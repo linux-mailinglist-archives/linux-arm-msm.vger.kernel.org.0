@@ -1,43 +1,43 @@
-Return-Path: <linux-arm-msm+bounces-24425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7ED3591A4BE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 13:13:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E63E891A4BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 13:13:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0DCC9B207DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 11:13:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 73DEF1F226EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 11:13:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F024148833;
-	Thu, 27 Jun 2024 11:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11D9C146D6D;
+	Thu, 27 Jun 2024 11:13:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ns.iliad.fr (ns.iliad.fr [212.27.33.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB51913BACC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5AE1459E4;
 	Thu, 27 Jun 2024 11:13:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.33.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719486801; cv=none; b=oezbSIxag0/+IhkdEy7Ut2ZNMAwbB7Iuycj8no1AqBSNoMNQW8Diszz7CLjPWI4UvF7xD0Y+FmeJ6PB0cQChxfd4WeeXRo/5KFPSZf5P/Zmm2/pV8+8kc9M7kscnf32ahQxMt3z5MAj9HjrAI2Q8hlE8XEqTDo0KruvfHvvepT0=
+	t=1719486800; cv=none; b=JVvFXSU/MNzAqvtK8gp7Cd3lPR2vKKAp4Z5ua2G+ELiJDa7lYgTV9XOhs0Ff/m7wFkut7/VWyHfoZYSITfN71zZyRMusZFwLkx+nPG5SE7ryV8szb2bRusv7iBTNtgTBJ94kv/5EEbcKl1RsiMZrto9U66UBEtw8FPlNahNi1Ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719486801; c=relaxed/simple;
-	bh=Gyv/Av2YrE9K2vk9JAjWwGCO3rN5K0ixQYUzGIdOj7A=;
+	s=arc-20240116; t=1719486800; c=relaxed/simple;
+	bh=JzLpY+B3zHA5J7D81gYsUd4B1w/Nr/nyo9UYhBMEEjM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Vcme/IlhXOqjmhcykNPny3t7L5ra+1febABM+DkdL6XI+4iMxFsTFQndpKcukyITf/M+yqrjgwnFwafoOCL74uGk5UqcaHXyIkfHTyRnfpdhQB2uR9i5TGJvtLSN8sRrUnLxdm9BWTpNis4lFyJDHCXgVYj3bn3j29xXTCyj/yc=
+	 In-Reply-To:To:Cc; b=oeQQhJW+L0AxoWih4dZ89B52G+m79hcYOxSYev997LaXo2qBPExEdfH08ZX/8QqlpJHBhglqiz3lfDS2T55vdcapnqzB5JPdVN1x32++Z6CCfyV5h9bwcu71xffue4a1GhVuFVVdcHTpAFiO2bcS1BKtty2MKqwQKF9phmpUhe8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=srs.iliad.fr; arc=none smtp.client-ip=212.27.33.1
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=srs.iliad.fr
 Received: from ns.iliad.fr (localhost [127.0.0.1])
-	by ns.iliad.fr (Postfix) with ESMTP id ED238205E8;
-	Thu, 27 Jun 2024 13:13:08 +0200 (CEST)
+	by ns.iliad.fr (Postfix) with ESMTP id 01EE7208AC;
+	Thu, 27 Jun 2024 13:13:09 +0200 (CEST)
 Received: from [127.0.1.1] (freebox.vlq16.iliad.fr [213.36.7.13])
-	by ns.iliad.fr (Postfix) with ESMTP id DA7AF2012E;
+	by ns.iliad.fr (Postfix) with ESMTP id E2DED20133;
 	Thu, 27 Jun 2024 13:13:08 +0200 (CEST)
 From: Marc Gonzalez <mgonzalez@freebox.fr>
-Date: Thu, 27 Jun 2024 13:13:03 +0200
-Subject: [PATCH v3 1/2] dt-bindings: display: bridge: add TI TDP158
+Date: Thu, 27 Jun 2024 13:13:04 +0200
+Subject: [PATCH v3 2/2] drm/bridge: add support for TI TDP158
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -46,7 +46,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240627-tdp158-v3-1-fb2fbc808346@freebox.fr>
+Message-Id: <20240627-tdp158-v3-2-fb2fbc808346@freebox.fr>
 References: <20240627-tdp158-v3-0-fb2fbc808346@freebox.fr>
 In-Reply-To: <20240627-tdp158-v3-0-fb2fbc808346@freebox.fr>
 To: Andrzej Hajda <andrzej.hajda@intel.com>, 
@@ -91,68 +91,160 @@ and transmit swing, and slew rate control
 
 https://www.ti.com/lit/ds/symlink/tdp158.pdf
 
+The default settings work fine for our use-case.
+So this basic driver doesn't tweak any I2C registers.
+
 Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
 ---
- .../bindings/display/bridge/ti,tdp158.yaml         | 51 ++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ drivers/gpu/drm/bridge/Kconfig     |   7 +++
+ drivers/gpu/drm/bridge/Makefile    |   1 +
+ drivers/gpu/drm/bridge/ti-tdp158.c | 108 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 116 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/display/bridge/ti,tdp158.yaml b/Documentation/devicetree/bindings/display/bridge/ti,tdp158.yaml
+diff --git a/drivers/gpu/drm/bridge/Kconfig b/drivers/gpu/drm/bridge/Kconfig
+index c621be1a99a89..c0ab5b620b57d 100644
+--- a/drivers/gpu/drm/bridge/Kconfig
++++ b/drivers/gpu/drm/bridge/Kconfig
+@@ -368,6 +368,13 @@ config DRM_TI_DLPC3433
+ 	  It supports up to 720p resolution with 60 and 120 Hz refresh
+ 	  rates.
+ 
++config DRM_TI_TDP158
++	tristate "TI TDP158 HDMI/TMDS bridge"
++	depends on OF
++	select DRM_PANEL_BRIDGE
++	help
++	  Texas Instruments TDP158 HDMI/TMDS Bridge driver
++
+ config DRM_TI_TFP410
+ 	tristate "TI TFP410 DVI/HDMI bridge"
+ 	depends on OF
+diff --git a/drivers/gpu/drm/bridge/Makefile b/drivers/gpu/drm/bridge/Makefile
+index 7df87b582dca3..3daf803ce80b6 100644
+--- a/drivers/gpu/drm/bridge/Makefile
++++ b/drivers/gpu/drm/bridge/Makefile
+@@ -32,6 +32,7 @@ obj-$(CONFIG_DRM_I2C_ADV7511) += adv7511/
+ obj-$(CONFIG_DRM_TI_DLPC3433) += ti-dlpc3433.o
+ obj-$(CONFIG_DRM_TI_SN65DSI83) += ti-sn65dsi83.o
+ obj-$(CONFIG_DRM_TI_SN65DSI86) += ti-sn65dsi86.o
++obj-$(CONFIG_DRM_TI_TDP158) += ti-tdp158.o
+ obj-$(CONFIG_DRM_TI_TFP410) += ti-tfp410.o
+ obj-$(CONFIG_DRM_TI_TPD12S015) += ti-tpd12s015.o
+ obj-$(CONFIG_DRM_NWL_MIPI_DSI) += nwl-dsi.o
+diff --git a/drivers/gpu/drm/bridge/ti-tdp158.c b/drivers/gpu/drm/bridge/ti-tdp158.c
 new file mode 100644
-index 0000000000000..21c8585c3bb2d
+index 0000000000000..58827c4d59a08
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/display/bridge/ti,tdp158.yaml
-@@ -0,0 +1,51 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/display/bridge/ti,tdp158.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
++++ b/drivers/gpu/drm/bridge/ti-tdp158.c
+@@ -0,0 +1,108 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright 2024 Freebox SAS
++ */
++#include <drm/drm_bridge.h>
++#include <drm/drm_atomic_helper.h>
++#include <linux/i2c.h>
 +
-+title: TI TDP158 HDMI to TMDS Redriver
++struct tdp158 {
++	struct drm_bridge bridge;
++	struct drm_bridge *next;
++	struct gpio_desc *enable; // Operation Enable - pin 36
++	struct regulator *vcc; // 3.3V
++	struct regulator *vdd; // 1.1V
++	struct device *dev;
++};
 +
-+maintainers:
-+  - Arnaud Vrac <avrac@freebox.fr>
-+  - Pierre-Hugues Husson <phhusson@freebox.fr>
++static void tdp158_enable(struct drm_bridge *bridge, struct drm_bridge_state *prev)
++{
++	int err;
++	struct tdp158 *tdp158 = bridge->driver_private;
 +
-+properties:
-+  compatible:
-+    const: ti,tdp158
++	err = regulator_enable(tdp158->vcc);
++	if (err)
++		dev_err(tdp158->dev, "failed to enable vcc: %d", err);
 +
-+  reg:
-+    description: I2C address of the device
++	err = regulator_enable(tdp158->vdd);
++	if (err)
++		dev_err(tdp158->dev, "failed to enable vdd: %d", err);
 +
-+  enable-gpios:
-+    description: GPIO controlling bridge enable
++	gpiod_set_value_cansleep(tdp158->enable, 1);
++}
 +
-+  vcc-supply:
-+    description: Power supply 3.3V
++static void tdp158_disable(struct drm_bridge *bridge, struct drm_bridge_state *prev)
++{
++	struct tdp158 *tdp158 = bridge->driver_private;
 +
-+  vdd-supply:
-+    description: Power supply 1.1V
++	gpiod_set_value_cansleep(tdp158->enable, 0);
++	regulator_disable(tdp158->vdd);
++	regulator_disable(tdp158->vcc);
++}
 +
-+  ports:
-+    $ref: /schemas/graph.yaml#/properties/ports
++static int tdp158_attach(struct drm_bridge *bridge, enum drm_bridge_attach_flags flags)
++{
++	struct tdp158 *tdp158 = bridge->driver_private;
 +
-+    properties:
-+      port@0:
-+        $ref: /schemas/graph.yaml#/properties/port
-+        description: Bridge input
++	return drm_bridge_attach(bridge->encoder, tdp158->next, bridge, flags);
++}
 +
-+      port@1:
-+        $ref: /schemas/graph.yaml#/properties/port
-+        description: Bridge output
++static const struct drm_bridge_funcs tdp158_bridge_funcs = {
++	.attach = tdp158_attach,
++	.atomic_enable = tdp158_enable,
++	.atomic_disable = tdp158_disable,
++	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
++	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
++	.atomic_reset = drm_atomic_helper_bridge_reset,
++};
 +
-+    required:
-+      - port@0
-+      - port@1
++static int tdp158_bridge_probe(struct i2c_client *client)
++{
++	struct tdp158 *tdp158;
++	struct device *dev = &client->dev;
 +
-+required:
-+  - compatible
-+  - vcc-supply
-+  - vdd-supply
-+  - ports
++	tdp158 = devm_kzalloc(dev, sizeof(*tdp158), GFP_KERNEL);
++	if (!tdp158)
++		return -ENOMEM;
 +
-+additionalProperties: false
++	tdp158->next = devm_drm_of_get_bridge(dev, dev->of_node, 1, 0);
++	if (IS_ERR(tdp158->next))
++		return dev_err_probe(dev, PTR_ERR(tdp158->next), "missing bridge");
++
++	tdp158->vcc = devm_regulator_get(dev, "vcc");
++	if (IS_ERR(tdp158->vcc))
++		return dev_err_probe(dev, PTR_ERR(tdp158->vcc), "vcc");
++
++	tdp158->vdd = devm_regulator_get(dev, "vdd");
++	if (IS_ERR(tdp158->vdd))
++		return dev_err_probe(dev, PTR_ERR(tdp158->vdd), "vdd");
++
++	tdp158->enable = devm_gpiod_get(dev, "enable", GPIOD_OUT_LOW);
++	if (IS_ERR(tdp158->enable))
++		return dev_err_probe(dev, PTR_ERR(tdp158->enable), "enable");
++
++	tdp158->bridge.of_node = dev->of_node;
++	tdp158->bridge.funcs = &tdp158_bridge_funcs;
++	tdp158->bridge.driver_private = tdp158;
++	tdp158->dev = dev;
++
++	return devm_drm_bridge_add(dev, &tdp158->bridge);
++}
++
++static const struct of_device_id tdp158_bridge_match_table[] = {
++	{ .compatible = "ti,tdp158" },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, tdp158_bridge_match_table);
++
++static struct i2c_driver tdp158_bridge_driver = {
++	.probe = tdp158_bridge_probe,
++	.driver = {
++		.name = "tdp158-bridge",
++		.of_match_table = tdp158_bridge_match_table,
++	},
++};
++module_i2c_driver(tdp158_bridge_driver);
++
++MODULE_DESCRIPTION("TI TDP158 driver");
++MODULE_LICENSE("GPL");
 
 -- 
 2.34.1
