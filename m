@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-24400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 496C1919E95
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 07:26:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AEE49919EC6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 07:38:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A6CA41F21A19
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 05:26:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 69F3E287F63
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 05:38:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87AAA1CA9E;
-	Thu, 27 Jun 2024 05:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0552B1CD31;
+	Thu, 27 Jun 2024 05:38:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kjPCOQyx"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lNpPFIoM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF8B1A702;
-	Thu, 27 Jun 2024 05:26:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735171CD0C;
+	Thu, 27 Jun 2024 05:38:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719466001; cv=none; b=OZGG6IG2PKQMVbMReWANKNWMI+CjF4VA50doIfZ9mqlnndqT5Y8NxFKMbjf7VvWOIhPPV22QdM+LdSo5jj+EkybUmOMUbrZ4FCCEyR0ORCyXrn5wnPgN3BMVNctoi8WOkbJ1Q5fkYt/6ohoKkB6zqEMPXQCVT13pBg7ewMzOpxg=
+	t=1719466696; cv=none; b=dEzcs0UJ2+rHQVW+6OYhjHSfp1d7X98ExfUmssiA8qxuPF3cTDBqd3S9SSdMCcBPJmc256wtJvsxF9M0JDP5VdxI48laeJ8+B70jAHolWPAxFOTuuMbRhsRLtt0WoFzOeT93V0hGRdyllxTxbrqUFXPZZWgG0rmLj6bRqW157B0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719466001; c=relaxed/simple;
-	bh=OuR9NleHXA3ZQdw1usDlCmtjq83kCMS29H9Cz2AqACs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=sgKC4nC+V5zhuLY/l/F4QkBDXmtMIA/33d9qIXGTu4a4Gote7FDZp7l8LlVsfxnIcYrWFATlIcKes0ZQlLxkMU2Wmcz6wM1KTihBlGYd8A5L4r2MdlqzJUX7E7B92637am2W24GA1NaDFl1j3H26YwEKDfbBKWohsEq8mPSYCKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kjPCOQyx; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1719466696; c=relaxed/simple;
+	bh=K6d5U/J+OhP5XbyMF5bFdwe1a5dAG0EXgpN36348UUE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=lzoFQH2HxOp6n4T99NsB9JYdG8DOI33d22CPjJjoRYjUEmEVldeBXZ5iYGx4Sxj0LTn43WHVk/jqVXZH4zCcFn9BSW40V3WUZZTW8gqaNw+ffFVrmwWdUX1HN3FOj3skkB9fvsrdCozopghsM0oReTsBVBEF1JAV0LyUVXcz1sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lNpPFIoM; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45R0DRtE003766;
-	Thu, 27 Jun 2024 05:26:12 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45QNsvD8011470;
+	Thu, 27 Jun 2024 05:37:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wYpXKHV1kel9Zds03gh2BxHVDdcoNxDveVlVPuZhkgk=; b=kjPCOQyxGovZJTCj
-	OPnm8pGQek/O8oafBsRh3k4WrV0X0ZdJePu1qGoSJxyuzDYxsn/sFFK4DvUC5Y39
-	wocQkxzuwpnEoqKfx58Gu8u8w1+uJDRMVKTagInbE9e/JIDewRRWgLTspjlI4Tm+
-	c4Uhc4TzAWGJtBe78ZVvDYc63OjzgVOBdVoEKJ/sArKpsxqvPxu8p0YYBNGcZy6k
-	/3Wv1unh0AD+kH6yKGc82RNm2B8ErA3yNm8JBLl9Mu2OyCd5lODuSq4io9Fv7rhv
-	TnSZCSupDMquBvZc/nzROLeGAV0SgdzxkA1F69inG3IK8nG7HIHVzC+GRf0k0vVC
-	RJIs+w==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywmaf3v70-1
+	/1XTB4r53fxKuVJ+ffpKN10uZXO4xAgJ7bZw+nI1ZKQ=; b=lNpPFIoMSTknubVK
+	rl6xRrqb/R+D3FamgZoRk1TTpPw9/ZwKiIDRpHBbPBCIqTNFoaRWYnsjkaE/VAev
+	D0VmK+u+B7muvx9x+xBo2t4WAxVhN/3XnjkudqUE0tCnEKtzgZ7l1jXoruHFijMr
+	mx0SdNfEG0k8Q+DtMSqvCqBhK0M+GcfTPHMnmopQEPx7VRdwyH3B3tIj4RTJhtuO
+	d6Rqsfti6ueQaTzrXR1QZ8InwW+r9y2Awg2z5ssK9f5Ux2pxeZG2A7cKJI14U9yA
+	/1ZoZcPmFPagWnAtX5lVbworVj1o1uwrv6RIjmu7WpiZAOudwBqOnR4ePnwYSlPV
+	vxTXnQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 400bdqb586-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Jun 2024 05:26:12 +0000 (GMT)
+	Thu, 27 Jun 2024 05:37:37 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45R5QAV4032328
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45R5bZD6003813
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Jun 2024 05:26:10 GMT
+	Thu, 27 Jun 2024 05:37:35 GMT
 Received: from [10.50.52.175] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 26 Jun
- 2024 22:25:53 -0700
-Message-ID: <4bf9dff9-3cb4-4276-8d21-697850e01170@quicinc.com>
-Date: Thu, 27 Jun 2024 10:55:49 +0530
+ 2024 22:37:26 -0700
+Message-ID: <69126dff-fe23-48d3-99b5-a2830af52e6a@quicinc.com>
+Date: Thu, 27 Jun 2024 11:07:22 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,96 +65,82 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V5 4/7] dt-bindings: clock: Add ipq9574 NSSCC clock and
- reset definitions
-To: Andrew Lunn <andrew@lunn.ch>
-CC: <catalin.marinas@arm.com>, <u-kumar1@ti.com>,
-        <linux-arm-kernel@lists.infradead.org>, <krzk+dt@kernel.org>,
-        <geert+renesas@glider.be>, <neil.armstrong@linaro.org>,
-        <nfraprado@collabora.com>, <mturquette@baylibre.com>,
-        <linux-kernel@vger.kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <netdev@vger.kernel.org>, <konrad.dybcio@linaro.org>,
-        <m.szyprowski@samsung.com>, <arnd@arndb.de>,
-        <richardcochran@gmail.com>, <will@kernel.org>, <sboyd@kernel.org>,
-        <andersson@kernel.org>, <p.zabel@pengutronix.de>,
+Subject: Re: [PATCH V4 5/7] clk: qcom: Add NSS clock Controller driver for
+ IPQ9574
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <p.zabel@pengutronix.de>,
+        <richardcochran@gmail.com>, <geert+renesas@glider.be>,
+        <dmitry.baryshkov@linaro.org>, <neil.armstrong@linaro.org>,
+        <arnd@arndb.de>, <m.szyprowski@samsung.com>, <nfraprado@collabora.com>,
+        <u-kumar1@ti.com>, <linux-arm-msm@vger.kernel.org>,
         <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20240626143302.810632-1-quic_devipriy@quicinc.com>
- <20240626143302.810632-5-quic_devipriy@quicinc.com>
- <171941612020.3280624.794530163562164163.robh@kernel.org>
- <eeea33c7-02bd-4ea4-a53f-fd6af839ca90@lunn.ch>
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <netdev@vger.kernel.org>
+References: <20240625070536.3043630-1-quic_devipriy@quicinc.com>
+ <20240625070536.3043630-6-quic_devipriy@quicinc.com>
+ <2391a1a1-46d3-4ced-a31f-c80194fdaf29@linaro.org>
 Content-Language: en-US
 From: Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <eeea33c7-02bd-4ea4-a53f-fd6af839ca90@lunn.ch>
+In-Reply-To: <2391a1a1-46d3-4ced-a31f-c80194fdaf29@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 9NOepCBt7OGnFxvhr4ou74KtrvgMHq_q
-X-Proofpoint-GUID: 9NOepCBt7OGnFxvhr4ou74KtrvgMHq_q
+X-Proofpoint-ORIG-GUID: mN0dPTXalv0QnqBdDs-HJr5m6-26SMHV
+X-Proofpoint-GUID: mN0dPTXalv0QnqBdDs-HJr5m6-26SMHV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-27_02,2024-06-25_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 spamscore=0 bulkscore=0 phishscore=0 malwarescore=0
- clxscore=1015 mlxscore=0 lowpriorityscore=0 priorityscore=1501
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2406140001 definitions=main-2406270039
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=667
+ adultscore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0
+ mlxscore=0 suspectscore=0 priorityscore=1501 clxscore=1015 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
+ definitions=main-2406270041
 
 
 
-On 6/26/2024 10:56 PM, Andrew Lunn wrote:
-> On Wed, Jun 26, 2024 at 09:35:20AM -0600, Rob Herring (Arm) wrote:
+On 6/25/2024 10:33 PM, Konrad Dybcio wrote:
+> On 25.06.2024 9:05 AM, Devi Priya wrote:
+>> Add Networking Sub System Clock Controller(NSSCC) driver for ipq9574 based
+>> devices.
 >>
->> On Wed, 26 Jun 2024 20:02:59 +0530, Devi Priya wrote:
->>> Add NSSCC clock and reset definitions for ipq9574.
->>>
->>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
->>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> ---
->>>   Changes in V5:
->>> 	- Dropped interconnects and added interconnect-cells to NSS
->>> 	  clock provider so that it can be  used as icc provider.
->>>
->>>   .../bindings/clock/qcom,ipq9574-nsscc.yaml    |  74 +++++++++
->>>   .../dt-bindings/clock/qcom,ipq9574-nsscc.h    | 152 ++++++++++++++++++
->>>   .../dt-bindings/reset/qcom,ipq9574-nsscc.h    | 134 +++++++++++++++
->>>   3 files changed, 360 insertions(+)
->>>   create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.yaml
->>>   create mode 100644 include/dt-bindings/clock/qcom,ipq9574-nsscc.h
->>>   create mode 100644 include/dt-bindings/reset/qcom,ipq9574-nsscc.h
->>>
->>
->> My bot found errors running 'make dt_binding_check' on your patch:
->>
->> yamllint warnings/errors:
->>
->> dtschema/dtc warnings/errors:
->> Error: Documentation/devicetree/bindings/clock/qcom,ipq9574-nsscc.example.dts:26.26-27 syntax error
->> FATAL ERROR: Unable to parse input tree
+>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>> Tested-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+>> ---
 > 
-> Hi Devi
+> [...]
 > 
-> Version 4 of these patches had the same exact problem. There was not
-> an email explaining it is a false positive etc, so i have to assume it
-> is a real error. So why has it not been fixed?
+>> +	struct regmap *regmap;
+>> +	struct qcom_cc_desc nsscc_ipq9574_desc = nss_cc_ipq9574_desc;
 > 
-> Qualcomm patches are under a microscope at the moment because of how
-> bad things went a couple of months ago with patches. You cannot ignore
-> things like this, because the damage to Qualcomm reputation is going
-> to make it impossible to get patches merged soon.
+> Why?
+Sure, Will drop this in V6.
 > 
-Hi Andrew,
-Very sorry for the inconvenience.
-I had run dt_binding_check locally on V4 patches and did not face any
-errors. I somehow missed to notice the binding check error that was
-reported on V4. Thus I went ahead and posted the same in V5.
-Will ensure such things are not repeated henceforth.
+>> +	struct clk *nsscc_clk;
+>> +	struct device_node *np = (&pdev->dev)->of_node;
+>> +	int ret;
+>> +
+>> +	nsscc_clk = of_clk_get(np, 11);
+>> +	if (IS_ERR(nsscc_clk))
+>> +		return PTR_ERR(nsscc_clk);
+>> +
+>> +	ret = clk_prepare_enable(nsscc_clk);
+> 
+> pm_clk_add()? And definitely drop the 11 literal, nobody could ever guess
+> or maintain magic numbers
+Hi Konrad,
+
+nsscc clk isn't related to power management clocks.
+Also, I believe it might require the usage of clock-names.
+Do you suggest adding a macro for the literal (11)?
+Please correct me if I'm wrong.
 
 Thanks,
 Devi Priya
-
-> 	Andrew
+> 
+> Konrad
 
