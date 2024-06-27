@@ -1,276 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-24420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 618AF91A44C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 12:49:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0ED1B91A498
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 13:08:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B405AB241A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 10:49:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8A558281D4D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 11:08:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47FEC13EFF3;
-	Thu, 27 Jun 2024 10:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1279B1459E4;
+	Thu, 27 Jun 2024 11:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Nn8tVPyt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SniUivUt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841F514A0A2;
-	Thu, 27 Jun 2024 10:49:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5069F13E40C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 11:08:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719485352; cv=none; b=AQSIAXWBFRt1wRGLhAH1pzcyQrR+4ep91OUzBW0DCfD5mPh8TpfEqkd4qNMxlutL64OlVsQNlFZKIl86YfsCtG9Q9kLQ+E1yCgo1UAPt/tM68BdXjpWN0RHWUmhU9pRNcMmeXy/2M4CL9ahz0i/ZpaO4bKTuMbnb8csJRn0qcpI=
+	t=1719486504; cv=none; b=Z9W02JJLDHXge0+1djh3USsYo8oJjpkYSW9Geds5PszqzWrywxNPHFiIGvDDMD/YrsaE6kXUbxLuB86qMnVdNOgrTCiOeuGtFI6zeyUg3Yz5efTpd16DZ7+iYZUFZ9bV6vn8KdUT6ANvynvjISdP8sh953tMEsuj8sAA8ztDYYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719485352; c=relaxed/simple;
-	bh=c5lcVmFIoWfuSzrbY5zB8s0IDhy57d4nb1ETd1V+0uQ=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AZC1l+WOWsjaWnIb7lfbu9Nujq+tPwEK3pdqGDZNB+J0GhHiPZsqnR4VmMO9eRXJvvazUM2oN0Xo8YHym/0wqZ4zyT0pRw+J6k/2qHZCBttqgSyj9axFMQDSB5iv3PLjsbjIe9G0Mn5z8kNelPsQATaN+6JrvNepJgR4YqTSdVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Nn8tVPyt; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45RA55vs015125;
-	Thu, 27 Jun 2024 10:49:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wUP7OkSjxccZXMrC/om1s69siujQlmzEYh73ztXduGU=; b=Nn8tVPytHQfePRAZ
-	++Psd2dZ5RBfPhSmzB2lHJCzI2lLpwpkruKlBn3VM21tKb2c2ZZ8QZN+2kAGKE4U
-	+qATpWyOPOYQiDBw2tHvZO1yIa3vKjYSOtkIaw3d9tK+HzrAAGDU5uDXZVWIN1bD
-	HdT6HWUfiEAumwxOfErBWcVZ9ZW6rku7wg0AXLiRflZIxD0bTBdJDcELEfdntRvp
-	M6AvwgXUcuAJXdAQ3kr/gTjG7ChiGI9a/hi6b0gq4jJ8PXyZKcs6zqMm9j6oibVR
-	3bIolUuYzZS/qUFU3P32Hwgit+Lh6cN74ZWWnLYGE39H3H6HiWdSVro0/oZLhd3r
-	QZHw2Q==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywqshv9ve-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Jun 2024 10:49:07 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45RAn64d001633
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 27 Jun 2024 10:49:06 GMT
-Received: from hu-sudeepgo-hyd.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 27 Jun 2024 03:49:03 -0700
-From: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>
-To: <quic_bjorande@quicinc.com>, <andersson@kernel.org>,
-        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <quic_deesin@quicinc.com>,
-        <quic_sudeepgo@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH V3 2/2] soc: qcom: smp2p: Introduce tracepoint support
-Date: Thu, 27 Jun 2024 16:18:31 +0530
-Message-ID: <20240627104831.4176799-3-quic_sudeepgo@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240627104831.4176799-1-quic_sudeepgo@quicinc.com>
-References: <20240627104831.4176799-1-quic_sudeepgo@quicinc.com>
+	s=arc-20240116; t=1719486504; c=relaxed/simple;
+	bh=d2qDTrmbKUsr+Rx4meYIaCNy4rxF3QmIbu+x1J2u7qI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SDcIak/6CXlZiyOmyq65TJ3HTbctz217uwKfKOuu6/xRNlF34mfL0HbCwQ4UbOuYRw8qeKYYWaXEOgoFRZnORwwfu0oIVK2AEgPjMqeKS0owqiazqf6WzWU9n8nR4ECWWb+KGf+ZF2MrUG3uAy1OQ7KSwsTGJOllmyw/AtXrgOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SniUivUt; arc=none smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2ee4ab5958dso4207441fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 04:08:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719486500; x=1720091300; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=LDIZ8jZNwgR+9ADgTc91LrJE3ciGgVcooiq9Tz2ImAg=;
+        b=SniUivUtEHA81Og4mGlKsZA9+IR1j9Q772AfYEmvjB8/n3PbkqmwkGqBKql7FvyehN
+         Cy0R4bAmDLQSO69VBDni1T0y28rYVwz9oLz9Xyq+Ra9RCg/eaECGCDo5enyJMCXwuIqv
+         7M1/uImXvC4aTDG8O9JZ5KyYncFyiQf8nQcWSnRRYJ0/suhRVdDHto+xPJnP0T6993Ze
+         tlOW/+bzDImw4xYOUFeDJ1hkNeLK+e5qYboUGWzVCk46dYHJLkufJhWtZaGJXJgC/E37
+         iH3cFaCcL7d7R5oyP25IzfTmtKEUAE6OAko2YNSDu51BM41n8coFf9UWGJ3gU3+VSIj8
+         HjDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719486500; x=1720091300;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LDIZ8jZNwgR+9ADgTc91LrJE3ciGgVcooiq9Tz2ImAg=;
+        b=GgfWqiq0A/0zxAur/Y1z0YImCGp56AEuUwCcipsYtiwxtDaX9gLY3Jym+yeVsebfCa
+         ydCKSTwvtWKqutmBoDbGbxCcDhsLuF8IWraIncoTX97Y3GsWA+n9G01XFM711gpCbi98
+         KrRC3EMCBOwkAZ3EqBnlg1z1f4CpTrr0ZRInX7z/EZT/wwln3j5AFH3p27G6IAx7FSGV
+         yqCIa3xW7fYLRuU0SGoHHWG1FHzbEpDip6BNcavEtfD4BxBAelKg3GZ6B1B+UCoZsj27
+         c7+ArXSZzHlhbOIMWwSLKvZ8PgimBbP8CRMmhsyXh0bGcvPsdmpbLviGLfMC8Ht5aq/c
+         L0bA==
+X-Forwarded-Encrypted: i=1; AJvYcCV7+kMGsmRI/5YRCPSr8ccI/BHmX55O6IfGU1Glz0VPPxTiYh3EaoX31aSv0WdlaGywzL4PVZuKBnBbSqlA781mhG115MMMarrSZEefsg==
+X-Gm-Message-State: AOJu0YwBELG5K9AE16HQj/nqFPc2AcSJEhu9ziuzSVEZHuErio2Ce8Zf
+	M4uI7BHlJ67ip6CfgNw710x1APXFJ/E3P7ES9CWwJjhtaQ0mhAxn9rq9zd6HT3xy3vsmDjXFMcb
+	7E38=
+X-Google-Smtp-Source: AGHT+IHwZv+z93couUdcfrBSYJbEjitjwBpwPIxQ5GGLRkyBz5sbtXa96C/INZ7K24jqhX2BnvOu1Q==
+X-Received: by 2002:a2e:9e8f:0:b0:2ec:514f:89af with SMTP id 38308e7fff4ca-2ee4803f58bmr7341271fa.6.1719486500528;
+        Thu, 27 Jun 2024 04:08:20 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ee4a4bef67sm2157101fa.122.2024.06.27.04.08.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Jun 2024 04:08:20 -0700 (PDT)
+Date: Thu, 27 Jun 2024 14:08:18 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Gokul Sriram P <quic_gokulsri@quicinc.com>
+Cc: sboyd@kernel.org, andersson@kernel.org, bjorn.andersson@linaro.org, 
+	david.brown@linaro.org, devicetree@vger.kernel.org, jassisinghbrar@gmail.com, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-remoteproc@vger.kernel.org, mark.rutland@arm.com, mturquette@baylibre.com, ohad@wizery.com, 
+	robh@kernel.org, sricharan@codeaurora.org, gokulsri@codeaurora.org
+Subject: Re: [PATCH v9 1/8] remoteproc: qcom: Add PRNG proxy clock
+Message-ID: <dyh3vxosjjfztgwgpb5jtoqhzfyf5jyfndaujqoslepzvbet4o@kx6xaotzazcs>
+References: <20240621114659.2958170-1-quic_gokulsri@quicinc.com>
+ <20240621114659.2958170-2-quic_gokulsri@quicinc.com>
+ <chi3pzh5ss3mivnhs3qeoen5hsecfcgzaj6qnrgxantvinrri2@bxsbmpufuqpe>
+ <73cb638e-4982-49a2-ba79-0e78402b59ad@quicinc.com>
+ <ga5kczcyn3dqoky4525c74rr7dct5uizun2smvyx3p3u6z6vtm@5vshoozpttod>
+ <2617940e-72ad-4214-be26-7a5b15374609@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: jMfCRo_t-jOS9POJUxT7XWfTOlqqImiX
-X-Proofpoint-GUID: jMfCRo_t-jOS9POJUxT7XWfTOlqqImiX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-27_06,2024-06-27_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- bulkscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
- mlxscore=0 impostorscore=0 mlxlogscore=999 priorityscore=1501 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
- definitions=main-2406270081
+In-Reply-To: <2617940e-72ad-4214-be26-7a5b15374609@quicinc.com>
 
-This commit introduces tracepoint support for smp2p, enabling
-logging of communication between local and remote processors.
-These tracepoints include information about the remote subsystem
-name, negotiation details, supported features, bit change
-notifications, and ssr activity. These logs are useful for
-debugging issues between subsystems.
+On Thu, Jun 27, 2024 at 03:31:01PM GMT, Gokul Sriram P wrote:
+> 
+> On 6/27/2024 12:47 AM, Dmitry Baryshkov wrote:
+> > On Tue, Jun 25, 2024 at 11:03:30AM GMT, Gokul Sriram P wrote:
+> > > On 6/22/2024 2:38 AM, Dmitry Baryshkov wrote:
+> > > > On Fri, Jun 21, 2024 at 05:16:52PM GMT, Gokul Sriram Palanisamy wrote:
+> > > > > PRNG clock is needed by the secure PIL, support for the same
+> > > > > is added in subsequent patches.
+> > > > Which 'same'?
+> > > > What is 'secure PIL'?
+> > >    will elaborate in the updated version.
+> > >    To answer your question, secure PIL is signed PIL image which only
+> > > TrustZone can authenticate and load.
+> > Fine. So, the current driver can not load WCSS firmware on IPQ8074, is
+> > that correct? Or was there some kind of firmware interface change? The
+> > driver was added in 2018, so I can only hope that at that point it
+> > worked. Could you please explain, what happened?
+> The existing wcss driver can load unsigned PIL images without the
+> involvement of TrustZone. That works even now.
+> With the current change, we are trying to add signed PIL as an option based
+> on "wcss->need_mem_protection" if set. For signed PIL alone, we send a PAS
+> request to TrustZone to authenticate and load.
 
-Signed-off-by: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>
----
- drivers/soc/qcom/Makefile      |  1 +
- drivers/soc/qcom/smp2p.c       |  9 ++++
- drivers/soc/qcom/trace-smp2p.h | 98 ++++++++++++++++++++++++++++++++++
- 3 files changed, 108 insertions(+)
- create mode 100644 drivers/soc/qcom/trace-smp2p.h
+I see that you are enabling it unconditionally for IPQ8074. How is it
+going to work?
 
-diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-index ca0bece0dfff..30c1bf645501 100644
---- a/drivers/soc/qcom/Makefile
-+++ b/drivers/soc/qcom/Makefile
-@@ -23,6 +23,7 @@ qcom_rpmh-y			+= rpmh.o
- obj-$(CONFIG_QCOM_SMD_RPM)	+= rpm-proc.o smd-rpm.o
- obj-$(CONFIG_QCOM_SMEM) +=	smem.o
- obj-$(CONFIG_QCOM_SMEM_STATE) += smem_state.o
-+CFLAGS_smp2p.o := -I$(src)
- obj-$(CONFIG_QCOM_SMP2P)	+= smp2p.o
- obj-$(CONFIG_QCOM_SMSM)	+= smsm.o
- obj-$(CONFIG_QCOM_SOCINFO)	+= socinfo.o
-diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
-index 696c2a8387d0..4aa61b0f11ad 100644
---- a/drivers/soc/qcom/smp2p.c
-+++ b/drivers/soc/qcom/smp2p.c
-@@ -161,6 +161,9 @@ struct qcom_smp2p {
- 	struct list_head outbound;
- };
- 
-+#define CREATE_TRACE_POINTS
-+#include "trace-smp2p.h"
-+
- static void qcom_smp2p_kick(struct qcom_smp2p *smp2p)
- {
- 	/* Make sure any updated data is written before the kick */
-@@ -192,6 +195,7 @@ static void qcom_smp2p_do_ssr_ack(struct qcom_smp2p *smp2p)
- 	struct smp2p_smem_item *out = smp2p->out;
- 	u32 val;
- 
-+	trace_smp2p_ssr_ack(smp2p->dev);
- 	smp2p->ssr_ack = !smp2p->ssr_ack;
- 
- 	val = out->flags & ~BIT(SMP2P_FLAGS_RESTART_ACK_BIT);
-@@ -214,6 +218,7 @@ static void qcom_smp2p_negotiate(struct qcom_smp2p *smp2p)
- 			smp2p->ssr_ack_enabled = true;
- 
- 		smp2p->negotiation_done = true;
-+		trace_smp2p_negotiate(smp2p->dev, out->features);
- 	}
- }
- 
-@@ -252,6 +257,8 @@ static void qcom_smp2p_notify_in(struct qcom_smp2p *smp2p)
- 		status = val ^ entry->last_value;
- 		entry->last_value = val;
- 
-+		trace_smp2p_notify_in(entry, status, val);
-+
- 		/* No changes of this entry? */
- 		if (!status)
- 			continue;
-@@ -415,6 +422,8 @@ static int smp2p_update_bits(void *data, u32 mask, u32 value)
- 	writel(val, entry->value);
- 	spin_unlock_irqrestore(&entry->lock, flags);
- 
-+	trace_smp2p_update_bits(entry, orig, val);
-+
- 	if (val != orig)
- 		qcom_smp2p_kick(entry->smp2p);
- 
-diff --git a/drivers/soc/qcom/trace-smp2p.h b/drivers/soc/qcom/trace-smp2p.h
-new file mode 100644
-index 000000000000..fa985a0d7615
---- /dev/null
-+++ b/drivers/soc/qcom/trace-smp2p.h
-@@ -0,0 +1,98 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#undef TRACE_SYSTEM
-+#define TRACE_SYSTEM qcom_smp2p
-+
-+#if !defined(__QCOM_SMP2P_TRACE_H__) || defined(TRACE_HEADER_MULTI_READ)
-+#define __QCOM_SMP2P_TRACE_H__
-+
-+#include <linux/device.h>
-+#include <linux/tracepoint.h>
-+
-+TRACE_EVENT(smp2p_ssr_ack,
-+	TP_PROTO(const struct device *dev),
-+	TP_ARGS(dev),
-+	TP_STRUCT__entry(
-+		__string(dev_name, dev_name(dev))
-+	),
-+	TP_fast_assign(
-+		__assign_str(dev_name, dev_name(dev));
-+	),
-+	TP_printk("%s: SSR detected", __get_str(dev_name))
-+);
-+
-+TRACE_EVENT(smp2p_negotiate,
-+	TP_PROTO(const struct device *dev, unsigned int features),
-+	TP_ARGS(dev, features),
-+	TP_STRUCT__entry(
-+		__string(dev_name, dev_name(dev))
-+		__field(u32, out_features)
-+	),
-+	TP_fast_assign(
-+		__assign_str(dev_name, dev_name(dev));
-+		__entry->out_features = features;
-+	),
-+	TP_printk("%s: state=open out_features=%s", __get_str(dev_name),
-+		__print_flags(__entry->out_features, "|",
-+			{SMP2P_FEATURE_SSR_ACK, "SMP2P_FEATURE_SSR_ACK"})
-+	)
-+);
-+
-+TRACE_EVENT(smp2p_notify_in,
-+	TP_PROTO(struct smp2p_entry *smp2p_entry, unsigned long status, u32 val),
-+	TP_ARGS(smp2p_entry, status, val),
-+	TP_STRUCT__entry(
-+		__string(dev_name, dev_name(smp2p_entry->smp2p->dev))
-+		__string(client_name, smp2p_entry->name)
-+		__field(unsigned long, status)
-+		__field(u32, val)
-+	),
-+	TP_fast_assign(
-+		__assign_str(dev_name, dev_name(smp2p_entry->smp2p->dev));
-+		__assign_str(client_name, smp2p_entry->name);
-+		__entry->status = status;
-+		__entry->val = val;
-+	),
-+	TP_printk("%s: %s: status:0x%0lx val:0x%0x",
-+		__get_str(dev_name),
-+		__get_str(client_name),
-+		__entry->status,
-+		__entry->val
-+	)
-+);
-+
-+TRACE_EVENT(smp2p_update_bits,
-+	TP_PROTO(struct smp2p_entry *smp2p_entry, u32 orig, u32 val),
-+	TP_ARGS(smp2p_entry, orig, val),
-+	TP_STRUCT__entry(
-+		__string(dev_name, dev_name(smp2p_entry->smp2p->dev))
-+		__string(client_name, smp2p_entry->name)
-+		__field(u32, orig)
-+		__field(u32, val)
-+	),
-+	TP_fast_assign(
-+		__assign_str(dev_name, dev_name(smp2p_entry->smp2p->dev));
-+		__assign_str(client_name, smp2p_entry->name);
-+		__entry->orig = orig;
-+		__entry->val = val;
-+	),
-+	TP_printk("%s: %s: orig:0x%0x new:0x%0x",
-+		__get_str(dev_name),
-+		__get_str(client_name),
-+		__entry->orig,
-+		__entry->val
-+	)
-+);
-+
-+#endif /* __QCOM_SMP2P_TRACE_H__ */
-+
-+#undef TRACE_INCLUDE_PATH
-+#define TRACE_INCLUDE_PATH .
-+
-+#undef TRACE_INCLUDE_FILE
-+#define TRACE_INCLUDE_FILE trace-smp2p
-+
-+#include <trace/define_trace.h>
+> I also just noticed that Bjorn had suggested to submit a new driver for the
+> PAS based IPQ WCSS instead of overloading this driver. Will also address
+> that and post a new driver in updated revision.
+> 
+> Regards,
+> Gokul
+> > > > > Signed-off-by: Nikhil Prakash V <quic_nprakash@quicinc.com>
+> > > > > Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+> > > > > Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+> > > > > ---
+> > > > >    drivers/remoteproc/qcom_q6v5_wcss.c | 65 +++++++++++++++++++++--------
+> > > > >    1 file changed, 47 insertions(+), 18 deletions(-)
+> > 
+
 -- 
-
+With best wishes
+Dmitry
 
