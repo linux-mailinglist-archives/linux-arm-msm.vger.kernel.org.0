@@ -1,185 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-24517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8785E91AD17
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 18:46:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5F1E91AD55
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 19:00:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3DF6D283CE5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 16:46:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 61B4B281B81
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 16:59:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26336E56A;
-	Thu, 27 Jun 2024 16:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7B02199EAB;
+	Thu, 27 Jun 2024 16:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="uLCCihFf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aDFPd0V7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E6614EC40
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 16:45:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1300199E95;
+	Thu, 27 Jun 2024 16:59:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719506762; cv=none; b=FrScW0U6TPY53xE6NYZjjvjmfe4Ab7ql1mVLgggPt6OSjmFhUd56sRHchG8MvwRo58vB8c8UhgB2YCPF5ZhxZs+g2i3Hja94dJaHFLhlhNHui/svjtPl7Jq8CXi7TUAw5n4Zv39zGs7O3/8S8JkISapXgtzCHEIX0oPSja23MIA=
+	t=1719507595; cv=none; b=S3Gepw0HVJAr1fMI40vWGwkzFCkGbeBpu8a6BUqNf79veoop82Cl3FKYPRRHq0kAFs6wNpuYM4eNVgx8pjwUUHyeeHk7tC2On7TQw8WsjUSmc1/04sXQzoOxLUnzW/rOYPvHLj9JC4qNIJzp3mR6th1I7siu8Rb9+PIHIBMJpg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719506762; c=relaxed/simple;
-	bh=GpSGQC8Lg26QkYGefBuZKxp3Opdx9gK22ng1OpQErTc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uiCvhjerOpSuUlem/rfzFFiMNC7qDFf/Aj1n1wnVqg6dlHxTrXbF4Lduv4sjyndpbAKUVdNR66CQGMwCnjoxm7ttZpVQod37twgPwrnh6gH6ZjdNvf7vvb3uDOUa/96Eavj++o0d807vtzsNkSoXgHtNLLkTyD7I1UViH9agY9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=uLCCihFf; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-36701e6c6e8so1795738f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 09:45:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1719506758; x=1720111558; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RUlTgVjd1SWrlQFq5ZUdpN+bd1M6z2ww4u0olJxdHqw=;
-        b=uLCCihFfiYEQiImHZvHyacJ5YxKWpiKWUn9wu7s7Ohs8gXm7WAPJKjuY55kOzkCElO
-         VZZGHNBQz8YOGE8lRjMovh6lSCzzEsMvUoR5+lIPB6fyZA0wTHRo62vVZTaOUwKvAWR4
-         IdIxNjlmHyC2zu7Ws03iE5hP/ng+4nYgfVtv/9kj+cQjlM8AFOAs9YUU+zifm8jp+/Xz
-         NQR0a695BdQgwrWNKQnovCDD68h4GcFFAxfXjErrtfyXAYtFCUszEWb9bgNUVcu+yv+D
-         DOa3us310RIAbdtEGg0TONSrcwk1soitAGiUJ1qGZyEQ4rc4fw8mMSI0QQo2sw5TxeR2
-         XwKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719506758; x=1720111558;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RUlTgVjd1SWrlQFq5ZUdpN+bd1M6z2ww4u0olJxdHqw=;
-        b=aOpPl553UU/9s1BaVXN6pG8WE3r7C9TkUsigfGeLVrynRSddiGB4oOEwfY7y2xcLyz
-         NGgh0CaoLDa3Ub45vhn1e+9JGBOpIn9BH864olGdt15NzBrEbx8Bcfl/ed9amLAf6JbT
-         pkZQqwHAeDoo5H9xQc4xsN7XdjZr9i/Ng99BswRx4RZz1kwWuviyhfa128UflCF7DkAm
-         STUS/bq2OsQ6d7Mspp1+ILiDgdUA4CnBA6W2H29ksWjMAiWL3LsSnCVw1gis44btQqlk
-         fj3zFY/w0FjOjvMJnsToIrOU9QCqb0NbHjLZEe7Sbwf0RrNSVaAHN+dw+8IjsQq9adfx
-         4u+g==
-X-Forwarded-Encrypted: i=1; AJvYcCUiYBdvyM6gxB9RzqNzEVHgKNTtofewNaZBgoGlC3Y1cb1koGUglciCaW0hkAZEPm6BF4Vw6+CoooAQlonG1yH0fpqBXTleJJgVWvw/Rw==
-X-Gm-Message-State: AOJu0Yynr39NVqPILX3912GR9czjeUm8O2ZKqwki7xW7s4JIqbDSfz92
-	HuKmjLTY7KLhI7UHp1MLlLciRJosRa32YCu8j7bZeBpIUtcWGi9xhtTYpqaigAk=
-X-Google-Smtp-Source: AGHT+IGIYRxdqaTOfk3Ahf8IGX/zJweg6pUTNHBb0iDQkXENMydzf+ntT71BoddaWEhyCxAUa1GbDA==
-X-Received: by 2002:a05:6000:184f:b0:366:ee84:6a79 with SMTP id ffacd0b85a97d-366ee846c15mr12700480f8f.51.1719506758451;
-        Thu, 27 Jun 2024 09:45:58 -0700 (PDT)
-Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3674369ecd3sm2401901f8f.104.2024.06.27.09.45.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Jun 2024 09:45:58 -0700 (PDT)
-Message-ID: <2fe0c2c0-2f67-4549-b62f-3b9db005d3f7@freebox.fr>
-Date: Thu, 27 Jun 2024 18:45:57 +0200
+	s=arc-20240116; t=1719507595; c=relaxed/simple;
+	bh=OK8qeKdyLiF2+ScelglgucYfbnjqFAGloVG5vj4NNhw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ukRFqGjuCsxtnfaIxXPAX+Kn7C4plxzUSbUnoZBte763Se90zy1c80VopBCzgdr/VqlNkyYmX7p0U+GfjlABHv0WQYc+sOGG4sgi/mIErryfwWx1sBlnR3YnkjOyBKqKJ63zrwcqEUWiDJ5aTVGf9ui6W6BWh4Z9sKoSf076Akw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aDFPd0V7; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45RAkNEl003678;
+	Thu, 27 Jun 2024 16:59:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	820qHeoMpUrUkKZikhn+Cg/pSlgrcxZ+7vwwwaAquLk=; b=aDFPd0V7hwygCumR
+	1MnDXkP8OwtiR9jKftgWDYOWQg+5Yu6AZLPxMuWWc224RMf1pt3TXtSTFuqIgWyj
+	l59M+bs0+S0D3ir2aDNTSErAYVqDisuq1XIygN0088sVgy4QUBR3hJ53j8r//25W
+	RA8bzb2QwrqQzaLI5apZhtRpoaFo7z5xYsAuIW39hxWAZSaM7joaorZOGSPiavxG
+	TazRtOIa0SK8f3/CKP+vcJLkeqPRRTPrASiFWmVGce87UnL4fbgsxoSODLNR1b2t
+	b3CHF96sEJ9lRe5ycLqA45j199noL4/PXWcUlpUAAmDNpRHielZTtYiiYUWw9K5n
+	EDHVxQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywmaf5jq4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 27 Jun 2024 16:59:44 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45RGxhSW003983
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 27 Jun 2024 16:59:43 GMT
+Received: from [10.216.16.130] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 27 Jun
+ 2024 09:59:38 -0700
+Message-ID: <75bca322-43df-9d4e-3dd8-804d9aa7f851@quicinc.com>
+Date: Thu, 27 Jun 2024 22:29:33 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] dt-bindings: display: bridge: add TI TDP158
-To: Conor Dooley <conor@kernel.org>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, dri-devel@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- Arnaud Vrac <avrac@freebox.fr>, Pierre-Hugues Husson <phhusson@freebox.fr>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20240627-tdp158-v3-0-fb2fbc808346@freebox.fr>
- <20240627-tdp158-v3-1-fb2fbc808346@freebox.fr>
- <20240627-display-quantum-48c2fa48ed1a@spud>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v2 1/2] scsi: ufs: Suspend clk scaling on no request
 Content-Language: en-US
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <20240627-display-quantum-48c2fa48ed1a@spud>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: Bart Van Assche <bvanassche@acm.org>,
+        "James E.J. Bottomley"
+	<James.Bottomley@HansenPartnership.com>,
+        "Martin K. Petersen"
+	<martin.petersen@oracle.com>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>
+CC: Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
+        <linux-scsi@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_cang@quicinc.com>,
+        <quic_nguyenb@quicinc.com>, <quic_pragalla@quicinc.com>,
+        <quic_nitirawa@quicinc.com>
+References: <20240627083756.25340-1-quic_rampraka@quicinc.com>
+ <20240627083756.25340-2-quic_rampraka@quicinc.com>
+ <97bb4c5a-46f3-4a81-96bf-a3147d9ec78b@acm.org>
+From: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+In-Reply-To: <97bb4c5a-46f3-4a81-96bf-a3147d9ec78b@acm.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: aD_WL8aGUEzjm4vN6-sIfPyu2N67iXph
+X-Proofpoint-GUID: aD_WL8aGUEzjm4vN6-sIfPyu2N67iXph
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-27_12,2024-06-27_03,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 spamscore=0 bulkscore=0 phishscore=0 malwarescore=0
+ clxscore=1015 mlxscore=0 lowpriorityscore=0 priorityscore=1501
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2406140001 definitions=main-2406270128
 
-On 27/06/2024 18:25, Conor Dooley wrote:
 
-> On Thu, Jun 27, 2024 at 01:13:03PM +0200, Marc Gonzalez wrote:
->
->> TDP158 is an AC-coupled DVI / HDMI to TMDS level shifting Redriver.
->> It supports DVI 1.0, HDMI 1.4b and 2.0b.
->> It supports 4 TMDS channels, HPD, and a DDC interface.
->> It supports dual power supply rails (1.1V on VDD, 3.3V on VCC)
->> for power reduction. Several methods of power management are
->> implemented to reduce overall power consumption.
->> It supports fixed receiver EQ gain using I2C or pin strap to
->> compensate for different lengths input cable or board traces.
->>
->> Features
->>
->> - AC-coupled TMDS or DisplayPort dual-mode physical layer input
->> to HDMI 2.0b TMDS physical layer output supporting up to 6Gbps
->> data rate, compatible with HDMI 2.0b electrical parameters
->> - DisplayPort dual-mode standard version 1.1
->> - Programmable fixed receiver equalizer up to 15.5dB
->> - Global or independent high speed lane control, pre-emphasis
->> and transmit swing, and slew rate control
->> - I2C or pin strap programmable
->> - Configurable as a DisplayPort redriver through I2C
->> - Full lane swap on main lanes
->> - Low power consumption (200 mW at 6Gbps, 8 mW in shutdown)
->>
->> https://www.ti.com/lit/ds/symlink/tdp158.pdf
->>
->> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
->> ---
->>  .../bindings/display/bridge/ti,tdp158.yaml         | 51 ++++++++++++++++++++++
->>  1 file changed, 51 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/display/bridge/ti,tdp158.yaml b/Documentation/devicetree/bindings/display/bridge/ti,tdp158.yaml
->> new file mode 100644
->> index 0000000000000..21c8585c3bb2d
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/display/bridge/ti,tdp158.yaml
->> @@ -0,0 +1,51 @@
->> +# SPDX-License-Identifier: GPL-2.0-only
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/display/bridge/ti,tdp158.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: TI TDP158 HDMI to TMDS Redriver
->> +
->> +maintainers:
->> +  - Arnaud Vrac <avrac@freebox.fr>
->> +  - Pierre-Hugues Husson <phhusson@freebox.fr>
->> +
->> +properties:
->> +  compatible:
->> +    const: ti,tdp158
->> +
->> +  reg:
->> +    description: I2C address of the device
+
+On 6/27/2024 10:05 PM, Bart Van Assche wrote:
+> On 6/27/24 1:37 AM, Ram Prakash Gupta wrote:
+>> diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+>> index 1b65e6ae4137..9f935e5c60e8 100644
+>> --- a/drivers/ufs/core/ufshcd.c
+>> +++ b/drivers/ufs/core/ufshcd.c
+>> @@ -1560,7 +1560,8 @@ static int ufshcd_devfreq_target(struct device 
+>> *dev,
+>>           ktime_to_us(ktime_sub(ktime_get(), start)), ret);
+>>   out:
+>> -    if (sched_clk_scaling_suspend_work && !scale_up)
+>> +    if (sched_clk_scaling_suspend_work &&
+>> +            (!scale_up || hba->clk_scaling.suspend_on_no_request))
+>>           queue_work(hba->clk_scaling.workq,
+>>                  &hba->clk_scaling.suspend_work);
+>> diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
+>> index bad88bd91995..c14607f2890b 100644
+>> --- a/include/ufs/ufshcd.h
+>> +++ b/include/ufs/ufshcd.h
+>> @@ -457,6 +457,7 @@ struct ufs_clk_scaling {
+>>       bool is_initialized;
+>>       bool is_busy_started;
+>>       bool is_suspended;
+>> +    bool suspend_on_no_request;
+>>   };
+>>   #define UFS_EVENT_HIST_LENGTH 8
 > 
-> Is reg not required? How do you communicate with the device if the i2c
-> bus is not connected? Is the enable GPIO enough to operate it in some
-> situations?
+> Who are the other vendors that support clock scaling? I'm asking because
+> I don't think that the behavior change introduced by this patch should
+> depend on the SoC vendor.
 > 
-> Otherwise this looks good to me, but given Maxime commented about the
-> complexity of the device, I'm probably out of my depth!
+> Thanks,
+> 
+> Bart.
 
-Valid question.
+Hi Bart,
 
-As discussed in my brilliantly expanded commit message (:p)
-the device can be configured in various ways, either through I2C registers
-or by pin strap. We use the device in its default settings, so we don't
-touch any I2C registers, thus I'm not sure the reg property is required.
+I guess, Mediatek is one vendor who is having this feature in use as I
+see some fixes coming from Peter with respect to clk scaling, where some
+power regression on mediatek chipsets were addressed.
 
->> +required:
->> +  - compatible
->> +  - vcc-supply
->> +  - vdd-supply
->> +  - ports
+Please check below link for background of this change and reason to keep
+it vendor specific.
+https://www.spinics.net/lists/linux-scsi/msg193591.html
 
-
-Regards
-
+Thanks,
+Ram
 
