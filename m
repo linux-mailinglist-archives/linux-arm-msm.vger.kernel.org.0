@@ -1,115 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-24430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DAF4C91A500
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 13:21:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 983C991A548
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 13:31:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9645028100E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 11:21:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 186E51F24E38
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 11:31:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC90C1494A1;
-	Thu, 27 Jun 2024 11:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 396BC1494CA;
+	Thu, 27 Jun 2024 11:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFaBiZPX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jN7z5zWm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59C313C9CA;
-	Thu, 27 Jun 2024 11:21:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A660913E41F;
+	Thu, 27 Jun 2024 11:30:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719487289; cv=none; b=uiCrxt6w8WKegyK3KinJ2aBRsO37fhiEMAnUM54d/T3EtRsrjPXNQQryZfTF7SKVr35QnrBrrW8pycYuu9jB/sGvMl3/9pPGWtFKMk0MmR6snHKPpkbsoGBczlDKFQli8bSd2ZIP5JLWn+FsqgxViRo+WVajLeL3L9BwYB27aKA=
+	t=1719487825; cv=none; b=VVPdeQjzhOMTOLOQQczV4JiyhstficB5sxgUBxLa46YftgplDXLDDbPFpz/sLLJcQy//U3gTXgWt0XClO9d5M0Hj23ZGbs2GS4F/gwyBo2K5EZ3Rbz9QtJSbV8IvFxu1prSLwaeCe59yqs7hmKwk74qxIfOjM4885y6/u8CJISw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719487289; c=relaxed/simple;
-	bh=CyKq1sUeh6UABolS6qiUs+Q6NjuB0eP+Qe2G6oJZRcc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SVZ3uxoU5kEb2zVU7OszUh1sWIDOfsHxLQGEhGORmRCdyIrrw1IDg8DtKNyispOBK79u3yQO0geLtLKdnneE6Z22aqOEEAfKdNxDZBO84yljIZMjXHlcTnPXoNMv3hp6JGf7oyZpOcyF+N5apKIY6eFHAgFuZ2COU3LCHbCYSdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFaBiZPX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C13C2BBFC;
-	Thu, 27 Jun 2024 11:21:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1719487289;
-	bh=CyKq1sUeh6UABolS6qiUs+Q6NjuB0eP+Qe2G6oJZRcc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VFaBiZPX+Cua2EczUngJQyDGZrGSYQ4BAZsHt98wkUqCoPvedXj0rIjWcKCWMFE24
-	 ZiBQpegoYV8FrFDvREsKdHzPP6xt1rOhyIE0wXZAygl/bGmul5RUVcd+ChblR43XTr
-	 ML9ZScS4+MQrtnPjulOsLThnHoHyxKMZJxAimUFE=
-Date: Thu, 27 Jun 2024 13:21:25 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
-	quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org,
-	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
-	arnd@arndb.de, stable <stable@kernel.org>
-Subject: Re: [PATCH v2] misc: fastrpc: Remove user PD initmem size check
-Message-ID: <2024062736-sanctuary-badge-6a1e@gregkh>
-References: <20240627060518.1510124-1-quic_ekangupt@quicinc.com>
- <2024062716-lumpish-both-24df@gregkh>
+	s=arc-20240116; t=1719487825; c=relaxed/simple;
+	bh=FMOhaUV2i8MrCHhGIzcTXcbZCBRkMiRMf4upve02Zg8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=NNkqJL3NIWoyGWOc8MqmB0CydzSGH5hL8J8m/H4hi8FvhjgpDL18Rmv4C/5TnBk1LFH9/1vvTGZxA9ZhC8F9QkBnhRVw94OSq6FFgdNZWDaemOg/rGyQN7KULFKOglB1Dk0wyR/MOmSdFb5KBHVcvOKkLFGbAjdEJUnuKn8Q/PY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jN7z5zWm; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45RAe8RE016143;
+	Thu, 27 Jun 2024 11:29:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	yvTNhHO8YwMDefQ88K6TNlh3o4bpkTA7GzgWDR19jog=; b=jN7z5zWmwMVhwmOB
+	P3A5vmzLUQkc5ttSyG+C4XfdueBJdSuR1zgf7kvO8LbiRJwgzBbT2V/YAVdZnp0t
+	AmFRFHKmnl+aDlq8LLWhm0LOYyQUqm5S/XGmud51uMgQlUA+NPc1wsm54322K1mT
+	P2fQ8vMsRq4SXnndL6Le9oyjuODheVmqXc5hI+ykyO+E7jOsSu3BQMiqYNvhq8fY
+	yf7IE8phvsyAyfbKjqEWCEF4PER9GF4NZObEYC/gHV3dhAS3DC1RDvYr5VTY4tkT
+	D4pZB+VG5MtFQQzC4f9vLDnOl1HlZkGDjrVu+rb1d5Ry5HGwU5wfqCOMAA0HleDJ
+	gFRbdg==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 400gcmb8th-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 27 Jun 2024 11:29:47 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45RBTkwS012401
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 27 Jun 2024 11:29:46 GMT
+Received: from [10.152.201.37] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 27 Jun
+ 2024 04:29:41 -0700
+Message-ID: <2ba4b368-d706-4723-a0aa-f1579600db23@quicinc.com>
+Date: Thu, 27 Jun 2024 16:59:38 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2024062716-lumpish-both-24df@gregkh>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 1/8] remoteproc: qcom: Add PRNG proxy clock
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <sboyd@kernel.org>, <andersson@kernel.org>, <bjorn.andersson@linaro.org>,
+        <david.brown@linaro.org>, <devicetree@vger.kernel.org>,
+        <jassisinghbrar@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <mark.rutland@arm.com>,
+        <mturquette@baylibre.com>, <ohad@wizery.com>, <robh@kernel.org>,
+        <sricharan@codeaurora.org>, <gokulsri@codeaurora.org>
+References: <20240621114659.2958170-1-quic_gokulsri@quicinc.com>
+ <20240621114659.2958170-2-quic_gokulsri@quicinc.com>
+ <chi3pzh5ss3mivnhs3qeoen5hsecfcgzaj6qnrgxantvinrri2@bxsbmpufuqpe>
+ <73cb638e-4982-49a2-ba79-0e78402b59ad@quicinc.com>
+ <ga5kczcyn3dqoky4525c74rr7dct5uizun2smvyx3p3u6z6vtm@5vshoozpttod>
+ <2617940e-72ad-4214-be26-7a5b15374609@quicinc.com>
+ <dyh3vxosjjfztgwgpb5jtoqhzfyf5jyfndaujqoslepzvbet4o@kx6xaotzazcs>
+Content-Language: en-US
+From: Gokul Sriram P <quic_gokulsri@quicinc.com>
+In-Reply-To: <dyh3vxosjjfztgwgpb5jtoqhzfyf5jyfndaujqoslepzvbet4o@kx6xaotzazcs>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 5XAp9QFoO9ErigkzPYvY_k_GoJj92gRz
+X-Proofpoint-ORIG-GUID: 5XAp9QFoO9ErigkzPYvY_k_GoJj92gRz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-27_06,2024-06-27_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
+ mlxlogscore=999 clxscore=1015 mlxscore=0 phishscore=0 impostorscore=0
+ adultscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2406270086
 
-On Thu, Jun 27, 2024 at 01:20:15PM +0200, Greg KH wrote:
-> On Thu, Jun 27, 2024 at 11:35:18AM +0530, Ekansh Gupta wrote:
-> > For user PD initialization, initmem is allocated and sent to DSP for
-> > initial memory requirements like shell loading. This size is passed
-> > by user space and is checked against a max size. For unsigned PD
-> > offloading, more than 2MB size could be passed by user which would
-> > result in PD initialization failure. Remove the user PD initmem size
-> > check and allow buffer allocation for user passed size. Any additional
-> > memory sent to DSP during PD init is used as the PD heap.
-> > 
-> > Fixes: 7f1f481263c3 ("misc: fastrpc: check before loading process to the DSP")
-> > Cc: stable <stable@kernel.org>
-> > Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> > ---
-> > Changes in v2:
-> >   - Modified commit text.
-> >   - Removed size check instead of updating max file size.
-> > 
-> >  drivers/misc/fastrpc.c | 5 -----
-> >  1 file changed, 5 deletions(-)
-> > 
-> > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> > index 5204fda51da3..9d064deeac89 100644
-> > --- a/drivers/misc/fastrpc.c
-> > +++ b/drivers/misc/fastrpc.c
-> > @@ -1389,11 +1389,6 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
-> >  		goto err;
-> >  	}
-> >  
-> > -	if (init.filelen > INIT_FILELEN_MAX) {
-> > -		err = -EINVAL;
-> > -		goto err;
-> > -	}
-> > -
-> >  	inbuf.pgid = fl->tgid;
-> >  	inbuf.namelen = strlen(current->comm) + 1;
-> >  	inbuf.filelen = init.filelen;
-> 
-> This feels really wrong as now there is no way to bounds-check the
-> buffer size at all, so userspace can do "bad things" like go over the
-> defined buffer size limit which you are expecting, right?
-> 
-> So how is this actually correct?  If you want larger sizes, then
-> increase the INIT_FILELEN_MAX value.
 
-And this feels really wrong compared to v1 of this patch, which did
-attempt to increase the size, yet it wasn't really well defined.  Now
-you went way too far to allow ANY size to be passed in here, which is
-obviously what you don't want to do.
+On 6/27/2024 4:38 PM, Dmitry Baryshkov wrote:
+> On Thu, Jun 27, 2024 at 03:31:01PM GMT, Gokul Sriram P wrote:
+>> On 6/27/2024 12:47 AM, Dmitry Baryshkov wrote:
+>>> On Tue, Jun 25, 2024 at 11:03:30AM GMT, Gokul Sriram P wrote:
+>>>> On 6/22/2024 2:38 AM, Dmitry Baryshkov wrote:
+>>>>> On Fri, Jun 21, 2024 at 05:16:52PM GMT, Gokul Sriram Palanisamy wrote:
+>>>>>> PRNG clock is needed by the secure PIL, support for the same
+>>>>>> is added in subsequent patches.
+>>>>> Which 'same'?
+>>>>> What is 'secure PIL'?
+>>>>     will elaborate in the updated version.
+>>>>     To answer your question, secure PIL is signed PIL image which only
+>>>> TrustZone can authenticate and load.
+>>> Fine. So, the current driver can not load WCSS firmware on IPQ8074, is
+>>> that correct? Or was there some kind of firmware interface change? The
+>>> driver was added in 2018, so I can only hope that at that point it
+>>> worked. Could you please explain, what happened?
+>> The existing wcss driver can load unsigned PIL images without the
+>> involvement of TrustZone. That works even now.
+>> With the current change, we are trying to add signed PIL as an option based
+>> on "wcss->need_mem_protection" if set. For signed PIL alone, we send a PAS
+>> request to TrustZone to authenticate and load.
+> I see that you are enabling it unconditionally for IPQ8074. How is it
+> going to work?
 
-thanks,
+Correct Dmitry. In this change, it is forcing secure PIL. With a 
+separate driver for secure PIL, this will be sorted right?
 
-greg k-h
+Regards,
+
+Gokul
+
+>> I also just noticed that Bjorn had suggested to submit a new driver for the
+>> PAS based IPQ WCSS instead of overloading this driver. Will also address
+>> that and post a new driver in updated revision.
+>>
+>> Regards,
+>> Gokul
+>>>>>> Signed-off-by: Nikhil Prakash V <quic_nprakash@quicinc.com>
+>>>>>> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+>>>>>> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+>>>>>> ---
+>>>>>>     drivers/remoteproc/qcom_q6v5_wcss.c | 65 +++++++++++++++++++++--------
+>>>>>>     1 file changed, 47 insertions(+), 18 deletions(-)
 
