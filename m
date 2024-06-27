@@ -1,138 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-24501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5476091AB36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 17:27:24 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E988C91ABB3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 17:44:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7FE341C21D59
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 15:27:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EEB5AB285D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 15:31:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B55C19B593;
-	Thu, 27 Jun 2024 15:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC50D198E90;
+	Thu, 27 Jun 2024 15:31:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O4jRsBdD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JU13wlmS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C0119AD46
-	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 15:23:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F06198E71;
+	Thu, 27 Jun 2024 15:31:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719501838; cv=none; b=adS4u4GFoapTBr9v18NDkmBpAVkim+O4//MMRf+M1gCvcXtF0clNwWOk4nZQw/h157CKr33ehH2F4ugit4ZFx0E7YA5KgtsT5xVu7kh9bgDuTTkPCKOJ4tuRrWKYn7PVfl10n/5byaXpnMch1xdTpjUKK7kejVoIsFvPATrnLhA=
+	t=1719502287; cv=none; b=YyILKoaAEPtCp4a3V6ZFXtZi+LD7pbzIGl4gAuHuLRTtUF7RXBrvFxTLLItevk394gQKpt1gePqkRn8s6z6/v7ZjIhRw568jY/P44SEfrDthYsYBsvDN34IbXvIRVfbVeEGIxi6PbiHwZ4qNLl2VKJvy99lY+vOZbUG0ch+EpWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719501838; c=relaxed/simple;
-	bh=l8Fs7uNm1FChU4HgNrAzvxr0CjT3lQ1EHDABQ5Se0aU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=M+EN8D1NdjJZvplROb1Y8Rgake/3eplCYSHvi7T3vJQKM4e6832kp/WklCS2HYl/u8ipo83103W/8s3Q/F/noxcB2nMf4FKhKabg/dhB3WM2DRJO76Jz/ZcV5SJvW28qe+GAT1FMW0eyqIoQQC2JxUpVM6tSRqgCkt6CQ8mxfFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O4jRsBdD; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-42138eadf64so68782255e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 08:23:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719501834; x=1720106634; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=x7JX1Bcmrsym1bUeGPwa5YrFI0Ft58jDDZJ4/xxAojk=;
-        b=O4jRsBdDbdPuc0npGe19bnuyXA1/w/07VlJDYFLJM/gWfacPamIwZ8N5RCO/dxnGK+
-         Bk0OVOhlPqUonBPLnK6sH/edy2B/Pa7t5nKPm1Eww308OS3e8zVAsyOQ43f9S1haSZD4
-         hgXBGLFp82y5T5sagbEwU05RGW+gTDv6lDyZfQ9MXPbWb4uutOshYX7L0r+7Y9qaW2MY
-         AABZ7RsKuGrOBkue919t40UQx2BGGCDhcPjzCWb66cNPvthITai6EegzAr/aauNtPv4w
-         HFDwGQQ0eVElN7TLdj+XhHiLcT/K2FCygEnRHSTcdkQ/ySZPjKMpIfQaycwXff/Hic1b
-         rhgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719501834; x=1720106634;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=x7JX1Bcmrsym1bUeGPwa5YrFI0Ft58jDDZJ4/xxAojk=;
-        b=vXTzM6y3bGepvWWzlvNmGUwnVyJK3978/oIwkO4i3bEqcuexI6dKTf8UuZiHKkA8t4
-         Ve+dsvejMumrAfFDgKTsRKLj+P3wYxx3pVyuxIqOKT+iQzwVxSC/AcuUhHcBo8FFfAqy
-         RbCC6jpfRsrwkKym0brbyjdqxD2V8k+stAexd4GxT6FkfsPIWUOBrE4xhdKcsG4+lFdY
-         gYDZv+G1d0PN0ntL9WDXfe6U8qoJb3c3FJAhfqs1kr9L+sKwx8ewz6o4mzwBxLTAyyj+
-         gg5rCw7cY5vfLUbaZaFvFqnCBL5AdQSNp/7vKkopnu3vQ2DYIMHlniYXJKzrtJTyT3Sx
-         92cQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW2oYGvbWpWoMZrxxGNLht8PonWiWnJJ0sseIcpQbUITUnWG2rOWmeI6hmcncOKrQ7oKRQsZ68U/McnYepEr+YsIEUxnByOKTAcHGA/Zw==
-X-Gm-Message-State: AOJu0Yz+E/tRIxPBM0eI0PZRvtNrgYMAbjBuIY73wcap0qGMTHZnWjG7
-	JiwwJFjKauF5byziojQdcfmbsh16h8PO3yOBL5dYc0E3UBVjUHD/BWZnAQpMbWU=
-X-Google-Smtp-Source: AGHT+IHU0uHfAgbvO3wWQFz4VkorLowhWrH3I6Q0ilQ6xxfYkyzq0SbVy9LBPiGmf7/YXOrhPlwUkw==
-X-Received: by 2002:a05:600c:4451:b0:422:62db:5a02 with SMTP id 5b1f17b1804b1-4248cc586ddmr102982145e9.32.1719501834317;
-        Thu, 27 Jun 2024 08:23:54 -0700 (PDT)
-Received: from [127.0.1.1] ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42564bb59b7sm32783185e9.34.2024.06.27.08.23.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jun 2024 08:23:53 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Thu, 27 Jun 2024 17:23:46 +0200
-Subject: [PATCH 4/4] ASoC: codecs: lpass-rx-macro: Use unsigned for number
- of widgets
+	s=arc-20240116; t=1719502287; c=relaxed/simple;
+	bh=wxLzTDpEy7fEUqTDhRZsA8Ui7D8BuLYyJagL/PF5qUo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j1YlaZvhylbORHR12W/3FO85Lm9b/PwGPc77J1pcUx2D5mMmhQ6cQvNK34lSD1GgITTt+id0Li1knAi8luTvmpMC0KXxzeRfB2oQ4LX/4RsIXkFC4ZwkFDwLo/fjWX3ardVF/6Z4UALWLh6EiUH8IKpgvIYmco7/P/32h276TZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JU13wlmS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE721C2BBFC;
+	Thu, 27 Jun 2024 15:31:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719502287;
+	bh=wxLzTDpEy7fEUqTDhRZsA8Ui7D8BuLYyJagL/PF5qUo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=JU13wlmSWUBHxHsfZ97TRsc/9fMuDshO44IMPpp5wIVEhfFOk/NTH1Qv/qetpmluT
+	 1kx1VpMufyQFVyxfq1WQuVE9lZW25YRoetH8leXKF5od+/O+UgJv8Tnw0CVI5eQhZf
+	 nqnpTt4O/bMpKPv6lfKtapMytVnhDUEqGxLG/EyVZ6wF/J/5ljxC+Hv96l9BM1lVX8
+	 7wXTLZJKwecarQF0i6EbEXHpIyC3GLT8tyS3AMfsqbs1XUMYwrcdlbRSsD8nUpWJWD
+	 rcPf8bYAV9FZXEBBA/3EZxi6rkyLp29xghivlitweBUQJObhUj1gn+iK82E3j6SIxh
+	 YTrEH/BDjxzFQ==
+Date: Thu, 27 Jun 2024 09:31:25 -0600
+From: Rob Herring <robh@kernel.org>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Jingoo Han <jingoohan1@gmail.com>, quic_vbadigan@quicinc.com,
+	quic_skananth@quicinc.com, quic_nitegupt@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC 1/7] dt: bindings: add qcom,qps615.yaml
+Message-ID: <20240627153125.GA3469266-robh@kernel.org>
+References: <20240626-qps615-v1-0-2ade7bd91e02@quicinc.com>
+ <20240626-qps615-v1-1-2ade7bd91e02@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240627-b4-qcom-audio-lpass-codec-cleanups-v1-4-ede31891d238@linaro.org>
-References: <20240627-b4-qcom-audio-lpass-codec-cleanups-v1-0-ede31891d238@linaro.org>
-In-Reply-To: <20240627-b4-qcom-audio-lpass-codec-cleanups-v1-0-ede31891d238@linaro.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, 
- Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>
-Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org, 
- linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=946;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=l8Fs7uNm1FChU4HgNrAzvxr0CjT3lQ1EHDABQ5Se0aU=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmfYQD7NGFlFAPZPk5oxOO2+MovrmCbj4uOIsyP
- e/OfXBPY16JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZn2EAwAKCRDBN2bmhouD
- 15n/D/9qgH86TgweMDT2rs2qJsT1XmlVEPhyqpMP/R9xme0SJMtfcuduTkwsrgdmqKSINPbIQf9
- u3d/5f8FCg8Eb9FhBU9vJJC5JYMLnU1gTKMoGG/DVrc28B4nTWP+FtO3VMEoYagqUJK/h9Z73RP
- HAUXqZ+R+Naqh4KBkVy5HW2m773Y7w2QRH0DdDHOC+hLjjL3nSr29P3ymYl0IBzza5eevLAxmx1
- /bJLceFRg8tedElAOIyRliiJq/z9V/zM0WKHyeVrxea90Jq2bnJ0c/KyKQpigZlyJjHRa+N6wa+
- Hr/aWoCzC1t599cRI3v+lROegFbtmpv6IgC1XPPoW8UwUNZk7JY+wy0PLBLwyvaQaEg8xLE+WmM
- HN6C6+dAz9zhak70UZ/oGbaSTx5UhcO/SVeTOteIzaxSyGF/BSwxy+b3R/hfKk0ORfgzBLUxMEh
- aJMTnkAnYopE185qHVVsSd7zNktFrNBouS33h5HPi7DSi6+Qs3RFHwjI5D+6x/pdKa0UpCpk8ot
- KFEIUX8fyfloTZrs0gvzm336tjIiuJohOp9kh0z2+VJ8kTlxd0deYc8BpqPbQFAtNiortgQZvnK
- p+CWP1afNQhnCiliM1vaAutzd21oORxUBoRQD9s2auCRtUilOI26FPIi8ULQvPAgBEz23+vLVan
- j8qaYgqDZPJsEaQ==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240626-qps615-v1-1-2ade7bd91e02@quicinc.com>
 
-Driver uses ARRAY_SIZE() to get number of widgets later passed to
-snd_soc_dapm_new_controls(), which is an 'unsigned int'.
+On Wed, Jun 26, 2024 at 06:07:49PM +0530, Krishna chaitanya chundru wrote:
+> qps615 is a driver for Qualcomm PCIe switch driver which controls
+> power & configuration of the hardware.
+> Add a bindings document for the driver.
+> 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  .../devicetree/bindings/pci/qcom,qps615.yaml       | 73 ++++++++++++++++++++++
+>  1 file changed, 73 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,qps615.yaml b/Documentation/devicetree/bindings/pci/qcom,qps615.yaml
+> new file mode 100644
+> index 000000000000..f090683f9e2f
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pci/qcom,qps615.yaml
+> @@ -0,0 +1,73 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pci/qcom,pcie-qps615.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm QPS615 PCIe switch
+> +
+> +maintainers:
+> +  - Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> +
+> +description: |
+> +  Qualcomm QPS615 PCIe switch has one upstream and three downstream
+> +  ports. One of the downstream ports is used as endpoint device of
+> +  Ethernet MAC. Other two downstream ports are supposed to connect
+> +  to external device.
+> +
+> +  The power controlled by the GPIO's, if we enable the GPIO's the
+> +  power to the switch will be on.
+> +
+> +  The QPS615 PCIe switch is configured through I2C interface before
+> +  PCIe link is established.
+> +
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- sound/soc/codecs/lpass-rx-macro.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+As a PCI device and implementing a PCI bus, you need to reference 
+pci-pci-bridge.yaml. And you'll need to fix your example when you add 
+that.
 
-diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
-index 3d8149665439..bfcbfbe8b086 100644
---- a/sound/soc/codecs/lpass-rx-macro.c
-+++ b/sound/soc/codecs/lpass-rx-macro.c
-@@ -3611,8 +3611,8 @@ static int rx_macro_component_probe(struct snd_soc_component *component)
- 	struct rx_macro *rx = snd_soc_component_get_drvdata(component);
- 	const struct snd_soc_dapm_widget *widgets;
- 	const struct snd_kcontrol_new *controls;
--	unsigned int num_controls;
--	int ret, num_widgets;
-+	unsigned int num_controls, num_widgets;
-+	int ret;
- 
- 	snd_soc_component_init_regmap(component, rx->regmap);
- 
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - pci1179,0623
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  vdd-supply:
+> +    description: |
+> +      Phandle to the vdd input voltage which are fixed regulators which
+> +      in are mapped to the GPIO's.
+> +
+> +  switch-i2c-cntrl:
+> +    description: |
+> +      phandle to i2c controller which is used to configure the PCIe
+> +      switch.
 
--- 
-2.43.0
+There's a somewhat standard property for this purpose: i2c-bus
 
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - vdd-supply
+> +  - switch-i2c-cntrl
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    pcie {
+> +        #address-cells = <3>;
+> +        #size-cells = <2>;
+> +
+> +        pcie@0 {
+> +            device_type = "pci";
+> +            reg = <0x0 0x0 0x0 0x0 0x0>;
+> +            #address-cells = <3>;
+> +            #size-cells = <2>;
+> +            ranges;
+> +
+> +            bus-range = <0x01 0xff>;
+
+Unless there's a h/w limitation, you don't need this.
+
+> +
+> +            qps615@0 {
+> +                compatible = "pci1179,0623";
+> +                reg = <0x10000 0x0 0x0 0x0 0x0>;
+> +
+> +                vdd-supply = <&vdd>;
+> +		switch-i2c-cntrl = <&foo>;
+> +            };
+> +        };
+> +    };
+> 
+> -- 
+> 2.42.0
+> 
 
