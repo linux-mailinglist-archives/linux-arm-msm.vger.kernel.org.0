@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-24515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D761E91ACEE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 18:36:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B23AC91AD05
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 18:42:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0A45F1C20BC6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 16:36:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5F2BD1F26C6E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 27 Jun 2024 16:42:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A37B01993A9;
-	Thu, 27 Jun 2024 16:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6ABB19539F;
+	Thu, 27 Jun 2024 16:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="SMp24Mxu"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="N4eaGq5R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 008.lax.mailroute.net (008.lax.mailroute.net [199.89.1.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F4519754D;
-	Thu, 27 Jun 2024 16:36:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFA21993B1
+	for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 16:41:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719506191; cv=none; b=ns8dOTURKGcWme9lCLrKRHLD2NjKAitGDUf7okv3DhLp5NZn1DqD/SQWqIOL+hvSq+mmRrvE9x/yAxIUHER8Vn2F2EcuPGE23BJVrOCGxe4EjdgAEJ4t5laM5C/je53kAwIHwRUGRsYTMd+aiYEgw/nYQ8QBLncAn6ly+hO9mq0=
+	t=1719506521; cv=none; b=HScjz0nhu2mRSz7v7qHOq8iE5dzj74A9l3Uc42O99gmc56cjHVueIDOHJU5CDdfiqr2rMRnGNmZw/K9EuPJHiE2RW5vGxZ4BwDdVHyRkX9EYaO+FdO8UgeJlrNk3L2nTNz2LL9rcfFgn6T/uiQFCtfK9C8DcnRuMPEBFVggFlYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719506191; c=relaxed/simple;
-	bh=Xlb8JpKDef6O0O8CZb72geLLbQ39bVwYYg/GCwPmj0c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G5ws9pV2DUqrrsckiDE74KovnaSGZzTMx46FMUz/FCzOhxzaz7gi3gWAZFg1B2P0ZIVj8C7PflvdozdDtReDJO0GQV5eU1nIKH9lsnHYUqYQA+b38h3nAGu5q8oIlt2f6LidW0K4/HG70kJaC0rdA5YJJwGI9zpHNjYJyI7Brg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=SMp24Mxu; arc=none smtp.client-ip=199.89.1.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
-Received: from localhost (localhost [127.0.0.1])
-	by 008.lax.mailroute.net (Postfix) with ESMTP id 4W942j4H7dz6Cnv3g;
-	Thu, 27 Jun 2024 16:36:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1719506184; x=1722098185; bh=uGZuyqH+Y1kAAIZS0KDXO8d/
-	1BuydkxnPixFAb8HbPI=; b=SMp24MxuX735UDT0vSYSozv8GwnpygdMgj1df8E+
-	VxVo/JWXxXlG/SnIWfTAlYZJN4uJD0BPHtuqOwkjIx9PG3Pd7rXxLlC7EbiTiHag
-	hk3hzb1IA6TdU/5ND88kQahiJjPSs/xse9TfOBEtoyMpwCSQsU6oKljp5u7ZKatb
-	J4539HqAwhaaIhJ8hHboWU88db2hc1BohEbnU9K2t3eK/9jRDHT8FH2V7rTep9fg
-	rrEv+m/rCO1JnkS4LnM186jQX0aWMJInc7YP5HLwhLXEM0MS4J9OWspQfpGmK6B/
-	j9S5RWo1xJzlpS2+f54rHBey97k+P29YSrWITPqx2XA+TQ==
-X-Virus-Scanned: by MailRoute
-Received: from 008.lax.mailroute.net ([127.0.0.1])
- by localhost (008.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id mLZED6yliAmK; Thu, 27 Jun 2024 16:36:24 +0000 (UTC)
-Received: from [100.125.79.228] (unknown [104.132.1.68])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 008.lax.mailroute.net (Postfix) with ESMTPSA id 4W942b1h2gz6Cnv3Q;
-	Thu, 27 Jun 2024 16:36:22 +0000 (UTC)
-Message-ID: <036f0300-e55f-4f12-a416-93f54be025a8@acm.org>
-Date: Thu, 27 Jun 2024 09:36:22 -0700
+	s=arc-20240116; t=1719506521; c=relaxed/simple;
+	bh=7rvwN+5JAyIiGWGIyml+PLmYwXOYSMAVm9NJrmFCrDA=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=BAWNemlxfgNHFOO7iRVrC7EzwjLQcf6wvh0CTtQMVEybSJK/am67lpMdtYRVseLGfIZUR15mCILToFuwWvelHF2fcm27lVSlG5rC/P0zWIyQ/lCDmvX4YwxwKcnI+mlqEvU51oT5bmEa7+TyStaoLvEFVGo6YUDZ37qLKz5UCis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=N4eaGq5R; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4248ea53493so36358465e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 27 Jun 2024 09:41:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1719506518; x=1720111318; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=eCkEwjsDLm0XGJB8xms/SKimkP02Q1zp6ZqAPKni7Cs=;
+        b=N4eaGq5Ra0q7A4BUtRwRjkWuTyTBW81Bpnh68jZiQkLRodtcv50uDEuh7yGW1jy/e4
+         Q2//3vDt2xyI2aDhWbKgHeay7tUnLhmGpgsf3elEd7F7ddherbgBbh9IT0cYU/f1YvKK
+         YEpjEJrTstZ+4mkQGcn1Kv7Y2vIrgk3yvc6PcNMxaH7Vel1dVWjcpCBh2SrejZqi0btY
+         o54UIfzf9FMEAHGwaTVMbGhAZranJ0N1yw37CDM7LTu+yOFTpJhEGVgA6x2faeXwzAz7
+         hwFrcwDoSzlQUDH+VXDMy2IR/O8nCVmnqdTcvEnMOTgT2StPGdbnJb/MccRD1f2RsY3n
+         W6TA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719506518; x=1720111318;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eCkEwjsDLm0XGJB8xms/SKimkP02Q1zp6ZqAPKni7Cs=;
+        b=oO5EjZeyq0hRa153uiW5RuN2+jxSxRd5XjzXp49hVNxeiqtoDifJIdG/ODaAx81dgB
+         LdmttkEIH+nTVAovLJVkuGCujgMM+tYX+QtKAa5Ka2UEdC/IaFn9hYyp2n6z6bvFeq73
+         sSTpWkQ0UVHZ4pa8ojWXBrNCg+0z6jLs/v5FrnIAnMRJLN3ZwZL2IqLJ7tInMSO9aonk
+         B9wd20WjZV85MJjrqjXSLa8eFjwq8iC2zLLDm2gAQBExWS6ShCYDkAd1iAIYQQs9DSDi
+         OX9bvxmrL3r2EH+w97VcrprHsf0W3r5bqJB2TjJtRpexUhqaaaYq7fLAtefYZGev+b5T
+         TAtQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWvDgs3KZvrldfuWrDLrnbnbTooEk397QV+avtoAMYqpWtPnyuJo2SNqP6e9XjVSHLNvywNUAxs7iSxaw84AUyz7MDgsKOceocj0gTomg==
+X-Gm-Message-State: AOJu0Yz48E7GbRB20xVu00s+wewNTxVWKiYLy723MZKzDvINKCkYJkWT
+	vWuPkZF1FLn7QTm+F18gbPvHTJZfcdZ1NCQ/tUkx0D8TUy0FZwKhvzLLsz0uedY=
+X-Google-Smtp-Source: AGHT+IFoughng9rudyhYvDZWWiOJXK0eg6Kt8g3iwAfz2BbedZzxIyaBmb2c2QaepjOkaw4EpuxaLA==
+X-Received: by 2002:a05:600c:2e04:b0:424:ae0c:6587 with SMTP id 5b1f17b1804b1-424ae0c65efmr41006865e9.14.1719506517953;
+        Thu, 27 Jun 2024 09:41:57 -0700 (PDT)
+Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-424c84245f0sm76109465e9.33.2024.06.27.09.41.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Jun 2024 09:41:57 -0700 (PDT)
+Message-ID: <e34ee0f2-8bc0-453b-8869-e261ffb83e68@freebox.fr>
+Date: Thu, 27 Jun 2024 18:41:57 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,31 +76,63 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 0/2] Suspend clk scaling when there is no request
-To: Ram Prakash Gupta <quic_rampraka@quicinc.com>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
- linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, quic_cang@quicinc.com,
- quic_nguyenb@quicinc.com, quic_pragalla@quicinc.com,
- quic_nitirawa@quicinc.com
-References: <20240627083756.25340-1-quic_rampraka@quicinc.com>
+Subject: Re: [PATCH v5 0/3] Add support for qcom msm8998-venus (HW vdec /
+ venc)
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+To: Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Cc: linux-media <linux-media@vger.kernel.org>,
+ MSM <linux-arm-msm@vger.kernel.org>, DT <devicetree@vger.kernel.org>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bryan O Donoghue <bryan.odonoghue@linaro.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>
+References: <8b2705b7-f33c-4ebe-a6a8-c5ef776fe9ad@freebox.fr>
+ <abfedc39-43d6-4ab0-b7b2-de68371d5d28@freebox.fr>
 Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20240627083756.25340-1-quic_rampraka@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <abfedc39-43d6-4ab0-b7b2-de68371d5d28@freebox.fr>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 6/27/24 1:37 AM, Ram Prakash Gupta wrote:
-> Changes since V1:
-> 	- Address minor review comment.
+Hello,
 
-This is too vague. Please be more specific in patch changelogs.
+It is still unclear to me exactly who is expected to merge patches 1 and 2.
 
-Thanks,
+In patchwork, patch 2 is marked as "Delegated to: Stanimir Varbanov"
 
-Bart.
+https://patchwork.linuxtv.org/project/linux-media/patch/eb15a48b-6185-42dd-92ca-8df33b0ea4b5@freebox.fr/
+
+Stanimir are you supposed to Ack? Review? Merge? None of the above?
+
+Regards
+
+
+On 17/06/2024 15:36, Marc Gonzalez wrote:
+
+> Hello Mauro,
+> 
+> Can you merge patches 1 & 2 in time for 6.11 ?
+> 
+> Regards
+> 
+> 
+> On 04/06/2024 18:41, Marc Gonzalez wrote:
+> 
+>> Changes in v5
+>> - Collect latest Acks (from Vikash)
+>> - Resend to Mauro
+>>
+>> Marc Gonzalez (1):
+>>   dt-bindings: media: add qcom,msm8998-venus
+>>
+>> Pierre-Hugues Husson (2):
+>>   arm64: dts: qcom: msm8998: add venus node
+>>   media: venus: add msm8998 support
+>>
+>>  Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml |  4 ++-
+>>  arch/arm64/boot/dts/qcom/msm8998.dtsi                           | 48 +++++++++++++++++++++++++++++
+>>  drivers/media/platform/qcom/venus/core.c                        | 39 +++++++++++++++++++++++
+>>  3 files changed, 90 insertions(+), 1 deletion(-)
 
 
