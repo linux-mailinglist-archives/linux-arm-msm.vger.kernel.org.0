@@ -1,118 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-24620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24621-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3EF5691BCC9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 12:47:25 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42CEC91BD6D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 13:30:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EC394282E70
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 10:47:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E8DE0283BE8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 11:30:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B24415534B;
-	Fri, 28 Jun 2024 10:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A36A6156C49;
+	Fri, 28 Jun 2024 11:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bDG1VjsX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XIvtcWUm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2774DA0C;
-	Fri, 28 Jun 2024 10:47:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FEC156972;
+	Fri, 28 Jun 2024 11:30:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719571635; cv=none; b=DUuDSiaBocVDFUDjCRlolWUpsK6S2b/8R72DYiVIjmoXStzhp0k73lXLE2rGvqSHZjSZGOVgrloA0ZbqiLiV4Z6Ln3p1XhtasGDo1LW2P4/aXL00xkc3QNHXXW76O2OoIDAUNI/eoVy8YaIQtdJYopOFu8PgFll+Eru8fokqpAU=
+	t=1719574223; cv=none; b=DHKdogVG8NvgecBE91OfDsgsbIIWmMI13nemWbSMRAgewx6kaI5CLBX16mFhBYGlExGekYFvgoj1NNC7msOnLrh3D0lcc25NrV3uMWBa8Bzqw9nHXDiOMScfMn6Z8Kfifmm3Gu8TZtNhEKFx/0HdwpA2v620q0+90X1vXAXVndY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719571635; c=relaxed/simple;
-	bh=tu81VLihDtiB2EU/b16jwlMJgEGb3wRkp9Jv94c7K7I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=mxTJwdUAxAjbRIpJYrh1XbmNXXteqPm5gE+ABU8fWmpzLObc/WE2eR6CO8n/k0z5Z5XQbIlbykzATQBdvcgYRNNZxSETZw1TlYXTUL/L8tnQ50g5BJQHsxcISoiAKFJBaiOmWUtgagkH+TRkQqJLfGVGUp38qXY/bRcPHNUCcfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bDG1VjsX; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45S8Y4hs010650;
-	Fri, 28 Jun 2024 10:47:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	dl0rYJ1SY742x7n44ent2QKcUViTZ8BpLhl0ihXX8PI=; b=bDG1VjsX5Q+k6Kcr
-	phNRceKLOHLh7HPPRaRToV0+kQMfwTQ2AbqBHq7QJOq/IOX9vPGGLOvYZdrmveYG
-	qHZZVMpX59G+HV62ZjM3nYZR8e6Pj7gu6ttBuHNLOtp+pNbOyZW39sIot+CiEjfv
-	5IiB81Kg2PnK6NGbGO/DmUUzBjczSPRQo/g6oV0N+VlbuO6upebcKAz+ckLVVXY0
-	yjNramgH2XlWGPUHG3wEe4sVvq/cV+hGkTil5j8Jmu4xq56ZKZw8rpleBYTDWLZY
-	1bAUSZzJQQAX+3pX7d1cr0txCrVKzjoOPLCbHgQLEeIGVHJ8ZURY25iJ4HJ3AR49
-	TUntgw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 400bdqf9n2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 28 Jun 2024 10:47:08 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45SAl6oB019972
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 28 Jun 2024 10:47:06 GMT
-Received: from [10.251.44.199] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 28 Jun
- 2024 03:47:03 -0700
-Message-ID: <75f15e4c-0e79-455a-a356-85c73a0f96ee@quicinc.com>
-Date: Fri, 28 Jun 2024 13:47:01 +0300
+	s=arc-20240116; t=1719574223; c=relaxed/simple;
+	bh=SnoK7XdshzEQwvq+kBt0n1g2IoUbW1LSA0WpSE8grF8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Hf9lgpUrK0aztza0ltHaITdsqKYx11Eg81H3mAbaiFhRGSHIl61PTb1RNJSXpXCYNz2RwdIzThRx0eFZ8ZFK60AylAR+1dPfYxDSK0kGnUcUslJGPnVG8jft5XVeEuUDhuxP8F8J2JLUCFM6n2GESE3JzPYCs9U0IE93S9bfBX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XIvtcWUm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1F81CC116B1;
+	Fri, 28 Jun 2024 11:30:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719574223;
+	bh=SnoK7XdshzEQwvq+kBt0n1g2IoUbW1LSA0WpSE8grF8=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=XIvtcWUmHsuaOknxdb+cHwWInshmrTO4AUMiol/Sbgz5CkvJ6W2kLR5LzPfT8xZJ/
+	 8Ax56BbHxtQ1C+O2pOsgqjG87gN4L9mucKlpJiYRgjqtroMSiiwVJRMsWpUtcnadnm
+	 8aLY14dcWbRkncsDvkZ39P3iDouun7JRcRUhDTCpb/P3IgmdiDS1Ea0EULmGxFU5rM
+	 H7Rr4OtmR2qamZ3K+pLMu/mnyVlaMJ+PUu54COI7fnHeCXn717zOGqvhvpsCOR0h72
+	 fo6li7JK7QODEaFGw1rTYe/8DuttXTvsF6+HxydAjVZ9mvfEaZ5JQi430r9c4Xnw1Q
+	 pXxunRXcknKMQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04423C2BBCA;
+	Fri, 28 Jun 2024 11:30:23 +0000 (UTC)
+From: Xilin Wu via B4 Relay <devnull+wuxilin123.gmail.com@kernel.org>
+Subject: [PATCH 0/2] Introduce ASUS Vivobook S 15
+Date: Fri, 28 Jun 2024 19:30:11 +0800
+Message-Id: <20240628-asus-vivobook-s15-v1-0-2a1e4571b8ab@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: qcom: camss: Remove unused phy_sel variable in
- csid gen2
-Content-Language: en-US
-To: Hans Verkuil <hverkuil-cisco@xs4all.nl>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <laurent.pinchart@ideasonboard.com>,
-        <quic_hariramp@quicinc.com>
-References: <20240626074730.85-1-quic_grosikop@quicinc.com>
- <32e23a79-ad3a-465f-97e3-d32cbc75019e@xs4all.nl>
-From: "Gjorgji Rosikopulos (Consultant)" <quic_grosikop@quicinc.com>
-In-Reply-To: <32e23a79-ad3a-465f-97e3-d32cbc75019e@xs4all.nl>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: OuzYOImc_n7Ez2JkUCZA4PE2r_tNN8xU
-X-Proofpoint-GUID: OuzYOImc_n7Ez2JkUCZA4PE2r_tNN8xU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-28_06,2024-06-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=999
- adultscore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0
- mlxscore=0 suspectscore=0 priorityscore=1501 clxscore=1015 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
- definitions=main-2406280080
+X-B4-Tracking: v=1; b=H4sIAMOefmYC/x3MQQ5AMBBA0avIrE2iRZWriEUxmEhUOtFIxN01l
+ m/x/wNCgUmgyx4IFFnYHwkqz2Da3LES8pwMutBVYbRFJ5dg5OhH73cUVWOjXdU21pTKWEjdGWj
+ h+3/2w/t+vmqEiWMAAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
+ Johan Hovold <johan+linaro@kernel.org>, Xilin Wu <wuxilin123@gmail.com>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1719574221; l=1810;
+ i=wuxilin123@gmail.com; s=20240424; h=from:subject:message-id;
+ bh=SnoK7XdshzEQwvq+kBt0n1g2IoUbW1LSA0WpSE8grF8=;
+ b=TTxkSJn9k9bv9UPn73ineqV4So/coDMuxKSmdV0vQQPcrEVXym9fSKlzUrOGby9hlRXIZ6xnN
+ lXLDDNUmRQgAItMxIXoskxaAgKbJt6JsuV3Uvbsuah8E/u+PEk3XRR2
+X-Developer-Key: i=wuxilin123@gmail.com; a=ed25519;
+ pk=vPnxeJnlD/PfEbyQPZzaay5ezxI/lMrke7qXy31lSM8=
+X-Endpoint-Received: by B4 Relay for wuxilin123@gmail.com/20240424 with
+ auth_id=157
+X-Original-From: Xilin Wu <wuxilin123@gmail.com>
+Reply-To: wuxilin123@gmail.com
 
-Hi Hans,
+ASUS Vivobook S 15 is a laptop based on the Qualcomm Snapdragon X Elite
+SoC (X1E78100). This series adds initial support for the device.
 
-On 6/28/2024 1:00 PM, Hans Verkuil wrote:
-> On 26/06/2024 09:47, Gjorgji Rosikopulos wrote:
->> The issue is introduced with:
->>
->> [PATCH v4 0/8] Move camss version related defs in to resources
-> 
-> In the pull request I posted today I folded this patch into that 6/8 of the
-> patch series, rather than having this patch on top.
-> 
-> I forgot to mention that in my PR.
+Currently working features:
 
-Thank you for this.
+- CPU frequency scaling up to 3.4GHz
+- NVMe storage on PCIe 6a (capable of Gen4x4, currently limited to Gen4x2)
+- Keyboard and touchpad
+- WCN7850 Wi-Fi
+- Two Type-C ports on the left side
+- internal eDP display
+- ADSP and CDSP remoteprocs
 
-Regards,
+Some features which can get working with out of tree patches:
 
-~Gjorgji
+- GPU [1]
+- Bluetooth [2]
+
+Notably not working features:
+
+- Battery monitoring via battmgr
+- Orientation switching and altmode on the Type-C ports (USB4 retimer driver needed?)
+- Two USB Type-A ports on the right side (dwc3 multiport controller)
+- Front camera
+- SD card slot
+- HDMI connector (using a Parade PS186 DP 1.4 to HDMI 2.0 converter) 
+- USB4 and the retimer (Parade PS8830?)
+- Anything using the EC
+
+Dump of the ACPI tables could be found here: [3]
+
+[1] https://lore.kernel.org/all/20240623110753.141400-1-quic_akhilpo@quicinc.com/
+[2] https://git.codelinaro.org/abel.vesa/linux/-/commits/topic/b4/x1e80100-bt
+[3] https://github.com/aarch64-laptops/build/pull/103
+
+Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
+---
+Xilin Wu (2):
+      dt-bindings: arm: qcom: Add ASUS Vivobook S 15
+      arm64: dts: qcom: Add device tree for ASUS Vivobook S 15
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
+ arch/arm64/boot/dts/qcom/Makefile                  | 515 ++++++++---------
+ .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   | 613 +++++++++++++++++++++
+ 3 files changed, 872 insertions(+), 257 deletions(-)
+---
+base-commit: 642a16ca7994a50d7de85715996a8ce171a5bdfb
+change-id: 20240628-asus-vivobook-s15-72a497863168
+
+Best regards,
+-- 
+Xilin Wu <wuxilin123@gmail.com>
+
 
 
