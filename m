@@ -1,196 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-24690-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F12EC91C8DD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 00:01:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 90A7F91C903
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 00:17:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 298F81C24303
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 22:01:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B90341C2195D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 22:17:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F393C12FB37;
-	Fri, 28 Jun 2024 21:58:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E8D67CF16;
+	Fri, 28 Jun 2024 22:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Qirre7mH"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="hsjFH66D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F85880023;
-	Fri, 28 Jun 2024 21:58:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3894DA08;
+	Fri, 28 Jun 2024 22:17:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719611937; cv=none; b=grIUp1AAzvLOkz1MRfwpPQwInJEuC30+61+g4lIAiqeqssP5OldiarASbRew1DKOvvXFH2+prt+AlBrSLnStKh9Lv1Gvm1OwCdYbwXm4ACVNHweBTj/AGi84Uvvja1zB6HL26iz4LH4GKQxhWzM0h71VCG1inkrj2nXi/TaahXQ=
+	t=1719613039; cv=none; b=rD79NEOVJpDsK3smm6dXL76TvuJWooqhH78RmAa3EhngFn4mivUtpPY4Oi+hJufNfBs0C5YoYpQFgLpARFOZM5P2CE5/AoC5ovvDrUl2wHulRMZMECJJvraVJcZhZi1WEaDiflftpL569oRugWU7xuq6XpFFPJ5512pf0MUp6wE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719611937; c=relaxed/simple;
-	bh=aNx5wKKGglJ25DAiffP1QsM3xJSJSymxhK2portxqrU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=MxCu4Mz6XDEcM1DkJKruKPKFEl2xaThqtPtfRth38MGVLZF4HxkL18O1YkmfD9IBuRF5rEjpYBheRRpm4ttIgn4J6/PNkwOJTQtszVm4oNraXPfKSilumnKh7yLS05oh562v+k/+N/ur70xLFdncor8Sse13rR3LquvPIGVyoIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Qirre7mH; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45SL02oo016462;
-	Fri, 28 Jun 2024 21:58:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0J2akENPIzOdoRjL2gN/Jt9bSjm4NMwCA+OZVI573+8=; b=Qirre7mHDVTOq+4Q
-	hj1ZjF8KfOdtyBjca5GwZWPQnWbG8MIdc0UhdnR4nFpFJFg4rjcKID/9Y8Z9iqhw
-	n3r2xKtTD3hWDp2siaVfpmpmv/Eci/fj6TA1sZmffQ1C6vB1+9nzqOqIY0lQ7zTq
-	OxqqaoUlbvI/uvhayvoo75r0A50/FLD/jHzqhUmKaAJha/RD+hI1l0eDVT+z6q2u
-	m99Nbk3mpK7RMPblh0ro/TRjmLylpYKX/Z3T6OLgTDnznil4dqXkEmHU27HYY7uw
-	kaWKYlSeGTaU54otTmE+2wNVuIObmsWLKzyijCrCbDqDuG765UrBZIUqYJKXeJ75
-	pOPGSg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 401pm5twqx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 28 Jun 2024 21:58:30 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45SLwSfl007583
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 28 Jun 2024 21:58:28 GMT
-Received: from [10.110.112.228] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 28 Jun
- 2024 14:58:25 -0700
-Message-ID: <22edcb67-9c25-4d16-ab5c-7522c710b1e2@quicinc.com>
-Date: Fri, 28 Jun 2024 14:58:24 -0700
+	s=arc-20240116; t=1719613039; c=relaxed/simple;
+	bh=tibdrRxKr+OmLNEUJ2Q1gCRl35J7obhxCvYtTb6dd/0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bl1cR2/oh7/wEBCoweUIPkgYo0qz6T98nYZSH/OAANY6OcdoC3RTX3KFauDiWyMWWkyR7AdqOr3vqEXD9BIhkiJKMfi46zoz54WRdF8jtSxMTyD8shB47KypPQ2mOHm82qrMT5zbD8+weQiZvNcLAgtwgNPoNteY54pHsHBqtYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=hsjFH66D; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=FkeOeWfmA8N6WfXP0KBtOcijRi04NyPUZ7Dnot/6j3o=; b=hsjFH66D8g9+9dSOKNWklH9uAF
+	YHXMKCxnAGWqimirw253jOOwZbhGZXu4SAPG1j2GtfIL4VYas6eNgesM7eayLd5ByzrFcpar7cCm/
+	SO9HxlYCH2wwr22sMmdQ57Vy7pbmrtjnm8aBQGrGyAyvD4dlfxmYXdSl7mSE36TNOlGZuPaZfyBJc
+	IbKx8njf8xWafxyFQpLbJwEO2MzbKK/jTiCi6cNiRb5y6MHOnKQcFoKRrPDQhLAzTVbdYOKGHvtUD
+	JaR+QF3Km+/aElUekrbXOkSB70v0tV3ji2Svk0JGWK/rIVCdkzCOFq89rzLd1wCHGgTM9MyN44lWv
+	zy2KYpDQ==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:43110)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1sNJtl-0007Yz-2e;
+	Fri, 28 Jun 2024 23:16:53 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1sNJtl-0006qf-Rf; Fri, 28 Jun 2024 23:16:53 +0100
+Date: Fri, 28 Jun 2024 23:16:53 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>, kernel@quicinc.com,
+	Andrew Halaney <ahalaney@redhat.com>, Andrew Lunn <andrew@lunn.ch>,
+	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] net: stmmac: Bring down the clocks to lower
+ frequencies when mac link goes down
+Message-ID: <Zn82VaTQBe0LkhSa@shell.armlinux.org.uk>
+References: <20240625-icc_bw_voting_from_ethqos-v2-0-eaa7cf9060f0@quicinc.com>
+ <20240625-icc_bw_voting_from_ethqos-v2-3-eaa7cf9060f0@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] net: stmmac: Add interconnect support
-To: Andrew Lunn <andrew@lunn.ch>
-CC: Vinod Koul <vkoul@kernel.org>,
-        Alexandre Torgue
-	<alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>,
-        "David S.
- Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        "Jakub
- Kicinski" <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>,
-        Russell King <linux@armlinux.org.uk>, "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>, <kernel@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>, <linux-arm-msm@vger.kernel.org>,
-        <netdev@vger.kernel.org>, <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20240625-icc_bw_voting_from_ethqos-v2-0-eaa7cf9060f0@quicinc.com>
- <20240625-icc_bw_voting_from_ethqos-v2-2-eaa7cf9060f0@quicinc.com>
- <4123b96c-ae1e-4fdd-aab2-70478031c59a@lunn.ch>
- <81e97c36-e244-4e94-b752-b06334a06db0@quicinc.com>
- <974114ca-98ed-44a7-a038-eb3f71bd03ef@lunn.ch>
-Content-Language: en-US
-From: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
-In-Reply-To: <974114ca-98ed-44a7-a038-eb3f71bd03ef@lunn.ch>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Ct61UG8KzFfDtH6q0f7ehA3guyUqO1k_
-X-Proofpoint-GUID: Ct61UG8KzFfDtH6q0f7ehA3guyUqO1k_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-28_16,2024-06-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- lowpriorityscore=0 phishscore=0 suspectscore=0 adultscore=0 mlxscore=0
- bulkscore=0 priorityscore=1501 spamscore=0 malwarescore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
- definitions=main-2406280165
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240625-icc_bw_voting_from_ethqos-v2-3-eaa7cf9060f0@quicinc.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
+On Tue, Jun 25, 2024 at 04:49:30PM -0700, Sagar Cheluvegowda wrote:
+> When mac link goes down we don't need to mainitain the clocks to operate
+> at higher frequencies, as an optimized solution to save power when
+> the link goes down we are trying to bring down the clocks to the
+> frequencies corresponding to the lowest speed possible.
 
+I thought I had already commented on a similar patch, but I can't find
+anything in my mailboxes to suggest I had.
 
-On 6/26/2024 5:12 PM, Andrew Lunn wrote:
-> On Wed, Jun 26, 2024 at 04:36:06PM -0700, Sagar Cheluvegowda wrote:
->>
->>
->> On 6/26/2024 6:07 AM, Andrew Lunn wrote:
->>>> +	plat->axi_icc_path = devm_of_icc_get(&pdev->dev, "axi");
->>>> +	if (IS_ERR(plat->axi_icc_path)) {
->>>> +		ret = (void *)plat->axi_icc_path;
->>>
->>> Casting	to a void * seems odd. ERR_PTR()?
->>>
->>> 	Andrew
->>
->> The output of devm_of_icc_get is a pointer of type icc_path,
->> i am getting below warning when i try to ERR_PTR instead of Void*
->> as ERR_PTR will try to convert a long integer to a Void*.
->>
->> "warning: passing argument 1 of ‘ERR_PTR’ makes integer from pointer without a cast"
->>
-> 
-> https://elixir.bootlin.com/linux/v6.10-rc5/source/drivers/crypto/qce/core.c#L224
-> https://elixir.bootlin.com/linux/v6.10-rc5/source/drivers/gpu/drm/msm/adreno/a3xx_gpu.c#L591
-> https://elixir.bootlin.com/linux/v6.10-rc5/source/drivers/gpu/drm/msm/adreno/a3xx_gpu.c#L597
-> https://elixir.bootlin.com/linux/v6.10-rc5/source/drivers/spi/spi-qup.c#L1052
-> 
-> Sorry, PTR_ERR().
-> 
-> In general, a cast to a void * is a red flag and will get looked
-> at. It is generally wrong. So you might want to fixup where ever you
-> copied this from.
-> 
-> 	Andrew
-the return type of stmmac_probe_config_dt is a pointer of type plat_stmmacenet_data,
-as PTR_ERR would give long integer value i don't think it would be ideal to
-return an integer value here, if casting plat->axi_icc_path to a void * doesn't look
-good, let me if the below solution is better or not?
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+> index ec7c61ee44d4..f0166f0bc25f 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+> @@ -996,6 +996,9 @@ static void stmmac_mac_link_down(struct phylink_config *config,
+>  {
+>  	struct stmmac_priv *priv = netdev_priv(to_net_dev(config->dev));
+>  
+> +	if (priv->plat->fix_mac_speed)
+> +		priv->plat->fix_mac_speed(priv->plat->bsp_priv, SPEED_10, mode);
+> +
+>  	stmmac_mac_set(priv, priv->ioaddr, false);
+>  	priv->eee_active = false;
+>  	priv->tx_lpi_enabled = false;
+> @@ -1004,6 +1007,11 @@ static void stmmac_mac_link_down(struct phylink_config *config,
+>  
+>  	if (priv->dma_cap.fpesel)
+>  		stmmac_fpe_link_state_handle(priv, false);
+> +
+> +	stmmac_set_icc_bw(priv, SPEED_10);
+> +
+> +	if (priv->plat->fix_mac_speed)
+> +		priv->plat->fix_mac_speed(priv->plat->bsp_priv, SPEED_10, mode);
 
+Two things here:
 
- 	plat->axi_icc_path = devm_of_icc_get(&pdev->dev, "axi");
-	if (IS_ERR(plat->axi_icc_path)) {
-		rc = PTR_ERR(plat->axi_icc_path);
-		ret = ERR_PTR(rc);
-		goto error_hw_init;
-	}
+1) Why do we need to call fix_mac_speed() at the start and end of this
+   stmmac_mac_link_down()?
 
-	plat->ahb_icc_path = devm_of_icc_get(&pdev->dev, "ahb");
-	if (IS_ERR(plat->ahb_icc_path)) {
-		rc = PTR_ERR(plat->ahb_icc_path);
-		ret = ERR_PTR(rc);
-		goto error_hw_init;
-	}
+2) What if the MAC doesn't support 10M operation? For example, dwxgmac2
+   and dwxlgmac2 do not support anything below 1G. It feels that this
+   is storing up a problem for the future, where a platform that uses
+   e.g. xlgmac2 also implements fix_mac_speed() and then gets a
+   surprise when it's called with SPEED_10.
 
-	plat->stmmac_rst = devm_reset_control_get_optional(&pdev->dev,
-							   STMMAC_RESOURCE_NAME);
-	if (IS_ERR(plat->stmmac_rst)) {
-		ret = plat->stmmac_rst;
-		goto error_hw_init;
-	}
+Personally, I don't like "fix_mac_speed", and I don't like it even more
+with this change. I would prefer to see link_up/link_down style
+operations so that platforms can do whatever they need to on those
+events, rather than being told what to do by a single call that may
+look identical irrespective of whether the link came up or went down.
 
-	plat->stmmac_ahb_rst = devm_reset_control_get_optional_shared(
-							&pdev->dev, "ahb");
-	if (IS_ERR(plat->stmmac_ahb_rst)) {
-		ret = plat->stmmac_ahb_rst;
-		goto error_hw_init;
-	}
-
-	return plat;
-
-error_hw_init:
-	clk_disable_unprepare(plat->pclk);
-error_pclk_get:
-	clk_disable_unprepare(plat->stmmac_clk);
-
-	return ret;
-}
-
-Regards,
-Sagar
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
