@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-24652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24653-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2047791C2C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 17:41:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C76491C2CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 17:42:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7F253282550
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 15:41:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2DE4B28029B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 15:42:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBA191C688B;
-	Fri, 28 Jun 2024 15:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B2E71C9EB7;
+	Fri, 28 Jun 2024 15:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bhbc2hTn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rzY8Jmtw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E571DFFB;
-	Fri, 28 Jun 2024 15:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2A71C232A;
+	Fri, 28 Jun 2024 15:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719589313; cv=none; b=LFpr2UoLu7P1BMEqswPAmfl1b1fkmIVQXlFvGAoKdMkRcOCadff0YZhWav7BY5UPiwUKGsQThHBRMTQVSogd4/uCNbvoxlTp4HEhK9LTds4sdviWiqNYR3riiPQJP3OHiNzFCFChtp7oS6juAoFicAapB5SlPi5RcjvYrlR4YPg=
+	t=1719589318; cv=none; b=NoT7k9iuOTi35JTCkT4LbaIF6RTmf6725O1evBYVlotBI4Szhm7LXuI5oV3Cvgw86GYTUDRR2ed2A+/48dHT5wqXaOAwMTkFTBvibUg/C46m64g6alOsUOgElCLaglG2XqGJ2XGykt4PYEUCEKZtN+0Lr+cyx60Wpi8k9hQO4S4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719589313; c=relaxed/simple;
-	bh=4ihIhb0n5pT2jWpYSgDOZjuCCMDfjHRBZMny1IcFD0M=;
+	s=arc-20240116; t=1719589318; c=relaxed/simple;
+	bh=ymvFz0WiHcyx8yRoT9Izl+kSBov6O15ewnJVOROeaBE=;
 	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=TRAU6MCLLtImZ5jR7ZZsHGR04l9WzZVCElkFcMJ4Hzq+GADpLWwlAeucE590h/cZdU4MJB1PCaKJHYuXp6+Ls3CFeK2v2JzLZtxxeIO2CjRvR2+pCAUl3haRKQkpRjJzU0wEqAb8weMHn/MgNuWkmj/0an/bJly6veBI7EDVtjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bhbc2hTn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC510C116B1;
-	Fri, 28 Jun 2024 15:41:52 +0000 (UTC)
+	 Message-Id:Subject; b=Cm69la/WRSPP+tkcA0bqPccjM/HM6OfH1Yykzw2+BvmyGREoboFIqjOzzLKS6YLn7OpLiHRNKnMzd5AZMAGfSilk4z48+4TxBrBNurKHuB2xT/XU63ubLnDQh0p4CvBG8mM6BYRb1IKtiJ3b/FtQEFT3nQ00HhUGc/ygz3dM2pY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rzY8Jmtw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3050C116B1;
+	Fri, 28 Jun 2024 15:41:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719589313;
-	bh=4ihIhb0n5pT2jWpYSgDOZjuCCMDfjHRBZMny1IcFD0M=;
+	s=k20201202; t=1719589317;
+	bh=ymvFz0WiHcyx8yRoT9Izl+kSBov6O15ewnJVOROeaBE=;
 	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=bhbc2hTnnbsNH0pDkzieLdp6IxdTwxgM8kCMOb/jX8V0JEFOOrQQxCcUBvbcvsNww
-	 1bwhL/33fqSwIqcxjXHBdzlOaAvGCsJgT4dJS4WIm2COgl3ORHtJLELbxgOOrqnSgO
-	 DpKAQjhpWLWSrK0r81NAvWwYrUxdjg6vWwq1/4UsXvTseoC/Qe6yXdFkHDVjfJdj+t
-	 Yb7chunuebUxAlW9JnWJqIQ4sNOnEaYP7a5EI/R9Hcm/BmGjm6lQnizBv/0255pgYN
-	 xuPHU2RN6kbUJ5QG7e8jWCvS5wSjyZEXFzq5rbwSC92YPgW115rM4tYwo5FGq2d585
-	 wLeVVMoBc0oYw==
-Date: Fri, 28 Jun 2024 09:41:51 -0600
+	b=rzY8JmtwoJdmMtk9RXZxz8vnwgshHYk7ndL2ZeeDIB8Y/LDD+LnD3Xhu3jRlF/MSR
+	 XQNQ862xw/gQbwO8MNvKUl90+jqBoyr6ZmBhgfQWQF7L02ArzBcA6ZcCzTAii+NhcW
+	 Kc12z6630APpVbOyfpVkw1/ERzpAYUAWWQqzIyCfSmf2nVOIBPvxef242o7MsLKsdn
+	 WpdwOxQWSM5bjA+FHh++46yVvY8n2VQpQ/q3qFLhWQ1LbZVNM8bd8sI8+RxWGxowyc
+	 cdBcME+0xYyLcuVzGSo/UEWm9eV4cR9GDqZNECO4TlkYQ8PLNnvGn1X2DlkztqxDz/
+	 Q/VFvez8+lr8Q==
+Date: Fri, 28 Jun 2024 09:41:56 -0600
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,38 +51,50 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Raymond Hackley <raymondhackley@protonmail.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, 
- phone-devel@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
- devicetree@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- ~postmarketos/upstreaming@lists.sr.ht, 
- Bjorn Andersson <andersson@kernel.org>
-In-Reply-To: <20240627193013.1800-1-raymondhackley@protonmail.com>
-References: <20240627193013.1800-1-raymondhackley@protonmail.com>
-Message-Id: <171958904261.3122689.7431145315207852456.robh@kernel.org>
-Subject: Re: [PATCH v2 0/2] ARM: dts: qcom-msm8226-samsung-ms013g: Add
- initial device tree
+To: Alexey Klimov <alexey.klimov@linaro.org>
+Cc: devicetree@vger.kernel.org, elder@linaro.org, conor+dt@kernel.org, 
+ tiwai@suse.com, andersson@kernel.org, perex@perex.cz, lgirdwood@gmail.com, 
+ bgoswami@quicinc.com, broonie@kernel.org, caleb.connolly@linaro.org, 
+ alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org, 
+ konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org, krzk+dt@kernel.org, 
+ srinivas.kandagatla@linaro.org, dmitry.baryshkov@linaro.org, 
+ krzysztof.kozlowski@linaro.org, linux-sound@vger.kernel.org
+In-Reply-To: <20240628010715.438471-1-alexey.klimov@linaro.org>
+References: <20240628010715.438471-1-alexey.klimov@linaro.org>
+Message-Id: <171958904690.3122888.14426656364563321881.robh@kernel.org>
+Subject: Re: [PATCH 0/7] qrb4210-rb2: add HDMI audio playback support
 
 
-On Thu, 27 Jun 2024 19:30:30 +0000, Raymond Hackley wrote:
-> Samsung Galaxy Grand 2 is a phone based on MSM8226. It's similar to the
-> other Samsung devices based on MSM8226 with only a few minor differences.
+On Fri, 28 Jun 2024 02:07:08 +0100, Alexey Klimov wrote:
+> First time I am doing anything like this. This series adds
+> mising pieces here and there to allow addition of sensible
+> sound card in qrb4210-rb2.dts and enable HDMI audio playback there.
 > 
-> The device trees contain initial support with:
->  - GPIO keys
->  - Regulator haptic
->  - SDHCI (internal and external storage)
->  - UART (on USB connector via the TI TSU6721 MUIC)
->  - Regulators
->  - Touchscreen
->  - Accelerometer
+> It is planned in future to add support for other outputs and capture --
+> analog audio support.
 > 
-> ---
-> v2: Adjust l3, l15, l22 and l27 regulator voltages. Sort nodes.
->     Set regulator-allow-set-load for vqmmc supplies.
+> The series depends on Srini's sm4250 lpi pinctrl driver:
+> c2e5a25e8d88 (pinctrl: qcom: Introduce SM4250 LPI pinctrl driver, 2024-06-22)
+> 2ffa7a354662 (dt-bindings: pinctrl: qcom: Add SM4250 pinctrl, 2024-06-22)
+> As far as I understood it was already accepted and will go through pinctrl tree.
 > 
+> Alexey Klimov (7):
+>   ASoC: dt-bindings: qcom,sm8250: add qrb4210-rb2-sndcard
+>   ASoC: qcom: sm8250: add qrb4210-rb2-sndcard compatible string
+>   ASoC: qcom: sm8250: add handling of secondary MI2S clock
+>   arm64: dts: qcom: sm6115: add apr, its services and simple sound node
+>   arm64: dts: qcom: sm6115: add LPASS LPI pin controller
+>   arm64: dts: qcom: sm6115: add description of lpi_i2s2 pins
+>   arm64: dts: qcom: qrb4210-rb2: add HDMI audio playback support
+> 
+>  .../bindings/sound/qcom,sm8250.yaml           |   1 +
+>  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts      |  73 ++++++++++++
+>  arch/arm64/boot/dts/qcom/sm6115.dtsi          | 112 ++++++++++++++++++
+>  sound/soc/qcom/sm8250.c                       |  19 +++
+>  4 files changed, 205 insertions(+)
+> 
+> --
+> 2.45.2
 > 
 > 
 > 
@@ -102,14 +114,9 @@ make sure dt-schema is up to date:
   pip3 install dtschema --upgrade
 
 
-New warnings running 'make CHECK_DTBS=y qcom/qcom-msm8226-samsung-ms013g.dtb' for 20240627193013.1800-1-raymondhackley@protonmail.com:
+New warnings running 'make CHECK_DTBS=y qcom/qrb4210-rb2.dtb' for 20240628010715.438471-1-alexey.klimov@linaro.org:
 
-arch/arm/boot/dts/qcom/qcom-msm8226-samsung-ms013g.dtb: syscon@f9011000: compatible: 'anyOf' conditional failed, one must be fixed:
-	['syscon'] is too short
-	'syscon' is not one of ['al,alpine-sysfabric-service', 'allwinner,sun8i-a83t-system-controller', 'allwinner,sun8i-h3-system-controller', 'allwinner,sun8i-v3s-system-controller', 'allwinner,sun50i-a64-system-controller', 'altr,l3regs', 'altr,sdr-ctl', 'amd,pensando-elba-syscon', 'amlogic,meson-mx-assist', 'amlogic,meson-mx-bootrom', 'amlogic,meson8-analog-top', 'amlogic,meson8b-analog-top', 'amlogic,meson8-pmu', 'amlogic,meson8b-pmu', 'apm,xgene-csw', 'apm,xgene-efuse', 'apm,xgene-mcb', 'apm,xgene-rb', 'apm,xgene-scu', 'atmel,sama5d2-sfrbu', 'atmel,sama5d3-nfc-io', 'atmel,sama5d3-sfrbu', 'atmel,sama5d4-sfrbu', 'axis,artpec6-syscon', 'brcm,cru-clkset', 'brcm,sr-cdru', 'brcm,sr-mhb', 'cirrus,ep7209-syscon1', 'cirrus,ep7209-syscon2', 'cirrus,ep7209-syscon3', 'cnxt,cx92755-uc', 'freecom,fsg-cs2-system-controller', 'fsl,imx93-aonmix-ns-syscfg', 'fsl,imx93-wakeupmix-syscfg', 'fsl,ls1088a-reset', 'fsl,vf610-anatop', 'fsl,vf610-mscm-cpucfg', 'hisilicon,dsa-subctrl', 'hisilicon,hi6220-sramctr
- l', 'hisilicon,hip04-ppe', 'hisilicon,pcie-sas-subctrl', 'hisilicon,peri-subctrl', 'hpe,gxp-sysreg', 'intel,lgm-syscon', 'loongson,ls1b-syscon', 'loongson,ls1c-syscon', 'lsi,axxia-syscon', 'marvell,armada-3700-cpu-misc', 'marvell,armada-3700-nb-pm', 'marvell,armada-3700-avs', 'marvell,armada-3700-usb2-host-misc', 'marvell,dove-global-config', 'mediatek,mt2701-pctl-a-syscfg', 'mediatek,mt2712-pctl-a-syscfg', 'mediatek,mt6397-pctl-pmic-syscfg', 'mediatek,mt8135-pctl-a-syscfg', 'mediatek,mt8135-pctl-b-syscfg', 'mediatek,mt8173-pctl-a-syscfg', 'mediatek,mt8365-syscfg', 'microchip,lan966x-cpu-syscon', 'microchip,sam9x60-sfr', 'microchip,sama7g5-ddr3phy', 'microchip,sparx5-cpu-syscon', 'mscc,ocelot-cpu-syscon', 'mstar,msc313-pmsleep', 'nuvoton,ma35d1-sys', 'nuvoton,wpcm450-shm', 'rockchip,px30-qos', 'rockchip,rk3036-qos', 'rockchip,rk3066-qos', 'rockchip,rk3128-qos', 'rockchip,rk3228-qos', 'rockchip,rk3288-qos', 'rockchip,rk3368-qos', 'rockchip,rk3399-qos', 'rockchip,rk3568-qos', 'rockchi
- p,rk3588-qos', 'rockchip,rv1126-qos', 'st,spear1340-misc', 'stericsson,nomadik-pmu', 'starfive,jh7100-sysmain', 'ti,am62-opp-efuse-table', 'ti,am62-usb-phy-ctrl', 'ti,am625-dss-oldi-io-ctrl', 'ti,am62p-cpsw-mac-efuse', 'ti,am654-dss-oldi-io-ctrl', 'ti,am654-serdes-ctrl', 'ti,j784s4-pcie-ctrl', 'ti,keystone-pllctrl']
-	from schema $id: http://devicetree.org/schemas/mfd/syscon.yaml#
+arch/arm64/boot/dts/qcom/qrb4210-rb2.dtb: /soc@0/pinctrl@a7c0000: failed to match any schema with compatible: ['qcom,sm4250-lpass-lpi-pinctrl']
 
 
 
