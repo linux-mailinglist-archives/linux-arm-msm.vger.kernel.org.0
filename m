@@ -1,220 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-24643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A14691C0AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 16:17:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D126E91C0AA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 16:17:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6C5DFB2345D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 14:17:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 888CD2815EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 14:17:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7FD21C004E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A574B1BF312;
 	Fri, 28 Jun 2024 14:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XrRG0XFG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BHlT5rxF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D961D1C0047;
-	Fri, 28 Jun 2024 14:17:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6501C0043
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2024 14:17:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719584253; cv=none; b=QYLxsuBQNbv99NyXyqk2WZk+dvwx8ujyt5g7wxnjEh2H4QvbNa+P5/YMLJdmMzW4QJ07Sk0QLWLhqgf/NtvzBIfRPBo+F7yb2XOs/3s58UECZeQpMd/9C2H0gYmWV1ECuhy1yeDj7LiZcf7RP6drLm3bwpbVk5IyMrqyCycHaaE=
+	t=1719584253; cv=none; b=ACm+i/UPN0CJV99eCbLYGoez4lhiAefzCBQds53WkWqO77+EFZS2jPTg/w+y6/oWioTsf/B121A27ySyPV92qiz5qbS/Q7Kg++Hqo1z7EA6Cp4mqmqLiqZAaEMC6uDNu3JqOrwlbs2LB9CjkkddmPbowtHiXSIjAJuimPffBRHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1719584253; c=relaxed/simple;
-	bh=Ydmge2jXvUltuSBS3uDjrxGcWKj6zkL+i043pry6h80=;
+	bh=X5an3abTWdvL8qtlTK3g1nKT+T6J9UFiLnTAbmQhG/I=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ys+ITEPtpp57WjXFEheJeIuN1h16amBkURpahDTUCc5z1alirmLLaBqTOModvX+JGNjsbyNLG+WpJBZH5HfTDH1HY+UuJmZfKKmeShNt2a3L9GB5t/zyJ4aNQLciy//oDRXbCf+ubPNAGoWQWFmPpzDtBWPQqUe4aiObhNs/++Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XrRG0XFG; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a6fe61793e2so36993966b.0;
-        Fri, 28 Jun 2024 07:17:31 -0700 (PDT)
+	 To:Cc:Content-Type; b=IU6zkUI1toinkAW05cLtcxPtBLwOm3wjm4ZIByklGhJei63mtH+X7vT9W83BuAMdxC07oqWbp0KblZ5jDUAcov9R3gWzGTLQ1SUpm/uKnJnmH5eA+WIyKbz2tB6Bi4dHAV9zYLrgqO6kp2LpdWm9CdNPrYq8TL9xxgxNWgv5Uqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BHlT5rxF; arc=none smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-648b9d03552so6058557b3.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2024 07:17:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719584250; x=1720189050; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HUZfsgVRZxSnQOE+V7qWG65GlTuqoj2VVa3LE3t/3OE=;
-        b=XrRG0XFGwMF4spM0z07MaF7e+f7ln4MGpw0smZiLI3Za0Lwrubg3pSml1H8/3ODTzD
-         ux53IwL2iv5dfw2MqHlDE6VOTsR/buJrOxi4oQd4WE3dztVYA1GbiyXnymJrZVewpwW7
-         UPPxHGbYWFQij/fXND8HmnqL2bYbPSlxF0EDXR0BowpoSXnr0GxGzmhhbRodWoRW0jP/
-         cLHSjGvQ97nYQLhOJhkP4epSkInMFPt7528d3TCMXg2poP1NjglA1438D/KsScXYtHXF
-         U/KcFGYeh1tXoVBl0aVt+JIK7VtGitLlhGnC2/CRCO2+TUL51GkMAh96dY2lXGQio0rN
-         5c+A==
+        d=linaro.org; s=google; t=1719584251; x=1720189051; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=DGMldhhxstZD2VHINPtgUkJtig9Dn80WfHZSFwMmp2Q=;
+        b=BHlT5rxFHSWv8sv4ru8q0rkky44r4ZlHhYBkqNNJ20WkX2JHeZtr+OQioKivAjB3/I
+         phXINjdp+vtyWvJXjFEesmy4d+4tLq6q1P6gLej/3idYnVj0HSAy+8iIZJAyjI9gRwup
+         FPpM8TGz0ygI8QIlxfizj5lTpg7+XFOmJYUkx+QDaL/Mx0Rzclyt9K6lP0uny4Pt3Dax
+         iR1hqKU9AWGGXj2+gVzePLrTBvpehgRI1wTnb6X5H3M1T6psO5uSrSQxIMKBHCEOl9CI
+         +mDyo9m1GH/tslLRM4WpHe1ml56Sfwzd7n+HsTZvFVIXgT57pC7zLxD306guYUt3oCmh
+         f64Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719584250; x=1720189050;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HUZfsgVRZxSnQOE+V7qWG65GlTuqoj2VVa3LE3t/3OE=;
-        b=oA5nWBsPa+owOU+DOGOSlmyUEjjGpyipMynl/rcTHCRODwbAiwK1Yli8E/jcF2Dfgi
-         AgXUF0mviAnMuWaIrjy5PM2XOoaGCXgOMn3V5QmNpxmBO4V9sKTi1QAmJmqbKQtlXS/f
-         XvxI54KSMEwr5TdvLWJkPn4a6kG6vPqKc9uXYkO198E+hltFHJkDUrT3ARivjdpusfFx
-         ygzMTEneREOCV0B743xejiiu4r+WdISlY/xcEe0/31l+9SBTctkVxQqUiu84n/4bA2zK
-         hkjJWXUyWZ+fE7ZoM9n87zMvl9MQax1ro4w94xcNfOILHe+CRArIT1CZm7dMVxWfRDlU
-         Ylww==
-X-Forwarded-Encrypted: i=1; AJvYcCUX0Ejo3O1lCyj6IYnRqxpW4NHE5XWzC5XXjo3p4St7YzNzVe0hTJjClgkEPk2MsVtg4KwuQtFHEWnAypEcj/8lftOAqxtV7ISOUIq4iyHc4N62OsfGgdwteShCylLVOL4kBEqPQXX1jVIzzw==
-X-Gm-Message-State: AOJu0YynlefmEbwwwnz2t3KYG0479Qg6NnEHeT1DcA0oWkryIZxEmd+G
-	Yn37zIsyUWJFuCJ7vl9sy/Z8DAhuUCHYtFzJYfICzO5Fpv/wu1WfE9ZUvwIGbCQxbj0r9EwC0OL
-	Y2N4TSZfVUuz4IZH7tpCjYB6j//Y=
-X-Google-Smtp-Source: AGHT+IFuP1Mc9O5IzSHeKzAD4lyy6B7kIx7ruZTd+TTFQ6LgZ8Bny0sYM+gfTL0wj7e4jUrhs5wD+k3GzQg3LDmK3N4=
-X-Received: by 2002:a50:ab5b:0:b0:57d:2659:9143 with SMTP id
- 4fb4d7f45d1cf-57d4bde078cmr13706394a12.37.1719584249785; Fri, 28 Jun 2024
- 07:17:29 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719584251; x=1720189051;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DGMldhhxstZD2VHINPtgUkJtig9Dn80WfHZSFwMmp2Q=;
+        b=SLLyg5YqdKMtFwwrgWGw5HE2W3Vez0LWBDXWu84PnDbuFNJVfeeejMuDmlaURO4phl
+         Gu/w3vQ4/j7p2PkU6yckzCtrKcCeF2G412JRUcgPCBxjIinXiEMYdWZHqJzq9z1tPayy
+         BIr9FqaK5cXvj0iafsN8ZEt4SLm78bDkEzQVmIbmEFbbfAFe8BpMh4K066/y1RTwa2WQ
+         dxoaBqg6okI+DAtZxxmZRfe55CqGmrI71DnQ0mT0KO3jDLcLJPtuWGKOwz7UZ77E8gdj
+         Nve58V8oOa2BQXG/iHk2HK3SLw0hVEfigbaFyJ8u2Z2ab/OoRsEgP22oQolw5xajl3Np
+         IwaA==
+X-Forwarded-Encrypted: i=1; AJvYcCXTDI2bm3CkaqOu6EN/eSKVI7Fv1pUzWinEbRTdnwhK+9KE7U7Qw188zm0SSu5OYtZbSDImTfDOP6Rq19yQJEVINtqvv6tjqqyC6UcMSg==
+X-Gm-Message-State: AOJu0Ywy1AAl5TtAaUcZUDAMrG4HChSVF4kmnt/57LJbyQkP2iY5jwDn
+	qYJlia3SO97b+w6UhyGfuZIu1WqrrY173Px6TM2/9KBAhrhl0z/RxKxNg5tcRtMOIOZ+VvsKMNs
+	tKNW5N8vpBlm9ela1bw0BN7quLXaXH05zhuQtUQ==
+X-Google-Smtp-Source: AGHT+IEnqc4gKd8d3/4CtY+9Z2dX/nIjYsaIb1fXkGgwuAAIIiovBHfJVK2XUUGwxWXGgo5SDGMIF1irekTJMnwHlS8=
+X-Received: by 2002:a81:de4d:0:b0:627:778f:b0a8 with SMTP id
+ 00721157ae682-643aba4654bmr165212747b3.42.1719584250582; Fri, 28 Jun 2024
+ 07:17:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628140435.1652374-1-quic_bibekkum@quicinc.com> <20240628140435.1652374-7-quic_bibekkum@quicinc.com>
-In-Reply-To: <20240628140435.1652374-7-quic_bibekkum@quicinc.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Fri, 28 Jun 2024 07:17:17 -0700
-Message-ID: <CAF6AEGvroi8rJimFv95tkWmRFa5_aTpBJ7GFcRAuZpLGdSyEYQ@mail.gmail.com>
-Subject: Re: [PATCH v13 6/6] iommu/arm-smmu: add support for PRR bit setup
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, jgg@ziepe.ca, 
-	jsnitsel@redhat.com, robh@kernel.org, krzysztof.kozlowski@linaro.org, 
-	quic_c_gdjako@quicinc.com, dmitry.baryshkov@linaro.org, 
-	konrad.dybcio@linaro.org, iommu@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+References: <20240627-b4-qcom-audio-lpass-codec-cleanups-v1-0-ede31891d238@linaro.org>
+ <20240627-b4-qcom-audio-lpass-codec-cleanups-v1-2-ede31891d238@linaro.org>
+ <grpb57rhum4auor3n66mqd2tpmd52gzofbdog3vlmxlamfxv5a@2mhfkigl6ek2> <1fa1da22-07a5-4d76-b4c7-fc16e3df4b32@linaro.org>
+In-Reply-To: <1fa1da22-07a5-4d76-b4c7-fc16e3df4b32@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 28 Jun 2024 17:17:20 +0300
+Message-ID: <CAA8EJpq_2RUs3go6JZ+uVuJ5PJKzv0e2T8uS5QJMrB_JUAtNPw@mail.gmail.com>
+Subject: Re: [PATCH 2/4] ASoC: codecs: lpass-rx-macro: Keep static
+ regmap_config as const
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami <bgoswami@quicinc.com>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org, 
+	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 28, 2024 at 7:05=E2=80=AFAM Bibek Kumar Patro
-<quic_bibekkum@quicinc.com> wrote:
+On Fri, 28 Jun 2024 at 11:39, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
-> Add an adreno-smmu-priv interface for drm/msm to call
-> into arm-smmu-qcom and initiate the PRR bit setup or reset
-> sequence as per request.
+> On 28/06/2024 10:34, Dmitry Baryshkov wrote:
+> > On Thu, Jun 27, 2024 at 05:23:44PM GMT, Krzysztof Kozlowski wrote:
+> >> The driver has static 'struct regmap_config', which is then customized
+> >> depending on device version.  This works fine, because there should not
+> >> be two devices in a system simultaneously and even less likely that such
+> >> two devices would have different versions, thus different regmap config.
+> >> However code is cleaner and more obvious when static data in the driver
+> >> is also const - it serves as a template.
+> >>
+> >> Mark the 'struct regmap_config' as const and duplicate it in the probe()
+> >> with devm_kmemdup to allow customizing per detected device variant.
+> >>
+> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >> ---
+> >>  sound/soc/codecs/lpass-rx-macro.c | 17 +++++++++++++----
+> >>  1 file changed, 13 insertions(+), 4 deletions(-)
+> >
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >
+> >>
+> >> diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
+> >> index 59fe76b13cdb..3d8149665439 100644
+> >> --- a/sound/soc/codecs/lpass-rx-macro.c
+> >> +++ b/sound/soc/codecs/lpass-rx-macro.c
+> >> @@ -1662,7 +1662,7 @@ static bool rx_is_readable_register(struct device *dev, unsigned int reg)
+> >>      return rx_is_rw_register(dev, reg);
+> >>  }
+> >>
+> >> -static struct regmap_config rx_regmap_config = {
+> >> +static const struct regmap_config rx_regmap_config = {
+> >>      .name = "rx_macro",
+> >>      .reg_bits = 16,
+> >>      .val_bits = 32, /* 8 but with 32 bit read/write */
+> >> @@ -3765,6 +3765,7 @@ static const struct snd_soc_component_driver rx_macro_component_drv = {
+> >>  static int rx_macro_probe(struct platform_device *pdev)
+> >>  {
+> >>      struct reg_default *reg_defaults;
+> >> +    struct regmap_config *reg_config;
+> >>      struct device *dev = &pdev->dev;
+> >>      kernel_ulong_t flags;
+> >>      struct rx_macro *rx;
+> >> @@ -3851,14 +3852,22 @@ static int rx_macro_probe(struct platform_device *pdev)
+> >>              goto err;
+> >>      }
+> >>
+> >> -    rx_regmap_config.reg_defaults = reg_defaults;
+> >> -    rx_regmap_config.num_reg_defaults = def_count;
+> >> +    reg_config = devm_kmemdup(dev, &rx_regmap_config, sizeof(*reg_config),
+> >> +                              GFP_KERNEL);
+> >> +    if (!reg_config) {
+> >> +            ret = -ENOMEM;
+> >> +            goto err;
+> >> +    }
+> >>
+> >> -    rx->regmap = devm_regmap_init_mmio(dev, base, &rx_regmap_config);
+> >> +    reg_config->reg_defaults = reg_defaults;
+> >> +    reg_config->num_reg_defaults = def_count;
+> >> +
+> >> +    rx->regmap = devm_regmap_init_mmio(dev, base, reg_config);
+> >>      if (IS_ERR(rx->regmap)) {
+> >>              ret = PTR_ERR(rx->regmap);
+> >>              goto err;
+> >>      }
+> >> +    devm_kfree(dev, reg_config);
+> >>      devm_kfree(dev, reg_defaults);
+> >
+> > Seeing devm_kfree in the non-error path makes me feel strange. Maybe
+> > it's one of the rare occasions when I can say that __free is suitable
+> > here.
 >
-> This will be used by GPU to setup the PRR bit and related
-> configuration registers through adreno-smmu private
-> interface instead of directly poking the smmu hardware.
+> These would have a bit different meaning in such case. The __free would
+> not clean it in this spot, but on exit from the scope. I wanted to
+> kfree() here, because the config (and reg_defaults) are not used by past
+> regmap_init. I mentioned it briefly in previous patch msg.
 >
-> Suggested-by: Rob Clark <robdclark@gmail.com>
-> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-> ---
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 23 ++++++++++++++++++++++
->  drivers/iommu/arm/arm-smmu/arm-smmu.h      |  2 ++
->  include/linux/adreno-smmu-priv.h           |  6 +++++-
->  3 files changed, 30 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/a=
-rm/arm-smmu/arm-smmu-qcom.c
-> index bd101a161d04..64571a1c47b8 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -28,6 +28,7 @@
->  #define PREFETCH_SHALLOW       (1 << PREFETCH_SHIFT)
->  #define PREFETCH_MODERATE      (2 << PREFETCH_SHIFT)
->  #define PREFETCH_DEEP          (3 << PREFETCH_SHIFT)
-> +#define GFX_ACTLR_PRR          (1 << 5)
->
->  static const struct actlr_config sc7280_apps_actlr_cfg[] =3D {
->         { 0x0800, 0x04e0, PREFETCH_DEFAULT | CMTLB },
-> @@ -235,6 +236,27 @@ static void qcom_adreno_smmu_resume_translation(cons=
-t void *cookie, bool termina
->         arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
->  }
->
-> +static void qcom_adreno_smmu_set_prr(const void *cookie, phys_addr_t pag=
-e_addr, bool set)
-> +{
-> +       struct arm_smmu_domain *smmu_domain =3D (void *)cookie;
-> +       struct arm_smmu_cfg *cfg =3D &smmu_domain->cfg;
-> +       struct arm_smmu_device *smmu =3D smmu_domain->smmu;
-> +       u32 reg =3D 0;
-> +
-> +       writel_relaxed(lower_32_bits(page_addr),
-> +                               smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
-> +
-> +       writel_relaxed(upper_32_bits(page_addr),
-> +                               smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
-> +
-> +       reg =3D  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR);
-> +       reg &=3D ~GFX_ACTLR_PRR;
-> +       if (set)
-> +               reg |=3D FIELD_PREP(GFX_ACTLR_PRR, 1);
-> +       arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
-> +
+> To me this code is readable and obvious - past this point nothing uses
+> that allocation. However maybe instead of devm(), the code would be
+> easier to read if non-devm-malloc + __free()?
 
-nit, extra line
+Yes, that's what I was thinking about. But it's definitely an optional
+topic. Your code is correct.
 
-Also, if you passed a `struct page *` instead, then you could drop the
-bool param, ie. passing NULL for the page would disable PRR.  But I
-can go either way if others have a strong preference for phys_addr_t.
 
-Otherwise, lgtm
-
-BR,
--R
-
-> +}
-> +
->  #define QCOM_ADRENO_SMMU_GPU_SID 0
->
->  static bool qcom_adreno_smmu_is_gpu_device(struct device *dev)
-> @@ -407,6 +429,7 @@ static int qcom_adreno_smmu_init_context(struct arm_s=
-mmu_domain *smmu_domain,
->         priv->get_fault_info =3D qcom_adreno_smmu_get_fault_info;
->         priv->set_stall =3D qcom_adreno_smmu_set_stall;
->         priv->resume_translation =3D qcom_adreno_smmu_resume_translation;
-> +       priv->set_prr =3D qcom_adreno_smmu_set_prr;
->
->         actlrvar =3D qsmmu->data->actlrvar;
->         if (!actlrvar)
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/ar=
-m-smmu/arm-smmu.h
-> index d9c2ef8c1653..3076bef49e20 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> @@ -154,6 +154,8 @@ enum arm_smmu_cbar_type {
->  #define ARM_SMMU_SCTLR_M               BIT(0)
->
->  #define ARM_SMMU_CB_ACTLR              0x4
-> +#define ARM_SMMU_GFX_PRR_CFG_LADDR     0x6008
-> +#define ARM_SMMU_GFX_PRR_CFG_UADDR     0x600C
->
->  #define ARM_SMMU_CB_RESUME             0x8
->  #define ARM_SMMU_RESUME_TERMINATE      BIT(0)
-> diff --git a/include/linux/adreno-smmu-priv.h b/include/linux/adreno-smmu=
--priv.h
-> index c637e0997f6d..d6e2ca9f8d8c 100644
-> --- a/include/linux/adreno-smmu-priv.h
-> +++ b/include/linux/adreno-smmu-priv.h
-> @@ -49,7 +49,10 @@ struct adreno_smmu_fault_info {
->   *                 before set_ttbr0_cfg().  If stalling on fault is enab=
-led,
->   *                 the GPU driver must call resume_translation()
->   * @resume_translation: Resume translation after a fault
-> - *
-> + * @set_prr:      Extendible interface to be used by GPU to modify the
-> + *                 ACTLR register bits, currently used to configure
-> + *                 Partially-Resident-Region (PRR) feature's
-> + *                 setup and reset sequence as requested.
->   *
->   * The GPU driver (drm/msm) and adreno-smmu work together for controllin=
-g
->   * the GPU's SMMU instance.  This is by necessity, as the GPU is directl=
-y
-> @@ -67,6 +70,7 @@ struct adreno_smmu_priv {
->      void (*get_fault_info)(const void *cookie, struct adreno_smmu_fault_=
-info *info);
->      void (*set_stall)(const void *cookie, bool enabled);
->      void (*resume_translation)(const void *cookie, bool terminate);
-> +    void (*set_prr)(const void *cookie, phys_addr_t page_addr, bool set)=
-;
->  };
->
->  #endif /* __ADRENO_SMMU_PRIV_H */
-> --
-> 2.34.1
->
+-- 
+With best wishes
+Dmitry
 
