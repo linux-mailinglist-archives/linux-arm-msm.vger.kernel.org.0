@@ -1,75 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-24680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C29D091C7BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 23:00:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CEBDC91C7EA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 23:13:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 79A3B289813
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 21:00:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7217C281486
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 21:13:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7CE87346A;
-	Fri, 28 Jun 2024 21:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 536987BAEC;
+	Fri, 28 Jun 2024 21:13:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hYyhk1yR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA771CF8D;
-	Fri, 28 Jun 2024 21:00:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAAED1CF8D;
+	Fri, 28 Jun 2024 21:13:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719608452; cv=none; b=ubwN0xJeDjrVhW6ZsLSMSe7fGlIwDPFTIAvv06szM4ueEn/FxxE46KQOGoeoTrDzPEFqLv9TY9RF9XbdDQK3AGFh99/0GJsaHJFv8X2rawfWQHKbvcntLFhkaaGfYBApqoQVqy4udRsaTVzIjGUWYNslkBgsOtImUId8KgK5yz4=
+	t=1719609230; cv=none; b=Iqmlj58xnx6y7QJnjUCPzMJVKM7HFlNCOQ5UR/Z8nG/wLla7IMOdufgZRK6B0+aPzACoqHVqyW7lNH4nSeHkywMS0XmmAG0iUWUUL59mCup/r291+MnptKRfMyaHshR4WcppNvTjseiB32I4Eq6VRygeCmzUBx1Yq6At2fSByVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719608452; c=relaxed/simple;
-	bh=4ENreLtp0JXG6KC4XZho83qrfg7AYsbJoo/otV6WhxQ=;
+	s=arc-20240116; t=1719609230; c=relaxed/simple;
+	bh=Iryb2m+gPPfQ3XTaob5zRURXXDuc2yMHNXPEQAvj6n8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jp0zfpYwMQ84sDUqk2XlaqRb09fdSWFsVkkJPY0ipTh2I4fzHxdMxhlU8YP38sFaD9kyHNOiToWKpP8k0jCS4D15lHSLXttP1puj7oQO96uFU7xAgwpbRcCaSKnafehuqTyLmx3hTNITNiSS/3aMzvLJdFIMV25+LFLxlf3KgEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-71910dfb8c0so696675a12.3;
-        Fri, 28 Jun 2024 14:00:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719608450; x=1720213250;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LXeehienu24I1oRun6Bc8GBlxqPh5TZvh3eBHievpzY=;
-        b=IA+MSDg0D4IGKNMNQTq7Q8wGNTnesIXkCRQLRLZ+o23JDWmZX8GY5g2XZrrhhu921G
-         2VIkGSWrjXkT+N/zN5/iy8zgkKwQVzbMYV5DCWbkqXIOe45PVqFBXGcHCuMH1mtYRraU
-         jaKl69t/rRSQfCNGJ34NSAnoLxwtPcpyhG660cmpQRsZwT9ZmFw8j2G31DTwBCgj94Ng
-         OHVzgmy0mVKFjRkV2eXpseNk6/7XfGKnmhc8f6KI3Uc2BP6BApyspsreVVnVYmAliUrr
-         2WqTYx1FpNY4O1WaFRXgJwF4pb3VBroncGwD5KUlcHRVvEBq+5b8FHag8rbrcKBQfe0e
-         xP+g==
-X-Forwarded-Encrypted: i=1; AJvYcCU3ZEEde3S0rP+zwKKzTM8uVvZeyACNIuHSwdeB+duGt2bcbe0LglJI8ZRMOxPF3dxuqv+cEZuokj9KAco4apr0Pv9fOhmjCveM5SNurO5I1yAUSRo8qXQwMi2o9+qzzWU6JGHNyOBYolGkeFWm56WNFkWQqOFDJPhNP/TF+0NJyvTYcv3X2fJIy6yKWTsXIDuiGpsbl5rfIVhrNqMuSZJU+5c=
-X-Gm-Message-State: AOJu0YyGqlIzOgCXIg+MOJkiM/xLjAKj+e6JkGJQGs7pR+BX56xn9RC0
-	TWfXx3I7MOUs3TtUcWmEfMyobYJ/VQ7RRv+Lj+hTDNMW0phIO5q85eTj35GRVGeliA==
-X-Google-Smtp-Source: AGHT+IHw9iXrkQkLoNi1yZuF3G48W5le7cMVZ4zcoBmI7mhMnaaPbYHs2pihEzHYqtk8Kceiv93yzw==
-X-Received: by 2002:a05:6a20:8c8a:b0:1bd:2d53:35d5 with SMTP id adf61e73a8af0-1bd2d539600mr9998932637.9.1719608450326;
-        Fri, 28 Jun 2024 14:00:50 -0700 (PDT)
-Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7086207ed02sm1809877b3a.95.2024.06.28.14.00.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jun 2024 14:00:49 -0700 (PDT)
-Date: Sat, 29 Jun 2024 06:00:47 +0900
-From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>, quic_vbadigan@quicinc.com,
-	quic_skananth@quicinc.com, quic_nitegupt@quicinc.com,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: [PATCH v15 0/4] PCI: qcom: Add support for OPP
-Message-ID: <20240628210047.GB2206339@rocinante>
-References: <20240619-opp_support-v15-0-aa769a2173a3@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Te9YrYTHqaTxc7cagxRSDMf+i5KEaBQAHJTkuCsovDbz3CWKA5wVg7jFrgoPj/9N4gYGW4eDdw1psNPIszvuviKjo22fnOE2mETqzsJMLc8ye0WMG7Th5V5CmgdT0HHepIDVkzo4H1g7dJf4PxF7XZHpn7WIjs8KWxwZMtS1vPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hYyhk1yR; arc=none smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1719609228; x=1751145228;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Iryb2m+gPPfQ3XTaob5zRURXXDuc2yMHNXPEQAvj6n8=;
+  b=hYyhk1yRzY/TxNECXv2mJn7i1LD+eFP40w6q+ogkc4v0jxrwAiUU0tSF
+   zPoyj8w4lIqJ65CYDMiVWbxkLt/UrlBZJYg9HlQRxVboytCJDOaAeygw2
+   Gv0+x1auZB8255Qah4jcTRRwa9PwmWBtKhCCX8k51o3CbelkaJf+PtAAG
+   JW2eqfHf17NaMb/AAtePmBa15uPJEACmgoMKktQ0MLum4bGrzNp6RGllR
+   21BMYmRlx8tVXc39VSp7IcNiM619eWq7XZ8I+vMfljg6TXArrMiUl52mY
+   0lY66EP+myOHH79A/ueVP9WDxrnexKjVUNOG/PgfIazzoOpwnG/xmTVoO
+   Q==;
+X-CSE-ConnectionGUID: HH0QmtnCRa+suO1VVI8KuA==
+X-CSE-MsgGUID: /nYmtFpESUKE2KOsXv7Ldw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11117"; a="42226285"
+X-IronPort-AV: E=Sophos;i="6.09,170,1716274800"; 
+   d="scan'208";a="42226285"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jun 2024 14:13:44 -0700
+X-CSE-ConnectionGUID: boN5JxTlR36UuSKhRsTXaQ==
+X-CSE-MsgGUID: rUbbWsXOSXaE3yQ4xFmbHA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,170,1716274800"; 
+   d="scan'208";a="44838891"
+Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
+  by fmviesa008.fm.intel.com with ESMTP; 28 Jun 2024 14:13:41 -0700
+Received: from kbuild by 68891e0c336b with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1sNIuY-000IUI-18;
+	Fri, 28 Jun 2024 21:13:38 +0000
+Date: Sat, 29 Jun 2024 05:12:51 +0800
+From: kernel test robot <lkp@intel.com>
+To: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>, sboyd@kernel.org,
+	andersson@kernel.org, bjorn.andersson@linaro.org,
+	david.brown@linaro.org, devicetree@vger.kernel.org,
+	jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org, mark.rutland@arm.com,
+	mturquette@baylibre.com, ohad@wizery.com, robh@kernel.org,
+	sricharan@codeaurora.org
+Cc: oe-kbuild-all@lists.linux.dev, gokulsri@codeaurora.org
+Subject: Re: [PATCH v9 8/8] arm64: dts: qcom: Enable Q6v5 WCSS for ipq8074 SoC
+Message-ID: <202406290444.4W2Fba5X-lkp@intel.com>
+References: <20240621114659.2958170-9-quic_gokulsri@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,62 +84,50 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240619-opp_support-v15-0-aa769a2173a3@quicinc.com>
+In-Reply-To: <20240621114659.2958170-9-quic_gokulsri@quicinc.com>
 
-Hello,
+Hi Gokul,
 
-> This patch adds support for OPP to vote for the performance state of RPMH
-> power domain based upon PCIe speed it got enumerated.
-> 
-> QCOM Resource Power Manager-hardened (RPMh) is a hardware block which
-> maintains hardware state of a regulator by performing max aggregation of
-> the requests made by all of the processors.
-> 
-> PCIe controller can operate on different RPMh performance state of power
-> domain based up on the speed of the link. And this performance state varies
-> from target to target.
-> 
-> It is manadate to scale the performance state based up on the PCIe speed
-> link operates so that SoC can run under optimum power conditions.
-> 
-> Add Operating Performance Points(OPP) support to vote for RPMh state based
-> upon GEN speed link is operating.
-> 
-> Before link up PCIe driver will vote for the maximum performance state.
-> 
-> As now we are adding ICC BW vote in OPP, the ICC BW voting depends both
-> GEN speed and link width using opp-level to indicate the opp entry table
-> will be difficult.
-> 
-> In PCIe certain gen speeds like 2.5GT/s x2 & 5.0 GT/s X1 or 8.0 GT/s x2 &
-> 16GT/s x1 use same ICC bw if we use freq in the OPP table to represent the
-> PCIe speed number of PCIe entries can reduced.
-> 
-> So going back to use freq in the OPP table instead of level.
-> 
-> To access PCIe registers of the host controller and endpoint PCIe
-> BAR space, config space the CPU-PCIe ICC (interconnect) path should
-> be voted otherwise it may lead to NoC (Network on chip) timeout.
-> We are surviving because of other driver voting for this path.
-> 
-> As there is less access on this path compared to PCIe to mem path
-> add minimum vote i.e 1KBps bandwidth always which is sufficient enough
-> to keep the path active and is recommended by HW team.
-> 
-> In suspend to ram case there can be some DBI access. Except in suspend
-> to ram case disable CPU-PCIe ICC path after register space access
-> is done.
+kernel test robot noticed the following build warnings:
 
-Applied to controller/qcom, thank you!
+[auto build test WARNING on remoteproc/rproc-next]
+[also build test WARNING on clk/clk-next robh/for-next linus/master v6.10-rc5 next-20240627]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-[01/03] PCI: qcom: Add ICC bandwidth vote for CPU to PCIe path
-        https://git.kernel.org/pci/pci/c/18f331d9c6db
+url:    https://github.com/intel-lab-lkp/linux/commits/Gokul-Sriram-Palanisamy/remoteproc-qcom-Add-PRNG-proxy-clock/20240625-162317
+base:   git://git.kernel.org/pub/scm/linux/kernel/git/remoteproc/linux.git rproc-next
+patch link:    https://lore.kernel.org/r/20240621114659.2958170-9-quic_gokulsri%40quicinc.com
+patch subject: [PATCH v9 8/8] arm64: dts: qcom: Enable Q6v5 WCSS for ipq8074 SoC
+config: arm64-randconfig-051-20240627 (https://download.01.org/0day-ci/archive/20240629/202406290444.4W2Fba5X-lkp@intel.com/config)
+compiler: clang version 19.0.0git (https://github.com/llvm/llvm-project ad79a14c9e5ec4a369eed4adf567c22cc029863f)
+dtschema version: 2024.6.dev3+g650bf2d
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240629/202406290444.4W2Fba5X-lkp@intel.com/reproduce)
 
-[02/03] PCI: Bring the PCIe speed to MBps logic to new pcie_dev_speed_mbps()
-        https://git.kernel.org/pci/pci/c/4bf3029dc2a1
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202406290444.4W2Fba5X-lkp@intel.com/
 
-[03/03] PCI: qcom: Add OPP support to scale performance
-        https://git.kernel.org/pci/pci/c/78b5f6f8855e
+dtcheck warnings: (new ones prefixed by >>)
+   arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: phy@59000: 'vdda-pll-supply' is a required property
+   	from schema $id: http://devicetree.org/schemas/phy/qcom,qusb2-phy.yaml#
+   arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: phy@59000: 'vdda-phy-dpdm-supply' is a required property
+   	from schema $id: http://devicetree.org/schemas/phy/qcom,qusb2-phy.yaml#
+   arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: phy@79000: 'vdd-supply' is a required property
+   	from schema $id: http://devicetree.org/schemas/phy/qcom,qusb2-phy.yaml#
+   arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: phy@79000: 'vdda-pll-supply' is a required property
+   	from schema $id: http://devicetree.org/schemas/phy/qcom,qusb2-phy.yaml#
+   arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: phy@79000: 'vdda-phy-dpdm-supply' is a required property
+   	from schema $id: http://devicetree.org/schemas/phy/qcom,qusb2-phy.yaml#
+>> arch/arm64/boot/dts/qcom/ipq8074-hk01.dtb: /soc@0/remoteproc@cd00000: failed to match any schema with compatible: ['qcom,ipq8074-wcss-pil']
+--
+>> arch/arm64/boot/dts/qcom/ipq8074-hk10-c1.dtb: /soc@0/remoteproc@cd00000: failed to match any schema with compatible: ['qcom,ipq8074-wcss-pil']
+--
+>> arch/arm64/boot/dts/qcom/ipq8074-hk10-c2.dtb: /soc@0/remoteproc@cd00000: failed to match any schema with compatible: ['qcom,ipq8074-wcss-pil']
 
-	Krzysztof
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
