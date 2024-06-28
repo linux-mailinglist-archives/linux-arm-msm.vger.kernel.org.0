@@ -1,166 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-24604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D630B91BB82
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 11:32:28 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5269991BB99
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 11:38:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8FB8A283915
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 09:32:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A07EDB23263
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 09:38:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE75A15253D;
-	Fri, 28 Jun 2024 09:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 162D01553A0;
+	Fri, 28 Jun 2024 09:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MWqw/d7m"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="akP5WYVI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92BA14B97E;
-	Fri, 28 Jun 2024 09:32:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFF015358F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2024 09:37:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719567142; cv=none; b=CzDTffc4X6lCe8D7UYDceIjDPbSoq4RlkVqfPIknKjkHGr7I63EJdf8Uj2lxW4G22wMOvShW3fYxelPWihYz/FP0mu6Ac1LayaFGcNVCZrNR4rtJ1FndNivFJOsesVRw2HJsPqta8AHKNxQZbGGrzU0pJfryHpRyl27MHVTaoRg=
+	t=1719567446; cv=none; b=CP07itgFHPZ+TpYIzrSi8lFoOYcPmQoI/jnmvDcaenlqVknNSZ0WRtcCoajMRWrSiJhIQTdxINgjx4cEYaswUSdaKeiwjCIc9kzBCHk35FI+vroHgam4W1jaw+GUZLEKCVmulN8lu8EclwEqG7x8HhZud38o1KsqHxHyH24ulZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719567142; c=relaxed/simple;
-	bh=tZ4mnqBxiyX3UIhp44aHn7n1X6SzClOpCAotFkByDYA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TNrGvDdbbjCn12uvL/fbOyj1/pmkZVYt4xDEd3pN1q4D1JKTG7AJeSgf0I3zXi6v3tr2aYsRP1jwgAt2eUS6JBYJxZXUGD4PS748Gr7dB0kYbQNNT1v6FOvq1yU93wu5pNSwl7yjkQcGbkW3AppPSLCED+aseTuHEB+3D21IMQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MWqw/d7m; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E96AC32781;
-	Fri, 28 Jun 2024 09:32:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719567142;
-	bh=tZ4mnqBxiyX3UIhp44aHn7n1X6SzClOpCAotFkByDYA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=MWqw/d7mONr2rdDnz+55RluFb39+8ksf6cbjudE5jfKJOtZf4P+aMeY8kCeDl/3Yq
-	 XqwFmC4pqL2TSfBLEPG0GXJiL+Guakcb9wN0U59RX7pKpmMiW8LAQtm124j/ltpgXe
-	 tinmMKlOzd8E9vci/XzDGumcZo7DjK0BsyNL3Ae8phoojPdS9bD28TXcXIRQlv4TuB
-	 ysccbjc9tUuNYxHn/FLaa2J3YgIoftEvmNJ0HmAhjM7c5blhm5hT9TXeNLlQdd+XAz
-	 z4MNTUrFRxtcBvhIzouXoCyb7/dCQFiSSoffJStc3Wgna1OKHNproz6Tfh2Jrq1xfo
-	 3p9mdYB6le9WA==
-Message-ID: <88588f06-66e1-47a9-b5ab-7849b1c53fb0@kernel.org>
-Date: Fri, 28 Jun 2024 12:32:17 +0300
+	s=arc-20240116; t=1719567446; c=relaxed/simple;
+	bh=WtRuAHHT69yqU4gURYurNYUVEyPdprvqJ3lgNWHjmeM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=n5K5h3XCttzr6wU5GpC9ycH89flQxa0hGYIEICdOEnih/lunQ6YSFKJeo5zML1f4gx95JL/+4t2bkpoGRZrssVCZfKOgzysD/ZGaGh8uD3rjlLsm5+niUNjnu/ipcFLj5hwG7fVUlKIGVyKc2UlI2XwcZVgAk9AqyjVMJRVd+eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=akP5WYVI; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1f9b523a15cso2828925ad.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2024 02:37:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719567444; x=1720172244; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=E4neoCm98447Of47CTz3xukfSh+rNUh5YPe17PUMr38=;
+        b=akP5WYVIH6dR3sUuUux1YV4Yp8I9s74v8qRnqZJiimVr6xrqXclxBv7lIwYUml2GWQ
+         b1D0kkcdWuyx9TDeoxfpIKr0ggS+iW3ItAILAD+243daa8sfPplIoEqzzlEunIqCxubM
+         YhZT2dO1TkDAgI+HTeao8kaLGZCJhSYMAZMaI3APpXYrr57DyNEPZXXQ9BwBPwYQ8oKi
+         kLoeYVV1AFbNzi7ArqZxNM+NtmobgL8TE2TD/NLdXlgzZ9qhw5nLGNKhwokI9CMaRQAY
+         GqtxPW8fa11bIJTnzxCedGPPyvVCgZtc9m3bMwIi5N3tpsyRS28td89sSUXH0JtEW7xD
+         RkwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719567444; x=1720172244;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=E4neoCm98447Of47CTz3xukfSh+rNUh5YPe17PUMr38=;
+        b=qcZ8Kfuauu+y6dWLooQJossACq4xMCkpxVoTQIJ14Y1b9J/H3IU44+GhwuAdkTWFPV
+         EgabsIy58jBPYrXEY91hBhi1L+AF5cmfSwqUNKdzJMg8AeKxbsNZx+4yuzGp1L0yK4/F
+         +DS4wootml+o7KYTFAG8YFQfKZFGqhBkXYC0tMVcWUbeatQsXJ2geUdik5ENWZ4pWWvz
+         CZz/aHT+GbyyUSPGRXXdotnIkNMNgT52y3g/wW6OoThWYz/FYPN1WleIKAaiAYkxL4yM
+         jCXyg+ikrOs9bxWziduNVScpjjCJlFLkz5Ar7QUQGsJtcTZb4I/fPTw3UGh+hIC8u+B9
+         2nKg==
+X-Forwarded-Encrypted: i=1; AJvYcCXxDUjqAC7yQT/z0gXwaP31rw1gNPNDIPBr9W/ImfrKj9qkieQlX2sqcIAqxbczhVQuXCDP3aTn/uDkLSdtlrU76kMpxOYb1Qevf/MM0g==
+X-Gm-Message-State: AOJu0Yxh6E8pJqzrI6nuNUoVbwEMoYvF2+tPsjYAUnjmUc43rG62I2Oz
+	8x2NjYJdIl2kwf5GiXMp92R7mkhLD2DCo01ItYWbbe1d66n2t0zTIb8OIY6oOQ==
+X-Google-Smtp-Source: AGHT+IE3+1r7knoAgAfXjjgZxmLqxm7zgs1EZKXQMbrgilvN/pdCxQN53ez7f2Ildp9w+InUibDLYA==
+X-Received: by 2002:a17:902:fc8d:b0:1f6:3580:65c9 with SMTP id d9443c01a7336-1fac7f03416mr17246725ad.26.1719567443476;
+        Fri, 28 Jun 2024 02:37:23 -0700 (PDT)
+Received: from thinkpad ([120.60.52.94])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fac1568ea7sm11025415ad.186.2024.06.28.02.37.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Jun 2024 02:37:23 -0700 (PDT)
+Date: Fri, 28 Jun 2024 15:07:14 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: "Alex G." <mr.nuke.me@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org,
+	quic_kathirav@quicinc.com, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 8/8] arm64: dts: qcom: ipq9574: add PCIe2 and PCIe3
+ nodes
+Message-ID: <20240628093714.GD54528@thinkpad>
+References: <20240501040800.1542805-1-mr.nuke.me@gmail.com>
+ <20240501040800.1542805-9-mr.nuke.me@gmail.com>
+ <20240624041832.GD10250@thinkpad>
+ <79e57338-1671-4574-b1e2-3b3aa9045ec9@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] interconnect: qcom: Add MSM8953 driver
-To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, Vladimir Lypak <vladimir.lypak@gmail.com>
-References: <20240627-msm8953-interconnect-v2-0-b4940a8eab69@mainlining.org>
- <20240627-msm8953-interconnect-v2-2-b4940a8eab69@mainlining.org>
-Content-Language: en-US
-From: Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20240627-msm8953-interconnect-v2-2-b4940a8eab69@mainlining.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <79e57338-1671-4574-b1e2-3b3aa9045ec9@gmail.com>
 
-On 27.06.24 18:08, Barnabás Czémán wrote:
-> From: Vladimir Lypak <vladimir.lypak@gmail.com>
+On Thu, Jun 27, 2024 at 11:39:10PM -0500, Alex G. wrote:
 > 
-> Add driver for interconnect busses found in MSM8953 based platforms.
-> The topology consists of four NoCs that are partially controlled by a
-> RPM processor.
 > 
-> Note that one of NoCs (System NoC) has a counterpart (System NoC MM)
-> that is modelled as child device to avoid resource conflicts, since it
-> uses same MMIO space for configuration.
+> On 6/23/24 23:18, Manivannan Sadhasivam wrote:
+> > On Tue, Apr 30, 2024 at 11:07:50PM -0500, Alexandru Gagniuc wrote:
+> > > On ipq9574, there are 4 PCIe controllers. Describe the pcie2 and pcie3
+> > > nodes, and their PHYs in devicetree.
+> > > 
+> > > The pcie0 and pcie1 controllers use a gen3x1 PHY, which is not
+> > > currently supported. Hence, only pcie2 and pcie3 are described. Only
+> > > pcie2 was tested because my devboard only has conenctions to pcie2.
+> > > 
+> > > Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+> > > ---
+> > >   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 178 +++++++++++++++++++++++++-
+> > >   1 file changed, 176 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> > > index 7f2e5cbf3bbb..c391886cf9ab 100644
+> > > --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> > > @@ -300,8 +300,8 @@ gcc: clock-controller@1800000 {
+> > >   				 <0>,
+> > >   				 <0>,
+> > >   				 <0>,
+> > > -				 <0>,
+> > > -				 <0>,
+> > > +				 <&pcie2_phy>,
+> > > +				 <&pcie3_phy>,
+> > >   				 <0>;
+> > >   			#clock-cells = <1>;
+> > >   			#reset-cells = <1>;
+> > > @@ -745,6 +745,180 @@ frame@b128000 {
+> > >   				status = "disabled";
+> > >   			};
+> > >   		};
+> > > +
+> > > +		pcie2_phy: phy@8c000 {
+> > > +			compatible = "qcom,ipq9574-qmp-gen3x2-pcie-phy";
+> > > +			reg = <0x0008c000 0x14f4>;
+> > > +
+> > > +			clocks = <&gcc GCC_PCIE2_AUX_CLK>,
+> > > +				 <&gcc GCC_PCIE2_AHB_CLK>,
+> > > +				 <&gcc GCC_PCIE2_PIPE_CLK>;
+> > > +			clock-names = "aux",
+> > > +				      "cfg_ahb",
+> > > +				      "pipe";
+> > > +
+> > > +			clock-output-names = "pcie_phy2_pipe_clk";
+> > > +			#clock-cells = <0>;
+> > > +			#phy-cells = <0>;
+> > > +
+> > > +			resets = <&gcc GCC_PCIE2_PHY_BCR>,
+> > > +				 <&gcc GCC_PCIE2PHY_PHY_BCR>;
+> > > +			reset-names = "phy",
+> > > +				      "common";
+> > > +			status = "disabled";
+> > > +		};
+> > > +
+> > > +		pcie3_phy: phy@f4000 {
+> > > +			compatible = "qcom,ipq9574-qmp-gen3x2-pcie-phy";
+> > > +			reg = <0x000f4000 0x14f4>;
+> > > +
+> > > +			clocks = <&gcc GCC_PCIE3_AUX_CLK>,
+> > > +				 <&gcc GCC_PCIE3_AHB_CLK>,
+> > > +				 <&gcc GCC_PCIE3_PIPE_CLK>;
+> > > +			clock-names = "aux",
+> > > +				      "cfg_ahb",
+> > > +				      "pipe";
+> > > +
+> > > +			clock-output-names = "pcie_phy3_pipe_clk";
+> > > +			#clock-cells = <0>;
+> > > +			#phy-cells = <0>;
+> > > +
+> > > +			resets = <&gcc GCC_PCIE3_PHY_BCR>,
+> > > +				 <&gcc GCC_PCIE3PHY_PHY_BCR>;
+> > > +			reset-names = "phy",
+> > > +				      "common";
+> > > +			status = "disabled";
+> > > +		};
+> > > +
+> > > +		/* TODO: Populate pcie0/pcie1 when gen3x1 phy support is added. */
+> > > +
+> > > +		pcie2: pcie@20000000 {
+> > > +			compatible = "qcom,pcie-ipq9574";
+> > > +			reg = <0x20000000 0xf1d>,
+> > > +			      <0x20000f20 0xa8>,
+> > > +			      <0x20001000 0x1000>,
+> > > +			      <0x00088000 0x4000>,
+> > > +			      <0x20100000 0x1000>;
+> > > +			reg-names = "dbi", "elbi", "atu", "parf", "config";
+> > > +
+> > > +			ranges = <0x81000000 0x0 0x20200000 0x20200000 0x0 0x00100000>,
+> > > +				 <0x82000000 0x0 0x20300000 0x20300000 0x0 0x07d00000>;
+> > 
+> > Please cross check 'ranges' property with other platforms.
+> > 
+> <snip>
+> > 
+> > Cross check 'interrupt-map' as well.
 > 
-> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-> ---
->   drivers/interconnect/qcom/Kconfig   |    9 +
->   drivers/interconnect/qcom/Makefile  |    2 +
->   drivers/interconnect/qcom/msm8953.c | 1325 +++++++++++++++++++++++++++++++++++
->   3 files changed, 1336 insertions(+)
+> I'm not seeing the smoking gun. What am I looking for?
 > 
-[..]
-> +
-> +static struct qcom_icc_node * const msm8953_pcnoc_nodes[] = {
-> +	[MAS_SPDM] = &mas_spdm,
-> +	[MAS_BLSP_1] = &mas_blsp_1,
-> +	[MAS_BLSP_2] = &mas_blsp_2,
-> +	[MAS_USB3] = &mas_usb3,
-> +	[MAS_CRYPTO] = &mas_crypto,
-> +	[MAS_SDCC_1] = &mas_sdcc_1,
-> +	[MAS_SDCC_2] = &mas_sdcc_2,
-> +	[MAS_SNOC_PCNOC] = &mas_snoc_pcnoc,
-> +	[PCNOC_M_0] = &pcnoc_m_0,
-> +	[PCNOC_M_1] = &pcnoc_m_1,
-> +	[PCNOC_INT_1] = &pcnoc_int_1,
-> +	[PCNOC_INT_2] = &pcnoc_int_2,
-> +	[PCNOC_S_0] = &pcnoc_s_0,
-> +	[PCNOC_S_1] = &pcnoc_s_1,
-> +	[PCNOC_S_2] = &pcnoc_s_2,
-> +	[PCNOC_S_3] = &pcnoc_s_3,
-> +	[PCNOC_S_4] = &pcnoc_s_4,
-> +	[PCNOC_S_6] = &pcnoc_s_6,
-> +	[PCNOC_S_7] = &pcnoc_s_7,
-> +	[PCNOC_S_8] = &pcnoc_s_8,
-> +	[PCNOC_S_9] = &pcnoc_s_9,
-> +	[SLV_SPDM] = &slv_spdm,
-> +	[SLV_PDM] = &slv_pdm,
-> +	[SLV_TCSR] = &slv_tcsr,
-> +	[SLV_SNOC_CFG] = &slv_snoc_cfg,
-> +	[SLV_TLMM] = &slv_tlmm,
-> +	[SLV_MESSAGE_RAM] = &slv_message_ram,
-> +	[SLV_BLSP_1] = &slv_blsp_1,
-> +	[SLV_BLSP_2] = &slv_blsp_2,
-> +	[SLV_PRNG] = &slv_prng,
-> +	[SLV_CAMERA_SS_CFG] = &slv_camera_ss_cfg,
-> +	[SLV_DISP_SS_CFG] = &slv_disp_ss_cfg,
-> +	[SLV_VENUS_CFG] = &slv_venus_cfg,
-> +	[SLV_GPU_CFG] = &slv_gpu_cfg,
-> +	[SLV_SDCC_1] = &slv_sdcc_1,
-> +	[SLV_SDCC_2] = &slv_sdcc_2,
-> +	[SLV_CRYPTO_0_CFG] = &slv_crypto_0_cfg,
-> +	[SLV_PMIC_ARB] = &slv_pmic_arb,
-> +	[SLV_USB3] = &slv_usb3,
-> +	[SLV_IPA_CFG] = &slv_ipa_cfg,
-> +	[SLV_TCU] = &slv_tcu,
-> +	[SLV_PCNOC_SNOC] = &slv_pcnoc_snoc,
-> +};
-> +
-> +static const char * const msm8953_pcnoc_bus_clocks[] = {
-> +	"bus", "bus_a"
-> +};
 
-This seems to be unused?
+Ah, nvm. I misread the '#address-cells' property of the GIC. This is fine.
 
-BR,
-Georgi
+- Mani
 
-> +
-> +static const char * const msm8953_pcnoc_intf_clocks[] = {
-> +	"pcnoc_usb3_axi"
-> +};
-> +
-> +static const struct regmap_config msm8953_pcnoc_regmap_config = {
-> +	.fast_io = true,
-> +	.max_register = 0x12080,
-> +	.reg_bits = 32,
-> +	.reg_stride = 4,
-> +	.val_bits = 32,
-> +};
-> +
-> +static const struct qcom_icc_desc msm8953_pcnoc = {
-> +	.type = QCOM_ICC_NOC,
-> +	.bus_clk_desc = &bus_0_clk,
-> +	.intf_clocks = msm8953_pcnoc_intf_clocks,
-> +	.num_intf_clocks = ARRAY_SIZE(msm8953_pcnoc_intf_clocks),
-> +	.nodes = msm8953_pcnoc_nodes,
-> +	.num_nodes = ARRAY_SIZE(msm8953_pcnoc_nodes),
-> +	.qos_offset = 0x7000,
-> +	.regmap_cfg = &msm8953_pcnoc_regmap_config,
-> +};
-
+-- 
+மணிவண்ணன் சதாசிவம்
 
