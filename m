@@ -1,212 +1,257 @@
-Return-Path: <linux-arm-msm+bounces-24654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1DC391C2D1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 17:42:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 560D691C2D5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 17:44:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 114A91C22638
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 15:42:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0D3D428180D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 15:44:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 227E11CB301;
-	Fri, 28 Jun 2024 15:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BC571C688B;
+	Fri, 28 Jun 2024 15:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mtExm6gk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qr0HVKD2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7291C9ED8;
-	Fri, 28 Jun 2024 15:41:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1E91C232A;
+	Fri, 28 Jun 2024 15:44:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719589320; cv=none; b=jQALLH7qoMgvu8nC2zSYditikeI2yBVFQbnddx4BV1XkyDZ131KIxkTyTpoviNWoB+jmV174nAZ4S3hDeiIUgqWWez9OswXIF7TgdWMJXoedSVT7E1sqhezp0zgoBFvg1BXr965SyX1oBK5gQsDoVnqTfJp7QgBwlFJcD4StJJo=
+	t=1719589464; cv=none; b=cZWaWIjAoB3R+mB6/y1CFbmoTJk38CD9ZcXzVl8gwDVEJdEtK3g/OotOSp2b9S5RNX6b+CEkqV2KpQzHIY4JsvBXXVE/3F35YOT8+4Wsr1RNyg2xOjJ6s+L98//KGNRzAUrt7AS+BAb8EbES4FqIVZMXTzMmsXVYqfMDS9ts7wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719589320; c=relaxed/simple;
-	bh=G38+k3BVa6YCeaehiQF1OAIDCC053l6ZWu3ZUmml0NY=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=ujj2jCPXohEAVMFaFGo8dpCKPHz8sRrCg34jQzEAu2S7V9QG7yw2ToNg+o96CwhdNsRUs1pR5LfnMOARvVpkfGIva7Ul+sBOnbjsJvF1nmgVn146Oy+ITP0C1fByyfgpNgPc1Nv7XtCN5wOd3XBP3SciLu0zs8wyugfKdXxY6/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mtExm6gk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350F2C116B1;
-	Fri, 28 Jun 2024 15:41:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719589319;
-	bh=G38+k3BVa6YCeaehiQF1OAIDCC053l6ZWu3ZUmml0NY=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=mtExm6gkdi65UD89ZhcHb8ePMuFBqdJ/EGAyZMTtkN8TrzXXC1Py933+Mkp5ruhN+
-	 Tr7oj15qki6hWcqmC6NZ4dstcEYkxRACh02ihulmScXrqQ42kcQqgBupT/cfAJnzqq
-	 UCmWOjKPjh8G0gYFpbB8txUeTcIJXq6Lqr0IedVb7wknzMwtwDPkBrD7XWte1LyLya
-	 Ld91r+HKvNu5HnXr9iuqroxcftVyYq6i0cAXdQCbze7RPglSZ9f7GSToTZEMf6Be8h
-	 apX0KVy30TFceGrpBpuCIPchFibOQ9MOxrHj6kai/a929y8kwUxb1xDiSk9Tm2rIC8
-	 S7IR+LSEpAdKg==
-Date: Fri, 28 Jun 2024 09:41:58 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1719589464; c=relaxed/simple;
+	bh=6baYHAndBaXBKtbguN4+Q1PPL5X8wWGWVfBYKK443KA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XyLVMERzZZQDQJRtFDWKgqy+1YgFvhrZ4CJ5rX80g1n6YUYYajEPdnFnszgCjP99YZvgQRT1CLpLWglIc5TcfQ/zPBYi9DiaVxf8wlH+/VaIr064vI9ROxHkDbvX5GEgjTQ1nc7A3H2/fmjfrA7+UQxu2CfUvTM1Xvz++Oq3Tqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qr0HVKD2; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-57cbc66a0a6so114790a12.1;
+        Fri, 28 Jun 2024 08:44:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1719589460; x=1720194260; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0HC6tl9tCbssmE3/Q/6kzuGmrgE8lN7GRWhwmyhOUQU=;
+        b=Qr0HVKD24m13jjacNaQ2NfWuvryB7hE3WaFePF06ky2zGQtPP0RYmzjF9XUN7ffxZN
+         1SfIk4UwpV7z8SaLIOrRMiKHIXWpceA8drvKui9QyXNc94ppKT7MtqKp7i0V9zNrS9fI
+         B1wTg7yjSqonSCUP3RWH9rdm4cR5F7ZLHsehjFNZHAyfs+scQLiklqd4FuhCde6lc+jr
+         ULq51FQcd0JsIO48sP7CGIhxxZS5cQR6j3xm9tKL6TNQVXWrJ+FSiQgOSQU7hjNQbCrG
+         iYvDIuT12RcAhSvyF1Tc8MaEi2F3DsqPQPvpejOHrchd+VtXuPyYm2nBGQxRK4d70Od0
+         r8Ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719589460; x=1720194260;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0HC6tl9tCbssmE3/Q/6kzuGmrgE8lN7GRWhwmyhOUQU=;
+        b=xG98CvgjT0arBgUHSBCrZQikmgSuYNBu+ecza5GQU0XWoCURh3EgiRs1k91stRMuDL
+         vOyqANcQAuTJkOP8iWnAWjQ1Il5/Di6aihJ86gVFfYJ9UdSYCAVrXSP5UkNznNa2maKm
+         FUsYTlmU+dVNqXnjm5yQhUZQ8UBGGvw3vbAdvM46LI65zA1H8istPRj9DQgYH4erOHQQ
+         M5y0iW83fklmZk082D1QB39XqceAKbYkwA//eZZUuHD7GhU4Z7DnrOgBVRXE7/oWJBQ+
+         wgxGDZelLepuKylqL2zfFlPoHXlPB1o6FAJoHJNLbjDx4CwOLoS1YQIZZZs+67BpoaPx
+         kQcw==
+X-Forwarded-Encrypted: i=1; AJvYcCXiqspnErfbmVrDHYI6+VnMNd9fDiUUfZ78bD48k0ukdNO1MuJLtyC1TYF+LhlIwjpZjuLkdE9pELR5BiB1H8mXYctkj7uRvyQyCnlNiwibWIn4Dv8cDbtvwVCRWQJpQIw5on7N9c3Qy34Ndw==
+X-Gm-Message-State: AOJu0YyldebkqwHZqo2c+dmjD8dRB8lPl5o1dcqUzbv20/TFTyMQK1Zi
+	j+geReY5dU53FhnLewfP43pdiwuTYYYqkIFssNoOqh5vCl0ExpkuCC7dBra6En1qy7cY/DV/cNW
+	mOYqBlS5GpQa33KQHv6mce5p8qVM=
+X-Google-Smtp-Source: AGHT+IGItWItOlNrtDqTAzzndsotYDbe2xVnarK09JySPML+dYHRvTB1nBEPxTE6oniunHMczL8ARP6qrdKU2eX5xec=
+X-Received: by 2002:a05:6402:5246:b0:57d:4a0d:d597 with SMTP id
+ 4fb4d7f45d1cf-5865c3f7b12mr1836505a12.12.1719589460233; Fri, 28 Jun 2024
+ 08:44:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Xilin Wu <wuxilin123@gmail.com>
-Cc: Conor Dooley <conor+dt@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Abel Vesa <abel.vesa@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Johan Hovold <johan+linaro@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-In-Reply-To: <20240628-asus-vivobook-s15-v1-0-92cb39f3f166@gmail.com>
-References: <20240628-asus-vivobook-s15-v1-0-92cb39f3f166@gmail.com>
-Message-Id: <171958905236.3123036.1526837699366043080.robh@kernel.org>
-Subject: Re: [PATCH RESEND 0/2] Introduce ASUS Vivobook S 15
+References: <20240628140435.1652374-1-quic_bibekkum@quicinc.com>
+ <20240628140435.1652374-7-quic_bibekkum@quicinc.com> <CAF6AEGvroi8rJimFv95tkWmRFa5_aTpBJ7GFcRAuZpLGdSyEYQ@mail.gmail.com>
+ <0650ba0a-4453-4e2d-8a76-0f396ac1999c@quicinc.com>
+In-Reply-To: <0650ba0a-4453-4e2d-8a76-0f396ac1999c@quicinc.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Fri, 28 Jun 2024 08:44:08 -0700
+Message-ID: <CAF6AEGv_9e-TDW1r0N4-db6pY_aV_EZFqrpNbATVS5Vy6+fs1g@mail.gmail.com>
+Subject: Re: [PATCH v13 6/6] iommu/arm-smmu: add support for PRR bit setup
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, jgg@ziepe.ca, 
+	jsnitsel@redhat.com, robh@kernel.org, krzysztof.kozlowski@linaro.org, 
+	quic_c_gdjako@quicinc.com, dmitry.baryshkov@linaro.org, 
+	konrad.dybcio@linaro.org, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Fri, Jun 28, 2024 at 8:10=E2=80=AFAM Bibek Kumar Patro
+<quic_bibekkum@quicinc.com> wrote:
+>
+>
+>
+> On 6/28/2024 7:47 PM, Rob Clark wrote:
+> > On Fri, Jun 28, 2024 at 7:05=E2=80=AFAM Bibek Kumar Patro
+> > <quic_bibekkum@quicinc.com> wrote:
+> >>
+> >> Add an adreno-smmu-priv interface for drm/msm to call
+> >> into arm-smmu-qcom and initiate the PRR bit setup or reset
+> >> sequence as per request.
+> >>
+> >> This will be used by GPU to setup the PRR bit and related
+> >> configuration registers through adreno-smmu private
+> >> interface instead of directly poking the smmu hardware.
+> >>
+> >> Suggested-by: Rob Clark <robdclark@gmail.com>
+> >> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+> >> ---
+> >>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 23 ++++++++++++++++++++=
+++
+> >>   drivers/iommu/arm/arm-smmu/arm-smmu.h      |  2 ++
+> >>   include/linux/adreno-smmu-priv.h           |  6 +++++-
+> >>   3 files changed, 30 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iomm=
+u/arm/arm-smmu/arm-smmu-qcom.c
+> >> index bd101a161d04..64571a1c47b8 100644
+> >> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >> @@ -28,6 +28,7 @@
+> >>   #define PREFETCH_SHALLOW       (1 << PREFETCH_SHIFT)
+> >>   #define PREFETCH_MODERATE      (2 << PREFETCH_SHIFT)
+> >>   #define PREFETCH_DEEP          (3 << PREFETCH_SHIFT)
+> >> +#define GFX_ACTLR_PRR          (1 << 5)
+> >>
+> >>   static const struct actlr_config sc7280_apps_actlr_cfg[] =3D {
+> >>          { 0x0800, 0x04e0, PREFETCH_DEFAULT | CMTLB },
+> >> @@ -235,6 +236,27 @@ static void qcom_adreno_smmu_resume_translation(c=
+onst void *cookie, bool termina
+> >>          arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
+> >>   }
+> >>
+> >> +static void qcom_adreno_smmu_set_prr(const void *cookie, phys_addr_t =
+page_addr, bool set)
+> >> +{
+> >> +       struct arm_smmu_domain *smmu_domain =3D (void *)cookie;
+> >> +       struct arm_smmu_cfg *cfg =3D &smmu_domain->cfg;
+> >> +       struct arm_smmu_device *smmu =3D smmu_domain->smmu;
+> >> +       u32 reg =3D 0;
+> >> +
+> >> +       writel_relaxed(lower_32_bits(page_addr),
+> >> +                               smmu->base + ARM_SMMU_GFX_PRR_CFG_LADD=
+R);
+> >> +
+> >> +       writel_relaxed(upper_32_bits(page_addr),
+> >> +                               smmu->base + ARM_SMMU_GFX_PRR_CFG_UADD=
+R);
+> >> +
+> >> +       reg =3D  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR)=
+;
+> >> +       reg &=3D ~GFX_ACTLR_PRR;
+> >> +       if (set)
+> >> +               reg |=3D FIELD_PREP(GFX_ACTLR_PRR, 1);
+> >> +       arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
+> >> +
+> >
+> > nit, extra line
+> >
+>
+> Ack, will remove this. Thanks for pointing out.
+>
+> > Also, if you passed a `struct page *` instead, then you could drop the
+> > bool param, ie. passing NULL for the page would disable PRR.  But I
+> > can go either way if others have a strong preference for phys_addr_t.
+> >
+>
+> Oh okay, this looks simple to reset the prr bit.
+> But since this page is allocated and is used inside gfx driver
+> before being utilized for prr bit operation, would it be safe for
+> drm/gfx driver to keep a reference to this page in smmu driver?
+>
+> Since we only need the page address for configuring the
+> CFG_UADDR/CFG_LADDR registers so passed the phys_addr_t.
 
-On Fri, 28 Jun 2024 19:49:33 +0800, Xilin Wu wrote:
-> ASUS Vivobook S 15 is a laptop based on the Qualcomm Snapdragon X Elite
-> SoC (X1E78100). This series adds initial support for the device.
-> 
-> Currently working features:
-> 
-> - CPU frequency scaling up to 3.4GHz
-> - NVMe storage on PCIe 6a (capable of Gen4x4, currently limited to Gen4x2)
-> - Keyboard and touchpad
-> - WCN7850 Wi-Fi
-> - Two Type-C ports on the left side
-> - internal eDP display
-> - ADSP and CDSP remoteprocs
-> 
-> Some features which can get working with out of tree patches:
-> 
-> - GPU [1]
-> - Bluetooth [2]
-> 
-> Notably not working features:
-> 
-> - Battery monitoring via battmgr
-> - Orientation switching and altmode on the Type-C ports (USB4 retimer driver needed?)
-> - Two USB Type-A ports on the right side (dwc3 multiport controller)
-> - Front camera
-> - SD card slot
-> - HDMI connector (using a Parade PS186 DP 1.4 to HDMI 2.0 converter)
-> - USB4 and the retimer (Parade PS8830?)
-> - Anything using the EC
-> 
-> Dump of the ACPI tables could be found here: [3]
-> 
-> [1] https://lore.kernel.org/all/20240623110753.141400-1-quic_akhilpo@quicinc.com/
-> [2] https://git.codelinaro.org/abel.vesa/linux/-/commits/topic/b4/x1e80100-bt
-> [3] https://github.com/aarch64-laptops/build/pull/103
-> 
-> Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
-> ---
-> Changes in v2:
-> - EDITME: describe what is new in this series revision.
-> - EDITME: use bulletpoints and terse descriptions.
-> - Link to v1: https://lore.kernel.org/r/20240628-asus-vivobook-s15-v1-0-2a1e4571b8ab@gmail.com
-> 
-> ---
-> Xilin Wu (2):
->       dt-bindings: arm: qcom: Add ASUS Vivobook S 15
->       arm64: dts: qcom: Add device tree for ASUS Vivobook S 15
-> 
->  Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
->  arch/arm64/boot/dts/qcom/Makefile                  |   1 +
->  .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   | 613 +++++++++++++++++++++
->  3 files changed, 615 insertions(+)
-> ---
-> base-commit: 642a16ca7994a50d7de85715996a8ce171a5bdfb
-> change-id: 20240628-asus-vivobook-s15-72a497863168
-> 
-> Best regards,
-> --
-> Xilin Wu <wuxilin123@gmail.com>
-> 
-> 
-> 
+I don't think the smmu driver needs to keep a reference to the page..
+we can just say it is the responsibility of the drm driver to call
+set_prr(NULL) before freeing the page
 
+BR,
+-R
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y qcom/x1e80100-asus-vivobook-s15.dtb' for 20240628-asus-vivobook-s15-v1-0-92cb39f3f166@gmail.com:
-
-arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: domain-idle-states: cluster-sleep-0: 'idle-state-name' does not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/power/domain-idle-state.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: domain-idle-states: cluster-sleep-1: 'idle-state-name' does not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/power/domain-idle-state.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: thermal-sensor@c271000: compatible: 'oneOf' conditional failed, one must be fixed:
-	['qcom,x1e80100-tsens', 'qcom,tsens-v2'] is too long
-	'qcom,x1e80100-tsens' is not one of ['qcom,ipq8064-tsens', 'qcom,msm8960-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,mdm9607-tsens', 'qcom,msm8226-tsens', 'qcom,msm8909-tsens', 'qcom,msm8916-tsens', 'qcom,msm8939-tsens', 'qcom,msm8974-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,msm8956-tsens', 'qcom,msm8976-tsens', 'qcom,qcs404-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,msm8953-tsens', 'qcom,msm8996-tsens', 'qcom,msm8998-tsens', 'qcom,qcm2290-tsens', 'qcom,sa8775p-tsens', 'qcom,sc7180-tsens', 'qcom,sc7280-tsens', 'qcom,sc8180x-tsens', 'qcom,sc8280xp-tsens', 'qcom,sdm630-tsens', 'qcom,sdm845-tsens', 'qcom,sm6115-tsens', 'qcom,sm6350-tsens', 'qcom,sm6375-tsens', 'qcom,sm8150-tsens', 'qcom,sm8250-tsens', 'qcom,sm8350-tsens', 'qcom,sm8450-tsens', 'qcom,sm8550-tsens', 'qcom,sm8650-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,ipq8074-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,ipq9574-tsens']
-	'qcom,tsens-v0_1' was expected
-	'qcom,tsens-v1' was expected
-	'qcom,ipq8074-tsens' was expected
-	from schema $id: http://devicetree.org/schemas/thermal/qcom-tsens.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: /soc@0/thermal-sensor@c271000: failed to match any schema with compatible: ['qcom,x1e80100-tsens', 'qcom,tsens-v2']
-arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: thermal-sensor@c272000: compatible: 'oneOf' conditional failed, one must be fixed:
-	['qcom,x1e80100-tsens', 'qcom,tsens-v2'] is too long
-	'qcom,x1e80100-tsens' is not one of ['qcom,ipq8064-tsens', 'qcom,msm8960-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,mdm9607-tsens', 'qcom,msm8226-tsens', 'qcom,msm8909-tsens', 'qcom,msm8916-tsens', 'qcom,msm8939-tsens', 'qcom,msm8974-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,msm8956-tsens', 'qcom,msm8976-tsens', 'qcom,qcs404-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,msm8953-tsens', 'qcom,msm8996-tsens', 'qcom,msm8998-tsens', 'qcom,qcm2290-tsens', 'qcom,sa8775p-tsens', 'qcom,sc7180-tsens', 'qcom,sc7280-tsens', 'qcom,sc8180x-tsens', 'qcom,sc8280xp-tsens', 'qcom,sdm630-tsens', 'qcom,sdm845-tsens', 'qcom,sm6115-tsens', 'qcom,sm6350-tsens', 'qcom,sm6375-tsens', 'qcom,sm8150-tsens', 'qcom,sm8250-tsens', 'qcom,sm8350-tsens', 'qcom,sm8450-tsens', 'qcom,sm8550-tsens', 'qcom,sm8650-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,ipq8074-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,ipq9574-tsens']
-	'qcom,tsens-v0_1' was expected
-	'qcom,tsens-v1' was expected
-	'qcom,ipq8074-tsens' was expected
-	from schema $id: http://devicetree.org/schemas/thermal/qcom-tsens.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: /soc@0/thermal-sensor@c272000: failed to match any schema with compatible: ['qcom,x1e80100-tsens', 'qcom,tsens-v2']
-arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: thermal-sensor@c273000: compatible: 'oneOf' conditional failed, one must be fixed:
-	['qcom,x1e80100-tsens', 'qcom,tsens-v2'] is too long
-	'qcom,x1e80100-tsens' is not one of ['qcom,ipq8064-tsens', 'qcom,msm8960-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,mdm9607-tsens', 'qcom,msm8226-tsens', 'qcom,msm8909-tsens', 'qcom,msm8916-tsens', 'qcom,msm8939-tsens', 'qcom,msm8974-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,msm8956-tsens', 'qcom,msm8976-tsens', 'qcom,qcs404-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,msm8953-tsens', 'qcom,msm8996-tsens', 'qcom,msm8998-tsens', 'qcom,qcm2290-tsens', 'qcom,sa8775p-tsens', 'qcom,sc7180-tsens', 'qcom,sc7280-tsens', 'qcom,sc8180x-tsens', 'qcom,sc8280xp-tsens', 'qcom,sdm630-tsens', 'qcom,sdm845-tsens', 'qcom,sm6115-tsens', 'qcom,sm6350-tsens', 'qcom,sm6375-tsens', 'qcom,sm8150-tsens', 'qcom,sm8250-tsens', 'qcom,sm8350-tsens', 'qcom,sm8450-tsens', 'qcom,sm8550-tsens', 'qcom,sm8650-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,ipq8074-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,ipq9574-tsens']
-	'qcom,tsens-v0_1' was expected
-	'qcom,tsens-v1' was expected
-	'qcom,ipq8074-tsens' was expected
-	from schema $id: http://devicetree.org/schemas/thermal/qcom-tsens.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: /soc@0/thermal-sensor@c273000: failed to match any schema with compatible: ['qcom,x1e80100-tsens', 'qcom,tsens-v2']
-arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: thermal-sensor@c274000: compatible: 'oneOf' conditional failed, one must be fixed:
-	['qcom,x1e80100-tsens', 'qcom,tsens-v2'] is too long
-	'qcom,x1e80100-tsens' is not one of ['qcom,ipq8064-tsens', 'qcom,msm8960-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,mdm9607-tsens', 'qcom,msm8226-tsens', 'qcom,msm8909-tsens', 'qcom,msm8916-tsens', 'qcom,msm8939-tsens', 'qcom,msm8974-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,msm8956-tsens', 'qcom,msm8976-tsens', 'qcom,qcs404-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,msm8953-tsens', 'qcom,msm8996-tsens', 'qcom,msm8998-tsens', 'qcom,qcm2290-tsens', 'qcom,sa8775p-tsens', 'qcom,sc7180-tsens', 'qcom,sc7280-tsens', 'qcom,sc8180x-tsens', 'qcom,sc8280xp-tsens', 'qcom,sdm630-tsens', 'qcom,sdm845-tsens', 'qcom,sm6115-tsens', 'qcom,sm6350-tsens', 'qcom,sm6375-tsens', 'qcom,sm8150-tsens', 'qcom,sm8250-tsens', 'qcom,sm8350-tsens', 'qcom,sm8450-tsens', 'qcom,sm8550-tsens', 'qcom,sm8650-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,ipq8074-tsens']
-	'qcom,x1e80100-tsens' is not one of ['qcom,ipq9574-tsens']
-	'qcom,tsens-v0_1' was expected
-	'qcom,tsens-v1' was expected
-	'qcom,ipq8074-tsens' was expected
-	from schema $id: http://devicetree.org/schemas/thermal/qcom-tsens.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: /soc@0/thermal-sensor@c274000: failed to match any schema with compatible: ['qcom,x1e80100-tsens', 'qcom,tsens-v2']
-arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: pci@1bf8000: Unevaluated properties are not allowed ('vddpe-3v3-supply' was unexpected)
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dtb: usb@a2f8800: interrupt-names: ['pwr_event', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-
-
-
-
-
+> > Otherwise, lgtm
+> >
+> > BR,
+> > -R
+> >
+>
+> Thanks & regards,
+> Bibek
+>
+> >> +}
+> >> +
+> >>   #define QCOM_ADRENO_SMMU_GPU_SID 0
+> >>
+> >>   static bool qcom_adreno_smmu_is_gpu_device(struct device *dev)
+> >> @@ -407,6 +429,7 @@ static int qcom_adreno_smmu_init_context(struct ar=
+m_smmu_domain *smmu_domain,
+> >>          priv->get_fault_info =3D qcom_adreno_smmu_get_fault_info;
+> >>          priv->set_stall =3D qcom_adreno_smmu_set_stall;
+> >>          priv->resume_translation =3D qcom_adreno_smmu_resume_translat=
+ion;
+> >> +       priv->set_prr =3D qcom_adreno_smmu_set_prr;
+> >>
+> >>          actlrvar =3D qsmmu->data->actlrvar;
+> >>          if (!actlrvar)
+> >> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm=
+/arm-smmu/arm-smmu.h
+> >> index d9c2ef8c1653..3076bef49e20 100644
+> >> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> >> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> >> @@ -154,6 +154,8 @@ enum arm_smmu_cbar_type {
+> >>   #define ARM_SMMU_SCTLR_M               BIT(0)
+> >>
+> >>   #define ARM_SMMU_CB_ACTLR              0x4
+> >> +#define ARM_SMMU_GFX_PRR_CFG_LADDR     0x6008
+> >> +#define ARM_SMMU_GFX_PRR_CFG_UADDR     0x600C
+> >>
+> >>   #define ARM_SMMU_CB_RESUME             0x8
+> >>   #define ARM_SMMU_RESUME_TERMINATE      BIT(0)
+> >> diff --git a/include/linux/adreno-smmu-priv.h b/include/linux/adreno-s=
+mmu-priv.h
+> >> index c637e0997f6d..d6e2ca9f8d8c 100644
+> >> --- a/include/linux/adreno-smmu-priv.h
+> >> +++ b/include/linux/adreno-smmu-priv.h
+> >> @@ -49,7 +49,10 @@ struct adreno_smmu_fault_info {
+> >>    *                 before set_ttbr0_cfg().  If stalling on fault is =
+enabled,
+> >>    *                 the GPU driver must call resume_translation()
+> >>    * @resume_translation: Resume translation after a fault
+> >> - *
+> >> + * @set_prr:      Extendible interface to be used by GPU to modify th=
+e
+> >> + *                 ACTLR register bits, currently used to configure
+> >> + *                 Partially-Resident-Region (PRR) feature's
+> >> + *                 setup and reset sequence as requested.
+> >>    *
+> >>    * The GPU driver (drm/msm) and adreno-smmu work together for contro=
+lling
+> >>    * the GPU's SMMU instance.  This is by necessity, as the GPU is dir=
+ectly
+> >> @@ -67,6 +70,7 @@ struct adreno_smmu_priv {
+> >>       void (*get_fault_info)(const void *cookie, struct adreno_smmu_fa=
+ult_info *info);
+> >>       void (*set_stall)(const void *cookie, bool enabled);
+> >>       void (*resume_translation)(const void *cookie, bool terminate);
+> >> +    void (*set_prr)(const void *cookie, phys_addr_t page_addr, bool s=
+et);
+> >>   };
+> >>
+> >>   #endif /* __ADRENO_SMMU_PRIV_H */
+> >> --
+> >> 2.34.1
+> >>
 
