@@ -1,280 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-24602-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24603-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D93E591BB5B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 11:22:54 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 573AB91BB70
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 11:27:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 077E71C22490
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 09:22:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CD292B2279A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 09:27:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FE4814F114;
-	Fri, 28 Jun 2024 09:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10B361514E0;
+	Fri, 28 Jun 2024 09:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I8fGdIb8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zngfVCWW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D20214F9FF;
-	Fri, 28 Jun 2024 09:22:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB551509A0
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2024 09:26:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719566573; cv=none; b=UXowbGbhKbkB23Q3g7iVvsd2ocsvng7ingj+QJQDbZ3HvMUW5JwLJsHdVNniVE+np0q5VobsOzX3pOTH0SxsGalER3VB5EMFjaCNFw9eB9ItBpbshEd0CCCJM8QUfLfMgKB2Rp6qaVkyKcfNsrQhUv9xdEfwGtIoKNCkU9z4OgM=
+	t=1719566815; cv=none; b=S5gXkJcPA6YZ/TxAfA0q/oX4/LvNTESNGQuctJWvMm8e/D3aipMY7SDydWYoiA9esk53wb4JECGVfkr26U1gvmrdu7v1ENLEoREFhlpCHF10/ZLgeisKUa+sXrLDgc0nH9H5yvg/Ih8IAWaspZEpuTO1GMGwi5SD+KI1Kc5rCEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719566573; c=relaxed/simple;
-	bh=ji3kYAAiZDeNMyOTvUchwFM6v2WJ4stp4je4nHMyTuc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=p90lINS8PhTvc0Dkng9UcepzlEAk/CU7WzlT4fwR0vAdQnBCYXSKgeUSoiqIEiBlHRVG1PKmX6Lc4khYwMEgJ2xl0XLIVkF0uhlQM14qIcmw7fk6gGEFln+FnFxgg8AtZGqV5F0DmO5Btt4lhbYpWFy4Wd5HGg+59MWD8vtVS24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I8fGdIb8; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45S7x9BC029750;
-	Fri, 28 Jun 2024 09:22:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0w1okXQKkQ+Gyg0vlX2pD+pzMSgGZ5fM5jZ85tnSM2M=; b=I8fGdIb8gWvI/L3u
-	BGtP/5bK3tYQwIPQnv47/xNyAZz5tprBARD5CX1iwx44LZ717xNmB5qvUfmFpt3J
-	TRzKcpz4M09H1oUsjE8UQFhSyIkA3UFqwJe2ITFyh+CeK0+npOeQe3U1a2BWkvaw
-	wHBcDMozhKXqItk7pYXttHsSK81E6oVPEwDX2R71IwCRTC8TBrwWHegoi7vUM9bf
-	3WXD+TF5n9h52sD4nHihALytel2D33e381+8OF/tXQmQaDNIun5b7E98wEqY+CUA
-	ito/N3Q/FSXN+MsiYRpFuFsRI1w6aUI+WDsyC884kG+BNUtJ2dW6b2mij/qqfMCv
-	O0zqJg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 400c46f0t0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 28 Jun 2024 09:22:47 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45S9Mj5Y019309
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 28 Jun 2024 09:22:45 GMT
-Received: from [10.217.239.82] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 28 Jun
- 2024 02:22:42 -0700
-Message-ID: <ef5d4b87-76c7-4ff3-84ed-7f4743ec052c@quicinc.com>
-Date: Fri, 28 Jun 2024 14:52:39 +0530
+	s=arc-20240116; t=1719566815; c=relaxed/simple;
+	bh=awHqXFlxPP8lfjXkvIjxe0HDyxCZOJaYWC2aPxNS3/c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iHsUcWBldRTqEarKbgF5iLcCIW8+BCgs32r9EOVmJmx8tiXvv7N7XMuk8zLvcdeCHDtXph7+9vNaxwXllwNiqbyhHcKBQbhOrwJOS05ILXZOSXK0t1j3q1Gmi2HxzUM+HHhKxTTY9VwGYAQB5x+ewMW6KUQFYynoW9GiVEYWOoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zngfVCWW; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2ec6635aa43so3602911fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2024 02:26:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719566810; x=1720171610; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=HJY5fes8y/eceaUuSHKFgSKTtu1p3rY5k3qOE9DAYWM=;
+        b=zngfVCWWgQLN5gcHqrF1n5pTobnmAJFPEq5EDm79wtcbPWOSsQ7FmFpZ6e2BOjonFi
+         5R8mRjlLncGsOJmPO85oaFezHDZ2/kMqD6LVeiuvutx8imBi9zlAQiiy/mSoYOIm2MQ/
+         Te30CbVI5n4D+hmPlrrGmnCuuFzGiR1ElzzPrEEqt4LhQjXSQL7j4ZK11nszA93havDj
+         qKOtlCs9SjtCyzzQrOwYxPzjxyCG2Gh74PtiHen6fmKOCQTI6gEN+uZc0Cp1h10R5fzI
+         EpKXiPwUdQLRM3Ad2QMnmcL11q4UTfmc1PZPKLnp6Sb3d+NHhn0+m+xnZyiV57Gr6wpa
+         qF6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719566810; x=1720171610;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HJY5fes8y/eceaUuSHKFgSKTtu1p3rY5k3qOE9DAYWM=;
+        b=JqeGkRrcGHLCMtp92qH2rfsrRTnazDVDiCUriC4hKMMGlLtp04InoD0WSSIPuV1T9i
+         MDC0A2FOYE9cTbgiCq4fY1rpTKawJXT9WB7jVfJ+xzuozG+8L87NDOsamw2vOp99/lbO
+         42cV804vDzYYoUOSZoKSGFWAIbyDfjPDB9VmyKx5aQVRdFvskxAjDp4a/15U4uRz/gZe
+         kFhGjdEaEgLd7RZ9gyBAAQh8NMNU5rq1LtLHsxXUl17F7XHE8UHDoyEWVQkA9vZeb1r8
+         /3L/5TvKocThSSwQCcHk6tLWfAQiAxSTgdTQzwLF3aRQGW4FN1Ov7kXhgwhhrrTVVXTi
+         GRTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV0lpW53aegzZJiONAzw7pDLlrkTeCMM9BBdbPMyiF2LrjIK2ooqMLpTehxv9zfLWf/oB+q23J1B7xJeo5W3DndNaoJExE84WXkrydNuQ==
+X-Gm-Message-State: AOJu0Yx5VikzXem7TcW+95KnUZCIjB0Ith6xYWZLq6vvfa4UBsCSHcfd
+	MrFCZ+8F7ZfqJ7i/dvvLUcc0DXoz5SVkpfvfbvsouF0ahu3nHtgcgIAN98w5ijM=
+X-Google-Smtp-Source: AGHT+IGLI7DnhKN2eEpzMawEemRB3nB1IrQwbGOlffIR7dko/3E83SMgD7+zmlsRDlsu7/SFPzQ+iQ==
+X-Received: by 2002:a05:6512:1248:b0:52c:e3ae:2737 with SMTP id 2adb3069b0e04-52ce3ae27c9mr12366756e87.68.1719566810593;
+        Fri, 28 Jun 2024 02:26:50 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52e7ab27ac2sm222157e87.129.2024.06.28.02.26.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Jun 2024 02:26:50 -0700 (PDT)
+Date: Fri, 28 Jun 2024 12:26:48 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Slark Xiao <slark_xiao@163.com>
+Cc: manivannan.sadhasivam@linaro.org, loic.poulain@linaro.org, 
+	ryazanov.s.a@gmail.com, johannes@sipsolutions.net, quic_jhugo@quicinc.com, 
+	netdev@vger.kernel.org, mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] bus: mhi: host: Add Foxconn SDX72 related support
+Message-ID: <k3vupufeagaaqapzybop45sh7p3hitvcd5xf54nefiucb6fb3n@awtivqfpish2>
+References: <20240628073605.1447218-1-slark_xiao@163.com>
+ <2xbnsvtzh23al43njugtqpihocyo5gtyuzu4wbd5gmizhs2utf@d2x2gxust3w5>
+ <455cd5ee.86ad.1905df8bbab.Coremail.slark_xiao@163.com>
+ <31b6372e.8805.1905dfc1c6e.Coremail.slark_xiao@163.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 2/2] soc: qcom: smp2p: Introduce tracepoint support
-To: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>, <quic_bjorande@quicinc.com>,
-        <andersson@kernel.org>, <quic_clew@quicinc.com>,
-        <mathieu.poirier@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-References: <20240627104831.4176799-1-quic_sudeepgo@quicinc.com>
- <20240627104831.4176799-3-quic_sudeepgo@quicinc.com>
-Content-Language: en-US
-From: Deepak Kumar Singh <quic_deesin@quicinc.com>
-In-Reply-To: <20240627104831.4176799-3-quic_sudeepgo@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: XbCY66zaB6fOR7SKbK055UrE5LPEag8o
-X-Proofpoint-GUID: XbCY66zaB6fOR7SKbK055UrE5LPEag8o
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-28_05,2024-06-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 phishscore=0 mlxlogscore=999 adultscore=0
- priorityscore=1501 malwarescore=0 clxscore=1011 suspectscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
- definitions=main-2406280068
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <31b6372e.8805.1905dfc1c6e.Coremail.slark_xiao@163.com>
 
-
-
-On 6/27/2024 4:18 PM, Sudeepgoud Patil wrote:
-> This commit introduces tracepoint support for smp2p, enabling
-> logging of communication between local and remote processors.
-> These tracepoints include information about the remote subsystem
-> name, negotiation details, supported features, bit change
-> notifications, and ssr activity. These logs are useful for
-> debugging issues between subsystems.
+On Fri, Jun 28, 2024 at 04:35:21PM GMT, Slark Xiao wrote:
 > 
-> Signed-off-by: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>
-Reviewed-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
-> ---
->   drivers/soc/qcom/Makefile      |  1 +
->   drivers/soc/qcom/smp2p.c       |  9 ++++
->   drivers/soc/qcom/trace-smp2p.h | 98 ++++++++++++++++++++++++++++++++++
->   3 files changed, 108 insertions(+)
->   create mode 100644 drivers/soc/qcom/trace-smp2p.h
+> At 2024-06-28 16:31:40, "Slark Xiao" <slark_xiao@163.com> wrote:
+> >
+> >At 2024-06-28 15:51:54, "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org> wrote:
+> >>On Fri, Jun 28, 2024 at 03:36:05PM GMT, Slark Xiao wrote:
+> >>> Align with Qcom SDX72, add ready timeout item for Foxconn SDX72.
+> >>> And also, add firehose support since SDX72.
+> >>> 
+> >>> Signed-off-by: Slark Xiao <slark_xiao@163.com>
+> >>> ---
+> >>> v2: (1). Update the edl file path and name (2). Set SDX72 support
+> >>> trigger edl mode by default
+> >>> v3: Divide into 2 parts for Foxconn sdx72 platform
+> >>
+> >>Generic comment: please send all the patches using a single
+> >>git-send-email command. This way it will thread them properly, so that
+> >>they form a single patchseries in developers's mail clients. Or you can
+> >>just use 'b4' tool to manage and send the patchset.
+> >>
+> >
+> >Send again with command "git send-email v3-*.patch ...". Please take a view on that.
+> >Thanks.
+> >
 > 
-> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-> index ca0bece0dfff..30c1bf645501 100644
-> --- a/drivers/soc/qcom/Makefile
-> +++ b/drivers/soc/qcom/Makefile
-> @@ -23,6 +23,7 @@ qcom_rpmh-y			+= rpmh.o
->   obj-$(CONFIG_QCOM_SMD_RPM)	+= rpm-proc.o smd-rpm.o
->   obj-$(CONFIG_QCOM_SMEM) +=	smem.o
->   obj-$(CONFIG_QCOM_SMEM_STATE) += smem_state.o
-> +CFLAGS_smp2p.o := -I$(src)
->   obj-$(CONFIG_QCOM_SMP2P)	+= smp2p.o
->   obj-$(CONFIG_QCOM_SMSM)	+= smsm.o
->   obj-$(CONFIG_QCOM_SOCINFO)	+= socinfo.o
-> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
-> index 696c2a8387d0..4aa61b0f11ad 100644
-> --- a/drivers/soc/qcom/smp2p.c
-> +++ b/drivers/soc/qcom/smp2p.c
-> @@ -161,6 +161,9 @@ struct qcom_smp2p {
->   	struct list_head outbound;
->   };
->   
-> +#define CREATE_TRACE_POINTS
-> +#include "trace-smp2p.h"
-> +
->   static void qcom_smp2p_kick(struct qcom_smp2p *smp2p)
->   {
->   	/* Make sure any updated data is written before the kick */
-> @@ -192,6 +195,7 @@ static void qcom_smp2p_do_ssr_ack(struct qcom_smp2p *smp2p)
->   	struct smp2p_smem_item *out = smp2p->out;
->   	u32 val;
->   
-> +	trace_smp2p_ssr_ack(smp2p->dev);
->   	smp2p->ssr_ack = !smp2p->ssr_ack;
->   
->   	val = out->flags & ~BIT(SMP2P_FLAGS_RESTART_ACK_BIT);
-> @@ -214,6 +218,7 @@ static void qcom_smp2p_negotiate(struct qcom_smp2p *smp2p)
->   			smp2p->ssr_ack_enabled = true;
->   
->   		smp2p->negotiation_done = true;
-> +		trace_smp2p_negotiate(smp2p->dev, out->features);
->   	}
->   }
->   
-> @@ -252,6 +257,8 @@ static void qcom_smp2p_notify_in(struct qcom_smp2p *smp2p)
->   		status = val ^ entry->last_value;
->   		entry->last_value = val;
->   
-> +		trace_smp2p_notify_in(entry, status, val);
-> +
->   		/* No changes of this entry? */
->   		if (!status)
->   			continue;
-> @@ -415,6 +422,8 @@ static int smp2p_update_bits(void *data, u32 mask, u32 value)
->   	writel(val, entry->value);
->   	spin_unlock_irqrestore(&entry->lock, flags);
->   
-> +	trace_smp2p_update_bits(entry, orig, val);
-> +
->   	if (val != orig)
->   		qcom_smp2p_kick(entry->smp2p);
->   
-> diff --git a/drivers/soc/qcom/trace-smp2p.h b/drivers/soc/qcom/trace-smp2p.h
-> new file mode 100644
-> index 000000000000..fa985a0d7615
-> --- /dev/null
-> +++ b/drivers/soc/qcom/trace-smp2p.h
-> @@ -0,0 +1,98 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#undef TRACE_SYSTEM
-> +#define TRACE_SYSTEM qcom_smp2p
-> +
-> +#if !defined(__QCOM_SMP2P_TRACE_H__) || defined(TRACE_HEADER_MULTI_READ)
-> +#define __QCOM_SMP2P_TRACE_H__
-> +
-> +#include <linux/device.h>
-> +#include <linux/tracepoint.h>
-> +
-> +TRACE_EVENT(smp2p_ssr_ack,
-> +	TP_PROTO(const struct device *dev),
-> +	TP_ARGS(dev),
-> +	TP_STRUCT__entry(
-> +		__string(dev_name, dev_name(dev))
-> +	),
-> +	TP_fast_assign(
-> +		__assign_str(dev_name, dev_name(dev));
-> +	),
-> +	TP_printk("%s: SSR detected", __get_str(dev_name))
-> +);
-> +
-> +TRACE_EVENT(smp2p_negotiate,
-> +	TP_PROTO(const struct device *dev, unsigned int features),
-> +	TP_ARGS(dev, features),
-> +	TP_STRUCT__entry(
-> +		__string(dev_name, dev_name(dev))
-> +		__field(u32, out_features)
-> +	),
-> +	TP_fast_assign(
-> +		__assign_str(dev_name, dev_name(dev));
-> +		__entry->out_features = features;
-> +	),
-> +	TP_printk("%s: state=open out_features=%s", __get_str(dev_name),
-> +		__print_flags(__entry->out_features, "|",
-> +			{SMP2P_FEATURE_SSR_ACK, "SMP2P_FEATURE_SSR_ACK"})
-> +	)
-> +);
-> +
-> +TRACE_EVENT(smp2p_notify_in,
-> +	TP_PROTO(struct smp2p_entry *smp2p_entry, unsigned long status, u32 val),
-> +	TP_ARGS(smp2p_entry, status, val),
-> +	TP_STRUCT__entry(
-> +		__string(dev_name, dev_name(smp2p_entry->smp2p->dev))
-> +		__string(client_name, smp2p_entry->name)
-> +		__field(unsigned long, status)
-> +		__field(u32, val)
-> +	),
-> +	TP_fast_assign(
-> +		__assign_str(dev_name, dev_name(smp2p_entry->smp2p->dev));
-> +		__assign_str(client_name, smp2p_entry->name);
-> +		__entry->status = status;
-> +		__entry->val = val;
-> +	),
-> +	TP_printk("%s: %s: status:0x%0lx val:0x%0x",
-> +		__get_str(dev_name),
-> +		__get_str(client_name),
-> +		__entry->status,
-> +		__entry->val
-> +	)
-> +);
-> +
-> +TRACE_EVENT(smp2p_update_bits,
-> +	TP_PROTO(struct smp2p_entry *smp2p_entry, u32 orig, u32 val),
-> +	TP_ARGS(smp2p_entry, orig, val),
-> +	TP_STRUCT__entry(
-> +		__string(dev_name, dev_name(smp2p_entry->smp2p->dev))
-> +		__string(client_name, smp2p_entry->name)
-> +		__field(u32, orig)
-> +		__field(u32, val)
-> +	),
-> +	TP_fast_assign(
-> +		__assign_str(dev_name, dev_name(smp2p_entry->smp2p->dev));
-> +		__assign_str(client_name, smp2p_entry->name);
-> +		__entry->orig = orig;
-> +		__entry->val = val;
-> +	),
-> +	TP_printk("%s: %s: orig:0x%0x new:0x%0x",
-> +		__get_str(dev_name),
-> +		__get_str(client_name),
-> +		__entry->orig,
-> +		__entry->val
-> +	)
-> +);
-> +
-> +#endif /* __QCOM_SMP2P_TRACE_H__ */
-> +
-> +#undef TRACE_INCLUDE_PATH
-> +#define TRACE_INCLUDE_PATH .
-> +
-> +#undef TRACE_INCLUDE_FILE
-> +#define TRACE_INCLUDE_FILE trace-smp2p
-> +
-> +#include <trace/define_trace.h>
+> Seems no difference in my side. Any difference in your side?
+
+Yes, the In-Reply-To headers have linked them together.
+
+> 
+> >>> ---
+> >>>  drivers/bus/mhi/host/pci_generic.c | 43 ++++++++++++++++++++++++++++++
+> >>>  1 file changed, 43 insertions(+)
+> >>> 
+> >>
+> >>
+> >>-- 
+> >>With best wishes
+> >>Dmitry
+
+-- 
+With best wishes
+Dmitry
 
