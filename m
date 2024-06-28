@@ -1,740 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-24627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA37D91BDCE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 13:49:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 04F7091BDE1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 13:54:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5A7F62859A2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 11:49:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A6B2C282F40
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 11:54:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9522C15821D;
-	Fri, 28 Jun 2024 11:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA65F158213;
+	Fri, 28 Jun 2024 11:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X217LRJR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Gwv3z3k5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E96F1581E4;
-	Fri, 28 Jun 2024 11:49:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB171865A;
+	Fri, 28 Jun 2024 11:54:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719575384; cv=none; b=cinRGoFN8JlmjsLnmOAl+r6UfgYYl61xYxJNqzqpAaYJUW9vNqgTemX52GDsqSQt+Pi396r44/c8e8zSMXAsduy2SWzrGM0dEColM9pI1CFHGDNN2e8SFaPGez9b+47RfmuZG+gcIy126kkgWcJ/KJaplHK+iB9B+H6Z4rNWx1I=
+	t=1719575646; cv=none; b=LO8Suj/5CdLG3aRcgE/nypKF7gq6YnYq9g+lj10FHmcZ15l7sJ8KcEIV5BBmT5BYHitqNy2vaZqoUNBo6uWxLAe6245mDZYeCSvSexv15BKSwDU6bEuPXLPG1Nc+t2zP3osyQFBbz/TkbJwd73xMG0scqA2+dcWnRRvbsoy8crc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719575384; c=relaxed/simple;
-	bh=MJ+38kjN2dgIxLa7i50Y6Fq+inzo4OjmuOvp8gVru48=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ayu1zQn9555R7jWBnytHuAI5pzGxTRFPqsyrjoqW2i8Xpp9j2ij2SzubYYrHG65Fw4bMOSVEKZZMuGY+KaoTXXPGiUvP/fcIMkpWA32PdPiBoHpGG50LTl3KCjd2qQYqIsOZBMt/clD+BC1YOjOlBCJ3x6YXr/UBDyAyZuhGc1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X217LRJR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0606FC4AF0D;
-	Fri, 28 Jun 2024 11:49:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719575384;
-	bh=MJ+38kjN2dgIxLa7i50Y6Fq+inzo4OjmuOvp8gVru48=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=X217LRJR/lA8kvxsNQtXP2FyQwGGftm6pS0KG0jlakobQ3tFEL73xtl8JCuGWx3Ya
-	 9rR27n52OTQ5r8u0o2gE4oSV5fJSc76WQME87EVrp8a8vj6lzRjG1CY0Lz8d8fbsBN
-	 TxhOwk1gQ/krhtfQLSYUveivkp5QeZIJixd/Uc0dnyP6CjIw8esq8owWIFBeFB1pai
-	 KU5XFuZMqlHpu24W3OF3S3lb3l7UkzX8tjiJcS96KFlRMOXx22LtdrgSlPqd0HAQj4
-	 zdh9OS6ihwl3XRBmRwQfNtxElEsVebxgIFaDPBJjFCD+csngnur/bKAEATXTMt87iD
-	 nud8Vu01yoH6Q==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7559C3065B;
-	Fri, 28 Jun 2024 11:49:43 +0000 (UTC)
-From: Xilin Wu via B4 Relay <devnull+wuxilin123.gmail.com@kernel.org>
-Date: Fri, 28 Jun 2024 19:49:35 +0800
-Subject: [PATCH RESEND 2/2] arm64: dts: qcom: Add device tree for ASUS
- Vivobook S 15
+	s=arc-20240116; t=1719575646; c=relaxed/simple;
+	bh=EfZPK4bQlzDxBEzFkfeTiecD2ZjbyZUL5K5NzJWy8bM=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gP8SZ4mIyLczJl21V0bqqa02J0DNMull+0ECpNhOo5kFamoo51GguooSFJ9wJjkFHJH51iE35mGDnYLGiUaIS7I1VjSTxrOV2pIuCdVoFoHOmhOMzTS0FCt2sNt8huK/3BeLNed6FEke9HVUb6XjHSpWzE+5LV1SWNCyvQHRE3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Gwv3z3k5; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45S8EoQN015125;
+	Fri, 28 Jun 2024 11:53:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=9At5m60WgpAapqFuAPwU1Hli
+	wnsb0FkeiKytGYb9+YA=; b=Gwv3z3k5DjFBLwP9W3KTTI9oJm6iGxryDIbMJw0e
+	XzhN7ngX3Ge1+hr3Z2FaFSj/kH+y4UJHbckJ4qLvOxDbzAAywGJlAK/jrrbkK/4o
+	L4t1jJTAE9Ejw36cg5OrKeV+I0RWnw/4LS9eEX65pQwmkW48m5e1n0q4Zk6C7/Lv
+	dOaxMf8bxiJET7kkVWprAm9EmHk3OkO0LjCxdZ1E0IzzouM/VaC34EOaTQu3HUJW
+	2A/q72AGincj8xFb2+7R5tNEufuTLZgCXoELHz/1Ev+gtBV/zCk5sDbTT+ep+ybT
+	jfSf+kSO1YPhoFSUsA8RM4RAfnY2QaoHJeWJHMwsgCJ8Mg==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywqshysxs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 28 Jun 2024 11:53:50 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45SBrnnD027966
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 28 Jun 2024 11:53:49 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 28 Jun 2024 04:53:42 -0700
+Date: Fri, 28 Jun 2024 17:23:38 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <angelogioacchino.delregno@collabora.com>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <ilia.lin@kernel.org>, <rafael@kernel.org>,
+        <viresh.kumar@linaro.org>, <ulf.hansson@linaro.org>,
+        <quic_sibis@quicinc.com>, <otto.pflueger@abscue.de>,
+        <neil.armstrong@linaro.org>, <luca@z3ntu.xyz>, <abel.vesa@linaro.org>,
+        <danila@jiaxyga.com>, <quic_ipkumar@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v3 8/9] soc: qcom: cpr3: Add IPQ9574 definitions
+Message-ID: <Zn6kQuw1Fm9ylppX@hu-varada-blr.qualcomm.com>
+References: <20240626104002.420535-1-quic_varada@quicinc.com>
+ <20240626104002.420535-9-quic_varada@quicinc.com>
+ <txid2b47zhnuknz35xaosfctuojrnrskcjehhqmyqubuxdimqj@7q7pzxlavk6k>
+ <Zn0TZiIDQ9W/ttox@hu-varada-blr.qualcomm.com>
+ <3mzerxpsa2gj227pryu2pg5rgaoqya7y3fplvpdsq5cnffuzj3@puwzk4j2t2t5>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240628-asus-vivobook-s15-v1-2-92cb39f3f166@gmail.com>
-References: <20240628-asus-vivobook-s15-v1-0-92cb39f3f166@gmail.com>
-In-Reply-To: <20240628-asus-vivobook-s15-v1-0-92cb39f3f166@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
- Johan Hovold <johan+linaro@kernel.org>, Xilin Wu <wuxilin123@gmail.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1719575382; l=14855;
- i=wuxilin123@gmail.com; s=20240424; h=from:subject:message-id;
- bh=025b2dVITYSRuZ4BECOQ4MDlSP+xw+Wq+nRakCNUnR4=;
- b=wsSTLFSpNpTNAUsQMVw+IwS0VIvyFiDHK02XKm7DW/pa0ZzQ3bc902pmxvsi9jAt+RN6HNQeA
- j4V3VmQebrDC34mF9mqe3iMoedrn3uZZGHSYL0rNRtNZD0N7vSkEeqQ
-X-Developer-Key: i=wuxilin123@gmail.com; a=ed25519;
- pk=vPnxeJnlD/PfEbyQPZzaay5ezxI/lMrke7qXy31lSM8=
-X-Endpoint-Received: by B4 Relay for wuxilin123@gmail.com/20240424 with
- auth_id=157
-X-Original-From: Xilin Wu <wuxilin123@gmail.com>
-Reply-To: wuxilin123@gmail.com
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <3mzerxpsa2gj227pryu2pg5rgaoqya7y3fplvpdsq5cnffuzj3@puwzk4j2t2t5>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: eEv0sBU4hXyiL4tztb316o4l1ifuEe84
+X-Proofpoint-GUID: eEv0sBU4hXyiL4tztb316o4l1ifuEe84
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-28_08,2024-06-28_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
+ bulkscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
+ mlxscore=0 impostorscore=0 mlxlogscore=999 priorityscore=1501 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
+ definitions=main-2406280087
 
-From: Xilin Wu <wuxilin123@gmail.com>
+On Thu, Jun 27, 2024 at 04:46:05PM +0300, Dmitry Baryshkov wrote:
+> On Thu, Jun 27, 2024 at 12:53:18PM GMT, Varadarajan Narayanan wrote:
+> > On Wed, Jun 26, 2024 at 09:27:53PM +0300, Dmitry Baryshkov wrote:
+> > > On Wed, Jun 26, 2024 at 04:10:01PM GMT, Varadarajan Narayanan wrote:
+> > > > From: Praveenkumar I <quic_ipkumar@quicinc.com>
+> > > >
+> > > > Add thread, scaling factor, CPR descriptor defines to enable CPR
+> > > > on IPQ9574.
+> > > >
+> > > > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> > > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > > > ---
+> > > > v3: Fix patch author
+> > > >     Included below information in cover letter
+> > > > v2: Fix Signed-off-by order
+> > > > Depends:
+> > > > 	[1] https://lore.kernel.org/lkml/20230217-topic-cpr3h-v14-0-9fd23241493d@linaro.org/T/
+> > > > 	[2] https://github.com/quic-varada/cpr/commits/konrad/
+> > > > ---
+> > > >  drivers/pmdomain/qcom/cpr3.c | 137 +++++++++++++++++++++++++++++++++++
+> > > >  1 file changed, 137 insertions(+)
+> > > >
+> > > > diff --git a/drivers/pmdomain/qcom/cpr3.c b/drivers/pmdomain/qcom/cpr3.c
+> > > > index c28028be50d8..66c8a4bd9adc 100644
+> > > > --- a/drivers/pmdomain/qcom/cpr3.c
+> > > > +++ b/drivers/pmdomain/qcom/cpr3.c
+> > >
+> > > > +
+> > > > +static const struct cpr_desc ipq9574_cpr_desc = {
+> > > > +	.cpr_type = CTRL_TYPE_CPR4,
+> > >
+> > > So, is it CPR4 or CPRh?
+> >
+> > CPR4.
+>
+> Then why do you have cprh in the compatible?
 
-ASUS Vivobook S 15 is a laptop based on the Qualcomm Snapdragon X Elite
-SoC (X1E78100).
+Sorry, copy-paste from msm8998. Will fix that in the next version.
 
-Add the device tree for the laptop with support for the following features:
+Thanks
+Varada
 
-- CPU frequency scaling up to 3.4GHz
-- NVMe storage on PCIe 6a (capable of Gen4x4, currently limited to Gen4x2)
-- Keyboard and touchpad
-- WCN7850 Wi-Fi
-- Two Type-C ports on the left side (USB3 only in one orientation)
-- internal eDP display
-- ADSP and CDSP remoteprocs
-
-Further details could be found in the cover letter.
-
-Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
----
- arch/arm64/boot/dts/qcom/Makefile                  |   1 +
- .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   | 613 +++++++++++++++++++++
- 2 files changed, 614 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 5576c7d6ea06..fe08b6be565d 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -258,5 +258,6 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-hdk-display-card.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-qrd.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-asus-vivobook-s15.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-crd.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-qcp.dtb
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-new file mode 100644
-index 000000000000..65cb3b0bd109
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-@@ -0,0 +1,613 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2024, Xilin Wu <wuxilin123@gmail.com>
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+
-+#include "x1e80100.dtsi"
-+#include "x1e80100-pmics.dtsi"
-+
-+/ {
-+	model = "ASUS Vivobook S 15";
-+	compatible = "asus,vivobook-s15", "qcom,x1e80100";
-+	chassis-type = "laptop";
-+
-+	pmic-glink {
-+		compatible = "qcom,x1e80100-pmic-glink",
-+			     "qcom,sm8550-pmic-glink",
-+			     "qcom,pmic-glink";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		orientation-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>,
-+				    <&tlmm 123 GPIO_ACTIVE_HIGH>;
-+
-+		connector@0 {
-+			compatible = "usb-c-connector";
-+			reg = <0>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					pmic_glink_ss0_hs_in: endpoint {
-+						remote-endpoint = <&usb_1_ss0_dwc3_hs>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					pmic_glink_ss0_ss_in: endpoint {
-+						remote-endpoint = <&usb_1_ss0_qmpphy_out>;
-+					};
-+				};
-+			};
-+		};
-+
-+		connector@1 {
-+			compatible = "usb-c-connector";
-+			reg = <1>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					pmic_glink_ss1_hs_in: endpoint {
-+						remote-endpoint = <&usb_1_ss1_dwc3_hs>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					pmic_glink_ss1_ss_in: endpoint {
-+						remote-endpoint = <&usb_1_ss1_qmpphy_out>;
-+					};
-+				};
-+			};
-+		};
-+	};
-+
-+	reserved-memory {
-+		linux,cma {
-+			compatible = "shared-dma-pool";
-+			size = <0x0 0x8000000>;
-+			reusable;
-+			linux,cma-default;
-+		};
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
-+	vreg_edp_3p3: regulator-edp-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_EDP_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 70 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&edp_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
-+	vreg_nvme: regulator-nvme {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_NVME_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 18 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&nvme_reg_en>;
-+	};
-+};
-+
-+&apps_rsc {
-+	regulators-0 {
-+		compatible = "qcom,pm8550-rpmh-regulators";
-+		qcom,pmic-id = "b";
-+
-+		vdd-bob1-supply = <&vph_pwr>;
-+		vdd-bob2-supply = <&vph_pwr>;
-+		vdd-l1-l4-l10-supply = <&vreg_s4c_1p8>;
-+		vdd-l2-l13-l14-supply = <&vreg_bob1>;
-+		vdd-l5-l16-supply = <&vreg_bob1>;
-+		vdd-l6-l7-supply = <&vreg_bob2>;
-+		vdd-l8-l9-supply = <&vreg_bob1>;
-+		vdd-l12-supply = <&vreg_s5j_1p2>;
-+		vdd-l15-supply = <&vreg_s4c_1p8>;
-+		vdd-l17-supply = <&vreg_bob2>;
-+
-+		vreg_bob1: bob1 {
-+			regulator-name = "vreg_bob1";
-+			regulator-min-microvolt = <3008000>;
-+			regulator-max-microvolt = <3960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_bob2: bob2 {
-+			regulator-name = "vreg_bob2";
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2b_3p0: ldo2 {
-+			regulator-name = "vreg_l2b_3p0";
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3100000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l14b_3p0: ldo14 {
-+			regulator-name = "vreg_l14b_3p0";
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3072000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-1 {
-+		compatible = "qcom,pm8550ve-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vdd-l1-supply = <&vreg_s5j_1p2>;
-+		vdd-l2-supply = <&vreg_s1f_0p7>;
-+		vdd-l3-supply = <&vreg_s1f_0p7>;
-+		vdd-s4-supply = <&vph_pwr>;
-+
-+		vreg_s4c_1p8: smps4 {
-+			regulator-name = "vreg_s4c_1p8";
-+			regulator-min-microvolt = <1856000>;
-+			regulator-max-microvolt = <2000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-2 {
-+		compatible = "qcom,pmc8380-rpmh-regulators";
-+		qcom,pmic-id = "d";
-+
-+		vdd-l1-supply = <&vreg_s1f_0p7>;
-+		vdd-l2-supply = <&vreg_s1f_0p7>;
-+		vdd-l3-supply = <&vreg_s4c_1p8>;
-+		vdd-s1-supply = <&vph_pwr>;
-+
-+		vreg_l1d_0p8: ldo1 {
-+			regulator-name = "vreg_l1d_0p8";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2d_0p9: ldo2 {
-+			regulator-name = "vreg_l2d_0p9";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3d_1p8: ldo3 {
-+			regulator-name = "vreg_l3d_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-3 {
-+		compatible = "qcom,pmc8380-rpmh-regulators";
-+		qcom,pmic-id = "e";
-+
-+		vdd-l2-supply = <&vreg_s1f_0p7>;
-+		vdd-l3-supply = <&vreg_s5j_1p2>;
-+
-+		vreg_l2e_0p8: ldo2 {
-+			regulator-name = "vreg_l2e_0p8";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3e_1p2: ldo3 {
-+			regulator-name = "vreg_l3e_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-4 {
-+		compatible = "qcom,pmc8380-rpmh-regulators";
-+		qcom,pmic-id = "f";
-+
-+		vdd-l1-supply = <&vreg_s5j_1p2>;
-+		vdd-l2-supply = <&vreg_s5j_1p2>;
-+		vdd-l3-supply = <&vreg_s5j_1p2>;
-+		vdd-s1-supply = <&vph_pwr>;
-+
-+		vreg_s1f_0p7: smps1 {
-+			regulator-name = "vreg_s1f_0p7";
-+			regulator-min-microvolt = <700000>;
-+			regulator-max-microvolt = <1100000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-6 {
-+		compatible = "qcom,pm8550ve-rpmh-regulators";
-+		qcom,pmic-id = "i";
-+
-+		vdd-l1-supply = <&vreg_s4c_1p8>;
-+		vdd-l2-supply = <&vreg_s5j_1p2>;
-+		vdd-l3-supply = <&vreg_s1f_0p7>;
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+	};
-+
-+	regulators-7 {
-+		compatible = "qcom,pm8550ve-rpmh-regulators";
-+		qcom,pmic-id = "j";
-+
-+		vdd-l1-supply = <&vreg_s1f_0p7>;
-+		vdd-l2-supply = <&vreg_s5j_1p2>;
-+		vdd-l3-supply = <&vreg_s1f_0p7>;
-+		vdd-s5-supply = <&vph_pwr>;
-+
-+		vreg_s5j_1p2: smps5 {
-+			regulator-name = "vreg_s5j_1p2";
-+			regulator-min-microvolt = <1256000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l1j_0p8: ldo1 {
-+			regulator-name = "vreg_l1j_0p8";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2j_1p2: ldo2 {
-+			regulator-name = "vreg_l2j_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3j_0p8: ldo3 {
-+			regulator-name = "vreg_l3j_0p8";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+};
-+
-+&i2c0 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	touchpad@15 {
-+		compatible = "hid-over-i2c";
-+		reg = <0x15>;
-+
-+		hid-descr-addr = <0x1>;
-+		interrupts-extended = <&tlmm 3 IRQ_TYPE_LEVEL_LOW>;
-+
-+		pinctrl-0 = <&tpad_default>;
-+		pinctrl-names = "default";
-+
-+		wakeup-source;
-+	};
-+};
-+
-+&i2c1 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+    /* PS8830 USB4 Retimer? @ 0x8 */
-+};
-+
-+&i2c3 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+    /* PS8830 USB4 Retimer? @ 0x8 */
-+};
-+
-+&i2c5 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	keyboard@3a {
-+		compatible = "hid-over-i2c";
-+		reg = <0x3a>;
-+
-+		hid-descr-addr = <0x1>;
-+		interrupts-extended = <&tlmm 67 IRQ_TYPE_LEVEL_LOW>;
-+
-+		pinctrl-0 = <&kybd_default>;
-+		pinctrl-names = "default";
-+
-+		wakeup-source;
-+	};
-+
-+    /* EC? @ 0x5b, 0x76 */
-+};
-+
-+&i2c7 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+    /* PS8830 USB4 Retimer? @ 0x8 */
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dp3 {
-+	compatible = "qcom,x1e80100-dp";
-+	/delete-property/ #sound-dai-cells;
-+
-+	status = "okay";
-+
-+	aux-bus {
-+		panel {
-+			compatible = "edp-panel";
-+			power-supply = <&vreg_edp_3p3>;
-+
-+			port {
-+				edp_panel_in: endpoint {
-+					remote-endpoint = <&mdss_dp3_out>;
-+				};
-+			};
-+		};
-+	};
-+
-+	ports {
-+		port@1 {
-+			reg = <1>;
-+			mdss_dp3_out: endpoint {
-+				data-lanes = <0 1 2 3>;
-+				link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
-+
-+				remote-endpoint = <&edp_panel_in>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dp3_phy {
-+	vdda-phy-supply = <&vreg_l3j_0p8>;
-+	vdda-pll-supply = <&vreg_l2j_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&pcie4 {
-+	status = "okay";
-+};
-+
-+&pcie4_phy {
-+	vdda-phy-supply = <&vreg_l3j_0p8>;
-+	vdda-pll-supply = <&vreg_l3e_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&pcie6a {
-+	perst-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 154 GPIO_ACTIVE_LOW>;
-+
-+	vddpe-3v3-supply = <&vreg_nvme>;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie6a_default>;
-+
-+	status = "okay";
-+};
-+
-+&pcie6a_phy {
-+	vdda-phy-supply = <&vreg_l1d_0p8>;
-+	vdda-pll-supply = <&vreg_l2j_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&qupv3_0 {
-+	status = "okay";
-+};
-+
-+&qupv3_1 {
-+	status = "okay";
-+};
-+
-+&qupv3_2 {
-+	status = "okay";
-+};
-+
-+&remoteproc_adsp {
-+	firmware-name = "qcom/x1e80100/ASUSTeK/vivobook-s15/qcadsp8380.mbn",
-+			"qcom/x1e80100/ASUSTeK/vivobook-s15/adsp_dtbs.elf";
-+
-+	status = "okay";
-+};
-+
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/x1e80100/ASUSTeK/vivobook-s15/qccdsp8380.mbn",
-+			"qcom/x1e80100/ASUSTeK/vivobook-s15/cdsp_dtbs.elf";
-+
-+	status = "okay";
-+};
-+
-+&smb2360_0_eusb2_repeater {
-+	vdd18-supply = <&vreg_l3d_1p8>;
-+	vdd3-supply = <&vreg_l2b_3p0>;
-+};
-+
-+&smb2360_1_eusb2_repeater {
-+	vdd18-supply = <&vreg_l3d_1p8>;
-+	vdd3-supply = <&vreg_l14b_3p0>;
-+};
-+
-+&smb2360_2 {
-+	status = "disabled";
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <34 2>, /* Unused */
-+			       <44 4>, /* SPI (TPM) */
-+			       <238 1>; /* UFS Reset */
-+
-+	edp_reg_en: edp-reg-en-state {
-+		pins = "gpio70";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+
-+	kybd_default: kybd-default-state {
-+		pins = "gpio67";
-+		function = "gpio";
-+		bias-disable;
-+	};
-+
-+	nvme_reg_en: nvme-reg-en-state {
-+		pins = "gpio18";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	pcie6a_default: pcie2a-default-state {
-+		clkreq-n-pins {
-+			pins = "gpio153";
-+			function = "pcie6a_clk";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		perst-n-pins {
-+			pins = "gpio152";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		wake-n-pins {
-+		    pins = "gpio154";
-+		    function = "gpio";
-+		    drive-strength = <2>;
-+		    bias-pull-up;
-+	    };
-+	};
-+
-+	tpad_default: tpad-default-state {
-+		pins = "gpio3";
-+		function = "gpio";
-+		bias-disable;
-+	};
-+};
-+
-+&usb_1_ss0_hsphy {
-+	vdd-supply = <&vreg_l2e_0p8>;
-+	vdda12-supply = <&vreg_l2j_1p2>;
-+
-+	phys = <&smb2360_0_eusb2_repeater>;
-+
-+	status = "okay";
-+};
-+
-+&usb_1_ss0_qmpphy {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l1j_0p8>;
-+
-+	orientation-switch;
-+
-+	status = "okay";
-+};
-+
-+&usb_1_ss0 {
-+	status = "okay";
-+};
-+
-+&usb_1_ss0_dwc3 {
-+	dr_mode = "host";
-+};
-+
-+&usb_1_ss0_dwc3_hs {
-+	remote-endpoint = <&pmic_glink_ss0_hs_in>;
-+};
-+
-+&usb_1_ss0_qmpphy_out {
-+	remote-endpoint = <&pmic_glink_ss0_ss_in>;
-+};
-+
-+&usb_1_ss1_hsphy {
-+	vdd-supply = <&vreg_l2e_0p8>;
-+	vdda12-supply = <&vreg_l2j_1p2>;
-+
-+	phys = <&smb2360_1_eusb2_repeater>;
-+
-+	status = "okay";
-+};
-+
-+&usb_1_ss1_qmpphy {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l2d_0p9>;
-+
-+	orientation-switch;
-+
-+	status = "okay";
-+};
-+
-+&usb_1_ss1 {
-+	status = "okay";
-+};
-+
-+&usb_1_ss1_dwc3 {
-+	dr_mode = "host";
-+};
-+
-+&usb_1_ss1_dwc3_hs {
-+	remote-endpoint = <&pmic_glink_ss1_hs_in>;
-+};
-+
-+&usb_1_ss1_qmpphy_out {
-+	remote-endpoint = <&pmic_glink_ss1_ss_in>;
-+};
-
--- 
-2.45.2
-
-
+> > > > +	.num_threads = 1,
+> > > > +	.apm_threshold = 850000,
+> > > > +	.apm_crossover = 880000,
+> > > > +	.apm_hysteresis = 0,
+> > > > +	.cpr_base_voltage = 700000,
+> > > > +	.cpr_max_voltage = 1100000,
+> > > > +	.timer_delay_us = 5000,
+> > > > +	.timer_cons_up = 0,
+> > > > +	.timer_cons_down = 0,
+> > > > +	.up_threshold = 2,
+> > > > +	.down_threshold = 2,
+> > > > +	.idle_clocks = 15,
+> > > > +	.count_mode = CPR3_CPR_CTL_COUNT_MODE_ALL_AT_ONCE_MIN,
+> > > > +	.count_repeat = 1,
+> > > > +	.gcnt_us = 1,
+> > > > +	.vreg_step_fixed = 12500,
+> > > > +	.vreg_step_up_limit = 1,
+> > > > +	.vreg_step_down_limit = 1,
+> > > > +	.vdd_settle_time_us = 34,
+> > > > +	.corner_settle_time_us = 6,
+> > > > +	.reduce_to_corner_uV = true,
+> > > > +	.hw_closed_loop_en = false,
+> > > > +	.threads = (const struct cpr_thread_desc *[]) {
+> > > > +		&ipq9574_thread_silver,
+> > >
+> > > If it's silver, where is gold or bronze?
+> >
+> > Will rename this as "ipq9574_thread"
+> >
+> > Thanks
+> > Varada
+> >
+> > > > +	},
+> > > > +};
+> > > > +
+> > > > +static const struct cpr_acc_desc ipq9574_cpr_acc_desc = {
+> > > > +	.cpr_desc = &ipq9574_cpr_desc,
+> > > > +};
+> > > > +
+> > > >  static const int sdm630_gold_scaling_factor[][CPR3_RO_COUNT] = {
+> > > >  	/* Same RO factors for all fuse corners */
+> > > >  	{
+> > > > @@ -2828,6 +2964,7 @@ static void cpr_remove(struct platform_device *pdev)
+> > > >  }
+> > > >
+> > > >  static const struct of_device_id cpr3_match_table[] = {
+> > > > +	{ .compatible = "qcom,ipq9574-cprh", .data = &ipq9574_cpr_acc_desc },
+> > > >  	{ .compatible = "qcom,msm8998-cprh", .data = &msm8998_cpr_acc_desc },
+> > > >  	{ .compatible = "qcom,sdm630-cprh", .data = &sdm630_cpr_acc_desc },
+> > > >  	{ }
+> > > > --
+> > > > 2.34.1
+> > > >
+> > >
+> > > --
+> > > With best wishes
+> > > Dmitry
+>
+> --
+> With best wishes
+> Dmitry
 
