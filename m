@@ -1,398 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-24648-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C46391C142
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 16:40:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6489991C1CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 16:54:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E46501F23F65
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 14:40:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B6321F212A3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 14:54:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C4A81C0DEA;
-	Fri, 28 Jun 2024 14:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DA6B1C2305;
+	Fri, 28 Jun 2024 14:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="jDJpA1fw"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="MGYf7Kdn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mainlining.org [5.75.144.95])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01001C0DD9;
-	Fri, 28 Jun 2024 14:40:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5511BE25F;
+	Fri, 28 Jun 2024 14:54:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719585604; cv=none; b=KGTSO3JrAYAjOBTnPm2A3fifihUR0pUqQgcX2hnyilsW8EkEFSFx/H9pT+zfBXuKiJ1tJ7Hnofq34me5ALQ5VGXmycVrXE9WRauM65cjsisEK1sXxqLA3L1D2/Kq41DCcTWfWIuIJ7kJInaxCYTuN4Fs35ZhhxCOryGmDK+uJBI=
+	t=1719586476; cv=none; b=M4QmqiHzsqUUaxvloCKFTeK5eB1e9P9Q9xg23uI/fSpEPW5YzuYkv0HywSRYdxQXiCi0M0nbyNS9yspjV8cfkLV7YfuBuuVFK3azQ6jPyf1gGsARZ6nMTVMaG65GDEDx1WHpT+hmOh/Qog4mUnxXfr9rXBavwTtEDYVL0VmhJYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719585604; c=relaxed/simple;
-	bh=HerbXrcCoX2JmXE5cUk6sHhLJhw+0pW04CzU6oYhEUM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=n2gFFYQJnlgwTQcc4drb2POX6IGuaIihO4DpcaC7ggkFMgo5OqNOVXWDhZlJH6yBOhEA7eJoj0S62hqguXjrUA7fjlhU1hM9mU1apviRnXVC9kATibC9FzjXoMChW6fIj0YPgLNXVj9qDpqV0U35hah46a6hmD+IoxK7TnuOJls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=jDJpA1fw; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from [192.168.1.130] (BC2492F3.dsl.pool.telekom.hu [188.36.146.243])
-	by mail.mainlining.org (Postfix) with ESMTPSA id BE5A9E456F;
-	Fri, 28 Jun 2024 14:39:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1719585600;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=i52Sev5f9ZkM3avljYpNjnOCa55uzK8xYUVVeQmsO7I=;
-	b=jDJpA1fwz8ec7Zrd7x9+j3aBBSB7Sb2cteI/uU/RM87IXztwXy864TRjz2F1+nB3eEh7r1
-	63aTgeADSz9kP4rE7OnYTJz1NCO1pAnQFgSJYTJa+lcZHro6IZ8UbG2ZGq+AUMl+NHkT30
-	o7uTAvz9vVLELCrzedvCpJuP6e6wYzjfDSJl7O1cgLobWFEu7JAhfUc1A/vQi8RuG5Z9KS
-	1BHDPxVShg2Y3hbX7x3yaDDKT0SfJ/19Z5Ik+B0EGIb46WoWTllC93LLtChD+b23F2CfUR
-	lRzlljxxzLVqC+Hai1GeeyU3DlU7e1UDS5EAsMuGzF/CFowfOiGledfIQRN1uQ==
-From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Fri, 28 Jun 2024 16:39:40 +0200
-Subject: [PATCH 2/2] drm/msm/dpu: add support for MSM8953
+	s=arc-20240116; t=1719586476; c=relaxed/simple;
+	bh=Ou4xM+KfwaWQtRXzFZntff3Dpxcze4HWoGlzHDofmiw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Gm8vBPE45VtVrOv9tiNHKTM3BuXjcZeL6ygs8Jp+mmizOJMzo7MGpSYnM7rYt4LnEuoMGSMnM029CSXqG5Hv0dBnvassCHQIxGMVNCShqIZtPuOWA5iZIHHyv2HEpqfdpEuBcq6Aw0GERWuPvAX9KuYMv70kk+rzxDP+5SzcAmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=MGYf7Kdn; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=81FpBswvqTN/+g4RZ2JQLI94RMcUtnvBgT5CRymvy00=; b=MGYf7KdnGuXY1WWsPiwRchgkQh
+	ckcHUlfg+yk3eL6vt4Rsvd5uI2k0bL8Gqkt4+p+vMHVp00sZytVvFCe/KhlzOuFFz+S3gA8u4PI0V
+	Eis+uEXgk0ESe02/721q9JveAWDX8ObVdhiaYOybrkobYbcLZ5wOdPYMILvu86VguhJexRV9y7cgE
+	JcraytzqsYeMIg3qNTsJrXZh/myRdCnjN7oomiwToTd7E9OvA89qlR18GbJJFKEn5S7S67riVx8h/
+	Im3BJ63YZhjxDDDNe6niBS5eMb5L4LPud3nqarCn6r18jtYaZ4eKaM4pZ5vk0zNF9xewkVqaxwo11
+	uESa2Vuw==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:35642)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1sNCzM-0006mN-02;
+	Fri, 28 Jun 2024 15:54:12 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1sNCzN-0006ah-A6; Fri, 28 Jun 2024 15:54:13 +0100
+Date: Fri, 28 Jun 2024 15:54:13 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Serge Semin <fancer.lancer@gmail.com>
+Cc: Andrew Halaney <ahalaney@redhat.com>, Vinod Koul <vkoul@kernel.org>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-stm32@st-md-mailman.stormreply.com, bpf@vger.kernel.org,
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC net-next v2 10/17] net: stmmac: Introduce internal
+ PCS offset-based CSR access
+Message-ID: <Zn7OlQ4aoO2vZTrj@shell.armlinux.org.uk>
+References: <Zlmzu7/ANyZxOOQL@shell.armlinux.org.uk>
+ <20240624132802.14238-2-fancer.lancer@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240628-dpu-msm8953-msm8996-v1-2-a31c77248db7@mainlining.org>
-References: <20240628-dpu-msm8953-msm8996-v1-0-a31c77248db7@mainlining.org>
-In-Reply-To: <20240628-dpu-msm8953-msm8996-v1-0-a31c77248db7@mainlining.org>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-X-Mailer: b4 0.14.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240624132802.14238-2-fancer.lancer@gmail.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Mon, Jun 24, 2024 at 04:26:27PM +0300, Serge Semin wrote:
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> index 80eb72bc6311..d0bcebe87ee8 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> @@ -633,7 +633,7 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
+>  			      RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
+>  			      RGMII_IO_MACRO_CONFIG2);
+>  		ethqos_set_serdes_speed(ethqos, SPEED_2500);
+> -		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 0, 0, 0);
+> +		stmmac_pcs_ctrl_ane(priv, priv->pcsaddr, 0, 0, 0);
+>  		break;
+>  	case SPEED_1000:
+>  		val &= ~ETHQOS_MAC_CTRL_PORT_SEL;
+> @@ -641,12 +641,12 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
+>  			      RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
+>  			      RGMII_IO_MACRO_CONFIG2);
+>  		ethqos_set_serdes_speed(ethqos, SPEED_1000);
+> -		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 1, 0, 0);
+> +		stmmac_pcs_ctrl_ane(priv, priv->pcsaddr, 1, 0, 0);
+>  		break;
+>  	case SPEED_100:
+>  		val |= ETHQOS_MAC_CTRL_PORT_SEL | ETHQOS_MAC_CTRL_SPEED_MODE;
+>  		ethqos_set_serdes_speed(ethqos, SPEED_1000);
+> -		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 1, 0, 0);
+> +		stmmac_pcs_ctrl_ane(priv, priv->pcsaddr, 1, 0, 0);
+>  		break;
+>  	case SPEED_10:
+>  		val |= ETHQOS_MAC_CTRL_PORT_SEL;
+> @@ -656,7 +656,7 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
+>  					 SGMII_10M_RX_CLK_DVDR),
+>  			      RGMII_IO_MACRO_CONFIG);
+>  		ethqos_set_serdes_speed(ethqos, SPEED_1000);
+> -		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 1, 0, 0);
+> +		stmmac_pcs_ctrl_ane(priv, priv->pcsaddr, 1, 0, 0);
+>  		break;
+>  	}
+>  
 
-Add support for MSM8953, which has MDP5 v1.16. It looks like
-trimmed down version of MSM8996. Less SSPP, LM and PP blocks. No DSC,
-etc.
+I think a better preparatory patch (given what you do in future patches)
+would be to change all of these to:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-[Remove intr_start from CTLs config, reword the commit]
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
----
- .../drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h   | 218 +++++++++++++++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  12 ++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
- drivers/gpu/drm/msm/msm_drv.c                      |   1 +
- 5 files changed, 233 insertions(+)
+	ethqos_pcs_set_inband(priv, {false | true});
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h
-new file mode 100644
-index 000000000000..14f36ea6ad0e
---- /dev/null
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h
-@@ -0,0 +1,218 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) 2023, Linaro Limited
-+ */
-+
-+#ifndef _DPU_1_16_MSM8953_H
-+#define _DPU_1_16_MSM8953_H
-+
-+static const struct dpu_caps msm8953_dpu_caps = {
-+	.max_mixer_width = DEFAULT_DPU_LINE_WIDTH,
-+	.max_mixer_blendstages = 0x4,
-+	.max_linewidth = DEFAULT_DPU_LINE_WIDTH,
-+	.pixel_ram_size = 40 * 1024,
-+	.max_hdeci_exp = MAX_HORZ_DECIMATION,
-+	.max_vdeci_exp = MAX_VERT_DECIMATION,
-+};
-+
-+static const struct dpu_mdp_cfg msm8953_mdp[] = {
-+	{
-+		.name = "top_0",
-+		.base = 0x0, .len = 0x454,
-+		.features = BIT(DPU_MDP_VSYNC_SEL),
-+		.clk_ctrls = {
-+			[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
-+			[DPU_CLK_CTRL_RGB0] = { .reg_off = 0x2ac, .bit_off = 4 },
-+			[DPU_CLK_CTRL_RGB1] = { .reg_off = 0x2b4, .bit_off = 4 },
-+			[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
-+			[DPU_CLK_CTRL_CURSOR0] = { .reg_off = 0x3a8, .bit_off = 16 },
-+		},
-+	},
-+};
-+
-+static const struct dpu_ctl_cfg msm8953_ctl[] = {
-+	{
-+		.name = "ctl_0", .id = CTL_0,
-+		.base = 0x1000, .len = 0x64,
-+	}, {
-+		.name = "ctl_1", .id = CTL_1,
-+		.base = 0x1200, .len = 0x64,
-+	}, {
-+		.name = "ctl_2", .id = CTL_2,
-+		.base = 0x1400, .len = 0x64,
-+	},
-+};
-+
-+static const struct dpu_sspp_cfg msm8953_sspp[] = {
-+	{
-+		.name = "sspp_0", .id = SSPP_VIG0,
-+		.base = 0x4000, .len = 0x150,
-+		.features = VIG_MSM8953_MASK,
-+		.sblk = &dpu_vig_sblk_qseed2,
-+		.xin_id = 0,
-+		.type = SSPP_TYPE_VIG,
-+		.clk_ctrl = DPU_CLK_CTRL_VIG0,
-+	}, {
-+		.name = "sspp_4", .id = SSPP_RGB0,
-+		.base = 0x14000, .len = 0x150,
-+		.features = RGB_MSM8953_MASK,
-+		.sblk = &dpu_rgb_sblk,
-+		.xin_id = 1,
-+		.type = SSPP_TYPE_RGB,
-+		.clk_ctrl = DPU_CLK_CTRL_RGB0,
-+	}, {
-+		.name = "sspp_5", .id = SSPP_RGB1,
-+		.base = 0x16000, .len = 0x150,
-+		.features = RGB_MSM8953_MASK,
-+		.sblk = &dpu_rgb_sblk,
-+		.xin_id = 5,
-+		.type = SSPP_TYPE_RGB,
-+		.clk_ctrl = DPU_CLK_CTRL_RGB1,
-+	}, {
-+		.name = "sspp_8", .id = SSPP_DMA0,
-+		.base = 0x24000, .len = 0x150,
-+		.features = DMA_MSM8953_MASK | BIT(DPU_SSPP_CURSOR),
-+		.sblk = &dpu_dma_sblk,
-+		.xin_id = 2,
-+		.type = SSPP_TYPE_DMA,
-+		.clk_ctrl = DPU_CLK_CTRL_DMA0,
-+	},
-+};
-+
-+static const struct dpu_lm_cfg msm8953_lm[] = {
-+	{
-+		.name = "lm_0", .id = LM_0,
-+		.base = 0x44000, .len = 0x320,
-+		.sblk = &msm8998_lm_sblk,
-+		.lm_pair = LM_1,
-+		.pingpong = PINGPONG_0,
-+		.dspp = DSPP_0,
-+	}, {
-+		.name = "lm_1", .id = LM_1,
-+		.base = 0x45000, .len = 0x320,
-+		.sblk = &msm8998_lm_sblk,
-+		.lm_pair = LM_0,
-+		.pingpong = PINGPONG_1,
-+	},
-+};
-+
-+static const struct dpu_pingpong_cfg msm8953_pp[] = {
-+	{
-+		.name = "pingpong_0", .id = PINGPONG_0,
-+		.base = 0x70000, .len = 0xd4,
-+		.features = PINGPONG_MSM8996_MASK,
-+		.sblk = &msm8996_pp_sblk,
-+		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-+		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
-+	}, {
-+		.name = "pingpong_1", .id = PINGPONG_1,
-+		.base = 0x70800, .len = 0xd4,
-+		.features = PINGPONG_MSM8996_MASK,
-+		.sblk = &msm8996_pp_sblk,
-+		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
-+		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13),
-+	},
-+};
-+
-+static const struct dpu_dspp_cfg msm8953_dspp[] = {
-+	{
-+		.name = "dspp_0", .id = DSPP_0,
-+		.base = 0x54000, .len = 0x1800,
-+		.features = DSPP_SC7180_MASK,
-+		.sblk = &msm8998_dspp_sblk,
-+	},
-+};
-+
-+static const struct dpu_intf_cfg msm8953_intf[] = {
-+	{
-+		.name = "intf_0", .id = INTF_0,
-+		.base = 0x6a000, .len = 0x268,
-+		.type = INTF_NONE,
-+		.prog_fetch_lines_worst_case = 14,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
-+		.intr_tear_rd_ptr = -1,
-+	}, {
-+		.name = "intf_1", .id = INTF_1,
-+		.base = 0x6a800, .len = 0x268,
-+		.type = INTF_DSI,
-+		.controller_id = MSM_DSI_CONTROLLER_0,
-+		.prog_fetch_lines_worst_case = 14,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
-+		.intr_tear_rd_ptr = -1,
-+	}, {
-+		.name = "intf_2", .id = INTF_2,
-+		.base = 0x6b000, .len = 0x268,
-+		.type = INTF_DSI,
-+		.controller_id = MSM_DSI_CONTROLLER_1,
-+		.prog_fetch_lines_worst_case = 14,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
-+		.intr_tear_rd_ptr = -1,
-+	},
-+};
-+
-+static const struct dpu_perf_cfg msm8953_perf_data = {
-+	.max_bw_low = 3400000,
-+	.max_bw_high = 3400000,
-+	.min_core_ib = 2400000,
-+	.min_llcc_ib = 0, /* No LLCC on this SoC */
-+	.min_dram_ib = 800000,
-+	.undersized_prefill_lines = 2,
-+	.xtra_prefill_lines = 2,
-+	.dest_scale_prefill_lines = 3,
-+	.macrotile_prefill_lines = 4,
-+	.yuv_nv12_prefill_lines = 8,
-+	.linear_prefill_lines = 1,
-+	.downscaling_prefill_lines = 1,
-+	.amortizable_threshold = 25,
-+	.min_prefill_lines = 14,
-+	.danger_lut_tbl = {0xf, 0xffff, 0x0},
-+	.safe_lut_tbl = {0xfffc, 0xff00, 0xffff},
-+	.qos_lut_tbl = {
-+		{.nentry = ARRAY_SIZE(msm8998_qos_linear),
-+		.entries = msm8998_qos_linear
-+		},
-+		{.nentry = ARRAY_SIZE(msm8998_qos_macrotile),
-+		.entries = msm8998_qos_macrotile
-+		},
-+		{.nentry = ARRAY_SIZE(msm8998_qos_nrt),
-+		.entries = msm8998_qos_nrt
-+		},
-+	},
-+	.cdp_cfg = {
-+		{.rd_enable = 1, .wr_enable = 1},
-+		{.rd_enable = 1, .wr_enable = 0}
-+	},
-+	.clk_inefficiency_factor = 105,
-+	.bw_inefficiency_factor = 120,
-+};
-+
-+static const struct dpu_mdss_version msm8953_mdss_ver = {
-+	.core_major_ver = 1,
-+	.core_minor_ver = 16,
-+};
-+
-+const struct dpu_mdss_cfg dpu_msm8953_cfg = {
-+	.mdss_ver = &msm8953_mdss_ver,
-+	.caps = &msm8953_dpu_caps,
-+	.mdp = msm8953_mdp,
-+	.ctl_count = ARRAY_SIZE(msm8953_ctl),
-+	.ctl = msm8953_ctl,
-+	.sspp_count = ARRAY_SIZE(msm8953_sspp),
-+	.sspp = msm8953_sspp,
-+	.mixer_count = ARRAY_SIZE(msm8953_lm),
-+	.mixer = msm8953_lm,
-+	.dspp_count = ARRAY_SIZE(msm8953_dspp),
-+	.dspp = msm8953_dspp,
-+	.pingpong_count = ARRAY_SIZE(msm8953_pp),
-+	.pingpong = msm8953_pp,
-+	.intf_count = ARRAY_SIZE(msm8953_intf),
-+	.intf = msm8953_intf,
-+	.vbif_count = ARRAY_SIZE(msm8996_vbif),
-+	.vbif = msm8996_vbif,
-+	.perf = &msm8953_perf_data,
-+};
-+
-+#endif
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index da7b75e09251..3ae8114ec1e2 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -21,6 +21,11 @@
- 	(VIG_BASE_MASK | \
- 	BIT(DPU_SSPP_CSC_10BIT))
- 
-+#define VIG_MSM8953_MASK \
-+	(BIT(DPU_SSPP_QOS) |\
-+	 BIT(DPU_SSPP_SCALER_QSEED2) |\
-+	 BIT(DPU_SSPP_CSC))
-+
- #define VIG_MSM8996_MASK \
- 	(BIT(DPU_SSPP_QOS) | BIT(DPU_SSPP_CDP) |\
- 	 BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_SCALER_QSEED2) |\
-@@ -37,6 +42,9 @@
- 
- #define VIG_QCM2290_MASK (VIG_BASE_MASK | BIT(DPU_SSPP_QOS_8LVL))
- 
-+#define DMA_MSM8953_MASK \
-+	(BIT(DPU_SSPP_QOS))
-+
- #define DMA_MSM8996_MASK \
- 	(BIT(DPU_SSPP_QOS) | BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_CDP))
- 
-@@ -71,6 +79,9 @@
- #define DMA_CURSOR_MSM8998_MASK \
- 	(DMA_MSM8998_MASK | BIT(DPU_SSPP_CURSOR))
- 
-+#define RGB_MSM8953_MASK \
-+	(BIT(DPU_SSPP_QOS))
-+
- #define RGB_MSM8996_MASK \
- 	(BIT(DPU_SSPP_QOS) | BIT(DPU_SSPP_CDP) |\
- 	 BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_SCALER_RGB))
-@@ -766,6 +777,7 @@ static const struct dpu_qos_lut_entry sc7180_qos_nrt[] = {
-  *************************************************************/
- 
- #include "catalog/dpu_1_7_msm8996.h"
-+#include "catalog/dpu_1_16_msm8953.h"
- 
- #include "catalog/dpu_3_0_msm8998.h"
- #include "catalog/dpu_3_2_sdm660.h"
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 69f089431901..68c1364c3ffe 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -831,6 +831,7 @@ struct dpu_mdss_cfg {
- 	const struct dpu_format_extended *vig_formats;
- };
- 
-+extern const struct dpu_mdss_cfg dpu_msm8953_cfg;
- extern const struct dpu_mdss_cfg dpu_msm8996_cfg;
- extern const struct dpu_mdss_cfg dpu_msm8998_cfg;
- extern const struct dpu_mdss_cfg dpu_sdm630_cfg;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 58933d66bace..8676cdfc2f31 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1435,6 +1435,7 @@ static const struct dev_pm_ops dpu_pm_ops = {
- };
- 
- static const struct of_device_id dpu_dt_match[] = {
-+	{ .compatible = "qcom,msm8953-mdp5", .data = &dpu_msm8953_cfg, },
- 	{ .compatible = "qcom,msm8996-mdp5", .data = &dpu_msm8996_cfg, },
- 	{ .compatible = "qcom,msm8998-dpu", .data = &dpu_msm8998_cfg, },
- 	{ .compatible = "qcom,qcm2290-dpu", .data = &dpu_qcm2290_cfg, },
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index df1ad00541f5..e3db561b562d 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -984,6 +984,7 @@ module_param(prefer_mdp5, bool, 0444);
- 
- /* list all platforms supported by both mdp5 and dpu drivers */
- static const char *const msm_mdp5_dpu_migration[] = {
-+	"qcom,msm8953-mdp5",
- 	"qcom,msm8996-mdp5",
- 	"qcom,sdm630-mdp5",
- 	"qcom,sdm660-mdp5",
+which would be:
+
+static void ethqos_pcs_set_inband(struct stmmac_priv *priv, bool enable)
+{
+	stmmac_pcs_ctrl_ane(priv, priv->ioaddr, enable, 0, 0);
+}
+
+which then means this patch becomes a single line, and your subsequent
+patch just has to replace stmmac_pcs_ctrl_ane() with its open-coded
+equivalent.
+
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.c b/drivers/net/ethernet/stmicro/stmmac/hwif.c
+> index 84fd57b76fad..3666893acb69 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/hwif.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/hwif.c
+> @@ -6,6 +6,7 @@
+>  
+>  #include "common.h"
+>  #include "stmmac.h"
+> +#include "stmmac_pcs.h"
+>  #include "stmmac_ptp.h"
+>  #include "stmmac_est.h"
+>  
+> @@ -116,6 +117,7 @@ static const struct stmmac_hwif_entry {
+>  	const void *tc;
+>  	const void *mmc;
+>  	const void *est;
+> +	const void *pcs;
+
+I'm not a fan of void pointers. common.h includes linux/phylink.h, which
+will define struct phylink_pcs_ops, so there is no reason not to declare
+this as:
+
+	const struct phylink_pcs_ops *pcs;
 
 -- 
-2.45.2
-
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
