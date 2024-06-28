@@ -1,138 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-24586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D5FB91B9DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 10:30:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B99291B9ED
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 10:31:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AE9291C22DC5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 08:30:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7338F1F24543
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 08:31:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 175B3146D53;
-	Fri, 28 Jun 2024 08:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C62B43AC0;
+	Fri, 28 Jun 2024 08:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="JtPFEYzu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZcXtPW/2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.220])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 310E12139A8;
-	Fri, 28 Jun 2024 08:30:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.220
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329B71422D9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2024 08:31:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719563427; cv=none; b=pu5rRTwg2U+FP9PZuXrg6FZ08/ylQYSD+CqpZAiN4ssOii5FJCXGuHEiopC7p2HfkCAhM5ycIVs0FUMskEB3EViMC73gkl3YhVC+xevlsb8jzzfxGVau2a1vA8hmznUeah8FJg+3wVChwNVMkVUM66N+W/fls6HkxVKVz1FG1ds=
+	t=1719563480; cv=none; b=KqQnLqfSdtTYLCbVsPMa1UWBTJNI1WQCTnt/qzLsFeS5HlZJXkbFyR3mj12EWaAPllxqM4BXZammYBxY5eG/saYwCHC3hTtHQJ57R/3XYZLdiHwIZcDYVOssL+OLpMQMl1/91b0dNklPGXl74x/hRFB/O88qE2e1fso5VQaRH9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719563427; c=relaxed/simple;
-	bh=btbuoqnbp19+IbkGkP5tLXygz84RloajtIo8HzsNVH8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=YlQ2QfjCjc7NfL/DHSJwmOaQtEbdS1xBMsssLCCXrJ+OR4xwWUyx7pMbD7Xayxu9/tEFm5pGKi8rv/3bT5WanxxVffSODnev034vA6XR8xv3mkqUyksXvGvWIAkAE+XbcbaIs9X1DPR23Q7Joa0oS1n4/Lb+7lczc+dd6ziQo4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=JtPFEYzu; arc=none smtp.client-ip=45.254.50.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=YMm3T
-	0UnxeIlA2nphWPchowTmAu5M5TowJxfd/HCvM0=; b=JtPFEYzuzFSCCKxdCdZwG
-	C97ktLDpUI+YKmiIJTJbUjT5qpM1Ni+t/FxkZOsIeRj3xaBTytY+eY/AIzN6A6qq
-	LSrrQ6IQwLR4xG9qcr66BBHG1exZHQtVAWIf1iKZOoNQEZXnIFTp+Stny3/WVgQU
-	aoZ7uR7BJN+wEVMUWwFBLA=
-Received: from localhost.localdomain (unknown [112.97.61.84])
-	by gzga-smtp-mta-g0-4 (Coremail) with SMTP id _____wD3v7BzdH5mWbI3Aw--.3813S4;
-	Fri, 28 Jun 2024 16:29:45 +0800 (CST)
-From: Slark Xiao <slark_xiao@163.com>
-To: manivannan.sadhasivam@linaro.org,
-	loic.poulain@linaro.org,
-	ryazanov.s.a@gmail.com,
-	johannes@sipsolutions.net,
-	quic_jhugo@quicinc.com
-Cc: netdev@vger.kernel.org,
-	mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Slark Xiao <slark_xiao@163.com>
-Subject: [PATCH v3 3/3] net: wwan: mhi: make default data link id configurable
-Date: Fri, 28 Jun 2024 16:29:21 +0800
-Message-Id: <20240628082921.1449860-3-slark_xiao@163.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240628082921.1449860-1-slark_xiao@163.com>
-References: <20240628082921.1449860-1-slark_xiao@163.com>
+	s=arc-20240116; t=1719563480; c=relaxed/simple;
+	bh=qrPmbzPc6thrcoALKqu5/RTyzon2Cv6tVnvT/bPg2MQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=VXmbhZkrOqQFHNDgxSx5JBsM+afkpiyWC/5BNoqaryKWo+F7KSnDDNBKWEHk9ftUlHTjkGnd9mWq8nciLAwRKFgTNjWrPKYWQ/9XX7uRwMa66Df2M0YS/rpd21vFHBzghL4yS/t67F9K2Sz6D9Ayeaj+xdE+BqL4aE/Mq+YK1As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZcXtPW/2; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2ebed33cb65so3284051fa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2024 01:31:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719563476; x=1720168276; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yw0eZbsyLTkgcERd78HaWAv1qQu+UDNZrR+zNE4CJuE=;
+        b=ZcXtPW/2puBMhEOGseqV+++Smg14GCSaHw451Ko18kvmZ6l+uEpFiBftrBr18RRhLB
+         +/4z842/IxL6ivd18/5VpZQY/sBCEkDWmkE9aYlU+j+cXdE9bvpHvI9jsBCqnIgU+XVu
+         il7cSV52Gx36Xx1kD0GQLXUZJ1MG3OnsVwDl9RzWRCU6F+ByBwBTQTCyrqLKcVveCzYm
+         301r3M6KjXxoN4W/RR2GEeI0+/ZttQlDbKzy88OFhzM4PPoogDG4uJYK1mNtGQUgJ/I6
+         kPbV5qCX5GTrQ8ngy+P1/AwSjU94FBkdq5rx4IgkA/24pSNoZbpDuqEAjWDpoBOctIhj
+         LHBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719563476; x=1720168276;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yw0eZbsyLTkgcERd78HaWAv1qQu+UDNZrR+zNE4CJuE=;
+        b=NgPyGDR3EyrteK0RuSjx2l/skNBbCSsBJoAB0moNTOBg7+lOHDQxwKgrZjgMxXPxyF
+         7BGKSrV8hZMEs7rr5XvVbiK41ywScVp4X6Becz5kZqPRPEDARcfUB9IYhimfmXR11Dhi
+         IOrr01gWIH+IQj4fDDWS6iBB0QVYxukvnSLVGb/cbG19KcKYmSWl4LhXnz8IWWG1InHH
+         daCEkMgMU0WSfTA418WAT77WDYarVevFf1QaK1aXq5pYLGstVt6M2/viRRRLOxszE4mi
+         A3yghrFrTwrMZsIQ2dIAyn8DUt7T9JRlhPNLsuIjadAVPurRxMc1qqYOLxHHVQBjbzvB
+         KFJg==
+X-Forwarded-Encrypted: i=1; AJvYcCVDoQ6nlM1YwMJpPpJnuqaMYQcYL57kGeEXaditaNdbOt9cAzZ23WvyDvpeiCwi3bRtkc/gt6akir9MTPNpNuQ+2iuH70PWH22q1fe+SA==
+X-Gm-Message-State: AOJu0Yyn0D10gyA28bgMQkId90xrQlUpsPt7SChDZx1/Yxm6XKYgyObl
+	8CqRiNLBgR6zPQyoT5MYNJgheTlg+MPRdCKJPt5fkpdgrtJgREmGKQcryoUpLBg=
+X-Google-Smtp-Source: AGHT+IEOpDmTUMd9T1aD3y3deOsD8U1CZqZy1tIh8+xDSlP0/UjZ7yj/m4ywU7C5CPZ6setS3NylKg==
+X-Received: by 2002:a2e:9d8f:0:b0:2ec:3dd4:75f9 with SMTP id 38308e7fff4ca-2ec5936fa45mr103261411fa.35.1719563476230;
+        Fri, 28 Jun 2024 01:31:16 -0700 (PDT)
+Received: from [127.0.1.1] ([82.79.124.209])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a0d90casm1521604f8f.32.2024.06.28.01.31.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Jun 2024 01:31:15 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+Date: Fri, 28 Jun 2024 11:31:01 +0300
+Subject: [PATCH v2] dt-bindings: thermal: qcom-tsens: Document the X1E80100
+ Temperature Sensor
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wD3v7BzdH5mWbI3Aw--.3813S4
-X-Coremail-Antispam: 1Uf129KBjvJXoW7ZrWfJr1DAr1DWFWrJFW8WFg_yoW5JF1rpa
-	yUKFW3tr48J3y7Wa18Cr45Za4Y9r4qka4ak342gws8tw1Yyr9xXFWxXFyjkryFkFWv9r1q
-	yF18try3GanFkrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0z__MaDUUUUU=
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiNRsMZGV4IU7gJQAAsx
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240628-x1e80100-bindings-thermal-qcom-tsens-v2-1-4843d4c2ba24@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAMR0fmYC/43NwQ6CMAzG8VchO1uzVQjoyfcwHMYo0AQ27QjBE
+ N7dSeLdpJd/D99vU5GEKapbtimhhSMHnwJPmXKD9T0Bt6kVasx1gQiroUobraFh37LvI8wDyWR
+ HeLkwwRzJR7AW2+aqXW7LXKWpp1DH68E86tQDxznI+1AX8/3+gPI/YDFgQHdFugqLC5n7yN5KO
+ AfpVb3v+wfLGRXW2QAAAA==
+To: Amit Kucheria <amitk@kernel.org>, 
+ Thara Gopinath <thara.gopinath@gmail.com>, 
+ "Rafael J. Wysocki" <rafael@kernel.org>, 
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+ Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzk@kernel.org>, Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1217; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=qrPmbzPc6thrcoALKqu5/RTyzon2Cv6tVnvT/bPg2MQ=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmfnTLGn/UF7opNHc1QGJsaA76e4ji5+Om1hc6i
+ yiBvMZAh3WJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZn50ywAKCRAbX0TJAJUV
+ VutPD/9wLkhRMLmeqpjZHtFMN6UO+4KERYfHvYjy6/KbvCAy0fTdD3D5WPHAh7sFceYaFzFy8Cp
+ ne9Zc9V3gNokItuKP9NHCa/Gh4XhQiHdgdLdyt5+eC382dptCDj1rlEh2V3dUkUpE8x+80FWWyY
+ 1R/068+oWA/RZm4MttN/LDzXz2Gm6fy4ato0/ghzTtNMVmj5to8J6asWxbCrEFEZOc4gAHfqrE8
+ F+HRD1r3ipAqfnzF2WdGeT8t7VEy9a5CAtFm4FrBnKWofpHga882ME3mQLvpysQUHipZVtzFOAQ
+ smx9Qkx/jm85g6GGsRXIQb6t6/O/f9tuSk6F69Dr0c2mp+SJ3FqSKpmjdA7M2XnB4pkm6YH5h+m
+ 4Yy2C7McHKoaUH2UJ0JUlXKHlxwnMfDsD5oAqavFYwtyiHxGCp4V/pAwdCWS7hN+Q7n4iPUVa4z
+ NilM095wgMURXJ21QXvidPhU2H+DyNPVVVMf1XnMZg1z2YSYoJSSLPUslztMVJN+4dbKFVOo+qk
+ saX0MgKD7TOyxeCVlE684JHHBIWFJ/ZxUFf0rm5AUvn3cWjhyPMUCLs298lNONCU8IIfxX8Lyjj
+ 9wu9Jb297Af2s0L6Nu+O1u2XBf9fz18pnjqUDBs7eC2yHL7oGbHTF0nt6tMAZAaJGyAuTceYjWW
+ 4Xl0tQKqoWV86cg==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-For SDX72 MBIM mode, it starts data mux id from 112 instead of 0.
-This would lead to device can't ping outside successfully.
-Also MBIM side would report "bad packet session (112)".
-In oder to fix this issue, we decide to use the modem name
-to do a match in wwan side. Then wwan driver could
-set a corresponding mux_id value according to the modem product.
+Document the Temperature Sensor (TSENS) on the X1E80100 Platform.
 
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- drivers/net/wwan/mhi_wwan_mbim.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+Changes in v2:
+- Just picked up Krzysztof's R-b tag
+- Link to v1: https://lore.kernel.org/r/20240527-x1e80100-bindings-thermal-qcom-tsens-v1-1-0f50f58253e1@linaro.org
+---
+ Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wwan/mhi_wwan_mbim.c b/drivers/net/wwan/mhi_wwan_mbim.c
-index 3f72ae943b29..e481ced496d8 100644
---- a/drivers/net/wwan/mhi_wwan_mbim.c
-+++ b/drivers/net/wwan/mhi_wwan_mbim.c
-@@ -42,6 +42,8 @@
- #define MHI_MBIM_LINK_HASH_SIZE 8
- #define LINK_HASH(session) ((session) % MHI_MBIM_LINK_HASH_SIZE)
+diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+index 99d9c526c0b6..ac54ed604b74 100644
+--- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
++++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+@@ -67,6 +67,7 @@ properties:
+               - qcom,sm8450-tsens
+               - qcom,sm8550-tsens
+               - qcom,sm8650-tsens
++              - qcom,x1e80100-tsens
+           - const: qcom,tsens-v2
  
-+#define WDS_BIND_MUX_DATA_PORT_MUX_ID 112
-+
- struct mhi_mbim_link {
- 	struct mhi_mbim_context *mbim;
- 	struct net_device *ndev;
-@@ -93,6 +95,15 @@ static struct mhi_mbim_link *mhi_mbim_get_link_rcu(struct mhi_mbim_context *mbim
- 	return NULL;
- }
- 
-+static int mhi_mbim_get_link_mux_id(struct mhi_controller *cntrl)
-+{
-+	if (strcmp(cntrl->name, "foxconn-dw5934e") == 0 ||
-+	    strcmp(cntrl->name, "foxconn-t99w515") == 0)
-+		return WDS_BIND_MUX_DATA_PORT_MUX_ID;
-+
-+	return 0;
-+}
-+
- static struct sk_buff *mbim_tx_fixup(struct sk_buff *skb, unsigned int session,
- 				     u16 tx_seq)
- {
-@@ -596,7 +607,7 @@ static int mhi_mbim_probe(struct mhi_device *mhi_dev, const struct mhi_device_id
- {
- 	struct mhi_controller *cntrl = mhi_dev->mhi_cntrl;
- 	struct mhi_mbim_context *mbim;
--	int err;
-+	int err, link_id;
- 
- 	mbim = devm_kzalloc(&mhi_dev->dev, sizeof(*mbim), GFP_KERNEL);
- 	if (!mbim)
-@@ -617,8 +628,11 @@ static int mhi_mbim_probe(struct mhi_device *mhi_dev, const struct mhi_device_id
- 	/* Number of transfer descriptors determines size of the queue */
- 	mbim->rx_queue_sz = mhi_get_free_desc_count(mhi_dev, DMA_FROM_DEVICE);
- 
-+	/* Get the corresponding mux_id from mhi */
-+	link_id = mhi_mbim_get_link_mux_id(cntrl);
-+
- 	/* Register wwan link ops with MHI controller representing WWAN instance */
--	return wwan_register_ops(&cntrl->mhi_dev->dev, &mhi_mbim_wwan_ops, mbim, 0);
-+	return wwan_register_ops(&cntrl->mhi_dev->dev, &mhi_mbim_wwan_ops, mbim, link_id);
- }
- 
- static void mhi_mbim_remove(struct mhi_device *mhi_dev)
+       - description: v2 of TSENS with combined interrupt
+
+---
+base-commit: 0fc4bfab2cd45f9acb86c4f04b5191e114e901ed
+change-id: 20240522-x1e80100-bindings-thermal-qcom-tsens-aa2db90c4a74
+
+Best regards,
 -- 
-2.25.1
+Abel Vesa <abel.vesa@linaro.org>
 
 
