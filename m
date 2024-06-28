@@ -1,147 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-24581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C3CB91B929
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 09:59:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E39E91B967
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 10:05:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EBE9D2822A7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 07:59:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 475431F22A91
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 08:05:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68FC9143C43;
-	Fri, 28 Jun 2024 07:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 057E4143C4A;
+	Fri, 28 Jun 2024 08:05:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nNEq6kZ0"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="AqEK5PJ2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72A4143745
-	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2024 07:58:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B2C4436A
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2024 08:05:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719561535; cv=none; b=mV4db1jRELB1oMOVteVnlAvkyDpH9tqvbS+ZpVgzLj5wXBjCcaZ0fiVLbT5LQJqx3vyiLdSTmxae3cPA7C1WmwQZO1+A4f5aJcIUfT02CLJY5IMyknYj41nBt8BU1a+3oFm35l3prSqxm3LL8qc8f78wZYMX2LXnb+mYR7morxQ=
+	t=1719561909; cv=none; b=T7aQhNZDGXn36xAqVzBG+U/hK9xNcsbNdL7p8gDkdCkvBdoGLTj5tCp5NFKgv18n+omUqfNygbB79WJdjkKvAYy0vSZk07f7MvIREsGK2Y47XsKl1C8oJdA+/7a2HJir3orsPxXMjmszwtYB4N0ltSVwmAPp1HejkMMZjBH2+Xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719561535; c=relaxed/simple;
-	bh=KSHFHEJQOwcEyLomFOH9oKcThmx8vwRpmht/1wMqglM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cnhw93d/zpjFg3y8KD10MH+U0g4XRqcU+huT1QvuE2EuUsORpGnvv2XjQkuwHSH8GIoBGpB7/HsXXOfaLg2mFKnT5kqcBgmXt+L8Dbw2rKHKTgVJmAfxYNj4jMOgVTXOXoApzV+kqG9nQmpIpsIg+TJkBUCGoGNxNH//dWa04ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nNEq6kZ0; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2ec10324791so2638701fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2024 00:58:52 -0700 (PDT)
+	s=arc-20240116; t=1719561909; c=relaxed/simple;
+	bh=JzJrqoFrrLlYjlFvyfWzcuywlzt232DBEfu3youbBSY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GdZGwEI6JpJ3JBqrJdxOoiqa+mM/1zV/Urw2nL0G6BTG4wCUMAJQNOEG6Zg5W0CY+AdEEAiBUMG1tz1c7cBAgj5psFllmN5vPEvni9rrA2zQwi9rtkB3U27gTYqHt8lnj5Pa+bHfBhHKb0a5rHDJkIViPcrJuliDsWsXS/dBrZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=AqEK5PJ2; arc=none smtp.client-ip=209.85.160.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-44644b8db9dso1671491cf.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2024 01:05:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719561531; x=1720166331; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hpVThxLKAwW8nm2tVnNjG2KBHYs+YTfM3+uWLBBi4MI=;
-        b=nNEq6kZ0iW5NUaPNWFEldF4tC0Od5jCUKwZiQC8ywXRgZ8GG8H67+BDd5fonVVfBDk
-         TfMtvRg7tBmVc+8DaZvZ+EWtKzqGdm1ZW9JNriQsQxvg3yalQkMuN9MCrAcliMP4Q68N
-         s+4Rif/AitBee/1Z99+I4YgietHpZaxtfVCUEyHw0oY6cznVaBscAs7j2x9H6JRYuDiN
-         vrS4IT1TkRkw/x1V8uMzc666z0qYiYGS8WjHCIXYG/GWmJe2hpvEw2A/ZWISgBKTAzxg
-         jjsDl1Hc3XbscfxEMP72nnd7xZve90USQGtLoK6XtSjp/re7zWL++pbuXxr5xdR0n/qV
-         lL6Q==
+        d=chromium.org; s=google; t=1719561907; x=1720166707; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=JzJrqoFrrLlYjlFvyfWzcuywlzt232DBEfu3youbBSY=;
+        b=AqEK5PJ2rxoIIIVQwXxRwNtPUpvxZNTbk3bFdnjTil6t4j9gHmOO9f6sn6LomA1z73
+         2If5fklFrF6ABz0j9aH8I+qYOdcIV9Ny9JHROITlwzF3UqtzcsTTjRfUPgl/DASBPTgf
+         L/eMf0v/jdf8UYw+9NiH/V4Yy1xyqDuFwpBBU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719561531; x=1720166331;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hpVThxLKAwW8nm2tVnNjG2KBHYs+YTfM3+uWLBBi4MI=;
-        b=kqtLynZDifdqQLuq9yW9sL4mGe57aNwNBcrEcXixe5PvJWIZW7M4h+RiZ6AkKDM5Wd
-         Klwxoe/A1O3TggNGbKknhcQycoaJk2Q27ibgdiGZ3SmfMcGOQf5utjum9WFNE+JkWwZU
-         zi9yfT15kxIYarMQNESXIN0R56cxuR+bzcPQIionLyyuTU4Q9pXgxkVb1dr/eCmLrwr2
-         EoIy/4oA/qaZt/L2aj6eRB/8s8FPbQy/syxzL5SfC4WRvrAhX8pVNA9IIQun40OJ0ICw
-         eT3NBvl+UUgy5q6u4G+u+eyFtzykMRnAi0nMU/dhjpp0agqEWAAePhyjODpQ3WtgqIeJ
-         lq/A==
-X-Forwarded-Encrypted: i=1; AJvYcCWFn/ll8ykgN03lE8Jos++RGvEs6ozrcihQ0dgckgGo1DUKZw+6GEgTdENbC17ajC91xnfnMlQqRxhna0+L7PUaGpRolB00y31aHOTsGg==
-X-Gm-Message-State: AOJu0YyfSEl34gKspYAabb9mcldRzsckT0f7xFORZYoB6kfAneRd5GSR
-	g0PU++P9pBzzKJZ5MDe8qJJCgvu5EFc7iPRwM5Ox2Iud7Hid0WI4SFDVB2NZ/m0=
-X-Google-Smtp-Source: AGHT+IHT1dN0X9G5ooLDoHTtpwGUZgml6ThHILx7KnXjSbHrlHKUYpf6rwFCzqavRCfGgLPHp3W0wA==
-X-Received: by 2002:a2e:8792:0:b0:2ec:5699:5e6 with SMTP id 38308e7fff4ca-2ec5b28ba0dmr94114421fa.26.1719561531089;
-        Fri, 28 Jun 2024 00:58:51 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ee51680226sm2034711fa.95.2024.06.28.00.58.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jun 2024 00:58:50 -0700 (PDT)
-Date: Fri, 28 Jun 2024 10:58:49 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Alexey Klimov <alexey.klimov@linaro.org>
-Cc: linus.walleij@linaro.org, srinivas.kandagatla@linaro.org, 
-	linux-arm-msm@vger.kernel.org, andersson@kernel.org, krzysztof.kozlowski@linaro.org, 
-	linux-gpio@vger.kernel.org, konradybcio@kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] pinctrl: qcom: lpass-lpi: increase MAX_NR_GPIO to 32
-Message-ID: <bkl3ry452jzhpoyzvidcvr3cquyx3dq5wbzulut3dzmlozi6ev@zjfdd6z2aqso>
-References: <20240627003654.242870-1-alexey.klimov@linaro.org>
+        d=1e100.net; s=20230601; t=1719561907; x=1720166707;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JzJrqoFrrLlYjlFvyfWzcuywlzt232DBEfu3youbBSY=;
+        b=eUsbhLWHURRtRnk56NXn2MPtBj0FkqkARSyXEBJs/LbbE1BTrdp1dFELodmfSvJLbK
+         iF4Ymor96LP1Mq3Qkdnks1qbu7voixok0M/TC3CDZKPFE6Sk+Zlgt1BgZPl192yiBFHw
+         2sz7+yPqu8X/YMgUMoncNWgYG+LHg9UEmUgbw4jGVUlqdCfaDDtukuK5dd44lQAPenRC
+         ofECNaQsqvhRV3iVbH1uPq1ITP0jrUx86YY+xlcDUf13zSo3He9HFwAiS/Spe+AbIuie
+         U3Hz5GGlvvrSm1sgj9Rm1VCSvZtifndyDLRsn2RKVTOhdnoAzq3M9GGij2dyAMjf1ZM1
+         62kw==
+X-Forwarded-Encrypted: i=1; AJvYcCU8SVsInnIxooDUWTn3VKMYF2Ut+Lqv7xTcpql8SiZFYcsuT9RhREUcKEI+CzxgeJ4gPxAM5SNzxWewPxkmQI5kZ8U48lGHzQjmfVYTew==
+X-Gm-Message-State: AOJu0YxhAxGj1inPs0pvGAtZdNxNWkrL6gWmyeqFXIkKrb0UDzI6Q/wh
+	uv/jPrwd2poc4zlL2nNHyIJh4PElpRX0Wgc/IRCYYQhHGofbFtYz9EaPu6p/SP8BL4dFeWSIG5k
+	Dcbed0TmFvd4tfm2WklFCBpdK80fVPsSip7L4
+X-Google-Smtp-Source: AGHT+IF0otSsDTnS1XWFIT01k1cgVlGvDRjEaZz815q/WnFkdlw4tS8NYw01YMmeU5bEvep9bbqcDylPNPoaN8d4UEU=
+X-Received: by 2002:a0c:f10b:0:b0:6b5:4b10:7849 with SMTP id
+ 6a1803df08f44-6b54b107986mr143489446d6.1.1719561907384; Fri, 28 Jun 2024
+ 01:05:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240627003654.242870-1-alexey.klimov@linaro.org>
+References: <20240521-board-ids-v3-0-e6c71d05f4d2@quicinc.com>
+ <CAFLszTjexpNEjo1sGVs67L0CAgGZLNkyn9RGfHRD7iHak_mtmg@mail.gmail.com>
+ <20240605100246481-0700.eberman@hu-eberman-lv.qualcomm.com>
+ <CAFLszThbe_aUAq_5rCCiPV-bj60oq9UCc=vdDHwM3i6t44ohLw@mail.gmail.com>
+ <20240621142054973-0700.eberman@hu-eberman-lv.qualcomm.com> <CAFLszThO1doxsXSYTrTTPy9QCW4hrBb07k0VdSNWip=4MKtTnA@mail.gmail.com>
+In-Reply-To: <CAFLszThO1doxsXSYTrTTPy9QCW4hrBb07k0VdSNWip=4MKtTnA@mail.gmail.com>
+From: Simon Glass <sjg@chromium.org>
+Date: Fri, 28 Jun 2024 09:04:56 +0100
+Message-ID: <CAFLszTiACk98KaqA4Aa65d8ck9iJZevQyeFfq90JjsyZhx_HjA@mail.gmail.com>
+Subject: Re: [PATCH RFC v3 0/9] dt-bindings: hwinfo: Introduce board-id
+To: Elliot Berman <quic_eberman@quicinc.com>
+Cc: Rob Herring <robh+dt@kernel.org>, Frank Rowand <frowand.list@gmail.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Amrit Anand <quic_amrianan@quicinc.com>, Peter Griffin <peter.griffin@linaro.org>, 
+	Caleb Connolly <caleb.connolly@linaro.org>, Andy Gross <agross@kernel.org>, 
+	Doug Anderson <dianders@chromium.org>, Chen-Yu Tsai <wenst@chromium.org>, 
+	Julius Werner <jwerner@chromium.org>, "Humphreys, Jonathan" <j-humphreys@ti.com>, 
+	Sumit Garg <sumit.garg@linaro.org>, Michal Simek <michal.simek@amd.com>, 
+	boot-architecture@lists.linaro.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Jun 27, 2024 at 01:36:54AM GMT, Alexey Klimov wrote:
-> Account for more than only 23 GPIOs in LPASS Low Power Island pinctrl
-> generic driver. The previous value 23 was chosen to satisfy existing
-> SoC-specific drivers. However SM4250 LPI pinctrl uses more than 23 GPIOs
-> and its probe routine fails on:
-> 
->         if (WARN_ON(data->npins > MAX_NR_GPIO))
->                 return -EINVAL;
-> 
-> with the following message:
-> 
-> [   10.709014] ------------[ cut here ]------------
-> [   10.719085] WARNING: CPU: 1 PID: 56 at
-> drivers/pinctrl/qcom/pinctrl-lpass-lpi.c:446
-> lpi_pinctrl_probe+0x308/0x388 [pinctrl_lpass_lpi]
-> [   10.719108] Modules linked in: [...]
-> [   10.719238] CPU: 1 PID: 56 Comm: kworker/u33:0 Not tainted
-> 6.10.0-rc2-00012-ge45ddb1f8d34-dirty #7
-> [   10.719245] Hardware name: Qualcomm Technologies, Inc. QRB4210 RB2 (DT)
-> [   10.719250] Workqueue: events_unbound deferred_probe_work_func
-> [   10.719265] pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [   10.719271] pc : lpi_pinctrl_probe+0x308/0x388 [pinctrl_lpass_lpi]
-> [   10.719278] lr : lpi_pinctrl_probe+0x44/0x388 [pinctrl_lpass_lpi]
->         ...
-> [   10.719357] Call trace:
-> [   10.719361]  lpi_pinctrl_probe+0x308/0x388 [pinctrl_lpass_lpi]
-> [   10.719369]  platform_probe+0x68/0xc4
-> [   10.719378]  really_probe+0xbc/0x29c
-> [   10.719384]  __driver_probe_device+0x78/0x12c
-> [   10.719390]  driver_probe_device+0xd8/0x15c
-> [   10.719395]  __device_attach_driver+0xb8/0x134
-> [   10.719401]  bus_for_each_drv+0x88/0xe8
-> [   10.719407]  __device_attach+0xa0/0x190
-> [   10.719412]  device_initial_probe+0x14/0x20
-> [   10.719418]  bus_probe_device+0xac/0xb0
-> [   10.719423]  deferred_probe_work_func+0x88/0xc0
-> [   10.719429]  process_one_work+0x150/0x294
-> [   10.719439]  worker_thread+0x2f8/0x408
-> [   10.719445]  kthread+0x110/0x114
-> [   10.719452]  ret_from_fork+0x10/0x20
-> [   10.719459] ---[ end trace 0000000000000000 ]---
-> [   10.719589] qcom-sm4250-lpass-lpi-pinctrl a7c0000.pinctrl: probe
+On Fri, 28 Jun 2024 at 08:33, Simon Glass <sjg@chromium.org> wrote:
+>
+> Hi Elliot,
+>
+> On Fri, 21 Jun 2024 at 23:40, Elliot Berman <quic_eberman@quicinc.com> wrote:
+> >
+> > Hi Simon,
+> >
+> > On Thu, Jun 06, 2024 at 10:00:54AM -0600, Simon Glass wrote:
+> > > On Wed, 5 Jun 2024 at 11:17, Elliot Berman <quic_eberman@quicinc.com> wrote:
+> > > > On Wed, Jun 05, 2024 at 07:17:35AM -0600, Simon Glass wrote:
+> > > > > Hi Elliot,
+> > > > >
+> > > > > I am just picking up the discussion here, which was started on another thread.
+> > > > >
+> > > > > I can't see why this new feature is needed. We should be able to use
+> > > > > compatible strings, as we do now. I added a 'usage' section to the FIT
+> > > > > spec [1] which might help. I also incorporated the board revision and
+> > > > > variant information and some notes on how to add to the available
+> > > > > suffixes.
+> > > > >
+> > > > > Does that handle your use case?
+> > > >
+> > > > -rev and -sku don't fit the versioning scheme for QTI devices, so this
+> > > > isn't a generic enough approach. Patch 5 in this series describes the
+> > > > versioning scheme for us.
+> > > >
+> > > > In the other thread, we had talked about using some regex based approach
+> > > > for matching the root node compatible. I haven't had chance to work on
+> > > > that proposal and will try to get to it in the next couple weeks.
+> > >
+> > > OK, I look forward to it. Please do check the FIT best match approach
+> > > and see how it might be extended to handle your requirements. So far I
+> > > have not seen a need for regexes, but it is certainly a possibility.
+> > >
+> >
+> > I spent some time collecting feedback from the team on using compatible
+> > strings + regex-style approach and we're not able to add a regex library
+> > into firmware, so this approach unfortunately won't work for us.
+> > Because we have more axes of board identification than chromebook, using
+> > FIT's compatible strings isn't a scalable solution for us. I don't think
+> > we have incompatible problems, we only have more than 2-3 axes of
+> > information.
+>
+> I understand that. I assume that you have a lot of devices that use
+> the same SoC but different PMICs, displays, etc. Some of these can be
+> handled in the bootloader, e.g. by detecting hardware and applying an
+> overlay, or enabling/disabling a node in the DT. It can be useful to
+> have a hardware-readable ID to indicate things which cannot be probed,
+> e.g. with GPIOs or ADC + resistors.
+>
+> Another option is to give names to your projects, so that machines
+> with the same SoC but major hardware differences end up with a
+> different name (see rk3399-xx.dts for examples).
+>
+> I'm sure you are already doing some/all of these things. I still feel
+> (so far) that you don't need to invent something new here.
+>
+> Re "FIT's compatible strings isn't a scalable solution for us", how is
+> what you are doing different from other vendors? Is it the sheer
+> number of variations, or something else?
 
-Nit: usually you can ommit timestamps when posting the backtrace.
-
-> with driver qcom-sm4250-lpass-lpi-pinctrl failed with error -22
-> 
-> Fixes: c2e5a25e8d88 ("pinctrl: qcom: Introduce SM4250 LPI pinctrl driver")
-> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-> ---
->  drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
--- 
-With best wishes
-Dmitry
+Here I am referring to the actual number of separate boards which
+appear in the wild, not the multiplication of the number of axes which
+produced them.
 
