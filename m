@@ -1,89 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-24590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7DF691B9F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 10:32:04 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7B1A91BA0D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 10:34:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 641BD285531
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 08:32:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 03E271C23689
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 08:34:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56C3C1474A9;
-	Fri, 28 Jun 2024 08:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41F85152799;
+	Fri, 28 Jun 2024 08:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="j8MBJLZI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hfKvL5gl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.220])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3330B14386F;
-	Fri, 28 Jun 2024 08:31:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.220
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B6B14F9D9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2024 08:32:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719563521; cv=none; b=H+G5luw5b1z+KGWVI1Vt0d0GZ3bevJ0ys/LWqbRObJcPR4bUZnPeN8ScFAtadYIl8dbOt3KbdvqSF0CV2v8uzii8VLCTELhJaJGNejRdrGYmXaOIBvFpfoftF5762DVenPoy7WlX6J8DvwE2A4tp6YdsTTjWKjW47pTZfe4Ul60=
+	t=1719563549; cv=none; b=jcy7RvvJw/BhhIW0Dp5d1ijr9UA7jASrbUVuVdPRvEYhFpT9DZGbVyR0dkY0PwDd8ux+6OngrC7vG8YHtOQq+lDpHmcHqEyTdPqo9a7aGB5URYj0K6prx3a1h417MGDFzcx2I6zC0xhi9+CXxpF0jrKQnuUHZoPyWls5QFLWlKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719563521; c=relaxed/simple;
-	bh=qRY2BttLFavGC0/FEKgRQmh0bDCXs9H3mYiv5W7T9/Y=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=F047Eh/3pmIIdUpw6NF0Vv68bGqphFR3JLKLMRZxlVgKiv5xhQKo70UavDZOGSJNl3tLZta/LdGgEOOcjVrit0vY7vx4ORnEQ5DojqEXmiIcoH+6c3eEmXAXfkCdVgItkLA5s7eOt8n65QeEeHtr7f+tl+WS24TU53CLtDUQzqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=j8MBJLZI reason="signature verification failed"; arc=none smtp.client-ip=45.254.50.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=8dm2yPnUBy+Zwic0JqYYPGSYk9HXlXSy6pvyaLYdubE=; b=j
-	8MBJLZI1RSp3f9pNMxxk9Mv4PjPyFCdx4UyqdjX5TU9bo1qsKgsoZvmx2DYc7dAd
-	PrWw41rsG+hLJdDsawkB8k8FjnEpf1HTFLAyEUtDbXwamoebx0H3aN3XOOX62yGt
-	iv5dujTTvdCqT5q0WlhH0GKBGh0de4dlwGiM3h98pM=
-Received: from slark_xiao$163.com ( [112.97.61.84] ) by
- ajax-webmail-wmsvr-40-137 (Coremail) ; Fri, 28 Jun 2024 16:31:40 +0800
- (CST)
-Date: Fri, 28 Jun 2024 16:31:40 +0800 (CST)
-From: "Slark Xiao" <slark_xiao@163.com>
-To: "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
-Cc: manivannan.sadhasivam@linaro.org, loic.poulain@linaro.org, 
-	ryazanov.s.a@gmail.com, johannes@sipsolutions.net, 
-	quic_jhugo@quicinc.com, netdev@vger.kernel.org, mhi@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re:Re: [PATCH v3 1/3] bus: mhi: host: Add Foxconn SDX72 related
- support
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <2xbnsvtzh23al43njugtqpihocyo5gtyuzu4wbd5gmizhs2utf@d2x2gxust3w5>
-References: <20240628073605.1447218-1-slark_xiao@163.com>
- <2xbnsvtzh23al43njugtqpihocyo5gtyuzu4wbd5gmizhs2utf@d2x2gxust3w5>
-X-NTES-SC: AL_Qu2aC/mdvE0r5iSdZ+kfmk8Sg+84W8K3v/0v1YVQOpF8jBLo0w4rRVxgI2Hp/cKNLi6tlzu0ViZu0OhWXqpzZ7ooSYwDKdnixOFe4YYADrnHLg==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	s=arc-20240116; t=1719563549; c=relaxed/simple;
+	bh=r7+eakRvT7ZiZ9WyL9rTTM6ysWPSIZYFNimdjEgNIJM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gI3NrZJivY7BWW9YEOGc1NsvOMdb9mZNUnaWijvPN6Rvpr1HAHW43l6Z5CxGr8+nVWMeC8CltIWFOY1j2QJsk0yjqju5xZxIv9kPThm2+qdolqN0PdbtIUqiVk45c1Ku9IanDtOuRlc3X3RoV6kYubHcTE7dP33ptyuGAob1zVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hfKvL5gl; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5295eb47b48so457899e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2024 01:32:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719563545; x=1720168345; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=RJwxeW+GDgd+YjrwH0bRPELomJst4fhgHNABgR77E/Q=;
+        b=hfKvL5glJDWnkKCm3Pt3eedbEmaBuw/7vyCk3OJF9HGv9Ejiav107XtJRaoLPNwhCL
+         iFXdyy1BmoZHSSLowdvwOqnsHlrIYE+f43kdkrUWdAitJHMZIVrf2ZQ1BgjZSAT3/FCa
+         l959aEQhv82XzlWxSnBKtmAHNBiYuP/1Rd0nBSDKcxJfBhIMaDuNkNspmTQv2RsqKnu+
+         Ep4QlT78UaLmdgzKIzK5uqem0ABVikJ+s7OodD7AaLuynb4Ee9sOci+QAm5sphY6il77
+         F5yIBE6DgooLxFKvsmsCL9ghj80UidYQTSr+KXPfvwQrPp0B7ETLJKhItPKXt6HDtLN3
+         xNJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719563545; x=1720168345;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RJwxeW+GDgd+YjrwH0bRPELomJst4fhgHNABgR77E/Q=;
+        b=nJXjbgBPvjDkwnEZR2/DRXbgo1+La6JbjZyHJ8HcohILF/t5/AYnMhj2vxv8rVvfP8
+         XpL9XorcBbhfZlyMsZH8a8OE5AgX7YRBX+4B0FID7U0nil9yLFCfZMawLkO6NFpznEzZ
+         Xw6HgYTStWE2ODObo00yTYO6cELCcGujCrA1kne6JXSXTtGYylgOfVGYKcwJRqfeynMP
+         WW5ZE/AA7UArZtZqSmH1VWeG8LjPDqpkOEUveKqeSh2ax5ZtK7wFWYq2AbGQRw7rhEzq
+         d2GRw4xC0SWEyz0bgqB4Ygp5wJ0fF3p4xkYOCqiJfSk+p6pjCRNz77T16MZnpsQcS9X1
+         Xa4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXMFa4O6NzDE59nr9FDZ1dItx9dUt0YfkJgi+7LMnwhFmaawZt+vV7wlYyVA+uGRy1FJ1x5FyZ3xmW1aYrmyzGr9G7EigE9JfrStOGXZg==
+X-Gm-Message-State: AOJu0YzaYx4Lg6UlNOKTIlcWn7hdfaYzKZ+R6QmYxKhNblVKi2bhflHc
+	rKmOmJHtnExvEuCNRfzzQqx3Gwk8eeMDbQ34nzRFiu4EpaSw11OvPvFtzfeO3uI=
+X-Google-Smtp-Source: AGHT+IEBqgq8/ijDLYuWtZgrlxH0PdT/BNEB0C1UNr460C7LtzL4BXpKkJbR3oMqpmu0RY60Od9/Ag==
+X-Received: by 2002:a19:ee17:0:b0:52c:def6:7c97 with SMTP id 2adb3069b0e04-52ce064146emr10914325e87.45.1719563545317;
+        Fri, 28 Jun 2024 01:32:25 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52e7ab3b4cdsm208851e87.294.2024.06.28.01.32.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Jun 2024 01:32:24 -0700 (PDT)
+Date: Fri, 28 Jun 2024 11:32:23 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] clk: qcom: gcc-x1e80100: Set parent rate for USB3 sec
+ and tert PHY pipe clks
+Message-ID: <6fr22a5ehq2vcd2ueeaphtzhauscpaj4llt2j62cj5m5wydw32@6ma244renp33>
+References: <20240530-x1e80100-clk-gcc-usb3-sec-tert-set-parent-rate-v1-1-7b2b04cad545@linaro.org>
+ <3ukguewuqqm5gmbd3afl62ihysdzkk44j3f2nuqht4gjuf5ruo@zu7jmmnbrpdj>
+ <Zn5w9zKxIT/2OvB4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <455cd5ee.86ad.1905df8bbab.Coremail.slark_xiao@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wD333DsdH5mXmkTAA--.29661W
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbioxsMZGVOEH3Z8wACs+
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zn5w9zKxIT/2OvB4@linaro.org>
 
-CkF0IDIwMjQtMDYtMjggMTU6NTE6NTQsICJEbWl0cnkgQmFyeXNoa292IiA8ZG1pdHJ5LmJhcnlz
-aGtvdkBsaW5hcm8ub3JnPiB3cm90ZToKPk9uIEZyaSwgSnVuIDI4LCAyMDI0IGF0IDAzOjM2OjA1
-UE0gR01ULCBTbGFyayBYaWFvIHdyb3RlOgo+PiBBbGlnbiB3aXRoIFFjb20gU0RYNzIsIGFkZCBy
-ZWFkeSB0aW1lb3V0IGl0ZW0gZm9yIEZveGNvbm4gU0RYNzIuCj4+IEFuZCBhbHNvLCBhZGQgZmly
-ZWhvc2Ugc3VwcG9ydCBzaW5jZSBTRFg3Mi4KPj4gCj4+IFNpZ25lZC1vZmYtYnk6IFNsYXJrIFhp
-YW8gPHNsYXJrX3hpYW9AMTYzLmNvbT4KPj4gLS0tCj4+IHYyOiAoMSkuIFVwZGF0ZSB0aGUgZWRs
-IGZpbGUgcGF0aCBhbmQgbmFtZSAoMikuIFNldCBTRFg3MiBzdXBwb3J0Cj4+IHRyaWdnZXIgZWRs
-IG1vZGUgYnkgZGVmYXVsdAo+PiB2MzogRGl2aWRlIGludG8gMiBwYXJ0cyBmb3IgRm94Y29ubiBz
-ZHg3MiBwbGF0Zm9ybQo+Cj5HZW5lcmljIGNvbW1lbnQ6IHBsZWFzZSBzZW5kIGFsbCB0aGUgcGF0
-Y2hlcyB1c2luZyBhIHNpbmdsZQo+Z2l0LXNlbmQtZW1haWwgY29tbWFuZC4gVGhpcyB3YXkgaXQg
-d2lsbCB0aHJlYWQgdGhlbSBwcm9wZXJseSwgc28gdGhhdAo+dGhleSBmb3JtIGEgc2luZ2xlIHBh
-dGNoc2VyaWVzIGluIGRldmVsb3BlcnMncyBtYWlsIGNsaWVudHMuIE9yIHlvdSBjYW4KPmp1c3Qg
-dXNlICdiNCcgdG9vbCB0byBtYW5hZ2UgYW5kIHNlbmQgdGhlIHBhdGNoc2V0Lgo+CgpTZW5kIGFn
-YWluIHdpdGggY29tbWFuZCAiZ2l0IHNlbmQtZW1haWwgdjMtKi5wYXRjaCAuLi4iLiBQbGVhc2Ug
-dGFrZSBhIHZpZXcgb24gdGhhdC4KVGhhbmtzLgoKPj4gLS0tCj4+ICBkcml2ZXJzL2J1cy9taGkv
-aG9zdC9wY2lfZ2VuZXJpYy5jIHwgNDMgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrCj4+
-ICAxIGZpbGUgY2hhbmdlZCwgNDMgaW5zZXJ0aW9ucygrKQo+PiAKPgo+Cj4tLSAKPldpdGggYmVz
-dCB3aXNoZXMKPkRtaXRyeQo=
+On Fri, Jun 28, 2024 at 11:14:47AM GMT, Abel Vesa wrote:
+> On 24-05-31 02:56:12, Dmitry Baryshkov wrote:
+> > On Thu, May 30, 2024 at 05:05:24PM +0300, Abel Vesa wrote:
+> > > Allow the USB3 second and third GCC PHY pipe clocks to propagate the
+> > > rate to the pipe clocks provided by the QMP combo PHYs. The first
+> > > instance is already doing that.
+> > 
+> > Which driver changes the rate of those clocks?
+> 
+> Sorry for the late reply.
+> 
+> These clocks are consumed by the combo PHYs, so driver is
+> phy-qcom-qmp-combo. This driver doesn't change the rates of the pipe
+> clocks as of yet.
+> 
+> The fix is still good, even if it's just to align all three clocks.
+> 
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+
+-- 
+With best wishes
+Dmitry
 
