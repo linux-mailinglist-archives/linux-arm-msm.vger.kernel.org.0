@@ -1,131 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-24573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24574-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26DF591B8AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 09:41:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A47791B8AC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 09:42:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57C461C224F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 07:41:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6F22C1C20F63
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 07:42:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D86851411E7;
-	Fri, 28 Jun 2024 07:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7940048788;
+	Fri, 28 Jun 2024 07:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eJyVXgZa"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eWDE87eH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A793B48788;
-	Fri, 28 Jun 2024 07:41:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA30140369
+	for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2024 07:42:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719560505; cv=none; b=aMMSC3B2oTlfLvrVzOKanfCPTH7r0BUDsfNR6C51E04IhQuIFW5L01M0FmRQdTKLTMxtESBfxDSSn6hvbzQTXScdB66Cldh/UunB3VrdtRt+TB4CRuuSzxERalfanVjvwUEaEKByDi0iBAOhzCmq6bhUjoGoCuOrvkG7JIx7kaY=
+	t=1719560535; cv=none; b=a1VYSab4BslTloVnHa9mte0kqzFPGJjWjBIgXcSrWGmk80s1dFoHjvVpgf2kpZ/ILGjkWJhEiHR3TUjP9jY/76kbwSQosXJxG1nw8N0tKtgiAJknRXRqrg7aVfSZ8YLjXmuFSJjp8A8b2B7t3K/RByJnvLw0Voo+94yVb2GDJvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719560505; c=relaxed/simple;
-	bh=Wt2QyXbbxL8PTmXZ2Z39CcMI+SgW9ROVsMqtFb7xo3g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jx5SSMHlmcOjDpFlVJlujxO1nxxwPr1gwtJhf2pK0+wwloEQ6bTtnC2gBWL/kpMIwcQn51QrnALPhfyMeEm29FyfX82/sSR58xFJdapQy5DI+UsRXqt3zm1W/CWpIru9v17l/QFzIVIRbWXB4modiXFtYPdZZ5HjxVo7+mnBeMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eJyVXgZa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49AD4C116B1;
-	Fri, 28 Jun 2024 07:41:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719560505;
-	bh=Wt2QyXbbxL8PTmXZ2Z39CcMI+SgW9ROVsMqtFb7xo3g=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=eJyVXgZaGjMK53Z83reYtBISCzGWxnheM32eCFiSZlxD/1k5NFVw3AOGT6ug4KrdY
-	 ci3jzunGWWqbJS1jSQBP/JaU3Dq2XUTdacgOMnZfn402ebzBE1qeyk4BbVeF4m5n9O
-	 QdzgrdJZz8q+/Yz/DDK8vmZCZZzD4vqDldkAhJjuVUja3GAJ4LrQNpm0dSBHO2RxWK
-	 S2BLY4fKjpQpKJ/mmRhYkXji1nq0XI9tmyQ0Rbqd8F36Ojg3msJqsGdJWr2NZZrThy
-	 4NnMGAgNG/i84YEObq/InOsdevGGblzHFBofp+MLXKj1zyrMzQi+DRDokCjt3xab4n
-	 7BNnb1jFGOjZg==
-Message-ID: <68e56d01-6cda-4101-a8dc-659cc5160afc@kernel.org>
-Date: Fri, 28 Jun 2024 09:41:39 +0200
+	s=arc-20240116; t=1719560535; c=relaxed/simple;
+	bh=th+V9j6yh5My6EhP3guWXo/ea8Qg8OvNze7mhEtKnDc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nn1ZGD5J20I4oBBExF1vZ3lgwUzi6FVBiwVfFrAq7GvBLCrN8GuZ7vvJrpDj6vEXMMXRkbTkJ38wgoeXlHGdyp6yzlos//a039K8hMHK0Bpshh36lswh13vV4ikNlzyQM3AQIAU6jNogiMEyUyiKOqlvVGZF0Wb7yLTcQVO6Jz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eWDE87eH; arc=none smtp.client-ip=209.85.208.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2ebe785b234so2614681fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 28 Jun 2024 00:42:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719560532; x=1720165332; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NMm0osVyJZdmOeSmEoxSq8LLZPLRQtI4SNJ5X2YxpwA=;
+        b=eWDE87eHvx5krGC3C7tUB9omHfA/XLhn1cMvzPmQi1vtx0QN0b26gihVZQdu9oOiKG
+         uA8XNYhVfCmkdRH3dVa5dzzODgRQuAbAhze+O7AlT5Bw29mC+TbJqnikSqhwY9cSj9PR
+         bJ8EHX4vm8U3gzpC5wgsPAC0HIBq4243LeDQ2yI5A1lAe79Kn8mLuR34VDViHZfrwIx8
+         Sw4Y/A9g+4jPCczrZ7UKJbSNFr10MDnn6uggS93sG4K+zM5uofQM8Ym8Sy9Onww1DBsv
+         KZjC3/4b7krGUjkKlbYskt7+CRtZKPeoily8SXGjMxYdzg/q8bOG0XdVNBMHP59IZR5j
+         dlww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719560532; x=1720165332;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NMm0osVyJZdmOeSmEoxSq8LLZPLRQtI4SNJ5X2YxpwA=;
+        b=ZuIKn+VKFIWNl6FkeL8ukkNRDqj01x30Qspf+FHhDtIIi6sYrp5OAX0xXHhW/Ilcx9
+         ez7b4etrRcvuwyhJvH6HbeYcYlrJYW8RFsE03YaRPyUUXMFSghASqCGI8BAumtWBeYfY
+         1mDJhsoYq3iIS8mrPakEKui853S890zueito6p3OE9BpOpH9Tku8khgw0/DZPYvcbtga
+         T5HqQKmueU2RSCK04X+DD6cjCIaSK1ZREKFWeT3bvE0IMWeYyQVaXZZSveYyJhXsA+7Y
+         wB1sP4Ym4jFy7ykOaZ4hGRFYZ12ZuxCDwRbDGbLei8payg35B3XT4tC54+ALEN3P5JD4
+         tz7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXpRAlSd1XPPGb46/+fOQ1bXWKhLHPbe3Z4jXZPICiu0/7YnWbljRnzNhhF9fah+mm/g2q+4Bwe7r7Pa7ppuMsSWNQv9GJjqtbjhlclnQ==
+X-Gm-Message-State: AOJu0YyI9kVsyyygKZNGTskB7ruPjjaJCACIfVPwe15OwAhqDQmSrNvA
+	xzvrYCwmCGnAPUhJrtGZZuFwBxPFXlP84RsXJ2hNJfnXG4757WYzraq0qP7C2GE=
+X-Google-Smtp-Source: AGHT+IG/qIByI+70l0XfVH63ki8U2sfazMwDB35r0gTgk96nZmuAEN8+w64PQMPGRrqKl8Wn8oYsAw==
+X-Received: by 2002:a05:651c:1511:b0:2ee:4c66:6828 with SMTP id 38308e7fff4ca-2ee4c6668femr28264571fa.24.1719560532124;
+        Fri, 28 Jun 2024 00:42:12 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ee5160e737sm2091621fa.11.2024.06.28.00.42.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Jun 2024 00:42:11 -0700 (PDT)
+Date: Fri, 28 Jun 2024 10:42:10 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Alexey Klimov <alexey.klimov@linaro.org>
+Cc: linux-sound@vger.kernel.org, srinivas.kandagatla@linaro.org, 
+	bgoswami@quicinc.com, lgirdwood@gmail.com, broonie@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org, 
+	konrad.dybcio@linaro.org, perex@perex.cz, tiwai@suse.com, linux-arm-msm@vger.kernel.org, 
+	alsa-devel@alsa-project.org, devicetree@vger.kernel.org, elder@linaro.org, 
+	krzysztof.kozlowski@linaro.org, caleb.connolly@linaro.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 4/7] arm64: dts: qcom: sm6115: add apr, its services and
+ simple sound node
+Message-ID: <nh3e4nfxfm45lj3wnaoqin4vdc7yfru4ro33ezi6tyhasdh7uo@tq5bm5xmuegp>
+References: <20240628010715.438471-1-alexey.klimov@linaro.org>
+ <20240628010715.438471-5-alexey.klimov@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] interconnect: qcom: Add MSM8953 driver
-To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
- Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- Vladimir Lypak <vladimir.lypak@gmail.com>
-References: <20240627-msm8953-interconnect-v2-0-b4940a8eab69@mainlining.org>
- <20240627-msm8953-interconnect-v2-2-b4940a8eab69@mainlining.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240627-msm8953-interconnect-v2-2-b4940a8eab69@mainlining.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240628010715.438471-5-alexey.klimov@linaro.org>
 
-On 27/06/2024 17:08, Barnabás Czémán wrote:
-> From: Vladimir Lypak <vladimir.lypak@gmail.com>
+On Fri, Jun 28, 2024 at 02:07:12AM GMT, Alexey Klimov wrote:
+> Add apr (asynchronous packet router) node and its associated services
+> required to enable audio on QRB4210 RB2 platform.
+> Also, add an empty sound{} device node. This allows board dts
+> files to fill in required board specific properties.
+
+There is no sound {} node. LGTM otherwise.
+
 > 
-> Add driver for interconnect busses found in MSM8953 based platforms.
-> The topology consists of four NoCs that are partially controlled by a
-> RPM processor.
+> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm6115.dtsi | 59 ++++++++++++++++++++++++++++
+>  1 file changed, 59 insertions(+)
 > 
-> Note that one of NoCs (System NoC) has a counterpart (System NoC MM)
-> that is modelled as child device to avoid resource conflicts, since it
-> uses same MMIO space for configuration.
-> 
-> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+-- 
+With best wishes
+Dmitry
 
