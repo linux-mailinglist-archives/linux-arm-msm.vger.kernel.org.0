@@ -1,171 +1,237 @@
-Return-Path: <linux-arm-msm+bounces-24649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24650-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6489991C1CC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 16:54:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E0ADB91C21E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 17:10:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B6321F212A3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 14:54:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 75ED41F2119B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 15:10:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DA6B1C2305;
-	Fri, 28 Jun 2024 14:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 675AD1C2325;
+	Fri, 28 Jun 2024 15:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="MGYf7Kdn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nxv7EW6o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5511BE25F;
-	Fri, 28 Jun 2024 14:54:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB0B1C2314;
+	Fri, 28 Jun 2024 15:10:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719586476; cv=none; b=M4QmqiHzsqUUaxvloCKFTeK5eB1e9P9Q9xg23uI/fSpEPW5YzuYkv0HywSRYdxQXiCi0M0nbyNS9yspjV8cfkLV7YfuBuuVFK3azQ6jPyf1gGsARZ6nMTVMaG65GDEDx1WHpT+hmOh/Qog4mUnxXfr9rXBavwTtEDYVL0VmhJYA=
+	t=1719587424; cv=none; b=EjNsvGfRir/REey8h3bluKJ3/BiqBXwaYmJJhF5IrytY+Ek9Hytr6c0HunLBurDe+t4iw1KMMWMSPb7qWR8LO0Szb/jG9iV0ksfbXWMm17n7d43jhDLcXCT11I4RBU+pQ3kbpO2qV/INGUUeqF3vModhZ5PeviVnHvNZeSmqx0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719586476; c=relaxed/simple;
-	bh=Ou4xM+KfwaWQtRXzFZntff3Dpxcze4HWoGlzHDofmiw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gm8vBPE45VtVrOv9tiNHKTM3BuXjcZeL6ygs8Jp+mmizOJMzo7MGpSYnM7rYt4LnEuoMGSMnM029CSXqG5Hv0dBnvassCHQIxGMVNCShqIZtPuOWA5iZIHHyv2HEpqfdpEuBcq6Aw0GERWuPvAX9KuYMv70kk+rzxDP+5SzcAmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=MGYf7Kdn; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=81FpBswvqTN/+g4RZ2JQLI94RMcUtnvBgT5CRymvy00=; b=MGYf7KdnGuXY1WWsPiwRchgkQh
-	ckcHUlfg+yk3eL6vt4Rsvd5uI2k0bL8Gqkt4+p+vMHVp00sZytVvFCe/KhlzOuFFz+S3gA8u4PI0V
-	Eis+uEXgk0ESe02/721q9JveAWDX8ObVdhiaYOybrkobYbcLZ5wOdPYMILvu86VguhJexRV9y7cgE
-	JcraytzqsYeMIg3qNTsJrXZh/myRdCnjN7oomiwToTd7E9OvA89qlR18GbJJFKEn5S7S67riVx8h/
-	Im3BJ63YZhjxDDDNe6niBS5eMb5L4LPud3nqarCn6r18jtYaZ4eKaM4pZ5vk0zNF9xewkVqaxwo11
-	uESa2Vuw==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:35642)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1sNCzM-0006mN-02;
-	Fri, 28 Jun 2024 15:54:12 +0100
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1sNCzN-0006ah-A6; Fri, 28 Jun 2024 15:54:13 +0100
-Date: Fri, 28 Jun 2024 15:54:13 +0100
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Serge Semin <fancer.lancer@gmail.com>
-Cc: Andrew Halaney <ahalaney@redhat.com>, Vinod Koul <vkoul@kernel.org>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com, bpf@vger.kernel.org,
-	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC net-next v2 10/17] net: stmmac: Introduce internal
- PCS offset-based CSR access
-Message-ID: <Zn7OlQ4aoO2vZTrj@shell.armlinux.org.uk>
-References: <Zlmzu7/ANyZxOOQL@shell.armlinux.org.uk>
- <20240624132802.14238-2-fancer.lancer@gmail.com>
+	s=arc-20240116; t=1719587424; c=relaxed/simple;
+	bh=4pOtqd7aznQ0H5L6NPfL6p00KX7xxaxSb9ApwXmQB/A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=SGQVSL9hts2ezTu4pyhGWlLf/4IH/DptBQoGp+ThpQ25vU6tQuRac1Dy2sOkNBR6ZOJSdgKWavxU/vGKvKHucTnBL+Jg3lFlM0oNGG7JELjU5jhy9ZGZuSWUSjATfaVQHWhLjqpYYqFGynb+Gk9IBi6cXeClNfk4uefYO7edJKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nxv7EW6o; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45SEWxDj015132;
+	Fri, 28 Jun 2024 15:09:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	GOng33xxFnbzPXnOdxfJnKWb6UEonBkwu9pgAcPZdE4=; b=nxv7EW6o8mU/upED
+	23gXpzsJHtG2aq0Cxa64zO+ma+c32vKwfS3XZG+Eww5U4EvqaekYIPKYT9YR5iwY
+	jj4F+ej8L59PniZK5/I67Qtn0iYr5sn8fR9C2zcZkOJlva3g+uOJivlB/dMdOlnP
+	NqvZUYb6D21ZhMib80NCbLw2OeHEAr/Bnh6UIWmRSXelON8A/loqRqe18g6/z5n7
+	j40QX/eFw5tpkhKJSPkO/vI5INRr+8nHkG3FEDQ8bd5Ez62zb60eRm6mmSVxHsql
+	DVYDv+qtwrXuDNjyXLzCdJdU8UNRYwtCsP5CxplsEvR0kcWHsfJqpSV35sOnL9S1
+	aWWRLQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywqsj0dk6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 28 Jun 2024 15:09:58 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45SF9ve1024972
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 28 Jun 2024 15:09:57 GMT
+Received: from [10.216.25.91] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 28 Jun
+ 2024 08:09:52 -0700
+Message-ID: <0650ba0a-4453-4e2d-8a76-0f396ac1999c@quicinc.com>
+Date: Fri, 28 Jun 2024 20:39:45 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240624132802.14238-2-fancer.lancer@gmail.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 6/6] iommu/arm-smmu: add support for PRR bit setup
+To: Rob Clark <robdclark@gmail.com>
+CC: <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
+        <jgg@ziepe.ca>, <jsnitsel@redhat.com>, <robh@kernel.org>,
+        <krzysztof.kozlowski@linaro.org>, <quic_c_gdjako@quicinc.com>,
+        <dmitry.baryshkov@linaro.org>, <konrad.dybcio@linaro.org>,
+        <iommu@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>
+References: <20240628140435.1652374-1-quic_bibekkum@quicinc.com>
+ <20240628140435.1652374-7-quic_bibekkum@quicinc.com>
+ <CAF6AEGvroi8rJimFv95tkWmRFa5_aTpBJ7GFcRAuZpLGdSyEYQ@mail.gmail.com>
+Content-Language: en-US
+From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+In-Reply-To: <CAF6AEGvroi8rJimFv95tkWmRFa5_aTpBJ7GFcRAuZpLGdSyEYQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: uG4YaFbvO4k6-zmB8RNoJGODp6maD0wO
+X-Proofpoint-GUID: uG4YaFbvO4k6-zmB8RNoJGODp6maD0wO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-28_10,2024-06-28_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
+ bulkscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
+ mlxscore=0 impostorscore=0 mlxlogscore=999 priorityscore=1501 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
+ definitions=main-2406280112
 
-On Mon, Jun 24, 2024 at 04:26:27PM +0300, Serge Semin wrote:
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> index 80eb72bc6311..d0bcebe87ee8 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> @@ -633,7 +633,7 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
->  			      RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
->  			      RGMII_IO_MACRO_CONFIG2);
->  		ethqos_set_serdes_speed(ethqos, SPEED_2500);
-> -		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 0, 0, 0);
-> +		stmmac_pcs_ctrl_ane(priv, priv->pcsaddr, 0, 0, 0);
->  		break;
->  	case SPEED_1000:
->  		val &= ~ETHQOS_MAC_CTRL_PORT_SEL;
-> @@ -641,12 +641,12 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
->  			      RGMII_CONFIG2_RGMII_CLK_SEL_CFG,
->  			      RGMII_IO_MACRO_CONFIG2);
->  		ethqos_set_serdes_speed(ethqos, SPEED_1000);
-> -		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 1, 0, 0);
-> +		stmmac_pcs_ctrl_ane(priv, priv->pcsaddr, 1, 0, 0);
->  		break;
->  	case SPEED_100:
->  		val |= ETHQOS_MAC_CTRL_PORT_SEL | ETHQOS_MAC_CTRL_SPEED_MODE;
->  		ethqos_set_serdes_speed(ethqos, SPEED_1000);
-> -		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 1, 0, 0);
-> +		stmmac_pcs_ctrl_ane(priv, priv->pcsaddr, 1, 0, 0);
->  		break;
->  	case SPEED_10:
->  		val |= ETHQOS_MAC_CTRL_PORT_SEL;
-> @@ -656,7 +656,7 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
->  					 SGMII_10M_RX_CLK_DVDR),
->  			      RGMII_IO_MACRO_CONFIG);
->  		ethqos_set_serdes_speed(ethqos, SPEED_1000);
-> -		stmmac_pcs_ctrl_ane(priv, priv->ioaddr, 1, 0, 0);
-> +		stmmac_pcs_ctrl_ane(priv, priv->pcsaddr, 1, 0, 0);
->  		break;
->  	}
->  
 
-I think a better preparatory patch (given what you do in future patches)
-would be to change all of these to:
 
-	ethqos_pcs_set_inband(priv, {false | true});
+On 6/28/2024 7:47 PM, Rob Clark wrote:
+> On Fri, Jun 28, 2024 at 7:05 AM Bibek Kumar Patro
+> <quic_bibekkum@quicinc.com> wrote:
+>>
+>> Add an adreno-smmu-priv interface for drm/msm to call
+>> into arm-smmu-qcom and initiate the PRR bit setup or reset
+>> sequence as per request.
+>>
+>> This will be used by GPU to setup the PRR bit and related
+>> configuration registers through adreno-smmu private
+>> interface instead of directly poking the smmu hardware.
+>>
+>> Suggested-by: Rob Clark <robdclark@gmail.com>
+>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+>> ---
+>>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 23 ++++++++++++++++++++++
+>>   drivers/iommu/arm/arm-smmu/arm-smmu.h      |  2 ++
+>>   include/linux/adreno-smmu-priv.h           |  6 +++++-
+>>   3 files changed, 30 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>> index bd101a161d04..64571a1c47b8 100644
+>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>> @@ -28,6 +28,7 @@
+>>   #define PREFETCH_SHALLOW       (1 << PREFETCH_SHIFT)
+>>   #define PREFETCH_MODERATE      (2 << PREFETCH_SHIFT)
+>>   #define PREFETCH_DEEP          (3 << PREFETCH_SHIFT)
+>> +#define GFX_ACTLR_PRR          (1 << 5)
+>>
+>>   static const struct actlr_config sc7280_apps_actlr_cfg[] = {
+>>          { 0x0800, 0x04e0, PREFETCH_DEFAULT | CMTLB },
+>> @@ -235,6 +236,27 @@ static void qcom_adreno_smmu_resume_translation(const void *cookie, bool termina
+>>          arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
+>>   }
+>>
+>> +static void qcom_adreno_smmu_set_prr(const void *cookie, phys_addr_t page_addr, bool set)
+>> +{
+>> +       struct arm_smmu_domain *smmu_domain = (void *)cookie;
+>> +       struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+>> +       struct arm_smmu_device *smmu = smmu_domain->smmu;
+>> +       u32 reg = 0;
+>> +
+>> +       writel_relaxed(lower_32_bits(page_addr),
+>> +                               smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
+>> +
+>> +       writel_relaxed(upper_32_bits(page_addr),
+>> +                               smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
+>> +
+>> +       reg =  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR);
+>> +       reg &= ~GFX_ACTLR_PRR;
+>> +       if (set)
+>> +               reg |= FIELD_PREP(GFX_ACTLR_PRR, 1);
+>> +       arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
+>> +
+> 
+> nit, extra line
+> 
 
-which would be:
+Ack, will remove this. Thanks for pointing out.
 
-static void ethqos_pcs_set_inband(struct stmmac_priv *priv, bool enable)
-{
-	stmmac_pcs_ctrl_ane(priv, priv->ioaddr, enable, 0, 0);
-}
+> Also, if you passed a `struct page *` instead, then you could drop the
+> bool param, ie. passing NULL for the page would disable PRR.  But I
+> can go either way if others have a strong preference for phys_addr_t.
+> 
 
-which then means this patch becomes a single line, and your subsequent
-patch just has to replace stmmac_pcs_ctrl_ane() with its open-coded
-equivalent.
+Oh okay, this looks simple to reset the prr bit.
+But since this page is allocated and is used inside gfx driver
+before being utilized for prr bit operation, would it be safe for
+drm/gfx driver to keep a reference to this page in smmu driver?
 
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.c b/drivers/net/ethernet/stmicro/stmmac/hwif.c
-> index 84fd57b76fad..3666893acb69 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/hwif.c
-> +++ b/drivers/net/ethernet/stmicro/stmmac/hwif.c
-> @@ -6,6 +6,7 @@
->  
->  #include "common.h"
->  #include "stmmac.h"
-> +#include "stmmac_pcs.h"
->  #include "stmmac_ptp.h"
->  #include "stmmac_est.h"
->  
-> @@ -116,6 +117,7 @@ static const struct stmmac_hwif_entry {
->  	const void *tc;
->  	const void *mmc;
->  	const void *est;
-> +	const void *pcs;
+Since we only need the page address for configuring the
+CFG_UADDR/CFG_LADDR registers so passed the phys_addr_t.
 
-I'm not a fan of void pointers. common.h includes linux/phylink.h, which
-will define struct phylink_pcs_ops, so there is no reason not to declare
-this as:
+> Otherwise, lgtm
+> 
+> BR,
+> -R
+>
 
-	const struct phylink_pcs_ops *pcs;
+Thanks & regards,
+Bibek
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+>> +}
+>> +
+>>   #define QCOM_ADRENO_SMMU_GPU_SID 0
+>>
+>>   static bool qcom_adreno_smmu_is_gpu_device(struct device *dev)
+>> @@ -407,6 +429,7 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>>          priv->get_fault_info = qcom_adreno_smmu_get_fault_info;
+>>          priv->set_stall = qcom_adreno_smmu_set_stall;
+>>          priv->resume_translation = qcom_adreno_smmu_resume_translation;
+>> +       priv->set_prr = qcom_adreno_smmu_set_prr;
+>>
+>>          actlrvar = qsmmu->data->actlrvar;
+>>          if (!actlrvar)
+>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+>> index d9c2ef8c1653..3076bef49e20 100644
+>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
+>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+>> @@ -154,6 +154,8 @@ enum arm_smmu_cbar_type {
+>>   #define ARM_SMMU_SCTLR_M               BIT(0)
+>>
+>>   #define ARM_SMMU_CB_ACTLR              0x4
+>> +#define ARM_SMMU_GFX_PRR_CFG_LADDR     0x6008
+>> +#define ARM_SMMU_GFX_PRR_CFG_UADDR     0x600C
+>>
+>>   #define ARM_SMMU_CB_RESUME             0x8
+>>   #define ARM_SMMU_RESUME_TERMINATE      BIT(0)
+>> diff --git a/include/linux/adreno-smmu-priv.h b/include/linux/adreno-smmu-priv.h
+>> index c637e0997f6d..d6e2ca9f8d8c 100644
+>> --- a/include/linux/adreno-smmu-priv.h
+>> +++ b/include/linux/adreno-smmu-priv.h
+>> @@ -49,7 +49,10 @@ struct adreno_smmu_fault_info {
+>>    *                 before set_ttbr0_cfg().  If stalling on fault is enabled,
+>>    *                 the GPU driver must call resume_translation()
+>>    * @resume_translation: Resume translation after a fault
+>> - *
+>> + * @set_prr:      Extendible interface to be used by GPU to modify the
+>> + *                 ACTLR register bits, currently used to configure
+>> + *                 Partially-Resident-Region (PRR) feature's
+>> + *                 setup and reset sequence as requested.
+>>    *
+>>    * The GPU driver (drm/msm) and adreno-smmu work together for controlling
+>>    * the GPU's SMMU instance.  This is by necessity, as the GPU is directly
+>> @@ -67,6 +70,7 @@ struct adreno_smmu_priv {
+>>       void (*get_fault_info)(const void *cookie, struct adreno_smmu_fault_info *info);
+>>       void (*set_stall)(const void *cookie, bool enabled);
+>>       void (*resume_translation)(const void *cookie, bool terminate);
+>> +    void (*set_prr)(const void *cookie, phys_addr_t page_addr, bool set);
+>>   };
+>>
+>>   #endif /* __ADRENO_SMMU_PRIV_H */
+>> --
+>> 2.34.1
+>>
 
