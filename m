@@ -1,155 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-24645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF10691C138
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 16:39:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1FBA91C13F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 16:40:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7D85B287BF1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 14:39:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 34ADA1F2299C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 14:40:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC7B11C0071;
-	Fri, 28 Jun 2024 14:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C15B41514E1;
+	Fri, 28 Jun 2024 14:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iJ6VPt1t"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="gLx1zXf5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mail.mainlining.org (mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806471E53A;
-	Fri, 28 Jun 2024 14:39:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7D61C0DD0;
+	Fri, 28 Jun 2024 14:40:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719585554; cv=none; b=u4YlkDS++upZP+CLlUrGLS8rrieRFt8vZngZOzdHsPl+k7tlR0UIRfkfVo51zCup8bp7mdmgKquiNXCAdHkUE1UOyBL8BAujH50bwzB76oeJGJg66o/noncGi+4tcm4/VKmD+Ls3j3FmrMuavkI8O+SSFhCBDY4Et26PSnUAhVo=
+	t=1719585602; cv=none; b=USyFchVEezhfXBlqgtt/hD9r5Otmbhcj2/h555OZbDE239R4En21TrYXBKe3ZHRLKKOPcr27xB5vvxdB17Z4/u+oIuRmseLVaUJOP18X2WIMWgfRab6m+iRQJ83aZJXXLyIHMq2Y5vLg11OwryOru2ZmXEwmOhBK2WVvUtOxGKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719585554; c=relaxed/simple;
-	bh=fbKwqXlvo36CXSMeJryZJPdETSPPD5sl/c0WBnH8V4Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=BdYPu1yGHwHcDFWdfXoUgS6RefbocjsmeP4mgjhc8dhqM0JIpUzStIRy2IArRgfvmEK6CL9zCY7uwKKY1FDCLAKNUw61pIWcXlh/o1mawSk4d2XBpZ0fIDuD2e8YdVs6NeNZ1XzOSKbVqC3Kd+1v3/2xEtMyV4XqT2gKk5C8upk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iJ6VPt1t; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45S8d61C012603;
-	Fri, 28 Jun 2024 14:38:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	vmsoo87nXpQIGp4+dpf035YqcbLL73mjN+51Tgx2Oh0=; b=iJ6VPt1toWRAphns
-	KeLg7V6++K2120XDsnNO3gzxAy2lpfHZOOmTLf0jGdA8aHEgx179wDkIo38uRD6w
-	Ol0Fx/eYsZTNPuWv0T4t1X9BTA5Sdhhelb94INMU2hn31qDiwYVUqml25fPJwneg
-	XpbgDtCfXBCs3v9Ic4jTEGeMZQqkt3PKi4OZbPnnwx7kkkapswtSzUmSm0Xo1vHl
-	UXfW30IO/4sDeQp1lO9/Q9ItwEFtacNykPWFDI59Nc8a2OOJ3pQckfsaqMdZeCtp
-	2/fOcrmT5DYfTbQpEwXOyCHRSO0BORydFz4HeejmgA7d6VT99SSUeBE/gpP5RU/u
-	UbQKMQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 401njr9tke-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 28 Jun 2024 14:38:59 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45SEcwfI027146
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 28 Jun 2024 14:38:58 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 28 Jun
- 2024 07:38:58 -0700
-Message-ID: <cde35f69-4d6e-d46d-88ca-9c5d6d5e757f@quicinc.com>
-Date: Fri, 28 Jun 2024 08:38:57 -0600
+	s=arc-20240116; t=1719585602; c=relaxed/simple;
+	bh=EunNP/EvctUNPAP9/1nqI3Scq3H8ObY1pNrZE7DLvBk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=lMf+IpzXiYEPUaNl0Dq+73R7vXzHYRYtI5+B9m89UmfNAcHnLid7/FhecLinPpPfOkM1pwNq3vYccg+I71m/pymdBR9limThv3KhIZ13kECWG+G5vPuHWkzfHT/hpcp/FJI39KqFhEA2CqSFKfqB55XD1pP+kY+lHh51R1zCq+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=gLx1zXf5; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+Received: from [192.168.1.130] (BC2492F3.dsl.pool.telekom.hu [188.36.146.243])
+	by mail.mainlining.org (Postfix) with ESMTPSA id 7B6DBE44E7;
+	Fri, 28 Jun 2024 14:39:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
+	s=psm; t=1719585598;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=BpaaS2OIMoGBVUdFbPUqueqmBQUDNqTEOvL6otASaZM=;
+	b=gLx1zXf5CGZ91j76c/awAbhU83Vzm61Tye15C0WwbYke+J3x0zEOJs5lV9AOk6e37Zk3hH
+	LoG8lv1C9M9T/GnU+U30S5v3waMYBKzRAXtp3UDjPAv+dm8Z2++DJD/SLxM8KTIyWV9y2r
+	1Dd/QezZaTcTFXkcbiWnBmaGi+DeTncB7dbfm143Sqv19kcb9s9aunODmCXConK655hAFH
+	gvEonstF0yFw6b1sDe9WzACDM06o1VfMLtjf3hlMWm7QHmwAVCU4l9G6jgMWcJYErsZgFc
+	x/mf+8+fzOyzgaeszYg4IpP1ViFoumdxnhX0NlcKZwvLq7in8DfxG08genmY2w==
+From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+Subject: [PATCH 0/2] Add MSM8996/MSM8953 dpu catalog
+Date: Fri, 28 Jun 2024 16:39:38 +0200
+Message-Id: <20240628-dpu-msm8953-msm8996-v1-0-a31c77248db7@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v3 2/3] bus: mhi: host: Add name for mhi_controller
-Content-Language: en-US
-To: Slark Xiao <slark_xiao@163.com>, <manivannan.sadhasivam@linaro.org>,
-        <loic.poulain@linaro.org>, <ryazanov.s.a@gmail.com>,
-        <johannes@sipsolutions.net>
-CC: <netdev@vger.kernel.org>, <mhi@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240628073626.1447288-1-slark_xiao@163.com>
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20240628073626.1447288-1-slark_xiao@163.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: jEkA4FUUieoR8WaoPVsF-2cM8dNthUvb
-X-Proofpoint-ORIG-GUID: jEkA4FUUieoR8WaoPVsF-2cM8dNthUvb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-28_10,2024-06-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
- malwarescore=0 bulkscore=0 adultscore=0 suspectscore=0 priorityscore=1501
- clxscore=1011 phishscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
- definitions=main-2406280109
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIACrLfmYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDUyML3ZSCUt3c4lwLS1NjCG1ppmuaYpCWZJ5qbGGeZKEE1FlQlJqWWQE
+ 2NTq2thYAKdviqGUAAAA=
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+ =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@somainline.org>
+X-Mailer: b4 0.14.0
 
-On 6/28/2024 1:36 AM, Slark Xiao wrote:
->   For SDX72 MBIM mode, it starts data mux id from 112 instead of 0.
->   This would lead to device can't ping outside successfully.
->   Also MBIM side would report "bad packet session (112)".
+This patch series add dpu support for MSM8996/MSM8953 devices.
 
-Weird indentation
+Note, by default these platforms are still handled by the MDP5 driver
+unless the `msm.prefer_mdp5=false' parameter is provided.
 
->   In oder to fix this issue, we decide to use the modem name
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+---
+Dmitry Baryshkov (1):
+      drm/msm/dpu: add support for MSM8953
 
-"order"
+Konrad Dybcio (1):
+      drm/msm/dpu: Add MSM8996 support
 
-> to do a match in client driver side. Then client driver could
-> set a corresponding mux_id value for this modem product.
-> 
-> Signed-off-by: Slark Xiao <slark_xiao@163.com>
-> ---
->   drivers/bus/mhi/host/pci_generic.c | 1 +
->   include/linux/mhi.h                | 2 ++
->   2 files changed, 3 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 1fb1c2f2fe12..14a11880bcea 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -1086,6 +1086,7 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->   	mhi_cntrl->runtime_get = mhi_pci_runtime_get;
->   	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
->   	mhi_cntrl->mru = info->mru_default;
-> +	mhi_cntrl->name = info->name;
->   
->   	if (info->edl_trigger)
->   		mhi_cntrl->edl_trigger = mhi_pci_generic_edl_trigger;
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index b573f15762f8..86aa4f52842c 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -361,6 +361,7 @@ struct mhi_controller_config {
->    * @wake_set: Device wakeup set flag
->    * @irq_flags: irq flags passed to request_irq (optional)
->    * @mru: the default MRU for the MHI device
-> + * @name: name of the modem
+ .../drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h   | 218 +++++++++++++
+ .../drm/msm/disp/dpu1/catalog/dpu_1_7_msm8996.h    | 348 +++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     | 106 +++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   2 +
+ drivers/gpu/drm/msm/msm_drv.c                      |   2 +
+ 6 files changed, 678 insertions(+)
+---
+base-commit: df9574a57d02b265322e77fb8628d4d33641dda9
+change-id: 20240528-dpu-msm8953-msm8996-5d0fb7e387b8
 
-Why restrict this to modems?  There are plenty of other MHI devices
-
->    *
->    * Fields marked as (required) need to be populated by the controller driver
->    * before calling mhi_register_controller(). For the fields marked as (optional)
-> @@ -445,6 +446,7 @@ struct mhi_controller {
->   	bool wake_set;
->   	unsigned long irq_flags;
->   	u32 mru;
-> +	const char *name;
-
-Please run pahole
-
->   };
->   
->   /**
+Best regards,
+-- 
+Barnabás Czémán <barnabas.czeman@mainlining.org>
 
 
