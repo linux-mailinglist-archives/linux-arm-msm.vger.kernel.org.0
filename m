@@ -1,200 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-24552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A59C91B5BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 06:39:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D04A91B5F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 07:18:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7447AB21EBC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 04:39:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D08D8284886
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 28 Jun 2024 05:18:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EE61224CC;
-	Fri, 28 Jun 2024 04:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66F882B9CC;
+	Fri, 28 Jun 2024 05:18:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SimwJTW5"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YLL9Seaq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF40E22619;
-	Fri, 28 Jun 2024 04:39:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9726922EE5;
+	Fri, 28 Jun 2024 05:18:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719549555; cv=none; b=qhEJnh6m2yHNw2jUg0oc0xJ+4xdDZxYjJzXa7v0mvhUywhSsSQOn4DQa+dYlchRNbrZKgEXWNWQFhllzsjLMv5vqaVbU1QZ6Ss049pRc5Hyy+s9hMSQLL4pkmpIJF5nDAKFoQbPldeNpp4prDFonj5tEJjeFaHwDPZeUTEooCis=
+	t=1719551924; cv=none; b=o2Pj1hJwcZ0zvf3R8VLDtfARyfHHiVEXfIVcg+unLMh3pR/0SWM3tbWlbF5Jw9Q110P5RBbAFh9Nh0R0PT/7wX1PTEGr40tp0eDVMWkgluRFEHEiWawxvQ5AnXJS8LJMGFmNDJ8Rln+AuBvFCW+8Pu0f+3fXuHplkbXGu+H+j74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719549555; c=relaxed/simple;
-	bh=co/vR/XWIMc1kuuqUdZlcYOIyhugYjuq1IRBG21/9V4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q/u/rznrHoHoyOJCpTnnho/M3TNa4N2d6wrTHgHfWj2PKGfmVR2nObBvfX0RXdIwpe16OPfs6DoKZXAOXrgaWGGFJ/PGESGZ+V5YoqG4RNIGMl5m6m1mno6L9tJseow/Ey4YvPX+rJnC6yJFLMvHeMeGBSosPlu3enS98bpWC5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SimwJTW5; arc=none smtp.client-ip=209.85.210.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-6f8ffe1b65dso103061a34.0;
-        Thu, 27 Jun 2024 21:39:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719549553; x=1720154353; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4A1myKhDtKpBD1HgzlCC9/RwlNtnnSCgm8rGrnmPwkg=;
-        b=SimwJTW5oFTBAi3djUGa+EVGgqyhCTRHxiCEatGArWmTujtAmLIJf82mtW1+ij18+U
-         DNg7Sp9QIljs4a1iB6Nrq2jR3TIV6GV0PYgxOA8mlGqQP9FsBd/VL2fnpftZADrCQole
-         gtAEySrUCnBSEh8+acIyoImSYFcz8SzwC3qXI/lirk83/Ymcn+MEHNPxwMeHa/Kblm4l
-         L9Hn8hbUXEUsE7i+9/jkIGnxvv+mjoE/5ASavhPZXEUv8nnxo0thNEVdR4do0yDyBx9u
-         3aSby31X5bLuPL9QQ/05LbK3dgYG1rU3DjNbeNvCN4xQTG07s7obzpSKH+8XHxAzwbn7
-         h1cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719549553; x=1720154353;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4A1myKhDtKpBD1HgzlCC9/RwlNtnnSCgm8rGrnmPwkg=;
-        b=tYa5gYQQscTn8nOvYUaj24e7LipyQVr3RPsAUgYqpYFI2gK7i/r/E1ETsbe5S0ONtc
-         aoE4/qhph12lhaGUNhEm6IAFOxuphzO6kwUZGpSlZOyGyFChUMg+Vt+UhgOvXWO2LKJR
-         ZYdfo4ghZslrRSM2vsEmHOwgCrd2fg8itUh3WdzvfhMLAqjBrhFvHMOY3BDQCOZCWKwv
-         aDHOxSQHB5utRHaPST47TRL72ePp23LMdTOVCR3Qp36AWAmtwrMICWGB0rcmRz1Br27g
-         GssLVqcdmC8N1AAuNyvfVfm+Yx58V5vwhYXMzLtJ/9iBoX5AYXL/0eu+HDXDIrzzctb1
-         +dFg==
-X-Forwarded-Encrypted: i=1; AJvYcCX7uXaYwqC7saUzBAqxaVKIQJbRwiOafpMipMLHT5sNTLOLoAIsrJG0KnJ5D0nHvmpolRLoMiVggJKjQklu2gMDKOgW0axxkrXXMy9R3o9pBogteH5z0QGoKnmlkeVuUlFY4Fg7BA0q485ZLw4qvZuLGBDt4oRWuA6FeLsE5yenkux7CcsnkY4=
-X-Gm-Message-State: AOJu0Yxo+Z0dvoplZdmGn/Z8r1ADjpmvgq67/UeiyEE5yc7lhT8X3rom
-	pku791PgbXQ/TUzYU5OLvbIiaQCBWZONTOpXO0Ls1/08vvLkPTeYDPdgomcj
-X-Google-Smtp-Source: AGHT+IEFutYK8aZdJ//n/IRqE4LDzLKmmJScOAjOOPa5VPHcRKb2EwXZjmgF49v8sbNgmV/Jv+c0wA==
-X-Received: by 2002:a9d:68c6:0:b0:6f9:d203:8d13 with SMTP id 46e09a7af769-701fa7c1f42mr252753a34.0.1719549552620;
-        Thu, 27 Jun 2024 21:39:12 -0700 (PDT)
-Received: from [192.168.7.110] (c-98-57-15-22.hsd1.tx.comcast.net. [98.57.15.22])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-5c4149c37c4sm153200eaf.42.2024.06.27.21.39.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Jun 2024 21:39:12 -0700 (PDT)
-Message-ID: <79e57338-1671-4574-b1e2-3b3aa9045ec9@gmail.com>
-Date: Thu, 27 Jun 2024 23:39:10 -0500
+	s=arc-20240116; t=1719551924; c=relaxed/simple;
+	bh=EsBjbl1L0ItHWLuJt6/SzDFQkncBAJfJVa3VjM2Xvcg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pBlrS8+Uzv2HM4NulMmw7vi/sLAZxRpPK2P1T+VXEobfeU7aEFPzE+m22SkYfFCvEGrfHCUtZnRYEBTWd/bsmp7/8HW6GKQsqdA+/+UMT2s9xcTeii8D2jmA7quu0MANZN20I+ld+eupc32t1XU2wqEykztIgbV+oa5KMDtBMgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YLL9Seaq; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1719551922; x=1751087922;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=EsBjbl1L0ItHWLuJt6/SzDFQkncBAJfJVa3VjM2Xvcg=;
+  b=YLL9SeaqZcFliqinc6nNTXuykOyo3w0Tb9gRiMQ5qjIr+UKsnGc4rYYH
+   l7QZORzTivBakBPuO92UUuQNMY8xXWo3WxCEJyG5ZWZYPU3zfrLg79O5o
+   NN0NFuRr2WYLuRvO2aX4xfQaxXb2hwj7fs58WSLoGewcq5QEk1pTUBzpG
+   ZjCz2ksTH8oVjdvXkFG7AOxHkI7d7aio4FyXT3W9nPEQSlYh3jZsDOIUk
+   lPxbXZXApuVdrbD7hVP6tfMLrwHy7Kza/WgdhT/x6NfrHFX2RPa9bUP0g
+   tQBQkRDifYEZVwjgvM/+rC0VntskzWVUntqetPsSp/KSi8y6hwoN1L0Oj
+   A==;
+X-CSE-ConnectionGUID: RE7hN/2WS7awaNzbY383NA==
+X-CSE-MsgGUID: KswBpAYVSbmDxkhxjmfgZA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11116"; a="27340531"
+X-IronPort-AV: E=Sophos;i="6.09,168,1716274800"; 
+   d="scan'208";a="27340531"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2024 22:18:41 -0700
+X-CSE-ConnectionGUID: PKoepgiDSSyTrsIjQx5f9Q==
+X-CSE-MsgGUID: sSeuRvK7T5S4L+nd0hgoSQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,168,1716274800"; 
+   d="scan'208";a="45367562"
+Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
+  by orviesa008.jf.intel.com with ESMTP; 27 Jun 2024 22:18:37 -0700
+Received: from kbuild by 68891e0c336b with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1sN40I-000Gp8-2o;
+	Fri, 28 Jun 2024 05:18:34 +0000
+Date: Fri, 28 Jun 2024 13:18:18 +0800
+From: kernel test robot <lkp@intel.com>
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, robdclark@gmail.com,
+	will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
+	jgg@ziepe.ca, jsnitsel@redhat.com, robh@kernel.org,
+	krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com,
+	dmitry.baryshkov@linaro.org, konrad.dybcio@linaro.org
+Cc: oe-kbuild-all@lists.linux.dev, iommu@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Subject: Re: [PATCH v12 6/6] iommu/arm-smmu: add support for PRR bit setup
+Message-ID: <202406281241.xEX0TWjt-lkp@intel.com>
+References: <20240626143020.3682243-7-quic_bibekkum@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 8/8] arm64: dts: qcom: ipq9574: add PCIe2 and PCIe3
- nodes
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-kernel@vger.kernel.org,
- quic_kathirav@quicinc.com, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20240501040800.1542805-1-mr.nuke.me@gmail.com>
- <20240501040800.1542805-9-mr.nuke.me@gmail.com>
- <20240624041832.GD10250@thinkpad>
-Content-Language: en-US
-From: "Alex G." <mr.nuke.me@gmail.com>
-In-Reply-To: <20240624041832.GD10250@thinkpad>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240626143020.3682243-7-quic_bibekkum@quicinc.com>
 
+Hi Bibek,
 
+kernel test robot noticed the following build warnings:
 
-On 6/23/24 23:18, Manivannan Sadhasivam wrote:
-> On Tue, Apr 30, 2024 at 11:07:50PM -0500, Alexandru Gagniuc wrote:
->> On ipq9574, there are 4 PCIe controllers. Describe the pcie2 and pcie3
->> nodes, and their PHYs in devicetree.
->>
->> The pcie0 and pcie1 controllers use a gen3x1 PHY, which is not
->> currently supported. Hence, only pcie2 and pcie3 are described. Only
->> pcie2 was tested because my devboard only has conenctions to pcie2.
->>
->> Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
->> ---
->>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 178 +++++++++++++++++++++++++-
->>   1 file changed, 176 insertions(+), 2 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> index 7f2e5cbf3bbb..c391886cf9ab 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> @@ -300,8 +300,8 @@ gcc: clock-controller@1800000 {
->>   				 <0>,
->>   				 <0>,
->>   				 <0>,
->> -				 <0>,
->> -				 <0>,
->> +				 <&pcie2_phy>,
->> +				 <&pcie3_phy>,
->>   				 <0>;
->>   			#clock-cells = <1>;
->>   			#reset-cells = <1>;
->> @@ -745,6 +745,180 @@ frame@b128000 {
->>   				status = "disabled";
->>   			};
->>   		};
->> +
->> +		pcie2_phy: phy@8c000 {
->> +			compatible = "qcom,ipq9574-qmp-gen3x2-pcie-phy";
->> +			reg = <0x0008c000 0x14f4>;
->> +
->> +			clocks = <&gcc GCC_PCIE2_AUX_CLK>,
->> +				 <&gcc GCC_PCIE2_AHB_CLK>,
->> +				 <&gcc GCC_PCIE2_PIPE_CLK>;
->> +			clock-names = "aux",
->> +				      "cfg_ahb",
->> +				      "pipe";
->> +
->> +			clock-output-names = "pcie_phy2_pipe_clk";
->> +			#clock-cells = <0>;
->> +			#phy-cells = <0>;
->> +
->> +			resets = <&gcc GCC_PCIE2_PHY_BCR>,
->> +				 <&gcc GCC_PCIE2PHY_PHY_BCR>;
->> +			reset-names = "phy",
->> +				      "common";
->> +			status = "disabled";
->> +		};
->> +
->> +		pcie3_phy: phy@f4000 {
->> +			compatible = "qcom,ipq9574-qmp-gen3x2-pcie-phy";
->> +			reg = <0x000f4000 0x14f4>;
->> +
->> +			clocks = <&gcc GCC_PCIE3_AUX_CLK>,
->> +				 <&gcc GCC_PCIE3_AHB_CLK>,
->> +				 <&gcc GCC_PCIE3_PIPE_CLK>;
->> +			clock-names = "aux",
->> +				      "cfg_ahb",
->> +				      "pipe";
->> +
->> +			clock-output-names = "pcie_phy3_pipe_clk";
->> +			#clock-cells = <0>;
->> +			#phy-cells = <0>;
->> +
->> +			resets = <&gcc GCC_PCIE3_PHY_BCR>,
->> +				 <&gcc GCC_PCIE3PHY_PHY_BCR>;
->> +			reset-names = "phy",
->> +				      "common";
->> +			status = "disabled";
->> +		};
->> +
->> +		/* TODO: Populate pcie0/pcie1 when gen3x1 phy support is added. */
->> +
->> +		pcie2: pcie@20000000 {
->> +			compatible = "qcom,pcie-ipq9574";
->> +			reg = <0x20000000 0xf1d>,
->> +			      <0x20000f20 0xa8>,
->> +			      <0x20001000 0x1000>,
->> +			      <0x00088000 0x4000>,
->> +			      <0x20100000 0x1000>;
->> +			reg-names = "dbi", "elbi", "atu", "parf", "config";
->> +
->> +			ranges = <0x81000000 0x0 0x20200000 0x20200000 0x0 0x00100000>,
->> +				 <0x82000000 0x0 0x20300000 0x20300000 0x0 0x07d00000>;
-> 
-> Please cross check 'ranges' property with other platforms.
-> 
-<snip>
-> 
-> Cross check 'interrupt-map' as well.
+[auto build test WARNING on joro-iommu/next]
+[also build test WARNING on linus/master v6.10-rc5 next-20240627]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-I'm not seeing the smoking gun. What am I looking for?
+url:    https://github.com/intel-lab-lkp/linux/commits/Bibek-Kumar-Patro/iommu-arm-smmu-re-enable-context-caching-in-smmu-reset-operation/20240627-074037
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/joro/iommu.git next
+patch link:    https://lore.kernel.org/r/20240626143020.3682243-7-quic_bibekkum%40quicinc.com
+patch subject: [PATCH v12 6/6] iommu/arm-smmu: add support for PRR bit setup
+config: arm64-randconfig-r113-20240628 (https://download.01.org/0day-ci/archive/20240628/202406281241.xEX0TWjt-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 13.2.0
+reproduce: (https://download.01.org/0day-ci/archive/20240628/202406281241.xEX0TWjt-lkp@intel.com/reproduce)
 
-Alex
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202406281241.xEX0TWjt-lkp@intel.com/
+
+sparse warnings: (new ones prefixed by >>)
+>> drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c:247:54: sparse: sparse: incorrect type in argument 2 (different address spaces) @@     expected void volatile [noderef] __iomem *addr @@     got void * @@
+   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c:247:54: sparse:     expected void volatile [noderef] __iomem *addr
+   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c:247:54: sparse:     got void *
+   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c:250:54: sparse: sparse: incorrect type in argument 2 (different address spaces) @@     expected void volatile [noderef] __iomem *addr @@     got void * @@
+   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c:250:54: sparse:     expected void volatile [noderef] __iomem *addr
+   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c:250:54: sparse:     got void *
+   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c: note: in included file (through include/linux/mmzone.h, include/linux/gfp.h, include/linux/slab.h, ...):
+   include/linux/page-flags.h:240:46: sparse: sparse: self-comparison always evaluates to false
+   include/linux/page-flags.h:240:46: sparse: sparse: self-comparison always evaluates to false
+
+vim +247 drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+
+   238	
+   239	static void qcom_adreno_smmu_set_prr(const void *cookie, phys_addr_t page_addr, bool set)
+   240	{
+   241		struct arm_smmu_domain *smmu_domain = (void *)cookie;
+   242		struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+   243		struct arm_smmu_device *smmu = smmu_domain->smmu;
+   244		u32 reg = 0;
+   245	
+   246		writel_relaxed(lower_32_bits(page_addr),
+ > 247					(void *)smmu->ioaddr + ARM_SMMU_GFX_PRR_CFG_LADDR);
+   248	
+   249		writel_relaxed(upper_32_bits(page_addr),
+   250					(void *)smmu->ioaddr + ARM_SMMU_GFX_PRR_CFG_UADDR);
+   251	
+   252		reg =  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR);
+   253		reg &= ~GFX_ACTLR_PRR;
+   254		if (set)
+   255			reg |= FIELD_PREP(GFX_ACTLR_PRR, 1);
+   256		arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
+   257	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
