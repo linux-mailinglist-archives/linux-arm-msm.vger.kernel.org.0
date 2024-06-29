@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-24733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 095F991CD53
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 15:42:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 692A091CD5D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 15:44:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0DBC61C20FE7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 13:42:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 223122810DB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 13:44:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96789811FF;
-	Sat, 29 Jun 2024 13:42:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6939245BEF;
+	Sat, 29 Jun 2024 13:44:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FjFkMWjV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GQp/kmWp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17B745BEF
-	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 13:42:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B6D1D52D
+	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 13:44:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719668554; cv=none; b=G28M+5MfomqW+5xyZtTB7Mm1x6pJWJYdz6Br7Ntp2wPvI2oDN/R3Wkr/HXHAIBr4H+r3caTKGe0UOZVcTSI1MDpT1S+9WH9W3Yk6SVI2wrCBhfwm/LMqUcnkO7aoKqJ2KqddnfwA/q2fpiPDnBGi9JnMigDCBON8bvC+lEM0W+o=
+	t=1719668652; cv=none; b=IKGygl+8vS2MJUBB3pBJcw0R2dDuJxPLSybihHiL1+5IxxGKrrrg3Ugnah4DtKd5jj29xK3TIXw33zfJEGul+JtUgwRWCEBX0n09yxEGgq5T4qQOzJfdXKT86iM6pftJ6fnkhlde4qY0UmqfaI1HK3aYHtsc8F+tmPEb3qpxrNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719668554; c=relaxed/simple;
-	bh=cXPfd0fEa4S+VFemAZ2d5w+WNgzF42fOneK5lp8jG9w=;
+	s=arc-20240116; t=1719668652; c=relaxed/simple;
+	bh=sygJd6QL0NbwyrJsKGrwAIO+qL4p7ETZM3vXb08ElKk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F+1uQjqnoU3cqU3UoYUrm5sKeujz4xYFuPqV4KkJm1/J23e6Ua9rQNO2T3FVH7ObJRocFEyi7dRi5QI4wZiTUYVZh9QzmhqF80+BlmMueLiCB2rav3gFfoCoaj9gDWi0MxWs3bJhx02cEc7VNj9b+VQNfnbrKTgb727wMCOX1Lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FjFkMWjV; arc=none smtp.client-ip=209.85.218.52
+	 In-Reply-To:Content-Type; b=ndpLAssOTnYAo2x/58M5UDNJvLuKCAv6E7x/KlZoKxlzhQiLAASD2LxGnYMJEd/IEuilyJCzOeHI7088fDQyStKKBjIHQhqD7RoGJgobiSLodQVfYXHqiSvBNOlQJhgbJsL07RHaWBdPFpHfodCC1YMblrVKIra6BOMKbxYHO70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GQp/kmWp; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a70c0349b64so197217066b.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 06:42:31 -0700 (PDT)
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-57d05e0017aso1907169a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 06:44:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719668550; x=1720273350; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1719668649; x=1720273449; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=89hU81MffUVomnG27nax1DyzxTndt9qlamfVFczEjJY=;
-        b=FjFkMWjV/93glYTIps7HTbeLGOaW+juhf798WQzC0Fb2u3KqShgC77qSgF5zgjYobv
-         2a/Q71mcJGEQs9tZtJaEV78O47VApwYHV+T0J2s6YdNaQPSfWEX8SaaNxj5OKpAZZak8
-         DJ9kpalXAirzQRY4RwYvRC2EDOloyF5THofe6uUPPZH6fRZFlui6wXf4vklNlyI8De46
-         djj1YjrtQsnMhDpW20BDWk4nReF7FT92VbsfqvKNph6VgYiJDAKcEB4tdTkBKK3cYpjo
-         fjGW1+fiB5ys869sbM/K5rLx5ZMAmsKxeEKsm+B0vSE/jFW690oa599jAqv5DNeIeRJM
-         NXEQ==
+        bh=0LV9QNrUseAYBOJIHcEtXZSmELN9/hwOlYXr6//1Yxo=;
+        b=GQp/kmWpuL+TJJtP+VS1kdImLPT9/Vea4/J4iro3FUKr0JHexxClamyWcp3VIvniI5
+         IxeTOI7e6wgbHltOSlks7rTEcOmD+Jhktk79UwyP6f6FP+KzrBHxtMlw6SwElos2Fmj/
+         qFJOkQKq11zoDUQVxwjX+hisigV00hP/TQOt7U4xniINjnRWeiJokcJuV2gY+N7Py913
+         zVmPBn1TkPIMcc1KR8xvLoZ39GUnYf1UNPnvQxOzEpCU221koQOqCSAD9hHGfmrSekr/
+         4fsjwlsbQJyNBEZTEpQqxFEBm05s6MX1SwGe2g/GAmy0dww/FTfamjhjyAR9NwVEGidj
+         yJNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719668550; x=1720273350;
+        d=1e100.net; s=20230601; t=1719668649; x=1720273449;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=89hU81MffUVomnG27nax1DyzxTndt9qlamfVFczEjJY=;
-        b=ideuT0UBixqzcoJI5ulnHpbbdBhllu47mQsXGhJ7lNS7SSqUkwc4ZJYJs2j3oQHxhe
-         N+BexdnlqtmSX5o7F/BOWgpZFvt1rY9niN3lgTxb2m7ACVEclO6dXoqrldKWntk3vxX3
-         v77Am6fgDPK0FCuIEYRmMpzP7cDTyMhKWuaqdrAFgpxrzpKY8sMxlZG21EQK355+C+A+
-         S03+oVzndBjAUP0Ge1waxrp2e6wE4QAFAmcugoYSWJfhCpSP9tX35EEc3wMqGM3rLZtQ
-         sxdFlU1v8H1ggJixm/xwuvs9zPNUVLwdlFB4AoOxZI+//qbSCORu3d4zh4XduS5yWjWd
-         mrlQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUlV30faSYYZSg8248tM96F3Gn5+25CPgfo2zE3yIfZbN90ov21Cd5uLPvCshFFheG91cxe18QlOOIx1bzdIRgpjFT++IeguS9zqfxjKg==
-X-Gm-Message-State: AOJu0YzHMILXGX+2u/bcfDZoExBHBUki79UmP5I7StHb21CAIcBGk9KP
-	TX9hw62u2kv9iJeaAY179TtZL4NmQtccz/pnsDhj2zkmtv0SdYaP35BJ9+qLTJ4=
-X-Google-Smtp-Source: AGHT+IGkI4CdDPFLm5hkOo2eXhclVzqaDP/BK686i7v6/fhp22g57DOv+8mTR622ezzn20kugpZ60g==
-X-Received: by 2002:a17:906:c0c7:b0:a5a:6bde:c3fb with SMTP id a640c23a62f3a-a751441e94amr70454766b.28.1719668549740;
-        Sat, 29 Jun 2024 06:42:29 -0700 (PDT)
+        bh=0LV9QNrUseAYBOJIHcEtXZSmELN9/hwOlYXr6//1Yxo=;
+        b=vq1ulC7F9QtNlzfGn2Wq5PdXxSE3uUR063Iktc8lNc4Mfj2nn34cXUbcWhzWc3OYzC
+         /FZue1Oy6tKI9Z8T25Ear3MAaLzeQRa27CDvK5G0NV0C1tYGJo8fZcVhpTyZ4cNAs8K3
+         1AxADN+QvB+1cjXkTZuIrytz+W2O2qN6C+ojQlDVxRjyQAIsSdihg1IwvmmX5uXddod7
+         RsMsWGfcYG3/DDI+dvEv1Bg0s/KOFThtqgcFW1j3/U8jur7imrakMpJ52g4kzMTQYWKM
+         HIsvg6esb7ck/Nviudi+y/9qimc3fpXJfzmeMdBOfHIkEe1aIojnsxVy+QlN7HfRWult
+         tHsg==
+X-Forwarded-Encrypted: i=1; AJvYcCUXFzmSl4mHmTzFX5EbrHcnTc2lm6g0DxSbPdn/b2m5CZsAfPB8kUriWyyuyLRYdkzSjqHrGTPDnJzA89BYgD0KauWGRWYY+cB+SYHVcw==
+X-Gm-Message-State: AOJu0YyRmACJqEDqYj8lpVp6MmOf3Vh4H55tCYQL+Cdvf/v9jkgzr6nx
+	VYrJVsQkwWZXbykZCsNwXAJanZAT1boVeJeQejfUlABjn5yCyFLT6Varm0fsyog=
+X-Google-Smtp-Source: AGHT+IGe5k/+Cg0G7hanL845tSD1zIZmGhhQVzgUhbAXzAyOMB+DQ6wjnUmb7w/qrSB4VpoWCF3zJQ==
+X-Received: by 2002:a05:6402:26d4:b0:585:a885:da28 with SMTP id 4fb4d7f45d1cf-5879f59bb3emr724776a12.24.1719668648901;
+        Sat, 29 Jun 2024 06:44:08 -0700 (PDT)
 Received: from [192.168.215.29] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a72ab065187sm165453966b.139.2024.06.29.06.42.28
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5861503b4c5sm2212539a12.93.2024.06.29.06.44.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 29 Jun 2024 06:42:29 -0700 (PDT)
-Message-ID: <a392f063-3914-4fff-969f-1b9f6de71241@linaro.org>
-Date: Sat, 29 Jun 2024 15:42:27 +0200
+        Sat, 29 Jun 2024 06:44:08 -0700 (PDT)
+Message-ID: <b93ee803-5963-4270-9bf9-9cbcf5d413b2@linaro.org>
+Date: Sat, 29 Jun 2024 15:44:06 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,22 +77,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/5] drm/msm/adreno: Implement SMEM-based speed bin
-To: Elliot Berman <quic_eberman@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20240625-topic-smem_speedbin-v4-0-f6f8493ab814@linaro.org>
- <20240625-topic-smem_speedbin-v4-1-f6f8493ab814@linaro.org>
- <20240628101549127-0700.eberman@hu-eberman-lv.qualcomm.com>
- <20240628102726231-0700.eberman@hu-eberman-lv.qualcomm.com>
+Subject: Re: [PATCH 1/2] drm/msm/dpu: Add MSM8996 support
+To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ Konrad Dybcio <konrad.dybcio@somainline.org>
+References: <20240628-dpu-msm8953-msm8996-v1-0-a31c77248db7@mainlining.org>
+ <20240628-dpu-msm8953-msm8996-v1-1-a31c77248db7@mainlining.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -130,61 +125,35 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240628102726231-0700.eberman@hu-eberman-lv.qualcomm.com>
+In-Reply-To: <20240628-dpu-msm8953-msm8996-v1-1-a31c77248db7@mainlining.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 28.06.2024 7:31 PM, Elliot Berman wrote:
-> On Fri, Jun 28, 2024 at 10:24:52AM -0700, Elliot Berman wrote:
->> On Tue, Jun 25, 2024 at 08:28:06PM +0200, Konrad Dybcio wrote:
->>> On recent (SM8550+) Snapdragon platforms, the GPU speed bin data is
->>> abstracted through SMEM, instead of being directly available in a fuse.
->>>
->>> Add support for SMEM-based speed binning, which includes getting
->>> "feature code" and "product code" from said source and parsing them
->>> to form something that lets us match OPPs against.
->>>
->>> Due to the product code being ignored in the context of Adreno on
->>> production parts (as of SM8650), hardcode it to SOCINFO_PC_UNKNOWN.
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
-
-[...]
-
->>> +	ret = qcom_smem_get_feature_code(&fcode);
->>> +	if (!ret)
->>> +		*fuse = ADRENO_SKU_ID(fcode);
->>> +	else if (ret != -EOPNOTSUPP)
->>> +		return dev_err_probe(dev, ret, "Couldn't get feature code from SMEM\n");
->>
->> Probably want to update a6xx_set_supported_hw() error handling to ignore
->> -EOPNOTSUPP or do:
->>
->> 	else /* ret == -EOPNOTSUPP */
->> 		return -ENOENT;
->>
->>
->>
->>> +#endif
->>> +
->>> +	return 0;
->>
->> I noticed that if SMEM isn't enabled and nvmem returns -ENOENT, we still
->> return 0. That could lead to uninitialized access of speedbin in both
->> users of adreno_read_speedbin(). Maybe:
->>
->> 	return ret;
->>
+On 28.06.2024 4:39 PM, Barnabás Czémán wrote:
+> From: Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
-> Ah, I see patch 4 in the series now, but I wonder if we can do something
-> better so that this patch works without relying on later patch in
-> series?
+> Add support for MSM8996, which - fun fact - was the SoC that this driver
+> (or rather SDE, its downstream origin) was meant for and first tested on.
+> 
+> It has some hardware that differs from the modern SoCs, so not a lot of
+> current structs could have been reused. It's also seemingly the only SoC
+> supported by DPU that uses RGB pipes.
+> 
+> Note, by default this platform is still handled by the MDP5 driver
+> unless the `msm.prefer_mdp5=false' parameter is provided.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> [DB: rebased on top of sblk changes, add dpu_rgb_sblk]
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> [Removed intr_start from CTLs config]
+> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+> ---
 
-Looks like rebase mess on my side :/
+Haven't given it a really in-depth look, but we've already done so with
+the previous iterations of this patch, so this is likely gtg
 
-Rob already picked this up for next.. Guess we could ask really nicely for
-a forcepush there?
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
