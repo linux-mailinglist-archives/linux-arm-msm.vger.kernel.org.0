@@ -1,187 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-24715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF23D91CC9F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 14:03:43 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9ACCB91CCD3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 14:56:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D2F35B2187C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 12:03:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DDE67B21366
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 12:56:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0D0A78C91;
-	Sat, 29 Jun 2024 12:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2374754278;
+	Sat, 29 Jun 2024 12:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w7OC6870"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="glxRhO+R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE3C54278
-	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 12:03:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6D629429
+	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 12:56:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719662616; cv=none; b=lFv6eUSq7fReRELPJwSGqMR3iX8B++HbvdaJSglOWjV7ltNl1e33V3RTcBn8kMxw5pr0+rYOeDTZA8g8PRj871hqsTNNGP3Xcoxieth8WoSJpdvSz3LbSCGQhEvV59NmAw/DKzWbcgNct/yG1rcIUBVH/e1aVluZ6fkTae4fpM4=
+	t=1719665807; cv=none; b=M39VRME6P4IkO23vVKCQkpsHOZ6+/3j9IpdFKCmgK20XvNT9MTU1T3sqzRflCU7OOBcbGDGw45fkzpnmE3/k8M5z0SQ2Cvml2dCc2dKpCUbwZEODB+/HoI9SFZgZtq67Z9FPr0gYdh5RXT0uNRIyLlFTiqpE/WRJoqAU8bDB37A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719662616; c=relaxed/simple;
-	bh=lArdPUADyKpjxHUN7n/CvkIS4KCsOhDeYHy/KXPHHIs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rq2HQP3kuVKzen0ujdzxXrZVMZYM76hUzB4xNMTmVz6MPQ5WRdQub+sVnx4Mk0rhsWpkEyavTlwf5hj8+thcmleZc92V/mJYE1vQGBr/OCnofw3btf0RQt0nCfWPfigBRrOi5U41hMQMfqlD9XdCsQcPmC+yyJ2W3Dpj4vxem/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w7OC6870; arc=none smtp.client-ip=209.85.215.170
+	s=arc-20240116; t=1719665807; c=relaxed/simple;
+	bh=aoX0AYKkE/8EHAJYrYxVzfMl8NYAv9cp+xERbNhnvDo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Bpfj2J4TOctK6hrizfC1RtaUwoL8RdNWczUeHiF8gnHouK2Lox0HLSD0GnOgEW2VTmalsmtZkA0Sx5ZXy5kCOKnoRLI8FsknsrDmqRMaZLk+tiNvJDjEbzLDXLegSWD4wgGZw7GXtH5lxwc3F99jN6aRP5AaiUGNIXhhJA6dEo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=glxRhO+R; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-7226821ad86so978974a12.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 05:03:34 -0700 (PDT)
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a729d9d7086so444928966b.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 05:56:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719662614; x=1720267414; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=VPg9SKSgYNPb6kLAYzvHmB3z47IH8SpApe8V8/ZdD0s=;
-        b=w7OC6870ThhhOY8D0zsBhKAs1Hlo5vKdVPpCsmZwtyvwxhuUQZt2MdIKfah4+fdSAv
-         tzeFEziMvTuzLbzHBPyg5yoTDmtxVazwIN6bIuBht9doVKoItB9tKaDQ7DvxKBJ9RJ0c
-         B1V0nrkPUCiw8ZAGZTuzIlrNLOaLGHQi4tolhXIyqFrsu5EisBhEIg4qXMek+4v2t1vS
-         PBHSn9QK8CpyUs71S+7Qf4VRX9uxfrJLI0vmVIQsjPxhkC98wGNKpkbN+e2k2sjmGOi0
-         ip1s9Njz485qyNstNvs3gKunfbLWDuStcrcPIHYFSakZL/pg542/wwseRJmiK+cheCMH
-         806g==
+        d=linaro.org; s=google; t=1719665804; x=1720270604; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=VLCFevl+bnXSYKqYiNMt3y9w/Slf85G42xq1zxOL/VE=;
+        b=glxRhO+R6AL5j1h8kks/6nJumjoVu9jcssqSPMtn/SmHPldhmpQB7DIMGWLqkdiBJt
+         V1zzbNfoRVFTiOrq96gdEqyD9Tgzdu331O3my1Z8Iu5lHTpGh2Dc82G/xMJ4sq29hqua
+         BmwzQ4dVJJ5YlySIf0ugaFVFW8CJPiYGZhYa8YhEsAFX6VE4lShlMLP63R1wA2ep8nWC
+         tpUVSPQLZILU8/GPIakGvTw4cAfv4dsrY8owwJDUmeGcQEAh7gfCAunMrgg53IHKj2KE
+         0zydoMgg9fYmxYtDT2rp2wEqR4Xrj96Sp757ibGafKh2AugrNYyAHKZYF2jzStQExU3Y
+         wZAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719662614; x=1720267414;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VPg9SKSgYNPb6kLAYzvHmB3z47IH8SpApe8V8/ZdD0s=;
-        b=A0talL77wHZwShzG8mj21xqAmRlOZ/sFpRG5GTvjDolx4YQx2dB142ke2Efkwcjbog
-         gywz0LskbC918lK79PtiQUt8cGPBa9gJxX2LWsFQUFdR9YQAFnIU7xuoLo/Y5F9oiqJM
-         +/3hd9fosOoyJQe5Ps1TBPQHjhzL23lkHWgPxVPI7JUQkOYTo+LlW+PiPpsOygaZF6hv
-         e6+bE+M7K5zci6hRus/YIsvX0Sy0ECAJJvgeJkZWUHqjrgEfxdkVCddAD7vKYb6riJzZ
-         TtE87+OCmMqzPqS6GAbKHu5j1lcqLqdaTAjeKzhmoZuMNxbe+tpugdyM1oVmChJ8S2QE
-         GaSA==
-X-Forwarded-Encrypted: i=1; AJvYcCVmBBXkwMMNgNUfTXBrO0meZAe9VugyWF4ZP/cmUSiGIaExYF0b/oAVr3yKKVhYjfovQqu+P3BONVWenTW+dMAya6rC05lhGfNHdQ+SRA==
-X-Gm-Message-State: AOJu0Yxp5irb2ZqqE/oFyu180jANV3jTaVGt8J6CeBNNjJna9dYDoMWk
-	ie/35L38oB4cQrd3CpMBV/UCQebWfzdDEvOl8PquXZWNLD4ti0gbZoNJQUqphg==
-X-Google-Smtp-Source: AGHT+IGrjryHFa529FoSoLFAluhRte5/p9zjbD12bPKViAwhKmDYQNdOp+qokHPowPDgPE5GH+I3sw==
-X-Received: by 2002:a05:6a20:a11f:b0:1be:c35e:d47b with SMTP id adf61e73a8af0-1bef619949emr892312637.34.1719662614188;
-        Sat, 29 Jun 2024 05:03:34 -0700 (PDT)
-Received: from thinkpad ([220.158.156.249])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fac1596d55sm30873885ad.277.2024.06.29.05.03.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Jun 2024 05:03:33 -0700 (PDT)
-Date: Sat, 29 Jun 2024 17:33:09 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Slark Xiao <slark_xiao@163.com>
-Cc: Jeffrey Hugo <quic_jhugo@quicinc.com>, loic.poulain@linaro.org,
-	ryazanov.s.a@gmail.com, johannes@sipsolutions.net,
-	netdev@vger.kernel.org, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: Re: [PATCH v3 2/3] bus: mhi: host: Add name for mhi_controller
-Message-ID: <20240629120222.GA4905@thinkpad>
-References: <20240628073626.1447288-1-slark_xiao@163.com>
- <cde35f69-4d6e-d46d-88ca-9c5d6d5e757f@quicinc.com>
- <298e9aeb.2587.190630546b9.Coremail.slark_xiao@163.com>
+        d=1e100.net; s=20230601; t=1719665804; x=1720270604;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VLCFevl+bnXSYKqYiNMt3y9w/Slf85G42xq1zxOL/VE=;
+        b=P7VBNr28Htg2wFqYd/JLJhr3yx6bAXHTDi3aFGYOhBwX7FFVoFMM7nNAkAQddRNHQH
+         ROzlbB7i7ZiV6LOztSU5ra728hm+ex3pwEOuiOPUgYtpDs3/UjbzZ/TV4FpfQrGErbZk
+         A/m7W+uvU8w5vQmLqu60mzjos2EwPZB6VXCvtn6WxVHsYjwG0sthueEWu5dM157V5S7H
+         7OR+jINBCXzJTf0DYI3pIzoEKmh9GHqjcgoDZZlQKEza28Ybf1OG6eK5jV/Lqs/h40jB
+         z0QhGkxeoyVx+wxYlna6uW8XkQ3/toIzDazJ783BMBMFq5D9kikFfBNi4LMhX5D3JABD
+         EpOw==
+X-Gm-Message-State: AOJu0YycJT5jIf/00t4zsGOZcjWIloBxm9ww4iWDBFWF7mY67hfSKLyy
+	BcHPxw43oq7ENzBiE6WS8YCuz1o4nG5F9Npm0YzckekjeYLBpNM9uKDSglA2iyE=
+X-Google-Smtp-Source: AGHT+IEFToXVictsFhLt27KEbw2INbGmxJOI/RnHLwEHzpz95mIpAqGiJvm+Lavqpk16FUMfxkb7Jg==
+X-Received: by 2002:a17:906:2709:b0:a6f:e699:a9f8 with SMTP id a640c23a62f3a-a72aeeb255fmr258839866b.18.1719665803243;
+        Sat, 29 Jun 2024 05:56:43 -0700 (PDT)
+Received: from [192.168.215.29] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a72ab06521esm161574466b.110.2024.06.29.05.56.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 29 Jun 2024 05:56:42 -0700 (PDT)
+Message-ID: <0c47c5fa-5fe2-4675-8eb9-9707f044ce90@linaro.org>
+Date: Sat, 29 Jun 2024 14:56:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <298e9aeb.2587.190630546b9.Coremail.slark_xiao@163.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add device tree for ASUS Vivobook S
+ 15
+To: wuxilin123@gmail.com, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
+ Johan Hovold <johan+linaro@kernel.org>
+References: <20240628-asus-vivobook-s15-v1-0-2a1e4571b8ab@gmail.com>
+ <20240628-asus-vivobook-s15-v1-2-2a1e4571b8ab@gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240628-asus-vivobook-s15-v1-2-2a1e4571b8ab@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sat, Jun 29, 2024 at 04:03:28PM +0800, Slark Xiao wrote:
+On 28.06.2024 1:30 PM, Xilin Wu via B4 Relay wrote:
+> From: Xilin Wu <wuxilin123@gmail.com>
 > 
-> At 2024-06-28 22:38:57, "Jeffrey Hugo" <quic_jhugo@quicinc.com> wrote:
-> >On 6/28/2024 1:36 AM, Slark Xiao wrote:
-> >>   For SDX72 MBIM mode, it starts data mux id from 112 instead of 0.
-> >>   This would lead to device can't ping outside successfully.
-> >>   Also MBIM side would report "bad packet session (112)".
-> >
+> ASUS Vivobook S 15 is a laptop based on the Qualcomm Snapdragon X Elite
+> SoC (X1E78100).
 > 
-> >Weird indentation
+> Add the device tree for the laptop with support for the following features:
 > 
-> My mistake. Will be corrected in next.
+> - CPU frequency scaling up to 3.4GHz
+> - NVMe storage on PCIe 6a (capable of Gen4x4, currently limited to Gen4x2)
+> - Keyboard and touchpad
+> - WCN7850 Wi-Fi
+> - Two Type-C ports on the left side (USB3 only in one orientation)
+> - internal eDP display
+> - ADSP and CDSP remoteprocs
 > 
-> >
-> >>   In oder to fix this issue, we decide to use the modem name
-> >
-> >"order"
-> >
-> >> to do a match in client driver side. Then client driver could
-> >> set a corresponding mux_id value for this modem product.
-> >> 
-> >> Signed-off-by: Slark Xiao <slark_xiao@163.com>
-> >> ---
-> >>   drivers/bus/mhi/host/pci_generic.c | 1 +
-> >>   include/linux/mhi.h                | 2 ++
-> >>   2 files changed, 3 insertions(+)
-> >> 
-> >> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> >> index 1fb1c2f2fe12..14a11880bcea 100644
-> >> --- a/drivers/bus/mhi/host/pci_generic.c
-> >> +++ b/drivers/bus/mhi/host/pci_generic.c
-> >> @@ -1086,6 +1086,7 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
-> >>   	mhi_cntrl->runtime_get = mhi_pci_runtime_get;
-> >>   	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
-> >>   	mhi_cntrl->mru = info->mru_default;
-> >> +	mhi_cntrl->name = info->name;
-> >>   
-> >>   	if (info->edl_trigger)
-> >>   		mhi_cntrl->edl_trigger = mhi_pci_generic_edl_trigger;
-> >> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> >> index b573f15762f8..86aa4f52842c 100644
-> >> --- a/include/linux/mhi.h
-> >> +++ b/include/linux/mhi.h
-> >> @@ -361,6 +361,7 @@ struct mhi_controller_config {
-> >>    * @wake_set: Device wakeup set flag
-> >>    * @irq_flags: irq flags passed to request_irq (optional)
-> >>    * @mru: the default MRU for the MHI device
-> >> + * @name: name of the modem
-> >
+> Further details could be found in the cover letter.
 > 
-> >Why restrict this to modems?  There are plenty of other MHI devices
-> 
-> Actually all MHI devices could be called modems. I don't think this is
-> a wrong name.
-> 
+> Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
+> ---
 
-No, not all MHI controllers are modems. This driver is a generic driver for MHI
-controllers. So use below description:
+[...]
 
-	'Product or device name of the MHI controller'
+> +	pmic-glink {
+> +		compatible = "qcom,x1e80100-pmic-glink",
+> +			     "qcom,sm8550-pmic-glink",
+> +			     "qcom,pmic-glink";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		orientation-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>,
+> +				    <&tlmm 123 GPIO_ACTIVE_HIGH>;
 
-> >
-> >>    *
-> >>    * Fields marked as (required) need to be populated by the controller driver
-> >>    * before calling mhi_register_controller(). For the fields marked as (optional)
-> >> @@ -445,6 +446,7 @@ struct mhi_controller {
-> >>   	bool wake_set;
-> >>   	unsigned long irq_flags;
-> >>   	u32 mru;
-> >> +	const char *name;
-> >
-> 
-> >Please run pahole
-> 
-> Emm, just checked,  there are 3 holes:
->     u32                        M3;                   /*   312     4 */
->     /* XXX 4 bytes hole, try to pack */
-> ...
->     bool                       wake_set;             /*   526     1 */
->     /* XXX 1 byte hole, try to pack */
-> ...
->     u32                        mru;                  /*   536     4 */
->     /* XXX 4 bytes hole, try to pack */
-> 
-> I will put 'const char *name' above 'u32 mru' to avoid the last hole.
-> Is this okay?
-> 
+#address-/size-cells usually go at the end
 
-Just put it at the top.
+> +
+> +		connector@0 {
 
-- Mani
+Could you add a comment detailing which port is which (like in x1e80100-crd.dts)?
 
--- 
-மணிவண்ணன் சதாசிவம்
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&nvme_reg_en>;
+
+property-n
+property-names
+
+[...]
+
+> +
+> +	ports {
+> +		port@1 {
+> +			reg = <1>;
+
+Please separate properties with subnodes with a newline
+
+[...]
+
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pcie6a_default>;
+
+property-n
+property-names
+
+Looks good otherwise!
+
+Konrad
 
