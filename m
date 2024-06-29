@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-24724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D108B91CCFB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 15:08:17 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53D4391CCFE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 15:09:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 862B82833EC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 13:08:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 77B851C21199
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 13:09:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 861187EEF5;
-	Sat, 29 Jun 2024 13:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C06FD7EF09;
+	Sat, 29 Jun 2024 13:09:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w6Nntv9l"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hVLXm+Uy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D4077107
-	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 13:08:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1375577107
+	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 13:09:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719666492; cv=none; b=Asa7x20agh+Gn+7J3J14FSzj6yzaJrrrQ/gq4ElKTc/Vyd0/W1kBcAQO2rAba+213Ai/xSCX9Njm6/tAQHf5yui7JPRXqxhaGSeczbYGcP2+XFH1mH4zPcp0p1Ov1wIl0daugxbvz846oOwlEAenUmObb9btEQDvkUDnuqgXXm4=
+	t=1719666557; cv=none; b=dRuPOmfi9Enu+7vFNlOEm3SnUnybXLntigA3Nfla9vORbUiWyIYBsNafJ1aKAAlKTVXs1voCZFvBK3kpgv1PhQeJePwp01BWE065Pktp9y7bKoC/+AWT3RW9NXEbZvr9KjALENQla7cAjjS/dKh7T4BGB73aGD4Lg8o7EQZ9Oy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719666492; c=relaxed/simple;
-	bh=a1z4svd2KApMipvOvkQdNF3dMOWZXDLZT9xmYSRM1s4=;
+	s=arc-20240116; t=1719666557; c=relaxed/simple;
+	bh=5HcREViO2ZDmFrPzvgNo6tpoLDPXkXeQ1vOIWwIOy4k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fojcD0wZ8afWJKn67j/IZgJsiuZyYGKyN3ZG2kAS0gZU4fzr50zwy3dzeqKLQxZFdncsrr7y2z3dDWP3Ni8n+B1Vbs0UrNnKw/KPnx865lSf+rMk2grP9uX4O4cIiF1mH/i+Tuse98wRTUlROTGsfkyU3yRyqlhxuP/cgm4+m7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w6Nntv9l; arc=none smtp.client-ip=209.85.167.42
+	 In-Reply-To:Content-Type; b=MLYRLi0ODE4boa1INTdT3XF9LMLdmGMY0YgXshUHW8IDSFch1s+93ymDvIkSHX1qtj6E3MYokRGNUzUvDi5I34LK10fqNyy/W+AY3koBITn8QRoUVaE+QN4Khd+94aRdF50b69Va/n+sCgg7+KufImv2qOYRQsP9LKu6WPos9Mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hVLXm+Uy; arc=none smtp.client-ip=209.85.208.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-52e829086f3so408812e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 06:08:10 -0700 (PDT)
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-57ccd1111b0so966324a12.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 06:09:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719666489; x=1720271289; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1719666554; x=1720271354; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=2+DlWBOIGOUot1NB7lncX8FvlbhuGpLLPEzsuaElYVU=;
-        b=w6Nntv9lIV+0hgYE+o5e+17gH5asqSGXQJHWrHZ4KyGD+7FfizHkvWc7A7RnVLYyLm
-         tCqsH24VX4KpCvkWxsb+Ko+QKm16ulQr6V7nLL9NaKqW93E9Tw/cckI7hzEXhj+Y+GPd
-         Bh3QNemjRhNN9A1k+qxgoTno/XuqTr0x7M2kyUi2+WDQOwHS8+qqWhIGTTcoTmDDXiji
-         Wwv30b0rREM2vU12g8dSEGrrmEed+fmXEtgrCngS/lg4nYGkxMbvzvN9jYEFm5z0eY0J
-         HUqNASNuQuWr5NIV9JLVqVVArlmZVWTjBPZABnaP8/3nchqMs2LszW+QKVElAQXZNsPj
-         /j6w==
+        bh=szW+qpHen639wDwHyYUuN0+gHXUW14bCmbG+jcL15DE=;
+        b=hVLXm+UyjVfpKM16PGEuCpVFB3dobjfum/UMBluf3PjgdN4eP8yohhikIJmjDuVyjU
+         WOU+Supzdk3m6GVGXtmi4JySqodA0UjrSeqi01SS0EvlPBw6ZdcA7QlpLT72978V623Y
+         vSfua7MwbPQKiTqOUfpcTT3fIiizgFBMkXS0JcFMGvWGVkTBpTZCvQq9S2nWsWsrCPNJ
+         tnggx0FkvJe1gbmK6CylRJ64Y1y2EwTv1uOek/fNzDlk0n3kq6ZVjqgknuxFhp12BrFC
+         l6uauu1lLNeCXL6u8IBugUjTZH1Dw9XSwuIMxCU7OIaAU38WeJJRwkj3RfjT5dXL0P0e
+         k5zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719666489; x=1720271289;
+        d=1e100.net; s=20230601; t=1719666554; x=1720271354;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2+DlWBOIGOUot1NB7lncX8FvlbhuGpLLPEzsuaElYVU=;
-        b=thgwWOFlNpiuEfl1M6+cdoPQVVxkmhcr7/mj6t3KfQY6wR+Q7xALKWKgFP/Svq99V3
-         OfqOPY6iKDb4pOcL1utr3CNjKrsEp7nsnl3+gi0MX4bLO743pnp6fe3zwYM3VJrxfnoa
-         KPfgBwrXvewfmmS453TzdZu7dsPy74ev6LGSpNqP2IHQvvtM71u/sqvU1fjGf5adfIz6
-         N96KEQofqF3a6WfE+EAlbPsZqM8VyJYYQcZ77aNnUG4UzTuwRcSke8OD/rbQLdxJ31uq
-         S7ynbK4AEaAmbSYVrxjTq6NFxvhSiN4SnYprmTb5fONmjrl2qnN6TcxgZz9Y1TiZolWq
-         pgHw==
-X-Forwarded-Encrypted: i=1; AJvYcCVl0TluVmsrSA2KB30auML7uVEjJLsinjx8tG5LsqhiKdOeVsVud3gLzw2cwwgriCO67aMMvkCYI5/nnM8vo2x6GNGXzQpQz10PbTdzHA==
-X-Gm-Message-State: AOJu0YzFKAmHOtpgfzPo5uwJCikdxl4CzYZuAkPflFSns2k5GNeKELBQ
-	c1tEX3Dd3TXsDNU9gc1oWx64VT1L0ExVFr2QpWoQk/GbGXUbV/tkCapgRBPp9KM=
-X-Google-Smtp-Source: AGHT+IGgDIGbbm3HJUo2dpldGiFw1eLh015QSIEQxsu0mz0rkCkOtS5vgeq/aUnP86xu2Op3wTOwhA==
-X-Received: by 2002:a05:6512:2254:b0:52e:74d5:4bf9 with SMTP id 2adb3069b0e04-52e826f7297mr816048e87.54.1719666488789;
-        Sat, 29 Jun 2024 06:08:08 -0700 (PDT)
+        bh=szW+qpHen639wDwHyYUuN0+gHXUW14bCmbG+jcL15DE=;
+        b=TOHbw2jvErbgZEZljid1+Wd5waR5ysPAQJUl71RY0tKpAUaRboG3Nq2X58qmdQUwGx
+         bk+2bSTYu+CgPq9TU/JP2U091gmnSFJR4Qt6wAjSWOhA6LSH/PBMdNA61JviiXwO5HQb
+         C6RtX5De5ceBCR68vA2ega07s9pFAhrhhVB4k3vsoAH/4nsYFLUmydkbIcMhW/SywsTQ
+         llEUn8cFsfvt1ZTdOVwJzF19HAyjmhSmH39gm8XyA6RO7XykDCnEbJYHx4LdCMkHlTEZ
+         EwzUad+J4vZLW6ixD2eQS9NSXElXoUxAlJBtInM6iLINiD4wszkvUUbI/C3m7tr1WtFj
+         QefQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWDg2fu0ClXQg2hoEEoLZVPxhrS1AY0tRFj+7a1PmeyvCxbSnGaIZZ3BcYH6WNDOVzIibG3HCqDachl45KrEbNVT3S/etOA7t0yiXpHjg==
+X-Gm-Message-State: AOJu0YxdO4XnQ3t5TfcL1mPVF9jNyZPiwmOP6X5B2dbM2o8t6PO1phDI
+	aVl0SJ4tqkvO35P0RdHJnvB3fXo6CAhJlFbvpcxzt595Wq8ONe9lSct2/L5mILY=
+X-Google-Smtp-Source: AGHT+IGAW8b892LzYjBo49cSL/7QUlVkTbYj03RIBUvQNFXrlob++LKjfIR5n0y6hLpu1m0VRwRK8w==
+X-Received: by 2002:a05:6402:348a:b0:56e:3293:3777 with SMTP id 4fb4d7f45d1cf-5879f3ad3bcmr933147a12.17.1719666554033;
+        Sat, 29 Jun 2024 06:09:14 -0700 (PDT)
 Received: from [192.168.215.29] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52e7ab2780asm596854e87.178.2024.06.29.06.08.06
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-58615037bdesm2207202a12.97.2024.06.29.06.09.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 29 Jun 2024 06:08:08 -0700 (PDT)
-Message-ID: <6feb2192-7f0e-4813-851d-207b2b9918ee@linaro.org>
-Date: Sat, 29 Jun 2024 15:08:06 +0200
+        Sat, 29 Jun 2024 06:09:13 -0700 (PDT)
+Message-ID: <0159b30e-2617-4e12-816b-273d58dfc297@linaro.org>
+Date: Sat, 29 Jun 2024 15:09:11 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,14 +77,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: Fix USB HS PHY 0.8V supply
-To: Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Rajendra Nayak
- <quic_rjendra@quicinc.com>, Sibi Sankar <quic_sibis@quicinc.com>
-Cc: Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240629-x1e80100-dts-fix-hsphy-0-8v-supplies-v1-1-de99ee030b27@linaro.org>
+Subject: Re: [PATCH v2 2/2] ARM: dts: qcom-msm8226-samsung-ms013g: Add initial
+ device tree
+To: Luca Weiss <luca@lucaweiss.eu>, linux-kernel@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+ Raymond Hackley <raymondhackley@protonmail.com>
+References: <20240627193013.1800-1-raymondhackley@protonmail.com>
+ <20240627193013.1800-3-raymondhackley@protonmail.com>
+ <6223513.lOV4Wx5bFT@g550jk>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -122,18 +126,40 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240629-x1e80100-dts-fix-hsphy-0-8v-supplies-v1-1-de99ee030b27@linaro.org>
+In-Reply-To: <6223513.lOV4Wx5bFT@g550jk>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29.06.2024 8:29 AM, Abel Vesa wrote:
-> According to the power grid documentation, the 0.8v HS PHY shared
-> regulator is actually LDO3 from PM8550ve id J. Fix both CRD and QCP
-> boards.
+On 29.06.2024 11:01 AM, Luca Weiss wrote:
+> On Donnerstag, 27. Juni 2024 21:30:52 MESZ Raymond Hackley wrote:
+>> Samsung Galaxy Grand 2 is a phone based on MSM8226. It's similar to the
+>> other Samsung devices based on MSM8226 with only a few minor differences.
+>>
+>> The device trees contain initial support with:
+>>  - GPIO keys
+>>  - Regulator haptic
+>>  - SDHCI (internal and external storage)
+>>  - UART (on USB connector via the TI TSU6721 MUIC)
+>>  - Regulators
+>>  - Touchscreen
+>>  - Accelerometer
+>>
+>> Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
+>> ---
+
+[...]
+
+>> +	haptic {
+>> +		compatible = "regulator-haptic";
+>> +		haptic-supply = <&reg_motor_vdd>;
+>> +		min-microvolt = <3300000>;
+>> +		max-microvolt = <3300000>;
+>> +	};
 > 
-> Fixes: d7e03cce0400 ("arm64: dts: qcom: x1e80100-crd: Enable more support")
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
+> This is the vibration motor? Use "vibrator" as node name then as per
+> https://github.com/devicetree-org/devicetree-specification/blob/main/source/chapter2-devicetree-basics.rst?plain=1#L299
+
+With that:
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
