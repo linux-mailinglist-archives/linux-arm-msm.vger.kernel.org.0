@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-24732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B70891CD3E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 15:36:57 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 095F991CD53
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 15:42:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E94741F22191
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 13:36:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0DBC61C20FE7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 13:42:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C06480BEE;
-	Sat, 29 Jun 2024 13:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96789811FF;
+	Sat, 29 Jun 2024 13:42:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m9wQ9gaE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FjFkMWjV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF8D7CF18
-	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 13:36:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17B745BEF
+	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 13:42:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719668212; cv=none; b=k1KUE0wT4o5TkEKJij2uwz4lHCmoofGhSQn6e7WsVGfaD6YEi/LvcZ6a4p976HNGSpSKm82KNlH+PUUIwFvZ/xiRW9aFQPq/A2KbOeHywum1irDs683/nSqtBieAVMh7CM6LAyKeSEHx7nt4+oCR9EJvbeOiXRYxIbX/NpKWDwU=
+	t=1719668554; cv=none; b=G28M+5MfomqW+5xyZtTB7Mm1x6pJWJYdz6Br7Ntp2wPvI2oDN/R3Wkr/HXHAIBr4H+r3caTKGe0UOZVcTSI1MDpT1S+9WH9W3Yk6SVI2wrCBhfwm/LMqUcnkO7aoKqJ2KqddnfwA/q2fpiPDnBGi9JnMigDCBON8bvC+lEM0W+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719668212; c=relaxed/simple;
-	bh=pEKkk9d0dkZtVkvo71avDXYFjS+/LQXs6eudgJgzkCU=;
+	s=arc-20240116; t=1719668554; c=relaxed/simple;
+	bh=cXPfd0fEa4S+VFemAZ2d5w+WNgzF42fOneK5lp8jG9w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PUGT6Gn7eo41audHvVMZWGn+v9eM4gYvX6RXRoGBoCc+EaTJ0Q7dhIJNzm0w8Gu1OYljDpc8i5CGZ+QclvQS9EJE0ifZ6PC9CnYb1nfQaqF6eGMpdhTp4rLZrQ8pKq9/KpXbwNdZa3Vn6HLwJZ86Blx8q6F2ETaQj1tl8q7Mc3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m9wQ9gaE; arc=none smtp.client-ip=209.85.208.174
+	 In-Reply-To:Content-Type; b=F+1uQjqnoU3cqU3UoYUrm5sKeujz4xYFuPqV4KkJm1/J23e6Ua9rQNO2T3FVH7ObJRocFEyi7dRi5QI4wZiTUYVZh9QzmhqF80+BlmMueLiCB2rav3gFfoCoaj9gDWi0MxWs3bJhx02cEc7VNj9b+VQNfnbrKTgb727wMCOX1Lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FjFkMWjV; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2ec595d0acbso17696981fa.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 06:36:50 -0700 (PDT)
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a70c0349b64so197217066b.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 06:42:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719668208; x=1720273008; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1719668550; x=1720273350; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fb+wSaIrJVe+pkmIcOdPYU+4bx32BHvpwZol/N+Ajuo=;
-        b=m9wQ9gaEGSueTlCiFflwMTHImkHduTDhofaQZ0/fB+JwSTOdcAfWvfs865Co1e4rkf
-         rdTVWXva2aNUp8bvRbmgTRb2oLPE+EO5tlDjMM6D2k1Os1nrMCCtM3mW5M6uFURybKvF
-         xn7IuEtilhwXAe/PIuh6fopUYkk7WYfwQkfVvsRgMsEPxMXKZ9uTW+DYzJBDcMgY8Pb6
-         QaIndoqSXTV6qU1HT5e8+BC59xQfh5/zZj0MyFm3w0gc9D6rbJRh7p7ICzXkEElrnzlK
-         hWh/P5wNlUJpc/hbYL1x/uVgDhZ4y4ZrIIkK3yfge4yC0pfFDv63Gw7VU4FxmnEdvnb5
-         kCnQ==
+        bh=89hU81MffUVomnG27nax1DyzxTndt9qlamfVFczEjJY=;
+        b=FjFkMWjV/93glYTIps7HTbeLGOaW+juhf798WQzC0Fb2u3KqShgC77qSgF5zgjYobv
+         2a/Q71mcJGEQs9tZtJaEV78O47VApwYHV+T0J2s6YdNaQPSfWEX8SaaNxj5OKpAZZak8
+         DJ9kpalXAirzQRY4RwYvRC2EDOloyF5THofe6uUPPZH6fRZFlui6wXf4vklNlyI8De46
+         djj1YjrtQsnMhDpW20BDWk4nReF7FT92VbsfqvKNph6VgYiJDAKcEB4tdTkBKK3cYpjo
+         fjGW1+fiB5ys869sbM/K5rLx5ZMAmsKxeEKsm+B0vSE/jFW690oa599jAqv5DNeIeRJM
+         NXEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719668208; x=1720273008;
+        d=1e100.net; s=20230601; t=1719668550; x=1720273350;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Fb+wSaIrJVe+pkmIcOdPYU+4bx32BHvpwZol/N+Ajuo=;
-        b=HGYiuq/Yur/ZCOj+YDRmyqDbopg0QAUkvCzc2rUna7Rp0f6fmSy6h5YufzQOKMaCMF
-         91J1KSaIdaAqz43O8Tp6FgiH0Z7hGlmxPmYiWY9XQ7kiyagFEW7VpZWPIo7GXpZsBB5a
-         T1GMhx5cL5pd/Dx/QCvw6kHmHE8LBJuuGHhej27HjP0CP67cD4O0n93RWEhAn7sJuzKL
-         ErkgenLlxW5bOsXjV6ABQWKGAw9x8NKhnIShaCqpsmI67QejL+sQcmUAZiAPFGoXJSir
-         TxzFpk13TpBKqXMaP9cxskl28OS3Ixd/XdPQES2FHFknDzevQHwezgOqJBM8Qn8hujMH
-         tNFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXboUM8EJut9aNvPqJD2LO8Cnbt5SoQxaMAb3xaRWlhBFfFY7H0eeFAPsXFrItaWLbz79pY72BBvVjw6Icy7fZLLEn3r57LcV9mC7GeZA==
-X-Gm-Message-State: AOJu0Yx/l/ml21rp0+zv7rckOx+OMI5xZmWVPur6COtusYzPlN9xy1Wt
-	pW+RVdijoDUVch8cgjJWCXeF0Y0LRDdPsBRHqtSaOObXGnN4u0aR2zHag0Wf2bU=
-X-Google-Smtp-Source: AGHT+IFViPkvLnjVI+tzuVPmDLNUpmDc9Ajbta0rj8EHH09MphUCQjSVvr6pLzm9yp2KFajt9W7Q6A==
-X-Received: by 2002:a2e:b00e:0:b0:2ec:5785:ee97 with SMTP id 38308e7fff4ca-2ee5e707ddemr8165451fa.53.1719668208268;
-        Sat, 29 Jun 2024 06:36:48 -0700 (PDT)
+        bh=89hU81MffUVomnG27nax1DyzxTndt9qlamfVFczEjJY=;
+        b=ideuT0UBixqzcoJI5ulnHpbbdBhllu47mQsXGhJ7lNS7SSqUkwc4ZJYJs2j3oQHxhe
+         N+BexdnlqtmSX5o7F/BOWgpZFvt1rY9niN3lgTxb2m7ACVEclO6dXoqrldKWntk3vxX3
+         v77Am6fgDPK0FCuIEYRmMpzP7cDTyMhKWuaqdrAFgpxrzpKY8sMxlZG21EQK355+C+A+
+         S03+oVzndBjAUP0Ge1waxrp2e6wE4QAFAmcugoYSWJfhCpSP9tX35EEc3wMqGM3rLZtQ
+         sxdFlU1v8H1ggJixm/xwuvs9zPNUVLwdlFB4AoOxZI+//qbSCORu3d4zh4XduS5yWjWd
+         mrlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUlV30faSYYZSg8248tM96F3Gn5+25CPgfo2zE3yIfZbN90ov21Cd5uLPvCshFFheG91cxe18QlOOIx1bzdIRgpjFT++IeguS9zqfxjKg==
+X-Gm-Message-State: AOJu0YzHMILXGX+2u/bcfDZoExBHBUki79UmP5I7StHb21CAIcBGk9KP
+	TX9hw62u2kv9iJeaAY179TtZL4NmQtccz/pnsDhj2zkmtv0SdYaP35BJ9+qLTJ4=
+X-Google-Smtp-Source: AGHT+IGkI4CdDPFLm5hkOo2eXhclVzqaDP/BK686i7v6/fhp22g57DOv+8mTR622ezzn20kugpZ60g==
+X-Received: by 2002:a17:906:c0c7:b0:a5a:6bde:c3fb with SMTP id a640c23a62f3a-a751441e94amr70454766b.28.1719668549740;
+        Sat, 29 Jun 2024 06:42:29 -0700 (PDT)
 Received: from [192.168.215.29] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5861381756esm2268082a12.56.2024.06.29.06.36.46
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a72ab065187sm165453966b.139.2024.06.29.06.42.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 29 Jun 2024 06:36:47 -0700 (PDT)
-Message-ID: <bc6d0faa-b3d6-4094-b569-dec3a5ed7545@linaro.org>
-Date: Sat, 29 Jun 2024 15:36:46 +0200
+        Sat, 29 Jun 2024 06:42:29 -0700 (PDT)
+Message-ID: <a392f063-3914-4fff-969f-1b9f6de71241@linaro.org>
+Date: Sat, 29 Jun 2024 15:42:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,19 +77,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 0/6] Add interconnect driver for IPQ9574 SoC
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, djakov@kernel.org,
- dmitry.baryshkov@linaro.org, quic_anusha@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, bryan.odonoghue@linaro.org
-References: <20240430064214.2030013-1-quic_varada@quicinc.com>
- <ZjXrTywO6+iRaEYk@hu-varada-blr.qualcomm.com>
- <90bb9256-d54d-4e01-aa06-4184e2b95d48@linaro.org>
- <Zmgc+Qzwt6Zbg/w+@hu-varada-blr.qualcomm.com>
- <ZnumpkYR2ILpbOwF@hu-varada-blr.qualcomm.com>
+Subject: Re: [PATCH v4 1/5] drm/msm/adreno: Implement SMEM-based speed bin
+To: Elliot Berman <quic_eberman@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20240625-topic-smem_speedbin-v4-0-f6f8493ab814@linaro.org>
+ <20240625-topic-smem_speedbin-v4-1-f6f8493ab814@linaro.org>
+ <20240628101549127-0700.eberman@hu-eberman-lv.qualcomm.com>
+ <20240628102726231-0700.eberman@hu-eberman-lv.qualcomm.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -127,65 +130,61 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <ZnumpkYR2ILpbOwF@hu-varada-blr.qualcomm.com>
+In-Reply-To: <20240628102726231-0700.eberman@hu-eberman-lv.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 26.06.2024 7:27 AM, Varadarajan Narayanan wrote:
-> On Tue, Jun 11, 2024 at 03:16:33PM +0530, Varadarajan Narayanan wrote:
->> On Thu, Jun 06, 2024 at 04:07:23PM +0200, Konrad Dybcio wrote:
->>> On 4.05.2024 10:01 AM, Varadarajan Narayanan wrote:
->>>> Bjorn,
->>>>
->>>>> On Tue, Apr 30, 2024 at 12:12:08PM +0530, Varadarajan Narayanan wrote:
->>>>> MSM platforms manage NoC related clocks and scaling from RPM.
->>>>> However, in IPQ SoCs, RPM is not involved in managing NoC
->>>>> related clocks and there is no NoC scaling.
->>>>>
->>>>> However, there is a requirement to enable some NoC interface
->>>>> clocks for the accessing the peripherals present in the
->>>>> system. Hence add a minimalistic interconnect driver that
->>>>> establishes a path from the processor/memory to those peripherals
->>>>> and vice versa.
->>>>>
->>>>> Change icc-clk driver to take master and slave ids instead
->>>>> of auto generating.
->>>>>
->>>>> Currently, drivers/clk/qcom/clk-cbf-8996.c is the only user of
->>>>> icc-clk. And, it had exactly one master and one slave node.
->>>>> For this the auto generated master (= 1) and slave (= 0) was
->>>>> enough.
->>>>>
->>>>> However, when drivers/clk/qcom/gcc-ipq9574.c wanted to make use
->>>>> of the icc-clk framework, it had more number of master and slave
->>>>> nodes and the auto generated ids did not suit the usage.
->>>>>
->>>>> ---
->>>>> v11:	No code changes
->>>>> 	Commit log changed for the first patch
->>>>> 	Added Acked-By: to 3 patches
->>>>
->>>> Can this be included in your driver changes for 6.10?
+On 28.06.2024 7:31 PM, Elliot Berman wrote:
+> On Fri, Jun 28, 2024 at 10:24:52AM -0700, Elliot Berman wrote:
+>> On Tue, Jun 25, 2024 at 08:28:06PM +0200, Konrad Dybcio wrote:
+>>> On recent (SM8550+) Snapdragon platforms, the GPU speed bin data is
+>>> abstracted through SMEM, instead of being directly available in a fuse.
 >>>
->> Konrad,
->>
->>> FWIW there is still an open discussion at v9
->>> <CAA8EJpqENsojPQmCbma_nQLEZq8nK1fz1K0JdtvLd=kPrH_DBw@mail.gmail.com>
->>
->> Thanks for reminding. Have responded to it.
->> https://lore.kernel.org/linux-arm-msm/Zmgb+OjdBNw71sC1@hu-varada-blr.qualcomm.com/
-> 
-> Bjorn/Konrad,
-> 
-> Can this be merged for 6.11. I believe the discussion open at v9
-> has been addressed. Please let me know if anything is still pending.
-> 
-> Below patches depend on this series:
-> 
-> 	PCI: https://lore.kernel.org/linux-arm-msm/20240512082858.1806694-1-quic_devipriy@quicinc.com/
-> 	NSSCC: https://lore.kernel.org/linux-arm-msm/20240625070536.3043630-1-quic_devipriy@quicinc.com/
+>>> Add support for SMEM-based speed binning, which includes getting
+>>> "feature code" and "product code" from said source and parsing them
+>>> to form something that lets us match OPPs against.
+>>>
+>>> Due to the product code being ignored in the context of Adreno on
+>>> production parts (as of SM8650), hardcode it to SOCINFO_PC_UNKNOWN.
+>>>
+>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> ---
 
-Looks solved now! Bjorn, feel free to pick this up
+[...]
+
+>>> +	ret = qcom_smem_get_feature_code(&fcode);
+>>> +	if (!ret)
+>>> +		*fuse = ADRENO_SKU_ID(fcode);
+>>> +	else if (ret != -EOPNOTSUPP)
+>>> +		return dev_err_probe(dev, ret, "Couldn't get feature code from SMEM\n");
+>>
+>> Probably want to update a6xx_set_supported_hw() error handling to ignore
+>> -EOPNOTSUPP or do:
+>>
+>> 	else /* ret == -EOPNOTSUPP */
+>> 		return -ENOENT;
+>>
+>>
+>>
+>>> +#endif
+>>> +
+>>> +	return 0;
+>>
+>> I noticed that if SMEM isn't enabled and nvmem returns -ENOENT, we still
+>> return 0. That could lead to uninitialized access of speedbin in both
+>> users of adreno_read_speedbin(). Maybe:
+>>
+>> 	return ret;
+>>
+> 
+> Ah, I see patch 4 in the series now, but I wonder if we can do something
+> better so that this patch works without relying on later patch in
+> series?
+
+Looks like rebase mess on my side :/
+
+Rob already picked this up for next.. Guess we could ask really nicely for
+a forcepush there?
 
 Konrad
 
