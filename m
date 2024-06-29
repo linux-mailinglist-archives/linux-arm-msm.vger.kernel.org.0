@@ -1,74 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-24719-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6BE891CCDD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 15:01:17 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BEED391CCE1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 15:03:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 410DE1F220EC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 13:01:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DE6061C20FCB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 13:03:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96F724D8AF;
-	Sat, 29 Jun 2024 13:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C44F04D8B7;
+	Sat, 29 Jun 2024 13:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hBd3vjSe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GjnjQtUZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E391B1E493
-	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 13:01:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1E229CFB
+	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 13:03:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719666072; cv=none; b=oF1SeCFr/XN0t886a0ubHarJcuLOz6wnjSVL4hcOl97MvI0SYwogCWNbLIiVt+HmrntT7p4S4t3NmSpozpF1F9D9Rf+UVh8QfCAOkM4lAgBxGlZ2zpU98IChUAJPdvmyqjQ0Jx9GKy74OxqEyDoyrqCQHVjUfDROX1Nu51oEr5c=
+	t=1719666206; cv=none; b=TN3Gj4Pgkr8+AlThndhfCrWJgJg/EEwlgCBAD6a2Fs4yd3F5INVKHPHudjFqwPfRnQns2oTtKX8nBNNXOHLTNYXnXYgJiyu2Ye330nThf5MqK8bFd/4UNp+rwrS4i0Ra5Sp2iiSXlUiY0WEZWnwNQhbVd/+IOQUiJE6RC1CR1GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719666072; c=relaxed/simple;
-	bh=+pAxkY9w/DH5seD/QP+PHFtRjh1MwqdB78uSpdSMtss=;
+	s=arc-20240116; t=1719666206; c=relaxed/simple;
+	bh=+dukUqqO7cIErap+h/ymTCUcq+zEUjZtEffudb1in58=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UnIcSZ2lfgkAJrImUPonh9c5AUqwE9e0FXXWuRIBGVa5hA8wW4uIfPG8OFHEAFY+sk5qQJCqKSOgRoHg7x7ekztDVhTMc+bbXg36GAeVkLSrREFeyoInyk21wjbb83eCpihHrdNLBrWtArqVnTEIaD7x4ykl8Cfk+guCxfFBN88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hBd3vjSe; arc=none smtp.client-ip=209.85.208.51
+	 In-Reply-To:Content-Type; b=WeHwEKZglyj4B+DVW93IrzqEwRyG0p7fN2FpPxyuGwdWO6fpcRZn71zGRBpjtu+tjbSRHOePbZS9xYI5+jDadhNdIhiE9KKUCVobd7/Ti07RxSOwLduyM8BuVS10hL9MkqB5zlPZ6itndSW+kznf2cOfSIxIzmh8Dnm+TIBgvDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GjnjQtUZ; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-57ccd1111aeso1855072a12.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 06:01:10 -0700 (PDT)
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52e7d2278d8so2150108e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 06:03:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719666069; x=1720270869; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1719666203; x=1720271003; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q15KtodgRcDJhbsUX44QuIqWrNjJ334aYzslN5VzRCE=;
-        b=hBd3vjSe4Cm1qW1KhfNmNdEsdb5CE4oDy7MPIPeILod1I1uo+TCZB0gDhJQ8Qwv7c5
-         5MQ+g0/KwaiHudMxyVFUs0TzHS9XNHz+TuBCVWvWG7yb9sBMPmpWQlqNaXpWpOC9jS3h
-         1ecYCq7T3mnB/gjuKV8YZuZBJjEe4mw5NXhF2skHIIWtpj/vs/MP3me5EtQgcgeZQmHz
-         lH1P6uOcXqurtYFx+UQhizIirMHBZdRFd0qGisAC40q4QdrMFEeGEfPYaL0OHiNfY0r5
-         ut1ES/GQtYolgW1gglrKWWrw2FCHTTr70nEDEktfQKpde7/1FBN+14UsuIzwZbgO1eVn
-         MZ8Q==
+        bh=AcFnKL/ViQqZRLkBUtcYy5DNPj56xFfRsRoffNy4BM0=;
+        b=GjnjQtUZpPzFoIkUINBn8x/RFxUUXPek0B3KxeADJcZxt5TIHRlTV2BMdUUChblQ8c
+         HWdvLrKQ0NhnFTvriNXwlfYwoeQeZ3dWQtQvcWcPqYCEMi/hxlTYpSKFbZpGj0f7OSin
+         Ustqe6y3/RVP3zB2eSwrHm1c4YGum4Ou0oIv1IR4VZtjT6RSUf/2u9RJM0047qf6bI/s
+         tLk4Ek5hWrIoy1+Z/lTGOvU+ZkkhT4Yih1+l0Bp/kJnIoCz0riBIYvh+/+FhCi5j5DZc
+         j2uPM3vHmhKxUQEcBaTltGiVhQNT//PLmnSUgLxvX91y5PiIJJoSbKCIUAeXJtZaAJeZ
+         D94w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719666069; x=1720270869;
+        d=1e100.net; s=20230601; t=1719666203; x=1720271003;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Q15KtodgRcDJhbsUX44QuIqWrNjJ334aYzslN5VzRCE=;
-        b=kah479/43X7CMjQqa0qF0LySUzFu3BrKNLVNspUwNASNzSQ14Ru14q+xuOqXxToE52
-         OoU6GbpFoqi0ubitRHZKcYKey+V6YmircG2WoDlQjl2mCJ+2O49775y2FCFnYheFVtwj
-         e9nMasK1r3aBS+lTKy/F0KmDhH2z9PtGkLXZzkuJeGvMxOh8eFB5qN2zppqnwnpcpBoN
-         rcbULE9FIU1+7PBBcKsv7QuKKAtILwOzob448Uy8udKcQ37tfWLGVhU58JSrOXXKpBa2
-         jalxtkty8010CtLEBauamW8LtDOVebykupLMwTfXS7b0gFzzr5zvt3GgWFgRFbDUoRUw
-         q22w==
-X-Gm-Message-State: AOJu0Yz0H0WtPlR7Lp4nYrKfI9EweV6sJ6IKUqm9wknvYEbAn37oRQCu
-	YX0WfPBnh4ArwEZ/DHFKedTwAO7aGhc/ePaaYhMc3JAQ/7/xVsU7p7GkAAWk+NU=
-X-Google-Smtp-Source: AGHT+IHDVXarznEkoh5Wzl0xqsIUTBQQhm3uVKbdV0WxGQmZT/NrSzv05ebdKsn1hFFoynLLEURrqg==
-X-Received: by 2002:a05:6402:5216:b0:57d:4ca4:61ba with SMTP id 4fb4d7f45d1cf-5879f4a570bmr769495a12.10.1719666069195;
-        Sat, 29 Jun 2024 06:01:09 -0700 (PDT)
+        bh=AcFnKL/ViQqZRLkBUtcYy5DNPj56xFfRsRoffNy4BM0=;
+        b=xFPWiHFgCJo6rKfP7eGoHOk7yCvUPdDyWEBN4ayh5+ILps/C+AxbM9W2XAOGlLNgej
+         IF2lGAjSEu2EoHSDNpy7DGONCJ67FKlAOzelud9+O35f4kbsN/IOrlrLEX81+Xh1QW1w
+         RNxLayvV+7ojsuDs8d8xIiXpsrEuY9NNddtuqUWdTsvtjI6lPpyfVm+3RBmVokU1mjb+
+         ZBtP9ImCv8BTLHa7dpvRoG0ekNdYpnR/6YYXZfejZf92DQvy/B5MJbwWQYN7X+4N3e4N
+         RLU8HkJkKZ9+xh+i60LABnPuLqZ3mxsMCrSIIDfLxp3gda16/EVe+MKqp6nJMSo8xQJH
+         CNlw==
+X-Forwarded-Encrypted: i=1; AJvYcCV5BpeFjh4l/dznmd4/u396r2wiHIrfJyJCAMOpbTxVzyZD1Xmv4Mz0cFv3u3Xw4q0UXmEc4OabeF4V4A29m/kV180oZ0ds5rCtIZjFug==
+X-Gm-Message-State: AOJu0Yz6DnVC7BJ60C6uq86dLC8ZIwRpOB4BWyghusNR2yb5cZkagqV3
+	TESrrUdSb/IR5w+EkM7WtWPG4Nhhf/QwU2oYVVvyb1uXYbC9+zB0RmG5/LzWGvhBHYRqcgTmbyt
+	R
+X-Google-Smtp-Source: AGHT+IEK1INTGjBjGmb3jwaEpotqKfPa2KCAiFV23CqI8Zcnh6V+H+84uY63hTBaHkeMGrOEwwZfsw==
+X-Received: by 2002:a05:6512:31cc:b0:52d:3ada:4b6b with SMTP id 2adb3069b0e04-52e8264b5c8mr990021e87.1.1719666202369;
+        Sat, 29 Jun 2024 06:03:22 -0700 (PDT)
 Received: from [192.168.215.29] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5861324dcb3sm2209179a12.26.2024.06.29.06.01.07
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a72aaf6336csm162734266b.70.2024.06.29.06.03.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 29 Jun 2024 06:01:08 -0700 (PDT)
-Message-ID: <ebac5b55-00d6-40c8-86c0-3e7a3affd5b9@linaro.org>
-Date: Sat, 29 Jun 2024 15:01:06 +0200
+        Sat, 29 Jun 2024 06:03:21 -0700 (PDT)
+Message-ID: <ee324f78-4789-4873-b8e5-e2ae7b42a5b2@linaro.org>
+Date: Sat, 29 Jun 2024 15:03:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,13 +78,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: smsm: Add missing mailbox dependency to
- Kconfig
-To: Luca Weiss <luca@lucaweiss.eu>, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel test robot <lkp@intel.com>
-References: <20240628-smsm-kconfig-v1-1-117d5af4ba1f@lucaweiss.eu>
+Subject: Re: [PATCH V3 1/2] soc: qcom: smp2p: Use devname for interrupt
+ descriptions
+To: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>, quic_bjorande@quicinc.com,
+ andersson@kernel.org, quic_clew@quicinc.com, mathieu.poirier@linaro.org
+Cc: linux-kernel@vger.kernel.org, quic_deesin@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
+References: <20240627104831.4176799-1-quic_sudeepgo@quicinc.com>
+ <20240627104831.4176799-2-quic_sudeepgo@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -120,20 +123,58 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240628-smsm-kconfig-v1-1-117d5af4ba1f@lucaweiss.eu>
+In-Reply-To: <20240627104831.4176799-2-quic_sudeepgo@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 28.06.2024 7:30 PM, Luca Weiss wrote:
-> Since the smsm driver got the ability to interact with the mailbox using
-> the mailbox subsystem and not just syscon, we need to add the dependency
-> to kconfig as well to avoid compile errors.
+On 27.06.2024 12:48 PM, Sudeepgoud Patil wrote:
+> From: Chris Lew <quic_clew@quicinc.com>
 > 
-> Fixes: 75287992f58a ("soc: qcom: smsm: Support using mailbox interface")
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202406180006.Z397C67h-lkp@intel.com/
-> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+> When using /proc/interrupts to collect statistics on smp2p interrupt
+> counts, it is hard to distinguish the different instances of smp2p from
+> each other. For example to debug a processor boot issue, the ready and
+> handover interrupts are checked for sanity to ensure the firmware
+> reached a specific initialization stage.
+> 
+> Remove "smp2p" string from the irq request so that the irq will default
+> to the device name. Add an .irq_print_chip() callback to print the irq
+> chip name as the device name. These two changes allow for a unique name
+> to be used in /proc/interrupts as shown below.
+> 
+> / # cat /proc/interrupts | grep smp2p
+>  18:  ...      ipcc 196610 Edge      smp2p-adsp
+>  20:  ...      ipcc 131074 Edge      smp2p-modem
+> 170:  ...  smp2p-modem   1 Edge      q6v5 ready
+> 178:  ...  smp2p-adsp   1 Edge      q6v5 ready
+> 
+> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
 > ---
+>  drivers/soc/qcom/smp2p.c | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
+> index a21241cbeec7..696c2a8387d0 100644
+> --- a/drivers/soc/qcom/smp2p.c
+> +++ b/drivers/soc/qcom/smp2p.c
+> @@ -16,6 +16,7 @@
+>  #include <linux/platform_device.h>
+>  #include <linux/pm_wakeirq.h>
+>  #include <linux/regmap.h>
+> +#include <linux/seq_file.h>
+>  #include <linux/soc/qcom/smem.h>
+>  #include <linux/soc/qcom/smem_state.h>
+>  #include <linux/spinlock.h>
+> @@ -353,11 +354,19 @@ static int smp2p_set_irq_type(struct irq_data *irqd, unsigned int type)
+>  	return 0;
+>  }
+>  
+> +static void smp2p_irq_print_chip(struct irq_data *irqd, struct seq_file *p)
+> +{
+> +	struct smp2p_entry *entry = irq_data_get_irq_chip_data(irqd);
+> +
+> +	seq_printf(p, " %8s", dev_name(entry->smp2p->dev));
+
+Not sure if the number is necessary but as you wish
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
