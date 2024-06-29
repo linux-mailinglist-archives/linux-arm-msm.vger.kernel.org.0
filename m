@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-24728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5A4991CD17
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 15:26:41 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FFB391CD27
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 15:30:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7BE6628333B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 13:26:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6B48C1C21118
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 13:30:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B839880027;
-	Sat, 29 Jun 2024 13:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F0217BB01;
+	Sat, 29 Jun 2024 13:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MU4ucmFs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BRwOZJI0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE29B7E563
-	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 13:26:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449521879
+	for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 13:30:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719667595; cv=none; b=JoMjtO/fyBDeYDNWNeFK30g9ELw0i27kVuBRIkh8jZ0/c1uOK9MIwvc2EFbuoAZ44k8uR3wk271wvFFXq8Beit7koen4kpVSb/2/DZgyrE2ZdtPt1EDmBX48w9CW1AaUh4OLkz33gIHzFISXNiDcYmV+kWBETqkXYNxX53RfAQc=
+	t=1719667844; cv=none; b=I/0rllmc8XUTvY7Nz3K7VzXIEfJCHGVcJbz2E0EONfF647LsMC7FJghGDrMRTFrie8tLp4lGs09WoQzMFLLNnE8LzL8+7i6Gyeu9g0RshGsduMqVGe/6AmT50sJR43r5Mws6aD1dVs9ROJBrAgkKxutPttcHeX6Ppg2SLRvC+Wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719667595; c=relaxed/simple;
-	bh=rGMabbjYduQb1TdtxhZEzPUiqGzSuTzr4tkzJBWKuiY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FWYobXxN+EaK2diBR9hMjEtSGlELaEBjfXbKQagXObGnV+mMoyFawWxHWtOwUhN7pSodORKX/nPyDlfCn5PdPpZQedbU1aJ4gv/xPxjNQGXBrgB6DBzGPt96rv1rz69kHtD0ujtGwxJpxKulB0yYAessHYgLaWENavH/LEOd75c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MU4ucmFs; arc=none smtp.client-ip=209.85.218.51
+	s=arc-20240116; t=1719667844; c=relaxed/simple;
+	bh=SOSRf2xGbABYyJkyrOzqdHzZoZvGbDKQu4Io0KKd4fY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=C/GUFy9sDrJzzX9A5QJDqo/ZD+HNdbYdI36uHopDKZPuCth5K84bJUPn8uG+lseMMHIuNdtq4rvHXbHpKWsOQIoXrR4BtPfproNCZvDod2cb6lRPsK3YQ9yLGE8GoI35cmtRgeQU+RyN8esRL5Z0KawjWLKDMiLi2bhzr82jZmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BRwOZJI0; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a72517e6225so179674566b.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 06:26:33 -0700 (PDT)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-57cf8880f95so1854479a12.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 29 Jun 2024 06:30:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719667592; x=1720272392; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1719667841; x=1720272641; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=GVntu1txUaOnn3weB5jy5aTPDvRe/rt/FHSyHLe9pec=;
-        b=MU4ucmFsG4yDyPA3NOrW4JFoWSgKsopMdTpY1zfrUQ814/c7h0j6P5bnsnW5sKz3vi
-         wg+W5Fl3E9WMOs7dqKUsS0gm8IooNcJ953I5Aj2wlytyCPk+zhSGOQH0f2FtPD+l3FlS
-         7CK4KrLOIEcSDN9ULtATegjc3HL2vtkCBQc14BUxQfBffzj8UUdW8/ahB/RSOjtvOGSM
-         7DUBITODiqwyDV4WdkwLmdq8y5ItsMXkJFb4Yy9tzNilw78AXM64HIdNPoPrJQE/o4zK
-         sf0XWnLKdN4PE/NXFOFnv6ak6bO+rY63AA+mPE/TPdu6UiLR9uuAlCz/HRgXjuVf81Lk
-         9zfQ==
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=CEplqgc1EUkrDgRyxKM1jdjFJoZG/7QBpRIZ5p4DyMg=;
+        b=BRwOZJI0Xnfwvf5YKZ2EILQPoWNVohSRmYbpOpooDMn2cBYr3xq8kvocTFbYrY1QOY
+         3LqKWPGVraMt7vSwaCLGrmNqVAE0rFl3KKHu0iG8m+lBcJf8RJghaEU8XwcVpZSU1a/h
+         I+4cnaLKs9eBF5pWGwD/QhvCWKRp9JbA+kLVXVRfOiNZAp8/815LxEd6dJfM6xatqzSz
+         x1BFPUknWdIfFi5bpg64QzO1We6DDhbnwFKP69tuqzxlNRiXI5ASGMX1WsFXS1AxBLcS
+         cDV0POA35OkBstjiF6tko4s5DFIjPRvH04x+SK9FMTl4HzsJofalg1yRdKbZCV0E6q4j
+         gMuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719667592; x=1720272392;
+        d=1e100.net; s=20230601; t=1719667841; x=1720272641;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GVntu1txUaOnn3weB5jy5aTPDvRe/rt/FHSyHLe9pec=;
-        b=QEIDqERakRkUO8ZS3RhHSuUaH1i6thyZrLHz/yGitvMPTOcL68W8igQv5A24tfWmqw
-         7JJ0Sdmd1qisNhpvj+dHzfQb4EYpSGnu4xtcWlTMdKKRQZjU/96n99/jrQ+lnTddjF6U
-         AuVO7Sd7uPi7gwZ5d6wv65RzITP9a53YYqmDrAmpPO7Z6ZkVCDCAcnEUhy62jNRtgj8f
-         EAXzAODQ5/tw6UfUDmYwuz4uM8qSm4SPd9bBSMZDmaWPVCwSZ4alSWOd+cTiPjC0Vj1c
-         wvsRTqY2kzCEuU1M1KS8SYy1lA5pt+9NPENXo/Kd5w3XMFiOmM5/FIUKXu5XQjrzG6b8
-         rD4g==
-X-Forwarded-Encrypted: i=1; AJvYcCVGo4jPR6kmVrzEUOxb/brfcV/5Aw9YKzyIreV5YqYLOn2PQYnODZQITVaeaD213128wU0Pz4FAOn/eGsI500Oa0qatTQjSorx6e5G1oA==
-X-Gm-Message-State: AOJu0YzkPumLmQ9ItN/D5A4rt8cjcjOSLOZKjHyWEjsV6frwRHX4Po1S
-	ki76Fi3kw6WONHMpBdoZxYO1D0K4ur2lacxZUguOZLghh5rvqz78vp7QnZA13w8=
-X-Google-Smtp-Source: AGHT+IGwZcuh8h++Gn0BZ68/CBUiSgT++N39s9q3g/+GgIVWwgKkzyzjxZgDQyV1FpHy46qCmItBXg==
-X-Received: by 2002:a17:907:7242:b0:a6f:c886:b68b with SMTP id a640c23a62f3a-a75144398a9mr95984966b.43.1719667591938;
-        Sat, 29 Jun 2024 06:26:31 -0700 (PDT)
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CEplqgc1EUkrDgRyxKM1jdjFJoZG/7QBpRIZ5p4DyMg=;
+        b=Vrhq7pXCRGf1dw0uR25rSjHYhxWtBdG+B1kZM+6oR8ChHTbOoqLzeWJypZDNkNyCgE
+         j+xOH7TFVpHtFU5PSAWC+w4HG7mnlfxswTpBGTu1ouI5DUaIj+1Vocov8tnOiZfLeAXg
+         j5QWIEdcYrBJQ5tUGf61vnRHcacJooDo7N3U7UW41mDCYVpX0gpKvE4s9algviQASt7h
+         l92bd2/GlYzA+mWNi3+NNZhcQYTZX2CCmdG78f2KAzBUo1/JDtaVTdjit1PMvmZIr8bm
+         lfnhyMdWMU2XmRvifUQbT+50Fd9sQ+AdHTef7mpVpM5a+KtJq5FQeVpH19kG3ZML7d22
+         d6zg==
+X-Forwarded-Encrypted: i=1; AJvYcCWmh0g3833Qp4goxlV9oErErTiC2yWHgiwPm+k59zWUXSU2gR6rupm9/g3J5pVX1SK5YOoijuTln73QQoIlAR3Cat+LA5s4L8DqNAErHQ==
+X-Gm-Message-State: AOJu0Yy51RBEMwhQrEnh1JBlnDtEuLrxhTWPhI4rjxXvhSGZLuKYuOm7
+	vtpmmR7HUylMJv/yZTwmBl+zX0WEj4reYsNmv9phrYenZII+iHQWQeOkaIFLFeE=
+X-Google-Smtp-Source: AGHT+IFjYFA5Bwi5YkXtp2KPgMk/XhRypC3d/N4WcAg/MPXc1RhesuL87S0Eo6vXB5XJD873lymEfw==
+X-Received: by 2002:a05:6402:50cb:b0:57c:80bf:9267 with SMTP id 4fb4d7f45d1cf-5879ede2ab6mr801572a12.6.1719667840341;
+        Sat, 29 Jun 2024 06:30:40 -0700 (PDT)
 Received: from [192.168.215.29] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a72ab06567esm162682466b.119.2024.06.29.06.26.30
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-58614d504cesm2248129a12.71.2024.06.29.06.30.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 29 Jun 2024 06:26:31 -0700 (PDT)
-Message-ID: <9d4c97cc-177d-4200-bfc5-f9295643f470@linaro.org>
-Date: Sat, 29 Jun 2024 15:26:29 +0200
+        Sat, 29 Jun 2024 06:30:40 -0700 (PDT)
+Message-ID: <8ffd8a3c-83e6-4753-8bdf-7daa3a3d8306@linaro.org>
+Date: Sat, 29 Jun 2024 15:30:37 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,15 +77,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm7225-fairphone-fp4: Name the
- regulators
-To: Luca Weiss <luca.weiss@fairphone.com>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240627-fp4-regulator-name-v1-1-66931111a006@fairphone.com>
+Subject: Re: [PATCH V5 6/7] arm64: dts: qcom: ipq9574: Add support for nsscc
+ node
+To: Devi Priya <quic_devipriy@quicinc.com>, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, catalin.marinas@arm.com,
+ will@kernel.org, p.zabel@pengutronix.de, richardcochran@gmail.com,
+ geert+renesas@glider.be, dmitry.baryshkov@linaro.org,
+ neil.armstrong@linaro.org, arnd@arndb.de, m.szyprowski@samsung.com,
+ nfraprado@collabora.com, u-kumar1@ti.com, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ netdev@vger.kernel.org
+References: <20240626143302.810632-1-quic_devipriy@quicinc.com>
+ <20240626143302.810632-7-quic_devipriy@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -123,18 +128,25 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240627-fp4-regulator-name-v1-1-66931111a006@fairphone.com>
+In-Reply-To: <20240626143302.810632-7-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27.06.2024 3:15 PM, Luca Weiss wrote:
-> Without explicitly specifying names for the regulators they are named
-> based on the DeviceTree node name. This results in multiple regulators
-> with the same name, making debug prints and regulator_summary impossible
-> to reason about.
+On 26.06.2024 4:33 PM, Devi Priya wrote:
+> Add a node for the nss clock controller found on ipq9574 based devices.
 > 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 > ---
+
+Title: s/support for//
+
+You're adding the node, not the support for it.
+
+The nodes look good. Looking at the driver, the interconnect paths that will
+be sync_state'd away due to no consumers don't seem to be super critical for
+the system, so I'm assuming this doesn't crash
+
+So, with the title fixed:
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
