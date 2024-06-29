@@ -1,122 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-24706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E67991CB8B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 10:04:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DCB1191CB9A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 10:22:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E91AE1F2268B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 08:04:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 080881C21147
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 08:22:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 155B6364CD;
-	Sat, 29 Jun 2024 08:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DEC83307B;
+	Sat, 29 Jun 2024 08:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="DSb4N0dU"
+	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="7OYeSst2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.219])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4E071CFA0;
-	Sat, 29 Jun 2024 08:03:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.219
+Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8FCB2AD38;
+	Sat, 29 Jun 2024 08:22:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719648241; cv=none; b=G37HCqIzVU0MBW3Yk7uN1Us9W1B4aDGlPY5QgSxE+E/kt67DNTkuG5ky2/G7RyG7gdHr/bmpaanJCcD+tmE/JoZEai7G3JnwUmp7eC2VzfLRnupolKhVSa54QB1me9iSUXAi6i3klO/sf/Q4eRrfOv4J8ROe+RDRfOACc842Bsc=
+	t=1719649368; cv=none; b=TpVR+X7o/GNiIMwceEqueSH7FzZ5W5vinrK7QXfirR9a9NK+fir7tVv9EPjc9SvEsvtMGmMfA6d0G2IwkJ4H/AbgIeXxCV3koBk5euIUGrd7w3YF/Cy64mempOpl+YL8c2OU3+duzO1z7M6l5exV1RJ5q5Ez4rAznDMW1dV5O/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719648241; c=relaxed/simple;
-	bh=VOubikG6ZpnVVZCM7MJ8dHjxeyaHenragv3J+gQEHdc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=C6ZZRYp+/0UCU0L9uOBpO3SR8MACvSC22RkvVNg17mceb+P35C2J3L/DPhcTawOe/r/vl2KXeETxl5VkkuyRv0/ld5dAGUYnRb7THrk75wsJbLXXktjQ74E9MuOOATinB/mqZC0g206dHPGkoQluXW5BcgljWq/WQwMJ2vZFKhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=DSb4N0dU reason="signature verification failed"; arc=none smtp.client-ip=45.254.50.219
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=QfAQv6rdwkp+lvfK9xPCyNRFEgAyBJrfS4SIVVxYfyc=; b=D
-	Sb4N0dUKgHssEp/5svGHDZdJWnqIFs2pjHVwg9ZUJtLykQkYgYv34v2H/rW2aJ+/
-	9UrdhQAyHTM74Mw6LvN42A5sK4qmk2vbezq43aOGEVEUK4/3jCPRD6LUeFGofpwp
-	xUn+a2/iDkDt3pOgj6e2ROM3g46ZnNF8ifuX63HttI=
-Received: from slark_xiao$163.com ( [112.97.61.182] ) by
- ajax-webmail-wmsvr-40-115 (Coremail) ; Sat, 29 Jun 2024 16:03:28 +0800
- (CST)
-Date: Sat, 29 Jun 2024 16:03:28 +0800 (CST)
-From: "Slark Xiao" <slark_xiao@163.com>
-To: "Jeffrey Hugo" <quic_jhugo@quicinc.com>
-Cc: manivannan.sadhasivam@linaro.org, loic.poulain@linaro.org, 
-	ryazanov.s.a@gmail.com, johannes@sipsolutions.net, 
-	netdev@vger.kernel.org, mhi@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re:Re: [PATCH v3 2/3] bus: mhi: host: Add name for mhi_controller
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <cde35f69-4d6e-d46d-88ca-9c5d6d5e757f@quicinc.com>
-References: <20240628073626.1447288-1-slark_xiao@163.com>
- <cde35f69-4d6e-d46d-88ca-9c5d6d5e757f@quicinc.com>
-X-NTES-SC: AL_Qu2aC/qft0or7iWeYOkfmk8Sg+84W8K3v/0v1YVQOpF8jDzp4AcPVGFHF0bdysidFwqFmhyTbCJOyu1wb5JYea0BAtDJVsQjLe1KmLXa219Cjw==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1719649368; c=relaxed/simple;
+	bh=FHKzh/Kr8vmSuI5zyQKcUxH/uadsHSfsj4Vf0FgJiUk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=FgAGJnjMHAH8YFPszjmG7GvRpU3uLMFYjQwibw1QRwjB7xOFWu/uHeSQKHruxSLjQkjsSHF7kupltdS0RrOzLxe6iQNCYU6Wk+06osMeUtIEBSK7C3KDgOaVa70P5uRZ4QMCLWixoTYrTrW/EHQNc0Z3mQNDAuMcUCjB+4cD8yI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=7OYeSst2; arc=none smtp.client-ip=128.199.32.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=lucaweiss.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
+	t=1719649363; bh=FHKzh/Kr8vmSuI5zyQKcUxH/uadsHSfsj4Vf0FgJiUk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=7OYeSst2GC9T+UK9Uap/Y07wy9fcsIK5ydPiu5IrDxVsbfvl5mzlU24pRGBcCHEUq
+	 0DJ6jDPtDgrdM2gEkS2HVQU7/xvh2fHuvoEkRhPKq4qwJxzipbFJDsN+J1Zf50Rzn6
+	 OalsITB6xnz7hRYRgNaU4QRt2gKzhkied12a/H7I=
+From: Luca Weiss <luca@lucaweiss.eu>
+To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ Kapatrala Syed <akapatra@quicinc.com>,
+ Hariram Purushothaman <hariramp@quicinc.com>,
+ cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Loic Poulain <loic.poulain@linaro.org>, Andi Shyti <andi.shyti@kernel.org>,
+ Vikram Sharma <quic_vikramsa@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-i2c@vger.kernel.org, Vikram Sharma <quic_vikramsa@quicinc.com>,
+ Hariram Purushothaman <quic_hariramp@quicinc.com>
+Subject: Re: [PATCH 5/6] i2c: Enable IMX577 camera sensor for qcm6490
+Date: Sat, 29 Jun 2024 10:22:40 +0200
+Message-ID: <2902343.mvXUDI8C0e@g550jk>
+In-Reply-To:
+ <20240629-camss_first_post_linux_next-v1-5-bc798edabc3a@quicinc.com>
+References:
+ <20240629-camss_first_post_linux_next-v1-0-bc798edabc3a@quicinc.com>
+ <20240629-camss_first_post_linux_next-v1-5-bc798edabc3a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <298e9aeb.2587.190630546b9.Coremail.slark_xiao@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wD3P47Qv39mWmsUAA--.8330W
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiJQIMZGVOB8H34gAEsz
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
-CkF0IDIwMjQtMDYtMjggMjI6Mzg6NTcsICJKZWZmcmV5IEh1Z28iIDxxdWljX2podWdvQHF1aWNp
-bmMuY29tPiB3cm90ZToKPk9uIDYvMjgvMjAyNCAxOjM2IEFNLCBTbGFyayBYaWFvIHdyb3RlOgo+
-PiAgIEZvciBTRFg3MiBNQklNIG1vZGUsIGl0IHN0YXJ0cyBkYXRhIG11eCBpZCBmcm9tIDExMiBp
-bnN0ZWFkIG9mIDAuCj4+ICAgVGhpcyB3b3VsZCBsZWFkIHRvIGRldmljZSBjYW4ndCBwaW5nIG91
-dHNpZGUgc3VjY2Vzc2Z1bGx5Lgo+PiAgIEFsc28gTUJJTSBzaWRlIHdvdWxkIHJlcG9ydCAiYmFk
-IHBhY2tldCBzZXNzaW9uICgxMTIpIi4KPgoKPldlaXJkIGluZGVudGF0aW9uCgpNeSBtaXN0YWtl
-LiBXaWxsIGJlIGNvcnJlY3RlZCBpbiBuZXh0LgoKPgo+PiAgIEluIG9kZXIgdG8gZml4IHRoaXMg
-aXNzdWUsIHdlIGRlY2lkZSB0byB1c2UgdGhlIG1vZGVtIG5hbWUKPgo+Im9yZGVyIgo+Cj4+IHRv
-IGRvIGEgbWF0Y2ggaW4gY2xpZW50IGRyaXZlciBzaWRlLiBUaGVuIGNsaWVudCBkcml2ZXIgY291
-bGQKPj4gc2V0IGEgY29ycmVzcG9uZGluZyBtdXhfaWQgdmFsdWUgZm9yIHRoaXMgbW9kZW0gcHJv
-ZHVjdC4KPj4gCj4+IFNpZ25lZC1vZmYtYnk6IFNsYXJrIFhpYW8gPHNsYXJrX3hpYW9AMTYzLmNv
-bT4KPj4gLS0tCj4+ICAgZHJpdmVycy9idXMvbWhpL2hvc3QvcGNpX2dlbmVyaWMuYyB8IDEgKwo+
-PiAgIGluY2x1ZGUvbGludXgvbWhpLmggICAgICAgICAgICAgICAgfCAyICsrCj4+ICAgMiBmaWxl
-cyBjaGFuZ2VkLCAzIGluc2VydGlvbnMoKykKPj4gCj4+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2J1
-cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5jIGIvZHJpdmVycy9idXMvbWhpL2hvc3QvcGNpX2dlbmVy
-aWMuYwo+PiBpbmRleCAxZmIxYzJmMmZlMTIuLjE0YTExODgwYmNlYSAxMDA2NDQKPj4gLS0tIGEv
-ZHJpdmVycy9idXMvbWhpL2hvc3QvcGNpX2dlbmVyaWMuYwo+PiArKysgYi9kcml2ZXJzL2J1cy9t
-aGkvaG9zdC9wY2lfZ2VuZXJpYy5jCj4+IEBAIC0xMDg2LDYgKzEwODYsNyBAQCBzdGF0aWMgaW50
-IG1oaV9wY2lfcHJvYmUoc3RydWN0IHBjaV9kZXYgKnBkZXYsIGNvbnN0IHN0cnVjdCBwY2lfZGV2
-aWNlX2lkICppZCkKPj4gICAJbWhpX2NudHJsLT5ydW50aW1lX2dldCA9IG1oaV9wY2lfcnVudGlt
-ZV9nZXQ7Cj4+ICAgCW1oaV9jbnRybC0+cnVudGltZV9wdXQgPSBtaGlfcGNpX3J1bnRpbWVfcHV0
-Owo+PiAgIAltaGlfY250cmwtPm1ydSA9IGluZm8tPm1ydV9kZWZhdWx0Owo+PiArCW1oaV9jbnRy
-bC0+bmFtZSA9IGluZm8tPm5hbWU7Cj4+ICAgCj4+ICAgCWlmIChpbmZvLT5lZGxfdHJpZ2dlcikK
-Pj4gICAJCW1oaV9jbnRybC0+ZWRsX3RyaWdnZXIgPSBtaGlfcGNpX2dlbmVyaWNfZWRsX3RyaWdn
-ZXI7Cj4+IGRpZmYgLS1naXQgYS9pbmNsdWRlL2xpbnV4L21oaS5oIGIvaW5jbHVkZS9saW51eC9t
-aGkuaAo+PiBpbmRleCBiNTczZjE1NzYyZjguLjg2YWE0ZjUyODQyYyAxMDA2NDQKPj4gLS0tIGEv
-aW5jbHVkZS9saW51eC9taGkuaAo+PiArKysgYi9pbmNsdWRlL2xpbnV4L21oaS5oCj4+IEBAIC0z
-NjEsNiArMzYxLDcgQEAgc3RydWN0IG1oaV9jb250cm9sbGVyX2NvbmZpZyB7Cj4+ICAgICogQHdh
-a2Vfc2V0OiBEZXZpY2Ugd2FrZXVwIHNldCBmbGFnCj4+ICAgICogQGlycV9mbGFnczogaXJxIGZs
-YWdzIHBhc3NlZCB0byByZXF1ZXN0X2lycSAob3B0aW9uYWwpCj4+ICAgICogQG1ydTogdGhlIGRl
-ZmF1bHQgTVJVIGZvciB0aGUgTUhJIGRldmljZQo+PiArICogQG5hbWU6IG5hbWUgb2YgdGhlIG1v
-ZGVtCj4KCj5XaHkgcmVzdHJpY3QgdGhpcyB0byBtb2RlbXM/ICBUaGVyZSBhcmUgcGxlbnR5IG9m
-IG90aGVyIE1ISSBkZXZpY2VzCgpBY3R1YWxseSBhbGwgTUhJIGRldmljZXMgY291bGQgYmUgY2Fs
-bGVkIG1vZGVtcy4gSSBkb24ndCB0aGluayB0aGlzIGlzCmEgd3JvbmcgbmFtZS4KCj4KPj4gICAg
-Kgo+PiAgICAqIEZpZWxkcyBtYXJrZWQgYXMgKHJlcXVpcmVkKSBuZWVkIHRvIGJlIHBvcHVsYXRl
-ZCBieSB0aGUgY29udHJvbGxlciBkcml2ZXIKPj4gICAgKiBiZWZvcmUgY2FsbGluZyBtaGlfcmVn
-aXN0ZXJfY29udHJvbGxlcigpLiBGb3IgdGhlIGZpZWxkcyBtYXJrZWQgYXMgKG9wdGlvbmFsKQo+
-PiBAQCAtNDQ1LDYgKzQ0Niw3IEBAIHN0cnVjdCBtaGlfY29udHJvbGxlciB7Cj4+ICAgCWJvb2wg
-d2FrZV9zZXQ7Cj4+ICAgCXVuc2lnbmVkIGxvbmcgaXJxX2ZsYWdzOwo+PiAgIAl1MzIgbXJ1Owo+
-PiArCWNvbnN0IGNoYXIgKm5hbWU7Cj4KCj5QbGVhc2UgcnVuIHBhaG9sZQoKRW1tLCBqdXN0IGNo
-ZWNrZWQswqAgdGhlcmUgYXJlIDMgaG9sZXM6CsKgwqDCoCB1MzLCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIE0zO8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoCAvKsKgwqAgMzEywqDCoMKgwqAgNCAqLwrCoMKgIMKgLyogWFhYIDQgYnl0ZXMg
-aG9sZSwgdHJ5IHRvIHBhY2sgKi8KLi4uCsKgwqDCoCBib29swqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgd2FrZV9zZXQ7wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-IC8qwqDCoCA1MjbCoMKgwqDCoCAxICovCsKgwqAgwqAvKiBYWFggMSBieXRlIGhvbGUsIHRyeSB0
-byBwYWNrICovCi4uLgrCoMKgwqAgdTMywqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoCBtcnU7wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvKsKg
-wqAgNTM2wqDCoMKgwqAgNCAqLwrCoMKgIMKgLyogWFhYIDQgYnl0ZXMgaG9sZSwgdHJ5IHRvIHBh
-Y2sgKi8KCkkgd2lsbCBwdXQgJ2NvbnN0IGNoYXIgKm5hbWUnIGFib3ZlICd1MzIgbXJ1JyB0byBh
-dm9pZCB0aGUgbGFzdCBob2xlLgpJcyB0aGlzIG9rYXk/Cgo+Cj4+ICAgfTsKPj4gICAKPj4gICAv
-KioK
+On Freitag, 28. Juni 2024 20:32:39 MESZ Vikram Sharma wrote:
+> This change enables IMX577 sensor driver for qcm6490.
+> 
+> Signed-off-by: Hariram Purushothaman <quic_hariramp@quicinc.com>
+> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+> ---
+>  drivers/i2c/busses/i2c-qcom-cci.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+> index 414882c57d7f..10e6df566ae3 100644
+> --- a/drivers/i2c/busses/i2c-qcom-cci.c
+> +++ b/drivers/i2c/busses/i2c-qcom-cci.c
+> @@ -817,6 +817,7 @@ static const struct of_device_id cci_dt_match[] = {
+>  	 * Do not add any new ones unless they introduce a new config
+>  	 */
+>  	{ .compatible = "qcom,msm8916-cci", .data = &cci_v1_data},
+> +	{ .compatible = "qcom,sc7280-cci", .data = &cci_v2_data},
+
+Please read the comment above qcom,msm8916-cci.
+
+And sc7280.dtsi already uses
+
+  compatible = "qcom,sc7280-cci", "qcom,msm8996-cci";
+
+So qcom,msm8996-cci with the same match data (cci_v2_data) gets used, so
+just drop this patch.
+
+Regards
+Luca
+
+>  	{ .compatible = "qcom,sdm845-cci", .data = &cci_v2_data},
+>  	{ .compatible = "qcom,sm8250-cci", .data = &cci_v2_data},
+>  	{ .compatible = "qcom,sm8450-cci", .data = &cci_v2_data},
+> 
+> 
+
+
+
+
 
