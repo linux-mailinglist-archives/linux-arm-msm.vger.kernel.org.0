@@ -1,173 +1,389 @@
-Return-Path: <linux-arm-msm+bounces-24703-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41E9691CA6C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 04:01:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC7C791CA73
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 04:03:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF6781F22604
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 02:01:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8928D2838DD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 29 Jun 2024 02:03:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E25FC2FB6;
-	Sat, 29 Jun 2024 02:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39B0353AC;
+	Sat, 29 Jun 2024 02:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AfC3UhQU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eEJ8Nadc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7427E53AC;
-	Sat, 29 Jun 2024 02:01:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8B52C9A;
+	Sat, 29 Jun 2024 02:03:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719626479; cv=none; b=oJ17GLUiMoWlHOzqrlN3rvbE9BUV/ctMIFyWVSvt3K9kQPfO6xfTWQXNuBybChF8b4lwYkfVKjGP7X1zA44E1otSVeFA/fv+CK0DISBK6TXHKVsod5pzDIQ+/HBKAf75vPysiQFRwQTLC7iu4gkGa2zj+PI0RvJYih9vAIGy56E=
+	t=1719626582; cv=none; b=dD2OZiit9WfAjVWNENpY0qb4SaijuNRKGrFk01Eia0+5Zzv0lnZR3WKogzLh4usQ8LaB1+AtFyPaKdJM7BihAP2/DqgkzIhcu1bd/aOAeX9ui4kqCdmfI+KwgxpHbKn8auuTsPOfDSzaJcUsQwJrqtbd5M9OYAE1+YeSMMFJAm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719626479; c=relaxed/simple;
-	bh=GIXOluhtrpg2CvD0RwEHU48d11ruSL5+0Xnrt02iKEY=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dL+OX3obsoliTfUM6eyzoBnUrfqyADm3xtaB9IGjLhTbkTaMV7WlKiJAvQJdSWeA1Jq6kZToCe3unwF9TLgVj5j/bzD1XnBkO4zw11vCypGGQwgO/IARfehp00XK/prtt544OqjICfIaG0PYNLQWfAl2srgA3AN5HKiU1ZtmFZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AfC3UhQU; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1719626582; c=relaxed/simple;
+	bh=clSqdg93X6Y8kY7/l/Gr7fmMAnemBGyIjD+YQqM0aaY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=GfIocZfwzVV+/2sKQNp5TF9oDjK5HsxeiiVvxvA2NzN7bHZ8pixGFNa9QXPg/9K4dwLcQwpA0qXNU6buraxHq9tqg/W6psfHS5wZEePBzhZ02qoYV+71Q30qeNXGmpW8WcCbz7spAUDQMW+2xhKK9i2PTY+tq/iG/ag7SWig8Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eEJ8Nadc; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45T1MX3g001899;
-	Sat, 29 Jun 2024 02:00:53 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45T0uwr8031353;
+	Sat, 29 Jun 2024 02:02:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=n2HYd77R9SEQCk1qUqX9Yjmk
-	bouHXocypS6wYSptXA4=; b=AfC3UhQUBIAsMqRV4uNPxxP25rmjvpXyWGySPZ2h
-	BQ5ibE8MX4tTi609JRFds69An23b8W3smiBv+LORzIf0WbxcMmCqdkmkcS6D1qpK
-	Clm+TlnYiulB2FDq/2JjjOnzyhbafY31SqyGD1tLHOuMoDRDSpUkAgBiamcl8Ny1
-	WXpFTjHrm12b/ngEf6FMR5K2kWxbM6UvAn0R1HPpFSTnFoUHhVsQPeIo11D2K/Oy
-	g8aYBF27CxJ8e+3MZVQjC5BwAXCfQI6kZ0XM+VAI5e5Z3nRhlRLBqnEqlem8oWWS
-	FjG/XupTAjHmLfFIaNY+ArjviU7yXfiAnel4zVSRVSv9EQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 400c46hf76-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	94rVeHKFTp5LaQCr/6jQoirBMQia1FYPMQ7NlEurw/w=; b=eEJ8NadcMasXh/Vj
+	gWt77LDvY7m4Cgr9xQLeVvjb0qWPcXIPPCNIbMuobAGuP0l5ug+9xTg9N4PrrORg
+	/pw1o2KBbaI4DranzHaKpkMqCibdjkOWKZDeXCZmDRxdknoTjwWxrJjUTLLrhBXN
+	DhnUNQ9pINiMD2MM8mnJrYvWn+YhOc856b5TNvtLd+671WE/NeiMavB7DEJvsYgV
+	+YXWu2+LiyoK2gc1Zmx3gRJBgyZOBbsWmjlv/2aWTKCASNj2dqMAwfQbQ8sXmRfj
+	bAs8RpG9THdr1ETDuIvT+KfTExKGQQFYcW+b1b2oKZWWtuQVadU+isd2RPjA41Ra
+	ltk+Gw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4027yf03je-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 29 Jun 2024 02:00:53 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45T20q8F024074
+	Sat, 29 Jun 2024 02:02:53 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45T22qH1022100
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 29 Jun 2024 02:00:52 GMT
-Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 28 Jun 2024 19:00:44 -0700
-Date: Sat, 29 Jun 2024 07:30:41 +0530
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-To: freedreno <freedreno@lists.freedesktop.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        "OPEN
- FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        "Will
- Deacon" <will@kernel.org>
-CC: Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie
-	<airlied@gmail.com>, Joerg Roedel <joro@8bytes.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Maxime Ripard
-	<mripard@kernel.org>, Rob Herring <robh@kernel.org>,
-        Robin Murphy
-	<robin.murphy@arm.com>, Sean Paul <sean@poorly.run>,
-        Thomas Zimmermann
-	<tzimmermann@suse.de>, <iommu@lists.linux.dev>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 0/5] Support for Adreno X1-85 GPU
-Message-ID: <20240629020041.r5dxdpc24swezfja@hu-akhilpo-hyd.qualcomm.com>
-References: <20240629015111.264564-1-quic_akhilpo@quicinc.com>
+	Sat, 29 Jun 2024 02:02:52 GMT
+Received: from [10.110.120.123] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 28 Jun
+ 2024 19:02:51 -0700
+Message-ID: <a01404d2-2f4d-4fb8-af9d-3db66d39acf7@quicinc.com>
+Date: Fri, 28 Jun 2024 19:02:04 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240629015111.264564-1-quic_akhilpo@quicinc.com>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] PCI: qcom: Avoid DBI and ATU register space mirror to
+ BAR/MMIO region
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: <lpieralisi@kernel.org>, <kw@linux.com>, <bhelgaas@google.com>,
+        <robh@kernel.org>, <linux-pci@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_mrana@quicinc.com>, <quic_devipriy@quicinc.com>
+References: <20240620213405.3120611-1-quic_pyarlaga@quicinc.com>
+ <20240622035444.GA2922@thinkpad>
+Content-Language: en-US
+From: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
+In-Reply-To: <20240622035444.GA2922@thinkpad>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Z8AyH3vRZ0kN6fWJmK6ecMzRCNw79Bzd
-X-Proofpoint-GUID: Z8AyH3vRZ0kN6fWJmK6ecMzRCNw79Bzd
+X-Proofpoint-GUID: te9XIV61HRjJoI2hHPmYE65r9s27dag1
+X-Proofpoint-ORIG-GUID: te9XIV61HRjJoI2hHPmYE65r9s27dag1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-28_18,2024-06-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 phishscore=0 mlxlogscore=999 adultscore=0
- priorityscore=1501 malwarescore=0 clxscore=1015 suspectscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
- definitions=main-2406290014
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
+ mlxscore=0 lowpriorityscore=0 mlxlogscore=999 phishscore=0 impostorscore=0
+ clxscore=1015 malwarescore=0 suspectscore=0 adultscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2406290014
 
-On Sat, Jun 29, 2024 at 07:19:33AM +0530, Akhil P Oommen wrote:
-> This series adds support for the Adreno X1-85 GPU found in Qualcomm's
-> compute series chipset, Snapdragon X1 Elite (x1e80100). In this new
-> naming scheme for Adreno GPU, 'X' stands for compute series, '1' denotes
-> 1st generation and '8' & '5' denotes the tier and the SKU which it
-> belongs.
-> 
-> X1-85 has major focus on doubling core clock frequency and bandwidth
-> throughput. It has a dedicated collapsible Graphics MX rail (gmxc) to
-> power the memories and double the number of data channels to improve
-> bandwidth to DDR.
-> 
-> Mesa has the necessary bits present already to support this GPU. We are
-> able to bring up Gnome desktop by hardcoding "0xffff43050a01" as
-> chipid. Also, verified glxgears and glmark2. We have plans to add the
-> new chipid support to Mesa in next few weeks, but these patches can go in
-> right away to get included in v6.11.
-> 
-> This series is rebased on top of msm-next branch. P3 cherry-picks cleanly on
-> qcom/for-next.
+Hi Manivannan,
 
-A typo here: P5 cherry-picks cleanly on qcom/for-next.
+Thanks for the review comments.
 
--Akhil
+On 6/21/2024 8:54 PM, Manivannan Sadhasivam wrote:
+> On Thu, Jun 20, 2024 at 02:34:05PM -0700, Prudhvi Yarlagadda wrote:
+>> PARF hardware block which is a wrapper on top of DWC PCIe controller
+>> mirrors the DBI and ATU register space. It uses PARF_SLV_ADDR_SPACE_SIZE
+>> register to get the size of the memory block to be mirrored and uses
+>> PARF_DBI_BASE_ADDR, PARF_ATU_BASE_ADDR registers to determine the base
+>> address of DBI and ATU space inside the memory block that is being
+>> mirrored.
+>>
 > 
-> P1, P2 & P3 for Rob Clark
-> P4 for Will Deacon
-> P5 for Bjorn to pick up.
+> This PARF_SLV_ADDR_SPACE register is a mystery to me. I tried getting to the
+> bottom of it, but nobody could explain it to me clearly. Looks like you know
+> more about it...
 > 
-> Changes in v2:
-> - Minor update to compatible pattern, '[x]' -> 'x'
-> - Increased address space size (Rob)
-> - Introduced gmu_chipid in a6xx_info (Rob)
-> - Improved fallback logic for gmxc (Dmitry)
-> - Rebased on top of msm-next
-> - Picked a new patch for arm-mmu bindings update
-> - Reordered gpu & gmu reg enties to match schema
+> From your description, it seems like this register specifies the size of the
+> mirroring region (ATU + DBI), but the response from your colleague indicates
+> something different [1].
 > 
-> Akhil P Oommen (5):
->   dt-bindings: display/msm/gmu: Add Adreno X185 GMU
->   drm/msm/adreno: Add support for X185 GPU
->   drm/msm/adreno: Introduce gmu_chipid for a740 & a750
->   dt-bindings: arm-smmu: Add X1E80100 GPU SMMU
->   arm64: dts: qcom: x1e80100: Add gpu support
+> [1] https://lore.kernel.org/linux-pci/f42559f5-9d4c-4667-bf0e-7abfd9983c36@quicinc.com/
 > 
->  .../devicetree/bindings/display/msm/gmu.yaml  |   4 +
->  .../devicetree/bindings/iommu/arm,smmu.yaml   |   3 +-
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi        | 195 ++++++++++++++++++
->  drivers/gpu/drm/msm/adreno/a6xx_catalog.c     |  20 ++
->  drivers/gpu/drm/msm/adreno/a6xx_gmu.c         |  34 +--
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c         |   2 +-
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.h         |   1 +
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h       |   5 +
->  8 files changed, 239 insertions(+), 25 deletions(-)
+
+PARF_SLV_ADDR_SPACE_SIZE is used for mirroring the region containing ATU + DBI.
+But the issue being observed in the patch pointed above and the issue I am
+observing are a bit different even though the same fix could be used for both issues.
+
+The issue I am observing is that the DBI and ATU region is getting mirrored into the
+BAR/MMIO region and thereby the DBI and ATU registers contents are getting modified
+while accessing the BAR region content.
+
+As per my discussions internally with Devi Priya (author of the patch pointed above),
+the issue being seen there is that the DBI register contents are not available
+at the expected address by software and this is causing enumeration failures.
+
+Below is the memory map of the IPQ9574 platform being mentioned in the above patch
+along with the memory locations of the DBI of respective PCIe Root Complexes.
+
+                      |--------------------|
+                      |                    |
+                      |                    |
+                      |                    |
+                      |                    |
+                      |--------------------|
+                      |                    |
+                      |       PCIe2        |
+                      |                    |
+                      |--------------------|---->0x2000_0000 ->DBI
+                      |                    |
+                      |       PCIe3        |
+                      |                    |
+                      |--------------------|---->0x1800_0000 ->DBI
+                      |                    |
+                      |       PCIe1        |
+                      |                    |
+                      |--------------------|---->0x1000_0000 ->DBI
+                      |                    |
+                      |                    |
+                      |                    |
+                      |--------------------|
+
+Previously PARF_SLV_ADDR_SPACE_SIZE is configured as 256MB (0x1000_0000) and
+PARF_DBI_BASE_ADDR is configured as 0x0 for each of the PCIe Root complex. With
+this configuration, in the case of PCIe1 DBI contents get accessible at 0x0,
+0x1000_0000 and 0x2000_0000 and so on due to mirroring. Although NOC allows access
+only to region 0x1000_0000 to 0x1800_0000 for PCIe1. So in the case of PCIe1 DBI
+is accessible at the expected location 0x1000_0000.
+
+Similarly in the case of PCIe3 its DBI contents are accessible at 0x0, 0x1000_0000
+and 0x2000_0000 but the expectation is to have DBI at 0x1800_0000 (as 0x1800_0000 is
+the physical address of DBI per devicetree). This is causing enumeration failures as
+DBI is not at the expected location (same issue w.r.t ATU).
+
+When PARF_SLV_ADDR_SPACE_SIZE is modified to 128MB (0x800_0000) and PARF_DBI_BASE_ADDR
+is kept 0x0, for PCIe3 the DBI gets accessible at 0x0, 0x800_0000, 0x1000_0000,
+0x1800_0000, 0x2000_0000 and so on. So, now the DBI becomes accessible at the
+expected location of 0x1800_0000 and its fixing the issue in the above patch.
+
+Alternate way to fix the above issue is if we use the current patch to disable
+mirroring and configure the PARF_DBI_BASE_ADDR then the DBI gets accessible only at
+the location given in PARF_DBI_BASE_ADDR register which will be the same location
+mentioned in devicetree.
+
+>> When a memory region which is located above the SLV_ADDR_SPACE_SIZE
+>> boundary is used for BAR region then there could be an overlap of DBI and
+>> ATU address space that is getting mirrored and the BAR region. This
+>> results in DBI and ATU address space contents getting updated when a PCIe
+>> function driver tries updating the BAR/MMIO memory region. Reference
+>> memory map of the PCIe memory region with DBI and ATU address space
+>> overlapping BAR region is as below.
+>>
+>> 			|---------------|
+>> 			|		|
+>> 			|		|
+>> 	-------	--------|---------------|
+>> 	   |	   |	|---------------|
+>> 	   |	   |	|	DBI	|
+>> 	   |	   |	|---------------|---->DBI_BASE_ADDR
+>> 	   |	   |	|		|
+>> 	   |	   |	|		|
+>> 	   |	PCIe	|		|---->2*SLV_ADDR_SPACE_SIZE
+>> 	   |	BAR/MMIO|---------------|
+>> 	   |	Region	|	ATU	|
+>> 	   |	   |	|---------------|---->ATU_BASE_ADDR
+>> 	   |	   |	|		|
+>> 	PCIe	   |	|---------------|
+>> 	Memory	   |	|	DBI	|
+>> 	Region	   |	|---------------|---->DBI_BASE_ADDR
+>> 	   |	   |	|		|
+>> 	   |	--------|		|
+>> 	   |		|		|---->SLV_ADDR_SPACE_SIZE
+>> 	   |		|---------------|
+>> 	   |		|	ATU	|
+>> 	   |		|---------------|---->ATU_BASE_ADDR
+>> 	   |		|		|
+>> 	   |		|---------------|
+>> 	   |		|	DBI	|
+>> 	   |		|---------------|---->DBI_BASE_ADDR
+>> 	   |		|		|
+>> 	   |		|		|
+>> 	----------------|---------------|
+>> 			|		|
+>> 			|		|
+>> 			|		|
+>> 			|---------------|
+>>
+>> Currently memory region beyond the SLV_ADDR_SPACE_SIZE boundary is not
+>> used for BAR region which is why the above mentioned issue is not
+>> encountered. This issue is discovered as part of internal testing when we
+>> tried moving the BAR region beyond the SLV_ADDR_SPACE_SIZE boundary. Hence
+>> we are trying to fix this.
+>>
 > 
-> -- 
-> 2.45.1
+> I don't quite understand this. PoR value of SLV_ADDR_SPACE_SIZE is 16MB and most
+> of the platforms have the size of whole PCIe region defined in DT as 512MB
+> (registers + I/O + MEM). So the range is already crossing the
+> SLV_ADDR_SPACE_SIZE boundary.
+> 
+> Ironically, the patch I pointed out above changes the value of this register as
+> 128MB, and the PCIe region size of that platform is also 128MB. The author of
+> that patch pointed out that if the SLV_ADDR_SPACE_SIZE is set to 256MB, then
+> they are seeing enumeration failures. If we go by your description of that
+> register, the SLV_ADDR_SPACE_SIZE of 256MB should be > PCIe region size of
+> 128MB. So they should not see any issues, right?
+> 
+
+As mentioned above, configuring PARF_SLV_ADDR_SPACE_SIZE as 256MB is causing
+issue with the PCIe instances in which DBI is not aligned with the multiples of
+256MB and due to PARF_DBI_BASE_ADDR being configured as 0x0 instead of the
+actual DBI address given in devicetree.
+
+>> As PARF hardware block mirrors DBI and ATU register space after every
+>> PARF_SLV_ADDR_SPACE_SIZE (default 0x1000000) boundary multiple, write
+>> U64_MAX to PARF_SLV_ADDR_SPACE_SIZE register to avoid mirroring DBI and
+>> ATU to BAR/MMIO region.
+> 
+> Looks like you are trying to avoid this mirroring on a whole. First of all, what
+> is the reasoning behind this mirroring?
+> 
+
+The reason is to have more control over where to have the DBI and ATU register
+contents in the system memory using the PARF_DBI_BASE_ADDR, PARF_ATU_BASE_ADDR.
+For the PARF_SLV_ADDR_SPACE_SIZE register we don't have an existing use case
+to utilize mirroring functionality.
+
+>> Write the physical base address of DBI and ATU
+>> register blocks to PARF_DBI_BASE_ADDR (default 0x0) and PARF_ATU_BASE_ADDR
+>> (default 0x1000) respectively to make sure DBI and ATU blocks are at
+>> expected memory locations.
+>>
+> 
+> Why is this needed? Some configs in this driver writes 0 to PARF_DBI_BASE_ADDR.
+> Does the hardware doesn't know where the registers are located?
+> 
+
+Yes, hardware doesn't know where the DBI, ATU registers are located in the
+PARF_SLV_ADDR_SPACE_SIZE memory block or system memory. Hardware gets the location
+of DBI and ATU registers from the PARF_DBI_BASE_ADDR, PARF_ATU_BASE_ADDR
+registers. So these registers must be programmed to have the DBI and ATU at
+expected memory locations.
+
+>> Signed-off-by: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
+>> ---
+>>  drivers/pci/controller/dwc/pcie-qcom.c | 40 ++++++++++++++++++++++----
+>>  1 file changed, 35 insertions(+), 5 deletions(-)
+>>
+>> Tested:
+>> - Validated NVME functionality with PCIe6a on x1e80100 platform.
+>> - Validated WiFi functionality with PCIe4 on x1e80100 platform.
+>> - Validated NVME functionality with PCIe0 and PCIe1 on SA8775p platform.
+>>
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>> index 5f9f0ff19baa..864548657551 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>> @@ -49,7 +49,12 @@
+>>  #define PARF_LTSSM				0x1b0
+>>  #define PARF_SID_OFFSET				0x234
+>>  #define PARF_BDF_TRANSLATE_CFG			0x24c
+>> +#define PARF_DBI_BASE_ADDR_V2			0x350
+>> +#define PARF_DBI_BASE_ADDR_V2_HI		0x354
+>>  #define PARF_SLV_ADDR_SPACE_SIZE		0x358
+>> +#define PARF_SLV_ADDR_SPACE_SIZE_HI		0x35C
+>> +#define PARF_ATU_BASE_ADDR			0x634
+>> +#define PARF_ATU_BASE_ADDR_HI			0x638
+>>  #define PARF_NO_SNOOP_OVERIDE			0x3d4
+>>  #define PARF_DEVICE_TYPE			0x1000
+>>  #define PARF_BDF_TO_SID_TABLE_N			0x2000
+>> @@ -319,6 +324,33 @@ static void qcom_pcie_clear_hpc(struct dw_pcie *pci)
+>>  	dw_pcie_dbi_ro_wr_dis(pci);
+>>  }
+>>  
+>> +static void qcom_pcie_avoid_dbi_atu_mirroring(struct qcom_pcie *pcie)
+>> +{
+>> +	struct dw_pcie *pci = pcie->pci;
+>> +	struct platform_device *pdev;
+>> +	struct resource *atu_res;
+>> +	struct resource *dbi_res;
+>> +
+>> +	pdev = to_platform_device(pci->dev);
+>> +	if (!pdev)
+>> +		return;
+>> +
+>> +	dbi_res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "dbi");
+>> +	if (dbi_res) {
+>> +		writel(lower_32_bits(dbi_res->start), pcie->parf + PARF_DBI_BASE_ADDR_V2);
+>> +		writel(upper_32_bits(dbi_res->start), pcie->parf + PARF_DBI_BASE_ADDR_V2_HI);
+>> +	}
+>> +
+>> +	atu_res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "atu");
+>> +	if (atu_res) {
+>> +		writel(lower_32_bits(atu_res->start), pcie->parf + PARF_ATU_BASE_ADDR);
+>> +		writel(upper_32_bits(atu_res->start), pcie->parf + PARF_ATU_BASE_ADDR_HI);
+>> +	}
+>> +
+> 
+> Above 2 resources are already fetched by dw_pcie_get_resources(). So we should
+> just store the phys addresses in 'struct dw_pcie' and make use of them here.
+> 
+> - Mani
+> 
+
+This function is using the DBI and ATU physical addresses here to program PARF registers
+that are specific to pcie-qcom driver. Currently there is no use for DBI and ATU physical
+addresses for other platform drivers that us dwc PCIe controller. Could you please let
+me know if you still want me to save the DBI and ATU physical addresses in dw_pcie structure ?
+
+Thanks,
+Prudhvi
+
+>> +	writel(lower_32_bits(U64_MAX), pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
+>> +	writel(upper_32_bits(U64_MAX), pcie->parf + PARF_SLV_ADDR_SPACE_SIZE_HI);
+>> +}
+>> +
+>>  static void qcom_pcie_2_1_0_ltssm_enable(struct qcom_pcie *pcie)
+>>  {
+>>  	u32 val;
+>> @@ -623,8 +655,7 @@ static int qcom_pcie_post_init_2_3_2(struct qcom_pcie *pcie)
+>>  	val &= ~PHY_TEST_PWR_DOWN;
+>>  	writel(val, pcie->parf + PARF_PHY_CTRL);
+>>  
+>> -	/* change DBI base address */
+>> -	writel(0, pcie->parf + PARF_DBI_BASE_ADDR);
+>> +	qcom_pcie_avoid_dbi_atu_mirroring(pcie);
+>>  
+>>  	/* MAC PHY_POWERDOWN MUX DISABLE  */
+>>  	val = readl(pcie->parf + PARF_SYS_CTRL);
+>> @@ -900,6 +931,8 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>>  	/* Wait for reset to complete, required on SM8450 */
+>>  	usleep_range(1000, 1500);
+>>  
+>> +	qcom_pcie_avoid_dbi_atu_mirroring(pcie);
+>> +
+>>  	/* configure PCIe to RC mode */
+>>  	writel(DEVICE_TYPE_RC, pcie->parf + PARF_DEVICE_TYPE);
+>>  
+>> @@ -908,9 +941,6 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>>  	val &= ~PHY_TEST_PWR_DOWN;
+>>  	writel(val, pcie->parf + PARF_PHY_CTRL);
+>>  
+>> -	/* change DBI base address */
+>> -	writel(0, pcie->parf + PARF_DBI_BASE_ADDR);
+>> -
+>>  	/* MAC PHY_POWERDOWN MUX DISABLE  */
+>>  	val = readl(pcie->parf + PARF_SYS_CTRL);
+>>  	val &= ~MAC_PHY_POWERDOWN_IN_P2_D_MUX_EN;
+>> -- 
+>> 2.25.1
+>>
 > 
 
