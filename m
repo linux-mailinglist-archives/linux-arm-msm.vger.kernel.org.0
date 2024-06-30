@@ -1,53 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-24739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86EFE91D0B5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jun 2024 10:59:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DED1B91D0D9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jun 2024 11:35:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AB29C1C209E9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jun 2024 08:59:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EC59A1C2099A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jun 2024 09:35:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E4D112D74E;
-	Sun, 30 Jun 2024 08:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99A9012D752;
+	Sun, 30 Jun 2024 09:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="es7spRaB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Z36tpFhd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E44A12CDBE;
-	Sun, 30 Jun 2024 08:59:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD74282ED;
+	Sun, 30 Jun 2024 09:35:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719737969; cv=none; b=NPuj5x1kMMMAArzvksdLvKwY0YYq62gEd5NNBVT39H0ZvvsZmAMznzUML2zUkrPmqDwfEOY+Jps4v7KQ7KGl3KpYMD6EbILJlI20vsk7M5Yql0cwaX4lv4Ojstj9Ji3NKNhsiOQyGSFHDMDSB7Ydq7+Rmpq3Sc7XAA+kYCIkGm4=
+	t=1719740151; cv=none; b=BcFQ+8b4LZcCEKY5K/3ZDSbIMVTQUOQ5UdZ2B+kyFKHyg91d8gYkO+B9MM6JKdVB1hprDDiD1eQGfQqywKGZvqobEEd33iPFQrt4HZDqR9AlG3o8FSjJIl4Jezq6/kjiclybqi8HCxJv2yodqdcSDzyAM/mFPzg+R7dgil2MZkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719737969; c=relaxed/simple;
-	bh=5GrQ/IxY1ReJ/10C0GBB1dW/QFidjY/D00qSVJldM1o=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=GGFvv8aNtQGyZ6Bwexa0+Gt6cEIfVA+fWEeRrYjQYOpZM4vANf7kgCvM+IvcowONrlO0r+u+DbLYly08NwcqvMTYDcRaQ8yxK0hnzfqy2Yej1/RTnmjjcyXLDyeR1RrApQGf5fBtzSSUFBhwXiGgG5ACsPc8CnR0xLlDmQSdeyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=es7spRaB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B92A4C4AF0A;
-	Sun, 30 Jun 2024 08:59:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719737968;
-	bh=5GrQ/IxY1ReJ/10C0GBB1dW/QFidjY/D00qSVJldM1o=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=es7spRaBWSO2wzbktmMxjqdau53jmAMItn9TEwGcMhed0OLxtWSA+6PzQ3WNNzaXI
-	 6+lU61JzJvQmDIxRdxAIE4s74TJrihrLw7n+4rHfI1CiHf5AngFw3t0eP1vVZvPZMg
-	 wf7OlhcKHm+OI1/S1UeDG5Z3UDUTAt8YHXXdaWVpLopV1zlcKeysjx26uJAcoiaNlj
-	 MGLGITvJ319szCcirJE4cdjisnH3BSb/OME+Ty+MCI0+UYl+bHKlf7WS0xhFq9dybS
-	 PsJn3qvpLR+Tg72izZMH4HV9THLhpC1KxJOTHz5oICrcWu3cQhlSRpoecrSettWfp+
-	 Tih3U+AD9jp3Q==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE835C3065A;
-	Sun, 30 Jun 2024 08:59:28 +0000 (UTC)
-From: Xilin Wu via B4 Relay <devnull+wuxilin123.gmail.com@kernel.org>
-Date: Sun, 30 Jun 2024 16:59:27 +0800
-Subject: [PATCH v3 2/2] arm64: dts: qcom: Add device tree for ASUS Vivobook
- S 15
+	s=arc-20240116; t=1719740151; c=relaxed/simple;
+	bh=mggnU2m/HyxNLvJ6qPq4P6ZJXZroENZLj14BgKfkDP0=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IuoJk3Z0gKH69RWHD++PxggF9TpG9ZEqIeoDsdD/rcNV0uUDWqcC7TMgaGUCW9CPCwWOjGR7LNoo29NQ9hyDhiWfNgiT7uclgU0L8tbBH8jnj6mvmzXB/GZPm84mjf3AREXgBpq4rKBGOAGmrgEuRduKbugCW9nsCXqS3DknSTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Z36tpFhd; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45U9J3k4002838;
+	Sun, 30 Jun 2024 09:35:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	4q8UNhiWgZ7Cc1A+okTFAmm4vbLeRCpN3RPDisIrE5k=; b=Z36tpFhdeEMJYvGH
+	5fgO+yr8mVz1VhPGGo60w7Vn3x0kCMgEtKkYqP+TXKlN4X3rZna8EEoCt8ltbTqd
+	BQTke5VbMRjszyhxIxHb+TA+ugpanQV41wkNk5FsJfEr/1LLcvfPI19ApriIlr6G
+	KfACnIy1g/dcJ5FAeN+H9NTA8E8JVdoaAm1MMIXWnK5CSfYIspc+0yQ4QJPSqcAp
+	V+uLoMdP+BWYglpOYozWlLco0U2qM48doolGZg1QjXGIIRHClaG+d/CRivyCzepu
+	JcQQI+6bMukQtV6fyfcmKq1p5T78zJWVQ/qsCsu8gdIIb/+gwwu3lTfolk51sZ2Z
+	o0utaw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 402ag29th3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 30 Jun 2024 09:35:33 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 45U9ZWLG027408
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 30 Jun 2024 09:35:32 GMT
+Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 30 Jun 2024 02:35:28 -0700
+Date: Sun, 30 Jun 2024 15:05:24 +0530
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+To: Rob Clark <robdclark@gmail.com>
+CC: <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@chromium.org>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        open list
+	<linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v4 1/5] drm/msm/adreno: Split up giant device table
+Message-ID: <20240630093524.3zmzxrgmngfh7giv@hu-akhilpo-hyd.qualcomm.com>
+References: <20240618164303.66615-1-robdclark@gmail.com>
+ <20240618164303.66615-2-robdclark@gmail.com>
+ <20240629015831.sglaflboanhrarmn@hu-akhilpo-hyd.qualcomm.com>
+ <CAF6AEGtHyGZhBaqNXtujNMg7Cv_cLkUQoCiAckKAWUihzO1i4Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,690 +83,204 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240630-asus-vivobook-s15-v3-2-bce7ca4d9683@gmail.com>
-References: <20240630-asus-vivobook-s15-v3-0-bce7ca4d9683@gmail.com>
-In-Reply-To: <20240630-asus-vivobook-s15-v3-0-bce7ca4d9683@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
- Johan Hovold <johan+linaro@kernel.org>, 
- Elliot Berman <quic_eberman@quicinc.com>, Xilin Wu <wuxilin123@gmail.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1719737967; l=14928;
- i=wuxilin123@gmail.com; s=20240424; h=from:subject:message-id;
- bh=ZqZYk1dxcYb9S8LAQsWpNDXmRbk5NdbFeEQCLCwSHKE=;
- b=ZTaoDZ0ZUZtwJZuOve3Chqaeh8b+OAuFjWAilLUVzWvDU56zYkur+jrzRm+NGA6s7KzZgiPJ2
- UQXYlBXshspDSOiaoXH+2B+S0R2oWFR+EorY6bkq4+qz+h6KuZtG0Rq
-X-Developer-Key: i=wuxilin123@gmail.com; a=ed25519;
- pk=vPnxeJnlD/PfEbyQPZzaay5ezxI/lMrke7qXy31lSM8=
-X-Endpoint-Received: by B4 Relay for wuxilin123@gmail.com/20240424 with
- auth_id=157
-X-Original-From: Xilin Wu <wuxilin123@gmail.com>
-Reply-To: wuxilin123@gmail.com
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAF6AEGtHyGZhBaqNXtujNMg7Cv_cLkUQoCiAckKAWUihzO1i4Q@mail.gmail.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: kbeiAbv5rnUbGGObmQ5GO6XGcd4s_4sK
+X-Proofpoint-GUID: kbeiAbv5rnUbGGObmQ5GO6XGcd4s_4sK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-30_08,2024-06-28_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ malwarescore=0 phishscore=0 impostorscore=0 mlxlogscore=999 bulkscore=0
+ spamscore=0 priorityscore=1501 suspectscore=0 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2406300075
 
-From: Xilin Wu <wuxilin123@gmail.com>
+On Sat, Jun 29, 2024 at 06:32:05AM -0700, Rob Clark wrote:
+> On Fri, Jun 28, 2024 at 6:58 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+> >
+> > On Tue, Jun 18, 2024 at 09:42:47AM -0700, Rob Clark wrote:
+> > > From: Rob Clark <robdclark@chromium.org>
+> > >
+> > > Split into a separate table per generation, in preparation to move each
+> > > gen's device table to it's own file.
+> > >
+> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > > ---
+> > >  drivers/gpu/drm/msm/adreno/adreno_device.c | 67 +++++++++++++++++-----
+> > >  drivers/gpu/drm/msm/adreno/adreno_gpu.h    | 10 ++++
+> > >  2 files changed, 63 insertions(+), 14 deletions(-)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > index c3703a51287b..a57659eaddc2 100644
+> > > --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> > > @@ -20,7 +20,7 @@ bool allow_vram_carveout = false;
+> > >  MODULE_PARM_DESC(allow_vram_carveout, "Allow using VRAM Carveout, in place of IOMMU");
+> > >  module_param_named(allow_vram_carveout, allow_vram_carveout, bool, 0600);
+> > >
+> > > -static const struct adreno_info gpulist[] = {
+> > > +static const struct adreno_info a2xx_gpus[] = {
+> > >       {
+> > >               .chip_ids = ADRENO_CHIP_IDS(0x02000000),
+> > >               .family = ADRENO_2XX_GEN1,
+> > > @@ -54,7 +54,12 @@ static const struct adreno_info gpulist[] = {
+> > >               .gmem  = SZ_512K,
+> > >               .inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> > >               .init  = a2xx_gpu_init,
+> > > -     }, {
+> > > +     }
+> > > +};
+> > > +DECLARE_ADRENO_GPULIST(a2xx);
+> > > +
+> > > +static const struct adreno_info a3xx_gpus[] = {
+> > > +     {
+> > >               .chip_ids = ADRENO_CHIP_IDS(0x03000512),
+> > >               .family = ADRENO_3XX,
+> > >               .fw = {
+> > > @@ -116,7 +121,12 @@ static const struct adreno_info gpulist[] = {
+> > >               .gmem  = SZ_1M,
+> > >               .inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> > >               .init  = a3xx_gpu_init,
+> > > -     }, {
+> > > +     }
+> > > +};
+> > > +DECLARE_ADRENO_GPULIST(a3xx);
+> > > +
+> > > +static const struct adreno_info a4xx_gpus[] = {
+> > > +     {
+> > >               .chip_ids = ADRENO_CHIP_IDS(0x04000500),
+> > >               .family = ADRENO_4XX,
+> > >               .revn  = 405,
+> > > @@ -149,7 +159,12 @@ static const struct adreno_info gpulist[] = {
+> > >               .gmem  = (SZ_1M + SZ_512K),
+> > >               .inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> > >               .init  = a4xx_gpu_init,
+> > > -     }, {
+> > > +     }
+> > > +};
+> > > +DECLARE_ADRENO_GPULIST(a4xx);
+> > > +
+> > > +static const struct adreno_info a5xx_gpus[] = {
+> > > +     {
+> > >               .chip_ids = ADRENO_CHIP_IDS(0x05000600),
+> > >               .family = ADRENO_5XX,
+> > >               .revn = 506,
+> > > @@ -274,7 +289,12 @@ static const struct adreno_info gpulist[] = {
+> > >               .quirks = ADRENO_QUIRK_LMLOADKILL_DISABLE,
+> > >               .init = a5xx_gpu_init,
+> > >               .zapfw = "a540_zap.mdt",
+> > > -     }, {
+> > > +     }
+> > > +};
+> > > +DECLARE_ADRENO_GPULIST(a5xx);
+> > > +
+> > > +static const struct adreno_info a6xx_gpus[] = {
+> > > +     {
+> > >               .chip_ids = ADRENO_CHIP_IDS(0x06010000),
+> > >               .family = ADRENO_6XX_GEN1,
+> > >               .revn = 610,
+> > > @@ -520,7 +540,12 @@ static const struct adreno_info gpulist[] = {
+> > >               .zapfw = "a690_zap.mdt",
+> > >               .hwcg = a690_hwcg,
+> > >               .address_space_size = SZ_16G,
+> > > -     }, {
+> > > +     }
+> > > +};
+> > > +DECLARE_ADRENO_GPULIST(a6xx);
+> > > +
+> > > +static const struct adreno_info a7xx_gpus[] = {
+> > > +     {
+> > >               .chip_ids = ADRENO_CHIP_IDS(0x07000200),
+> > >               .family = ADRENO_6XX_GEN1, /* NOT a mistake! */
+> > >               .fw = {
+> > > @@ -582,7 +607,17 @@ static const struct adreno_info gpulist[] = {
+> > >               .init = a6xx_gpu_init,
+> > >               .zapfw = "gen70900_zap.mbn",
+> > >               .address_space_size = SZ_16G,
+> > > -     },
+> > > +     }
+> > > +};
+> > > +DECLARE_ADRENO_GPULIST(a7xx);
+> > > +
+> > > +static const struct adreno_gpulist *gpulists[] = {
+> > > +     &a2xx_gpulist,
+> > > +     &a3xx_gpulist,
+> > > +     &a4xx_gpulist,
+> > > +     &a5xx_gpulist,
+> > > +     &a6xx_gpulist,
+> > > +     &a6xx_gpulist,
+> >
+> > Typo. a6xx_gpulist -> a7xx_gpulist.
+> 
+> yup, already have a patch fixing that in msm-next-robclark
 
-ASUS Vivobook S 15 is a laptop based on the Qualcomm Snapdragon X Elite
-SoC (X1E78100).
+fwiw, Tested-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 
-Add the device tree for the laptop with support for the following features:
-
-- CPU frequency scaling up to 3.4GHz
-- NVMe storage on PCIe 6a (capable of Gen4x4, currently limited to Gen4x2)
-- Keyboard and touchpad
-- WCN7850 Wi-Fi
-- Two Type-C ports on the left side (USB3 only in one orientation)
-- internal eDP display
-- ADSP and CDSP remoteprocs
-
-Further details could be found in the cover letter.
-
-Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
----
- arch/arm64/boot/dts/qcom/Makefile                  |   1 +
- .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   | 616 +++++++++++++++++++++
- 2 files changed, 617 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 5576c7d6ea06..fe08b6be565d 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -258,5 +258,6 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-hdk-display-card.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-mtp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-qrd.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-asus-vivobook-s15.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-crd.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-qcp.dtb
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-new file mode 100644
-index 000000000000..34f90e45a5d7
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-@@ -0,0 +1,616 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2024, Xilin Wu <wuxilin123@gmail.com>
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+
-+#include "x1e80100.dtsi"
-+#include "x1e80100-pmics.dtsi"
-+
-+/ {
-+	model = "ASUS Vivobook S 15";
-+	compatible = "asus,vivobook-s15", "qcom,x1e80100";
-+	chassis-type = "laptop";
-+
-+	pmic-glink {
-+		compatible = "qcom,x1e80100-pmic-glink",
-+			     "qcom,sm8550-pmic-glink",
-+			     "qcom,pmic-glink";
-+		orientation-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>,
-+				    <&tlmm 123 GPIO_ACTIVE_HIGH>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		/* Left-side port, closer to the screen */
-+		connector@0 {
-+			compatible = "usb-c-connector";
-+			reg = <0>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					pmic_glink_ss0_hs_in: endpoint {
-+						remote-endpoint = <&usb_1_ss0_dwc3_hs>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					pmic_glink_ss0_ss_in: endpoint {
-+						remote-endpoint = <&usb_1_ss0_qmpphy_out>;
-+					};
-+				};
-+			};
-+		};
-+
-+		/* Left-side port, farther from the screen */
-+		connector@1 {
-+			compatible = "usb-c-connector";
-+			reg = <1>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					pmic_glink_ss1_hs_in: endpoint {
-+						remote-endpoint = <&usb_1_ss1_dwc3_hs>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					pmic_glink_ss1_ss_in: endpoint {
-+						remote-endpoint = <&usb_1_ss1_qmpphy_out>;
-+					};
-+				};
-+			};
-+		};
-+	};
-+
-+	reserved-memory {
-+		linux,cma {
-+			compatible = "shared-dma-pool";
-+			size = <0x0 0x8000000>;
-+			reusable;
-+			linux,cma-default;
-+		};
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
-+	vreg_edp_3p3: regulator-edp-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_EDP_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 70 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&edp_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
-+	vreg_nvme: regulator-nvme {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_NVME_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 18 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&nvme_reg_en>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
-+&apps_rsc {
-+	regulators-0 {
-+		compatible = "qcom,pm8550-rpmh-regulators";
-+		qcom,pmic-id = "b";
-+
-+		vdd-bob1-supply = <&vph_pwr>;
-+		vdd-bob2-supply = <&vph_pwr>;
-+		vdd-l1-l4-l10-supply = <&vreg_s4c_1p8>;
-+		vdd-l2-l13-l14-supply = <&vreg_bob1>;
-+		vdd-l5-l16-supply = <&vreg_bob1>;
-+		vdd-l6-l7-supply = <&vreg_bob2>;
-+		vdd-l8-l9-supply = <&vreg_bob1>;
-+		vdd-l12-supply = <&vreg_s5j_1p2>;
-+		vdd-l15-supply = <&vreg_s4c_1p8>;
-+		vdd-l17-supply = <&vreg_bob2>;
-+
-+		vreg_bob1: bob1 {
-+			regulator-name = "vreg_bob1";
-+			regulator-min-microvolt = <3008000>;
-+			regulator-max-microvolt = <3960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_bob2: bob2 {
-+			regulator-name = "vreg_bob2";
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2b_3p0: ldo2 {
-+			regulator-name = "vreg_l2b_3p0";
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3100000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l14b_3p0: ldo14 {
-+			regulator-name = "vreg_l14b_3p0";
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3072000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-1 {
-+		compatible = "qcom,pm8550ve-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vdd-l1-supply = <&vreg_s5j_1p2>;
-+		vdd-l2-supply = <&vreg_s1f_0p7>;
-+		vdd-l3-supply = <&vreg_s1f_0p7>;
-+		vdd-s4-supply = <&vph_pwr>;
-+
-+		vreg_s4c_1p8: smps4 {
-+			regulator-name = "vreg_s4c_1p8";
-+			regulator-min-microvolt = <1856000>;
-+			regulator-max-microvolt = <2000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-2 {
-+		compatible = "qcom,pmc8380-rpmh-regulators";
-+		qcom,pmic-id = "d";
-+
-+		vdd-l1-supply = <&vreg_s1f_0p7>;
-+		vdd-l2-supply = <&vreg_s1f_0p7>;
-+		vdd-l3-supply = <&vreg_s4c_1p8>;
-+		vdd-s1-supply = <&vph_pwr>;
-+
-+		vreg_l1d_0p8: ldo1 {
-+			regulator-name = "vreg_l1d_0p8";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2d_0p9: ldo2 {
-+			regulator-name = "vreg_l2d_0p9";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3d_1p8: ldo3 {
-+			regulator-name = "vreg_l3d_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-3 {
-+		compatible = "qcom,pmc8380-rpmh-regulators";
-+		qcom,pmic-id = "e";
-+
-+		vdd-l2-supply = <&vreg_s1f_0p7>;
-+		vdd-l3-supply = <&vreg_s5j_1p2>;
-+
-+		vreg_l2e_0p8: ldo2 {
-+			regulator-name = "vreg_l2e_0p8";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3e_1p2: ldo3 {
-+			regulator-name = "vreg_l3e_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-4 {
-+		compatible = "qcom,pmc8380-rpmh-regulators";
-+		qcom,pmic-id = "f";
-+
-+		vdd-l1-supply = <&vreg_s5j_1p2>;
-+		vdd-l2-supply = <&vreg_s5j_1p2>;
-+		vdd-l3-supply = <&vreg_s5j_1p2>;
-+		vdd-s1-supply = <&vph_pwr>;
-+
-+		vreg_s1f_0p7: smps1 {
-+			regulator-name = "vreg_s1f_0p7";
-+			regulator-min-microvolt = <700000>;
-+			regulator-max-microvolt = <1100000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-6 {
-+		compatible = "qcom,pm8550ve-rpmh-regulators";
-+		qcom,pmic-id = "i";
-+
-+		vdd-l1-supply = <&vreg_s4c_1p8>;
-+		vdd-l2-supply = <&vreg_s5j_1p2>;
-+		vdd-l3-supply = <&vreg_s1f_0p7>;
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+	};
-+
-+	regulators-7 {
-+		compatible = "qcom,pm8550ve-rpmh-regulators";
-+		qcom,pmic-id = "j";
-+
-+		vdd-l1-supply = <&vreg_s1f_0p7>;
-+		vdd-l2-supply = <&vreg_s5j_1p2>;
-+		vdd-l3-supply = <&vreg_s1f_0p7>;
-+		vdd-s5-supply = <&vph_pwr>;
-+
-+		vreg_s5j_1p2: smps5 {
-+			regulator-name = "vreg_s5j_1p2";
-+			regulator-min-microvolt = <1256000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l1j_0p8: ldo1 {
-+			regulator-name = "vreg_l1j_0p8";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2j_1p2: ldo2 {
-+			regulator-name = "vreg_l2j_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3j_0p8: ldo3 {
-+			regulator-name = "vreg_l3j_0p8";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+};
-+
-+&i2c0 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	touchpad@15 {
-+		compatible = "hid-over-i2c";
-+		reg = <0x15>;
-+
-+		hid-descr-addr = <0x1>;
-+		interrupts-extended = <&tlmm 3 IRQ_TYPE_LEVEL_LOW>;
-+
-+		pinctrl-0 = <&tpad_default>;
-+		pinctrl-names = "default";
-+
-+		wakeup-source;
-+	};
-+};
-+
-+&i2c1 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	/* PS8830 USB4 Retimer? @ 0x8 */
-+};
-+
-+&i2c3 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	/* PS8830 USB4 Retimer? @ 0x8 */
-+};
-+
-+&i2c5 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	keyboard@3a {
-+		compatible = "hid-over-i2c";
-+		reg = <0x3a>;
-+
-+		hid-descr-addr = <0x1>;
-+		interrupts-extended = <&tlmm 67 IRQ_TYPE_LEVEL_LOW>;
-+
-+		pinctrl-0 = <&kybd_default>;
-+		pinctrl-names = "default";
-+
-+		wakeup-source;
-+	};
-+
-+	/* EC? @ 0x5b, 0x76 */
-+};
-+
-+&i2c7 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	/* PS8830 USB4 Retimer? @ 0x8 */
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dp3 {
-+	compatible = "qcom,x1e80100-dp";
-+	/delete-property/ #sound-dai-cells;
-+
-+	status = "okay";
-+
-+	aux-bus {
-+		panel {
-+			compatible = "edp-panel";
-+			power-supply = <&vreg_edp_3p3>;
-+
-+			port {
-+				edp_panel_in: endpoint {
-+					remote-endpoint = <&mdss_dp3_out>;
-+				};
-+			};
-+		};
-+	};
-+
-+	ports {
-+		port@1 {
-+			reg = <1>;
-+
-+			mdss_dp3_out: endpoint {
-+				data-lanes = <0 1 2 3>;
-+				link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
-+
-+				remote-endpoint = <&edp_panel_in>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dp3_phy {
-+	vdda-phy-supply = <&vreg_l3j_0p8>;
-+	vdda-pll-supply = <&vreg_l2j_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&pcie4 {
-+	status = "okay";
-+};
-+
-+&pcie4_phy {
-+	vdda-phy-supply = <&vreg_l3j_0p8>;
-+	vdda-pll-supply = <&vreg_l3e_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&pcie6a {
-+	perst-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 154 GPIO_ACTIVE_LOW>;
-+
-+	vddpe-3v3-supply = <&vreg_nvme>;
-+
-+	pinctrl-0 = <&pcie6a_default>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&pcie6a_phy {
-+	vdda-phy-supply = <&vreg_l1d_0p8>;
-+	vdda-pll-supply = <&vreg_l2j_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&qupv3_0 {
-+	status = "okay";
-+};
-+
-+&qupv3_1 {
-+	status = "okay";
-+};
-+
-+&qupv3_2 {
-+	status = "okay";
-+};
-+
-+&remoteproc_adsp {
-+	firmware-name = "qcom/x1e80100/ASUSTeK/vivobook-s15/qcadsp8380.mbn",
-+			"qcom/x1e80100/ASUSTeK/vivobook-s15/adsp_dtbs.elf";
-+
-+	status = "okay";
-+};
-+
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/x1e80100/ASUSTeK/vivobook-s15/qccdsp8380.mbn",
-+			"qcom/x1e80100/ASUSTeK/vivobook-s15/cdsp_dtbs.elf";
-+
-+	status = "okay";
-+};
-+
-+&smb2360_0_eusb2_repeater {
-+	vdd18-supply = <&vreg_l3d_1p8>;
-+	vdd3-supply = <&vreg_l2b_3p0>;
-+};
-+
-+&smb2360_1_eusb2_repeater {
-+	vdd18-supply = <&vreg_l3d_1p8>;
-+	vdd3-supply = <&vreg_l14b_3p0>;
-+};
-+
-+&smb2360_2 {
-+	status = "disabled";
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <34 2>, /* Unused */
-+			       <44 4>, /* SPI (TPM) */
-+			       <238 1>; /* UFS Reset */
-+
-+	edp_reg_en: edp-reg-en-state {
-+		pins = "gpio70";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+	};
-+
-+	kybd_default: kybd-default-state {
-+		pins = "gpio67";
-+		function = "gpio";
-+		bias-disable;
-+	};
-+
-+	nvme_reg_en: nvme-reg-en-state {
-+		pins = "gpio18";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	pcie6a_default: pcie2a-default-state {
-+		clkreq-n-pins {
-+			pins = "gpio153";
-+			function = "pcie6a_clk";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		perst-n-pins {
-+			pins = "gpio152";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		wake-n-pins {
-+			pins = "gpio154";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+
-+	tpad_default: tpad-default-state {
-+		pins = "gpio3";
-+		function = "gpio";
-+		bias-disable;
-+	};
-+};
-+
-+&usb_1_ss0_hsphy {
-+	vdd-supply = <&vreg_l2e_0p8>;
-+	vdda12-supply = <&vreg_l2j_1p2>;
-+
-+	phys = <&smb2360_0_eusb2_repeater>;
-+
-+	status = "okay";
-+};
-+
-+&usb_1_ss0_qmpphy {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l1j_0p8>;
-+
-+	orientation-switch;
-+
-+	status = "okay";
-+};
-+
-+&usb_1_ss0 {
-+	status = "okay";
-+};
-+
-+&usb_1_ss0_dwc3 {
-+	dr_mode = "host";
-+};
-+
-+&usb_1_ss0_dwc3_hs {
-+	remote-endpoint = <&pmic_glink_ss0_hs_in>;
-+};
-+
-+&usb_1_ss0_qmpphy_out {
-+	remote-endpoint = <&pmic_glink_ss0_ss_in>;
-+};
-+
-+&usb_1_ss1_hsphy {
-+	vdd-supply = <&vreg_l2e_0p8>;
-+	vdda12-supply = <&vreg_l2j_1p2>;
-+
-+	phys = <&smb2360_1_eusb2_repeater>;
-+
-+	status = "okay";
-+};
-+
-+&usb_1_ss1_qmpphy {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l2d_0p9>;
-+
-+	orientation-switch;
-+
-+	status = "okay";
-+};
-+
-+&usb_1_ss1 {
-+	status = "okay";
-+};
-+
-+&usb_1_ss1_dwc3 {
-+	dr_mode = "host";
-+};
-+
-+&usb_1_ss1_dwc3_hs {
-+	remote-endpoint = <&pmic_glink_ss1_hs_in>;
-+};
-+
-+&usb_1_ss1_qmpphy_out {
-+	remote-endpoint = <&pmic_glink_ss1_ss_in>;
-+};
-
--- 
-2.45.2
-
-
+-Akhil
+> 
+> BR,
+> -R
+> 
+> > -Akhil
+> >
+> > >  };
+> > >
+> > >  MODULE_FIRMWARE("qcom/a300_pm4.fw");
+> > > @@ -617,13 +652,17 @@ MODULE_FIRMWARE("qcom/yamato_pm4.fw");
+> > >  static const struct adreno_info *adreno_info(uint32_t chip_id)
+> > >  {
+> > >       /* identify gpu: */
+> > > -     for (int i = 0; i < ARRAY_SIZE(gpulist); i++) {
+> > > -             const struct adreno_info *info = &gpulist[i];
+> > > -             if (info->machine && !of_machine_is_compatible(info->machine))
+> > > -                     continue;
+> > > -             for (int j = 0; info->chip_ids[j]; j++)
+> > > -                     if (info->chip_ids[j] == chip_id)
+> > > -                             return info;
+> > > +     for (int i = 0; i < ARRAY_SIZE(gpulists); i++) {
+> > > +             for (int j = 0; j < gpulists[i]->gpus_count; j++) {
+> > > +                     const struct adreno_info *info = &gpulists[i]->gpus[j];
+> > > +
+> > > +                     if (info->machine && !of_machine_is_compatible(info->machine))
+> > > +                             continue;
+> > > +
+> > > +                     for (int k = 0; info->chip_ids[k]; k++)
+> > > +                             if (info->chip_ids[k] == chip_id)
+> > > +                                     return info;
+> > > +             }
+> > >       }
+> > >
+> > >       return NULL;
+> > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > > index 77526892eb8c..17aba8c58f3d 100644
+> > > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> > > @@ -114,6 +114,16 @@ struct adreno_info {
+> > >
+> > >  #define ADRENO_CHIP_IDS(tbl...) (uint32_t[]) { tbl, 0 }
+> > >
+> > > +struct adreno_gpulist {
+> > > +     const struct adreno_info *gpus;
+> > > +     unsigned gpus_count;
+> > > +};
+> > > +
+> > > +#define DECLARE_ADRENO_GPULIST(name)                  \
+> > > +const struct adreno_gpulist name ## _gpulist = {      \
+> > > +     name ## _gpus, ARRAY_SIZE(name ## _gpus)      \
+> > > +}
+> > > +
+> > >  /*
+> > >   * Helper to build a speedbin table, ie. the table:
+> > >   *      fuse | speedbin
+> > > --
+> > > 2.45.2
+> > >
 
