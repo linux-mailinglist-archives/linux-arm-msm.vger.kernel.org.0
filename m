@@ -1,63 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-24828-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1EAAF91E86D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 21:19:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88D7C91E884
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 21:22:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 413571C21898
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 19:19:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E93D2873EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 19:22:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDBBC16F0F0;
-	Mon,  1 Jul 2024 19:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 232E516F830;
+	Mon,  1 Jul 2024 19:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="e0xEJUb3"
+	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="jBCuKzMj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.smtpout.orange.fr (smtp-13.smtpout.orange.fr [80.12.242.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4488415DBD6;
-	Mon,  1 Jul 2024 19:19:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264DB16F278;
+	Mon,  1 Jul 2024 19:22:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719861542; cv=none; b=DWi4hb+XdVeDbU4mNwfo3O9JvbKBlUIfrbmu8Kdj0/YuPfIJ3dg4rrpLZ3MPc//u0BI0KYlKhPNv2/hjagGzZikq9gtbaN4YzuwUPmiHjnbXmXIYH7dlgPL6a+mJa4mBcRwhRB8uG6n7Roh3O/x90BHQ/BVO6INO5YQPRUsgvFc=
+	t=1719861758; cv=none; b=oeVhG8ykbkUIiht/dkhib98ESFEWIUoKjKY9ApkmncUkWp/01ksIXOJ1nTO3Sa2HwnnyD/OkH0/rvkBOL4WBc/IiPE3Ba46EIARNd3MSdxRqexREz2KQK5iX9RQKet0CIrdvSQ5tf4I9kMmrmmqPOAi7PgIvksWEGbWRNKVe12w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719861542; c=relaxed/simple;
-	bh=jWZ1CeQ+Pa38AA57KdIwDpbzTnMj3qGPaHVJkcEuG78=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=jMdKrAjEAbNFhFKLMg2VK0lXp0jy+DRizu/q366ZEqw4sd+qV+JPLi6jK2e4qKPFEDWvOKBPbthiom7cY70uEVMSW+1ApdtaEtsQZwdMDeuJUIQPmIxLrRpvD3Lgn9KV1sDe95ovpMzcY7VOi2+1LNT6Wf6wVgzCWMboMXR6en0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=e0xEJUb3; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 461BNd10031186;
-	Mon, 1 Jul 2024 19:18:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	HEOucDbBLsGiHd0h8bxK39k/378s4ze6cCjXgEeaqvw=; b=e0xEJUb3vKj9QKER
-	EMjxyym5noJskbaAYX2LSb0TYrSwXmhph4DlGyEwpocJJTThlcjgIgz139Nu1PwW
-	rJCmj/YM2GFPBpc4JVaQXk7jSgscd7Ezp29tUG9hHKuicp8X/vLI6W+RET3C5yOl
-	YJUM+UNoRB5xPIMdYcOhqQG0zkN/Dn62pi7NUy7X+MLfoCViP+SMYbOMSQrRcXBH
-	CocIKkKsFQjDkFi96LPjRuZAe8RTfKsbUaA+rYNgrTObWKAZNqd4LNir9BFdCUH8
-	110n0lnIoNuPLpyk2rjl3HfYCax+iX3pi5uPkRJ0jneP8CyZv1hcg75DhEuVN2Pw
-	bJDsdg==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 402bejmvvs-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 01 Jul 2024 19:18:24 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 461JIOT7014247
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 1 Jul 2024 19:18:24 GMT
-Received: from [10.110.54.196] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 1 Jul 2024
- 12:18:19 -0700
-Message-ID: <eb63b7c2-9485-4b11-bf73-4d38a2365f19@quicinc.com>
-Date: Mon, 1 Jul 2024 12:18:19 -0700
+	s=arc-20240116; t=1719861758; c=relaxed/simple;
+	bh=lWC6dIbWDly2CcGfLx/WDvuKm5OkyX/CfYLA1wFb040=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=LXr2ydXvKv1ix+gD1NXlQR93Oecsd54OVuzj0BxsvN5Z9QAAiSTPCMX6qNcBmzYGkipQLChb7bvdF9a+OqOpzXRj4p2OUTe8rcPyh9pYgYeQmlpd4yFkOiIZGrHmcmXGpXihjCC6R1eG8E4RM1iGPKQ8lR5sWIl/9thGydhVpbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=jBCuKzMj; arc=none smtp.client-ip=80.12.242.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
+Received: from [192.168.100.239] ([77.130.249.198])
+	by smtp.orange.fr with ESMTPA
+	id OMbXsqFR28cAtOMbXsjqTh; Mon, 01 Jul 2024 21:22:26 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
+	s=t20230301; t=1719861746;
+	bh=r5S9eLlZvmDguqOEMMdCQ+1RWefFjQZempUUq4HCebs=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To;
+	b=jBCuKzMjJB52awDCiIwRFUHMTRGx/pTt9IV61JWjyr02O38gQeYHKUnrAdexOqYXl
+	 oWvQECuIKVg2g71vQQGfB1DMNnGieZ6iD+/ZqaafEJlmznK2GQt8HT4h8/hyGL13r0
+	 uEQSUe1uCcrpIPwKJOUp3xsWDxUubr/h+qSDutZUEmTYrP+NaG0oMoNzi+rAxecnAn
+	 hVjYyK4v/IoIvI0wmwgHjM+MRCWtTP93J8a+FXg5hc+hRNVeumNawb6CTiNMcVO8yB
+	 3bqKfeE1fVhgYlOcgMGpkTF2o1Mg67DRSlMFTh7XW26ZIfnbpkanQSECiyNujBg3Cy
+	 8EWy7lPU/40gw==
+X-ME-Helo: [192.168.100.239]
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Mon, 01 Jul 2024 21:22:26 +0200
+X-ME-IP: 77.130.249.198
+Message-ID: <1fa0f2d9-b193-4fcd-9074-2b68f09ad39c@wanadoo.fr>
+Date: Mon, 1 Jul 2024 21:22:23 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,107 +57,180 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] net: stmmac: Bring down the clocks to lower
- frequencies when mac link goes down
-From: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
-To: Andrew Halaney <ahalaney@redhat.com>
-CC: Vinod Koul <vkoul@kernel.org>,
-        Alexandre Torgue
-	<alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>,
-        "David S.
- Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        "Jakub
- Kicinski" <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>,
-        Russell King <linux@armlinux.org.uk>, "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>, <kernel@quicinc.com>,
-        Andrew Lunn <andrew@lunn.ch>, <linux-arm-msm@vger.kernel.org>,
-        <netdev@vger.kernel.org>, <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20240625-icc_bw_voting_from_ethqos-v2-0-eaa7cf9060f0@quicinc.com>
- <20240625-icc_bw_voting_from_ethqos-v2-3-eaa7cf9060f0@quicinc.com>
- <qf4zl7qupkzbrb6ik4v4nkjct7tsh34cmoufy23zozcht5gch6@kvymsd2ue6cd>
- <fd5c86d8-4243-43d6-a07d-919ceeb12d82@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <fd5c86d8-4243-43d6-a07d-919ceeb12d82@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: kddQ-wpQVuQPjCybJxZd8qn6L8J1iblC
-X-Proofpoint-ORIG-GUID: kddQ-wpQVuQPjCybJxZd8qn6L8J1iblC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-01_19,2024-07-01_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
- impostorscore=0 spamscore=0 clxscore=1015 mlxscore=0 suspectscore=0
- bulkscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407010144
+From: Marion & Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Subject: Re: [PATCH 6/6] media: qcom: camss: support for camss driver for
+ sc7280
+To: Vikram Sharma <quic_vikramsa@quicinc.com>, Robert Foss
+ <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Kapatrala Syed <akapatra@quicinc.com>,
+ Hariram Purushothaman <hariramp@quicinc.com>,
+ cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Loic Poulain <loic.poulain@linaro.org>, Andi Shyti <andi.shyti@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-i2c@vger.kernel.org, Suresh Vankadara <quic_svankada@quicinc.com>,
+ Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
+References: <20240629-camss_first_post_linux_next-v1-0-bc798edabc3a@quicinc.com>
+ <20240629-camss_first_post_linux_next-v1-6-bc798edabc3a@quicinc.com>
+Content-Language: en-MW
+In-Reply-To: <20240629-camss_first_post_linux_next-v1-6-bc798edabc3a@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Le 28/06/2024 à 20:32, Vikram Sharma a écrit :
+> From: Suresh Vankadara <quic_svankada@quicinc.com>
+> 
+> This change adds support for camss driver for sc7280 soc.
+> 
+> Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
+> Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
+> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+> ---
+
+Hi,
+
+...
+
+> -	if (camss->res->version == CAMSS_8250) {
+> +	switch (camss->res->version) {
+> +	case CAMSS_8250:
+>   		/* for titan 480, CSID registers are inside the VFE region,
+>   		 * between the VFE "top" and "bus" registers. this requires
+>   		 * VFE to be initialized before CSID
+> @@ -1040,10 +1041,19 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
+>   		else
+>   			csid->base = csid->res->parent_dev_ops->get_base_address(camss, id)
+>   				 + VFE_480_CSID_OFFSET;
+> -	} else {
+> +		break;
+> +	case CAMSS_7280:
+
+Maybe, as said for other places by Bryan, keep it ordered (CAMSS_7280, 
+then CAMSS_8250)?
+
+> +		/* for titan 165, CSID registers are inside the VFE region,
+> +		 * between the VFE "top" and "bus" registers. this requires
+> +		 * VFE to be initialized before CSID
+> +		 */
+> +		csid->base = camss->vfe[id].base + VFE_165_CSID_OFFSET;
+> +		break;
+> +	default:
+>   		csid->base = devm_platform_ioremap_resource_byname(pdev, res->reg[0]);
+>   		if (IS_ERR(csid->base))
+>   			return PTR_ERR(csid->base);
+> +		break;
+>   	}
+>   
+>   	/* Interrupt */
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> index df7e93a5a4f6..c7e507420732 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> @@ -510,6 +510,7 @@ static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
+>   		array_size = ARRAY_SIZE(lane_regs_sdm845[0]);
+>   		break;
+>   	case CAMSS_8250:
+> +	case CAMSS_7280:
+>   		r = &lane_regs_sm8250[0][0];
+>   		array_size = ARRAY_SIZE(lane_regs_sm8250[0]);
+>   		break;
+> @@ -560,6 +561,7 @@ static bool csiphy_is_gen2(u32 version)
+>   	case CAMSS_845:
+>   	case CAMSS_8250:
+>   	case CAMSS_8280XP:
+> +	case CAMSS_7280:
+>   		ret = true;
+>   		break;
+>   	}
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+> index 83c5a36d071f..757e872b8eb8 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> @@ -338,6 +338,7 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
+>   	case CAMSS_845:
+>   	case CAMSS_8250:
+>   	case CAMSS_8280XP:
+> +	case CAMSS_7280:
+
+Here as well.
+
+>   		switch (sink_code) {
+>   		case MEDIA_BUS_FMT_YUYV8_1X16:
+>   		{
+> @@ -1695,6 +1696,7 @@ static int vfe_bpl_align(struct vfe_device *vfe)
+>   	case CAMSS_845:
+>   	case CAMSS_8250:
+>   	case CAMSS_8280XP:
+> +	case CAMSS_7280:
+
+Here as well.
+
+>   		ret = 16;
+>   		break;
+>   	default:
+
+...
+
+> +static int camss_link_entities_v2(struct camss *camss)
+> +{
+> +	int i, j;
+> +	int ret;
+> +
+> +	for (i = 0; i < camss->res->csiphy_num; i++) {
+> +		for (j = 0; j < camss->res->csid_num; j++) {
+> +			ret = media_create_pad_link(&camss->csiphy[i].subdev.entity,
+> +						    MSM_CSIPHY_PAD_SRC,
+> +						    &camss->csid[j].subdev.entity,
+> +						    MSM_CSID_PAD_SINK,
+> +						    0);
+
+Should there be some error handling path here and below to free the 
+allocated resources?
+
+.link_entities seems to be new and I can't find it in my -next-20240627, 
+so I can't check myself if already handle in a way or another by the 
+framework.
+
+CJ
 
 
+> +			if (ret < 0) {
+> +				dev_err(camss->dev,
+> +					"Failed to link %s->%s entities: %d\n",
+> +					camss->csiphy[i].subdev.entity.name,
+> +					camss->csid[j].subdev.entity.name,
+> +					ret);
+> +				return ret;
+> +			}
+> +		}
+> +	}
+> +
+> +	for (i = 0; i < camss->res->csid_num; i++)
+> +		for (j = 0; j < camss->vfe[i].res->line_num; j++) {
+> +			struct v4l2_subdev *csid = &camss->csid[i].subdev;
+> +			struct v4l2_subdev *vfe = &camss->vfe[i].line[j].subdev;
+> +
+> +			ret = media_create_pad_link(&csid->entity,
+> +						    MSM_CSID_PAD_FIRST_SRC + j,
+> +						    &vfe->entity,
+> +						    MSM_VFE_PAD_SINK,
+> +						    0);
+> +			if (ret < 0) {
+> +				dev_err(camss->dev,
+> +					"Failed to link %s->%s entities: %d\n",
+> +					csid->entity.name,
+> +					vfe->entity.name,
+> +					ret);
+> +				return ret;
+> +			}
+> +		}
+> +	return 0;
+> +}
 
-On 6/28/2024 2:50 PM, Sagar Cheluvegowda wrote:
-> 
-> 
-> On 6/26/2024 7:58 AM, Andrew Halaney wrote:
->> On Tue, Jun 25, 2024 at 04:49:30PM GMT, Sagar Cheluvegowda wrote:
->>> When mac link goes down we don't need to mainitain the clocks to operate
->>> at higher frequencies, as an optimized solution to save power when
->>> the link goes down we are trying to bring down the clocks to the
->>> frequencies corresponding to the lowest speed possible.
->>>
->>> Signed-off-by: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
->>> ---
->>>  drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 8 ++++++++
->>>  1 file changed, 8 insertions(+)
->>>
->>> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
->>> index ec7c61ee44d4..f0166f0bc25f 100644
->>> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
->>> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
->>> @@ -996,6 +996,9 @@ static void stmmac_mac_link_down(struct phylink_config *config,
->>>  {
->>>  	struct stmmac_priv *priv = netdev_priv(to_net_dev(config->dev));
->>>  
->>> +	if (priv->plat->fix_mac_speed)
->>> +		priv->plat->fix_mac_speed(priv->plat->bsp_priv, SPEED_10, mode);
->>> +
-The above fix_mac_speed needs to be removed, i lately realized this mistake.
->>>  	stmmac_mac_set(priv, priv->ioaddr, false);
->>>  	priv->eee_active = false;
->>>  	priv->tx_lpi_enabled = false;
->>> @@ -1004,6 +1007,11 @@ static void stmmac_mac_link_down(struct phylink_config *config,
->>>  
->>>  	if (priv->dma_cap.fpesel)
->>>  		stmmac_fpe_link_state_handle(priv, false);
->>> +
->>> +	stmmac_set_icc_bw(priv, SPEED_10);
->>> +
->>> +	if (priv->plat->fix_mac_speed)
->>> +		priv->plat->fix_mac_speed(priv->plat->bsp_priv, SPEED_10, mode);
->>
->>
->> I think you're doing this at the beginning and end of
->> stmmac_mac_link_down(), is that intentional?
->>
->>
-> 
-> I realised that bringing down the clock to 10Mbps should be the last operation
-> of the link down process, the reason being if we bring down the clocks first it will
-> deprive essential internal clocks to DMA/MTL modules which are required for
-> Cleanup operations this might cause excessive delays in stopping DMA
-> or flusing MTL queues.
->  
->>
+...
+
 
