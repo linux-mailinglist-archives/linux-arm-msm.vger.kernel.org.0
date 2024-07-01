@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-24790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8937791DB21
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 11:10:48 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 148E791DB99
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 11:36:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AB6B81C20F3C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 09:10:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A885F1F21533
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 09:36:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA25D84A5E;
-	Mon,  1 Jul 2024 09:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B75A112BF30;
+	Mon,  1 Jul 2024 09:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zWJt2t0w"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HC/XfgyD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91588286F
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 09:10:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08421126F02
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 09:36:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719825042; cv=none; b=SAY+5sI6MtLIuAHVFxVqC9APlIAKY2dBjcexcIKjz7emcXsINmrK8iG00BLDVrESBlPMsjx3ZCzHwkDL2135jWO++m6ZhlMl4xHGhXDXqI0OGVllBMSMEFnBOBPS1I9TQaiGzZrFcnxHcH7NniP5bBxKaoihOy09WxjVvUtJ95U=
+	t=1719826592; cv=none; b=Ts62Z0dH5sMP43brSdeCNW7UdIq4OhkwiOm0qdxe7O2OCYoJdWmVm0ng+wuZG1BlIyZ01DwVmZIUJTYlVlQq4ROHE3SE8wlDxOldneEC5FPXPM0uRlymsFNLY2Bpj/JkS2gKOuV4G1P7qdk3uYr58woZmIMY1tIR868ryZ85od8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719825042; c=relaxed/simple;
-	bh=MihLrulO9FQtyvs5PM4koGS4EJy3DSirwHr1Ngd6tAM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=uG85q30d26I4EYCUi0dzRZN2qJn5/Uktqdp/ckW0uqslC6v+XUZ99dOLjZYORkyvD2W/a1ZKsabBrPd48fU6dM5+M5kE/eUYmKWUSXOYyLn0wmPakQAw2U7GViX6gARE7VGWRcJbk9S7vykriC2rMrf9Bucsp346A1+JNqxBQG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zWJt2t0w; arc=none smtp.client-ip=209.85.167.53
+	s=arc-20240116; t=1719826592; c=relaxed/simple;
+	bh=NMLtUBfX+KJAZE3A3RjtYMlUbGTxZThVo8VmwHXUL9Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Q3sV7K+/L8GGD6wYmt6Ul59GnKb+z4YiAeR6WC2ovnCawlez4muB4rDvX85v3x1+aNlqr4IKgnY20k8uTlW1UbjyHI7oggYFuKPhB7hZG1p65gaPGmuMJ/rPOMk0Mr8GjOEigEkSSKGzuDB3oXYfxwRd58PhpRjYDbwvxVfRQi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HC/XfgyD; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-52cdd03d6aaso3186510e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2024 02:10:40 -0700 (PDT)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-42122ac2f38so16068555e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2024 02:36:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719825039; x=1720429839; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WmxwoN5WifjaiLHb4RF2OzomH1ffmSkrRHOoZR2aCx8=;
-        b=zWJt2t0weDnDDofh6PgypnbImIWrnv0r7qKGN3eSk/lxnT/SD3W982ABf9QS2jlkmW
-         fHN88i+Juke8j4c8GrPBraf3nR+FRzyuhdY3t4Hjg8W/O84Om1l21b2BZY089xrHtsFo
-         kt+PbA0/9nHOymKecQ914wyIwZmwJnmoWNuV24IVVl99pCFgJaufQTkL68r947lp6xBt
-         pJMeC8QKjt5VbkNzYWzICaBRZGrieg/lsG4doIXBGZVA1ClX5lKigLNSDLghD0dXECtR
-         iJcIVcSS0LFJLApU7+jtxMe01k3VTkr+60oZTk441Aa29d1lSKQa312RvWcTgLaDVx/I
-         5BGg==
+        d=linaro.org; s=google; t=1719826589; x=1720431389; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=3pqs4nmxooikczXjxw63lsFMoDXjJaKB4W76ZXvb4D8=;
+        b=HC/XfgyDAiHA3Bkhzp0G53NU8fKTEOt1tuvlUhGMkeI8EwS3D6Ot7LabyhrzqMzjJX
+         xAfjuhoBh9IlM71xvwVXCyRqn1/NkEi806cRfGEzvX+6IQfr3W3F01mkw06AJvxum7SY
+         So0ZmPeQrC7AqZVOSKUD3HywLWN5Bde80pLjlg81w5e+QdA8sWCABdMH+oBG5uHpqP/o
+         3pL7beJw9wTfzpC9lTuqkMn/jK8AmsKKL2zu65swVBJeCm0l9745cdNntlkXJCCguNel
+         hSxTrEAs9271BcHqlat/vLeXcDpW9BlPhqTGnhaWr8/3IlNmNqmonPuyWPwMIhtXtNHu
+         9yiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719825039; x=1720429839;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=WmxwoN5WifjaiLHb4RF2OzomH1ffmSkrRHOoZR2aCx8=;
-        b=QQXzMrhGnFxgevgTYUBbqHMi+W5ewW5+Vpkm/UHBrPA9plCGwhw0RSo6N2oI43BXxO
-         7kHC/q1P54esfV4vDhpYrYVBVkNJ/e9a5hMnLKEejC2Q7cydbf6g4Z/AXWIgAM/mCZGc
-         OfLkDqdbsP481i8qDCb2sMCCN6BOvKgat8J6iklSl4zB4X3w45e27gQ7PgzXtvkPsh1U
-         dMvyEDQ37DAOKfImnRuReVn5rOF3WCoEEyIuqt7+rVjBUKd3jZ1Ol26D2alNrIO9Sr51
-         7nCQubGIqHVC52NeMaEqEknaGAwLv+zGsGKghaGR4Z90DC9sUFJraQNCDtYPIrpzX0NC
-         TF4A==
-X-Forwarded-Encrypted: i=1; AJvYcCUBcal3Da/XK0X4q1EcA/0FvgSzdwuvntPujevSSL1t2HtSxXg6Lork0lTatUzMf6f4H3WG3wF0hxzVTOm6jLcBpIRdniOFSKgGenlGyg==
-X-Gm-Message-State: AOJu0YySzGt/9DTqxs2xD6t+kL6gTCp93Pk9i0DTLontFKNlJqDcu3/p
-	tKRXetF1iHXp7VyqwRx8LLwEhgCLdybgOc54jBZOiDobMihmhbVj22Qta3IWFGM=
-X-Google-Smtp-Source: AGHT+IEU8xp3goGxhTEutzBiuLEdZgqoKoixVNFadzR5iUuvIJM+GQ80X/3pH/R60oEG9o4bMBlLAw==
-X-Received: by 2002:a05:6512:39ca:b0:52c:e312:2082 with SMTP id 2adb3069b0e04-52e826febbamr3646811e87.54.1719825038326;
-        Mon, 01 Jul 2024 02:10:38 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:4719:99ea:652b:10d0? ([2a01:e0a:982:cbb0:4719:99ea:652b:10d0])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a0cd687sm9494431f8f.14.2024.07.01.02.10.37
+        d=1e100.net; s=20230601; t=1719826589; x=1720431389;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3pqs4nmxooikczXjxw63lsFMoDXjJaKB4W76ZXvb4D8=;
+        b=YEYNQJ86DaGmbaxg/C45kR/k9DxCuKZwL5OLWw0I4HbgloCCdH3IdiOv+qGwyGa96y
+         p73XZhcTc8Tz+jnaQUklV3g9jkx/C9KO7/9ENzJx5eldoa34JWI/BfOMhXYrA9LIH6YD
+         bEcTsveH8pmMw1Cz3sNxnU3vPmVG3y2X1vRWTYCktiP62W0niqG3e9EEXUbMU4G0Epaj
+         Iyz7m3OiJT9TKp4mfFaKHwjoSLPgT7OYf2Kccuqo/tHjtsV8zTim+hsKmIqEt0gp6liy
+         IDKXDue4ScC6Wptp8vmD94MYtRqNG2A4Sk3XV4hMYQFSh/kryyn/Uh5UgAFCUMQzl9BG
+         eTJg==
+X-Forwarded-Encrypted: i=1; AJvYcCXzBTIM5Q6i1bcJzDuQN9FJ1qq+T5JBL54xdGJ11uuUnTzeqaU7kZeu18It/qIT1wCRD5RNp6Midok4bhE+lu8IM0hrvgibdhfBsXRnTQ==
+X-Gm-Message-State: AOJu0YxEYCAhBWQTRwGEzztIDVHOr1t1dwpRSVjBDZBDFWxVACeMTsIE
+	PFLA09HIs57KwtuCAQ5Bu3uDXs0zf9KH0OXe5zZjRQNZvAX5LUpp7Lr20GGvPXc=
+X-Google-Smtp-Source: AGHT+IFWvG4fosc6/R33UomGs9VQxDNiWqGJAdzOoVYVsp/X7YQcOt95k7kaqgK4jyy9WEpmh0opvw==
+X-Received: by 2002:a7b:c450:0:b0:425:7aa7:e490 with SMTP id 5b1f17b1804b1-4257aa7e509mr40653635e9.3.1719826589267;
+        Mon, 01 Jul 2024 02:36:29 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.137])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4256b068e93sm145987255e9.24.2024.07.01.02.36.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Jul 2024 02:10:37 -0700 (PDT)
-Message-ID: <bd1c0c99-e394-4ad2-bc86-a277018b3ec0@linaro.org>
-Date: Mon, 1 Jul 2024 11:10:36 +0200
+        Mon, 01 Jul 2024 02:36:28 -0700 (PDT)
+Message-ID: <b5b76937-091f-494e-879a-c042ab475548@linaro.org>
+Date: Mon, 1 Jul 2024 11:36:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,191 +77,75 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 0/2] iio: frequency: add iio support for Amlogic clock
- measure
-To: Jerome Brunet <jbrunet@baylibre.com>
-Cc: Jonathan Cameron <jic23@kernel.org>, Lars-Peter Clausen
- <lars@metafoo.de>, Kevin Hilman <khilman@baylibre.com>,
- linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org,
- linux-iio@vger.kernel.org, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <20240624173105.909554-1-jbrunet@baylibre.com>
- <52fab9b5-2b44-49c0-8b90-cb2a74eb6633@linaro.org>
- <1jzfr9gxh4.fsf@starbuckisacylon.baylibre.com>
- <c092ec67-e384-411d-8885-665597547523@linaro.org>
- <1jv81xgmfc.fsf@starbuckisacylon.baylibre.com>
- <5da26c0e-75a7-4d5a-9eca-f88ecf369996@linaro.org>
- <1jjzi5a3ka.fsf@starbuckisacylon.baylibre.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <1jjzi5a3ka.fsf@starbuckisacylon.baylibre.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v2 1/2] dt-bindings: arm: qcom: Document samsung,ms013g
+To: Raymond Hackley <raymondhackley@protonmail.com>,
+ linux-kernel@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht
+References: <20240627193013.1800-1-raymondhackley@protonmail.com>
+ <20240627193013.1800-2-raymondhackley@protonmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240627193013.1800-2-raymondhackley@protonmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 01/07/2024 11:01, Jerome Brunet wrote:
-> On Mon 01 Jul 2024 at 09:41, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+On 27/06/2024 21:30, Raymond Hackley wrote:
+> Document samsung,ms013g for Galaxy Grand 2.
 > 
->> On 25/06/2024 15:51, Jerome Brunet wrote:
->>> On Tue 25 Jun 2024 at 15:18, Neil Armstrong <neil.armstrong@linaro.org> wrote:
->>>
->>>> On 25/06/2024 11:53, Jerome Brunet wrote:
->>>>> On Tue 25 Jun 2024 at 11:38, Neil Armstrong <neil.armstrong@linaro.org> wrote:
->>>>>
->>>>>> Hi,
->>>>>>
->>>>>> [+cc people from linux-msm]
->>>>>>
->>>>>> On 24/06/2024 19:31, Jerome Brunet wrote:
->>>>>>> Add support for the HW found in most Amlogic SoC dedicated to measure
->>>>>>> system clocks.
->>>>>>> This drivers aims to replace the one found in
->>>>>>> drivers/soc/amlogic/meson-clk-measure.c with following improvements:
->>>>>>> * Access to the measurements through the IIO API:
->>>>>>>       Easier re-use of the results in userspace and other drivers
->>>>>>> * Controllable scale with raw measurements
->>>>>>> * Higher precision with processed measurements
->>>>>>> Jerome Brunet (2):
->>>>>>>       dt-bindings: iio: frequency: add clock measure support
->>>>>>>       iio: frequency: add amlogic clock measure support
->>>>>>>      .../iio/frequency/amlogic,clk-msr-io.yaml     |  50 ++
->>>>>>>      drivers/iio/frequency/Kconfig                 |  15 +
->>>>>>>      drivers/iio/frequency/Makefile                |   1 +
->>>>>>>      drivers/iio/frequency/amlogic-clk-msr-io.c    | 802 ++++++++++++++++++
->>>>>>>      4 files changed, 868 insertions(+)
->>>>>>>      create mode 100644 Documentation/devicetree/bindings/iio/frequency/amlogic,clk-msr-io.yaml
->>>>>>>      create mode 100644 drivers/iio/frequency/amlogic-clk-msr-io.c
->>>>>>>
->>>>>>
->>>>>> While I really appreciate the effort, and the code looks cool, the clkmsr is really
->>>>>> a debug tool, and I'm not sure IIO is the right place for such debug tool ?
->>>>> The reason why I went through the trouble of doing an IIO port is
->>>>> because I need that for other purposes than debug. I need to to be able
->>>>> to check a frequency from another driver. I don't see a reason to invent
->>>>> another API when IIO provide a perfectly good one.
->>>>> The HW does measurements. IIO seems like the best place for it.
->>>>> For the record, I need this for a eARC support.
->>>>> eARC has a PLL that locks on incoming stream. eARC registers show wether
->>>>> the PLL is locked or not, but not at which rate. That information is
->>>>> needed in ASoC. Fortunately the eARC PLL is one of measured clock, which
->>>>> is a life saver in that case.
->>>>
->>>> This is a very interesting use-case, and quite weird nothing is provided
->>>> on the eARC side.
->>> Indeed.
->>>
->>>>
->>>> So yes it's definitely a valid use-case, but:
->>>> - we should keep the debugfs interface, perhaps move it in the iio driver ?
->>> I considered this initially but it would add a lot of boiler plate
->>> code to provide over debugfs exactly what iio already provides over
->>> sysfs. As you pointed out, the previous driver only provided debug
->>> information, the debugfs interface it provided is hardly a
->>> critical/stable one.
->>
->> I still don't see why it could add so much boilerplate, all the tables and
->> calculation fonction would be shared, only the debugfs clk_msr_show() and
->> clk_msr_summary_show() would be kept, all the rest would be common.
->>
->> I insist, please keep the debugfs interface for debug purposes. You don't
->> want to mess with IIO when you bring up new platforms with bare minimum
->> kernels.
-> 
-> I don't think that is going to change anything. It's not like IIO brings
-> any complexity or will be compiled out.
-> 
-> But since you insist, I'll add it in the next version as a separate patch.
-> 
->>
->>>
->>>> - we should keep a single compatible, so simply update the current bindings with iio cells
->>> Using a new compatible allows to split the memory region, making the
->>> interface between DT and driver a lot easier to implement seemlessly
->>> between old and new SoCs. Eventually it may allow to implement the duty
->>> part too.
->>
->> It's a problem for new platforms, you can introduce the split only for the
->> new ones, the impact on code won't high enough to justify new bindings.
->>
-> 
-> What you are requesting will introduce two drivers providing the same
-> compatible, unless you plan on removing the old one in a coordinated
-> way.
-> 
-> That's an unncessary churn. The old driver could stay there for a
-> while and platform slowly migrate. What you are requesting forcefully
-> migrates every consumer, assuming the old driver is compiled out.
-> 
-> This is an opportunity to more correctly describe the interface.
-> It does not break any DT rules, that is enough of a justification IMO.
+> Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
 
-DT describes the Hardware, I don't see how the new bindings describes better
-the current hardware... tying the new bindings to a new driver is actually
-against the DT rules, the bindings thing is actually to avoid that.
-For PWM, bindings architecture was clearly wrong, but here, not really.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-I still don't see the problem of migrating current users to the new driver
-using the current compatible, really, please explain what would be the problem ?
-
-In any case you'll only need to add the #io-channel-cells to boards that would
-require frequency monitoring for eARC, for all the other boards you'll won't need it.
-So this property can safely be added as optional to the current bindings.
-
-Neil
-
-> 
->> Neil
->>
->>>
->>>> - for s4 & c3, it's ok to either add a second reg entry in the bindings
->>> Doing that for s4 and c3 only would still make a mess of offset handling
->>> the region because duty prepend the region on old SoC. The goal is to
->>> have an interface that seemlessly support both old and new SoCs.
->>>
->>>>
->>>> Neil
->>>>
->>>>> Everything that was available through the old driver still is, with more
->>>>> precision and more control.
->>>>>
->>>>>>
->>>>>> There's almost the same interface on qcom SoCs (https://github.com/linux-msm/debugcc) but
->>>>>> they chose to keep it in userspace until we find an appropriate way to expose
->>>>>> this from the kernel the right way.
->>>>>>
->>>>>> If it enabled us to monitor a frequency input for a product use-case, IIO would be
->>>>>> the appropriate interface, but AFAIK it's only internal clocks and thus I'm worried
->>>>>> it's not the best way to expose those clocks.
->>>>>>
->>>>>> Neil
->>>>>
->>>
-> 
+Best regards,
+Krzysztof
 
 
