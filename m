@@ -1,140 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-24793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E461991DC23
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 12:13:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFD4791DC5D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 12:25:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E418281EAC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 10:13:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6BE11B212EF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 10:25:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43C8F12C489;
-	Mon,  1 Jul 2024 10:13:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 990A712BEBE;
+	Mon,  1 Jul 2024 10:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="OjB4fFmy"
+	dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b="F2JAIHJp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 690B884D13
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 10:13:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD914381D9;
+	Mon,  1 Jul 2024 10:25:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.252.153.129
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719828813; cv=none; b=Md87fDHDUGOjDQHIo+QW9oaIh+3VTNoEJD9SU1Tx6hFyMItDVfeGV8rYQQxWzh5Jk6XzrsRKUStMfGAsErhzd7kgxn7JN0VFHcjWLSpnnd6YJ0k5Z1c/F5DWtuLR2Sg3Lp3I4g2QT4+45Tp+hS5kHVIGs84wKeDij4A5/BiDV2o=
+	t=1719829516; cv=none; b=JZRRUWZFQkK6pNa+rDhsvALintcD1yBR675oqP3v34UVgOZug5R8M5s/LRuedsfHsX/QcfV1oxy4xuCtZDbN8aVldyEdqa9jqWY+S04aR+/D++E+9IseKouZKEYYi6WnMSz/lBXGUC0l3jabtIj7yghaEATzQG3i5Ja/CJvZ1+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719828813; c=relaxed/simple;
-	bh=wbQXOeAsXHy4G+RPUD1L4HvHY3UjpcFzd4LWh5TzHPk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=gTiKSDqtO+DXExIm0OGb5zUN1ytzhYCXHV+pn8g3oNuUcrK3FFeLBQ8HQXTAb/98HImiDrwkAxUnMXwnPzQiVrSWxKdlLWsrybLpColEhgZjVu7gJaQWHIYZPQYEaeIkNFwpkhZTaxucIW9igHrewg+xP0/jHCxiB2fIhddFR1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=OjB4fFmy; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-57cc1c00ba6so57750a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2024 03:13:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1719828809; x=1720433609; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=27HxPtMT+Pe7iuNMl9/1XfWreBshEKC9NaTAcn2bpUE=;
-        b=OjB4fFmyDjkRaDVzRkat9MstEfgZVDsLnCVzQASOpbiTMuaNuFg6CrwPsMJNIrR//Z
-         lw29irsO8swaHOXwBhYOKsWl348MvZ+w4mN4s+zYitJU3bNjeO3bCWS2EoiHIK2uzMJu
-         AYIcOMaIz3xOtojdvrpWKjZmShs2P/sROipsVeaHJz0f5zvafNktFbctxPA6DSECVvHO
-         WHfrBFW/IYrceBT42LaDDkAGYZvti1p/as78ABTUzJhW++kLAvTrjdMr9lZbea+MQKG+
-         K7i/PuXHoLN85weWB1NDsz3jSJ/BuyGXqcER8nRs8JKekAb3CbjAffUARUNIbqLN66UW
-         U8TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719828809; x=1720433609;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=27HxPtMT+Pe7iuNMl9/1XfWreBshEKC9NaTAcn2bpUE=;
-        b=XAP46UT2kT8X3oePmcLCAJG6lJyNXSVZlVBzYz7AoYB1Ldt/iw5+Bft8ijgy2jCMjx
-         C/OugLgUrBJyobtYf3hu8mzZge/mfozyIq/XUnxjfx/VVvzCrO8zNODPXsnXcU3NdaTk
-         N/fnjTRwnnzN9pxcQdxm8DKHAMojU4cF+pa/YPdmivLikcoVb15O2l+EZmjGXVLdn7Jy
-         GvlT8M/0hx4dljCGHok+RyS4n6+e6J8X7F2qZlr7KpPqf8tNKlhKXHSmBOBTx6k9X6q1
-         4r+Bf7pYSGWwI4wHS0s2ULP2bZr1ajtjOqOAG9+500wLTML9sJrNhITC5kcuQ9iGKi85
-         WIkA==
-X-Forwarded-Encrypted: i=1; AJvYcCVkWvg4/uKCWYqUe+w/6QzWrb64ySXjMD9kvbdvE/aiBVtA2ChYA+GQujndNytQL1VFjENZCmUCRgYMAIRKLyhQkeedqJT8hlH1Yjrp5g==
-X-Gm-Message-State: AOJu0YySbTaHJSuUWbghIiNdwn0Wd/DSmcwYVSY0g6yTlFUD2l9CjebS
-	WnzhEuqJRwRlYu+yk3jcU7ToBZDdhzZ996mGbkvlpydt3lKOyFAI+bGKypT489I=
-X-Google-Smtp-Source: AGHT+IHj+BcVm87b41Z+G83EUAjJgrmIUWRa5gN38WLv/Sf6cUjrQOUekcEFjk4rw0lBU4DrEAitPg==
-X-Received: by 2002:a05:6402:1941:b0:57d:456:e838 with SMTP id 4fb4d7f45d1cf-587a0b037ebmr3541191a12.31.1719828808730;
-        Mon, 01 Jul 2024 03:13:28 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5861324feb7sm4244777a12.37.2024.07.01.03.13.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Jul 2024 03:13:28 -0700 (PDT)
+	s=arc-20240116; t=1719829516; c=relaxed/simple;
+	bh=mlb70k49gE58Gm8n+ygNOCLV0HCSd9r+gI3Aw80eKVg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=V711tWAAXlRE2B9tqucQ8VZpObgIl/5IoqsLQoRPKeD0rehGI+pfKkyXVi9zfmVXFWBMOn/ECNIptCCmdOegSyG6oamoERwvMwZipz1wVaeqOEsu3RPEsVTv97DnXF6qCKyJGuv6pFyVvMhQwfrIQc1ndQf1hYai5xITP1USC+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riseup.net; spf=pass smtp.mailfrom=riseup.net; dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b=F2JAIHJp; arc=none smtp.client-ip=198.252.153.129
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riseup.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riseup.net
+Received: from fews01-sea.riseup.net (fews01-sea-pn.riseup.net [10.0.1.109])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx1.riseup.net (Postfix) with ESMTPS id 4WCMcT6cZqzDqVw;
+	Mon,  1 Jul 2024 10:25:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+	t=1719829514; bh=mlb70k49gE58Gm8n+ygNOCLV0HCSd9r+gI3Aw80eKVg=;
+	h=From:Date:Subject:To:Cc:From;
+	b=F2JAIHJpK4uQONftgmhukfs6dBiNkpGkLljTuYsV9l+FrboyNc5ox6rsyuczptW1T
+	 tdXbL6BVPgiqks3kMBFVv0CMIWWrLD9FMIgXHR+TWc5pudNyODVvUAxcMp+20GZh8I
+	 qvVAfRT5/rx191WlqSTEYa0RT3FIjWtmzOJH6osg=
+X-Riseup-User-ID: 8D6BE43A718B906C928C50D09DE8CB4E792BE55DD41C2F5D69CC61EAC71526D7
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	 by fews01-sea.riseup.net (Postfix) with ESMTPSA id 4WCMcD1tDCzJrPW;
+	Mon,  1 Jul 2024 10:25:00 +0000 (UTC)
+From: Dang Huynh <danct12@riseup.net>
+Date: Mon, 01 Jul 2024 17:24:39 +0700
+Subject: [PATCH v2] arm64: dts: qcom: qrb4210-rb2: Correct PMI632 VBUS
+ ampere
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 01 Jul 2024 12:13:28 +0200
-Message-Id: <D2E4FJAD0UZ7.ZDYOYNZ8QOJA@fairphone.com>
-Cc: "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
- <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: qrb4210-rb2: Correct PMI632 VBUS
- voltage
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Dang Huynh" <danct12@riseup.net>, "Bjorn Andersson"
- <andersson@kernel.org>, "Konrad Dybcio" <konrad.dybcio@linaro.org>, "Rob
- Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>
-X-Mailer: aerc 0.17.0-0-g6ea74eb30457
-References: <20240701-qrd4210rb2-vbus-volt-v1-1-5c06f8358436@riseup.net>
-In-Reply-To: <20240701-qrd4210rb2-vbus-volt-v1-1-5c06f8358436@riseup.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240701-qrd4210rb2-vbus-volt-v2-1-b7bcd2a78c8b@riseup.net>
+X-B4-Tracking: v=1; b=H4sIAOaDgmYC/4WNTQ6CMBBGr0Jm7Zh2KD9x5T0MCyiDTGIAp9BoD
+ He3cgGX7yXf+z4QWIUDXLIPKEcJMk8J6JSBH9vpzih9YiBDzlTG4lN7R9ZoRxi7LWCcHyvWRFX
+ pfOUH30KaLsqDvI7srUk8SlhnfR8v0f7sn2C0aLHwphzqvKhdXl5VAm/LeeIVmn3fv7JsQd25A
+ AAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Dang Huynh <danct12@riseup.net>
 
-On Mon Jul 1, 2024 at 12:09 PM CEST, Dang Huynh wrote:
-> According to downstream sources, PMI632 maximum VBUS voltage is
-> 1 volt.
+According to downstream sources, PMI632 maximum VBUS ampere is
+1A.
 
-Everywhere (also subject): s/volt/ampere/
+Taken from msm-4.19 (631561973a034e46ccacd0e53ef65d13a40d87a4)
+Line 685-687 in drivers/power/supply/qcom/qpnp-smb5.c
 
-Voltage for USB is 5V
+Signed-off-by: Dang Huynh <danct12@riseup.net>
+---
+In previous patch series, there's a suggestion to correct
+PMI632's VBUS ampere.
 
-Regards
-Luca
+Unfortunately it didn't make it and probably forgotten.
 
->
-> Taken from msm-4.19 (631561973a034e46ccacd0e53ef65d13a40d87a4)
-> Line 685-687 in drivers/power/supply/qcom/qpnp-smb5.c
->
-> Signed-off-by: Dang Huynh <danct12@riseup.net>
-> ---
-> In previous patch series, there's a suggestion to correct
-> PMI632's VBUS voltage.
->
-> Unfortunately it didn't make it and probably forgotten.
-> ---
->  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/d=
-ts/qcom/qrb4210-rb2.dts
-> index 1c7de7f2db79..1888d99d398b 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> @@ -305,7 +305,7 @@ pmi632_ss_in: endpoint {
-> =20
->  &pmi632_vbus {
->  	regulator-min-microamp =3D <500000>;
-> -	regulator-max-microamp =3D <3000000>;
-> +	regulator-max-microamp =3D <1000000>;
->  	status =3D "okay";
->  };
-> =20
->
-> ---
-> base-commit: 642a16ca7994a50d7de85715996a8ce171a5bdfb
-> change-id: 20240701-qrd4210rb2-vbus-volt-822764c7cfca
->
-> Best regards,
+----
+Changes in v2:
+- Fixed typo (voltage -> ampere)
+- Link to v1: https://lore.kernel.org/r/20240701-qrd4210rb2-vbus-volt-v1-1-5c06f8358436@riseup.net
+---
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+index 1c7de7f2db79..1888d99d398b 100644
+--- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
++++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+@@ -305,7 +305,7 @@ pmi632_ss_in: endpoint {
+ 
+ &pmi632_vbus {
+ 	regulator-min-microamp = <500000>;
+-	regulator-max-microamp = <3000000>;
++	regulator-max-microamp = <1000000>;
+ 	status = "okay";
+ };
+ 
+
+---
+base-commit: 642a16ca7994a50d7de85715996a8ce171a5bdfb
+change-id: 20240701-qrd4210rb2-vbus-volt-822764c7cfca
+
+Best regards,
+-- 
+Dang Huynh <danct12@riseup.net>
 
 
