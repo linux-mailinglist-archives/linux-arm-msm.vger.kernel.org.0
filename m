@@ -1,152 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-24817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C279691E675
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 19:19:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8313A91E6EB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 19:52:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 021E01C22823
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 17:19:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DCD22281E78
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 17:52:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E977716EB7B;
-	Mon,  1 Jul 2024 17:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6FB016EBEA;
+	Mon,  1 Jul 2024 17:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iUpFkhh/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FKH7srHI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A26F16E865
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 17:19:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A8816EB77;
+	Mon,  1 Jul 2024 17:51:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719854365; cv=none; b=c0bRJ02p54PeER4HeIjlSxEwi7b+ozjbvxnTncId6f+5Qyq7ZxQk1pYWYdTXROmqHFSxm7xdFCqg74Oblayyy8qkA8AtoENWjy1AcnULqutQompizB4VRXGlUlRQhkSKcKis7sx+Oi+HqvjhtNAsdrN8UPDmyYAHMgG+20XkVDw=
+	t=1719856312; cv=none; b=tEh61Jd8uz7gJHwiisNsz7qDP0j4iOESSCitrJLl+5MvN1KnU820See/5/DwomTDHglpdSLxQORiXBm0RIIedyLem1x0YKwkhBRS2374eI4CHOUwDjkWK/FPT1Vr///Cms/tI/BXe2lGe5CKtxLL/gyns+R8cJ33EJWYQkHkE+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719854365; c=relaxed/simple;
-	bh=P21qd1OkbuiMrCjx3m8pH2sGiiMR71WkUYVgzpHXae8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VkuQzFNSPWO3AcJjdIuYbJ1EvBk/EMqUkiPet62Noyg2doWnYx5raCdilLheSN/n+fSfgpYzmlx56Lu77gvJUsblvVJSYsq6IqvjHJskuuKYSLHSi4Wf1w8lZE0oKy4dKNQOvGx5yMdZQquNghiIgxGqwNN3wbDZzKKg8Krbx/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iUpFkhh/; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52cd87277d8so3318870e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2024 10:19:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719854362; x=1720459162; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yqja86UDKTFIc+qc3NF0+FAZFhHDXQ4XzxpjOTJHZXE=;
-        b=iUpFkhh/nSsOntn7LxJqxDqyniQjpbI6xZnHvMEP4jNzHazxAOJulCN9XGGoc2Kzgi
-         7WWFDXupEr1tHXxLC7DhaNvVD79LkoJz/S0fKks/CZ7n13W5DieE4vVjkvcvTdyfp/K8
-         DlqymiXUa4dJLZcAueyjs/iUdXUq+qypotFz8r2JR/GMO6yVoPRNiEZz3use97cLiWz8
-         IDs9olCcy9m8uukiqQ1BTs456ONhXIwBkSTbft09sBCiEY/WZbOrr96O5U1Et0AKNHAz
-         EK68FUvsgsC3RILJkAnb5Vsj+OVGM26wAgCwo+matXqBLxhkQENtscLRbRkbgsSAcY5q
-         w6sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719854362; x=1720459162;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yqja86UDKTFIc+qc3NF0+FAZFhHDXQ4XzxpjOTJHZXE=;
-        b=e/EINScDgghlCtf+5XTKkebExnhxloAXVpgKJZCHUyZD/9ZpigpBre0SVur9rc8VIx
-         3aNQ6ksSEFMzUUkPu15qpyvRcZtYVZU/yI6B0miwwPklgMuB6OGCejhkuvEb2C33eHF3
-         A9oxHG3hl61BpIkDadSkiiz9yrOpzBHhjJlYJJ6srbiKZ/fZU7cr0Ze4+VDPRM/XQhob
-         z0jIJk6txUB799zsGmMDwV1ddiY7FmDhxbDwoV45Srn/FX7GREMKoedscidZf7P+r2R1
-         QlJb8kowAKw9EsJgiVWlYWmjyw85jIzYmhFFnZ5roltxOY8p4b65LbjaxW5LplISJX3B
-         qntw==
-X-Forwarded-Encrypted: i=1; AJvYcCU6/cVbSAt4mKFUcp6cVKhDcs0Lk/zKu+l0LCCViOoe+X/4jLG2iHq2VuLMEIXwGBgutlP0HKCwhRYlXBqk9gIxK2CQo6ID6gU1yBrrJA==
-X-Gm-Message-State: AOJu0Yz85GBV6KQEpL5bE7Jmpo2WxGVTzyKUqF8dWZAcBXnSGIlztF6V
-	j5rjYu6VKJZmYZIAtV4dq2FQwQxkM9JrZPer2YRkr6HVfD5JpV04oY6dxG6n+1c=
-X-Google-Smtp-Source: AGHT+IEpcOPlfAXhpzDXXuXPLW36uadem/IXz8BjMrFDaiR4x1PqQz5+4iXhrAFqE4LAPZjFn+z0sg==
-X-Received: by 2002:a05:6512:1599:b0:52c:dc69:28f3 with SMTP id 2adb3069b0e04-52e8270fa7dmr4370670e87.52.1719854362487;
-        Mon, 01 Jul 2024 10:19:22 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a112e19sm10581137f8f.116.2024.07.01.10.19.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jul 2024 10:19:22 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Banajit Goswami <bgoswami@quicinc.com>,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	alsa-devel@alsa-project.org,
-	linux-arm-msm@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] ASoC: qcom: topology: Simplify with cleanup.h
-Date: Mon,  1 Jul 2024 19:19:17 +0200
-Message-ID: <20240701171917.596173-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240701171917.596173-1-krzysztof.kozlowski@linaro.org>
-References: <20240701171917.596173-1-krzysztof.kozlowski@linaro.org>
+	s=arc-20240116; t=1719856312; c=relaxed/simple;
+	bh=+xTcvxBakZ4cHh0hXoK9EpJRwYxm/3zwJmLM/+ERZyc=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=OyMmLoArLaqI4Qe/aIjy84iP1GwjHn2x8tv+Y125/bO2h6Rke0GMGuGwumXOfwf3+kw3Nfdg3KZ1XLP/lbOM8bh8O4WSaSHEQiy85ow8I4kBlJ2c1/F/JuSAmzi5pEbAXTLsJVjbmMkMqcEtTLx+NZFKpTR/6IK+ft72ZuifElI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FKH7srHI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31FBC116B1;
+	Mon,  1 Jul 2024 17:51:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719856312;
+	bh=+xTcvxBakZ4cHh0hXoK9EpJRwYxm/3zwJmLM/+ERZyc=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=FKH7srHI4Yo1MYbh1wm2OLGqHckHihJmvcF+yJfLIOPxZJYM8uje+hAqVUn7J4sOV
+	 dSC8EXnJ8xX+YM3CP5NSk6RCwdhGJl/sMgn0UgObqwTS+1THutn3ShGabc7hkLhYWc
+	 Q2xjVfTYt5im03tQiPRQJ3aemWnw42gEAVUTrvuAz9u0sk9JULKbB0eCBhE5eP5jsm
+	 H9qVfq8MxIuS5TUMn9QSgmJoqtJqQAO4iz9TT+Jf8uPgsVNR9eVAZXTfkBDiZ2THt5
+	 TYaBcvh7baMNe/p6saTZKW+xHXTQL6bZMVaNK+aXhf6AGgtL4H9V//m7mIEZMu+c7e
+	 x4YXpuwLXpYJg==
+Date: Mon, 1 Jul 2024 12:51:49 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Jingoo Han <jingoohan1@gmail.com>, quic_vbadigan@quicinc.com,
+	quic_skananth@quicinc.com, quic_nitegupt@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC 0/7] PCI: enable Power and configure the QPS615 PCIe
+ switch
+Message-ID: <20240701175149.GA10638@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240626-qps615-v1-0-2ade7bd91e02@quicinc.com>
 
-Allocate memory, which is being freed at end of the scope, with
-scoped/cleanup.h to reduce number of error paths and make code a bit
-simpler.
+On Wed, Jun 26, 2024 at 06:07:48PM +0530, Krishna chaitanya chundru wrote:
+>       dt: bindings: add qcom,qps615.yaml
+>       arm64: dts: qcom: qcs6490-rb3gen2: Add qps615 node
+>       pci: Change the parent of the platform devices for child OF nodes
+>       pci: Add new start_link() & stop_link function ops
+>       pci: dwc: Add support for new pci function op
+>       pci: qcom: Add support for start_link() & stop_link()
+>       pci: pwrctl: Add power control driver for qps615
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- sound/soc/qcom/qdsp6/topology.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+Run "git log --oneline" on these files and match the style.
+"PCI: Change ...", "PCI: qcom:", "PCI/pwrctl", etc.
 
-diff --git a/sound/soc/qcom/qdsp6/topology.c b/sound/soc/qcom/qdsp6/topology.c
-index f4d62ea60baa..83319a928f29 100644
---- a/sound/soc/qcom/qdsp6/topology.c
-+++ b/sound/soc/qcom/qdsp6/topology.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- // Copyright (c) 2020, Linaro Limited
- 
-+#include <linux/cleanup.h>
- #include <sound/soc.h>
- #include <sound/soc-dapm.h>
- #include <sound/pcm.h>
-@@ -1288,18 +1289,19 @@ int audioreach_tplg_init(struct snd_soc_component *component)
- 	struct snd_soc_card *card = component->card;
- 	struct device *dev = component->dev;
- 	const struct firmware *fw;
--	char *tplg_fw_name;
- 	int ret;
- 
- 	/* Inline with Qualcomm UCM configs and linux-firmware path */
--	tplg_fw_name = kasprintf(GFP_KERNEL, "qcom/%s/%s-tplg.bin", card->driver_name, card->name);
-+	char *tplg_fw_name __free(kfree) = kasprintf(GFP_KERNEL, "qcom/%s/%s-tplg.bin",
-+						     card->driver_name,
-+						     card->name);
- 	if (!tplg_fw_name)
- 		return -ENOMEM;
- 
- 	ret = request_firmware(&fw, tplg_fw_name, dev);
- 	if (ret < 0) {
- 		dev_err(dev, "tplg firmware loading %s failed %d\n", tplg_fw_name, ret);
--		goto err;
-+		return ret;
- 	}
- 
- 	ret = snd_soc_tplg_component_load(component, &audioreach_tplg_ops, fw);
-@@ -1309,8 +1311,6 @@ int audioreach_tplg_init(struct snd_soc_component *component)
- 	}
- 
- 	release_firmware(fw);
--err:
--	kfree(tplg_fw_name);
- 
- 	return ret;
- }
--- 
-2.43.0
+The colon vs slash convention isn't obvious, but this is how we've
+applied it in the past:
 
+For PCI core features like MSI, PM, ASPM, AER, DOE, etc:
+
+  PCI/<feature>: <Text>
+
+For PCI drivers outside the PCI core, like dwc, qcom, imx6, etc:
+
+  PCI: <driver name>: <Text>
 
