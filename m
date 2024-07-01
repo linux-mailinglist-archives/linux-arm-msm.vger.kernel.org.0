@@ -1,122 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-24768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72CB191D7C2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 07:57:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B6C0291D80C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 08:23:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7A7BDB22BBF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 05:57:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB8011C222C5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 06:23:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 771A441C85;
-	Mon,  1 Jul 2024 05:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE79047F45;
+	Mon,  1 Jul 2024 06:22:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OEz4M7Gs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Y56TD+xB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440613D0C5;
-	Mon,  1 Jul 2024 05:56:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8BB39FCE
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 06:22:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719813418; cv=none; b=BcMRJmA+kIE+u6g4kHBmx4QwgBMiuOITSeYoianwVWFSsLT8xowZNvOCAg12fBFqvrGVEuXa2IjuJCha4C5BePF16M+FwuR0YVGpDJ1n4pUPDEn7cvZeeApQi/3D5B3/rVqqHcjPyUo2mMId+BCUsy/YyT6qOTq4N50yrHO/CUI=
+	t=1719814979; cv=none; b=JR1KO9VYDsQ9jSHoyAbU7TRBuRuPwaDNy0JlTJ6LK+Sq1QLomRI3fAYzg6kMoCnGnPbcIxZr0N3otnM2FdSlcr63OyZ2ULrnqnzkQAcZhpniY2vju+24+TWGabOxfxgXIAZDSjeI00uCIseTcGL0ocvQSf3HneEtswyzpjq4MAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719813418; c=relaxed/simple;
-	bh=ndCOuKt0DYt62n4PsC9t0wTAVT7ZtqIln7LC58W6I4A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Rey2fagR+OaDflUwbRsBtYTekcJeAx+hATSYnXUB1+HniK8l+jYYfY57ysVTTabs75MR0rYtTBeJjcXRMvgmE4wqQRM4FJxJC1IgBgveQLawiCGsIJR+lYXnKWlURwCXqcryN6vs0ua4LOyG58k89v9r2wJkX2arqFkZgNAqQ9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OEz4M7Gs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93291C116B1;
-	Mon,  1 Jul 2024 05:56:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719813417;
-	bh=ndCOuKt0DYt62n4PsC9t0wTAVT7ZtqIln7LC58W6I4A=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=OEz4M7GsqkgUe7P6HitPdkxJx38RR0yVpqDA63AdiWvgJ/tel0McZJ3ACHFlafGrC
-	 9fP33DoCrQdGLtg9tvXxbdvIE8W99yz+J56nn1ufZOhyISWZbi/FPMm0zbKVBzf0hl
-	 vQhXyzGmEaeMqrGHgiwFYfUHvhmLLrCKIYkbIC1oDV1+tjGoxEioIsWb5sCQJBLgiO
-	 80z9aR7K2o2FVx660xyAO16RGHQsO86FyCsWbOnjgjaU+rpcgvtWX3Ag8OhtOdeNF+
-	 Il/w9u4xgoh+IrhRIFqLnQwjcGy5VoDt1zxLQIB55q5jcQI2WAWKIG0f3/MEka6808
-	 uqs9WaBtZCocQ==
-Message-ID: <f9a37a44-fd24-4e35-ba74-5664da0ff080@kernel.org>
-Date: Mon, 1 Jul 2024 07:56:50 +0200
+	s=arc-20240116; t=1719814979; c=relaxed/simple;
+	bh=vnOavInzasusu7sZvRiMbPs2BO7CtAwUG6VhiHeTfx0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=e17zTQzAcEaquYPgvQwGdc2O7uVRN4GoBs01XDc+6IhIhoS3iq6YThAHBh7q+L7gZMUIh93/KFPcKfmVDMP63dVNVzSbB/9W4EH3GoUmeodAC7EI6wd4wqmjzNrZs0hUMA5SOoJ6nKwCr/6D+I/tZYVwLkMfbh92ZJrl8kIrVTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Y56TD+xB; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52db11b1d31so3765208e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Jun 2024 23:22:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719814976; x=1720419776; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BAsmlu9vk3gg6K/UmI0l9ZVjTV6Bp6WBwBKunNxxZw0=;
+        b=Y56TD+xBGEfL3e6m0Ky7SO8+7XSH0KiWIp9JIGbgUWi70Ew6atcIuAtlzXREPRCOUo
+         9X34HJ2E8T5ncUpz8i5rR5b1xI+ZJU851Lu2608pGu4RAXE5mpTtdyxIJV6TifVHBtYM
+         jWAmmZvXJMoIjZWl1WSmTd0rP9o/A4r2Wz4oSL9YkO9OgRPQP3OqdtpIM26yn1rqoGmL
+         PUvPKYpjwjV4voDIk63K5amElrYs9hWd6YGjKs8JEl2Fm5nVpR/avTZ75JzgrzfN1VC0
+         92M/CLS1cGvBOzEImRxnhI6JfxQOk1FA86dq4ZglSF38nDTAlTvqL5tbQX3+VCx9/lS1
+         tZ3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719814976; x=1720419776;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BAsmlu9vk3gg6K/UmI0l9ZVjTV6Bp6WBwBKunNxxZw0=;
+        b=UFUO7GEoOWbRf7v9FCUpnksjbY2VvuNhjS8YjCGMtLnDwe436GpUDM6Pu7CDOLarU1
+         kR8LQovpFDcjymg7kw8OTMFn7WS51kA3uwB7fdnddPqoMz40eiTh+eeIFBKg51nHJpbe
+         df/8CEB9WBw94dSwHSLLKeDKSDkPM0DInjlUM9kfAY1g9Kjbn7wM/CgQSjEKKy6jh1kA
+         s0de/6l6hY/yKa1tvyHr8JfgEImDFewjwNAhKG20OOQ02JXTvEyNpQvvQr5yE2tKX/4I
+         oUB3j0tnGLDM/fClIOTSfXfhGoUYeocPOweKSxUNZmLsQZlzRhta0I/RPjod6OHzPxlD
+         hy0w==
+X-Forwarded-Encrypted: i=1; AJvYcCXcdAbfae8iKS+pDetvAKL4g3T3AumqFOJUJ0LL1Pb4nZlF25z1UkurwffE/wi9PvzpTVZu6vFq+1A5RNr+DH+4sOYXRHIuEgqp98gGkA==
+X-Gm-Message-State: AOJu0YxxJy+WTgFRhDDexj0VTvoZVXSXrfGlMyDQWdPcoXnHEpheRIGo
+	WEFTYcVI6ETmqgJ7KMryVVSv3k8sBk16L+S/YGlOTSONHLO1YR5AL+L4S+dhpec=
+X-Google-Smtp-Source: AGHT+IGMyvzN1UuH0TYDU07LJVMzmdbi3um4v8edhrn6hp/lr+qA+R8n3VuTL2BsnUlvBPuUwMTlbQ==
+X-Received: by 2002:a05:6512:1049:b0:52c:d88a:f769 with SMTP id 2adb3069b0e04-52e82687d9dmr2577628e87.33.1719814976266;
+        Sun, 30 Jun 2024 23:22:56 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.219.137])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4258014f8b7sm40899615e9.41.2024.06.30.23.22.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 30 Jun 2024 23:22:55 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	kernel test robot <lkp@intel.com>
+Subject: [PATCH] ARM: dts: qcom: apq8064: drop incorrect ranges from QFPROM
+Date: Mon,  1 Jul 2024 08:22:53 +0200
+Message-ID: <20240701062253.18149-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/2] dt-bindings: arm: qcom: Add ASUS Vivobook S 15
-To: wuxilin123@gmail.com, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
- Johan Hovold <johan+linaro@kernel.org>,
- Elliot Berman <quic_eberman@quicinc.com>
-References: <20240701-asus-vivobook-s15-v4-0-ce7933b4d4e5@gmail.com>
- <20240701-asus-vivobook-s15-v4-1-ce7933b4d4e5@gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240701-asus-vivobook-s15-v4-1-ce7933b4d4e5@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 01/07/2024 05:05, Xilin Wu via B4 Relay wrote:
-> From: Xilin Wu <wuxilin123@gmail.com>
-> 
-> Add the compatible for this device.
+There is no direct mapping between QFPROM children and parent/SoC MMIO
+bus, so 'ranges' property is not correct.  Pointed by dtbs_check:
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+  qcom-apq8064-cm-qs600.dtb: efuse@700000: Unevaluated properties are not allowed ('ranges' was unexpected)
 
-Best regards,
-Krzysztof
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202406292139.yqPYyUfi-lkp@intel.com/
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm/boot/dts/qcom/qcom-apq8064.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
+index d73ea1434b36..769e151747c3 100644
+--- a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
+@@ -671,7 +671,7 @@ qfprom: efuse@700000 {
+ 			reg = <0x00700000 0x1000>;
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+-			ranges;
++
+ 			tsens_calib: calib@404 {
+ 				reg = <0x404 0x10>;
+ 			};
+-- 
+2.43.0
 
 
