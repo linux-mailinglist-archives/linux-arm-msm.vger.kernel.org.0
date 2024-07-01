@@ -1,166 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-24772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFEEF91D901
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 09:34:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC6B091D922
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 09:39:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6AFF41F21D11
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 07:34:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 726D4285B3E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 07:39:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B4705028C;
-	Mon,  1 Jul 2024 07:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE7A175804;
+	Mon,  1 Jul 2024 07:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="J2jRLiee"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PIt63bSg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13187376E6
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 07:34:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22195FB9B
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 07:39:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719819243; cv=none; b=WnWCt6gqPNuL0iD6RQ92rSMy5DYzc1km1CthbIvsh5sUJ7JLjyZ+DdD9edCx/2jzMd0Gfkuz40qLxWIGUbSkJFY4LxpQmb0rmIINFpGJs+JsrmDy4MxCY4q1SL/wFFEStfOEZVgyNC7d8XlAktUoFjQ1dkF6AeFi6vMMF2GK0Hg=
+	t=1719819589; cv=none; b=KD+QPOMhNoB6L6ezOrHmrlX6GGHTqfvyIsyfPLxtxOzNPg4gdeQU8O4oNEAJ/a5XeNRl0i3SCqfFLN/jRgJ0H790IfJ5TtMoO9PBbq14jReNcWMrTEaMRRMNwVp9v5+QaCpx+kKQjpIxNwQUiDIMqj2m5hzqjKA+dP8BpRdEv2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719819243; c=relaxed/simple;
-	bh=eZsMjIZhDuPAksSPMbB5+rRUCtL8QcyCA/PNWz9K4Qs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Q1Gy/UD7a1vTbOJdAJC0MV4WtClDmIcUiTHUBxeYf+gX+caxHr6ZzYv5+FkgXIAdU4BMM2u/pdx8RMUbntiKX+5h+9TywXTJXPoUVWUEYt7/GkA2vaikYQSnD/60VtaGHT6hi16aBu0xh8ju6PYiu+ydhVcFKKUSExZuQQghq6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=J2jRLiee; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2ec5fad1984so36478691fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2024 00:34:00 -0700 (PDT)
+	s=arc-20240116; t=1719819589; c=relaxed/simple;
+	bh=l7CmpDx0OVT51yTSUKQ7OivFmec9RD8HJKyY4/LpEDk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=vEmt5NksPwiRtM9O94QAzJPJwr3QgWAC0rkEqP1qjWfvwovttxxMkjxdVU32WFk6N9+Y7rvP1uPWz4j0LXJnki2eLnKPzaPrBFugdbeeBdLbqmuAaLYdaxjKtG6GijYb3mEzNvbrCDttnpZu+eTgsXDai2WtCZ/XWBgB3aBJa10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PIt63bSg; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4255fc43f1cso18342555e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2024 00:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1719819239; x=1720424039; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KGnaHuY/UYIawLKptXg5wA64lSgFUEpMdtAJsEUQQL0=;
-        b=J2jRLieesVcI/v3IBiJV35yyA3kTNxHQ31yKaA/q+kpq0W6ofXq/2pxYyjECAbObpr
-         J7GjnB4nJC2SSYqHGyXKOmuCeJTBWUI43AVkPfGiopdhD8DCE2KsK5toMw3BJAFeokty
-         OXOhm58MMUnExd7j/8Qkxitx3qVVpBT+lh5rf9r/RsroMbSrsqDVN67VBVVWvEUtq/oJ
-         nWc1fwUrYSfCym1WOKRtRqhXB6rmypLDhP84rrlWeuA2CcMuRAJDc0RTteMXq0i0ySZe
-         tFhOy5tv0rsmnLIJjS01T3OW1zRBkbPZUAcsQAYh3cD2PQLX4XvUQ6goVSkbmrTQak2+
-         tv4g==
+        d=linaro.org; s=google; t=1719819586; x=1720424386; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4B9dNm2ieQc2Bk/AjzSpT1hZ88q/WKm0M218pzJl4ks=;
+        b=PIt63bSgE90wUF77A3CEnqNrBkQuSJqziu/LkAvjdod7hXWwrxePAfw36UbsK3bMdq
+         rJufPfBljcOlvdGduc9fSDfpiLTlhq+s1yeiViohWBYqkMbUU5edSBfZs4G18adKFX7f
+         zOZTtsKXyVXgeLFhww+87tWbs2pLtrQpCUlbpa1QHDnEKF0l5TwqbWTeiQmW9TpdX1ja
+         hvZirXtR69ZKFRCwjjYYIbdZDuBnkUIRRiS3Le3GKrd0yYLiEjZePkymYjBUfjhYnE3b
+         OOjoan4mBcz8A9zIVMBro7i+TzU163JxTlgP+sEnWYNmAHTmLOX8ey6vAs9wYeOk2loC
+         tpcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719819239; x=1720424039;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KGnaHuY/UYIawLKptXg5wA64lSgFUEpMdtAJsEUQQL0=;
-        b=CnuqlVPNeQoavSyXrO08SlkLUoyyJ0MsI8zv1VzWvg8NhgKpz6apbn6fXuu3uolvpr
-         LF3eLArbgwslcIO3H11dFIqpeyWnsXqXekxQi9zDVXK1sUTjKVOfNnc0pSqo5WGq2SGv
-         3mCYd1ZIzO7vzNY9WXX7T03WzSVAvhuuadRSCdR0pYqBc4OmYM2gMxK+O2eEu7u6eAeS
-         MRRF5RBfBfjQduVpk3ckGfXRrq9q6ac/Ryl3kDd0rlhlujgIxM0BCr56z4IR2kTxObU1
-         AqjwQQ8+7RjHRo/tXkiWXCZ5y+RwGE6b54k6HUTd6XW6V6WNHBmW0KorR3YlxwcOxomg
-         I/CA==
-X-Forwarded-Encrypted: i=1; AJvYcCXIIJmvGtUpDr6We3eosNsPhzUSDsfTUzAcwN8tbwr9MKgDAS5CccUDRw28QSkUEM0SiLeOWnACs+9jlBmdhS0GE1IT1tYlUCJmeds0jg==
-X-Gm-Message-State: AOJu0YzS6h4bdtUkfUXvxlozwZHx0flvNVJDzslFXb3KApVKCtBOHSF7
-	k06ogXQR3hPc2ABpiPG+2D2cI/16iKqT0pGHIySALUgxU5RQVav/mCJcQ3aVbFN2LyvxdVOasaD
-	vYcX8VmuR3Q7czQ4DQ07UZu1XKWfh0FUe4HieQZ8zLqC+w2egGhA=
-X-Google-Smtp-Source: AGHT+IFZ3XxeN71lww9NC0DG+IOMdkmXvd+56jLZTVfxUnDmNNaMUdKKc2sk6skBQksAT62FrN/QAiIUHt+mXlr4aWw=
-X-Received: by 2002:a2e:a5c4:0:b0:2ee:5ec1:1838 with SMTP id
- 38308e7fff4ca-2ee5ec11928mr45421871fa.30.1719819239028; Mon, 01 Jul 2024
- 00:33:59 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719819586; x=1720424386;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4B9dNm2ieQc2Bk/AjzSpT1hZ88q/WKm0M218pzJl4ks=;
+        b=KxPottA2TQxfbzEMEUmFNHSPR1bUqN19hr9QHcgHThfOsuGpGCyJPxbDHSFiEnYDsu
+         MbJrLxGlqnfn3bBVYIcFzHs119rcXeHKSrz5dZtZzocYMs9OfNJjORQIW281h1MFtQ82
+         HN13lxtiQ4B6nwAWWHwPnFIpJgYAXGwhIY2vs/Z9pDw3vu/iuSi29LMZxOVYbFLiV23v
+         DqQDG6pcghuQ9UHF2zaEDnUFxP18yATPJfbW2MZRTX7trG3VfuiM2qPBeT7UWDfV2sUM
+         Rp8FZbcGZgQQ/rEPgHIANri0GFb5V3Bp3phM7seldsJ0Chx45ZvpnDLrbyp6Dmi/tPEf
+         iF4g==
+X-Forwarded-Encrypted: i=1; AJvYcCXXhw/lmF6RPanJ9HF09ZTDcnlyxTNewkel4vCTO8GhjAfFFDjmRy8VbcYzAsVK+OpsNxaTQuU96TagqrwdSiya29XhxyA38VO4QVm+EQ==
+X-Gm-Message-State: AOJu0Yx08G6yydsB5KvTnuXm2k1aYp5OP5H+/AreBP9/RrUE/AzGdVGe
+	TY1ao27/8kZmGF4gtdXnnnXMcozhvZL5796JmIs6BSyby0KunT10C5ky2omlT40=
+X-Google-Smtp-Source: AGHT+IHwi9wQ7iu9omN0RZeIldhqGbPY9Yk8ZFtz7ksFEq8ByEQhX5wBxtlk/3yYRzB/D/lJIvLoQQ==
+X-Received: by 2002:a5d:524c:0:b0:360:791c:afed with SMTP id ffacd0b85a97d-367756a3ba6mr3178457f8f.13.1719819586184;
+        Mon, 01 Jul 2024 00:39:46 -0700 (PDT)
+Received: from [127.0.1.1] ([178.197.219.137])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a0fb9absm9279936f8f.80.2024.07.01.00.39.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Jul 2024 00:39:45 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 0/6] ASoC: codecs: lpass-rx-macro: Few code cleanups
+Date: Mon, 01 Jul 2024 09:39:32 +0200
+Message-Id: <20240701-b4-qcom-audio-lpass-codec-cleanups-v3-0-6d98d4dd1ef5@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <9d1156b9-cdf1-44be-b65d-45b17c0b681e@gmail.com>
-In-Reply-To: <9d1156b9-cdf1-44be-b65d-45b17c0b681e@gmail.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 1 Jul 2024 09:33:47 +0200
-Message-ID: <CAMRc=MczeH+ptirFQpFi968m+-4RoABa43M5VQUx4guZTZxLSw@mail.gmail.com>
-Subject: Re: [PROBLEM linux-next] ERROR: modpost: "devm_qcom_tzmem_pool_new"
- [drivers/firmware/qcom/qcom-scm.ko] undefined!
-To: Mirsad Todorovac <mtodorovac69@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Stephen Rothwell <sfr@canb.auug.org.au>
-Cc: Linux Kernel Build System <linux-kbuild@vger.kernel.org>, 
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADRdgmYC/5XNvQ6CMBiF4Vsxnf1M/6Dg5H0Yh9p+QBOk2EqjI
+ dy7hUk3Hd8zPGcmEYPDSI67mQRMLjo/5BD7HTGdHloEZ3MTTrmkJVdwlXA3/gZ6ss5DP+oYwXi
+ LBkyPepjGCFwxVTTM0rJuSIbGgI17bifnS+7OxYcPr+0zsXX9i08MKKBFwaqaWS6qU+8GHfzBh
+ 5asfuKfZvWTyVezVpIxKVBWxZe5LMsb9CceQSkBAAA=
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>
+Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org, 
+ linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1651;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=l7CmpDx0OVT51yTSUKQ7OivFmec9RD8HJKyY4/LpEDk=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmgl04miXbCVi2whIvFXDGy/G8Yc1booM4gP/Yd
+ EGO7UTr4v+JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZoJdOAAKCRDBN2bmhouD
+ 11raEACIDCPfzgDMUPpRI7qxYBm+QvKhVXtPljGQ1KS/fnSzaFQTSduEey/7UhMliwzArc1bobj
+ 2RjtD/nYMy8O5uy5LqWKfIpDjlUSLpaKKq8dKecfgLg3QSly0TaFJojGqTgHDFP8dxOMYcjBsPK
+ mDKL2Q+E69ofya307xc0aqKFtnppNnrfsLzewqabt+zfZ5LMgPtWDdZbbVsYv7ioTatdhhJXseC
+ AlmO3jx7CaNrn8ePK9J6iVkdrJ3fk5CywEawUh/USF7F7Z/WaWAvWqn1e/5d0L6GDmajy5E09Jk
+ aH8KCCHoelA7nHA5k8/m+0zs0g/269KPE8b6yZCeiCtnlMO+PVu1Pl4YhfKSOnw9+Lcuezz9mH9
+ EeTjtCMzkmUKD0nyyVNk8at9mmjVuS8LHyUivQOdcDFsov1bAq5IhHVV02OEjStclYa8c8DURl5
+ E2KysJF9RuuB1d0jjgaoglCq04/qw0NGqcO9vAW7JiRgJF5S7LMo3KsQHo1YkbbXxaYmMP9A+Zd
+ fg4Dgpi4EcajNkzW8VU4AfJU5+b41qqZgFbNM/nwQwUsHRkvzCFHRwsFMXfIe2A6mtLtL1COajX
+ 5vOEA8K+EVkC36y8/lVVpKz9dNNzqF9Rc2cQPJnQALnFpoYXbYfStvEATeOwB28qbdelMSTb/0D
+ Dm32U4t8lUDqAzw==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-On Fri, Jun 28, 2024 at 8:27=E2=80=AFPM Mirsad Todorovac <mtodorovac69@gmai=
-l.com> wrote:
->
-> Hi all,
->
-> In vanilla linux-next next-20240627 branch, there seems to be a build err=
-or with
-> KCONFIG_SEED=3D0x44AB31A6.
->
-> The error log is:
->
-> ~/linux/kernel/linux-next$ time nice make -j 36 bindeb-pkg |& tee ../err-=
-6.10-rc5-next-20240627-29.log; date
->   GEN     debian
-> dpkg-buildpackage --build=3Dbinary --no-pre-clean --unsigned-changes -R'm=
-ake -f debian/rules' -j1 -a$(cat debian/arch)
-> dpkg-buildpackage: info: source package linux-upstream
-> dpkg-buildpackage: info: source version 6.10.0-rc5-38
-> dpkg-buildpackage: info: source distribution jammy
-> dpkg-buildpackage: info: source changed by marvin <marvin@defiant>
->  dpkg-source --before-build .
-> dpkg-buildpackage: info: host architecture amd64
->  make -f debian/rules binary
-> #
-> # No change to .config
-> #
-> mkdir -p /home/marvin/linux/kernel/linux-next/tools/objtool && make O=3D/=
-home/marvin/linux/kernel/linux-next subdir=3Dtools/objtool --no-print-direc=
-tory -C objtool
-> mkdir -p /home/marvin/linux/kernel/linux-next/tools/bpf/resolve_btfids &&=
- make O=3D/home/marvin/linux/kernel/linux-next subdir=3Dtools/bpf/resolve_b=
-tfids --no-print-directory -C bpf/resolve_btfids
->   INSTALL libsubcmd_headers
->   INSTALL libsubcmd_headers
->   CALL    scripts/checksyscalls.sh
->   UPD     init/utsversion-tmp.h
->   CC      init/version.o
->   AR      init/built-in.a
->   CHK     kernel/kheaders_data.tar.xz
->   AR      built-in.a
->   AR      vmlinux.a
->   LD      vmlinux.o
->   OBJCOPY modules.builtin.modinfo
->   GEN     modules.builtin
->   MODPOST Module.symvers
-> ERROR: modpost: "devm_qcom_tzmem_pool_new" [drivers/firmware/qcom/qcom-sc=
-m.ko] undefined!
-> make[5]: *** [scripts/Makefile.modpost:145: Module.symvers] Error 1
-> make[4]: *** [Makefile:1886: modpost] Error 2
-> make[3]: *** [debian/rules:74: build-arch] Error 2
-> dpkg-buildpackage: error: make -f debian/rules binary subprocess returned=
- exit status 2
-> make[2]: *** [scripts/Makefile.package:121: bindeb-pkg] Error 2
-> make[1]: *** [/home/marvin/linux/kernel/linux-next/Makefile:1555: bindeb-=
-pkg] Error 2
-> make: *** [Makefile:240: __sub-make] Error 2
->
-> real    0m5.950s
-> user    0m15.971s
-> sys     0m10.430s
-> Fri Jun 28 20:22:03 CEST 2024
-> ~/linux/kernel/linux-next$
->
-> Please find attached .config, just to be sure that we are talking about t=
-he same thing.
->
-> Best regards,
-> Mirsad Todorovac
+Hi,
 
-The fix for this is in the qcom tree[1] but I'm not sure why it still
-hasn't been pulled into next. I don't see any notifications about
-conflicts in next which could be the reason. Cc'ing Mark and Stephen.
+Changes in v3:
+- New patch #1 to fix clang jump warning ("ASoC: codecs: lpass-rx-macro: Simplify PDS cleanup with devm")
+- Link to v2: https://lore.kernel.org/r/20240628-b4-qcom-audio-lpass-codec-cleanups-v2-0-e9741143e485@linaro.org
 
-Bart
+Changes in v2:
+- Use cleanup.h instead of devm(), therefore not adding Dmitry's review.
+- New patch #5.
+- Link to v1: https://lore.kernel.org/r/20240627-b4-qcom-audio-lpass-codec-cleanups-v1-0-ede31891d238@linaro.org
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?=
-h=3Dfor-next&id=3Dd96377892dd89bd4e7e5ae7293647f6bc7bddf7d
+Improve a bit the Qualcomm LPASS RX macro driver and align similar parts
+of code with LPASS WSA macro driver for consistency.
+
+No external dependencies.
+
+Best regards,
+Krzysztof
+
+---
+Krzysztof Kozlowski (6):
+      ASoC: codecs: lpass-rx-macro: Simplify PDS cleanup with devm
+      ASoC: codecs: lpass-rx-macro: Simplify with cleanup.h
+      ASoC: codecs: lpass-rx-macro: Keep static regmap_config as const
+      ASoC: dapm: Use unsigned for number of widgets in snd_soc_dapm_new_controls()
+      ASoC: codecs: lpass-rx-macro: Use unsigned for number of widgets
+      ASoC: codecs: lpass-wsa-macro: Simplify with cleanup.h
+
+ include/sound/soc-dapm.h              |  2 +-
+ sound/soc/codecs/lpass-macro-common.h |  5 +++
+ sound/soc/codecs/lpass-rx-macro.c     | 63 +++++++++++++++++------------------
+ sound/soc/codecs/lpass-wsa-macro.c    | 22 ++++++------
+ sound/soc/soc-dapm.c                  |  2 +-
+ 5 files changed, 47 insertions(+), 47 deletions(-)
+---
+base-commit: feca1ff0cd5ab7bc3990ec5a387d81d4dff88068
+change-id: 20240627-b4-qcom-audio-lpass-codec-cleanups-27175f1d069f
+
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
