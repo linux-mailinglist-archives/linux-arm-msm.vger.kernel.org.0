@@ -1,236 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-24829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88D7C91E884
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 21:22:40 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC9F391E8AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 21:34:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E93D2873EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 19:22:39 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 44EC8B20FAF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 19:34:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 232E516F830;
-	Mon,  1 Jul 2024 19:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E235416EBE7;
+	Mon,  1 Jul 2024 19:34:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="jBCuKzMj"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UkYrT3Z+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.smtpout.orange.fr (smtp-13.smtpout.orange.fr [80.12.242.13])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264DB16F278;
-	Mon,  1 Jul 2024 19:22:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6131116D9BA
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 19:34:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719861758; cv=none; b=oeVhG8ykbkUIiht/dkhib98ESFEWIUoKjKY9ApkmncUkWp/01ksIXOJ1nTO3Sa2HwnnyD/OkH0/rvkBOL4WBc/IiPE3Ba46EIARNd3MSdxRqexREz2KQK5iX9RQKet0CIrdvSQ5tf4I9kMmrmmqPOAi7PgIvksWEGbWRNKVe12w=
+	t=1719862447; cv=none; b=EYI1JOdMIXfs0ET9pZjSCKJU2UTeZA6CPafyFPu4iZEbQ0sQfo0CYb1Pxd14utlM6EX+TE9qjSGCTkjHQ7Bi7pqcY46e3DBlQ0NCXgBb7chiQVaP8yPm/T5jP0hWf9O0Ub12eMaeA5t3KnGyPQyczwzLkIfqpFbeNjgwahUHm+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719861758; c=relaxed/simple;
-	bh=lWC6dIbWDly2CcGfLx/WDvuKm5OkyX/CfYLA1wFb040=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=LXr2ydXvKv1ix+gD1NXlQR93Oecsd54OVuzj0BxsvN5Z9QAAiSTPCMX6qNcBmzYGkipQLChb7bvdF9a+OqOpzXRj4p2OUTe8rcPyh9pYgYeQmlpd4yFkOiIZGrHmcmXGpXihjCC6R1eG8E4RM1iGPKQ8lR5sWIl/9thGydhVpbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=jBCuKzMj; arc=none smtp.client-ip=80.12.242.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
-Received: from [192.168.100.239] ([77.130.249.198])
-	by smtp.orange.fr with ESMTPA
-	id OMbXsqFR28cAtOMbXsjqTh; Mon, 01 Jul 2024 21:22:26 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1719861746;
-	bh=r5S9eLlZvmDguqOEMMdCQ+1RWefFjQZempUUq4HCebs=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To;
-	b=jBCuKzMjJB52awDCiIwRFUHMTRGx/pTt9IV61JWjyr02O38gQeYHKUnrAdexOqYXl
-	 oWvQECuIKVg2g71vQQGfB1DMNnGieZ6iD+/ZqaafEJlmznK2GQt8HT4h8/hyGL13r0
-	 uEQSUe1uCcrpIPwKJOUp3xsWDxUubr/h+qSDutZUEmTYrP+NaG0oMoNzi+rAxecnAn
-	 hVjYyK4v/IoIvI0wmwgHjM+MRCWtTP93J8a+FXg5hc+hRNVeumNawb6CTiNMcVO8yB
-	 3bqKfeE1fVhgYlOcgMGpkTF2o1Mg67DRSlMFTh7XW26ZIfnbpkanQSECiyNujBg3Cy
-	 8EWy7lPU/40gw==
-X-ME-Helo: [192.168.100.239]
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Mon, 01 Jul 2024 21:22:26 +0200
-X-ME-IP: 77.130.249.198
-Message-ID: <1fa0f2d9-b193-4fcd-9074-2b68f09ad39c@wanadoo.fr>
-Date: Mon, 1 Jul 2024 21:22:23 +0200
+	s=arc-20240116; t=1719862447; c=relaxed/simple;
+	bh=GqWUmN8vicjOeJLEWfrNOVZ7nMrI1gyKg60+lcC4I1g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qtGQxU//2OYZygQIX1Jq7ZWrSGy2+tCT4txl0cOjzm3zcbWdOB2BKnpENFM7q/jwuS6jf611MAzlUMc3GePiMeOyi7L64OSWvxrLu2waiFUyA9wSmqziIjzwgYyrA1BGanUQ0iSZLHiwdnDwug6BluYayxOcZw1HMAbhyYQjQlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UkYrT3Z+; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-57d00a51b71so10919a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2024 12:34:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1719862445; x=1720467245; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wLv8nBE8MAPhTzu4Pe0VYjku1Tl2AHNOOkQcp9/ZdEI=;
+        b=UkYrT3Z+TEeHrV78imRJgHbDy8CT1OVHRqGhXNg+5ATAbTL3UH/C4ewstxiqyPZp7A
+         aczq0w5SpV3trPgfrzNI7jBSQqFdFbfBow9l6Im4m66vk0oEPkLGt1LfkZ7jCJXDKzzQ
+         //BrzNfnG4N0cdqi9rHqvqPL94qoYJWlTU+xYqPggQ9W5sswxNNvN3VAFt54bB91cepn
+         q8BIpZh82cq0z1+0lOT4jxR/7yMzDS8qoDZLRElRR7eYz47BNd76XCbh+7qqG2uU7VRf
+         h4hSHI96jdo5/CQagFlXbhZKFtUxUbO+WtAiKePC3deik3cWfrk4sEjNLLNkmkSucWC6
+         mtxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719862445; x=1720467245;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wLv8nBE8MAPhTzu4Pe0VYjku1Tl2AHNOOkQcp9/ZdEI=;
+        b=ulyrwqTN2Pa8eOw3pbfzS5BuFz/8xTkhleeaZU/oHV/LZfEvvKmor4/Bhi+uQqC5Ne
+         x0B/P41LEpvNM6d3wY3358u4SCljkLesix2sTD5pE7nLUrfmHK4Z87VZnGOZ2/lRRqnS
+         mPCDp9h46MQ84sX1G65dybgD/429iZHOuEMGkBYzUyjiQtpk7gPhhJrkDpFXpsECs1FY
+         jXzqu1xRQyVeB+XE1w4NTus7AwLbRlvH/L9jw3GGqYkVeA+B6NOTtxHU8qCg/qoHRlaP
+         MeDZ4phRrRi4repb5FLUnCFQtKAe+ZCVNyxQmymB6sd3KLlQyq8qlyEnLG9FERVT4VOH
+         qv2w==
+X-Forwarded-Encrypted: i=1; AJvYcCVY9kSRzsvl4RnAoeTm+Vg7hL/qccrIeo0hSb8KafUzG/HNTswlbFM0raTnrblwmJIrZ7U7XDbNt8PAsS2Gg9HVp+HLo7Y5DkEBkO9YBw==
+X-Gm-Message-State: AOJu0YyP6cle7B6UeRON+zNNiDaTFxp8C0RdrRaM7O2MZxyJNUAbD7X6
+	HOQiJQEYBz1c+sNwNu3GYMGNtRN4Mm3p2ueCY7oUV7+Uk/yjCX0pmX4TxfgraCVuYcana+8wJFX
+	WsuoT9wpabCpVxeFoijiX9bknIwLT+8i8Zv2b
+X-Google-Smtp-Source: AGHT+IHXcfFF7nEh7bzw1aPRlCKzpCzTU07EXQDKT9/pl7Y576hP+SUgYE1Vu8uRmhB5tC6qEWbDsk816Q4QLs3uQtc=
+X-Received: by 2002:a50:9308:0:b0:57d:32ff:73ef with SMTP id
+ 4fb4d7f45d1cf-5872f79a720mr442372a12.6.1719862444542; Mon, 01 Jul 2024
+ 12:34:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Marion & Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Subject: Re: [PATCH 6/6] media: qcom: camss: support for camss driver for
- sc7280
-To: Vikram Sharma <quic_vikramsa@quicinc.com>, Robert Foss
- <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Kapatrala Syed <akapatra@quicinc.com>,
- Hariram Purushothaman <hariramp@quicinc.com>,
- cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Loic Poulain <loic.poulain@linaro.org>, Andi Shyti <andi.shyti@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-i2c@vger.kernel.org, Suresh Vankadara <quic_svankada@quicinc.com>,
- Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
-References: <20240629-camss_first_post_linux_next-v1-0-bc798edabc3a@quicinc.com>
- <20240629-camss_first_post_linux_next-v1-6-bc798edabc3a@quicinc.com>
-Content-Language: en-MW
-In-Reply-To: <20240629-camss_first_post_linux_next-v1-6-bc798edabc3a@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20240701162025.375134-1-robdclark@gmail.com> <20240701162025.375134-3-robdclark@gmail.com>
+In-Reply-To: <20240701162025.375134-3-robdclark@gmail.com>
+From: Pranjal Shrivastava <praan@google.com>
+Date: Tue, 2 Jul 2024 01:03:52 +0530
+Message-ID: <CAN6iL-TV3OGN4eDx6yG9u9Y-2tEn6NS9B3Vq5ijAoFvJ71PssQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] iommu/arm-smmu-qcom-debug: Do not print for
+ handled faults
+To: Rob Clark <robdclark@gmail.com>
+Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	Stephen Boyd <swboyd@chromium.org>, Robin Murphy <robin.murphy@arm.com>, 
+	Rob Clark <robdclark@chromium.org>, Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>, 
+	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>, 
+	open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Le 28/06/2024 à 20:32, Vikram Sharma a écrit :
-> From: Suresh Vankadara <quic_svankada@quicinc.com>
-> 
-> This change adds support for camss driver for sc7280 soc.
-> 
-> Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
-> Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
-> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+On Mon, Jul 1, 2024 at 9:50=E2=80=AFPM Rob Clark <robdclark@gmail.com> wrot=
+e:
+>
+> From: Rob Clark <robdclark@chromium.org>
+>
+> Handled faults can be "normal", don't spam dmesg about them.
+>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
-
-Hi,
-
-...
-
-> -	if (camss->res->version == CAMSS_8250) {
-> +	switch (camss->res->version) {
-> +	case CAMSS_8250:
->   		/* for titan 480, CSID registers are inside the VFE region,
->   		 * between the VFE "top" and "bus" registers. this requires
->   		 * VFE to be initialized before CSID
-> @@ -1040,10 +1041,19 @@ int msm_csid_subdev_init(struct camss *camss, struct csid_device *csid,
->   		else
->   			csid->base = csid->res->parent_dev_ops->get_base_address(camss, id)
->   				 + VFE_480_CSID_OFFSET;
-> -	} else {
-> +		break;
-> +	case CAMSS_7280:
-
-Maybe, as said for other places by Bryan, keep it ordered (CAMSS_7280, 
-then CAMSS_8250)?
-
-> +		/* for titan 165, CSID registers are inside the VFE region,
-> +		 * between the VFE "top" and "bus" registers. this requires
-> +		 * VFE to be initialized before CSID
-> +		 */
-> +		csid->base = camss->vfe[id].base + VFE_165_CSID_OFFSET;
-> +		break;
-> +	default:
->   		csid->base = devm_platform_ioremap_resource_byname(pdev, res->reg[0]);
->   		if (IS_ERR(csid->base))
->   			return PTR_ERR(csid->base);
-> +		break;
->   	}
->   
->   	/* Interrupt */
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> index df7e93a5a4f6..c7e507420732 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> @@ -510,6 +510,7 @@ static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
->   		array_size = ARRAY_SIZE(lane_regs_sdm845[0]);
->   		break;
->   	case CAMSS_8250:
-> +	case CAMSS_7280:
->   		r = &lane_regs_sm8250[0][0];
->   		array_size = ARRAY_SIZE(lane_regs_sm8250[0]);
->   		break;
-> @@ -560,6 +561,7 @@ static bool csiphy_is_gen2(u32 version)
->   	case CAMSS_845:
->   	case CAMSS_8250:
->   	case CAMSS_8280XP:
-> +	case CAMSS_7280:
->   		ret = true;
->   		break;
->   	}
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-> index 83c5a36d071f..757e872b8eb8 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-> @@ -338,6 +338,7 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
->   	case CAMSS_845:
->   	case CAMSS_8250:
->   	case CAMSS_8280XP:
-> +	case CAMSS_7280:
-
-Here as well.
-
->   		switch (sink_code) {
->   		case MEDIA_BUS_FMT_YUYV8_1X16:
->   		{
-> @@ -1695,6 +1696,7 @@ static int vfe_bpl_align(struct vfe_device *vfe)
->   	case CAMSS_845:
->   	case CAMSS_8250:
->   	case CAMSS_8280XP:
-> +	case CAMSS_7280:
-
-Here as well.
-
->   		ret = 16;
->   		break;
->   	default:
-
-...
-
-> +static int camss_link_entities_v2(struct camss *camss)
-> +{
-> +	int i, j;
-> +	int ret;
-> +
-> +	for (i = 0; i < camss->res->csiphy_num; i++) {
-> +		for (j = 0; j < camss->res->csid_num; j++) {
-> +			ret = media_create_pad_link(&camss->csiphy[i].subdev.entity,
-> +						    MSM_CSIPHY_PAD_SRC,
-> +						    &camss->csid[j].subdev.entity,
-> +						    MSM_CSID_PAD_SINK,
-> +						    0);
-
-Should there be some error handling path here and below to free the 
-allocated resources?
-
-.link_entities seems to be new and I can't find it in my -next-20240627, 
-so I can't check myself if already handle in a way or another by the 
-framework.
-
-CJ
-
-
-> +			if (ret < 0) {
-> +				dev_err(camss->dev,
-> +					"Failed to link %s->%s entities: %d\n",
-> +					camss->csiphy[i].subdev.entity.name,
-> +					camss->csid[j].subdev.entity.name,
-> +					ret);
-> +				return ret;
-> +			}
-> +		}
-> +	}
-> +
-> +	for (i = 0; i < camss->res->csid_num; i++)
-> +		for (j = 0; j < camss->vfe[i].res->line_num; j++) {
-> +			struct v4l2_subdev *csid = &camss->csid[i].subdev;
-> +			struct v4l2_subdev *vfe = &camss->vfe[i].line[j].subdev;
-> +
-> +			ret = media_create_pad_link(&csid->entity,
-> +						    MSM_CSID_PAD_FIRST_SRC + j,
-> +						    &vfe->entity,
-> +						    MSM_VFE_PAD_SINK,
-> +						    0);
-> +			if (ret < 0) {
-> +				dev_err(camss->dev,
-> +					"Failed to link %s->%s entities: %d\n",
-> +					csid->entity.name,
-> +					vfe->entity.name,
-> +					ret);
-> +				return ret;
-> +			}
-> +		}
-> +	return 0;
-> +}
-
-...
-
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c | 4 ----
+>  1 file changed, 4 deletions(-)
+>
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c b/drivers/i=
+ommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+> index e4ee78fb6a66..681fbdfc325d 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+> @@ -419,10 +419,6 @@ irqreturn_t qcom_smmu_context_fault(int irq, void *d=
+ev)
+>         tmp =3D report_iommu_fault(&smmu_domain->domain, NULL, iova,
+>                                  fsynr & ARM_SMMU_CB_FSYNR0_WNR ? IOMMU_F=
+AULT_WRITE : IOMMU_FAULT_READ);
+>         if (!tmp || tmp =3D=3D -EBUSY) {
+> -               dev_dbg(smmu->dev,
+> -                       "Context fault handled by client: iova=3D0x%08lx,=
+ fsr=3D0x%x, fsynr=3D0x%x, cb=3D%d\n",
+> -                       iova, fsr, fsynr, idx);
+> -               dev_dbg(smmu->dev, "soft iova-to-phys=3D%pa\n", &phys_sof=
+t);
+>                 ret =3D IRQ_HANDLED;
+>                 resume =3D ARM_SMMU_RESUME_TERMINATE;
+>         } else {
+> --
+> 2.45.2
+>
+Seems consistent with the arm_smmu_context_fault handler.
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
 
