@@ -1,148 +1,295 @@
-Return-Path: <linux-arm-msm+bounces-24796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D340891DCCA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 12:35:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C9AD91DD61
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 13:03:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 103AE1C20C4E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 10:35:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C4863B226CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 11:03:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B28B1474AD;
-	Mon,  1 Jul 2024 10:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AD8413C9A4;
+	Mon,  1 Jul 2024 11:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="DqQdcwRq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lte97tHr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7056A15D5C7
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 10:28:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9138C13C80C;
+	Mon,  1 Jul 2024 11:01:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719829715; cv=none; b=nGC3Cdj+A0tBJ0vro6wGk6mYYHjR9InZwf8Bf5WEre/k9xa7RqxyBNgQz6PrmgCTDuSWDwFgNfY5dA7wlCgSZg65zeK39A+xPR7YwKsygI9az5Ou5J1lpKhw+UYQC4mYS7+drWdNLeZra9VfYv9FWFvuV34SS0INYLLpQRSZg48=
+	t=1719831693; cv=none; b=hcCr/LCWzVJ91v83D98x7TDKszx5qd5hdreKg6pJK+IiNBi0t8r5PLCHm+Wi7S2vWtKZ4+iQ4RNJv6EmKvgvQq4MgtJuAq9Zb+GmNoTtjyHOo0/+/buN931eVYgY5Ip2CcPkEj9fz/VkpUuzeOLar8wltjrwyxwlRW6bpbMULZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719829715; c=relaxed/simple;
-	bh=whwSt1dw1W4v39hDUemEnAGBam55003cQAughFau/xs=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=fGAJokMCesoxhDLfiIZK0+XaVWMtjmqtHtMr6Rl8nk9AWL+DYVe0XtTz7MsJ/U+73es8AWEATlFtHVsZ+TTx7XZEymK1HWNvD0CR+t4ND1l0vD0SMKQOcQ807YKBVBBzVMtcCuTKwFC8xmyb4n6veb/4hOmHrYTN7d99l6/vOu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=DqQdcwRq; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5854ac817afso60889a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2024 03:28:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1719829713; x=1720434513; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G0t9wDVAneCoqR1L6zC6P8I5fHbJSVdv4J4WVgEUPrA=;
-        b=DqQdcwRqEP9VD+hO4HcDK8iiLA0klPdNOgOYdfB+Aex7QkVYLbr7/R5mCgVvy56UKi
-         frVailCuTLdRPyFh7IjZd/dlaujvguOycJXL1uchQvuC49uV8SRxPtzBSJVofvOB/Czv
-         +4m45+AYqjuO6o9nAIwibfmv+ye7HUWM/u0Rjbnjv8pgWrw+/QusnXXe9wdNgxTprWy5
-         AdCAG1Hno7Exph5KCo/yfvyaXryipsvGQn6Yxofk8BY7R9Y2M2e+MgTBAo3Vp4I7HUGC
-         DCQa9oOh6VZHgBz7nAb2CIE17M3AMe1FgevMGSQREV+XZoWAtkltVmWc65DfUAPZSLZt
-         1TXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719829713; x=1720434513;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=G0t9wDVAneCoqR1L6zC6P8I5fHbJSVdv4J4WVgEUPrA=;
-        b=va7izxqC00Lqa/KDMC4YRsoZWV0NqmI1PZltxyzA8bViy51g0+bpagYvKzis05dkbr
-         sdBvQSgvbnHDTiOI69kR5UMa1Up6XUeCW1nizT0XVa4A5YuD35nYRxQTExbW2p7trJyV
-         Oe/N9EqlOFwqlYc+0s0xLd2Gbh5j+JqG2E2gF+AHVnygt4okjHFCDoo4TLYOAnSaKOG5
-         TOzSmC5Uh7iSdrNXLeQ+uH+E1sJaynrNRkJdnINBPhugk777admARKt+NmfKgMI87SpZ
-         /nJw4E+7GsAh5BBWdf9F/8MtfrwP6oYq4o8h9vMte4BjIH1INPg783/wfbhZlUk/6ZHy
-         NuYA==
-X-Forwarded-Encrypted: i=1; AJvYcCX3qrHmS14Cs/NsXaz5DZ1WNB4fusVi5K5BQVZFIgPPYDe07UNbK1P7oMxJa781s0xl/H55ZE6kBz3krThUcIo+KIVHc8IytqXWfKCU2g==
-X-Gm-Message-State: AOJu0YzvfPL3BhS81eJaroP0oWO0ss+SmeoYC1kW9kVKoYFJFOS9PucT
-	duSyTCUUoBJpLhWlITnSRkc+hA7qzFc2oE9a4dG77wAqDTb+F7OIpx/oVhgf1gc=
-X-Google-Smtp-Source: AGHT+IEJKT3Q3jDkIA2zjsFxld8zqgyuod2jji5hNuOlEYmpBrVmAXGndjtNhh2RXHiW/4ytTo9uqw==
-X-Received: by 2002:a05:6402:d05:b0:57a:858d:20ca with SMTP id 4fb4d7f45d1cf-587a0a0e925mr3247556a12.28.1719829712897;
-        Mon, 01 Jul 2024 03:28:32 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-58614f3d4c4sm4242861a12.87.2024.07.01.03.28.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Jul 2024 03:28:32 -0700 (PDT)
+	s=arc-20240116; t=1719831693; c=relaxed/simple;
+	bh=VNLM0HLqDJnHLl6fMY9WSa/iYARy9ZjW6UrBdqUkz1Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ZknG5E8IMkgjWgJArMSnD/1B0G3ttpePp8mAthAzVaW+zpJp2Jqk1ZGSMsos+vMvMlbmeOF3FikpuN99aKRG6rVfeH/lSK/oxkI7nguh+Xh0iMPx+J3DcY+o7bywG/43vmraAWr4rxRnqKodEwF4mEKtN5uqatB+IEpm9YiZNVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lte97tHr; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 461101k8031391;
+	Mon, 1 Jul 2024 11:01:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	MOyXYr7FrXgXLOv3+57Gczp54c+wbDeUJfH9ahSbxKI=; b=lte97tHrA0L42RGq
+	UQD2OTNPKKMv5vLUtx+p/T+XzueFrnJOUq5OHuSExXjygB89IZT2SsvGY7s+C9nX
+	T2VcclYPAtFMw9McIQ3TCy2FpsK+UUQRaGjjdjBNFx6HwUfJSGyKhLgtnjhU1uZ+
+	OgU8fTIb2ICC2cqLOIGAH1Cb4Y0KIJ+MImoW6atMTsRZFPiZLFSlwb4ysJQoVDh4
+	igmPJUFbqgKRIbqfYRZMOgQ4CSP3r0TI4DNKDVlW1GnyOfgP3ebKAo94c8UJXTcZ
+	AM2N3cUws7GSVsxCQp8lMHTiXe1ZZpI5wroV6lyGiFF+GYTNnP5Fqzmt+0Q2d4e7
+	/mEVGA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 402bj83mr0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 01 Jul 2024 11:01:01 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 461B10Qb005276
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 1 Jul 2024 11:01:00 GMT
+Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 1 Jul 2024
+ 04:00:55 -0700
+Message-ID: <4a5f54c7-120e-427d-8a0a-9fb83e13a72e@quicinc.com>
+Date: Mon, 1 Jul 2024 16:30:45 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 01 Jul 2024 12:28:32 +0200
-Message-Id: <D2E4R2MLD3ZY.S3QF3GPPFQK0@fairphone.com>
-To: "Dang Huynh" <danct12@riseup.net>, "Bjorn Andersson"
- <andersson@kernel.org>, "Konrad Dybcio" <konrad.dybcio@linaro.org>, "Rob
- Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>
-Cc: "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
- <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2] arm64: dts: qcom: qrb4210-rb2: Correct PMI632 VBUS
- ampere
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-X-Mailer: aerc 0.17.0-0-g6ea74eb30457
-References: <20240701-qrd4210rb2-vbus-volt-v2-1-b7bcd2a78c8b@riseup.net>
-In-Reply-To: <20240701-qrd4210rb2-vbus-volt-v2-1-b7bcd2a78c8b@riseup.net>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 6/6] iommu/arm-smmu: add support for PRR bit setup
+To: Rob Clark <robdclark@gmail.com>
+CC: <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
+        <jgg@ziepe.ca>, <jsnitsel@redhat.com>, <robh@kernel.org>,
+        <krzysztof.kozlowski@linaro.org>, <quic_c_gdjako@quicinc.com>,
+        <dmitry.baryshkov@linaro.org>, <konrad.dybcio@linaro.org>,
+        <iommu@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>
+References: <20240628140435.1652374-1-quic_bibekkum@quicinc.com>
+ <20240628140435.1652374-7-quic_bibekkum@quicinc.com>
+ <CAF6AEGvroi8rJimFv95tkWmRFa5_aTpBJ7GFcRAuZpLGdSyEYQ@mail.gmail.com>
+ <0650ba0a-4453-4e2d-8a76-0f396ac1999c@quicinc.com>
+ <CAF6AEGv_9e-TDW1r0N4-db6pY_aV_EZFqrpNbATVS5Vy6+fs1g@mail.gmail.com>
+Content-Language: en-US
+From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+In-Reply-To: <CAF6AEGv_9e-TDW1r0N4-db6pY_aV_EZFqrpNbATVS5Vy6+fs1g@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Rg2szrFmnrY5hjXddC-XZPR0110l0oaK
+X-Proofpoint-GUID: Rg2szrFmnrY5hjXddC-XZPR0110l0oaK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-01_09,2024-06-28_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ spamscore=0 suspectscore=0 mlxlogscore=999 mlxscore=0 priorityscore=1501
+ malwarescore=0 adultscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
+ definitions=main-2407010085
 
-On Mon Jul 1, 2024 at 12:24 PM CEST, Dang Huynh wrote:
-> According to downstream sources, PMI632 maximum VBUS ampere is
-> 1A.
->
-> Taken from msm-4.19 (631561973a034e46ccacd0e53ef65d13a40d87a4)
-> Line 685-687 in drivers/power/supply/qcom/qpnp-smb5.c
->
-> Signed-off-by: Dang Huynh <danct12@riseup.net>
 
-Fixes: a06a2f12f9e2 ("arm64: dts: qcom: qrb4210-rb2: enable USB-C port hand=
-ling")
-Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
 
-> ---
-> In previous patch series, there's a suggestion to correct
-> PMI632's VBUS ampere.
->
-> Unfortunately it didn't make it and probably forgotten.
+On 6/28/2024 9:14 PM, Rob Clark wrote:
+> On Fri, Jun 28, 2024 at 8:10 AM Bibek Kumar Patro
+> <quic_bibekkum@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 6/28/2024 7:47 PM, Rob Clark wrote:
+>>> On Fri, Jun 28, 2024 at 7:05 AM Bibek Kumar Patro
+>>> <quic_bibekkum@quicinc.com> wrote:
+>>>>
+>>>> Add an adreno-smmu-priv interface for drm/msm to call
+>>>> into arm-smmu-qcom and initiate the PRR bit setup or reset
+>>>> sequence as per request.
+>>>>
+>>>> This will be used by GPU to setup the PRR bit and related
+>>>> configuration registers through adreno-smmu private
+>>>> interface instead of directly poking the smmu hardware.
+>>>>
+>>>> Suggested-by: Rob Clark <robdclark@gmail.com>
+>>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+>>>> ---
+>>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 23 ++++++++++++++++++++++
+>>>>    drivers/iommu/arm/arm-smmu/arm-smmu.h      |  2 ++
+>>>>    include/linux/adreno-smmu-priv.h           |  6 +++++-
+>>>>    3 files changed, 30 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>> index bd101a161d04..64571a1c47b8 100644
+>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>> @@ -28,6 +28,7 @@
+>>>>    #define PREFETCH_SHALLOW       (1 << PREFETCH_SHIFT)
+>>>>    #define PREFETCH_MODERATE      (2 << PREFETCH_SHIFT)
+>>>>    #define PREFETCH_DEEP          (3 << PREFETCH_SHIFT)
+>>>> +#define GFX_ACTLR_PRR          (1 << 5)
+>>>>
+>>>>    static const struct actlr_config sc7280_apps_actlr_cfg[] = {
+>>>>           { 0x0800, 0x04e0, PREFETCH_DEFAULT | CMTLB },
+>>>> @@ -235,6 +236,27 @@ static void qcom_adreno_smmu_resume_translation(const void *cookie, bool termina
+>>>>           arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
+>>>>    }
+>>>>
+>>>> +static void qcom_adreno_smmu_set_prr(const void *cookie, phys_addr_t page_addr, bool set)
+>>>> +{
+>>>> +       struct arm_smmu_domain *smmu_domain = (void *)cookie;
+>>>> +       struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+>>>> +       struct arm_smmu_device *smmu = smmu_domain->smmu;
+>>>> +       u32 reg = 0;
+>>>> +
+>>>> +       writel_relaxed(lower_32_bits(page_addr),
+>>>> +                               smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
+>>>> +
+>>>> +       writel_relaxed(upper_32_bits(page_addr),
+>>>> +                               smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
+>>>> +
+>>>> +       reg =  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR);
+>>>> +       reg &= ~GFX_ACTLR_PRR;
+>>>> +       if (set)
+>>>> +               reg |= FIELD_PREP(GFX_ACTLR_PRR, 1);
+>>>> +       arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
+>>>> +
+>>>
+>>> nit, extra line
+>>>
+>>
+>> Ack, will remove this. Thanks for pointing out.
+>>
+>>> Also, if you passed a `struct page *` instead, then you could drop the
+>>> bool param, ie. passing NULL for the page would disable PRR.  But I
+>>> can go either way if others have a strong preference for phys_addr_t.
+>>>
+>>
+>> Oh okay, this looks simple to reset the prr bit.
+>> But since this page is allocated and is used inside gfx driver
+>> before being utilized for prr bit operation, would it be safe for
+>> drm/gfx driver to keep a reference to this page in smmu driver?
+>>
+>> Since we only need the page address for configuring the
+>> CFG_UADDR/CFG_LADDR registers so passed the phys_addr_t.
+> 
+> I don't think the smmu driver needs to keep a reference to the page..
+> we can just say it is the responsibility of the drm driver to call
+> set_prr(NULL) before freeing the page
+> 
 
-Could've included a link for easier context:
-https://lore.kernel.org/linux-arm-msm/CYMDEAJZ0TJK.K31XZB3E9QOG@fairphone.c=
-om/
+That makes sense. If we go by this NULL page method to disable the PRR, 
+we would have to set the address registers to reset value as well.
 
->
-> ----
-> Changes in v2:
-> - Fixed typo (voltage -> ampere)
-> - Link to v1: https://lore.kernel.org/r/20240701-qrd4210rb2-vbus-volt-v1-=
-1-5c06f8358436@riseup.net
-> ---
->  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/d=
-ts/qcom/qrb4210-rb2.dts
-> index 1c7de7f2db79..1888d99d398b 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> @@ -305,7 +305,7 @@ pmi632_ss_in: endpoint {
-> =20
->  &pmi632_vbus {
->  	regulator-min-microamp =3D <500000>;
-> -	regulator-max-microamp =3D <3000000>;
-> +	regulator-max-microamp =3D <1000000>;
->  	status =3D "okay";
->  };
-> =20
->
-> ---
-> base-commit: 642a16ca7994a50d7de85715996a8ce171a5bdfb
-> change-id: 20240701-qrd4210rb2-vbus-volt-822764c7cfca
->
-> Best regards,
+The sequence would be like the following as per my understaning:
+- Check if it's NULL page
+- Set the PRR_CFG_UADDR/PRR_CFG_LADDR to reset values i.e - 0x0 for
+   these registers
+- Reset the PRR bit in actlr register
 
+Similar to this snippet:
+
+#PRR_RESET_ADDR 0x0
+
+--------------
+reg =  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR);
+reg &= ~GFX_ACTLR_PRR;
+arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
+
+if (!prr_page) {
+	writel_relaxed(PRR_RESET_ADDR,
+			smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
+	writel_relaxed(PRR_RESET_ADDR),
+                         smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
+	return;
+}
+
+
+writel_relaxed(lower_32_bits(page_to_phys(prr_page)),
+  		smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
+
+writel_relaxed(upper_32_bits(page_to_phys(prr_page)),
+  		smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
+
+reg |= FIELD_PREP(GFX_ACTLR_PRR, 1);
+arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
+-----------------
+
+If looks good, will implement the same in next version.
+
+Thanks & regards,
+Bibek
+
+> BR,
+> -R
+> 
+>>> Otherwise, lgtm
+>>>
+>>> BR,
+>>> -R
+>>>
+>>
+>> Thanks & regards,
+>> Bibek
+>>
+>>>> +}
+>>>> +
+>>>>    #define QCOM_ADRENO_SMMU_GPU_SID 0
+>>>>
+>>>>    static bool qcom_adreno_smmu_is_gpu_device(struct device *dev)
+>>>> @@ -407,6 +429,7 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>>>>           priv->get_fault_info = qcom_adreno_smmu_get_fault_info;
+>>>>           priv->set_stall = qcom_adreno_smmu_set_stall;
+>>>>           priv->resume_translation = qcom_adreno_smmu_resume_translation;
+>>>> +       priv->set_prr = qcom_adreno_smmu_set_prr;
+>>>>
+>>>>           actlrvar = qsmmu->data->actlrvar;
+>>>>           if (!actlrvar)
+>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+>>>> index d9c2ef8c1653..3076bef49e20 100644
+>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
+>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+>>>> @@ -154,6 +154,8 @@ enum arm_smmu_cbar_type {
+>>>>    #define ARM_SMMU_SCTLR_M               BIT(0)
+>>>>
+>>>>    #define ARM_SMMU_CB_ACTLR              0x4
+>>>> +#define ARM_SMMU_GFX_PRR_CFG_LADDR     0x6008
+>>>> +#define ARM_SMMU_GFX_PRR_CFG_UADDR     0x600C
+>>>>
+>>>>    #define ARM_SMMU_CB_RESUME             0x8
+>>>>    #define ARM_SMMU_RESUME_TERMINATE      BIT(0)
+>>>> diff --git a/include/linux/adreno-smmu-priv.h b/include/linux/adreno-smmu-priv.h
+>>>> index c637e0997f6d..d6e2ca9f8d8c 100644
+>>>> --- a/include/linux/adreno-smmu-priv.h
+>>>> +++ b/include/linux/adreno-smmu-priv.h
+>>>> @@ -49,7 +49,10 @@ struct adreno_smmu_fault_info {
+>>>>     *                 before set_ttbr0_cfg().  If stalling on fault is enabled,
+>>>>     *                 the GPU driver must call resume_translation()
+>>>>     * @resume_translation: Resume translation after a fault
+>>>> - *
+>>>> + * @set_prr:      Extendible interface to be used by GPU to modify the
+>>>> + *                 ACTLR register bits, currently used to configure
+>>>> + *                 Partially-Resident-Region (PRR) feature's
+>>>> + *                 setup and reset sequence as requested.
+>>>>     *
+>>>>     * The GPU driver (drm/msm) and adreno-smmu work together for controlling
+>>>>     * the GPU's SMMU instance.  This is by necessity, as the GPU is directly
+>>>> @@ -67,6 +70,7 @@ struct adreno_smmu_priv {
+>>>>        void (*get_fault_info)(const void *cookie, struct adreno_smmu_fault_info *info);
+>>>>        void (*set_stall)(const void *cookie, bool enabled);
+>>>>        void (*resume_translation)(const void *cookie, bool terminate);
+>>>> +    void (*set_prr)(const void *cookie, phys_addr_t page_addr, bool set);
+>>>>    };
+>>>>
+>>>>    #endif /* __ADRENO_SMMU_PRIV_H */
+>>>> --
+>>>> 2.34.1
+>>>>
 
