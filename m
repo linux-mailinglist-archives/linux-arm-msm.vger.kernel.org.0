@@ -1,213 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-24771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F5C691D84B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 08:52:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DFEEF91D901
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 09:34:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CB9351F20FD7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 06:52:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6AFF41F21D11
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 07:34:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 905EA4A9B0;
-	Mon,  1 Jul 2024 06:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B4705028C;
+	Mon,  1 Jul 2024 07:34:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gRD7lXQM"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="J2jRLiee"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E42410A0E;
-	Mon,  1 Jul 2024 06:52:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13187376E6
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 07:34:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719816763; cv=none; b=Sm3a2/oZRHgzAtk9CFQZC9b1b4HcP+fQLxDHNIyvlE5ZBpPUfpO/FOff2EtIkQMypeHLkzWRaAi/J7WNkpmGHQn1MiP0ADEKjF0dZQpwMBohTDsy9yM1ft97wac4OOyRuRmLnnsUb4x3VbT6wHGJ6tFZXA92imT1iaggJtpV1Qk=
+	t=1719819243; cv=none; b=WnWCt6gqPNuL0iD6RQ92rSMy5DYzc1km1CthbIvsh5sUJ7JLjyZ+DdD9edCx/2jzMd0Gfkuz40qLxWIGUbSkJFY4LxpQmb0rmIINFpGJs+JsrmDy4MxCY4q1SL/wFFEStfOEZVgyNC7d8XlAktUoFjQ1dkF6AeFi6vMMF2GK0Hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719816763; c=relaxed/simple;
-	bh=E9TFWo9WdevrDFVoWL1TYS3FtsXZKCPU5LV1g0UiW3M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GdBsyTfZ2RzgfGxfKBlHwv6rOFWE6PhWE1z1Gp9BhvkqusEkNLVnPZqNsMFmZuHTBXj92O6r2kmRGMnJi0GpJ8C8GLTcYefAnYWtXJXf5cuMWp5/pl16OTewcyCqiQxkLhvmGA0brFnHJM86WkXaU5TDwNCyzT/4DXvu2enpO1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gRD7lXQM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1761CC116B1;
-	Mon,  1 Jul 2024 06:52:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719816762;
-	bh=E9TFWo9WdevrDFVoWL1TYS3FtsXZKCPU5LV1g0UiW3M=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=gRD7lXQMnyWnfIw4ySq7WC1Jyz2mQfR/Ss8soD9e4WlOEBsvlBVlgLtUwnFvvXyH3
-	 nPaHpgtc1VHVzgksvo7jhS9lBR6AP2Uhb3sRv8fXqrxzFOW2HgR7GNlbOeElrhimj0
-	 WgSs32zo1YhakujIr0nnoGlYR0lusMCauPKNjRM9EE2RNczmYmUDQcV6vgueocMmj3
-	 PvAbjIAFq//VktjEopZSabhiJTR7bLwYuRDVxJPCxKTQjqV3WuwzpZPN7U8jQQz8ro
-	 LMUVphrWnDTgVyCgLwj8RHHzvVmHPm+YH0zDm47rkUkotObWyov9DaVOc5GwxQ6BMu
-	 V2DFfrB9Wo8ow==
-Message-ID: <aea7fa07-b1c9-4386-891f-5e23fb6baf32@kernel.org>
-Date: Mon, 1 Jul 2024 08:52:33 +0200
+	s=arc-20240116; t=1719819243; c=relaxed/simple;
+	bh=eZsMjIZhDuPAksSPMbB5+rRUCtL8QcyCA/PNWz9K4Qs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Q1Gy/UD7a1vTbOJdAJC0MV4WtClDmIcUiTHUBxeYf+gX+caxHr6ZzYv5+FkgXIAdU4BMM2u/pdx8RMUbntiKX+5h+9TywXTJXPoUVWUEYt7/GkA2vaikYQSnD/60VtaGHT6hi16aBu0xh8ju6PYiu+ydhVcFKKUSExZuQQghq6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=J2jRLiee; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2ec5fad1984so36478691fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2024 00:34:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1719819239; x=1720424039; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KGnaHuY/UYIawLKptXg5wA64lSgFUEpMdtAJsEUQQL0=;
+        b=J2jRLieesVcI/v3IBiJV35yyA3kTNxHQ31yKaA/q+kpq0W6ofXq/2pxYyjECAbObpr
+         J7GjnB4nJC2SSYqHGyXKOmuCeJTBWUI43AVkPfGiopdhD8DCE2KsK5toMw3BJAFeokty
+         OXOhm58MMUnExd7j/8Qkxitx3qVVpBT+lh5rf9r/RsroMbSrsqDVN67VBVVWvEUtq/oJ
+         nWc1fwUrYSfCym1WOKRtRqhXB6rmypLDhP84rrlWeuA2CcMuRAJDc0RTteMXq0i0ySZe
+         tFhOy5tv0rsmnLIJjS01T3OW1zRBkbPZUAcsQAYh3cD2PQLX4XvUQ6goVSkbmrTQak2+
+         tv4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719819239; x=1720424039;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KGnaHuY/UYIawLKptXg5wA64lSgFUEpMdtAJsEUQQL0=;
+        b=CnuqlVPNeQoavSyXrO08SlkLUoyyJ0MsI8zv1VzWvg8NhgKpz6apbn6fXuu3uolvpr
+         LF3eLArbgwslcIO3H11dFIqpeyWnsXqXekxQi9zDVXK1sUTjKVOfNnc0pSqo5WGq2SGv
+         3mCYd1ZIzO7vzNY9WXX7T03WzSVAvhuuadRSCdR0pYqBc4OmYM2gMxK+O2eEu7u6eAeS
+         MRRF5RBfBfjQduVpk3ckGfXRrq9q6ac/Ryl3kDd0rlhlujgIxM0BCr56z4IR2kTxObU1
+         AqjwQQ8+7RjHRo/tXkiWXCZ5y+RwGE6b54k6HUTd6XW6V6WNHBmW0KorR3YlxwcOxomg
+         I/CA==
+X-Forwarded-Encrypted: i=1; AJvYcCXIIJmvGtUpDr6We3eosNsPhzUSDsfTUzAcwN8tbwr9MKgDAS5CccUDRw28QSkUEM0SiLeOWnACs+9jlBmdhS0GE1IT1tYlUCJmeds0jg==
+X-Gm-Message-State: AOJu0YzS6h4bdtUkfUXvxlozwZHx0flvNVJDzslFXb3KApVKCtBOHSF7
+	k06ogXQR3hPc2ABpiPG+2D2cI/16iKqT0pGHIySALUgxU5RQVav/mCJcQ3aVbFN2LyvxdVOasaD
+	vYcX8VmuR3Q7czQ4DQ07UZu1XKWfh0FUe4HieQZ8zLqC+w2egGhA=
+X-Google-Smtp-Source: AGHT+IFZ3XxeN71lww9NC0DG+IOMdkmXvd+56jLZTVfxUnDmNNaMUdKKc2sk6skBQksAT62FrN/QAiIUHt+mXlr4aWw=
+X-Received: by 2002:a2e:a5c4:0:b0:2ee:5ec1:1838 with SMTP id
+ 38308e7fff4ca-2ee5ec11928mr45421871fa.30.1719819239028; Mon, 01 Jul 2024
+ 00:33:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/8] dt-bindings: input: touchscreen: document
- synaptics TCM oncell
-To: Caleb Connolly <caleb@postmarketos.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <quic_jesszhan@quicinc.com>, David Airlie <airlied@gmail.com>,
- Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Henrik Rydberg <rydberg@bitmath.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht
-References: <20240630-oneplus8-v2-0-c4a1f8da74f1@postmarketos.org>
- <20240630-oneplus8-v2-2-c4a1f8da74f1@postmarketos.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240630-oneplus8-v2-2-c4a1f8da74f1@postmarketos.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <9d1156b9-cdf1-44be-b65d-45b17c0b681e@gmail.com>
+In-Reply-To: <9d1156b9-cdf1-44be-b65d-45b17c0b681e@gmail.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Mon, 1 Jul 2024 09:33:47 +0200
+Message-ID: <CAMRc=MczeH+ptirFQpFi968m+-4RoABa43M5VQUx4guZTZxLSw@mail.gmail.com>
+Subject: Re: [PROBLEM linux-next] ERROR: modpost: "devm_qcom_tzmem_pool_new"
+ [drivers/firmware/qcom/qcom-scm.ko] undefined!
+To: Mirsad Todorovac <mtodorovac69@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Stephen Rothwell <sfr@canb.auug.org.au>
+Cc: Linux Kernel Build System <linux-kbuild@vger.kernel.org>, 
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 30/06/2024 20:36, Caleb Connolly wrote:
-> 
-> diff --git a/Documentation/devicetree/bindings/input/touchscreen/syna,tcm-oncell.yaml b/Documentation/devicetree/bindings/input/touchscreen/syna,tcm-oncell.yaml
-> new file mode 100644
-> index 000000000000..6e366c9446f8
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/input/touchscreen/syna,tcm-oncell.yaml
+On Fri, Jun 28, 2024 at 8:27=E2=80=AFPM Mirsad Todorovac <mtodorovac69@gmai=
+l.com> wrote:
+>
+> Hi all,
+>
+> In vanilla linux-next next-20240627 branch, there seems to be a build err=
+or with
+> KCONFIG_SEED=3D0x44AB31A6.
+>
+> The error log is:
+>
+> ~/linux/kernel/linux-next$ time nice make -j 36 bindeb-pkg |& tee ../err-=
+6.10-rc5-next-20240627-29.log; date
+>   GEN     debian
+> dpkg-buildpackage --build=3Dbinary --no-pre-clean --unsigned-changes -R'm=
+ake -f debian/rules' -j1 -a$(cat debian/arch)
+> dpkg-buildpackage: info: source package linux-upstream
+> dpkg-buildpackage: info: source version 6.10.0-rc5-38
+> dpkg-buildpackage: info: source distribution jammy
+> dpkg-buildpackage: info: source changed by marvin <marvin@defiant>
+>  dpkg-source --before-build .
+> dpkg-buildpackage: info: host architecture amd64
+>  make -f debian/rules binary
+> #
+> # No change to .config
+> #
+> mkdir -p /home/marvin/linux/kernel/linux-next/tools/objtool && make O=3D/=
+home/marvin/linux/kernel/linux-next subdir=3Dtools/objtool --no-print-direc=
+tory -C objtool
+> mkdir -p /home/marvin/linux/kernel/linux-next/tools/bpf/resolve_btfids &&=
+ make O=3D/home/marvin/linux/kernel/linux-next subdir=3Dtools/bpf/resolve_b=
+tfids --no-print-directory -C bpf/resolve_btfids
+>   INSTALL libsubcmd_headers
+>   INSTALL libsubcmd_headers
+>   CALL    scripts/checksyscalls.sh
+>   UPD     init/utsversion-tmp.h
+>   CC      init/version.o
+>   AR      init/built-in.a
+>   CHK     kernel/kheaders_data.tar.xz
+>   AR      built-in.a
+>   AR      vmlinux.a
+>   LD      vmlinux.o
+>   OBJCOPY modules.builtin.modinfo
+>   GEN     modules.builtin
+>   MODPOST Module.symvers
+> ERROR: modpost: "devm_qcom_tzmem_pool_new" [drivers/firmware/qcom/qcom-sc=
+m.ko] undefined!
+> make[5]: *** [scripts/Makefile.modpost:145: Module.symvers] Error 1
+> make[4]: *** [Makefile:1886: modpost] Error 2
+> make[3]: *** [debian/rules:74: build-arch] Error 2
+> dpkg-buildpackage: error: make -f debian/rules binary subprocess returned=
+ exit status 2
+> make[2]: *** [scripts/Makefile.package:121: bindeb-pkg] Error 2
+> make[1]: *** [/home/marvin/linux/kernel/linux-next/Makefile:1555: bindeb-=
+pkg] Error 2
+> make: *** [Makefile:240: __sub-make] Error 2
+>
+> real    0m5.950s
+> user    0m15.971s
+> sys     0m10.430s
+> Fri Jun 28 20:22:03 CEST 2024
+> ~/linux/kernel/linux-next$
+>
+> Please find attached .config, just to be sure that we are talking about t=
+he same thing.
+>
+> Best regards,
+> Mirsad Todorovac
 
-Filename like compatible, so syna,s3908.yaml
+The fix for this is in the qcom tree[1] but I'm not sure why it still
+hasn't been pulled into next. I don't see any notifications about
+conflicts in next which could be the reason. Cc'ing Mark and Stephen.
 
-> @@ -0,0 +1,68 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/input/touchscreen/syna,tcm-oncell.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Synaptics TCM Oncell i2c touchscreen
-> +
-> +maintainers:
-> +  - Caleb Connolly <caleb@postmarketos.org>
-> +
-> +allOf:
-> +  - $ref: touchscreen.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - syna,s3908
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts-extended:
+Bart
 
-Instead, just interrupts:
-
-> +    maxItems: 1
-> +
-> +  reset-gpios:
-> +    maxItems: 1
-> +    description: Reset GPIO the chip is connected to.
-> +
-> +  vdd-supply:
-> +    description: a phandle for the regulator supplying 3V power.
-> +
-> +  vcc-supply:
-> +    description: a phandle for the regulator supplying IO power.
-> +
-> +additionalProperties: false
-
-This goes after "required:" block.
-
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts-extended
-> +  - reset-gpios
-> +  - vdd-supply
-> +  - vcc-supply
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +    #include <dt-bindings/gpio/gpio.h>
-> +
-> +    i2c {
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +      clock-frequency = <400000>;
-
-Drop
-
-> +      status = "okay";
-
-Drop
-
-> +
-> +      touchscreen@4b {
-> +        compatible = "syna,s3908";
-> +        reg = <0x4B>;
-> +
-> +        interrupts-extended = <&tlmm 39 0x2008>;
-
-Not a correct interrupt flag, I think.
-
-Best regards,
-Krzysztof
-
-
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?=
+h=3Dfor-next&id=3Dd96377892dd89bd4e7e5ae7293647f6bc7bddf7d
 
