@@ -1,84 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-24834-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D208991E8E7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 21:52:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9650291E8EB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 21:54:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8EEA4283F1D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 19:52:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 474FB283FEC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 19:54:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACA3316FF4E;
-	Mon,  1 Jul 2024 19:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6176E16F914;
+	Mon,  1 Jul 2024 19:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OUyt9Owt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XQCq2cf6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12AF16F904
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 19:52:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2971116F0C2;
+	Mon,  1 Jul 2024 19:54:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719863538; cv=none; b=b6huyBuGjVNn9MuBrkW7dCHTQmxI1ZRiCYCudQfgfuNEHWdoqFJYVMQ2Nmf8wOjXWdJ8AduI5MRh4djGRvi4U5ITSHacPJ4PhL6XRNtCk0kVorMR0XsqWj5iawlQON9ghTaaohzX1hxXcrBz2Gip/oAy/ijbt/xxS874eZpRjgo=
+	t=1719863685; cv=none; b=EYALHYUgRoZHxcI7853pw3l6g3j/0BCQyxTmQnODB7IasVPtyoCmC55VBMUSFDMRiIhWIzc/JjaksKbnuH2Gl2u+3DqgOx+q5LbzXcNw7H0WRaCuWbgLBTfNzav/V8TkV10/p6ZKWpq1AKNc+bbLO2ypxxasfWGH4kr12QZS1MQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719863538; c=relaxed/simple;
-	bh=H8delFYIAEjO+ZiSHwr9JeJ8MSblaIUUh8iXOXAfrOw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XMj5YIc6R+H8O7amd6ryOu7LMzlP4XDdP17KEz9H3ao2JgiIZtrrtsarnBpgWbaaxjHwa5PZ0DwlGAislAgbIxaTdz0TatCgqvn81AiG09aXsBjTZqFNROHfxRxDT8nCWnUh26MM1REHpIVv3nleV/+/glZDw4+dQCoQB737aIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OUyt9Owt; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52cdf4bc083so5070949e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2024 12:52:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719863534; x=1720468334; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HRHUkoGwpjNf6W9qmppc9hQKHNt+zygF+l53pGcNu58=;
-        b=OUyt9OwtmL/2wdV2pmTB+YajlTimlcuW5/JAHYR0SP+gPc6uyaIr/WLRDhenyYxTXQ
-         r3npugV59vWn4rN/Gm6ybycHZoiHwtInX/DSpIGDH4lijcIWnmk81AnM41xv0mpVi4mX
-         CHFJYnBRk57dzJgRDXcSasUEO4RoKUJLIFuzVH/hD0LHdcUo2xssfaiAcTZJ2v2bh8nV
-         b+4JUTuMI5DfTolcjat3cC9HssVmBMJU/cjsnnuhQaTgmyCL9MvuGyBk6ssyB5yIqJol
-         1fI+IB/3+GyfOa1jZ228LTtsyMN5Lib6PObRiUBXJC9aQVI9Lrv3Kz01zp7nJBAuoCp6
-         txGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719863534; x=1720468334;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HRHUkoGwpjNf6W9qmppc9hQKHNt+zygF+l53pGcNu58=;
-        b=QKcT/37699H+b3hoZ+1V8csqMADG2i5lH1eWaIzhdY0VtCR5aaxWZWfpJIA+vW6sxv
-         +eGUYTVddMQsFr6x3mvYZB2ch/bKU3GZOwGchOJLAGp88OX6GmdAhFzaz2d6jNbdPg6o
-         /otxNvbb046JXnFSbWraOKLH4+/YKMRW+/QjhidFehF3Y5yuFXm0dv42Lw2XDLN6Ux/g
-         YSwKzL5TagqSVOq3H71tiDzwrTKWy+SUfNn7U9tP4uuwR6UNNGiFgSo+h8pCXc7S52YN
-         QxX+6vLbwbhfv24paICHKWKmSsoOkFG75kgC45yf7ztBBv0au0s3F0oDz4hInqv3FOfP
-         hcdw==
-X-Forwarded-Encrypted: i=1; AJvYcCXehbDlj18G06zAupeVkLD6kvIVTQ7RE3wM0qpkTpIpHX1ES8eaXN0KuNylctdHs93bX5fU8QWXTNQUPKCqUcGIayF2Ca0hNuUWO1/W+g==
-X-Gm-Message-State: AOJu0YyA2PP0c05+aO//jA6RH9bAdcrdCbaQRHcDy2xgI2QzryznfVpt
-	LsKKr3M1V14sAh7AzB8Fqd7s7PGhB/fA8PbQN8+YmhBL4ZR0LDw4O+XiqWSMzIU=
-X-Google-Smtp-Source: AGHT+IGpZG78DLYt7UtXr9ZQfMpLzTwgkoAHEXhLyaBaZvfF5SxznHfPGIkjInmqLnX5xJ/9v+HutA==
-X-Received: by 2002:a05:6512:2397:b0:52c:dfe1:44ea with SMTP id 2adb3069b0e04-52e82643c41mr5319588e87.6.1719863533890;
-        Mon, 01 Jul 2024 12:52:13 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52e7ab2ea60sm1522272e87.218.2024.07.01.12.52.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jul 2024 12:52:13 -0700 (PDT)
-Date: Mon, 1 Jul 2024 22:52:12 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, dri-devel@lists.freedesktop.org, 
-	quic_jesszhan@quicinc.com, swboyd@chromium.org, dianders@chromium.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/5] drm/msm/iommu: introduce msm_iommu_disp_new() for
- msm_kms
-Message-ID: <b4kskldnis3m724kq6kpvqx4pnnjditxwy2jiiivkieqt25o6w@aj6ybxbvwq3t>
-References: <20240628214848.4075651-1-quic_abhinavk@quicinc.com>
- <20240628214848.4075651-4-quic_abhinavk@quicinc.com>
+	s=arc-20240116; t=1719863685; c=relaxed/simple;
+	bh=w+IwRyDf2gcSLquuXMXHhJOg/e5P+XyOdiaWytVCB1k=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=LBCir+HsFN5s4D/X16XclA4hZBCG+rHgTdsAdHGmCuxMiU8ftUbKF8+OnuEmK9qr7OhG8cv208uN8kBlWZqp0gyqkhWvtp1hKDjCvQdC3ZFgru/xipiLd3Z1kKbXX0KIxgkQlKMuVuzakgruBZ1DA3hDhJC0feiOQBAs63xCyuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XQCq2cf6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38725C116B1;
+	Mon,  1 Jul 2024 19:54:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719863684;
+	bh=w+IwRyDf2gcSLquuXMXHhJOg/e5P+XyOdiaWytVCB1k=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=XQCq2cf6ueTua29TV8Hbzc7SkMdAxxj34WJUYXIx1Q2P3u3FAaWGY9oHXezkPkkBN
+	 A4HE8Tf4FfFMCaLZshD6ODMMIEhANmbF8rME+qDgrmtNos/T61EBMN+HdzD57gBNhQ
+	 Z6HJQ8+ivJTAuA+5s9wtFOW2UwTbYv4DY8MdLzxo5dq5AEhtxtzPodxrX0ZljCExFW
+	 34LHogp5dK3C7nBExXVdhAIAPv0rv7X8RrhJBjelGqzCn1WYCF573L3m68xUZsBPfg
+	 sbGTUVUEVZerYJznen/oebUVGbcZwUGUCE058ywjZlWEDpPr2iLOYLC7G3Y2BfSXIL
+	 DXscPsPJQRAnQ==
+Date: Mon, 1 Jul 2024 14:54:42 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Jingoo Han <jingoohan1@gmail.com>, quic_vbadigan@quicinc.com,
+	quic_skananth@quicinc.com, quic_nitegupt@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC 7/7] pci: pwrctl: Add power control driver for qps615
+Message-ID: <20240701195442.GA14596@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,21 +67,32 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240628214848.4075651-4-quic_abhinavk@quicinc.com>
+In-Reply-To: <20240626-qps615-v1-7-2ade7bd91e02@quicinc.com>
 
-On Fri, Jun 28, 2024 at 02:48:45PM GMT, Abhinav Kumar wrote:
-> Introduce a new API msm_iommu_disp_new() for display use-cases.
-> 
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/msm_iommu.c | 26 ++++++++++++++++++++++++++
->  drivers/gpu/drm/msm/msm_mmu.h   |  1 +
->  2 files changed, 27 insertions(+)
-> 
+On Wed, Jun 26, 2024 at 06:07:55PM +0530, Krishna chaitanya chundru wrote:
+> QPS615 switch needs to configured after powering on and before
+> PCIe link was up.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+s/need to configured/needs to be configured/
 
--- 
-With best wishes
-Dmitry
+> As the PCIe controller driver already enables the PCIe link training
+> at the host side, stop the link training.
+
+Add blank line between paragraphs or rewrap into a single paragraph.
+
+> Otherwise the moment we turn on the switch it will participate in
+> the link training and link may come before switch is configured through
+> i2c.
+
+s/link may come before/link may come up before/ ?
+
+> The switch can be configured different ways like changing de-emphasis
+> settings of the switch, disabling unused ports etc and these settings
+> can vary from board to board, for that reason the sequence is taken
+> from the firmware file which contains the address of the slave, to address
+> and data to be written to the switch. The driver reads the firmware file
+> and parses them to apply those configurations to the switch.
+
+s/to address and data/the address and the data/ ?
+s/and parses them/and parses it/ (I assume you parse the file?)
 
