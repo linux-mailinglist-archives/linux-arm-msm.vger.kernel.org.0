@@ -1,75 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-24770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5227D91D817
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 08:29:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F5C691D84B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 08:52:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DFA9F1F21D96
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 06:29:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CB9351F20FD7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 06:52:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 371B65474A;
-	Mon,  1 Jul 2024 06:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 905EA4A9B0;
+	Mon,  1 Jul 2024 06:52:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JLYuIdUl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gRD7lXQM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD3243AD2
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 06:29:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E42410A0E;
+	Mon,  1 Jul 2024 06:52:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719815384; cv=none; b=jtsAoCupdT8Ojd0hogEeJHa/8DfLeIVBjrcx8FbJNRImHqycr1dw80kojDA4xtpyZ/K+xq4nMLz5UAzCR/bwlhec+ySgb0rUIFBVvM3/sjMtaSRtuo4YYMJiDeGkm5nHlHQNHd/mt+R4xh/gK3E4yt+W86nlWaAFzZqkbxWiY34=
+	t=1719816763; cv=none; b=Sm3a2/oZRHgzAtk9CFQZC9b1b4HcP+fQLxDHNIyvlE5ZBpPUfpO/FOff2EtIkQMypeHLkzWRaAi/J7WNkpmGHQn1MiP0ADEKjF0dZQpwMBohTDsy9yM1ft97wac4OOyRuRmLnnsUb4x3VbT6wHGJ6tFZXA92imT1iaggJtpV1Qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719815384; c=relaxed/simple;
-	bh=vwcflbuSSFSwLf/CpDhlvWISNUTd9C1LejWrrepemnI=;
+	s=arc-20240116; t=1719816763; c=relaxed/simple;
+	bh=E9TFWo9WdevrDFVoWL1TYS3FtsXZKCPU5LV1g0UiW3M=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Uan81CJj6PNQu7k4AYbRbkh1G1/Kak1UMyIVTk4+oVA+CHWyJQjsNVvlM1k2hBSIGkzEgYiJ0hAaGYsDReQR3it84LEOg6Uzv17QsBj5j+tkXZOHaa1oflH78MSfaEU5EKw6AhTTUGJpffrXJN7EbgeTU42uLLHUm3VnSfyED+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JLYuIdUl; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-57d1d614049so3095276a12.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 30 Jun 2024 23:29:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719815379; x=1720420179; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=8KI73HaIZKPtA6tUNhbdnUVOjQwMiDbmpvyBy7MyR40=;
-        b=JLYuIdUl3U+j9tVpNyWNyYWNkUVli1yBbs7j3Tx3cf8BKsj5W4iD9pHdGWp5uD953B
-         8PEzp6HnRgUd6WGNyAGUqUIGTJFcnF6iO/PUAtHr3fMPNUgR6k/+ltptHmalplutkB2m
-         vyUmxqZA3rUmzc/o6UmydIpP2v3z40NT2eg8XG4qw0Yi61ZftJ9b8cWsmNpwAvA/EsT0
-         eTyJn/fzlpfoqeOz6+EK3USnbbC9faiKZx4MasSID8zc2YKY86HFsoWVjsxqUEtugKPR
-         jGsWRB9XexLR04yxo9JXwbfgDTqZ+CW/28ENZWa11JJI/A5Z0r0HCbNH7IWdToBzLxmw
-         rCYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719815379; x=1720420179;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8KI73HaIZKPtA6tUNhbdnUVOjQwMiDbmpvyBy7MyR40=;
-        b=asU1TiPlW5n7i35iCb5cniXEGRrC2MpJv5N0+fC+zJqCosB8WJ91N97VXFnRHQWmWp
-         UxXo9Ga77a10/JlJEjXmzYiEd8ilHTmEr2/SaZHtK+eRPVIE9M8FwON7CvFiXGYzXRGY
-         NJXhWPMdcCi/42xf23QcSz8Vteh9tHt1M6UQ1cd0j2i4y/nAYg5tw7nydPhhYOPqTu18
-         BOEcclCUMRC0l4dCMTXkCXkYtr06MVFnDXe+Ce2XNNcrJzd9eDbozNtFQQvQYbkdSj4Q
-         DnExgCT3P3CbKxzVn3MG0VDQGnoe3bYUBWwzxz+OY3qsIGG1ZaAzqL3Cu/wlSuN2RjG3
-         VhLA==
-X-Forwarded-Encrypted: i=1; AJvYcCWkZdylDlmF37UMBM2vEO+faCQTvBcUkczug6cmkeVNRvYbyOMuCR5dV27kqcU+25PXNA6dwvOYZThmIfXXW4yrPKugz+e/3ViNj7zyQg==
-X-Gm-Message-State: AOJu0Yx1WrD0WYShfpxzPzTuK2NsAP44jPwoj7wEPd5VHG0aOCp3gEXo
-	IOt1BKH3VkM8ZKhX6ahqEL124AnHjMAeBUyC8jyrynQ+5Y3X3Py4i4W8J/Rtpno=
-X-Google-Smtp-Source: AGHT+IHwGKsRVShXGsslXlNb+wdgx+/t7H8J1mjqUgapp5brp8WyE93jr5C/X9AvXUda+6ZxZmDH0A==
-X-Received: by 2002:a17:906:6a0d:b0:a6f:af8e:b75d with SMTP id a640c23a62f3a-a751446749bmr422138566b.8.1719815379548;
-        Sun, 30 Jun 2024 23:29:39 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a72aaf603d6sm300841266b.62.2024.06.30.23.29.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 30 Jun 2024 23:29:39 -0700 (PDT)
-Message-ID: <bc254432-47da-49b6-ab5c-cec731273e28@linaro.org>
-Date: Mon, 1 Jul 2024 08:29:36 +0200
+	 In-Reply-To:Content-Type; b=GdBsyTfZ2RzgfGxfKBlHwv6rOFWE6PhWE1z1Gp9BhvkqusEkNLVnPZqNsMFmZuHTBXj92O6r2kmRGMnJi0GpJ8C8GLTcYefAnYWtXJXf5cuMWp5/pl16OTewcyCqiQxkLhvmGA0brFnHJM86WkXaU5TDwNCyzT/4DXvu2enpO1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gRD7lXQM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1761CC116B1;
+	Mon,  1 Jul 2024 06:52:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719816762;
+	bh=E9TFWo9WdevrDFVoWL1TYS3FtsXZKCPU5LV1g0UiW3M=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=gRD7lXQMnyWnfIw4ySq7WC1Jyz2mQfR/Ss8soD9e4WlOEBsvlBVlgLtUwnFvvXyH3
+	 nPaHpgtc1VHVzgksvo7jhS9lBR6AP2Uhb3sRv8fXqrxzFOW2HgR7GNlbOeElrhimj0
+	 WgSs32zo1YhakujIr0nnoGlYR0lusMCauPKNjRM9EE2RNczmYmUDQcV6vgueocMmj3
+	 PvAbjIAFq//VktjEopZSabhiJTR7bLwYuRDVxJPCxKTQjqV3WuwzpZPN7U8jQQz8ro
+	 LMUVphrWnDTgVyCgLwj8RHHzvVmHPm+YH0zDm47rkUkotObWyov9DaVOc5GwxQ6BMu
+	 V2DFfrB9Wo8ow==
+Message-ID: <aea7fa07-b1c9-4386-891f-5e23fb6baf32@kernel.org>
+Date: Mon, 1 Jul 2024 08:52:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,19 +50,29 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/5] ASoC: codecs: lpass-rx-macro: Simplify with
- cleanup.h
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>
-Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240628-b4-qcom-audio-lpass-codec-cleanups-v2-0-e9741143e485@linaro.org>
- <20240628-b4-qcom-audio-lpass-codec-cleanups-v2-1-e9741143e485@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 2/8] dt-bindings: input: touchscreen: document
+ synaptics TCM oncell
+To: Caleb Connolly <caleb@postmarketos.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>, David Airlie <airlied@gmail.com>,
+ Daniel Vetter <daniel@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Henrik Rydberg <rydberg@bitmath.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht
+References: <20240630-oneplus8-v2-0-c4a1f8da74f1@postmarketos.org>
+ <20240630-oneplus8-v2-2-c4a1f8da74f1@postmarketos.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
  JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
@@ -99,88 +82,132 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  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
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240628-b4-qcom-audio-lpass-codec-cleanups-v2-1-e9741143e485@linaro.org>
+ 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 fv0=
+In-Reply-To: <20240630-oneplus8-v2-2-c4a1f8da74f1@postmarketos.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 28/06/2024 12:10, Krzysztof Kozlowski wrote:
-> Allocate the default register values array with scoped/cleanup.h to
-> reduce number of error paths and make code a bit simpler.
+On 30/06/2024 20:36, Caleb Connolly wrote:
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Not adding Dmitry's Rb tag, because of major change devm->cleanup.h.
-> ---
->  sound/soc/codecs/lpass-rx-macro.c | 11 +++++------
->  1 file changed, 5 insertions(+), 6 deletions(-)
-> 
-> diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
-> index d47c49c90de3..4cf030760d74 100644
-> --- a/sound/soc/codecs/lpass-rx-macro.c
-> +++ b/sound/soc/codecs/lpass-rx-macro.c
-> @@ -1,6 +1,7 @@
->  // SPDX-License-Identifier: GPL-2.0-only
->  // Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
->  
-> +#include <linux/cleanup.h>
->  #include <linux/module.h>
->  #include <linux/init.h>
->  #include <linux/io.h>
-> @@ -3764,7 +3765,6 @@ static const struct snd_soc_component_driver rx_macro_component_drv = {
->  
->  static int rx_macro_probe(struct platform_device *pdev)
->  {
-> -	struct reg_default *reg_defaults;
->  	struct device *dev = &pdev->dev;
->  	kernel_ulong_t flags;
->  	struct rx_macro *rx;
-> @@ -3809,6 +3809,8 @@ static int rx_macro_probe(struct platform_device *pdev)
->  		goto err;
+> diff --git a/Documentation/devicetree/bindings/input/touchscreen/syna,tcm-oncell.yaml b/Documentation/devicetree/bindings/input/touchscreen/syna,tcm-oncell.yaml
+> new file mode 100644
+> index 000000000000..6e366c9446f8
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/input/touchscreen/syna,tcm-oncell.yaml
 
-I got now LKP report about build warning on clang (which I did not build
-with).
+Filename like compatible, so syna,s3908.yaml
 
-note: jump bypasses initialization of variable with __attribute__((cleanup))
+> @@ -0,0 +1,68 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/input/touchscreen/syna,tcm-oncell.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Synaptics TCM Oncell i2c touchscreen
+> +
+> +maintainers:
+> +  - Caleb Connolly <caleb@postmarketos.org>
+> +
+> +allOf:
+> +  - $ref: touchscreen.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - syna,s3908
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts-extended:
 
-This needs new version.
+Instead, just interrupts:
+
+> +    maxItems: 1
+> +
+> +  reset-gpios:
+> +    maxItems: 1
+> +    description: Reset GPIO the chip is connected to.
+> +
+> +  vdd-supply:
+> +    description: a phandle for the regulator supplying 3V power.
+> +
+> +  vcc-supply:
+> +    description: a phandle for the regulator supplying IO power.
+> +
+> +additionalProperties: false
+
+This goes after "required:" block.
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts-extended
+> +  - reset-gpios
+> +  - vdd-supply
+> +  - vcc-supply
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    #include <dt-bindings/gpio/gpio.h>
+> +
+> +    i2c {
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +      clock-frequency = <400000>;
+
+Drop
+
+> +      status = "okay";
+
+Drop
+
+> +
+> +      touchscreen@4b {
+> +        compatible = "syna,s3908";
+> +        reg = <0x4B>;
+> +
+> +        interrupts-extended = <&tlmm 39 0x2008>;
+
+Not a correct interrupt flag, I think.
 
 Best regards,
 Krzysztof
+
 
 
