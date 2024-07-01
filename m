@@ -1,121 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-24849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 988DF91EA64
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 23:32:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D33891EB47
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 01:16:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5229C2820C6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 21:32:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BFC4A2832E0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 23:16:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A9B416CD28;
-	Mon,  1 Jul 2024 21:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18AF780026;
+	Mon,  1 Jul 2024 23:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WkRSBw4Q"
+	dkim=pass (2048-bit key) header.d=canb.auug.org.au header.i=@canb.auug.org.au header.b="S7+J/66n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0665C4AEE0;
-	Mon,  1 Jul 2024 21:32:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACB438DD9;
+	Mon,  1 Jul 2024 23:16:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=150.107.74.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719869540; cv=none; b=U51ifCncd/qN885B5oty5qx0XfMb+E1dY8fIob8gYc8PYWgBDNq8bnm9oyJ0AC9gkYP8XNVEtQbQ8Io+FkM0ebpZ9aNLaIRQjRI9fE9Ei1ft3phQR6jsOnrx0jLAAMOvy/94nVH1R01HidX1Eb+MPUrSMsM0zQvJ2Ues0Q1Fvsg=
+	t=1719875787; cv=none; b=DZAOOtQ1yPg/hNCREPIN8O0OEzrEEV6xw06pRJHa02LphLISRRODXDca7eHpL7vFWJXxDV7OpQPYtYwK8MZZ+Yv9Z9bxQ9GiAXpZfLuOryfqIVgihIsvATwedBL3ZJhCVc1uwGmLBBNPeeUVphKaa05nHlRp4oQ7N9AKTX4onlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719869540; c=relaxed/simple;
-	bh=UL/aII2Jt1lvOrPsGuVdH5YjejNJjEUaM7KueST9pU0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XEzBb755tDebcZuu3hy4f98JuFWcLsNVxscRNjDSfgJ14cYAvNA30ANJF+HTlf8n0grn0ZwRDkzie2VctbI9/Tgo8ZynAY4n/HT1FI4rfpLbvieyoHJz3dmGB0ErM9lAJv1FVc32ISZgc3eXTWYDXEE36jvDCMvDH6LUreCe67Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WkRSBw4Q; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1fa0f143b85so24043785ad.3;
-        Mon, 01 Jul 2024 14:32:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719869538; x=1720474338; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9bbLFnVEa+CU/qtvwaSGT47EN8FSAW/HwwbaQu0/5Hk=;
-        b=WkRSBw4Q3MN5rXZkvfKKOxkoqZdMEoNujoumYdprkhpIXyZDeDGukjEdKzFURmc5ul
-         U4tPZXWBRoPh7e9NIXx2cogUQYgQV43RHxdSYECP3qu0P/WGntr6NKw4h7EFkZyfTnZ8
-         b3yR6WkL888ae3z5aMjvuPDnPkZ6PT30HwlJ5n+Mk4W7NaktRlTSx9u4Dk7UsrQnS2uq
-         c6fNKZi4S+2INSN7wFy9FpGR9ttN9HI/gqatJePTYPDJl9UGidf18ViEBPD0A6O9dgRX
-         P/VB7T8PgaOhfDK2y+aOtB5LbCTpZWAS7iZwRhQkBiDs7AgoYt1GBh1COrpvw0d9vHOy
-         TqWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719869538; x=1720474338;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9bbLFnVEa+CU/qtvwaSGT47EN8FSAW/HwwbaQu0/5Hk=;
-        b=K/Pq1IQwBjqbiUjZXudwL75VtSaFf/qOahBV6ZFbJXZvyC1p1cXYX9A55vX0LUOap0
-         ScQnc7Z+3xgbbzKRvfHPbKvSUnCTHPwsxP7V9LaFq+kNbA/g24v0iy0LouL8yHBtJd5f
-         juDV6L07WlabSURCoiXWZcOhIFohlr7w28CvkP+LEnvF5SqKP4UUj5EVFzNcA2HnkJux
-         d4XkHrMfInH8TmMeSMEdyDnDm68BCNjCCtijKQ8ZmxBVMaWaQR8GMQfRnSxY8r5edhUf
-         kuO743Lj/1HibwUZzbNgguYnPv9j2SsbV2/l5Qq18KmSwG12LGz2VcWNJN9UqnKiaZLu
-         nIUg==
-X-Forwarded-Encrypted: i=1; AJvYcCUxbgG3GsPGsz0Mf1Qu+/brUb/zzpV47btHsa/PDtA1UJFkWDOptm2ucLnLkWf39tHym15lsue20/3KNlTGu7R4W8+NISjSbYHL6BLu8h7CocD8hB7mMfvdmf3ZHS5JQ3py8xKomq8zfdBWOQ==
-X-Gm-Message-State: AOJu0YzmDw52ewa6yeUdRTUr/1cslqEnF89E211CuylNGD54F5vNEtDf
-	+e1zezovNOWpb4pM0gv5ETfpbpNrZP0xmZAV4+iS/LBZSARmKjf8
-X-Google-Smtp-Source: AGHT+IHIcAexP3OqxwduJL8FgnJI5xa1a0FyP/85oM+2PKJHJfsk0x8k1VLccITLOZ7HkF3Vk/7K2Q==
-X-Received: by 2002:a17:902:c402:b0:1f9:db1e:ef9d with SMTP id d9443c01a7336-1fadbcf45e5mr52066355ad.49.1719869538138;
-        Mon, 01 Jul 2024 14:32:18 -0700 (PDT)
-Received: from localhost ([2a00:79e1:2e00:1301:e1c5:6354:b45d:8ffc])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fac1568de4sm69750415ad.199.2024.07.01.14.32.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jul 2024 14:32:17 -0700 (PDT)
-From: Rob Clark <robdclark@gmail.com>
-To: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	Rob Clark <robdclark@chromium.org>,
-	kernel test robot <lkp@intel.com>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/gem: Add missing rcu_dereference()
-Date: Mon,  1 Jul 2024 14:32:14 -0700
-Message-ID: <20240701213215.433101-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1719875787; c=relaxed/simple;
+	bh=tSU39dZciMDb8sRhmnUcIch2vV1Fa5AdS7QF6XJHPJ8=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=iG1G8wzXS0uHbSz1N0x4sHY2FWFdeat5BsQT0SzXAAebWEGDyYBnBF0xf/ax6PnqQ7IdDtA+CZt8fZ2EQ4MQEBRS1dPKb64B7rvOVieOWgPye2xXkYJK7T52nPyVb1gCOpY6HjT5gOB7GcAKX0ut7Dkit6rQ2hB+TFLiIBseQGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canb.auug.org.au; spf=pass smtp.mailfrom=canb.auug.org.au; dkim=pass (2048-bit key) header.d=canb.auug.org.au header.i=@canb.auug.org.au header.b=S7+J/66n; arc=none smtp.client-ip=150.107.74.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canb.auug.org.au
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canb.auug.org.au
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canb.auug.org.au;
+	s=201702; t=1719875775;
+	bh=Y8wHQu+h5olE2m0mvmAj9n3XXWT5DGPtyl9UEjbVIzY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=S7+J/66nJaCPaCOgTDPPPUJBYNj0XZ1xwsfXirzp99Pz3/6Wa+jGoX6GFXhSOBVvo
+	 9XSWs8wOMfzX6nG6f/wFeXzD9Y/x51/zm5BvY508UZ0m6zojXbXnb/5Y1A2WIWpsDt
+	 6wccVVskeFD3tgm6ovPaOf4qtuIyrCLHuFJfR7E+tFzIJYIWLnzOjWI1pHxxvgzfG7
+	 CeUfJtIxT0bxSOrcdOWaSuJfVYxR3Bxwv6WJ+HEueBl6HcoFjHPfQUvfwOaQ2qhsw2
+	 8NCHi5/WOOVaKebYM2HWYHGEgNFf1LtiAwDQI1kGDMlUUvNNYdrDlwryNNWRdq9cI/
+	 qXiJAAjFDdbOQ==
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.ozlabs.org (Postfix) with ESMTPSA id 4WChk7257bz4wcC;
+	Tue,  2 Jul 2024 09:16:14 +1000 (AEST)
+Date: Tue, 2 Jul 2024 09:16:14 +1000
+From: Stephen Rothwell <sfr@canb.auug.org.au>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Mirsad Todorovac <mtodorovac69@gmail.com>, Mark Brown
+ <broonie@kernel.org>, Linux Kernel Build System
+ <linux-kbuild@vger.kernel.org>, Linux Kernel Mailing List
+ <linux-kernel@vger.kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PROBLEM linux-next] ERROR: modpost: "devm_qcom_tzmem_pool_new"
+ [drivers/firmware/qcom/qcom-scm.ko] undefined!
+Message-ID: <20240702091614.2334b182@canb.auug.org.au>
+In-Reply-To: <CAMRc=MczeH+ptirFQpFi968m+-4RoABa43M5VQUx4guZTZxLSw@mail.gmail.com>
+References: <9d1156b9-cdf1-44be-b65d-45b17c0b681e@gmail.com>
+	<CAMRc=MczeH+ptirFQpFi968m+-4RoABa43M5VQUx4guZTZxLSw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; boundary="Sig_/gEVH0E3.cizaTH.FlNpjhWH";
+ protocol="application/pgp-signature"; micalg=pgp-sha256
 
-From: Rob Clark <robdclark@chromium.org>
+--Sig_/gEVH0E3.cizaTH.FlNpjhWH
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Fixes a sparse "different address spaces" error.
+Hi Bart,
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202406280050.syeEwLTE-lkp@intel.com/
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Mon, 1 Jul 2024 09:33:47 +0200 Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+>
+> On Fri, Jun 28, 2024 at 8:27=E2=80=AFPM Mirsad Todorovac <mtodorovac69@gm=
+ail.com> wrote:
+> >
+> > In vanilla linux-next next-20240627 branch, there seems to be a build e=
+rror with
+> > KCONFIG_SEED=3D0x44AB31A6.
+> >
+> > The error log is:
+> >
+> > ~/linux/kernel/linux-next$ time nice make -j 36 bindeb-pkg |& tee ../er=
+r-6.10-rc5-next-20240627-29.log; date
+> >   GEN     debian
+> > dpkg-buildpackage --build=3Dbinary --no-pre-clean --unsigned-changes -R=
+'make -f debian/rules' -j1 -a$(cat debian/arch)
+> > dpkg-buildpackage: info: source package linux-upstream
+> > dpkg-buildpackage: info: source version 6.10.0-rc5-38
+> > dpkg-buildpackage: info: source distribution jammy
+> > dpkg-buildpackage: info: source changed by marvin <marvin@defiant>
+> >  dpkg-source --before-build .
+> > dpkg-buildpackage: info: host architecture amd64
+> >  make -f debian/rules binary
+> > #
+> > # No change to .config
+> > #
+> > mkdir -p /home/marvin/linux/kernel/linux-next/tools/objtool && make O=
+=3D/home/marvin/linux/kernel/linux-next subdir=3Dtools/objtool --no-print-d=
+irectory -C objtool
+> > mkdir -p /home/marvin/linux/kernel/linux-next/tools/bpf/resolve_btfids =
+&& make O=3D/home/marvin/linux/kernel/linux-next subdir=3Dtools/bpf/resolve=
+_btfids --no-print-directory -C bpf/resolve_btfids
+> >   INSTALL libsubcmd_headers
+> >   INSTALL libsubcmd_headers
+> >   CALL    scripts/checksyscalls.sh
+> >   UPD     init/utsversion-tmp.h
+> >   CC      init/version.o
+> >   AR      init/built-in.a
+> >   CHK     kernel/kheaders_data.tar.xz
+> >   AR      built-in.a
+> >   AR      vmlinux.a
+> >   LD      vmlinux.o
+> >   OBJCOPY modules.builtin.modinfo
+> >   GEN     modules.builtin
+> >   MODPOST Module.symvers
+> > ERROR: modpost: "devm_qcom_tzmem_pool_new" [drivers/firmware/qcom/qcom-=
+scm.ko] undefined!
+> > make[5]: *** [scripts/Makefile.modpost:145: Module.symvers] Error 1
+> > make[4]: *** [Makefile:1886: modpost] Error 2
+> > make[3]: *** [debian/rules:74: build-arch] Error 2
+> > dpkg-buildpackage: error: make -f debian/rules binary subprocess return=
+ed exit status 2
+> > make[2]: *** [scripts/Makefile.package:121: bindeb-pkg] Error 2
+> > make[1]: *** [/home/marvin/linux/kernel/linux-next/Makefile:1555: binde=
+b-pkg] Error 2
+> > make: *** [Makefile:240: __sub-make] Error 2
+> >
+> > real    0m5.950s
+> > user    0m15.971s
+> > sys     0m10.430s
+> > Fri Jun 28 20:22:03 CEST 2024
+> > ~/linux/kernel/linux-next$
+> >
+> > Please find attached .config, just to be sure that we are talking about=
+ the same thing.
+> >
+> > Best regards,
+> > Mirsad Todorovac =20
+>=20
+> The fix for this is in the qcom tree[1] but I'm not sure why it still
+> hasn't been pulled into next. I don't see any notifications about
+> conflicts in next which could be the reason. Cc'ing Mark and Stephen.
+>=20
+> Bart
+>=20
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit=
+/?h=3Dfor-next&id=3Dd96377892dd89bd4e7e5ae7293647f6bc7bddf7d
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index ddc6a131c041..ebc9ba66efb8 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -48,7 +48,7 @@ static void update_ctx_mem(struct drm_file *file, ssize_t size)
- 	uint64_t ctx_mem = atomic64_add_return(size, &ctx->ctx_mem);
- 
- 	rcu_read_lock(); /* Locks file->pid! */
--	trace_gpu_mem_total(0, pid_nr(file->pid), ctx_mem);
-+	trace_gpu_mem_total(0, pid_nr(rcu_dereference(file->pid)), ctx_mem);
- 	rcu_read_unlock();
- 
- }
--- 
-2.45.2
+The qcom tree has another build failure and so new versions of it have
+not been merged into linux-next since June 24.  Hopefully today the
+other build failure will be fixed.
 
+--=20
+Cheers,
+Stephen Rothwell
+
+--Sig_/gEVH0E3.cizaTH.FlNpjhWH
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEENIC96giZ81tWdLgKAVBC80lX0GwFAmaDOL4ACgkQAVBC80lX
+0GyGRQgAo2Wta0jZeIzedy6FN/CUQwgG42NjJmW9mHJypbFEi36DohRLHHpyqMsk
+gGfkxvRRuNbzbK5ES3ni2j0rfRt357l2uFYmMkfA52J0ZxyZ+taBpUiRELh1aTge
+1L0tGm5AOwoYY9md1AV4iUPgo9OFmVK9WVUPaJCPD/BEoWA8Gc4GBkm9vImay3ts
+zXnCZKXtq97Nbaa4i8mjaiP6LcP8zWAmqXDCurRGDdudwDehV6zLv7EhNQB4agn+
+0CyxQoWjgakbts/m5cD7KOEzbp3a1cq5nYFGKDxmcq2VGj5/qjUkRGnPJRMPXOg6
+Wq+HC70SBoGwThQMQPp6OZtHTkIq1w==
+=YIZu
+-----END PGP SIGNATURE-----
+
+--Sig_/gEVH0E3.cizaTH.FlNpjhWH--
 
