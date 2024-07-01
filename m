@@ -1,111 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-24836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 021D891E923
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 22:03:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5E7F91E929
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 22:07:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0FCE2814E2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 20:03:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 01D511C215E4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 20:07:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C20D16FF45;
-	Mon,  1 Jul 2024 20:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7255616FF48;
+	Mon,  1 Jul 2024 20:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L6V+A8s4"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pV7iWmMn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD0916F0E1
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 20:02:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB85816F267
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 20:07:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719864180; cv=none; b=TTTmTO7rsYcq55MFafSwdpyrpuc/XMdCGSNYEo56VLVmZu0t5eY/P86foqS8+U/gYxgxv0A92/2aEnOSwRrOyRzox4ssoazThzAKzdQUUG3xlUGRwEh3vaI8TYFF0wqCJnPyvmC5zI+2NzEI+IZQsVejO1KjzBt9CS6i9350EN4=
+	t=1719864436; cv=none; b=jj6Ckdo96ooZJ4g91JNOtEACWyjBgyyL5Z8JnzLJD8QK/RsyRrb++8tpvdiBKOAvkN7job4mJHsMgeWqI7A1c8IrSVZkvXM66UVicX8wRRLRXg1UHsw0sf5VpkEkCiPV42hlHFzAh81Lr2byOd1zMGJSxuWhPnOmv8dh2b9pfy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719864180; c=relaxed/simple;
-	bh=FNR/rmR6vy0+aDEomEh8L5gm+bBQq8dAdbJajJLXiOE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Cp5uXuKRcJFtuL/4SlaqEU25XE/Du0uHGVu23f83qJY9qtJioePMRam5fz9XRGl879KE5wuZ6NidDkLRxgCBDXcCNlfd1tbCONu4ZwmE21VfqvqPK2ItayXHbfbKNWvfsPJgJmZlUlUf1it/Ifeds87B846n26ytjqdTuk0d3RM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=L6V+A8s4; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52e8b27f493so1494171e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2024 13:02:58 -0700 (PDT)
+	s=arc-20240116; t=1719864436; c=relaxed/simple;
+	bh=DTx0TnMXknMnU1py/GEV3TbUeQ0A4+c8OwKWSEIEY60=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UYTjkk7tmwpnYHaf8Hqgx21hAQgyeg/O7EdaV1d3vtbtOfVuRqPvUYXUgxcQbaJeEyFvs2QrhxXTOABuIB4cpL2KtUxqVd9TA11y4OX7DLiqXvGmY1uFYGl1bFYB7E9fstSIG8RA7VMatLntuREgTdvq5aPXC6b/RmL3h0fAoho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pV7iWmMn; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-57d119fddd9so10814a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2024 13:07:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719864176; x=1720468976; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PfEsJfsC2ks7CWPYI27j4I38dK3PJe0vgriu9DWaCNI=;
-        b=L6V+A8s4Qv+url02wS/03LlZlbDn7wWllqPLn36sxVLxiORsCEf2wqUaJ+8RSHnbY3
-         Pp1xAZzXMbTH0lyo8vRdKT8D4VLX9lbqexseDjbo+fL8vGH538dRm6GXf2pcBfiYUYwn
-         gUZgmwvCqYLa2mPFDGhU/xWeoYUc+PZgmkZ2hm3M/beeMgY9A47u/GI9MxhdUCNXJZVf
-         QcZur44QnIggqhuBHSZ98Coh4uDbThtCxgQhDzxWj5M/IB5M2ipEJzSs4wL6MZdY03yL
-         Ka0iRYiMFPhCVJ/UqOGwNrYyeiAu+0roS/m99MoVFx97vxnUPY91lHvevDxPzGAPGQEV
-         Y2Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719864176; x=1720468976;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=google.com; s=20230601; t=1719864433; x=1720469233; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PfEsJfsC2ks7CWPYI27j4I38dK3PJe0vgriu9DWaCNI=;
-        b=ZeNt1HBsLNxZ/kHfoirUlqv6lgSM57dtWqTi41qOBBHp/W1HBNhNIVo5BtrC/fWUte
-         LZYU2rHgOnnLm0axSLA87T8zVUeJj+FrvAC76bGCdrnZKQHkSKiHhmDwoN/QLJfC7Ux6
-         Av4dxI4G3TGPSO+BiXpFQ5ucyMm0nCHmYXpnlxhSatPr7jAB5b0bOy3HiAwURLKId+wg
-         ZpoD9IaJ1KxBhhtNte4BYBv0GLzB59t4Mvu3OTBFooRse1i6AlYYjlvU3OEOY7Gr65oo
-         khX77/Qq/KkIT/kzdXooiBTS4wfQTobxEublHZ0EAvvT3YsRW1MSqXQBbQNxNqNAPDD5
-         WCfA==
-X-Forwarded-Encrypted: i=1; AJvYcCVOJP9WSAqdeP/a46lPbQi0MYKaJ+m1F0KwMimzQCZx5n6xQIC6VrM8DMjBbjKW+otg4W20PKJjzamtQ+OO6S2vTyv2sNRzoOtxdFTipg==
-X-Gm-Message-State: AOJu0YxuvUGeMApi8M0zvvfBpEJU/ksAAsypuGrokfDm8FsuWqHB7DGk
-	lULB76+1vfxd0WcmKPt/fJPX2Vig/LPB9j4tgv5hRHz5paAJGm31HFGHGtdkBaE=
-X-Google-Smtp-Source: AGHT+IGsjvOAZG6k6Yrc1aU147z/nHf11R4olGWCpEWKjChOK/ghF1HIDqiNrJy1XLnts3ZhEuDM0A==
-X-Received: by 2002:a05:6512:128a:b0:52c:9ab1:a312 with SMTP id 2adb3069b0e04-52e8264c2ccmr5115108e87.4.1719864176585;
-        Mon, 01 Jul 2024 13:02:56 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52e7ab10269sm1504535e87.96.2024.07.01.13.02.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jul 2024 13:02:56 -0700 (PDT)
-Date: Mon, 1 Jul 2024 23:02:54 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Caleb Connolly <caleb@postmarketos.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Henrik Rydberg <rydberg@bitmath.org>, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH v2 5/8] drm/mipi-dsi: add set column/page multi helpers
-Message-ID: <r2dalmjcz2egae6uw6zlgr7yu74z5uivigcr2r6zzvyg72z336@agftaxio44dr>
-References: <20240630-oneplus8-v2-0-c4a1f8da74f1@postmarketos.org>
- <20240630-oneplus8-v2-5-c4a1f8da74f1@postmarketos.org>
+        bh=HA1dU22m3UNj5lyj13MGSrb+8h3p7MYcfXDGMuEpnwo=;
+        b=pV7iWmMnE4CLmq/TiV0X7tzonmq/wxD24BAM1cWI/CSi7jua2bZ+hR/8iqNnZvmmCD
+         lqfrr8GMbU9DCJpVX3xmkkMZPAmd3kJImpE/q9WXkjnSZxlwd3WYd3Ay/r1od6cJWll7
+         p6XX92skCQsVjeyAB6JEQuuBNPPtUGq4tvFpVRLtmHPgFxHr67+njCHPsasnMnCD6ji/
+         T7D2HQ+O/ZRAozy5waDZoewOIK/hmXFu65GgxBVv9Wzsl/E99kKQGBQRWBExOBWRy6Xg
+         GLhw2ySClsWGHZDTmrbVIkwm0r0/GcijvTusNEuaVAGv+zYb5MptAp3y9KMXp/IEwpsU
+         0fBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719864433; x=1720469233;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HA1dU22m3UNj5lyj13MGSrb+8h3p7MYcfXDGMuEpnwo=;
+        b=kEFpbGJooIEM/Bj77CHaS8ExSOikjTC6MYarSC7NnGji+2bgEL1O3swXgLZtvn1kD0
+         j4uGEUqKHERHO6T7BW6YuMQcyBAf5kIJRwr/gO+ZsOf3jgWCMP41I3YL2N3oUC/Wvy2b
+         V9OUl0lJ9kHJjqqoDcwQGZqxEKekebCGe/yCHWw59WkDHBGDdMmfUBT+h5pK3+j49FsU
+         o9b6VAk7wZXelP3smckV83RJzlfAFlhnaYc0Mn8dRQmk6OVC9ygmbmxfl29gRO8c6Hq3
+         RzoEO2qUElZHl4SIKYzQasb8OeHYqdcH+epuYLwnLo+S4f1AeCc9YyfE64+mlQMbE+/r
+         fs4w==
+X-Forwarded-Encrypted: i=1; AJvYcCWcMocLZUZUbOQi1wisAV6BZ411GCfrPmkQJZQKXPkwyd0hF0OPUbO0p9k/ZF1PukVjnUJKY4Ep84M3B+zs/4QSunEVu53H8IJxVLaNSg==
+X-Gm-Message-State: AOJu0Yzk5C6FdcP6QArlll9aH8vkzD7miJDyq2rByG9qjNqbdYhIYBJV
+	LV3w3OrL76M7uDcWQwUK6Pmb9OoMYWK3bTrf1EiTQtRlvx7T4xKBtoWo+1/Q7UEz0x0utt+nfNb
+	10efzEaxkTR97SK1uG7xhJWpOrja7NHk0Dsaa
+X-Google-Smtp-Source: AGHT+IH9YyeTHtOmKWNRjWDZNOFaOcyjCIO5hmhn2IbnyBQewSRB362+m++tv5m6fkb6HeoZ2TpHUYTYJYIbCgB85hk=
+X-Received: by 2002:a50:d799:0:b0:58b:93:b624 with SMTP id 4fb4d7f45d1cf-58b0093b6fdmr89607a12.1.1719864432894;
+ Mon, 01 Jul 2024 13:07:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240630-oneplus8-v2-5-c4a1f8da74f1@postmarketos.org>
+References: <20240701162025.375134-1-robdclark@gmail.com>
+In-Reply-To: <20240701162025.375134-1-robdclark@gmail.com>
+From: Pranjal Shrivastava <praan@google.com>
+Date: Tue, 2 Jul 2024 01:37:00 +0530
+Message-ID: <CAN6iL-TCsS1dxwZngJ77J1MJcBeRsZW22W9uNLG59Z-isy9J5w@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] iommu/arm-smmu: Prettyify context fault messages
+To: Rob Clark <robdclark@gmail.com>
+Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	Stephen Boyd <swboyd@chromium.org>, Robin Murphy <robin.murphy@arm.com>, 
+	Rob Clark <robdclark@chromium.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Georgi Djakov <quic_c_gdjako@quicinc.com>, Jason Gunthorpe <jgg@ziepe.ca>, 
+	Jerry Snitselaar <jsnitsel@redhat.com>, Joerg Roedel <jroedel@suse.de>, Krishna Reddy <vdumpa@nvidia.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>, 
+	open list <linux-kernel@vger.kernel.org>, 
+	"open list:POWER MANAGEMENT CORE" <linux-pm@vger.kernel.org>, 
+	"open list:TEGRA IOMMU DRIVERS" <linux-tegra@vger.kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Will Deacon <will@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jun 30, 2024 at 08:36:28PM GMT, Caleb Connolly wrote:
-> Introduce mipi_dsi_dcs_set_column_address_multi() and
-> mipi_dsi_dcs_set_page_address_multi() helpers.
-> 
-> Signed-off-by: Caleb Connolly <caleb@postmarketos.org>
-> ---
->  include/drm/drm_mipi_dsi.h | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
-> 
+On Mon, Jul 1, 2024 at 9:50=E2=80=AFPM Rob Clark <robdclark@gmail.com> wrot=
+e:
+>
+> From: Rob Clark <robdclark@chromium.org>
+>
+> v3: Split out the reg bitfield renaming, rework
+>     print_context_fault_info() helper
+>
+> Rob Clark (3):
+>   iommu/arm-smmu: Add CB prefix to register bitfields
+>   iommu/arm-smmu-qcom-debug: Do not print for handled faults
+>   iommu/arm-smmu: Pretty-print context fault related regs
+>
+>  drivers/iommu/arm/arm-smmu/arm-smmu-nvidia.c  |  2 +-
+>  .../iommu/arm/arm-smmu/arm-smmu-qcom-debug.c  | 66 ++++++-----------
+>  drivers/iommu/arm/arm-smmu/arm-smmu.c         | 74 ++++++++++++++-----
+>  drivers/iommu/arm/arm-smmu/arm-smmu.h         | 71 +++++++++++-------
+>  drivers/iommu/arm/arm-smmu/qcom_iommu.c       |  4 +-
+>  5 files changed, 127 insertions(+), 90 deletions(-)
+>
+> --
+> 2.45.2
+>
+For the series:
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
 
--- 
-With best wishes
-Dmitry
+Thanks,
+Praan
 
