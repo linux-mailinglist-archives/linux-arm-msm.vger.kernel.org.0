@@ -1,113 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-24757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CC7891D392
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jun 2024 21:55:34 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17A9391D5DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 03:48:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A0DA6B20BD6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 30 Jun 2024 19:55:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 810C92816BD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 01:48:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 574B7155744;
-	Sun, 30 Jun 2024 19:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F25345382;
+	Mon,  1 Jul 2024 01:48:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RTZ+hc2W"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g3RurggF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBF237169;
-	Sun, 30 Jun 2024 19:55:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2638BF7;
+	Mon,  1 Jul 2024 01:48:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719777326; cv=none; b=YHifo6tyEhLflyGAX7DOKa/1DDZRodhVGtXOmJwa3Y83pHNpVPtjQ3tzXKnB+g+kA0wyARYub5Va//NzcC44boY6xZUqBaCOqN5pBP0IqanOFlFw3TvN60X4teCVoz2nKuncXlVeMoNawneBUO7ulsUspaEh5NnZE+lfwSxtsi0=
+	t=1719798511; cv=none; b=Z6cINPw3ABmORDcPQ11cz7PdzS2ttJAzv//fuFMpc5OJXkr0ZKKBIL9zw2uec2pEp2AhkY1llK+6v58oh7uvWfP3sQ5TYTngvls7kjRp8k4SR6pPXI3ClSNSOp3+IcJEgWSyZAfIWuTl/wTlhmSTJMA7GXy6UvUrq8aukus9bMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719777326; c=relaxed/simple;
-	bh=t0kMkB/WeZM4FC6XXyefVXL1YStBOqisgBin5mqjQ+k=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=QJEVm3z5n5TE1bRy2MpZ4/dhKqIoj5fjaLedTdoQtaOv4NBdp72KzeFR7y/c+DqJR3RW2jtHRgrr0XhhgBo42edg628Yrj/y7lrB8zySd27Ahcl5tKaY0UZPuTnrZuJqzgsL4xoDH3XA88E0ZP4vxDMnD1XdW/5k0dsVsvA9WI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RTZ+hc2W; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB70C32781;
-	Sun, 30 Jun 2024 19:55:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719777325;
-	bh=t0kMkB/WeZM4FC6XXyefVXL1YStBOqisgBin5mqjQ+k=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=RTZ+hc2WOo66gCpTZi1xjIb+Qgiav0F44CotgM/U+cp2gYp2+R63IxXn/0WDkZWHc
-	 qXYxtT9vtV5iVYr8IzYUv4cwyA25Z2iQa1zaJ4P1dQXRJMMx/FNdPB/V/5V3UVOoQ5
-	 dZsalutIjxzZbzNZlTABB2TGJ2qKAaiemKC2iZFvuIK+XSpd54MjX1ts2Nayq57fQQ
-	 SWXtqIT7AtsMf+eqWK1rusCDQFkHYuDcijlGTGxIjXRQvR8rHrc5sohQ1Dggw1z32p
-	 pGI7bRRW3ZlcsRZIhGnSyQQl5JpzqiMsXz+DjB1FfuI+0aD+xmuqKF3zkcdvPqHnQf
-	 MxGgurq3HPmng==
-Date: Sun, 30 Jun 2024 13:55:24 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1719798511; c=relaxed/simple;
+	bh=LndvduBCTugN+zBgpjFGTFw8L6tV1GxLf4ARV2GO3qI=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=X80EnCuPPbwGXD/ibdxvQDTas7yRUc/Nj4DDXqTNh3/9r2hcpyAwO5lBkYJFSbqCVd65w1TkH7jvxT7ARNcC9apwUJyucdk8mrfpIAXM4lBR/6w+BYhosJUfNaY90c5QOT5Ku069Rj6V7WZabUxkBsuP2QArReyuNdHdfb5PGV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=g3RurggF; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45UNeK7L008799;
+	Mon, 1 Jul 2024 01:47:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=WFZ3rpLyvbaEqpM/4Iq05h
+	1u6dg1spWjaj74z8leeGQ=; b=g3RurggF4njQzSpBy00U0kleC4Txb1zGsvbgpJ
+	8Z3yZzkoFQhkdwH3wB/TPbiXeSiaEj0lN190RgNRRCVka9qa+AX0YZ0hId4MutJz
+	EN3gytJyqNQQGe++sxVTmmJiEArr/HCS7Ij3PGveRIakwYIOvP9VYVFc3Xi47DsY
+	aVbnIWaJMxTSWamTUjBhaJSVikyrkzZMgZpWAN5PmGMkhi4jq7ek6eU+NRwwOUF1
+	LiLfsYEKh5K0dnNRnhthJEdF1TxBbwT8QeHoltJ2IRj8NDe42xadLkmR3/IKzEzR
+	vD0vUvnWkEldXkQzGU7GYosUT/IybJu/eED20V18Wgrtk/IA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4027mnk1a8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 01 Jul 2024 01:47:39 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4611lcHI019116
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 1 Jul 2024 01:47:38 GMT
+Received: from yijiyang-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 30 Jun 2024 18:47:29 -0700
+From: YijieYang <quic_yijiyang@quicinc.com>
+To: <vkoul@kernel.org>, <alexandre.torgue@foss.st.com>, <joabreu@synopsys.com>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <mcoquelin.stm32@gmail.com>,
+        <bartosz.golaszewski@linaro.org>, <netdev@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>
+CC: <kernel@quicinc.com>, <quic_tengfan@quicinc.com>,
+        <quic_aiquny@quicinc.com>, <quic_jiegan@quicinc.com>,
+        <quic_yijiyang@quicinc.com>, <stable@vger.kernel.org>
+Subject: [PATCH] net: stmmac: dwmac-qcom-ethqos: fix error array size
+Date: Mon, 1 Jul 2024 09:47:20 +0800
+Message-ID: <20240701014720.2547856-1-quic_yijiyang@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Caleb Connolly <caleb@postmarketos.org>
-Cc: Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Henrik Rydberg <rydberg@bitmath.org>, linux-arm-msm@vger.kernel.org, 
- linux-input@vger.kernel.org, David Airlie <airlied@gmail.com>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- ~postmarketos/upstreaming@lists.sr.ht, Maxime Ripard <mripard@kernel.org>, 
- dri-devel@lists.freedesktop.org, Neil Armstrong <neil.armstrong@linaro.org>, 
- devicetree@vger.kernel.org, Jessica Zhang <quic_jesszhan@quicinc.com>, 
- Thomas Zimmermann <tzimmermann@suse.de>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Dmitry Torokhov <dmitry.torokhov@gmail.com>
-In-Reply-To: <20240630-oneplus8-v2-1-c4a1f8da74f1@postmarketos.org>
-References: <20240630-oneplus8-v2-0-c4a1f8da74f1@postmarketos.org>
- <20240630-oneplus8-v2-1-c4a1f8da74f1@postmarketos.org>
-Message-Id: <171977732454.1979597.10634226835672850966.robh@kernel.org>
-Subject: Re: [PATCH v2 1/8] dt-bindings: panel: document Samsung AMB655X
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 2gfIGHlo93uEszPcsCr5YxwpAZcB6C0B
+X-Proofpoint-GUID: 2gfIGHlo93uEszPcsCr5YxwpAZcB6C0B
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-01_01,2024-06-28_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ spamscore=0 malwarescore=0 adultscore=0 priorityscore=1501
+ lowpriorityscore=0 phishscore=0 mlxscore=0 suspectscore=0 clxscore=1011
+ mlxlogscore=979 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407010010
 
+From: Yijie Yang <quic_yijiyang@quicinc.com>
 
-On Sun, 30 Jun 2024 20:36:24 +0200, Caleb Connolly wrote:
-> Describe the Samsung AMB655X panel. It has three supplies.
-> 
-> Signed-off-by: Caleb Connolly <caleb@postmarketos.org>
-> ---
->  .../bindings/display/panel/samsung,amb655x.yaml    | 63 ++++++++++++++++++++++
->  1 file changed, 63 insertions(+)
-> 
+Correct member @num_por with size of right array @emac_v4_0_0_por for
+struct ethqos_emac_driver_data @emac_v4_0_0_data.
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Cc: stable@vger.kernel.org
+Fixes: 8c4d92e82d50 ("net: stmmac: dwmac-qcom-ethqos: add support for emac4 on sa8775p platforms")
+Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
+---
+ drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-yamllint warnings/errors:
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+index 80eb72bc6311..e8a1701cdb7c 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -272,7 +272,7 @@ static const struct ethqos_emac_por emac_v4_0_0_por[] = {
+ 
+ static const struct ethqos_emac_driver_data emac_v4_0_0_data = {
+ 	.por = emac_v4_0_0_por,
+-	.num_por = ARRAY_SIZE(emac_v3_0_0_por),
++	.num_por = ARRAY_SIZE(emac_v4_0_0_por),
+ 	.rgmii_config_loopback_en = false,
+ 	.has_emac_ge_3 = true,
+ 	.link_clk_name = "phyaux",
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/display/panel/samsung,amb655x.example.dts:20.11-21: Warning (reg_format): /example-0/panel@0:reg: property has invalid length (4 bytes) (#address-cells == 1, #size-cells == 1)
-Documentation/devicetree/bindings/display/panel/samsung,amb655x.example.dtb: Warning (pci_device_reg): Failed prerequisite 'reg_format'
-Documentation/devicetree/bindings/display/panel/samsung,amb655x.example.dtb: Warning (pci_device_bus_num): Failed prerequisite 'reg_format'
-Documentation/devicetree/bindings/display/panel/samsung,amb655x.example.dtb: Warning (simple_bus_reg): Failed prerequisite 'reg_format'
-Documentation/devicetree/bindings/display/panel/samsung,amb655x.example.dtb: Warning (i2c_bus_reg): Failed prerequisite 'reg_format'
-Documentation/devicetree/bindings/display/panel/samsung,amb655x.example.dtb: Warning (spi_bus_reg): Failed prerequisite 'reg_format'
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240630-oneplus8-v2-1-c4a1f8da74f1@postmarketos.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+base-commit: 0fc4bfab2cd45f9acb86c4f04b5191e114e901ed
+-- 
+2.34.1
 
 
