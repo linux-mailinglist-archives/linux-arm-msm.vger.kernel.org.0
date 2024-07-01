@@ -1,160 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-24840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FC9491E964
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 22:16:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D40B191E962
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 22:16:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 82BDFB21D96
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 20:16:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8E60E283109
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 20:16:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A76C1171096;
-	Mon,  1 Jul 2024 20:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 511EC17106E;
+	Mon,  1 Jul 2024 20:16:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Q60WqDUi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="x0ahzrXC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E1F16F265
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 20:16:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E94C17107A
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 20:15:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719864967; cv=none; b=mN81k00HoFTyPdsiNrIktV7C3rauPGON1t8HaJNpy24nrLtStn+fLP7DnLdEC3U8WsO+j7nTOT0I3zAWnnHi4gsg03SsWm+Ds49TtHOIEU3sLZ3S7NHHmk+QUFceENgw2KhAeTDZBgL47RbAij0oNdjZQJxSOrhgam3z/oCByO0=
+	t=1719864961; cv=none; b=oUXt8aysGk/XmBNCDxTUKLonhsmEReZkdGe+bb2QA8PLu9IzRXi1EQGtp+MITR0S1TrQ2N0/46oV7bIfuuANLeb1JXvg2LCF4YnoJxKjCgJWiF/01aMO9bJ7qvLXhbwTUh3F/VxI5yP8SDrYBzQVdUFbKwTbRzCD7m87hrzcCgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719864967; c=relaxed/simple;
-	bh=8BAeJrhfF4MjoWK6BCb1lGegZfneASgqj+Rvzy7n+rk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MiUSIiQcSngF7Qxg2JPraMt2TTNwUL9ShVVQufVpsgy+2qU42lkrc0ZuPjzUuD/bvOxK9JnU63rYD+0AhrRxGVTG6A3TUtmR9mTzPjs+aBV1mTGVpl883wQvu8XcsFDh5WzRjeCyCAu7ydNlF4+k6tVEbjwzsXx+6/Z7G/pINBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Q60WqDUi; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2ec6635aa43so34132961fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2024 13:16:04 -0700 (PDT)
+	s=arc-20240116; t=1719864961; c=relaxed/simple;
+	bh=VIwgCdYfo2EDVpDqpPnXe9fwfK490V75vA+cDr+FOwA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eQOsmlASBr6PzNTFkss143c82ahRIv6LL9NwhBQy/nl6Jmmt6OLnDa9msWdHXX9FuTmCaSVrCJJPvRvnWtS4SX/LKbdOZxIqJdf1ntYeWcagAuLdV5Y0KSltBJV8+AoFN77/rK2GjAPQrNK44q9uZHA3jyl8lb0q5YEUjkK6ZMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=x0ahzrXC; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-52e8cdc6a89so1201945e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2024 13:15:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1719864963; x=1720469763; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=L/7AZmTT+AVERGwwpJNjGUJrmrBTr7GP14K4O8EWIlY=;
-        b=Q60WqDUi3pqLWriq7fVrADnm2JxdRl9Qu/HKPaI6G+kwuZOdvFAHvcq8ce0veiz3J2
-         q5/3hS3OSDnCx5eT6fd5KXRqvPar4dHnHL3z0brtWdKRPeHmv19B13aIrIOVt6g8/vae
-         I+YVodCB6mnvzHE74vmPDmA7GYyE7LH/nShXNeyqxvZPFvMMG1FTgIPj+0t/tex6rurM
-         bC7As71en6Bv/3Jgs/VTgL2JPskQHrw0r1x7iJuzOiLbBAckdfdHGVhCU2lu/OzZjTZQ
-         cqqUwEwjsUFWTfCIBlVyHWJ2I2nxfVXRykaQfi0wfoKzfOFufq1BdOZ5KpzKC44MuiT+
-         mCHg==
+        d=linaro.org; s=google; t=1719864957; x=1720469757; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=m9/8mIy2Soy1rT0VBZ0KovI3gB0F5GIqwuAKjma/NsQ=;
+        b=x0ahzrXCW3MiNMAyxszkU9qHj6PhkGMDRT/mg/YU3Erad1c7uDkn+iHzrLaNg1ZMnO
+         QRN4T3Ri1c1ZYFPY49twg7xstYvNkEwnEsxRmcIwY+5kVfWvziKtvUtghCp4DfoXclNd
+         X3gYJ2U7DaEhjkxnskjnnGenvM+4I10mj5O62dPqoczL//f/YSCVnFqseUlfHj7x/5J5
+         K3aB0rp+uH1jgD8EVX53JGZlZrdeu9PEMuB52GGryNyliPr2X9IvFfbpJuH97ITTIlDk
+         ci73QlCYpVWdZVlx7WYY4lhi47WSDYQ5ij2aPWRpBHesXbU3oj5OpdTgHxqem2Crbit/
+         DQRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719864963; x=1720469763;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=L/7AZmTT+AVERGwwpJNjGUJrmrBTr7GP14K4O8EWIlY=;
-        b=VfiRlp6dlZ0L41W91+4tK+DE1Lo0Efmpn74loOHwFif13EsoNCViua1OfzSba7UnPX
-         /SxQWTKhrayeigcslZPh74gMZNYKj+b4oJbB1Ts38PoGP2gZUispARAFMMOdpVMS757O
-         iHRCboBKcYNHiI1PvSAvJVT4wo/Vz84+JcTvBzTDEQ/b9MX5wtbTLGh5DqXl8fcqb+sT
-         xLLG+mxHtcsW9CjfH/J90RMWIw8x2PwPxLqGikXcSDzRrdXG036PorDCbjhnkDmBwbaf
-         K2LwF29h+JBMDB5UGzNRF7c6HqSLZ1VNZ8wrfhx7HZ48LoQxSDQtPnGqmh1TrLWES8r8
-         HGtw==
-X-Forwarded-Encrypted: i=1; AJvYcCWjHrMI5+Aojiys9PhNnb6oWBlb5yPVjGNIDDfkx2TcYuIrjLIK+lxKEhzUnPSj6laxGqxKuJIp55TbfN2SdAmBbfhkqKJeeiJ7SNxUHQ==
-X-Gm-Message-State: AOJu0Yyrhsw9EZpYzvI0laFeN2Q+NKrjp7aPY2lj008khO1RMjF82MtG
-	/cL7KXmoBaiwaVwFUHZYFg64JnoOkk72y7Vj2tESYnxo4sByRP+7PJmZyKl/EN9ChnTobLgZmkM
-	MbRXTGWl9EripXx5iGArUoiJCOwBrthmN71JufQ==
-X-Google-Smtp-Source: AGHT+IEKAZ0mm0RcxwgLcfbN1Y6EDGlhonP962JD5DjNt0v+wIWUTtByp8xBB5E9Sy3ozcPBuqs8cSZzA/gNt5LZ0dQ=
-X-Received: by 2002:a05:651c:b0b:b0:2ec:5c94:3d99 with SMTP id
- 38308e7fff4ca-2ee5e3810b7mr44548691fa.2.1719864963002; Mon, 01 Jul 2024
- 13:16:03 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719864957; x=1720469757;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m9/8mIy2Soy1rT0VBZ0KovI3gB0F5GIqwuAKjma/NsQ=;
+        b=sSZkmAFvLdWMVsf6Q1ifjmCDn58PQZnGtS+1Kv9+xfvaV2m8ZHo/dcUyM6BXEUopv6
+         G8opwCBQt2baa/L+VVSurRtMvy2H5g0Zdnmz1MOGvwBeCxcvjBdCxovLLUENmImpzhEb
+         Z2bDxJM9J6Yimv1diQnf0zkGSXM8TWmXUC3PDNLgOZtCLsPBX0BMpHxfvGOEF6LGPv/z
+         BcuMELWSdnHdwf156b7ZYgP5cWj8h35z7DdQfU6TaFG3ZLsuiYH7+Xcj16x2EON/Pjt4
+         Hs9qJMhRnePDtX93iNKJRBQ2hDlvQ+F630rwaVQcC6M5b6FmCvH4BxvBFfj8Ce32s6Fo
+         ZSsw==
+X-Forwarded-Encrypted: i=1; AJvYcCVUrxyneADSxC0QkidVB8u/E5FrVD7EuXiXR+gwWjLD+WjCLqzjUD4S4Beba8MJvxzOUWh7U42HIKORB811j4DBB82klHyDlpuEtTkIHw==
+X-Gm-Message-State: AOJu0Yw5cR0J8mvFMu1MH8fmAaCUAIN2vUXxexTR/jivebZeFVioWYDu
+	Va9/kZv4s9vCD1Jb684MXCnBYpS3zNWjdyZIqx1Lnv+oKByOeYaNpCIzMEFbZtE=
+X-Google-Smtp-Source: AGHT+IFxn3+GVHpCKWLFmtvjbAhKGJt1X+Qt6/RrWK3J3/PhaV4OJn52mux+6Y+DaNLf76MWaMizZQ==
+X-Received: by 2002:a05:6512:3da3:b0:52e:713e:697c with SMTP id 2adb3069b0e04-52e8267b8d0mr5580487e87.25.1719864954692;
+        Mon, 01 Jul 2024 13:15:54 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52e7ab100f2sm1522634e87.69.2024.07.01.13.15.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Jul 2024 13:15:54 -0700 (PDT)
+Date: Mon, 1 Jul 2024 23:15:52 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Caleb Connolly <caleb@postmarketos.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Henrik Rydberg <rydberg@bitmath.org>, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v2 4/8] drm: mipi: add mipi_dsi_generic_write_multi_type()
+Message-ID: <6bbvfyh3pgbx6cgzvgvxszrlm2eycpuqf2lzjppvlfnojwr4sk@koppspbhqins>
+References: <20240630-oneplus8-v2-0-c4a1f8da74f1@postmarketos.org>
+ <20240630-oneplus8-v2-4-c4a1f8da74f1@postmarketos.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240627113948.25358-1-brgl@bgdev.pl> <20240627113948.25358-3-brgl@bgdev.pl>
- <td5jbseo7gtu6d4xai6q2zkfmxw4ijimyiromrf52he5hze3w3@fd3kayixf4lw> <f416e06e-e354-4628-883b-07850f05e276@lunn.ch>
-In-Reply-To: <f416e06e-e354-4628-883b-07850f05e276@lunn.ch>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 1 Jul 2024 22:15:51 +0200
-Message-ID: <CAMRc=MdSte_7MSfR1DAH8fHpHWcOfgPX2SO9DR1UnXrgvMDbdg@mail.gmail.com>
-Subject: Re: [PATCH v2 net-next 2/2] net: stmmac: qcom-ethqos: add a DMA-reset
- quirk for sa8775p-ride
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Andrew Halaney <ahalaney@redhat.com>, Vinod Koul <vkoul@kernel.org>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, Jose Abreu <joabreu@synopsys.com>, 
-	"David S . Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240630-oneplus8-v2-4-c4a1f8da74f1@postmarketos.org>
 
-On Thu, Jun 27, 2024 at 9:37=E2=80=AFPM Andrew Lunn <andrew@lunn.ch> wrote:
->
-> On Thu, Jun 27, 2024 at 12:07:22PM -0500, Andrew Halaney wrote:
-> > On Thu, Jun 27, 2024 at 01:39:47PM GMT, Bartosz Golaszewski wrote:
-> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > >
-> > > On sa8775p-ride the RX clocks from the AQR115C PHY are not available =
-at
-> > > the time of the DMA reset so we need to loop TX clocks to RX and then
-> > > disable loopback after link-up. Use the existing callbacks to do it j=
-ust
-> > > for this board.
-> > >
-> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > Sorry, not being very helpful but trying to understand these changes
-> > and the general cleanup of stmmac... so I'll point out that I'm still
-> > confused by this based on Russell's last response:
-> > https://lore.kernel.org/netdev/ZnQLED%2FC3Opeim5q@shell.armlinux.org.uk=
-/
-> >
-> > Quote:
-> >
-> >     If you're using true Cisco SGMII, there are _no_ clocks transferred
-> >     between the PHY and PCS/MAC. There are two balanced pairs of data
-> >     lines and that is all - one for transmit and one for receive. So th=
-is
-> >     explanation doesn't make sense to me.
-> >
->
-> Agreed. We need a deeper understanding of the clocking to find an
-> acceptable solution to this problem.
->
-> Is the MAC extracting a clock from the SERDES lines?
->
-> Is the PHY not driving the SERDES lines when there is no link?
->
-> For RGMII PHYs, they often do have a clock output at 25 or 50MHz which
-> the MAC uses. And some PHY drivers need asking to not turn this clock
-> off.  Maybe we need the same here, by asking the PHY to keep the
-> SERDES lines running when there is no link?
->
+On Sun, Jun 30, 2024 at 08:36:27PM GMT, Caleb Connolly wrote:
+> Some panels like the Samsung AMB655X use long write commands for all
+> non-standard messages and do not work when trying to use the appropriate
+> command type.
+> 
+> Support these panels by introducing a new helper to send commands of a
+> specific type, overriding the normal rules.
+> 
+> Signed-off-by: Caleb Connolly <caleb@postmarketos.org>
+> ---
+>  drivers/gpu/drm/drm_mipi_dsi.c | 40 ++++++++++++++++++++++++++++++++++++++++
+>  include/drm/drm_mipi_dsi.h     | 16 ++++++++++++++++
+>  2 files changed, 56 insertions(+)
+> 
 
-Yes, there are two 50MHz outputs on this PHY but they are not
-connected on this board.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> https://elixir.bootlin.com/linux/v6.10-rc5/source/include/linux/phy.h#L78=
-1
->
-> I also wounder why this is not an issue with plain SGMII, rather than
-> overclocked SGMII? Maybe there is already a workaround for SGMII and
-> it just needs extended to this not quiet 2500BaseX mode.
->
 
-Well, you pointed out that there is a DMA-reset-related workaround in
-place for ethqos so I tried to reuse it in this version. Does it
-count? :) We did establish that this mode has no in-band signalling,
-so we should be fine with the above solution after all.
-
-Also regarding the PHY mode: on a rather non-technical diagram I
-found, the four SGMII signals going to the MAC are referred to as 2.5G
-HSGMII, not OCSGMII but I'm not sure if that's just naming convention.
-
-I'm still trying to get more info but it's taking time... :(
-
-Bartosz
+-- 
+With best wishes
+Dmitry
 
