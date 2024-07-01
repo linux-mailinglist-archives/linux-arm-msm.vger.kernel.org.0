@@ -1,320 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-24841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D4B491E99B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 22:31:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CC3EF91E99F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 22:32:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0294F282BE4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 20:31:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 81270282703
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 20:32:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A76C516F0FE;
-	Mon,  1 Jul 2024 20:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 221A816F0E9;
+	Mon,  1 Jul 2024 20:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Am3IDviD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NgCgeeSF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABAB316F0E4;
-	Mon,  1 Jul 2024 20:31:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE041EB39
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jul 2024 20:32:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719865903; cv=none; b=YiLN3qKTjKhFPqaOhXI8TotwdZqNSoEtctJCN9tpZisbXX9gtsbvDAS7Ux4a0x5DjUcHQLL/ju5rNo16eboUyBQJR4vLe6QCVJXlrvtq4T6pycLFnCvz31xupINdD6NJLzUGL6Qyd1b5Jc/YCYrUef6O/dHYsGRu+hTxFaM/jqY=
+	t=1719865950; cv=none; b=UguO0i9+J8Ffwajm9ocps4UbS1MRC165BGl2yp1/xX1+8Vc3T7vcuCOKJYcPC7MupX1PF2vLxtQkrTRgHxcdgR8wNFjIEwXB2rEWh40OeEVweo4eA+AR3C+ptpi8qOKiuDqGDXChZCgusTFabEaS6jD+ZKFQqQQrBZHw5rfGKU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719865903; c=relaxed/simple;
-	bh=Xoug+Pf2H5s/IkOhc+YsXZkhlN6gdo4kVZVVtz2oYuI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sxf8jO+ZZBaLq73x2J26lgL08LVM/THyDf2qHnRG2T5YWBgJnjrbwvvDHMsxGi1QF6rbehGT3EPt4Lw0WtF/LrhQi4CxiYupMiabo1FJ+c9rdeJPDKqxBGx4fhaeX4cNRU6Yo9WAvX3swVLWYVn6lYllcxKB1GDUg47lLFf04w8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Am3IDviD; arc=none smtp.client-ip=209.85.208.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2e72224c395so38546401fa.3;
-        Mon, 01 Jul 2024 13:31:41 -0700 (PDT)
+	s=arc-20240116; t=1719865950; c=relaxed/simple;
+	bh=xpN7/tTYQgy383QB2y2T9uhzz123rWmHug8FpUAhRWs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rlSOuQlCcXj4K4jMboxnGFFF+ung0F3M9ZXtcvmJY+sRNiKp3v9Tfn1M2tsjaKXqhy135N1dSjNwwV7IthOya2amBXQ1lBgEm2RWawI/KJ72B4XvUtR5xeOf/0YPT6phfJcpx9aOuUJNyCasnig9wXDq3tJePvnRYUkX5GLiG4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NgCgeeSF; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-52cdbc20faeso4960234e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2024 13:32:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1719865900; x=1720470700; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Igo6mRmi4Wb8qhjbnltnAiTul1wcsE29u8pkuVZmfuw=;
-        b=Am3IDviDQfxF9WipTCrlovnGnaeEhjvUcOnFcTL7aamPt0Zv1ZMGCjINe4Niyh653W
-         govtQZJ1tHVcidMDq9MIbCkeOeVasjlq/nfia0ecc8p2pQlryywV6JcjzW3vsWG3rJtT
-         lyS6IhNySBmi43v7G4tnFuHZwuzR+rZ520v7lzkqKZfu8mvQPJZbRoGfo2ocfXZZ3BsI
-         oewWEZLmmpDTX5OwJizXd59is4MMJXugiA9B6bArQ2NHxeurMiiZpttypMb1RpS+Y3oN
-         s9kwPfKi8kGnpcVNHjAw5KpC7sJRob607lfFy14GpwnYgCoZQvWj/bD09J7iqQKXv1t6
-         a2Mg==
+        d=linaro.org; s=google; t=1719865946; x=1720470746; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q4Al+p7+Jx4QMS6ZRzOMzn7/IcRW4qS/ED9WAZRF5M0=;
+        b=NgCgeeSFjasOhQsDYo2Mpdf5YD+Og5uCCxGjOvJo1pZOQ3Njt8Xc4mRM9hvQO54pAw
+         QgStnA1/BTvV3wmCf7dGrq8cIIneX1/0O2xBtFFAHI6iYnrpsVaVCE1Sn4+LmtmdCyVh
+         hSbq0+5GHpVewQ4H7ZlvlyAqpNvDgOhI2Hyhve7wjMPLatARK2M6k0f9G0CW3rkFpEui
+         tY+uEOvjzQ7PvZXl6zcsZu2PI7BJ2BlrAyMQVMGTZQSFuLqBsUfMNykwHO+29XunoaxG
+         7eZ/4MuoHNNd6GgOQIEOLput8Zi0dNRvwV5Bn0v7hsG8YM4LipFpOs2g+ktQHOXqjmgX
+         3s0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719865900; x=1720470700;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Igo6mRmi4Wb8qhjbnltnAiTul1wcsE29u8pkuVZmfuw=;
-        b=q1dYrs5/JHRmk9DXjMUUEW0jy98a2uAogOO4DpHuBEZ9Z2jkDGa7jh71voZB2r2Llf
-         o/ZZwTzxp0XvXUM9qnNvQaVFoghibFCTLS8Tb777uHvA9BQN6+ndBLbc/bW+aWebXweb
-         kW2smzUrO7ghlKp5lRZTCtK7+ZOHYwguCBEJQakW/uyX2ruRbneo+kf9jzDzz11UYCJE
-         /VCq2NbBL5JTJjyJsDV2XSaLhyXtJMTzBuSsRfqZuMFlfBoP+XMhb1HWLORs6sDSidPy
-         cZDTlR/tXvBTtNmbq00z7EAUxvIaePxxqKSqITIM24XpmF2TxDXP2AnoyB0XC+iggiWG
-         oBeA==
-X-Forwarded-Encrypted: i=1; AJvYcCV92BMPkxy4H/9mLAm0WFIIDaWaxhOHBg0crkx75kVw/tJQ4HvhVe0tlP/jq4lrSS8O0UjO+uhXVygX3TqWw8yrlK+33XoTGE4a3+lGAbZY8xtLSOqTZ1Pjy73gDNCmWxX33DLzeXjrCNc5tA==
-X-Gm-Message-State: AOJu0YyRf1TN7oOIX0UtPKqiRiJa45p9q/c0pQbc381JyLdBM+bTTpwF
-	nYUAUok0i+r2f+OSxB2eqsDRC/8hMMZVT5qqMRYA4OUtESkJXfZedNwtz2qOQ5QUzOVTsJ2sfoK
-	ShBA1SdFc2SjJkkz6jo1kns7F/bI=
-X-Google-Smtp-Source: AGHT+IFOIrXPT4bf9oS/jD9RNxfQRx/jOKo5gIFwN3zbBp2BUCaCY4nY72iPAZpqtW7pbCW/3tcVNRjGyb52d14AWDU=
-X-Received: by 2002:a2e:7004:0:b0:2ec:556f:3474 with SMTP id
- 38308e7fff4ca-2ee5e6d76e9mr38826921fa.52.1719865899468; Mon, 01 Jul 2024
- 13:31:39 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1719865946; x=1720470746;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Q4Al+p7+Jx4QMS6ZRzOMzn7/IcRW4qS/ED9WAZRF5M0=;
+        b=QzKDP2GGAVk12lGw9HT0H4Gg/h0H5fB91Xo012MjA7qGFhjxLoYysnlu6NIXS6eKOi
+         OrOiYfhl3vd+ooDX26ul3dBEQ4TlUi0huRGRwNa9rEioA/xHHjo6Ja+wEY5is1gJYckO
+         Crl+RGgNtg8pON90dgqxZd9pQOHb+OP0japz2J13GtZvhK/gQ6p9KnV4adHZ1OyRtUPb
+         tqdChbVSGzWZWWCeiOLLa304DIlkMn7ThjFDh1Ks32x4t4jsqbnQQddeC8gJGA29q2is
+         M6pT+VXici28kJuxeRk9TYZDBA3gfEwTLmo8zLpQac9uquzDtlPdnbSBLQwT+O+gZFxg
+         Dl1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXqq8NXo8I8h15XVVf/WIUkGlrWIM/Mfb/fM4dTIWV8u4M+xFTbVB9bCYxefg2qeBCb3Pg8G6kuCWJYKa+0RawjL7n2wC9RsAKcjBwEpw==
+X-Gm-Message-State: AOJu0YxRha8UuBxHAkQl3BwGQ+V1LVyYBbyDM+jzib2tn9Z6XeMvb8zn
+	+HK9HGkbuI0ACTTV0UptbazWZbAlDULrlzUoWTi6rUO7nwkdi/H4KLtjhWl2gNw=
+X-Google-Smtp-Source: AGHT+IFJr9iphLbm2TbLxdU2q9eLCNITZS5yDZ612pI0Pqk94QNI9OpKhvGgRjiFMmsb1ZR/me6Rwg==
+X-Received: by 2002:a05:6512:2312:b0:52c:7fe8:6489 with SMTP id 2adb3069b0e04-52e8273e4a5mr4495138e87.63.1719865944333;
+        Mon, 01 Jul 2024 13:32:24 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52e7ab2f77dsm1528020e87.229.2024.07.01.13.32.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Jul 2024 13:32:23 -0700 (PDT)
+Date: Mon, 1 Jul 2024 23:32:22 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Caleb Connolly <caleb@postmarketos.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Henrik Rydberg <rydberg@bitmath.org>, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v2 6/8] drm/panel: add driver for samsung amb655x
+Message-ID: <37y25ko7q2hoqlzvteqt3cj2lsms3lkwi6xu6qm4xaq5gm6pus@lxh4jo4hpryv>
+References: <20240630-oneplus8-v2-0-c4a1f8da74f1@postmarketos.org>
+ <20240630-oneplus8-v2-6-c4a1f8da74f1@postmarketos.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628140435.1652374-1-quic_bibekkum@quicinc.com>
- <20240628140435.1652374-7-quic_bibekkum@quicinc.com> <CAF6AEGvroi8rJimFv95tkWmRFa5_aTpBJ7GFcRAuZpLGdSyEYQ@mail.gmail.com>
- <0650ba0a-4453-4e2d-8a76-0f396ac1999c@quicinc.com> <CAF6AEGv_9e-TDW1r0N4-db6pY_aV_EZFqrpNbATVS5Vy6+fs1g@mail.gmail.com>
- <4a5f54c7-120e-427d-8a0a-9fb83e13a72e@quicinc.com>
-In-Reply-To: <4a5f54c7-120e-427d-8a0a-9fb83e13a72e@quicinc.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Mon, 1 Jul 2024 13:31:27 -0700
-Message-ID: <CAF6AEGtrtFNxDWtuADA4oOHhZJ=dJZcGaJ1XLFJt4fe4Xp=pTA@mail.gmail.com>
-Subject: Re: [PATCH v13 6/6] iommu/arm-smmu: add support for PRR bit setup
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, jgg@ziepe.ca, 
-	jsnitsel@redhat.com, robh@kernel.org, krzysztof.kozlowski@linaro.org, 
-	quic_c_gdjako@quicinc.com, dmitry.baryshkov@linaro.org, 
-	konrad.dybcio@linaro.org, iommu@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240630-oneplus8-v2-6-c4a1f8da74f1@postmarketos.org>
 
-On Mon, Jul 1, 2024 at 4:01=E2=80=AFAM Bibek Kumar Patro
-<quic_bibekkum@quicinc.com> wrote:
->
->
->
-> On 6/28/2024 9:14 PM, Rob Clark wrote:
-> > On Fri, Jun 28, 2024 at 8:10=E2=80=AFAM Bibek Kumar Patro
-> > <quic_bibekkum@quicinc.com> wrote:
-> >>
-> >>
-> >>
-> >> On 6/28/2024 7:47 PM, Rob Clark wrote:
-> >>> On Fri, Jun 28, 2024 at 7:05=E2=80=AFAM Bibek Kumar Patro
-> >>> <quic_bibekkum@quicinc.com> wrote:
-> >>>>
-> >>>> Add an adreno-smmu-priv interface for drm/msm to call
-> >>>> into arm-smmu-qcom and initiate the PRR bit setup or reset
-> >>>> sequence as per request.
-> >>>>
-> >>>> This will be used by GPU to setup the PRR bit and related
-> >>>> configuration registers through adreno-smmu private
-> >>>> interface instead of directly poking the smmu hardware.
-> >>>>
-> >>>> Suggested-by: Rob Clark <robdclark@gmail.com>
-> >>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-> >>>> ---
-> >>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 23 +++++++++++++++++=
-+++++
-> >>>>    drivers/iommu/arm/arm-smmu/arm-smmu.h      |  2 ++
-> >>>>    include/linux/adreno-smmu-priv.h           |  6 +++++-
-> >>>>    3 files changed, 30 insertions(+), 1 deletion(-)
-> >>>>
-> >>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/io=
-mmu/arm/arm-smmu/arm-smmu-qcom.c
-> >>>> index bd101a161d04..64571a1c47b8 100644
-> >>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >>>> @@ -28,6 +28,7 @@
-> >>>>    #define PREFETCH_SHALLOW       (1 << PREFETCH_SHIFT)
-> >>>>    #define PREFETCH_MODERATE      (2 << PREFETCH_SHIFT)
-> >>>>    #define PREFETCH_DEEP          (3 << PREFETCH_SHIFT)
-> >>>> +#define GFX_ACTLR_PRR          (1 << 5)
-> >>>>
-> >>>>    static const struct actlr_config sc7280_apps_actlr_cfg[] =3D {
-> >>>>           { 0x0800, 0x04e0, PREFETCH_DEFAULT | CMTLB },
-> >>>> @@ -235,6 +236,27 @@ static void qcom_adreno_smmu_resume_translation=
-(const void *cookie, bool termina
-> >>>>           arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, re=
-g);
-> >>>>    }
-> >>>>
-> >>>> +static void qcom_adreno_smmu_set_prr(const void *cookie, phys_addr_=
-t page_addr, bool set)
-> >>>> +{
-> >>>> +       struct arm_smmu_domain *smmu_domain =3D (void *)cookie;
-> >>>> +       struct arm_smmu_cfg *cfg =3D &smmu_domain->cfg;
-> >>>> +       struct arm_smmu_device *smmu =3D smmu_domain->smmu;
-> >>>> +       u32 reg =3D 0;
-> >>>> +
-> >>>> +       writel_relaxed(lower_32_bits(page_addr),
-> >>>> +                               smmu->base + ARM_SMMU_GFX_PRR_CFG_LA=
-DDR);
-> >>>> +
-> >>>> +       writel_relaxed(upper_32_bits(page_addr),
-> >>>> +                               smmu->base + ARM_SMMU_GFX_PRR_CFG_UA=
-DDR);
-> >>>> +
-> >>>> +       reg =3D  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_ACTL=
-R);
-> >>>> +       reg &=3D ~GFX_ACTLR_PRR;
-> >>>> +       if (set)
-> >>>> +               reg |=3D FIELD_PREP(GFX_ACTLR_PRR, 1);
-> >>>> +       arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
-> >>>> +
-> >>>
-> >>> nit, extra line
-> >>>
-> >>
-> >> Ack, will remove this. Thanks for pointing out.
-> >>
-> >>> Also, if you passed a `struct page *` instead, then you could drop th=
-e
-> >>> bool param, ie. passing NULL for the page would disable PRR.  But I
-> >>> can go either way if others have a strong preference for phys_addr_t.
-> >>>
-> >>
-> >> Oh okay, this looks simple to reset the prr bit.
-> >> But since this page is allocated and is used inside gfx driver
-> >> before being utilized for prr bit operation, would it be safe for
-> >> drm/gfx driver to keep a reference to this page in smmu driver?
-> >>
-> >> Since we only need the page address for configuring the
-> >> CFG_UADDR/CFG_LADDR registers so passed the phys_addr_t.
-> >
-> > I don't think the smmu driver needs to keep a reference to the page..
-> > we can just say it is the responsibility of the drm driver to call
-> > set_prr(NULL) before freeing the page
-> >
->
-> That makes sense. If we go by this NULL page method to disable the PRR,
-> we would have to set the address registers to reset value as well.
->
-> The sequence would be like the following as per my understaning:
-> - Check if it's NULL page
-> - Set the PRR_CFG_UADDR/PRR_CFG_LADDR to reset values i.e - 0x0 for
->    these registers
-> - Reset the PRR bit in actlr register
->
-> Similar to this snippet:
->
-> #PRR_RESET_ADDR 0x0
->
-> --------------
-> reg =3D  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR);
-> reg &=3D ~GFX_ACTLR_PRR;
-> arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
->
-> if (!prr_page) {
->         writel_relaxed(PRR_RESET_ADDR,
->                         smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
->         writel_relaxed(PRR_RESET_ADDR),
->                          smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
->         return;
-> }
->
->
-> writel_relaxed(lower_32_bits(page_to_phys(prr_page)),
->                 smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
->
-> writel_relaxed(upper_32_bits(page_to_phys(prr_page)),
->                 smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
->
-> reg |=3D FIELD_PREP(GFX_ACTLR_PRR, 1);
-> arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
-> -----------------
->
-> If looks good, will implement the same in next version.
+On Sun, Jun 30, 2024 at 08:36:29PM GMT, Caleb Connolly wrote:
+> This is a 1080x2400 120hz panel used on the OnePlus 8T. It uses DSC but
+> with many non-standard DCS commands.
+> 
+> The only user of this panel (the OnePlus 8T) has a bug somewhere in the
+> DSI stack whereby it isn't possible to properly initialize this panel
+> after a reset. As a result, the reset GPIO is made optional so it can be
+> left unused on that device.
+> 
+> Signed-off-by: Caleb Connolly <caleb@postmarketos.org>
+> ---
+>  MAINTAINERS                                   |   7 +
+>  drivers/gpu/drm/panel/Kconfig                 |   9 +
+>  drivers/gpu/drm/panel/Makefile                |   1 +
+>  drivers/gpu/drm/panel/panel-samsung-amb655x.c | 399 ++++++++++++++++++++++++++
+>  4 files changed, 416 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 807feae089c4..2b9cfbf92d7a 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -7142,8 +7142,15 @@ M:	Robert Chiras <robert.chiras@nxp.com>
+>  S:	Maintained
+>  F:	Documentation/devicetree/bindings/display/panel/raydium,rm67191.yaml
+>  F:	drivers/gpu/drm/panel/panel-raydium-rm67191.c
+>  
+> +DRM DRIVER FOR SAMSUNG AMB655X PANEL
+> +M:	Caleb Connolly <caleb@postmarketos.org>
+> +S:	Maintained
+> +T:	git https://gitlab.freedesktop.org/drm/misc/kernel.git
+> +F:	Documentation/devicetree/bindings/display/panel/samsung,amb655x.yaml
+> +F:	drivers/gpu/drm/panel/panel-samsung-amb655x.c
+> +
+>  DRM DRIVER FOR SAMSUNG DB7430 PANELS
+>  M:	Linus Walleij <linus.walleij@linaro.org>
+>  S:	Maintained
+>  T:	git https://gitlab.freedesktop.org/drm/misc/kernel.git
+> diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
+> index bf4eadfe21cb..7203d16ab20a 100644
+> --- a/drivers/gpu/drm/panel/Kconfig
+> +++ b/drivers/gpu/drm/panel/Kconfig
+> @@ -590,8 +590,17 @@ config DRM_PANEL_SAMSUNG_S6E88A0_AMS452EF01
+>  	depends on OF
+>  	select DRM_MIPI_DSI
+>  	select VIDEOMODE_HELPERS
+>  
+> +config DRM_PANEL_SAMSUNG_AMB655X
+> +	tristate "Samsung AMB655X DSI panel"
+> +	depends on OF
+> +	depends on DRM_MIPI_DSI
+> +	depends on BACKLIGHT_CLASS_DEVICE
+> +	help
+> +	  DRM panel driver for the Samsung AMB655X panel.
+> +	  This panel has a resolution of 1080x2400 @ 60hz or 120Hz.
+> +
+>  config DRM_PANEL_SAMSUNG_ATNA33XC20
+>  	tristate "Samsung ATNA33XC20 eDP panel"
+>  	depends on OF
+>  	depends on BACKLIGHT_CLASS_DEVICE
+> diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
+> index 051b75b3df7b..be6d500a56a4 100644
+> --- a/drivers/gpu/drm/panel/Makefile
+> +++ b/drivers/gpu/drm/panel/Makefile
+> @@ -58,8 +58,9 @@ obj-$(CONFIG_DRM_PANEL_RAYDIUM_RM67191) += panel-raydium-rm67191.o
+>  obj-$(CONFIG_DRM_PANEL_RAYDIUM_RM68200) += panel-raydium-rm68200.o
+>  obj-$(CONFIG_DRM_PANEL_RAYDIUM_RM692E5) += panel-raydium-rm692e5.o
+>  obj-$(CONFIG_DRM_PANEL_RAYDIUM_RM69380) += panel-raydium-rm69380.o
+>  obj-$(CONFIG_DRM_PANEL_RONBO_RB070D30) += panel-ronbo-rb070d30.o
+> +obj-$(CONFIG_DRM_PANEL_SAMSUNG_AMB655X) += panel-samsung-amb655x.o
+>  obj-$(CONFIG_DRM_PANEL_SAMSUNG_ATNA33XC20) += panel-samsung-atna33xc20.o
+>  obj-$(CONFIG_DRM_PANEL_SAMSUNG_DB7430) += panel-samsung-db7430.o
+>  obj-$(CONFIG_DRM_PANEL_SAMSUNG_LD9040) += panel-samsung-ld9040.o
+>  obj-$(CONFIG_DRM_PANEL_SAMSUNG_S6D16D0) += panel-samsung-s6d16d0.o
 
-yeah, that looks like it could work..
 
-you probably don't need to zero out the PRR_CFG_*ADDR when disabling,
-and probably could avoid double writing ACTLR, but that is getting
-into bikeshedding
+> +static int samsung_amb655x_prepare(struct drm_panel *panel)
+> +{
+> +	struct samsung_amb655x *ctx = to_samsung_amb655x(panel);
+> +	struct device *dev = &ctx->dsi->dev;
+> +	int ret;
+> +
+> +	/*
+> +	 * During the first call to prepare, the regulators are already enabled
+> +	 * since they're boot-on. Avoid enabling them twice so we keep the refcounts
+> +	 * balanced.
 
-BR,
--R
+I see your intent, but I don't think this is fully correct. If the
+driver gets rebound, then it will perform one extra disable call. On the
+next driver probe / enable / disable / remove cycle the driver will
+perform one more, underflowing enable count. I think
+regulator_init_complete_work_function should give the phone enough time
+to boot the panel.
 
->
-> Thanks & regards,
-> Bibek
->
-> > BR,
-> > -R
-> >
-> >>> Otherwise, lgtm
-> >>>
-> >>> BR,
-> >>> -R
-> >>>
-> >>
-> >> Thanks & regards,
-> >> Bibek
-> >>
-> >>>> +}
-> >>>> +
-> >>>>    #define QCOM_ADRENO_SMMU_GPU_SID 0
-> >>>>
-> >>>>    static bool qcom_adreno_smmu_is_gpu_device(struct device *dev)
-> >>>> @@ -407,6 +429,7 @@ static int qcom_adreno_smmu_init_context(struct =
-arm_smmu_domain *smmu_domain,
-> >>>>           priv->get_fault_info =3D qcom_adreno_smmu_get_fault_info;
-> >>>>           priv->set_stall =3D qcom_adreno_smmu_set_stall;
-> >>>>           priv->resume_translation =3D qcom_adreno_smmu_resume_trans=
-lation;
-> >>>> +       priv->set_prr =3D qcom_adreno_smmu_set_prr;
-> >>>>
-> >>>>           actlrvar =3D qsmmu->data->actlrvar;
-> >>>>           if (!actlrvar)
-> >>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/a=
-rm/arm-smmu/arm-smmu.h
-> >>>> index d9c2ef8c1653..3076bef49e20 100644
-> >>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> >>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> >>>> @@ -154,6 +154,8 @@ enum arm_smmu_cbar_type {
-> >>>>    #define ARM_SMMU_SCTLR_M               BIT(0)
-> >>>>
-> >>>>    #define ARM_SMMU_CB_ACTLR              0x4
-> >>>> +#define ARM_SMMU_GFX_PRR_CFG_LADDR     0x6008
-> >>>> +#define ARM_SMMU_GFX_PRR_CFG_UADDR     0x600C
-> >>>>
-> >>>>    #define ARM_SMMU_CB_RESUME             0x8
-> >>>>    #define ARM_SMMU_RESUME_TERMINATE      BIT(0)
-> >>>> diff --git a/include/linux/adreno-smmu-priv.h b/include/linux/adreno=
--smmu-priv.h
-> >>>> index c637e0997f6d..d6e2ca9f8d8c 100644
-> >>>> --- a/include/linux/adreno-smmu-priv.h
-> >>>> +++ b/include/linux/adreno-smmu-priv.h
-> >>>> @@ -49,7 +49,10 @@ struct adreno_smmu_fault_info {
-> >>>>     *                 before set_ttbr0_cfg().  If stalling on fault =
-is enabled,
-> >>>>     *                 the GPU driver must call resume_translation()
-> >>>>     * @resume_translation: Resume translation after a fault
-> >>>> - *
-> >>>> + * @set_prr:      Extendible interface to be used by GPU to modify =
-the
-> >>>> + *                 ACTLR register bits, currently used to configure
-> >>>> + *                 Partially-Resident-Region (PRR) feature's
-> >>>> + *                 setup and reset sequence as requested.
-> >>>>     *
-> >>>>     * The GPU driver (drm/msm) and adreno-smmu work together for con=
-trolling
-> >>>>     * the GPU's SMMU instance.  This is by necessity, as the GPU is =
-directly
-> >>>> @@ -67,6 +70,7 @@ struct adreno_smmu_priv {
-> >>>>        void (*get_fault_info)(const void *cookie, struct adreno_smmu=
-_fault_info *info);
-> >>>>        void (*set_stall)(const void *cookie, bool enabled);
-> >>>>        void (*resume_translation)(const void *cookie, bool terminate=
-);
-> >>>> +    void (*set_prr)(const void *cookie, phys_addr_t page_addr, bool=
- set);
-> >>>>    };
-> >>>>
-> >>>>    #endif /* __ADRENO_SMMU_PRIV_H */
-> >>>> --
-> >>>> 2.34.1
-> >>>>
+> +	 */
+> +	if (!regulator_is_enabled(ctx->supplies[0].consumer)) {
+> +		ret = regulator_bulk_enable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
+> +		if (ret) {
+> +			dev_err(dev, "Failed to enable regulators: %d\n", ret);
+> +			return ret;
+> +		}
+> +	}
+> +
+
+-- 
+With best wishes
+Dmitry
 
