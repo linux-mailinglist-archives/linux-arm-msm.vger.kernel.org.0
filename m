@@ -1,182 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-24850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D33891EB47
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 01:16:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DCD1091EB59
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 01:32:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BFC4A2832E0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 23:16:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 007FD281362
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jul 2024 23:32:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18AF780026;
-	Mon,  1 Jul 2024 23:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A3CC128812;
+	Mon,  1 Jul 2024 23:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=canb.auug.org.au header.i=@canb.auug.org.au header.b="S7+J/66n"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T7zaLcu9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACB438DD9;
-	Mon,  1 Jul 2024 23:16:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=150.107.74.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86222F29;
+	Mon,  1 Jul 2024 23:32:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719875787; cv=none; b=DZAOOtQ1yPg/hNCREPIN8O0OEzrEEV6xw06pRJHa02LphLISRRODXDca7eHpL7vFWJXxDV7OpQPYtYwK8MZZ+Yv9Z9bxQ9GiAXpZfLuOryfqIVgihIsvATwedBL3ZJhCVc1uwGmLBBNPeeUVphKaa05nHlRp4oQ7N9AKTX4onlo=
+	t=1719876760; cv=none; b=ahz8YDmaidJK8Z3R3+elz3k75bshGPwrYpqYDeJgiIFqNwf7hmE82nHlNmzyybVTNCdw2DD7HNYPlyL5m6qYu/CVrtHi/PsbARu+2k+yfoxCilUrUgFDZPjL1d7dmjPJwQ0Da9SJRMDUaRaZ8t0Ddpw44DLerLyrwQSB1n8ElnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719875787; c=relaxed/simple;
-	bh=tSU39dZciMDb8sRhmnUcIch2vV1Fa5AdS7QF6XJHPJ8=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iG1G8wzXS0uHbSz1N0x4sHY2FWFdeat5BsQT0SzXAAebWEGDyYBnBF0xf/ax6PnqQ7IdDtA+CZt8fZ2EQ4MQEBRS1dPKb64B7rvOVieOWgPye2xXkYJK7T52nPyVb1gCOpY6HjT5gOB7GcAKX0ut7Dkit6rQ2hB+TFLiIBseQGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canb.auug.org.au; spf=pass smtp.mailfrom=canb.auug.org.au; dkim=pass (2048-bit key) header.d=canb.auug.org.au header.i=@canb.auug.org.au header.b=S7+J/66n; arc=none smtp.client-ip=150.107.74.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canb.auug.org.au
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canb.auug.org.au
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canb.auug.org.au;
-	s=201702; t=1719875775;
-	bh=Y8wHQu+h5olE2m0mvmAj9n3XXWT5DGPtyl9UEjbVIzY=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=S7+J/66nJaCPaCOgTDPPPUJBYNj0XZ1xwsfXirzp99Pz3/6Wa+jGoX6GFXhSOBVvo
-	 9XSWs8wOMfzX6nG6f/wFeXzD9Y/x51/zm5BvY508UZ0m6zojXbXnb/5Y1A2WIWpsDt
-	 6wccVVskeFD3tgm6ovPaOf4qtuIyrCLHuFJfR7E+tFzIJYIWLnzOjWI1pHxxvgzfG7
-	 CeUfJtIxT0bxSOrcdOWaSuJfVYxR3Bxwv6WJ+HEueBl6HcoFjHPfQUvfwOaQ2qhsw2
-	 8NCHi5/WOOVaKebYM2HWYHGEgNFf1LtiAwDQI1kGDMlUUvNNYdrDlwryNNWRdq9cI/
-	 qXiJAAjFDdbOQ==
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.ozlabs.org (Postfix) with ESMTPSA id 4WChk7257bz4wcC;
-	Tue,  2 Jul 2024 09:16:14 +1000 (AEST)
-Date: Tue, 2 Jul 2024 09:16:14 +1000
-From: Stephen Rothwell <sfr@canb.auug.org.au>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Mirsad Todorovac <mtodorovac69@gmail.com>, Mark Brown
- <broonie@kernel.org>, Linux Kernel Build System
- <linux-kbuild@vger.kernel.org>, Linux Kernel Mailing List
- <linux-kernel@vger.kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org
-Subject: Re: [PROBLEM linux-next] ERROR: modpost: "devm_qcom_tzmem_pool_new"
- [drivers/firmware/qcom/qcom-scm.ko] undefined!
-Message-ID: <20240702091614.2334b182@canb.auug.org.au>
-In-Reply-To: <CAMRc=MczeH+ptirFQpFi968m+-4RoABa43M5VQUx4guZTZxLSw@mail.gmail.com>
-References: <9d1156b9-cdf1-44be-b65d-45b17c0b681e@gmail.com>
-	<CAMRc=MczeH+ptirFQpFi968m+-4RoABa43M5VQUx4guZTZxLSw@mail.gmail.com>
+	s=arc-20240116; t=1719876760; c=relaxed/simple;
+	bh=QzziNSGKG9wOhMxJd38Ynxsrqkm6AIs2nSS0ifsTVog=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=S693uPmBsHLWTtQHca9apXE2VoH5b8/1ASvxnpzuuooF4GHkqpYma3QqXjC9ot/sFIjlbSoXLZ/q870rxsGxtN6O94n1A4yjs6TNC3qgZl6QKo5jFgxj0ueL+SF0T0kP6jqwt8PYra/L1lVyaR/v9MsU30U2PYk8lb8kAfujx1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T7zaLcu9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3AFAC116B1;
+	Mon,  1 Jul 2024 23:32:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719876759;
+	bh=QzziNSGKG9wOhMxJd38Ynxsrqkm6AIs2nSS0ifsTVog=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=T7zaLcu9s5XC/DeDAErSiRbc6ErcdOdi6YtBox1oaQ8CvdieSQp08QD6Uqrbm5UFp
+	 apSNdEbMb08RteSKFwBhziX5XRIHZkPszZQSy3EjlE/kWzYSbCT3L2dqR74PAXve2T
+	 oQPO14h4BzFsyDItxEAJDjFodOFhbfUtrdBEBaOt+ex6L1Y1ZnwReg7mwQCtwe40hz
+	 ryhyZbFRsXamxXo6yMXIgrhz9DarV7SE2R3hMHR+9fevAv6Ew/fDrYArP5spqIxyO6
+	 EXIg9KOJdW6EQWb5xXJj9DgoWsI/gKmaqo8GArWxWhpiKcUzFjpUJMSlEy5zaZVmE0
+	 bhAPBhipApxrg==
+Message-ID: <a7b959ff-a041-4380-86dd-05cdbc11fab4@kernel.org>
+Date: Tue, 2 Jul 2024 02:32:32 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/gEVH0E3.cizaTH.FlNpjhWH";
- protocol="application/pgp-signature"; micalg=pgp-sha256
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/4] interconnect: qcom: sc7280: enable QoS
+ configuration
+To: Bjorn Andersson <andersson@kernel.org>,
+ Odelu Kukatla <quic_okukatla@quicinc.com>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>,
+ cros-qcom-dts-watchers@chromium.org,
+ "Gustavo A . R . Silva" <gustavoars@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-hardening@vger.kernel.org, quic_rlaggysh@quicinc.com,
+ quic_mdtipton@quicinc.com
+References: <20240607173927.26321-1-quic_okukatla@quicinc.com>
+ <20240607173927.26321-3-quic_okukatla@quicinc.com>
+ <ciji6nlxn752ina4tmh6kwvek52nxpnguomqek6plwvwgvoqef@yrtexkpmn5br>
+Content-Language: en-US
+From: Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <ciji6nlxn752ina4tmh6kwvek52nxpnguomqek6plwvwgvoqef@yrtexkpmn5br>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---Sig_/gEVH0E3.cizaTH.FlNpjhWH
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On 1.07.24 19:42, Bjorn Andersson wrote:
+> On Fri, Jun 07, 2024 at 11:09:25PM GMT, Odelu Kukatla wrote:
+>> Enable QoS configuration for master ports with predefined values
+>> for priority and urgency forawrding.
+>>
+> 
+> This patch causes QCS6490 RB3Gen2 to hit a bus timeout and crash during
+> boot, unless the associated DeviceTree change (adding clocks) is
+> present.
+> 
+> The two patches are reaching linux-next, and hence mainline, through
+> different code paths we now have periods where rb3gen2 is not bootable.
+> But more importantly, devices with current .dtbs installed can not boot
+> the new kernel.
+> 
+> 
+> It is not acceptable to introduce non-backwards compatible changes in
+> drivers (unless there's extraordinary reasons to do so).
+> 
 
-Hi Bart,
+Thanks for the report, Bjorn! The intent of the patches is to keep it
+backwards compatible. I think that the patch below should fix it.
+I'll try to validate it and get it merged.
 
-On Mon, 1 Jul 2024 09:33:47 +0200 Bartosz Golaszewski <brgl@bgdev.pl> wrote:
->
-> On Fri, Jun 28, 2024 at 8:27=E2=80=AFPM Mirsad Todorovac <mtodorovac69@gm=
-ail.com> wrote:
-> >
-> > In vanilla linux-next next-20240627 branch, there seems to be a build e=
-rror with
-> > KCONFIG_SEED=3D0x44AB31A6.
-> >
-> > The error log is:
-> >
-> > ~/linux/kernel/linux-next$ time nice make -j 36 bindeb-pkg |& tee ../er=
-r-6.10-rc5-next-20240627-29.log; date
-> >   GEN     debian
-> > dpkg-buildpackage --build=3Dbinary --no-pre-clean --unsigned-changes -R=
-'make -f debian/rules' -j1 -a$(cat debian/arch)
-> > dpkg-buildpackage: info: source package linux-upstream
-> > dpkg-buildpackage: info: source version 6.10.0-rc5-38
-> > dpkg-buildpackage: info: source distribution jammy
-> > dpkg-buildpackage: info: source changed by marvin <marvin@defiant>
-> >  dpkg-source --before-build .
-> > dpkg-buildpackage: info: host architecture amd64
-> >  make -f debian/rules binary
-> > #
-> > # No change to .config
-> > #
-> > mkdir -p /home/marvin/linux/kernel/linux-next/tools/objtool && make O=
-=3D/home/marvin/linux/kernel/linux-next subdir=3Dtools/objtool --no-print-d=
-irectory -C objtool
-> > mkdir -p /home/marvin/linux/kernel/linux-next/tools/bpf/resolve_btfids =
-&& make O=3D/home/marvin/linux/kernel/linux-next subdir=3Dtools/bpf/resolve=
-_btfids --no-print-directory -C bpf/resolve_btfids
-> >   INSTALL libsubcmd_headers
-> >   INSTALL libsubcmd_headers
-> >   CALL    scripts/checksyscalls.sh
-> >   UPD     init/utsversion-tmp.h
-> >   CC      init/version.o
-> >   AR      init/built-in.a
-> >   CHK     kernel/kheaders_data.tar.xz
-> >   AR      built-in.a
-> >   AR      vmlinux.a
-> >   LD      vmlinux.o
-> >   OBJCOPY modules.builtin.modinfo
-> >   GEN     modules.builtin
-> >   MODPOST Module.symvers
-> > ERROR: modpost: "devm_qcom_tzmem_pool_new" [drivers/firmware/qcom/qcom-=
-scm.ko] undefined!
-> > make[5]: *** [scripts/Makefile.modpost:145: Module.symvers] Error 1
-> > make[4]: *** [Makefile:1886: modpost] Error 2
-> > make[3]: *** [debian/rules:74: build-arch] Error 2
-> > dpkg-buildpackage: error: make -f debian/rules binary subprocess return=
-ed exit status 2
-> > make[2]: *** [scripts/Makefile.package:121: bindeb-pkg] Error 2
-> > make[1]: *** [/home/marvin/linux/kernel/linux-next/Makefile:1555: binde=
-b-pkg] Error 2
-> > make: *** [Makefile:240: __sub-make] Error 2
-> >
-> > real    0m5.950s
-> > user    0m15.971s
-> > sys     0m10.430s
-> > Fri Jun 28 20:22:03 CEST 2024
-> > ~/linux/kernel/linux-next$
-> >
-> > Please find attached .config, just to be sure that we are talking about=
- the same thing.
-> >
-> > Best regards,
-> > Mirsad Todorovac =20
->=20
-> The fix for this is in the qcom tree[1] but I'm not sure why it still
-> hasn't been pulled into next. I don't see any notifications about
-> conflicts in next which could be the reason. Cc'ing Mark and Stephen.
->=20
-> Bart
->=20
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit=
-/?h=3Dfor-next&id=3Dd96377892dd89bd4e7e5ae7293647f6bc7bddf7d
+BR,
+Georgi
 
-The qcom tree has another build failure and so new versions of it have
-not been merged into linux-next since June 24.  Hopefully today the
-other build failure will be fixed.
+-->8--
+diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+index 93047defd5e2..487e562dbd22 100644
+--- a/drivers/interconnect/qcom/icc-rpmh.c
++++ b/drivers/interconnect/qcom/icc-rpmh.c
+@@ -311,7 +311,7 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+  		}
 
---=20
-Cheers,
-Stephen Rothwell
-
---Sig_/gEVH0E3.cizaTH.FlNpjhWH
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEENIC96giZ81tWdLgKAVBC80lX0GwFAmaDOL4ACgkQAVBC80lX
-0GyGRQgAo2Wta0jZeIzedy6FN/CUQwgG42NjJmW9mHJypbFEi36DohRLHHpyqMsk
-gGfkxvRRuNbzbK5ES3ni2j0rfRt357l2uFYmMkfA52J0ZxyZ+taBpUiRELh1aTge
-1L0tGm5AOwoYY9md1AV4iUPgo9OFmVK9WVUPaJCPD/BEoWA8Gc4GBkm9vImay3ts
-zXnCZKXtq97Nbaa4i8mjaiP6LcP8zWAmqXDCurRGDdudwDehV6zLv7EhNQB4agn+
-0CyxQoWjgakbts/m5cD7KOEzbp3a1cq5nYFGKDxmcq2VGj5/qjUkRGnPJRMPXOg6
-Wq+HC70SBoGwThQMQPp6OZtHTkIq1w==
-=YIZu
------END PGP SIGNATURE-----
-
---Sig_/gEVH0E3.cizaTH.FlNpjhWH--
+  		qp->num_clks = devm_clk_bulk_get_all(qp->dev, &qp->clks);
+-		if (qp->num_clks < 0) {
++		if (qp->num_clks <= 0) {
+  			dev_info(dev, "Skipping QoS, failed to get clk: %d\n", qp->num_clks);
+  			goto skip_qos_config;
+  		}
 
