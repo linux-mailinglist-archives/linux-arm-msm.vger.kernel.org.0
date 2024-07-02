@@ -1,80 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-24873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CFDC923C16
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 13:09:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1773B923C1C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 13:10:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BED60284F0D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 11:09:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C8D3B2876B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 11:10:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33B8315B102;
-	Tue,  2 Jul 2024 11:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B226015956C;
+	Tue,  2 Jul 2024 11:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="G0fZ5M3a"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PX+uurSk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E63515B108
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jul 2024 11:08:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155D3381D9
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jul 2024 11:10:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719918526; cv=none; b=JnZgkL2DfVwapHt3Qz6G3RRtlyUyNe1dEToeTC+BijkP4DCxR2Lu+NC+4fJV4YX21OgNFOlhWt2bofi1LPIzM84FvqIgFogxoO3QVrpb7pxhQou9kvemkFeoYh2VlytXfmo9yIxrXmnJxa15qhzetLstSdG179aJOTsuZVgUvNw=
+	t=1719918627; cv=none; b=MHUT29xh3//4lxynOYq8GRvj4d7ECZ1zkYY0CAktiO6b0p9lrJMcFYrV2QcQX5jtP3prX2pJRf4TvltTmry2v3Q5J36LOsd4BmOmAwA9t6glSau34e3LvBzmJdxFvnij28BBH1885JXd6cd8Nq1KHrJjgvdvw5w5R0NjN7JnD0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719918526; c=relaxed/simple;
-	bh=rkLpdMgiJZFVhnB8hgL0AQQ81N+bITs8qz59JOchlCo=;
+	s=arc-20240116; t=1719918627; c=relaxed/simple;
+	bh=SfEjw4cFfxixrvq6qtIfO/ZWv+HyMAbCOPeV0PYn3fw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hcTOQmhtrHXiFUDHSif38NLVe68FJsCsXcSAZJW3V9FWDmfgU1yruG4lssU7rmvaA6FcE07Hiejslt2JdJ+IWlViK3/uMy8iXLFWrF+P66a5KAhpWMt+qhtu/10sXOMBu8Jh0gxBNkf9qaRuyonLj8LT2f2WB1JFFVvrvszh9/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=G0fZ5M3a; arc=none smtp.client-ip=209.85.208.171
+	 Content-Type:Content-Disposition:In-Reply-To; b=fwwnlZksatofxTbpqKRxO3vfGU/1swvZAtILkkFJD3UeScfE5WfbfKcNCBypKZuLPmKbG57bzJRR6ihC4XVTpdIxiw6gfqlKtcHtCt3jnmj9mDQ5nuLSPtU8viLd6e40t7DbAks+7CRo41Lj/UkH5R1XjAw9b//Bh0fszhyyknU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PX+uurSk; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2ec58040f39so38950041fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jul 2024 04:08:43 -0700 (PDT)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-52ce6c8db7bso6114969e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jul 2024 04:10:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719918522; x=1720523322; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1719918624; x=1720523424; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BetJ1UFbBIbWuWtZ702eQZdFCcSKSw0NShAWxEnl87w=;
-        b=G0fZ5M3akgdl+DVQOA7cf6HpEZILjVZkCIgavcFOZHjFXxmY19RmX1p6fgZWGATN+c
-         4+fmwIZuVhJsak0/LwtafE5W3ocERs1J3IVD0PtVwbzuaFpp2aFdda1UZhOrckMvKPqo
-         2YjQRqc4XDb6dpTU6BAGIMtrfeoy1i3HbUuuUQhJvH/D6f+JPi/yBUM4oGJAOhVuTkoJ
-         ShFXuNpKZSEUX9e6Xbf4abS6ktplNicOKMJxpfZ6yLhJ0z85tkOe+54dXlDCF6wogsFS
-         n0CpGnKanCqB5wlDzxiUMMnJ8q93/OW4yOpP0gX2iyQLDBusrTNo7Zv792aBZHtgchiM
-         7CIQ==
+        bh=GUL6InU1s2oamDAjQ14QR1sgjo5CD0g2L+SSERlRdFs=;
+        b=PX+uurSkYHA1OXCMSJiiocGz/VMb6MGfNCpF9I17uoPpoPG6CXxgi5NMmn02ea5UiC
+         UmGyUuKbwePN7euLN7YLoRTG0ZJ43SIhKLyMnzZnG93mXMzM0zrkZkZTK84//LLAYrOn
+         fKn3OUHgPByZjw6vrwr73varjOKs4lBK83v9l/KkWgraRvLgw/brJz/+DBetzxe/v33n
+         JC4MXeaSJ7XU0+aYgLx8626K4HXBi/k89ZBlSTlSXlcLaujLorWpUvGmnkCjNP4Wxt3i
+         waayR4dzXvH2SB0kyEggRy1eH9QccRjngkEIsKwxU6E1U5E7O2GYr9DxVbbRpqeS1BMq
+         i05Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719918522; x=1720523322;
+        d=1e100.net; s=20230601; t=1719918624; x=1720523424;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BetJ1UFbBIbWuWtZ702eQZdFCcSKSw0NShAWxEnl87w=;
-        b=um3RxhluuX+zbvaFgHXubPebM/GKwsOPDHcEYYUvp1XrSg2QN9Uuk8l3royTgtSlVb
-         C3i3WZIeyL6rPN7B+5SUfurDq4f4ZD4Ru7ilephk+7bFRk5cmY4JRLWz+pL/pUh6W5cR
-         Bi/TZHQSCSZwg4uFgOVO4clinByBhDcL3WHJqkKj2qWfoGqN814qfapluA1tOuOUHDAr
-         OFeWa0wf/SaIFS3Oer4VZ0ky6QYCofMhDND12UB4ZPHE3jYDoBD2fc3E6mQr0/80Qtmh
-         va95K6RmcDOnsGWyrJn+N2wkZmxPlHdg0prkX805DdamQ1zbDBW5/jOFzOtD+CRi8Ua2
-         vl7w==
-X-Forwarded-Encrypted: i=1; AJvYcCX4KlLk4LzHqNDB9ipcdrxDI/JU3QPiGIeSNZocSiEvs+5aJ6zWvFKy2lMUETmmwtQ8zoe6t4ZQIUWpEcXPFaYUWBouN3FQ/J9hcu1w0g==
-X-Gm-Message-State: AOJu0Yy9C4dI2RFNLTMegmYEsXtYitXetQ7w+J+qLjb9Xiox0Kx87pza
-	hcDcTcVBnv5yXdHa53II4Xttz4RAhENFhIqBueaMQaAoaf4/Wsd3/ElN7Tt7GIQ=
-X-Google-Smtp-Source: AGHT+IG9yoIyOpavgSvp8xHwWJUEv9GqMHuoWpEObJoubi3aQFctTwmkcSut9eRF8p0IN+IsXf9WjA==
-X-Received: by 2002:a05:651c:198b:b0:2ec:5843:2fbd with SMTP id 38308e7fff4ca-2ee5e6cd69cmr61059341fa.41.1719918522391;
-        Tue, 02 Jul 2024 04:08:42 -0700 (PDT)
+        bh=GUL6InU1s2oamDAjQ14QR1sgjo5CD0g2L+SSERlRdFs=;
+        b=n8eVcNQiHEvCCe+Ep3y8LLg9IkDxWRUHCgDkk+kzx7MBOnTcc2ceYmz3+vrpApe5U6
+         7UCWl1QBiC2QmmUfBGwweTF0MDWKo7LpRGvZpLRpBQh506gsEuTYWkAivQI1/oD5qegQ
+         ySk0dQgqFWTc0Tvu4iuifSyrLwInAkdu6HSw57GekW9YswupC5Iq8DJ3t0yAoFpC5sJ4
+         l7ORXzLk489Qo3yMfXE/ibYmbLcPt9XPo+Ci0m2Bmec2Hqq1IwsRwztc4DfNTwuUZ29M
+         nwBsSRenRf2Uo6Hsjn6PiHVGwryJiAfFkW8XyhNWlwcXDJ9H4XE0B5xuxKLtoUKUJljA
+         /9wg==
+X-Forwarded-Encrypted: i=1; AJvYcCXI4p7zXw93yL81W0f35W5SMnv1zkr0fpLoIbv3qWJRCKwWkKe5+p0KlpdMYn+r1e8HjW6hGPBrvJ+rN7h+20zCWBfhb2RmT7kbQem4Sg==
+X-Gm-Message-State: AOJu0YxeGvlV3nE/5wUtxqap/PUSe+xOZ6x2+dANOzIEB6Wr50nHxUhX
+	QTRUMV2w/knZ11cdoPzQr7kpL62Gj6sbKvGhBHLsNGSgtak2VVCya70yEIcCjg0=
+X-Google-Smtp-Source: AGHT+IHsgF9I8uZJmqTmWCz+zNt8GwFkL2X6pxZhrZeGft31aGGDWcnY7hGJ7WQ7OHecVueU0YVRJA==
+X-Received: by 2002:a05:6512:3996:b0:52c:a1ad:18bd with SMTP id 2adb3069b0e04-52e82651a88mr6252854e87.6.1719918623990;
+        Tue, 02 Jul 2024 04:10:23 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ee55fa9c47sm14955721fa.15.2024.07.02.04.08.41
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52e7ab30a68sm1775997e87.242.2024.07.02.04.10.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jul 2024 04:08:42 -0700 (PDT)
-Date: Tue, 2 Jul 2024 14:08:40 +0300
+        Tue, 02 Jul 2024 04:10:23 -0700 (PDT)
+Date: Tue, 2 Jul 2024 14:10:22 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Zhenhua Huang <quic_zhenhuah@quicinc.com>
-Cc: robdclark@gmail.com, will@kernel.org, robin.murphy@arm.com, 
-	joro@8bytes.org, iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] iommu/arm-smmu-qcom: record reason for deferring probe
-Message-ID: <ecomdlciigigng36ao6j4sj25dmbkoy6j5qun6nje3ok4rp6ld@n7cwb7v2ynbt>
-References: <1719910870-25079-1-git-send-email-quic_zhenhuah@quicinc.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Amit Pundir <amit.pundir@linaro.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm <linux-arm-msm@vger.kernel.org>, 
+	dt <devicetree@vger.kernel.org>, lkml <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sm8550-hdk: add the Wifi node
+Message-ID: <he7q4mzj7u7t3c4pndu565m727e6hqpf2srrqgbdltjdffugdl@x3xrwteqpki3>
+References: <20240702091655.278974-1-amit.pundir@linaro.org>
+ <8ba07bbf-e8b1-4244-882b-ff2575368b20@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,22 +87,46 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1719910870-25079-1-git-send-email-quic_zhenhuah@quicinc.com>
+In-Reply-To: <8ba07bbf-e8b1-4244-882b-ff2575368b20@kernel.org>
 
-On Tue, Jul 02, 2024 at 05:01:10PM GMT, Zhenhua Huang wrote:
-> To avoid deferring probe smmu driver silently, record reason for it.
-> It can be checked through ../debugfs/devices_deferred as well:
-> /sys/kernel/debug# cat devices_deferred
-> 15000000.iommu  arm-smmu: qcom_scm not ready
+On Tue, Jul 02, 2024 at 12:42:02PM GMT, Krzysztof Kozlowski wrote:
+> On 02/07/2024 11:16, Amit Pundir wrote:
+> > Describe the ath12k WLAN on-board the WCN7850 module present on the
+> > board.
+> > 
+> > Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> > ---
+> > Kanged verbatim from 490812872449 ("arm64: dts: qcom: sm8550-qrd: add the Wifi node").
+> > 
+> >  arch/arm64/boot/dts/qcom/sm8550-hdk.dts | 97 +++++++++++++++++++++++++
+> >  1 file changed, 97 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8550-hdk.dts b/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
+> > index 12d60a0ee095..c453d081a2df 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
+> > @@ -279,6 +279,68 @@ platform {
+> >  			};
+> >  		};
+> >  	};
+> > +
+> > +	wcn7850-pmu {
+> > +		compatible = "qcom,wcn7850-pmu";
+> > +
+> > +		pinctrl-names = "default";
+> > +		pinctrl-0 = <&wlan_en>, <&pmk8550_sleep_clk>;
+> > +
+> > +		wlan-enable-gpios = <&tlmm 80 GPIO_ACTIVE_HIGH>;
+> > +		/*
+> > +		 * TODO Add bt-enable-gpios once the Bluetooth driver is
+> > +		 * converted to using the power sequencer.
 > 
-> Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
-> ---
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
+> I don't understand why hardware description should depend on the driver.
+> Either you have this GPIO or not. If you have it, what does it matter if
+> there is no driver who can play with it?
 
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Then there is a conflict between BT and PMU, which both will try to
+access the gpio (or at least the pinctrl).
 
 -- 
 With best wishes
