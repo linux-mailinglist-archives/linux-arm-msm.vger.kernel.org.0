@@ -1,114 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-24864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6972C91F0BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 10:03:57 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B975D923A44
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 11:39:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D7EC01F22B80
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 08:03:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1E76FB21EF5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 09:39:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B56D148314;
-	Tue,  2 Jul 2024 08:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 348081534EB;
+	Tue,  2 Jul 2024 09:39:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oMhMwAIv"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XeO/0M3A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C3616419
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jul 2024 08:03:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D0015217F;
+	Tue,  2 Jul 2024 09:39:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719907434; cv=none; b=PBo7N0WO7MHyqyXUQAdIu7yGjwyJNtsynS5YmhDuvTRBNJYQ09SzPkJSPtHfs3u5dHU0upQPBGQrvSH7HE4xT93bgTXj5HWgD0QHZPNZC0Vdln4uehpFRhHvxeajMXdmN7YgYGvLsO9TgUSqEtvM7w6fTqIqpngGzfJFT0MjDBs=
+	t=1719913163; cv=none; b=DEXjC9lvl5jOI1O82069SW0FMRz4+sUyF3LeBFalvlQgH3g9ttupqdPm57d8J/NAwoxXV0nJ9ynLmmgHcyjO3pNgdgFZPlweXbe/PZTxWWhXO6urWnHo8g7hNXt4E6YDO8ecM1XpE28+u65Ot9Gb9us+9BGEHIpUcpLOdxNChLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719907434; c=relaxed/simple;
-	bh=b/wmykKwVxbhO5h9j19Pvj79GV8/eI9inxecTME1l/0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QPZcW/0cr6h4xYNbrnlAM9nmsHl1tmuubqMRZo1Z9v/WM1xnGMAecTg23QdbcGZeckcJ0EQv7qU3zPouwBJwpvgexLbW2aQ9HS4Lhs/aX3T7h2qs3mikVbu4hH3uLd6+8JXKNXRK7YdpeK5OQ7k/Ohm3zRpTYxiJeOHklVNJ8G8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oMhMwAIv; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2ee4ae13aabso40868341fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jul 2024 01:03:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719907430; x=1720512230; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4LAM6lIuRtsvCZNgiIxZSTOFr184re6ASNS29In5f8g=;
-        b=oMhMwAIvZYMh4WI7lJoFpxtiVJoYl3l5oXQSlEjPyI6et5LNARcv/6Oz3PR79Oa0EP
-         6hw4TcE2PYgmdcP0ywFwm74IBEsOljmbkqhBurFMB/dW6TF5dC6vPlw6EerkpdjQqPVD
-         m0EQYbWOVrgZGKqSEVdq5iidXGW1wEqNiB9WusoBX8nwu25AL/u1yLkqoAh4azDVUhJN
-         blFmb5fyWymsnuX31Qs0AfTr8iOtFkl9lmOB3wCR7nCyl6BwkcYyIIVqFhmc+LOtH4Y6
-         HsX44vGLVL7GXI5fa9JImeAIx6vRcJq8zH4Yb5c3RhOGKByt81s5rYeZVR74tOQ+sOvq
-         XDoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719907430; x=1720512230;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4LAM6lIuRtsvCZNgiIxZSTOFr184re6ASNS29In5f8g=;
-        b=gVY70mScz7yq/+maUhqtM8vekGo/hj8frK6/fIzggqap47D0fsU+DBhxWc24ZZIluN
-         UZbnM2xA9ddPTLn4Jnszb7e71JeQ0UEGnaUDoYBXeM8TqjeS2fnriQaHROtVjCuNDp85
-         PXbSSCCpWbteoO2KHhNoP3UmsOeMOC4rvPwuHSLYn3Wn2nP/T+uX7LyPLA/hFix56e3q
-         Zh8sfplvy0ntLCsl9k/X8cig/TdA/Ha4iLYBF5LKkPHQusyWr/y4v5pFjFCajVfkid1T
-         b/3whWmvfRgNaqYL1625/TZ6tFgXT3p7Yzz8ACphb4CRWvvJewOgmercrCC3rxIAdl3f
-         9DQw==
-X-Forwarded-Encrypted: i=1; AJvYcCXOuRpilJkiTMFnZv4C3liGXbC7peIQI5/qSWI/8bcJYUxZ5QaHEEKffm0j6SKHTqxNpsmXfVFM5XI+iYE1lVpf30ZnLBy+c+c0BRCXYw==
-X-Gm-Message-State: AOJu0YxGnfadqcfBBC3qky4oMNjWDix64P+scHUK9shQ1fnx8GK1Dpcm
-	ShFjVx4txZIvuymtuVbRD0XrQ7GTDsWJP83KaOjiyvJiPVzGizGLU5FDqa8D4lI=
-X-Google-Smtp-Source: AGHT+IF3ecEAZvC/pQ2gIHHNnpG1wqrG6SjuqFnUiYhmdot/hwZ/XHb/8hTTHi+H/mXFV5XzZdj6Qw==
-X-Received: by 2002:a05:651c:220e:b0:2ec:174b:75bb with SMTP id 38308e7fff4ca-2ee5e38103emr57141381fa.28.1719907430551;
-        Tue, 02 Jul 2024 01:03:50 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ee5160d26dsm16306991fa.25.2024.07.02.01.03.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jul 2024 01:03:50 -0700 (PDT)
-Date: Tue, 2 Jul 2024 11:03:48 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>
-Cc: quic_bjorande@quicinc.com, andersson@kernel.org, quic_clew@quicinc.com, 
-	mathieu.poirier@linaro.org, linux-kernel@vger.kernel.org, quic_deesin@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH V3 2/2] soc: qcom: smp2p: Introduce tracepoint support
-Message-ID: <sgrgxfkvqnjeaiovvt665klmse443vkmzncb4jcun6oa432chh@ogaidyok27wf>
-References: <20240627104831.4176799-1-quic_sudeepgo@quicinc.com>
- <20240627104831.4176799-3-quic_sudeepgo@quicinc.com>
+	s=arc-20240116; t=1719913163; c=relaxed/simple;
+	bh=cKKhmZWA8i3/t0YPKgOkIBJTFu7C+J1VqMks8j/9hs0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FAQwfJTeITuEmt9Psz8aLiNEcJEkHu87vfJb9QC+E73EpdaVk1ekgPgZANJAP//ESsXAyIITa1noCYyr/PDRYrOBCjj5wY279EAFuN8h667LtBedymCtjISSEJ8CGun46SNR/w47b3s7e+1l/blrusfWa1sOHVeOc5mwc0NrnVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XeO/0M3A; arc=none smtp.client-ip=192.198.163.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1719913162; x=1751449162;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=cKKhmZWA8i3/t0YPKgOkIBJTFu7C+J1VqMks8j/9hs0=;
+  b=XeO/0M3A4KnIe3oLFSTo31cb8QzG9N6I6vNvkHVY/Tv3O7n0pOrqGFU/
+   C+/AtxZ+zlk9JMBoXxZrLNpuzV+S8EIE5w2RQGUF5DdpxhXlj2JSy7cGK
+   2nlOowfU0jbZCcmiL3sw6T14lw9xeNgk7Ef9MSj3SQwduyNAUV4GWFb9N
+   Ydx1tN84KqQEBuoJIpWXb2ZmuKoEqda2OJjOwjnY2ju9WqpX3U0TdotO1
+   qBOwttUrkuyUMyRzuVs3zQ9T/NdazZY53T75VwomKtIYevHu2LhtuTE5R
+   ieEzGiFfwrz2SDVuC4OzqJvfuuE7VjJR+iBgnS9h/u/j3tDX3/2pUos4z
+   Q==;
+X-CSE-ConnectionGUID: UW+Vl1+oTESyocJmh+htsA==
+X-CSE-MsgGUID: n7Rbw1buR+uEb7+OJJZsCw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11120"; a="17289670"
+X-IronPort-AV: E=Sophos;i="6.09,178,1716274800"; 
+   d="scan'208";a="17289670"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jul 2024 02:39:21 -0700
+X-CSE-ConnectionGUID: 3z6E88XVSzSZZvVdIsg49w==
+X-CSE-MsgGUID: tPms4iSOTy2At6x47qeQuQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,178,1716274800"; 
+   d="scan'208";a="45637566"
+Received: from ncintean-mobl1.ger.corp.intel.com (HELO [10.245.246.174]) ([10.245.246.174])
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jul 2024 02:39:14 -0700
+Message-ID: <f982842a-1804-420b-a539-a609ecf8fb8a@linux.intel.com>
+Date: Tue, 2 Jul 2024 10:30:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240627104831.4176799-3-quic_sudeepgo@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v23 32/32] ASoC: doc: Add documentation for SOC USB
+To: Wesley Cheng <quic_wcheng@quicinc.com>,
+ =?UTF-8?Q?Amadeusz_S=C5=82awi=C5=84ski?=
+ <amadeuszx.slawinski@linux.intel.com>, srinivas.kandagatla@linaro.org,
+ mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+ corbet@lwn.net, broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
+ Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, tiwai@suse.com,
+ robh@kernel.org, gregkh@linuxfoundation.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ alsa-devel@alsa-project.org
+References: <20240610235808.22173-1-quic_wcheng@quicinc.com>
+ <20240610235808.22173-33-quic_wcheng@quicinc.com>
+ <5be51e1f-70c9-4bbc-96fa-1e50e441bd35@linux.intel.com>
+ <408d9e8e-0f40-7e66-54be-2f8d2c0783a3@quicinc.com>
+ <ca1e1063-e1bd-4e03-a7cd-91985e9954e9@linux.intel.com>
+ <096d59a0-5e18-092c-c9ae-d98130226f06@quicinc.com>
+ <368d9019-2c96-468e-b472-7e1127f76213@linux.intel.com>
+ <eb6370ea-47a0-3659-3c10-cb7f95e3e520@quicinc.com>
+ <510468c7-b181-48d0-bf2d-3e478b2f2aca@linux.intel.com>
+ <c7a95157-1b71-1489-3657-8fe67f9acb4e@quicinc.com>
+ <90463a4e-c2e7-4b59-9a79-23533b4acd1e@linux.intel.com>
+ <fd8f1eb0-4b21-4697-8175-a61bc3858852@quicinc.com>
+Content-Language: en-US
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <fd8f1eb0-4b21-4697-8175-a61bc3858852@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jun 27, 2024 at 04:18:31PM GMT, Sudeepgoud Patil wrote:
-> This commit introduces tracepoint support for smp2p, enabling
 
-See Documentation/process/submitting-patches.rst, "This patch".
-
-> logging of communication between local and remote processors.
-> These tracepoints include information about the remote subsystem
-> name, negotiation details, supported features, bit change
-> notifications, and ssr activity. These logs are useful for
-> debugging issues between subsystems.
+>> There are really multiple layers to deal with
+>>
+>> a) is the controller able to support the offload path? IIRC this is
+>> embedded in an obscure XHCI property, it would make sense to expose it
+>> as a control, or component string, of the USB card.
 > 
-> Signed-off-by: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>
-> ---
->  drivers/soc/qcom/Makefile      |  1 +
->  drivers/soc/qcom/smp2p.c       |  9 ++++
->  drivers/soc/qcom/trace-smp2p.h | 98 ++++++++++++++++++++++++++++++++++
->  3 files changed, 108 insertions(+)
->  create mode 100644 drivers/soc/qcom/trace-smp2p.h
+> If a component string/tag is desired, I already have some way of doing that.  I can add it to the USB card.
 > 
+>>
+>> b) is there a companion card capable of dealing with the offload path?
+>> Since the presence of this card may depend on driver probe, there should
+>> be a control on the USB card. userspace could detect changes to this
+>> control and detect if that path is or is no longer enabled.
+> 
+> So currently, the "USB Offload Playback Capable Card" kcontrol (on the USB card) will determine if there is an offload path.  However, this differs than what Amadeusz is suggesting, in that he wants a single kcontrol created for EACH USB card identified (per USB audio device), and a simple enable/disable control to determine if the offload path is enabled for that card/pcm stream.
+> 
+> It would be a simpler approach for the userspace, and if the card that handles the offload card isn't present, then these enable/disable control will be set to "disabled," and even if users attempt to set the control, it won't go through.
+
+Not following. Are you suggesting userspace would modify the
+enable/disable status?
+
+I would just have a read-only control that reports what the hardware can
+do and which other card can deal with offload. It's up to userspace to
+select the offloaded PCM device or not.
 
 
--- 
-With best wishes
-Dmitry
+
+>> c) which PCM device is actually offloaded? This could be plural for some
+>> implementations. The mapping between PCM devices exposed by the USB
+>> card, and those exposed by the companion card, should be known to
+>> userspace. I am not sure how this would be done though, a variable
+>> number of controls is a sure way to confuse userspace.
+> 
+> Expanding on Amadeusz's suggestion, my idea is to have an enable/disable kcontrol per USB stream.  For example, one USB card could have multiple PCM devices (USB streams).  So we would have something like:
+> 
+> PCM Offload Playback Enable Stream#0  enable/disable
+> 
+> PCM Offload Playback Enable Stream#1  enable/disable
+> 
+> ....
+
+are those read-only or not?
+
+> So we'd know which USB card and PCM device is selected for USB SND.  However, I see what you're getting at in case there are multiple supported streams, because userspace needs to know which ASoC card/pcm combination corresponds to which USB device/combination.
+
+I don't understand how this would help map the two parts? There's got to
+be an additional mapping...
+
+> What do you think about having a USB card kcontrol to display the mapped ASoC card and PCM indexes?
+> 
+> PCM Offload Playback Enable Stream Mapping#0  0, 1 (ASoC card#0, PCM device#1)
+> 
+> To summarize, if we did this, I'd plan to remove all the kcontrols in ASoC card, and have the following in the USB card for an USB audio device that supports one USB stream:
+> 
+> PCM Offload Playback Enable Stream#0  enable/disable
+> 
+> PCM Offload Playback Enable Stream Mapping#0  0, 1 (ASoC card#0, PCM device#1)
+
+... which is suggested here.
+
+Assuming these are read-only controls, we would need to know which PCM
+device on the USB card can be optimized with the use of which PCM device
+on the ASoC card. That means a set of three values. You would also want
+a number of streams to make the guesswork on controls less painful.
 
