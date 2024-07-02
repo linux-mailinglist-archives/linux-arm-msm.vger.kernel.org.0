@@ -1,209 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-24870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24871-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BDAD923A61
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 11:43:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EF5A923BB2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 12:42:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE08D2810A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 09:43:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C3C521C2400C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 10:42:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B257155312;
-	Tue,  2 Jul 2024 09:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BA49158D64;
+	Tue,  2 Jul 2024 10:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="Ho1v5h9K"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lXeTGi8H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-183.mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D80A15530C
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jul 2024 09:43:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B47916131A;
+	Tue,  2 Jul 2024 10:42:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719913388; cv=none; b=tRi21Q2PEnhv8ZO6cHkcRyWt1fXsZ/s3isJiP8LqX37DWgzUXtWX6FtvSiBaXZUqS43+/maXuevF2Vmr/tJ5l2kK5EIiRB564/Sd+PIOycZgLZyoQkKU3h7h9wQzva8sYQZdc79Gf3IBTN1DyAO7HZjGhY6X0AONb/2mAz6BnW4=
+	t=1719916929; cv=none; b=OVuzlKcIgM9c8snGqkDmuDhjs9cIUBOeZqwVYdqbAf6E5yVUQCo1VVyoYr5uvmaalvmKS28E59pmXK8aEryfWEOSGrBCq5Ob1LnVpsFODFrQNWhsWQAWCBrk03JIEtEPUhMc4JzFbiKZzoXbJ9kgk18xfxX87S0PxRKHpOao3Xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719913388; c=relaxed/simple;
-	bh=GBMM0dVazdheQtySNQrd9itpZeEMvmwZWXhrnd+2J+U=;
+	s=arc-20240116; t=1719916929; c=relaxed/simple;
+	bh=9te4SuzqH62rSiRTnMqtKWx++pY/uzFBoKFXN4sinKw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MH0hcBTWrGZQNx8RHRtfM1YoFKRtf6/G5+qEcGHC9FJa3UG4s0hRzSlketjuxFfeglHnjKVxdvXn4cm5HRiIQ3vqEKMv81K8dFARyI0DbqmaTRuFl2GMyZOkNENOP2H61c8RPIXtJ2CWPEsGayXSwlEe159B0MKYQsizpuQpT1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=Ho1v5h9K; arc=none smtp.client-ip=95.215.58.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
-X-Envelope-To: dmitry.baryshkov@linaro.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-	s=key1; t=1719913382;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=yOKgP0GWvCCYbYaffXHDB7kZ4VKKj8957zGCIlU8n2I=;
-	b=Ho1v5h9KPPiREQ1LtxXGM3qE54jU5wgUYiHjHw9g4QhuTJf4DVKUTWx7X6TrSTI8v6sQ6H
-	AvZe5aiJCsHdw1MBWC+dw7235Jh40HqwikeQMvU+k53Di8+y4Mn5L2rUlGK0hIG8xmtw1a
-	8w/eXlRVTHdX6Wt7DDhUIMZlclscKJEtr4v6/TW+jTSDOdA66zSNOXV5aroaYmKH201coU
-	EW8+pO/vrRyWt1mvAhM4cvcH7BCTERcMRjXiFfF3K8ltD+q1OxM4tTLFfPZOq7MNvlf78x
-	9akdpo5LJsk9Sb+8twQFUOFfp+7isrVfMjL8l1nFwZNfI6NicBuoHO2w3a10/w==
-X-Envelope-To: neil.armstrong@linaro.org
-X-Envelope-To: quic_jesszhan@quicinc.com
-X-Envelope-To: airlied@gmail.com
-X-Envelope-To: daniel@ffwll.ch
-X-Envelope-To: maarten.lankhorst@linux.intel.com
-X-Envelope-To: mripard@kernel.org
-X-Envelope-To: tzimmermann@suse.de
-X-Envelope-To: robh@kernel.org
-X-Envelope-To: krzk+dt@kernel.org
-X-Envelope-To: conor+dt@kernel.org
-X-Envelope-To: dmitry.torokhov@gmail.com
-X-Envelope-To: andersson@kernel.org
-X-Envelope-To: konrad.dybcio@linaro.org
-X-Envelope-To: rydberg@bitmath.org
-X-Envelope-To: dri-devel@lists.freedesktop.org
-X-Envelope-To: devicetree@vger.kernel.org
-X-Envelope-To: linux-input@vger.kernel.org
-X-Envelope-To: linux-arm-msm@vger.kernel.org
-X-Envelope-To: ~postmarketos/upstreaming@lists.sr.ht
-Message-ID: <efa5b7c2-05ac-4354-830b-1d5a66e2fb58@postmarketos.org>
-Date: Tue, 2 Jul 2024 11:42:58 +0200
+	 In-Reply-To:Content-Type; b=u3dX22X2s5rOj2+AJorm9mokj8HMJYCzhaUvmk2U433q6doPc4PW+3Ed2GtjRYideZRAOfe1pp1WiIaxia44tbhp1zFKqH/dRZU4nNbHDNWmpQdz/s94T99DkyhWGv85yz3ygGdIfkOWwjurNGHZv50NdSw9kixo+AiyeNB2c/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lXeTGi8H; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFCCC116B1;
+	Tue,  2 Jul 2024 10:42:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719916928;
+	bh=9te4SuzqH62rSiRTnMqtKWx++pY/uzFBoKFXN4sinKw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=lXeTGi8H5lQ99m0W9AvngPQxNZJtHcWYxpIhiiLXFNheUejm5z/qZHHoy3JqcMAso
+	 S7Ci/nmaL3WJhAAKmPounVeajUgtjDvAebA0khHHJvOujOTgP4UOqUIJp2YgnM38dB
+	 z+39tqOvWtIVlGEiCgAhwqPPHqIszugB1iw9a4dQ8Mm/A/J39QXwYLJldGLuBT/yff
+	 YOFM91BqsCEVwo7PIw4NsDU+PXiuBl/xw69EFyZNTt8K8DG8A5KJr8SPrs+BJXOwzm
+	 deSrdFQDgq+YouyNjgG4IwZ+9kcHsMXC8vfKaKUc1G6urvTRKW3e5HsyEl3jPQtCKj
+	 5MhssaujpzxBw==
+Message-ID: <8ba07bbf-e8b1-4244-882b-ff2575368b20@kernel.org>
+Date: Tue, 2 Jul 2024 12:42:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2 6/8] drm/panel: add driver for samsung amb655x
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <quic_jesszhan@quicinc.com>, David Airlie <airlied@gmail.com>,
- Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sm8550-hdk: add the Wifi node
+To: Amit Pundir <amit.pundir@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Henrik Rydberg <rydberg@bitmath.org>, dri-devel@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-input@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20240630-oneplus8-v2-0-c4a1f8da74f1@postmarketos.org>
- <20240630-oneplus8-v2-6-c4a1f8da74f1@postmarketos.org>
- <37y25ko7q2hoqlzvteqt3cj2lsms3lkwi6xu6qm4xaq5gm6pus@lxh4jo4hpryv>
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+ dt <devicetree@vger.kernel.org>, lkml <linux-kernel@vger.kernel.org>
+References: <20240702091655.278974-1-amit.pundir@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Caleb Connolly <caleb@postmarketos.org>
-In-Reply-To: <37y25ko7q2hoqlzvteqt3cj2lsms3lkwi6xu6qm4xaq5gm6pus@lxh4jo4hpryv>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240702091655.278974-1-amit.pundir@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
 
+On 02/07/2024 11:16, Amit Pundir wrote:
+> Describe the ath12k WLAN on-board the WCN7850 module present on the
+> board.
+> 
+> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> ---
+> Kanged verbatim from 490812872449 ("arm64: dts: qcom: sm8550-qrd: add the Wifi node").
+> 
+>  arch/arm64/boot/dts/qcom/sm8550-hdk.dts | 97 +++++++++++++++++++++++++
+>  1 file changed, 97 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550-hdk.dts b/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
+> index 12d60a0ee095..c453d081a2df 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
+> @@ -279,6 +279,68 @@ platform {
+>  			};
+>  		};
+>  	};
+> +
+> +	wcn7850-pmu {
+> +		compatible = "qcom,wcn7850-pmu";
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&wlan_en>, <&pmk8550_sleep_clk>;
+> +
+> +		wlan-enable-gpios = <&tlmm 80 GPIO_ACTIVE_HIGH>;
+> +		/*
+> +		 * TODO Add bt-enable-gpios once the Bluetooth driver is
+> +		 * converted to using the power sequencer.
 
+I don't understand why hardware description should depend on the driver.
+Either you have this GPIO or not. If you have it, what does it matter if
+there is no driver who can play with it?
 
-On 01/07/2024 22:32, Dmitry Baryshkov wrote:
-> On Sun, Jun 30, 2024 at 08:36:29PM GMT, Caleb Connolly wrote:
->> This is a 1080x2400 120hz panel used on the OnePlus 8T. It uses DSC but
->> with many non-standard DCS commands.
->>
->> The only user of this panel (the OnePlus 8T) has a bug somewhere in the
->> DSI stack whereby it isn't possible to properly initialize this panel
->> after a reset. As a result, the reset GPIO is made optional so it can be
->> left unused on that device.
->>
->> Signed-off-by: Caleb Connolly <caleb@postmarketos.org>
->> ---
->>   MAINTAINERS                                   |   7 +
->>   drivers/gpu/drm/panel/Kconfig                 |   9 +
->>   drivers/gpu/drm/panel/Makefile                |   1 +
->>   drivers/gpu/drm/panel/panel-samsung-amb655x.c | 399 ++++++++++++++++++++++++++
->>   4 files changed, 416 insertions(+)
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 807feae089c4..2b9cfbf92d7a 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -7142,8 +7142,15 @@ M:	Robert Chiras <robert.chiras@nxp.com>
->>   S:	Maintained
->>   F:	Documentation/devicetree/bindings/display/panel/raydium,rm67191.yaml
->>   F:	drivers/gpu/drm/panel/panel-raydium-rm67191.c
->>   
->> +DRM DRIVER FOR SAMSUNG AMB655X PANEL
->> +M:	Caleb Connolly <caleb@postmarketos.org>
->> +S:	Maintained
->> +T:	git https://gitlab.freedesktop.org/drm/misc/kernel.git
->> +F:	Documentation/devicetree/bindings/display/panel/samsung,amb655x.yaml
->> +F:	drivers/gpu/drm/panel/panel-samsung-amb655x.c
->> +
->>   DRM DRIVER FOR SAMSUNG DB7430 PANELS
->>   M:	Linus Walleij <linus.walleij@linaro.org>
->>   S:	Maintained
->>   T:	git https://gitlab.freedesktop.org/drm/misc/kernel.git
->> diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
->> index bf4eadfe21cb..7203d16ab20a 100644
->> --- a/drivers/gpu/drm/panel/Kconfig
->> +++ b/drivers/gpu/drm/panel/Kconfig
->> @@ -590,8 +590,17 @@ config DRM_PANEL_SAMSUNG_S6E88A0_AMS452EF01
->>   	depends on OF
->>   	select DRM_MIPI_DSI
->>   	select VIDEOMODE_HELPERS
->>   
->> +config DRM_PANEL_SAMSUNG_AMB655X
->> +	tristate "Samsung AMB655X DSI panel"
->> +	depends on OF
->> +	depends on DRM_MIPI_DSI
->> +	depends on BACKLIGHT_CLASS_DEVICE
->> +	help
->> +	  DRM panel driver for the Samsung AMB655X panel.
->> +	  This panel has a resolution of 1080x2400 @ 60hz or 120Hz.
->> +
->>   config DRM_PANEL_SAMSUNG_ATNA33XC20
->>   	tristate "Samsung ATNA33XC20 eDP panel"
->>   	depends on OF
->>   	depends on BACKLIGHT_CLASS_DEVICE
->> diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
->> index 051b75b3df7b..be6d500a56a4 100644
->> --- a/drivers/gpu/drm/panel/Makefile
->> +++ b/drivers/gpu/drm/panel/Makefile
->> @@ -58,8 +58,9 @@ obj-$(CONFIG_DRM_PANEL_RAYDIUM_RM67191) += panel-raydium-rm67191.o
->>   obj-$(CONFIG_DRM_PANEL_RAYDIUM_RM68200) += panel-raydium-rm68200.o
->>   obj-$(CONFIG_DRM_PANEL_RAYDIUM_RM692E5) += panel-raydium-rm692e5.o
->>   obj-$(CONFIG_DRM_PANEL_RAYDIUM_RM69380) += panel-raydium-rm69380.o
->>   obj-$(CONFIG_DRM_PANEL_RONBO_RB070D30) += panel-ronbo-rb070d30.o
->> +obj-$(CONFIG_DRM_PANEL_SAMSUNG_AMB655X) += panel-samsung-amb655x.o
->>   obj-$(CONFIG_DRM_PANEL_SAMSUNG_ATNA33XC20) += panel-samsung-atna33xc20.o
->>   obj-$(CONFIG_DRM_PANEL_SAMSUNG_DB7430) += panel-samsung-db7430.o
->>   obj-$(CONFIG_DRM_PANEL_SAMSUNG_LD9040) += panel-samsung-ld9040.o
->>   obj-$(CONFIG_DRM_PANEL_SAMSUNG_S6D16D0) += panel-samsung-s6d16d0.o
-> 
-> 
->> +static int samsung_amb655x_prepare(struct drm_panel *panel)
->> +{
->> +	struct samsung_amb655x *ctx = to_samsung_amb655x(panel);
->> +	struct device *dev = &ctx->dsi->dev;
->> +	int ret;
->> +
->> +	/*
->> +	 * During the first call to prepare, the regulators are already enabled
->> +	 * since they're boot-on. Avoid enabling them twice so we keep the refcounts
->> +	 * balanced.
-> 
-> I see your intent, but I don't think this is fully correct. If the
-> driver gets rebound, then it will perform one extra disable call. On the
-> next driver probe / enable / disable / remove cycle the driver will
-> perform one more, underflowing enable count. I think
-> regulator_init_complete_work_function should give the phone enough time
-> to boot the panel.
+Best regards,
+Krzysztof
 
-I do make an extra call to regulator_bulk_enable() in probe(), does that 
-balance things out?
-> 
->> +	 */
->> +	if (!regulator_is_enabled(ctx->supplies[0].consumer)) {
->> +		ret = regulator_bulk_enable(ARRAY_SIZE(ctx->supplies), ctx->supplies);
->> +		if (ret) {
->> +			dev_err(dev, "Failed to enable regulators: %d\n", ret);
->> +			return ret;
->> +		}
->> +	}
->> +
-> 
 
