@@ -1,85 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-24877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FD11923C55
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 13:25:20 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8CE8923C5E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 13:28:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1D64B280D27
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 11:25:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 58652B22163
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 11:28:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE13C15B0EE;
-	Tue,  2 Jul 2024 11:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03FC815B10B;
+	Tue,  2 Jul 2024 11:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PKZ/1wY7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ed3Ssusn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BEC76F17;
-	Tue,  2 Jul 2024 11:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D2115218A;
+	Tue,  2 Jul 2024 11:28:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719919515; cv=none; b=Rqr0L6XErt/UQNyXdWIrcrUwD8bIYmwxJkLUq4ZjKvrtTWQXhcHoCYQMdEblLbU6aQhgZY0F3mIHmnDXjh7VPxBgq7kJw7sl8o586EsXYs/RxCe2tJlyRJMzYgXh3nB32ci3wmrP6qCaLFVjDquVpDVZ0rMxuqV1A4tQVdEXJfk=
+	t=1719919715; cv=none; b=NPvmqGd8AZ03gZrsrECatWLIV/qA4z44ppOH2JYyUF3gvMNUQehWOjGnvvLI/4UHvDilY6SKdOHn3WMZPLtyONaKYjFQvTooCeach5DFCyaD+qd+JjvV5F1z7Kuw+GCpIKlvoJL5UtLzkUX4COj0LMJbu4du7ZWmuaS/vPFeH/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719919515; c=relaxed/simple;
-	bh=IGTDRo6K0tNvKcrV9mV4TjWGqTPF30WgvwuJZWZo89I=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=scGRIEPpjOSdrZDLMBFjm2OwC1yFXwZoh+PHF4IzGVeuMcoEXnDKP+cFWLQLxwui8qSPlxcO09Uvu8VJByTSU6hceBFkTyOlKh70n3aLenMo9rKw8BaROdMYXxxMCFiaJKBiFkLMFLNslG336XW7mJN5xMnIckh5IvANRH6vXu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PKZ/1wY7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137CAC116B1;
-	Tue,  2 Jul 2024 11:25:12 +0000 (UTC)
+	s=arc-20240116; t=1719919715; c=relaxed/simple;
+	bh=R8+rZJ4UpBPZnN3SumMPWq4w3upOof4xgExoUpvjPIo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=p0NGPv3n2mEXb2J42Qaa5ygvnp/CdexyDlPb1bC2xu5WFcmb6Y/KLyyWXeIT9JWR+9y8Du9MeP2HeinWZyzAGzMhdOsNACm7iYAFO1jCd5ZVKDJzHvHAtki6xAnFMEinQwlXnmvYMv1iWKTfL1BuQ9NtTBqDb8s499TpazU10wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ed3Ssusn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA159C116B1;
+	Tue,  2 Jul 2024 11:28:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719919515;
-	bh=IGTDRo6K0tNvKcrV9mV4TjWGqTPF30WgvwuJZWZo89I=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=PKZ/1wY7tvnQaI+Hw0HCd/2Y7JR21vFGvwILD5Mjf+tLfWdzWegNWShdC2RK462CS
-	 LCBQCsYfsFCCIYdO241a/ALbsMALzY2tURPNlP/lAkEBnirO8KdsDwyURmEk5BXKtr
-	 egNi79vCTPhUtOTuLCzpjoxoEu5kixrTXWCtgmN6QbRCidfAN5CsCg35VYBO961Utl
-	 156nS5zOT4irehy7MELJfyJpkOEOZNcEDkgXhmrReaYHO7sngPrjNwNQJ13c4MKZ60
-	 HeGsvafdYiZIMkna5wWGG3+KZ3lDQ9qN3Ftu5sWAKBWupfYA7rIEVIPSj88wpHmIKK
-	 Cy8vP8shX24GQ==
+	s=k20201202; t=1719919715;
+	bh=R8+rZJ4UpBPZnN3SumMPWq4w3upOof4xgExoUpvjPIo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ed3SsusnbPQFrOkXNsNT53jAZHRwWGEkjbXL8uLNX4imPdtdA0A7rAZOs/bXabqPr
+	 /2aJ1SEJ0RWsG8GuAX2EYKimbbgrPo9k/KtK+YGqs4IIGvGFscQ7VH5H/KJRQg6j69
+	 8XUBQe+ebABqr5ZTUAwWHYu44DV130KYFurTdcq48yYMFMWwsNXZbsMD2Jxw6G8hxV
+	 Ck45x85p8c4QlgXTQ9GYhdXvizNI9lRrveBiyLsQCr5pc0LoXbHOl8C3gPkDSaG6sX
+	 67/HQIH8ndX+UoDiWPpxO+aHH3fc7Ku/rsEx9wT15qCU9qDPcQE36Q97/Im+0xgvd9
+	 7kzuiKwSaRlqw==
+Date: Tue, 2 Jul 2024 16:58:31 +0530
 From: Vinod Koul <vkoul@kernel.org>
-To: Bard Liao <yung-chuan.liao@linux.intel.com>, 
- Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>, 
- Sanyog Kale <sanyog.r.kale@intel.com>, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20240618-soundwire-port-map-v1-1-9644e5545b9b@linaro.org>
-References: <20240618-soundwire-port-map-v1-1-9644e5545b9b@linaro.org>
-Subject: Re: [PATCH] drivers:soundwire: qcom: cleanup port maask
- calculations
-Message-Id: <171991951268.679506.15436884721168000207.b4-ty@kernel.org>
-Date: Tue, 02 Jul 2024 16:55:12 +0530
+To: Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, Arnaud Vrac <avrac@freebox.fr>,
+	Pierre-Hugues Husson <phhusson@freebox.fr>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: Re: [PATCH v5 1/4] dt-bindings: phy: add qcom,hdmi-phy-8998
+Message-ID: <ZoPkX0lE82Lkab6R@matsya>
+References: <20240627-hdmi-tx-v5-0-355d5c1fbc3c@freebox.fr>
+ <20240627-hdmi-tx-v5-1-355d5c1fbc3c@freebox.fr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240627-hdmi-tx-v5-1-355d5c1fbc3c@freebox.fr>
 
-
-On Tue, 18 Jun 2024 14:55:15 +0100, Srinivas Kandagatla wrote:
-> Cleanup the port map calculations, existing masks of having separate
-> masks for in and out ports is not really required.
-> Having a single mask for all the ports in the controller is simple and
-> cuts of some unnecessary code.
-> 
+On 27-06-24, 17:53, Marc Gonzalez wrote:
+> HDMI PHY block embedded in the APQ8098.
 > 
 
-Applied, thanks!
+Acked-by: Vinod Koul <vkoul@kernel.org>
 
-[1/1] drivers:soundwire: qcom: cleanup port maask calculations
-      commit: 518aee32c551d2f7d1e577f63df6dfcc80259b50
-
-Best regards,
 -- 
-Vinod Koul <vkoul@kernel.org>
-
+~Vinod
 
