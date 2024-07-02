@@ -1,221 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-24916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF3F99248D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 22:14:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7ED19249B8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 23:06:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5C2591F217EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 20:14:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 056F61C224CF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 21:06:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B27A2200130;
-	Tue,  2 Jul 2024 20:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0AE6201260;
+	Tue,  2 Jul 2024 21:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="T5xF/ldV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T0jF5n0X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4041BD4EF;
-	Tue,  2 Jul 2024 20:13:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869DF20013B
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jul 2024 21:06:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719951240; cv=none; b=GJLMIzmAQj9GsbPeL7smnCzCJmt6CH4/3KbmuPQXBkDs+eRkw1Y5zpVhzJBofDYIIt6aD7e23mDY5jwAPBS8w+whSsDwLdoSSKty4YG9ZqOFWzJD3jVLlUIsTwqKtrWnTMTkKAMFgkWSDD1QMyLWxoBFP84k8bEy6sBD5rTW30U=
+	t=1719954379; cv=none; b=MwmH9nv23HQ/LK9AJm0thBnjD46KoxNXFgGOoc66PSIzMopwdqq61zshFZy8b5H1nf3f43PrOxm6MWCTBBwwPnQ7Nbr/U6KoclfH4EyqWvQE7G7U4V2aP9RI5KBCkwQ2gNSM4Sy4lKT1wK5AewWA0wmK5oyr8k7xU+1cTlvfFc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719951240; c=relaxed/simple;
-	bh=tIrWAMtYQDHGnAKcDAHOxAuCGlOo7sWRf0KLjVuDOpU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=XwCJrFPf5cu2c52xPRlxJksSG/BubpT40aqObZjBInfBDEqArZ6EAiKzrMGM6EgSd5Go3AX3qNHp8a8BRjcPwfQYboB4J8wL9U5tfKZE5rwb8v+NFRidIMbbtkj86l5bjuwrxBwcdWnTv6NzdlxuUOHEk/n8Jh+FyUtsXVGvDss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=T5xF/ldV; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 462EVAcH028799;
-	Tue, 2 Jul 2024 20:13:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	tIrWAMtYQDHGnAKcDAHOxAuCGlOo7sWRf0KLjVuDOpU=; b=T5xF/ldVpkdXlidm
-	FxEWRWZyy9IwIo5EL5yItM5H0fhTXsNtl7M1IRHiTWHou5GCgF2Bb+oruJKsgeI+
-	Gtmw+2dHbEW30NpBuhV9olzclPrRsFKKIcP7dDHEFEy+13hnlGPXZFxPGCby3OLk
-	a0bIH07dAVpXXLmR0YcL1zOiQl83zDIiuQB//S70jAxqI6/ppyXPol1ESMTk6AP4
-	LCWWH6GfzLT9pPLDOu5stnKPKi+hC3MqA8I3g7Lwd6Tf9qxaKnTTE3riVfcl6ouN
-	P9tDn3w1OBtHD2tjngdcFuReWh3a94WjqCUeEzPmkENrHRhNgDXh38sc0/8We+aU
-	fD/3zQ==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 404kcth6gh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Jul 2024 20:13:52 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 462KDpR3024415
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 2 Jul 2024 20:13:51 GMT
-Received: from [10.110.36.143] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 2 Jul 2024
- 13:13:50 -0700
-Message-ID: <1fcea728-6ee6-4361-b3c5-63d8a2facd74@quicinc.com>
-Date: Tue, 2 Jul 2024 13:13:49 -0700
+	s=arc-20240116; t=1719954379; c=relaxed/simple;
+	bh=NyzwM0fsXKf4dXOAJKkuMhvtpscp3UAXzQ88ePFkdHg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RPZUaclQOuW3AMGfDU7QXBUqyIyiL6ewUw2vJe+/ZaF/ojwTOMKK3DetYhHatL3fWgns/B0irHo+V4guqReAOyhUbTFqa48FyVBwsFkaU5NwFOXzgQvKlO55gmdSenflI/Ziu1uBb53InBP3uhupM44e5gJoNt13Wv11ge75QAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T0jF5n0X; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D689C32781
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jul 2024 21:06:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1719954379;
+	bh=NyzwM0fsXKf4dXOAJKkuMhvtpscp3UAXzQ88ePFkdHg=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=T0jF5n0XmYOBWCFsIhEiFwCW709AF2iNAJBXPHQDhZ3ouUIflhHJtwIPSeAQkemwl
+	 uvh5nDRj8MsScENuyxikrGs7trBmvGpceQ90A9jThyM6OwHTK1hSB47GteIED0mkfp
+	 yIXfQgx1XVTTfS14P6B441+5oNJT53fpMKqRINxMzkGSKAywbiMtggfLmF/5MhXRyE
+	 MR2OEIi2KWdc0w+AofhLDxqqtYNvgWMUcCMzmTV90XllmcI+M2rs3uGRjmGpiIo+bY
+	 S7E4wTeW1JLVmvZdlftDTuGLXlMEsznlapdBUQq2P/lZic0fAeIbHo/yvEPyuqkLW8
+	 0fIXzDl9OJV+g==
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2ec61eeed8eso58153841fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jul 2024 14:06:19 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUr9g8AgfX8CG236NS+ZvGif8sZrA+Dw6kyOyzsmjY1bsacBJQxwc3Omgykgt5BNUbxP3gtL6hv4GQdMje5lN508eKx5WTae05yVa6lag==
+X-Gm-Message-State: AOJu0YwHX8pL+JUL3bMSwDvrGkCGB6XJrGLXDCuTIjWhYtWctsO+i4r4
+	q5kQfpmnkrdCVGeCvEy7cDwpolVZqOfVEjIt5sTRKO4zpAefqIDDaVGQFpHBFX6xaS7XBFFqIa/
+	kWmwhXMRLVlTjt0neyKvA1Kgn+wr+Ab6l7S25hQ==
+X-Google-Smtp-Source: AGHT+IGUxDpnfmOI+j4i7sET5B6iGTwPCxoZxCFPXJYFFkWMGwCKQTKuc3id2P0lUND+5DiDyxhNNJ4MNomLGxiA7Lo=
+X-Received: by 2002:a17:906:f185:b0:a72:b1b1:eb3a with SMTP id
+ a640c23a62f3a-a751447b093mr634755766b.19.1719954357446; Tue, 02 Jul 2024
+ 14:05:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V6 5/5] arm64: dts: qcom: x1e80100: Enable cpufreq
-To: Sibi Sankar <quic_sibis@quicinc.com>, Johan Hovold <johan@kernel.org>
-CC: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <jassisinghbrar@gmail.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <dmitry.baryshkov@linaro.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_rgottimu@quicinc.com>, <quic_kshivnan@quicinc.com>,
-        <conor+dt@kernel.org>, <quic_psodagud@quicinc.com>,
-        <abel.vesa@linaro.org>
-References: <20240612124056.39230-1-quic_sibis@quicinc.com>
- <20240612124056.39230-6-quic_sibis@quicinc.com>
- <ZoQjAWse2YxwyRJv@hovoldconsulting.com>
- <f53bc00f-8217-1dc8-5203-1a83c24d353d@quicinc.com>
-Content-Language: en-US
-From: Nikunj Kela <quic_nkela@quicinc.com>
-In-Reply-To: <f53bc00f-8217-1dc8-5203-1a83c24d353d@quicinc.com>
+References: <20240614-dt-bindings-thermal-allof-v1-0-30b25a6ae24e@linaro.org> <20240614-dt-bindings-thermal-allof-v1-11-30b25a6ae24e@linaro.org>
+In-Reply-To: <20240614-dt-bindings-thermal-allof-v1-11-30b25a6ae24e@linaro.org>
+From: Amit Kucheria <amitk@kernel.org>
+Date: Wed, 3 Jul 2024 02:35:45 +0530
+X-Gmail-Original-Message-ID: <CAHLCerMuG92Sf8+BdqPLqh+x3YxBjD6YdYF2k+AxQcwCqerxzw@mail.gmail.com>
+Message-ID: <CAHLCerMuG92Sf8+BdqPLqh+x3YxBjD6YdYF2k+AxQcwCqerxzw@mail.gmail.com>
+Subject: Re: [PATCH 11/22] dt-bindings: thermal: qcom-tsens: reference
+ thermal-sensor schema
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+	Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Guillaume La Roque <glaroque@baylibre.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Vasily Khoruzhick <anarsoul@gmail.com>, Chen-Yu Tsai <wens@csie.org>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Anson Huang <Anson.Huang@nxp.com>, Thierry Reding <thierry.reding@gmail.com>, 
+	Jonathan Hunter <jonathanh@nvidia.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	=?UTF-8?Q?Niklas_S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>, 
+	Heiko Stuebner <heiko@sntech.de>, Biju Das <biju.das.jz@bp.renesas.com>, 
+	Orson Zhai <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
+	Chunyan Zhang <zhang.lyra@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Pascal Paillet <p.paillet@foss.st.com>, Keerthy <j-keerthy@ti.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
+	Florian Fainelli <florian.fainelli@broadcom.com>, Scott Branden <sbranden@broadcom.com>, 
+	zhanghongchen <zhanghongchen@loongson.cn>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Geert Uytterhoeven <geert+renesas@glider.be>, linux-pm@vger.kernel.org, 
+	linux-samsung-soc@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-amlogic@lists.infradead.org, linux-sunxi@lists.linux.dev, 
+	imx@lists.linux.dev, linux-tegra@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-rockchip@lists.infradead.org, linux-stm32@st-md-mailman.stormreply.com, 
+	Florian Fainelli <f.fainelli@gmail.com>, linux-rpi-kernel@lists.infradead.org, 
+	linux-mediatek@lists.infradead.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: oM6fzncQLZ4hXXcG4_i6Qz8O2v0WtrIF
-X-Proofpoint-ORIG-GUID: oM6fzncQLZ4hXXcG4_i6Qz8O2v0WtrIF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-02_15,2024-07-02_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- bulkscore=0 mlxlogscore=999 priorityscore=1501 impostorscore=0
- suspectscore=0 mlxscore=0 lowpriorityscore=0 clxscore=1011 malwarescore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407020148
+Content-Transfer-Encoding: quoted-printable
 
+On Fri, Jun 14, 2024 at 3:17=E2=80=AFPM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> Device is a thermal sensor and it requires '#thermal-sensor-cells', so
+> reference the thermal-sensor.yaml to simplify it and bring the
+> common definition of '#thermal-sensor-cells' property.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-On 7/2/2024 12:59 PM, Sibi Sankar wrote:
->
->
-> On 7/2/24 21:25, Johan Hovold wrote:
->> On Wed, Jun 12, 2024 at 06:10:56PM +0530, Sibi Sankar wrote:
->>> Enable cpufreq on X1E80100 SoCs through the SCMI perf protocol node.
->>>
->>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 63
->>> ++++++++++++++++----------
->>>   1 file changed, 39 insertions(+), 24 deletions(-)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->>> b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->>> index 7b619db07694..d134dc4c7425 100644
->>> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->>> @@ -69,8 +69,8 @@ CPU0: cpu@0 {
->>>               reg = <0x0 0x0>;
->>>               enable-method = "psci";
->>>               next-level-cache = <&L2_0>;
->>> -            power-domains = <&CPU_PD0>;
->>> -            power-domain-names = "psci";
->>> +            power-domains = <&CPU_PD0>, <&scmi_dvfs 0>;
->>> +            power-domain-names = "psci", "perf";
->>>               cpu-idle-states = <&CLUSTER_C4>;
->>
->>> +        scmi {
->>> +            compatible = "arm,scmi";
->>> +            mboxes = <&cpucp_mbox 0>, <&cpucp_mbox 2>;
->>> +            mbox-names = "tx", "rx";
->>> +            shmem = <&cpu_scp_lpri0>, <&cpu_scp_lpri1>;
->>> +
->>> +            #address-cells = <1>;
->>> +            #size-cells = <0>;
->>> +
->>> +            scmi_dvfs: protocol@13 {
->>> +                reg = <0x13>;
->>> +                #power-domain-cells = <1>;
->>> +            };
->>> +        };
->>>       };
->>
->
-> Hey Johan,
->
-> Thanks for trying out the series.
->
->> This series gives a nice performance boost on the x1e80100 CRD, but I'm
->> seeing a bunch of warnings and errors that need to be addressed:
->>
->> [    9.533053] arm-scmi firmware:scmi: Failed to get FC for protocol
->> 13 [MSG_ID:6 / RES_ID:0] - ret:-95. Using regular messaging.
->> [    9.549458] arm-scmi firmware:scmi: Failed to add opps_by_lvl at
->> 3417600 for NCC - ret:-16
->> [    9.563925] arm-scmi firmware:scmi: Failed to add opps_by_lvl at
->> 3417600 for NCC - ret:-16
->> [    9.572835] arm-scmi firmware:scmi: Failed to get FC for protocol
->> 13 [MSG_ID:6 / RES_ID:1] - ret:-95. Using regular messaging.
->> [    9.609471] arm-scmi firmware:scmi: Failed to add opps_by_lvl at
->> 3417600 for NCC - ret:-16
->> [    9.633341] arm-scmi firmware:scmi: Failed to add opps_by_lvl at
->> 3417600 for NCC - ret:-16
->> [    9.650000] arm-scmi firmware:scmi: Failed to get FC for protocol
->> 13 [MSG_ID:6 / RES_ID:2] - ret:-95. Using regular messaging.
->
-> X1E uses fast channels only for message-id: 7 (level set) and regular
-> channels for all the other messages. The spec doesn't mandate fast
-> channels for any of the supported message ids for the perf protocol.
-> So nothing to fix here.
->
->> [    9.727098] cpu cpu4: _opp_is_duplicate: duplicate OPPs detected.
->> Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq:
->> 3417600000, volt: 0, enabled: 1
->> [    9.737157] cpu cpu4: _opp_is_duplicate: duplicate OPPs detected.
->> Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq:
->> 3417600000, volt: 0, enabled: 1
->> [    9.875039] cpu cpu8: _opp_is_duplicate: duplicate OPPs detected.
->> Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq:
->> 3417600000, volt: 0, enabled: 1
->> [    9.888428] cpu cpu8: _opp_is_duplicate: duplicate OPPs detected.
->> Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq:
->> 3417600000, volt: 0, enabled: 1
->
-> The duplicate entries reported by the perf protocol come directly from
-> the speed bins. I was told the duplicate entry with volt 0 is meant to
-> indicate a lower power way of achieving the said frequency at a lower
-> core count. We have no way of using it in the kernel and it gets safely
-> discarded. So again nothing to fix in the kernel.
+Reviewed-by: Amit Kucheria <amitk@kernel.org>
 
-Hi Sibi,
-
-Can you try increasing the max_msg_size to 256 bytes in mailbox
-transport? We saw the same issue but got resolved by increasing the
-max_msg_size for the transport(obviously, I reduced the max_msg to 10 to
-keep the total shmem size same). Even the opps_by_lvl warning went away
-with this for us.
-
-Thanks,
-
--Nikunj
-
+> ---
+>  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 8 +++-----
+>  1 file changed, 3 insertions(+), 5 deletions(-)
 >
->> [    9.913506] debugfs: Directory 'NCC' with parent 'pm_genpd'
->> already present!
->> [    9.922198] debugfs: Directory 'NCC' with parent 'pm_genpd'
->> already present!
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/=
+Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> index 99d9c526c0b6..cce6624228c7 100644
+> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> @@ -217,18 +217,16 @@ properties:
 >
-> Yeah I did notice ^^ during dev, the series isn't the one introducing it
-> so it shouldn't block the series acceptance. Meanwhile I'll spend some
-> cycles to get this warn fixed.
+>    "#thermal-sensor-cells":
+>      const: 1
+> -    description:
+> -      Number of cells required to uniquely identify the thermal sensors.=
+ Since
+> -      we have multiple sensors this is set to 1
 >
-> -Sibi
+>  required:
+>    - compatible
+>    - interrupts
+>    - interrupt-names
+> -  - "#thermal-sensor-cells"
+>    - "#qcom,sensors"
 >
->>
->> Johan
->>
+>  allOf:
+> +  - $ref: thermal-sensor.yaml#
+> +
+>    - if:
+>        properties:
+>          compatible:
+> @@ -292,7 +290,7 @@ allOf:
+>        required:
+>          - reg
+>
+> -additionalProperties: false
+> +unevaluatedProperties: false
+>
+>  examples:
+>    - |
+>
+> --
+> 2.43.0
+>
 
