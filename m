@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-24861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3CA891EF34
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 08:40:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC22091EFBA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 09:07:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 159581C232D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 06:40:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 51D3F1F214BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 07:07:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9659D82D68;
-	Tue,  2 Jul 2024 06:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FFD112EBE1;
+	Tue,  2 Jul 2024 07:07:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="blQHnHqQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iinhIyCc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C98347C2;
-	Tue,  2 Jul 2024 06:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE76612DDAF;
+	Tue,  2 Jul 2024 07:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719902362; cv=none; b=gRPPht+G2Bp1PQkIOba7PS3GjYjouthGgfU2SeIkNDAcW7VwL/e0GsDdrPYHLSXPYP8EReHy5rWXrTm39la5PPZLeVL3qCCh0dNzO/pDPFOOBOnQGEreq1dEG1vDFC398h7EwEd5injxriYq+8UV/88xBgj8Oa6idQVQ4E2xIQU=
+	t=1719904061; cv=none; b=n7P0LoQPV1DvH5Mjsax6ouQZDlPZHzMjmCtyZBUfXwTfdsnPRSCFuPmj2nJLjt+PsE3TjGe5Cqofi0tsyWokgypbcLwldVUtMMByG5d/jwvH+6eXPsSppCEzQUPVBm6vjAjV6OsOukxWp7yu6LVvtw+INkjqbTllFPsxBbrDGVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719902362; c=relaxed/simple;
-	bh=vn5YWUS6RydoYKJs+yOfeo/iZTPzfs2PzZAP0GAyLmA=;
+	s=arc-20240116; t=1719904061; c=relaxed/simple;
+	bh=Vk4bYNKhpK6COrm6nr1+yRC4zvYfwQ5t+wYF1UvIWd0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=hZ/RbfLEjeNpa6D9NN87OKH05CZiLkfxTXZf5JADgmLgraEH7z7T6hxXXM2oeq/BbooVN3xXKbUpm/XBNJAZI+ui9MUaRG7sYwPtRudzi7VcyDmqWlWUjsEFoDPFlRa6fDCJh/DSXfkZ3C3r6ISWPEdlmsn8gE9e2BL/q/84j5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=blQHnHqQ; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=GN8zPvRCCl4IbqK3DyLsLeLUBMwejaJH+OU7QNqKP3mx5NJR/wwB151cGrKowvjrl8ECcRemaYWK17oSUFXfnCB03Rc5jMI9GEyx/qt8nGO3PfC0ms0xry5j+Y0lJQEv+mcVFlUw6HkU6NvT1Mi+C5uv5EE5y03+xB2WAHB7fc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iinhIyCc; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 461LFxEF002531;
-	Tue, 2 Jul 2024 06:39:17 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 461L0Y9h013083;
+	Tue, 2 Jul 2024 07:07:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Bc0FbBCjop0mDDwTTnWmvB20qL8T+RaItfFuUos6ofs=; b=blQHnHqQxJkXkmfz
-	SUZhqAnvWjONAzDqRI7MAFFTE00irORQkSM5EfyeJAHKywyJzv7IWyHHpz/ivwGm
-	G/cLQ4A1rdeL3EZFjZ2I86gQpBp85lKe5GQdavEnr/BumAhFwJdnsSr02qsa+DF0
-	hVHmDdc6bNU9ZubhrPnKqadBZ3zqTnJCbxXMOn8oupDKywKkws8EUeUaoXEFZIT0
-	TAv2A07kvwjngW8EGI9t2fnPB47lkw5P3aZC4vrhqo2wY1NgTRnv6U6y0LZddXAS
-	Ex2mT+FxtCQOe23M2VxO0epqYPUlD6QWXyW8MBk1XqCpR5DEzDGV4ZTfornPhLMW
-	VevlFQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 402bj862rw-1
+	B/tDdP2Z1keyEASbG3gxexaFA29gWOsTfObNOgHDdoM=; b=iinhIyCc65Cwmfmj
+	7mlmSav7clUGbmcbQDEZUSD6SI7yNMaGDWyRNAscb7IIPQa8JYUouldQIhLWERhh
+	hBX0y4TLS8cm8fW1a7VAF0ijLGEtjOr21pNkT91bqiPvcyhRcOflWc+Wcni7Z4u5
+	KdQw5mZGXJPTmHZaBwnqCnZQ8vczNi32PRndv14yhzsxIt7ZIMBS12jrtt/JMhge
+	zGP6nBicBPUadBUWeXvaad1+Wxst/FMoxz2UvU3mhl0WBLjanJFwQfGVxh35aHcH
+	XX6Y3lu7EA0H2gZHtZBM8DQnXZgeuhrao7kFXCDY8zwUbuc/MjyBwBKsN/xhU36y
+	im6MLg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 402ag2ebp3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 02 Jul 2024 06:39:16 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4626dGXp004878
+	Tue, 02 Jul 2024 07:07:32 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46277VIY012507
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 2 Jul 2024 06:39:16 GMT
-Received: from [10.217.238.102] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 1 Jul 2024
- 23:39:13 -0700
-Message-ID: <4a5c0b88-d4be-4dd2-9bce-981f093737aa@quicinc.com>
-Date: Tue, 2 Jul 2024 12:09:10 +0530
+	Tue, 2 Jul 2024 07:07:31 GMT
+Received: from [10.204.65.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 2 Jul 2024
+ 00:07:28 -0700
+Message-ID: <3b07be20-e0c9-4ee2-a37b-34400e63862b@quicinc.com>
+Date: Tue, 2 Jul 2024 12:37:25 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,103 +65,97 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 1/2] soc: qcom: smp2p: Use devname for interrupt
- descriptions
-To: <quic_bjorande@quicinc.com>, <andersson@kernel.org>,
-        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <quic_deesin@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        "Konrad
- Dybcio" <konrad.dybcio@linaro.org>
-References: <20240627104831.4176799-1-quic_sudeepgo@quicinc.com>
- <20240627104831.4176799-2-quic_sudeepgo@quicinc.com>
+Subject: Re: [PATCH v2] misc: fastrpc: Remove user PD initmem size check
 Content-Language: en-US
-From: Sudeep Patil <quic_sudeepgo@quicinc.com>
-In-Reply-To: <20240627104831.4176799-2-quic_sudeepgo@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Greg KH <gregkh@linuxfoundation.org>, <srinivas.kandagatla@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_bkumar@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>,
+        stable
+	<stable@kernel.org>
+References: <20240627060518.1510124-1-quic_ekangupt@quicinc.com>
+ <62dzilcvsp3efxpxulzkf6e62rzcrhp55k6yjk5fymkqthdfzw@yageexbx6ddz>
+ <f3d502ca-228e-4be4-b296-a9073975d34b@quicinc.com>
+ <a5e69a5e-b882-4f36-b023-f85da430fa2f@quicinc.com>
+ <2024062849-brunt-humvee-d338@gregkh>
+ <2e616e9d-fc04-4826-b784-4c6ee45bfbc2@quicinc.com>
+ <foe6khsckzdvd5ccwitzfpdwoigdgu3uostuar3zk5d5stcd4s@hkrdg7vp4mqt>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+In-Reply-To: <foe6khsckzdvd5ccwitzfpdwoigdgu3uostuar3zk5d5stcd4s@hkrdg7vp4mqt>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 5q_d6UxEzsm5-MhTxHB8iMtugursaPH9
-X-Proofpoint-GUID: 5q_d6UxEzsm5-MhTxHB8iMtugursaPH9
+X-Proofpoint-ORIG-GUID: B9XM07VYNaMfDIjZ_s349d8y1bzur172
+X-Proofpoint-GUID: B9XM07VYNaMfDIjZ_s349d8y1bzur172
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-02_02,2024-07-02_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
- spamscore=0 suspectscore=0 mlxlogscore=999 mlxscore=0 priorityscore=1501
- malwarescore=0 adultscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
- definitions=main-2407020048
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ malwarescore=0 phishscore=0 impostorscore=0 mlxlogscore=916 bulkscore=0
+ spamscore=0 priorityscore=1501 suspectscore=0 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407020053
 
 
 
-On 6/27/2024 4:18 PM, Sudeepgoud Patil wrote:
-> From: Chris Lew <quic_clew@quicinc.com>
-> 
-> When using /proc/interrupts to collect statistics on smp2p interrupt
-> counts, it is hard to distinguish the different instances of smp2p from
-> each other. For example to debug a processor boot issue, the ready and
-> handover interrupts are checked for sanity to ensure the firmware
-> reached a specific initialization stage.
-> 
-> Remove "smp2p" string from the irq request so that the irq will default
-> to the device name. Add an .irq_print_chip() callback to print the irq
-> chip name as the device name. These two changes allow for a unique name
-> to be used in /proc/interrupts as shown below.
-> 
-> / # cat /proc/interrupts | grep smp2p
->   18:  ...      ipcc 196610 Edge      smp2p-adsp
->   20:  ...      ipcc 131074 Edge      smp2p-modem
-> 170:  ...  smp2p-modem   1 Edge      q6v5 ready
-> 178:  ...  smp2p-adsp   1 Edge      q6v5 ready
-> 
-> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
-Signed-off-by: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>
-> ---
->   drivers/soc/qcom/smp2p.c | 11 ++++++++++-
->   1 file changed, 10 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
-> index a21241cbeec7..696c2a8387d0 100644
-> --- a/drivers/soc/qcom/smp2p.c
-> +++ b/drivers/soc/qcom/smp2p.c
-> @@ -16,6 +16,7 @@
->   #include <linux/platform_device.h>
->   #include <linux/pm_wakeirq.h>
->   #include <linux/regmap.h>
-> +#include <linux/seq_file.h>
->   #include <linux/soc/qcom/smem.h>
->   #include <linux/soc/qcom/smem_state.h>
->   #include <linux/spinlock.h>
-> @@ -353,11 +354,19 @@ static int smp2p_set_irq_type(struct irq_data *irqd, unsigned int type)
->   	return 0;
->   }
->   
-> +static void smp2p_irq_print_chip(struct irq_data *irqd, struct seq_file *p)
-> +{
-> +	struct smp2p_entry *entry = irq_data_get_irq_chip_data(irqd);
-> +
-> +	seq_printf(p, " %8s", dev_name(entry->smp2p->dev));
-> +}
-> +
->   static struct irq_chip smp2p_irq_chip = {
->   	.name           = "smp2p",
->   	.irq_mask       = smp2p_mask_irq,
->   	.irq_unmask     = smp2p_unmask_irq,
->   	.irq_set_type	= smp2p_set_irq_type,
-> +	.irq_print_chip = smp2p_irq_print_chip,
->   };
->   
->   static int smp2p_irq_map(struct irq_domain *d,
-> @@ -617,7 +626,7 @@ static int qcom_smp2p_probe(struct platform_device *pdev)
->   	ret = devm_request_threaded_irq(&pdev->dev, irq,
->   					NULL, qcom_smp2p_intr,
->   					IRQF_ONESHOT,
-> -					"smp2p", (void *)smp2p);
-> +					NULL, (void *)smp2p);
->   	if (ret) {
->   		dev_err(&pdev->dev, "failed to request interrupt\n");
->   		goto unwind_interfaces;
+On 7/1/2024 10:41 PM, Dmitry Baryshkov wrote:
+> On Mon, Jul 01, 2024 at 10:50:38AM GMT, Ekansh Gupta wrote:
+>>
+>> On 6/28/2024 7:51 PM, Greg KH wrote:
+>>> On Fri, Jun 28, 2024 at 04:12:10PM +0530, Ekansh Gupta wrote:
+>>>> On 6/28/2024 3:59 PM, Ekansh Gupta wrote:
+>>>>> On 6/27/2024 4:43 PM, Dmitry Baryshkov wrote:
+>>>>>> On Thu, Jun 27, 2024 at 11:35:18AM GMT, Ekansh Gupta wrote:
+>>>>>>> For user PD initialization, initmem is allocated and sent to DSP for
+>>>>>>> initial memory requirements like shell loading. This size is passed
+>>>>>>> by user space and is checked against a max size. For unsigned PD
+>>>>>>> offloading, more than 2MB size could be passed by user which would
+>>>>>>> result in PD initialization failure. Remove the user PD initmem size
+>>>>>>> check and allow buffer allocation for user passed size. Any additional
+>>>>>>> memory sent to DSP during PD init is used as the PD heap.
+>>>>>> Would it allow malicious userspace to allocate big enough buffers and
+>>>>>> reduce the amount of memory available to the system? To other DSP
+>>>>>> programs?
+>>>>> The allocation here is happening from SMMU context bank which is uniquely assigned
+>>>>> to processes going to DSP. As per my understanding process can allocate maximum
+>>>>> 4GB of memory from the context bank and the memory availability will be taken care
+>>>>> by kernel memory management. Please correct me if my understanding is incorrect.
+>>>> Just wanted to add 1 question here:
+>>>> User space can also directly allocate memory. Wouldn't that be a problem if any malicious userspace
+>>>> allocated huge memory?
+>>> No, because any userspace program that takes up too much memory will be
+>>> killed by the kernel.
+>>>
+>>> You can not have userspace tell the kernel to allocate 100Gb of memory,
+>>> as then the kernel is the one that just took it all up, and then
+>>> userspace applications will start to be killed off.
+>>>
+>>> You MUST bounds check your userspace-supplied memory requests.  Remember
+>>> the 4 words of kernel development:
+>>>
+>>> 	All input is evil.
+>> Thanks for the detailed explanation, Greg. I'll remember this going forward.
+>>
+>> For this change, I'll increase the max size limit to 5MB which is the requirement for
+>> unsigned PD to run on DSP.
+> So we are back to the quesiton of why 5MB is considered to be enough,
+> see
+>
+> https://lore.kernel.org/linux-arm-msm/2024061755-snare-french-de38@gregkh/
+This is based on the initial memory requirement for unsigned PD. This includes memory for shell loading on DSP
++ memory for static heap allocations(heap allocations are dynamic for Signed PD). This requirement tends to
+around 5MB. I'll update this  also information in commit text. There will be some additional memory passed to
+the PD which will get added to the PD heap.
+
+--Ekansh
+>
+>> --Ekansh
+>>> thanks,
+>>>
+>>> greg k-h
+
 
