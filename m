@@ -1,65 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-24868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id B975D923A44
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 11:39:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03CAA923777
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 10:41:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1E76FB21EF5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 09:39:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2FCA01C22037
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 08:41:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 348081534EB;
-	Tue,  2 Jul 2024 09:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 213B214E2E8;
+	Tue,  2 Jul 2024 08:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XeO/0M3A"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iAzpE2rL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D0015217F;
-	Tue,  2 Jul 2024 09:39:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058DF14B97A;
+	Tue,  2 Jul 2024 08:40:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719913163; cv=none; b=DEXjC9lvl5jOI1O82069SW0FMRz4+sUyF3LeBFalvlQgH3g9ttupqdPm57d8J/NAwoxXV0nJ9ynLmmgHcyjO3pNgdgFZPlweXbe/PZTxWWhXO6urWnHo8g7hNXt4E6YDO8ecM1XpE28+u65Ot9Gb9us+9BGEHIpUcpLOdxNChLc=
+	t=1719909657; cv=none; b=hcUYa6ORONdtW9F+A0mhnocuVMsaAoTi0ln64OO5S0Yhv1yotkiNAg7jkyRjcL8nj7Jp9bqWUFhfJlPsEiCxvazzSQkH1HVsRYVMSGpF/4Igd7kJ509+IJbJjZvw6/7U6D+v1vj76Mzv7042FUP94tdfgl3soOWqsnioU/7CfLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719913163; c=relaxed/simple;
-	bh=cKKhmZWA8i3/t0YPKgOkIBJTFu7C+J1VqMks8j/9hs0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FAQwfJTeITuEmt9Psz8aLiNEcJEkHu87vfJb9QC+E73EpdaVk1ekgPgZANJAP//ESsXAyIITa1noCYyr/PDRYrOBCjj5wY279EAFuN8h667LtBedymCtjISSEJ8CGun46SNR/w47b3s7e+1l/blrusfWa1sOHVeOc5mwc0NrnVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XeO/0M3A; arc=none smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1719913162; x=1751449162;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=cKKhmZWA8i3/t0YPKgOkIBJTFu7C+J1VqMks8j/9hs0=;
-  b=XeO/0M3A4KnIe3oLFSTo31cb8QzG9N6I6vNvkHVY/Tv3O7n0pOrqGFU/
-   C+/AtxZ+zlk9JMBoXxZrLNpuzV+S8EIE5w2RQGUF5DdpxhXlj2JSy7cGK
-   2nlOowfU0jbZCcmiL3sw6T14lw9xeNgk7Ef9MSj3SQwduyNAUV4GWFb9N
-   Ydx1tN84KqQEBuoJIpWXb2ZmuKoEqda2OJjOwjnY2ju9WqpX3U0TdotO1
-   qBOwttUrkuyUMyRzuVs3zQ9T/NdazZY53T75VwomKtIYevHu2LhtuTE5R
-   ieEzGiFfwrz2SDVuC4OzqJvfuuE7VjJR+iBgnS9h/u/j3tDX3/2pUos4z
-   Q==;
-X-CSE-ConnectionGUID: UW+Vl1+oTESyocJmh+htsA==
-X-CSE-MsgGUID: n7Rbw1buR+uEb7+OJJZsCw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11120"; a="17289670"
-X-IronPort-AV: E=Sophos;i="6.09,178,1716274800"; 
-   d="scan'208";a="17289670"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jul 2024 02:39:21 -0700
-X-CSE-ConnectionGUID: 3z6E88XVSzSZZvVdIsg49w==
-X-CSE-MsgGUID: tPms4iSOTy2At6x47qeQuQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,178,1716274800"; 
-   d="scan'208";a="45637566"
-Received: from ncintean-mobl1.ger.corp.intel.com (HELO [10.245.246.174]) ([10.245.246.174])
-  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jul 2024 02:39:14 -0700
-Message-ID: <f982842a-1804-420b-a539-a609ecf8fb8a@linux.intel.com>
-Date: Tue, 2 Jul 2024 10:30:15 +0200
+	s=arc-20240116; t=1719909657; c=relaxed/simple;
+	bh=u+aOJF3gZZR5fDXd86dDnlILnB/6Ycly+pFrUKbGE+s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=nVP2dI8U98Nl7KnezY/TDlNiOqavxN01GWJFSasTjhucnIqhnadzk4l6n1an9RLNeghtX8KA5bWg1v/m3rJI0N2jcG+J5oOSBs5qdtlOrCDH/PY9taGzhC1bciwQskcsQjGScExg/FyjLH8jvJFGRCeZwYpX8MMQjjAykhnEnvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iAzpE2rL; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4628eZII011448;
+	Tue, 2 Jul 2024 08:40:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ai4mMkxG7K2zhtMaV60b0R6R2hGk3c6gNObnKdp7cck=; b=iAzpE2rLBMfbirZA
+	xYkjaP2BrBkTm10pKM3/Bn5ngsOOTSzCidKIpDrwlikX6HjC/nYDzrkwsKIr/xqT
+	Ibg8Z7wE2nB0GFwsT1CjhbzbodYGryGZSDlMSYJiJ5t5M2TH+kLxH+jjIcY1oWWS
+	knBVvnaPgr+K59Kwa8CAfjM7q16XYm0Rzejjn5erAOMl3H4tW9+mBgELDDeeFz+T
+	XwS2vnzbjjNYsv9qv9BBcl66fBT2dIth/aMCB66kPYEd6F8pTtCHXHhzL9Xcz/cW
+	6dZfluIuAL4tx6i4hS4WX9UvXSHYFVNzzZWaThiXNGkW0rGqb6OyB2tn9R6virn8
+	IgcXAw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 402an769bk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 02 Jul 2024 08:40:34 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4628eX7f008915
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 2 Jul 2024 08:40:33 GMT
+Received: from [10.204.65.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 2 Jul 2024
+ 01:40:29 -0700
+Message-ID: <46aa3914-7ac9-4605-911f-5120e8a33720@quicinc.com>
+Date: Tue, 2 Jul 2024 14:10:26 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,99 +65,138 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v23 32/32] ASoC: doc: Add documentation for SOC USB
-To: Wesley Cheng <quic_wcheng@quicinc.com>,
- =?UTF-8?Q?Amadeusz_S=C5=82awi=C5=84ski?=
- <amadeuszx.slawinski@linux.intel.com>, srinivas.kandagatla@linaro.org,
- mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
- corbet@lwn.net, broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
- Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, tiwai@suse.com,
- robh@kernel.org, gregkh@linuxfoundation.org
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
- alsa-devel@alsa-project.org
-References: <20240610235808.22173-1-quic_wcheng@quicinc.com>
- <20240610235808.22173-33-quic_wcheng@quicinc.com>
- <5be51e1f-70c9-4bbc-96fa-1e50e441bd35@linux.intel.com>
- <408d9e8e-0f40-7e66-54be-2f8d2c0783a3@quicinc.com>
- <ca1e1063-e1bd-4e03-a7cd-91985e9954e9@linux.intel.com>
- <096d59a0-5e18-092c-c9ae-d98130226f06@quicinc.com>
- <368d9019-2c96-468e-b472-7e1127f76213@linux.intel.com>
- <eb6370ea-47a0-3659-3c10-cb7f95e3e520@quicinc.com>
- <510468c7-b181-48d0-bf2d-3e478b2f2aca@linux.intel.com>
- <c7a95157-1b71-1489-3657-8fe67f9acb4e@quicinc.com>
- <90463a4e-c2e7-4b59-9a79-23533b4acd1e@linux.intel.com>
- <fd8f1eb0-4b21-4697-8175-a61bc3858852@quicinc.com>
+Subject: Re: [PATCH v3] misc: fastrpc: Increase max user PD initmem size
 Content-Language: en-US
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <fd8f1eb0-4b21-4697-8175-a61bc3858852@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+CC: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>,
+        stable
+	<stable@kernel.org>
+References: <20240701115237.371020-1-quic_ekangupt@quicinc.com>
+ <ZoMcM+F8r58tmE7g@hu-bjorande-lv.qualcomm.com>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+In-Reply-To: <ZoMcM+F8r58tmE7g@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: OUYXYds6jrjvyUvX1jaQQfxaPyVkCN5k
+X-Proofpoint-ORIG-GUID: OUYXYds6jrjvyUvX1jaQQfxaPyVkCN5k
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-02_04,2024-07-02_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ clxscore=1015 adultscore=0 malwarescore=0 mlxlogscore=999 suspectscore=0
+ phishscore=0 bulkscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
+ definitions=main-2407020065
 
 
->> There are really multiple layers to deal with
+
+On 7/2/2024 2:44 AM, Bjorn Andersson wrote:
+> On Mon, Jul 01, 2024 at 05:22:37PM +0530, Ekansh Gupta wrote:
+>> For user PD initialization, initmem is allocated and sent to DSP for
+>> initial memory requirements like shell loading. This size is passed
+>> by user space and is checked against a max size.
+> Why does fastrpc_init_create_process() allocate 4x the passed value and
+> why is the value rounded up to INIT_FILELEN_MAX?
+The passed value is actually the size of fastrpc shell. This size is not sufficient for the user
+PD initialization and the PD also needs some additional memory for it's other requirements
+like heap. The value is aligned to 1 MB and there is a possibility that the user passed value
+is zero(user can only pass the size if it can open the shell). For this, there is at least some
+memory allocated and sent to DSP for PD initialization(2MB as of today).
+>> For unsigned PD
+>> offloading requirement, more than 2MB size could be passed by user
+>> which would result in PD initialization failure. Increase the maximum
+>> size that can be passed py user for user PD initmem allocation.
+> Sounds good, but why not 2.1MB or a rounder arbitrary value of 8 or 16?
+>
+> What is actually expected to fit in this initial memory? Is it the shell
+> that has grown beyond 2MB?
+I checked this again with the size of shell and I see that the shell size is not going beyond
+2 MB, it's the unsigned PD requirement which is asking for more memory. This is because
+there are some static heap initialization specifically for unsigned PD. Do you suggest having
+a different definition for minimum initmem? Or have it as a local variable which changes
+based on PD type(2MB for signed PD and 5MB for unsigned PD)?
+>
+> Also, s/py/by
+>
+>> Any
+>> additional memory sent to DSP during PD init is used as the PD heap.
 >>
->> a) is the controller able to support the offload path? IIRC this is
->> embedded in an obscure XHCI property, it would make sense to expose it
->> as a control, or component string, of the USB card.
-> 
-> If a component string/tag is desired, I already have some way of doing that.  I can add it to the USB card.
-> 
+> Does this mean that the initmem is used for shell loading and initial
+> heap, and if more heap is needed after that the DSP can request more
+> memory? Related to the question in v2, how is this memory accounted for?
+Yes this is for the initial heap requirement of PD(described above also). In case any more
+memory is required by DSP PD, it will make a reverse call to borrow more memory from
+HLOS using ADD_PAGES request which is supported by fastrpc_req_mmap. However,
+for unsigned PD the heaps are statically initialized which brings the requirement of some
+additional memory.
+>
+> What would it mean that init.filefd != 0 in
+> fastrpc_init_create_process(), will that pre-allocated memory (which was
+> allocated without any size checks afaict) then be used for the same
+> purpose? Why is a buffer of 4x the size of initfd then also allocated
+> and mapped to the DSP?
+The init.filefd is the FD of fastrpc shell that is opened and read by the process user space.
+I believe the pre-allocated memory you mentioned is the memory pointed by init.file. If
+the shell file is opened by user process DSP will load the shell and add the initmem to the
+DSP PD pool. If the user space has not opened and read the shell, DSP root PD daemon
+will open and read the shell for loading for PD spawning. Please let me know if there are
+any more questions here. Basically the usage of initmem is for shell loading and remaining
+memory is added to PD pool of heap and other usage.
+>
+>
+> Could you please send a patch adding some comments documenting these
+> things, the steps taken to create a new process, and what the 6
+> arguments built in fastrpc_init_create_process() actually means?
+Sure, I'll add this information in the next spin.
+>
+> Perhaps I'm just failing to read the answers already in the
+> implementation, if so I'm sorry.
+Thanks for reviewing the patch. I'll add most of the information in commit text and as
+comments in the next patch.
+
+--Ekansh
+>
+> Regards,
+> Bjorn
+>
+>> Fixes: 7f1f481263c3 ("misc: fastrpc: check before loading process to the DSP")
+>> Cc: stable <stable@kernel.org>
+>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+>> ---
+>> Changes in v2:
+>>   - Modified commit text.
+>>   - Removed size check instead of updating max file size.
+>> Changes in v3:
+>>   - Added bound check again with a higher max size definition.
+>>   - Modified commit text accordingly.
 >>
->> b) is there a companion card capable of dealing with the offload path?
->> Since the presence of this card may depend on driver probe, there should
->> be a control on the USB card. userspace could detect changes to this
->> control and detect if that path is or is no longer enabled.
-> 
-> So currently, the "USB Offload Playback Capable Card" kcontrol (on the USB card) will determine if there is an offload path.  However, this differs than what Amadeusz is suggesting, in that he wants a single kcontrol created for EACH USB card identified (per USB audio device), and a simple enable/disable control to determine if the offload path is enabled for that card/pcm stream.
-> 
-> It would be a simpler approach for the userspace, and if the card that handles the offload card isn't present, then these enable/disable control will be set to "disabled," and even if users attempt to set the control, it won't go through.
+>>  drivers/misc/fastrpc.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index 5204fda51da3..11a230af0b10 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -38,7 +38,7 @@
+>>  #define FASTRPC_INIT_HANDLE	1
+>>  #define FASTRPC_DSP_UTILITIES_HANDLE	2
+>>  #define FASTRPC_CTXID_MASK (0xFF0)
+>> -#define INIT_FILELEN_MAX (2 * 1024 * 1024)
+>> +#define INIT_FILELEN_MAX (5 * 1024 * 1024)
+>>  #define INIT_FILE_NAMELEN_MAX (128)
+>>  #define FASTRPC_DEVICE_NAME	"fastrpc"
+>>  
+>> -- 
+>> 2.34.1
+>>
+>>
+>>
 
-Not following. Are you suggesting userspace would modify the
-enable/disable status?
-
-I would just have a read-only control that reports what the hardware can
-do and which other card can deal with offload. It's up to userspace to
-select the offloaded PCM device or not.
-
-
-
->> c) which PCM device is actually offloaded? This could be plural for some
->> implementations. The mapping between PCM devices exposed by the USB
->> card, and those exposed by the companion card, should be known to
->> userspace. I am not sure how this would be done though, a variable
->> number of controls is a sure way to confuse userspace.
-> 
-> Expanding on Amadeusz's suggestion, my idea is to have an enable/disable kcontrol per USB stream.  For example, one USB card could have multiple PCM devices (USB streams).  So we would have something like:
-> 
-> PCM Offload Playback Enable Stream#0  enable/disable
-> 
-> PCM Offload Playback Enable Stream#1  enable/disable
-> 
-> ....
-
-are those read-only or not?
-
-> So we'd know which USB card and PCM device is selected for USB SND.  However, I see what you're getting at in case there are multiple supported streams, because userspace needs to know which ASoC card/pcm combination corresponds to which USB device/combination.
-
-I don't understand how this would help map the two parts? There's got to
-be an additional mapping...
-
-> What do you think about having a USB card kcontrol to display the mapped ASoC card and PCM indexes?
-> 
-> PCM Offload Playback Enable Stream Mapping#0  0, 1 (ASoC card#0, PCM device#1)
-> 
-> To summarize, if we did this, I'd plan to remove all the kcontrols in ASoC card, and have the following in the USB card for an USB audio device that supports one USB stream:
-> 
-> PCM Offload Playback Enable Stream#0  enable/disable
-> 
-> PCM Offload Playback Enable Stream Mapping#0  0, 1 (ASoC card#0, PCM device#1)
-
-... which is suggested here.
-
-Assuming these are read-only controls, we would need to know which PCM
-device on the USB card can be optimized with the use of which PCM device
-on the ASoC card. That means a set of three values. You would also want
-a number of streams to make the guesswork on controls less painful.
 
