@@ -1,83 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-24863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 129D491F0A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 09:59:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6972C91F0BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 10:03:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 913361F226CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 07:59:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D7EC01F22B80
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 08:03:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22EA255C1A;
-	Tue,  2 Jul 2024 07:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B56D148314;
+	Tue,  2 Jul 2024 08:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nlDVsS9W"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oMhMwAIv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689CB146010
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jul 2024 07:59:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C3616419
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jul 2024 08:03:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719907167; cv=none; b=mWQ4yvqLKY/QwF5rv3mpf4A6AmbK/jw6S/W7nVp9HZbVvyUnJLiFqd5ovuWG9TMoUCB+NOFeZP9n+ff68hUbocQ4XtSTcbFwreApAY9bLFRMHJcAaVC9KRyWps6SPxfmpp11oALl6Nm15rwjFKMEaiEBIfVfoHk9FUxLzpX6UEU=
+	t=1719907434; cv=none; b=PBo7N0WO7MHyqyXUQAdIu7yGjwyJNtsynS5YmhDuvTRBNJYQ09SzPkJSPtHfs3u5dHU0upQPBGQrvSH7HE4xT93bgTXj5HWgD0QHZPNZC0Vdln4uehpFRhHvxeajMXdmN7YgYGvLsO9TgUSqEtvM7w6fTqIqpngGzfJFT0MjDBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719907167; c=relaxed/simple;
-	bh=xO4jgFcHGGtM3PtvZAzuNk3ui4TywDxw1FF2Di44KFg=;
+	s=arc-20240116; t=1719907434; c=relaxed/simple;
+	bh=b/wmykKwVxbhO5h9j19Pvj79GV8/eI9inxecTME1l/0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VIazZD96E+3ypgEwvGdBgwcFMwZWkIhrG0itNdE/rOZTeRC/1EJ0u53K+gNSxasfezvdfqLRh4S+ROxfPRa72DqXSCaN82B4qQ9XBc9IrBpEbNtIc1i8k9u3I4++IxfOk8bfYX3zc8jwTePTPXEdqDMXDtGhiJbBvhpvfhPhops=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nlDVsS9W; arc=none smtp.client-ip=209.85.167.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=QPZcW/0cr6h4xYNbrnlAM9nmsHl1tmuubqMRZo1Z9v/WM1xnGMAecTg23QdbcGZeckcJ0EQv7qU3zPouwBJwpvgexLbW2aQ9HS4Lhs/aX3T7h2qs3mikVbu4hH3uLd6+8JXKNXRK7YdpeK5OQ7k/Ohm3zRpTYxiJeOHklVNJ8G8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oMhMwAIv; arc=none smtp.client-ip=209.85.208.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-52cdebf9f53so3985648e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jul 2024 00:59:25 -0700 (PDT)
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2ee4ae13aabso40868341fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jul 2024 01:03:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719907163; x=1720511963; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1719907430; x=1720512230; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HpyvxQ8xbjmGUnixp39QhyA5GFx0SN+s+GmNtVx8+E0=;
-        b=nlDVsS9WQkg8MQeV7oo59ZKzp7z2S1AkcllrYCvGu/tz8yqd1vKYNKItHDtMhsPPzw
-         Q4+187fxnN+OmuzNyQXdmCdy/ExfcLntXwiKz5QB0GHNWWb7VUmjYYJo2n2If7OyGhVn
-         YsKGwL0ZdDx2HCTpaAmMUddDRc6WemjGbRK0It4Xhdlq0YwqXpkTrnHo09qzbjllkqLI
-         Egt1F3z1e2mjx/0IlyD6mYSZiiAkC+baPeRzBwjUtnr0HxGmD1REUWU1IJoi8rqYzXAj
-         S+dHeZ9Yd34DBXHBFDaSSO0jko8RM4ZssC6ns6iRsPeqv43ZW0VtLbM1IaegU+cpd+r+
-         oz0Q==
+        bh=4LAM6lIuRtsvCZNgiIxZSTOFr184re6ASNS29In5f8g=;
+        b=oMhMwAIvZYMh4WI7lJoFpxtiVJoYl3l5oXQSlEjPyI6et5LNARcv/6Oz3PR79Oa0EP
+         6hw4TcE2PYgmdcP0ywFwm74IBEsOljmbkqhBurFMB/dW6TF5dC6vPlw6EerkpdjQqPVD
+         m0EQYbWOVrgZGKqSEVdq5iidXGW1wEqNiB9WusoBX8nwu25AL/u1yLkqoAh4azDVUhJN
+         blFmb5fyWymsnuX31Qs0AfTr8iOtFkl9lmOB3wCR7nCyl6BwkcYyIIVqFhmc+LOtH4Y6
+         HsX44vGLVL7GXI5fa9JImeAIx6vRcJq8zH4Yb5c3RhOGKByt81s5rYeZVR74tOQ+sOvq
+         XDoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719907163; x=1720511963;
+        d=1e100.net; s=20230601; t=1719907430; x=1720512230;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HpyvxQ8xbjmGUnixp39QhyA5GFx0SN+s+GmNtVx8+E0=;
-        b=HRab9l0ucE/DrMHqmKRSdCRyizz+jnV0tDLFU5Q8yH3eTmozhVr8pGlgPIUG5gaDSL
-         vevQ/cgQLZ8AXJIv9ZWgQQqxsdrF32XozpmwLNcPuvXFnPkiQNbinZPK/nF3qZ1EHDA4
-         hkH26sjQX3QtrxEZLXcMvyEvDzTj3yeNX4UQf7saL3nbcuY18GYX0LW0Z6XxgFpvGMwd
-         STONkmDfA5Uj0RG7A38XsbLhl1gyJbNN+iySdQ4OTmtnQOnEQNzypm1tDT+3AmvJE/hx
-         gFEVuSzqGwvfy1HktfmPAOeoziPDtm2HcnT/fHZQ8U23bj35QpIPG15Qd/S8cvlRaTsM
-         2UdA==
-X-Forwarded-Encrypted: i=1; AJvYcCXZVEPiEIHzV1tQ4R45m0zqTmV2U+6GCFgG8fn4c4+g1i1ftDEQxATHwf2NnIEC+1asGfNh8JqKjRxT8aCDz4sYoxi1R1rS+7664xkZxA==
-X-Gm-Message-State: AOJu0YxYrMqKruG8yUIgELCUaItNRPMCu9XyU93rN3HjqJf/DW8ITCEW
-	NvDhMw+NcDSvzE+z6X9Fn/dJkdr8TrsZmxu3j9v59qL+qmaK4lRbSWPzv0EgYJU=
-X-Google-Smtp-Source: AGHT+IFu60DTwWGR8MMLwXSmwkhC75Hs8TtEXLJtowjRn73LqZP6vLcd/4pHjJ3ShXg72GnfNAT4Pg==
-X-Received: by 2002:a05:6512:3a91:b0:52c:dca7:c9bd with SMTP id 2adb3069b0e04-52e82687f28mr4318804e87.30.1719907163576;
-        Tue, 02 Jul 2024 00:59:23 -0700 (PDT)
+        bh=4LAM6lIuRtsvCZNgiIxZSTOFr184re6ASNS29In5f8g=;
+        b=gVY70mScz7yq/+maUhqtM8vekGo/hj8frK6/fIzggqap47D0fsU+DBhxWc24ZZIluN
+         UZbnM2xA9ddPTLn4Jnszb7e71JeQ0UEGnaUDoYBXeM8TqjeS2fnriQaHROtVjCuNDp85
+         PXbSSCCpWbteoO2KHhNoP3UmsOeMOC4rvPwuHSLYn3Wn2nP/T+uX7LyPLA/hFix56e3q
+         Zh8sfplvy0ntLCsl9k/X8cig/TdA/Ha4iLYBF5LKkPHQusyWr/y4v5pFjFCajVfkid1T
+         b/3whWmvfRgNaqYL1625/TZ6tFgXT3p7Yzz8ACphb4CRWvvJewOgmercrCC3rxIAdl3f
+         9DQw==
+X-Forwarded-Encrypted: i=1; AJvYcCXOuRpilJkiTMFnZv4C3liGXbC7peIQI5/qSWI/8bcJYUxZ5QaHEEKffm0j6SKHTqxNpsmXfVFM5XI+iYE1lVpf30ZnLBy+c+c0BRCXYw==
+X-Gm-Message-State: AOJu0YxGnfadqcfBBC3qky4oMNjWDix64P+scHUK9shQ1fnx8GK1Dpcm
+	ShFjVx4txZIvuymtuVbRD0XrQ7GTDsWJP83KaOjiyvJiPVzGizGLU5FDqa8D4lI=
+X-Google-Smtp-Source: AGHT+IF3ecEAZvC/pQ2gIHHNnpG1wqrG6SjuqFnUiYhmdot/hwZ/XHb/8hTTHi+H/mXFV5XzZdj6Qw==
+X-Received: by 2002:a05:651c:220e:b0:2ec:174b:75bb with SMTP id 38308e7fff4ca-2ee5e38103emr57141381fa.28.1719907430551;
+        Tue, 02 Jul 2024 01:03:50 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52e7ab2f8b5sm1710321e87.233.2024.07.02.00.59.22
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ee5160d26dsm16306991fa.25.2024.07.02.01.03.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jul 2024 00:59:23 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:59:21 +0300
+        Tue, 02 Jul 2024 01:03:50 -0700 (PDT)
+Date: Tue, 2 Jul 2024 11:03:48 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>
 Cc: quic_bjorande@quicinc.com, andersson@kernel.org, quic_clew@quicinc.com, 
 	mathieu.poirier@linaro.org, linux-kernel@vger.kernel.org, quic_deesin@quicinc.com, 
 	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
 	Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH V3 1/2] soc: qcom: smp2p: Use devname for interrupt
- descriptions
-Message-ID: <nrqojhdkt3ay5mtj6fcpmzqlo6xjo6rkvwymm673nn2b3tqqxj@4cjlba7j4o3p>
+Subject: Re: [PATCH V3 2/2] soc: qcom: smp2p: Introduce tracepoint support
+Message-ID: <sgrgxfkvqnjeaiovvt665klmse443vkmzncb4jcun6oa432chh@ogaidyok27wf>
 References: <20240627104831.4176799-1-quic_sudeepgo@quicinc.com>
- <20240627104831.4176799-2-quic_sudeepgo@quicinc.com>
+ <20240627104831.4176799-3-quic_sudeepgo@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,38 +85,28 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240627104831.4176799-2-quic_sudeepgo@quicinc.com>
+In-Reply-To: <20240627104831.4176799-3-quic_sudeepgo@quicinc.com>
 
-On Thu, Jun 27, 2024 at 04:18:30PM GMT, Sudeepgoud Patil wrote:
-> From: Chris Lew <quic_clew@quicinc.com>
-> 
-> When using /proc/interrupts to collect statistics on smp2p interrupt
-> counts, it is hard to distinguish the different instances of smp2p from
-> each other. For example to debug a processor boot issue, the ready and
-> handover interrupts are checked for sanity to ensure the firmware
-> reached a specific initialization stage.
-> 
-> Remove "smp2p" string from the irq request so that the irq will default
-> to the device name. Add an .irq_print_chip() callback to print the irq
-> chip name as the device name. These two changes allow for a unique name
-> to be used in /proc/interrupts as shown below.
-> 
-> / # cat /proc/interrupts | grep smp2p
->  18:  ...      ipcc 196610 Edge      smp2p-adsp
->  20:  ...      ipcc 131074 Edge      smp2p-modem
-> 170:  ...  smp2p-modem   1 Edge      q6v5 ready
-> 178:  ...  smp2p-adsp   1 Edge      q6v5 ready
-> 
-> Signed-off-by: Chris Lew <quic_clew@quicinc.com>
+On Thu, Jun 27, 2024 at 04:18:31PM GMT, Sudeepgoud Patil wrote:
+> This commit introduces tracepoint support for smp2p, enabling
 
-Your sign-off is missing. LGTM otherwise
+See Documentation/process/submitting-patches.rst, "This patch".
 
+> logging of communication between local and remote processors.
+> These tracepoints include information about the remote subsystem
+> name, negotiation details, supported features, bit change
+> notifications, and ssr activity. These logs are useful for
+> debugging issues between subsystems.
+> 
+> Signed-off-by: Sudeepgoud Patil <quic_sudeepgo@quicinc.com>
 > ---
->  drivers/soc/qcom/smp2p.c | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
+>  drivers/soc/qcom/Makefile      |  1 +
+>  drivers/soc/qcom/smp2p.c       |  9 ++++
+>  drivers/soc/qcom/trace-smp2p.h | 98 ++++++++++++++++++++++++++++++++++
+>  3 files changed, 108 insertions(+)
+>  create mode 100644 drivers/soc/qcom/trace-smp2p.h
 > 
 
-> 
 
 -- 
 With best wishes
