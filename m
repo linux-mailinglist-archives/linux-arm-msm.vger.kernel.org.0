@@ -1,129 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-24899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCE999242F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 17:55:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AD074924329
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 18:05:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0AD881C2489F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 15:55:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E25411C243BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 16:05:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA4FB1BC08D;
-	Tue,  2 Jul 2024 15:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C61231BD01E;
+	Tue,  2 Jul 2024 16:05:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pJbpM50l"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jR6N/eyn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1AF26AE4;
-	Tue,  2 Jul 2024 15:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26131BD016
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jul 2024 16:05:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719935749; cv=none; b=ucsBsDJThU/3V13riynljmu8LyNzmofcVqRWriO23H1RsbCKU27JUb7wRn0TwWV7pRG59OfbFW4T+/sVi+8/B9eJZqp6xYDakyYvJ1RdYu5cGQupg9XZxHJUnpkjcgqnORrXuPdxsTRGgcsXgg1e8yXVq6iJMs4TRNUR1V+Dlh4=
+	t=1719936321; cv=none; b=mIGnPc3f3IFhI14hEjgXthZjoQ1Mq+KnOnC9AjCdADbUrLJiLyNFiV5tyshvtMx1N/HmozES6D8bJvg2AvCQMsVbcj7FaWQXfqcKKuwZANg+T6ATkmEIn/9lmiKO7TdQeIPm83w9rdhuRUuy2UsERaEcTfzMi+6DAlzk/m4U6k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719935749; c=relaxed/simple;
-	bh=bR4HNfKuY8jGJG6iuXf2xRGlqbsq3FVgf0n2KcVyQlo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G0Qgc9LXlBE7KUCJ0MQOKVI2mYasnsb5WlkAlOo1/e/M+bwywMXzkJJhEVO783QzDvMCiGaVnR9jyL/111PKAvAheljwjdJL9yrf3xAD1uOwZfGBSpYX0of+MfsXdB6L1nTfKgDA6ID5u9cu2WG2i1z1DHD7kT1w4TOPd7nwOLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pJbpM50l; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D7EC4AF07;
-	Tue,  2 Jul 2024 15:55:49 +0000 (UTC)
+	s=arc-20240116; t=1719936321; c=relaxed/simple;
+	bh=syIp2eAtSwSV1hJbA1lDFrbWh4wHMuVpkhgYugmdvnU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MaEEPlnqnp0tazAY2eyNSWrX1a1kIQJ3+hKtrvjXOaUm6LJotHM9y4AN5MIIyCthdAPL2LewZ/8CP/oaZM1eCkZYM5IxAs9AG7svSGfkcAMn5FcEvQhgWTzrBhJ+ggJYaE/inf8UeGfYqltuyz80l5esEGIRCq8mzwE7g72tUHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jR6N/eyn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AFE2C4AF15
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jul 2024 16:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719935749;
-	bh=bR4HNfKuY8jGJG6iuXf2xRGlqbsq3FVgf0n2KcVyQlo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pJbpM50lyyIUovqd33O82XefqYGxiM+do2g3jXYXYoxk1GTBC93LwYs+pV0ot3Y8K
-	 UqnVJVu51D3hUcB8VXMFZbJzn9glQPfYrUz8F9rpN+MNExo14wFGuiIrIY9ysDqvKo
-	 OTFRTqcAC0ePiWxzyvaJQXGrV15NbXc08BaE6XwBQoh8mKYMQfR/zCXBwVpthHZR0a
-	 efDoebDxfIGXFWaZhQ/QqzMMEUd01hxtLFfDCy7QXZ1O8O1pPnd8rNZo84Fu/oHrqa
-	 aQWnG/7eGENVZzDQ9r9QBjHU9NTK0a1bjUY+ZwGAwHOrhr8v+4rk155nOb7rPNdtTY
-	 VaBB7glgeMDmQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1sOfr7-000000003W1-26rB;
-	Tue, 02 Jul 2024 17:55:46 +0200
-Date: Tue, 2 Jul 2024 17:55:45 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org,
-	konrad.dybcio@linaro.org, jassisinghbrar@gmail.com,
-	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-	dmitry.baryshkov@linaro.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com,
-	conor+dt@kernel.org, quic_nkela@quicinc.com,
-	quic_psodagud@quicinc.com, abel.vesa@linaro.org
-Subject: Re: [PATCH V6 5/5] arm64: dts: qcom: x1e80100: Enable cpufreq
-Message-ID: <ZoQjAWse2YxwyRJv@hovoldconsulting.com>
-References: <20240612124056.39230-1-quic_sibis@quicinc.com>
- <20240612124056.39230-6-quic_sibis@quicinc.com>
+	s=k20201202; t=1719936321;
+	bh=syIp2eAtSwSV1hJbA1lDFrbWh4wHMuVpkhgYugmdvnU=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=jR6N/eyng+xqAZrCwVB3AkqP86jCFo5ENmDSyMnINnqWe25QcmAL+WZOSaTgJPQTe
+	 LXNmiGW4wga9uSrf16qwxrQPI6qPuzitGCXUMGOspvgPjlJMenJS9aCUnYaEC2NWnV
+	 Mn6x84PO9Ew+3i3L8pdNyTzWQ9rVd9hXLjbfEt5B9b9FVlM1vd88uOiNXWZgY95QYO
+	 FvqggpPLcebX+0471D0bZmkLxYTA8qK19g/7OC+dOyiFpZO+df0y+zDJi54i/WKc2L
+	 XeJTvxGZxwjJSPPboNrhHSnqE0Lh7F552JG2WGPgG4BM97ACCzni4fiS1mkylmTT5v
+	 DUrY/jFvcuczw==
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a72510ebc3fso653381466b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jul 2024 09:05:21 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVzuDDEz5pNk3ZXCbLynzPwCUPPNPypqKqUaPc8e8Y8pLFIB0YxOkqnJSBfodKzSD6cc/lJhAVO+u/tESyThsQzOWqufCpBjldFMD8XyQ==
+X-Gm-Message-State: AOJu0YzIgMJ/QBxLEWuOAM2ZGdIFWiOsDdnh/1M9e8/C+dmmyDabrJxA
+	IDJlktDcmlCVfkC/NZnkWOtCGaWXSiD2n5gX8OCH2L+LAMSdV2bmI0925FDVr06IMK/Fm8hba81
+	s8vZDkdUcNOt6BkXc3gNgbv1nnRrxCwzyM0hiIQ==
+X-Google-Smtp-Source: AGHT+IEBp4AdEUbTVgkYnrR4l+M9u5QRL7lxuLE7wPVki6HJriUGGhJlS+z/qX598S3G9T3Nof1fz6H2Rp80Ffza6Tk=
+X-Received: by 2002:a17:907:6e9f:b0:a6f:668b:3442 with SMTP id
+ a640c23a62f3a-a75144de9c7mr601088966b.77.1719936319707; Tue, 02 Jul 2024
+ 09:05:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240612124056.39230-6-quic_sibis@quicinc.com>
+References: <20240628-x1e80100-bindings-thermal-qcom-tsens-v2-1-4843d4c2ba24@linaro.org>
+In-Reply-To: <20240628-x1e80100-bindings-thermal-qcom-tsens-v2-1-4843d4c2ba24@linaro.org>
+From: Amit Kucheria <amitk@kernel.org>
+Date: Tue, 2 Jul 2024 21:35:07 +0530
+X-Gmail-Original-Message-ID: <CAHLCerNKcHf3e71jTSihbd+Mp1W9ndZ+ULbn-B-iJ734Cj8OEQ@mail.gmail.com>
+Message-ID: <CAHLCerNKcHf3e71jTSihbd+Mp1W9ndZ+ULbn-B-iJ734Cj8OEQ@mail.gmail.com>
+Subject: Re: [PATCH v2] dt-bindings: thermal: qcom-tsens: Document the
+ X1E80100 Temperature Sensor
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Thara Gopinath <thara.gopinath@gmail.com>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+	Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 12, 2024 at 06:10:56PM +0530, Sibi Sankar wrote:
-> Enable cpufreq on X1E80100 SoCs through the SCMI perf protocol node.
-> 
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+On Fri, Jun 28, 2024 at 2:01=E2=80=AFPM Abel Vesa <abel.vesa@linaro.org> wr=
+ote:
+>
+> Document the Temperature Sensor (TSENS) on the X1E80100 Platform.
+>
+> Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+
+Reviewed-by: Amit Kucheria <amitk@kernel.org>
+
 > ---
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 63 ++++++++++++++++----------
->  1 file changed, 39 insertions(+), 24 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> index 7b619db07694..d134dc4c7425 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> @@ -69,8 +69,8 @@ CPU0: cpu@0 {
->  			reg = <0x0 0x0>;
->  			enable-method = "psci";
->  			next-level-cache = <&L2_0>;
-> -			power-domains = <&CPU_PD0>;
-> -			power-domain-names = "psci";
-> +			power-domains = <&CPU_PD0>, <&scmi_dvfs 0>;
-> +			power-domain-names = "psci", "perf";
->  			cpu-idle-states = <&CLUSTER_C4>;
-
-> +		scmi {
-> +			compatible = "arm,scmi";
-> +			mboxes = <&cpucp_mbox 0>, <&cpucp_mbox 2>;
-> +			mbox-names = "tx", "rx";
-> +			shmem = <&cpu_scp_lpri0>, <&cpu_scp_lpri1>;
-> +
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			scmi_dvfs: protocol@13 {
-> +				reg = <0x13>;
-> +				#power-domain-cells = <1>;
-> +			};
-> +		};
->  	};
-
-This series gives a nice performance boost on the x1e80100 CRD, but I'm
-seeing a bunch of warnings and errors that need to be addressed:
-
-[    9.533053] arm-scmi firmware:scmi: Failed to get FC for protocol 13 [MSG_ID:6 / RES_ID:0] - ret:-95. Using regular messaging.
-[    9.549458] arm-scmi firmware:scmi: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-[    9.563925] arm-scmi firmware:scmi: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-[    9.572835] arm-scmi firmware:scmi: Failed to get FC for protocol 13 [MSG_ID:6 / RES_ID:1] - ret:-95. Using regular messaging.
-[    9.609471] arm-scmi firmware:scmi: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-[    9.633341] arm-scmi firmware:scmi: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
-[    9.650000] arm-scmi firmware:scmi: Failed to get FC for protocol 13 [MSG_ID:6 / RES_ID:2] - ret:-95. Using regular messaging.
-[    9.727098] cpu cpu4: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq: 3417600000, volt: 0, enabled: 1
-[    9.737157] cpu cpu4: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq: 3417600000, volt: 0, enabled: 1
-[    9.875039] cpu cpu8: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq: 3417600000, volt: 0, enabled: 1
-[    9.888428] cpu cpu8: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq: 3417600000, volt: 0, enabled: 1
-[    9.913506] debugfs: Directory 'NCC' with parent 'pm_genpd' already present!
-[    9.922198] debugfs: Directory 'NCC' with parent 'pm_genpd' already present!
-
-Johan
+> Changes in v2:
+> - Just picked up Krzysztof's R-b tag
+> - Link to v1: https://lore.kernel.org/r/20240527-x1e80100-bindings-therma=
+l-qcom-tsens-v1-1-0f50f58253e1@linaro.org
+> ---
+>  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/=
+Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> index 99d9c526c0b6..ac54ed604b74 100644
+> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> @@ -67,6 +67,7 @@ properties:
+>                - qcom,sm8450-tsens
+>                - qcom,sm8550-tsens
+>                - qcom,sm8650-tsens
+> +              - qcom,x1e80100-tsens
+>            - const: qcom,tsens-v2
+>
+>        - description: v2 of TSENS with combined interrupt
+>
+> ---
+> base-commit: 0fc4bfab2cd45f9acb86c4f04b5191e114e901ed
+> change-id: 20240522-x1e80100-bindings-thermal-qcom-tsens-aa2db90c4a74
+>
+> Best regards,
+> --
+> Abel Vesa <abel.vesa@linaro.org>
+>
 
