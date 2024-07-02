@@ -1,128 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-24856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FCCD91EEB2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 08:02:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB8B891EEE6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 08:24:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B114E1C21905
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 06:01:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8778C1F22732
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jul 2024 06:24:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C74D336120;
-	Tue,  2 Jul 2024 06:01:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80EDC7E574;
+	Tue,  2 Jul 2024 06:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b="L7vC1fK5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b2N1lwNs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0.riseup.net (mx0.riseup.net [198.252.153.6])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4AF747F;
-	Tue,  2 Jul 2024 06:01:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.252.153.6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CA976F17
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jul 2024 06:24:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719900114; cv=none; b=gW3UKREedViabUV/sWKWY+Vf448TWWijtwW2KtTUHvfZJJBC8fltG7lquc+jst2USBiV3yMnGHuuLKseCkcpP65m4wrMjzeE8ohN3eZ0Zt4wsaBRY+BoytfKdldykg2lcfdc0m7HvvVKrjZl35ewqCEeVf+NVdOs27AqDmeuIoY=
+	t=1719901469; cv=none; b=KHh4Ri4EoxURb4KBt/CMJjYeuWkl/3J68wK5YSollHxV5b72yt8wJDkYuy2Sf1Uh8ZkB0Z0uM0A4UYY5b3S1mHf4bSNS5bRg45+ccU82P4sWBXRik8gG5RObpRpGWCP7yofHBdISMP2sVew6r8rOpFvyfnS9ii9J2EPQ6zKLOo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719900114; c=relaxed/simple;
-	bh=xcSQiVNOMATEXEpewV4rKAkfpC7Es+uQVI1OXvCfdSs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=lmcHoAesSpgHqH4HcCvRAuWpwC2ooDf653LiGmxc2usL27pFngnb3YCfBROY4sHYKVubDQpB1c+xIVxS1dBH1lLgQ6EDYgx81zlzhBM+kAv6PS+ouhqyi/742jfUUfoAql2f01oJnDuDyeO3bm5i07yldtSiw0P6IYFyLtrNdAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riseup.net; spf=pass smtp.mailfrom=riseup.net; dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b=L7vC1fK5; arc=none smtp.client-ip=198.252.153.6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riseup.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riseup.net
-Received: from fews01-sea.riseup.net (fews01-sea-pn.riseup.net [10.0.1.109])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx0.riseup.net (Postfix) with ESMTPS id 4WCsk800Mwz9tCm;
-	Tue,  2 Jul 2024 06:01:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-	t=1719900112; bh=xcSQiVNOMATEXEpewV4rKAkfpC7Es+uQVI1OXvCfdSs=;
-	h=From:Date:Subject:To:Cc:From;
-	b=L7vC1fK5z/bNPFDADUtNi/2HsHiRSXQ5l/nCXi1INv5MxJQTTwIvOmtCwCGG/s74L
-	 CtLAmzcX2U2xtn59L4Y263H0uececU0eG+9MeJljSXZ2z+OmoqDkuz9cZGb3NGVewD
-	 HdWbuC9XbBRtNW/+GS7qySGh5lUzUzDttL1EfdQA=
-X-Riseup-User-ID: 03BF26FFB56FD71EFBC1F986A0C6E788064EFC6FD312FAC9CB199716DF497863
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	 by fews01-sea.riseup.net (Postfix) with ESMTPSA id 4WCsjt025dzJrSk;
-	Tue,  2 Jul 2024 06:01:37 +0000 (UTC)
-From: Dang Huynh <danct12@riseup.net>
-Date: Tue, 02 Jul 2024 13:01:19 +0700
-Subject: [PATCH v3] arm64: dts: qcom: qrb4210-rb2: Correct max current draw
- for VBUS
+	s=arc-20240116; t=1719901469; c=relaxed/simple;
+	bh=InAhoUN8tcseJPMHm9g66x74qz1q4L1w7tnrp4q2JsE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j7WypD7XdDjUJ/0DlAjDX84h1E5XE1xMnerBNJNmBrVk339wbl2TQhcK2poJErQnIKUG5oQeIOUbtumYt531Bxk0Bkztwqihnm9NrhnGSYmvGiO72XrXinIP6YOf3z5CyivroE0MiFdJImAX2qqfn4D6bifNRQT8uHshYW4oLXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=b2N1lwNs; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-52cf4ca8904so6147632e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jul 2024 23:24:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719901465; x=1720506265; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=bDo5IygLtEAB+cPD4fX0+9qX3XWf/HFh9CkZqeTvO3k=;
+        b=b2N1lwNsdAc6F2kYGz5Kme/belkl+xxHosId+dCCZfnbeqzjBc5HNCZUelmLQMT/hS
+         Ni40G36hsDBEQsn14C6iT/HJeEgbDM9YwVzNQpiQQAAEtHTSsXw4xjPc+SnU4QhSWk+q
+         O1N6oWY3pQy9dTzCJxNNhzQccafc9BnvMncJHc8RYVDWRRG+qJS9FuWEqft1AvRSIuJ9
+         2Eqp6iYm3b60mwYZn+rqnGPE3jPP2b9nkZqYNOwJrwgXBJpazOj1PobvOCtpL5h4dgii
+         /ouHcvqwcpwc6WCZk/WOATRb/QhvblBirL75SrLr1uylXOj5tG1toDo/VkyGmofKnaGn
+         ER6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719901465; x=1720506265;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bDo5IygLtEAB+cPD4fX0+9qX3XWf/HFh9CkZqeTvO3k=;
+        b=Mi3K0e6JadyAn5guz70JrknVo7/jaD+tl7ID0d21UCp8ians/YhNkHaGAwBe2H7KjM
+         Yuv1FhZ5UiV9wruzlyckoRpg+XzhlQgx2gupKn56MhLWWnHbfaEfrJ/fTNESqy6cLcxF
+         4VAGOuzACS5LT5S44Q6ylBpSEafkv2uN1AL0d4MQazBdTHIhyvCNDVaf9Jpv64pBKDjQ
+         EWBXEUkGcv4IEmjC6n80eDUMRXA60/RcnTLXNxrjEfF+SymEyaC/t5E2vWji8Krw7qwi
+         BOpnkmmt3JvFFtqooMzgnMDGJbqGbS/oBsljFtqcso8ygJ47UK3i+bJmxvRbNdGIamfj
+         oaNA==
+X-Forwarded-Encrypted: i=1; AJvYcCVf/sjRh2tbv1gPPLLkA2NlxfZ8shCDNZ8QpUrDMi0/mM4X8dmZ+/8lGQ54wQNBqIAA0URSuxRCgNcjdbqpfGtKLi3wKtEvWlrehhq1Lg==
+X-Gm-Message-State: AOJu0YyrsLDXnORaaqRrXsUC3h5HvLNAVg8fufW55GlB+elbrkg3Mray
+	sDrbyG8E98jry+QgOKZzFlGo0GoVR5LWOUegFRf1V3HY9JGeiLva5AUBizxJCVw=
+X-Google-Smtp-Source: AGHT+IF75P/sOWPMtLxALLKSe++8Cf/2bVEGI3L9gmOs0TCyDPgWQ2uHOuklB9AeLyumfAx+WoRHcQ==
+X-Received: by 2002:a05:6512:10d0:b0:52c:ab83:d783 with SMTP id 2adb3069b0e04-52e8264c68emr4508470e87.6.1719901465067;
+        Mon, 01 Jul 2024 23:24:25 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52e7ab0b840sm1665664e87.11.2024.07.01.23.24.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 01 Jul 2024 23:24:24 -0700 (PDT)
+Date: Tue, 2 Jul 2024 09:24:22 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Dang Huynh <danct12@riseup.net>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] arm64: dts: qcom: qrb4210-rb2: Correct max current
+ draw for VBUS
+Message-ID: <ql24nvbdqfzhtogocmsh2xm2wkjfddfcvoxnzbzvjgcucy7gyz@hqgvr4oul7pb>
+References: <20240702-qrd4210rb2-vbus-volt-v3-1-fbd24661eec4@riseup.net>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240702-qrd4210rb2-vbus-volt-v3-1-fbd24661eec4@riseup.net>
-X-B4-Tracking: v=1; b=H4sIAK6Xg2YC/43NQQ6CMBCF4auQrh3TDoU2rryHcUFLkUkM6BQaD
- eHuFnaudPm/ZL5ZRAxMIYpTsQgOiSKNQ47yUAjfN8MtALW5BUrU0kgFT241KskOIbk5QhrvE1h
- EU2tvfOcbkU8fHDp67ezlmrunOI383r8kta0/wKRAQeVl3dmysrqsz0wxzI/jECaxiQn/UTArz
- jjfYmOst+5LWdf1A1oRinX/AAAA
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Dang Huynh <danct12@riseup.net>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240702-qrd4210rb2-vbus-volt-v3-1-fbd24661eec4@riseup.net>
 
-According to downstream sources, maximum current for PMI632 VBUS
-is 1A.
+On Tue, Jul 02, 2024 at 01:01:19PM GMT, Dang Huynh wrote:
+> According to downstream sources, maximum current for PMI632 VBUS
+> is 1A.
+> 
+> Taken from msm-4.19 (631561973a034e46ccacd0e53ef65d13a40d87a4)
+> Line 685-687 in drivers/power/supply/qcom/qpnp-smb5.c
+> 
+> Fixes: a06a2f12f9e2 ("arm64: dts: qcom: qrb4210-rb2: enable USB-C port handling")
+> Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
+> Signed-off-by: Dang Huynh <danct12@riseup.net>
+> ---
+> In previous patch series, there's a suggestion to correct maximum
+> current for PMI632 VBUS.
+> 
+> Unfortunately it didn't make it and probably forgotten.
+> 
+> Link to the suggestion mentioned:
+> https://lore.kernel.org/linux-arm-msm/CYMDEAJZ0TJK.K31XZB3E9QOG@fairphone.com/
+> 
+> Signed-off-by: Dang Huynh <danct12@riseup.net>
+> ----
+> Changes in v3:
+> - Fixed wrong usage of electrical units.
+> - Link to v2: https://lore.kernel.org/r/20240701-qrd4210rb2-vbus-volt-v2-1-b7bcd2a78c8b@riseup.net
+> 
+> Changes in v2:
+> - Fixed typo (voltage -> ampere)
+> - Link to v1: https://lore.kernel.org/r/20240701-qrd4210rb2-vbus-volt-v1-1-5c06f8358436@riseup.net
+> ---
+>  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
-Taken from msm-4.19 (631561973a034e46ccacd0e53ef65d13a40d87a4)
-Line 685-687 in drivers/power/supply/qcom/qpnp-smb5.c
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Fixes: a06a2f12f9e2 ("arm64: dts: qcom: qrb4210-rb2: enable USB-C port handling")
-Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Dang Huynh <danct12@riseup.net>
----
-In previous patch series, there's a suggestion to correct maximum
-current for PMI632 VBUS.
-
-Unfortunately it didn't make it and probably forgotten.
-
-Link to the suggestion mentioned:
-https://lore.kernel.org/linux-arm-msm/CYMDEAJZ0TJK.K31XZB3E9QOG@fairphone.com/
-
-Signed-off-by: Dang Huynh <danct12@riseup.net>
-----
-Changes in v3:
-- Fixed wrong usage of electrical units.
-- Link to v2: https://lore.kernel.org/r/20240701-qrd4210rb2-vbus-volt-v2-1-b7bcd2a78c8b@riseup.net
-
-Changes in v2:
-- Fixed typo (voltage -> ampere)
-- Link to v1: https://lore.kernel.org/r/20240701-qrd4210rb2-vbus-volt-v1-1-5c06f8358436@riseup.net
----
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-index 1c7de7f2db79..1888d99d398b 100644
---- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -305,7 +305,7 @@ pmi632_ss_in: endpoint {
- 
- &pmi632_vbus {
- 	regulator-min-microamp = <500000>;
--	regulator-max-microamp = <3000000>;
-+	regulator-max-microamp = <1000000>;
- 	status = "okay";
- };
- 
-
----
-base-commit: 642a16ca7994a50d7de85715996a8ce171a5bdfb
-change-id: 20240701-qrd4210rb2-vbus-volt-822764c7cfca
-
-Best regards,
 -- 
-Dang Huynh <danct12@riseup.net>
-
+With best wishes
+Dmitry
 
