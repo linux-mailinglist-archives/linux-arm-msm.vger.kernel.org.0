@@ -1,223 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-25054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C0D2925707
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:41:25 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B87E925715
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:43:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 497BA28195E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 09:41:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0A471B2114E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 09:43:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C734B13D630;
-	Wed,  3 Jul 2024 09:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C65B713D636;
+	Wed,  3 Jul 2024 09:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="j3Ehs6Ap"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="M/itL3Cl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE0013D60F;
-	Wed,  3 Jul 2024 09:41:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18BA5747F
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 09:42:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719999683; cv=none; b=URM/u2nBBT9LTMbgCyDA6GNHplj9Pk03cMHPDDfztInf7ypWG65sbrfTquGoNiYIrNXAe8BHcUcUqfEWG5WsbGc9mIrSVGGn1GSXEI/ilIk2trUJBCYO/JxNrXLDNTAATGeiT+v2XJ5d8upiiQz6tzpcBc7eLsJsYiX07o+vQUs=
+	t=1719999777; cv=none; b=p6+7sKICA4/IGC5LPwZBhyKqmUReH882EKJtCSLQDFG/hhhOHrzm3jfQ0v5kmVM7VajXjN3/BGiPim19mcRTouw50Pb9+4Pw9du9WUHhH2PZaR7njQlyuGLola926Df+5rf8JBUSqDTtXC8sdYYi12dq5damUjIwENLgMkJ0/5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719999683; c=relaxed/simple;
-	bh=D5bmYFbTnQTtjYsNZyh9ZSR8LSHiNPbLvAJD8cZzbYk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=YAjIpYDqEmqlx6uWJD3zwUq1R2oZxb2DifGLmW/5ZKHxmrrMlezMP1RUre+cu0xnkeWo+H11YqEx5g79+Btq9vLZC4kuBZj5H5cpT3AkSKT7x7w8Rv29nAnxnpqTS2+7lO/h9NQ1aQZySaDcQr0i+PCMrB+8FRW0D2eHobVgwIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=j3Ehs6Ap; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 462NWMm4005551;
-	Wed, 3 Jul 2024 09:40:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	TMN22tJYs4aAZjuMNYZk5hWvC0MHLAbXmOFNPbB+8cE=; b=j3Ehs6ApzFhR+TWK
-	TyI+iTHF2SDxZXMzIkZP4hhe9cIOpc3TijwW24NKNOPUlhO9wXa/0PcKMf3uPEuW
-	7wRdbghFPiOnKi5WHpXAFijUmJpGnpUGB0ZiO0HAKwiZUOay6zguV3zO2cdZmYCm
-	+sLdGJi/UnwTU/IE96aO3Ie7ugQRsGW31saJv1SE1nRM7zbfztI+mc4M7phh4J3n
-	yM4DvlO7sM2jLqKLkRhetVWPhy/P1zV93AYxkBT/BK6HZ715PhzDW1153dj6Fx9s
-	XqQkvAyKoJgyiIlAs1kTF3sdmZS3oyAUsrGyeh53Sb5k8ehXyDz5ojVWcnakE+ih
-	WhFhiA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4027yfbcv6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 03 Jul 2024 09:40:07 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4639e6gL020230
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 3 Jul 2024 09:40:06 GMT
-Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 3 Jul 2024
- 02:39:43 -0700
-Message-ID: <64934d64-3922-4cc1-a01d-6dcd773bc466@quicinc.com>
-Date: Wed, 3 Jul 2024 17:39:41 +0800
+	s=arc-20240116; t=1719999777; c=relaxed/simple;
+	bh=GQN4rXHx2UG2oivNmrtAmX8dq+E7nruQfMN32eMd1eM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=m22UrOHGH3ffjh+AhVqg/wwUA2Pqf4bosIHN+ouXnAaS3iUTvnldSm/51eLGLzKqISoik3hKOkj0QRYuQ3Hj6ChUpy1sXWly5hdGoVLHTuyFS2D6Dl4LN8MWRT7Qi57Ni4wVuqZxehNNManY5WagrRZVJpz9Z07XH5JrRKzB458=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=M/itL3Cl; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2ec595d0acbso64404151fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 02:42:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1719999774; x=1720604574; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WcmTclZ+42BPmUE7KTzQ7bpGml0JNnglidN9Azk6SEk=;
+        b=M/itL3CllqLwJpZtavmrF91r02l456mxpNFzbkg6mmtNBFfSFK1VPLagZF0rROj65b
+         CGBb414OQqYFzK0NgDJw9UOH7bg55gFSRpLQCcqjHK+LsXuw1FwgNWy9bh0liDuvIKHl
+         At/3p/Jja9nskqXLknxMmbnziidOlvv8j6ahB+xEjPTPwULxWjyv/9xzr2zRVEWXpaiq
+         MTiH5dRuqw6GhngPpfGdZI34ljRPKIwMOtMfr94mfvtMfQlqejG8DbjeVuBq8iJ6OlBV
+         1tMTj8Q9GZuGdAXfsUdjyRge9WFMJtgXiWU0DK1UeP+UiDTQblEERpiSrjWBFOi0LV2F
+         K2lA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1719999774; x=1720604574;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WcmTclZ+42BPmUE7KTzQ7bpGml0JNnglidN9Azk6SEk=;
+        b=e609hiqefTyS9NHbygT630MH9uhUOG2lb2sEMjtp579R1DyVY3cln1BJu9359IuChD
+         kfGvHnIVk7HN6hznfDXTp1UJzEv5GhM+uhi8FKbJM4P61++KwdaPh6HbY/mwD148yPqA
+         7Wtra7V7bNQkZVH7KPOuOlW8H+MQjfcpwxCnLRuD+SVsXXjfQT5bMv1tPhYf1L3VqqPi
+         7HWGOIjU6a3bDAtBdmA0EIx0UWRA2Vt0/+3FeSwEPexIyYT1n9+0tzgCi5NYzgPzWmML
+         i+4TVGb2TUcpvPw/yjlJtv5BpcGSv7OfADqcux3oFvF9Ex2NwQwu+pstsIAqbsVXp/Zc
+         0cDQ==
+X-Gm-Message-State: AOJu0Yw1cLG0hjAuNuhAkgMsRBZQnRqR5JUcZXNl4mWO5/mQt/h3uoi5
+	mhi3rElfifIlM79vAH4lDKe+9rNZ7rLSnGE1hMyvzGP8SznY5/OtMhXYKBgYoEG+EnThEaz0Hbf
+	M5Sw=
+X-Google-Smtp-Source: AGHT+IFnEkb03dKoaJAxJdhF12F8Nyu65FGLFVgQujGEPXwewpoF1sy+/o5+EWS5Ghm6mQEo6JZgfw==
+X-Received: by 2002:a05:651c:a0b:b0:2ec:3e02:9737 with SMTP id 38308e7fff4ca-2ee5e3809d7mr100384011fa.2.1719999773268;
+        Wed, 03 Jul 2024 02:42:53 -0700 (PDT)
+Received: from [127.0.1.1] ([178.197.219.137])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a1030dfsm15341394f8f.100.2024.07.03.02.42.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Jul 2024 02:42:52 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 0/5] soc: qcom: simplify with cleanup.h
+Date: Wed, 03 Jul 2024 11:42:35 +0200
+Message-Id: <20240703-thermal-const-v1-0-6e59e139c65d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/47] arm64: qcom: dts: add QCS9100 support
-To: Krzysztof Kozlowski <krzk@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <djakov@kernel.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <jassisinghbrar@gmail.com>,
-        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
-        <manivannan.sadhasivam@linaro.org>, <will@kernel.org>,
-        <joro@8bytes.org>, <conor@kernel.org>, <tglx@linutronix.de>,
-        <amitk@kernel.org>, <thara.gopinath@gmail.com>,
-        <linus.walleij@linaro.org>, <wim@linux-watchdog.org>,
-        <linux@roeck-us.net>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
-        <vkoul@kernel.org>, <edumazet@google.com>, <kuba@kernel.org>,
-        <pabeni@redhat.com>, <mcoquelin.stm32@gmail.com>
-CC: <robimarko@gmail.com>, <bartosz.golaszewski@linaro.org>,
-        <kishon@kernel.org>, <quic_wcheng@quicinc.com>,
-        <alim.akhtar@samsung.com>, <avri.altman@wdc.com>, <bvanassche@acm.org>,
-        <agross@kernel.org>, <gregkh@linuxfoundation.org>,
-        <quic_tdas@quicinc.com>, <robin.murphy@arm.com>,
-        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
-        <lukasz.luba@arm.com>, <quic_rjendra@quicinc.com>,
-        <ulf.hansson@linaro.org>, <quic_sibis@quicinc.com>,
-        <otto.pflueger@abscue.de>, <luca@z3ntu.xyz>,
-        <neil.armstrong@linaro.org>, <abel.vesa@linaro.org>,
-        <bhupesh.sharma@linaro.org>, <alexandre.torgue@foss.st.com>,
-        <peppe.cavallaro@st.com>, <joabreu@synopsys.com>,
-        <netdev@vger.kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <bhelgaas@google.com>, <ahalaney@redhat.com>,
-        <krzysztof.kozlowski@linaro.org>, <u.kleine-koenig@pengutronix.de>,
-        <dmitry.baryshkov@linaro.org>, <quic_cang@quicinc.com>,
-        <danila@jiaxyga.com>, <quic_nitirawa@quicinc.com>,
-        <mantas@8devices.com>, <athierry@redhat.com>,
-        <quic_kbajaj@quicinc.com>, <quic_bjorande@quicinc.com>,
-        <quic_msarkar@quicinc.com>, <quic_devipriy@quicinc.com>,
-        <quic_tsoni@quicinc.com>, <quic_rgottimu@quicinc.com>,
-        <quic_shashim@quicinc.com>, <quic_kaushalk@quicinc.com>,
-        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
-        <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-crypto@vger.kernel.org>,
-        <linux-scsi@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-        <linux-riscv@lists.infradead.org>, <linux-gpio@vger.kernel.org>,
-        <linux-watchdog@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>, <kernel@quicinc.com>
-References: <20240703025850.2172008-1-quic_tengfan@quicinc.com>
- <20240703035735.2182165-1-quic_tengfan@quicinc.com>
- <7417fd8c-e852-45ee-bac9-d92921036e2f@kernel.org>
-From: Tengfei Fan <quic_tengfan@quicinc.com>
-In-Reply-To: <7417fd8c-e852-45ee-bac9-d92921036e2f@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: kiiVH7Fe3W0fNlX1fdY9JogHsKzjFhan
-X-Proofpoint-ORIG-GUID: kiiVH7Fe3W0fNlX1fdY9JogHsKzjFhan
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-03_06,2024-07-02_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
- mlxscore=0 lowpriorityscore=0 mlxlogscore=999 phishscore=0 impostorscore=0
- clxscore=1015 malwarescore=0 suspectscore=0 adultscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407030071
+X-B4-Tracking: v=1; b=H4sIAAsdhWYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDcwNj3ZKM1KLcxBzd5Py84hJd87Qki1RDc6NkQwtjJaCegqLUtMwKsHn
+ RsbW1ANLT1MJfAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=944;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=GQN4rXHx2UG2oivNmrtAmX8dq+E7nruQfMN32eMd1eM=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmhR0UZWMBNeWKODlZmQc61lqHBah8QITW6z6i2
+ o6bK/gmFxaJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZoUdFAAKCRDBN2bmhouD
+ 1/6xD/94mznz3vWsK0/dAbCAvZ1bIfoyk+3jf7gidJ59nflndcThT2WMijVuCsyP+7v/8LAV1HT
+ w4vcuX/TQOkOWm2GIdNiXTw7f8csu18Gx6TB1iein2vqodCq3O2jO8YA2CvcLVLi2CquEx/5q5y
+ xp9F/i9XOXwZJDdHaXJTI6K0EBxle6zZ+jxdpNZi4UKegymE2ojPCd7f0O10GKIL1XTjQn+Opk5
+ mCbxxxi1tukUTcE6+mt/fLT/Tfww/MVb8bpFWvl9ifNXjeb6vsRx9pKscPkoBH/sY31TPbmjYVO
+ XKgK7suDh/LJMNtUzfpAVXie1hy1lwQKnEoYJs3GIf/2mGCWgBhUcEBeJGwCIafrLYRzQCuTP6+
+ Kov9HViUfmaxW3/J4L/e76thJwNqTO9NzhUmC2i4NBiyYWwW4+sm2ajAcENtAKQ9jBkjBmVQs9u
+ ONS0Pk/V96IQnA47pORfvGEJjDww+AZOI7gkNaB9ROHs6mYA8YXk1Yddw7pY+B0jBTGbqFHUAQ5
+ ILBu3AVX9Ywl0VO8iuHo647bmTefn+y+rpNVxwYGE1J7UZQqXJhtejg4wgkHV4lg4fJp4FQymqa
+ VRWEI2ALINiCXG6jjK3BQpmGSpg/hCZMccD8YkhLAAtoy7qrHgFE5Eg5Og10+d2uwS5KuSwuG+E
+ FmkSYx98BwNGZMQ==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
+Allocate the memory with scoped/cleanup.h to reduce error handling (less
+error paths) and make the code a bit simpler.
 
+Best regards,
+Krzysztof
 
-On 7/3/2024 12:45 PM, Krzysztof Kozlowski wrote:
-> On 03/07/2024 05:56, Tengfei Fan wrote:
->> Introduce support for the QCS9100 SoC device tree (DTSI) and the
->> QCS9100 RIDE board DTS. The QCS9100 is a variant of the SA8775p.
->> While the QCS9100 platform is still in the early design stage, the
->> QCS9100 RIDE board is identical to the SA8775p RIDE board, except it
->> mounts the QCS9100 SoC instead of the SA8775p SoC.
-> 
-> The same huge patchset, to huge number of recipients was sent twice.
-> First, sorry, this is way too big. Second, it has way too many
-> recipients, but this is partially a result of first point. Only
-> partially because you put here dozen of totally unrelated emails. Sorry,
-> that does not make even sense. See form letter at the end how this
-> works. Third, sending it to everyone twice is a way to annoy them off
-> twice... Fourth,
-> 
-> Please split your work and do not cc dozen of unrelated folks.
+---
+Krzysztof Kozlowski (5):
+      soc: qcom: llcc: simplify with cleanup.h
+      soc: qcom: mdt_loader: simplify with cleanup.h
+      soc: qcom: ocmem: simplify with cleanup.h
+      soc: qcom: pdr: simplify with cleanup.h
+      soc: qcom: wcnss: simplify with cleanup.h
 
-I can split this patch series, there are two options for splitting:
-Option A:
-   1. Initial qcs9100.dtsi, qcs9100-pmics.dtsi, qcs9100-ride.dts renamed 
-from sa8775p with existing compatible.
+ drivers/soc/qcom/llcc-qcom.c     |  6 ++----
+ drivers/soc/qcom/mdt_loader.c    |  6 ++----
+ drivers/soc/qcom/ocmem.c         | 10 ++++------
+ drivers/soc/qcom/pdr_interface.c | 38 ++++++++++++++------------------------
+ drivers/soc/qcom/wcnss_ctrl.c    | 11 +++++------
+ 5 files changed, 27 insertions(+), 44 deletions(-)
+---
+base-commit: eec3a8b019937cc4520772df2657a8a105250e04
+change-id: 20240703-thermal-const-7fb8e172c183
 
-   2. Each subsystem have single patch series to each limited driver 
-maintainers.
-
-      - About 15 series need to update related drivers, so each series 
-will have 3 patches (bindings, drivers, the compatible names in 
-subsystem-related parts of dtsi/dts).
-
-      - About 14 series only need to add qcs9100 compatible in 
-bindings., so each series will have 2 patches (bindings, the compatible 
-names in subsystem-related parts of dtsi/dts).
-
-Option B:
-
-   1. Each subsystem have single patch series to each limited driver 
-maintainers. Each patch series only update bindings, drivers, but no 
-compatible names change in dts.
-
-      - About 15 series in total and each series will have 2 patches 
-(bindings, drivers).
-
-      - About 14 series only need to add qcs9100 compatible in bindings, 
-so each series will have 1 patches (bindings).
-
-   2. Squash current qcs9100.dtsi, qcs9100-pmics.dtsi, qcs9100-ride.dts 
-with compatible changed to qcs9100 dt files.
-
-We tend to use Option A.
-
-Welcome to other ideas ideas for splitting the huge numbers of patches 
-as well.
-
-Another, each splited series will also have cover letter contain the 
-whole story like this cover letter.
-
-> 
-> <form letter>
-> Please use scripts/get_maintainers.pl to get a list of necessary people
-> and lists to CC (and consider --no-git-fallback argument). It might
-> happen, that command when run on an older kernel, gives you outdated
-> entries. Therefore please be sure you base your patches on recent Linux
-> kernel.
-> 
-> Tools like b4 or scripts/get_maintainer.pl provide you proper list of
-> people, so fix your workflow. Tools might also fail if you work on some
-> ancient tree (don't, instead use mainline), work on fork of kernel
-> (don't, instead use mainline) or you ignore some maintainers (really
-> don't). Just use b4 and everything should be fine, although remember
-> about `b4 prep --auto-to-cc` if you added new patches to the patchset.
-> </form letter>
-> 
-> Best regards,
-> Krzysztof
-> 
-
-Previously, I've been using scripts/get_maintainers.pl to obtain a list 
-of recipients and manually removing duplicate email addresses(although I 
-noticed you have two different email addresses, so I included both).
-I'll follow your advice and use b4 to submit a new version patch series 
-to upstream, confident that similar issues won't arise again.
-
+Best regards,
 -- 
-Thx and BRs,
-Tengfei Fan
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
