@@ -1,53 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-25153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FE55926034
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 14:24:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56556926032
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 14:24:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 31253283A13
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 12:24:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E34D02827FE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 12:24:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D4F817625B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 008101741D2;
 	Wed,  3 Jul 2024 12:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nSWoPaq6"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fMRs8Ciw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8AC85298;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687CF137760;
 	Wed,  3 Jul 2024 12:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720009449; cv=none; b=G+ipQYFjWu8TM0NLDmCjI1gnLHN1podl2gGQYO9HJ0qp/x6DeNc2L3eS4l2zimnMX24CL/wsFv7nQo1jvb8WnfpjvzUuePBNNbYgHXM8Ru61Q+DtQy2RbuA+0mKsnIp+lqZEPW5O9p62dwidzVSwfXGiibjbWxycnJgKLH1X1to=
+	t=1720009448; cv=none; b=M6pt4NxyNiDdEdZLkXDtxoHrYGcViuDQeIv+Oy/JwggHQ7CuoKfqF85uV748iyuNO8ODOsKI8hgY2cQxNY/ycZd2MXuwt36yznL32uG7Yp6sKT8W+v5wZ4Kwxbx39KOCJkngzQSJGbsw2QibFCRDpNhKaRNq4KvX4ew+4wvGBnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720009449; c=relaxed/simple;
-	bh=1/8i7wVHAZjipRxLeMo6uNdTLOGoWe9clEghtFGvLg8=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=t5kHE/pUdhoK5YxNmI/A5LGxLw/ctfLgFU2vVAnON0fzgUjqPJscekqgxGgcOi6ToNVXwUkHe4gYrez6c5tvvboIjwxJvAIEboj4/bboI3+4NMqBSkHaQkrIJzpaMKxAP1rShjFH1d17gt6UD1mt4vXRk4DlI2Wyau5eQUujQR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nSWoPaq6; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1720009448; c=relaxed/simple;
+	bh=U57Pku3XSdjo1pKiBfbtWJj21FaRAi1kg8KsDq9FJ50=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=HEb+4pEKEzJfIB0FcxD6cHzbfxdBMAZAAc3M5IV0upFSirphINqsssv5JLLDHy6KDo5hOLxxJKNf375uTNuAeH3eSTaqipjNimi3azlBRJTQjFSXbJHjsQsvhIe3NfGlfpBNWOO8gmHcLWHcoilciqAAiqc0g1urb83jM6FSTlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fMRs8Ciw; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4635J12h023274;
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4635JJ0x023441;
 	Wed, 3 Jul 2024 12:23:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=F3XF1sezdc/oiQITX1PAeF
-	9EGD8pO5m8W3s5qu3Kanw=; b=nSWoPaq6tnAjOg+f7Us7lKqPG9K0TC/1NXkGzZ
-	fkugoBNCHTGNLAbDJ7NeFECwF81oequn1CBJJYRjASP4DCknEF7/YRcf0BkGC8JJ
-	R81w2fhtFiD15AwJDg+H6sWbOmDDvuU3T1lk6uETz5ysnEmYnoSS6bhozVi5d6GF
-	gLzETVHsrlylRcdbShBFFM0nBGcKZ83cbphBqkI58D0pmwI/gQQQnx+yYGcJ0H+G
-	6r8NUD/RXWoy/sUOWZ2HNy5MbcW4ixbAyNTVjiD4pHr/Cz5JUSGuMOciFw5JSpXF
-	u8xpbrwZ8Yxsc3L2uGspYER9MGwgALwMzPz4JJPKNBYD53Fg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4050cy90ub-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	dILm4ABbipWX5Aq/71FBCD3MvpTiyptNTMvyjzZKznY=; b=fMRs8CiwmK5hrVmm
+	8xr+lBjaxkB791uDTe2jwih0ItETbY/fjqoo6kS8rAVPzPBzYXIJmLK+FOoaBg8b
+	5lbytMCnxIhL5K7xEObGZrcID5hXZ+/66dnUsDl2W0z308kdJIVF35qcgcn95bOO
+	+w9vCmo6w5RBOEHOPQsc4PB8aAKOe8wJBktXce9kSPx8GLP9bJu4GwBw5vbUEnxn
+	5aG4J98jCTeNMVbOYqcFT1AGDsfAjsDbf+0frmGtnF+WrSGIcnz4PhMKJ7pHe/V4
+	mjKckScuEGN+LZqjAsI0zpntECndrdOXnnUEeQkM0IZh47Rky61O3per/RECP1cE
+	7ngvmA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4050cy90uc-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Wed, 03 Jul 2024 12:23:55 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 463CNsLH014157
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 463CNssl005944
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Wed, 3 Jul 2024 12:23:54 GMT
 Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
@@ -76,10 +78,12 @@ CC: <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
         songchai <quic_songchai@quicinc.com>,
         Jie Gan
 	<quic_jiegan@quicinc.com>
-Subject: [PATCH v4 0/2] coresight: core: Add device name support
-Date: Wed, 3 Jul 2024 05:23:36 -0700
-Message-ID: <20240703122340.26864-1-quic_jinlmao@quicinc.com>
+Subject: [PATCH v4 1/2] dt-bindings: arm: Add device-name in the coresight components
+Date: Wed, 3 Jul 2024 05:23:37 -0700
+Message-ID: <20240703122340.26864-2-quic_jinlmao@quicinc.com>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240703122340.26864-1-quic_jinlmao@quicinc.com>
+References: <20240703122340.26864-1-quic_jinlmao@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,8 +96,8 @@ X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: kghyHclw4VYBb65rxkDt2pjlyOhSlax9
-X-Proofpoint-ORIG-GUID: kghyHclw4VYBb65rxkDt2pjlyOhSlax9
+X-Proofpoint-GUID: aoryo9K74mYuKwzieyp5VrWrOml95JZO
+X-Proofpoint-ORIG-GUID: aoryo9K74mYuKwzieyp5VrWrOml95JZO
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-03_08,2024-07-03_01,2024-05-17_01
@@ -103,72 +107,95 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscor
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
  definitions=main-2407030090
 
-With current design, the name of the non-cpu bounded coresight
-component is the device type with the number. And with 'ls' command
-we can get the register address of the component. But from these
-information, we can't know what the HW or system the component belongs
-to. Add device-name in DT to support it.
+Current name of coresight component's folder consists of prefix of
+the device and the id in the device list. When run 'ls' command,
+we can get the register address of the device. Take CTI for example,
+if we want to set the config for modem CTI, but we can't know which
+CTI is modem CTI from all current information.
 
 cti_sys0 -> ../../../devices/platform/soc@0/138f0000.cti/cti_sys0
 cti_sys1 -> ../../../devices/platform/soc@0/13900000.cti/cti_sys1
-tpdm0 -> ../../../devices/platform/soc@0/10b0d000.tpdm/tpdm0
-tpdm1 -> ../../../devices/platform/soc@0/10c28000.tpdm/tpdm1
-tpdm2 -> ../../../devices/platform/soc@0/10c29000.tpdm/tpdm2
 
-Change since V3:
-1. Change device-name to arm,cs-dev-name.
-2. Add arm,cs-dev-name to only CTI and sources' dt-binding.
+Add device-name in device tree which can provide a better description
+of the coresight device. It can provide the info like the system or
+HW it belongs to.
 
-Change since V2:
-1. Fix the error in coresight core.
-drivers/hwtracing/coresight/coresight-core.c:1775:7: error: assigning to 'char *' from 'const char *' discards qualifiers
+Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+---
+ .../devicetree/bindings/arm/arm,coresight-cti.yaml          | 6 ++++++
+ .../devicetree/bindings/arm/arm,coresight-dummy-source.yaml | 6 ++++++
+ .../devicetree/bindings/arm/arm,coresight-stm.yaml          | 6 ++++++
+ .../devicetree/bindings/arm/qcom,coresight-tpdm.yaml        | 6 ++++++
+ 4 files changed, 24 insertions(+)
 
-2. Fix the warning when run dtbinding check.
-Documentation/devicetree/bindings/arm/arm,coresight-cpu-debug.yaml: device-name: missing type definition
-
-Change since V1:
-1. Change coresight-name to device name.
-2. Add the device-name in coresight dt bindings.
-
-
-Mao Jinlong (2):
-  coresight: core: Add device name support
-  dt-bindings: arm: Add device-name in the coresight components
-
- .../bindings/arm/arm,coresight-catu.yaml      |  6 +++
- .../bindings/arm/arm,coresight-cpu-debug.yaml |  6 +++
- .../bindings/arm/arm,coresight-cti.yaml       |  6 +++
- .../arm/arm,coresight-dummy-sink.yaml         |  6 +++
- .../arm/arm,coresight-dummy-source.yaml       |  6 +++
- .../arm/arm,coresight-dynamic-funnel.yaml     |  6 +++
- .../arm/arm,coresight-dynamic-replicator.yaml |  6 +++
- .../bindings/arm/arm,coresight-etb10.yaml     |  6 +++
- .../bindings/arm/arm,coresight-etm.yaml       |  6 +++
- .../arm/arm,coresight-static-funnel.yaml      |  6 +++
- .../arm/arm,coresight-static-replicator.yaml  |  6 +++
- .../bindings/arm/arm,coresight-stm.yaml       |  6 +++
- .../bindings/arm/arm,coresight-tmc.yaml       |  6 +++
- .../bindings/arm/arm,coresight-tpiu.yaml      |  6 +++
- .../bindings/arm/qcom,coresight-tpda.yaml     |  6 +++
- .../bindings/arm/qcom,coresight-tpdm.yaml     |  6 +++
- drivers/hwtracing/coresight/coresight-core.c  | 37 ++++++++++---------
- .../hwtracing/coresight/coresight-platform.c  | 31 ++++++++++++++++
- include/linux/coresight.h                     |  3 +-
- 19 files changed, 149 insertions(+), 18 deletions(-)
-
-Mao Jinlong (2):
-  dt-bindings: arm: Add device-name in the coresight components
-  coresight: core: Add device name support
-
- .../bindings/arm/arm,coresight-cti.yaml       |  6 +++
- .../arm/arm,coresight-dummy-source.yaml       |  6 +++
- .../bindings/arm/arm,coresight-stm.yaml       |  6 +++
- .../bindings/arm/qcom,coresight-tpdm.yaml     |  6 +++
- drivers/hwtracing/coresight/coresight-core.c  | 37 ++++++++++---------
- .../hwtracing/coresight/coresight-platform.c  | 30 +++++++++++++++
- include/linux/coresight.h                     |  3 +-
- 7 files changed, 76 insertions(+), 18 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+index 2d5545a2b49c..6a73eaa66a42 100644
+--- a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
++++ b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+@@ -98,6 +98,12 @@ properties:
+   power-domains:
+     maxItems: 1
+ 
++  arm,cs-dev-name:
++    $ref: /schemas/types.yaml#/definitions/string
++    description:
++      Define the name which can describe what kind of HW or system the
++      coresight device belongs to.
++
+   arm,cti-ctm-id:
+     $ref: /schemas/types.yaml#/definitions/uint32
+     description:
+diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
+index 6745b4cc8f1c..578c5e3227a6 100644
+--- a/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
++++ b/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
+@@ -38,6 +38,12 @@ properties:
+     enum:
+       - arm,coresight-dummy-source
+ 
++  arm,cs-dev-name:
++    $ref: /schemas/types.yaml#/definitions/string
++    description:
++      Define the name which can describe what kind of HW or system the
++      coresight device belongs to.
++
+   out-ports:
+     $ref: /schemas/graph.yaml#/properties/ports
+ 
+diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-stm.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-stm.yaml
+index 378380c3f5aa..3261d4f4adbb 100644
+--- a/Documentation/devicetree/bindings/arm/arm,coresight-stm.yaml
++++ b/Documentation/devicetree/bindings/arm/arm,coresight-stm.yaml
+@@ -51,6 +51,12 @@ properties:
+       - const: stm-base
+       - const: stm-stimulus-base
+ 
++  arm,cs-dev-name:
++    $ref: /schemas/types.yaml#/definitions/string
++    description:
++      Define the name which can describe what kind of HW or system the
++      coresight device belongs to.
++
+   clocks:
+     minItems: 1
+     maxItems: 2
+diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
+index 8eec07d9d454..12bb6403e934 100644
+--- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
+@@ -44,6 +44,12 @@ properties:
+     minItems: 1
+     maxItems: 2
+ 
++  arm,cs-dev-name:
++    $ref: /schemas/types.yaml#/definitions/string
++    description:
++      Define the name which can describe what kind of HW or system the
++      coresight device belongs to.
++
+   qcom,dsb-element-bits:
+     description:
+       Specifies the DSB(Discrete Single Bit) element size supported by
 -- 
 2.41.0
 
