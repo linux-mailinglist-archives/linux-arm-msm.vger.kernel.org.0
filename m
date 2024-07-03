@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-25071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0428F925765
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:52:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91D6E925769
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:52:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A4C2D1F26A36
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 09:52:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4DACE28CADD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 09:52:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB65F1741CE;
-	Wed,  3 Jul 2024 09:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43FFA1741FC;
+	Wed,  3 Jul 2024 09:50:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZW9lM1tF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JwYkkUlV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA4E172BCE;
-	Wed,  3 Jul 2024 09:50:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7651741C2;
+	Wed,  3 Jul 2024 09:50:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720000241; cv=none; b=BzdP44cy/K8BP/kWju4EagqR77CCRrjUjdZmkYJM4/EGuL3tVZUjMLpMDbzS+HGJcL4ZHCfSwT8Vxt9xZhuJVyCPrKIIhGEbcCj/k+Q6kQ7Q+QnE6TZ+/nGTTl4kdeOPpbmuKARCvl34TPifQGuuKhLEhvel7sLC/VqqLAmlmFc=
+	t=1720000243; cv=none; b=PGeJUZnLtu1mujZJz/vtGoyyEgqpNwzhfN5j8EaAgsiRwAUNYCWXM+LdJJer3ZuwQHF6fXX3ecAmXct3VtfiaJOVh5EIuTiIh2TfrjJJRUSdhq4UZKDknd+KlMSc3pKeMQtlrLUzCoROJ2A1kFaou5g59tLpP4fYf0WuIgiFjx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720000241; c=relaxed/simple;
-	bh=r9UG0iaRfl1edz0iDrKl1TCA7udEuIQIOzcFOl/X/K4=;
+	s=arc-20240116; t=1720000243; c=relaxed/simple;
+	bh=4FCNr5GOWcEA6y5NqdpifkLm70epZYiiKRWR1KypcjM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aM8mkW+tNS0/d7bWbK8refrmXnfELKJqIVKzApqEXKiHdhMaoEviyi0H0iZ6Lq1k9Blg3uhqd7pXUDkIsaqaLhny1/TIPuv8kyBxEhZH+gA46yJCf0X66h0SUQEHeWfa8p5sBhAgecXPXJfjf/HriiPeRg5DT6cxmkEjG2Dk8VI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZW9lM1tF; arc=none smtp.client-ip=209.85.208.48
+	 In-Reply-To:To:Cc; b=XZixHBzw2gTRgGdm6rwNWxQ2zuZWc4em9LeAxbPoktjBEyz8PcmoEWEe5w6TqSqbktroMM41uuA9TzUO0eDdTBZmlV86Hni/0ZB7ZGfw4+0DvlWAIGtpIAQN/9pdZDat+dc8fMy+LTN3BmqmGDsT0rSRmVz0GFuElKr2waA3eRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JwYkkUlV; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-57ccd1111aeso3563741a12.0;
-        Wed, 03 Jul 2024 02:50:39 -0700 (PDT)
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-57d046f4afdso1495307a12.1;
+        Wed, 03 Jul 2024 02:50:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720000238; x=1720605038; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1720000240; x=1720605040; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=wLgsGqmc7BPqHMYWncG3lDrLlsc7ZfRJcAq4ykKg8iQ=;
-        b=ZW9lM1tFTgzOV3EICwEov/SvbvgcwYBIyBEyb+8XNUw2beOQ4x8BjniOn2/8c7w0ka
-         jXAk9yzCSmBmohkIlhzBy0Q9hSbPKw0zT3++x0fjImnrbYj30cbQfBBrtun8luZvViAk
-         IxRR1QykXozn89T2pFVDCKn70SzNEyvCb1alcANQSpP7GIVKKsH6CPblo0ZTrj52vgsC
-         kEtaCGUhlBGHhTR1n/A+ukqR6oyqpR+ibY8CWJriJk+89kNPmdakTr8ngZz+7BTtcWgn
-         QcZOmNJkItfE7TCLopl86WsfJJ7vBLO6c694Mv0o6DQ2KYDGk35b54vHid8v2dOahQUt
-         beIQ==
+        bh=iiCqBhqUCgc2qlo69kMyfb9Kw0XmXS+HbWPYR88AKtM=;
+        b=JwYkkUlVIbIPHjTKtZaKrfdmCLSqLIhyuyx38W+H91zZY1BtcXVylFiTSGDI5Etsua
+         lPo82F83b+hMdY3AFj1T/Mkyww4P9cwp+mXZHjFmXX3HL/YoSoeWF1hZxLeX73p3GVkz
+         GXayrJZFGJspaL0Zyn34v8vWAEZjDLx2hE8oqi5KsbALYTWzzb5xNgf2yAqWET4DWANg
+         TV1Pjihd0wpZLvjNwcpNhkGrmF87HEqO09vIIbYbtE32ApVxyveJsJSmZ11mI1rJpW1Q
+         MerYFXuDxCrvzaU4wHdKfi+UL9F/je3cTUgXtJqGsj4O/xP7vBhqmzNdmDtE21rPsUjR
+         gfxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720000238; x=1720605038;
+        d=1e100.net; s=20230601; t=1720000240; x=1720605040;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wLgsGqmc7BPqHMYWncG3lDrLlsc7ZfRJcAq4ykKg8iQ=;
-        b=pQJZbrC/hWs/YR8akkCX89/pPKfLPtmirWj7MtJx4p6jKVmA5Oxszevo6pRK9Emo7/
-         XhCtIQeS/+nidZdsL/e8ouq+cEPoUYThncS3OOVqI/7rD101ARAkH3xm/Zrnmoogc46+
-         ZkwBgV154ZVThMQLquKrn3piQDsH+l1gPaLRcbWPXJl++IZ1YzR5YhmE+eCFX7TS+Wut
-         eOJAHOgZmp7KL2Ddwg8fnLZlTuwgQCIlIL0t2wdahrZN+Kr5H4L98oj2bPy5c/2toKvf
-         xLT+BB2ALwRMa8E6F8ZQod5GZielArjj5SdOFXQF9VrB0tU2P72ei7h5hTXuuJPBqIps
-         K6HA==
-X-Forwarded-Encrypted: i=1; AJvYcCU9LksQImPAU1fDEslGg9zD2qQwzfmoPjNHD8CoSieZIpxUURy7URF6JxCi/fgo8rN7gJ4l3q1VGr9E1n8CZqgMcrm/sZgCv9K+xL2ooVjCAXdipFbI2apTlmkd1dR91252qUw5tHsbBhbh5syucmrDRHEy+kuh3PtieKilLWsHR3keKfo7Yw==
-X-Gm-Message-State: AOJu0YzJtCWXq9YSZJxYTt+UJNPylh0kPoD7/quHoZ32Y+/wNJxcsIjp
-	d8T1fs0fZ6D6PuO36DIhrLJpiE2p+6EOhbVYpLIadrE2zNRB/Xcm
-X-Google-Smtp-Source: AGHT+IHDBJT3Q4Laj/q87YJoetkDqI5ofUOXbXiuW/rDGosGYXbLBVOAupqJHnTVnz6rBOrgARQkAQ==
-X-Received: by 2002:a05:6402:27ce:b0:572:4fc3:3a28 with SMTP id 4fb4d7f45d1cf-5879f982ffamr8309648a12.23.1720000238458;
-        Wed, 03 Jul 2024 02:50:38 -0700 (PDT)
+        bh=iiCqBhqUCgc2qlo69kMyfb9Kw0XmXS+HbWPYR88AKtM=;
+        b=tSlPFsnUFzX0Tc5e9aIpRdOfetkxH5qJrSglZq/4/lFUNcOCkGEHMoYm1hAm2eXlu3
+         oyX7/16KQ9JlU2H6Qb3h2a0cfhEBjGpqD829q7DXXSVBbpbSFMmiDtBrUqVFEYEM5tq+
+         l7fBWgR+bbucuZQky2J9DQrUIpAUOHNgeEqVdKQigH5va7JqAvzdWGmxvZOwvbYApd5F
+         Xc+VSSrRvtLAW1AakxhTyTbwetWW2YLzctvRoDYJONjwgG+XJsQN6Z/5mIrcnyJAqe+G
+         u/MNpj+SPwn4K8VLrO4JPrJA95QXTW2tsoOKq1AvM3VvGaoHShej+hSbkoortcFVpXPt
+         aAnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUu6BL0u1HvbiHcsubW9oaHiTPgDEbI11XdHyqMD/4OvKeWHCdDvw0jpXwatZyDkopTMPfe1vgM09RZ/73Z1HdpolAckj9fSiPZOnfFrbRF7O1RldsxBDQj9eD1cbEuyCzvcFXCl1lAx+Xa2Wxno0CjAr1hyjZ3BeBRzljITAtYIPwDOjdx8w==
+X-Gm-Message-State: AOJu0Ywfudp0FNSIjFsCBp+QcoAiS75E53Hh6fXVLbyptBObagHkIUd8
+	9BpRmOajfBJmor/NMPDKx+dhQUA5Ayo7SiWnjAMjpH8FpLhipmY7
+X-Google-Smtp-Source: AGHT+IH9+soogFDEvM3qfzATv+xM46StvZo3k4+MIXApLMLfrZb95ASnqwtlsqhaymD0ber1BdzxkQ==
+X-Received: by 2002:a05:6402:1d53:b0:57c:dd3a:f399 with SMTP id 4fb4d7f45d1cf-5879f3ac31cmr10795277a12.12.1720000239972;
+        Wed, 03 Jul 2024 02:50:39 -0700 (PDT)
 Received: from [127.0.1.1] (91-118-163-37.static.upcbusiness.at. [91.118.163.37])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-58b4a97b1f3sm2082130a12.18.2024.07.03.02.50.37
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-58b4a97b1f3sm2082130a12.18.2024.07.03.02.50.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jul 2024 02:50:37 -0700 (PDT)
+        Wed, 03 Jul 2024 02:50:39 -0700 (PDT)
 From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Date: Wed, 03 Jul 2024 11:50:21 +0200
-Subject: [PATCH 08/10] clk: qcom: lpasscc-sc8280xp: Constify struct
- regmap_config
+Date: Wed, 03 Jul 2024 11:50:22 +0200
+Subject: [PATCH 09/10] clk: sunxi-ng r40: Constify struct regmap_config
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240703-clk-const-regmap-v1-8-7d15a0671d6f@gmail.com>
+Message-Id: <20240703-clk-const-regmap-v1-9-7d15a0671d6f@gmail.com>
 References: <20240703-clk-const-regmap-v1-0-7d15a0671d6f@gmail.com>
 In-Reply-To: <20240703-clk-const-regmap-v1-0-7d15a0671d6f@gmail.com>
 To: Neil Armstrong <neil.armstrong@linaro.org>, 
@@ -95,45 +94,35 @@ Cc: linux-amlogic@lists.infradead.org, linux-clk@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-sunxi@lists.linux.dev, 
  Javier Carrasco <javier.carrasco.cruz@gmail.com>
 X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1720000225; l=1251;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1720000225; l=823;
  i=javier.carrasco.cruz@gmail.com; s=20240312; h=from:subject:message-id;
- bh=r9UG0iaRfl1edz0iDrKl1TCA7udEuIQIOzcFOl/X/K4=;
- b=B7jdNvHm/5Mt3ktcfDeM9c8KninOBlgFk8K0PVOq+LB2WsKsc0vbO7U/7APUKe4yiJSNoyh1i
- HlwYoMOYWxNBOUay+b6kvtC6NNAQ4xpzKMHyksGClZZg3Nd+T/kDVWb
+ bh=4FCNr5GOWcEA6y5NqdpifkLm70epZYiiKRWR1KypcjM=;
+ b=hxckhw6snFQZeQGymAQKqS0eL3J2chT1g/zqB+Nq3f/23Ef5U+/1Bs6WOELhWWFbyyQW0D6hS
+ pI0dG8mxc8nCvqABfGl2sjQpU8VqFqsdaygU+yFnBzBcOvEHmee/pmx
 X-Developer-Key: i=javier.carrasco.cruz@gmail.com; a=ed25519;
  pk=lzSIvIzMz0JhJrzLXI0HAdPwsNPSSmEn6RbS+PTS9aQ=
 
-`lpass_audiocc_sc8280xp_regmap_config` and `lpasscc_sc8280x_regmap_config`
-are not modified and can be declared as const to move their data to a
-read-only section.
+`sun8i_r40_ccu_regmap_config` is not modified and can be declared as
+const to move its data to a read-only section.
 
 Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 ---
- drivers/clk/qcom/lpasscc-sc8280xp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/sunxi-ng/ccu-sun8i-r40.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/lpasscc-sc8280xp.c b/drivers/clk/qcom/lpasscc-sc8280xp.c
-index 3693e47d548e..9fd9498d7dc8 100644
---- a/drivers/clk/qcom/lpasscc-sc8280xp.c
-+++ b/drivers/clk/qcom/lpasscc-sc8280xp.c
-@@ -23,7 +23,7 @@ static const struct qcom_reset_map lpass_audiocc_sc8280xp_resets[] = {
- 	[LPASS_AUDIO_SWR_WSA2_CGCR] =  { 0xd8, 1 },
- };
+diff --git a/drivers/clk/sunxi-ng/ccu-sun8i-r40.c b/drivers/clk/sunxi-ng/ccu-sun8i-r40.c
+index 984ad3f76b18..2f51ceab8016 100644
+--- a/drivers/clk/sunxi-ng/ccu-sun8i-r40.c
++++ b/drivers/clk/sunxi-ng/ccu-sun8i-r40.c
+@@ -1292,7 +1292,7 @@ static bool sun8i_r40_ccu_regmap_accessible_reg(struct device *dev,
+ 	return false;
+ }
  
--static struct regmap_config lpass_audiocc_sc8280xp_regmap_config = {
-+static const struct regmap_config lpass_audiocc_sc8280xp_regmap_config = {
- 	.reg_bits = 32,
- 	.reg_stride = 4,
- 	.val_bits = 32,
-@@ -41,7 +41,7 @@ static const struct qcom_reset_map lpasscc_sc8280xp_resets[] = {
- 	[LPASS_AUDIO_SWR_TX_CGCR] = { 0xc010, 1 },
- };
- 
--static struct regmap_config lpasscc_sc8280xp_regmap_config = {
-+static const struct regmap_config lpasscc_sc8280xp_regmap_config = {
- 	.reg_bits = 32,
- 	.reg_stride = 4,
- 	.val_bits = 32,
+-static struct regmap_config sun8i_r40_ccu_regmap_config = {
++static const struct regmap_config sun8i_r40_ccu_regmap_config = {
+ 	.reg_bits	= 32,
+ 	.val_bits	= 32,
+ 	.reg_stride	= 4,
 
 -- 
 2.40.1
