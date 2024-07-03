@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-25159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E73F99260BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 14:44:07 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1BFC9260CF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 14:48:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 175FB1C22C3F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 12:44:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 39D51B220CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 12:48:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD33D177992;
-	Wed,  3 Jul 2024 12:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EDE31741D2;
+	Wed,  3 Jul 2024 12:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Qv67i7uS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qkbF7qhQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0375813DDA6
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 12:43:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A8817334F
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 12:48:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720010640; cv=none; b=aPJwlM/pd5gySlsKdBK766uaV9dSBHWOlp2158fMIITyiK0iYqVALcfRfaNC+gdeAV32QqACs95IIR7JuiiHDgXpUaIVpFouV0tKw8xXtpctvtC0Tc4ojPBmi37NFsw6A1wd1UH4r60lTT/caE1hsHc48Qglg+GJHR6mPy1uMgE=
+	t=1720010915; cv=none; b=WCVfBjb3+k2OwDWSHjEt594whxohYh2DNqrHJVRFZE/EDBxI7yDe2OavE1WpawjByi6Nkh7NKTh2mm07CgRNVz+8zxQ6EWGmqtKfb0GQumIard1QtiOnqvj0x/i7srYTXbTxmDN0WXHeon696LWKeJkW+9jilfSNyxxnKCdrpJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720010640; c=relaxed/simple;
-	bh=VdRfPzAthl7DMawkwBV/SuNa8f44jOlg5OX6ORSz6BI=;
+	s=arc-20240116; t=1720010915; c=relaxed/simple;
+	bh=0lW5f3/U7nB0ic4rh0p1oHz+q5hn8y4tLUJ5Yk1gsio=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=OXkgdoiHH5rOcG4ArNke/ZjpMDyPCBToDNO2Co/JSc+9LZUP9XmVQt0ypQYPyHRM6Z8mbttM9h5a6wlLeKE+Uv1xo9yoCd3cj705Bg0KHp41cIwONKRSReDl/kmsWhWDphgXmb434WqkAPvN1PlSK2PpIHs4SSI9qxWa2wrANfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Qv67i7uS; arc=none smtp.client-ip=209.85.208.175
+	 In-Reply-To:Content-Type; b=ENpVzvBUywkboOPX7mIOtCBRrxQC/vp/4TFfegIqSEuPv4BOoBHY5p6Wqeh8cw4+59zgPDtHzUns6o7GxVbRkjdawLxKBW41m0Jnke9SMr3A/PfI5MWw4i3EwrJa+59PLM+VPKEabBvmOcSFOcU+qzWe/+CntZjAwlyYw5octro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qkbF7qhQ; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2ee7a1ad286so15725491fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 05:43:58 -0700 (PDT)
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2ebed33cb65so59780511fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 05:48:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720010637; x=1720615437; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1720010911; x=1720615711; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=l3HgH1hvKo0FY8JZsGAA6bC1vvxBJE11DO7UMAUzFq0=;
-        b=Qv67i7uSx35gz3ytcVBmquEtpVRgqD+ssSoCvMAc2fK7og0j1H2UcJk8/DMKH6t8Zc
-         ADsOEFpk2QuFZofSQaQFTZ3KCDBlepyPSEVJVqEWJ0haOrdSfJCDE84kQ7niMFPHijPM
-         n3dMiWnNuasXkNwRo4GyMSuiAh6xUSQtLxeoM6nn57Jv0G3nSSXwPrlvmpHHl9m9+kAv
-         gcO2QcwKw3do2JpkhkkDZ8eknqlq5Eg3g0X46BafppBkOBahr5toWfyCDOz2WdrwNQbl
-         rU1PNyscuPBovlxPwQDHeHL8JuNskQ1nfqXaUMqN1C/lyTmMLP1EV1K1GDzlvThyx5ey
-         Ehlw==
+        bh=x11iuqRGe4Tgv5rOzurWgHtPcvZZMPkYb7YxaddpGqE=;
+        b=qkbF7qhQKGr+stZVWplmX2sqy+qUSChugO+xCyXpWijzQprfJmlwNU7iePSR6POgSm
+         vQYPUpGazBPJGneHndSd0q2ulRdC7isiZYOBnia61SzIIy+t0g28WTz8gwLFYIJEVSsI
+         uFXAQJsVxPR//HyqRuF/gr+xu2ZH2bkpWXU1XAmAEBl/ZHSWBYjs5XGvKVDw6fpCTnNm
+         45EPLSloG2SkXwBZZEULHYTa6Li7T1dUjZr19XxAZ9s7DvcMdVIXniHma2sjltU6nGWk
+         JoU1pre7r5E9ba5fOZmIq3fH3Qjg8IjAQ/IYTSnhWaVuw5uXnQwlDsLpDFb84W1qwpMH
+         wVKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720010637; x=1720615437;
+        d=1e100.net; s=20230601; t=1720010911; x=1720615711;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=l3HgH1hvKo0FY8JZsGAA6bC1vvxBJE11DO7UMAUzFq0=;
-        b=wUU2E6CHF0KqriI5BW3Ymzfq12MUEqMeLeFHyltgMxn0KPxzVNSMrZ5K68kBMc8NYi
-         bmCwR4Dke1dg4QU3GBXdhFW+94XrHaywvnDkk3LuLjYQoSjvCdhruVU8LWT165UtXtLI
-         uWKc4Fm2pB8js+hXEN/3mhsXI90ZZOh0whD7sr5TXGewLLe/spvNs2kuGyueAMxiLe48
-         cukdLNsj6Zbdfq0Wl9k7S7IHQ6nMVj18qTZb1MeBzoUJDFZwnklfbrTX++UtdWe4IyLc
-         W/Pl9ZddQBobBSUuSU3vDU60KMmQbxTnPqhy1USv9L3nbw0jRadRc4fyf6v/C+UoeFcM
-         UISg==
-X-Forwarded-Encrypted: i=1; AJvYcCXwZm+5BrMuV52R+3tEe45uyEVUN7Gjdw6qibvj/SpQxKagZDPEohCG5RlZKRB9my7eewYG/ZMlDI/eu3N1hDlFxoDKpntOapasCujeZg==
-X-Gm-Message-State: AOJu0YzA6EWFSGWMa3po8MzLWzAMOdB+qfyF6HVpzwKxu9HOvFaMCX6M
-	9iYHcQ6DJyWI0/U/5oi+Aj+Q8jgaEwQumFdgAtqa68SefqKPOi3Xv3lfU1OqD6E=
-X-Google-Smtp-Source: AGHT+IHap25tUcl2feO5Gid55wz2EuEoXF9uI1mSdT2acRF9XJ3Tb5QEU9rHXqKUwVaFOWBXfgmR9g==
-X-Received: by 2002:a2e:87c9:0:b0:2ec:5811:edd4 with SMTP id 38308e7fff4ca-2ee5e3c35dbmr84168551fa.31.1720010636932;
-        Wed, 03 Jul 2024 05:43:56 -0700 (PDT)
+        bh=x11iuqRGe4Tgv5rOzurWgHtPcvZZMPkYb7YxaddpGqE=;
+        b=nEfOitlAF6opE5AQ0kVVgE9/8hazWh6QzEnIVCs9CS5V9Zx12p3bPHLBzPh/cLM2Oz
+         UQCRVvp48x9uqlioMHlBixJH5pH2FGqHaqp6Im6EMCmgprTGpwXpdOuHtLTsq/thHYeA
+         SZqF2rpQWK30GRKneDXgSXRQt8B7ocMcvN4zUkKod5yslahhjfRcDTa+hILxERFmMX0K
+         1KbJBfjIEVUVolztt3w6jOe2SOM87tdrnNZEX2L+0WejBdV1EZnhuyzyBh3gVxdIpG2X
+         1XJzWpGrBcpqUteVgo1BRS4eLyqi60/cwcDSBq1RhimmS0/siE3t2/q7boQSHjM9RLkI
+         t5Uw==
+X-Forwarded-Encrypted: i=1; AJvYcCUYWz0yYhAKoofjgtNXZWtAKzMCyiMnIzUIkU+iTW/wxw+uw7Xn7wj/7Ca40DsVUdsOzmmncztif6OQPn2XAYmzIi1Sagapk7O7mbacEQ==
+X-Gm-Message-State: AOJu0Yx+Jlk4ZGsANBOmib6SRiFe3eLHBA0zAUvkgPXcbWlnabjbgcx6
+	BXzdlbJTd372oW5iu3OPLge6GqwHm2GPhLp344eJcsg6mt6ZufFiCiNNV18Qn7k=
+X-Google-Smtp-Source: AGHT+IEgpBgzmnLDU0pqMOnMuikxdfaM8cWgSqf7ihXy6Ww9djEMRDj3Spb9YqLBoyszuYbuJHQxPg==
+X-Received: by 2002:a2e:a889:0:b0:2e9:8a0a:ea05 with SMTP id 38308e7fff4ca-2ee5e3ad756mr89968581fa.17.1720010911158;
+        Wed, 03 Jul 2024 05:48:31 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:ef03:73b5:7503:ee71? ([2a01:e0a:982:cbb0:ef03:73b5:7503:ee71])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36796bae9ecsm786492f8f.38.2024.07.03.05.43.56
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a0cd634sm15990961f8f.9.2024.07.03.05.48.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Jul 2024 05:43:56 -0700 (PDT)
-Message-ID: <fdbdfdc3-d87c-4b95-8fc9-7b2331d1b684@linaro.org>
-Date: Wed, 3 Jul 2024 14:43:55 +0200
+        Wed, 03 Jul 2024 05:48:30 -0700 (PDT)
+Message-ID: <06f8113c-8e83-411a-a4bf-bfadc2560882@linaro.org>
+Date: Wed, 3 Jul 2024 14:48:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,19 +80,18 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: neil.armstrong@linaro.org
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2] thermal: core: Call monitor_thermal_zone() if zone
- temperature is invalid
-To: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: "Rafael J. Wysocki" <rjw@rjwysocki.net>,
- Linux PM <linux-pm@vger.kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- LKML <linux-kernel@vger.kernel.org>, Lukasz Luba <lukasz.luba@arm.com>,
- Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
- Zhang Rui <rui.zhang@intel.com>,
- linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <2764814.mvXUDI8C0e@rjwysocki.net>
- <2ed4c630-204a-4f80-a37f-f2ca838eb455@linaro.org>
- <CAJZ5v0ghYd28H5eX8b68PSABMm8vTbeSpMxUsQ5mpVOXRPZ3RA@mail.gmail.com>
+Subject: Re: [PATCH RFC 0/3] Implement Qualcomm TEE IPC and ioctl calls
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Sumit Semwal <sumit.semwal@linaro.org>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ srinivas.kandagatla@linaro.org, bartosz.golaszewski@linaro.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org
+References: <20240702-qcom-tee-object-and-ioctls-v1-0-633c3ddf57ee@quicinc.com>
+ <umwai5fxohuz6apprv6ouhdrnomal4a7cmyhmzpf6dnamnvti2@un4hxx52hkge>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -119,128 +118,57 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <CAJZ5v0ghYd28H5eX8b68PSABMm8vTbeSpMxUsQ5mpVOXRPZ3RA@mail.gmail.com>
+In-Reply-To: <umwai5fxohuz6apprv6ouhdrnomal4a7cmyhmzpf6dnamnvti2@un4hxx52hkge>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hi,
+On 03/07/2024 13:36, Dmitry Baryshkov wrote:
+> On Tue, Jul 02, 2024 at 10:57:35PM GMT, Amirreza Zarrabi wrote:
 
-On 03/07/2024 13:29, Rafael J. Wysocki wrote:
-> Hi,
+<snip>
+
 > 
-> On Wed, Jul 3, 2024 at 1:04 PM Neil Armstrong <neil.armstrong@linaro.org> wrote:
 >>
->> Hi,
+>> Can we use TEE subsystem?
+>> -------------------------
+>> There are workarounds for some of the issues above. The question is if we
+>> should define our own UAPI or try to use a hack-y way of fitting into
+>> the TEE subsystem. I am using word hack-y, as most of the workaround
+>> involves:
 >>
->> On 28/06/2024 14:10, Rafael J. Wysocki wrote:
->>> From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
->>>
->>> Commit 202aa0d4bb53 ("thermal: core: Do not call handle_thermal_trip()
->>> if zone temperature is invalid") caused __thermal_zone_device_update()
->>> to return early if the current thermal zone temperature was invalid.
->>>
->>> This was done to avoid running handle_thermal_trip() and governor
->>> callbacks in that case which led to confusion.  However, it went too
->>> far because monitor_thermal_zone() still needs to be called even when
->>> the zone temperature is invalid to ensure that it will be updated
->>> eventually in case thermal polling is enabled and the driver has no
->>> other means to notify the core of zone temperature changes (for example,
->>> it does not register an interrupt handler or ACPI notifier).
->>>
->>> Also if the .set_trips() zone callback is expected to set up monitoring
->>> interrupts for a thermal zone, it has to be provided with valid
->>> boundaries and that can only happen if the zone temperature is known.
->>>
->>> Accordingly, to ensure that __thermal_zone_device_update() will
->>> run again after a failing zone temperature check, make it call
->>> monitor_thermal_zone() regardless of whether or not the zone
->>> temperature is valid and make the latter schedule a thermal zone
->>> temperature update if the zone temperature is invalid even if
->>> polling is not enabled for the thermal zone.
->>>
->>> Fixes: 202aa0d4bb53 ("thermal: core: Do not call handle_thermal_trip() if zone temperature is invalid")
->>> Reported-by: Daniel Lezcano <daniel.lezcano@linaro.org>
->>> Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
->>> ---
->>>    drivers/thermal/thermal_core.c |    5 ++++-
->>>    drivers/thermal/thermal_core.h |    6 ++++++
->>>    2 files changed, 10 insertions(+), 1 deletion(-)
->>>
->>> Index: linux-pm/drivers/thermal/thermal_core.c
->>> ===================================================================
->>> --- linux-pm.orig/drivers/thermal/thermal_core.c
->>> +++ linux-pm/drivers/thermal/thermal_core.c
->>> @@ -300,6 +300,8 @@ static void monitor_thermal_zone(struct
->>>                thermal_zone_device_set_polling(tz, tz->passive_delay_jiffies);
->>>        else if (tz->polling_delay_jiffies)
->>>                thermal_zone_device_set_polling(tz, tz->polling_delay_jiffies);
->>> +     else if (tz->temperature == THERMAL_TEMP_INVALID)
->>> +             thermal_zone_device_set_polling(tz, msecs_to_jiffies(THERMAL_RECHECK_DELAY_MS));
->>>    }
->>>
->>>    static struct thermal_governor *thermal_get_tz_governor(struct thermal_zone_device *tz)
->>> @@ -514,7 +516,7 @@ void __thermal_zone_device_update(struct
->>>        update_temperature(tz);
->>>
->>>        if (tz->temperature == THERMAL_TEMP_INVALID)
->>> -             return;
->>> +             goto monitor;
->>>
->>>        tz->notify_event = event;
->>>
->>> @@ -536,6 +538,7 @@ void __thermal_zone_device_update(struct
->>>
->>>        thermal_debug_update_trip_stats(tz);
->>>
->>> +monitor:
->>>        monitor_thermal_zone(tz);
->>>    }
->>>
->>> Index: linux-pm/drivers/thermal/thermal_core.h
->>> ===================================================================
->>> --- linux-pm.orig/drivers/thermal/thermal_core.h
->>> +++ linux-pm/drivers/thermal/thermal_core.h
->>> @@ -133,6 +133,12 @@ struct thermal_zone_device {
->>>        struct thermal_trip_desc trips[] __counted_by(num_trips);
->>>    };
->>>
->>> +/*
->>> + * Default delay after a failing thermal zone temperature check before
->>> + * attempting to check it again.
->>> + */
->>> +#define THERMAL_RECHECK_DELAY_MS     100
->>> +
->>>    /* Default Thermal Governor */
->>>    #if defined(CONFIG_THERMAL_DEFAULT_GOV_STEP_WISE)
->>>    #define DEFAULT_THERMAL_GOVERNOR       "step_wise"
->>>
->>>
->>>
->>>
+>> - "diverging from the definition". For instance, ignoring the session
+>>    open and close ioctl calls or use file descriptors for all remote
+>> resources (as, fd is the closet to capability) which undermines the
+>> isolation provided by the contexts,
 >>
->> This patch on next-20240702 makes Qualcomm HDK8350, HDK8450, QRD8550, HDK8560, QRD8650 & HDK8650 output in loop:
+>> - "overloading the variables". For instance, passing object ID as file
+>>    descriptors in a place of session ID, or
 >>
->> thermal thermal_zoneXX: failed to read out thermal zone (-19)
-> 
-> Is the loop endless?  If not, how many times does the message get printed?
+>> - "bypass TEE subsystem". For instance, extensively rely on meta
+>>    parameters or push everything (e.g. kernel services) to the back-end
+>> driver, which means leaving almost all TEE subsystem unused.
 
-It get printed indefinitely
+Why can't you extend the TEE subsystem with those features ?
 
+>>
+>> We cannot take the full benefits of TEE subsystem and may need to
+>> implement most of the requirements in the back-end driver. Also, as
+>> discussed above, the UAPI is not suitable for capability-based use cases.
+>> We proposed a new set of ioctl calls for SMC-Invoke driver.
+>>
+>> In this series we posted three patches. We implemented a transport
+>> driver that provides qcom_tee_object. Any object on secure side is
+>> represented with an instance of qcom_tee_object and any struct exposed
+>> to TEE should embed an instance of qcom_tee_object. Any, support for new
+>> services, e.g. memory object, RPMB, userspace clients or supplicants are
+>> implemented independently from the driver.
+>>
+>> We have a simple memory object and a user driver that uses
+>> qcom_tee_object.
 > 
-> If I'm not mistaken, it would be printed at least once without the
-> commit in question.  Can you please check that?
-> 
-> Also, can you check the previous version of the patch in question:
-> 
-> https://lore.kernel.org/linux-pm/2745114.mvXUDI8C0e@rjwysocki.net/
-> 
-> and see if it has the same problem (just apply it instead of the $subject one).
+> Could you please point out any user for the uAPI? I'd like to understand
+> how does it from from the userspace point of view.
 
-I reverted this one a applied v1 and the message disappeared completely.
-
-Neil
-
-> 
-> Thanks!
+<snip>
 
 
