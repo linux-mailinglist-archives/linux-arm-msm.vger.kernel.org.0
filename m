@@ -1,161 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-25078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCC439257C7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 12:05:55 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAA5B9257C3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 12:05:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 73913289478
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 10:05:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6106DB26104
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 10:05:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59DCC14D2B2;
-	Wed,  3 Jul 2024 10:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CBB11422DE;
+	Wed,  3 Jul 2024 10:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LO3g+rXT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IcrJ9yEO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D315A1411E3;
-	Wed,  3 Jul 2024 10:05:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C966113D2BE
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 10:05:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720001137; cv=none; b=FR/6cdKiE6xaZQObm1jXaiifnE5L3YqigWPI9E595nX/0BPRel1P3uMiyrviTcCN5O48h6UOGHIAZDiho3Pp9j+OBKZHdlEvFrPL3AcQ7327ID3RkKp2YpMqtdDb0w3rcwru0oU4hr7hmwATN2v4pi22uS/fy4fmBfQa5uSdOYM=
+	t=1720001124; cv=none; b=dNpFullyWvj1KwS6OgPlpuc7JQ85nk8BBXQs+ioG8jupqwR7dNlIuNtLKl34wFI+mh/U9JuvUFIORcCd6LBd2/mP6UgZw0M3FI/k2LzQKe1yH+3Fm7u0gJMg889Vrf9KxgyYt1bLL+ykKCcPUwrPxf8VmvgKuj+VLBt25bKVVBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720001137; c=relaxed/simple;
-	bh=btIei9/sNOh68L5VxbSRNJ6/SY9lrijEipZIFbe55Cs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=aiNfFrxYcZx1qyiwqy4MW0B9IRVVKKI5g+YW6CqLlIAe8SDj3HTEBTU4kyKhZT1qaLDRFFRWADq9upt6pdh1t0QVQre68O3/C5osXYqwUxzVP0x+FWtXYO4DMteTFahp03LJ4a59dK6ak4cx0aZj9+bhdrYgPEpFJzTkt5lM1z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LO3g+rXT; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4632V6vL028807;
-	Wed, 3 Jul 2024 10:04:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MTYyEqDPQFUg534+DSkldx2EQ4hiUNnVI33QmvBczZk=; b=LO3g+rXTgZGcl6je
-	Rl00DBC52bV/FNAWASeog2Cru0JsaypLW3GIlbDU7M6yXixixBpgsVS2g2s6hP2o
-	gOg3MVIiGXxM6foWGxKOVE1pNpCDabVLLy7ME1un5mROUZvVVAUGSvRzFcJpYuV7
-	pjwKBkQRG3eBpSiiMK1gx+osblIsz7gUs0nknVyMDFSjRtQBFO17oJABopAwn4KR
-	6MqqXHYgtie84G7tLEvErF4Hcb/C+bXioNXyzOE51JB/+SvPv8DkEyF37FC5fBac
-	mxeUAbIeHw5CyFdS7RkAl0DOQkQVXfm5ynLxaZlU05YfyJ41Z0MTSCICSG3KUucn
-	FjDZgQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 404kctjq2w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 03 Jul 2024 10:04:37 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 463A4a3Q012329
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 3 Jul 2024 10:04:36 GMT
-Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 3 Jul 2024
- 03:04:14 -0700
-Message-ID: <312b699d-1ca4-4a58-877b-af9d91132724@quicinc.com>
-Date: Wed, 3 Jul 2024 18:04:11 +0800
+	s=arc-20240116; t=1720001124; c=relaxed/simple;
+	bh=jgTdbMIy3lPw9hS0B8xJBdXEhPzx9j4iinOlLX/ocq4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EWBYykpCdiGYzo+PsbU0mhmCaB3z3v1+mOhwF/S8fHXSZh/YLKJ9GmMPi/uh12+JebdEZMuaNg0dJvvdrg9mtAgYFxrVPzffBS58y9FjtBpaDZW84eSsqocDbVHtG50n6sITyvGm9DPonCkkRwOc+G6KUHkgMIglbf2cLO8Mu8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IcrJ9yEO; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-52e976208f8so674116e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 03:05:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1720001121; x=1720605921; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VEGEiMVW3dKZB1ERhh5sdo8NkR9UfHJ7kZbPn+Gk5rw=;
+        b=IcrJ9yEONaOu6th8eiYQeNtUyAjEUfNEjykepHxJ35UauliXG971r3CudEgYO/o3Lz
+         LieUtf5oK/23a5OCx9zJAzesOpXUMtsHbrR6/F5YdV9RTCML5AN8wjxPVtUdn2UoEU30
+         BZEjkhTMls5ZgE5wmK4SS5JB0zIcLKLrp9KQDnzr7vhR9EsF7tC8g7Wpjw2veP0OJysI
+         08bHb/ZyZACYbb9T11PenmYacDrjO3qbGH3PjxI4zy8ajRCoRvlwlRvGLnfIaGv2HbqD
+         7f50SX25LRbXPdnWVTck6p3QOrhtVkGdHpVvcrRmuVKjzYqxJvvr3OH3IWomqs5LSJyo
+         ZYhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720001121; x=1720605921;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VEGEiMVW3dKZB1ERhh5sdo8NkR9UfHJ7kZbPn+Gk5rw=;
+        b=jxbq1Gua6g/UY/+w1nHf0yxA6GVy+ATyglaB9NlwHNMm4TVGcQaSt99k6bEePPYv8G
+         HYPHuVyWrsZM33qWOtIyHiZV9kLj25PuN8KbDsLcHhZmTh0G5Vq3m7V4ZSWIQgq2qQBI
+         FjSY5ykwcdJlmHUQtQfBH6VpNGnitEVVGeoysYkxTA7zzYDNA1DA7HZy78JGrSrlLHCV
+         g8tP2r60MJOuUpQsGDvPgP0LgsBlbZEzP/f49LwcuzGCC/zcSN/nRAPKH0gbsp0SF3lg
+         DO86ab7tAvpqQcuKCqJhcvHE73bzMak/4UHhZ4kcVkGpn5C9ljCX7bwnIym+5VtjsecT
+         Rn4A==
+X-Forwarded-Encrypted: i=1; AJvYcCUNcLJ/M7ZHOPdsacVkaR+1mxn0J8meA0EtyeyICq/LFPxMtYFp4bGbPMdej2FFkM8xQLtEV/SRsPE7Ks/cVMZmJyrdJAhBJ8zxtvLx1w==
+X-Gm-Message-State: AOJu0YxU7k98ONH6naL0zSCVnD0n0TKsAF2eEIfZKArRxX/IDQg3SQNV
+	7FuYMPKQqijHvQHBbdffLh+yQHuyo7ngf9HixkG+/bpu9AufHAJ7pOKmnzrBuck=
+X-Google-Smtp-Source: AGHT+IGmicq1DTq3FjWhSJE0DkaC7SbXpSLotK2RdxXl2sDdvdH+z8SVw2eot3uzPTC4Zcp0M2pykw==
+X-Received: by 2002:a05:6512:39c5:b0:52c:842b:c276 with SMTP id 2adb3069b0e04-52e8270914amr9349060e87.53.1720001118998;
+        Wed, 03 Jul 2024 03:05:18 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52e7ab3b23fsm2092520e87.280.2024.07.03.03.05.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Jul 2024 03:05:18 -0700 (PDT)
+Date: Wed, 3 Jul 2024 13:05:17 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@codeaurora.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>, 
+	Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
+	Jagadeesh Kona <quic_jkona@quicinc.com>
+Subject: Re: [PATCH v2 3/6] clk: qcom: clk-alpha-pll: Add support for Regera
+ PLL ops
+Message-ID: <kxoxr5cxxedckh7q45zhhyssqx4ahdfbqw7sdsrxx2ddplummh@2s6jv62ipnhb>
+References: <20240702-camcc-support-sm8150-v2-0-4baf54ec7333@quicinc.com>
+ <20240702-camcc-support-sm8150-v2-3-4baf54ec7333@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 41/47] clk: qcom: rpmh: Add support for QCS9100 rpmh
- clocks
-To: Taniya Das <quic_tdas@quicinc.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <djakov@kernel.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <jassisinghbrar@gmail.com>,
-        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
-        <manivannan.sadhasivam@linaro.org>, <will@kernel.org>,
-        <joro@8bytes.org>, <conor@kernel.org>, <tglx@linutronix.de>,
-        <amitk@kernel.org>, <thara.gopinath@gmail.com>,
-        <linus.walleij@linaro.org>, <wim@linux-watchdog.org>,
-        <linux@roeck-us.net>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
-        <vkoul@kernel.org>, <edumazet@google.com>, <kuba@kernel.org>,
-        <pabeni@redhat.com>, <mcoquelin.stm32@gmail.com>
-CC: <robimarko@gmail.com>, <bartosz.golaszewski@linaro.org>,
-        <kishon@kernel.org>, <quic_wcheng@quicinc.com>,
-        <alim.akhtar@samsung.com>, <avri.altman@wdc.com>, <bvanassche@acm.org>,
-        <agross@kernel.org>, <gregkh@linuxfoundation.org>,
-        <robin.murphy@arm.com>, <daniel.lezcano@linaro.org>,
-        <rui.zhang@intel.com>, <lukasz.luba@arm.com>,
-        <quic_rjendra@quicinc.com>, <ulf.hansson@linaro.org>,
-        <quic_sibis@quicinc.com>, <otto.pflueger@abscue.de>, <luca@z3ntu.xyz>,
-        <neil.armstrong@linaro.org>, <abel.vesa@linaro.org>,
-        <bhupesh.sharma@linaro.org>, <alexandre.torgue@foss.st.com>,
-        <peppe.cavallaro@st.com>, <joabreu@synopsys.com>,
-        <netdev@vger.kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <bhelgaas@google.com>, <ahalaney@redhat.com>,
-        <krzysztof.kozlowski@linaro.org>, <u.kleine-koenig@pengutronix.de>,
-        <dmitry.baryshkov@linaro.org>, <quic_cang@quicinc.com>,
-        <danila@jiaxyga.com>, <quic_nitirawa@quicinc.com>,
-        <mantas@8devices.com>, <athierry@redhat.com>,
-        <quic_kbajaj@quicinc.com>, <quic_bjorande@quicinc.com>,
-        <quic_msarkar@quicinc.com>, <quic_devipriy@quicinc.com>,
-        <quic_tsoni@quicinc.com>, <quic_rgottimu@quicinc.com>,
-        <quic_shashim@quicinc.com>, <quic_kaushalk@quicinc.com>,
-        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
-        <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-crypto@vger.kernel.org>,
-        <linux-scsi@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-        <linux-gpio@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>, <kernel@quicinc.com>
-References: <20240703025850.2172008-1-quic_tengfan@quicinc.com>
- <20240703035154.2182083-1-quic_tengfan@quicinc.com>
- <20240703035154.2182083-12-quic_tengfan@quicinc.com>
- <e08b4798-b1fe-4e8a-80a4-716696dfdcd6@quicinc.com>
-From: Tengfei Fan <quic_tengfan@quicinc.com>
-In-Reply-To: <e08b4798-b1fe-4e8a-80a4-716696dfdcd6@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: tMRDhs9g2i136rzis9EqfAfQCqfDYtjd
-X-Proofpoint-ORIG-GUID: tMRDhs9g2i136rzis9EqfAfQCqfDYtjd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-03_06,2024-07-02_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- bulkscore=0 mlxlogscore=771 priorityscore=1501 impostorscore=0
- suspectscore=0 mlxscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407030074
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240702-camcc-support-sm8150-v2-3-4baf54ec7333@quicinc.com>
 
-
-
-On 7/3/2024 1:33 PM, Taniya Das wrote:
+On Tue, Jul 02, 2024 at 09:20:41PM GMT, Satya Priya Kakitapalli wrote:
+> From: Taniya Das <quic_tdas@quicinc.com>
 > 
+> Regera PLL ops are required to control the Regera PLL from clock
+> controller drivers, thus add support for the same.
+
+the same what?
+
 > 
-> On 7/3/2024 9:21 AM, Tengfei Fan wrote:
->> { .compatible = "qcom,qcs9100-rpmh-clk", .data = &clk_rpmh_sa8775p},
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+> ---
+>  drivers/clk/qcom/clk-alpha-pll.c | 32 +++++++++++++++++++++++++++++++-
+>  drivers/clk/qcom/clk-alpha-pll.h |  5 +++++
+>  2 files changed, 36 insertions(+), 1 deletion(-)
 > 
-> This is not required, we already have sa8775p bindings.
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+> index d2bef078588f..afb7ab72c90d 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.c
+> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> @@ -1,7 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  /*
+>   * Copyright (c) 2015, 2018, The Linux Foundation. All rights reserved.
+> - * Copyright (c) 2021, 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2021, 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
+>  
+>  #include <linux/kernel.h>
+> @@ -2605,3 +2605,33 @@ const struct clk_ops clk_alpha_pll_stromer_plus_ops = {
+>  	.set_rate = clk_alpha_pll_stromer_plus_set_rate,
+>  };
+>  EXPORT_SYMBOL_GPL(clk_alpha_pll_stromer_plus_ops);
+> +
+> +void clk_regera_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+> +			     const struct alpha_pll_config *config)
+> +{
+> +	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
+> +	clk_alpha_pll_write_config(regmap, PLL_ALPHA_VAL(pll), config->alpha);
+> +	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL(pll), config->config_ctl_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U(pll), config->config_ctl_hi_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U1(pll), config->config_ctl_hi1_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_USER_CTL(pll), config->user_ctl_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_USER_CTL_U(pll), config->user_ctl_hi_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_USER_CTL_U1(pll), config->user_ctl_hi1_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL(pll), config->test_ctl_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U(pll), config->test_ctl_hi_val);
+> +	clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U1(pll), config->test_ctl_hi1_val);
+> +
+> +	/* Set operation mode to STANDBY */
+> +	regmap_write(regmap, PLL_OPMODE(pll), PLL_STANDBY);
+> +}
+> +EXPORT_SYMBOL_GPL(clk_regera_pll_configure);
 
-This patch is necessary, and the cover letter provides detailed 
-explanations for why we are making this change.
+Does it make sense to call this function from clk_zonda_pll_configure()?
 
-In this patch series, we are renaming sa8775p.dtsi to qcs9100.dtsi. 
-Additionally, in the coming weeks, the auto team will submit a new 
-sa8775p-related dtsi to upstream.
-
-Within qcs9100.dtsi, we are updating all compatible names from sa8775p-* 
-to qcs9100-*(only have qcs9100-*, remove all sa8775p-*). Consequently, 
-we need to add support for qcs9100-* in the driver as well.
-
+> +
+> +const struct clk_ops clk_alpha_pll_regera_ops = {
+> +	.enable = clk_zonda_pll_enable,
+> +	.disable = clk_zonda_pll_disable,
+> +	.is_enabled = clk_alpha_pll_is_enabled,
+> +	.recalc_rate = clk_trion_pll_recalc_rate,
+> +	.round_rate = clk_alpha_pll_round_rate,
+> +	.set_rate = clk_zonda_pll_set_rate,
+> +};
+> +EXPORT_SYMBOL_GPL(clk_alpha_pll_regera_ops);
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
+> index fb6d50263bb9..5bb0a07da53d 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.h
+> +++ b/drivers/clk/qcom/clk-alpha-pll.h
+> @@ -21,6 +21,7 @@ enum {
+>  	CLK_ALPHA_PLL_TYPE_LUCID = CLK_ALPHA_PLL_TYPE_TRION,
+>  	CLK_ALPHA_PLL_TYPE_AGERA,
+>  	CLK_ALPHA_PLL_TYPE_ZONDA,
+> +	CLK_ALPHA_PLL_TYPE_REGERA = CLK_ALPHA_PLL_TYPE_ZONDA,
+>  	CLK_ALPHA_PLL_TYPE_ZONDA_OLE,
+>  	CLK_ALPHA_PLL_TYPE_LUCID_EVO,
+>  	CLK_ALPHA_PLL_TYPE_LUCID_OLE,
+> @@ -189,6 +190,8 @@ extern const struct clk_ops clk_alpha_pll_postdiv_lucid_evo_ops;
+>  extern const struct clk_ops clk_alpha_pll_rivian_evo_ops;
+>  #define clk_alpha_pll_postdiv_rivian_evo_ops clk_alpha_pll_postdiv_fabia_ops
+>  
+> +extern const struct clk_ops clk_alpha_pll_regera_ops;
+> +
+>  void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+>  			     const struct alpha_pll_config *config);
+>  void clk_fabia_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+> @@ -210,5 +213,7 @@ void clk_rivian_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regm
+>  				  const struct alpha_pll_config *config);
+>  void clk_stromer_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+>  			       const struct alpha_pll_config *config);
+> +void clk_regera_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+> +			     const struct alpha_pll_config *config);
+>  
+>  #endif
+> 
+> -- 
+> 2.25.1
+> 
 
 -- 
-Thx and BRs,
-Tengfei Fan
+With best wishes
+Dmitry
 
