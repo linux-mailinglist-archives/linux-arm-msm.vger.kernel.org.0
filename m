@@ -1,481 +1,245 @@
-Return-Path: <linux-arm-msm+bounces-25132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F288925EB3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 13:39:08 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3F8C925EC2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 13:39:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 058951F26403
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:39:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 54DEB1F277C3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:39:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7395F178CE4;
-	Wed,  3 Jul 2024 11:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59307174EF7;
+	Wed,  3 Jul 2024 11:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FwSxIfF8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PCxMCuvc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658481428F8;
-	Wed,  3 Jul 2024 11:34:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F911741D8
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 11:36:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720006467; cv=none; b=uYXyr8FsnTagw5Du2DU/4BaIOHODAFoX4v3tmdT33r9QzWVIXjQroXmicLDYGeTCdKb/UQ3kWtmylsq5/8BG/mTWMBTgVN3P0P7u7+jwxJpg3Fnp3rN/jamcpLF7FB5raujPQnAJTQkpYT+sMe6etUBOA9W/C6/CleXZkODAf0w=
+	t=1720006618; cv=none; b=BDr/1rZoT4R8lAmP2hpz/bv2LIB9hJpGMYEIIMOUbVMt8KrH+sBCfjdAny98lmQOQuiDU0DOP1TPLakLCO4B+CqZbkEsVDjZ79FFQrFVKMW1Vm0Ub1B7UK/fg+tTwu7N2hgAisSHVeWg2nlG1XCgzc9iZr9CE+fCW1KMHQwEclA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720006467; c=relaxed/simple;
-	bh=+VQihXo80QnqSzDvSNrqJzZrPVkhrvqzTf1AA3isGB8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=scsGmiyvUxc3xC/idzsZbCwy920NrOVcUwNbBM54mDInq2kaXxIHDy4sIgspWxW/jEgmhKRT61O+HUbLHZxxCbwmSJNWzUxJpnX2B6DCaLY99hRxxuGsZpcavwOG9kw45ePisc1n2t/xqguI2JDGzlmH1FwUeVy9ZV1yqWYeaOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FwSxIfF8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4634MZir026759;
-	Wed, 3 Jul 2024 11:34:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wFTp1f926IGc/3arNUlQ4xkkpA/Inij6QnEd6kHIGXY=; b=FwSxIfF8fBRvXsx1
-	/tNQ/POk0sCFWZF3nVTrx/NB2zCer+kNYdJNc90sMFcx9PCC6wg01We6PDXQ+atu
-	D2ssqgL91XpxD/yyAi1704GSPiQWHenaoy9i6YxPXyYNf9lKvJIvcQL8dV22Z3k6
-	pXNLbxg8PGJf3SDchzUKdLlLBi5otAVcuwJWlHe3wJmGhOIBR4a5oSZEaBjASqXI
-	9ZkKOcHrpXuZnqK453pIoEAhgtZFmpC8eY+748thKWtCiT4VahzLCORT3dsvM9H3
-	FZjIflqHRaZRcIJ7aInpHlgCqwzxvWeS/X/dOeeLjMDzbVQhCenIzD//nwIZerqa
-	Iksokw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 404yjhry4u-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 03 Jul 2024 11:34:17 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 463BYG0O022053
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 3 Jul 2024 11:34:16 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 3 Jul 2024
- 04:34:11 -0700
-Message-ID: <11dee606-9c8a-7e6e-4514-d03979c118bd@quicinc.com>
-Date: Wed, 3 Jul 2024 17:04:07 +0530
+	s=arc-20240116; t=1720006618; c=relaxed/simple;
+	bh=IDGRN2PvO7yqS0Y2VVRQOM2z4DsQkqAtSopvE1ya4YM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jslIsG9ol3d0LqhqyOe6yRCA77BSk1OhpaRJtTasWyN/BC8075HQj5OpM/ZcoUD63o6KIJolOBRdGINRh342ZGpnuYwNjS4Jmy574w/CiGsmq1S71QN+WZdtcy1oN4C00GIA5dJcUClS6aVWfrpHJROO+I161t86hCLMUXqJlgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PCxMCuvc; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-52cf4ca8904so8628252e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 04:36:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1720006614; x=1720611414; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=a9lv0dNph4VIX6fjDIPL0Am9pZ9pFj6rkqPcBPNXsWI=;
+        b=PCxMCuvcdO3IkJNH8SEOCusbvG9RfU1NIvqAVdozqHsRSmCXWRDcgh/7NYRhbzqisv
+         myfYyUppUrykbfDi+kPR3q+1fSsxk45TGeqjT/qpJcBuaGOI9JYfMvhMQOxKd4sKOhR7
+         YNizw62qr8HC1VuqSRgqBq7Qk6fjhMZc/qsipYrewnAKnGZdaaBCIfXcVEi0zrsDh3L5
+         EADb9RJ7syB0WE6NxAdvd0cZR1qAFTYnAMlu3MkuZHLWUltHMzGJW9FRDva1+GWeDfBE
+         qLLGVuLHMQaQH6c5ChbsMGkm3jF1EFVSKc4eGOOtN3xaF/n11nlb+PkxCwVTDxStpS7k
+         jQ7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720006614; x=1720611414;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a9lv0dNph4VIX6fjDIPL0Am9pZ9pFj6rkqPcBPNXsWI=;
+        b=jce7Mq+XKVRQ3QHY1ZeMVuMZQ6pwkkDS1pqgpJEbIZTooBLjVn9JTDJY5QuLifmkMp
+         mM9nqpC3C0SR1R+QjDCch/7AbfFYnF6PLZ+K6Zn4XOKpZlz3NGI0iJKPVJ8jTbiJ36hK
+         BR/jcway6dkWU97j1yFZvt25zX8AAyv++skYrNABnb5AD4jbqZP3M0tGKbG1gzHHv7O8
+         lrM8rnbYw9487OLQQEVAdGSjmF74pRAYRJCGGJTTw6aUZkMtiiw+NjCJm3vh7ZV3SZ+Q
+         dM45kaDF0bvU3BGfsAXIwRO9GDAPuvtrJLB8QK9wXXjtXvlMW4/YX9Looni5QtzcbbmG
+         EU7A==
+X-Forwarded-Encrypted: i=1; AJvYcCV91clKiQBlGGLyLxJopsiMoAFaF7V7cQ7ficgRyr9ht/U0mNNkuUE/MDA6MvI6UmQw4qGjT5TVdIMErrYBtmjKkYAHANv5DNa8Ik4D+g==
+X-Gm-Message-State: AOJu0YxyM3ZaUcOGZFTgn09MjSbCkSZ2SYYoeA2eM7ldH0Acvj09tR0R
+	B3f/k746kcf1DXuEqRHW27FjWbpjXexDbqy7mfPY5alGEtq775Tfn+aV3NQk4eY=
+X-Google-Smtp-Source: AGHT+IHq5miROCNaH4d32J0OpMAkkQ6y4cLs6SwoFlGLh4VJCgygoze+j6b1zp7HswtTjkNXT++ySg==
+X-Received: by 2002:a05:6512:3f5:b0:52e:8018:279b with SMTP id 2adb3069b0e04-52e82747e45mr4620335e87.69.1720006614203;
+        Wed, 03 Jul 2024 04:36:54 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52e96d6be30sm207314e87.306.2024.07.03.04.36.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Jul 2024 04:36:53 -0700 (PDT)
+Date: Wed, 3 Jul 2024 14:36:52 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Sumit Semwal <sumit.semwal@linaro.org>, 
+	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, srinivas.kandagatla@linaro.org, bartosz.golaszewski@linaro.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	linaro-mm-sig@lists.linaro.org
+Subject: Re: [PATCH RFC 0/3] Implement Qualcomm TEE IPC and ioctl calls
+Message-ID: <umwai5fxohuz6apprv6ouhdrnomal4a7cmyhmzpf6dnamnvti2@un4hxx52hkge>
+References: <20240702-qcom-tee-object-and-ioctls-v1-0-633c3ddf57ee@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [RFC V3 3/4] soc: qcom: Introduce SCMI based Memlat (Memory
- Latency) governor
-Content-Language: en-US
-To: Shivnandan Kumar <quic_kshivnan@quicinc.com>, <sudeep.holla@arm.com>,
-        <cristian.marussi@arm.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <quic_rgottimu@quicinc.com>, <conor+dt@kernel.org>,
-        Amir Vajid
-	<avajid@quicinc.com>
-References: <20240702191440.2161623-1-quic_sibis@quicinc.com>
- <20240702191440.2161623-4-quic_sibis@quicinc.com>
- <4731cfa1-60d6-4f2b-9740-88e546edbd6b@quicinc.com>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <4731cfa1-60d6-4f2b-9740-88e546edbd6b@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WswzxV_rxHNZZqw8f0uV3lOCmoJoSSo-
-X-Proofpoint-ORIG-GUID: WswzxV_rxHNZZqw8f0uV3lOCmoJoSSo-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-03_06,2024-07-03_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- mlxlogscore=999 clxscore=1015 lowpriorityscore=0 suspectscore=0
- malwarescore=0 mlxscore=0 priorityscore=1501 adultscore=0 impostorscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407030084
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240702-qcom-tee-object-and-ioctls-v1-0-633c3ddf57ee@quicinc.com>
 
-
-
-On 7/3/24 14:14, Shivnandan Kumar wrote:
+On Tue, Jul 02, 2024 at 10:57:35PM GMT, Amirreza Zarrabi wrote:
+> Qualcomm TEE hosts Trusted Applications (TAs) and services that run in
+> the secure world. Access to these resources is provided using MinkIPC.
+> MinkIPC is a capability-based synchronous message passing facility. It
+> allows code executing in one domain to invoke objects running in other
+> domains. When a process holds a reference to an object that lives in
+> another domain, that object reference is a capability. Capabilities
+> allow us to separate implementation of policies from implementation of
+> the transport.
 > 
+> As part of the upstreaming of the object invoke driver (called SMC-Invoke
+> driver), we need to provide a reasonable kernel API and UAPI. The clear
+> option is to use TEE subsystem and write a back-end driver, however the
+> TEE subsystem doesn't fit with the design of Qualcomm TEE.
 > 
-> On 7/3/2024 12:44 AM, Sibi Sankar wrote:
->> Introduce a client driver that uses the memlat algorithm string hosted
->> on ARM SCMI QCOM Vendor Protocol to detect memory latency workloads and
->> control frequency/level of the various memory buses (DDR/LLCC/DDR_QOS).
->>
-
-Hey Shiv,
-
-Thanks for taking time to review the series :)
-
->> Co-developed-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
->> Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
->> Co-developed-by: Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
->> Signed-off-by: Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
->> Co-developed-by: Amir Vajid <avajid@quicinc.com>
->> Signed-off-by: Amir Vajid <avajid@quicinc.com>
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->> ---
->>
->> V2:
->> * Make driver changes to the accommodate bindings changes. [Rob]
->> * Replace explicit of_node_put with _free.
->>
->>   drivers/soc/qcom/Kconfig            |  12 +
->>   drivers/soc/qcom/Makefile           |   1 +
->>   drivers/soc/qcom/qcom_scmi_client.c | 583 ++++++++++++++++++++++++++++
->>   3 files changed, 596 insertions(+)
->>   create mode 100644 drivers/soc/qcom/qcom_scmi_client.c
->>
->> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
->> index 432c85bd8ad4..b253504bd386 100644
->> --- a/drivers/soc/qcom/Kconfig
->> +++ b/drivers/soc/qcom/Kconfig
->> @@ -294,4 +294,16 @@ config QCOM_PBS
->>         This module provides the APIs to the client drivers that wants 
->> to send the
->>         PBS trigger event to the PBS RAM.
->> +config QCOM_SCMI_CLIENT
->> +    tristate "Qualcomm Technologies Inc. SCMI client driver"
->> +    depends on ARM_SCMI_PROTOCOL_VENDOR_QCOM || COMPILE_TEST
->> +    default n
->> +    help
->> +      This driver uses the memlat algorithm string hosted on QCOM SCMI
->> +      Vendor Protocol to detect memory latency workloads and control
->> +      frequency/level of the various memory buses (DDR/LLCC/DDR_QOS).
->> +
->> +      This driver defines/documents the parameter IDs used while 
->> configuring
->> +      the memory buses.
->> +
->>   endmenu
->> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
->> index d3560f861085..8a2e832d1d5d 100644
->> --- a/drivers/soc/qcom/Makefile
->> +++ b/drivers/soc/qcom/Makefile
->> @@ -35,6 +35,7 @@ obj-$(CONFIG_QCOM_APR) += apr.o
->>   obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
->>   obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=    kryo-l2-accessors.o
->>   obj-$(CONFIG_QCOM_ICC_BWMON)    += icc-bwmon.o
->> +obj-$(CONFIG_QCOM_SCMI_CLIENT)    += qcom_scmi_client.o
->>   qcom_ice-objs            += ice.o
->>   obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)    += qcom_ice.o
->>   obj-$(CONFIG_QCOM_PBS) +=    qcom-pbs.o
->> diff --git a/drivers/soc/qcom/qcom_scmi_client.c 
->> b/drivers/soc/qcom/qcom_scmi_client.c
->> new file mode 100644
->> index 000000000000..8369b415c0ab
->> --- /dev/null
->> +++ b/drivers/soc/qcom/qcom_scmi_client.c
->> @@ -0,0 +1,583 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights 
->> reserved.
->> + */
->> +
->> +#include <linux/cpu.h>
->> +#include <linux/err.h>
->> +#include <linux/errno.h>
->> +#include <linux/init.h>
->> +#include <linux/kernel.h>
->> +#include <linux/module.h>
->> +#include <linux/of.h>
->> +#include <linux/platform_device.h>
->> +#include <linux/qcom_scmi_vendor.h>
->> +#include <linux/scmi_protocol.h>
->> +#include <linux/units.h>
->> +#include <dt-bindings/soc/qcom,scmi-vendor.h>
->> +
->> +#define MEMLAT_ALGO_STR                0x4D454D4C4154 /* MEMLAT */
->> +#define INVALID_IDX                0xff
->> +#define MAX_MEMORY_TYPES            3
->> +#define MAX_MONITOR_CNT                4
->> +#define MAX_NAME_LEN                20
->> +#define MAX_MAP_ENTRIES                7
->> +#define CPUCP_DEFAULT_SAMPLING_PERIOD_MS    4
->> +#define CPUCP_DEFAULT_FREQ_METHOD        1
->> +
->> +/**
->> + * scmi_memlat_protocol_cmd - parameter_ids supported by the "MEMLAT" 
->> algo_str hosted
->> + *                            by the Qualcomm SCMI Vendor Protocol on 
->> the SCMI controller.
->> + *
->> + * MEMLAT (Memory Latency) monitors the counters to detect memory 
->> latency bound workloads
->> + * and scales the frequency/levels of the memory buses accordingly.
->> + *
->> + * @MEMLAT_SET_MEM_GROUP: initializes the frequency/level scaling 
->> functions for the memory bus.
->> + * @MEMLAT_SET_MONITOR: configures the monitor to work on a specific 
->> memory bus.
->> + * @MEMLAT_SET_COMMON_EV_MAP: set up common counters used to monitor 
->> the cpu frequency.
->> + * @MEMLAT_SET_GRP_EV_MAP: set up any specific counters used to 
->> monitor the memory bus.
->> + * @MEMLAT_IPM_CEIL: set the IPM (Instruction Per Misses) ceiling per 
->> monitor.
->> + * @MEMLAT_SAMPLE_MS: set the sampling period for all the monitors.
->> + * MEMLAT_MON_FREQ_MAP: setup the cpufreq to memfreq map.
->> + * MEMLAT_SET_MIN_FREQ: set the max frequency of the memory bus.
->> + * MEMLAT_SET_MAX_FREQ: set the min frequency of the memory bus.
->> + * MEMLAT_START_TIMER: start all the monitors with the requested 
->> sampling period.
->> + * MEMLAT_START_TIMER: stop all the running monitors.
+> Does TEE subsystem fit requirements of a capability based system?
+> -----------------------------------------------------------------
+> In TEE subsystem, to invoke a function:
+>    - client should open a device file "/dev/teeX",
+>    - create a session with a TA, and
+>    - invoke the functions in that session.
 > 
-> Typo above, it should be MEMLAT_STOP_TIMER
+> 1. The privilege to invoke a function is determined by a session. If a
+>    client has a session, it cannot share it with other clients. Even if
+> it does, it is not fine-grained enough, i.e. either all accessible
+> functions/resources in a session or none. Assume a scenario when a client
+> wants to grant a permission to invoke just a function that it has the rights,
+> to another client.
+> 
+> The "all or nothing" for sharing sessions is not in line with our
+> capability system: "if you own a capability, you should be able to grant
+> or share it".
 
-ack, thanks for catching this.
+Can you please be more specific here? What kind of sharing is expected
+on the user side of it?
+
+> 2. In TEE subsystem, resources are managed in a context. Every time a
+>    client opens "/dev/teeX", a new context is created to keep track of
+> the allocated resources, including opened sessions and remote objects. Any
+> effort for sharing resources between two independent clients requires
+> involvement of context manager, i.e. the back-end driver. This requires
+> implementing some form of policy in the back-end driver.
+
+What kind of resource sharing?
+
+> 3. The TEE subsystem supports two type of memory sharing:
+>    - per-device memory pools, and
+>    - user defined memory references.
+> User defined memory references are private to the application and cannot
+> be shared. Memory allocated from per-device "shared" pools are accessible
+> using a file descriptor. It can be mapped by any process if it has
+> access to it. This means, we cannot provide the resource isolation
+> between two clients. Assume a scenario when a client wants to allocate a
+> memory (which is shared with TEE) from an "isolated" pool and share it
+> with another client, without the right to access the contents of memory.
+
+This doesn't explain, why would it want to share such memory with
+another client.
+
+> 4. The kernel API provided by TEE subsystem does not support a kernel
+>    supplicant. Adding support requires an execution context (e.g. a
+> kernel thread) due to the TEE subsystem design. tee_driver_ops supports
+> only "send" and "receive" callbacks and to deliver a request, someone
+> should wait on "receive".
+
+There is nothing wrong here, but maybe I'm misunderstanding something.
+
+> We need a callback to "dispatch" or "handle" a request in the context of
+> the client thread. It should redirect a request to a kernel service or
+> a user supplicant. In TEE subsystem such requirement should be implemented
+> in TEE back-end driver, independent from the TEE subsystem.
+> 
+> 5. The UAPI provided by TEE subsystem is similar to the GPTEE Client
+>    interface. This interface is not suitable for a capability system.
+> For instance, there is no session in a capability system which means
+> either its should not be used, or we should overload its definition.
+
+General comment: maybe adding more detailed explanation of how the
+capabilities are aquired and how they can be used might make sense.
+
+BTW. It might be my imperfect English, but each time I see the word
+'capability' I'm thinking that some is capable of doing something. I
+find it hard to use 'capability' for the reference to another object.
 
 > 
->> + * MEMLAT_SET_EFFECTIVE_FREQ_METHOD: set the method used to determine 
->> cpu frequency.
->> + */
->> +enum scmi_memlat_protocol_cmd {
->> +    MEMLAT_SET_MEM_GROUP = 16,
->> +    MEMLAT_SET_MONITOR,
->> +    MEMLAT_SET_COMMON_EV_MAP,
->> +    MEMLAT_SET_GRP_EV_MAP,
->> +    MEMLAT_IPM_CEIL = 23,
->> +    MEMLAT_SAMPLE_MS = 31,
->> +    MEMLAT_MON_FREQ_MAP,
->> +    MEMLAT_SET_MIN_FREQ,
->> +    MEMLAT_SET_MAX_FREQ,
->> +    MEMLAT_START_TIMER = 36,
->> +    MEMLAT_STOP_TIMER,
->> +    MEMLAT_SET_EFFECTIVE_FREQ_METHOD = 39,
->> +};
->> +
->> +struct map_table {
-
-[...]
-
->> +
->> +static int populate_physical_mask(struct device_node *np, u32 *mask, 
->> u32 *cluster_info)
->> +{
->> +    struct device_node *dev_phandle;
->> +    int cpu, i = 0, physical_id;
->> +
->> +    do {
->> +        dev_phandle = of_parse_phandle(np, "cpus", i++);
->> +        cpu = of_cpu_node_to_id(dev_phandle);
->> +        if (cpu != -ENODEV) {
->> +            physical_id = topology_core_id(cpu);
->> +            for (int j = 0; j < topology_cluster_id(cpu); j++)
->> +                physical_id += *(cluster_info + j);
->> +            *mask |= BIT(physical_id);
->> +        }
->> +    } while (dev_phandle);
->> +
->> +    return 0;
->> +}
->> +
->> +static struct cpufreq_memfreq_map *init_cpufreq_memfreq_map(struct 
->> device *dev,
->> +                                struct scmi_memory_info *memory,
->> +                                struct device_node *of_node,
->> +                                u32 *cnt)
->> +{
->> +    struct device_node *tbl_np, *opp_np;
->> +    struct cpufreq_memfreq_map *tbl;
->> +    int ret, i = 0;
->> +    u32 level, len;
->> +    u64 rate;
->> +
->> +    tbl_np = of_parse_phandle(of_node, "operating-points-v2", 0);
->> +    if (!tbl_np)
->> +        return ERR_PTR(-ENODEV);
->> +
->> +    len = min(of_get_available_child_count(tbl_np), MAX_MAP_ENTRIES);
->> +    if (len == 0)
->> +        return ERR_PTR(-ENODEV);
->> +
->> +    tbl = devm_kzalloc(dev, (len + 1) * sizeof(struct 
->> cpufreq_memfreq_map),
->> +               GFP_KERNEL);
->> +    if (!tbl)
->> +        return ERR_PTR(-ENOMEM);
->> +
->> +    for_each_available_child_of_node(tbl_np, opp_np) {
->> +        ret = of_property_read_u64_index(opp_np, "opp-hz", 0, &rate);
->> +        if (ret < 0)
->> +            return ERR_PTR(ret);
->> +
->> +        tbl[i].cpufreq_mhz = rate / HZ_PER_MHZ;
->> +
->> +        if (memory->hw_type != QCOM_MEM_TYPE_DDR_QOS) {
->> +            ret = of_property_read_u64_index(opp_np, "opp-hz", 1, 
->> &rate);
->> +            if (ret < 0)
->> +                return ERR_PTR(ret);
->> +
->> +            tbl[i].memfreq_khz = rate / HZ_PER_KHZ;
->> +        } else {
->> +            ret = of_property_read_u32(opp_np, "opp-level", &level);
->> +            if (ret < 0)
->> +                return ERR_PTR(ret);
->> +
->> +            tbl[i].memfreq_khz = level;
->> +        }
->> +
->> +        dev_dbg(dev, "Entry%d CPU:%u, Mem:%u\n", i, 
->> tbl[i].cpufreq_mhz, tbl[i].memfreq_khz);
->> +        i++;
->> +    }
->> +    *cnt = len;
->> +    tbl[i].cpufreq_mhz = 0;
+> Can we use TEE subsystem?
+> -------------------------
+> There are workarounds for some of the issues above. The question is if we
+> should define our own UAPI or try to use a hack-y way of fitting into
+> the TEE subsystem. I am using word hack-y, as most of the workaround
+> involves:
 > 
-> This is not needed as for allocating memory, devm_kzalloc is used.
+> - "diverging from the definition". For instance, ignoring the session
+>   open and close ioctl calls or use file descriptors for all remote
+> resources (as, fd is the closet to capability) which undermines the
+> isolation provided by the contexts,
+> 
+> - "overloading the variables". For instance, passing object ID as file
+>   descriptors in a place of session ID, or
+> 
+> - "bypass TEE subsystem". For instance, extensively rely on meta
+>   parameters or push everything (e.g. kernel services) to the back-end
+> driver, which means leaving almost all TEE subsystem unused.
+> 
+> We cannot take the full benefits of TEE subsystem and may need to
+> implement most of the requirements in the back-end driver. Also, as
+> discussed above, the UAPI is not suitable for capability-based use cases.
+> We proposed a new set of ioctl calls for SMC-Invoke driver.
+> 
+> In this series we posted three patches. We implemented a transport
+> driver that provides qcom_tee_object. Any object on secure side is
+> represented with an instance of qcom_tee_object and any struct exposed
+> to TEE should embed an instance of qcom_tee_object. Any, support for new
+> services, e.g. memory object, RPMB, userspace clients or supplicants are
+> implemented independently from the driver.
+> 
+> We have a simple memory object and a user driver that uses
+> qcom_tee_object.
 
-ack
+Could you please point out any user for the uAPI? I'd like to understand
+how does it from from the userspace point of view.
 
 > 
->> +
->> +    return tbl;
->> +}
->> +
->> +static int process_scmi_memlat_of_node(struct scmi_device *sdev, 
->> struct scmi_memlat_info *info)
->> +{
->> +    struct scmi_monitor_info *monitor;
->> +    struct scmi_memory_info *memory;
->> +    char name[MAX_NAME_LEN];
->> +    u64 memfreq[2];
->> +    int ret;
->> +
->> +    ret = populate_cluster_info(info->cluster_info);
->> +    if (ret < 0) {
->> +        dev_err_probe(&sdev->dev, ret, "failed to populate cluster 
->> info\n");
->> +        goto err;
->> +    }
->> +
->> +    of_node_get(sdev->handle->dev->of_node);
->> +    do {
->> +        snprintf(name, sizeof(name), "memory-%d", info->memory_cnt);
->> +        struct device_node *memory_np __free(device_node) =
->> +            of_find_node_by_name(sdev->handle->dev->of_node, name);
->> +
->> +        if (!memory_np)
->> +            break;
->> +
->> +        memory = devm_kzalloc(&sdev->dev, sizeof(*memory), GFP_KERNEL);
->> +        if (!memory) {
->> +            ret = -ENOMEM;
->> +            goto err;
->> +        }
->> +
->> +        ret = of_property_read_u32(memory_np, "qcom,memory-type", 
->> &memory->hw_type);
->> +        if (ret) {
->> +            dev_err_probe(&sdev->dev, ret, "failed to read memory 
->> type\n");
->> +            goto err;
->> +        }
->> +
->> +        ret = of_property_read_u64_array(memory_np, "freq-table-hz", 
->> memfreq, 2);
->> +        if (ret && (ret != -EINVAL)) {
->> +            dev_err_probe(&sdev->dev, ret, "failed to read min/max 
->> freq\n");
->> +            goto err;
->> +        }
->> +
->> +        if (memory->hw_type != QCOM_MEM_TYPE_DDR_QOS) {
->> +            memory->min_freq = memfreq[0] / HZ_PER_KHZ;
->> +            memory->max_freq = memfreq[1] / HZ_PER_KHZ;
->> +        } else {
->> +            memory->min_freq = memfreq[0];
->> +            memory->max_freq = memfreq[1];
->> +        }
->> +        info->memory[info->memory_cnt++] = memory;
->> +
->> +        do {
->> +            snprintf(name, sizeof(name), "monitor-%d", 
->> memory->monitor_cnt);
->> +            struct device_node *monitor_np __free(device_node) =
->> +                of_get_child_by_name(memory_np, name);
->> +
->> +            if (!monitor_np)
->> +                break;
->> +
->> +            monitor = devm_kzalloc(&sdev->dev, sizeof(*monitor), 
->> GFP_KERNEL);
->> +            if (!monitor) {
->> +                ret = -ENOMEM;
->> +                goto err;
->> +            }
->> +
->> +            monitor->mon_type = of_property_read_bool(monitor_np, 
->> "qcom,compute-type");
->> +            if (!monitor->mon_type) {
->> +                ret = of_property_read_u32(monitor_np, "qcom,ipm-ceil",
->> +                               &monitor->ipm_ceil);
->> +                if (ret) {
->> +                    dev_err_probe(&sdev->dev, ret,
->> +                              "failed to read IPM ceiling\n");
->> +                    goto err;
->> +                }
->> +            }
->> +
->> +            /*
->> +             * Variants of the SoC having reduced number of cpus operate
->> +             * with the same number of logical cpus but the physical
->> +             * cpu disabled will differ between parts. Calculate the
->> +             * physical cpu number using cluster information instead.
->> +             */
->> +            ret = populate_physical_mask(monitor_np, &monitor->mask,
->> +                             info->cluster_info);
->> +            if (ret < 0) {
->> +                dev_err_probe(&sdev->dev, ret, "failed to populate 
->> cpu mask\n");
->> +                goto err;
->> +            }
->> +
+> Signed-off-by: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+> ---
+> Amirreza Zarrabi (3):
+>       firmware: qcom: implement object invoke support
+>       firmware: qcom: implement memory object support for TEE
+>       firmware: qcom: implement ioctl for TEE object invocation
 > 
-> Above error check is not needed as populate_physical_mask always return 0.
-
-ack, will fix this in the next re-spin.
-
+>  drivers/firmware/qcom/Kconfig                      |   36 +
+>  drivers/firmware/qcom/Makefile                     |    2 +
+>  drivers/firmware/qcom/qcom_object_invoke/Makefile  |   12 +
+>  drivers/firmware/qcom/qcom_object_invoke/async.c   |  142 +++
+>  drivers/firmware/qcom/qcom_object_invoke/core.c    | 1139 ++++++++++++++++++
+>  drivers/firmware/qcom/qcom_object_invoke/core.h    |  186 +++
+>  .../qcom/qcom_object_invoke/qcom_scm_invoke.c      |   22 +
+>  .../firmware/qcom/qcom_object_invoke/release_wq.c  |   90 ++
+>  .../qcom/qcom_object_invoke/xts/mem_object.c       |  406 +++++++
+>  .../qcom_object_invoke/xts/object_invoke_uapi.c    | 1231 ++++++++++++++++++++
+>  include/linux/firmware/qcom/qcom_object_invoke.h   |  233 ++++
+>  include/uapi/misc/qcom_tee.h                       |  117 ++
+>  12 files changed, 3616 insertions(+)
+> ---
+> base-commit: 74564adfd3521d9e322cfc345fdc132df80f3c79
+> change-id: 20240702-qcom-tee-object-and-ioctls-6f52fde03485
 > 
+> Best regards,
+> -- 
+> Amirreza Zarrabi <quic_azarrabi@quicinc.com>
 > 
->> +            monitor->freq_map = init_cpufreq_memfreq_map(&sdev->dev, 
->> memory, monitor_np,
->> +                                     &monitor->freq_map_len);
->> +            if (IS_ERR(monitor->freq_map)) {
->> +                dev_err_probe(&sdev->dev, PTR_ERR(monitor->freq_map),
->> +                          "failed to populate cpufreq-memfreq map\n");
->> +                goto err;
->> +            }
->> +
->> +            strscpy(monitor->mon_name, name, sizeof(monitor->mon_name));
->> +            monitor->mon_idx = memory->monitor_cnt;
->> +
->> +            memory->monitor[memory->monitor_cnt++] = monitor;
-> 
-> If from dt, more than 4 monitor are passed then this may lead to 
-> overflow, adding a check and giving warning in case number of monitor 
-> exceeds MAX_MONITOR_CNT will be better idea.
 
-I'll make sure to account for ^^ by either switching to dynamic
-allocation or by using MAX_MONITOR_CNT.
-
-> 
-> 
->> +        } while (1);
->> +
-
-[...]
-
->> +MODULE_DESCRIPTION("QTI SCMI client driver");
->> +MODULE_LICENSE("GPL");
+-- 
+With best wishes
+Dmitry
 
