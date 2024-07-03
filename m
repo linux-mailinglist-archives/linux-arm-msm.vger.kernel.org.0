@@ -1,228 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-25181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5041A9265A7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 18:09:59 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 874839265D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 18:19:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C143D1F23088
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 16:09:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AC7A31C216BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 16:19:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DA7C18306E;
-	Wed,  3 Jul 2024 16:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88B2C1822C1;
+	Wed,  3 Jul 2024 16:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bcZIgWdS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l5+fHgwL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7DF181CEC;
-	Wed,  3 Jul 2024 16:08:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEBC180A86;
+	Wed,  3 Jul 2024 16:18:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720022940; cv=none; b=TYcloX+Qw45xVZ1ebsuX3lreMSrtg9cYjMsJ6AbL2MaA/TJpUSFdfBch4zL6GAOHuZOcLmQHmf1yzBRef6l6L9U23jFp15zE9rboy9VBV+slDVm6/XVIiEf5+wEadv/3AJi0qRio2MvS39GiAbvpBq1IEnyXMj4UrqR9Vb+32A4=
+	t=1720023539; cv=none; b=GBx0pXQueI1UJkPF+FC07qax0JbALYBgkmJz92qORzI52lFBIrbgLqX6XselhBFqmrZN6lmu0+/Jfmg1ipYG/w9SXssvv50DCOSEJkFVRimI2ETBmkAA9Vbk66Yql0rK3uLHuZUhwDjliDaPOPT5bUixRUvqiNozUTZ7sACWJAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720022940; c=relaxed/simple;
-	bh=Wrl2QCxQh9DL4QM23kjgDJ21J8YSKTQXFbPMz9pni74=;
+	s=arc-20240116; t=1720023539; c=relaxed/simple;
+	bh=gsbxeyzBgRva3YUtYUEpVxn4Ojk5LKZtDO81mCspOh8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=msdAkZkWBlvjE21yyKJfpivHiPXxWcu+GAaBNTIvCEwqtLjeLR1i92KSjQw6r/bIyETEi+qKYOY6dEizW26anU+Qfg4QJ15bjLgxChoTPXyMTLLxpySGnzDiSIcnXvHzYGg7cza4cxyxkXKjThH7b1RhHj5jTBam8DlbtxmsybY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bcZIgWdS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA87C4AF0E;
-	Wed,  3 Jul 2024 16:08:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720022939;
-	bh=Wrl2QCxQh9DL4QM23kjgDJ21J8YSKTQXFbPMz9pni74=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=bcZIgWdSHl9HqQ9LWnmRQCxhKdtymnFvObDMowIfDX0vIXUhmbAhMgYTRkUSumnAR
-	 m3SBYSqMuezR0YxitmmwBymOefuijwH0aS8P6SMCa0dEAEbUuZDgaSQ58OxUvnl6HJ
-	 i0hCxuUii7tmCd6aeedo/Nn5S7+Qe0cCw1ig1l76LEklhotELD0NfRMWK9XLXpxAOj
-	 cQavn/1t2QmSQZ2noBvZ7som789iL75LNcJdVTzw/oxkvBbpJP1Dtdsr9VXV9hhtGI
-	 0LgnXIEA0cC2qlw2z4OPhcIg6fW/5ZSPmORwAEzViUYgJNMEjmGECtwIpuo80hy48i
-	 mwGqlWHLHmC6g==
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-25e19ad0050so78493fac.0;
-        Wed, 03 Jul 2024 09:08:59 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVWKQWCHNiDXrHDIUI44c3NDRla27AdvzgXeU42/ib8wUxNQcn+rlPEzF4uEBWEEgT2LQliUm2RX47I8+7+6yLSFT2TYVEw+Nq9ek3KIxkOAdWd6v6qerSo9MEfAfp+jIiO5P3+qQX/T1ETrcQhS4bweAe1fPyxPR/Hn1Y7rwCRHt4xIan9
-X-Gm-Message-State: AOJu0YyyIxR9k9bFYd1dG5AYEr9jZVlpWejPrxY3V5Fms5fy3b2IAddf
-	/J0MCYRlUxlLxEhusLVLsRZY+QvqfxphdsI9pLKT7Yn1x0tkU2m0fHSWYEj/h/aREqO9cpKKMna
-	W1IbI1aht+DM+Hw7BQXUwZDezCXE=
-X-Google-Smtp-Source: AGHT+IG/+G5oxAf3pRAL08K5QVCFB8+ouzzqF/SX5Qi842HGV2jF2VSe0OAQWbDffHLH1vdDzdUWiacN6hqcO09jXs0=
-X-Received: by 2002:a05:6870:8a0b:b0:25c:f5f8:a7fd with SMTP id
- 586e51a60fabf-25db34044admr11982494fac.2.1720022938630; Wed, 03 Jul 2024
- 09:08:58 -0700 (PDT)
+	 To:Cc:Content-Type; b=m5We2pS6ssQDwSP+/UUHvbk+Hf7gdDZRPkXvOEAiuapT9mDjwMssbva1hNZbYYBZgxaPYgFft/aWBHBRTIwol9gWSfkqmGVwvRqUCO7gB8CqepWxOzZkPcHkW0sop+AbqQESpUaMdhoh2S+uR9SwrjXr9ANxLTlsm4j+R4aVq/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l5+fHgwL; arc=none smtp.client-ip=209.85.208.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-58b0dddab63so4130103a12.3;
+        Wed, 03 Jul 2024 09:18:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720023536; x=1720628336; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=esD+x2zV0b2HUw6HwJUTrpl5r5TD37X0+FbuUmt4lJo=;
+        b=l5+fHgwLgTbW/rklc0uxKu5E3EKuEB85AUGRXKUPNDAIpp7Y/xsAY2aczUEoRlgGI2
+         amrIU3fEqvRbJvoBjc0ADVuqMoCVKnY3AQTzivTJK8hl/VM9CF6AtLaCUsGMWvI+f3H2
+         lrSpQKwERSDi/XlXqH3nLHIBbpe46oglbP109US4FN6e5pCJD7TTPlkkDkTkULk9xjBi
+         lNDzDzt6Z4XyhVpDA/1FX1YQvaSeq10DChx7EPYjaMOPKUhqjQn650UcAqEKWJuBVUXM
+         Uz30HlAg5H9aKye7HkD8jZy1J+SY9QGuuTP5mBpglqkXQEtYqZxB1zgbCzNYY2v4N9cw
+         zvpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720023536; x=1720628336;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=esD+x2zV0b2HUw6HwJUTrpl5r5TD37X0+FbuUmt4lJo=;
+        b=T1UtzYRnzTfGPbknVvxw+GGFP9fPY98fSizHV9hOe1S78EFLdti4RXUK7vbCmaMEdw
+         rD6LkLwBvuQl8c9WOUSMiwgji3ohu1QRCIhYEmYreo0y0mYFl4DoABaAz+Ut8N2/CsWQ
+         k94Kg4kCjAqoQn9mMdw6X4md02ncRFGQ+kyF6ewUHjGWuPl90lEGwwJUR+8rvZ8KZF3x
+         J8cV5hBH5JI2opKa8/t1jBXkYYKPOYLO7dnPSNPvcy47lXsRvF0MOQlLBULFmJQMyasX
+         ZvS788/fqfrENtJ+SsuTHnfrdSH8RMguceXZe1lAsy0k6L8J5UDbywRpwLGDIiwPjxWR
+         7YIw==
+X-Forwarded-Encrypted: i=1; AJvYcCV+2Aoay+aL+Gn3tbbcqIQeN6AKTqyed6JCR5BcF4mnZx8tK3KVa3dQpluZNeqFnn4SQclyoDW0sB2E7c7onFS7T/tStp0dVCOFh7AHz8AKmCAOxIFhcVudESmX8QtYNcb2yS8F+CCnH475LA==
+X-Gm-Message-State: AOJu0Yy5qlLvoQh0o6/J6VVvNAuZp5wLiG6YBa6c9pDnyvBKCK8GHWIA
+	Ek/jH7lZjXEvZjfdilqpQNPUdza6OA/fSreIydLez6HgkRhare/ARrnM9t/coviCtJIvQS2DKk6
+	OIgHnntTcLS6x8G5o1XWrRlETInc=
+X-Google-Smtp-Source: AGHT+IFrxgGuzaRNyApPFpENAxOnyEk7yjeXF5TSrqyg43Iliri20si+kBcM7kVZGYcFuq65U5baHs//egURPR5OvQI=
+X-Received: by 2002:a50:e705:0:b0:57c:fa44:7a04 with SMTP id
+ 4fb4d7f45d1cf-587a0bfeb3bmr7434340a12.39.1720023535793; Wed, 03 Jul 2024
+ 09:18:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <2764814.mvXUDI8C0e@rjwysocki.net> <2ed4c630-204a-4f80-a37f-f2ca838eb455@linaro.org>
- <8d91a3c1-018f-495b-83be-979b795b5548@linaro.org> <12c5c133-9519-4a26-b9a3-2da1d3466e94@linaro.org>
- <15b67ce6-3238-435d-ad28-7c06efbe9153@linaro.org>
-In-Reply-To: <15b67ce6-3238-435d-ad28-7c06efbe9153@linaro.org>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Wed, 3 Jul 2024 18:08:47 +0200
-X-Gmail-Original-Message-ID: <CAJZ5v0jiCgPKRha81NyUChNVGe02+GDNX442NsZL=XDPao_4WA@mail.gmail.com>
-Message-ID: <CAJZ5v0jiCgPKRha81NyUChNVGe02+GDNX442NsZL=XDPao_4WA@mail.gmail.com>
-Subject: Re: [PATCH v2] thermal: core: Call monitor_thermal_zone() if zone
- temperature is invalid
-To: Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc: neil.armstrong@linaro.org, "Rafael J. Wysocki" <rjw@rjwysocki.net>, 
-	Linux PM <linux-pm@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
-	Lukasz Luba <lukasz.luba@arm.com>, 
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>, Zhang Rui <rui.zhang@intel.com>, 
-	linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: multipart/mixed; boundary="0000000000004400ae061c5a0c44"
-
---0000000000004400ae061c5a0c44
+References: <20240626204033.255813-1-robdclark@gmail.com> <20240626204033.255813-2-robdclark@gmail.com>
+ <20240703150205.GA6012@willie-the-truck>
+In-Reply-To: <20240703150205.GA6012@willie-the-truck>
+From: Rob Clark <robdclark@gmail.com>
+Date: Wed, 3 Jul 2024 09:18:43 -0700
+Message-ID: <CAF6AEGsgN8O2eJGqcJm1UaPzV2rWSXskAc+A8uk0mVbsj8Wm8A@mail.gmail.com>
+Subject: Re: [PATCH v5 1/2] iommu/io-pgtable-arm: Add way to debug pgtable walk
+To: Will Deacon <will@kernel.org>
+Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	Robin Murphy <robin.murphy@arm.com>, Rob Clark <robdclark@chromium.org>, 
+	Joerg Roedel <joro@8bytes.org>, Jason Gunthorpe <jgg@ziepe.ca>, Steven Price <steven.price@arm.com>, 
+	Boris Brezillon <boris.brezillon@collabora.com>, Kevin Tian <kevin.tian@intel.com>, 
+	Joao Martins <joao.m.martins@oracle.com>, 
+	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>, 
+	open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 3, 2024 at 4:00=E2=80=AFPM Daniel Lezcano <daniel.lezcano@linar=
-o.org> wrote:
+On Wed, Jul 3, 2024 at 8:02=E2=80=AFAM Will Deacon <will@kernel.org> wrote:
 >
-> On 03/07/2024 14:43, neil.armstrong@linaro.org wrote:
-> > Hi,
-> >
-> > On 03/07/2024 14:25, Daniel Lezcano wrote:
-> >>
-> >> Hi Neil,
-> >>
-> >> it seems there is something wrong with the driver actually.
-> >>
-> >> There can be a moment where the sensor is not yet initialized for
-> >> different reason, so reading the temperature fails. The routine will
-> >> just retry until the sensor gets ready.
-> >>
-> >> Having these errors seem to me that the sensor for this specific
-> >> thermal zone is never ready which may be the root cause of your issue.
-> >> The change is spotting this problem IMO.
-> >
-> > Probably, but it gets printed every second until system shutdown, but
-> > only for a single thermal_zone.
-> >
-> > Using v1 of Rafael's patch makes the message disappear completely.
+> Hi Rob,
 >
-> Yes, because you have probably the thermal zone polling delay set to
-> zero, thus it fails the first time and does no longer try to set it up
-> again. The V1 is an incomplete fix.
+> On Wed, Jun 26, 2024 at 01:40:26PM -0700, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > Add an io-pgtable method to walk the pgtable returning the raw PTEs tha=
+t
+> > would be traversed for a given iova access.
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >  drivers/iommu/io-pgtable-arm.c | 34 +++++++++++++++++++++++++---------
+> >  include/linux/io-pgtable.h     | 16 ++++++++++++++++
+> >  2 files changed, 41 insertions(+), 9 deletions(-)
 >
-> Very likely the problem is in the sensor platform driver, or in the
-> thermal zone description in the device tree which describes a non
-> functional thermal zone.
+> Non-technical question, but with patch 2/2 being drm-specific, how do
+> you plan to get this merged this once it's finalised? I can take this
+> part via the IOMMU tree?
 
-I agree, but polling this useless thermal zone forever is not
-particularly useful.
+I guess if need be, I could merge the drm part only after the iommu
+part lands.  We've lived with an earlier iteration of these series as
+downstream patches in the CrOS kernel for this long, it isn't the end
+of the world if it takes a bit longer
 
-I was kind of afraid that something like this would happen, but then I
-didn't want to complicate the patch unnecessarily until I knew that it
-really would happen.
+> > +static phys_addr_t arm_lpae_iova_to_phys(struct io_pgtable_ops *ops,
+> > +                                      unsigned long iova)
+> > +{
+> > +     struct arm_lpae_io_pgtable *data =3D io_pgtable_ops_to_data(ops);
+> > +     struct io_pgtable_walk_data wd =3D {};
+> > +     int ret, lvl;
+> > +
+> > +     ret =3D arm_lpae_pgtable_walk(ops, iova, &wd);
+> > +     if (ret)
+> > +             return 0;
+> > +
+> > +     lvl =3D wd.level + data->start_level;
+>
+> nit, but the level is architectural so I think we should initialise
+> wd.level to data->start_level instead.
 
-So attached is a modification of the $subject patch that will double
-the temperature recheck delay after every failed attempt to get the
-zone temperature and it will give up eventually (in this particular
-version, after the recheck delay exceeds 30 s).
+Hmm, I wanted to use wd.level to get the index of the last entry in
+wd.ptes.  Perhaps I should just call it something other than 'level'
+instead?
 
-I would appreciate giving it a go (obviously, by replacing the
-$subject one with it).
+> >
+> > -found_translation:
+> >       iova &=3D (ARM_LPAE_BLOCK_SIZE(lvl, data) - 1);
+> > -     return iopte_to_paddr(pte, data) | iova;
+> > +     return iopte_to_paddr(wd.ptes[wd.level - 1], data) | iova;
+> >  }
+> >
+> >  static void arm_lpae_restrict_pgsizes(struct io_pgtable_cfg *cfg)
+> > @@ -804,6 +819,7 @@ arm_lpae_alloc_pgtable(struct io_pgtable_cfg *cfg)
+> >               .map_pages      =3D arm_lpae_map_pages,
+> >               .unmap_pages    =3D arm_lpae_unmap_pages,
+> >               .iova_to_phys   =3D arm_lpae_iova_to_phys,
+> > +             .pgtable_walk   =3D arm_lpae_pgtable_walk,
+> >       };
+> >
+> >       return data;
+> > diff --git a/include/linux/io-pgtable.h b/include/linux/io-pgtable.h
+> > index 86cf1f7ae389..4d696724c7da 100644
+> > --- a/include/linux/io-pgtable.h
+> > +++ b/include/linux/io-pgtable.h
+> > @@ -171,12 +171,26 @@ struct io_pgtable_cfg {
+> >       };
+> >  };
+> >
+> > +/**
+> > + * struct io_pgtable_walk_data - information from a pgtable walk
+> > + *
+> > + * @ptes:     The recorded PTE values from the walk
+> > + * @level:    The level of the last PTE
+> > + *
+> > + * @level also specifies the last valid index in @ptes
+> > + */
+> > +struct io_pgtable_walk_data {
+> > +     u64 ptes[4];
+> > +     int level;
+> > +};
+>
+> I wonder if we can do better than hardcoding the '4' here? I wouldn't be
+> surprised if this doesn't work, but could we do something along the
+> lines of:
+>
+> struct io_pgtable_walk_data {
+>         int level;
+>         int num_levels;
+>         u64 ptes[] __counted_by(num_levels);
+> };
+>
+> and then have the Arm (LPAE)-specific code wrap that in a private
+> structure:
+>
+> struct arm_lpae_io_pgtable_walk_data {
+>         struct io_pgtable_walk_data data;
+>         u64 ptes[ARM_LPAE_MAX_LEVELS];
+> };
+>
+> which is used by the walker?
 
---0000000000004400ae061c5a0c44
-Content-Type: text/x-patch; charset="US-ASCII"; name="thermal-poll-if-temp-invalid-v3.patch"
-Content-Disposition: attachment; 
-	filename="thermal-poll-if-temp-invalid-v3.patch"
-Content-Transfer-Encoding: base64
-Content-ID: <f_ly617b6o0>
-X-Attachment-Id: f_ly617b6o0
+I guess we could just make the walk_data fxn ptr arg a void* and
+rename io_pgtable_walk_data -> io_lpae_pgtable_walk_data?  I'm not
+sure how hard to try to make this interface generic when I think it is
+probably only going to be used by code that knows what pgtable format
+is used.  It's kinda the same question about what type to use for the
+pte.  Maybe the answer is just "it's pgtable format dependent"?
 
-RnJvbTogUmFmYWVsIEouIFd5c29ja2kgPHJhZmFlbC5qLnd5c29ja2lAaW50ZWwuY29tPgpTdWJq
-ZWN0OiBbUEFUQ0ggdjNdIHRoZXJtYWw6IGNvcmU6IENhbGwgbW9uaXRvcl90aGVybWFsX3pvbmUo
-KSBpZiB6b25lIHRlbXBlcmF0dXJlIGlzIGludmFsaWQKCkNvbW1pdCAyMDJhYTBkNGJiNTMgKCJ0
-aGVybWFsOiBjb3JlOiBEbyBub3QgY2FsbCBoYW5kbGVfdGhlcm1hbF90cmlwKCkKaWYgem9uZSB0
-ZW1wZXJhdHVyZSBpcyBpbnZhbGlkIikgY2F1c2VkIF9fdGhlcm1hbF96b25lX2RldmljZV91cGRh
-dGUoKQp0byByZXR1cm4gZWFybHkgaWYgdGhlIGN1cnJlbnQgdGhlcm1hbCB6b25lIHRlbXBlcmF0
-dXJlIHdhcyBpbnZhbGlkLgoKVGhpcyB3YXMgZG9uZSB0byBhdm9pZCBydW5uaW5nIGhhbmRsZV90
-aGVybWFsX3RyaXAoKSBhbmQgZ292ZXJub3IKY2FsbGJhY2tzIGluIHRoYXQgY2FzZSB3aGljaCBs
-ZWQgdG8gY29uZnVzaW9uLiAgSG93ZXZlciwgaXQgd2VudCB0b28KZmFyIGJlY2F1c2UgbW9uaXRv
-cl90aGVybWFsX3pvbmUoKSBzdGlsbCBuZWVkcyB0byBiZSBjYWxsZWQgZXZlbiB3aGVuCnRoZSB6
-b25lIHRlbXBlcmF0dXJlIGlzIGludmFsaWQgdG8gZW5zdXJlIHRoYXQgaXQgd2lsbCBiZSB1cGRh
-dGVkCmV2ZW50dWFsbHkgaW4gY2FzZSB0aGVybWFsIHBvbGxpbmcgaXMgZW5hYmxlZCBhbmQgdGhl
-IGRyaXZlciBoYXMgbm8Kb3RoZXIgbWVhbnMgdG8gbm90aWZ5IHRoZSBjb3JlIG9mIHpvbmUgdGVt
-cGVyYXR1cmUgY2hhbmdlcyAoZm9yIGV4YW1wbGUsCml0IGRvZXMgbm90IHJlZ2lzdGVyIGFuIGlu
-dGVycnVwdCBoYW5kbGVyIG9yIEFDUEkgbm90aWZpZXIpLgoKQWxzbyBpZiB0aGUgLnNldF90cmlw
-cygpIHpvbmUgY2FsbGJhY2sgaXMgZXhwZWN0ZWQgdG8gc2V0IHVwIG1vbml0b3JpbmcKaW50ZXJy
-dXB0cyBmb3IgYSB0aGVybWFsIHpvbmUsIGl0IG5lZWRzIHRvIGJlIHByb3ZpZGVkIHdpdGggdmFs
-aWQKYm91bmRhcmllcyBhbmQgdGhhdCBjYW4gb25seSBiZSBkb25lIGlmIHRoZSB6b25lIHRlbXBl
-cmF0dXJlIGlzIGtub3duLgoKQWNjb3JkaW5nbHksIHRvIGVuc3VyZSB0aGF0IF9fdGhlcm1hbF96
-b25lX2RldmljZV91cGRhdGUoKSB3aWxsCnJ1biBhZ2FpbiBhZnRlciBhIGZhaWxpbmcgem9uZSB0
-ZW1wZXJhdHVyZSBjaGVjaywgbWFrZSBpdCBjYWxsCm1vbml0b3JfdGhlcm1hbF96b25lKCkgcmVn
-YXJkbGVzcyBvZiB3aGV0aGVyIG9yIG5vdCB0aGUgem9uZQp0ZW1wZXJhdHVyZSBpcyB2YWxpZCBh
-bmQgbWFrZSB0aGUgbGF0dGVyIHNjaGVkdWxlIGEgdGhlcm1hbCB6b25lCnRlbXBlcmF0dXJlIHVw
-ZGF0ZSBpZiB0aGUgem9uZSB0ZW1wZXJhdHVyZSBpcyBpbnZhbGlkIGV2ZW4gaWYKcG9sbGluZyBp
-cyBub3QgZW5hYmxlZCBmb3IgdGhlIHRoZXJtYWwgem9uZSAoaG93ZXZlciwgaWYgdGhpcwpjb250
-aW51ZXMgdG8gZmFpbCwgZ2l2ZSB1cCBhZnRlciBzb21lIHRpbWUpLgoKRml4ZXM6IDIwMmFhMGQ0
-YmI1MyAoInRoZXJtYWw6IGNvcmU6IERvIG5vdCBjYWxsIGhhbmRsZV90aGVybWFsX3RyaXAoKSBp
-ZiB6b25lIHRlbXBlcmF0dXJlIGlzIGludmFsaWQiKQpSZXBvcnRlZC1ieTogRGFuaWVsIExlemNh
-bm8gPGRhbmllbC5sZXpjYW5vQGxpbmFyby5vcmc+ClNpZ25lZC1vZmYtYnk6IFJhZmFlbCBKLiBX
-eXNvY2tpIDxyYWZhZWwuai53eXNvY2tpQGludGVsLmNvbT4KLS0tCiBkcml2ZXJzL3RoZXJtYWwv
-dGhlcm1hbF9jb3JlLmMgfCAgIDEzICsrKysrKysrKysrKy0KIGRyaXZlcnMvdGhlcm1hbC90aGVy
-bWFsX2NvcmUuaCB8ICAgIDkgKysrKysrKysrCiAyIGZpbGVzIGNoYW5nZWQsIDIxIGluc2VydGlv
-bnMoKyksIDEgZGVsZXRpb24oLSkKCkluZGV4OiBsaW51eC1wbS9kcml2ZXJzL3RoZXJtYWwvdGhl
-cm1hbF9jb3JlLmMKPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PQotLS0gbGludXgtcG0ub3JpZy9kcml2ZXJzL3RoZXJtYWwv
-dGhlcm1hbF9jb3JlLmMKKysrIGxpbnV4LXBtL2RyaXZlcnMvdGhlcm1hbC90aGVybWFsX2NvcmUu
-YwpAQCAtMzAwLDYgKzMwMCwxNCBAQCBzdGF0aWMgdm9pZCBtb25pdG9yX3RoZXJtYWxfem9uZShz
-dHJ1Y3QKIAkJdGhlcm1hbF96b25lX2RldmljZV9zZXRfcG9sbGluZyh0eiwgdHotPnBhc3NpdmVf
-ZGVsYXlfamlmZmllcyk7CiAJZWxzZSBpZiAodHotPnBvbGxpbmdfZGVsYXlfamlmZmllcykKIAkJ
-dGhlcm1hbF96b25lX2RldmljZV9zZXRfcG9sbGluZyh0eiwgdHotPnBvbGxpbmdfZGVsYXlfamlm
-Zmllcyk7CisJZWxzZSBpZiAodHotPnRlbXBlcmF0dXJlID09IFRIRVJNQUxfVEVNUF9JTlZBTElE
-ICYmCisJCSB0ei0+cmVjaGVja19kZWxheV9qaWZmaWVzIDw9IFRIRVJNQUxfTUFYX1JFQ0hFQ0tf
-REVMQVkpIHsKKwkJdGhlcm1hbF96b25lX2RldmljZV9zZXRfcG9sbGluZyh0eiwgdHotPnJlY2hl
-Y2tfZGVsYXlfamlmZmllcyk7CisJCS8qIERvdWJsZSB0aGUgcmVjaGVjayBkZWxheSBmb3IgdGhl
-IG5leHQgYXR0ZW1wdC4gKi8KKwkJdHotPnJlY2hlY2tfZGVsYXlfamlmZmllcyArPSB0ei0+cmVj
-aGVja19kZWxheV9qaWZmaWVzOworCQlpZiAodHotPnJlY2hlY2tfZGVsYXlfamlmZmllcyA+IFRI
-RVJNQUxfTUFYX1JFQ0hFQ0tfREVMQVkpCisJCQlkZXZfaW5mbygmdHotPmRldmljZSwgIlRlbXBl
-cmF0dXJlIHVua25vd24sIGdpdmluZyB1cFxuIik7CisJfQogfQogCiBzdGF0aWMgc3RydWN0IHRo
-ZXJtYWxfZ292ZXJub3IgKnRoZXJtYWxfZ2V0X3R6X2dvdmVybm9yKHN0cnVjdCB0aGVybWFsX3pv
-bmVfZGV2aWNlICp0eikKQEAgLTQzMCw2ICs0MzgsNyBAQCBzdGF0aWMgdm9pZCB1cGRhdGVfdGVt
-cGVyYXR1cmUoc3RydWN0IHRoCiAKIAl0ei0+bGFzdF90ZW1wZXJhdHVyZSA9IHR6LT50ZW1wZXJh
-dHVyZTsKIAl0ei0+dGVtcGVyYXR1cmUgPSB0ZW1wOworCXR6LT5yZWNoZWNrX2RlbGF5X2ppZmZp
-ZXMgPSAxOwogCiAJdHJhY2VfdGhlcm1hbF90ZW1wZXJhdHVyZSh0eik7CiAKQEAgLTUxNCw3ICs1
-MjMsNyBAQCB2b2lkIF9fdGhlcm1hbF96b25lX2RldmljZV91cGRhdGUoc3RydWN0CiAJdXBkYXRl
-X3RlbXBlcmF0dXJlKHR6KTsKIAogCWlmICh0ei0+dGVtcGVyYXR1cmUgPT0gVEhFUk1BTF9URU1Q
-X0lOVkFMSUQpCi0JCXJldHVybjsKKwkJZ290byBtb25pdG9yOwogCiAJdHotPm5vdGlmeV9ldmVu
-dCA9IGV2ZW50OwogCkBAIC01MzYsNiArNTQ1LDcgQEAgdm9pZCBfX3RoZXJtYWxfem9uZV9kZXZp
-Y2VfdXBkYXRlKHN0cnVjdAogCiAJdGhlcm1hbF9kZWJ1Z191cGRhdGVfdHJpcF9zdGF0cyh0eik7
-CiAKK21vbml0b3I6CiAJbW9uaXRvcl90aGVybWFsX3pvbmUodHopOwogfQogCkBAIC0xNDM4LDYg
-KzE0NDgsNyBAQCB0aGVybWFsX3pvbmVfZGV2aWNlX3JlZ2lzdGVyX3dpdGhfdHJpcHMoCiAKIAl0
-aGVybWFsX3NldF9kZWxheV9qaWZmaWVzKCZ0ei0+cGFzc2l2ZV9kZWxheV9qaWZmaWVzLCBwYXNz
-aXZlX2RlbGF5KTsKIAl0aGVybWFsX3NldF9kZWxheV9qaWZmaWVzKCZ0ei0+cG9sbGluZ19kZWxh
-eV9qaWZmaWVzLCBwb2xsaW5nX2RlbGF5KTsKKwl0ei0+cmVjaGVja19kZWxheV9qaWZmaWVzID0g
-MTsKIAogCS8qIHN5cyBJL0YgKi8KIAkvKiBBZGQgbm9kZXMgdGhhdCBhcmUgYWx3YXlzIHByZXNl
-bnQgdmlhIC5ncm91cHMgKi8KSW5kZXg6IGxpbnV4LXBtL2RyaXZlcnMvdGhlcm1hbC90aGVybWFs
-X2NvcmUuaAo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09Ci0tLSBsaW51eC1wbS5vcmlnL2RyaXZlcnMvdGhlcm1hbC90aGVy
-bWFsX2NvcmUuaAorKysgbGludXgtcG0vZHJpdmVycy90aGVybWFsL3RoZXJtYWxfY29yZS5oCkBA
-IC02Nyw2ICs2Nyw4IEBAIHN0cnVjdCB0aGVybWFsX2dvdmVybm9yIHsKICAqIEBwb2xsaW5nX2Rl
-bGF5X2ppZmZpZXM6IG51bWJlciBvZiBqaWZmaWVzIHRvIHdhaXQgYmV0d2VlbiBwb2xscyB3aGVu
-CiAgKgkJCWNoZWNraW5nIHdoZXRoZXIgdHJpcCBwb2ludHMgaGF2ZSBiZWVuIGNyb3NzZWQgKDAg
-Zm9yCiAgKgkJCWludGVycnVwdCBkcml2ZW4gc3lzdGVtcykKKyAqIEByZWNoZWNrX2RlbGF5X2pp
-ZmZpZXM6IGRlbGF5IGFmdGVyIGEgZmFpbGVkIHRoZXJtYWwgem9uZSB0ZW1wZXJhdHVyZSBjaGVj
-aworICogCQkJYmVmb3JlIGF0dGVtcHRpbmcgdG8gY2hlY2sgaXQgYWdhaW4KICAqIEB0ZW1wZXJh
-dHVyZToJY3VycmVudCB0ZW1wZXJhdHVyZS4gIFRoaXMgaXMgb25seSBmb3IgY29yZSBjb2RlLAog
-ICoJCQlkcml2ZXJzIHNob3VsZCB1c2UgdGhlcm1hbF96b25lX2dldF90ZW1wKCkgdG8gZ2V0IHRo
-ZQogICoJCQljdXJyZW50IHRlbXBlcmF0dXJlCkBAIC0xMDgsNiArMTEwLDcgQEAgc3RydWN0IHRo
-ZXJtYWxfem9uZV9kZXZpY2UgewogCWludCBudW1fdHJpcHM7CiAJdW5zaWduZWQgbG9uZyBwYXNz
-aXZlX2RlbGF5X2ppZmZpZXM7CiAJdW5zaWduZWQgbG9uZyBwb2xsaW5nX2RlbGF5X2ppZmZpZXM7
-CisJdW5zaWduZWQgbG9uZyByZWNoZWNrX2RlbGF5X2ppZmZpZXM7CiAJaW50IHRlbXBlcmF0dXJl
-OwogCWludCBsYXN0X3RlbXBlcmF0dXJlOwogCWludCBlbXVsX3RlbXBlcmF0dXJlOwpAQCAtMTMz
-LDYgKzEzNiwxMiBAQCBzdHJ1Y3QgdGhlcm1hbF96b25lX2RldmljZSB7CiAJc3RydWN0IHRoZXJt
-YWxfdHJpcF9kZXNjIHRyaXBzW10gX19jb3VudGVkX2J5KG51bV90cmlwcyk7CiB9OwogCisvKgor
-ICogTWF4aW11bSBkZWxheSBhZnRlciBhIGZhaWxpbmcgdGhlcm1hbCB6b25lIHRlbXBlcmF0dXJl
-IGNoZWNrIGJlZm9yZQorICogYXR0ZW1wdGluZyB0byBjaGVjayBpdCBhZ2FpbiAoaW4gamlmZmll
-cykuCisgKi8KKyNkZWZpbmUgVEhFUk1BTF9NQVhfUkVDSEVDS19ERUxBWQkoMzAgKiBIWikKKwog
-LyogRGVmYXVsdCBUaGVybWFsIEdvdmVybm9yICovCiAjaWYgZGVmaW5lZChDT05GSUdfVEhFUk1B
-TF9ERUZBVUxUX0dPVl9TVEVQX1dJU0UpCiAjZGVmaW5lIERFRkFVTFRfVEhFUk1BTF9HT1ZFUk5P
-UiAgICAgICAic3RlcF93aXNlIgo=
---0000000000004400ae061c5a0c44--
+BR,
+-R
 
