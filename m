@@ -1,142 +1,261 @@
-Return-Path: <linux-arm-msm+bounces-25116-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D2B9925C92
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 13:19:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5621B925B31
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 13:06:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5759BB3421C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:05:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8B386282A68
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:05:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7539916B390;
-	Wed,  3 Jul 2024 10:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A28121822DA;
+	Wed,  3 Jul 2024 10:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MHAe3FTa"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uJ0g6iqW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE11B181CF0
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 10:54:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB3F1822CE
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 10:54:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720004047; cv=none; b=A3qDVjvCaCPifhYLOKssftpx9eM4fvJCglxWtQrGPXje34RWVIj+sAuP79h7Rkx7ENrkfGZ0VdyL3AaFEfu+iT0zm8vr8Oi63+cW6458X3nMf4T2pAvbpWaCoDNXe2cECimHRHvnqDNo3IFQdX3/QupOMTPt4izCu0KxmVteROg=
+	t=1720004048; cv=none; b=g2qD36FHiZcY1hiBq36BXsyDTNosT32sVC0srKc3l7WyD1mnu3R9typ6q8WhSceNUkSjFT4c22jAnMCBDqMDw7CxFD9Mr5GcMJh8wAgJbci+eJLIVUJPyPGa6DUqYr/dUIZakD3k+XBzEWCS8Yw2NFexN1aEd39gx0t+1lB7+9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720004047; c=relaxed/simple;
-	bh=NRBL4jAN6hjfyxISVZD05E8syLttrXlZkKCLenRZkDQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kX7AjuxlE2T4h/rKkgqRRHpKWzHDtjixr2lxPwxlIus9vp59CONqx3NX5XgoRKjaf2/N5a0ZMfNPu7LQP+8UvLYG/vmDNGq4EYphBNwANJAfL8XGn2wIIcpzCrPtY5Y2DcK1Pg58XTQfWU3Dg67jOXFcjzHY8sYQjII1bq7q48k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MHAe3FTa; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2ec4eefbaf1so55597381fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 03:54:05 -0700 (PDT)
+	s=arc-20240116; t=1720004048; c=relaxed/simple;
+	bh=v+LcIkQeE6VnibfYBosiQU36K7avbPdAnd6TRofVBqo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oRJsPili7LGzMYGeghhdNbFiel5TlaNSOap3t+NC+FdouFRiihX8r/Tvf4l4kZ7zxZxfr8I5mgP8gMCdi713w2trvmPKb/rvMAtP71uLrVRyF5bOh5NkIUOrcNIvl6ec1HU2/X6F7IpqTwCUFU9PYN12xI3XQdFxuUCeVrkxb/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uJ0g6iqW; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3627ef1fc07so3015499f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 03:54:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720004044; x=1720608844; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1720004045; x=1720608845; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:reply-to
+         :autocrypt:from:content-language:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=X+in5BXb/vtFxcHIZXRWviluH0ffdCxEZJKwCycdffI=;
-        b=MHAe3FTaKszuSNE2y/LPo61aACBO/T1SdzgzaSwKDzf+HIJUaYU2GMXyw4s2BgWya+
-         1W7/qGh5L0WFJgo0gRj6XTdPw+FRXNsUuYwnyTDr4LptLenpg1R1GnYjiz4wnNYTy3u/
-         IGh95WWexAkt7pLyzx5wVRPWogApf4FZMO9iRGexs+dpHxJ5Le+FEcUWGxe/OhVLYof7
-         G43z370KXQ+cggUMz308yReNbAqpVKtRiUIPcCbS3c8gXkvwyRiG/KZkQuP+sJZj95GT
-         cZ8T80ODDcJySuWLn22AyvBWs2xNgmz3a9oGzTkvVF4Xwp7lKyt82n2/iw6Tu3nC7fug
-         xsvA==
+        bh=+p6bEMX9YONbLaw0sZ5j1nuPhjD7JRXd1vca2HJaFig=;
+        b=uJ0g6iqWty+Stj1Bj6zC+FM6ieirsD9cVA+whqTQKfETgQa1+J16iHdPsXgvVHkbmJ
+         R8mvRcoQ6HA3ZbxfUQT0UxSZDRHrVrMNWVd5U47ZXDqVx9XdjIUEbbvdcx1jUSoP2PZk
+         fLGZ6xfNM1+vuQNRymVwr+uLzjLUkdMFLYX7MyldV5gR6i1yW/Wlwh2ZU6BYEkproXlK
+         49UB7jFivKb0HK82Kxw2kLXVMGxGlOrbYnRQRuOVFKFGTrc0iiiTFKJxG+dnFDqdmbn2
+         UDw1FHNB1YGzksbhMyw8+Jwf4Jb7AWHZY8TEX2yE4mv0oTA0x8jFkNzLVvVLdLRL5SC8
+         lWXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720004044; x=1720608844;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=X+in5BXb/vtFxcHIZXRWviluH0ffdCxEZJKwCycdffI=;
-        b=pGnTjKJx92j17lj5PCBeVrTfnCe2BxcrRT8AxqLroKXRwM+6/v4pl/4fOv9Jm0vBOJ
-         sxrocHtRs+XMSWoTAAIB3cd/2fIckWi2HpVhU/EmFKXD+6Yt87Et1+3M9Bq0Ix1xegFI
-         KyBJpsf80yixwbTQXCDroFBxiKz6LHnvmFQcfMBvQ6nDK2OTi0bcmXPRcWv6DZbSm8oq
-         pkkBatDKYXudd5iOFN6Vamyu/CboYcc7huWJ4jwHuGPCQxefmZNGlxmk8fTTKPVe0Hi5
-         3AxpenSuYrot4Ro6iNpxdSBaatzDvN1fPb8N9aqMLBjDZEyfy3bOA4iqtwiUHYvbYccS
-         Q2GQ==
-X-Gm-Message-State: AOJu0YxbIPl83sXhm890n/9fh11nk2POGj9QTjYv9fbARkIPPeI3unKD
-	KbRGjyNj7/P1qqkm/Q2AswUBYXVWt1nt7rD6AMD1e+kJvCWTQrJs
-X-Google-Smtp-Source: AGHT+IGkQhYp6C4iCdcLdDXmR0eESMCPMl+aTQRH6S1hhLyjnuBSp92V5VZ53UeIKqFXa98xzrHVjQ==
-X-Received: by 2002:a2e:b169:0:b0:2ee:8817:422b with SMTP id 38308e7fff4ca-2ee8817435emr4552951fa.19.1720004043456;
-        Wed, 03 Jul 2024 03:54:03 -0700 (PDT)
-Received: from [192.168.0.20] (cpc115152-dals23-2-0-cust532.20-2.cable.virginm.net. [86.12.82.21])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a0d9b1dsm15644879f8f.42.2024.07.03.03.54.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jul 2024 03:54:03 -0700 (PDT)
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Wed, 03 Jul 2024 11:53:49 +0100
-Subject: [PATCH v2 3/3] drm/msm: Expose expanded UBWC config uapi
+        d=1e100.net; s=20230601; t=1720004045; x=1720608845;
+        h=content-transfer-encoding:in-reply-to:organization:reply-to
+         :autocrypt:from:content-language:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=+p6bEMX9YONbLaw0sZ5j1nuPhjD7JRXd1vca2HJaFig=;
+        b=kqopiJT41Do3AyJl1t7jCfvrSkf063cEwkwbyoyxRpmY3I2PoIjsUWYdf7zw/ZDAmd
+         uM3BhfwJbZ/j9KzTCDN2/mCZPvW2R2YLYK7m+Sj08po+94j3PvJrmNTsIS9oAmfdSQe0
+         t/CWvvQBoQq4D0kg9wpXzrPIN8c4TRQqy/UarW7fhFHZwfsq1wn2CPbQVB27xiYloCjI
+         wIGkgmR5/aQ+b3nb/+hvkc9E7fl6XIqLTcD3Jz4HE7zhKGWIAPkBiiwKMwtL0CxRQkoH
+         /NTWEWc7pmBipt7gtFiAHiQTDchZC+A39ryNMPG54DcaWdk5zXHc2ABuOAI7knKFsPG2
+         PSdg==
+X-Forwarded-Encrypted: i=1; AJvYcCWC9GaWaGclmT3+OX2XlNdeKa87rt6G9KTAUKuzG39QEzsRRnUb2Cb4yJljG/wLKFuy8LYAD76dBmR/mRWNNXStf9ujt8XMfPsv0i29fA==
+X-Gm-Message-State: AOJu0YxO+Udz0ZPmicf+cc76R01vy9qIxEv9AbnIstzjZtCqxw1IYlKt
+	UEFV7VqTY/mPKRFeGCsWZK+y0MLifwT43ZZFPbUOu3ujVc8UQi5e8zv8w/9k7ZE=
+X-Google-Smtp-Source: AGHT+IFS2NEtwIRqoxk93UeQqIVriDU61FHBi9UJSFAeOh6tVg5an4pMMJC6ImdbMh2ie+e8fG+bHw==
+X-Received: by 2002:adf:f012:0:b0:367:9795:92ba with SMTP id ffacd0b85a97d-36797959437mr152350f8f.23.1720004044633;
+        Wed, 03 Jul 2024 03:54:04 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:ef03:73b5:7503:ee71? ([2a01:e0a:982:cbb0:ef03:73b5:7503:ee71])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a104dbdsm15578186f8f.113.2024.07.03.03.54.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jul 2024 03:54:04 -0700 (PDT)
+Message-ID: <2ed4c630-204a-4f80-a37f-f2ca838eb455@linaro.org>
+Date: Wed, 3 Jul 2024 12:54:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] thermal: core: Call monitor_thermal_zone() if zone
+ temperature is invalid
+To: "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+ Linux PM <linux-pm@vger.kernel.org>
+Cc: Daniel Lezcano <daniel.lezcano@linaro.org>,
+ LKML <linux-kernel@vger.kernel.org>, Lukasz Luba <lukasz.luba@arm.com>,
+ Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+ Zhang Rui <rui.zhang@intel.com>,
+ linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <2764814.mvXUDI8C0e@rjwysocki.net>
+Content-Language: en-US, fr
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Reply-To: neil.armstrong@linaro.org
+Organization: Linaro
+In-Reply-To: <2764814.mvXUDI8C0e@rjwysocki.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240703-msm-tiling-config-v2-3-b9da29ab6608@gmail.com>
-References: <20240703-msm-tiling-config-v2-0-b9da29ab6608@gmail.com>
-In-Reply-To: <20240703-msm-tiling-config-v2-0-b9da29ab6608@gmail.com>
-To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Marijn Suijten <marijn.suijten@somainline.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, Connor Abbott <cwabbott0@gmail.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1720004038; l=1686;
- i=cwabbott0@gmail.com; s=20240426; h=from:subject:message-id;
- bh=NRBL4jAN6hjfyxISVZD05E8syLttrXlZkKCLenRZkDQ=;
- b=uOMD0cQHXWYYxQeOFr04/892ck5b1ocEmyn8AQq69zm16OKeU85kklfqTCge7b1j1knvXHGK9
- i3zfAdgB7EvBAenyVHWZ44zjKbL20RNSaqmk08J4cUdCWs+BruErspQ
-X-Developer-Key: i=cwabbott0@gmail.com; a=ed25519;
- pk=dkpOeRSXLzVgqhy0Idr3nsBr4ranyERLMnoAgR4cHmY=
 
-This adds extra parameters that affect UBWC tiling that will be used by
-the Mesa implementation of VK_EXT_host_image_copy.
+Hi,
 
-Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
----
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 6 ++++++
- include/uapi/drm/msm_drm.h              | 2 ++
- 2 files changed, 8 insertions(+)
+On 28/06/2024 14:10, Rafael J. Wysocki wrote:
+> From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+> 
+> Commit 202aa0d4bb53 ("thermal: core: Do not call handle_thermal_trip()
+> if zone temperature is invalid") caused __thermal_zone_device_update()
+> to return early if the current thermal zone temperature was invalid.
+> 
+> This was done to avoid running handle_thermal_trip() and governor
+> callbacks in that case which led to confusion.  However, it went too
+> far because monitor_thermal_zone() still needs to be called even when
+> the zone temperature is invalid to ensure that it will be updated
+> eventually in case thermal polling is enabled and the driver has no
+> other means to notify the core of zone temperature changes (for example,
+> it does not register an interrupt handler or ACPI notifier).
+> 
+> Also if the .set_trips() zone callback is expected to set up monitoring
+> interrupts for a thermal zone, it has to be provided with valid
+> boundaries and that can only happen if the zone temperature is known.
+> 
+> Accordingly, to ensure that __thermal_zone_device_update() will
+> run again after a failing zone temperature check, make it call
+> monitor_thermal_zone() regardless of whether or not the zone
+> temperature is valid and make the latter schedule a thermal zone
+> temperature update if the zone temperature is invalid even if
+> polling is not enabled for the thermal zone.
+> 
+> Fixes: 202aa0d4bb53 ("thermal: core: Do not call handle_thermal_trip() if zone temperature is invalid")
+> Reported-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+> Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+> ---
+>   drivers/thermal/thermal_core.c |    5 ++++-
+>   drivers/thermal/thermal_core.h |    6 ++++++
+>   2 files changed, 10 insertions(+), 1 deletion(-)
+> 
+> Index: linux-pm/drivers/thermal/thermal_core.c
+> ===================================================================
+> --- linux-pm.orig/drivers/thermal/thermal_core.c
+> +++ linux-pm/drivers/thermal/thermal_core.c
+> @@ -300,6 +300,8 @@ static void monitor_thermal_zone(struct
+>   		thermal_zone_device_set_polling(tz, tz->passive_delay_jiffies);
+>   	else if (tz->polling_delay_jiffies)
+>   		thermal_zone_device_set_polling(tz, tz->polling_delay_jiffies);
+> +	else if (tz->temperature == THERMAL_TEMP_INVALID)
+> +		thermal_zone_device_set_polling(tz, msecs_to_jiffies(THERMAL_RECHECK_DELAY_MS));
+>   }
+>   
+>   static struct thermal_governor *thermal_get_tz_governor(struct thermal_zone_device *tz)
+> @@ -514,7 +516,7 @@ void __thermal_zone_device_update(struct
+>   	update_temperature(tz);
+>   
+>   	if (tz->temperature == THERMAL_TEMP_INVALID)
+> -		return;
+> +		goto monitor;
+>   
+>   	tz->notify_event = event;
+>   
+> @@ -536,6 +538,7 @@ void __thermal_zone_device_update(struct
+>   
+>   	thermal_debug_update_trip_stats(tz);
+>   
+> +monitor:
+>   	monitor_thermal_zone(tz);
+>   }
+>   
+> Index: linux-pm/drivers/thermal/thermal_core.h
+> ===================================================================
+> --- linux-pm.orig/drivers/thermal/thermal_core.h
+> +++ linux-pm/drivers/thermal/thermal_core.h
+> @@ -133,6 +133,12 @@ struct thermal_zone_device {
+>   	struct thermal_trip_desc trips[] __counted_by(num_trips);
+>   };
+>   
+> +/*
+> + * Default delay after a failing thermal zone temperature check before
+> + * attempting to check it again.
+> + */
+> +#define THERMAL_RECHECK_DELAY_MS	100
+> +
+>   /* Default Thermal Governor */
+>   #if defined(CONFIG_THERMAL_DEFAULT_GOV_STEP_WISE)
+>   #define DEFAULT_THERMAL_GOVERNOR       "step_wise"
+> 
+> 
+> 
+> 
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 1c6626747b98..a4d3bc2de8df 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -379,6 +379,12 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
- 	case MSM_PARAM_RAYTRACING:
- 		*value = adreno_gpu->has_ray_tracing;
- 		return 0;
-+	case MSM_PARAM_UBWC_SWIZZLE:
-+		*value = adreno_gpu->ubwc_config.ubwc_swizzle;
-+		return 0;
-+	case MSM_PARAM_MACROTILE_MODE:
-+		*value = adreno_gpu->ubwc_config.macrotile_mode;
-+		return 0;
- 	default:
- 		DBG("%s: invalid param: %u", gpu->name, param);
- 		return -EINVAL;
-diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-index 3fca72f73861..2377147b6af0 100644
---- a/include/uapi/drm/msm_drm.h
-+++ b/include/uapi/drm/msm_drm.h
-@@ -88,6 +88,8 @@ struct drm_msm_timespec {
- #define MSM_PARAM_VA_SIZE    0x0f  /* RO: size of valid GPU iova range (bytes) */
- #define MSM_PARAM_HIGHEST_BANK_BIT 0x10 /* RO */
- #define MSM_PARAM_RAYTRACING 0x11 /* RO */
-+#define MSM_PARAM_UBWC_SWIZZLE 0x12 /* RO */
-+#define MSM_PARAM_MACROTILE_MODE 0x13 /* RO */
- 
- /* For backwards compat.  The original support for preemption was based on
-  * a single ring per priority level so # of priority levels equals the #
+This patch on next-20240702 makes Qualcomm HDK8350, HDK8450, QRD8550, HDK8560, QRD8650 & HDK8650 output in loop:
 
--- 
-2.31.1
+thermal thermal_zoneXX: failed to read out thermal zone (-19)
 
+Boot logs or ARM64 defconfig:
+https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/152439#L1393
+https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/152440#L2200
+https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/152442#L2828
+https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/152441#L1862
+https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/152443#L1776
+https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/152444#L1723
+
+Result of git bisect:
+# bad: [82e4255305c554b0bb18b7ccf2db86041b4c8b6e] Add linux-next specific files for 20240702
+# good: [22a40d14b572deb80c0648557f4bd502d7e83826] Linux 6.10-rc6
+git bisect start 'FETCH_HEAD' 'v6.10-rc6'
+# bad: [f6dfcf0e9567b57b93f2564966d9177f0d8dbe05] Merge branch 'master' of git://git.kernel.org/pub/scm/linux/kernel/git/herbert/cryptodev-2.6.git
+git bisect bad f6dfcf0e9567b57b93f2564966d9177f0d8dbe05
+# good: [7f86ae0c2dc19fea7be1da29b2bf03f085463ae7] Merge branch 'for-next' of git://git.kernel.org/pub/scm/linux/kernel/git/s390/linux.git
+git bisect good 7f86ae0c2dc19fea7be1da29b2bf03f085463ae7
+# bad: [077d5bbd75dd12af2096c96846ffc78ab5dd65b1] Merge branch 'devfreq-next' of git://git.kernel.org/pub/scm/linux/kernel/git/chanwoo/linux.git
+git bisect bad 077d5bbd75dd12af2096c96846ffc78ab5dd65b1
+# good: [271bcaf753d0afe2bd0386ab1e98132ee65b61ca] Merge branch 'for-next' of git://git.kernel.org/pub/scm/linux/kernel/git/printk/linux.git
+git bisect good 271bcaf753d0afe2bd0386ab1e98132ee65b61ca
+# good: [9758a2ee5316a6f8736ab4fd39a6f6176aa057ec] Merge branch 'hwmon-next' of git://git.kernel.org/pub/scm/linux/kernel/git/groeck/linux-staging.git
+git bisect good 9758a2ee5316a6f8736ab4fd39a6f6176aa057ec
+# good: [e6bd69ea345045520bd63487b85a4b5676aff76b] Merge branch 'master' of git://linuxtv.org/mchehab/media-next.git
+git bisect good e6bd69ea345045520bd63487b85a4b5676aff76b
+# good: [46398edfb36e2882be5e86ea563b2db9138ae499] Merge branches 'pm-cpuidle' and 'pm-powercap' into linux-next
+git bisect good 46398edfb36e2882be5e86ea563b2db9138ae499
+# good: [d3927cbc52eed166f74ea7e031ed6384cc3d4d5f] Merge branch 'thermal-intel' into linux-next
+git bisect good d3927cbc52eed166f74ea7e031ed6384cc3d4d5f
+# good: [ce84b7beeb524e7b20983838687862454ba54df7] cpufreq: sti: add missing MODULE_DEVICE_TABLE entry for stih418
+git bisect good ce84b7beeb524e7b20983838687862454ba54df7
+# bad: [fcf61315d38d41f4e55856b179f9e5538e299ef4] Merge branch 'thermal-fixes' into linux-next
+git bisect bad fcf61315d38d41f4e55856b179f9e5538e299ef4
+# good: [4262b8d782a74c7cf7b8b94ed9e4fcb94e856d1e] dt-bindings: thermal: mediatek: Fix thermal zone definition for MT8186
+git bisect good 4262b8d782a74c7cf7b8b94ed9e4fcb94e856d1e
+# good: [7eeb114a635a04bea2fa7d57cedbf374c714d29e] dt-bindings: thermal: convert hisilicon-thermal.txt to dt-schema
+git bisect good 7eeb114a635a04bea2fa7d57cedbf374c714d29e
+# good: [107ac0d49ae6a86b4986146b9a612294f7e34406] Merge branch 'thermal/linux-next' of ssh://gitolite.kernel.org/pub/scm/linux/kernel/git/thermal/linux into linux-next
+git bisect good 107ac0d49ae6a86b4986146b9a612294f7e34406
+# bad: [5725f40698b9ba7f84fbfee25b9059ba044c4b86] thermal: core: Call monitor_thermal_zone() if zone temperature is invalid
+git bisect bad 5725f40698b9ba7f84fbfee25b9059ba044c4b86
+# first bad commit: [5725f40698b9ba7f84fbfee25b9059ba044c4b86] thermal: core: Call monitor_thermal_zone() if zone temperature is invalid
+
+#regzbot introduced: 5725f40698b9ba7f84fbfee25b9059ba044c4b86
+
+Thanks,
+Neil
 
