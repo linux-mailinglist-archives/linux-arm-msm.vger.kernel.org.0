@@ -1,60 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-24964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D20AA924FC7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 05:40:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93A86924FC9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 05:40:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8E34028EF78
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 03:40:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F26E28F183
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 03:40:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19DBF12F5A6;
-	Wed,  3 Jul 2024 03:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38766130A79;
+	Wed,  3 Jul 2024 03:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cu7GumeY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cOLYcK5s"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E254812F592;
-	Wed,  3 Jul 2024 03:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C248130A58;
+	Wed,  3 Jul 2024 03:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719977867; cv=none; b=MRu1Ju+6XyfgL7UJ2eWO3nhQKouoSp+g8YGIVWljEdl1JM89fAaHtemIrf1YDinOZBQx/Ub6eR16hTbBGC0tThoUK8g7oGTqu811IPy3UzR4cy7YV1u7HWPYlMcn8HcF3NCv5rYBJRwx8VcC7sfR9721YL4xC8fTJnl5ZCxyomE=
+	t=1719977868; cv=none; b=FyqPMBT9CJPOzduqwYWujwcTJXq2v3gunMhfUWp7J0RFVQLj8Lw5JrUAts2sWEysA40SQ/cOdOEGi+9Xds20+tAyGm+4OT3WSA8T7VyfZnC2AiKKAsWLLanQteaHa2miz9EGnK3OM7ASSDEkTJo8hLHNkW4eXXjvVQgKkeP/KIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719977867; c=relaxed/simple;
-	bh=mn6fgtCAr/go49G8FELV7cfQDy/AQHdXAzjUEO6cFeg=;
+	s=arc-20240116; t=1719977868; c=relaxed/simple;
+	bh=6TDXQTG++TbpVEUx6lNGsMRPGRrbhV5OIIZyQ0wWN/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OBBg/JCF41I2gGh0QvEBOmT/RW7iSRkv+NpB8ks6/2rw3+wPXaMiGPX8Q7lzTqo23pmQNBr3VA5TJhabCrFGjCpNipECZ9zOGX+cdhlxX65H8VMwua2f2SFtdrpNsmZxs4QimDpUKcY21X7dw+JX+ZCWkUReSWhKv3rluroHLq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cu7GumeY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01324C4AF0A;
-	Wed,  3 Jul 2024 03:37:45 +0000 (UTC)
+	 MIME-Version:Content-Type; b=FMZvxpXcEucy6MES81oknsfWBToA3nuD21t+E2eJ03rAPEla9HgDWO/+o96xym/10orFtj1iarl9XgFoIffG9nj60Gk8JSFAvnONJIEaAzyYi4dfzj/nLFlgkWdT4AvSQy19g4A40c2Ge35wAqDsRqUoUXmOrEZZdJn4HWVOIDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cOLYcK5s; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA56C4AF0D;
+	Wed,  3 Jul 2024 03:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719977866;
-	bh=mn6fgtCAr/go49G8FELV7cfQDy/AQHdXAzjUEO6cFeg=;
+	s=k20201202; t=1719977867;
+	bh=6TDXQTG++TbpVEUx6lNGsMRPGRrbhV5OIIZyQ0wWN/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cu7GumeYoedneb7nE+CF854itXrRBxgoq0aXqnndWjRRJPeTCgKw06sIfSuHW5QjN
-	 rg3HmmT0sfZZHY2y/pikLsNBurJi2mYr8mP2T4bxEj+i63Jjrvq1D8U/h2moLPljx9
-	 WLFBnSbAY9oKa5gb4csnqAIM2ENXXFiQ8P8b/xP0lsHVewfwB3zYBjmAWiV+gp3nPy
-	 dP5KHLhNje7pOdAesD85k9ICj4kbOPn9awjO/FOimpp3yyL1D3PxMEioLaWLjS2OtU
-	 3pyv40PsKSaGZ8Hh/DHRFBzl7uQdXg1+rvxVqbk4lkeEpedxxy+2OtE1lUCe/I0UOT
-	 SKITSzyjQQh6A==
+	b=cOLYcK5sw8G4aalGY6eoXeipol1qQptTqfvynDmFWdhqvmYsoxsOQ26lA6aJpRSoR
+	 jExO6/QG8c3DIkxnMfzWVTwswosjW8ITKR286zuqfv/xRfdEzYbtSB67/07rmSlSLD
+	 C3wj4rn3BTEoLNV77M9BJmXPqEP0HxvwGWVpL9sLR54SNJ1I4y1z2ta5LCuYECPMl7
+	 G/q4oVIdJadM1QnNT5QURaBdQ64cNtzsUYXPWy1bYCrg1PXSHgHIe0ZL8NsS9TQK8C
+	 3iQoonotf6fql13EbqKbUZ9/0e4AVAtQHxuuO4cITJw1+CxJNx+Or9c1MxtSUS4FYF
+	 HuEPat66vSXAw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: ~postmarketos/upstreaming@lists.sr.ht,
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>
+Cc: ~postmarketos/upstreaming@lists.sr.ht,
 	phone-devel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Luca Weiss <luca@lucaweiss.eu>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] soc: qcom: smsm: Add missing mailbox dependency to Kconfig
-Date: Tue,  2 Jul 2024 22:37:29 -0500
-Message-ID: <171997785356.348959.1744316153641275134.b4-ty@kernel.org>
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm7225-fairphone-fp4: Name the regulators
+Date: Tue,  2 Jul 2024 22:37:30 -0500
+Message-ID: <171997785361.348959.6115195331037721492.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240628-smsm-kconfig-v1-1-117d5af4ba1f@lucaweiss.eu>
-References: <20240628-smsm-kconfig-v1-1-117d5af4ba1f@lucaweiss.eu>
+In-Reply-To: <20240627-fp4-regulator-name-v1-1-66931111a006@fairphone.com>
+References: <20240627-fp4-regulator-name-v1-1-66931111a006@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,17 +68,18 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 28 Jun 2024 19:30:23 +0200, Luca Weiss wrote:
-> Since the smsm driver got the ability to interact with the mailbox using
-> the mailbox subsystem and not just syscon, we need to add the dependency
-> to kconfig as well to avoid compile errors.
+On Thu, 27 Jun 2024 15:15:54 +0200, Luca Weiss wrote:
+> Without explicitly specifying names for the regulators they are named
+> based on the DeviceTree node name. This results in multiple regulators
+> with the same name, making debug prints and regulator_summary impossible
+> to reason about.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] soc: qcom: smsm: Add missing mailbox dependency to Kconfig
-      commit: 05a21e8b5d006177bce7332523eea5e3f2ee23ab
+[1/1] arm64: dts: qcom: sm7225-fairphone-fp4: Name the regulators
+      commit: d870196e3383b92179dfc051fe6f038df9a94ea9
 
 Best regards,
 -- 
