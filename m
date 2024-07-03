@@ -1,115 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-25178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92B8D92648A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 17:12:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 953419264E8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 17:34:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E65728E1DE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 15:12:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 52F6A282ECF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 15:34:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53B06181311;
-	Wed,  3 Jul 2024 15:12:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eXCAsBIU"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B3EE181B88;
+	Wed,  3 Jul 2024 15:34:45 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D34B181303;
-	Wed,  3 Jul 2024 15:12:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D2617C218;
+	Wed,  3 Jul 2024 15:34:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720019539; cv=none; b=tMPKa0ItBLQh34Of7/u0tQxWQCzEjPIEKeOIqXSlUEO+l7sw+Oj1aX9KlTySPx2Tw1b+u/9tEMhizltDfQhF4djV4tojucpuXmHYYeU9uKwsUNBaVHRRwzs2gw93iSLAq49X6InaggnsVeWl5vR85hpMZEUA6YjttyuJZCSoMy4=
+	t=1720020885; cv=none; b=RwNiOvL4CLpxUv8Mr/sCNqCiINAZkm6dF5KgE5dbJd36NZwIQ79g75vCiKnfEGmE1b7ecA/i+qQKBXA+ToV+D/E5tbdbTrX9G4WBCW/0uszp9ezM2mQmvpVgABPNIpkPeLKLD08GUJDHU0WkIg9xTWW4N98fvOjnLWeW5ReDLv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720019539; c=relaxed/simple;
-	bh=X7KkvROHIZA5v9Zh3iho8Licbn39MdZ8YXDxuNJ7XNM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Mr4MZyE8rakay/QVEeVMlG9xtmVUh255vfDybpXOZlNVKGwvpaZQ6VA/H61gz//8tQOlTWpJ2u5pAQNkCJoqqG2+q9WPrC2czlW4PRlYuu7L2zDZPhWmNNlgqz2QKGjO+cGwvR7ekDtig32Cqi36FaEL2XoNI1NZp89rG9LE5Mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eXCAsBIU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F003BC4AF07;
-	Wed,  3 Jul 2024 15:12:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720019539;
-	bh=X7KkvROHIZA5v9Zh3iho8Licbn39MdZ8YXDxuNJ7XNM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eXCAsBIUhDx0hcDVysxLYy5n+y6OVoNK2yCqIwkvUMFHllmycXBNmIh5g9K0d5Jzx
-	 pEw53/h+aLERGlcSTAJ9vBivIKAZCftospMarzWY7qfdvHaYEgGXeQl82ckuzr5V8O
-	 RsXRdiFq2RnOJEuyK086iPJ22ZZEOTATphJetELAprXUGaJLGbZ3kTHGqnr4ATDjsR
-	 Q7XExUKE4mLRw/ERiptmE1VC856nOTEq7aJapdF5VFkIT40LvDiUMIO2g49NtUchvk
-	 agXKi0TIEyDDLActlWlhGL2ifBSg+EmC1kYIh+RV4RxGQdtIqKyojx5VgNEXraOxni
-	 3ztTsdXrdL/pA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1sP1eZ-000000005vS-2e43;
-	Wed, 03 Jul 2024 17:12:16 +0200
-Date: Wed, 3 Jul 2024 17:12:15 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Kieran Bingham <kieran.bingham@ideasonboard.com>,
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: Failure to stop CAMSS stream (sc8280xp)
-Message-ID: <ZoVqT0jzro8s4NUC@hovoldconsulting.com>
-References: <ZoVNHOTI0PKMNt4_@hovoldconsulting.com>
- <49b2504f-e5ab-4ea9-aefb-bc9c7f71f5fc@linaro.org>
+	s=arc-20240116; t=1720020885; c=relaxed/simple;
+	bh=bfaw19uuK8TQlCj0Vgpd7pA788Xds97aFClcqdNEz8I=;
+	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=tdoaSnkF6wr4OfABT437IixwWVioFcvV5ypAVLyC59UItQKcZHaxZwBjcCYH2dbSP8ylkfhmsfinMDc12wYc2p2HAv3USuYBTFVrVBgm968pA4HUhXOOR0zg1N97YLP1aahmQ9VmPFZQ3/6s9eUR+lGzny1VkLWntATO+5LUXNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WDkLJ3vy7z6K8y3;
+	Wed,  3 Jul 2024 23:32:40 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+	by mail.maildlp.com (Postfix) with ESMTPS id 6253A140A87;
+	Wed,  3 Jul 2024 23:34:33 +0800 (CST)
+Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 3 Jul
+ 2024 16:34:32 +0100
+Date: Wed, 3 Jul 2024 16:34:31 +0100
+From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+To: Luca Ceresoli <luca.ceresoli@bootlin.com>
+CC: Miguel Ojeda <ojeda@kernel.org>, Rob Herring <robh@kernel.org>, "Saravana
+ Kannan" <saravanak@google.com>, Nathan Chancellor <nathan@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>,
+	Tony Lindgren <tony@atomide.com>, Bjorn Andersson <andersson@kernel.org>,
+	Emilio =?ISO-8859-1?Q?L=F3pez?= <emilio@elopez.com.ar>, Chen-Yu Tsai
+	<wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland
+	<samuel@sholland.org>, "Krzysztof Kozlowski" <krzk@kernel.org>, Daniel
+ Lezcano <daniel.lezcano@linaro.org>, Thomas Gleixner <tglx@linutronix.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>, Broadcom internal kernel
+ review list <bcm-kernel-feedback-list@broadcom.com>, Linus Walleij
+	<linus.walleij@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>, "Jonathan
+ Cameron" <jic23@kernel.org>, Lee Jones <lee@kernel.org>, Shawn Guo
+	<shawnguo@kernel.org>, Pengutronix Kernel Team <kernel@pengutronix.de>, Uwe
+ =?ISO-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>, Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, "Richard
+ Leitner" <richard.leitner@linux.dev>, Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>, Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>, "Naveen N. Rao"
+	<naveen.n.rao@linux.ibm.com>, Damien Le Moal <dlemoal@kernel.org>, "Peng Fan
+ (OSS)" <peng.fan@oss.nxp.com>, Thomas Petazzoni
+	<thomas.petazzoni@bootlin.com>, <linux-kernel@vger.kernel.org>,
+	<devicetree@vger.kernel.org>, <llvm@lists.linux.dev>,
+	<linux-clk@vger.kernel.org>, <linux-omap@vger.kernel.org>,
+	<linux-arm-msm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-sunxi@lists.linux.dev>, <linux-samsung-soc@vger.kernel.org>,
+	<linux-gpio@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+	<linux-pwm@vger.kernel.org>, <linux-serial@vger.kernel.org>,
+	<linux-usb@vger.kernel.org>, <patches@opensource.cirrus.com>,
+	<linux-sound@vger.kernel.org>, <linuxppc-dev@lists.ozlabs.org>,
+	<linux-riscv@lists.infradead.org>
+Subject: Re: [PATCH 12/20] iio: adc: ti_am335x_adc: convert to
+ of_property_for_each_u32_new()
+Message-ID: <20240703163431.0000268f@Huawei.com>
+In-Reply-To: <20240703-of_property_for_each_u32-v1-12-42c1fc0b82aa@bootlin.com>
+References: <20240703-of_property_for_each_u32-v1-0-42c1fc0b82aa@bootlin.com>
+	<20240703-of_property_for_each_u32-v1-12-42c1fc0b82aa@bootlin.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <49b2504f-e5ab-4ea9-aefb-bc9c7f71f5fc@linaro.org>
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
 
-On Wed, Jul 03, 2024 at 03:30:09PM +0100, Bryan O'Donoghue wrote:
-> On 03/07/2024 14:07, Johan Hovold wrote:
-> > Is this a known issue with CAMSS or is something missing in the sc8280xp
-> > integration?
+On Wed, 03 Jul 2024 12:36:56 +0200
+Luca Ceresoli <luca.ceresoli@bootlin.com> wrote:
+
+> Simplify code using of_property_for_each_u32_new() as the two additional
+> parameters in of_property_for_each_u32() are not used here.
 > 
-> A known issue on my end,
-
-Ok, good. Do you know already if this is a generic CAMSS issue or
-something with the sc8280xp integration? I believe I heard someone
-saying that they had seen something similar on other Qualcomm platforms.
-
-> I also want to root cause intermittent sensor 
-> startup failure, before switching on the sensor upstream for more common 
-> use.
-
-> > The issue was there with 6.9 as well so it's not a (recent) regression.
-> > 
-> > Probing the camera sometimes, but infrequently, also fails with:
-> > 
-> > 	qcom-camss ac5a000.camss: Failed to power up pipeline: -13
-> 
-> Yes this. If you recall on the pm8010 I had mentioned to you about a 
-> wait-time to startup the regulator - thinking it was the regulator 
-> causing this error.
-> 
-> More likely the GPIO reset polarity or delay needs to be tweaked in the 
-> sensor driver.
-
-Ok. Seems to happen quite rarely here. I have also seen a probe deferral
-warning (which should be suppressed if it's legit) that may or may not
-be related:
-
-	ov5675 24-0010: failed to get HW configuration: -517
-
-> > and I'm seeing the following warning on every boot:
-> > 
-> > 	i2c-qcom-cci ac4c000.cci: Found 19200000 cci clk rate while 37500000 was expected
-> 
-> That's hanging around for quite a long time 19.2 MHz is a perfectly 
-> valid clock, useless error message.
-
-Ok, but please do something to get rid of this warning as well. With
-too much noise in the logs, people may fail to notice real issues.
-
-Johan
+> Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
