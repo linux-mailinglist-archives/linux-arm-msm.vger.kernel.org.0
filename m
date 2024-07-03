@@ -1,186 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-25176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB4D592645E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 17:09:54 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8ADF926488
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 17:12:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0AFD11C229CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 15:09:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 73B4F1F21AA4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 15:12:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B1FE17E907;
-	Wed,  3 Jul 2024 15:09:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C14817E46A;
+	Wed,  3 Jul 2024 15:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="UJZDW7n+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jmKWp556"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A085A17DA2E
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 15:09:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F2317DA25
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 15:12:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720019389; cv=none; b=sUcTSSXeT4dlp74eQ8jjg1LMoE5jxQT3nKbHOlkJKySxQLAZFHA+Q7O4uOIDYL4piPeqtNEsIuJDZsNfilWJ3uovpK2nKDURZcNGvo5VIL803zIUhzka3O+gw6MXRiyVomE+y31GuchjiS01WdXaRgUyJ6kTuI3VksJCL1deIfY=
+	t=1720019537; cv=none; b=ioGrELb4FZmgMI0FqQZb1hdX210w04Nrj5v5EwmZkFMsBMrth26Aky0EwzQ446vb/CjGnM6S1yY0CUyY+QPcKc6IQa2i5/OOF44m74MH2KqPi13tyE/E/u2KcUdCqRBv0E11DwE/rOZ1KFFVE1PVHo9XqxOe0ibR/LjR2ieYTmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720019389; c=relaxed/simple;
-	bh=fhpejWcF/vfLe6nwrakqQTsElpgre49BCBgEinb2+BE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hvR1qBhKJemHEJtMhB/hEOAMZ9jaLOxT2CzeRUl5NvQQShUWGdj6+hiWZBASfsXIPNZq97xCG8ugvna9r3w7v5RArIrEyOuagsx/RvXxk+aCaNliuusV+b0xylgsXwjMbZ5xyq18e16VpIIKsk/8vb7zLDthUPQCTfaciUw3+pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=UJZDW7n+; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1720019386;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OwJT/oF0rqnt+S31sg05vpTbadEupYIHlD2ocZCHgDI=;
-	b=UJZDW7n+MdeF+JfbBn5NmBBNDsceRfbGJEVch/a4mgevkikhmDQuQW3t5LdDOxYo3yVo2j
-	sqKNqP2ClXNW+uoUhJ3lxLi1xediCOWp+mVKylLN2ObKLwHV7b2B/RQjrxexLv5t2xPnel
-	QX1J8gL1ZGR2xMRehINzn5GNz3qQXq0=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-Em94G8TpMy2OQ0GBHifaMQ-1; Wed, 03 Jul 2024 11:09:45 -0400
-X-MC-Unique: Em94G8TpMy2OQ0GBHifaMQ-1
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-446102c711bso65941421cf.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 08:09:45 -0700 (PDT)
+	s=arc-20240116; t=1720019537; c=relaxed/simple;
+	bh=bvCK0w6pEBun5yXlbvybJvpOQqqTLo2EHx1hpAZm8Og=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fVeeFO9zr7QP5PzwbHYMiVB4GdtmwcW9lnC2pH36bPOr9X3sSgiacZ6XIKRDADOgVWBtBG9DD8gbY+fnNY7fR4+TX+BYihwoi6FsxdfZ3L0xr3AqqziLv1xeZZUhk3JcQDk4/Hr8ollA18f/z8ktOG5IKic965J+fzL8iOpZ1fU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jmKWp556; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4256aee6d4fso33893265e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 08:12:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1720019533; x=1720624333; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=X1FBE/phOqlt/mt0C2kNHxxiftuxkoc0MD4S1IpTeCw=;
+        b=jmKWp556hMVckFahLA8tFWwthUd3Y6vHmcle06tL4r7saS2l01pDbaFrX+8iHH4TyR
+         SFuBcpcRH/q+hhBb7VEdIYbRG6xF5pzoPeCqM15/NtmbZeq7BHtbw68rS+EGXH33LgQ1
+         Jiq9k/fesZ1qG0+YjXjL0InMGr48AiH69xLXdo+aj5OXJlcQSYQ5ub7yIWvZUmb26gYd
+         Gr4t9cgN2u8PBEizhKYogeMc6iKsXgfJ6MjaZj5+b3FhsfOCvbNJKXv6knOzN8+8VEac
+         TTMT9giBelWNwm+d8/03PRIjheaRNBfEbL+woQMJWFEZKIDkEwq1M5ANc4Isdyc6ST5S
+         SRPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720019382; x=1720624182;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OwJT/oF0rqnt+S31sg05vpTbadEupYIHlD2ocZCHgDI=;
-        b=OJxyLtPKH9WzTbBwh5Bd4wLoenOEQpNjbyAfiNav9Vdw3L51h4RcU+3Ttv8MFZ3WBA
-         WvoGpAge/ZdXE2HB6ulTU/TUBbFoQn5yl1A/c+zCEmTWtfLr7KgimRmKF/Gr7nWn6Tsa
-         H2smYpwV3uHsU/01IixpoUQcXzv9ZZpJ9QwVQGNM3vrIoiF1wLYCQxhL0qllBLdMbU/L
-         ksHqeoOxdvvRO0h7iB154gICI7ce0RgOJKZTsU/JcARsm4HeYafvjSulVCCTbyYeF41d
-         z0h30QlDYGpSpJo1m44h2ZSmNk/7Htx5mFH7iTwc43sExxVT0gMVt8L9O2Y3eHv1v198
-         YLCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVzw01xk5JYsgTaLZug3p+vvd65upgKzLMfJYgXGq6zMfUa/eysNqmb8MQL7NfhCAML1Ae/raAK/N6M7rmC5lSpoMHmoeI+7vHtn/yZxQ==
-X-Gm-Message-State: AOJu0Yw1tvJN6MrL6fI2Gw1zyE4VqEWudDH4yY1Kr3pVrKmeVTBiL1Xj
-	VfEg44vsy8otcwyKBF2rpeoX5PWMPb693QRiNceSQlE3TDSRxp2X7iepxlMgWbg0MGdlDlpsSx3
-	4x2u573xJarbz70j1Fb999DkU+llNAVdY361IRE0im92wJAwroxSzRwAzPqK/F9A=
-X-Received: by 2002:ac8:7d84:0:b0:444:b495:e94d with SMTP id d75a77b69052e-44662c99f4bmr119752781cf.3.1720019381963;
-        Wed, 03 Jul 2024 08:09:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE8jWmpy5/3+Y1qV1pkAlEofbtK+RF6spB2E3wXQKII8gdILaaxSAxoLFic14g5Q4iTwcc7CA==
-X-Received: by 2002:ac8:7d84:0:b0:444:b495:e94d with SMTP id d75a77b69052e-44662c99f4bmr119751991cf.3.1720019381501;
-        Wed, 03 Jul 2024 08:09:41 -0700 (PDT)
-Received: from x1gen2nano ([2600:1700:1ff0:d0e0::40])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4465c4bf7ecsm43222571cf.80.2024.07.03.08.09.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jul 2024 08:09:41 -0700 (PDT)
-Date: Wed, 3 Jul 2024 10:09:36 -0500
-From: Andrew Halaney <ahalaney@redhat.com>
-To: Tengfei Fan <quic_tengfan@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, djakov@kernel.org, mturquette@baylibre.com, 
-	sboyd@kernel.org, jassisinghbrar@gmail.com, herbert@gondor.apana.org.au, 
-	davem@davemloft.net, manivannan.sadhasivam@linaro.org, will@kernel.org, 
-	joro@8bytes.org, conor@kernel.org, tglx@linutronix.de, amitk@kernel.org, 
-	thara.gopinath@gmail.com, linus.walleij@linaro.org, wim@linux-watchdog.org, 
-	linux@roeck-us.net, rafael@kernel.org, viresh.kumar@linaro.org, vkoul@kernel.org, 
-	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, mcoquelin.stm32@gmail.com, 
-	robimarko@gmail.com, quic_gurus@quicinc.com, bartosz.golaszewski@linaro.org, 
-	kishon@kernel.org, quic_wcheng@quicinc.com, alim.akhtar@samsung.com, 
-	avri.altman@wdc.com, bvanassche@acm.org, agross@kernel.org, 
-	gregkh@linuxfoundation.org, quic_tdas@quicinc.com, robin.murphy@arm.com, 
-	daniel.lezcano@linaro.org, rui.zhang@intel.com, lukasz.luba@arm.com, 
-	quic_rjendra@quicinc.com, ulf.hansson@linaro.org, quic_sibis@quicinc.com, 
-	otto.pflueger@abscue.de, quic_rohiagar@quicinc.com, luca@z3ntu.xyz, 
-	neil.armstrong@linaro.org, abel.vesa@linaro.org, bhupesh.sharma@linaro.org, 
-	alexandre.torgue@foss.st.com, peppe.cavallaro@st.com, joabreu@synopsys.com, 
-	netdev@vger.kernel.org, lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com, 
-	krzysztof.kozlowski@linaro.org, u.kleine-koenig@pengutronix.de, dmitry.baryshkov@linaro.org, 
-	quic_cang@quicinc.com, danila@jiaxyga.com, quic_nitirawa@quicinc.com, 
-	mantas@8devices.com, athierry@redhat.com, quic_kbajaj@quicinc.com, 
-	quic_bjorande@quicinc.com, quic_msarkar@quicinc.com, quic_devipriy@quicinc.com, 
-	quic_tsoni@quicinc.com, quic_rgottimu@quicinc.com, quic_shashim@quicinc.com, 
-	quic_kaushalk@quicinc.com, quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com, 
-	srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	linux-phy@lists.infradead.org, linux-crypto@vger.kernel.org, linux-scsi@vger.kernel.org, 
-	linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, 
-	linux-riscv@lists.infradead.org, linux-gpio@vger.kernel.org, linux-watchdog@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, kernel@quicinc.com
-Subject: Re: [PATCH 29/47] dt-bindings: net: qcom,ethqos: add description for
- qcs9100
-Message-ID: <u5ekupjqvgoehkl76pv7ljyqqzbnnyh6ci2dilfxfkcdvdy3dp@ehdujhkul7ow>
-References: <20240703025850.2172008-1-quic_tengfan@quicinc.com>
- <20240703025850.2172008-30-quic_tengfan@quicinc.com>
+        d=1e100.net; s=20230601; t=1720019533; x=1720624333;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=X1FBE/phOqlt/mt0C2kNHxxiftuxkoc0MD4S1IpTeCw=;
+        b=gBsSmAItMhHKL4Chwk9GyaMPmrFtjiVEbrtIyyxt7y2Sl1ZZiQj1wWwauFq8uynMFB
+         dwWvH8RGxv1BAnQX0pB55i0uyXOz5e6r5CGxx8Te2lC9HNedFOJmfXR7WCwQodFTudFo
+         UhMozdVTRLac3kataNNhlAoc9Dwk7IMpHQlNq+P/s4zBXpZTQCdJdY9P8JtnnsOGl1sU
+         gFF9jACe6hvLSJE9X8fsQbYquIi1M4kqj3aVilaJBuQ014R0zfWPKVMdHVXSXu87NxYJ
+         61WuPVwWSEe0cPR5+JsJAjdLWbXKWmQQN/d1e3FJvnprvyQsdEVUq98MzKCuwpXRYBvk
+         pkAg==
+X-Forwarded-Encrypted: i=1; AJvYcCXQ8PD1P11HUTej0gqQ5FBk+GzaR1ajYmm1WKVT6ER5IYq+W08rgW0T4FwxrlayhAGKIgS2/5f+3jFKII2b+IrAnCXnCvNJ+sCYg3Ay9w==
+X-Gm-Message-State: AOJu0Yz/KpELC8MOEmUCGkB2VSgXunUMteeAmDoivu5lpkMrSYdcq5nP
+	yrXp8k2PW5Rb8WT/nRRFJ1cr8bERb/CecyfgFMBjsXx0ipDHp9u8N90aHUcYSPg=
+X-Google-Smtp-Source: AGHT+IE7vw1r/9Y7G9J0ix6309xiLeagBgiZBiVv+LE/k4h7o5oLFCLiI/O9L56xF3fZG44ACc7p6g==
+X-Received: by 2002:adf:ef11:0:b0:367:9718:5792 with SMTP id ffacd0b85a97d-367971859f4mr786905f8f.18.1720019533577;
+        Wed, 03 Jul 2024 08:12:13 -0700 (PDT)
+Received: from ?IPV6:2a05:6e02:1041:c10:c49e:e1a5:3210:b8c0? ([2a05:6e02:1041:c10:c49e:e1a5:3210:b8c0])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-367961a507csm1346306f8f.77.2024.07.03.08.12.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jul 2024 08:12:13 -0700 (PDT)
+Message-ID: <0c4b401e-86b8-4169-af88-475433012d67@linaro.org>
+Date: Wed, 3 Jul 2024 17:12:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240703025850.2172008-30-quic_tengfan@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] thermal: core: Call monitor_thermal_zone() if zone
+ temperature is invalid
+To: neil.armstrong@linaro.org, "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+ Linux PM <linux-pm@vger.kernel.org>
+Cc: LKML <linux-kernel@vger.kernel.org>, Lukasz Luba <lukasz.luba@arm.com>,
+ Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+ Zhang Rui <rui.zhang@intel.com>,
+ linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <2764814.mvXUDI8C0e@rjwysocki.net>
+ <2ed4c630-204a-4f80-a37f-f2ca838eb455@linaro.org>
+ <8d91a3c1-018f-495b-83be-979b795b5548@linaro.org>
+ <12c5c133-9519-4a26-b9a3-2da1d3466e94@linaro.org>
+ <15b67ce6-3238-435d-ad28-7c06efbe9153@linaro.org>
+ <ce6c2e8a-65a7-4cb2-a91d-fbcaeef6edc1@linaro.org>
+Content-Language: en-US
+From: Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <ce6c2e8a-65a7-4cb2-a91d-fbcaeef6edc1@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jul 03, 2024 at 10:58:32AM GMT, Tengfei Fan wrote:
-> Add the compatible for the MAC controller on qcs9100 platforms. This MAC
-> works with a single interrupt so add minItems to the interrupts property.
-> The fourth clock's name is different here so change it. Enable relevant
-> PHY properties. Add the relevant compatibles to the binding document for
-> snps,dwmac as well.
+On 03/07/2024 16:42, neil.armstrong@linaro.org wrote:
+> On 03/07/2024 16:00, Daniel Lezcano wrote:
+>> On 03/07/2024 14:43, neil.armstrong@linaro.org wrote:
+>>> Hi,
+>>>
+>>> On 03/07/2024 14:25, Daniel Lezcano wrote:
+>>>>
+>>>> Hi Neil,
+>>>>
+>>>> it seems there is something wrong with the driver actually.
+>>>>
+>>>> There can be a moment where the sensor is not yet initialized for 
+>>>> different reason, so reading the temperature fails. The routine will 
+>>>> just retry until the sensor gets ready.
+>>>>
+>>>> Having these errors seem to me that the sensor for this specific 
+>>>> thermal zone is never ready which may be the root cause of your 
+>>>> issue. The change is spotting this problem IMO.
+>>>
+>>> Probably, but it gets printed every second until system shutdown, but 
+>>> only for a single thermal_zone.
+>>>
+>>> Using v1 of Rafael's patch makes the message disappear completely.
+>>
+>> Yes, because you have probably the thermal zone polling delay set to 
+>> zero, thus it fails the first time and does no longer try to set it up 
+>> again. The V1 is an incomplete fix.
+>>
+>> Very likely the problem is in the sensor platform driver, or in the 
+>> thermal zone description in the device tree which describes a non 
+>> functional thermal zone.
+>>
+> 
+> It was at 0 but the delay was removed recently:
+> https://lore.kernel.org/all/20240510-topic-msm-polling-cleanup-v2-0-436ca4218da2@linaro.org/
 
-This description doesn't match what was done in this patch, its what
-Bart did when he made changes to add the sa8775 changes. Please consider
-using a blurb indicating that this is the same SoC as sa8775p, just with
-different firmware strategies or something along those lines?
+Yes, these changes are because another change did:
 
-> 
-> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/net/qcom,ethqos.yaml | 1 +
->  Documentation/devicetree/bindings/net/snps,dwmac.yaml  | 3 +++
->  2 files changed, 4 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-> index 6672327358bc..8ab11e00668c 100644
-> --- a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-> +++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-> @@ -20,6 +20,7 @@ properties:
->    compatible:
->      enum:
->        - qcom,qcs404-ethqos
-> +      - qcom,qcs9100-ethqos
->        - qcom,sa8775p-ethqos
->        - qcom,sc8280xp-ethqos
->        - qcom,sm8150-ethqos
-> diff --git a/Documentation/devicetree/bindings/net/snps,dwmac.yaml b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-> index 3bab4e1f3fbf..269c21779396 100644
-> --- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-> +++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-> @@ -67,6 +67,7 @@ properties:
->          - loongson,ls2k-dwmac
->          - loongson,ls7a-dwmac
->          - qcom,qcs404-ethqos
-> +        - qcom,qcs9100-ethqos
->          - qcom,sa8775p-ethqos
->          - qcom,sc8280xp-ethqos
->          - qcom,sm8150-ethqos
-> @@ -582,6 +583,7 @@ allOf:
->                - ingenic,x1600-mac
->                - ingenic,x1830-mac
->                - ingenic,x2000-mac
-> +              - qcom,qcs9100-ethqos
->                - qcom,sa8775p-ethqos
->                - qcom,sc8280xp-ethqos
->                - snps,dwmac-3.50a
-> @@ -639,6 +641,7 @@ allOf:
->                - ingenic,x1830-mac
->                - ingenic,x2000-mac
->                - qcom,qcs404-ethqos
-> +              - qcom,qcs9100-ethqos
->                - qcom,sa8775p-ethqos
->                - qcom,sc8280xp-ethqos
->                - qcom,sm8150-ethqos
-> -- 
-> 2.25.1
-> 
+commit 488164006a281986d95abbc4b26e340c19c4c85b
+Author: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+     thermal/of: Assume polling-delay(-passive) 0 when absent
+
+diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.c
+
+> That doesn't explain it because only the last platforms have this error 
+> message printed.
+
+Let me recap.
+
+It has been reported if a thermal-zone with zero delay fails to 
+initialize because the sensor returns an error, then there is no more 
+attempt to initialize it and the thermal zone won't be functional.
+
+The provided fix will periodically read the sensor temperature until 
+there is a valid temperature. When there is a valid temperature, then 
+the interrupts are set for the previous and the next temperature 
+thresholds. That leads to the end of the routine of initializing the 
+thermal zone and cancels the timer.
+
+The platforms you reported, the delay is zero (before and after the 
+'polling cleanup').
+
+My hypothesis is the following:
+
+The thermal-zone29 describes a sensor which does not operate.
+
+Before the patch:
+
+First attempt to initialize it, the temperature is invalid, then because 
+the delay is zero, the routine stops, and there is no more attempts to 
+initialize it. Nothing will happen to this thermal zone and it will stay 
+stuck silently. So at this point, the thermal zone is broken and you 
+don't notice it.
+
+After the patch:
+
+The initialization routine is constantly retrying to init the thermal zone.
+
+-------------------
+
+If you revert the fix and you try to read the thermal zone 29, it should 
+always fail to return an error.
+
+If I'm correct, then I suggest to identify what thermal zone is 29 (type 
+file), identify the node name in the DT, find the tsens channel and 
+double check if it really describes an existing sensor
+
+
+
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
 
 
