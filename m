@@ -1,140 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-25202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB82D926861
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 20:40:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 40B25926894
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 20:50:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8764F28FAB6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 18:40:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EB85228B6AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 18:50:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 601CF187560;
-	Wed,  3 Jul 2024 18:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 769EF187557;
+	Wed,  3 Jul 2024 18:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hfjlK69k"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SQ7eo1Ak"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32421DA313;
-	Wed,  3 Jul 2024 18:40:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F04217A5B0;
+	Wed,  3 Jul 2024 18:49:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720032027; cv=none; b=pql9QutOrq1x4Q90o7cm6JAzZKcOjSjQC4zjFB29rjdhRahpQsH4395zXFUb7+ptT3r/j2OrNtUx98RCl5t+LNubBlMAjd7j1vjjWmkbUyx+VLYLZb1XSNmnJBixoA1gvp5Mm3vqsQmXPwp178DCt4xfTzRM10rfu9JMD0HX1hI=
+	t=1720032597; cv=none; b=WE22ywmJmHRtS6u/MFaxb+9nO+2vFc7NhL8o/LpFMpzUKOKrWOJD9w0uM0GjMwZMS7Y8kQaPlF7AdFRcZHJ0xTMAg1HmG1jTH21c98pMFBgn18EDfNCEBm1ck8Hdrn0H0s8rk2NgKsC1fsVpt9PLOZHFrlDoCwF3PshI5WHxgd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720032027; c=relaxed/simple;
-	bh=Oj1d10s7TZz/O/U8oSMrvs64BZo0o6g/hvl+0ULOJOA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lwtA7BLoowR82OGu5VfTkHUqCbSN5jiEIfncK2zncBd5Q5GNsYxMKLWnJpaap5qaAv/yinHjJ1IJ8ESxaNK2P8KSOZF/RRHvhzQ9Pn4IZCaQgeFGTNk9BiQeeH+VGbEEaqNCwYScGeTrYcRD0nqcMJhHmMOHJr5EAhpXcy+AzTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hfjlK69k; arc=none smtp.client-ip=209.85.160.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-446427c5923so7720151cf.0;
-        Wed, 03 Jul 2024 11:40:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720032025; x=1720636825; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cJtlUQr1V/Td3Ek+PCwnNUq8quOaMRlSlzvkM1qbD0k=;
-        b=hfjlK69k++uqjp2du90gmbl7Nh8hskbr9fJaCy1ulO3Oant7IDA0oERyNqs3BEVUo7
-         stssHaq23fczG2Zb7EU7d5W/SwigdsQxWt/+/Oy1OJVPNtqkbPX9vB6XSF/xaAFbIy0i
-         bfD5fov2GZLLYbGQIrJzkFZ8ovP4NQUq4exuloe/h81Q2SannTYPKc7sgzA9mllLKwWc
-         D9Zb17vzBCJrQrx/BnqN+wi3WRurB7sHuDmePShbj6DAIvGHpJ6nZDL6sg+LwHM5FTk5
-         bapWBqep1c7kJlb8FR4BcjmtXDc3oQef1eC/aS83PfQEY62kFk2rSqftrphIwGPGG2In
-         nIDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720032025; x=1720636825;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cJtlUQr1V/Td3Ek+PCwnNUq8quOaMRlSlzvkM1qbD0k=;
-        b=owqpTSV6WM9cz5ZK2Nd1SrcKHB2o550cYEIvjMJkIbxXKe/W10oo5tjYPNQybYIkik
-         XJcTJNhHShp5Un6682og5BYQc9DyLc1o1tf8tnBU5ZNuYLM6YmesYbWqBh13zQaA8AXy
-         kd4CbYyx945uY6cMF2iNcfT+yyrSHBr6/NaBPWTFwKz+U4XiL0umm7vdXzqab1H+3YqV
-         xaFD9V3KIijLoa8lcP1lL36qPtUy9VSc9vukcsLzsB5Rd4MAfp4DctjgEhPTdOz4RkXg
-         05k4spJPLi9NiPD6gRBii6HfqCPZuyjq/Vk4Lefl4hy9fSLPc94m3mjlr2bgyRFkvoZW
-         +esQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXaNFtYbF/iL3Y046xVgbf5tJZ+BAe2tXJLyYQ6iZvi29CB0Pb8vyg4U0pGfGRTMcIi2GrtgbBE2pXS6PcJzj5pIZAnbD6J8eznFq3u3RFeV6t3sYFW8f4LDamMXfMg5EnDCM1TuEzdtp8rNoyO7nltATMHhN7VvoItx5eBdLbPQcu8qYhbfto=
-X-Gm-Message-State: AOJu0Yy3hq0748h++IdLdqVJXI/kh/0wnsc4JU/TWsnypVdSAgdPxkxx
-	yD2iRJlyV11dI9kAEYX8HiBZGR/uV1TSJAxpYI1GBPVlUdwhj3aKOp0X5EpyvT7CzPrwazXZLDo
-	dIgSYTSdHQrIUEkFCIq2hePnA7Zs=
-X-Google-Smtp-Source: AGHT+IFU6K+fRyWZMDSxRvdrQZWYEZK82oDyu3Y0c55ypIpf/Ufgyo9zTxhe9Mpyt1hO6cdgJkET7KzYjCIzPwRCL+0=
-X-Received: by 2002:ac8:578b:0:b0:446:59db:9184 with SMTP id
- d75a77b69052e-447bf8e2f81mr42689071cf.22.1720032024739; Wed, 03 Jul 2024
- 11:40:24 -0700 (PDT)
+	s=arc-20240116; t=1720032597; c=relaxed/simple;
+	bh=tL3e/ur6/KMkg7mh3t7r3ZIFeZQ4xi5Q34S/7FlZ2qA=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=SLq2w25GpHpJBUellizhaTjqXXk76DXYVeBiRdvDL7I8h7/vRs3pjJ1J40oIPwxA/uls4pJOVx7u1tzsLEceO+TuGQgjyA1/QA+yKbeX5uuaueX724HZHO5boF25b4Bkxs49NUb2f8Y7/MrgRLdac44sLslW72RIbiIdV51tqBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SQ7eo1Ak; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B6EC2BD10;
+	Wed,  3 Jul 2024 18:49:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720032596;
+	bh=tL3e/ur6/KMkg7mh3t7r3ZIFeZQ4xi5Q34S/7FlZ2qA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=SQ7eo1AkC8LjRWberzbfTrXdEmn8AVAPTH1nI5h830+ubxo1C5MaKmEtPRy9gsG1o
+	 M8aW67LDGZEnsrCM4Q/GRKRYn+r39JIjjMUn4+wwhQ4mb+Nyw7/6h4NQGIjateXcmW
+	 XAfTSrhx2kUyLwJweon5gGjsH9sMGD6YpKO/TIf9EwzO/u3UL14SYAuIKAMoMlbYkK
+	 bxKEJlfNCtFdikjht8PVx57e+Ez2TZA0kY1xDB4xr5o96jrOLhYPq5oX8riaz0aLMe
+	 pQxRIT/WAYj12CgJvmnxQibErDTaKj3syhCujN4MjJ27ACtbE6kpJopp6TU3GIN89Q
+	 vkEmm7DBvS+3g==
+Date: Wed, 3 Jul 2024 11:49:52 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: patchwork-bot+netdevbpf@kernel.org
+Cc: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, djakov@kernel.org, mturquette@baylibre.com,
+ sboyd@kernel.org, jassisinghbrar@gmail.com, herbert@gondor.apana.org.au,
+ davem@davemloft.net, manivannan.sadhasivam@linaro.org, will@kernel.org,
+ joro@8bytes.org, conor@kernel.org, tglx@linutronix.de, amitk@kernel.org,
+ thara.gopinath@gmail.com, linus.walleij@linaro.org, wim@linux-watchdog.org,
+ linux@roeck-us.net, rafael@kernel.org, viresh.kumar@linaro.org,
+ vkoul@kernel.org, edumazet@google.com, pabeni@redhat.com,
+ mcoquelin.stm32@gmail.com, robimarko@gmail.com, quic_gurus@quicinc.com,
+ bartosz.golaszewski@linaro.org, kishon@kernel.org, quic_wcheng@quicinc.com,
+ alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+ agross@kernel.org, gregkh@linuxfoundation.org, quic_tdas@quicinc.com,
+ robin.murphy@arm.com, daniel.lezcano@linaro.org, rui.zhang@intel.com,
+ lukasz.luba@arm.com, quic_rjendra@quicinc.com, ulf.hansson@linaro.org,
+ quic_sibis@quicinc.com, otto.pflueger@abscue.de, quic_rohiagar@quicinc.com,
+ luca@z3ntu.xyz, neil.armstrong@linaro.org, abel.vesa@linaro.org,
+ bhupesh.sharma@linaro.org, alexandre.torgue@foss.st.com,
+ peppe.cavallaro@st.com, joabreu@synopsys.com, netdev@vger.kernel.org,
+ lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
+ ahalaney@redhat.com, krzysztof.kozlowski@linaro.org,
+ u.kleine-koenig@pengutronix.de, dmitry.baryshkov@linaro.org,
+ quic_cang@quicinc.com, danila@jiaxyga.com, quic_nitirawa@quicinc.com,
+ mantas@8devices.com, athierry@redhat.com, quic_kbajaj@quicinc.com,
+ quic_bjorande@quicinc.com, quic_msarkar@quicinc.com,
+ quic_devipriy@quicinc.com, quic_tsoni@quicinc.com,
+ quic_rgottimu@quicinc.com, quic_shashim@quicinc.com,
+ quic_kaushalk@quicinc.com, quic_tingweiz@quicinc.com,
+ quic_aiquny@quicinc.com, srinivas.kandagatla@linaro.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-crypto@vger.kernel.org, linux-scsi@vger.kernel.org,
+ linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ iommu@lists.linux.dev, linux-riscv@lists.infradead.org,
+ linux-gpio@vger.kernel.org, linux-watchdog@vger.kernel.org,
+ linux-pci@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+ kernel@quicinc.com
+Subject: Re: [PATCH 00/47] arm64: qcom: dts: add QCS9100 support
+Message-ID: <20240703114952.6013f05e@kernel.org>
+In-Reply-To: <171998042970.21654.12559535993133117436.git-patchwork-notify@kernel.org>
+References: <20240703025850.2172008-1-quic_tengfan@quicinc.com>
+	<171998042970.21654.12559535993133117436.git-patchwork-notify@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240703-yoga-slim7x-v1-0-7aa4fd5fdece@linaro.org>
-In-Reply-To: <20240703-yoga-slim7x-v1-0-7aa4fd5fdece@linaro.org>
-From: Rob Clark <robdclark@gmail.com>
-Date: Wed, 3 Jul 2024 11:40:11 -0700
-Message-ID: <CAF6AEGvcb6EBrmRTDZhPtUD68L2tztoPmFk80Wn7pw+APsp77w@mail.gmail.com>
-Subject: Re: [PATCH 0/2] arm64: dts: qcom: x1e80100: add Lenovo Yoga Slim 7x support.
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jul 3, 2024 at 10:01=E2=80=AFAM Srinivas Kandagatla
-<srinivas.kandagatla@linaro.org> wrote:
->
-> This patchset adds support to Lenovo Yoga Slim 7x based on x1e80100 SoC.
->
-> Tested features:
-> -> Keyboard,
-> -> touch screen
-> -> Display,
-> -> Speakers.
-> -> all 3 usb ports.
-> -> WLAN
-> -> GPU
-> -> NVMe
->
-> TODO:
-> -> touchpad.
-> -> 4 x dmics
-> -> Battery level (Does not work)
->
-> Note, All the firmwares are copied from windows for testing.
+On Wed, 03 Jul 2024 04:20:29 +0000 patchwork-bot+netdevbpf@kernel.org
+wrote:
+> This series was applied to netdev/net-next.git (main)
+> by Jakub Kicinski <kuba@kernel.org>:
 
-maybe it would be worth mentioning (in the patch, so it ends up in git
-log?) where to look for fw?  I found 'em in
-\Windows\System32\DriverStore\FileRepository\*\*.mbn/jsn/dtbs.elf
+> Here is the summary with links:
+>   - [01/47] dt-bindings: arm: qcom: Document QCS9100 SoC and RIDE board
+>     (no matching commit)
+>   - [02/47] arm64: dts: qcom: qcs9100: Introduce QCS9100 SoC dtsi
+>     (no matching commit)
+>   - [03/47] arm64: dts: qcom: qcs9100: Introduce QCS9100 PMIC dtsi
+>     https://git.kernel.org/netdev/net-next/c/df18948d331e
 
-BR,
--R
-
->
->
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
-> Srinivas Kandagatla (2):
->       dt-bindings: arm: qcom: Add Lenovo Yoga Slim 7x
->       arm64: dts: qcom: x1e80100: add Lenovo Thinkpad Yoga slim 7x device=
-tree
->
->  Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
->  arch/arm64/boot/dts/qcom/Makefile                  |   1 +
->  .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 910 +++++++++++++++=
-++++++
->  3 files changed, 912 insertions(+)
-> ---
-> base-commit: 5f18d86e750408030e3980e566ff87f0319d7f34
-> change-id: 20240703-yoga-slim7x-35e6cbb5e13a
->
-> Best regards,
-> --
-> Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->
->
+This is some bug / false positive in the bot, to be clear.
+Commit df18948d331e is ("Merge branch 'device-memory-tcp'").
+No idea how it got from that to DTS.
 
