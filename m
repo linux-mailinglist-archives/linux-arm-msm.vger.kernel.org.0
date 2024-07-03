@@ -1,61 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-24969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6907924FDB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 05:41:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id ADFC0924FD6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 05:41:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B0F02B28E19
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 03:41:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 721D428F873
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 03:41:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78025136E38;
-	Wed,  3 Jul 2024 03:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D8AE13775B;
+	Wed,  3 Jul 2024 03:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pXO/cnDk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tpTBoIgQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0A3136E34;
-	Wed,  3 Jul 2024 03:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0044E13774D;
+	Wed,  3 Jul 2024 03:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719977873; cv=none; b=PoVzxUw6ZIqDctND0VzBJ/NMqeub6cWzTjDGzwmpjAVNZTrzeHX7NJR6p5ug0CuTnFSqgVUeuw869pcQJZYfvltSpdaTAUFKdzUQyruLwjbcPnmMguwuZY0oaT970uMlDVB9FOl4Wh0BS2J10bqF7ydwPD3SwXRFQPLvu5hhSNg=
+	t=1719977874; cv=none; b=k6bg9C8Gm3QxZpuMPjnNieSJE+aYZ5ARXqCNIl/VDnFzCLWYedaEmfkDNgTs2CmCHKGCHpGloEKoN6Rd9wkNI6HRKTy39vnWh3MV6kW+6xQUWL2K9Zs5NsVwJoV5eTGHffSNFfyda35R1JzekMPkgLcadtabvlBkLaK4OpfTvu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719977873; c=relaxed/simple;
-	bh=AWlKbGxkg8EHIpMhkU6ZC3GVkJjPIGmUP8n5jnBrS9g=;
+	s=arc-20240116; t=1719977874; c=relaxed/simple;
+	bh=9LOG+Iz8twR7rHxeQYQr8OSRQaJ7m/kpUczuRzyqIIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MbW7j+vYuA6W+YUqYujTXDLMpaBwBzyfvd95TFj2FsF+8RTyYpA1id7QF0m7vkKoQH4aGR+WWwWLf3zraemNnw/Q/e4MZa1Vlp6EaLKUHu722MvIiIF9o6siqU6l1l3tK+01Z6STYAs2bUABn1a0nPlpwzBYkjWWaQoGf6Bxt2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pXO/cnDk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E178C4AF0A;
-	Wed,  3 Jul 2024 03:37:52 +0000 (UTC)
+	 MIME-Version:Content-Type; b=LJyfpSovydMqJaa0D+5vJ3cMDxVN20+Zm9SQ0mbziH0raE8w6Ga/+zNUtoWugRxOAdalN10OKcHASLlvfRzTCT3ypn2kJlI3VNS8La43aPBTmTkAfXF+cpd0EgXOGk39uKICC1Sf31hSWJlzoxXRLrLZy0vGqovnD3M+XuZmNCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tpTBoIgQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13EA5C116B1;
+	Wed,  3 Jul 2024 03:37:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719977872;
-	bh=AWlKbGxkg8EHIpMhkU6ZC3GVkJjPIGmUP8n5jnBrS9g=;
+	s=k20201202; t=1719977873;
+	bh=9LOG+Iz8twR7rHxeQYQr8OSRQaJ7m/kpUczuRzyqIIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pXO/cnDkzqVGKoxNklZMnAv/7bhs9NO+VSnz8KKt7ior4n35gSATz/V4uxJqD/zQj
-	 NxR7Qw41Knk3e0NMly9OdJA0cRbz7bnY7yr6AVvJluqXK43XgblKe0DSD/NnHqvijB
-	 LZMrydIM/ATW/VspL9JCaQEcRJ2B2kM0RugGIm0V+XEhpLvAtxVkhum9F1WMhCtK3h
-	 ydvuplmjaSrhLyy/g/SpxdgJQYkwjavGKYSZzRnl/VaWu2TSKzqf3BmVwMnq+qLV3P
-	 WTLMgC5vHanT0uMpzzAMcNRZbwhjUHk8fWQ6qiNu9+dsbLYj0WieBuA8KhlSBYebJ2
-	 BeqorRIw8QMFQ==
+	b=tpTBoIgQnZ20aIszmZXh3ZSV6CyQiqIM/M4nMi408ma+p4JmpU7FjZw/HX0tgyFd1
+	 Il09SUk/v8u9hvdUYVCfrkdI6NlWkYywThvtI13U2ADO0k7jGA2b9Tsuz/vF71kCwv
+	 erL+b7NFnQ+6xDsQODusJXkQinwWLPpzg2fsdJFriN0l7xrRGP9fJ+F/pOZA3KahjD
+	 eLwhEPemhx9SRdgWWnZt9UKbSA2KqYLBU5+i1p8wEYnUJ0jy4nYgKlopfTF9soEgZT
+	 ZuBwGv6nD9MNR12j/oEYaXRYUfpbHkURp/GV5z2ZDJ3V5XJXBpxcjIuNjJlRIiT13R
+	 CdDKw0cze0QwQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: quic_bjorande@quicinc.com,
-	quic_clew@quicinc.com,
-	mathieu.poirier@linaro.org,
-	Sudeepgoud Patil <quic_sudeepgo@quicinc.com>
-Cc: linux-kernel@vger.kernel.org,
-	quic_deesin@quicinc.com,
+To: linux-kernel@vger.kernel.org,
+	Raymond Hackley <raymondhackley@protonmail.com>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org
-Subject: Re: (subset) [PATCH V3 0/2] Use of devname for interrupt descriptions and tracepoint support for smp2p
-Date: Tue,  2 Jul 2024 22:37:34 -0500
-Message-ID: <171997785365.348959.8013084242190824614.b4-ty@kernel.org>
+	devicetree@vger.kernel.org,
+	phone-devel@vger.kernel.org,
+	~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: (subset) [PATCH v3 0/2] ARM: dts: qcom-msm8226-samsung-ms013g: Add initial device tree
+Date: Tue,  2 Jul 2024 22:37:35 -0500
+Message-ID: <171997785372.348959.15845091614741529157.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240627104831.4176799-1-quic_sudeepgo@quicinc.com>
-References: <20240627104831.4176799-1-quic_sudeepgo@quicinc.com>
+In-Reply-To: <20240630132859.2885-1-raymondhackley@protonmail.com>
+References: <20240630132859.2885-1-raymondhackley@protonmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,21 +68,25 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 27 Jun 2024 16:18:29 +0530, Sudeepgoud Patil wrote:
-> This commit enhances the smp2p driver by adding support for using the device
-> name in interrupt descriptions and introducing tracepoint functionality.
-> These improvements facilitate more effective debugging of smp2p-related issues.
+On Sun, 30 Jun 2024 13:29:13 +0000, Raymond Hackley wrote:
+> Samsung Galaxy Grand 2 is a phone based on MSM8226. It's similar to the
+> other Samsung devices based on MSM8226 with only a few minor differences.
 > 
-> The devname patch, along with the callback to print the irq chip name as the
-> device name and the removal of the ‘smp2p’ string from the irq request,
-> results in a unique interrupt description.
+> The device trees contain initial support with:
+>  - GPIO keys
+>  - Regulator haptic
+>  - SDHCI (internal and external storage)
+>  - UART (on USB connector via the TI TSU6721 MUIC)
+>  - Regulators
+>  - Touchscreen
+>  - Accelerometer
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] soc: qcom: smp2p: Use devname for interrupt descriptions
-      commit: e49380c155940cb47e291a4b3fcb7fdffee6aa4d
+[2/2] ARM: dts: qcom-msm8226-samsung-ms013g: Add initial device tree
+      commit: 2a5454d0fe5684855581f8ad958afbcdc476fd64
 
 Best regards,
 -- 
