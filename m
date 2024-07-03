@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-25059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D99A92571D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:43:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D907892571E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:43:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 253CA2841EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 09:43:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8FBD728575E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 09:43:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FCC914265F;
-	Wed,  3 Jul 2024 09:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33AE3142E77;
+	Wed,  3 Jul 2024 09:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fAeYcvXG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yFz7ZOMX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834471411E0
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 09:43:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614391422CC
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 09:43:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719999783; cv=none; b=bOqnojIBy7s09M5kmQlEUDwK/cxOLtGkh+ww++UKbI5XNNlFY5RdXYo6w8OmFD/uzQ2X82d3JcknwPx2Ax1koWey66ZSgq/tTq5Lx7ZGDYEgtuX2tGTFo/MSF0U8MoBKZk9wUYi2lycGqprn6H5Ukj23aVZjMrlY8n2NMAlTp30=
+	t=1719999784; cv=none; b=mRAoju5m87DY76vosr5exfJ3T7DSF0ye17g700fjUOi1DtthUPT9cCMkTQOZHyXV5j4qHw4dwixADDLa4c8llYsWiN9tg/jwBPt4IErBdxv3Th24B0IJq2Ppj0jyGsaNH5WRg5HZ/S8dKTO+CJ3t6VMspfoauIx8r6J/yQsNknU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719999783; c=relaxed/simple;
-	bh=qpxrmTREuNaHHrdQzgu1e/L+P9VsCpf8GWp7U06TfTg=;
+	s=arc-20240116; t=1719999784; c=relaxed/simple;
+	bh=Jq0jlG89u9hud4QvxGvDm+WMAUvi4Tm+sc+lYy6IEW4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=TcVeqXqQtR3THCSU6SmJmj4L6JtKxnapSBh0aFTyXHoF9qYk077JIZACHs94ddQoS6SzVsVQN+SoKyzITkAKM9ie5v6pRJ+/3mt6Z7xw/fogUHHEhhXm9MNmeI61I/lDaXUn9b5xz7M7phcGJa4sH4hiT4HKCVQsqOAW4vXHlrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fAeYcvXG; arc=none smtp.client-ip=209.85.221.42
+	 In-Reply-To:To:Cc; b=Eq/uJEuQKUQYpgl48smVHoTa1XQzzhH9FNNEnPLEwvrYnHkovRGJyoQVNtFtzS/PkZsXm2aq6/m14AHRB1zJCFoeWxN/t/jElnr8P5LkDKOb0s+lqty+iMoboHZ3oefXe11vVMhCHqu/qHiMTDF8dsP3ld2yuxxqk6LXwx2vffQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yFz7ZOMX; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-367940c57ddso250506f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 02:43:01 -0700 (PDT)
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3636c572257so3711496f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 02:43:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719999780; x=1720604580; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1719999781; x=1720604581; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=KS5iVDe1obLhEwpLoT+EWyyGo/TPfbyIkExLZDp79p4=;
-        b=fAeYcvXGdiruT1GG2fnhiqGzviJIfwruiv6Ie/rwTiSp/wWz+p4oJbULIrqLe1QFQe
-         30Z5+5sc12KBjJOonNbgHsGMHbb0MjkNY9W08LGH8kcseO3mMQcebGp3Dt5/ZWYSIXP9
-         YCg1hWcOgiT6Fkj0boC7at91fIeQla7n+cytwZW9N1V6YtysC6j69wz19zPdkbjBN0qD
-         WktVsa3PI7MP3b8S+z6p2tz0CUhNBcEEMQ8qiawQezH+xdTSd0zMsdrNYpHJAx4C0meQ
-         HcZeG2yVnrP1XnC6YIzaWuFebpW1w4Uv9BrGDOrvqG7yyuH5HzUt/2Hm6pZ+nN3pdnVB
-         DMdg==
+        bh=4pYRZX+NSiwidYn0MWwg3SiL2WiSTwldzzZjg+SAT9I=;
+        b=yFz7ZOMX+28Sv80KaOvXPSjX/A9C+Cb3SvljNm7vXODFgLinx6p9f6o/lFSZJa614z
+         TizqmposHfHIBHZb1cgBoNA93iy3/3FVco7iqA7Qb9BJtk7vg6mdkSL84uFFUJx/EvqS
+         i1WtcDzHMrSI6Iz0LR3wsoH9aKywMQ2XfO32Gsz8YUgXeEZ+JYQkqsVGPL3/af5Z5VE0
+         C/BYNhDhWb53w8MTdcKnZuHHBeFYpwehjIUZKhk9RKIlbfYamXbw8qlr2dX4JjVCoz23
+         L+YtwLg5CNGMoLhb0qnFjUstLbXLBJUwa7xveaEKLwwBG1+O3zxMvA3weDO2rp2YI8mc
+         veZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719999780; x=1720604580;
+        d=1e100.net; s=20230601; t=1719999781; x=1720604581;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KS5iVDe1obLhEwpLoT+EWyyGo/TPfbyIkExLZDp79p4=;
-        b=QotR9UhBiJvrqPVDvveRjVggt872ruDcIQCIbFW2fCXe2ljx0jQCeqC3BSjkUkg3qV
-         nw11Lznans2t2ryOlmb+Z+MJmacBnocJJaPG0dwXPBNtaBnDn6CoMg8y/F2ngxx4Ky0G
-         I/Vc/kFLIRPmkcF25GQCJeeS/nadgwL3gFymJVbqNTAN/YfH0uBmgLHkvHYVbkhe78op
-         +CPRz7COathfoXljok5507dSrwN83t/VNxFE7s3BN+tDabH39iQBpTz2dRR6j7HtGAvK
-         63Oc7iZapoda/F3bo5a/tlD4g6Fl+MdcYpEqP5zHs1PSITIxqO0vl7DARtF0TTHJXK6y
-         AtYg==
-X-Gm-Message-State: AOJu0YxoWWst9tth1OQtoZ2QzuEF47wL+KsK6aw7FRAU5x5ZhoORqszv
-	gIfWiCCEFVkQI+7l/x5guoYLg0I6713DTpJ5XZgQvcIDTQpcQfJprdeH8CSk76o=
-X-Google-Smtp-Source: AGHT+IGxe93V1JY+FgRSUXokHtoTw1Cnd90wqvUvteioTByC5F3kobDqHNkUL6qu4wdsVi0h/tayjA==
-X-Received: by 2002:a5d:47af:0:b0:367:434f:caa2 with SMTP id ffacd0b85a97d-36775627d4dmr9358064f8f.0.1719999779823;
-        Wed, 03 Jul 2024 02:42:59 -0700 (PDT)
+        bh=4pYRZX+NSiwidYn0MWwg3SiL2WiSTwldzzZjg+SAT9I=;
+        b=aOWNvBqrFzuJ06ku94EUmVUNA60kTbA+B7Syc52/o573SmBVDAaQpeduqB77XRwQgP
+         QNTaOLSskAOtDH3UU/1PD7jiQJKwk5Fs1imOrqO1r8BLvBQ65M6fcEmvCnXoZwsJg6i/
+         vVe2DGYTi0EvQkV3UzWWp8Y6B0ffjvsvX5xjPTaXz5cMmom9Vfg1jhnxEvUbl79tOnvf
+         ipgZft4ZuoYExBHsR/R8B5jAR8QmD+pPZpMbxW4MHhbNisUyNOfWcdVjf3IzAumd2xFj
+         Dp5R1Q/nDdQxbwgm+32vrxHY4aEkWctCI6gQrHe7wgSBgv30r3zWH6vIAQZx8TDUMkXX
+         p9Rw==
+X-Gm-Message-State: AOJu0YxB2u/ggB3HS5iN8Dy51t18p1kZUYtrVZlP/OHbeJjH/qCn+1N/
+	nS3N5hcW0LgfASQm2Mv98x9NQY2Tl3uNvOkTeK1D2iCZCy/3q45ViT2GQcBcS0I=
+X-Google-Smtp-Source: AGHT+IFWB4DW3FsA6wGH0ff7ZiA+oTRSHRSUHHe3nL56wU5YlOkiMjj2tYWvcvQcU/QIqFwdzi6Sig==
+X-Received: by 2002:a5d:6852:0:b0:367:8f98:c501 with SMTP id ffacd0b85a97d-3678f98c65cmr1690529f8f.38.1719999780870;
+        Wed, 03 Jul 2024 02:43:00 -0700 (PDT)
 Received: from [127.0.1.1] ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a1030dfsm15341394f8f.100.2024.07.03.02.42.58
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a1030dfsm15341394f8f.100.2024.07.03.02.43.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jul 2024 02:42:59 -0700 (PDT)
+        Wed, 03 Jul 2024 02:43:00 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 03 Jul 2024 11:42:39 +0200
-Subject: [PATCH 4/5] soc: qcom: pdr: simplify with cleanup.h
+Date: Wed, 03 Jul 2024 11:42:40 +0200
+Subject: [PATCH 5/5] soc: qcom: wcnss: simplify with cleanup.h
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +77,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240703-thermal-const-v1-4-6e59e139c65d@linaro.org>
+Message-Id: <20240703-thermal-const-v1-5-6e59e139c65d@linaro.org>
 References: <20240703-thermal-const-v1-0-6e59e139c65d@linaro.org>
 In-Reply-To: <20240703-thermal-const-v1-0-6e59e139c65d@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -85,21 +85,21 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4629;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1904;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=qpxrmTREuNaHHrdQzgu1e/L+P9VsCpf8GWp7U06TfTg=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmhR0agPr2ydUI703BLOJm92MpT5P4Ug9p19B4/
- V2j5arr6aCJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZoUdGgAKCRDBN2bmhouD
- 15HkD/4mPJtxbfduWCVlQ2Ud2+O/dfZBP1x5bFZbyQ1RIm01TwvHVpLPmzGTZPrwLaUcY/5CTIG
- t6x/P/bfHbewKwehMh+SPSydHRLs3eW4V/4HFx11hl2tOL8q7n+uzzfdp2ENOAWRrH4ZCt89BlD
- 3LgSjqt+lvljDUh/Y1+Mn4DV3SJi8CmNPLparB899ityH6K45PNkipxKAAH6/s7H/78o4U+hdY7
- ulSNfkZBDbKEGrwwpFRMAfxzOebedteO14WgirJZf/wdOGFFEda5WmxlL1R0FDWg60S5omxi3iM
- bjf6rGVsE0hzeSP1S6c4JXQWrZI56rrNLsLQ7MWyqaRSaIf8JIGm5hi40q2Ltp6Syz+/cMSjQnu
- DOFH+cSTryBenzx+KHFrux+IQ8Mlo39jADLjGrAQBur4Hy6BmXbZbp5iRIEeuTSZla4ogjVrUQW
- wlajOYWXQkcv4/lzklWA7jAplf16b7Zkna6TpIC2z0XL8/N8wO99IQZV2khEsqGTixdxKBS2bVq
- LsoM+tPR3Uwxa216shRoNjAs64sgqEJKT3kij947i5vpCI1OlfsR/spQpcjHwpGkr2t8+ZR1Usn
- +d4l61vzAdn84/6/BlSnHiLcAOvtDqPCsRKp9r7XqY5P5F+zQ50bNHI0oo1T14aaFLf6LdzOIOH
- Wkx+gT6U9DC4gwA==
+ bh=Jq0jlG89u9hud4QvxGvDm+WMAUvi4Tm+sc+lYy6IEW4=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmhR0bcBnmEh+GBsRCoRqmtTRL5Fmpc/yV0AnNM
+ 1D/dJe8iQaJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZoUdGwAKCRDBN2bmhouD
+ 11EFD/wPkjo6yn0annMs8pDfoUHjIpLBQ+3NuImJ1F6ieXBKkgf9n3tvlYMqXYGHs3Cl7aWSbw2
+ pbgPRDYjrnBaXoRovrylyXGnmCpnt/SRSpWgXL8naTDADYS38EMBrEoV9GiMUEEc77WxEkgv82X
+ wJz6kQs+/gsfbURh7nb1+iU/owcjoMld+dh/biNLs9v+zdqNlJSfR9YX2XmeQ7baXXHoSSEmrtF
+ ivOqej5DvFkMJMpsKHPtiX7tw669rxVJrHsPRYmwkDQqsnj2yf9m4RiX8nhsvQh7ZuSccIpbMPP
+ 5a9unMamwFS5WqTpaEbPpUiMI13kmcCkZt4M3UP4VDlUspbl2bF+87Mftx8GJuC23hAdGsuzg+X
+ bMp9eNEOUqQtRU8Vs5o0tkvTlSrgLja1T1jCENEDj45D75tVHZnHMacQZKZHtPfQHgOoZJ+ljod
+ 9u3mnDVQEeJBu+NwKHq3tuoOg8YVuq2hYiggpO9P8t9lDSGz663NcyEMp3AAHAKv1+0vzNJlo3+
+ 0XR7FsE40AgZ3wJ9K6+IlaqTjQ4nnoiOALx3cb6nlVuxDQ01UpjmtzUKHqsq7EvjMtT+Q6Ozh/p
+ rGBT4z5SsQeiwq6yNSYkTBZNMt6a06A0XkQvIgl0ZR+1LMKEZEkcEXHNkxGhi2O9FJlgTHbONJm
+ lEVXlpn4UvZYg7A==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
@@ -108,151 +108,60 @@ error paths) and make the code a bit simpler.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/soc/qcom/pdr_interface.c | 38 ++++++++++++++------------------------
- 1 file changed, 14 insertions(+), 24 deletions(-)
+ drivers/soc/qcom/wcnss_ctrl.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
-index 216166e98fae..328b6153b2be 100644
---- a/drivers/soc/qcom/pdr_interface.c
-+++ b/drivers/soc/qcom/pdr_interface.c
+diff --git a/drivers/soc/qcom/wcnss_ctrl.c b/drivers/soc/qcom/wcnss_ctrl.c
+index 148bcbac332d..62b424e90d90 100644
+--- a/drivers/soc/qcom/wcnss_ctrl.c
++++ b/drivers/soc/qcom/wcnss_ctrl.c
 @@ -3,6 +3,7 @@
-  * Copyright (C) 2020 The Linux Foundation. All rights reserved.
+  * Copyright (c) 2016, Linaro Ltd.
+  * Copyright (c) 2015, Sony Mobile Communications Inc.
   */
- 
 +#include <linux/cleanup.h>
- #include <linux/kernel.h>
+ #include <linux/firmware.h>
  #include <linux/module.h>
  #include <linux/slab.h>
-@@ -396,13 +397,13 @@ static int pdr_get_domain_list(struct servreg_get_domain_list_req *req,
- 
- static int pdr_locate_service(struct pdr_handle *pdr, struct pdr_service *pds)
+@@ -198,7 +199,6 @@ static int wcnss_request_version(struct wcnss_ctrl *wcnss)
+  */
+ static int wcnss_download_nv(struct wcnss_ctrl *wcnss, bool *expect_cbc)
  {
--	struct servreg_get_domain_list_resp *resp;
- 	struct servreg_get_domain_list_req req;
- 	struct servreg_location_entry *entry;
- 	int domains_read = 0;
- 	int ret, i;
- 
--	resp = kzalloc(sizeof(*resp), GFP_KERNEL);
-+	struct servreg_get_domain_list_resp *resp __free(kfree) = kzalloc(sizeof(*resp),
-+									  GFP_KERNEL);
- 	if (!resp)
- 		return -ENOMEM;
- 
-@@ -415,7 +416,7 @@ static int pdr_locate_service(struct pdr_handle *pdr, struct pdr_service *pds)
- 		req.domain_offset = domains_read;
- 		ret = pdr_get_domain_list(&req, resp, pdr);
- 		if (ret < 0)
--			goto out;
-+			return ret;
- 
- 		for (i = 0; i < resp->domain_list_len; i++) {
- 			entry = &resp->domain_list[i];
-@@ -427,7 +428,7 @@ static int pdr_locate_service(struct pdr_handle *pdr, struct pdr_service *pds)
- 				pds->service_data_valid = entry->service_data_valid;
- 				pds->service_data = entry->service_data;
- 				pds->instance = entry->instance;
--				goto out;
-+				return 0;
- 			}
- 		}
- 
-@@ -440,8 +441,7 @@ static int pdr_locate_service(struct pdr_handle *pdr, struct pdr_service *pds)
- 
- 		domains_read += resp->domain_list_len;
- 	} while (domains_read < resp->total_domains);
--out:
--	kfree(resp);
-+
- 	return ret;
- }
- 
-@@ -517,8 +517,7 @@ struct pdr_service *pdr_add_lookup(struct pdr_handle *pdr,
- 				   const char *service_name,
- 				   const char *service_path)
- {
--	struct pdr_service *pds, *tmp;
--	int ret;
-+	struct pdr_service *tmp;
- 
- 	if (IS_ERR_OR_NULL(pdr))
- 		return ERR_PTR(-EINVAL);
-@@ -527,7 +526,7 @@ struct pdr_service *pdr_add_lookup(struct pdr_handle *pdr,
- 	    !service_path || strlen(service_path) > SERVREG_NAME_LENGTH)
- 		return ERR_PTR(-EINVAL);
- 
--	pds = kzalloc(sizeof(*pds), GFP_KERNEL);
-+	struct pdr_service *pds __free(kfree) = kzalloc(sizeof(*pds), GFP_KERNEL);
- 	if (!pds)
- 		return ERR_PTR(-ENOMEM);
- 
-@@ -542,8 +541,7 @@ struct pdr_service *pdr_add_lookup(struct pdr_handle *pdr,
- 			continue;
- 
- 		mutex_unlock(&pdr->list_lock);
--		ret = -EALREADY;
--		goto err;
-+		return ERR_PTR(-EALREADY);
- 	}
- 
- 	list_add(&pds->node, &pdr->lookups);
-@@ -551,10 +549,7 @@ struct pdr_service *pdr_add_lookup(struct pdr_handle *pdr,
- 
- 	schedule_work(&pdr->locator_work);
- 
--	return pds;
--err:
--	kfree(pds);
--	return ERR_PTR(ret);
-+	return_ptr(pds);
- }
- EXPORT_SYMBOL_GPL(pdr_add_lookup);
- 
-@@ -651,13 +646,12 @@ struct pdr_handle *pdr_handle_alloc(void (*status)(int state,
- 						   char *service_path,
- 						   void *priv), void *priv)
- {
--	struct pdr_handle *pdr;
+-	struct wcnss_download_nv_req *req;
+ 	const struct firmware *fw;
+ 	struct device *dev = wcnss->dev;
+ 	const char *nvbin = NVBIN_FILE;
+@@ -206,18 +206,19 @@ static int wcnss_download_nv(struct wcnss_ctrl *wcnss, bool *expect_cbc)
+ 	ssize_t left;
  	int ret;
  
- 	if (!status)
- 		return ERR_PTR(-EINVAL);
+-	req = kzalloc(sizeof(*req) + NV_FRAGMENT_SIZE, GFP_KERNEL);
++	struct wcnss_download_nv_req *req __free(kfree) = kzalloc(sizeof(*req) + NV_FRAGMENT_SIZE,
++								  GFP_KERNEL);
+ 	if (!req)
+ 		return -ENOMEM;
  
--	pdr = kzalloc(sizeof(*pdr), GFP_KERNEL);
-+	struct pdr_handle *pdr __free(kfree) = kzalloc(sizeof(*pdr), GFP_KERNEL);
- 	if (!pdr)
- 		return ERR_PTR(-ENOMEM);
+ 	ret = of_property_read_string(dev->of_node, "firmware-name", &nvbin);
+ 	if (ret < 0 && ret != -EINVAL)
+-		goto free_req;
++		return ret;
  
-@@ -676,10 +670,8 @@ struct pdr_handle *pdr_handle_alloc(void (*status)(int state,
- 	INIT_WORK(&pdr->indack_work, pdr_indack_work);
+ 	ret = request_firmware(&fw, nvbin, dev);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to load nv file %s: %d\n", nvbin, ret);
+-		goto free_req;
++		return ret;
+ 	}
  
- 	pdr->notifier_wq = create_singlethread_workqueue("pdr_notifier_wq");
--	if (!pdr->notifier_wq) {
--		ret = -ENOMEM;
--		goto free_pdr_handle;
--	}
-+	if (!pdr->notifier_wq)
-+		return ERR_PTR(-ENOMEM);
+ 	data = fw->data;
+@@ -263,8 +264,6 @@ static int wcnss_download_nv(struct wcnss_ctrl *wcnss, bool *expect_cbc)
  
- 	pdr->indack_wq = alloc_ordered_workqueue("pdr_indack_wq", WQ_HIGHPRI);
- 	if (!pdr->indack_wq) {
-@@ -704,7 +696,7 @@ struct pdr_handle *pdr_handle_alloc(void (*status)(int state,
- 	if (ret < 0)
- 		goto release_qmi_handle;
+ release_fw:
+ 	release_firmware(fw);
+-free_req:
+-	kfree(req);
  
--	return pdr;
-+	return_ptr(pdr);
- 
- release_qmi_handle:
- 	qmi_handle_release(&pdr->locator_hdl);
-@@ -712,8 +704,6 @@ struct pdr_handle *pdr_handle_alloc(void (*status)(int state,
- 	destroy_workqueue(pdr->indack_wq);
- destroy_notifier:
- 	destroy_workqueue(pdr->notifier_wq);
--free_pdr_handle:
--	kfree(pdr);
- 
- 	return ERR_PTR(ret);
+ 	return ret;
  }
 
 -- 
