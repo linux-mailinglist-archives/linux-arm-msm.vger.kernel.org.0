@@ -1,143 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-25074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3A96925775
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:55:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6976E9257B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 12:02:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 701251F23112
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 09:55:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 154982866AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 10:02:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43BEE1422B4;
-	Wed,  3 Jul 2024 09:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8430D13B5AD;
+	Wed,  3 Jul 2024 10:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nuFTRo6x"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cOnYZ6xK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8779B14037D
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 09:55:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED0713D8B5
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 10:01:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720000504; cv=none; b=fYdL9dieheDDbLir3ZpKc8pkGtP9kYRtHS8QTI0W+ehy9RUOz8NOez55G7IiF892ZJalwjYASlG5C8VZRgmM30vPKsGzpIwXkazOGltWXJVS/twCWt+usYQbEQZPWD46rMoCWBpr0VCaFRilkEtxE0o4Q0Qn5Bemtkl2xYRw1dk=
+	t=1720000907; cv=none; b=p5H2JlhFJuO+Rq+9jdsWKh5VBycTpRIEgvNBGdgv5opa+DLy3BzThEAA8Zemf6ZIRdhODu1earoE4p9J0vLiSzH6sRDiR+181/JC03qcos8/S2MWg2sKcJScoFEsosRgThn0Wgev1fAPfFrmDAij0ZCCIkqmJ5VCCpi90pqk0+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720000504; c=relaxed/simple;
-	bh=k/+CTBpj1EiCKMxmYiMFK6O7Hti0OmObuybzNT9VcZE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kTpM6cRX/NEchlTGQZ7YDEQMkY7mG5HnTl+vO8YqSWxOXP4BAj1WA5R1x0vUdqRNd9hAkREmg5rD8QZhIu0ZnBj4YD/B/BdFJr0N8AkoIeFBBG6z/oZi4ToGDiVFRd7Las0vO0otcUrwSP8cQdaXLxoqXut/9I/dRD0qaDekHck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nuFTRo6x; arc=none smtp.client-ip=209.85.128.169
+	s=arc-20240116; t=1720000907; c=relaxed/simple;
+	bh=IoztH7c3ObPzPyOJzXRpFf3OvcHSvttFXXjWl6mAImk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uvi9ZG/On8xjbWwezxxxJkg+ejDQhg1QoDLaYlloTc3EtCEWPQLnLyAYf40sHj8ZifR5cTcuI5VZx1zzwF3n/XFRyO94kil7YzUE0gFqs+WLcthLHj9gKa6GrK2c8WUD+Y/+2c85a4/wQm1FTd2FEaquR5sCP5rYmWX316rGNR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cOnYZ6xK; arc=none smtp.client-ip=209.85.208.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-64f4f96bbf9so24091997b3.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 02:55:01 -0700 (PDT)
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2ec5779b423so47313301fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 03:01:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720000500; x=1720605300; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=KRpouyYlT8w2vDlaWB3dgP182H0ox0N2Q0MheHmPiuY=;
-        b=nuFTRo6x4AaHQ5W+QWLWOgUgkOpgi5FCU7SwWX986/hr7jLsO1MZQaLDYAVxykukjg
-         ZX2kt2pUJZ8/xEhwFW3kEjQzKIo7WmB0PzV6/nmhGfF0w1fB/jQafFDDYzlF1pi7qYrt
-         QePEPBM+Qb+AzeM1KCEKRPFOcJuYpMhOmbcNxkQ7MoJvOS4O+1zATM739AcHmdq/Jarj
-         fAwEgXz2hyvdJnTIL4nnlfdAaFLxV1rJ88UYHDOXphUmapTF0LZhP1+PHnn5zAvflYqt
-         QU1PPLqniroTY+POaMukarYhczrPees08Lk6H/Y5o6hMRMvqqBCa8VFT3SPhYFHtX5Qj
-         xTsA==
+        d=linaro.org; s=google; t=1720000903; x=1720605703; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ba8TVs0WiPW/mrVDZB1JnVEfDtu3H86gU8ZQ9MafN2c=;
+        b=cOnYZ6xKRBAttW8/AJvS8G3KoH4Xq2Pua85oqMMlKvuZnD9DaxAk1oNZ91SIqt9BgB
+         YJ+EMEOmZgbKA7m8b1oky8TZjPibE4vdTr8Nx+EhMa2rYI9RGXatFmFyZhruLz6Az+it
+         HmQJdRLPwJ5ILE7IKV5uNq8jQu9XEJdAGEtSN/+vkb/vt5qtDFuKrMd1MpkwyDPHv5I8
+         mov4gifDGzBZRkRMQHn1wd6zF5xRHf1RDXU1bz8FXXdLiZju9SZsqDBvd1nICZR1hGaD
+         jG7+ab8VaTLiN80H20o/x9Gkuxw76DOL+QoCJLC4LfCZST9fOJkqzOESlyyvHK2s6Q3l
+         xfWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720000500; x=1720605300;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KRpouyYlT8w2vDlaWB3dgP182H0ox0N2Q0MheHmPiuY=;
-        b=bzT0rmttdcKEaT3A/MmSBpWIQvVXxqREQJQKPsI45hMriYB77YJyBiwe+3cGHbxuSe
-         /6F88ULjGndsJ4P8bxr1+QrNeDrhQ+OtuHgxK3u5ZUT43MKT7vpFlt0MEa8CVUkDwLKd
-         AxqyEr63ZA9OiW8ro1Y9FbTFH+4lyaHyhV2LZeuI6MbY7wFnRx4PhMgfS/Oo/rx2JFUo
-         f0qs4Z1WM+7VGbv3Xcpxjx7jM7Xv8x1a/diUnWjj0LX6PQ86+xLYKf/lMRSiiBEDp6h8
-         yX+v8hMq3rSJcPpFZ1wzMumW4u+qaclUN8NWblAaV8Z0UW/SIE+pWzfH2FKofv/Fv1Xa
-         8UhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXGPFhj8EiyqoBR533pEuwNrIrD6lWcLMeYxcZHWick1JsHbkN1QOL8LOQzOtDmI46S7cjfkGSVG5e7CtAqdxW0LB+Ma95wp7Q+3ZviBQ==
-X-Gm-Message-State: AOJu0YyyrZEBruoBh8ui402bYE3u33pLsmzHb8/PocZrGXKvV7uUfMbf
-	bfzBVVugp9ZXmEOkEm+0EJL2znk8uLCwBOtrtT9Z0RFAGKebU719VhYArRp3X/qnexqhYsEmKVi
-	Y5jHD1DTn9IaEhuknfJf6bxvrat4z7yaOEq3PbQ==
-X-Google-Smtp-Source: AGHT+IHoNzBewnWkhcdAH2IejqHRntRYwy/kVJsz9+740G9qHkKMZZR3MQADqefkEA2eUyN1XlgmAmLhG8Zvd2gJPFA=
-X-Received: by 2002:a05:690c:804:b0:64a:7d9b:934 with SMTP id
- 00721157ae682-64c7277c728mr123416777b3.16.1720000500575; Wed, 03 Jul 2024
- 02:55:00 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720000903; x=1720605703;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ba8TVs0WiPW/mrVDZB1JnVEfDtu3H86gU8ZQ9MafN2c=;
+        b=eweLPHPeLLwtHIXqzB0FMBqjvtTT15ShAUCUKqdhz+A+UYN2ZDbPkvzMSVNVgNi6F6
+         zqSD3cTEwgK/o/nWfNnXk3fnsg/RTUnaW0QEtrBglkKfAWgeQwSUieQmwjYjsh5UiU4p
+         N6wGBZ7TVVfMLbAUgzCrGjWa3e0AZh2fYc+xcBAfdaP5IHWtH2rhbxg/ZrTGdC3FDRvb
+         ro/V/bxKTkE6RJorr+aKvOq4MvyrWez9DT25Z7vKiXvnw5zT5xOqXcXUxKFWZapv9Z0Y
+         kD0qkkHOIZVB+lNnB+clMW0j2tLbiJ1WASTl+k2IooQw7IL8Os+B9JTwT+xpi1IL/jP7
+         k2gA==
+X-Forwarded-Encrypted: i=1; AJvYcCV0pSRInX2mN+8MIGrjH91+BXxPNLXdOtWJmLJ1gZwIPWUjEEW3tGu+u+4j+5PTQbcxs8dQ0V9w9waZdP/jL5a/wKQTOtd5ioa/yqKVqA==
+X-Gm-Message-State: AOJu0Ywxn69KndP24QceoFZYAahO/L7KrPducIhImiTy9mfUUCBUYXQT
+	VPO9fc5V8lZZebqMHsL4E63YL/1akdopjuyA+AcKN0QWNNPklhbhnfv8f73qQsg=
+X-Google-Smtp-Source: AGHT+IFt0NIPlTRfTacZKad2D9AAb0rB8mNH1GSrB71JnEIIs0lwsvAcQ1VQLk1LTElL0scOqic9Gg==
+X-Received: by 2002:a2e:9849:0:b0:2ec:4e59:a3e with SMTP id 38308e7fff4ca-2ee5e4bb7a5mr70347281fa.23.1720000900854;
+        Wed, 03 Jul 2024 03:01:40 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ee59fd21a5sm16276051fa.129.2024.07.03.03.01.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Jul 2024 03:01:40 -0700 (PDT)
+Date: Wed, 3 Jul 2024 13:01:38 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@codeaurora.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>, 
+	Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
+	Jagadeesh Kona <quic_jkona@quicinc.com>, stable@vger.kernel.org
+Subject: Re: [PATCH v2 1/6] clk: qcom: alpha-pll: Fix the pll post div mask
+ and shift
+Message-ID: <gx3vhkjvwwzxvbh36c3bwp5kw7pxiki2rvsp7ig6rdo3gw6fju@afmhwuwdqquj>
+References: <20240702-camcc-support-sm8150-v2-0-4baf54ec7333@quicinc.com>
+ <20240702-camcc-support-sm8150-v2-1-4baf54ec7333@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240417133731.2055383-1-quic_c_gdjako@quicinc.com>
- <20240417133731.2055383-6-quic_c_gdjako@quicinc.com> <CAA8EJppcXVu72OSo+OiYEiC1HQjP3qCwKMumOsUhcn6Czj0URg@mail.gmail.com>
- <CAA8EJpr3GYimirDz39f4n-3hDAxFWzo+9fdY6MAuxaNguouVFg@mail.gmail.com>
- <3e816509-a12b-4658-85f4-c0d0037c6a64@kernel.org> <CAA8EJpr1G4eq5xJn0z2JQmpXY89UK13uk2BWJCgROsFP_-NkQw@mail.gmail.com>
- <20240702163908.GA4635@willie-the-truck>
-In-Reply-To: <20240702163908.GA4635@willie-the-truck>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 3 Jul 2024 12:54:48 +0300
-Message-ID: <CAA8EJprGja_L6QXVmfSqoeMKCmSrf-qBeAWNToZDe++AsZ+Nyg@mail.gmail.com>
-Subject: Re: [PATCH v8 5/7] arm64: dts: qcom: sdm845: Add DT nodes for the TBUs
-To: Will Deacon <will@kernel.org>
-Cc: Georgi Djakov <djakov@kernel.org>, Georgi Djakov <quic_c_gdjako@quicinc.com>, robin.murphy@arm.com, 
-	joro@8bytes.org, iommu@lists.linux.dev, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
-	devicetree@vger.kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
-	robdclark@gmail.com, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	quic_cgoldswo@quicinc.com, quic_sukadev@quicinc.com, quic_pdaly@quicinc.com, 
-	quic_sudaraja@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240702-camcc-support-sm8150-v2-1-4baf54ec7333@quicinc.com>
 
-On Tue, 2 Jul 2024 at 19:39, Will Deacon <will@kernel.org> wrote:
->
-> On Tue, Jun 25, 2024 at 03:59:27PM +0300, Dmitry Baryshkov wrote:
-> > On Tue, 25 Jun 2024 at 15:57, Georgi Djakov <djakov@kernel.org> wrote:
-> > >
-> > > On 25.06.24 10:50, Dmitry Baryshkov wrote:
-> > > > On Fri, 14 Jun 2024 at 21:05, Dmitry Baryshkov
-> > > > <dmitry.baryshkov@linaro.org> wrote:
-> > > >>
-> > > >> On Wed, 17 Apr 2024 at 16:39, Georgi Djakov <quic_c_gdjako@quicinc.com> wrote:
-> > > >>>
-> > > >>> Add the device-tree nodes for the TBUs (translation buffer units) that
-> > > >>> are present on the sdm845 platforms. The TBUs can be used debug the
-> > > >>> kernel and provide additional information when a context faults occur.
-> > > >>>
-> > > >>> Describe the all registers, clocks, interconnects and power-domain
-> > > >>> resources that are needed for each of the TBUs.
-> > > >>>
-> > > >>> Signed-off-by: Georgi Djakov <quic_c_gdjako@quicinc.com>
-> > > >>
-> > > >> This patch now prevents interconnect drivers from hitting the sync
-> > > >> state on SDM845.
-> > > >> The TBU driver is enabled only when the ARM_SMMU_QCOM_DEBUG is
-> > > >> enabled, which is not a typical case on a normal system:
-> > > >
-> > > > Georgi, before I start acting like a bull in a china shop and sending
-> > > > reverts, any update from your side?
-> > >
-> > > Hi Dmitry!
-> > > Thanks for the report! We can easily add status = "disabled" to the DT
-> > > nodes, but please give me some time to take a look what would be the best
-> > > way to handle this, as i was out last week and now i am still catching up.
-> >
-> > I think the simplest thing would be to move the TBU driver to the
-> > arm-qcom-smmu.c instead of having it in the -debug.c
->
-> The TBUs aren't used for anything other than debugging, so I'd really
-> rather they live with the debug code.
+On Tue, Jul 02, 2024 at 09:20:39PM GMT, Satya Priya Kakitapalli wrote:
+> The PLL_POST_DIV_MASK should be 0 to (width - 1) bits. Fix it.
+> Also, correct the pll postdiv shift used in trion pll postdiv
+> set rate API. The shift value is not same for different types of
+> plls and should be taken from the pll's .post_div_shift member.
 
-The problem is that not having any driver bound to the TBU devices
-prevents interconnect drivers from hitting the sync state (and thus
-lowering the bandwidth to the requested values).
-Being that late in the development cycle, I think we should fix the
-issue in the fastest way. So I'm close to sending a revert of the DT
-changes. Setting status = "disabled" doesn't qualify as a logical
-change as having TBU units enabled on a platform-to-platform basis
-doesn't make sense.
+Two separate commits for two different fixes, please.
+
+> 
+> Fixes: 1c3541145cbf ("clk: qcom: support for 2 bit PLL post divider")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+> ---
+>  drivers/clk/qcom/clk-alpha-pll.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+> index 8a412ef47e16..6107c144c0f5 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.c
+> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> @@ -40,7 +40,7 @@
+>  
+>  #define PLL_USER_CTL(p)		((p)->offset + (p)->regs[PLL_OFF_USER_CTL])
+>  # define PLL_POST_DIV_SHIFT	8
+> -# define PLL_POST_DIV_MASK(p)	GENMASK((p)->width, 0)
+> +# define PLL_POST_DIV_MASK(p)	GENMASK((p)->width - 1, 0)
+>  # define PLL_ALPHA_EN		BIT(24)
+>  # define PLL_ALPHA_MODE		BIT(25)
+>  # define PLL_VCO_SHIFT		20
+> @@ -1496,8 +1496,8 @@ clk_trion_pll_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
+>  	}
+>  
+>  	return regmap_update_bits(regmap, PLL_USER_CTL(pll),
+> -				  PLL_POST_DIV_MASK(pll) << PLL_POST_DIV_SHIFT,
+> -				  val << PLL_POST_DIV_SHIFT);
+> +				  PLL_POST_DIV_MASK(pll) << pll->post_div_shift,
+> +				  val << pll->post_div_shift);
+>  }
+>  
+>  const struct clk_ops clk_alpha_pll_postdiv_trion_ops = {
+> 
+> -- 
+> 2.25.1
+> 
 
 -- 
 With best wishes
