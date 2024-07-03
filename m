@@ -1,166 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-25026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C14E99253A4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 08:30:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 378409253DD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 08:44:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E11BA1C22D13
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 06:30:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A8C131F25456
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 06:44:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52591130AC8;
-	Wed,  3 Jul 2024 06:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42AB3132C39;
+	Wed,  3 Jul 2024 06:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b="Gxsoe0HD"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NenHOlnR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1089130A58;
-	Wed,  3 Jul 2024 06:29:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=68.232.153.233
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490E5131BDD;
+	Wed,  3 Jul 2024 06:44:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719988198; cv=none; b=omRZKaquo2Kz9bBV2DqflrGLN3tgBbogx///6V4BcRcdTILSPMcAbBauVQVLLJvsgZ4UPJ3jR+RESEfMcVm9fvnKQ5iLSIUyqc+nUokubyCDlHun5Begpqxw0mnMLY3TkRhyJeilftAKYqY84w+uYPB9vy07R0vbUAl5YQOm40U=
+	t=1719989067; cv=none; b=E9Y2yOGMFS7rC++MgOpfbAEf0P8YMJckQ2/Nz9+u9uUI9EjkY86yMRDpU5XjCz0FbU0bouXSy6siSzLW3nWPjbk0BHQBVEZlDf+EFIntuU1Y3k+S4eYOXtaTOsr7DUesbsW6AzX3i8T3lDKo0Dhy8EcoDZaj9pwpZHjGPje86G0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719988198; c=relaxed/simple;
-	bh=uNhuDjLWZorDbXDOWnVhHDPlY99NnQewwMxhnvVsgtQ=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vD6t/EB7OPjc/Trou7EnbIBEWXKpVaQ6h9UuGIXbKHeaxa5y7iaQPb9fYzKFzNu2PDYjFuigoRx9HByJg8XkQgbBVKPOLfTJ/wmcf0D/Xv3UdGbdAONbbPn1R5xFVlvSpjqcwMGS1a8pUWZBskeCnRNt/ouoXZOINL7zWRXX0Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microchip.com; spf=fail smtp.mailfrom=microchip.com; dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b=Gxsoe0HD; arc=none smtp.client-ip=68.232.153.233
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microchip.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=microchip.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1719988196; x=1751524196;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=uNhuDjLWZorDbXDOWnVhHDPlY99NnQewwMxhnvVsgtQ=;
-  b=Gxsoe0HDr1vqSeikiipVO5TI/gFLTolVGrIn0jHuD0KYVjfCBy1UEBSZ
-   BpRYiUfnCkff/9qnCQ/66s7om2eDgQhzRramGfsq0ofYBKt6ovGOuxD4p
-   L3rqkMjoVJq1x3N9qU7Ad23WyCHMDsySnLd7M+kdKfVHRgXYZ55Lrbkvt
-   bWW+7NYk6yDaSSaPabbtDt/H1D3dqxqPp2abyJm0KRvzmRlmtXOSMW9v1
-   Gj6syKdrKT8gsFo5Q3dlaBpwOUYypWKzlaa+f3iV4/Im69c5JdnNLkZ4d
-   04MEJkypyA8ZfmuQN9+0piLgjC2U7qdhCBpqQm0e+oXr9xYQ9mm5UaUTh
-   A==;
-X-CSE-ConnectionGUID: uIiTarkbQoeuHwrRiGsmdg==
-X-CSE-MsgGUID: 7MEjGxCjQO6357/Nmml1zg==
-X-IronPort-AV: E=Sophos;i="6.09,181,1716274800"; 
-   d="asc'?scan'208";a="31406626"
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa1.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 02 Jul 2024 23:29:52 -0700
-Received: from chn-vm-ex04.mchp-main.com (10.10.85.152) by
- chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Tue, 2 Jul 2024 23:29:26 -0700
-Received: from wendy (10.10.85.11) by chn-vm-ex04.mchp-main.com (10.10.85.152)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35 via Frontend
- Transport; Tue, 2 Jul 2024 23:29:12 -0700
-Date: Wed, 3 Jul 2024 07:28:53 +0100
-From: Conor Dooley <conor.dooley@microchip.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Tengfei Fan <quic_tengfan@quicinc.com>, <andersson@kernel.org>,
-	<konrad.dybcio@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-	<conor+dt@kernel.org>, <djakov@kernel.org>, <mturquette@baylibre.com>,
-	<sboyd@kernel.org>, <jassisinghbrar@gmail.com>,
-	<herbert@gondor.apana.org.au>, <davem@davemloft.net>,
-	<manivannan.sadhasivam@linaro.org>, <will@kernel.org>, <joro@8bytes.org>,
-	<conor@kernel.org>, <tglx@linutronix.de>, <amitk@kernel.org>,
-	<thara.gopinath@gmail.com>, <linus.walleij@linaro.org>,
-	<wim@linux-watchdog.org>, <linux@roeck-us.net>, <rafael@kernel.org>,
-	<viresh.kumar@linaro.org>, <vkoul@kernel.org>, <edumazet@google.com>,
-	<kuba@kernel.org>, <pabeni@redhat.com>, <mcoquelin.stm32@gmail.com>,
-	<robimarko@gmail.com>, <quic_gurus@quicinc.com>,
-	<bartosz.golaszewski@linaro.org>, <kishon@kernel.org>,
-	<quic_wcheng@quicinc.com>, <alim.akhtar@samsung.com>, <avri.altman@wdc.com>,
-	<bvanassche@acm.org>, <agross@kernel.org>, <gregkh@linuxfoundation.org>,
-	<quic_tdas@quicinc.com>, <robin.murphy@arm.com>, <daniel.lezcano@linaro.org>,
-	<rui.zhang@intel.com>, <lukasz.luba@arm.com>, <quic_rjendra@quicinc.com>,
-	<ulf.hansson@linaro.org>, <quic_sibis@quicinc.com>,
-	<otto.pflueger@abscue.de>, <quic_rohiagar@quicinc.com>, <luca@z3ntu.xyz>,
-	<neil.armstrong@linaro.org>, <abel.vesa@linaro.org>,
-	<bhupesh.sharma@linaro.org>, <alexandre.torgue@foss.st.com>,
-	<peppe.cavallaro@st.com>, <joabreu@synopsys.com>, <netdev@vger.kernel.org>,
-	<lpieralisi@kernel.org>, <kw@linux.com>, <bhelgaas@google.com>,
-	<ahalaney@redhat.com>, <krzysztof.kozlowski@linaro.org>,
-	<u.kleine-koenig@pengutronix.de>, <dmitry.baryshkov@linaro.org>,
-	<quic_cang@quicinc.com>, <danila@jiaxyga.com>, <quic_nitirawa@quicinc.com>,
-	<mantas@8devices.com>, <athierry@redhat.com>, <quic_kbajaj@quicinc.com>,
-	<quic_bjorande@quicinc.com>, <quic_msarkar@quicinc.com>,
-	<quic_devipriy@quicinc.com>, <quic_tsoni@quicinc.com>,
-	<quic_rgottimu@quicinc.com>, <quic_shashim@quicinc.com>,
-	<quic_kaushalk@quicinc.com>, <quic_tingweiz@quicinc.com>,
-	<quic_aiquny@quicinc.com>, <srinivas.kandagatla@linaro.org>,
-	<linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-	<linux-clk@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-	<linux-crypto@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-	<linux-usb@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<iommu@lists.linux.dev>, <linux-riscv@lists.infradead.org>,
-	<linux-gpio@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
-	<linux-pci@vger.kernel.org>, <linux-stm32@st-md-mailman.stormreply.com>,
-	<kernel@quicinc.com>
-Subject: Re: [PATCH 00/47] arm64: qcom: dts: add QCS9100 support
-Message-ID: <20240703-manager-armless-b13b18c79192@wendy>
-References: <20240703025850.2172008-1-quic_tengfan@quicinc.com>
- <20240703035735.2182165-1-quic_tengfan@quicinc.com>
- <7417fd8c-e852-45ee-bac9-d92921036e2f@kernel.org>
+	s=arc-20240116; t=1719989067; c=relaxed/simple;
+	bh=5a9KnK+yQL5yBs6h/0MIyztEbwdQDmjTI80SPyugzlQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=oN4/tNd5z5xXBrC137AtcNSWqHVPWbzNJpnAHeP+1MpZXz3x+bsVR9IQp36Bq6nA8I2kbBnqq77QqTENNeCfjUuYXvrhN/qGKRYQx4XZW7gnS6DlCAVlkq1Gf3KPmsNJl8KoKBSwIZ9fAK50viI30mqThltZxXTdqEgvhIlZ0Is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NenHOlnR; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4635IuEg023216;
+	Wed, 3 Jul 2024 06:44:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	LBnJNdNihFNWFLg/yGpphb/wqfN22TBekYfvklVf0NU=; b=NenHOlnRelxIX3v2
+	HGp9On1kf1vr2fhXnYhPZ4J8jvUcAGzoT9LQVDqhRZggHDkyogreezXJxPbsNyax
+	aViSLt3PlywcAkA6ekOXlJ0Hn+wxA/u2GzF9CL2X8L3aKuB/GzqwudhZSF2l7Xes
+	RnqR1wAdK7vf+T9aiudhCh4Q884+c8nFYCkqdC0R6x+J0b/qgrR1wHbPquKYqzEp
+	w0dPoUlU8dppm4gdMQC9CBD2v2qWcuYnMOIzoxb4ZYIP0zgeBJf79pZ4wWUHsOMn
+	inSTUhy8+dFU/Ztr5im2NXhgumZzxVUQX1COpIHoNAtMVuzdxpG+/Z96Pzq6I8dz
+	+2UMUw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4050cy85b1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 03 Jul 2024 06:44:16 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4636iFfp001144
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 3 Jul 2024 06:44:15 GMT
+Received: from [10.204.65.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 2 Jul 2024
+ 23:44:12 -0700
+Message-ID: <c48e17df-1806-439d-b0c9-2c6b7c208505@quicinc.com>
+Date: Wed, 3 Jul 2024 12:14:08 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="5oSvLfaqEVebv1DP"
-Content-Disposition: inline
-In-Reply-To: <7417fd8c-e852-45ee-bac9-d92921036e2f@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] misc: fastrpc: Remove user PD initmem size check
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Greg KH <gregkh@linuxfoundation.org>, <srinivas.kandagatla@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_bkumar@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>,
+        stable
+	<stable@kernel.org>
+References: <20240627060518.1510124-1-quic_ekangupt@quicinc.com>
+ <62dzilcvsp3efxpxulzkf6e62rzcrhp55k6yjk5fymkqthdfzw@yageexbx6ddz>
+ <f3d502ca-228e-4be4-b296-a9073975d34b@quicinc.com>
+ <a5e69a5e-b882-4f36-b023-f85da430fa2f@quicinc.com>
+ <2024062849-brunt-humvee-d338@gregkh>
+ <2e616e9d-fc04-4826-b784-4c6ee45bfbc2@quicinc.com>
+ <foe6khsckzdvd5ccwitzfpdwoigdgu3uostuar3zk5d5stcd4s@hkrdg7vp4mqt>
+ <3b07be20-e0c9-4ee2-a37b-34400e63862b@quicinc.com>
+ <CAA8EJpoxwNv-wpJvqEf9U+Dg9=BJXG++GWB+2DES92MSqXN-3w@mail.gmail.com>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+In-Reply-To: <CAA8EJpoxwNv-wpJvqEf9U+Dg9=BJXG++GWB+2DES92MSqXN-3w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: WrNEgocS_7TlX9dniu_Kv0D2ipA8uwYF
+X-Proofpoint-ORIG-GUID: WrNEgocS_7TlX9dniu_Kv0D2ipA8uwYF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-03_03,2024-07-02_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
+ mlxlogscore=999 priorityscore=1501 adultscore=0 mlxscore=0 impostorscore=0
+ spamscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
+ definitions=main-2407030048
 
---5oSvLfaqEVebv1DP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 03, 2024 at 06:45:00AM +0200, Krzysztof Kozlowski wrote:
-> On 03/07/2024 05:56, Tengfei Fan wrote:
-> > Introduce support for the QCS9100 SoC device tree (DTSI) and the
-> > QCS9100 RIDE board DTS. The QCS9100 is a variant of the SA8775p.
-> > While the QCS9100 platform is still in the early design stage, the
-> > QCS9100 RIDE board is identical to the SA8775p RIDE board, except it
-> > mounts the QCS9100 SoC instead of the SA8775p SoC.
->=20
-> The same huge patchset, to huge number of recipients was sent twice.
-> First, sorry, this is way too big. Second, it has way too many
-> recipients, but this is partially a result of first point. Only
-> partially because you put here dozen of totally unrelated emails. Sorry,
-> that does not make even sense. See form letter at the end how this
-> works. Third, sending it to everyone twice is a way to annoy them off
-> twice... Fourth,
->=20
-> Please split your work and do not cc dozen of unrelated folks.
 
-One of the extra recipients is cos that of that patch I sent adding the
-cache bindings to the cache entry, forgetting that that would CC the
-riscv list on all cache bindings. I modified that patch to drop the riscv
-list from the entry.
+On 7/2/2024 3:10 PM, Dmitry Baryshkov wrote:
+> On Tue, 2 Jul 2024 at 10:07, Ekansh Gupta <quic_ekangupt@quicinc.com> wrote:
+>>
+>>
+>> On 7/1/2024 10:41 PM, Dmitry Baryshkov wrote:
+>>> On Mon, Jul 01, 2024 at 10:50:38AM GMT, Ekansh Gupta wrote:
+>>>> On 6/28/2024 7:51 PM, Greg KH wrote:
+>>>>> On Fri, Jun 28, 2024 at 04:12:10PM +0530, Ekansh Gupta wrote:
+>>>>>> On 6/28/2024 3:59 PM, Ekansh Gupta wrote:
+>>>>>>> On 6/27/2024 4:43 PM, Dmitry Baryshkov wrote:
+>>>>>>>> On Thu, Jun 27, 2024 at 11:35:18AM GMT, Ekansh Gupta wrote:
+>>>>>>>>> For user PD initialization, initmem is allocated and sent to DSP for
+>>>>>>>>> initial memory requirements like shell loading. This size is passed
+>>>>>>>>> by user space and is checked against a max size. For unsigned PD
+>>>>>>>>> offloading, more than 2MB size could be passed by user which would
+>>>>>>>>> result in PD initialization failure. Remove the user PD initmem size
+>>>>>>>>> check and allow buffer allocation for user passed size. Any additional
+>>>>>>>>> memory sent to DSP during PD init is used as the PD heap.
+>>>>>>>> Would it allow malicious userspace to allocate big enough buffers and
+>>>>>>>> reduce the amount of memory available to the system? To other DSP
+>>>>>>>> programs?
+>>>>>>> The allocation here is happening from SMMU context bank which is uniquely assigned
+>>>>>>> to processes going to DSP. As per my understanding process can allocate maximum
+>>>>>>> 4GB of memory from the context bank and the memory availability will be taken care
+>>>>>>> by kernel memory management. Please correct me if my understanding is incorrect.
+>>>>>> Just wanted to add 1 question here:
+>>>>>> User space can also directly allocate memory. Wouldn't that be a problem if any malicious userspace
+>>>>>> allocated huge memory?
+>>>>> No, because any userspace program that takes up too much memory will be
+>>>>> killed by the kernel.
+>>>>>
+>>>>> You can not have userspace tell the kernel to allocate 100Gb of memory,
+>>>>> as then the kernel is the one that just took it all up, and then
+>>>>> userspace applications will start to be killed off.
+>>>>>
+>>>>> You MUST bounds check your userspace-supplied memory requests.  Remember
+>>>>> the 4 words of kernel development:
+>>>>>
+>>>>>     All input is evil.
+>>>> Thanks for the detailed explanation, Greg. I'll remember this going forward.
+>>>>
+>>>> For this change, I'll increase the max size limit to 5MB which is the requirement for
+>>>> unsigned PD to run on DSP.
+>>> So we are back to the quesiton of why 5MB is considered to be enough,
+>>> see
+>>>
+>>> https://lore.kernel.org/linux-arm-msm/2024061755-snare-french-de38@gregkh/
+>> This is based on the initial memory requirement for unsigned PD. This includes memory for shell loading on DSP
+>> + memory for static heap allocations(heap allocations are dynamic for Signed PD). This requirement tends to
+>> around 5MB. I'll update this  also information in commit text. There will be some additional memory passed to
+>> the PD which will get added to the PD heap.
+> Could you please clarify, are these 2MB and 5MB requirements coming
+> from the DSP side or from the userspace side? In other words, is it
+> coming from the shell / firmware / etc?
+I did some more checking here, I'll summarize the problem and try to propose a
+better solution:
+init.filelen is actually the size of fastrpc shell file which is close to 900kb for both
+signed and unsigned shells. User space passes this memory and size after opening
+and reading the shell file. The bound check is for this filelen which looks correct also
+as this size is not expected to be more than 2MB.
 
-Cheers,
-Conor.
+Now for PD initmem, this memory is needed for PD initialization which includes
+loading of shell and other initialization requirements eg. PD heap. As of today, the
+initmem allocation is taken as the max of FASTRPC_FILELEN_MAX(2MB bound check
+macro) and 4 times of filelen(~4MB). So every time, atleast 2MB memory is allocated
+for this initmem for PD initialization.
 
---5oSvLfaqEVebv1DP
-Content-Type: application/pgp-signature; name="signature.asc"
+For unsigned PD, there are some additional read-write segments loaded on DSP which
+takes the size requirement to slightly more than 4MB. Therefore allocating 5MB is
+helping unsigned PD to be spawned.
 
------BEGIN PGP SIGNATURE-----
+I hope this helps in understanding the problem.
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZoTvpQAKCRB4tDGHoIJi
-0iuiAP9Wgtx8LiFpImc+BXo3h8CTF/4nY5kHoihO91fC51FsogEAnEhd56PAeLdE
-Uxg8sGMCKh5qjR+u3kQIZlblyU1rmwA=
-=Khim
------END PGP SIGNATURE-----
+Proposed solution:
+I believe the bound check macro should not be used for initmem size. I can add some
+new definition with FASTRPC_INITMEM_MIN.
 
---5oSvLfaqEVebv1DP--
+In the create_process function, the "memlen" will be set to FASTRPC_INITMEM_MIN
+initially and it will get increased to 5MB if "unsigned_module" is requested.
+
+Or I can add different MACRO definitions for both signed(3MB) and unsigned PD(5MB)
+minimum initmem size.
+
+Please let me know if this is not clear, I'll send a patch for better understanding.
+
+--Ekansh
+
+>> --Ekansh
+>>>> --Ekansh
+>>>>> thanks,
+>>>>>
+>>>>> greg k-h
+>
+
 
