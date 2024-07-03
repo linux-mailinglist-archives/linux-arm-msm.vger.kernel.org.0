@@ -1,170 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-25060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D907892571E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:43:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7034D92573A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:50:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8FBD728575E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 09:43:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 71BDDB21BD3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 09:50:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33AE3142E77;
-	Wed,  3 Jul 2024 09:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2A4E14037D;
+	Wed,  3 Jul 2024 09:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yFz7ZOMX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fgOb2eyl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614391422CC
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 09:43:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D3C13DDA3;
+	Wed,  3 Jul 2024 09:50:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719999784; cv=none; b=mRAoju5m87DY76vosr5exfJ3T7DSF0ye17g700fjUOi1DtthUPT9cCMkTQOZHyXV5j4qHw4dwixADDLa4c8llYsWiN9tg/jwBPt4IErBdxv3Th24B0IJq2Ppj0jyGsaNH5WRg5HZ/S8dKTO+CJ3t6VMspfoauIx8r6J/yQsNknU=
+	t=1720000213; cv=none; b=Nyn4XIsjvW+XQbX/zPVSAwb+sar0zqG80iBx52pWu1I14LJE5XRz/vsW8KO4H7NmQghPWyoGSHeK6sGGe9/1Npu4VJJypKXuEleJZ8nhfE0NeSWXdCzzCdFAagR/xnJi4S4wDkeEw1l1KeO4yxOVdYeMWpoB881rjPX0MBna5gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719999784; c=relaxed/simple;
-	bh=Jq0jlG89u9hud4QvxGvDm+WMAUvi4Tm+sc+lYy6IEW4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Eq/uJEuQKUQYpgl48smVHoTa1XQzzhH9FNNEnPLEwvrYnHkovRGJyoQVNtFtzS/PkZsXm2aq6/m14AHRB1zJCFoeWxN/t/jElnr8P5LkDKOb0s+lqty+iMoboHZ3oefXe11vVMhCHqu/qHiMTDF8dsP3ld2yuxxqk6LXwx2vffQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yFz7ZOMX; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3636c572257so3711496f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 02:43:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1719999781; x=1720604581; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4pYRZX+NSiwidYn0MWwg3SiL2WiSTwldzzZjg+SAT9I=;
-        b=yFz7ZOMX+28Sv80KaOvXPSjX/A9C+Cb3SvljNm7vXODFgLinx6p9f6o/lFSZJa614z
-         TizqmposHfHIBHZb1cgBoNA93iy3/3FVco7iqA7Qb9BJtk7vg6mdkSL84uFFUJx/EvqS
-         i1WtcDzHMrSI6Iz0LR3wsoH9aKywMQ2XfO32Gsz8YUgXeEZ+JYQkqsVGPL3/af5Z5VE0
-         C/BYNhDhWb53w8MTdcKnZuHHBeFYpwehjIUZKhk9RKIlbfYamXbw8qlr2dX4JjVCoz23
-         L+YtwLg5CNGMoLhb0qnFjUstLbXLBJUwa7xveaEKLwwBG1+O3zxMvA3weDO2rp2YI8mc
-         veZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1719999781; x=1720604581;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4pYRZX+NSiwidYn0MWwg3SiL2WiSTwldzzZjg+SAT9I=;
-        b=aOWNvBqrFzuJ06ku94EUmVUNA60kTbA+B7Syc52/o573SmBVDAaQpeduqB77XRwQgP
-         QNTaOLSskAOtDH3UU/1PD7jiQJKwk5Fs1imOrqO1r8BLvBQ65M6fcEmvCnXoZwsJg6i/
-         vVe2DGYTi0EvQkV3UzWWp8Y6B0ffjvsvX5xjPTaXz5cMmom9Vfg1jhnxEvUbl79tOnvf
-         ipgZft4ZuoYExBHsR/R8B5jAR8QmD+pPZpMbxW4MHhbNisUyNOfWcdVjf3IzAumd2xFj
-         Dp5R1Q/nDdQxbwgm+32vrxHY4aEkWctCI6gQrHe7wgSBgv30r3zWH6vIAQZx8TDUMkXX
-         p9Rw==
-X-Gm-Message-State: AOJu0YxB2u/ggB3HS5iN8Dy51t18p1kZUYtrVZlP/OHbeJjH/qCn+1N/
-	nS3N5hcW0LgfASQm2Mv98x9NQY2Tl3uNvOkTeK1D2iCZCy/3q45ViT2GQcBcS0I=
-X-Google-Smtp-Source: AGHT+IFWB4DW3FsA6wGH0ff7ZiA+oTRSHRSUHHe3nL56wU5YlOkiMjj2tYWvcvQcU/QIqFwdzi6Sig==
-X-Received: by 2002:a5d:6852:0:b0:367:8f98:c501 with SMTP id ffacd0b85a97d-3678f98c65cmr1690529f8f.38.1719999780870;
-        Wed, 03 Jul 2024 02:43:00 -0700 (PDT)
-Received: from [127.0.1.1] ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a1030dfsm15341394f8f.100.2024.07.03.02.43.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jul 2024 02:43:00 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 03 Jul 2024 11:42:40 +0200
-Subject: [PATCH 5/5] soc: qcom: wcnss: simplify with cleanup.h
+	s=arc-20240116; t=1720000213; c=relaxed/simple;
+	bh=acghGTS4hAklAZ2imwEsU8Dr1XC4qbENVq+v8SXSkhQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Ia8bafeTbzJNe0UbNIP4d/ReUae/VTS3H0bbiSpc+epnvedDCWFTXjIiB0mBH/aROdUDz4LMTE+55HOio9F1jIURN2nysTDNdZUbUklhPcWiDJPOQFzv61U7wvayS6zuX9xHQbD5NnFpUPvu59TKp3dW6AGvQOmGAKd1yu6U4Oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fgOb2eyl; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4637uuPo026176;
+	Wed, 3 Jul 2024 09:48:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	r6PDo3ZmiND29AWr6xwATv2xdbzZhoXvEb3979p8hvo=; b=fgOb2eylbajis5N8
+	ilInFJsChuMPbqsDA/wN7LFmAn5tS+jCd49TPxAQklol/D7qgTGt0Y1EZeZjsxuY
+	EgALPNsEoSpujmS1DMKVxI7BJ/iK9yyKw3DROVe/RAPYMthBoNT07ja1G9QJybJ1
+	3ijh0MmK4g5PkY5yjhqjVCeT9QtxVwDh2KBfC0Rq3X33uHZeJdTluSYNSyHr/DUh
+	d+SuPBMD7VYAPUN80xDPa45ckZvYduMHTxgOH++tG6zHEW4U6qJrupzkB8Q1zzd/
+	cRHhAiktD1GpLNCL7l7cLRyhcIWKrcCoNeSx2d/n35tuRSbwR/rcEQQJk+BLdxYk
+	qB58XA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4027mnrqvf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 03 Jul 2024 09:48:30 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4639mSdZ005772
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 3 Jul 2024 09:48:28 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 3 Jul 2024
+ 02:48:06 -0700
+Message-ID: <d60e0658-b670-44eb-bf6a-60a58c1742be@quicinc.com>
+Date: Wed, 3 Jul 2024 17:48:04 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/47] dt-bindings: arm: qcom: Document QCS9100 SoC and
+ RIDE board
+To: Krzysztof Kozlowski <krzk@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <djakov@kernel.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <jassisinghbrar@gmail.com>,
+        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
+        <manivannan.sadhasivam@linaro.org>, <will@kernel.org>,
+        <joro@8bytes.org>, <conor@kernel.org>, <tglx@linutronix.de>,
+        <amitk@kernel.org>, <thara.gopinath@gmail.com>,
+        <linus.walleij@linaro.org>, <wim@linux-watchdog.org>,
+        <linux@roeck-us.net>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
+        <vkoul@kernel.org>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <mcoquelin.stm32@gmail.com>
+CC: <robimarko@gmail.com>, <bartosz.golaszewski@linaro.org>,
+        <kishon@kernel.org>, <quic_wcheng@quicinc.com>,
+        <alim.akhtar@samsung.com>, <avri.altman@wdc.com>, <bvanassche@acm.org>,
+        <agross@kernel.org>, <gregkh@linuxfoundation.org>,
+        <quic_tdas@quicinc.com>, <robin.murphy@arm.com>,
+        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
+        <lukasz.luba@arm.com>, <quic_rjendra@quicinc.com>,
+        <ulf.hansson@linaro.org>, <quic_sibis@quicinc.com>,
+        <otto.pflueger@abscue.de>, <luca@z3ntu.xyz>,
+        <neil.armstrong@linaro.org>, <abel.vesa@linaro.org>,
+        <bhupesh.sharma@linaro.org>, <alexandre.torgue@foss.st.com>,
+        <peppe.cavallaro@st.com>, <joabreu@synopsys.com>,
+        <netdev@vger.kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <bhelgaas@google.com>, <ahalaney@redhat.com>,
+        <krzysztof.kozlowski@linaro.org>, <u.kleine-koenig@pengutronix.de>,
+        <dmitry.baryshkov@linaro.org>, <quic_cang@quicinc.com>,
+        <danila@jiaxyga.com>, <quic_nitirawa@quicinc.com>,
+        <mantas@8devices.com>, <athierry@redhat.com>,
+        <quic_kbajaj@quicinc.com>, <quic_bjorande@quicinc.com>,
+        <quic_msarkar@quicinc.com>, <quic_devipriy@quicinc.com>,
+        <quic_tsoni@quicinc.com>, <quic_rgottimu@quicinc.com>,
+        <quic_shashim@quicinc.com>, <quic_kaushalk@quicinc.com>,
+        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-crypto@vger.kernel.org>,
+        <linux-scsi@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+        <linux-gpio@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>, <kernel@quicinc.com>
+References: <20240703025850.2172008-1-quic_tengfan@quicinc.com>
+ <20240703025850.2172008-2-quic_tengfan@quicinc.com>
+ <665f6c8c-4f43-4d20-90e9-9e037a942066@kernel.org>
+ <fbeb5969-0b3a-455e-88eb-b83734bf2c50@quicinc.com>
+ <97c9484b-e257-4163-a104-3457d59bc69b@kernel.org>
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+In-Reply-To: <97c9484b-e257-4163-a104-3457d59bc69b@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240703-thermal-const-v1-5-6e59e139c65d@linaro.org>
-References: <20240703-thermal-const-v1-0-6e59e139c65d@linaro.org>
-In-Reply-To: <20240703-thermal-const-v1-0-6e59e139c65d@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1904;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=Jq0jlG89u9hud4QvxGvDm+WMAUvi4Tm+sc+lYy6IEW4=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmhR0bcBnmEh+GBsRCoRqmtTRL5Fmpc/yV0AnNM
- 1D/dJe8iQaJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZoUdGwAKCRDBN2bmhouD
- 11EFD/wPkjo6yn0annMs8pDfoUHjIpLBQ+3NuImJ1F6ieXBKkgf9n3tvlYMqXYGHs3Cl7aWSbw2
- pbgPRDYjrnBaXoRovrylyXGnmCpnt/SRSpWgXL8naTDADYS38EMBrEoV9GiMUEEc77WxEkgv82X
- wJz6kQs+/gsfbURh7nb1+iU/owcjoMld+dh/biNLs9v+zdqNlJSfR9YX2XmeQ7baXXHoSSEmrtF
- ivOqej5DvFkMJMpsKHPtiX7tw669rxVJrHsPRYmwkDQqsnj2yf9m4RiX8nhsvQh7ZuSccIpbMPP
- 5a9unMamwFS5WqTpaEbPpUiMI13kmcCkZt4M3UP4VDlUspbl2bF+87Mftx8GJuC23hAdGsuzg+X
- bMp9eNEOUqQtRU8Vs5o0tkvTlSrgLja1T1jCENEDj45D75tVHZnHMacQZKZHtPfQHgOoZJ+ljod
- 9u3mnDVQEeJBu+NwKHq3tuoOg8YVuq2hYiggpO9P8t9lDSGz663NcyEMp3AAHAKv1+0vzNJlo3+
- 0XR7FsE40AgZ3wJ9K6+IlaqTjQ4nnoiOALx3cb6nlVuxDQ01UpjmtzUKHqsq7EvjMtT+Q6Ozh/p
- rGBT4z5SsQeiwq6yNSYkTBZNMt6a06A0XkQvIgl0ZR+1LMKEZEkcEXHNkxGhi2O9FJlgTHbONJm
- lEVXlpn4UvZYg7A==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 4iQ3c_4SVvTyiCWE8YBXnnMoC_qGpXdF
+X-Proofpoint-GUID: 4iQ3c_4SVvTyiCWE8YBXnnMoC_qGpXdF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-03_06,2024-07-02_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ spamscore=0 malwarescore=0 adultscore=0 priorityscore=1501
+ lowpriorityscore=0 phishscore=0 mlxscore=0 suspectscore=0 clxscore=1015
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407030072
 
-Allocate the memory with scoped/cleanup.h to reduce error handling (less
-error paths) and make the code a bit simpler.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/soc/qcom/wcnss_ctrl.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/soc/qcom/wcnss_ctrl.c b/drivers/soc/qcom/wcnss_ctrl.c
-index 148bcbac332d..62b424e90d90 100644
---- a/drivers/soc/qcom/wcnss_ctrl.c
-+++ b/drivers/soc/qcom/wcnss_ctrl.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2016, Linaro Ltd.
-  * Copyright (c) 2015, Sony Mobile Communications Inc.
-  */
-+#include <linux/cleanup.h>
- #include <linux/firmware.h>
- #include <linux/module.h>
- #include <linux/slab.h>
-@@ -198,7 +199,6 @@ static int wcnss_request_version(struct wcnss_ctrl *wcnss)
-  */
- static int wcnss_download_nv(struct wcnss_ctrl *wcnss, bool *expect_cbc)
- {
--	struct wcnss_download_nv_req *req;
- 	const struct firmware *fw;
- 	struct device *dev = wcnss->dev;
- 	const char *nvbin = NVBIN_FILE;
-@@ -206,18 +206,19 @@ static int wcnss_download_nv(struct wcnss_ctrl *wcnss, bool *expect_cbc)
- 	ssize_t left;
- 	int ret;
- 
--	req = kzalloc(sizeof(*req) + NV_FRAGMENT_SIZE, GFP_KERNEL);
-+	struct wcnss_download_nv_req *req __free(kfree) = kzalloc(sizeof(*req) + NV_FRAGMENT_SIZE,
-+								  GFP_KERNEL);
- 	if (!req)
- 		return -ENOMEM;
- 
- 	ret = of_property_read_string(dev->of_node, "firmware-name", &nvbin);
- 	if (ret < 0 && ret != -EINVAL)
--		goto free_req;
-+		return ret;
- 
- 	ret = request_firmware(&fw, nvbin, dev);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to load nv file %s: %d\n", nvbin, ret);
--		goto free_req;
-+		return ret;
- 	}
- 
- 	data = fw->data;
-@@ -263,8 +264,6 @@ static int wcnss_download_nv(struct wcnss_ctrl *wcnss, bool *expect_cbc)
- 
- release_fw:
- 	release_firmware(fw);
--free_req:
--	kfree(req);
- 
- 	return ret;
- }
+On 7/3/2024 5:33 PM, Krzysztof Kozlowski wrote:
+> On 03/07/2024 11:21, Tengfei Fan wrote:
+>>>>          - items:
+>>>>              - enum:
+>>>> +              - qcom,qcs9100-ride
+>>>>                  - qcom,sa8775p-ride
+>>>> +          - const: qcom,qcs9100
+>>>
+>>> This changes existing compatible for sa8775p without any explanation in
+>>> commit msg.
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>>
+>>
+>> In the next verion patch series, I will provide relevant explanatory
+>> information in this patch commit message.
+> 
+> TBH, I cannot think of any reasonable explanation for this, especially
+> considering rest of the patchset which does not fix resulting dtbs_check
+> warning.
+> 
+> Best regards,
+> Krzysztof
+> 
+
+This patch may need to be updated based on the results of dtbs_check. In 
+the new version patch series, I will revise the commit message according 
+to the patch updates made.
 
 -- 
-2.43.0
-
+Thx and BRs,
+Tengfei Fan
 
