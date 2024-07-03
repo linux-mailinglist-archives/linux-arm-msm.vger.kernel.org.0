@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-25136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C84E5925FCA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 14:11:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4D48925FCB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 14:11:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 802651F23875
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 12:11:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6018E1F23813
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 12:11:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EBCA1741F9;
-	Wed,  3 Jul 2024 12:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBF7317335C;
+	Wed,  3 Jul 2024 12:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yinf8q62"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AS/uMFHq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4EC17279B
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 12:11:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206441741C9
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 12:11:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720008674; cv=none; b=cLQIzKGamxKdyJFpAZuI++Q79st6gQwVk8PM+iQO+/N5tduo1LTaZIaFf3LhuvJTvoxsDo0xmuqHStbZ8Veu47Axhcl6ME4oewvFPq8nrxsc3b/1+Bz0JhJo8TT4dN4dJx2IiSmspwjjezn4WP3sYrLvPknjr9lMocqOVghAOIo=
+	t=1720008675; cv=none; b=Qp3/RpZW2ugmkSikKC5WQvu34UELky2mcVOyvpb5orPVS9wIc/o1ZKIxto3wai+3Mwbowwv0wvzg2jTEQnJsjbsw/PV1dQX+W/tDyb03QRPhivKFnVtTZ0DNcRBTFQdO5F0YXbZZeg/JfoNy44/X+qmHueLhURDkvZf54fQqra0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720008674; c=relaxed/simple;
-	bh=zkBYXA5XhH4F6q1m9UDysUTPImTnL2Gru3YtQza5a+s=;
+	s=arc-20240116; t=1720008675; c=relaxed/simple;
+	bh=C2mr7bEsmKb5ROqOqNDH7IBKsoD0jmhYaojg0nmAdOo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=i/6otY3ZkrxlGd0bjA1JL/TIudniNMqrhqS5fTty2bShQ4FOjgZa5xenKoUMEvfGnFBhx51jQ27Tni9Ccy21IMhVadLN/q8frU9a8KJbTyXOU9Vtp/Uh6ynNQHRsZn9sla3lVOHaweFufbE5tTOQXf9uktrfKX7S8/AFYFxt5CQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yinf8q62; arc=none smtp.client-ip=209.85.221.43
+	 In-Reply-To:To:Cc; b=gLSsI6QKVfMkKiwoXhNTnTLylmu63DZQE4YtoZXBl2Dfeddrvrtb0HDI9TyciwCJX1xxASL9euUCsDxN+B0kVvxjxPKVwbYC+/U3++ysBbvqZB4n2UnF+0PnsRgeS12gpRlFaK1YBhSPbA+/9dc0LvgjvKyMsKB12bUr3ysroQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AS/uMFHq; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-36743a79dceso376068f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 05:11:12 -0700 (PDT)
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-425809eef0eso24406495e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 05:11:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720008671; x=1720613471; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1720008672; x=1720613472; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7cLxowQxGXKyItHO9t5LQNge45csaHkg4VU8jx6Qm+I=;
-        b=yinf8q62WNkfCKrJA8xgleqMQO7qSsl23P729JNkKfm3ERJdcoAKP8/eDe3qt/j98s
-         Z7kqV9rqyGgAbEUxIG9338sx/rRtkS4THO1ffdHRN0wAyD/KAfLpGW9Y9y6Noui2BrLN
-         U1vV/WDI+GnAkVdg9pJrFJQgARnMH3a4uvN97045rGM8WYaz3jbJX1S15l91bIauI817
-         mnelTHbYU8AcO/mEwBZSq6iI7xYHnoTZ00sQEdalq5W/dJPOVa7H0H5QpTv/hcPLDPnU
-         ATWv6BG1I0AEG4NPX91V+zQbzdqsHUiJZuaxQNu2xJ3BGoXUF2s/3HLZSMJRuS3XltVB
-         7wuQ==
+        bh=q7ezAWLj7MMf6cupnuxIo+JndCzydckyqulVxplwpWA=;
+        b=AS/uMFHqiFE5tc581B5apYRNtnR3h8asIeU1fs6ZS3XcZd7Iu/d4ajsbcZGi82/fVc
+         GoNWM4WOsa1bpQ+kKjks+eowbTQSLXjHyVepTwnV5jhxL1WWghBMb2XoXNnnE9MIhnwT
+         6E9F6JtFMZCdL+jpAe0JgmLU9HGx5sdeNrEE196/p3jOLk1wJ68fkKGxFRmw9E+GEvVs
+         eeASsX8p/81vAOXknF1PqvOfLwsRXag7F5BL57lQGRDy4NJgSpAu3Jv3klzIAS4jTNp8
+         XtdCAGhiIOK2zp4uzzCOJtQiYImzGXx4w9hNQ57Tod1JcYP0Ja/2WzhDPhoIUN6zG9YT
+         TvZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720008671; x=1720613471;
+        d=1e100.net; s=20230601; t=1720008672; x=1720613472;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7cLxowQxGXKyItHO9t5LQNge45csaHkg4VU8jx6Qm+I=;
-        b=YeZZnTLYj2djDhIc2CzbTXoIE543jpYWYp+9amGhLQY+f3wBYapzmTt4IB005ccC3L
-         +LDqRpkx+0KfX1veRnp9S//p3b78+2XYsvj7vafH4b+pJkNn63lngdlaaqN9roMH9kDi
-         ll0lobmPRkkFAgxtKLdK8Y/3m1BU8qm2+9YzKuMu/yJ+oby/mnrkt30I69Gim/5uJRw1
-         iY5hHwoCD+z93SRZ3PS4MZ+t63rSvge5GphHaiEOzlJx1j9mPFh/epWuNyB+uIHnhRU/
-         bV1RsPpWuIlCZFQtfzTwGC8suelGLISIO9XXi2XtE/f+SawOSEoHzjg8iWKYvbzikmjE
-         YnaA==
-X-Forwarded-Encrypted: i=1; AJvYcCVqF85h0nzAwFdf4KJcEM8cRx51ASQ5WMHnKFKMeO7sFD+462Q+AmI4Hk4GF+BrUT8a+3X6VbXXWYY38heNKbJlHaQIJDIxGqheH6cWIg==
-X-Gm-Message-State: AOJu0YzIqiTlDsWmCBWK9ayIO18/CJqTlDkzkrJsjJEnEbpPq66Hxgrs
-	i/TAykDiuvC8NEm+hcEcJ3ZV3HNjhHg18wKJXxELScHdk3Ly91dqW0xKbzqGF63cBhc2JE2eUI1
-	fhFA=
-X-Google-Smtp-Source: AGHT+IFy7XIwYIBv75NcGjjGCl0VS2oKdh8CqLT1sJCeuF/ePWgLta3XoHjrEoA8051q0A7kko4l1Q==
-X-Received: by 2002:adf:f652:0:b0:363:337a:3e0 with SMTP id ffacd0b85a97d-36794780b27mr1367398f8f.1.1720008670720;
-        Wed, 03 Jul 2024 05:11:10 -0700 (PDT)
+        bh=q7ezAWLj7MMf6cupnuxIo+JndCzydckyqulVxplwpWA=;
+        b=kvAf9pwaVnWJXQTaJzWTPCEoQe5sK2aG1c/fxoTkFht4TYRralQm8eI+fgq0cWomhG
+         VqSSTxDSOAPSuQPr5xi3diBOKcppIMnRUJP50l+BEQhQZbegvNfbv1zXUegBxIeB1FqI
+         yCYewiRqwsB8fy/doEFcHCbwzpuR+SY7nqZe3AcQoEb02NwVTOty1Rv/pwWMoE34aERB
+         Tvauue09TepDlS9bbl2astdrBc+dKgFQv3M3vCcBNGkeEyBZ2r1j4p5nw5kpB7mTMQ8g
+         AfUjAIVpsfPNdjrGGvHxfoGdDzC0BbFhUB1kk/J16aDxFumEPjqxP24nBiKIgnJlykMS
+         Ky/g==
+X-Forwarded-Encrypted: i=1; AJvYcCWr1cF382CofoWU3VN3mI6zkgtNZXsur3atOxgABFBrnjbO5jB75J71tGWMJyKgJ4ro7SgLP1SUXa9PBFJtg9wjfUcz8A/GazXZ1ElXSg==
+X-Gm-Message-State: AOJu0YwZuaWYNPV//haqj9vuR5bMFPEO2o8b0BWkgDmI0kgAXBVd0kx4
+	fcoxKjfjZixUzQNylvzoiSXF4aprdIKbYi0+6KyviVHMwU44yL6AAMBGFuyDBVZdin5CDOVY42a
+	my14=
+X-Google-Smtp-Source: AGHT+IHjhpXQtXuOXL2sG7Nz/kypplntZTHCDuejtJNJgkYlN74FsUPBIXDr/hqUtpG9V0bzXDVXnA==
+X-Received: by 2002:a05:600c:181b:b0:421:7bed:5274 with SMTP id 5b1f17b1804b1-4257a02f7f0mr79850405e9.10.1720008672113;
+        Wed, 03 Jul 2024 05:11:12 -0700 (PDT)
 Received: from [127.0.1.1] ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a10307bsm15716222f8f.94.2024.07.03.05.11.09
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3675a10307bsm15716222f8f.94.2024.07.03.05.11.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jul 2024 05:11:10 -0700 (PDT)
+        Wed, 03 Jul 2024 05:11:11 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 03 Jul 2024 14:10:55 +0200
-Subject: [PATCH 01/11] ASoC: codecs: audio-iio-aux: Simplify
- audio_iio_aux_add_dapms() with cleanup.h
+Date: Wed, 03 Jul 2024 14:10:56 +0200
+Subject: [PATCH 02/11] ASoC: codecs: audio-iio-aux: Simplify
+ audio_iio_aux_probe() with cleanup.h
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,7 +80,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240703-asoc-cleanup-h-v1-1-71219dfd0aef@linaro.org>
+Message-Id: <20240703-asoc-cleanup-h-v1-2-71219dfd0aef@linaro.org>
 References: <20240703-asoc-cleanup-h-v1-0-71219dfd0aef@linaro.org>
 In-Reply-To: <20240703-asoc-cleanup-h-v1-0-71219dfd0aef@linaro.org>
 To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
@@ -91,107 +91,122 @@ Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
  alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2812;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3506;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=zkBYXA5XhH4F6q1m9UDysUTPImTnL2Gru3YtQza5a+s=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmhT/SBRZL/pAdnmTHzMWcEt1sae0bOVf+MOlLi
- 9Iouwdrzt+JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZoU/0gAKCRDBN2bmhouD
- 1++xD/4smEI7/Q/xqQ8kHg3Br1em0PyUgtV32GF4yvl2OjiJmfHfqwc4MC8tYzguMEV3m9v143t
- 3is1DhFHdotHjyQMMJiMG+/b3egvgKx8MxxKLDTGJ3MbXRecLSlQAaMuSCGeuLk4bCEXAZtN2nZ
- 59l6mosBbXKPDZGIBe3M+soiCM03Ydl01cJl8dSK5suDjwRpkMhb0+JXQjOl4yk2ZO0u8RmvM0j
- uTtxKpGljxGv78qEXDf1jblZH1uShAGNoK1Ox0ZKWxrhVpaG14Ytg1DC66Mpd7oomSWnyWBt1wU
- EshhBKabPnUlVVJObbJ1XFzGZURbnFu/lUXJgmBgaxhNczlYsv9/5T60tarIxLoFEClMrdN5NF4
- 7an704jrG2hU0kQtKZznWsT3bxDivQfnUj/7hEgnVcadq4eChOBHgZKl886/hgKB4b7l25UUdxr
- 7Zw7a1u0wlt1n9SPZTdlqdQwGj/1eL8hAkZkxLW54Dn6o59EUy415ArhoHSaawTLZFbER5UtXSs
- JrKvhfVNnjlmMmOGlnXUwCWRTfLqf9HBuynCCUJsjfA4B6sMDo0lV+P5grGPlQlghYxPgiaUAzU
- H96CRf99qS+tBY6o3K4/0HEsWzv1FLK3oz/6DmIkUKweb/sR9xpbL8JxcMRwZsi762H3cuL7vTE
- RVySwVK/E7N7Ziw==
+ bh=C2mr7bEsmKb5ROqOqNDH7IBKsoD0jmhYaojg0nmAdOo=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmhT/S1XP/zEy17um3RkbB+7GXXnM0KA43l8+pw
+ GB5H7vS1OCJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZoU/0gAKCRDBN2bmhouD
+ 15/ED/4tY2cdMjmCzBV33UogE0kN1pHip/43JaL23ZH7qMeMHA3I3HXhF7aKMqK7J2sC0UIzYGz
+ 3UF5+KEbKvi9RXaKQmvPhEEboYiZWEeayVfsviuXZz8nxxyJd+9az94jDrtbZTcz+A/y7RrQpIV
+ 0RRIbNATso7rZk4UUuVrjIKKlRO2N78g4xrJRvaTmsEUB88uJGF3kZAQOniUdfxXOUpn8eCwLQM
+ ED/8KZPkZCnzSghFw8NgYfG8qG7VzAVWfp+IDWZPwF875VBep7TgSR8l8oxFvSjhtzykewNxMXH
+ 170X/msAVpt0RDwMRwNiSYjecVw4pCmF6nG1b7jzaUQ8bf9tJpqzHD+Xzilpx5y/CFIgz6Qvv2Y
+ 2ykvK6o4boLyK+rgP+KAr+/jnfAfLT5yIGFu6ufyNL2JkaWnwvo9B6Rh5T3Ccts3uOvJyWNCXG2
+ Fm0n1cnNo3w4Y1sYeSqq1znPn7s5a25nX9fFp+9pCwLPFei70SRPfU5+jB3fbDlGcqm/vITVx2f
+ raw0aCQ2q6xyCFwKg/H2Ib62EqpEAKnUuC99UxwTH+ud5nYPnxN+pqS55kZPvGDzyWZuEty8kK8
+ reZVthBBte8bn0XyuOOkBiJ7vd9IvPpbOFsJpx34YEEruH6wFTVCkUf3D3WRfx28Zg5ccZcC5nh
+ 2dZFA30ZhxUEPwg==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Allocate the memory with scoped/cleanup.h in audio_iio_aux_add_dapms()
-to reduce error handling (less error paths) and make the code a bit
+Allocate the memory with scoped/cleanup.h in audio_iio_aux_probe() to
+reduce error handling (less error paths) and make the code a bit
 simpler.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- sound/soc/codecs/audio-iio-aux.c | 36 +++++++++++-------------------------
- 1 file changed, 11 insertions(+), 25 deletions(-)
+ sound/soc/codecs/audio-iio-aux.c | 47 +++++++++++++++-------------------------
+ 1 file changed, 18 insertions(+), 29 deletions(-)
 
 diff --git a/sound/soc/codecs/audio-iio-aux.c b/sound/soc/codecs/audio-iio-aux.c
-index 1e8e1effc2af..3969ee45f41e 100644
+index 3969ee45f41e..588e48044c13 100644
 --- a/sound/soc/codecs/audio-iio-aux.c
 +++ b/sound/soc/codecs/audio-iio-aux.c
-@@ -6,6 +6,7 @@
- //
- // Author: Herve Codina <herve.codina@bootlin.com>
- 
-+#include <linux/cleanup.h>
- #include <linux/iio/consumer.h>
- #include <linux/minmax.h>
- #include <linux/mod_devicetable.h>
-@@ -131,33 +132,27 @@ static int audio_iio_aux_add_dapms(struct snd_soc_component *component,
- 				   struct audio_iio_aux_chan *chan)
- {
- 	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(component);
--	char *output_name;
--	char *input_name;
--	char *pga_name;
+@@ -230,8 +230,6 @@ static int audio_iio_aux_probe(struct platform_device *pdev)
+ 	struct audio_iio_aux_chan *iio_aux_chan;
+ 	struct device *dev = &pdev->dev;
+ 	struct audio_iio_aux *iio_aux;
+-	const char **names;
+-	u32 *invert_ranges;
+ 	int count;
  	int ret;
+ 	int i;
+@@ -248,22 +246,22 @@ static int audio_iio_aux_probe(struct platform_device *pdev)
  
--	input_name = kasprintf(GFP_KERNEL, "%s IN", chan->name);
-+	/* Allocated names are not needed afterwards (duplicated in ASoC internals) */
-+	char *input_name __free(kfree) = kasprintf(GFP_KERNEL, "%s IN", chan->name);
- 	if (!input_name)
+ 	iio_aux->num_chans = count;
+ 
+-	names = kcalloc(iio_aux->num_chans, sizeof(*names), GFP_KERNEL);
++	const char **names __free(kfree) = kcalloc(iio_aux->num_chans,
++						   sizeof(*names),
++						   GFP_KERNEL);
+ 	if (!names)
  		return -ENOMEM;
  
--	output_name = kasprintf(GFP_KERNEL, "%s OUT", chan->name);
--	if (!output_name) {
+-	invert_ranges = kcalloc(iio_aux->num_chans, sizeof(*invert_ranges), GFP_KERNEL);
+-	if (!invert_ranges) {
 -		ret = -ENOMEM;
--		goto out_free_input_name;
+-		goto out_free_names;
 -	}
-+	char *output_name __free(kfree) = kasprintf(GFP_KERNEL, "%s OUT", chan->name);
-+	if (!output_name)
++	u32 *invert_ranges __free(kfree) = kcalloc(iio_aux->num_chans,
++						   sizeof(*invert_ranges),
++						   GFP_KERNEL);
++	if (!invert_ranges)
 +		return -ENOMEM;
  
--	pga_name = kasprintf(GFP_KERNEL, "%s PGA", chan->name);
--	if (!pga_name) {
--		ret = -ENOMEM;
--		goto out_free_output_name;
+ 	ret = device_property_read_string_array(dev, "io-channel-names",
+ 						names, iio_aux->num_chans);
+-	if (ret < 0) {
+-		dev_err_probe(dev, ret, "failed to read io-channel-names\n");
+-		goto out_free_invert_ranges;
 -	}
-+	char *pga_name __free(kfree) = kasprintf(GFP_KERNEL, "%s PGA", chan->name);
-+	if (!pga_name)
-+		return -ENOMEM;
++	if (ret < 0)
++		return dev_err_probe(dev, ret, "failed to read io-channel-names\n");
  
- 	widgets[0] = SND_SOC_DAPM_INPUT(input_name);
- 	widgets[1] = SND_SOC_DAPM_OUTPUT(output_name);
- 	widgets[2] = SND_SOC_DAPM_PGA(pga_name, SND_SOC_NOPM, 0, 0, NULL, 0);
- 	ret = snd_soc_dapm_new_controls(dapm, widgets, 3);
- 	if (ret)
--		goto out_free_pga_name;
-+		return ret;
+ 	/*
+ 	 * snd-control-invert-range is optional and can contain fewer items
+@@ -274,10 +272,8 @@ static int audio_iio_aux_probe(struct platform_device *pdev)
+ 		count = min_t(unsigned int, count, iio_aux->num_chans);
+ 		ret = device_property_read_u32_array(dev, "snd-control-invert-range",
+ 						     invert_ranges, count);
+-		if (ret < 0) {
+-			dev_err_probe(dev, ret, "failed to read snd-control-invert-range\n");
+-			goto out_free_invert_ranges;
+-		}
++		if (ret < 0)
++			return dev_err_probe(dev, ret, "failed to read snd-control-invert-range\n");
+ 	}
  
- 	routes[0].sink = pga_name;
- 	routes[0].control = NULL;
-@@ -165,17 +160,8 @@ static int audio_iio_aux_add_dapms(struct snd_soc_component *component,
- 	routes[1].sink = output_name;
- 	routes[1].control = NULL;
- 	routes[1].source = pga_name;
--	ret = snd_soc_dapm_add_routes(dapm, routes, 2);
+ 	for (i = 0; i < iio_aux->num_chans; i++) {
+@@ -286,23 +282,16 @@ static int audio_iio_aux_probe(struct platform_device *pdev)
+ 		iio_aux_chan->is_invert_range = invert_ranges[i];
  
--	/* Allocated names are no more needed (duplicated in ASoC internals) */
--
--out_free_pga_name:
--	kfree(pga_name);
--out_free_output_name:
--	kfree(output_name);
--out_free_input_name:
--	kfree(input_name);
+ 		iio_aux_chan->iio_chan = devm_iio_channel_get(dev, iio_aux_chan->name);
+-		if (IS_ERR(iio_aux_chan->iio_chan)) {
+-			ret = PTR_ERR(iio_aux_chan->iio_chan);
+-			dev_err_probe(dev, ret, "get IIO channel '%s' failed\n",
+-				      iio_aux_chan->name);
+-			goto out_free_invert_ranges;
+-		}
++		if (IS_ERR(iio_aux_chan->iio_chan))
++			return dev_err_probe(dev, PTR_ERR(iio_aux_chan->iio_chan),
++					     "get IIO channel '%s' failed\n",
++					     iio_aux_chan->name);
+ 	}
+ 
+ 	platform_set_drvdata(pdev, iio_aux);
+ 
+-	ret = devm_snd_soc_register_component(dev, &audio_iio_aux_component_driver,
+-					      NULL, 0);
+-out_free_invert_ranges:
+-	kfree(invert_ranges);
+-out_free_names:
+-	kfree(names);
 -	return ret;
-+	return snd_soc_dapm_add_routes(dapm, routes, 2);
++	return devm_snd_soc_register_component(dev, &audio_iio_aux_component_driver,
++					       NULL, 0);
  }
  
- static int audio_iio_aux_component_probe(struct snd_soc_component *component)
+ static const struct of_device_id audio_iio_aux_ids[] = {
 
 -- 
 2.43.0
