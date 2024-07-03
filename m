@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-25065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E01F2925750
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:51:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7B81925759
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:51:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A2AD0289370
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 09:51:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8426028AA93
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 09:51:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65E26158871;
-	Wed,  3 Jul 2024 09:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4F9416C6BE;
+	Wed,  3 Jul 2024 09:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gCMUeLc6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VaMCRLnj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D9A143C52;
-	Wed,  3 Jul 2024 09:50:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6B9156F28;
+	Wed,  3 Jul 2024 09:50:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720000234; cv=none; b=O4ABFAM8xJekWVYKFtT8x16KO5IRUdAdXME0+xN3VWUEKXkXOZrH4dnrV4ALfj61VWyQs93yhtlPkRJe3oyp83NXUjWSoqtbDyVXgWnJZnNCobHW5Ol2ufD60JbCDIV9CM/mwLbb6d8CUtrNZzHU/EdUbyx55b0husOaN7hWQok=
+	t=1720000235; cv=none; b=lB6gJxNx7GY8ErbWGUA1d2jPmc36FEo/FkW9fokoKzF0s8OlfixlnZKtRL3zNWe4ckGYzi2bO0WiZGP8rz81dhTnFiLSnAA6qMeQO8Gn5EkC0i/tBOZRh/5Hv8iGRmCux0eLphU7WQi9fguNSb1yvve0rjKhJuzgchhnaBauyjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720000234; c=relaxed/simple;
-	bh=TxADEvEEBX/TothZVxPgAJ7RkXfQpn93WbFswKz2wf8=;
+	s=arc-20240116; t=1720000235; c=relaxed/simple;
+	bh=87EEyGDhqMM4XSc2dnrLtfdRuLpnYLj4dPXzZjLB2bE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=emy1/Pu/tHynZwQRqSMOTjqeZnxPAo8tP+6264O4axoaEJxDSUhDKcKTPBQtLRu4Ptg/COkS4Q+5gp+vnEPMMrbLhuM3w0N7utDc6zQC6M2UMOk6c6IIMacbDFy33DsR+E3QkN4z9tQwqn/nZRPQ1rKspzLuYkzxrnaBkPgLxdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gCMUeLc6; arc=none smtp.client-ip=209.85.208.51
+	 In-Reply-To:To:Cc; b=itYbCUJWY6LeEtc75gFQuvi7nJe76wXBHj3lzG43I4hUME5BkaGgy5zutTABcuU6y9+2TTsK4phEe2v2gPOK9ZH2nYs2UXqOMBfksFgi7dYFdiqp62m9u3N3ZFwsODOLX3J7bm/ZGJlQO24K2uuUpIK12Tzl5Y/tsr7YDk1Dmdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VaMCRLnj; arc=none smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5854ac817afso3158039a12.2;
-        Wed, 03 Jul 2024 02:50:32 -0700 (PDT)
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-57d046f4afdso1495188a12.1;
+        Wed, 03 Jul 2024 02:50:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720000231; x=1720605031; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1720000232; x=1720605032; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=nvMEinijEwgsKZDsBmGm/iKxTFLThMpGobnSIWlzUFc=;
-        b=gCMUeLc6ZSRT2nYpqXde7mp7rfirujtgQcFaJfmDZUJQx0NEfiqE/7EZUMIuz85Ohm
-         UQarvbjQLJkQQ36cHnscIzRVEYPMDrQc8WYSZFw2qaLBIM8QbjjwVJ8vojBu0vNt6a3h
-         q46C7yVZdPQGr+/4l+EQQo3uX/wj3On4KM0A79HmXH7bG77un/dwjBPCEbBdtr4A+c4/
-         lLAth4DLnWXSXS6hYU95ZZC2+AzgdsFFtgQhnPFheMOkxFya6QAcmzRZxC+medxqSH/B
-         Uybixz/Z75qDcSeIJN/0x3WJfc80ioF4db7WgDeQIHZBSxLna9i7x4OGiJqBuAIwZGDU
-         jSlQ==
+        bh=Kd/sgJHBXOe9fs3qrhdvMpUQXrTXNMFaR6+MycDuFVo=;
+        b=VaMCRLnjSFAmCJxeE6GFgMg6azNYQggJhWKo5o290Tr/T1HF97RKBS9isr2JkQTeUW
+         JP4JqDN90KlfLTcPK+Pfs2Jx0UQo7Ee4DLXpwVeiCfnm22iSXYieEGMQ4Jg/k9f+Lywm
+         Rn2eMZ6KheBwsHE5XtC3cF9qp3ECrDiH3Ou7J+otTlOm8cjeEPPV78jdIKuw966vDYDa
+         7q1fLt2GZ6FAXFW3qnzXHbK4hAMGE/Eqj0R7Uce/mrW5cVpq7TRtCrlZ8AfiFFjgApcb
+         ObGgA7OSqocLu5/SBM9KtMzSgH961urSg3vNIgjznbzWv4OM9hHCwk1RbYLp4lZ+jcR+
+         fLzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720000231; x=1720605031;
+        d=1e100.net; s=20230601; t=1720000232; x=1720605032;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nvMEinijEwgsKZDsBmGm/iKxTFLThMpGobnSIWlzUFc=;
-        b=qdO7o4KzZg8vDJ56yHsBvmvKBsMQcJnRgIKLYc2uez7edDCjbNmqY47edFHkWDiNJX
-         T4KlhdYCflC257rhJ2TONrgXsaOXpj3fQanyF5s+v7KoPzGT7Z/iTqH39XkTX0XAn+8r
-         7IKtPE12ozp8DZm4mx/EFdV8JjZ9gjkY6FuW2v2YtE66Xpp3yNXNp80h3Qkxu7hQUSvo
-         sCE9Kxphd45S64G/a0bJuCQaMtQFpwXdXPCwuKlF4q+H5EokszVZkFF4uF18bIV5p1r2
-         y+LtDTYIkExZWba5b8INx1mRyqr/BsOrdx0DJ/sY4c+yuZD+0zvDJVS7pmyL2jmUNzdA
-         f46w==
-X-Forwarded-Encrypted: i=1; AJvYcCVQSInqns8MGsvxLFIXOvWHkypYhfcXHnmuROGy0f/yrJz+TVIH7xYCj6J2WHvfVUX8xmC4pLZlqdo+UcKDi1B4Qc64y9VL+QdkYBa60EP+OR0D3UyCTsUuDxdxd5bjIh5wtuqk/zEBa9khwf3XakF9jtiSEz7ib1egUImolhxT84Gr+2VApg==
-X-Gm-Message-State: AOJu0YwfR3YaPx0Hxw4Ma1GoZj0q12XLjPoI0ZKCeV8IQuX9Oh9/CDH+
-	6sRFG4jFm/NE/kihpWSBDwuLFWkBU7R5mpgWjcquMOV3ww4MLHnv
-X-Google-Smtp-Source: AGHT+IHqO0NeW0hYgOS++CrB+maws1bAp/Jb+zrdkccIaJUBHpnIHgiVuw0F79kfyt8XXwzzdBrjHg==
-X-Received: by 2002:a05:6402:90e:b0:57c:abf9:e6ab with SMTP id 4fb4d7f45d1cf-587a0bfc706mr8446988a12.31.1720000231004;
-        Wed, 03 Jul 2024 02:50:31 -0700 (PDT)
+        bh=Kd/sgJHBXOe9fs3qrhdvMpUQXrTXNMFaR6+MycDuFVo=;
+        b=dN8d3WMmzAsxQWo4wLSof0c8XQPMuf6Rpoq6irWx060OH4PDi9wbuA4zgWuEOiGOsP
+         u6v40Wtx4Zz0i9B7TCsacQU1l8hAe56JN8vC+C9cL7pQvZm2M8cOix2loed62L93u8kg
+         QZr/DUpe84457s/B2lLO4bcwXymfOD80FmvoS9i+z9ZMdT3kIcpOW0mpA7a+5TxoHKoY
+         r8TpJ6/FMO/r6Xx89Qs4jlSgfyipLzqV0Y4g9qwyn7SVR91cv92l9j1uV3e8aCyZ58Ym
+         wy/a/2ApKeOEyZmfH+IDAKm8y45/K0F9SvNFJYJas8DOMyLXLncgqYaCa7WJGd6a1M/J
+         bSrg==
+X-Forwarded-Encrypted: i=1; AJvYcCUVWB2AfFTyxSpjGWlHLjCA5KQt4uHHoumJcTUedp+fnF0WBB20ibgVpaGVt/l6/EucuL/yfMHH6C8CkIwzJmVAqtxy4MMIZBJ5PbNFMqbMF9Si1S5DMBrAxEVQgTxZ4Nw4sjk+/UvDeNf3cz4zZTZb5Rs8GLXRRPWEWgGcyw9vq0eAewT9QA==
+X-Gm-Message-State: AOJu0YyUXEb2XyhzsAz01WWIlyvOv8eRa7WYU59ECTHQCYlF94rh01mo
+	ICQsX9cMA2pkzfIss+SLUtEi/or5L7Xfy/NJAhz4i7oDVxyo8aHm
+X-Google-Smtp-Source: AGHT+IGs/WDtbZIXTR4T3vygKaznx3++FpGKeIUBPGN/fnT9vd+Uc+Jd45wPLlvNWdhc0V3hB+BFGQ==
+X-Received: by 2002:a05:6402:1cc1:b0:57c:7c44:74df with SMTP id 4fb4d7f45d1cf-587a0822c1dmr7791768a12.29.1720000232375;
+        Wed, 03 Jul 2024 02:50:32 -0700 (PDT)
 Received: from [127.0.1.1] (91-118-163-37.static.upcbusiness.at. [91.118.163.37])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-58b4a97b1f3sm2082130a12.18.2024.07.03.02.50.29
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-58b4a97b1f3sm2082130a12.18.2024.07.03.02.50.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jul 2024 02:50:30 -0700 (PDT)
+        Wed, 03 Jul 2024 02:50:31 -0700 (PDT)
 From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Date: Wed, 03 Jul 2024 11:50:16 +0200
-Subject: [PATCH 03/10] clk: meson: c3: peripherals: Constify struct
- regmap_config
+Date: Wed, 03 Jul 2024 11:50:17 +0200
+Subject: [PATCH 04/10] clk: meson: c3: pll: Constify struct regmap_config
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240703-clk-const-regmap-v1-3-7d15a0671d6f@gmail.com>
+Message-Id: <20240703-clk-const-regmap-v1-4-7d15a0671d6f@gmail.com>
 References: <20240703-clk-const-regmap-v1-0-7d15a0671d6f@gmail.com>
 In-Reply-To: <20240703-clk-const-regmap-v1-0-7d15a0671d6f@gmail.com>
 To: Neil Armstrong <neil.armstrong@linaro.org>, 
@@ -95,11 +94,11 @@ Cc: linux-amlogic@lists.infradead.org, linux-clk@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-sunxi@lists.linux.dev, 
  Javier Carrasco <javier.carrasco.cruz@gmail.com>
 X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1720000225; l=790;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1720000225; l=745;
  i=javier.carrasco.cruz@gmail.com; s=20240312; h=from:subject:message-id;
- bh=TxADEvEEBX/TothZVxPgAJ7RkXfQpn93WbFswKz2wf8=;
- b=ZRDeYsd4qQkFOSJF/zfGi7N72RpeUf69oTYxSsNrKIIUNBXaLyo9mTarnDmlHNHfjp8M5XoMO
- P5IZN9S7rqXB/deiDxd3FbCvxgerParLlTFa3YYJek2EV5ur4YeuUNQ
+ bh=87EEyGDhqMM4XSc2dnrLtfdRuLpnYLj4dPXzZjLB2bE=;
+ b=RRDOpnPm8XSIvDMG7UScdHDXqikzkMcrNLmY1ueozOmyEoM6oRCDBKdS0sxGWYXstfh9vXJrP
+ yRZGKhFD/fLAt32CCD3d5+xukZJvqb/EN1KQc39Rdh40+W9lXA4SAtY
 X-Developer-Key: i=javier.carrasco.cruz@gmail.com; a=ed25519;
  pk=lzSIvIzMz0JhJrzLXI0HAdPwsNPSSmEn6RbS+PTS9aQ=
 
@@ -108,15 +107,15 @@ X-Developer-Key: i=javier.carrasco.cruz@gmail.com; a=ed25519;
 
 Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 ---
- drivers/clk/meson/c3-peripherals.c | 2 +-
+ drivers/clk/meson/c3-pll.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/meson/c3-peripherals.c b/drivers/clk/meson/c3-peripherals.c
-index 56b33d23c317..cfa573262bf1 100644
---- a/drivers/clk/meson/c3-peripherals.c
-+++ b/drivers/clk/meson/c3-peripherals.c
-@@ -2296,7 +2296,7 @@ static struct clk_regmap *const c3_periphs_clk_regmaps[] = {
- 	&vapb,
+diff --git a/drivers/clk/meson/c3-pll.c b/drivers/clk/meson/c3-pll.c
+index 6d5271c61d14..f09f4f7b46fe 100644
+--- a/drivers/clk/meson/c3-pll.c
++++ b/drivers/clk/meson/c3-pll.c
+@@ -678,7 +678,7 @@ static struct clk_regmap *const c3_pll_clk_regmaps[] = {
+ 	&mclk1,
  };
  
 -static struct regmap_config clkc_regmap_config = {
