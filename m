@@ -1,63 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-24959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-24960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02421924FB6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 05:38:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AF2D0924FBB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 05:39:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B1FB9286B88
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 03:38:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B01428B96D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 03:39:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B69F381B1;
-	Wed,  3 Jul 2024 03:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BD7D3A1DA;
+	Wed,  3 Jul 2024 03:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k8wmCDtj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mtI9SEOV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F372A328A0;
-	Wed,  3 Jul 2024 03:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4F93CF73;
+	Wed,  3 Jul 2024 03:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719977862; cv=none; b=Szd92dUG8vwXSzdQvdvEak281oyB/kMgaYEPlAdzfC7p5Rd1KvH07WKlh40/15yqfgrlXCcuYddU+ycJCHPuq4Gsc/j4w6XiORkVDrvcGdvMhzU9QeLQmLl+RZAFHoMsl3KEXDHumgL/Jb0T7h+j5OFyU/14f02FJJkB7xTDjxQ=
+	t=1719977863; cv=none; b=gS85c0nOpigNpawki1z5tN36g6Do9BMbzh2L2xsvRWt51QWrCP/MG3iAxJ6bZVe35tzWzVDd6a4zbQtBdq2TeiyLv9gOVSWuDSKRUPZNpP3pa9/C+L2l6gAQom54Vt+X8iAo/AJd8jDsjAam1sOUWYE706CFiK3KGgmbzENNNn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719977862; c=relaxed/simple;
-	bh=fQ7ZOMsBulfwfa8UwCcjgYsOIZM7uaZoJmDHFm9n2i8=;
+	s=arc-20240116; t=1719977863; c=relaxed/simple;
+	bh=IQKmGLGA4Sltc/YzMkzZrkzhPn+PBbSEtBAa1q25RHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U+fDFKySYWN2AtOQxRxNXDZXGWp4b5bxLsw6fGfq5oZbB9WTSRD75chuk84jCCHEmrtphFF1tRCpIuNqzkAVoYhbU+UsszW29o+fxNsVz6FxXrE3ioEK1H4oxTns7VyJjaaFx2YqHUQzDgEzXkn6XM7nxpFGr9OYkLmuiTrc2ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k8wmCDtj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030D2C4AF0D;
-	Wed,  3 Jul 2024 03:37:40 +0000 (UTC)
+	 MIME-Version:Content-Type; b=dP6vri9rfdYWIL5U3GzLniPL3lwq+Q5FUDkxk2kbA61+G3NmEm2q8ongparwsEffQnsVYZz9ivy30boPN8v8j51M0tJFF0Md4JW6tveYtXpHmeeXfXVTIUvYers0+yPuOfY0eIG08SuRkWIN+Es9L/baN0fNv4rdLtrQ+m575AE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mtI9SEOV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E543C4AF13;
+	Wed,  3 Jul 2024 03:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719977861;
-	bh=fQ7ZOMsBulfwfa8UwCcjgYsOIZM7uaZoJmDHFm9n2i8=;
+	s=k20201202; t=1719977862;
+	bh=IQKmGLGA4Sltc/YzMkzZrkzhPn+PBbSEtBAa1q25RHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k8wmCDtjnpvIqKJB60ldmag6kNtmlJzo24APkajHGqNsCpeAnk2BUjlPuwFoH/4cO
-	 AG0sE2IBF/nqa/H+RPUuLX3hyB47YB0yundJNVekz9WHvmdHmjl8RSENMAsuEShV2g
-	 08w9RvwBRjh0URnzAwUENEEyD3NJ7kMj3ZcEPds3QNt1tvlTUJXMwCjAFIovpsFO9A
-	 n3CHewuYkvZLUajDn+N+GELwELq0ZMXqJ7EafcOepu5Vo3zaLLYKZ0J62Ils339SLK
-	 O5WMCGs1dtO6cjGvrJeVFkCGZza/fhXBQl2jktvb9Si83G96CRzPKorIXFyhbmpK0I
-	 EgHfx4eDcTZ+Q==
+	b=mtI9SEOV0LE6Nh+22vHdJPw7DYBu/cenTbyowxiDnIGdqDUG7Y94Y6Fns+crLf0S2
+	 dkiaQpgkwOZKx3Xvt6E7I9LcQ68yVKkOlaU7p4FuzIaxbOuyYDGApSc8ObfRNVkvLz
+	 aPt3Na0CYLBdOiB74+4JXn+eaIpg2kiORQ/CPlgQiOyBP4CahtT/FolB1jqmGsM2zr
+	 qDzpgRgsiwoaZlbRI0BOeQBFc922hwI6wSkEuhlpJFYko+KI/BX4ZYkpkNQ0rozZ6u
+	 1e/WeZrgICqcDyhD56Y48A7edZniLyI2Fd7ufhO8E4CM8QMw8x+dcTJ6TiJwt14yBC
+	 h8VTnNx7P+zzA==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Dang Huynh <danct12@riseup.net>
-Cc: Luca Weiss <luca.weiss@fairphone.com>,
+	Chris Lew <quic_clew@quicinc.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Mark Brown <broonie@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] arm64: dts: qcom: qrb4210-rb2: Correct max current draw for VBUS
-Date: Tue,  2 Jul 2024 22:37:24 -0500
-Message-ID: <171997785369.348959.4235528262063919362.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org
+Subject: Re: (subset) [PATCH 0/2] qcom: fix missing dependencies for the QCOM_PD_MAPPER
+Date: Tue,  2 Jul 2024 22:37:25 -0500
+Message-ID: <171997785345.348959.9767564474353680940.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240702-qrd4210rb2-vbus-volt-v3-1-fbd24661eec4@riseup.net>
-References: <20240702-qrd4210rb2-vbus-volt-v3-1-fbd24661eec4@riseup.net>
+In-Reply-To: <20240626-qcom-pd-mapper-fix-deps-v1-0-644678dc4663@linaro.org>
+References: <20240626-qcom-pd-mapper-fix-deps-v1-0-644678dc4663@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,20 +66,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 02 Jul 2024 13:01:19 +0700, Dang Huynh wrote:
-> According to downstream sources, maximum current for PMI632 VBUS
-> is 1A.
-> 
-> Taken from msm-4.19 (631561973a034e46ccacd0e53ef65d13a40d87a4)
-> Line 685-687 in drivers/power/supply/qcom/qpnp-smb5.c
+On Wed, 26 Jun 2024 22:12:36 +0300, Dmitry Baryshkov wrote:
+> While refactoring pd-mapper to use auxiliary bus for the PD mapper
+> instantiation I forgot to select the bus in Kconfig entries. Fix it now.
 > 
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: qrb4210-rb2: Correct max current draw for VBUS
-      commit: c6050d45cd372e4a34f9f501b30243caf2e810c6
+[1/2] soc: qcom: add missing pd-mapper dependencies
+      commit: b89c5bc72102469a87f0c6ec0ee7112ef2eba01f
 
 Best regards,
 -- 
