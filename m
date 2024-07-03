@@ -1,130 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-25073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 805BC92576C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:53:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3A96925775
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 11:55:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3C48628CD62
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 09:53:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 701251F23112
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 09:55:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22CAD17623A;
-	Wed,  3 Jul 2024 09:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43BEE1422B4;
+	Wed,  3 Jul 2024 09:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WG+PT8Uf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nuFTRo6x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848D7174EF3;
-	Wed,  3 Jul 2024 09:50:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8779B14037D
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 09:55:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720000245; cv=none; b=MQuHMft9aigpodfZhkZzCYjFXkb931LRncWha3RftcHw47LHe1HHgjMDnevJG61plfGxqCaLwXMsEYdlgVobWvY8KmaD5OqRU6veoozi1srD/9LuVGBdZmJLMha51/cZF+PAPMBMClZHZ1UaS3gKCQWpU9tMSq3q3FqlgmI0hYI=
+	t=1720000504; cv=none; b=fYdL9dieheDDbLir3ZpKc8pkGtP9kYRtHS8QTI0W+ehy9RUOz8NOez55G7IiF892ZJalwjYASlG5C8VZRgmM30vPKsGzpIwXkazOGltWXJVS/twCWt+usYQbEQZPWD46rMoCWBpr0VCaFRilkEtxE0o4Q0Qn5Bemtkl2xYRw1dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720000245; c=relaxed/simple;
-	bh=0Ld8vX9WBeucJVIFv2KTKTHdTYHtYqJmnFDn01dCNek=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cT2HfWtrlqht9K2uLuc3QTdUzGBvUmLwOliPw5VQtQajxEXr5N6pUHdcvQOyYGGmuUQGaFPuWJLJc8B3VGGakpFOZ3jAchzXcaipYRVcB7FwY5uK5mF3KLngHWmYJDtORWJYE4WYut5LNRZ9L5shogDyEGiVxMfkbMvQAto3GLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WG+PT8Uf; arc=none smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a7541fad560so206109866b.0;
-        Wed, 03 Jul 2024 02:50:43 -0700 (PDT)
+	s=arc-20240116; t=1720000504; c=relaxed/simple;
+	bh=k/+CTBpj1EiCKMxmYiMFK6O7Hti0OmObuybzNT9VcZE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kTpM6cRX/NEchlTGQZ7YDEQMkY7mG5HnTl+vO8YqSWxOXP4BAj1WA5R1x0vUdqRNd9hAkREmg5rD8QZhIu0ZnBj4YD/B/BdFJr0N8AkoIeFBBG6z/oZi4ToGDiVFRd7Las0vO0otcUrwSP8cQdaXLxoqXut/9I/dRD0qaDekHck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nuFTRo6x; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-64f4f96bbf9so24091997b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 02:55:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720000242; x=1720605042; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Z/FFHHxRXCiHESWSSzIR+30DbRf3GOBGMceZW/6eQho=;
-        b=WG+PT8Uf2ZxBQnk3ANyzZ/4kGwV3sYvcBoUETlSdCLKgziZYYHuxgJ1ucjDTys+5Gv
-         AduJIlmXHo5aKobFEM+pFtdhsrMn6o0intTQXVOCxu3VsXtT9A5a/0MPcQjK0dKU6M5+
-         +avLmllrWsAu3KJdcv9oG3H57r7T0GVX+3tD+72CMb7aWpWFwQv49EICmrnIfdzbQtUg
-         s7KtlkBYhQm82ysmgBhks5iKBVuQwIT4nPEkpuv51pLljun3/BNHSsdRfkWW/vlqU6Ud
-         dmvXu4l221mi8GxVbwV6d6NMzjmp5FjpILja7SuWnGATXFd2jVmO5NDjEi/C/+fubr/A
-         c8Ow==
+        d=linaro.org; s=google; t=1720000500; x=1720605300; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=KRpouyYlT8w2vDlaWB3dgP182H0ox0N2Q0MheHmPiuY=;
+        b=nuFTRo6x4AaHQ5W+QWLWOgUgkOpgi5FCU7SwWX986/hr7jLsO1MZQaLDYAVxykukjg
+         ZX2kt2pUJZ8/xEhwFW3kEjQzKIo7WmB0PzV6/nmhGfF0w1fB/jQafFDDYzlF1pi7qYrt
+         QePEPBM+Qb+AzeM1KCEKRPFOcJuYpMhOmbcNxkQ7MoJvOS4O+1zATM739AcHmdq/Jarj
+         fAwEgXz2hyvdJnTIL4nnlfdAaFLxV1rJ88UYHDOXphUmapTF0LZhP1+PHnn5zAvflYqt
+         QU1PPLqniroTY+POaMukarYhczrPees08Lk6H/Y5o6hMRMvqqBCa8VFT3SPhYFHtX5Qj
+         xTsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720000242; x=1720605042;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Z/FFHHxRXCiHESWSSzIR+30DbRf3GOBGMceZW/6eQho=;
-        b=Ii0xA3P+k7bzIdOiLSf31QV7YDySJ1UQXLwyRn2v3vBlSAVB+OASMO4bS9IWUp0eNi
-         cE0r3EzbPSFWccBp2TE0B98edGDU0r5eVFz+M3OwnrktQDfRrctacFohQ4rHmdGTA2U8
-         /RIQLq8OdcZMWpTS+7uNhYAX+HQmw9uqd1NGidQ14dAwsD9AJTsDHih/S5OwgeHYOuLc
-         li0ejgzE8xBe6z8FhHpw7C4nnGGhp8ajWg0Ekj5A8FAd4H5mWAKkrauCGNWslStNCtjj
-         /2StwxBl4aCPq2KyqpTrkc2eyEwdjqU4xGPCjOvcyapu83A2o5rv3DV9GXvR6eIph6zL
-         70Zg==
-X-Forwarded-Encrypted: i=1; AJvYcCU9yBudVuKpqOq0UXnc7o7bVR9sI0YaNHKAOFT7ii2patEb+ZWG/0Jt2A6l9CVAzBSejd+NqY6EVxR57ftdsdBIGWUL5h08uJa9f3WQQnQNAmm9L2vuziIQfK1jilvTCO4FrPkXLzSgzmzici2TrXeUO3s4bQBp56N0UqlDWqoYpBtNIdMiBA==
-X-Gm-Message-State: AOJu0YyFTufrMEsNgzTAGCA+8FTvy3S2t8d3fsQbtJFRCcg2X4fhIKjp
-	In1rDlyG04KdduM8Pqj6pLoqsdku9vSjPupp8Q92T2fj/e9APpro
-X-Google-Smtp-Source: AGHT+IFvEQQ1or7Te92RZ7ee6rZM9e+5Mnmbmp6JAtgn1kSIV+we403CXkNT3daH3fdDLTkrC72WiA==
-X-Received: by 2002:a17:906:f847:b0:a75:1096:bbb4 with SMTP id a640c23a62f3a-a75144b9bb8mr700286266b.69.1720000241798;
-        Wed, 03 Jul 2024 02:50:41 -0700 (PDT)
-Received: from [127.0.1.1] (91-118-163-37.static.upcbusiness.at. [91.118.163.37])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-58b4a97b1f3sm2082130a12.18.2024.07.03.02.50.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jul 2024 02:50:40 -0700 (PDT)
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Date: Wed, 03 Jul 2024 11:50:23 +0200
-Subject: [PATCH 10/10] clk: xilinx: Constify struct regmap_config
+        d=1e100.net; s=20230601; t=1720000500; x=1720605300;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KRpouyYlT8w2vDlaWB3dgP182H0ox0N2Q0MheHmPiuY=;
+        b=bzT0rmttdcKEaT3A/MmSBpWIQvVXxqREQJQKPsI45hMriYB77YJyBiwe+3cGHbxuSe
+         /6F88ULjGndsJ4P8bxr1+QrNeDrhQ+OtuHgxK3u5ZUT43MKT7vpFlt0MEa8CVUkDwLKd
+         AxqyEr63ZA9OiW8ro1Y9FbTFH+4lyaHyhV2LZeuI6MbY7wFnRx4PhMgfS/Oo/rx2JFUo
+         f0qs4Z1WM+7VGbv3Xcpxjx7jM7Xv8x1a/diUnWjj0LX6PQ86+xLYKf/lMRSiiBEDp6h8
+         yX+v8hMq3rSJcPpFZ1wzMumW4u+qaclUN8NWblAaV8Z0UW/SIE+pWzfH2FKofv/Fv1Xa
+         8UhQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXGPFhj8EiyqoBR533pEuwNrIrD6lWcLMeYxcZHWick1JsHbkN1QOL8LOQzOtDmI46S7cjfkGSVG5e7CtAqdxW0LB+Ma95wp7Q+3ZviBQ==
+X-Gm-Message-State: AOJu0YyyrZEBruoBh8ui402bYE3u33pLsmzHb8/PocZrGXKvV7uUfMbf
+	bfzBVVugp9ZXmEOkEm+0EJL2znk8uLCwBOtrtT9Z0RFAGKebU719VhYArRp3X/qnexqhYsEmKVi
+	Y5jHD1DTn9IaEhuknfJf6bxvrat4z7yaOEq3PbQ==
+X-Google-Smtp-Source: AGHT+IHoNzBewnWkhcdAH2IejqHRntRYwy/kVJsz9+740G9qHkKMZZR3MQADqefkEA2eUyN1XlgmAmLhG8Zvd2gJPFA=
+X-Received: by 2002:a05:690c:804:b0:64a:7d9b:934 with SMTP id
+ 00721157ae682-64c7277c728mr123416777b3.16.1720000500575; Wed, 03 Jul 2024
+ 02:55:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240703-clk-const-regmap-v1-10-7d15a0671d6f@gmail.com>
-References: <20240703-clk-const-regmap-v1-0-7d15a0671d6f@gmail.com>
-In-Reply-To: <20240703-clk-const-regmap-v1-0-7d15a0671d6f@gmail.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>, 
- Jerome Brunet <jbrunet@baylibre.com>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Kevin Hilman <khilman@baylibre.com>, 
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
- Vladimir Zapolskiy <vz@mleia.com>, Bjorn Andersson <andersson@kernel.org>, 
- Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Samuel Holland <samuel@sholland.org>, Michal Simek <michal.simek@amd.com>
-Cc: linux-amlogic@lists.infradead.org, linux-clk@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-sunxi@lists.linux.dev, 
- Javier Carrasco <javier.carrasco.cruz@gmail.com>
-X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1720000225; l=760;
- i=javier.carrasco.cruz@gmail.com; s=20240312; h=from:subject:message-id;
- bh=0Ld8vX9WBeucJVIFv2KTKTHdTYHtYqJmnFDn01dCNek=;
- b=qbAZlsyWzomXPwtnqnjjR10PqlzCLG5uVxcNmtMDRmfWhY+nLBfhZqS5clqsqtfVrERC45aqH
- MoIjvu7D0tkCoOqeHOgE9Tak9NQ52dqqmYQ7r9zdNOTlkalNvb0TusC
-X-Developer-Key: i=javier.carrasco.cruz@gmail.com; a=ed25519;
- pk=lzSIvIzMz0JhJrzLXI0HAdPwsNPSSmEn6RbS+PTS9aQ=
+References: <20240417133731.2055383-1-quic_c_gdjako@quicinc.com>
+ <20240417133731.2055383-6-quic_c_gdjako@quicinc.com> <CAA8EJppcXVu72OSo+OiYEiC1HQjP3qCwKMumOsUhcn6Czj0URg@mail.gmail.com>
+ <CAA8EJpr3GYimirDz39f4n-3hDAxFWzo+9fdY6MAuxaNguouVFg@mail.gmail.com>
+ <3e816509-a12b-4658-85f4-c0d0037c6a64@kernel.org> <CAA8EJpr1G4eq5xJn0z2JQmpXY89UK13uk2BWJCgROsFP_-NkQw@mail.gmail.com>
+ <20240702163908.GA4635@willie-the-truck>
+In-Reply-To: <20240702163908.GA4635@willie-the-truck>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 3 Jul 2024 12:54:48 +0300
+Message-ID: <CAA8EJprGja_L6QXVmfSqoeMKCmSrf-qBeAWNToZDe++AsZ+Nyg@mail.gmail.com>
+Subject: Re: [PATCH v8 5/7] arm64: dts: qcom: sdm845: Add DT nodes for the TBUs
+To: Will Deacon <will@kernel.org>
+Cc: Georgi Djakov <djakov@kernel.org>, Georgi Djakov <quic_c_gdjako@quicinc.com>, robin.murphy@arm.com, 
+	joro@8bytes.org, iommu@lists.linux.dev, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	devicetree@vger.kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
+	robdclark@gmail.com, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	quic_cgoldswo@quicinc.com, quic_sukadev@quicinc.com, quic_pdaly@quicinc.com, 
+	quic_sudaraja@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-`vcu_settings_regmap_config` is not modified and can be declared as
-const to move its data to a read-only section.
+On Tue, 2 Jul 2024 at 19:39, Will Deacon <will@kernel.org> wrote:
+>
+> On Tue, Jun 25, 2024 at 03:59:27PM +0300, Dmitry Baryshkov wrote:
+> > On Tue, 25 Jun 2024 at 15:57, Georgi Djakov <djakov@kernel.org> wrote:
+> > >
+> > > On 25.06.24 10:50, Dmitry Baryshkov wrote:
+> > > > On Fri, 14 Jun 2024 at 21:05, Dmitry Baryshkov
+> > > > <dmitry.baryshkov@linaro.org> wrote:
+> > > >>
+> > > >> On Wed, 17 Apr 2024 at 16:39, Georgi Djakov <quic_c_gdjako@quicinc.com> wrote:
+> > > >>>
+> > > >>> Add the device-tree nodes for the TBUs (translation buffer units) that
+> > > >>> are present on the sdm845 platforms. The TBUs can be used debug the
+> > > >>> kernel and provide additional information when a context faults occur.
+> > > >>>
+> > > >>> Describe the all registers, clocks, interconnects and power-domain
+> > > >>> resources that are needed for each of the TBUs.
+> > > >>>
+> > > >>> Signed-off-by: Georgi Djakov <quic_c_gdjako@quicinc.com>
+> > > >>
+> > > >> This patch now prevents interconnect drivers from hitting the sync
+> > > >> state on SDM845.
+> > > >> The TBU driver is enabled only when the ARM_SMMU_QCOM_DEBUG is
+> > > >> enabled, which is not a typical case on a normal system:
+> > > >
+> > > > Georgi, before I start acting like a bull in a china shop and sending
+> > > > reverts, any update from your side?
+> > >
+> > > Hi Dmitry!
+> > > Thanks for the report! We can easily add status = "disabled" to the DT
+> > > nodes, but please give me some time to take a look what would be the best
+> > > way to handle this, as i was out last week and now i am still catching up.
+> >
+> > I think the simplest thing would be to move the TBU driver to the
+> > arm-qcom-smmu.c instead of having it in the -debug.c
+>
+> The TBUs aren't used for anything other than debugging, so I'd really
+> rather they live with the debug code.
 
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
----
- drivers/clk/xilinx/xlnx_vcu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/clk/xilinx/xlnx_vcu.c b/drivers/clk/xilinx/xlnx_vcu.c
-index 60a3ed7c7263..d983fab12756 100644
---- a/drivers/clk/xilinx/xlnx_vcu.c
-+++ b/drivers/clk/xilinx/xlnx_vcu.c
-@@ -68,7 +68,7 @@ struct xvcu_device {
- 	struct clk_hw_onecell_data *clk_data;
- };
- 
--static struct regmap_config vcu_settings_regmap_config = {
-+static const struct regmap_config vcu_settings_regmap_config = {
- 	.name = "regmap",
- 	.reg_bits = 32,
- 	.val_bits = 32,
+The problem is that not having any driver bound to the TBU devices
+prevents interconnect drivers from hitting the sync state (and thus
+lowering the bandwidth to the requested values).
+Being that late in the development cycle, I think we should fix the
+issue in the fastest way. So I'm close to sending a revert of the DT
+changes. Setting status = "disabled" doesn't qualify as a logical
+change as having TBU units enabled on a platform-to-platform basis
+doesn't make sense.
 
 -- 
-2.40.1
-
+With best wishes
+Dmitry
 
