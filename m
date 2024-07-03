@@ -1,204 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-25182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 874839265D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 18:19:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A08E9265EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 18:21:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AC7A31C216BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 16:19:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2C7DE284AEA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 16:21:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88B2C1822C1;
-	Wed,  3 Jul 2024 16:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 428F618307B;
+	Wed,  3 Jul 2024 16:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l5+fHgwL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X9UpOCTq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEBC180A86;
-	Wed,  3 Jul 2024 16:18:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81DA0282E1;
+	Wed,  3 Jul 2024 16:21:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720023539; cv=none; b=GBx0pXQueI1UJkPF+FC07qax0JbALYBgkmJz92qORzI52lFBIrbgLqX6XselhBFqmrZN6lmu0+/Jfmg1ipYG/w9SXssvv50DCOSEJkFVRimI2ETBmkAA9Vbk66Yql0rK3uLHuZUhwDjliDaPOPT5bUixRUvqiNozUTZ7sACWJAo=
+	t=1720023676; cv=none; b=FBPIAsSe1JRVM6hGMeKSL+f19raZj55FEoFfCLD1+kDsWQVWnZPFTYHhSmalUH+AsCHgWR+pJoT2KH6oldBtHrHC1oZGqzL/yAOhdGLQhw/a06B4+rsD4fQllhmLOdCX43Jn8pCjHOE2xTswHSt0Q008BuR41YiCb/wA0u0KVVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720023539; c=relaxed/simple;
-	bh=gsbxeyzBgRva3YUtYUEpVxn4Ojk5LKZtDO81mCspOh8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=m5We2pS6ssQDwSP+/UUHvbk+Hf7gdDZRPkXvOEAiuapT9mDjwMssbva1hNZbYYBZgxaPYgFft/aWBHBRTIwol9gWSfkqmGVwvRqUCO7gB8CqepWxOzZkPcHkW0sop+AbqQESpUaMdhoh2S+uR9SwrjXr9ANxLTlsm4j+R4aVq/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l5+fHgwL; arc=none smtp.client-ip=209.85.208.44
+	s=arc-20240116; t=1720023676; c=relaxed/simple;
+	bh=2yfo3OvP/tnsTIp4VFs4rNirB845fNkFXJ45jxb/Y+c=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=IAGhzCZZL2dhIBZVuCMMv27Y/eJzBmkDAWxyiS+fmtep93OJjEPefpVcJS5wYUP+0EqH7L8B8iSNDlG/aUXGc7/me4ezPhWDdgwRTWz0SHjCNNh9uOviRYDXbq3CMENsQqi4GKABsytMzDW6vkmm8LoS4bVsEwAcHhGOx89Z3aQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X9UpOCTq; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-58b0dddab63so4130103a12.3;
-        Wed, 03 Jul 2024 09:18:57 -0700 (PDT)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52e97e5a84bso1344614e87.2;
+        Wed, 03 Jul 2024 09:21:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720023536; x=1720628336; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=esD+x2zV0b2HUw6HwJUTrpl5r5TD37X0+FbuUmt4lJo=;
-        b=l5+fHgwLgTbW/rklc0uxKu5E3EKuEB85AUGRXKUPNDAIpp7Y/xsAY2aczUEoRlgGI2
-         amrIU3fEqvRbJvoBjc0ADVuqMoCVKnY3AQTzivTJK8hl/VM9CF6AtLaCUsGMWvI+f3H2
-         lrSpQKwERSDi/XlXqH3nLHIBbpe46oglbP109US4FN6e5pCJD7TTPlkkDkTkULk9xjBi
-         lNDzDzt6Z4XyhVpDA/1FX1YQvaSeq10DChx7EPYjaMOPKUhqjQn650UcAqEKWJuBVUXM
-         Uz30HlAg5H9aKye7HkD8jZy1J+SY9QGuuTP5mBpglqkXQEtYqZxB1zgbCzNYY2v4N9cw
-         zvpQ==
+        d=gmail.com; s=20230601; t=1720023672; x=1720628472; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jsALFFHLFuxY5RQqYr6ygaK5HtrgJplgfhE1MyVzeTA=;
+        b=X9UpOCTqvwzSMicpDoZjII/jBw1qP7Fz7/PFgrzV43Lmlye2jku4YsSN5Ui+C9SHXl
+         RXVdz3Nnfalzgg5ER4GVS2AidGyFfCzuHAMRP+MdHpIDGWNuMbreucsyhduhr2u1+Lqz
+         ItsElKH+MwL0LEddrFjZRxJUyuV+fLplHFRSDUjVlyqaWWS52BJOGMKzNWNq9vatZ3NU
+         0dP+V7CneQrGnkb9BsOHjpgUl9oeox4MHf3gQtaEEO8+ywYCSsOV86fohpJp6TKzk7l1
+         vHQVEEUPU3s4YxrsZ3yNd1Ysn2BYVGkjokvpaRLRl/0CoQy1ww/LpKbd/VAINwANwW3p
+         luxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720023536; x=1720628336;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=esD+x2zV0b2HUw6HwJUTrpl5r5TD37X0+FbuUmt4lJo=;
-        b=T1UtzYRnzTfGPbknVvxw+GGFP9fPY98fSizHV9hOe1S78EFLdti4RXUK7vbCmaMEdw
-         rD6LkLwBvuQl8c9WOUSMiwgji3ohu1QRCIhYEmYreo0y0mYFl4DoABaAz+Ut8N2/CsWQ
-         k94Kg4kCjAqoQn9mMdw6X4md02ncRFGQ+kyF6ewUHjGWuPl90lEGwwJUR+8rvZ8KZF3x
-         J8cV5hBH5JI2opKa8/t1jBXkYYKPOYLO7dnPSNPvcy47lXsRvF0MOQlLBULFmJQMyasX
-         ZvS788/fqfrENtJ+SsuTHnfrdSH8RMguceXZe1lAsy0k6L8J5UDbywRpwLGDIiwPjxWR
-         7YIw==
-X-Forwarded-Encrypted: i=1; AJvYcCV+2Aoay+aL+Gn3tbbcqIQeN6AKTqyed6JCR5BcF4mnZx8tK3KVa3dQpluZNeqFnn4SQclyoDW0sB2E7c7onFS7T/tStp0dVCOFh7AHz8AKmCAOxIFhcVudESmX8QtYNcb2yS8F+CCnH475LA==
-X-Gm-Message-State: AOJu0Yy5qlLvoQh0o6/J6VVvNAuZp5wLiG6YBa6c9pDnyvBKCK8GHWIA
-	Ek/jH7lZjXEvZjfdilqpQNPUdza6OA/fSreIydLez6HgkRhare/ARrnM9t/coviCtJIvQS2DKk6
-	OIgHnntTcLS6x8G5o1XWrRlETInc=
-X-Google-Smtp-Source: AGHT+IFrxgGuzaRNyApPFpENAxOnyEk7yjeXF5TSrqyg43Iliri20si+kBcM7kVZGYcFuq65U5baHs//egURPR5OvQI=
-X-Received: by 2002:a50:e705:0:b0:57c:fa44:7a04 with SMTP id
- 4fb4d7f45d1cf-587a0bfeb3bmr7434340a12.39.1720023535793; Wed, 03 Jul 2024
- 09:18:55 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720023672; x=1720628472;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jsALFFHLFuxY5RQqYr6ygaK5HtrgJplgfhE1MyVzeTA=;
+        b=MWE7722Cgi58ZrzIcMbybpfMXMymRiy5qYLk3y5zq5zAjpTOYM8+cv+b4hxx3JWtdz
+         hq85IIwNkKSdIRHL4CyxSLfPIjLDTepQxJYYi0SceLKPazNuvfK7eiBrgkyUMdG7tVtD
+         iiQLN3HYruoOiHCZY+Gqo3vO6fIGxQjQskICVxvGvRIIPEtrF4fdPkOpKHpoasMS5J9G
+         XWDAQk0mO761OHxjuWHHuUChUzH3U02QeWAg27Otx6s32682/IR4/4EX7+Sx60RVR6LK
+         H6stX6k0PpGn2hnjDWKOCMFamfSYqk1o04KYpwBwJ5fGRPBXNPj5KL8YT5+RHE42Q3PQ
+         WPow==
+X-Forwarded-Encrypted: i=1; AJvYcCXyKUo6oe1EoXpkVjLHBGgxGaSHtxcnryH5Aiwz2yxFrGcKiqlAZVjXceTaYn9z+Bch8XrIaZZxFVppu0ralias3PuEequH2sNAEcBgJ/PxNqziKmdMjZhl7A6+XTT3/UQUsYEbOio8sF6FoN69AEOt8KgXhbDODs5fdW/0AgC1q+hTZv2Ypi5nXe52r5ZPbngpj9cNodYTLsxxzPRB8zEKZZzmRA==
+X-Gm-Message-State: AOJu0Yx8amQ6cwDN7xRXLBWmrAjgqwCDa/d8HQGADyC2dKjRjk9+jt7J
+	W0Xe7t/odEhiyudUUcv96RXP4YFS0+HC/QU1BBnzY2wOdUYtUhyiNdmPPaWV
+X-Google-Smtp-Source: AGHT+IEFbJZPNdKnbaS0tCECdKRbpFEUC6/kEynhmQGEQOtH15bPicM3fIy/tKjmK0CSUZrTfa6cCA==
+X-Received: by 2002:a05:6512:124a:b0:529:b718:8d00 with SMTP id 2adb3069b0e04-52e8264b5dfmr11354631e87.8.1720023670436;
+        Wed, 03 Jul 2024 09:21:10 -0700 (PDT)
+Received: from [127.0.1.1] (91-118-163-37.static.upcbusiness.at. [91.118.163.37])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a72b5abddaesm473075166b.140.2024.07.03.09.21.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Jul 2024 09:21:10 -0700 (PDT)
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Subject: [PATCH 0/9] ASoC: Constify struct regmap_config
+Date: Wed, 03 Jul 2024 18:20:56 +0200
+Message-Id: <20240703-sound-const-regmap_config-v1-0-2e379b0446a7@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240626204033.255813-1-robdclark@gmail.com> <20240626204033.255813-2-robdclark@gmail.com>
- <20240703150205.GA6012@willie-the-truck>
-In-Reply-To: <20240703150205.GA6012@willie-the-truck>
-From: Rob Clark <robdclark@gmail.com>
-Date: Wed, 3 Jul 2024 09:18:43 -0700
-Message-ID: <CAF6AEGsgN8O2eJGqcJm1UaPzV2rWSXskAc+A8uk0mVbsj8Wm8A@mail.gmail.com>
-Subject: Re: [PATCH v5 1/2] iommu/io-pgtable-arm: Add way to debug pgtable walk
-To: Will Deacon <will@kernel.org>
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	Robin Murphy <robin.murphy@arm.com>, Rob Clark <robdclark@chromium.org>, 
-	Joerg Roedel <joro@8bytes.org>, Jason Gunthorpe <jgg@ziepe.ca>, Steven Price <steven.price@arm.com>, 
-	Boris Brezillon <boris.brezillon@collabora.com>, Kevin Tian <kevin.tian@intel.com>, 
-	Joao Martins <joao.m.martins@oracle.com>, 
-	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>, 
-	open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGh6hWYC/x3MSwqEMBBF0a1IjS2Ivxbcikij5hlrYCIpbQRx7
+ 4YensG9NymiQKnLbor4iUrwCUWe0byO3oHFJlNpytq0pmINp7c8B68HR7ht3L8JizgubG2bz9S
+ iASj1e8Qi1//dD8/zAtML9wtrAAAA
+To: David Rhodes <david.rhodes@cirrus.com>, 
+ Richard Fitzgerald <rf@opensource.cirrus.com>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+ Paul Cercueil <paul@crapouillou.net>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Banajit Goswami <bgoswami@quicinc.com>
+Cc: alsa-devel@alsa-project.org, patches@opensource.cirrus.com, 
+ linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-mips@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Javier Carrasco <javier.carrasco.cruz@gmail.com>
+X-Mailer: b4 0.14-dev
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1720023669; l=1329;
+ i=javier.carrasco.cruz@gmail.com; s=20240312; h=from:subject:message-id;
+ bh=2yfo3OvP/tnsTIp4VFs4rNirB845fNkFXJ45jxb/Y+c=;
+ b=2XXm7af+smGwzm0vmJjdGPs0OO7QoTlsUJ3ujwzB3P8Nu0wlrV/eudsRaas7fpkTWpXW772bV
+ IB2/agz33aMBtUVwjbgPWXgOTcE34sW54Hcm2J2XEj5ds6/20gz0XNB
+X-Developer-Key: i=javier.carrasco.cruz@gmail.com; a=ed25519;
+ pk=lzSIvIzMz0JhJrzLXI0HAdPwsNPSSmEn6RbS+PTS9aQ=
 
-On Wed, Jul 3, 2024 at 8:02=E2=80=AFAM Will Deacon <will@kernel.org> wrote:
->
-> Hi Rob,
->
-> On Wed, Jun 26, 2024 at 01:40:26PM -0700, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > Add an io-pgtable method to walk the pgtable returning the raw PTEs tha=
-t
-> > would be traversed for a given iova access.
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >  drivers/iommu/io-pgtable-arm.c | 34 +++++++++++++++++++++++++---------
-> >  include/linux/io-pgtable.h     | 16 ++++++++++++++++
-> >  2 files changed, 41 insertions(+), 9 deletions(-)
->
-> Non-technical question, but with patch 2/2 being drm-specific, how do
-> you plan to get this merged this once it's finalised? I can take this
-> part via the IOMMU tree?
+This series adds the const modifier to the remaining regmap_config
+structs under sound/soc that are effectively used as const (i.e., only
+read after their declaration), but kept as writtable data.
 
-I guess if need be, I could merge the drm part only after the iommu
-part lands.  We've lived with an earlier iteration of these series as
-downstream patches in the CrOS kernel for this long, it isn't the end
-of the world if it takes a bit longer
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+---
+Javier Carrasco (9):
+      ASoC: cs35l34: Constify struct regmap_config
+      ASoC: cs35l35: Constify struct regmap_config
+      ASoC: cs35l36: Constify struct regmap_config
+      ASoC: cs53l30: Constify struct regmap_config
+      ASoC: jz4760: Constify struct regmap_config
+      ASoC: jz4770: Constify struct regmap_config
+      ASoC: wsa881x: Constify struct regmap_config
+      ASoC: wsa883x: Constify struct regmap_config
+      ASoC: wsa884x: Constify struct regmap_config
 
-> > +static phys_addr_t arm_lpae_iova_to_phys(struct io_pgtable_ops *ops,
-> > +                                      unsigned long iova)
-> > +{
-> > +     struct arm_lpae_io_pgtable *data =3D io_pgtable_ops_to_data(ops);
-> > +     struct io_pgtable_walk_data wd =3D {};
-> > +     int ret, lvl;
-> > +
-> > +     ret =3D arm_lpae_pgtable_walk(ops, iova, &wd);
-> > +     if (ret)
-> > +             return 0;
-> > +
-> > +     lvl =3D wd.level + data->start_level;
->
-> nit, but the level is architectural so I think we should initialise
-> wd.level to data->start_level instead.
+ sound/soc/codecs/cs35l34.c | 2 +-
+ sound/soc/codecs/cs35l35.c | 2 +-
+ sound/soc/codecs/cs35l36.c | 2 +-
+ sound/soc/codecs/cs53l30.c | 2 +-
+ sound/soc/codecs/jz4760.c  | 2 +-
+ sound/soc/codecs/jz4770.c  | 2 +-
+ sound/soc/codecs/wsa881x.c | 2 +-
+ sound/soc/codecs/wsa883x.c | 2 +-
+ sound/soc/codecs/wsa884x.c | 2 +-
+ 9 files changed, 9 insertions(+), 9 deletions(-)
+---
+base-commit: 0b58e108042b0ed28a71cd7edf5175999955b233
+change-id: 20240703-sound-const-regmap_config-1d4d56b7e5ee
 
-Hmm, I wanted to use wd.level to get the index of the last entry in
-wd.ptes.  Perhaps I should just call it something other than 'level'
-instead?
+Best regards,
+-- 
+Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-> >
-> > -found_translation:
-> >       iova &=3D (ARM_LPAE_BLOCK_SIZE(lvl, data) - 1);
-> > -     return iopte_to_paddr(pte, data) | iova;
-> > +     return iopte_to_paddr(wd.ptes[wd.level - 1], data) | iova;
-> >  }
-> >
-> >  static void arm_lpae_restrict_pgsizes(struct io_pgtable_cfg *cfg)
-> > @@ -804,6 +819,7 @@ arm_lpae_alloc_pgtable(struct io_pgtable_cfg *cfg)
-> >               .map_pages      =3D arm_lpae_map_pages,
-> >               .unmap_pages    =3D arm_lpae_unmap_pages,
-> >               .iova_to_phys   =3D arm_lpae_iova_to_phys,
-> > +             .pgtable_walk   =3D arm_lpae_pgtable_walk,
-> >       };
-> >
-> >       return data;
-> > diff --git a/include/linux/io-pgtable.h b/include/linux/io-pgtable.h
-> > index 86cf1f7ae389..4d696724c7da 100644
-> > --- a/include/linux/io-pgtable.h
-> > +++ b/include/linux/io-pgtable.h
-> > @@ -171,12 +171,26 @@ struct io_pgtable_cfg {
-> >       };
-> >  };
-> >
-> > +/**
-> > + * struct io_pgtable_walk_data - information from a pgtable walk
-> > + *
-> > + * @ptes:     The recorded PTE values from the walk
-> > + * @level:    The level of the last PTE
-> > + *
-> > + * @level also specifies the last valid index in @ptes
-> > + */
-> > +struct io_pgtable_walk_data {
-> > +     u64 ptes[4];
-> > +     int level;
-> > +};
->
-> I wonder if we can do better than hardcoding the '4' here? I wouldn't be
-> surprised if this doesn't work, but could we do something along the
-> lines of:
->
-> struct io_pgtable_walk_data {
->         int level;
->         int num_levels;
->         u64 ptes[] __counted_by(num_levels);
-> };
->
-> and then have the Arm (LPAE)-specific code wrap that in a private
-> structure:
->
-> struct arm_lpae_io_pgtable_walk_data {
->         struct io_pgtable_walk_data data;
->         u64 ptes[ARM_LPAE_MAX_LEVELS];
-> };
->
-> which is used by the walker?
-
-I guess we could just make the walk_data fxn ptr arg a void* and
-rename io_pgtable_walk_data -> io_lpae_pgtable_walk_data?  I'm not
-sure how hard to try to make this interface generic when I think it is
-probably only going to be used by code that knows what pgtable format
-is used.  It's kinda the same question about what type to use for the
-pte.  Maybe the answer is just "it's pgtable format dependent"?
-
-BR,
--R
 
