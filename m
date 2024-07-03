@@ -1,147 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-25021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7570A925311
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 07:36:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 272AA92536E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 08:00:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B6E76B234C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 05:36:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A84D91F28D70
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 06:00:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B065760DCF;
-	Wed,  3 Jul 2024 05:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1E7179B6F;
+	Wed,  3 Jul 2024 05:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hXNe8PhP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Dig3kYqm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169DB17996;
-	Wed,  3 Jul 2024 05:36:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302D861FF9;
+	Wed,  3 Jul 2024 05:58:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719984991; cv=none; b=bzweTVID9dbpCfmUsKoyhC7tXAkHjrhMFulf+mcAqS9I08/9tnWuAVfi5gShkWa/eT7/Fn2wx8EOpnrFm5mV3gsIX4aTe/CVwcHN+PhV1h4rocmprlXTKhOKFS+4Flzr2Rdw9eKTeP9t8WaX8KgS6Wxu0xOEzQMJCyMhqoqIFig=
+	t=1719986319; cv=none; b=FCdMBpRQrhv8hjq54mk0ZyO8tMAjPx447VK873JuNt2y+FwFue+1sodzh+gOail1ma8WHIm9C/ldIcd54+PjFBLHO3yHWikNPsblAUprayozHIZxSL2ANWVLlUR71++BjFPLt1juSR2TFfetVlvKTxz67mu4/uimkmqF2ddaODE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719984991; c=relaxed/simple;
-	bh=IqYMDHXTd5RtQdMHI3rY7t86+H3DAox5dASetNL6o9o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=g5CUu61vWf9cENcnycDyQ7FcT/JGcnKhexl0UVxNgrpeanxQgQSJ/CDpuI8dA2PA+Spn8WFmtO+avHUdcNXlznjJu4DQEwc/4MhkIT9F8SIpsDTfCy+O9KgxOdWGCDLlJcoPQymeOO39iG/inS1tiIGZcCrVTn+TLlxr7FzUAV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hXNe8PhP; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1719986319; c=relaxed/simple;
+	bh=UbLaVPYf/8fF6WtHy1fuyY5eDsi0S5XH2heNT10lzQc=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=uI+pE+DfH9ptJsCydv8pfAnc3Mht4spDrKD69KISVusOD5ybdsa0aEyBBs1089qclJ8cUhJAGp++CVeqozVLpEsKUDJ3p8tizR9EP/zbgThWD6l71XfDoK+5j5nCCGlV8nx6RiG/3GOVYfBeSLSKoPtRf+7HJsTlo1ZAV0S3Uec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Dig3kYqm; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 462HEImb032039;
-	Wed, 3 Jul 2024 05:35:49 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4634Yn2b010616;
+	Wed, 3 Jul 2024 05:58:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	vEVq87AQcLxqSzjd33YFwLExMjs188eHyfneCEj+UDE=; b=hXNe8PhPrrp+FVGZ
-	NuvieG1pC+wgJ/vaAb8nNIOGTPYIE6nC7NWHuwTTaP/4vNbrCfJcn4onPCNcJoTS
-	4z9Zkcp5xUW2sOiR61zuqiFenqwkEdBl1NhEM/JPcR6FQQ0GzdgVPHs2nKZg6hL6
-	+1/SdraCW7DZkyvkQH0Dj2v4jWj/LxFlDzWYwNEeNb5KJvcNJ8/0/Ir2+UR4rlXA
-	AhV2OfKxdxIkqlH+3/1z2lCbbC7COlwG/TjrLarefFnJnCsj3q3uyTnkp5PepMmc
-	/X/zzwRJG6StBE7K9Ybpv4FdNEGs/8AEM2r3Wgjwz1mwaEoTa6rDIM/KMQA8uP0/
-	UzYa4g==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 402abtqsjh-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=2bCbwj31Jqvp01Ij45V+38
+	DSdGH4QBJ4EfdMmc5rl+g=; b=Dig3kYqmOsPT2BTpKGIMJvFn9cFT/+m5SQNM4D
+	zKJHCTVmYuTgTrs8os/g6OLdMGXTm13cvJhcyMbLJL6DqC93tVLdfIevh9Sk4a4b
+	lj7ByhjnQanjqt9WxdMVvMUcaI/CHNwe/xLt5wGmWEPm9dtwq2aC7kp5p8L1jGlE
+	3o1oUE7Hwg2013NZ33c3SJNEElF0Gm8kh30RTuRgfSF6MITf1699rceqcc9IIcv1
+	99xV9RNkgN2aU8xY4dhvmXz94ZHFaGZSUK736D6KfT/3765k7C6fMp08FKmfwlZ+
+	IDLmqkVH04Lifpp8mHx1RJ9MNuXPt+QJdPmO3LjLZjx4iK6A==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 404yr984d0-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 03 Jul 2024 05:35:48 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4635ZlZg021927
+	Wed, 03 Jul 2024 05:58:32 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4635wV1X008878
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 3 Jul 2024 05:35:47 GMT
-Received: from [10.218.0.85] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 2 Jul 2024
- 22:35:16 -0700
-Message-ID: <23303bc2-4fa2-4b28-af5d-2cadf6795b94@quicinc.com>
-Date: Wed, 3 Jul 2024 11:05:12 +0530
+	Wed, 3 Jul 2024 05:58:31 GMT
+Received: from hu-azarrabi-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 2 Jul 2024 22:58:30 -0700
+From: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+Subject: [PATCH RFC 0/3] Implement Qualcomm TEE IPC and ioctl calls
+Date: Tue, 2 Jul 2024 22:57:35 -0700
+Message-ID: <20240702-qcom-tee-object-and-ioctls-v1-0-633c3ddf57ee@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 27/47] dt-bindings: cpufreq: cpufreq-qcom-hw: Add QCS9100
- compatibles
-To: Tengfei Fan <quic_tengfan@quicinc.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <djakov@kernel.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <jassisinghbrar@gmail.com>,
-        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
-        <manivannan.sadhasivam@linaro.org>, <will@kernel.org>,
-        <joro@8bytes.org>, <conor@kernel.org>, <tglx@linutronix.de>,
-        <amitk@kernel.org>, <thara.gopinath@gmail.com>,
-        <linus.walleij@linaro.org>, <wim@linux-watchdog.org>,
-        <linux@roeck-us.net>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
-        <vkoul@kernel.org>, <edumazet@google.com>, <kuba@kernel.org>,
-        <pabeni@redhat.com>, <mcoquelin.stm32@gmail.com>
-CC: <robimarko@gmail.com>, <quic_gurus@quicinc.com>,
-        <bartosz.golaszewski@linaro.org>, <kishon@kernel.org>,
-        <quic_wcheng@quicinc.com>, <alim.akhtar@samsung.com>,
-        <avri.altman@wdc.com>, <bvanassche@acm.org>, <agross@kernel.org>,
-        <gregkh@linuxfoundation.org>, <robin.murphy@arm.com>,
-        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
-        <lukasz.luba@arm.com>, <quic_rjendra@quicinc.com>,
-        <ulf.hansson@linaro.org>, <quic_sibis@quicinc.com>,
-        <otto.pflueger@abscue.de>, <quic_rohiagar@quicinc.com>,
-        <luca@z3ntu.xyz>, <neil.armstrong@linaro.org>, <abel.vesa@linaro.org>,
-        <bhupesh.sharma@linaro.org>, <alexandre.torgue@foss.st.com>,
-        <peppe.cavallaro@st.com>, <joabreu@synopsys.com>,
-        <netdev@vger.kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <bhelgaas@google.com>, <ahalaney@redhat.com>,
-        <krzysztof.kozlowski@linaro.org>, <u.kleine-koenig@pengutronix.de>,
-        <dmitry.baryshkov@linaro.org>, <quic_cang@quicinc.com>,
-        <danila@jiaxyga.com>, <quic_nitirawa@quicinc.com>,
-        <mantas@8devices.com>, <athierry@redhat.com>,
-        <quic_kbajaj@quicinc.com>, <quic_bjorande@quicinc.com>,
-        <quic_msarkar@quicinc.com>, <quic_devipriy@quicinc.com>,
-        <quic_tsoni@quicinc.com>, <quic_rgottimu@quicinc.com>,
-        <quic_shashim@quicinc.com>, <quic_kaushalk@quicinc.com>,
-        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
-        <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-crypto@vger.kernel.org>,
-        <linux-scsi@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-        <linux-riscv@lists.infradead.org>, <linux-gpio@vger.kernel.org>,
-        <linux-watchdog@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>, <kernel@quicinc.com>
-References: <20240703025850.2172008-1-quic_tengfan@quicinc.com>
- <20240703035735.2182165-1-quic_tengfan@quicinc.com>
- <20240703035735.2182165-28-quic_tengfan@quicinc.com>
-Content-Language: en-US
-From: Taniya Das <quic_tdas@quicinc.com>
-In-Reply-To: <20240703035735.2182165-28-quic_tengfan@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-B4-Tracking: v=1; b=H4sIAE/ohGYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDcwMj3cLk/FzdktRU3fykrNTkEt3EvBTdzPzkkpxiXbM0U6O0lFQDYxM
+ LUyWgAQVFqWmZFWDDo5WC3JyVYmtrAeTmQadxAAAA
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        <srinivas.kandagatla@linaro.org>, <bartosz.golaszewski@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <linaro-mm-sig@lists.linaro.org>,
+        "Amirreza Zarrabi" <quic_azarrabi@quicinc.com>
+X-Mailer: b4 0.13.0
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8lJLEVbQuwd3L6rNbNczrDg_BxIJ7MEN
-X-Proofpoint-ORIG-GUID: 8lJLEVbQuwd3L6rNbNczrDg_BxIJ7MEN
+X-Proofpoint-GUID: 7O4WY9ZCbdTvL_HRAaIGxYzG58P6xYQ2
+X-Proofpoint-ORIG-GUID: 7O4WY9ZCbdTvL_HRAaIGxYzG58P6xYQ2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-03_02,2024-07-02_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 mlxscore=0 clxscore=1015 suspectscore=0 malwarescore=0
- lowpriorityscore=0 phishscore=0 adultscore=0 spamscore=0 impostorscore=0
- mlxlogscore=772 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407030039
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1011
+ bulkscore=0 impostorscore=0 malwarescore=0 spamscore=0 mlxscore=0
+ mlxlogscore=999 adultscore=0 lowpriorityscore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407030042
 
+Qualcomm TEE hosts Trusted Applications (TAs) and services that run in
+the secure world. Access to these resources is provided using MinkIPC.
+MinkIPC is a capability-based synchronous message passing facility. It
+allows code executing in one domain to invoke objects running in other
+domains. When a process holds a reference to an object that lives in
+another domain, that object reference is a capability. Capabilities
+allow us to separate implementation of policies from implementation of
+the transport.
 
+As part of the upstreaming of the object invoke driver (called SMC-Invoke
+driver), we need to provide a reasonable kernel API and UAPI. The clear
+option is to use TEE subsystem and write a back-end driver, however the
+TEE subsystem doesn't fit with the design of Qualcomm TEE.
 
-On 7/3/2024 9:27 AM, Tengfei Fan wrote:
-> +              - qcom,qcs9100-cpufreq-epss
+Does TEE subsystem fit requirements of a capability based system?
+-----------------------------------------------------------------
+In TEE subsystem, to invoke a function:
+   - client should open a device file "/dev/teeX",
+   - create a session with a TA, and
+   - invoke the functions in that session.
 
-This is not required as we already have sa8775p bindings.
+1. The privilege to invoke a function is determined by a session. If a
+   client has a session, it cannot share it with other clients. Even if
+it does, it is not fine-grained enough, i.e. either all accessible
+functions/resources in a session or none. Assume a scenario when a client
+wants to grant a permission to invoke just a function that it has the rights,
+to another client.
 
+The "all or nothing" for sharing sessions is not in line with our
+capability system: "if you own a capability, you should be able to grant
+or share it".
+
+2. In TEE subsystem, resources are managed in a context. Every time a
+   client opens "/dev/teeX", a new context is created to keep track of
+the allocated resources, including opened sessions and remote objects. Any
+effort for sharing resources between two independent clients requires
+involvement of context manager, i.e. the back-end driver. This requires
+implementing some form of policy in the back-end driver.
+
+3. The TEE subsystem supports two type of memory sharing:
+   - per-device memory pools, and
+   - user defined memory references.
+User defined memory references are private to the application and cannot
+be shared. Memory allocated from per-device "shared" pools are accessible
+using a file descriptor. It can be mapped by any process if it has
+access to it. This means, we cannot provide the resource isolation
+between two clients. Assume a scenario when a client wants to allocate a
+memory (which is shared with TEE) from an "isolated" pool and share it
+with another client, without the right to access the contents of memory.
+
+4. The kernel API provided by TEE subsystem does not support a kernel
+   supplicant. Adding support requires an execution context (e.g. a
+kernel thread) due to the TEE subsystem design. tee_driver_ops supports
+only "send" and "receive" callbacks and to deliver a request, someone
+should wait on "receive".
+
+We need a callback to "dispatch" or "handle" a request in the context of
+the client thread. It should redirect a request to a kernel service or
+a user supplicant. In TEE subsystem such requirement should be implemented
+in TEE back-end driver, independent from the TEE subsystem.
+
+5. The UAPI provided by TEE subsystem is similar to the GPTEE Client
+   interface. This interface is not suitable for a capability system.
+For instance, there is no session in a capability system which means
+either its should not be used, or we should overload its definition.
+
+Can we use TEE subsystem?
+-------------------------
+There are workarounds for some of the issues above. The question is if we
+should define our own UAPI or try to use a hack-y way of fitting into
+the TEE subsystem. I am using word hack-y, as most of the workaround
+involves:
+
+- "diverging from the definition". For instance, ignoring the session
+  open and close ioctl calls or use file descriptors for all remote
+resources (as, fd is the closet to capability) which undermines the
+isolation provided by the contexts,
+
+- "overloading the variables". For instance, passing object ID as file
+  descriptors in a place of session ID, or
+
+- "bypass TEE subsystem". For instance, extensively rely on meta
+  parameters or push everything (e.g. kernel services) to the back-end
+driver, which means leaving almost all TEE subsystem unused.
+
+We cannot take the full benefits of TEE subsystem and may need to
+implement most of the requirements in the back-end driver. Also, as
+discussed above, the UAPI is not suitable for capability-based use cases.
+We proposed a new set of ioctl calls for SMC-Invoke driver.
+
+In this series we posted three patches. We implemented a transport
+driver that provides qcom_tee_object. Any object on secure side is
+represented with an instance of qcom_tee_object and any struct exposed
+to TEE should embed an instance of qcom_tee_object. Any, support for new
+services, e.g. memory object, RPMB, userspace clients or supplicants are
+implemented independently from the driver.
+
+We have a simple memory object and a user driver that uses
+qcom_tee_object.
+
+Signed-off-by: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+---
+Amirreza Zarrabi (3):
+      firmware: qcom: implement object invoke support
+      firmware: qcom: implement memory object support for TEE
+      firmware: qcom: implement ioctl for TEE object invocation
+
+ drivers/firmware/qcom/Kconfig                      |   36 +
+ drivers/firmware/qcom/Makefile                     |    2 +
+ drivers/firmware/qcom/qcom_object_invoke/Makefile  |   12 +
+ drivers/firmware/qcom/qcom_object_invoke/async.c   |  142 +++
+ drivers/firmware/qcom/qcom_object_invoke/core.c    | 1139 ++++++++++++++++++
+ drivers/firmware/qcom/qcom_object_invoke/core.h    |  186 +++
+ .../qcom/qcom_object_invoke/qcom_scm_invoke.c      |   22 +
+ .../firmware/qcom/qcom_object_invoke/release_wq.c  |   90 ++
+ .../qcom/qcom_object_invoke/xts/mem_object.c       |  406 +++++++
+ .../qcom_object_invoke/xts/object_invoke_uapi.c    | 1231 ++++++++++++++++++++
+ include/linux/firmware/qcom/qcom_object_invoke.h   |  233 ++++
+ include/uapi/misc/qcom_tee.h                       |  117 ++
+ 12 files changed, 3616 insertions(+)
+---
+base-commit: 74564adfd3521d9e322cfc345fdc132df80f3c79
+change-id: 20240702-qcom-tee-object-and-ioctls-6f52fde03485
+
+Best regards,
 -- 
-Thanks & Regards,
-Taniya Das.
+Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+
 
