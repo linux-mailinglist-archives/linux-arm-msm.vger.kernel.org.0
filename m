@@ -1,119 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-25076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F8969257B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 12:02:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BCC439257C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 12:05:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 33C891F2743F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 10:02:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 73913289478
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 10:05:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8375013D8B5;
-	Wed,  3 Jul 2024 10:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59DCC14D2B2;
+	Wed,  3 Jul 2024 10:05:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ReHHKmDg"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LO3g+rXT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C360D13959B
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 10:02:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D315A1411E3;
+	Wed,  3 Jul 2024 10:05:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720000959; cv=none; b=tw68dnZSuqvSeq6PiLsiOPckJa/ENiKxS3qzv6BvKQeckiSRlX/q3Hn4/iyp1b+XnQS0ebDM3Z0Q6dKpajrUwz1maEC+cL8Ovyb8Iqr3Az0IkdXEyf7VA+Zea2IVmGtOnxIBlKb3ouqQv0W9LiqfpnCSKg7hfKexn+NUgxWp2Z0=
+	t=1720001137; cv=none; b=FR/6cdKiE6xaZQObm1jXaiifnE5L3YqigWPI9E595nX/0BPRel1P3uMiyrviTcCN5O48h6UOGHIAZDiho3Pp9j+OBKZHdlEvFrPL3AcQ7327ID3RkKp2YpMqtdDb0w3rcwru0oU4hr7hmwATN2v4pi22uS/fy4fmBfQa5uSdOYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720000959; c=relaxed/simple;
-	bh=10Mu0LIhKDTYtSfcuq6JGEEaI5HtHH/2L1wNR2pXhHc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bUeouQM1PxeOHewfpHt0duTJBlJ+L9Ii5lXKFE6y8JMF9jY4fbbZ2uWo/hEaWRPPm7untZDftnqWuMCVS8ite14/3N/UII7YGwYVxmdC8b3q9EO0YC1kMbx0Sq29Y/lWkOIK26Lkh0QtEIMXuGjulRlGAPQu79XAnVApaqrPK7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ReHHKmDg; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2ec50a5e230so51827791fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 03:02:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720000956; x=1720605756; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9pL8DbkCHgymdSkljEzIwaY+82euVKxIINYVvOUjWCU=;
-        b=ReHHKmDgiAadlzOBLr50T27b18+xD7fcsZ0JWb45pgP0PfhJY+/w6eX+nZAlqa7Ewn
-         qAyyxrsAY+pZxb7lcBavu6wWxKHQVt/VM/4WVfqFzguLUrPZmkxLo2gmP0wK+JQQLFvg
-         8/ngB1mUEuGeny8jaEIj/gbXpzuEjRqblDlxYMQYhXnQNZX9KuQTzo9gcfg1Y5MnMIpO
-         BMQVRKsRBeRzGw38A2AZdenRzvTe7JZY7jij6nFpzmNqRGOiM6N5SlWPqVn1PrY+D8pu
-         IhC4NZR4Az3kugdXte/1wDKeGZbozKLU4fkMgTa6pLSCNqWZeJ1t1KSCJ1AwxiwQnweD
-         hpRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720000956; x=1720605756;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9pL8DbkCHgymdSkljEzIwaY+82euVKxIINYVvOUjWCU=;
-        b=xBpQQTpQi26THFg7/RXLjqnY+9nPxVXDn7phKOzIXONVdcaX8afxUXg8DqlZaNfuNG
-         /3THeleF7wVZyxihC6HP7U5s40tX74DNTg50nRTWE5Xb7Hp1D9losYg38khi83PH9C4s
-         fW13+QRv1CwaKIrIzDGmdjjLko6+SEemPaZTKEY9M0TmP1yAGNbF2lu+7dh8hjIWS6t0
-         obn3h5WnKfzJbl18QikSy4I5VW7gnHD0KpwzHqGyydo0GwSJVWxjPp08dAG4cCk7Own0
-         V4VjeqnhnG+yzhAvRMjNQjqJSqkLzuv71SFFboY9ElaP11z08fgHKjKvQU1YIqJ9UT53
-         3n1w==
-X-Forwarded-Encrypted: i=1; AJvYcCWHPD3lqdX6j5Fk7NXzwK2160kZ1cbTHUkt/RGwtYbao29R4NrygW9D5/x/BUXsxnUd7CRFU0W5ldzfJOgkcPzSfRZn5jay7+ZhLrhrjw==
-X-Gm-Message-State: AOJu0YwiTNAA1Qn5v10IHbfO7oQCy4GIUiupVn79q3BEsTaCQkOPwD8p
-	GgIV1nUhTxh1OFllwGpXu1RerVIxHkOMCxBC6FWwow5qCeh8SPXjuNCIsbPIqUo=
-X-Google-Smtp-Source: AGHT+IE/GYi8OYn4QCZxmJ7Okzw9g5+fbHAXWRqvNbmCY+VpnWF1LZ/N4KxL8LKQwszZSTWHQsoeAw==
-X-Received: by 2002:a2e:a1c5:0:b0:2ec:4eda:6b55 with SMTP id 38308e7fff4ca-2ee5e6d74c4mr67198081fa.50.1720000954067;
-        Wed, 03 Jul 2024 03:02:34 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ee516802bdsm19370891fa.84.2024.07.03.03.02.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jul 2024 03:02:33 -0700 (PDT)
-Date: Wed, 3 Jul 2024 13:02:32 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@codeaurora.org>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>, 
-	Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
-	Jagadeesh Kona <quic_jkona@quicinc.com>
-Subject: Re: [PATCH v2 2/6] clk: qcom: clk-alpha-pll: Update set_rate for
- Zonda PLL
-Message-ID: <jni3b6l4mw6aismxxytzlediepitakand5m4dkqy6diwnmd6xu@r6zaslz722ed>
-References: <20240702-camcc-support-sm8150-v2-0-4baf54ec7333@quicinc.com>
- <20240702-camcc-support-sm8150-v2-2-4baf54ec7333@quicinc.com>
+	s=arc-20240116; t=1720001137; c=relaxed/simple;
+	bh=btIei9/sNOh68L5VxbSRNJ6/SY9lrijEipZIFbe55Cs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=aiNfFrxYcZx1qyiwqy4MW0B9IRVVKKI5g+YW6CqLlIAe8SDj3HTEBTU4kyKhZT1qaLDRFFRWADq9upt6pdh1t0QVQre68O3/C5osXYqwUxzVP0x+FWtXYO4DMteTFahp03LJ4a59dK6ak4cx0aZj9+bhdrYgPEpFJzTkt5lM1z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LO3g+rXT; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4632V6vL028807;
+	Wed, 3 Jul 2024 10:04:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	MTYyEqDPQFUg534+DSkldx2EQ4hiUNnVI33QmvBczZk=; b=LO3g+rXTgZGcl6je
+	Rl00DBC52bV/FNAWASeog2Cru0JsaypLW3GIlbDU7M6yXixixBpgsVS2g2s6hP2o
+	gOg3MVIiGXxM6foWGxKOVE1pNpCDabVLLy7ME1un5mROUZvVVAUGSvRzFcJpYuV7
+	pjwKBkQRG3eBpSiiMK1gx+osblIsz7gUs0nknVyMDFSjRtQBFO17oJABopAwn4KR
+	6MqqXHYgtie84G7tLEvErF4Hcb/C+bXioNXyzOE51JB/+SvPv8DkEyF37FC5fBac
+	mxeUAbIeHw5CyFdS7RkAl0DOQkQVXfm5ynLxaZlU05YfyJ41Z0MTSCICSG3KUucn
+	FjDZgQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 404kctjq2w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 03 Jul 2024 10:04:37 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 463A4a3Q012329
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 3 Jul 2024 10:04:36 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 3 Jul 2024
+ 03:04:14 -0700
+Message-ID: <312b699d-1ca4-4a58-877b-af9d91132724@quicinc.com>
+Date: Wed, 3 Jul 2024 18:04:11 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240702-camcc-support-sm8150-v2-2-4baf54ec7333@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 41/47] clk: qcom: rpmh: Add support for QCS9100 rpmh
+ clocks
+To: Taniya Das <quic_tdas@quicinc.com>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <djakov@kernel.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <jassisinghbrar@gmail.com>,
+        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
+        <manivannan.sadhasivam@linaro.org>, <will@kernel.org>,
+        <joro@8bytes.org>, <conor@kernel.org>, <tglx@linutronix.de>,
+        <amitk@kernel.org>, <thara.gopinath@gmail.com>,
+        <linus.walleij@linaro.org>, <wim@linux-watchdog.org>,
+        <linux@roeck-us.net>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
+        <vkoul@kernel.org>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <mcoquelin.stm32@gmail.com>
+CC: <robimarko@gmail.com>, <bartosz.golaszewski@linaro.org>,
+        <kishon@kernel.org>, <quic_wcheng@quicinc.com>,
+        <alim.akhtar@samsung.com>, <avri.altman@wdc.com>, <bvanassche@acm.org>,
+        <agross@kernel.org>, <gregkh@linuxfoundation.org>,
+        <robin.murphy@arm.com>, <daniel.lezcano@linaro.org>,
+        <rui.zhang@intel.com>, <lukasz.luba@arm.com>,
+        <quic_rjendra@quicinc.com>, <ulf.hansson@linaro.org>,
+        <quic_sibis@quicinc.com>, <otto.pflueger@abscue.de>, <luca@z3ntu.xyz>,
+        <neil.armstrong@linaro.org>, <abel.vesa@linaro.org>,
+        <bhupesh.sharma@linaro.org>, <alexandre.torgue@foss.st.com>,
+        <peppe.cavallaro@st.com>, <joabreu@synopsys.com>,
+        <netdev@vger.kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <bhelgaas@google.com>, <ahalaney@redhat.com>,
+        <krzysztof.kozlowski@linaro.org>, <u.kleine-koenig@pengutronix.de>,
+        <dmitry.baryshkov@linaro.org>, <quic_cang@quicinc.com>,
+        <danila@jiaxyga.com>, <quic_nitirawa@quicinc.com>,
+        <mantas@8devices.com>, <athierry@redhat.com>,
+        <quic_kbajaj@quicinc.com>, <quic_bjorande@quicinc.com>,
+        <quic_msarkar@quicinc.com>, <quic_devipriy@quicinc.com>,
+        <quic_tsoni@quicinc.com>, <quic_rgottimu@quicinc.com>,
+        <quic_shashim@quicinc.com>, <quic_kaushalk@quicinc.com>,
+        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
+        <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-crypto@vger.kernel.org>,
+        <linux-scsi@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+        <linux-gpio@vger.kernel.org>, <linux-watchdog@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>, <kernel@quicinc.com>
+References: <20240703025850.2172008-1-quic_tengfan@quicinc.com>
+ <20240703035154.2182083-1-quic_tengfan@quicinc.com>
+ <20240703035154.2182083-12-quic_tengfan@quicinc.com>
+ <e08b4798-b1fe-4e8a-80a4-716696dfdcd6@quicinc.com>
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+In-Reply-To: <e08b4798-b1fe-4e8a-80a4-716696dfdcd6@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: tMRDhs9g2i136rzis9EqfAfQCqfDYtjd
+X-Proofpoint-ORIG-GUID: tMRDhs9g2i136rzis9EqfAfQCqfDYtjd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-03_06,2024-07-02_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ bulkscore=0 mlxlogscore=771 priorityscore=1501 impostorscore=0
+ suspectscore=0 mlxscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407030074
 
-On Tue, Jul 02, 2024 at 09:20:40PM GMT, Satya Priya Kakitapalli wrote:
-> The Zonda PLL has a 16 bit signed alpha and in the cases where the alpha
-> value is greater than 0.5, the L value needs to be adjusted accordingly.
-> Thus update the logic for the same.
+
+
+On 7/3/2024 1:33 PM, Taniya Das wrote:
 > 
-> Also, fix zonda set_rate failure when PLL is disabled. Currently,
-> clk_zonda_pll_set_rate polls for the PLL to lock even if the PLL is
-> disabled. However, if the PLL is disabled then LOCK_DET will never
-> assert and we'll return an error. There is no reason to poll LOCK_DET
-> if the PLL is already disabled, so skip polling in this case.
-
-Two separate commits, missing Fixes tags.
-
 > 
-> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-> ---
->  drivers/clk/qcom/clk-alpha-pll.c | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
+> On 7/3/2024 9:21 AM, Tengfei Fan wrote:
+>> { .compatible = "qcom,qcs9100-rpmh-clk", .data = &clk_rpmh_sa8775p},
+> 
+> This is not required, we already have sa8775p bindings.
+
+This patch is necessary, and the cover letter provides detailed 
+explanations for why we are making this change.
+
+In this patch series, we are renaming sa8775p.dtsi to qcs9100.dtsi. 
+Additionally, in the coming weeks, the auto team will submit a new 
+sa8775p-related dtsi to upstream.
+
+Within qcs9100.dtsi, we are updating all compatible names from sa8775p-* 
+to qcs9100-*(only have qcs9100-*, remove all sa8775p-*). Consequently, 
+we need to add support for qcs9100-* in the driver as well.
 
 
 -- 
-With best wishes
-Dmitry
+Thx and BRs,
+Tengfei Fan
 
