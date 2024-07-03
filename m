@@ -1,115 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-25203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40B25926894
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 20:50:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85470926911
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 21:39:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EB85228B6AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 18:50:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 01C101F24FE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jul 2024 19:39:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 769EF187557;
-	Wed,  3 Jul 2024 18:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E016318A93F;
+	Wed,  3 Jul 2024 19:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SQ7eo1Ak"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r+fltZH6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F04217A5B0;
-	Wed,  3 Jul 2024 18:49:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC84184116
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jul 2024 19:39:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720032597; cv=none; b=WE22ywmJmHRtS6u/MFaxb+9nO+2vFc7NhL8o/LpFMpzUKOKrWOJD9w0uM0GjMwZMS7Y8kQaPlF7AdFRcZHJ0xTMAg1HmG1jTH21c98pMFBgn18EDfNCEBm1ck8Hdrn0H0s8rk2NgKsC1fsVpt9PLOZHFrlDoCwF3PshI5WHxgd0=
+	t=1720035587; cv=none; b=hN5jfaCdFV9PuScEYV5eVzF8qwHtK4jx/HWSw/pFwTqBNANXlh9gnKwVJc7FHArjdPkS5dLfY5zEW7FOlwFrDP+gzKTbGD2o+p+YrZRGa1uKucm0LGUVI0HycIKbo4g+C4T/L0mpY1G4p1wKnWePv25DZ0PKjihc7535sggdPSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720032597; c=relaxed/simple;
-	bh=tL3e/ur6/KMkg7mh3t7r3ZIFeZQ4xi5Q34S/7FlZ2qA=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SLq2w25GpHpJBUellizhaTjqXXk76DXYVeBiRdvDL7I8h7/vRs3pjJ1J40oIPwxA/uls4pJOVx7u1tzsLEceO+TuGQgjyA1/QA+yKbeX5uuaueX724HZHO5boF25b4Bkxs49NUb2f8Y7/MrgRLdac44sLslW72RIbiIdV51tqBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SQ7eo1Ak; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B6EC2BD10;
-	Wed,  3 Jul 2024 18:49:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720032596;
-	bh=tL3e/ur6/KMkg7mh3t7r3ZIFeZQ4xi5Q34S/7FlZ2qA=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=SQ7eo1AkC8LjRWberzbfTrXdEmn8AVAPTH1nI5h830+ubxo1C5MaKmEtPRy9gsG1o
-	 M8aW67LDGZEnsrCM4Q/GRKRYn+r39JIjjMUn4+wwhQ4mb+Nyw7/6h4NQGIjateXcmW
-	 XAfTSrhx2kUyLwJweon5gGjsH9sMGD6YpKO/TIf9EwzO/u3UL14SYAuIKAMoMlbYkK
-	 bxKEJlfNCtFdikjht8PVx57e+Ez2TZA0kY1xDB4xr5o96jrOLhYPq5oX8riaz0aLMe
-	 pQxRIT/WAYj12CgJvmnxQibErDTaKj3syhCujN4MjJ27ACtbE6kpJopp6TU3GIN89Q
-	 vkEmm7DBvS+3g==
-Date: Wed, 3 Jul 2024 11:49:52 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: patchwork-bot+netdevbpf@kernel.org
-Cc: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, djakov@kernel.org, mturquette@baylibre.com,
- sboyd@kernel.org, jassisinghbrar@gmail.com, herbert@gondor.apana.org.au,
- davem@davemloft.net, manivannan.sadhasivam@linaro.org, will@kernel.org,
- joro@8bytes.org, conor@kernel.org, tglx@linutronix.de, amitk@kernel.org,
- thara.gopinath@gmail.com, linus.walleij@linaro.org, wim@linux-watchdog.org,
- linux@roeck-us.net, rafael@kernel.org, viresh.kumar@linaro.org,
- vkoul@kernel.org, edumazet@google.com, pabeni@redhat.com,
- mcoquelin.stm32@gmail.com, robimarko@gmail.com, quic_gurus@quicinc.com,
- bartosz.golaszewski@linaro.org, kishon@kernel.org, quic_wcheng@quicinc.com,
- alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
- agross@kernel.org, gregkh@linuxfoundation.org, quic_tdas@quicinc.com,
- robin.murphy@arm.com, daniel.lezcano@linaro.org, rui.zhang@intel.com,
- lukasz.luba@arm.com, quic_rjendra@quicinc.com, ulf.hansson@linaro.org,
- quic_sibis@quicinc.com, otto.pflueger@abscue.de, quic_rohiagar@quicinc.com,
- luca@z3ntu.xyz, neil.armstrong@linaro.org, abel.vesa@linaro.org,
- bhupesh.sharma@linaro.org, alexandre.torgue@foss.st.com,
- peppe.cavallaro@st.com, joabreu@synopsys.com, netdev@vger.kernel.org,
- lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
- ahalaney@redhat.com, krzysztof.kozlowski@linaro.org,
- u.kleine-koenig@pengutronix.de, dmitry.baryshkov@linaro.org,
- quic_cang@quicinc.com, danila@jiaxyga.com, quic_nitirawa@quicinc.com,
- mantas@8devices.com, athierry@redhat.com, quic_kbajaj@quicinc.com,
- quic_bjorande@quicinc.com, quic_msarkar@quicinc.com,
- quic_devipriy@quicinc.com, quic_tsoni@quicinc.com,
- quic_rgottimu@quicinc.com, quic_shashim@quicinc.com,
- quic_kaushalk@quicinc.com, quic_tingweiz@quicinc.com,
- quic_aiquny@quicinc.com, srinivas.kandagatla@linaro.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-crypto@vger.kernel.org, linux-scsi@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- iommu@lists.linux.dev, linux-riscv@lists.infradead.org,
- linux-gpio@vger.kernel.org, linux-watchdog@vger.kernel.org,
- linux-pci@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
- kernel@quicinc.com
-Subject: Re: [PATCH 00/47] arm64: qcom: dts: add QCS9100 support
-Message-ID: <20240703114952.6013f05e@kernel.org>
-In-Reply-To: <171998042970.21654.12559535993133117436.git-patchwork-notify@kernel.org>
-References: <20240703025850.2172008-1-quic_tengfan@quicinc.com>
-	<171998042970.21654.12559535993133117436.git-patchwork-notify@kernel.org>
+	s=arc-20240116; t=1720035587; c=relaxed/simple;
+	bh=PgjlqjpDtSMNToK+0DWfNPbGm3RXM7KEd8vklcHb2CM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZRXSyFPCjagpCH4sGhunfvpdJ9dXVlVZMdQfqWY/RWjmKI73XrLBHI2Vp/e3XyFc3cih+GWG1wewFMrZF5U/ZFZq1QNvD7/bNQ2pI8Z+WAjkyfiGUOQZyUL2FXUGrslxLXr674nZyyBC7qMmJ+4wuEisu7rzOCkx0FNicHho1ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r+fltZH6; arc=none smtp.client-ip=209.85.208.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2ec6635aa43so57546901fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jul 2024 12:39:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1720035584; x=1720640384; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NQz1UR6bDZLMmSUGCaRreiwA1h+kKJVVIEZe47xJ3rI=;
+        b=r+fltZH6WIJAwES4UAwvWJ4oLyhhEbqooSzUocT6VeHJCq9vH2U6E5pwC3mbGd7+ys
+         HHkHKQzphba4MrVJVJzRg6lXpbh7lhbizlNI0cIla5Fh0OUSEqdPHMYmIozDEItQ/hIG
+         wWy+zwu4bKPnWtPOknh8O//M1Sij35Yw6PDWjOMRqAQit8UeL76dO395Jnsa0eig05dO
+         YznBxwymNq0pUR+B5G83WDdhYJNDViZ2Dh9oLMNistyFSoauaOgjADMUZhdAcl8CRXQy
+         1+vJZOj/0C7dca/oXSIQVH7mrYw2tyDCYtCZ5vTZE40xsnFNQMWGCu+blpDL1vxsbhke
+         2q9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720035584; x=1720640384;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NQz1UR6bDZLMmSUGCaRreiwA1h+kKJVVIEZe47xJ3rI=;
+        b=aFRJRZQz8J1iX0RTW99+znb6D1Gc8qCogdrCEkf9b00GgadAGmYHbvfU2mIBFuBKgU
+         iaETKFxzSr7LbaCMcuBG2IIl3Tw8eeagirxFFQ8/0VUsmS70YKh7XVOtXyfCFf/ftGuf
+         idie2jD1sk7NhklnsFAyhFAuQqmFR/Cok8oZp9YDv4IeN4sMkcPZX1USA9cKoWnKM0iU
+         K31bToFFyEMosqSAMmgqowEtWaK/7IWbn2gy//dnCe2y2NJyJNSOovq+QMt87O8tyVij
+         D+1bS0bFPWP3itPu3QndUAtRnRuDWk24LZtgQh3ZgsMFo66EJwZULjgOkZ57aFZqeQRq
+         Yw+g==
+X-Forwarded-Encrypted: i=1; AJvYcCX0Hdt3KUGQgVsXiCzudHeCbBunUo84j9G0fRO3IJEz3+Q5IAbLJspcwQU7qn2j/qxCR9AL4JVBF9UIUGC+WEhb2DtpBMuGCaTRS7I3kw==
+X-Gm-Message-State: AOJu0YwCOkRBZsisttPWCx1Y93M5jkgMZli8YaNIx/4U1HOOaEhGZjdP
+	OUs53ZjJ20rN2HiegBn1Lx5EIMeYb66SxiDDFN+5r9GV5BKhJ2FEQ9WKom9LX4/HR0fvhVMuZZV
+	OgR8=
+X-Google-Smtp-Source: AGHT+IEpw4uTyTeCbt6/9ih3YCJdaiM7QLsRYETOoXHgx6zL4W2wfa3/M5DwW4ZdtGzxE5d7N91g4w==
+X-Received: by 2002:a2e:a889:0:b0:2eb:dd0b:b9ec with SMTP id 38308e7fff4ca-2ee5e3a30e0mr98452451fa.20.1720035584013;
+        Wed, 03 Jul 2024 12:39:44 -0700 (PDT)
+Received: from [192.168.86.191] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-4256af55c0asm248729915e9.15.2024.07.03.12.39.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jul 2024 12:39:43 -0700 (PDT)
+Message-ID: <80baa293-d0b1-404c-afc6-4e0e25ae7f60@linaro.org>
+Date: Wed, 3 Jul 2024 20:39:42 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100: add Lenovo Thinkpad Yoga
+ slim 7x devicetree
+To: Rob Clark <robdclark@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240703-yoga-slim7x-v1-0-7aa4fd5fdece@linaro.org>
+ <20240703-yoga-slim7x-v1-2-7aa4fd5fdece@linaro.org>
+ <CAF6AEGt+3LFP+GCcSwiSEymixVVkYD98iJX5RJ75NQDzZbPpcw@mail.gmail.com>
+Content-Language: en-US
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <CAF6AEGt+3LFP+GCcSwiSEymixVVkYD98iJX5RJ75NQDzZbPpcw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, 03 Jul 2024 04:20:29 +0000 patchwork-bot+netdevbpf@kernel.org
-wrote:
-> This series was applied to netdev/net-next.git (main)
-> by Jakub Kicinski <kuba@kernel.org>:
 
-> Here is the summary with links:
->   - [01/47] dt-bindings: arm: qcom: Document QCS9100 SoC and RIDE board
->     (no matching commit)
->   - [02/47] arm64: dts: qcom: qcs9100: Introduce QCS9100 SoC dtsi
->     (no matching commit)
->   - [03/47] arm64: dts: qcom: qcs9100: Introduce QCS9100 PMIC dtsi
->     https://git.kernel.org/netdev/net-next/c/df18948d331e
 
-This is some bug / false positive in the bot, to be clear.
-Commit df18948d331e is ("Merge branch 'device-memory-tcp'").
-No idea how it got from that to DTS.
+On 03/07/2024 19:33, Rob Clark wrote:
+> On Wed, Jul 3, 2024 at 10:17 AM Srinivas Kandagatla
+> <srinivas.kandagatla@linaro.org> wrote:
+>>
+>> Add an initial devicetree for the Lenovo Yoga slim 7x with support for
+>> Display, usb, keyboard, touchscreen, PMICs, speaker audio, gpu, NVMe,
+>> and remoteprocs.
+>>
+>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> ---
+>>   arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+>>   .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 910 +++++++++++++++++++++
+>>   2 files changed, 911 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>> index e0babd642fa8..d7de2aea4748 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -261,4 +261,5 @@ dtb-$(CONFIG_ARCH_QCOM)     += sm8650-mtp.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)        += sm8650-qrd.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-asus-vivobook-s15.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-crd.dtb
+>> +dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-lenovo-yoga-slim7x.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)        += x1e80100-qcp.dtb
+>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+>> new file mode 100644
+>> index 000000000000..1d00119691bc
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+>> @@ -0,0 +1,910 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +/*
+>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +/dts-v1/;
+>> +
+...
+>> +
+>> +&gpu {
+>> +       status = "okay";
+>> +
+>> +       zap-shader {
+>> +               firmware-name = "qcom/x1e80100/LENOVO/14Q8X9/qcdxkmsuc8380.mbn";
+> 
+> I ended up with:
+> 
+>    firmware-name = "qcom/x1e80100/LENOVO/83ED/qcdxkmsuc8380.mbn";
+> 
+> my DMI string is:
+> 
+>    DMI: LENOVO 83ED/LNVNB161216, BIOS NHCN36WW 05/23/2024
+> 
+> idk if that is different for you?
+
+
+You are correct, dmi/id/product_name is 83ED in my case too. I think i 
+overlooked it :-)
+
+
+will send out a v2 to fix this one..
+
+
+> 
+>> +       };
+>> +};
+>> +
+>> +&i2c0 {
+>> +       clock-frequency = <400000>;
+>> +
+>> +       status = "okay";
+>> +
+> 
+> I also have this, which is working for me (sry about gmail butchering
+> the formating):
+> 
+> 
+> touchpad@2c {
+> compatible = "hid-over-i2c";
+> reg = <0x2c>;
+> 
+> hid-descr-addr = <0x20>;
+> interrupts-extended = <&tlmm 3 IRQ_TYPE_LEVEL_LOW>;
+> 
+> pinctrl-0 = <&tpad_default>;
+> pinctrl-names = "default";
+> 
+> wakeup-source;
+> };
+> 
+> basically just uncommented the node from Xilin's tree, but seems to work fine.
+> 
+
+Thanks.. I could not figure out the descr-addr from acpi tables.
+It works now..
+V2 will have this as well.
+
+--srini
+
+> BR,
+> -R
+> 
 
