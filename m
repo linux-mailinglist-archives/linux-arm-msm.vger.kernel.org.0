@@ -1,138 +1,257 @@
-Return-Path: <linux-arm-msm+bounces-25267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D2A09274B2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 13:13:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF7639274E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 13:23:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3ED461C2137F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 11:12:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 77081289C09
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 11:23:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C99601AC23B;
-	Thu,  4 Jul 2024 11:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85B8A1AC427;
+	Thu,  4 Jul 2024 11:23:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Zc8x2B4N"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dqWUEaIt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E889F1AC227
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jul 2024 11:12:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E561ABCC0
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jul 2024 11:23:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720091573; cv=none; b=MoxXdEg8zjc7QB1H+FMTTqhhFXoT3uN4Edfkme/GD05eXkBIGmyDaAfsSFocpfDqvOSwDvlYgs0bYVlTavLMrGys3m8aF7NRWBkuj6udk4C/l8Lf32gRnvp/qoFrjCYwx9hkPt7oehAtZaccQ4afx1K+G9GTMIeCT1wge4HoZlI=
+	t=1720092218; cv=none; b=Vn42m1iQnCKD7VrlOwGGJbZ68q+7FvKZOEV9511HmiyN08QCAODRTOXElRroQFpw4bX+ZK7DVvT+beC0Hpitau37Zy+MTc3kSkK+LPai4d6GRD8cirsh8+C/ygUVWSBChrKA18GZb+KnGuQu5y9ahVLVNTlrY8TKVSdyHt0Cdnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720091573; c=relaxed/simple;
-	bh=kwlzyQko3YrlL9qqxe77HjjjJn+6EPX3Akye8+HUD68=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=bDs7/cEgZP123B9T++okMtGeLy8aNbDC2y8Ost/juA6sgZkrPee5gb/DnlmHOcdRDHqfqFMwOxIdg2SAsFyMHxNdzyORhLBH6McEdHyGcYrSRySkOsypjt/q78iTGrF+B8VwpQPC8mPurD1/1nTfFc+sPXFytZeS+f7GCllfpvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Zc8x2B4N; arc=none smtp.client-ip=209.85.208.170
+	s=arc-20240116; t=1720092218; c=relaxed/simple;
+	bh=SMB+igqj6n9++aWRLyA03Vj9yqGMmTygj1Y2j40KYuc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mLBXo3hZFeViLL/7hE/eB9FS9ArUQtW+CaDlRUkr6PpYgDNu1uDW/GAxkVfqA77w45ZdFNlCT9WFZz/NbhAcBcpz2jKqluxeByNZo/hLORM0J9uCNlZO1tK6yujJLOgWm5QfpreltJFmEEsW7fCJWvcAMmBfmP/QD+d7ypKbSPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dqWUEaIt; arc=none smtp.client-ip=209.85.128.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2ebe40673e8so6330671fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jul 2024 04:12:50 -0700 (PDT)
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-64b5617ba47so5017217b3.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jul 2024 04:23:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720091569; x=1720696369; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=tPC43rasB/6PLGfsWyLsHpREn7UhdyM0rRDUzfTMoaw=;
-        b=Zc8x2B4Nhj0vNk5z8ePe4ReNaOvU/FyZ1Q4mHE5CK4FqarS7Fz06f7a8MkafRPyanY
-         t68uQFxMdEwM0HxWbe11a1rp8MliDMw6eadyxKw9NTmanN7kovxcs+SqM5AYM3oWDCra
-         n4/bgrdYP4nkONXzdf6fiM35Ru+Lr1AjAp2Pp+WXcf0I+i7nACNF6udOOSQA0tisbBPt
-         b0EbYXyYyEnioL49crz956U6HV21CdX7AqoEvC2kAxhf5wFXCXksNgvUsuMDotROP/u4
-         oS/vNEWnxRHQOy1X8R5M6JGEM5iNEWVyr2vZDE54NhtJO0xETdQjPq/HCAtRm6sOpwvr
-         +RJQ==
+        d=linaro.org; s=google; t=1720092215; x=1720697015; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Fu5k71EftNN7Y1CDQiusnOVRLjdoJgBCPaoKhdRlLMQ=;
+        b=dqWUEaIt6WD9pVNSbWWUNANEOSK9EBnmRCbB83EA6RIjcxi4pUqln19w3XWeeXQB74
+         gMgDvrwc/YZXxS+CzMnwiamkNJkVm8hJKyiacnKsbcp3cxVO5c9bWgEltEPVYu8CVnH+
+         t84YBnHNzaUmG28TwIREJ8ybVRe6I20LFoGYL3OUSi19QqwKQgTg5T29GcB3KNvPN+RV
+         iOfAH6qvD9XFYTgjUcM2kZbCr8O9uFbxPfQZIRcLu8puFCvtK7tXT1lB1wHTsiCsMpRt
+         vBPjz93pit9QbrlL00tKyBD4ToRighcZn6hM853VMvzpNeQ0Jt6+nBu9DARLsp8PCYKM
+         uK5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720091569; x=1720696369;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1720092215; x=1720697015;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=tPC43rasB/6PLGfsWyLsHpREn7UhdyM0rRDUzfTMoaw=;
-        b=bX6sifYJ5Bu5xN+w8cAnG1lHb6p4O2WsTUHNeyVaBgr1zLwMaMsczPgJstcCFJw/n9
-         y+7luD6okexTk1BhjPjVgIEo8PSIekALVewt03jCTQoO3CYuaduRW35tDgitpdyvP+4u
-         pNsXB5Ex/GibPDamaFfPlICN/SHncp/EEji7nc1cBZH0QTgL6lDd24MjeiXF0SxsET1a
-         P+DoQP4pxxg5LiTUSAq16Swl3ZS3LPZNzpGjFGqSUy99yjtmc4Vpm0G06IBevrwMsNAY
-         3UkQKXf1vljykUTolKDDmBBClTcxOXJfsEcK7ndujNucVvc/N9H4Hiq+UhePytp+967Y
-         Xl5w==
-X-Gm-Message-State: AOJu0Yzk/buYETYpgyHoPqwJGIjX09JOTtTmSMUpuf5xUA1eTiV/XuzQ
-	M7RpaHnqGUtX2cHeN7ZmwT4/rWn9QaCv2oO4ngi6KjHp7Hq76PsfvjdyjYZjqTs=
-X-Google-Smtp-Source: AGHT+IFms/l9EmzZxMph8D1Drc8PuDALxOm8EuU40LrFeEyesL8Xp6EbT7z6hzNTjKi0IszFb3Au2w==
-X-Received: by 2002:a2e:b049:0:b0:2ec:57c7:c72c with SMTP id 38308e7fff4ca-2ee8ee01fd8mr7848291fa.35.1720091569001;
-        Thu, 04 Jul 2024 04:12:49 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ee8d0396a3sm2113881fa.68.2024.07.04.04.12.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jul 2024 04:12:48 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 04 Jul 2024 14:12:46 +0300
-Subject: [PATCH] firmware: qcom: tzmem: blacklist more platforms for SHM
- Bridge
+        bh=Fu5k71EftNN7Y1CDQiusnOVRLjdoJgBCPaoKhdRlLMQ=;
+        b=vV/QvbHH72Y+YWM3Dv8P4TkDJZBEi7w7n9vniH/Fa5xX34AMIMx9u2Zx8pPXj5ypqc
+         1JBi4p7p9sP6sVP4B2VlPsWYPyWuQOWeS/Ow+QUSYx4lNXHKkx00uf0YaGAWmjlHFgA6
+         PngM9Upc/FTwxG2HH8gB8tnOkNu159PpRwlpqhdlY7L3LpRhQbkZuckmhL/f8yNvFq78
+         muaYPQdET16BMT5ODnO5fZRD30B2YyWauC3P11C5WvG8mZx+53lDu4ov+bO6TT+i6/yu
+         ZjFikwptu9aSoSbzR4AY7817r7dWRSM5lZfXTWqE6u4jM2u4lv26FX9mWCRrY4xyIw8Z
+         fULA==
+X-Forwarded-Encrypted: i=1; AJvYcCXmkWB70aD8zxvVUI7z6GqJ7lTi8YoP7hkXCcHr0At+Ge/5GllFG1WJNcdrnDyT9/tesSLyulhEqz6mgXA2vVtoKeEPCmd2VVuTT0aUnA==
+X-Gm-Message-State: AOJu0YyN4ycpFfg2T7ZMKyBJ9PkkDEOoXTDGwWL2CLNvUQr9KdGQfecl
+	mxf59FUc6QeLoKJ9b4jeqXM7dEzothl2IG1tqvITR0Yt/XpbtrTRLmGheKPqxlXHDt4HhptKiF8
+	hGbHoyY/IXbBhM38fbyd8Vq/Sm+uZP5y0DyyCug==
+X-Google-Smtp-Source: AGHT+IFsWPFr8p78DsaOJ4IVt+skDa7EL1Ymt4GtJo1evSDlcMH/wDnYhG+FUPuv3o6FilN6Lhm6EDdd6fD4yyh2xpM=
+X-Received: by 2002:a81:920f:0:b0:61b:33e1:9641 with SMTP id
+ 00721157ae682-652d582166amr12390047b3.13.1720092215000; Thu, 04 Jul 2024
+ 04:23:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240704-shmbridge-blacklist-v1-1-14b027b3b2dc@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAK2DhmYC/x2MSQqAMBDAviJztlBrQetXxEOX0Q6udEQE8e8Wj
- yEkDzAmQoaueCDhRUz7lqEqC/DRbhMKCplBSaVlI7XguLpEIQu3WD8vxKeQqnLBNK61poZcHgl
- Huv9rP7zvB3IiPBplAAAA
-To: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Elliot Berman <quic_eberman@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1354;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=kwlzyQko3YrlL9qqxe77HjjjJn+6EPX3Akye8+HUD68=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmhoOwm1V5jQ1hxjuCBndjf0/vDRv6bE6MnpyJ+
- adV5W46kCGJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZoaDsAAKCRCLPIo+Aiko
- 1ZJXCACusvt3u67ChJfBSVHOT/JoRoltQEburmBUDlSvNJSEVvbU9u3pJ+Kg4W0yfSBVQXKEtfp
- B2zhCPFT/1/nOzxVmv5IZHp9diWBDeiDvCjxvSqagj2QirpQRmMd+ANy0KTYTDWhfmNDTkbYuR+
- LbfOticztug72JKVKat0PTY9SXBGIFnyT75Cvf0adm1jrOyWT/G0wgoR5UjwsGSExIk3Z1ytfCF
- 6Z63KbkSsLn/1AX3dESoThPwIskEUTXdEhCu4lgagAcnIKkW7RANV4Sq8fnGxTmZh7ZlVhAvhnN
- x93nYIDEASo6FLjGW/+1VJowJW2OM77sq+IO3ptsOD1zBK+2
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+References: <20240628140435.1652374-1-quic_bibekkum@quicinc.com>
+ <20240628140435.1652374-5-quic_bibekkum@quicinc.com> <ueuhu5xfzp2rnuxzeqqd6cho476adidztgx7oq2tbiufauv6h4@obblpxvqwnno>
+ <6da77880-2ba4-4b02-8b3e-cb0fbd0a9daf@quicinc.com>
+In-Reply-To: <6da77880-2ba4-4b02-8b3e-cb0fbd0a9daf@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 4 Jul 2024 14:23:23 +0300
+Message-ID: <CAA8EJpqXfqKSi-j3NsAzQA4hOLndFZSPAiL1YpwnxMgbgrWokA@mail.gmail.com>
+Subject: Re: [PATCH v13 4/6] iommu/arm-smmu: add ACTLR data and support for SM8550
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Cc: robdclark@gmail.com, will@kernel.org, robin.murphy@arm.com, 
+	joro@8bytes.org, jgg@ziepe.ca, jsnitsel@redhat.com, robh@kernel.org, 
+	krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com, 
+	konrad.dybcio@linaro.org, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-The SHM bridge makes the Qualcomm RB3 and SM8150-HDK reset while probing
-the RMTFS (in qcom_scm_assign_mem()). Blacklist the SHM Bridge on
-corresponding platforms using SoC-level compat string. If later it's
-found that the bad behaviour is limited just to the particular boards
-rather than SoC, the compat strings can be adjusted.
+On Wed, 3 Jul 2024 at 15:15, Bibek Kumar Patro
+<quic_bibekkum@quicinc.com> wrote:
+>
+>
+>
+> On 7/2/2024 12:04 AM, Dmitry Baryshkov wrote:
+> > On Fri, Jun 28, 2024 at 07:34:33PM GMT, Bibek Kumar Patro wrote:
+> >> Add ACTLR data table for SM8550 along with support for
+> >> same including SM8550 specific implementation operations.
+> >>
+> >> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+> >> ---
+> >>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 89 ++++++++++++++++++++++
+> >>   1 file changed, 89 insertions(+)
+> >>
+> >> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >> index 77c9abffe07d..b4521471ffe9 100644
+> >> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >> @@ -23,6 +23,85 @@
+> >>
+> >>   #define CPRE                       (1 << 1)
+> >>   #define CMTLB                      (1 << 0)
+> >> +#define PREFETCH_SHIFT              8
+> >> +#define PREFETCH_DEFAULT    0
+> >> +#define PREFETCH_SHALLOW    (1 << PREFETCH_SHIFT)
+> >> +#define PREFETCH_MODERATE   (2 << PREFETCH_SHIFT)
+> >> +#define PREFETCH_DEEP               (3 << PREFETCH_SHIFT)
+> >> +
+> >> +static const struct actlr_config sm8550_apps_actlr_cfg[] = {
+> >> +    { 0x18a0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> >> +    { 0x18e0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> >> +    { 0x0800, 0x0020, PREFETCH_DEFAULT | CMTLB },
+> >> +    { 0x1800, 0x00c0, PREFETCH_DEFAULT | CMTLB },
+> >> +    { 0x1820, 0x0000, PREFETCH_DEFAULT | CMTLB },
+> >> +    { 0x1860, 0x0000, PREFETCH_DEFAULT | CMTLB },
+> >> +    { 0x0c01, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> >
+> > - Please keep the list sorted
+>
+> Sure Dmitry, will sort this list in reverse-christmas-tree order
+> in next iteration. Thanks for this input.
 
-Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
-Fixes: f86c61498a57 ("firmware: qcom: tzmem: enable SHM Bridge support")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/firmware/qcom/qcom_tzmem.c | 2 ++
- 1 file changed, 2 insertions(+)
+Why? Just sort basing on SID.
 
-diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
-index 5d526753183d..c715729f071c 100644
---- a/drivers/firmware/qcom/qcom_tzmem.c
-+++ b/drivers/firmware/qcom/qcom_tzmem.c
-@@ -78,6 +78,8 @@ static bool qcom_tzmem_using_shm_bridge;
- /* List of machines that are known to not support SHM bridge correctly. */
- static const char *const qcom_tzmem_blacklist[] = {
- 	"qcom,sc8180x",
-+	"qcom,sdm845", /* reset in rmtfs memory assignment */
-+	"qcom,sm8150", /* reset in rmtfs memory assignment */
- 	NULL
- };
- 
+>
+> > - Please comment, which devices use these settings.
+>
+> As discussed in earlier versions of this patch, these table entries
+> are kind of just blind values for SMMU device, where SMMU do not have
+> idea on which SID belong to which client. During probe time when the
+> clients' Stream-ID has corresponding ACTLR entry then the driver would
+> set value in register.
+> Also some might have their prefetch settings as proprietary.
+> Hence did not add the comments for device using these settings.
 
----
-base-commit: 82e4255305c554b0bb18b7ccf2db86041b4c8b6e
-change-id: 20240704-shmbridge-blacklist-021bd97b8a93
+Please mention devices that are going to use the SIDs.
 
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
+>
+>
+> Thanks & regards,
+> Bibek
+>
+> >
+> >> +    { 0x0c02, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x0c03, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x0c04, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x0c05, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x0c06, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x0c07, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x0c08, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x0c09, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x0c0c, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x0c0d, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x0c0e, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x0c0f, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x1961, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x1962, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x1963, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x1964, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x1965, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x1966, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x1967, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x1968, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x1969, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x196c, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x196d, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x196e, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x196f, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x19c1, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x19c2, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x19c3, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x19c4, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x19c5, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x19c6, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x19c7, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x19c8, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x19c9, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x19cc, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x19cd, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x19ce, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x19cf, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +    { 0x1c00, 0x0002, PREFETCH_SHALLOW | CPRE | CMTLB },
+> >> +    { 0x1c01, 0x0000, PREFETCH_DEFAULT | CMTLB },
+> >> +    { 0x1920, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> >> +    { 0x1923, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> >> +    { 0x1924, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> >> +    { 0x1940, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> >> +    { 0x1941, 0x0004, PREFETCH_SHALLOW | CPRE | CMTLB },
+> >> +    { 0x1943, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> >> +    { 0x1944, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> >> +    { 0x1947, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+> >> +};
+> >> +
+> >> +static const struct actlr_config sm8550_gfx_actlr_cfg[] = {
+> >> +    { 0x0000, 0x03ff, PREFETCH_DEEP | CPRE | CMTLB },
+> >> +};
+> >> +
+> >> +static const struct actlr_variant sm8550_actlr[] = {
+> >> +    {
+> >> +            .io_start = 0x15000000,
+> >> +            .actlrcfg = sm8550_apps_actlr_cfg,
+> >> +            .num_actlrcfg = ARRAY_SIZE(sm8550_apps_actlr_cfg)
+> >> +    }, {
+> >> +            .io_start = 0x03da0000,
+> >> +            .actlrcfg = sm8550_gfx_actlr_cfg,
+> >> +            .num_actlrcfg = ARRAY_SIZE(sm8550_gfx_actlr_cfg)
+> >> +    },
+> >> +};
+> >>
+> >>   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
+> >>   {
+> >> @@ -606,6 +685,15 @@ static const struct qcom_smmu_match_data sdm845_smmu_500_data = {
+> >>      /* Also no debug configuration. */
+> >>   };
+> >>
+> >> +
+> >> +static const struct qcom_smmu_match_data sm8550_smmu_500_impl0_data = {
+> >> +    .impl = &qcom_smmu_500_impl,
+> >> +    .adreno_impl = &qcom_adreno_smmu_500_impl,
+> >> +    .cfg = &qcom_smmu_impl0_cfg,
+> >> +    .actlrvar = sm8550_actlr,
+> >> +    .num_smmu = ARRAY_SIZE(sm8550_actlr),
+> >> +};
+> >> +
+> >>   static const struct qcom_smmu_match_data qcom_smmu_500_impl0_data = {
+> >>      .impl = &qcom_smmu_500_impl,
+> >>      .adreno_impl = &qcom_adreno_smmu_500_impl,
+> >> @@ -640,6 +728,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+> >>      { .compatible = "qcom,sm8250-smmu-500", .data = &qcom_smmu_500_impl0_data },
+> >>      { .compatible = "qcom,sm8350-smmu-500", .data = &qcom_smmu_500_impl0_data },
+> >>      { .compatible = "qcom,sm8450-smmu-500", .data = &qcom_smmu_500_impl0_data },
+> >> +    { .compatible = "qcom,sm8550-smmu-500", .data = &sm8550_smmu_500_impl0_data },
+> >>      { .compatible = "qcom,smmu-500", .data = &qcom_smmu_500_impl0_data },
+> >>      { }
+> >>   };
+> >> --
+> >> 2.34.1
+> >>
+> >
+
+
+
+--
+With best wishes
+Dmitry
 
