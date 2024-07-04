@@ -1,131 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-25301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06F5A927B92
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 19:06:30 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5631F927C73
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 19:44:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B0D041F2549D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 17:06:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D3D78B2216D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 17:44:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F50F1B375B;
-	Thu,  4 Jul 2024 17:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF3113FBAD;
+	Thu,  4 Jul 2024 17:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="3axY/P01"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fp04a8kh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2581B3751
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jul 2024 17:04:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7974B3D3AC;
+	Thu,  4 Jul 2024 17:44:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720112686; cv=none; b=ajDmZmhiYIuHRGa3VxNNDTS4iMxrcL7ayqGYUFqHLyfhG9AddaS/X5HdZFg1wSzOgaB45UVE485wmozYNRavtkUef7AqtlycTqZ3osLMa1eBdGxOWZR3cfq7TFSnumqTeZ62xN1X2oTRPMtwHKd7lcJLnijA+O07l8h0A2gst/o=
+	t=1720115063; cv=none; b=aRHDFzh1P/2KX+bIg23wD6BIXIBbkDew1sPwfut7sE1OxmzwSj/sUjrQSwqI+xqwi8++FGKyXuzPSYij0hcoor0C+AXSYqQW5VU/Hg8ZnNB4CLhNFgtvXky6nNbpwOoL/rDOCESt645bqt/cufwHje404QsWhN8+bsmvmQ6Ma4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720112686; c=relaxed/simple;
-	bh=VhEKXBgCk8YcI/We+H9vMpuHE/Wchhz3UGLxkuxH2GI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VyTBSofQtQubigWeBlVBgrPbDWtmYybPDfmdQ911ZiA0xVOXeMNqKlJg6qZ2FVnJFl1u/8ujIqnqTIfw7Fri0+k6JALNvuAMcqy3hv0Is5y2biZDMMPCZyCMt2TsPAyWA1/WYR8A1ibYRTFAM3dY2yo/YPIsGrumRFZUPBGl2Ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=3axY/P01; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4257d5fc9b7so7195415e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jul 2024 10:04:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1720112683; x=1720717483; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VhEKXBgCk8YcI/We+H9vMpuHE/Wchhz3UGLxkuxH2GI=;
-        b=3axY/P01OGBe/sPn0X/rAY5nHD6rHT3mFGUZsSJXfOmexodrZsBIl6smQ4mzCgUJcm
-         t8x33X7Sf+AZpRACjJoXkXOCQyik/P06Uf61gkIj6tYqLug7128sAEcWS1H7SB5QMeHB
-         e3/tHPo7/AXBUOjdo3yWTlYDk1NdWDSdcdp4JLQZUOgH5zc+Jz16Qni/2iRnyRMPsQPl
-         lYHHX2O/Es18ne6BYyXf3eKCpTqnma4C9TKSU8azN/FBudlfV51fHZP04HruKZIliIr8
-         9uUZvxB+A0P2/F3V2jyPLw+aDNs1S4fQZmSbJoAOMokssoCXyN6ZqklnaPIOo1t5qRg0
-         r3lQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720112683; x=1720717483;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VhEKXBgCk8YcI/We+H9vMpuHE/Wchhz3UGLxkuxH2GI=;
-        b=khKIvl2J3XL+ZuFLQ+h5FVG3WZI1ZP5WdKtW9yNoqxolHIloLaQ7rFtOqW6oxtyVgs
-         U0yrwUmrkgLXo1F4SPGgANHVFmRh0UXX5KCL+a0uUqV98WJELjXjIILUcaE0kazAjOcX
-         /1rDev2rS/3Yd9/q9nK/W9pKESF+vScIpSw/bx6ijcShO/CebReEH22Bdx+sUPC9dkUh
-         2bJgazo9PH9lG6H5zZcpFpW0wRqkIJqgdv0/p7FGQvscTFZzhwY4D6K33seb3odIa4BL
-         wBKJkzq/bRR8v80gjR6SqiZmfjN10SkJdUyzvyHwUXEzLbfj1R37Mmiq2Jk6zrQoV51t
-         xKSw==
-X-Forwarded-Encrypted: i=1; AJvYcCWS/MP7ccW4l7yAUYIXosr/QwhbIlJyAhUew/i3s6RKkth/VAjQtMlrp+GvLu6yN2uxwjaiKJzTbVfnvtS11gNkmbefo5zgE5lI/b3+3g==
-X-Gm-Message-State: AOJu0YzC2JQXfgAYkMhwcAHDeALwZ/bpF75Brmxq/6jt2llBzA9f835A
-	aq/V2o7GaxjIWJPmok5z/HBjIewdOxqcMbO3Mdt99VNvS7lhmlLsT/vo1qQuxwM=
-X-Google-Smtp-Source: AGHT+IFcq4eZY0ByhNRonxN57ZbQ4denoA/srdaVmLq6HfGOy2pmX+pLKLzxcImWqmQ5tilcL6/aXA==
-X-Received: by 2002:a05:600c:1790:b0:424:784c:b134 with SMTP id 5b1f17b1804b1-4264a3bc345mr20946965e9.6.1720112682605;
-        Thu, 04 Jul 2024 10:04:42 -0700 (PDT)
-Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4264a1d165bsm31107415e9.4.2024.07.04.10.04.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jul 2024 10:04:42 -0700 (PDT)
-Message-ID: <e55d0f0e-a104-4790-b832-120dbddd93ad@freebox.fr>
-Date: Thu, 4 Jul 2024 19:04:41 +0200
+	s=arc-20240116; t=1720115063; c=relaxed/simple;
+	bh=AzVLN5s8m2pR07hkp4MUmLEh08g3IkzD0iu13g2nOIo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PSNiSSX6ElzmmmbEtuEh2A2SvsAZpl5FPRsOEa3HmFF2Jygl0j8lDEMRGD0kDsOl5yOw1mKjsRJQWpnDiuTm7HYE/Q7/Pz3IrCPg8hdVPxZ4C7/DNtnNHHKWOheLT8pNGn70F8zGIhhBc/08mvNMO7Yuyh8/VKmna+ZEnSTrV4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fp04a8kh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF0BC3277B;
+	Thu,  4 Jul 2024 17:44:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720115063;
+	bh=AzVLN5s8m2pR07hkp4MUmLEh08g3IkzD0iu13g2nOIo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Fp04a8khZ0ndBddqA0DLvSs631FmVud72skRkUs8zP/6w+757aMn5psgiVA14HIre
+	 fchF+ee7Y9F5LJSElxVE7mlRVdCTCYIglkzqTD4N2oZUGbOlsbPxsY77cnZcyXKZNA
+	 3MDlgXwMHkX9637NcxJVWNnRNIdqkPabyo27JHud/gNUYn3GfNqZk0GvP8JkKlMOhX
+	 nK2tm6xpN73P9O+DbdyV+7PQGJ9IDkaMNFCHqeMDGkiUqqNZAP05AI2roPkHBUjWUE
+	 sY69eyvc9+Yret1FjSWXFO/O6vMG0Xz2ofudBVZowajTVWwtXMQ7jEcJnrNe9n74hN
+	 osSCiwLuT6bVQ==
+Date: Thu, 4 Jul 2024 12:44:19 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Odelu Kukatla <quic_okukatla@quicinc.com>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Kees Cook <keescook@chromium.org>, cros-qcom-dts-watchers@chromium.org, 
+	"Gustavo A . R . Silva" <gustavoars@kernel.org>, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
+	quic_rlaggysh@quicinc.com, quic_mdtipton@quicinc.com
+Subject: Re: [PATCH] interconnect: qcom: Fix DT backwards compatibility for
+ QoS
+Message-ID: <jhfya4mjnckrmogtmusyvwjv4mlyycgqj3apt2kaj5umxprhtv@rfew7c5w3zf5>
+References: <20240704125515.22194-1-quic_okukatla@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] dt-bindings: display: bridge: add TI TDP158
-To: Maxime Ripard <mripard@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
- Daniel Vetter <daniel@ffwll.ch>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, dri-devel@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- Arnaud Vrac <avrac@freebox.fr>, Pierre-Hugues Husson <phhusson@freebox.fr>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20240627-tdp158-v3-0-fb2fbc808346@freebox.fr>
- <20240627-tdp158-v3-1-fb2fbc808346@freebox.fr>
- <20240701-bug-of-great-honeydew-cfb6ef@houat>
-Content-Language: en-US
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <20240701-bug-of-great-honeydew-cfb6ef@houat>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240704125515.22194-1-quic_okukatla@quicinc.com>
 
-On 01/07/2024 15:50, Maxime Ripard wrote:
+On Thu, Jul 04, 2024 at 06:25:15PM GMT, Odelu Kukatla wrote:
+> Add qos_clks_required flag to skip QoS configuration if clocks property
+> is not populated in devicetree for providers which require clocks to be
+> enabled for accessing registers. This is to keep the QoS configuration
+> backwards compatible with devices that have older DTB.
+> 
 
-> The i2c register access (and the whole behaviour of the device) is
-> constrained on the I2C_EN pin status, and you can't read it from the
-> device, so it's also something we need to have in the DT.
+Please read "Describe your changes" [1], and make your commit message
+start with the problem description - establish to the reader why this
+change is needed, then follow that with a technical description of the
+solution (likely in a separate paragraph).
 
-I think the purpose of the I2C_EN pin might have been misunderstood.
+[1] https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
 
-I2C_EN is not meant to be toggled, ever, by anyone from this planet.
+> Reported-by: Bjorn Andersson <andersson@kernel.org>
+> Closes: https://lore.kernel.org/all/ciji6nlxn752ina4tmh6kwvek52nxpnguomqek6plwvwgvoqef@yrtexkpmn5br/
+> Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
+> ---
+>  drivers/interconnect/qcom/icc-rpmh.c | 2 +-
+>  drivers/interconnect/qcom/icc-rpmh.h | 1 +
+>  drivers/interconnect/qcom/sc7280.c   | 2 ++
+>  3 files changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+> index 93047defd5e2..f49a8e0cb03c 100644
+> --- a/drivers/interconnect/qcom/icc-rpmh.c
+> +++ b/drivers/interconnect/qcom/icc-rpmh.c
+> @@ -311,7 +311,7 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+>  		}
+>  
+>  		qp->num_clks = devm_clk_bulk_get_all(qp->dev, &qp->clks);
+> -		if (qp->num_clks < 0) {
+> +		if (qp->num_clks < 0 || (!qp->num_clks && desc->qos_clks_required)) {
 
-I2C_EN is a layout-time setting, decided by a board manufacturer:
+For this new case, I think the dev_info() below makes total sense. I.e.
+this looks good to me.
 
-- If the TDP158 is fully configured once-and-for-all at layout-time,
-then no I2C bus is required, and I2C_EN is pulled down forever.
 
-- If the board manufacturer wants to keep open the possibility
-to adjust some parameters at run-time, then they must connect
-the device to an I2C bus, and I2C_EN is pulled up forever.
+However, the num_clks < 0 case would represent finding a devicetree node
+with clocks specified, but failing to get these clocks. I believe that
+this would include EPROBE_DEFER.
 
-The only reason I see to expose I2C_EN in a binding is:
-if we want to support the fully static setup, AND it is not acceptable
-to support it from an i2c_driver, then there might need to be a way to
-say "you are not an i2c client, you must fail in probe".
+I don't think it's correct to print a informational message and continue
+without QoS. I think we should fail here.
 
-Or I don't understand anything about device tree bindings
-(which is entirely possible).
+Also, in this case devm_clk_bulk_get_all() would have pr_err() a message
+about which clock it failed to acquire and why, so printing again here
+doesn't seem useful.
 
-Regards
+But I think that is a separate follow up patch.
 
+>  			dev_info(dev, "Skipping QoS, failed to get clk: %d\n", qp->num_clks);
+>  			goto skip_qos_config;
+>  		}
+> diff --git a/drivers/interconnect/qcom/icc-rpmh.h b/drivers/interconnect/qcom/icc-rpmh.h
+> index 9a5142c70486..14db89850fb3 100644
+> --- a/drivers/interconnect/qcom/icc-rpmh.h
+> +++ b/drivers/interconnect/qcom/icc-rpmh.h
+> @@ -153,6 +153,7 @@ struct qcom_icc_desc {
+>  	size_t num_nodes;
+>  	struct qcom_icc_bcm * const *bcms;
+>  	size_t num_bcms;
+> +	bool qos_clks_required;
+>  };
+>  
+>  int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+> diff --git a/drivers/interconnect/qcom/sc7280.c b/drivers/interconnect/qcom/sc7280.c
+> index 759c609a20bf..167971f8e8be 100644
+> --- a/drivers/interconnect/qcom/sc7280.c
+> +++ b/drivers/interconnect/qcom/sc7280.c
+> @@ -1691,6 +1691,7 @@ static const struct qcom_icc_desc sc7280_aggre1_noc = {
+>  	.num_nodes = ARRAY_SIZE(aggre1_noc_nodes),
+>  	.bcms = aggre1_noc_bcms,
+>  	.num_bcms = ARRAY_SIZE(aggre1_noc_bcms),
+> +	.qos_clks_required = true,
+>  };
+>  
+>  static struct qcom_icc_bcm * const aggre2_noc_bcms[] = {
+> @@ -1722,6 +1723,7 @@ static const struct qcom_icc_desc sc7280_aggre2_noc = {
+>  	.num_nodes = ARRAY_SIZE(aggre2_noc_nodes),
+>  	.bcms = aggre2_noc_bcms,
+>  	.num_bcms = ARRAY_SIZE(aggre2_noc_bcms),
+> +	.qos_clks_required = true,
+
+When reading the commit message and the name of this property, my first
+reaction was "aggre2_noc requires qos clocks".
+
+As such, I'd prefer if this was renamed "qos_requires_clocks" to more
+clearly document what the requirement entails and hint the future reader
+that the interconnect might still be operational.
+
+
+With that said, thanks for your quick reply to my regression report!
+
+Tested-by: Bjorn Andersson <andersson@kernel.org>
+
+Regards,
+Bjorn
+
+>  };
+>  
+>  static struct qcom_icc_bcm * const clk_virt_bcms[] = {
+> -- 
+> 2.17.1
+> 
 
