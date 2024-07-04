@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-25263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 494429273DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 12:19:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4FAC9273D8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 12:19:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E7ED41F216D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 10:19:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 69D70287191
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 10:19:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C74581AB90C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA9801AB905;
 	Thu,  4 Jul 2024 10:19:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LRcoAIz2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HN+qGK3n"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B82B13C8FF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8BD1AAE1A;
 	Thu,  4 Jul 2024 10:19:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720088361; cv=none; b=WLpNToeMFZoxXVMOAbS96pyNib0KF26F1oxW7W7YI1MNstzblZYKU8ZKhkcKevK/PuSlaCJzZE+vTCMi63BqIISv7bL2Zis3S33tN6k6T/IHCB9klz3vbX52UDVzBmkW+KyPjg8vQ4Di0I3VVNFSRWdzMr8HeMvUvd/oKiXxbjE=
+	t=1720088361; cv=none; b=Bhya0ty13+tVIhVxDTeaWKtNrHcIRZ5zHy0LCXOu0yo6/0Qn9D81Mxa4pKBWc/i+sb6wXr7838pBqL2l38FrePR4QNNbWr9cLg+8T4puTTX1WbqXHwi/+/wLbXTlRJ2r/6tc7Q/rz5IS6zBNGwgW1qYCC91j/0kIAqdvuQA0Wcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1720088361; c=relaxed/simple;
-	bh=kB83DN3LYrLXwAxtLBcxkuvnDD4VsSkzzf5MSWSoQiY=;
+	bh=ReEZb7hAFfQAyy9IF/NSMp6O9E23hw+JmMg7zAegyBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g0faN7PeHzbK+T5zgzWycKAFE/cwwq9GmRoDpIeUUh9QEqsZmCIDut64dO0Oxqn6tTv5OOGqu3gvmxyS9JR6nrddf059zWom0RRcuMrek9wTDGtY/wll+MirJ2nqSUHGkwkgf+MaDTQn9yC9bKWa+iSXdtknQ9dFg9rE31Y/lDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LRcoAIz2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BDADC4AF0B;
+	 MIME-Version; b=LvrQPAHKCE9v7wgo1/+S0FBdTIC17uSaVF9d1eOONYgyu1P7iiMjqvRmfwKvgNrB5UFqLbYa9T8UDIpd40S7yXQ39a/WryUO/WOdA+SV/9lo8sjGtfSi2zV37L1dZHHymujuMdYYgLIY/qLTcef5brWhCyM58+322lM4VeG/B9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HN+qGK3n; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29AEBC32786;
 	Thu,  4 Jul 2024 10:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1720088361;
-	bh=kB83DN3LYrLXwAxtLBcxkuvnDD4VsSkzzf5MSWSoQiY=;
+	bh=ReEZb7hAFfQAyy9IF/NSMp6O9E23hw+JmMg7zAegyBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LRcoAIz2HOxnmVFe+OKHrBOlXyrVkZl0Fh2jmUuk3PYxAvhRLT73OzBysw8ascY3a
-	 DyW4UcICHJsdZl1txFMJZnEXaT/aqX8DhfuUqJxyb3DdcreGTFAQN24jcM01rKKGc/
-	 eK7TTwUnKpiAgIb0Kcb/Sa1eVOQOSZWy7G+lyZCaqbhKMDbnW1vDPg3e/hQfIVEljL
-	 WL8T1cz0F/nx6LSXr/4Sup+QVhB2F76FKZN/UPS/c2DUfbGYQZiM5PBh+cb557rmb9
-	 DlItxngq2hG4vHSEw8WTWeY3NZdo+vyK15am4aQQTKjtp7DwfTf5xYaKoF0S6pNn8W
-	 Ggw+8OCJx/XPw==
+	b=HN+qGK3nq80EbYDzuiWUPl+mScDHcNU/L1vkwylY5w0ddAnOJd3vn58ldxl+DOgZk
+	 ur/xnGPfbGM+/fff/1H7sdwCCRc1I4Os2uAc4/4jZrWBdxQ0q5w4AWkuo/WskCw8zO
+	 8FoR5gbSU65hsQbHmTU58bvr4ThxowMXpCGWK3WFkFZlKcHS8GyJduxwzS+bYbUdQ0
+	 wqgvmDgWu9xyLGLXSOZTU9BFb/70RvAefiTiyWuYNttUfYAeuhF+M/JRMNhixtqCgC
+	 9C+iLx0yo0fLblgDQFYVtmfwe0d4IEKZh+XlZAFfKpbepKwMod15vl28G5BkIInQPV
+	 8dEMhGT3bBI1Q==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan+linaro@kernel.org>)
-	id 1sPJYf-000000007zP-11nn;
+	id 1sPJYf-000000007zR-1RhI;
 	Thu, 04 Jul 2024 12:19:21 +0200
 From: Johan Hovold <johan+linaro@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -54,11 +54,10 @@ Cc: Douglas Anderson <dianders@chromium.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-serial@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>,
-	stable@vger.kernel.org
-Subject: [PATCH v2 2/3] serial: qcom-geni: fix hard lockup on buffer flush
-Date: Thu,  4 Jul 2024 12:18:04 +0200
-Message-ID: <20240704101805.30612-3-johan+linaro@kernel.org>
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH v2 3/3] serial: qcom-geni: do not kill the machine on fifo underrun
+Date: Thu,  4 Jul 2024 12:18:05 +0200
+Message-ID: <20240704101805.30612-4-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.44.1
 In-Reply-To: <20240704101805.30612-1-johan+linaro@kernel.org>
 References: <20240704101805.30612-1-johan+linaro@kernel.org>
@@ -70,75 +69,35 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The Qualcomm GENI serial driver does not handle buffer flushing and used
-to continue printing discarded characters when the circular buffer was
-cleared. Since commit 1788cf6a91d9 ("tty: serial: switch from circ_buf
-to kfifo") this instead results in a hard lockup due to
+The Qualcomm GENI serial driver did not handle buffer flushing and used
+to print discarded characters when the circular buffer was cleared.
+Since commit 1788cf6a91d9 ("tty: serial: switch from circ_buf to kfifo")
+this instead resulted in a hard lockup due to
 qcom_geni_serial_send_chunk_fifo() spinning indefinitely in the
 interrupt handler.
 
-This is easily triggered by interrupting a command such as dmesg in a
-serial console but can also happen when stopping a serial getty on
-reboot.
+The underlying bugs have now been fixed, but make sure to output NUL
+characters instead of killing the machine if a similar driver bug is
+ever reintroduced.
 
-Implement the flush_buffer() callback and use it to cancel any active TX
-command when the write buffer has been emptied.
-
-Reported-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/lkml/20240610222515.3023730-1-dianders@chromium.org/
-Fixes: 1788cf6a91d9 ("tty: serial: switch from circ_buf to kfifo")
-Fixes: a1fee899e5be ("tty: serial: qcom_geni_serial: Fix softlock")
-Cc: stable@vger.kernel.org	# 5.0
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index a41360d34790..b2bbd2d79dbb 100644
+index b2bbd2d79dbb..69a632fefc41 100644
 --- a/drivers/tty/serial/qcom_geni_serial.c
 +++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -906,13 +906,17 @@ static void qcom_geni_serial_handle_tx_fifo(struct uart_port *uport,
- 	else
- 		pending = kfifo_len(&tport->xmit_fifo);
+@@ -878,7 +878,7 @@ static void qcom_geni_serial_send_chunk_fifo(struct uart_port *uport,
+ 		memset(buf, 0, sizeof(buf));
+ 		tx_bytes = min(remaining, BYTES_PER_FIFO_WORD);
  
--	/* All data has been transmitted and acknowledged as received */
--	if (!pending && !status && done) {
-+	/* All data has been transmitted or command has been cancelled */
-+	if (!pending && done) {
- 		qcom_geni_serial_stop_tx_fifo(uport);
- 		goto out_write_wakeup;
- 	}
+-		tx_bytes = uart_fifo_out(uport, buf, tx_bytes);
++		uart_fifo_out(uport, buf, tx_bytes);
  
--	avail = port->tx_fifo_depth - (status & TX_FIFO_WC);
-+	if (active)
-+		avail = port->tx_fifo_depth - (status & TX_FIFO_WC);
-+	else
-+		avail = port->tx_fifo_depth;
-+
- 	avail *= BYTES_PER_FIFO_WORD;
+ 		iowrite32_rep(uport->membase + SE_GENI_TX_FIFOn, buf, 1);
  
- 	chunk = min(avail, pending);
-@@ -1091,6 +1095,11 @@ static void qcom_geni_serial_shutdown(struct uart_port *uport)
- 	qcom_geni_serial_cancel_tx_cmd(uport);
- }
- 
-+static void qcom_geni_serial_flush_buffer(struct uart_port *uport)
-+{
-+	qcom_geni_serial_cancel_tx_cmd(uport);
-+}
-+
- static int qcom_geni_serial_port_setup(struct uart_port *uport)
- {
- 	struct qcom_geni_serial_port *port = to_dev_port(uport);
-@@ -1547,6 +1556,7 @@ static const struct uart_ops qcom_geni_console_pops = {
- 	.request_port = qcom_geni_serial_request_port,
- 	.config_port = qcom_geni_serial_config_port,
- 	.shutdown = qcom_geni_serial_shutdown,
-+	.flush_buffer = qcom_geni_serial_flush_buffer,
- 	.type = qcom_geni_serial_get_type,
- 	.set_mctrl = qcom_geni_serial_set_mctrl,
- 	.get_mctrl = qcom_geni_serial_get_mctrl,
 -- 
 2.44.1
 
