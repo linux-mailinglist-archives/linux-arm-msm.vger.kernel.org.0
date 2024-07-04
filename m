@@ -1,152 +1,321 @@
-Return-Path: <linux-arm-msm+bounces-25293-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 736D6927A30
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 17:32:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 434B5927A71
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 17:48:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 287871F27B97
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 15:32:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA4FB282CC0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 15:48:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E88421B47A9;
-	Thu,  4 Jul 2024 15:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7000E1E485;
+	Thu,  4 Jul 2024 15:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="erD3plal"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OMVJ/HsV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D85A1B47A1;
-	Thu,  4 Jul 2024 15:30:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0971BC23
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jul 2024 15:48:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720107037; cv=none; b=Y251Kr47JOu7z0q2DiZ9hadfE9M+kKQVxihHB3L0uCFJXhkbrEAjYnt3maNRD1MGNSm3sydxmbJUJdgZxFzY0AgDUy/QyNads0L0Fqq8npKn6P3qldVCW1LMuTCmWH58e8dZWcGIbAoAXht/G7oxrQeK9pqDmeLpBmdsCZK/69Y=
+	t=1720108115; cv=none; b=EJ42TjzJfloXQiTIny0kdQHHsZr/BXURV6PgAcn3eki/o4h+IAv1c8cEjFf1WFiLhWv2xPhoh1nhgE6sTXJWuEPN+tIwfweqrvDGbDSu1pTXQLyIJYrtUkzLibiAioMKRE6WuPg9jD3CZcsbhzEnTzdAD3oE2RrXnqXiKpevqkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720107037; c=relaxed/simple;
-	bh=sEq2TRdPzIZRKJRYYBZmr2pwopVAKl7uQ+Qr/+zQDwg=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rVnwAqy9y+OTTMKd1Qp6mKh+bAsGVNYuUvgXnwti6aIsSnDaxnSgeQSWHoEWxc86zE3Cgz0n3QUYsSVRwLR+cgJzjSYPJzGoxcEIPH/ub59/auGJf6uGmZ3AIX4pJjmkJtewKC+frUrL69eDI9kBZz5K4pVPxTCqey8QLFXzNis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=erD3plal; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4646prxx024680;
-	Thu, 4 Jul 2024 15:30:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	52j9KCjC6rV9OJ4LMt484mcZXv9N0Iyvy5lvhjvdvx4=; b=erD3plalauCzPD7X
-	IodZ2DId2ph/lMXDWpWRFTb49rW5GX4aaLTPj+N9HZExhI6gLV1BcfLu1j82z2/f
-	5o/VzYPnNlfUHdx7E9vrgb4Lkc/NlkkwT/+di5l5mQxWRQR5j/Xggpm7Ctm7LCvE
-	IkAodYNLKTqYWtrzsx3I4bFsBlZCI7Pg4wfyMSDz5EuwYd/pi84SAVQJ2d9RxfH8
-	3uzkfRv4TdJCvSmflo+xT4uylUj2/kZQIsjYFDdIzQktovjoIznVP7yl8Bfk6HIT
-	ad9LAYEEGnFvboBy+RelFXoeLwlAVpgU7p0eUMfM4mnu+NZraFRTigp0j4ZPe5rH
-	HJimYg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4050cybyy9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 04 Jul 2024 15:30:05 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 464FU4bF007435
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 4 Jul 2024 15:30:04 GMT
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 4 Jul 2024 08:29:57 -0700
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
-To: Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, Baruch Siach
-	<baruch@tkos.co.il>,
-        Kathiravan T <quic_kathirav@quicinc.com>,
-        "Sivaprakash
- Murugesan" <sivaprak@codeaurora.org>,
-        Andy Gross <andy.gross@linaro.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Douglas Anderson
-	<dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>, Iskren Chernev
-	<me@iskren.info>,
-        AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@somainline.org>,
-        Vivek Gautam
-	<vivek.gautam@codeaurora.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, Krishna Kurapati <quic_kriskura@quicinc.com>,
-        <stable@vger.kernel.org>
-Subject: [PATCH 8/8] arm64: dts: qcom: sdm845: Disable SS instance in Parkmode for USB
-Date: Thu, 4 Jul 2024 20:58:48 +0530
-Message-ID: <20240704152848.3380602-9-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240704152848.3380602-1-quic_kriskura@quicinc.com>
-References: <20240704152848.3380602-1-quic_kriskura@quicinc.com>
+	s=arc-20240116; t=1720108115; c=relaxed/simple;
+	bh=mF/U87+qilTKB0OB0wRil6xKLBgvp11NjXgzK68VF0E=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=EAefrTcONP9muKUFICb/C8OwzeyVDWmGHNe8h3L6g0Q9O8Keaqz05K+kwMgHP9M9K1/OS1iOHRlRewk9izc37nzVGKYyfNdPvuTsopz2JUY80Fok7pTSUvu8kCfXlV49mrhbgQIVFqRvE867X/1ci4J16Xj2e9kzcRYBY79nxh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OMVJ/HsV; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-650cef35de3so7101047b3.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jul 2024 08:48:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720108112; x=1720712912; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ODCvryMTA6A8sXHZz8NPzUt+8Vn+Lkh4+jLdnCtJUC0=;
+        b=OMVJ/HsV1Jc5WYlK+MRCsqvdixSdNX4JaqetLZPeP/nCRuc0rk1HE2r2+jANvqZP9G
+         MsfbKus+IPYP/D+59nP7i7n/LKM47GJ4+PsXNPhKCmm67C8I2tCoOK6pL6YN8hvtbJAU
+         JMSYVHCuk3RBRfLOGWX3Lq+VpA70c0O0wZMpJ8SprCWSX3OYv+uf0XDvgr97tEUuJmci
+         Yp+IqtptU/+IkqKjRFd40W5dDB3CH0TpNGKOH80P1rG/w90q3pOIxZF1dO9wRzVeMh4P
+         gGEidjJkNJflSpZg40LiAflQZ88ChDV3jEe9mybQqCUL3KWfC04tBuekwxixGcfwz9pJ
+         QNBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720108112; x=1720712912;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ODCvryMTA6A8sXHZz8NPzUt+8Vn+Lkh4+jLdnCtJUC0=;
+        b=vlmF4uw5Groed5OIbTgDZWDDCoEnJgEmDKlv/gzVkee6npCKEB0eZ4wOxNO3We9TXk
+         b614WBjZCNgYjU5KCJYh/2s3qVmC0/0m02Tdq8L/+KF9fMp/w7OwbowF0YQ39QQemWQz
+         X0EoepjmnJdjvMhM2+LEGkNEh+g2elCbDR1e/s7kljekdst/+cJaC6Vnz6StTsxoX/Z9
+         V/TNGE/ficACIQqIQ0kG0i5uY2NpvmGuP+7v1IEhu4kFoDcZN58diA4QN5esLLQHqEO9
+         Xruc76YCR0EatpioVm3OT+SYE6qrXt+DHXAeqF/nssgXvBGXnl+q1hRZ0vofM9R4rYRh
+         xIww==
+X-Forwarded-Encrypted: i=1; AJvYcCVm1c1bIygAOn0Ct88BKshqRmw0b/Hqkzh5hkvAa1MwBo2KLggkiB3W9vtxtaYR8ubSWrBF7k8RVEyvywVMrwGwTV9aokA1+8xcSHiPqQ==
+X-Gm-Message-State: AOJu0YzlOC+tsahUGX1dfEoq3wy8sDqmTlbfsjqanheNAw5JHMjKNCNz
+	ZemqPjheVQO3Py/vxH0ZST7kbRS4a2Z3BtqJN+1jn4umKdjinKgr/X8v33Cs/+yuoSv0ZL/ZCBN
+	HdWkxTOqB9AJXs+fn+PjwLwv7u3w=
+X-Google-Smtp-Source: AGHT+IEGh3cmGC8CBuNIQEethiWr6gUVQWnD2iXynMt/GnSIyI1XwTtJhb2yBWYpy1qCcW9Vp94mr/d6uU2pTXS2hgw=
+X-Received: by 2002:a05:690c:6910:b0:64a:5df5:3afb with SMTP id
+ 00721157ae682-652d7870764mr23664987b3.39.1720108112482; Thu, 04 Jul 2024
+ 08:48:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4R0ShGltYd3r06EgzXnhurvnYzRg2cLD
-X-Proofpoint-ORIG-GUID: 4R0ShGltYd3r06EgzXnhurvnYzRg2cLD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-04_10,2024-07-03_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- mlxlogscore=568 priorityscore=1501 adultscore=0 mlxscore=0 impostorscore=0
- spamscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
- definitions=main-2407040111
+From: Rob Clark <robdclark@gmail.com>
+Date: Thu, 4 Jul 2024 08:48:18 -0700
+Message-ID: <CAF6AEGvZQpYEHpSCgXGJ2kaHJDK6QFAFfTsfiWm4b2zZOnjXGw@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-next-2024-07-04 for v6.11
+To: Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: dri-devel <dri-devel@lists.freedesktop.org>, 
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>, freedreno <freedreno@lists.freedesktop.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-For Gen-1 targets like SDM845, it is seen that stressing out the
-controller in host mode results in HC died error:
+Hi Dave, Sima,
 
- xhci-hcd.12.auto: xHCI host not responding to stop endpoint command
- xhci-hcd.12.auto: xHCI host controller not responding, assume dead
- xhci-hcd.12.auto: HC died; cleaning up
+This is the main pull for v6.11.  It includes a merge of the immutable
+tag qcom/20240430-a750-raytracing-v3-2-7f57c5ac082d@gmail.com to pick
+up dependencies for raytracing and SMEM speedbin.
 
-And at this instant only restarting the host mode fixes it. Disable
-SuperSpeed instance in park mode for SDM845 to mitigate this issue.
+Further description below.
 
-Cc: <stable@vger.kernel.org>
-Fixes: ca4db2b538a1 ("arm64: dts: qcom: sdm845: Add USB-related nodes")
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+The following changes since commit 92815da4576a495cb6362cdfb132152fccc2222d=
+:
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 23b101bb3842..54077549b9da 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -4138,6 +4138,7 @@ usb_1_dwc3: usb@a600000 {
- 				iommus = <&apps_smmu 0x740 0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
-+				snps,parkmode-disable-ss-quirk;
- 				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 
-@@ -4213,6 +4214,7 @@ usb_2_dwc3: usb@a800000 {
- 				iommus = <&apps_smmu 0x760 0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
-+				snps,parkmode-disable-ss-quirk;
- 				phys = <&usb_2_hsphy>, <&usb_2_qmpphy>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 			};
--- 
-2.34.1
+  Merge remote-tracking branch 'drm-misc/drm-misc-next' into HEAD
+(2024-06-12 16:52:39 +0300)
 
+are available in the Git repository at:
+
+  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-next-2024-07-04
+
+for you to fetch changes up to fe34394ecdad459d2d7b1f30e4a39ac27fcd77f8:
+
+  dt-bindings: display/msm: dsi-controller-main: Add SM7150
+(2024-07-03 05:57:35 -0700)
+
+----------------------------------------------------------------
+Updates for v6.11
+
+Core:
+- SM7150 support
+
+DPU:
+- SM7150 support
+- Fix DSC support for DSI panels in video mode
+- Fixed TE vsync source support for DSI command-mode panels
+- Fix for devices without UBWC in the display controller (ie.
+  QCM2290)
+
+DSI:
+- Remove unused register-writing wrappers
+- Fix DSC support for panels in video mode
+- Add support for parsing TE vsync source
+- Add support for MSM8937 (28nm DSI PHY)
+
+MDP5:
+- Add support for MSM8937
+- Fix configuration for MSM8953
+
+GPU:
+- Split giant device table into per-gen "hw catalog" similar to
+  what is done on the display side of the driver
+- Fix a702 UBWC mode
+- Fix unused variably warnings
+- GPU memory traces
+- Add param for userspace to know if raytracing is supported
+- Memory barrier cleanup and GBIF unhalt fix
+- X185 support (aka gpu in X1 laptop chips)
+- a505 support
+- fixes
+
+----------------------------------------------------------------
+Abhinav Kumar (3):
+      drm/msm/a6xx: use __unused__ to fix compiler warnings for gen7_* incl=
+udes
+      drm/msm/dpu: drop validity checks for clear_pending_flush() ctl op
+      drm/msm/dpu: check ubwc support before adding compressed formats
+
+Akhil P Oommen (3):
+      dt-bindings: display/msm/gmu: Add Adreno X185 GMU
+      drm/msm/adreno: Add support for X185 GPU
+      drm/msm/adreno: Introduce gmu_chipid for a740 & a750
+
+Barnab=C3=A1s Cz=C3=A9m=C3=A1n (4):
+      drm/msm/dpu: guard ctl irq callback register/unregister
+      drm/msm/mdp5: Remove MDP_CAP_SRC_SPLIT from msm8x53_config
+      dt-bindings: display/msm: qcom, mdp5: Add msm8937 compatible
+      dt-bindings: msm: dsi-phy-28nm: Document msm8937 compatible
+
+Connor Abbott (5):
+      firmware: qcom: scm: Add gpu_init_regs call
+      firmware: qcom_scm: Add gpu_init_regs call
+      drm/msm/a7xx: Initialize a750 "software fuse"
+      drm/msm: Add MSM_PARAM_RAYTRACING uapi
+      drm/msm/a7xx: Add missing register writes from downstream
+
+Daniil Titov (3):
+      drm/msm/mdp5: Add MDP5 configuration for MSM8937
+      drm/msm/dsi: Add phy configuration for MSM8937
+      drm/msm/adreno: Add support for Adreno 505 GPU
+
+Danila Tikhonov (5):
+      dt-bindings: display/msm: Add SM7150 DPU
+      drm/msm/dpu: Add SM7150 support
+      dt-bindings: display/msm: Add SM7150 MDSS
+      drm/msm: mdss: Add SM7150 support
+      dt-bindings: display/msm: dsi-controller-main: Add SM7150
+
+Dmitry Baryshkov (9):
+      dt-bindings: display/msm/dsi: allow specifying TE source
+      drm/msm/dpu: convert vsync source defines to the enum
+      drm/msm/dsi: drop unused GPIOs handling
+      drm/msm/dpu: pull the is_cmd_mode out of
+_dpu_encoder_update_vsync_source()
+      drm/msm/dpu: rework vsync_source handling
+      drm/msm/dsi: parse vsync source from device tree
+      drm/msm/dpu: support setting the TE source
+      drm/msm/dpu: rename dpu_hw_setup_vsync_source functions
+      drm/msm/dpu: remove CRTC frame event callback registration
+
+Jani Nikula (1):
+      drm/msm/dp: switch to struct drm_edid
+
+Jonathan Marek (4):
+      drm/msm/dpu: fix video mode DSC for DSI
+      drm/msm/dsi: set video mode widebus enable bit when widebus is enable=
+d
+      drm/msm/dsi: set VIDEO_COMPRESSION_MODE_CTRL_WC
+      drm/msm/dsi: add a comment to explain pkt_per_line encoding
+
+Jun Nie (2):
+      drm/msm/dpu: adjust data width for widen bus case
+      drm/msm/dpu: enable compression bit in cfg2 for DSC
+
+Konrad Dybcio (7):
+      drm/msm/a6xx: Fix A702 UBWC mode
+      soc: qcom: Move some socinfo defines to the header
+      soc: qcom: smem: Add a feature code getter
+      drm/msm/dsi: Remove dsi_phy_read/write()
+      drm/msm/dsi: Remove dsi_phy_write_[un]delay()
+      drm/msm/adreno: De-spaghettify the use of memory barriers
+      Revert "drm/msm/a6xx: Poll for GBIF unhalt status in hw_init"
+
+Krzysztof Kozlowski (4):
+      dt-bindings: display/msm/gpu: constrain clocks in top-level
+      dt-bindings: display/msm/gpu: define reg-names in top-level
+      dt-bindings: display/msm/gpu: simplify compatible regex
+      dt-bindings: display/msm/gpu: fix the schema being not applied
+
+Neil Armstrong (2):
+      drm/msm/adreno: fix a7xx gpu init
+      drm/msm/adreno: fix a743 and a740 cx mem init
+
+Rob Clark (11):
+      drm/msm/adreno: Split up giant device table
+      drm/msm/adreno: Split catalog into separate files
+      drm/msm/adreno: Move hwcg regs to a6xx hw catalog
+      drm/msm/adreno: Move hwcg table into a6xx specific info
+      drm/msm/adreno: Move CP_PROTECT settings to hw catalog
+      drm/msm: Add GPU memory traces
+      drm/msm: Add obj flags to gpu devcoredump
+      drm/msm/adreno: Check for zap node availability
+      Merge remote-tracking branch
+'qcom/20240430-a750-raytracing-v3-2-7f57c5ac082d@gmail.com' into
+msm-next-robclark
+      drm/msm/a6xx: Add missing __always_unused
+      drm/msm/gem: Add missing rcu_dereference()
+
+ .../bindings/display/msm/dsi-controller-main.yaml  |   19 +
+ .../bindings/display/msm/dsi-phy-28nm.yaml         |    1 +
+ .../devicetree/bindings/display/msm/gmu.yaml       |    4 +
+ .../devicetree/bindings/display/msm/gpu.yaml       |   27 +-
+ .../devicetree/bindings/display/msm/qcom,mdp5.yaml |    1 +
+ .../devicetree/bindings/display/msm/qcom,mdss.yaml |    1 +
+ .../bindings/display/msm/qcom,sm7150-dpu.yaml      |  143 +++
+ .../bindings/display/msm/qcom,sm7150-mdss.yaml     |  458 +++++++
+ drivers/firmware/qcom/qcom_scm.c                   |   14 +
+ drivers/firmware/qcom/qcom_scm.h                   |    3 +
+ drivers/gpu/drm/msm/Kconfig                        |    1 +
+ drivers/gpu/drm/msm/Makefile                       |    5 +
+ drivers/gpu/drm/msm/adreno/a2xx_catalog.c          |   52 +
+ drivers/gpu/drm/msm/adreno/a3xx_catalog.c          |   81 ++
+ drivers/gpu/drm/msm/adreno/a4xx_catalog.c          |   50 +
+ drivers/gpu/drm/msm/adreno/a5xx_catalog.c          |  161 +++
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c              |   29 +-
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c          | 1259 ++++++++++++++++=
+++++
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |   38 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  995 ++--------------
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |   12 +
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        |   13 +-
+ drivers/gpu/drm/msm/adreno/adreno_device.c         |  624 +---------
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c            |    6 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h            |   44 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h |  335 ++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |   25 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h           |    2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |   57 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |   15 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |    8 +
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |    4 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |   21 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |    3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |    1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |    1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |    3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |   19 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |    5 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   26 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c         |   14 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h         |    2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   45 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          |    7 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h          |    4 -
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c           |   91 +-
+ drivers/gpu/drm/msm/dp/dp_display.c                |   11 +-
+ drivers/gpu/drm/msm/dp/dp_panel.c                  |   47 +-
+ drivers/gpu/drm/msm/dp/dp_panel.h                  |    2 +-
+ drivers/gpu/drm/msm/dsi/dsi.h                      |    1 +
+ drivers/gpu/drm/msm/dsi/dsi_host.c                 |   59 +-
+ drivers/gpu/drm/msm/dsi/dsi_manager.c              |    5 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |    2 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |    6 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c         |  273 ++---
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c         |  218 ++--
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c         |  109 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c         |  323 ++---
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c    |  205 ++--
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          |  320 +++--
+ drivers/gpu/drm/msm/msm_drv.h                      |   11 +
+ drivers/gpu/drm/msm/msm_gem.c                      |   37 +
+ drivers/gpu/drm/msm/msm_gpu.c                      |    6 +-
+ drivers/gpu/drm/msm/msm_gpu.h                      |    9 +
+ drivers/gpu/drm/msm/msm_mdss.c                     |    8 +
+ drivers/soc/qcom/smem.c                            |   33 +
+ drivers/soc/qcom/socinfo.c                         |    8 -
+ include/linux/firmware/qcom/qcom_scm.h             |   23 +
+ include/linux/soc/qcom/smem.h                      |    1 +
+ include/linux/soc/qcom/socinfo.h                   |   34 +
+ include/uapi/drm/msm_drm.h                         |    1 +
+ 71 files changed, 4011 insertions(+), 2470 deletions(-)
+ create mode 100644
+Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
+ create mode 100644
+Documentation/devicetree/bindings/display/msm/qcom,sm7150-mdss.yaml
+ create mode 100644 drivers/gpu/drm/msm/adreno/a2xx_catalog.c
+ create mode 100644 drivers/gpu/drm/msm/adreno/a3xx_catalog.c
+ create mode 100644 drivers/gpu/drm/msm/adreno/a4xx_catalog.c
+ create mode 100644 drivers/gpu/drm/msm/adreno/a5xx_catalog.c
+ create mode 100644 drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h
 
