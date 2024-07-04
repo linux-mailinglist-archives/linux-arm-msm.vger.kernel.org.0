@@ -1,360 +1,256 @@
-Return-Path: <linux-arm-msm+bounces-25282-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8205E927929
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 16:47:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0615B92796B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 17:02:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 38B7C289C08
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 14:47:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B00C81F23CA6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 15:02:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05F1D1B0100;
-	Thu,  4 Jul 2024 14:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48B291B121E;
+	Thu,  4 Jul 2024 15:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S5uf+CIk"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="H9TH+SE/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01DA41B0119;
-	Thu,  4 Jul 2024 14:47:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636E31AEFF5
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jul 2024 15:01:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720104429; cv=none; b=QksujHwcXAaybCKU77L/GnmkV9XYE9vF/L4Cn0vyzALXE6NTIVg2e7+1PdhzGYRcQ+Uukgy8T1GUjeiaHqVwBSscbHBNI6F555uAyeknhFeD4KQn0qNkrzJkBlWnAl9beH1Z5wK51tSiGDZbY8GjPYA5NkUGGaa4197WsTrKe6I=
+	t=1720105320; cv=none; b=IXsQIGeXP7o42hd89oOc1orM8fYVM4NdhM9yMYnScmqb1JKFQ8+KNSAii3WJS72dLyMlM+iZeQzV81OvnhYT8toOtZC9ars5siPicJMUPBhgbtuD7vV1PfmAKId74l9RzSIpaIjnubAvcEc98iAK/8+ThyilCbvGeNmuEPsHMbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720104429; c=relaxed/simple;
-	bh=IDCeiu5mEawM+br2ekExwxrGFPHyU/H1yI19GY34aAA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jVWcKvhFEiZLuRzrO0SZhMXzkkhkZDDeERDe0J5X04gMfbylZnL/qF28Y1sLV7J7hJCKeeWoCRrHRIxzR7nNQo7xnKTFPFcxwdLFeOQw50W+W+WY3FyKoXPmFo9cezJti7MMkDSsTZaV3fPPMO7w7cOLZ7tDv4GEIGzLBfoM9Xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S5uf+CIk; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52caebc6137so675505e87.0;
-        Thu, 04 Jul 2024 07:47:07 -0700 (PDT)
+	s=arc-20240116; t=1720105320; c=relaxed/simple;
+	bh=5XHC/DiPTdbZKgQU4c//xJ3ZzNIOnLdZwKuG4Jg17m0=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=R8BLtW1r+6huQ4ER68VrUwBnjOWWeJK5Bvl+jUpWWUH7rqBuS4pbRrAF2emXoVbmf13QMKV9hYe7WRdI0UThhc36LqLq8QYWknZGHYXnOLB5YcOX2VGPlJ41nguxZjJYF0PaTyczaj6/CmH5+7/im5ZMyKBjrfbJPKv4uQ53/o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=H9TH+SE/; arc=none smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2eaae2a6dc1so9979351fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jul 2024 08:01:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720104426; x=1720709226; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=fairphone.com; s=fair; t=1720105315; x=1720710115; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DUvph06JSFrE905v1rTCX4Mxj2mGQYTfL/RGtqhSfkY=;
-        b=S5uf+CIkmN2fqdXtc6G14d3dqKdrIaLg4kiFNbmCJVMeAvxoJm32ISyZUyKlBy9X70
-         uCEcszrwErUG6Iz/+kHWzih8Q2VULSSRUZEih5uS9keHMIdAcVjXCkGrCOQtBbiUKMJ/
-         iC9pPstPPninC4ZghPD7EUEL1eHc+o/IyP5bk0f8hjVGKP5JUatcGkgCpdJUZoWDKa14
-         P6f8sb3DUGx7gahQthk1qgNN0kMF2OsaOENh5Ir/86aBpDmSNFnBABPTAUW0SrAeQmxW
-         x1LfVTRZWzNfwGsq1w3/1DNWG3rhgXRYdidLtKVf39oAmw8SrRVdumpVwNrpHw4gLZsE
-         Utnw==
+        bh=BULRBOFvK05apBX+ctPL2pcEaLu2COoB/KetU0ktBgg=;
+        b=H9TH+SE/I/sEXYbCjayqnTqxBZTlGn/d+BaNshAFcjDHITKNFamnPgc9uPKpTYA7fk
+         S1yi2FpGMGgU4F9CE5ODb9uZUqs6nK/c2El4rhTB0pQY13NcFiymAD61i8DaqhmX+s30
+         foeTh1EvX3+5KyQM51ElsHaWn8xUEfRTd5LQK86DDLYw/Ji1YQVjJDbY0X0UhmaRDP2w
+         dBwptpoYl5ar5N42fYCw3hBsKTOdbQfOTFa3TNh5X1T/DlTke3ILG3rFCZaVBZLt0jyN
+         QRTUc+odvW32V1/ZekD8/SMLQvps1fm5kBqmPf47NGfx/Ot7X9y5GOlKFW9fyAUCZasy
+         SB/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720104426; x=1720709226;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DUvph06JSFrE905v1rTCX4Mxj2mGQYTfL/RGtqhSfkY=;
-        b=xG5U/DSbnInn6YSVeHecY2ZeCBuVaLJWWzgNwaRNxzvkyJmNO4Ep6DId7Cc6MFcjqC
-         zrgQd2KFZoyQdFZRgFPEdAlQqCnum6baxbqxyjc/S4JKv2KPWd+j9TZkUDO9fPeyOfyR
-         PJ3131i0k8L8UHyqkewpp1yw0KEggNs5zY2zFdHSvD2VbYc4kbRnZWTax7edat1+cINU
-         D/2QgRlqopab6SF+mu7G5ocGFyItA3nim8DVLka3UGGvU8gaUDDkJcezreu2rKGbf41l
-         4fV0YlROuZKQGSOuOzk22PgXO8cf8nGYAuqqvj4O6u8sja3n9LQnGT9BMEu97DMOlCyV
-         8c5w==
-X-Forwarded-Encrypted: i=1; AJvYcCUR+RR5P9iGsxJYT4uER3NAKA42l6k14Q4i95isRjOZDsQI2S562BNswB5A4tjItT6D57YnDpgS5o9inSTYKuJ5ivLc9X9z5P+da7Rd5+R/HRBPodfC+pwxJj2NrbY4jh6KSQMZRv64gyt9OA==
-X-Gm-Message-State: AOJu0YwbNiAnb7Wieq/7P/5loAy6l02kM+7F/rNqEeHZ38K9484ZNJ1q
-	qS2qBdc524S/rzMH5b1zYWynb5g7Jcoy8yMZUrO6JewPVAEF04cOf1Ddb7GZ/IeonKtIKEhC4qM
-	h8xOnRac6w6jAPqudxSG8l/8fGKI=
-X-Google-Smtp-Source: AGHT+IFSMB2hLvdXIpk7WdV3emzczgQAeYoRzOjZFLycZVjysO+DsBXLASIoHowJh0V9QyCWLB/vIGYqxvk5qrbfmlQ=
-X-Received: by 2002:a19:911d:0:b0:52c:dc0b:42cf with SMTP id
- 2adb3069b0e04-52ea061f607mr1239471e87.9.1720104425794; Thu, 04 Jul 2024
- 07:47:05 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720105315; x=1720710115;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=BULRBOFvK05apBX+ctPL2pcEaLu2COoB/KetU0ktBgg=;
+        b=nqdtnXrE6+ycG9peErEjAwzt4JyNfh4xulkvHQHSYw47Yu1dkyhimEs/XUETuox0IM
+         JngdtLbHr/nqO8vhBdPXDMaw4KpdnpvvoMeuMFgZRB76eV8OhQP9c4cMijEyNCw/19QI
+         4oUUSGMIYb4IdNcY6rVu9R8gxhJ6hGw19/TpIS+ttuZX5MhNM9hlAVFyi7Bh6JWHMgOO
+         4E2BTN1VAmSsPFlqm8vf6UzrZDVMcd7rFs8qJdyu4wAnFmVQH4/fThv8KtJFtnwGwK/H
+         wukIKRoKfyLA1F92w13mp4hHv7uBdBeMfSQl0PeoCBCT8ga8hYLChJ5gWbni2TpBbmim
+         ovrg==
+X-Gm-Message-State: AOJu0YwSVOC1UrasraSas0L0LPNGeJVFDSuU2gigJuq7hC9qd7JW2B3q
+	WQGjwW2IYflJgUEl6RyrqQWmTU9H+GWY4p8a+7iVTSgX4M5PONVekBftuRKvP58=
+X-Google-Smtp-Source: AGHT+IF8IG7O3sWGDwGtIn0Is+tyKiyak/t/OHdy0e8YTVFUu5mblg8vYgPAWflBIysihMT7fKvHzw==
+X-Received: by 2002:a2e:9515:0:b0:2ec:5843:2fb8 with SMTP id 38308e7fff4ca-2ee8ee0e795mr14918511fa.42.1720105315487;
+        Thu, 04 Jul 2024 08:01:55 -0700 (PDT)
+Received: from localhost (2a02-a210-20ba-5a00-9ceb-707b-2d57-26f7.cable.dynamic.v6.ziggo.nl. [2a02:a210:20ba:5a00:9ceb:707b:2d57:26f7])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a77c2af0352sm25441466b.198.2024.07.04.08.01.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Jul 2024 08:01:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20240628140435.1652374-1-quic_bibekkum@quicinc.com>
- <20240628140435.1652374-7-quic_bibekkum@quicinc.com> <CAF6AEGvroi8rJimFv95tkWmRFa5_aTpBJ7GFcRAuZpLGdSyEYQ@mail.gmail.com>
- <0650ba0a-4453-4e2d-8a76-0f396ac1999c@quicinc.com> <CAF6AEGv_9e-TDW1r0N4-db6pY_aV_EZFqrpNbATVS5Vy6+fs1g@mail.gmail.com>
- <4a5f54c7-120e-427d-8a0a-9fb83e13a72e@quicinc.com> <CAF6AEGtrtFNxDWtuADA4oOHhZJ=dJZcGaJ1XLFJt4fe4Xp=pTA@mail.gmail.com>
- <3b7c05b1-8f36-4c81-a55c-dbb467314099@quicinc.com>
-In-Reply-To: <3b7c05b1-8f36-4c81-a55c-dbb467314099@quicinc.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Thu, 4 Jul 2024 07:46:53 -0700
-Message-ID: <CAF6AEGuRKU+DkL0-b3xdR1R45_MiiKQYRRXEXYz-xohu8rUaEQ@mail.gmail.com>
-Subject: Re: [PATCH v13 6/6] iommu/arm-smmu: add support for PRR bit setup
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, jgg@ziepe.ca, 
-	jsnitsel@redhat.com, robh@kernel.org, krzysztof.kozlowski@linaro.org, 
-	quic_c_gdjako@quicinc.com, dmitry.baryshkov@linaro.org, 
-	konrad.dybcio@linaro.org, iommu@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 04 Jul 2024 17:01:54 +0200
+Message-Id: <D2GUG0KGQNHX.3AITI7PGV3KW3@fairphone.com>
+Cc: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-i2c@vger.kernel.org>, "Suresh Vankadara"
+ <quic_svankada@quicinc.com>, "Trishansh Bhardwaj"
+ <quic_tbhardwa@quicinc.com>, "Hariram Purushothaman"
+ <quic_hariramp@quicinc.com>
+Subject: Re: [PATCH 0/6] media: qcom: camss: Add sc7280 support
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Vikram Sharma" <quic_vikramsa@quicinc.com>, "Robert Foss"
+ <rfoss@kernel.org>, "Todor Tomov" <todor.too@gmail.com>, "Bryan O'Donoghue"
+ <bryan.odonoghue@linaro.org>, "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+ "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Kapatrala
+ Syed" <akapatra@quicinc.com>, "Hariram Purushothaman"
+ <hariramp@quicinc.com>, <cros-qcom-dts-watchers@chromium.org>, "Bjorn
+ Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konrad.dybcio@linaro.org>, "Loic Poulain" <loic.poulain@linaro.org>, "Andi
+ Shyti" <andi.shyti@kernel.org>
+X-Mailer: aerc 0.17.0-0-g6ea74eb30457
+References: <20240629-camss_first_post_linux_next-v1-0-bc798edabc3a@quicinc.com>
+In-Reply-To: <20240629-camss_first_post_linux_next-v1-0-bc798edabc3a@quicinc.com>
 
-On Wed, Jul 3, 2024 at 4:38=E2=80=AFAM Bibek Kumar Patro
-<quic_bibekkum@quicinc.com> wrote:
+On Fri Jun 28, 2024 at 8:32 PM CEST, Vikram Sharma wrote:
+> SC7280 is a Qualcomm SoC. This series adds support to
+> bring up the CSIPHY, CSID, VFE/RDI interfaces in SC7280.
 >
+> SC7280 provides
 >
+> - 3 x VFE, 3 RDI per VFE
+> - 2 x VFE Lite, 4 RDI per VFE
+> - 3 x CSID
+> - 2 x CSID Lite
+> - 5 x CSI PHY
 >
-> On 7/2/2024 2:01 AM, Rob Clark wrote:
-> > On Mon, Jul 1, 2024 at 4:01=E2=80=AFAM Bibek Kumar Patro
-> > <quic_bibekkum@quicinc.com> wrote:
-> >>
-> >>
-> >>
-> >> On 6/28/2024 9:14 PM, Rob Clark wrote:
-> >>> On Fri, Jun 28, 2024 at 8:10=E2=80=AFAM Bibek Kumar Patro
-> >>> <quic_bibekkum@quicinc.com> wrote:
-> >>>>
-> >>>>
-> >>>>
-> >>>> On 6/28/2024 7:47 PM, Rob Clark wrote:
-> >>>>> On Fri, Jun 28, 2024 at 7:05=E2=80=AFAM Bibek Kumar Patro
-> >>>>> <quic_bibekkum@quicinc.com> wrote:
-> >>>>>>
-> >>>>>> Add an adreno-smmu-priv interface for drm/msm to call
-> >>>>>> into arm-smmu-qcom and initiate the PRR bit setup or reset
-> >>>>>> sequence as per request.
-> >>>>>>
-> >>>>>> This will be used by GPU to setup the PRR bit and related
-> >>>>>> configuration registers through adreno-smmu private
-> >>>>>> interface instead of directly poking the smmu hardware.
-> >>>>>>
-> >>>>>> Suggested-by: Rob Clark <robdclark@gmail.com>
-> >>>>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-> >>>>>> ---
-> >>>>>>     drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 23 ++++++++++++++=
-++++++++
-> >>>>>>     drivers/iommu/arm/arm-smmu/arm-smmu.h      |  2 ++
-> >>>>>>     include/linux/adreno-smmu-priv.h           |  6 +++++-
-> >>>>>>     3 files changed, 30 insertions(+), 1 deletion(-)
-> >>>>>>
-> >>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/=
-iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >>>>>> index bd101a161d04..64571a1c47b8 100644
-> >>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >>>>>> @@ -28,6 +28,7 @@
-> >>>>>>     #define PREFETCH_SHALLOW       (1 << PREFETCH_SHIFT)
-> >>>>>>     #define PREFETCH_MODERATE      (2 << PREFETCH_SHIFT)
-> >>>>>>     #define PREFETCH_DEEP          (3 << PREFETCH_SHIFT)
-> >>>>>> +#define GFX_ACTLR_PRR          (1 << 5)
-> >>>>>>
-> >>>>>>     static const struct actlr_config sc7280_apps_actlr_cfg[] =3D {
-> >>>>>>            { 0x0800, 0x04e0, PREFETCH_DEFAULT | CMTLB },
-> >>>>>> @@ -235,6 +236,27 @@ static void qcom_adreno_smmu_resume_translati=
-on(const void *cookie, bool termina
-> >>>>>>            arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME,=
- reg);
-> >>>>>>     }
-> >>>>>>
-> >>>>>> +static void qcom_adreno_smmu_set_prr(const void *cookie, phys_add=
-r_t page_addr, bool set)
-> >>>>>> +{
-> >>>>>> +       struct arm_smmu_domain *smmu_domain =3D (void *)cookie;
-> >>>>>> +       struct arm_smmu_cfg *cfg =3D &smmu_domain->cfg;
-> >>>>>> +       struct arm_smmu_device *smmu =3D smmu_domain->smmu;
-> >>>>>> +       u32 reg =3D 0;
-> >>>>>> +
-> >>>>>> +       writel_relaxed(lower_32_bits(page_addr),
-> >>>>>> +                               smmu->base + ARM_SMMU_GFX_PRR_CFG_=
-LADDR);
-> >>>>>> +
-> >>>>>> +       writel_relaxed(upper_32_bits(page_addr),
-> >>>>>> +                               smmu->base + ARM_SMMU_GFX_PRR_CFG_=
-UADDR);
-> >>>>>> +
-> >>>>>> +       reg =3D  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_AC=
-TLR);
-> >>>>>> +       reg &=3D ~GFX_ACTLR_PRR;
-> >>>>>> +       if (set)
-> >>>>>> +               reg |=3D FIELD_PREP(GFX_ACTLR_PRR, 1);
-> >>>>>> +       arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg=
-);
-> >>>>>> +
-> >>>>>
-> >>>>> nit, extra line
-> >>>>>
-> >>>>
-> >>>> Ack, will remove this. Thanks for pointing out.
-> >>>>
-> >>>>> Also, if you passed a `struct page *` instead, then you could drop =
-the
-> >>>>> bool param, ie. passing NULL for the page would disable PRR.  But I
-> >>>>> can go either way if others have a strong preference for phys_addr_=
-t.
-> >>>>>
-> >>>>
-> >>>> Oh okay, this looks simple to reset the prr bit.
-> >>>> But since this page is allocated and is used inside gfx driver
-> >>>> before being utilized for prr bit operation, would it be safe for
-> >>>> drm/gfx driver to keep a reference to this page in smmu driver?
-> >>>>
-> >>>> Since we only need the page address for configuring the
-> >>>> CFG_UADDR/CFG_LADDR registers so passed the phys_addr_t.
-> >>>
-> >>> I don't think the smmu driver needs to keep a reference to the page..
-> >>> we can just say it is the responsibility of the drm driver to call
-> >>> set_prr(NULL) before freeing the page
-> >>>
-> >>
-> >> That makes sense. If we go by this NULL page method to disable the PRR=
-,
-> >> we would have to set the address registers to reset value as well.
-> >>
-> >> The sequence would be like the following as per my understaning:
-> >> - Check if it's NULL page
-> >> - Set the PRR_CFG_UADDR/PRR_CFG_LADDR to reset values i.e - 0x0 for
-> >>     these registers
-> >> - Reset the PRR bit in actlr register
-> >>
-> >> Similar to this snippet:
-> >>
-> >> #PRR_RESET_ADDR 0x0
-> >>
-> >> --------------
-> >> reg =3D  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR);
-> >> reg &=3D ~GFX_ACTLR_PRR;
-> >> arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
-> >>
-> >> if (!prr_page) {
-> >>          writel_relaxed(PRR_RESET_ADDR,
-> >>                          smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
-> >>          writel_relaxed(PRR_RESET_ADDR),
-> >>                           smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
-> >>          return;
-> >> }
-> >>
-> >>
-> >> writel_relaxed(lower_32_bits(page_to_phys(prr_page)),
-> >>                  smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
-> >>
-> >> writel_relaxed(upper_32_bits(page_to_phys(prr_page)),
-> >>                  smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
-> >>
-> >> reg |=3D FIELD_PREP(GFX_ACTLR_PRR, 1);
-> >> arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
-> >> -----------------
-> >>
-> >> If looks good, will implement the same in next version.
-> >
-> > yeah, that looks like it could work..
-> >
-> > you probably don't need to zero out the PRR_CFG_*ADDR when disabling,
-> > and probably could avoid double writing ACTLR, but that is getting
-> > into bikeshedding
-> >
+> This series is rebased based on=EF=BC=9A
+> https://lore.kernel.org/linux-arm-msm/20240522154659.510-1-quic_grosikop@=
+quicinc.com/
 >
-> Actually Rob, since you rightly pointed this out.
-> I crosschecked again on these registers.
-> PRR_CFG_*ADDR is a global register in SMMU space but
-> ACTLR register including PRR bit is a per-domain register.
-> There might also be a situation where PRR feature need to be
-> disabled or enabled separately for each domain.
-> So I think it would be cleaner to have two apis, set_prr_addr(),
-> set_prr_bit().
-> set_prr_addr() will be used only to set this PRR_CFG_*ADDR
-> register by passing a 'struct page *'
-> set_prr_bit() will be used as a switch for PRR feature,
-> where required smmu_domain will be passed along with
-> the bool value to set/reset the PRR bit depending on which this
-> feature will be enabled/disabled for the selected domain.
+> The changes are verified on SC7280 qcs6490-rb3gen2 board, the base dts fo=
+r qcs6490-rb3gen2
+> is:
+> https://lore.kernel.org/all/20231103184655.23555-1-quic_kbajaj@quicinc.co=
+m/
 
-on a related note, adreno has been using arm-smmu for a number of
-generations, I guess not all support PRR?  The drm driver will need to
-know whether PRR is supported (and expose that to userspace to let the
-UMD know whether to expose certain extensions).  How should this work?
+Hi Vikram,
 
-BR,
--R
+Thanks for sending this patch!
 
-> Thanks & regards,
-> Bibek
+I just tried this on QCM6490 Fairphone 5 smartphone but unfortunately
+during probe something is not quite right.
+
+[   99.531855] qcom-camss acaf000.camss: Adding to iommu group 11
+[   99.533180] ------------[ cut here ]------------
+[   99.533187] qcom-camss acaf000.camss: Error: CSID depends on VFE/IFE dev=
+ice ops!
+[   99.533219] WARNING: CPU: 2 PID: 6902 at drivers/media/platform/qcom/cam=
+ss/camss-csid.c:1024 msm_csid_subdev_init+0x41c/0x460 [qcom_camss]
+[   99.533248] Modules linked in: qcom_camss(+) videobuf2_dma_sg videobuf2_=
+memops videobuf2_v4l2 videobuf2_common
+[   99.533266] CPU: 2 PID: 6902 Comm: modprobe Not tainted 6.10.0-rc5-00087=
+-g1dd25cd60c69 #138
+[   99.533272] Hardware name: Fairphone 5 (DT)
+[   99.533276] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=
+=3D--)
+[   99.533281] pc : msm_csid_subdev_init+0x41c/0x460 [qcom_camss]
+[   99.533301] lr : msm_csid_subdev_init+0x41c/0x460 [qcom_camss]
+[   99.533321] sp : ffff80008575b760
+[   99.533324] x29: ffff80008575b760 x28: ffffae85fd7685d8 x27: ffff8000857=
+5bca8
+[   99.533334] x26: 0000000000002c28 x25: 0000000000000000 x24: ffff307e4c4=
+8a080
+[   99.533343] x23: ffff307e46876080 x22: 0000000000000000 x21: ffff307e40b=
+dac10
+[   99.533352] x20: ffff307e46876080 x19: 0000000000000000 x18: fffffffffff=
+ed520
+[   99.533361] x17: 2065636976656420 x16: 4546492f45465620 x15: 6e6f2073646=
+e6570
+[   99.533369] x14: ffffae865b46dad0 x13: 2173706f20656369 x12: 76656420454=
+6492f
+[   99.533377] x11: ffffae865b46dad0 x10: 00000000000002d3 x9 : ffffae865b4=
+c5ad0
+[   99.533386] x8 : 0000000000017fe8 x7 : 00000000fffff000 x6 : ffffae865b4=
+c5ad0
+[   99.533394] x5 : ffff307fb6f83848 x4 : 0000000000000000 x3 : ffff81f95bd=
+4d000
+[   99.533402] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff307e4df=
+e9000
+[   99.533412] Call trace:
+[   99.533415]  msm_csid_subdev_init+0x41c/0x460 [qcom_camss]
+[   99.533435]  camss_probe+0x310/0x998 [qcom_camss]
+[   99.533454]  platform_probe+0x68/0xe0
+[   99.533465]  really_probe+0xbc/0x2c0
+[   99.533471]  __driver_probe_device+0x78/0x120
+[   99.533479]  driver_probe_device+0x3c/0x160
+[   99.533485]  __driver_attach+0x90/0x1a0
+[   99.533490]  bus_for_each_dev+0x7c/0xf0
+[   99.533497]  driver_attach+0x24/0x30
+[   99.533503]  bus_add_driver+0xe4/0x208
+[   99.533509]  driver_register+0x68/0x124
+[   99.533514]  __platform_driver_register+0x28/0x40
+[   99.533521]  qcom_camss_driver_init+0x20/0x1000 [qcom_camss]
+[   99.533540]  do_one_initcall+0x60/0x1d4
+[   99.533547]  do_init_module+0x5c/0x21c
+[   99.533555]  load_module+0x18b0/0x1e40
+[   99.533562]  init_module_from_file+0x88/0xcc
+[   99.533568]  __arm64_sys_finit_module+0x174/0x340
+[   99.533575]  invoke_syscall+0x48/0x10c
+[   99.533582]  el0_svc_common.constprop.0+0x40/0xe0
+[   99.533588]  do_el0_svc+0x1c/0x34
+[   99.533594]  el0_svc+0x34/0xe0
+[   99.533602]  el0t_64_sync_handler+0x120/0x12c
+[   99.533608]  el0t_64_sync+0x190/0x194
+[   99.533613] ---[ end trace 0000000000000000 ]---
+[   99.533619] qcom-camss acaf000.camss: Failed to init csid0 sub-device: -=
+22
+[   99.533828] qcom-camss acaf000.camss: probe with driver qcom-camss faile=
+d with error -22
+
+My tree is based on 6.10-rc5 plus v4 of:
+https://lore.kernel.org/linux-arm-msm/20240522154659.510-1-quic_grosikop@qu=
+icinc.com/
+plus your v1 series.
+
+And then some extra patches for my device but nothing touching camss
+driver.
+
+Am I missing something?
+
+Regards
+Luca
+
 >
-> > BR,
-> > -R
-> >
-> >>
-> >> Thanks & regards,
-> >> Bibek
-> >>
-> >>> BR,
-> >>> -R
-> >>>
-> >>>>> Otherwise, lgtm
-> >>>>>
-> >>>>> BR,
-> >>>>> -R
-> >>>>>
-> >>>>
-> >>>> Thanks & regards,
-> >>>> Bibek
-> >>>>
-> >>>>>> +}
-> >>>>>> +
-> >>>>>>     #define QCOM_ADRENO_SMMU_GPU_SID 0
-> >>>>>>
-> >>>>>>     static bool qcom_adreno_smmu_is_gpu_device(struct device *dev)
-> >>>>>> @@ -407,6 +429,7 @@ static int qcom_adreno_smmu_init_context(struc=
-t arm_smmu_domain *smmu_domain,
-> >>>>>>            priv->get_fault_info =3D qcom_adreno_smmu_get_fault_inf=
-o;
-> >>>>>>            priv->set_stall =3D qcom_adreno_smmu_set_stall;
-> >>>>>>            priv->resume_translation =3D qcom_adreno_smmu_resume_tr=
-anslation;
-> >>>>>> +       priv->set_prr =3D qcom_adreno_smmu_set_prr;
-> >>>>>>
-> >>>>>>            actlrvar =3D qsmmu->data->actlrvar;
-> >>>>>>            if (!actlrvar)
-> >>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu=
-/arm/arm-smmu/arm-smmu.h
-> >>>>>> index d9c2ef8c1653..3076bef49e20 100644
-> >>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> >>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> >>>>>> @@ -154,6 +154,8 @@ enum arm_smmu_cbar_type {
-> >>>>>>     #define ARM_SMMU_SCTLR_M               BIT(0)
-> >>>>>>
-> >>>>>>     #define ARM_SMMU_CB_ACTLR              0x4
-> >>>>>> +#define ARM_SMMU_GFX_PRR_CFG_LADDR     0x6008
-> >>>>>> +#define ARM_SMMU_GFX_PRR_CFG_UADDR     0x600C
-> >>>>>>
-> >>>>>>     #define ARM_SMMU_CB_RESUME             0x8
-> >>>>>>     #define ARM_SMMU_RESUME_TERMINATE      BIT(0)
-> >>>>>> diff --git a/include/linux/adreno-smmu-priv.h b/include/linux/adre=
-no-smmu-priv.h
-> >>>>>> index c637e0997f6d..d6e2ca9f8d8c 100644
-> >>>>>> --- a/include/linux/adreno-smmu-priv.h
-> >>>>>> +++ b/include/linux/adreno-smmu-priv.h
-> >>>>>> @@ -49,7 +49,10 @@ struct adreno_smmu_fault_info {
-> >>>>>>      *                 before set_ttbr0_cfg().  If stalling on fau=
-lt is enabled,
-> >>>>>>      *                 the GPU driver must call resume_translation=
-()
-> >>>>>>      * @resume_translation: Resume translation after a fault
-> >>>>>> - *
-> >>>>>> + * @set_prr:      Extendible interface to be used by GPU to modif=
-y the
-> >>>>>> + *                 ACTLR register bits, currently used to configu=
-re
-> >>>>>> + *                 Partially-Resident-Region (PRR) feature's
-> >>>>>> + *                 setup and reset sequence as requested.
-> >>>>>>      *
-> >>>>>>      * The GPU driver (drm/msm) and adreno-smmu work together for =
-controlling
-> >>>>>>      * the GPU's SMMU instance.  This is by necessity, as the GPU =
-is directly
-> >>>>>> @@ -67,6 +70,7 @@ struct adreno_smmu_priv {
-> >>>>>>         void (*get_fault_info)(const void *cookie, struct adreno_s=
-mmu_fault_info *info);
-> >>>>>>         void (*set_stall)(const void *cookie, bool enabled);
-> >>>>>>         void (*resume_translation)(const void *cookie, bool termin=
-ate);
-> >>>>>> +    void (*set_prr)(const void *cookie, phys_addr_t page_addr, bo=
-ol set);
-> >>>>>>     };
-> >>>>>>
-> >>>>>>     #endif /* __ADRENO_SMMU_PRIV_H */
-> >>>>>> --
-> >>>>>> 2.34.1
-> >>>>>>
+> Suresh Vankadara (2):
+> media: qcom: camss: support for camss driver on sc7280
+> arm64: dts: qcom: sc7280: Add support for camss
+>
+> Trishansh Bhardwaj (2):
+> media: qcom: camss: support for camss driver on sc7280
+> arm64: dts: qcom: sc7280: Add support for camss
+>
+> Vikram Sharma (1):
+> media: dt-bindings: media: camss: Add qcom,sc7280-camss binding
+>
+> Hariram Purshotam (3):
+> i2c: Enable IMX577 camera sensor for qcm6490
+> arm64: dts: qcom: qcs6490-rb3gen2: Enable IMX577 camera sensor
+> arm64: dts: qcom: sc7280: Add IMX577 camera sensor
+>
+> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+> ---
+> Suresh Vankadara (1):
+>       media: qcom: camss: support for camss driver for sc7280
+>
+> Vikram Sharma (5):
+>       media: dt-bindings: media: camss: Add qcom,sc7280-camss binding
+>       arm64: dts: qcom: sc7280: Add support for camss
+>       arm64: dts: qcom: sc7280: Add IMX577 camera sensor
+>       arm64: dts: qcom: qcs6490-rb3gen2: Enable IMX577 camera sensor
+>       i2c: Enable IMX577 camera sensor for qcm6490
+>
+>  .../bindings/media/qcom,sc7280-camss.yaml          | 477 +++++++++++++++=
+++++++
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts       |  67 +++
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi               | 215 ++++++++++
+>  drivers/i2c/busses/i2c-qcom-cci.c                  |   1 +
+>  drivers/media/platform/qcom/camss/camss-csid.c     |  16 +-
+>  .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     |   2 +
+>  drivers/media/platform/qcom/camss/camss-vfe.c      |   2 +
+>  drivers/media/platform/qcom/camss/camss.c          | 340 +++++++++++++++
+>  drivers/media/platform/qcom/camss/camss.h          |   2 +
+>  9 files changed, 1119 insertions(+), 3 deletions(-)
+> ---
+> base-commit: 18eeb2d92baca167809cd5d48eb60e0a5c036d51
+> change-id: 20240627-camss_first_post_linux_next-f4163c90093c
+>
+> Best regards,
+
 
