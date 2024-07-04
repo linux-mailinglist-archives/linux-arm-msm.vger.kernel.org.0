@@ -1,173 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-25302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5631F927C73
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 19:44:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F574927D2F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 20:35:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D3D78B2216D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 17:44:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0536C1F2104C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 18:35:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF3113FBAD;
-	Thu,  4 Jul 2024 17:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E884553389;
+	Thu,  4 Jul 2024 18:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fp04a8kh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z7O6TYn9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7974B3D3AC;
-	Thu,  4 Jul 2024 17:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA3445979;
+	Thu,  4 Jul 2024 18:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720115063; cv=none; b=aRHDFzh1P/2KX+bIg23wD6BIXIBbkDew1sPwfut7sE1OxmzwSj/sUjrQSwqI+xqwi8++FGKyXuzPSYij0hcoor0C+AXSYqQW5VU/Hg8ZnNB4CLhNFgtvXky6nNbpwOoL/rDOCESt645bqt/cufwHje404QsWhN8+bsmvmQ6Ma4I=
+	t=1720118141; cv=none; b=h9kodB1ZCIS7nVIyx57IcQAXCt4UpdiA/P2l3AS0vcs350e04Y5v8D8XqO0QxVOCmpbinqbvRi5biSVbtHO3KIUSZShdAXmiOKW9yhKhR93DOaZQBRP91IFS/L93beGcI1z85hk3v6lI19QsJF8UTppu4+MBfGMVO8nAHt5hf9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720115063; c=relaxed/simple;
-	bh=AzVLN5s8m2pR07hkp4MUmLEh08g3IkzD0iu13g2nOIo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PSNiSSX6ElzmmmbEtuEh2A2SvsAZpl5FPRsOEa3HmFF2Jygl0j8lDEMRGD0kDsOl5yOw1mKjsRJQWpnDiuTm7HYE/Q7/Pz3IrCPg8hdVPxZ4C7/DNtnNHHKWOheLT8pNGn70F8zGIhhBc/08mvNMO7Yuyh8/VKmna+ZEnSTrV4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fp04a8kh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF0BC3277B;
-	Thu,  4 Jul 2024 17:44:21 +0000 (UTC)
+	s=arc-20240116; t=1720118141; c=relaxed/simple;
+	bh=x3m9D/QtwKRfrkMQATybZBTtL+idcV8O373Ppn4287Y=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=T1u3U0km9ROdRw1N4tUogTYOvZVMbtI1MVdA0FbTcb4m3uPAlMOacGHaXuXDzNrBXWYjMswpi9yVMnZc+461tXYY4PivmJmRRV8/UcC5GSObPOo7vVKP0q1lhctpkQmAtPnWOhlpqDt7kkol8UXFrQJ0Hc9BuV8xWAm6YL+TiaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z7O6TYn9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D540C3277B;
+	Thu,  4 Jul 2024 18:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720115063;
-	bh=AzVLN5s8m2pR07hkp4MUmLEh08g3IkzD0iu13g2nOIo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Fp04a8khZ0ndBddqA0DLvSs631FmVud72skRkUs8zP/6w+757aMn5psgiVA14HIre
-	 fchF+ee7Y9F5LJSElxVE7mlRVdCTCYIglkzqTD4N2oZUGbOlsbPxsY77cnZcyXKZNA
-	 3MDlgXwMHkX9637NcxJVWNnRNIdqkPabyo27JHud/gNUYn3GfNqZk0GvP8JkKlMOhX
-	 nK2tm6xpN73P9O+DbdyV+7PQGJ9IDkaMNFCHqeMDGkiUqqNZAP05AI2roPkHBUjWUE
-	 sY69eyvc9+Yret1FjSWXFO/O6vMG0Xz2ofudBVZowajTVWwtXMQ7jEcJnrNe9n74hN
-	 osSCiwLuT6bVQ==
-Date: Thu, 4 Jul 2024 12:44:19 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Odelu Kukatla <quic_okukatla@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Kees Cook <keescook@chromium.org>, cros-qcom-dts-watchers@chromium.org, 
-	"Gustavo A . R . Silva" <gustavoars@kernel.org>, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
-	quic_rlaggysh@quicinc.com, quic_mdtipton@quicinc.com
-Subject: Re: [PATCH] interconnect: qcom: Fix DT backwards compatibility for
- QoS
-Message-ID: <jhfya4mjnckrmogtmusyvwjv4mlyycgqj3apt2kaj5umxprhtv@rfew7c5w3zf5>
-References: <20240704125515.22194-1-quic_okukatla@quicinc.com>
+	s=k20201202; t=1720118141;
+	bh=x3m9D/QtwKRfrkMQATybZBTtL+idcV8O373Ppn4287Y=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=Z7O6TYn9rH9U9DNLwoH+7LVOv1bT0wKHvm3jZsMwLwm0xQauZ5yqUfUICRZUaoqlq
+	 uJOlm13ATmnokGbIaQS4Pqr8dQQLEw3sWGMj72OdlQxqk9QeMxj6eqQPbT0438060X
+	 87MlttsNAmfJmWtgzDVyygHVih2fXs8IowOGn9NI+Q7HftzvIQSHZvS8fz8e/MpkyW
+	 QBwuoEHCmbPlSvmhqy5LRSgg8L9iQ25LBZ0zbkOm5XRnxTtdc1RRmCNoXUN0620yJ4
+	 uuGWj3Ebawe/NqmPrN4E+9iWGuywmvsf8voA1gEiNJ2ou78kI3UfLuwmlhaldRCK8Y
+	 yxCgW+NAB73KA==
+From: Mark Brown <broonie@kernel.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org, 
+ linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20240701-b4-qcom-audio-lpass-codec-cleanups-v3-0-6d98d4dd1ef5@linaro.org>
+References: <20240701-b4-qcom-audio-lpass-codec-cleanups-v3-0-6d98d4dd1ef5@linaro.org>
+Subject: Re: [PATCH v3 0/6] ASoC: codecs: lpass-rx-macro: Few code cleanups
+Message-Id: <172011813890.108577.12531319893239383182.b4-ty@kernel.org>
+Date: Thu, 04 Jul 2024 19:35:38 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240704125515.22194-1-quic_okukatla@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.14-dev-d4707
 
-On Thu, Jul 04, 2024 at 06:25:15PM GMT, Odelu Kukatla wrote:
-> Add qos_clks_required flag to skip QoS configuration if clocks property
-> is not populated in devicetree for providers which require clocks to be
-> enabled for accessing registers. This is to keep the QoS configuration
-> backwards compatible with devices that have older DTB.
+On Mon, 01 Jul 2024 09:39:32 +0200, Krzysztof Kozlowski wrote:
+> Changes in v3:
+> - New patch #1 to fix clang jump warning ("ASoC: codecs: lpass-rx-macro: Simplify PDS cleanup with devm")
+> - Link to v2: https://lore.kernel.org/r/20240628-b4-qcom-audio-lpass-codec-cleanups-v2-0-e9741143e485@linaro.org
 > 
-
-Please read "Describe your changes" [1], and make your commit message
-start with the problem description - establish to the reader why this
-change is needed, then follow that with a technical description of the
-solution (likely in a separate paragraph).
-
-[1] https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
-
-> Reported-by: Bjorn Andersson <andersson@kernel.org>
-> Closes: https://lore.kernel.org/all/ciji6nlxn752ina4tmh6kwvek52nxpnguomqek6plwvwgvoqef@yrtexkpmn5br/
-> Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
-> ---
->  drivers/interconnect/qcom/icc-rpmh.c | 2 +-
->  drivers/interconnect/qcom/icc-rpmh.h | 1 +
->  drivers/interconnect/qcom/sc7280.c   | 2 ++
->  3 files changed, 4 insertions(+), 1 deletion(-)
+> Changes in v2:
+> - Use cleanup.h instead of devm(), therefore not adding Dmitry's review.
+> - New patch #5.
+> - Link to v1: https://lore.kernel.org/r/20240627-b4-qcom-audio-lpass-codec-cleanups-v1-0-ede31891d238@linaro.org
 > 
-> diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
-> index 93047defd5e2..f49a8e0cb03c 100644
-> --- a/drivers/interconnect/qcom/icc-rpmh.c
-> +++ b/drivers/interconnect/qcom/icc-rpmh.c
-> @@ -311,7 +311,7 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
->  		}
->  
->  		qp->num_clks = devm_clk_bulk_get_all(qp->dev, &qp->clks);
-> -		if (qp->num_clks < 0) {
-> +		if (qp->num_clks < 0 || (!qp->num_clks && desc->qos_clks_required)) {
+> [...]
 
-For this new case, I think the dev_info() below makes total sense. I.e.
-this looks good to me.
+Applied to
 
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-However, the num_clks < 0 case would represent finding a devicetree node
-with clocks specified, but failing to get these clocks. I believe that
-this would include EPROBE_DEFER.
+Thanks!
 
-I don't think it's correct to print a informational message and continue
-without QoS. I think we should fail here.
+[1/6] ASoC: codecs: lpass-rx-macro: Simplify PDS cleanup with devm
+      commit: 891168dc4a6c637ca76c64e7bde6917b96b9cd54
+[2/6] ASoC: codecs: lpass-rx-macro: Simplify with cleanup.h
+      commit: ee5e13b2c92324938c2bffc44b36b5a29fc28087
+[3/6] ASoC: codecs: lpass-rx-macro: Keep static regmap_config as const
+      commit: 0c02cacf62fd90bf9f0c6c33e9a4862cfc50aab4
+[4/6] ASoC: dapm: Use unsigned for number of widgets in snd_soc_dapm_new_controls()
+      commit: bf95919fe1917efa8f5da83057ff9fc11130aa55
+[5/6] ASoC: codecs: lpass-rx-macro: Use unsigned for number of widgets
+      commit: c72585d79249fb07ca3e3c91022e312d21f20f40
+[6/6] ASoC: codecs: lpass-wsa-macro: Simplify with cleanup.h
+      commit: 67820eb9f4895791da46df42ff7942dfc1353bb2
 
-Also, in this case devm_clk_bulk_get_all() would have pr_err() a message
-about which clock it failed to acquire and why, so printing again here
-doesn't seem useful.
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-But I think that is a separate follow up patch.
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
->  			dev_info(dev, "Skipping QoS, failed to get clk: %d\n", qp->num_clks);
->  			goto skip_qos_config;
->  		}
-> diff --git a/drivers/interconnect/qcom/icc-rpmh.h b/drivers/interconnect/qcom/icc-rpmh.h
-> index 9a5142c70486..14db89850fb3 100644
-> --- a/drivers/interconnect/qcom/icc-rpmh.h
-> +++ b/drivers/interconnect/qcom/icc-rpmh.h
-> @@ -153,6 +153,7 @@ struct qcom_icc_desc {
->  	size_t num_nodes;
->  	struct qcom_icc_bcm * const *bcms;
->  	size_t num_bcms;
-> +	bool qos_clks_required;
->  };
->  
->  int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
-> diff --git a/drivers/interconnect/qcom/sc7280.c b/drivers/interconnect/qcom/sc7280.c
-> index 759c609a20bf..167971f8e8be 100644
-> --- a/drivers/interconnect/qcom/sc7280.c
-> +++ b/drivers/interconnect/qcom/sc7280.c
-> @@ -1691,6 +1691,7 @@ static const struct qcom_icc_desc sc7280_aggre1_noc = {
->  	.num_nodes = ARRAY_SIZE(aggre1_noc_nodes),
->  	.bcms = aggre1_noc_bcms,
->  	.num_bcms = ARRAY_SIZE(aggre1_noc_bcms),
-> +	.qos_clks_required = true,
->  };
->  
->  static struct qcom_icc_bcm * const aggre2_noc_bcms[] = {
-> @@ -1722,6 +1723,7 @@ static const struct qcom_icc_desc sc7280_aggre2_noc = {
->  	.num_nodes = ARRAY_SIZE(aggre2_noc_nodes),
->  	.bcms = aggre2_noc_bcms,
->  	.num_bcms = ARRAY_SIZE(aggre2_noc_bcms),
-> +	.qos_clks_required = true,
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-When reading the commit message and the name of this property, my first
-reaction was "aggre2_noc requires qos clocks".
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
-As such, I'd prefer if this was renamed "qos_requires_clocks" to more
-clearly document what the requirement entails and hint the future reader
-that the interconnect might still be operational.
+Thanks,
+Mark
 
-
-With that said, thanks for your quick reply to my regression report!
-
-Tested-by: Bjorn Andersson <andersson@kernel.org>
-
-Regards,
-Bjorn
-
->  };
->  
->  static struct qcom_icc_bcm * const clk_virt_bcms[] = {
-> -- 
-> 2.17.1
-> 
 
