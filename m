@@ -1,135 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-25254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CF2592734B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 11:47:39 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC52492736E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 11:56:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 436981F23354
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 09:47:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D0A6F1C2189D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 09:56:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D12B1AAE38;
-	Thu,  4 Jul 2024 09:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B6DC1AB8F6;
+	Thu,  4 Jul 2024 09:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KbWAEAmr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dQ5K7yae"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B017F1A01BB
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jul 2024 09:47:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0121AB526;
+	Thu,  4 Jul 2024 09:56:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720086453; cv=none; b=W0t5xXuSUZ1kCMjyiljYVN0S3AWtMhRyjDnPO+PpHwZU0PbgyP5epyXBPY0dS+HgPNktkTRgpBqIddYZWYh7uYKu9IUqTE6y/67tDRAXt6uEwcotb6zWPrVZcNrDUnFoCM5ywas0oM7enA0vgVtZcx4h9ZKvj8MSFa9/geeSgRM=
+	t=1720086972; cv=none; b=BgDM4h3txphpW/YUHQ6LV0RbuBvUWSPNALgDpK/qcFd/eR5AE/SU+4pf3dMBNRfv1SEsYL9yOMCDQftbXb7CMMWTGcLkzsW33NlhDc2aGylXMM+RfWTFtyaYovs7nnxesnMYFeHm6JqeQ7XO7fYERn5PhIwlpyr3ms+VWs1q2As=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720086453; c=relaxed/simple;
-	bh=h7xMYCifnvTUw5k/D0mjXoV49x0eYwbCKpGUXqoPaqs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UWDJOD9Hgr/VcQNiiqz3qizuswB4JOqLR5k26sa5v0Lt8wGt87qcoueBvEIN7vM1DGkCVxACE5EXYDR9Li02vbs/Wga1KSgmVKgk4sb1pMup1hUQ4ykYr49uqb80/Tnlnfn8IsEAqAZrociN6i+dJlDolF1k9rfqXrDnFhc7v4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KbWAEAmr; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2ee910d6a9eso1311431fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jul 2024 02:47:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720086450; x=1720691250; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=35N2PrXzYxiJZwkwJHk2aUwLzMamAemczMI+Lfl3A9Q=;
-        b=KbWAEAmrWZYlVVEFjE1+xqDYAVq4P0FoAnKZUo/4QIInc9/P+FW9pUz0/xV7ZGVB4u
-         aatWoQwXZhMkUdapjIrvKKCK8QOWeVc6znX31GqPAcerQBycZ2PP6utgPT6JGwMGuRTH
-         qQ9umGTZHJFe8JIhO4x487OSA+jsCsskaBP1hrpFW5uzUkIjWeYZSLXkp1kNGkL1clm6
-         ebAXW84PKdoF5Ao9kQAkVkhaVhHo5O5B382XahWnM9E5pQf85xvAenhnlDeJGGGHXEpR
-         t0KW1N0bKnz8lq9QWwFFsRATRScRZrveJXuIr+2ZTLq7u6pkWrsaAtGun2Fp/+hHilj0
-         3gjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720086450; x=1720691250;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=35N2PrXzYxiJZwkwJHk2aUwLzMamAemczMI+Lfl3A9Q=;
-        b=CkScg0jqqfh/3c1I1QhO5aFDAnojE0rqQEWtcEsd1BmZtU4SUI3Pk2SI9l7F3Ptnpp
-         Fu3gtBM2OOLIzDD9J7IrFNTGjwv4yLc/SfeD1hw2rCNwOVn+JIdzLAIS00Kd7YhB+AOB
-         bGZR92KM+If46tG8ppTfcKwp70YeVOLx4fsO7SGgHiGkzXaS4bdt4SuWSe4HxYYJ/WpI
-         sVdkS7v6T+W/bjKBHcHYRUV+YoZ0Ggx1cJNA48I5GtNLAWLfyidDf/VsFQJrIgRDaDc3
-         VQXqKoAo1oOQvzNRo0GSVl2a8Vg2cTe3ARD3xh/4zeAl8IDWBJVhGjXDVUkMUXadWN8r
-         qcIA==
-X-Forwarded-Encrypted: i=1; AJvYcCXtok0Et9pI/dxC0b3feoEm6IPFI9qzUNgGzvMVKiasazv6KZeEBS5QUulGgnAkNbygQoFxrPLh1RgDg8pav7jrmCPpup7YfdyPDwfeeA==
-X-Gm-Message-State: AOJu0Yyh7iCzduLXCl74pSYDLbOT68KSjMJICD1y1reB2k4XNru0K1MS
-	2MYa4BPX934ullIvEdaYxupHG1DnuVNuAY/i+WdVqXvMaEC2OFIfx1VGvoYzk5U=
-X-Google-Smtp-Source: AGHT+IHY10vCx+yPAsfjMVF2tw9KVqfnRtV2MHnfk54hzEFRlKpMtmNraZr7IHPDg143p/NmuRLI2g==
-X-Received: by 2002:a2e:3312:0:b0:2ee:8aa7:4885 with SMTP id 38308e7fff4ca-2ee8f2bce1emr3526411fa.14.1720086449816;
-        Thu, 04 Jul 2024 02:47:29 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0c3:3a00::b8c? (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ee5168cf96sm21284091fa.108.2024.07.04.02.47.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jul 2024 02:47:29 -0700 (PDT)
-Message-ID: <019146e8-25b3-474a-b433-c69d4fbe0ee0@linaro.org>
-Date: Thu, 4 Jul 2024 12:47:28 +0300
+	s=arc-20240116; t=1720086972; c=relaxed/simple;
+	bh=COEjk9Oj72PdEK4k+Ahpuka/isshgbyhwwmtFNnF57c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lBKLnmpFuK+c2pAXhtmMe5mlI7j/+eJHfDIP3aW2biw1oY1tvlI3uTT2dNY5zAurvqettsgx97TSGm+q5ogdYrBmkTdfXchvkb9IbGN3+uv61jE9kXKhvc3E6jSOmBhcuc5My1UZ21/nH98/HME60klA9QQDWHdLVCNHTQd5ZY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dQ5K7yae; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17D8C4AF0C;
+	Thu,  4 Jul 2024 09:56:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720086972;
+	bh=COEjk9Oj72PdEK4k+Ahpuka/isshgbyhwwmtFNnF57c=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=dQ5K7yaeSMyntI46FdQXcBQtEO0b3qAmOKsATzghngrplFsEg8/Ho06SCm2iirIiv
+	 68ka5QBRiJZpSIRCufJhe8fyaoK4vz4swZnVbCwF+OihxOh34IzqicrXn6dzJfdHT0
+	 d+8AvAkj/K+TCWHIhEtxgATilfk27lmYXYnDfd8eQCpKf6RGaZGVgx3BlrGwAENklh
+	 ty0J4wq2SjmKIZ6UvyyzTvfTVQOVIisdR2VtvVuZm0H0ovsfMx42tAVDTTyLJlIEC/
+	 tertsap30dpMkoqSfxc+U2tcYNkARwMk5c1kon9G2OjthphZorItlOXh3T+N5OGRDP
+	 oq/u6E8mVKtDg==
+Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-5c477d759ffso10337eaf.2;
+        Thu, 04 Jul 2024 02:56:11 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXpOe4PoOe/RL9Np+xhdJriYwQ0fyZOYSADrrhBI8+Ny011zqEhE6y+0Fs7Hp2uwNznYfkJcR/jvHfW5d2ft6aCxNb6kqCAvD9ruCza9DS+ZiMHFv3kPHxVzb+jc7kYjWxa9+Nvm0D3eAOpZaE/aKcaG+beHFf0wCvvbTEWGDAHS8rsKwQv
+X-Gm-Message-State: AOJu0Yz6BihA5nmU95QURb6UkfTn69Bi+WZb4yWtvYBYOx6jselDgmKG
+	QUoHPuswlz8rRnnknQDL3M0RdgvjypfAipZpJYCrFARMWNdN4Osxb97Un2Grswcs2MeQAMqW/jc
+	ary9O8i2H0w8gY3LH6Dba8FnwU+A=
+X-Google-Smtp-Source: AGHT+IHL27S/pDU0YvWXpAxhpyYPpDZN9BSijWYjpfutmPzGD1M6tgLna6yoOLjv16+Sfd/NgfaOZ7LcB8l7WKIT0U4=
+X-Received: by 2002:a05:6820:166:b0:5c2:2795:7cae with SMTP id
+ 006d021491bc7-5c646eb2ee8mr1183685eaf.1.1720086971219; Thu, 04 Jul 2024
+ 02:56:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm: Fix incorrect file name output in
- adreno_request_fw()
-To: Aleksandr Mishin <amishin@t-argos.ru>,
- Jordan Crouse <jordan@cosmicpenguin.net>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- lvc-project@linuxtesting.org
-References: <20240704093002.15155-1-amishin@t-argos.ru>
-Content-Language: en-GB
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20240704093002.15155-1-amishin@t-argos.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <2764814.mvXUDI8C0e@rjwysocki.net> <2ed4c630-204a-4f80-a37f-f2ca838eb455@linaro.org>
+ <8d91a3c1-018f-495b-83be-979b795b5548@linaro.org> <12c5c133-9519-4a26-b9a3-2da1d3466e94@linaro.org>
+ <15b67ce6-3238-435d-ad28-7c06efbe9153@linaro.org> <ce6c2e8a-65a7-4cb2-a91d-fbcaeef6edc1@linaro.org>
+ <0c4b401e-86b8-4169-af88-475433012d67@linaro.org> <636922b4-96d4-49cb-9020-2359e7497f56@linaro.org>
+In-Reply-To: <636922b4-96d4-49cb-9020-2359e7497f56@linaro.org>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Thu, 4 Jul 2024 11:55:59 +0200
+X-Gmail-Original-Message-ID: <CAJZ5v0hHV8VfLd7pi2pP2TyJ3ghc0bMnodfVC00kxv6bBTDEfw@mail.gmail.com>
+Message-ID: <CAJZ5v0hHV8VfLd7pi2pP2TyJ3ghc0bMnodfVC00kxv6bBTDEfw@mail.gmail.com>
+Subject: Re: [PATCH v2] thermal: core: Call monitor_thermal_zone() if zone
+ temperature is invalid
+To: neil.armstrong@linaro.org
+Cc: Daniel Lezcano <daniel.lezcano@linaro.org>, "Rafael J. Wysocki" <rjw@rjwysocki.net>, 
+	Linux PM <linux-pm@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
+	Lukasz Luba <lukasz.luba@arm.com>, 
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>, Zhang Rui <rui.zhang@intel.com>, 
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 04/07/2024 12:30, Aleksandr Mishin wrote:
-> In adreno_request_fw() when debugging information is printed to the log
-> after firmware load, an incorrect filename is printed. 'newname' is used
-> instead of 'fwname', so prefix "qcom/" is being added to filename.
-> Looks like "copy-paste" mistake.
-> 
-> Fix this mistake by replacing 'newname' with 'fwname'.
-> 
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
-> 
-> Fixes: 9fe041f6fdfe ("drm/msm: Add msm_gem_get_and_pin_iova()")
+On Thu, Jul 4, 2024 at 9:39=E2=80=AFAM <neil.armstrong@linaro.org> wrote:
+>
+> On 03/07/2024 17:12, Daniel Lezcano wrote:
+> > On 03/07/2024 16:42, neil.armstrong@linaro.org wrote:
+> >> On 03/07/2024 16:00, Daniel Lezcano wrote:
+> >>> On 03/07/2024 14:43, neil.armstrong@linaro.org wrote:
+> >>>> Hi,
+> >>>>
+> >>>> On 03/07/2024 14:25, Daniel Lezcano wrote:
+> >>>>>
+> >>>>> Hi Neil,
+> >>>>>
+> >>>>> it seems there is something wrong with the driver actually.
+> >>>>>
+> >>>>> There can be a moment where the sensor is not yet initialized for d=
+ifferent reason, so reading the temperature fails. The routine will just re=
+try until the sensor gets ready.
+> >>>>>
+> >>>>> Having these errors seem to me that the sensor for this specific th=
+ermal zone is never ready which may be the root cause of your issue. The ch=
+ange is spotting this problem IMO.
+> >>>>
+> >>>> Probably, but it gets printed every second until system shutdown, bu=
+t only for a single thermal_zone.
+> >>>>
+> >>>> Using v1 of Rafael's patch makes the message disappear completely.
+> >>>
+> >>> Yes, because you have probably the thermal zone polling delay set to =
+zero, thus it fails the first time and does no longer try to set it up agai=
+n. The V1 is an incomplete fix.
+> >>>
+> >>> Very likely the problem is in the sensor platform driver, or in the t=
+hermal zone description in the device tree which describes a non functional=
+ thermal zone.
+> >>>
+> >>
+> >> It was at 0 but the delay was removed recently:
+> >> https://lore.kernel.org/all/20240510-topic-msm-polling-cleanup-v2-0-43=
+6ca4218da2@linaro.org/
+> >
+> > Yes, these changes are because another change did:
+> >
+> > commit 488164006a281986d95abbc4b26e340c19c4c85b
+> > Author: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >
+> >      thermal/of: Assume polling-delay(-passive) 0 when absent
+> >
+> > diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.=
+c
+> >
+> >> That doesn't explain it because only the last platforms have this erro=
+r message printed.
+> >
+> > Let me recap.
+> >
+> > It has been reported if a thermal-zone with zero delay fails to initial=
+ize because the sensor returns an error, then there is no more attempt to i=
+nitialize it and the thermal zone won't be functional.
+> >
+> > The provided fix will periodically read the sensor temperature until th=
+ere is a valid temperature. When there is a valid temperature, then the int=
+errupts are set for the previous and the next temperature thresholds. That =
+leads to the end of the routine of initializing the thermal zone and cancel=
+s the timer.
+> >
+> > The platforms you reported, the delay is zero (before and after the 'po=
+lling cleanup').
+> >
+> > My hypothesis is the following:
+> >
+> > The thermal-zone29 describes a sensor which does not operate.
+> >
+> > Before the patch:
+> >
+> > First attempt to initialize it, the temperature is invalid, then becaus=
+e the delay is zero, the routine stops, and there is no more attempts to in=
+itialize it. Nothing will happen to this thermal zone and it will stay stuc=
+k silently. So at this point, the thermal zone is broken and you don't noti=
+ce it.
+> >
+> > After the patch:
+> >
+> > The initialization routine is constantly retrying to init the thermal z=
+one.
+> >
+> > -------------------
+> >
+> > If you revert the fix and you try to read the thermal zone 29, it shoul=
+d always fail to return an error.
+> >
+> > If I'm correct, then I suggest to identify what thermal zone is 29 (typ=
+e file), identify the node name in the DT, find the tsens channel and doubl=
+e check if it really describes an existing sensor
+> >
+> >
+> >
+> OK I just found out, it's the `qcom-battmgr-bat` thermal zone, and in CI =
+we do not have the firmwares so the
+> temperature is never available, this is why it fails in a loop.
+>
+> Before this patch it would fail silently, but would be useless if we star=
+t the firmware too late.
+>
+> So since it's firmware based, valid data could arrive very late in the bo=
+ot stage, and sending an
+> error message in a loop until the firmware isn't started doesn't seem rig=
+ht.
+>
+> I think Rafael's new patch is good, but perhaps it should send an error w=
+hen it finally stops monitoring.
 
-Fixes tag is incorrect, LGTM otherwise.
+Do you mean do something in addition to printing the message?  It can
+do a couple of things.  For instance, it could disable the thermal
+zone which would also cause a netlink message to be sent.  However,
+I'd rather send another patch for this for the next cycle because we
+are late in the current one and I'd rather stay on the conservative
+side of things ATM.
 
-> Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-> ---
->   drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> index 074fb498706f..0bb7d66047f8 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -475,7 +475,7 @@ adreno_request_fw(struct adreno_gpu *adreno_gpu, const char *fwname)
->   		ret = request_firmware_direct(&fw, fwname, drm->dev);
->   		if (!ret) {
->   			DRM_DEV_INFO(drm->dev, "loaded %s from legacy location\n",
-> -				newname);
-> +				fwname);
->   			adreno_gpu->fwloc = FW_LOCATION_LEGACY;
->   			goto out;
->   		} else if (adreno_gpu->fwloc != FW_LOCATION_UNKNOWN) {
+Or do you mean the pr_info() log level is too low for this message?
 
--- 
-With best wishes
-Dmitry
-
+Anyway, I'm going to submit the patch officially as is and please feel
+free to send comments on that submission.
 
