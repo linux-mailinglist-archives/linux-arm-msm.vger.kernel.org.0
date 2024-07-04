@@ -1,321 +1,380 @@
-Return-Path: <linux-arm-msm+bounces-25294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 434B5927A71
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 17:48:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 30E4B927ABB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 17:59:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA4FB282CC0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 15:48:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DBF402874B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 15:59:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7000E1E485;
-	Thu,  4 Jul 2024 15:48:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB1471B29D1;
+	Thu,  4 Jul 2024 15:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OMVJ/HsV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WUuhV4bH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0971BC23
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jul 2024 15:48:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96111B1504;
+	Thu,  4 Jul 2024 15:58:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720108115; cv=none; b=EJ42TjzJfloXQiTIny0kdQHHsZr/BXURV6PgAcn3eki/o4h+IAv1c8cEjFf1WFiLhWv2xPhoh1nhgE6sTXJWuEPN+tIwfweqrvDGbDSu1pTXQLyIJYrtUkzLibiAioMKRE6WuPg9jD3CZcsbhzEnTzdAD3oE2RrXnqXiKpevqkE=
+	t=1720108721; cv=none; b=FsUcoLeGB0DvrfYiN4iQBZ1vy5+OxyHUaOrKhA4nsB46OQRKTcqjMKsxNB5xULryr4mwDWKfBEXRHCN87yfbB75+G73PBWJXl3HukHXEcMnt9RDKdtoTpnMu0vKgzC+NScPXCmeYjFIiAEeH5VX+srJgggKwvgeinScyxP8T7ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720108115; c=relaxed/simple;
-	bh=mF/U87+qilTKB0OB0wRil6xKLBgvp11NjXgzK68VF0E=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=EAefrTcONP9muKUFICb/C8OwzeyVDWmGHNe8h3L6g0Q9O8Keaqz05K+kwMgHP9M9K1/OS1iOHRlRewk9izc37nzVGKYyfNdPvuTsopz2JUY80Fok7pTSUvu8kCfXlV49mrhbgQIVFqRvE867X/1ci4J16Xj2e9kzcRYBY79nxh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OMVJ/HsV; arc=none smtp.client-ip=209.85.128.180
+	s=arc-20240116; t=1720108721; c=relaxed/simple;
+	bh=Vw9cYiWmBWfb8TTsaP6MPM8WxWX5thyZbtwBWEFIH6A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nYKHWl9rj5xcOsu6iE90tJURny6pdE8O69x90wdprkt4rlvwpA45Kj7S+Mt4mvF4u9klKggY+jouBHrbRrYqUptVQlDqHsy6utsSOxkVuVJv9U9Zxsbbv5u56iFlmVcJoCHyI47so/ZaRqrh7Zvddx3NnN8RXLcVwVsw3KMzljU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WUuhV4bH; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-650cef35de3so7101047b3.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jul 2024 08:48:33 -0700 (PDT)
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-58ef19aa6b3so265243a12.1;
+        Thu, 04 Jul 2024 08:58:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720108112; x=1720712912; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1720108718; x=1720713518; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ODCvryMTA6A8sXHZz8NPzUt+8Vn+Lkh4+jLdnCtJUC0=;
-        b=OMVJ/HsV1Jc5WYlK+MRCsqvdixSdNX4JaqetLZPeP/nCRuc0rk1HE2r2+jANvqZP9G
-         MsfbKus+IPYP/D+59nP7i7n/LKM47GJ4+PsXNPhKCmm67C8I2tCoOK6pL6YN8hvtbJAU
-         JMSYVHCuk3RBRfLOGWX3Lq+VpA70c0O0wZMpJ8SprCWSX3OYv+uf0XDvgr97tEUuJmci
-         Yp+IqtptU/+IkqKjRFd40W5dDB3CH0TpNGKOH80P1rG/w90q3pOIxZF1dO9wRzVeMh4P
-         gGEidjJkNJflSpZg40LiAflQZ88ChDV3jEe9mybQqCUL3KWfC04tBuekwxixGcfwz9pJ
-         QNBA==
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mGlL/uE7TDzKfiVbTPhEKK0ePrDxqpfFWq/HFd9CIio=;
+        b=WUuhV4bHvFhNQCyQyarav8gCNSsqOrOGqGOKoY4T8uNL0nz1kgZ+n9cvUr/8rg+Rdo
+         Rb4y/W9UR1G/2+nab8QCV6iORRoOo90Aurh5JKbhlKz2E9oJ+egbcdrxuy6vjHEO4nj2
+         s5WZ0eT6eG+SOCdlHYKwDCdWkfjE7XiDd3jAraHpnl17TrWk4i74Pg8HtzRGRJMG+qkN
+         Dvon3U5bEGCOoe62BjWgnpNZNsMsxvr6YcWp6rCDAU3qq21O3ORFCilZVk+0o2OmT4RE
+         JgMgMeZ3nCsNZWEMXEC8X+xsFPSrDU6lKHt8QcfW9XSQ/t3D/+IdZIunYUVABpnMgYXQ
+         PcaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720108112; x=1720712912;
+        d=1e100.net; s=20230601; t=1720108718; x=1720713518;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ODCvryMTA6A8sXHZz8NPzUt+8Vn+Lkh4+jLdnCtJUC0=;
-        b=vlmF4uw5Groed5OIbTgDZWDDCoEnJgEmDKlv/gzVkee6npCKEB0eZ4wOxNO3We9TXk
-         b614WBjZCNgYjU5KCJYh/2s3qVmC0/0m02Tdq8L/+KF9fMp/w7OwbowF0YQ39QQemWQz
-         X0EoepjmnJdjvMhM2+LEGkNEh+g2elCbDR1e/s7kljekdst/+cJaC6Vnz6StTsxoX/Z9
-         V/TNGE/ficACIQqIQ0kG0i5uY2NpvmGuP+7v1IEhu4kFoDcZN58diA4QN5esLLQHqEO9
-         Xruc76YCR0EatpioVm3OT+SYE6qrXt+DHXAeqF/nssgXvBGXnl+q1hRZ0vofM9R4rYRh
-         xIww==
-X-Forwarded-Encrypted: i=1; AJvYcCVm1c1bIygAOn0Ct88BKshqRmw0b/Hqkzh5hkvAa1MwBo2KLggkiB3W9vtxtaYR8ubSWrBF7k8RVEyvywVMrwGwTV9aokA1+8xcSHiPqQ==
-X-Gm-Message-State: AOJu0YzlOC+tsahUGX1dfEoq3wy8sDqmTlbfsjqanheNAw5JHMjKNCNz
-	ZemqPjheVQO3Py/vxH0ZST7kbRS4a2Z3BtqJN+1jn4umKdjinKgr/X8v33Cs/+yuoSv0ZL/ZCBN
-	HdWkxTOqB9AJXs+fn+PjwLwv7u3w=
-X-Google-Smtp-Source: AGHT+IEGh3cmGC8CBuNIQEethiWr6gUVQWnD2iXynMt/GnSIyI1XwTtJhb2yBWYpy1qCcW9Vp94mr/d6uU2pTXS2hgw=
-X-Received: by 2002:a05:690c:6910:b0:64a:5df5:3afb with SMTP id
- 00721157ae682-652d7870764mr23664987b3.39.1720108112482; Thu, 04 Jul 2024
- 08:48:32 -0700 (PDT)
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mGlL/uE7TDzKfiVbTPhEKK0ePrDxqpfFWq/HFd9CIio=;
+        b=EzkWNHgaWv3QcpvmqLIlRCG0nL0RStCDOCQlHmeK01lh1oP3NLYkTfb4UQL+Q5qjRJ
+         /vWZ8W62xLDzFfQ8OmLOW0Y6v7D+1fZn9wNzSVJcXtgiCEQVy/uo4DW2uJLINKL1L02Q
+         Pl6PsFq6/SghiNNxd+kQjZZpvfABgw5UuRGpxrdKQsy3PCFzOhBL/AuJYHSdY3ALIdg0
+         AgK0g6tSdvfDUMe/Ua68yyzmdBmh8aI1Ly0AejGx66N5Si0+TQ79nXiq4JnafytH3jMc
+         7ow+uIKm8W8wJCXz3pyP9gKdE3y//uqnF4OgPIu4mATUR6UBgM6v7C0PaJwDwwNWMCFy
+         qYQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWoi9fxBXTA/+uzviEc4jhPSjKOswT092ighSuttnROEwPqmj1kKuh2UOB02uXDCxgNpvJyz56SO/cz+IDVAAPdLZ7rvSRKaK6Uvg/XxY+bY/YNOUKMqXzJkSSqOG+aw4j8Xm3FolBZ6zUeEg==
+X-Gm-Message-State: AOJu0Ywi/pzXMuGEVF7e0WOpMy+HZDNVd5vdqNYPeAWRbzMvFrWFnkxj
+	K6yQ4lDokyfJgmBOlOiG5R1Ut3H0m0MIexpqK/l8EWmcHXuflkZh4b//HWX3j223b6I8Mm1qW7K
+	AdUpJYUeXGK2yv8qdfy670H/wwQroOg==
+X-Google-Smtp-Source: AGHT+IErblZt7bgFomQcrLEXumFkfKSXuHPwhtBd2lP9n6LZzEj45+6eygT0JdMZl+luoWXHBcNvx4nQ61KnR9k20lo=
+X-Received: by 2002:a05:6402:27d0:b0:57a:3046:1cd8 with SMTP id
+ 4fb4d7f45d1cf-58e5994dfc1mr1915766a12.7.1720108717922; Thu, 04 Jul 2024
+ 08:58:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+References: <20240628140435.1652374-1-quic_bibekkum@quicinc.com>
+ <20240628140435.1652374-7-quic_bibekkum@quicinc.com> <CAF6AEGvroi8rJimFv95tkWmRFa5_aTpBJ7GFcRAuZpLGdSyEYQ@mail.gmail.com>
+ <0650ba0a-4453-4e2d-8a76-0f396ac1999c@quicinc.com> <CAF6AEGv_9e-TDW1r0N4-db6pY_aV_EZFqrpNbATVS5Vy6+fs1g@mail.gmail.com>
+ <4a5f54c7-120e-427d-8a0a-9fb83e13a72e@quicinc.com> <CAF6AEGtrtFNxDWtuADA4oOHhZJ=dJZcGaJ1XLFJt4fe4Xp=pTA@mail.gmail.com>
+ <3b7c05b1-8f36-4c81-a55c-dbb467314099@quicinc.com> <CAF6AEGuRKU+DkL0-b3xdR1R45_MiiKQYRRXEXYz-xohu8rUaEQ@mail.gmail.com>
+In-Reply-To: <CAF6AEGuRKU+DkL0-b3xdR1R45_MiiKQYRRXEXYz-xohu8rUaEQ@mail.gmail.com>
 From: Rob Clark <robdclark@gmail.com>
-Date: Thu, 4 Jul 2024 08:48:18 -0700
-Message-ID: <CAF6AEGvZQpYEHpSCgXGJ2kaHJDK6QFAFfTsfiWm4b2zZOnjXGw@mail.gmail.com>
-Subject: [pull] drm/msm: drm-msm-next-2024-07-04 for v6.11
-To: Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: dri-devel <dri-devel@lists.freedesktop.org>, 
-	linux-arm-msm <linux-arm-msm@vger.kernel.org>, freedreno <freedreno@lists.freedesktop.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 4 Jul 2024 08:58:25 -0700
+Message-ID: <CAF6AEGtbw06-gOSvX9gAbi=SA801gmD3_8c5xkOU-G9g2qKptQ@mail.gmail.com>
+Subject: Re: [PATCH v13 6/6] iommu/arm-smmu: add support for PRR bit setup
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, jgg@ziepe.ca, 
+	jsnitsel@redhat.com, robh@kernel.org, krzysztof.kozlowski@linaro.org, 
+	quic_c_gdjako@quicinc.com, dmitry.baryshkov@linaro.org, 
+	konrad.dybcio@linaro.org, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Dave, Sima,
+On Thu, Jul 4, 2024 at 7:46=E2=80=AFAM Rob Clark <robdclark@gmail.com> wrot=
+e:
+>
+> On Wed, Jul 3, 2024 at 4:38=E2=80=AFAM Bibek Kumar Patro
+> <quic_bibekkum@quicinc.com> wrote:
+> >
+> >
+> >
+> > On 7/2/2024 2:01 AM, Rob Clark wrote:
+> > > On Mon, Jul 1, 2024 at 4:01=E2=80=AFAM Bibek Kumar Patro
+> > > <quic_bibekkum@quicinc.com> wrote:
+> > >>
+> > >>
+> > >>
+> > >> On 6/28/2024 9:14 PM, Rob Clark wrote:
+> > >>> On Fri, Jun 28, 2024 at 8:10=E2=80=AFAM Bibek Kumar Patro
+> > >>> <quic_bibekkum@quicinc.com> wrote:
+> > >>>>
+> > >>>>
+> > >>>>
+> > >>>> On 6/28/2024 7:47 PM, Rob Clark wrote:
+> > >>>>> On Fri, Jun 28, 2024 at 7:05=E2=80=AFAM Bibek Kumar Patro
+> > >>>>> <quic_bibekkum@quicinc.com> wrote:
+> > >>>>>>
+> > >>>>>> Add an adreno-smmu-priv interface for drm/msm to call
+> > >>>>>> into arm-smmu-qcom and initiate the PRR bit setup or reset
+> > >>>>>> sequence as per request.
+> > >>>>>>
+> > >>>>>> This will be used by GPU to setup the PRR bit and related
+> > >>>>>> configuration registers through adreno-smmu private
+> > >>>>>> interface instead of directly poking the smmu hardware.
+> > >>>>>>
+> > >>>>>> Suggested-by: Rob Clark <robdclark@gmail.com>
+> > >>>>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+> > >>>>>> ---
+> > >>>>>>     drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 23 ++++++++++++=
+++++++++++
+> > >>>>>>     drivers/iommu/arm/arm-smmu/arm-smmu.h      |  2 ++
+> > >>>>>>     include/linux/adreno-smmu-priv.h           |  6 +++++-
+> > >>>>>>     3 files changed, 30 insertions(+), 1 deletion(-)
+> > >>>>>>
+> > >>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/driver=
+s/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > >>>>>> index bd101a161d04..64571a1c47b8 100644
+> > >>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > >>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > >>>>>> @@ -28,6 +28,7 @@
+> > >>>>>>     #define PREFETCH_SHALLOW       (1 << PREFETCH_SHIFT)
+> > >>>>>>     #define PREFETCH_MODERATE      (2 << PREFETCH_SHIFT)
+> > >>>>>>     #define PREFETCH_DEEP          (3 << PREFETCH_SHIFT)
+> > >>>>>> +#define GFX_ACTLR_PRR          (1 << 5)
+> > >>>>>>
+> > >>>>>>     static const struct actlr_config sc7280_apps_actlr_cfg[] =3D=
+ {
+> > >>>>>>            { 0x0800, 0x04e0, PREFETCH_DEFAULT | CMTLB },
+> > >>>>>> @@ -235,6 +236,27 @@ static void qcom_adreno_smmu_resume_transla=
+tion(const void *cookie, bool termina
+> > >>>>>>            arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUM=
+E, reg);
+> > >>>>>>     }
+> > >>>>>>
+> > >>>>>> +static void qcom_adreno_smmu_set_prr(const void *cookie, phys_a=
+ddr_t page_addr, bool set)
+> > >>>>>> +{
+> > >>>>>> +       struct arm_smmu_domain *smmu_domain =3D (void *)cookie;
+> > >>>>>> +       struct arm_smmu_cfg *cfg =3D &smmu_domain->cfg;
+> > >>>>>> +       struct arm_smmu_device *smmu =3D smmu_domain->smmu;
+> > >>>>>> +       u32 reg =3D 0;
+> > >>>>>> +
+> > >>>>>> +       writel_relaxed(lower_32_bits(page_addr),
+> > >>>>>> +                               smmu->base + ARM_SMMU_GFX_PRR_CF=
+G_LADDR);
+> > >>>>>> +
+> > >>>>>> +       writel_relaxed(upper_32_bits(page_addr),
+> > >>>>>> +                               smmu->base + ARM_SMMU_GFX_PRR_CF=
+G_UADDR);
+> > >>>>>> +
+> > >>>>>> +       reg =3D  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_=
+ACTLR);
+> > >>>>>> +       reg &=3D ~GFX_ACTLR_PRR;
+> > >>>>>> +       if (set)
+> > >>>>>> +               reg |=3D FIELD_PREP(GFX_ACTLR_PRR, 1);
+> > >>>>>> +       arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, r=
+eg);
+> > >>>>>> +
+> > >>>>>
+> > >>>>> nit, extra line
+> > >>>>>
+> > >>>>
+> > >>>> Ack, will remove this. Thanks for pointing out.
+> > >>>>
+> > >>>>> Also, if you passed a `struct page *` instead, then you could dro=
+p the
+> > >>>>> bool param, ie. passing NULL for the page would disable PRR.  But=
+ I
+> > >>>>> can go either way if others have a strong preference for phys_add=
+r_t.
+> > >>>>>
+> > >>>>
+> > >>>> Oh okay, this looks simple to reset the prr bit.
+> > >>>> But since this page is allocated and is used inside gfx driver
+> > >>>> before being utilized for prr bit operation, would it be safe for
+> > >>>> drm/gfx driver to keep a reference to this page in smmu driver?
+> > >>>>
+> > >>>> Since we only need the page address for configuring the
+> > >>>> CFG_UADDR/CFG_LADDR registers so passed the phys_addr_t.
+> > >>>
+> > >>> I don't think the smmu driver needs to keep a reference to the page=
+..
+> > >>> we can just say it is the responsibility of the drm driver to call
+> > >>> set_prr(NULL) before freeing the page
+> > >>>
+> > >>
+> > >> That makes sense. If we go by this NULL page method to disable the P=
+RR,
+> > >> we would have to set the address registers to reset value as well.
+> > >>
+> > >> The sequence would be like the following as per my understaning:
+> > >> - Check if it's NULL page
+> > >> - Set the PRR_CFG_UADDR/PRR_CFG_LADDR to reset values i.e - 0x0 for
+> > >>     these registers
+> > >> - Reset the PRR bit in actlr register
+> > >>
+> > >> Similar to this snippet:
+> > >>
+> > >> #PRR_RESET_ADDR 0x0
+> > >>
+> > >> --------------
+> > >> reg =3D  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR);
+> > >> reg &=3D ~GFX_ACTLR_PRR;
+> > >> arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
+> > >>
+> > >> if (!prr_page) {
+> > >>          writel_relaxed(PRR_RESET_ADDR,
+> > >>                          smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
+> > >>          writel_relaxed(PRR_RESET_ADDR),
+> > >>                           smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
+> > >>          return;
+> > >> }
+> > >>
+> > >>
+> > >> writel_relaxed(lower_32_bits(page_to_phys(prr_page)),
+> > >>                  smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
+> > >>
+> > >> writel_relaxed(upper_32_bits(page_to_phys(prr_page)),
+> > >>                  smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
+> > >>
+> > >> reg |=3D FIELD_PREP(GFX_ACTLR_PRR, 1);
+> > >> arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
+> > >> -----------------
+> > >>
+> > >> If looks good, will implement the same in next version.
+> > >
+> > > yeah, that looks like it could work..
+> > >
+> > > you probably don't need to zero out the PRR_CFG_*ADDR when disabling,
+> > > and probably could avoid double writing ACTLR, but that is getting
+> > > into bikeshedding
+> > >
+> >
+> > Actually Rob, since you rightly pointed this out.
+> > I crosschecked again on these registers.
+> > PRR_CFG_*ADDR is a global register in SMMU space but
+> > ACTLR register including PRR bit is a per-domain register.
+> > There might also be a situation where PRR feature need to be
+> > disabled or enabled separately for each domain.
+> > So I think it would be cleaner to have two apis, set_prr_addr(),
+> > set_prr_bit().
+> > set_prr_addr() will be used only to set this PRR_CFG_*ADDR
+> > register by passing a 'struct page *'
+> > set_prr_bit() will be used as a switch for PRR feature,
+> > where required smmu_domain will be passed along with
+> > the bool value to set/reset the PRR bit depending on which this
+> > feature will be enabled/disabled for the selected domain.
+>
+> on a related note, adreno has been using arm-smmu for a number of
+> generations, I guess not all support PRR?  The drm driver will need to
+> know whether PRR is supported (and expose that to userspace to let the
+> UMD know whether to expose certain extensions).  How should this work?
 
-This is the main pull for v6.11.  It includes a merge of the immutable
-tag qcom/20240430-a750-raytracing-v3-2-7f57c5ac082d@gmail.com to pick
-up dependencies for raytracing and SMEM speedbin.
+So, I noticed in the x1e80100.dtsi that there is a gpu_prr_mem
+reserved section..  maybe we should be connecting this to the smmu
+driver in dt, and using that to detect presence of PRR?  Ie. the smmu
+driver would configure PRR_CFG_*ADDR based on the reserved mem, and
+the interface to drm would just be to enable/disable PRR, returning an
+error code if the reserved mem section isn't there.
 
-Further description below.
+This simplifies the interface, and handles the question of how to
+detect if PRR is supported.
 
-The following changes since commit 92815da4576a495cb6362cdfb132152fccc2222d=
-:
+BR,
+-R
 
-  Merge remote-tracking branch 'drm-misc/drm-misc-next' into HEAD
-(2024-06-12 16:52:39 +0300)
-
-are available in the Git repository at:
-
-  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-next-2024-07-04
-
-for you to fetch changes up to fe34394ecdad459d2d7b1f30e4a39ac27fcd77f8:
-
-  dt-bindings: display/msm: dsi-controller-main: Add SM7150
-(2024-07-03 05:57:35 -0700)
-
-----------------------------------------------------------------
-Updates for v6.11
-
-Core:
-- SM7150 support
-
-DPU:
-- SM7150 support
-- Fix DSC support for DSI panels in video mode
-- Fixed TE vsync source support for DSI command-mode panels
-- Fix for devices without UBWC in the display controller (ie.
-  QCM2290)
-
-DSI:
-- Remove unused register-writing wrappers
-- Fix DSC support for panels in video mode
-- Add support for parsing TE vsync source
-- Add support for MSM8937 (28nm DSI PHY)
-
-MDP5:
-- Add support for MSM8937
-- Fix configuration for MSM8953
-
-GPU:
-- Split giant device table into per-gen "hw catalog" similar to
-  what is done on the display side of the driver
-- Fix a702 UBWC mode
-- Fix unused variably warnings
-- GPU memory traces
-- Add param for userspace to know if raytracing is supported
-- Memory barrier cleanup and GBIF unhalt fix
-- X185 support (aka gpu in X1 laptop chips)
-- a505 support
-- fixes
-
-----------------------------------------------------------------
-Abhinav Kumar (3):
-      drm/msm/a6xx: use __unused__ to fix compiler warnings for gen7_* incl=
-udes
-      drm/msm/dpu: drop validity checks for clear_pending_flush() ctl op
-      drm/msm/dpu: check ubwc support before adding compressed formats
-
-Akhil P Oommen (3):
-      dt-bindings: display/msm/gmu: Add Adreno X185 GMU
-      drm/msm/adreno: Add support for X185 GPU
-      drm/msm/adreno: Introduce gmu_chipid for a740 & a750
-
-Barnab=C3=A1s Cz=C3=A9m=C3=A1n (4):
-      drm/msm/dpu: guard ctl irq callback register/unregister
-      drm/msm/mdp5: Remove MDP_CAP_SRC_SPLIT from msm8x53_config
-      dt-bindings: display/msm: qcom, mdp5: Add msm8937 compatible
-      dt-bindings: msm: dsi-phy-28nm: Document msm8937 compatible
-
-Connor Abbott (5):
-      firmware: qcom: scm: Add gpu_init_regs call
-      firmware: qcom_scm: Add gpu_init_regs call
-      drm/msm/a7xx: Initialize a750 "software fuse"
-      drm/msm: Add MSM_PARAM_RAYTRACING uapi
-      drm/msm/a7xx: Add missing register writes from downstream
-
-Daniil Titov (3):
-      drm/msm/mdp5: Add MDP5 configuration for MSM8937
-      drm/msm/dsi: Add phy configuration for MSM8937
-      drm/msm/adreno: Add support for Adreno 505 GPU
-
-Danila Tikhonov (5):
-      dt-bindings: display/msm: Add SM7150 DPU
-      drm/msm/dpu: Add SM7150 support
-      dt-bindings: display/msm: Add SM7150 MDSS
-      drm/msm: mdss: Add SM7150 support
-      dt-bindings: display/msm: dsi-controller-main: Add SM7150
-
-Dmitry Baryshkov (9):
-      dt-bindings: display/msm/dsi: allow specifying TE source
-      drm/msm/dpu: convert vsync source defines to the enum
-      drm/msm/dsi: drop unused GPIOs handling
-      drm/msm/dpu: pull the is_cmd_mode out of
-_dpu_encoder_update_vsync_source()
-      drm/msm/dpu: rework vsync_source handling
-      drm/msm/dsi: parse vsync source from device tree
-      drm/msm/dpu: support setting the TE source
-      drm/msm/dpu: rename dpu_hw_setup_vsync_source functions
-      drm/msm/dpu: remove CRTC frame event callback registration
-
-Jani Nikula (1):
-      drm/msm/dp: switch to struct drm_edid
-
-Jonathan Marek (4):
-      drm/msm/dpu: fix video mode DSC for DSI
-      drm/msm/dsi: set video mode widebus enable bit when widebus is enable=
-d
-      drm/msm/dsi: set VIDEO_COMPRESSION_MODE_CTRL_WC
-      drm/msm/dsi: add a comment to explain pkt_per_line encoding
-
-Jun Nie (2):
-      drm/msm/dpu: adjust data width for widen bus case
-      drm/msm/dpu: enable compression bit in cfg2 for DSC
-
-Konrad Dybcio (7):
-      drm/msm/a6xx: Fix A702 UBWC mode
-      soc: qcom: Move some socinfo defines to the header
-      soc: qcom: smem: Add a feature code getter
-      drm/msm/dsi: Remove dsi_phy_read/write()
-      drm/msm/dsi: Remove dsi_phy_write_[un]delay()
-      drm/msm/adreno: De-spaghettify the use of memory barriers
-      Revert "drm/msm/a6xx: Poll for GBIF unhalt status in hw_init"
-
-Krzysztof Kozlowski (4):
-      dt-bindings: display/msm/gpu: constrain clocks in top-level
-      dt-bindings: display/msm/gpu: define reg-names in top-level
-      dt-bindings: display/msm/gpu: simplify compatible regex
-      dt-bindings: display/msm/gpu: fix the schema being not applied
-
-Neil Armstrong (2):
-      drm/msm/adreno: fix a7xx gpu init
-      drm/msm/adreno: fix a743 and a740 cx mem init
-
-Rob Clark (11):
-      drm/msm/adreno: Split up giant device table
-      drm/msm/adreno: Split catalog into separate files
-      drm/msm/adreno: Move hwcg regs to a6xx hw catalog
-      drm/msm/adreno: Move hwcg table into a6xx specific info
-      drm/msm/adreno: Move CP_PROTECT settings to hw catalog
-      drm/msm: Add GPU memory traces
-      drm/msm: Add obj flags to gpu devcoredump
-      drm/msm/adreno: Check for zap node availability
-      Merge remote-tracking branch
-'qcom/20240430-a750-raytracing-v3-2-7f57c5ac082d@gmail.com' into
-msm-next-robclark
-      drm/msm/a6xx: Add missing __always_unused
-      drm/msm/gem: Add missing rcu_dereference()
-
- .../bindings/display/msm/dsi-controller-main.yaml  |   19 +
- .../bindings/display/msm/dsi-phy-28nm.yaml         |    1 +
- .../devicetree/bindings/display/msm/gmu.yaml       |    4 +
- .../devicetree/bindings/display/msm/gpu.yaml       |   27 +-
- .../devicetree/bindings/display/msm/qcom,mdp5.yaml |    1 +
- .../devicetree/bindings/display/msm/qcom,mdss.yaml |    1 +
- .../bindings/display/msm/qcom,sm7150-dpu.yaml      |  143 +++
- .../bindings/display/msm/qcom,sm7150-mdss.yaml     |  458 +++++++
- drivers/firmware/qcom/qcom_scm.c                   |   14 +
- drivers/firmware/qcom/qcom_scm.h                   |    3 +
- drivers/gpu/drm/msm/Kconfig                        |    1 +
- drivers/gpu/drm/msm/Makefile                       |    5 +
- drivers/gpu/drm/msm/adreno/a2xx_catalog.c          |   52 +
- drivers/gpu/drm/msm/adreno/a3xx_catalog.c          |   81 ++
- drivers/gpu/drm/msm/adreno/a4xx_catalog.c          |   50 +
- drivers/gpu/drm/msm/adreno/a5xx_catalog.c          |  161 +++
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c              |   29 +-
- drivers/gpu/drm/msm/adreno/a6xx_catalog.c          | 1259 ++++++++++++++++=
-++++
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |   38 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  995 ++--------------
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |   12 +
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        |   13 +-
- drivers/gpu/drm/msm/adreno/adreno_device.c         |  624 +---------
- drivers/gpu/drm/msm/adreno/adreno_gpu.c            |    6 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.h            |   44 +-
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h |  335 ++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |   25 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h           |    2 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |   57 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |   15 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |    8 +
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |    4 +-
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |   21 +-
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |    3 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |    1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |    1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |    3 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        |   19 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |    5 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   26 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c         |   14 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h         |    2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   45 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          |    7 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h          |    4 -
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c           |   91 +-
- drivers/gpu/drm/msm/dp/dp_display.c                |   11 +-
- drivers/gpu/drm/msm/dp/dp_panel.c                  |   47 +-
- drivers/gpu/drm/msm/dp/dp_panel.h                  |    2 +-
- drivers/gpu/drm/msm/dsi/dsi.h                      |    1 +
- drivers/gpu/drm/msm/dsi/dsi_host.c                 |   59 +-
- drivers/gpu/drm/msm/dsi/dsi_manager.c              |    5 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |    2 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |    6 +-
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c         |  273 ++---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c         |  218 ++--
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_20nm.c         |  109 +-
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c         |  323 ++---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c    |  205 ++--
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          |  320 +++--
- drivers/gpu/drm/msm/msm_drv.h                      |   11 +
- drivers/gpu/drm/msm/msm_gem.c                      |   37 +
- drivers/gpu/drm/msm/msm_gpu.c                      |    6 +-
- drivers/gpu/drm/msm/msm_gpu.h                      |    9 +
- drivers/gpu/drm/msm/msm_mdss.c                     |    8 +
- drivers/soc/qcom/smem.c                            |   33 +
- drivers/soc/qcom/socinfo.c                         |    8 -
- include/linux/firmware/qcom/qcom_scm.h             |   23 +
- include/linux/soc/qcom/smem.h                      |    1 +
- include/linux/soc/qcom/socinfo.h                   |   34 +
- include/uapi/drm/msm_drm.h                         |    1 +
- 71 files changed, 4011 insertions(+), 2470 deletions(-)
- create mode 100644
-Documentation/devicetree/bindings/display/msm/qcom,sm7150-dpu.yaml
- create mode 100644
-Documentation/devicetree/bindings/display/msm/qcom,sm7150-mdss.yaml
- create mode 100644 drivers/gpu/drm/msm/adreno/a2xx_catalog.c
- create mode 100644 drivers/gpu/drm/msm/adreno/a3xx_catalog.c
- create mode 100644 drivers/gpu/drm/msm/adreno/a4xx_catalog.c
- create mode 100644 drivers/gpu/drm/msm/adreno/a5xx_catalog.c
- create mode 100644 drivers/gpu/drm/msm/adreno/a6xx_catalog.c
- create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_2_sm7150.h
+> BR,
+> -R
+>
+> > Thanks & regards,
+> > Bibek
+> >
+> > > BR,
+> > > -R
+> > >
+> > >>
+> > >> Thanks & regards,
+> > >> Bibek
+> > >>
+> > >>> BR,
+> > >>> -R
+> > >>>
+> > >>>>> Otherwise, lgtm
+> > >>>>>
+> > >>>>> BR,
+> > >>>>> -R
+> > >>>>>
+> > >>>>
+> > >>>> Thanks & regards,
+> > >>>> Bibek
+> > >>>>
+> > >>>>>> +}
+> > >>>>>> +
+> > >>>>>>     #define QCOM_ADRENO_SMMU_GPU_SID 0
+> > >>>>>>
+> > >>>>>>     static bool qcom_adreno_smmu_is_gpu_device(struct device *de=
+v)
+> > >>>>>> @@ -407,6 +429,7 @@ static int qcom_adreno_smmu_init_context(str=
+uct arm_smmu_domain *smmu_domain,
+> > >>>>>>            priv->get_fault_info =3D qcom_adreno_smmu_get_fault_i=
+nfo;
+> > >>>>>>            priv->set_stall =3D qcom_adreno_smmu_set_stall;
+> > >>>>>>            priv->resume_translation =3D qcom_adreno_smmu_resume_=
+translation;
+> > >>>>>> +       priv->set_prr =3D qcom_adreno_smmu_set_prr;
+> > >>>>>>
+> > >>>>>>            actlrvar =3D qsmmu->data->actlrvar;
+> > >>>>>>            if (!actlrvar)
+> > >>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iom=
+mu/arm/arm-smmu/arm-smmu.h
+> > >>>>>> index d9c2ef8c1653..3076bef49e20 100644
+> > >>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> > >>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+> > >>>>>> @@ -154,6 +154,8 @@ enum arm_smmu_cbar_type {
+> > >>>>>>     #define ARM_SMMU_SCTLR_M               BIT(0)
+> > >>>>>>
+> > >>>>>>     #define ARM_SMMU_CB_ACTLR              0x4
+> > >>>>>> +#define ARM_SMMU_GFX_PRR_CFG_LADDR     0x6008
+> > >>>>>> +#define ARM_SMMU_GFX_PRR_CFG_UADDR     0x600C
+> > >>>>>>
+> > >>>>>>     #define ARM_SMMU_CB_RESUME             0x8
+> > >>>>>>     #define ARM_SMMU_RESUME_TERMINATE      BIT(0)
+> > >>>>>> diff --git a/include/linux/adreno-smmu-priv.h b/include/linux/ad=
+reno-smmu-priv.h
+> > >>>>>> index c637e0997f6d..d6e2ca9f8d8c 100644
+> > >>>>>> --- a/include/linux/adreno-smmu-priv.h
+> > >>>>>> +++ b/include/linux/adreno-smmu-priv.h
+> > >>>>>> @@ -49,7 +49,10 @@ struct adreno_smmu_fault_info {
+> > >>>>>>      *                 before set_ttbr0_cfg().  If stalling on f=
+ault is enabled,
+> > >>>>>>      *                 the GPU driver must call resume_translati=
+on()
+> > >>>>>>      * @resume_translation: Resume translation after a fault
+> > >>>>>> - *
+> > >>>>>> + * @set_prr:      Extendible interface to be used by GPU to mod=
+ify the
+> > >>>>>> + *                 ACTLR register bits, currently used to confi=
+gure
+> > >>>>>> + *                 Partially-Resident-Region (PRR) feature's
+> > >>>>>> + *                 setup and reset sequence as requested.
+> > >>>>>>      *
+> > >>>>>>      * The GPU driver (drm/msm) and adreno-smmu work together fo=
+r controlling
+> > >>>>>>      * the GPU's SMMU instance.  This is by necessity, as the GP=
+U is directly
+> > >>>>>> @@ -67,6 +70,7 @@ struct adreno_smmu_priv {
+> > >>>>>>         void (*get_fault_info)(const void *cookie, struct adreno=
+_smmu_fault_info *info);
+> > >>>>>>         void (*set_stall)(const void *cookie, bool enabled);
+> > >>>>>>         void (*resume_translation)(const void *cookie, bool term=
+inate);
+> > >>>>>> +    void (*set_prr)(const void *cookie, phys_addr_t page_addr, =
+bool set);
+> > >>>>>>     };
+> > >>>>>>
+> > >>>>>>     #endif /* __ADRENO_SMMU_PRIV_H */
+> > >>>>>> --
+> > >>>>>> 2.34.1
+> > >>>>>>
 
