@@ -1,229 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-25270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C5A292751D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 13:29:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 70681927548
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 13:39:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 150461F23FC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 11:29:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1AE1E1F24D33
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 11:39:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ADE01AC450;
-	Thu,  4 Jul 2024 11:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AFBE1AC420;
+	Thu,  4 Jul 2024 11:39:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mEkAuid9"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="Q+VD2LFz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82E21AC43F
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jul 2024 11:26:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192AD1AC43F
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jul 2024 11:39:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720092375; cv=none; b=azqKrsKztTZ0CD6fa7Vm+IfINmxXrk4r/vHEj8YAbpWG+0jcJALtcNcWa20H6wIxpzp9nCMr+y0BugBRWzauZdK/36myKBlT/4bha4n3bM7t4gwrX/72TSs5t32kIcV/fVyp7XVZHcr9EOpXMO57lMAAXZNYvDTHQl9WK4lKBD4=
+	t=1720093182; cv=none; b=PB7Y8Pq59+is+mwoeHma3mdBFNEd/J/XpMr900m2K8N+QH0GaTpM/sRnD85iiRMAVi/KoOS9PhVm/Hk59nsqMSkZXOLK9EKZOfv0uPbjr71lHEeOVlxSlwCUEYBIlIRElG6q2+m8o0+0Wm5YmGVriGRWNZAIW5/dyDmBwxBPC/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720092375; c=relaxed/simple;
-	bh=Dg3JTq0ZBWP2D2Vr8U1r3aGFATnfejdOWc8Xk9rIx4E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LN1yDEmpmjHzizucX/OsD9DeiAWCbROeq02oP+tqS5nEy62ai2qXPeI8uO/lsz/tt1p2mLVdroQ3H9Hv54nWt18b3BP5FenhjUcg4xja4fnu6DjDjHoZilTP0BjGIX4u3R2HLQiuDTF4CY5rGejk5OzTgGw1qhG4R7nh8oNGM3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mEkAuid9; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-6515b824117so4738577b3.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jul 2024 04:26:13 -0700 (PDT)
+	s=arc-20240116; t=1720093182; c=relaxed/simple;
+	bh=cebFaK1PCNoKeU18B3oxIeruyJcc2wRP3KXLZsY2bZQ=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=lJ4J9JiUaEsEoOSu6zu9xs4t9PI2jCDr9pEIE5ulAwrFvwi7i5O6vCfoLmH3Ke58k0NdtS14fL0CSpo5Ovyk+EHq3aYxo29M9psWPlsmxdF9j7hGUGOBJPkqwdqrWBMG+xhAVXNui+vbkn3ZW+OA9hl//tf1Ik8LdyWvXP4fnxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=Q+VD2LFz; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-424ad991cbbso3812495e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jul 2024 04:39:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720092373; x=1720697173; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wz4auga2ihI3UY4J8JDbIVFDxmJf4jQfyvh3R1LfKJQ=;
-        b=mEkAuid9SZNozokiF88nNNapNf46Jynmz0sjs+tnMynRIs/AW9CovslVAiwuYz4n8x
-         dqt9vS9r6l5GotCvJJm8X1VKvtJscvyUkl6ytG10fAPCoWbdhPMDRhvKPaB+Sc3dpxRg
-         VoctEsBhNwW1nFoJuYTvrbHHGW2gQ8pm/5LoI9z9Mvxph/Xm6SnjvoWIXvcNjpbUqKSq
-         cZFd4qWO2liLWHS3iOhTw9BvhG/EEdMrU6MjXkTejm4Mmjqq9YizexeyoaZL39qS45GK
-         ORXNvXRiepWpsPP+Z1/CexRVcDtVU0PLrTS7tXrBf07CGh9iXknnTeJhCe8BSQwCF2IS
-         SCJA==
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1720093177; x=1720697977; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=iG2QvdM8ow9ri0MC7ZjMDAjQNyzUeAXguRK1dhaQ4EU=;
+        b=Q+VD2LFz62xzTrEsLOTKhq53mV4Jmh6fh3UAtogAo/IGFxsbUey3/IYsJn0KNsmr5F
+         P0KSrax0jO6q8cVbklyPszEoQX9rw/eLGBce1B6TCqI26L82JO2DuMez8OruetiBjKiw
+         KBHgQgzR6BcOw/6P2k2WkNfdDK3NsoK6CKEYFadWfSyHnWY2mkkjqVfX8KRtCG0vslZI
+         4bv2k7FmMn0dmLhNIGss16g5ROyoseGOLDr21mxtmzqMSf+9sp1IqE5TLIBIJ6Om9CC1
+         L2tKX5rkPQQenueG/d+x9/3FTby5T4I7K/Zxu1hEd7wKwkkiQyV3Feek1KpI1dfjGbjf
+         yIug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720092373; x=1720697173;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wz4auga2ihI3UY4J8JDbIVFDxmJf4jQfyvh3R1LfKJQ=;
-        b=RK5AIuu0+O6KyscxK70BDfV6sh13CgNAoY8Okz0KiBrT+YVo1x8SIC9B+5pGBCorxg
-         wjTaai+RfN1yAjrM3hTveCYg3Sni1OixKN6oYTP3cGhtTaRu5NuHb9y/VBPTVS8hyGll
-         J/67NV3PRb6E81klfhMiJBc67ap+kB9KgDHEliF7A/vQ9mejE90RIHy5OFWyAQN2D/Nj
-         Ym/5AFglQXC4m+/SBUE+4N+sTpzm8amqdMOqlP/4YDGSi2dvjhRAVWL2KAB/DzxBRnoa
-         ntzhT1u2Gwz7zxJoEU+dHJMwhm7WSULVRcse1fKzkTLAbCiO4DPiQ4YPZ8aMnz1mqoGg
-         gitg==
-X-Forwarded-Encrypted: i=1; AJvYcCU2B9DqSfcJlt7lBZ1T17IAdJjQtaZgt7N++Z7mo/QsQZzMTVvSqqh7O+3w2eigS+v8yb126UFR0YohlgcsQJgDEAQb4Bg/11tTmGlPhA==
-X-Gm-Message-State: AOJu0Yy0ObFWjWz9K8Dm3PNax1MeSyM1ao7Q7hZI+3NlNipTz/x5rMyw
-	3K03AXaaqjVyffQSOfDQXUZFmzTYKpi1qQUiAB1+rWtrMfAJMF1IrtimDWW/eIMnBvp0v17ftCw
-	tL6cHYgMcPeQFNzPQfBaWnwtxh5eagIDajnZOGA==
-X-Google-Smtp-Source: AGHT+IGUuy8LiMm7CRx7RcUn3ERP1YBHOTaS7EuRnYAtXbHY8JFSwXprjEPPOPd0GIcSCtt0Mrw7VgCiJ21+Ale1Jug=
-X-Received: by 2002:a05:690c:6801:b0:62c:f82b:553f with SMTP id
- 00721157ae682-652d62e4a62mr15119967b3.31.1720092372647; Thu, 04 Jul 2024
- 04:26:12 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720093177; x=1720697977;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iG2QvdM8ow9ri0MC7ZjMDAjQNyzUeAXguRK1dhaQ4EU=;
+        b=KF9mVvzdzSPmKnaWY+uArkFWOruT5e0ZWbVqIUXUEG9LViHpsoZdR81BfT2G2LzW4S
+         zcwKs1NeELNJ/UF/AxcPtE33zcNLy8/hJ+lR3B651q9IrIqf4cVvAxG2osjqU5BHLkJy
+         YYdIXDE1AIP7ZdPQMa1mCYJ3bSi3hZosw4UaUurEMozwSQiMtptz+3KpzeNbc8a9NRR4
+         Bux3rFTYAoZRYZo3VB8zECrQwZfZEXQ6kDe2mAfEG6LHvWFpoRBF3wKkvgNXTyuZeahZ
+         BYZHD4/+QH+B9Usba6co/+nOX6izZTMFPbVqkhUt9f14uC5sti+l6zTHKQw/fB7UvJB/
+         bQow==
+X-Gm-Message-State: AOJu0YzcmB8JtyH+irOdGyETVltGb9CpJwVJTcif+KRtJmNVswpIqBVp
+	j3UeE+psiprOUGXl6Wbwdd1jQEXyrGbh5H0mUm2y0TUY93nzNAT1OidS9FS0a6BXOGD+MI7FT0N
+	M
+X-Google-Smtp-Source: AGHT+IFF+9XJUYkfl3PDjXhqWeuEZV+2D54hXSyv5DSMVDSNk+SGcKx5ctLEi9Wm7CrneuFEpTI6LA==
+X-Received: by 2002:adf:ecd2:0:b0:35f:1dce:8671 with SMTP id ffacd0b85a97d-3679dd29926mr1099679f8f.25.1720093177309;
+        Thu, 04 Jul 2024 04:39:37 -0700 (PDT)
+Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3679d827789sm1398974f8f.76.2024.07.04.04.39.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Jul 2024 04:39:36 -0700 (PDT)
+Message-ID: <0d66422c-ab7b-4364-bd74-d2aca24b8a2d@freebox.fr>
+Date: Thu, 4 Jul 2024 13:39:36 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628140435.1652374-1-quic_bibekkum@quicinc.com>
- <20240628140435.1652374-5-quic_bibekkum@quicinc.com> <ueuhu5xfzp2rnuxzeqqd6cho476adidztgx7oq2tbiufauv6h4@obblpxvqwnno>
- <6da77880-2ba4-4b02-8b3e-cb0fbd0a9daf@quicinc.com> <20240703130209.GA5750@willie-the-truck>
- <6ad2e62d-8672-4b64-848a-6634d7a9410e@quicinc.com>
-In-Reply-To: <6ad2e62d-8672-4b64-848a-6634d7a9410e@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 4 Jul 2024 14:26:01 +0300
-Message-ID: <CAA8EJpqDFeCVEiuVM4RJoYPVjRn+PNRAYbe3RcFdDsDTj_Gkwg@mail.gmail.com>
-Subject: Re: [PATCH v13 4/6] iommu/arm-smmu: add ACTLR data and support for SM8550
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Cc: Will Deacon <will@kernel.org>, robdclark@gmail.com, robin.murphy@arm.com, 
-	joro@8bytes.org, jgg@ziepe.ca, jsnitsel@redhat.com, robh@kernel.org, 
-	krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com, 
-	konrad.dybcio@linaro.org, iommu@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 0/3] Add support for qcom msm8998-venus (HW vdec /
+ venc)
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+To: Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: MSM <linux-arm-msm@vger.kernel.org>,
+ linux-media <linux-media@vger.kernel.org>, DT <devicetree@vger.kernel.org>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Arnaud Vrac <avrac@freebox.fr>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bryan O Donoghue <bryan.odonoghue@linaro.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>
+References: <8b2705b7-f33c-4ebe-a6a8-c5ef776fe9ad@freebox.fr>
+Content-Language: en-US
+In-Reply-To: <8b2705b7-f33c-4ebe-a6a8-c5ef776fe9ad@freebox.fr>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, 4 Jul 2024 at 12:12, Bibek Kumar Patro
-<quic_bibekkum@quicinc.com> wrote:
->
->
->
-> On 7/3/2024 6:32 PM, Will Deacon wrote:
-> > On Wed, Jul 03, 2024 at 05:45:23PM +0530, Bibek Kumar Patro wrote:
-> >>
-> >>
-> >> On 7/2/2024 12:04 AM, Dmitry Baryshkov wrote:
-> >>> On Fri, Jun 28, 2024 at 07:34:33PM GMT, Bibek Kumar Patro wrote:
-> >>>> Add ACTLR data table for SM8550 along with support for
-> >>>> same including SM8550 specific implementation operations.
-> >>>>
-> >>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-> >>>> ---
-> >>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 89 +++++++++++++++++=
-+++++
-> >>>>    1 file changed, 89 insertions(+)
-> >>>>
-> >>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/io=
-mmu/arm/arm-smmu/arm-smmu-qcom.c
-> >>>> index 77c9abffe07d..b4521471ffe9 100644
-> >>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >>>> @@ -23,6 +23,85 @@
-> >>>>
-> >>>>    #define CPRE                    (1 << 1)
-> >>>>    #define CMTLB                   (1 << 0)
-> >>>> +#define PREFETCH_SHIFT            8
-> >>>> +#define PREFETCH_DEFAULT  0
-> >>>> +#define PREFETCH_SHALLOW  (1 << PREFETCH_SHIFT)
-> >>>> +#define PREFETCH_MODERATE (2 << PREFETCH_SHIFT)
-> >>>> +#define PREFETCH_DEEP             (3 << PREFETCH_SHIFT)
-> >>>> +
-> >>>> +static const struct actlr_config sm8550_apps_actlr_cfg[] =3D {
-> >>>> +  { 0x18a0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
-> >>>> +  { 0x18e0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
-> >>>> +  { 0x0800, 0x0020, PREFETCH_DEFAULT | CMTLB },
-> >>>> +  { 0x1800, 0x00c0, PREFETCH_DEFAULT | CMTLB },
-> >>>> +  { 0x1820, 0x0000, PREFETCH_DEFAULT | CMTLB },
-> >>>> +  { 0x1860, 0x0000, PREFETCH_DEFAULT | CMTLB },
-> >>>> +  { 0x0c01, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
-> >>>
-> >>> - Please keep the list sorted
-> >>
-> >> Sure Dmitry, will sort this list in reverse-christmas-tree order
-> >> in next iteration. Thanks for this input.
-> >>
-> >>> - Please comment, which devices use these settings.
-> >>
-> >> As discussed in earlier versions of this patch, these table entries
-> >> are kind of just blind values for SMMU device, where SMMU do not have
-> >> idea on which SID belong to which client. During probe time when the
-> >> clients' Stream-ID has corresponding ACTLR entry then the driver would
-> >> set value in register.
-> >
-> > I'm still firmly of the opinion that this stuff needs a higher-level
-> > description in the device-tree and should not be hard-coded in the driv=
-er
-> > like this. It's not just a list of opaque values; it describes
-> > SoC-specific topological information that should not be this rigid.
-> >
->
-> As per my understanding since ACTLR register is an implementation
-> defined register,
-> so I think the placement can also depend on factor of how these
-> registers are used?
->
-> For Qualcomm SoCs, it stores prefetch values for each client, improving
-> performance without defining hardware design.
-> Even without setting this value, clients on these Stream-IDs would still
-> function, albeit with reduced performance.
->
-> The SteamID/Mask pair in first two columns <which is a SoC topology> is
-> only used as reference to find preferred prefetch setting for the
-> corresponding client on this StreamID
->
-> To refer initial discussion and Robin's thoughts on device-tree approach
-> for this property which we proposed as a part of RFC:
-> https://lore.kernel.org/all/a01e7e60-6ead-4a9e-ba90-22a8a6bbd03f@quicinc.=
-com/
->
-> " On 9/18/2023 4:49 PM, Robin Murphy wrote: "
->  >
->  > At the very least this would need to be in a implementation-specific
->  > backend, since everything about ACTLR is implementation-defined; there
->  > could be bits in there that the driver needs to manage itself and
->  > clients have absolutely no business overriding (e.g. the MMU-500 errat=
-a
->  > workarounds). The generic driver can't know what's valid, nor what the
->  > consequences are of not being able to satisfy a particular setting. Th=
-en
->  > there's still the question of what if two clients ask for different
->  > settings but want to attach to the same context?
->  >
->  > It's also questionable whether this would belong in DT at all, since i=
-t
->  > has a bit of a smell of software policv about it.
->  >
->  > If it could be
->  > sufficiently justified then it would need a proper binding proposal, a=
-nd
->  > "write this opaque value into this register" type properties are
->  > generally not approved of.
->  >
->  > Thanks,
->  > Robin.
->  >
->
-> So as per the initial discussions it felt right to have this data stored
-> inside driver.
-> One potential downside is that the driver file could become cluttered
-> with this data, but this can be mitigated by storing the table in a
-> separate file if necessary.
->
-> For use cases or vendor that implement the ACTLR register differently,
-> deeply involving SoC topology values or defining hardware design
-> (something similar to Stream Matching Register),then it might be more
-> appropriate to place it in the devicetree?
->
-> This is just my understanding. I=E2=80=99d appreciate your further though=
-ts on
-> this - Will, Robin, Dmitry, Rob.
+On 04/06/2024 18:41, Marc Gonzalez wrote:
 
-My understanding was that DT should be a place for variable
-information. In this case the mapping between Stream-IDs and the
-corresponding register programming is more or less fixed for a
-particular Soc.
-Probably the only way this can be handled outside of the driver is by
-increasing #iommu-cells and encoding these values in this extra IOMMU
-cell.
+> Changes in v5
+> - Collect latest Acks (from Vikash)
+> - Resend to Mauro
+> 
+> Marc Gonzalez (1):
+>   dt-bindings: media: add qcom,msm8998-venus
+> 
+> Pierre-Hugues Husson (2):
+>   arm64: dts: qcom: msm8998: add venus node
+>   media: venus: add msm8998 support
+> 
+>  Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml |  4 ++-
+>  arch/arm64/boot/dts/qcom/msm8998.dtsi                           | 48 +++++++++++++++++++++++++++++
+>  drivers/media/platform/qcom/venus/core.c                        | 39 +++++++++++++++++++++++
+>  3 files changed, 90 insertions(+), 1 deletion(-)
 
---=20
-With best wishes
-Dmitry
+Hello Hans,
+
+I got an email stating:
+
+The following patches (submitted by you) have been updated in Patchwork:
+
+ * linux-media: [v5,1/3] dt-bindings: media: add qcom,msm8998-venus
+     - http://patchwork.linuxtv.org/project/linux-media/patch/2db42e45-c034-43be-be96-0e88511d1878@freebox.fr/
+     - for: Linux Media kernel patches
+    was: New
+    now: Accepted
+
+ * linux-media: [v5,2/3] media: venus: add msm8998 support
+     - http://patchwork.linuxtv.org/project/linux-media/patch/eb15a48b-6185-42dd-92ca-8df33b0ea4b5@freebox.fr/
+     - for: Linux Media kernel patches
+    was: New
+    now: Accepted
+
+
+Yet, I've gotten a warning from kernel test robot <lkp@intel.com> stating:
+
+arch/arm64/boot/dts/qcom/msm8998-mtp.dtb: /soc@0/video-codec@cc00000: failed to match any schema with compatible: ['qcom,msm8998-venus']
+
+
+Is this because the patches are not merged in linux-next?
+
+Will they be merged in v6.11 ?
+
+Regards
+
 
