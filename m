@@ -1,257 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-25268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF7639274E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 13:23:54 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B5EE927511
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 13:27:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 77081289C09
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 11:23:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B02C0B2376D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jul 2024 11:27:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85B8A1AC427;
-	Thu,  4 Jul 2024 11:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C45B1AD3F3;
+	Thu,  4 Jul 2024 11:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dqWUEaIt"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="k+iyaGdx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E561ABCC0
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jul 2024 11:23:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5501AC449;
+	Thu,  4 Jul 2024 11:25:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720092218; cv=none; b=Vn42m1iQnCKD7VrlOwGGJbZ68q+7FvKZOEV9511HmiyN08QCAODRTOXElRroQFpw4bX+ZK7DVvT+beC0Hpitau37Zy+MTc3kSkK+LPai4d6GRD8cirsh8+C/ygUVWSBChrKA18GZb+KnGuQu5y9ahVLVNTlrY8TKVSdyHt0Cdnw=
+	t=1720092321; cv=none; b=GdfqZ8FuFf/P0feXW6SYopWUoVNcX6d95PL0CEjla/hTewFr5ie7fOjs9AOhgz36ZHvT2LFRynepC07nXhn7FIzhBbDBb7hzaWdHKZYuzpa4YLTnjV1oM22m8VfE2Do+RCM2vO0Xotvbjhnc+XZyFZtqXYkBOUr+XObgMGv7ZY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720092218; c=relaxed/simple;
-	bh=SMB+igqj6n9++aWRLyA03Vj9yqGMmTygj1Y2j40KYuc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mLBXo3hZFeViLL/7hE/eB9FS9ArUQtW+CaDlRUkr6PpYgDNu1uDW/GAxkVfqA77w45ZdFNlCT9WFZz/NbhAcBcpz2jKqluxeByNZo/hLORM0J9uCNlZO1tK6yujJLOgWm5QfpreltJFmEEsW7fCJWvcAMmBfmP/QD+d7ypKbSPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dqWUEaIt; arc=none smtp.client-ip=209.85.128.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-64b5617ba47so5017217b3.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jul 2024 04:23:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720092215; x=1720697015; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fu5k71EftNN7Y1CDQiusnOVRLjdoJgBCPaoKhdRlLMQ=;
-        b=dqWUEaIt6WD9pVNSbWWUNANEOSK9EBnmRCbB83EA6RIjcxi4pUqln19w3XWeeXQB74
-         gMgDvrwc/YZXxS+CzMnwiamkNJkVm8hJKyiacnKsbcp3cxVO5c9bWgEltEPVYu8CVnH+
-         t84YBnHNzaUmG28TwIREJ8ybVRe6I20LFoGYL3OUSi19QqwKQgTg5T29GcB3KNvPN+RV
-         iOfAH6qvD9XFYTgjUcM2kZbCr8O9uFbxPfQZIRcLu8puFCvtK7tXT1lB1wHTsiCsMpRt
-         vBPjz93pit9QbrlL00tKyBD4ToRighcZn6hM853VMvzpNeQ0Jt6+nBu9DARLsp8PCYKM
-         uK5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720092215; x=1720697015;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Fu5k71EftNN7Y1CDQiusnOVRLjdoJgBCPaoKhdRlLMQ=;
-        b=vV/QvbHH72Y+YWM3Dv8P4TkDJZBEi7w7n9vniH/Fa5xX34AMIMx9u2Zx8pPXj5ypqc
-         1JBi4p7p9sP6sVP4B2VlPsWYPyWuQOWeS/Ow+QUSYx4lNXHKkx00uf0YaGAWmjlHFgA6
-         PngM9Upc/FTwxG2HH8gB8tnOkNu159PpRwlpqhdlY7L3LpRhQbkZuckmhL/f8yNvFq78
-         muaYPQdET16BMT5ODnO5fZRD30B2YyWauC3P11C5WvG8mZx+53lDu4ov+bO6TT+i6/yu
-         ZjFikwptu9aSoSbzR4AY7817r7dWRSM5lZfXTWqE6u4jM2u4lv26FX9mWCRrY4xyIw8Z
-         fULA==
-X-Forwarded-Encrypted: i=1; AJvYcCXmkWB70aD8zxvVUI7z6GqJ7lTi8YoP7hkXCcHr0At+Ge/5GllFG1WJNcdrnDyT9/tesSLyulhEqz6mgXA2vVtoKeEPCmd2VVuTT0aUnA==
-X-Gm-Message-State: AOJu0YyN4ycpFfg2T7ZMKyBJ9PkkDEOoXTDGwWL2CLNvUQr9KdGQfecl
-	mxf59FUc6QeLoKJ9b4jeqXM7dEzothl2IG1tqvITR0Yt/XpbtrTRLmGheKPqxlXHDt4HhptKiF8
-	hGbHoyY/IXbBhM38fbyd8Vq/Sm+uZP5y0DyyCug==
-X-Google-Smtp-Source: AGHT+IFsWPFr8p78DsaOJ4IVt+skDa7EL1Ymt4GtJo1evSDlcMH/wDnYhG+FUPuv3o6FilN6Lhm6EDdd6fD4yyh2xpM=
-X-Received: by 2002:a81:920f:0:b0:61b:33e1:9641 with SMTP id
- 00721157ae682-652d582166amr12390047b3.13.1720092215000; Thu, 04 Jul 2024
- 04:23:35 -0700 (PDT)
+	s=arc-20240116; t=1720092321; c=relaxed/simple;
+	bh=jkDP8M9nS6zbeKG8Ls4A6Gkiqj2sTDusTpp/rBGe0V8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=K1r4zA9H4hYxwVCbLCgHspU4Xdk4YHu3BMekApe63F96/MZQKQDT1S9eltIxGeFyw5NYw7vQwtJZGbUqVprSKBXVxMq3bxpF1xmm3IyYU3QpyX7Ov3d3ujZwvFgNpZn+Qm21IZjpmiAlZKaBNWf9rErcM6tezWQS8qpTNBuKCgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=k+iyaGdx; arc=none smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1720092319; x=1751628319;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=jkDP8M9nS6zbeKG8Ls4A6Gkiqj2sTDusTpp/rBGe0V8=;
+  b=k+iyaGdxIEE+bEjjCbngFqguf9ZVanRXNGituaRAbFsY8+naKNzNnEf9
+   LiBHVI0wOlH1/pXTIA/Ox2V6biHD/ZzWlvhEyjoNL3fvDq5KhOgwVhmwb
+   hh48MQTtWtl/f46nF6BmmTPiVsAoIGu0DS0QfHhECe1VydMwBn0zuz//p
+   lJSRKrp4d82MpSrysQTyGrEc810L6R745wpnj4VNoEhVKwdnYosx0ZxRB
+   XRRqMh0WbJRPeaQ96/d4BDqp9dWFWeN5WEUfvyu1AOghrgd3fKOwpeZ67
+   Scam5T7W+3X4YyaOAvB+0OO5v8yaB9aPAwW/F43r+GrAEKoVU/OiwIW24
+   g==;
+X-CSE-ConnectionGUID: Hn0X33VeTmeKrDWy1OdVMA==
+X-CSE-MsgGUID: 3cHolDtUQoiCJ41gtJS2TA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11122"; a="17477832"
+X-IronPort-AV: E=Sophos;i="6.09,183,1716274800"; 
+   d="scan'208";a="17477832"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jul 2024 04:25:18 -0700
+X-CSE-ConnectionGUID: ws7LtSdaR264xMczHG3i8g==
+X-CSE-MsgGUID: K9y0McSiT7qKUb2J70jrew==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,183,1716274800"; 
+   d="scan'208";a="69759893"
+Received: from bergbenj-mobl1.ger.corp.intel.com (HELO [10.245.246.90]) ([10.245.246.90])
+  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jul 2024 04:25:12 -0700
+Message-ID: <f9923336-3dd3-4f36-b5f6-f45f4ed09e0c@linux.intel.com>
+Date: Thu, 4 Jul 2024 13:25:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628140435.1652374-1-quic_bibekkum@quicinc.com>
- <20240628140435.1652374-5-quic_bibekkum@quicinc.com> <ueuhu5xfzp2rnuxzeqqd6cho476adidztgx7oq2tbiufauv6h4@obblpxvqwnno>
- <6da77880-2ba4-4b02-8b3e-cb0fbd0a9daf@quicinc.com>
-In-Reply-To: <6da77880-2ba4-4b02-8b3e-cb0fbd0a9daf@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 4 Jul 2024 14:23:23 +0300
-Message-ID: <CAA8EJpqXfqKSi-j3NsAzQA4hOLndFZSPAiL1YpwnxMgbgrWokA@mail.gmail.com>
-Subject: Re: [PATCH v13 4/6] iommu/arm-smmu: add ACTLR data and support for SM8550
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Cc: robdclark@gmail.com, will@kernel.org, robin.murphy@arm.com, 
-	joro@8bytes.org, jgg@ziepe.ca, jsnitsel@redhat.com, robh@kernel.org, 
-	krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com, 
-	konrad.dybcio@linaro.org, iommu@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-
-On Wed, 3 Jul 2024 at 15:15, Bibek Kumar Patro
-<quic_bibekkum@quicinc.com> wrote:
->
->
->
-> On 7/2/2024 12:04 AM, Dmitry Baryshkov wrote:
-> > On Fri, Jun 28, 2024 at 07:34:33PM GMT, Bibek Kumar Patro wrote:
-> >> Add ACTLR data table for SM8550 along with support for
-> >> same including SM8550 specific implementation operations.
-> >>
-> >> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-> >> ---
-> >>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 89 ++++++++++++++++++++++
-> >>   1 file changed, 89 insertions(+)
-> >>
-> >> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >> index 77c9abffe07d..b4521471ffe9 100644
-> >> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> >> @@ -23,6 +23,85 @@
-> >>
-> >>   #define CPRE                       (1 << 1)
-> >>   #define CMTLB                      (1 << 0)
-> >> +#define PREFETCH_SHIFT              8
-> >> +#define PREFETCH_DEFAULT    0
-> >> +#define PREFETCH_SHALLOW    (1 << PREFETCH_SHIFT)
-> >> +#define PREFETCH_MODERATE   (2 << PREFETCH_SHIFT)
-> >> +#define PREFETCH_DEEP               (3 << PREFETCH_SHIFT)
-> >> +
-> >> +static const struct actlr_config sm8550_apps_actlr_cfg[] = {
-> >> +    { 0x18a0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
-> >> +    { 0x18e0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
-> >> +    { 0x0800, 0x0020, PREFETCH_DEFAULT | CMTLB },
-> >> +    { 0x1800, 0x00c0, PREFETCH_DEFAULT | CMTLB },
-> >> +    { 0x1820, 0x0000, PREFETCH_DEFAULT | CMTLB },
-> >> +    { 0x1860, 0x0000, PREFETCH_DEFAULT | CMTLB },
-> >> +    { 0x0c01, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
-> >
-> > - Please keep the list sorted
->
-> Sure Dmitry, will sort this list in reverse-christmas-tree order
-> in next iteration. Thanks for this input.
-
-Why? Just sort basing on SID.
-
->
-> > - Please comment, which devices use these settings.
->
-> As discussed in earlier versions of this patch, these table entries
-> are kind of just blind values for SMMU device, where SMMU do not have
-> idea on which SID belong to which client. During probe time when the
-> clients' Stream-ID has corresponding ACTLR entry then the driver would
-> set value in register.
-> Also some might have their prefetch settings as proprietary.
-> Hence did not add the comments for device using these settings.
-
-Please mention devices that are going to use the SIDs.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v23 32/32] ASoC: doc: Add documentation for SOC USB
+To: =?UTF-8?Q?Amadeusz_S=C5=82awi=C5=84ski?=
+ <amadeuszx.slawinski@linux.intel.com>, Wesley Cheng
+ <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+ mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+ corbet@lwn.net, broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
+ Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, tiwai@suse.com,
+ robh@kernel.org, gregkh@linuxfoundation.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ alsa-devel@alsa-project.org
+References: <20240610235808.22173-1-quic_wcheng@quicinc.com>
+ <5be51e1f-70c9-4bbc-96fa-1e50e441bd35@linux.intel.com>
+ <408d9e8e-0f40-7e66-54be-2f8d2c0783a3@quicinc.com>
+ <ca1e1063-e1bd-4e03-a7cd-91985e9954e9@linux.intel.com>
+ <096d59a0-5e18-092c-c9ae-d98130226f06@quicinc.com>
+ <368d9019-2c96-468e-b472-7e1127f76213@linux.intel.com>
+ <eb6370ea-47a0-3659-3c10-cb7f95e3e520@quicinc.com>
+ <510468c7-b181-48d0-bf2d-3e478b2f2aca@linux.intel.com>
+ <c7a95157-1b71-1489-3657-8fe67f9acb4e@quicinc.com>
+ <90463a4e-c2e7-4b59-9a79-23533b4acd1e@linux.intel.com>
+ <fd8f1eb0-4b21-4697-8175-a61bc3858852@quicinc.com>
+ <f982842a-1804-420b-a539-a609ecf8fb8a@linux.intel.com>
+ <3c358604-6926-4f90-8fc8-8139c68c3418@quicinc.com>
+ <70bf10a7-7f87-4fd1-bd44-1733d3b2b15e@linux.intel.com>
+ <b1fcef2a-2af9-4985-ae00-f348ca5df3f1@linux.intel.com>
+ <ab734271-58ee-4981-926c-9b57f36b8ac6@linux.intel.com>
+ <ccbf9366-f3de-4a80-bffc-e32a8409e1a7@quicinc.com>
+ <adb4e27b-b328-4eef-87ca-9b8bad6639e6@linux.intel.com>
+Content-Language: en-US
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <adb4e27b-b328-4eef-87ca-9b8bad6639e6@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 
->
->
-> Thanks & regards,
-> Bibek
->
-> >
-> >> +    { 0x0c02, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x0c03, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x0c04, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x0c05, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x0c06, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x0c07, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x0c08, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x0c09, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x0c0c, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x0c0d, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x0c0e, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x0c0f, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x1961, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x1962, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x1963, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x1964, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x1965, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x1966, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x1967, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x1968, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x1969, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x196c, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x196d, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x196e, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x196f, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x19c1, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x19c2, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x19c3, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x19c4, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x19c5, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x19c6, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x19c7, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x19c8, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x19c9, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x19cc, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x19cd, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x19ce, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x19cf, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +    { 0x1c00, 0x0002, PREFETCH_SHALLOW | CPRE | CMTLB },
-> >> +    { 0x1c01, 0x0000, PREFETCH_DEFAULT | CMTLB },
-> >> +    { 0x1920, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
-> >> +    { 0x1923, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
-> >> +    { 0x1924, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
-> >> +    { 0x1940, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
-> >> +    { 0x1941, 0x0004, PREFETCH_SHALLOW | CPRE | CMTLB },
-> >> +    { 0x1943, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
-> >> +    { 0x1944, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
-> >> +    { 0x1947, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
-> >> +};
-> >> +
-> >> +static const struct actlr_config sm8550_gfx_actlr_cfg[] = {
-> >> +    { 0x0000, 0x03ff, PREFETCH_DEEP | CPRE | CMTLB },
-> >> +};
-> >> +
-> >> +static const struct actlr_variant sm8550_actlr[] = {
-> >> +    {
-> >> +            .io_start = 0x15000000,
-> >> +            .actlrcfg = sm8550_apps_actlr_cfg,
-> >> +            .num_actlrcfg = ARRAY_SIZE(sm8550_apps_actlr_cfg)
-> >> +    }, {
-> >> +            .io_start = 0x03da0000,
-> >> +            .actlrcfg = sm8550_gfx_actlr_cfg,
-> >> +            .num_actlrcfg = ARRAY_SIZE(sm8550_gfx_actlr_cfg)
-> >> +    },
-> >> +};
-> >>
-> >>   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
-> >>   {
-> >> @@ -606,6 +685,15 @@ static const struct qcom_smmu_match_data sdm845_smmu_500_data = {
-> >>      /* Also no debug configuration. */
-> >>   };
-> >>
-> >> +
-> >> +static const struct qcom_smmu_match_data sm8550_smmu_500_impl0_data = {
-> >> +    .impl = &qcom_smmu_500_impl,
-> >> +    .adreno_impl = &qcom_adreno_smmu_500_impl,
-> >> +    .cfg = &qcom_smmu_impl0_cfg,
-> >> +    .actlrvar = sm8550_actlr,
-> >> +    .num_smmu = ARRAY_SIZE(sm8550_actlr),
-> >> +};
-> >> +
-> >>   static const struct qcom_smmu_match_data qcom_smmu_500_impl0_data = {
-> >>      .impl = &qcom_smmu_500_impl,
-> >>      .adreno_impl = &qcom_adreno_smmu_500_impl,
-> >> @@ -640,6 +728,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
-> >>      { .compatible = "qcom,sm8250-smmu-500", .data = &qcom_smmu_500_impl0_data },
-> >>      { .compatible = "qcom,sm8350-smmu-500", .data = &qcom_smmu_500_impl0_data },
-> >>      { .compatible = "qcom,sm8450-smmu-500", .data = &qcom_smmu_500_impl0_data },
-> >> +    { .compatible = "qcom,sm8550-smmu-500", .data = &sm8550_smmu_500_impl0_data },
-> >>      { .compatible = "qcom,smmu-500", .data = &qcom_smmu_500_impl0_data },
-> >>      { }
-> >>   };
-> >> --
-> >> 2.34.1
-> >>
-> >
+>> Just so I understand...is it really desired that userspace doesn't
+>> have the flexibility to choose which USB device is offloaded?  I know
+>> it complicates what needs to be done, but it could be just an
+>> additional feature that can be added later on.  Again, by default, we
+>> select the last USB headset plugged in to be enabled for offload by
+>> default.
+> 
+> If it chooses endpoint by itself perhaps you can send patch set without
+> controls first? This has added benefit of less patches in series, making
+> it easier to review and it won't block whole patch set by discussion on
+> controls feature. Controls can be added in followup series.
 
+We do need read-only controls for userspace to know that offload is
+possible and which card/device to use. That can be done in a first step
+assuming there's a single device plugged-in.
 
+Dealing with multiple devices and defining rules or configuration
+options to select the offloaded device is a second-level problem.
 
---
-With best wishes
-Dmitry
+In most cases the only thing that will be offloaded is a headset
+anyways, so the selection could be rather static based on a
+vendor/system ID, all other USB devices would be ignored.
 
