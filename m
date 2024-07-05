@@ -1,45 +1,45 @@
-Return-Path: <linux-arm-msm+bounces-25317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 492D69280E9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 05:29:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6BAF928101
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 05:44:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D0A681F23BB7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 03:29:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9C4CD282C06
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 03:44:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79687364BE;
-	Fri,  5 Jul 2024 03:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A021F175BE;
+	Fri,  5 Jul 2024 03:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I9rSH4cp"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MKuRjaV7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CBF1643D
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jul 2024 03:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFE0101F2
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jul 2024 03:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720150169; cv=none; b=eVtPKxzD4xUlpCudlRGFyrRnNJMVyeiS4ER5xbr/2eG3GG3nEPSAjNmj48l+5VHuPkNZr/qe+XY5UrMy7zSd2JRJ8Fxjj2A4dhqbiO+LDYXsQvzqiI/WTW6t9S/b9Nti6W9wTxcAb7xlQtmKQEGjViyxweFEEISEa46FhqXuNCc=
+	t=1720151053; cv=none; b=bDfdCG2LikUT13QkRT3hjOu1ShNvy0zvVAGQfru7tcVTciFY/371bAiD1SCA5KYdRWo+A1dTiyZnz7t/M0IB4E7+r0FB2orcz0WO4n5nJ2zkDVkp8d9USmrDqTUJmysJWbRc7ZafyYveqgwzRNxDRuW6KU9lPGnGvUOq5KMGZFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720150169; c=relaxed/simple;
-	bh=Ps8xXKZWmPgGRHEifvv2uPVP/BAoklxGIoNc4O9nlDk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=kdH9BM1GJJEsnHzglen6pRLkOOK6PJr4EXvsPg+GwkpP/lBNZ1qJLMtciQ1uchrzaJezSOTeuiP3e9lRe2cU+UhGSq/TmsZQ/PKyBvvwYt5jc0Wn1+F/kS8bTF8mOELxEN42TcqPkEzCWWuprBljA2r2zSS5SfRR/4Voo6CXUjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I9rSH4cp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B243C116B1;
-	Fri,  5 Jul 2024 03:29:27 +0000 (UTC)
+	s=arc-20240116; t=1720151053; c=relaxed/simple;
+	bh=KFHYjq5IV9E5+ewoxycafpWUC2+leBNfaqEcTS6nnOg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Wa42KNgf3J4soM3xHEm88DU19IFnHLXBhw2xU5c2aTFWeR5tVIDinkn6YW4AqUWtBcC9CItSLTWmXvAwu2QAM1eqO8V4svkgGrNx3oc1MSMSPRZNU3cWxAJ5zntoApcj/qZKNQymKKuLuwxnEwlLXce6mOEAn8BgbmAPNwf4K+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MKuRjaV7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207AAC116B1;
+	Fri,  5 Jul 2024 03:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720150168;
-	bh=Ps8xXKZWmPgGRHEifvv2uPVP/BAoklxGIoNc4O9nlDk=;
+	s=k20201202; t=1720151053;
+	bh=KFHYjq5IV9E5+ewoxycafpWUC2+leBNfaqEcTS6nnOg=;
 	h=From:List-Id:To:Cc:Subject:Date:From;
-	b=I9rSH4cpeC7U22DCSdLDfaZRYa5PbvOSVmza4gncSS4VuGRGniDPhLGgZ1QnZFo+e
-	 xN2heeGcubC8TkXHAPqgoM67RNwIHCcpsbQ2FOJWsZnRjngIf3Dm7GaNCAxQwlrMqu
-	 655Ri7F+JX6svSW4XDgGG2J00x7RLYW6xbX0YdPAOMAItbD4CE9IlgE4MocEwyAdpB
-	 sD7Sf02MTFlBRbqDJeS06pPuwNvNTpt7jUoedQ9N9lbVMoYkUVIPzR3RME0V9J7P1H
-	 AAGj06XOwfjnN6LjbOqSwS5iVO6C3pQKi/reb1JiYiAHR9VOefwYzv0m+RIVLv6tPN
-	 PYyTyRkcXWB6A==
+	b=MKuRjaV779ysM+zTbWZ2hulUKqdyoV2067YC9XoXvY+2IfjvIkMq1B3+VYYJcQBsO
+	 Cv2Q00DTAAYVXtqStGo80zKIizwgj//CoMe9dpl67fP7d4UJFIWYUI2KlfIkGknHZH
+	 /Cdxjp9nGfHaxXoTWslI4HrZeUbIZSfaKJaccb5+NLswpTfsGcosjzZ+0GZSiruZ0c
+	 5w9AHL++Axv6zWPjXqNPlYqJT5bwekSGxGH61MB734soLNVbn5DB8El9vqvcyJmbiO
+	 Xi2k92uVQaq6l78jLO0kAuglTJ9Ap8sG9ZsMD8NnMkLz4An3X75mqUF8zGapX3MFXu
+	 pgwN20B7F/wXg==
 From: Bjorn Andersson <andersson@kernel.org>
 To: arm@kernel.org,
 	soc@kernel.org
@@ -48,21 +48,27 @@ Cc: linux-arm-msm@vger.kernel.org,
 	Arnd Bergmann <arnd@arndb.de>,
 	Olof Johansson <olof@lixom.net>,
 	Kevin Hilman <khilman@baylibre.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Luca Weiss <luca@z3ntu.xyz>,
-	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Valeriy Klimin <vdos63@gmail.com>,
-	Adam Honse <calcprogrammer1@gmail.com>,
-	Alexandre Messier <alex@me.ssier.org>,
-	Bryant Mairs <bryant@mai.rs>,
+	Unnathi Chalicheemala <quic_uchalich@quicinc.com>,
+	Richard Acayan <mailingradian@gmail.com>,
+	Tengfei Fan <quic_tengfan@quicinc.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Chris Lew <quic_clew@quicinc.com>,
+	Connor Abbott <cwabbott0@gmail.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Luca Weiss <luca@lucaweiss.eu>,
-	Raymond Hackley <raymondhackley@protonmail.com>,
-	Rayyan Ansari <rayyan@ansari.sh>,
-	Stanislav Jakubek <stano.jakubek@gmail.com>
-Subject: [GIT PULL] Qualcomm Arm32 DeviceTree updates for v6.11
-Date: Thu,  4 Jul 2024 22:29:24 -0500
-Message-ID: <20240705032926.13333-1-andersson@kernel.org>
+	Rohit Agarwal <quic_rohiagar@quicinc.com>,
+	Stephen Boyd <swboyd@chromium.org>
+Subject: [GIT PULL] Qualcomm driver updates for v6.11
+Date: Thu,  4 Jul 2024 22:44:09 -0500
+Message-ID: <20240705034410.13968-1-andersson@kernel.org>
 X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -70,7 +76,6 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 
@@ -80,106 +85,175 @@ The following changes since commit 1613e604df0cd359cf2a7fbd9be7a0bcfacfabd0:
 
 are available in the Git repository at:
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm32-for-6.11
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-for-6.11
 
-for you to fetch changes up to 2a5454d0fe5684855581f8ad958afbcdc476fd64:
+for you to fetch changes up to e49380c155940cb47e291a4b3fcb7fdffee6aa4d:
 
-  ARM: dts: qcom: qcom-msm8226-samsung-ms013g: Add initial device tree (2024-07-02 22:15:57 -0500)
-
-----------------------------------------------------------------
-Qualcomm Arm32 DeviceTree updates for v6.11
-
-This introduces new support for the Sony Xperia Z3 Compact, HTC One
-(M8), Samsung Galaxy Tab 4 8.0 Wi-Fi, Samsung Galaxy Grand 2, and
-Samsung Galaxy Note 3 devices.
-
-The Motorola Moto G and Motorola Moto G 4G gains accelerometer and
-magnetometer support, with the latter also getting framebuffer supplies
-and a temperature sensor wired up.
-
-The SMBB (charger block) is enabled across all MSM8x26 Lumia devices, as
-this is used for USB state changes.
-
-The operating mode for SDC regulator is set to HPM on Sony Xperia
-"Shinano" family to avoid brownouts on uSD-cards.
-
-The panel on LGE Nexus 5 is connected to the backlight, to make this
-turn off on blanking.
-
-MSM8974 is transitioned to use the mailbox-abstraction for invoking
-PC interrupts on remote processors.
+  soc: qcom: smp2p: Use devname for interrupt descriptions (2024-07-01 22:31:14 -0500)
 
 ----------------------------------------------------------------
-Adam Honse (1):
-      ARM: dts: qcom: msm8974: Add Samsung Galaxy Note 3
+Qualcomm driver updates for v6.11
 
-Alexandre Messier (1):
-      ARM: dts: qcom: Add initial support for HTC One (M8)
+Support for Shared Memory (shm) Bridge is added, which provides a
+stricter interface for handling of buffers passed to TrustZone.
 
-André Apitzsch (3):
-      ARM: dts: qcom: msm8926-motorola-peregrine: Add accelerometer, magnetometer, regulator
-      ARM: dts: qcom: msm8926-motorola-peregrine: Update temperature sensor
-      ARM: dts: qcom: msm8926-motorola-peregrine: Add framebuffer supplies
+The X1Elite platform is added to uefisecapp allow list, to instantiate
+the efivars implementation.
 
-Bryant Mairs (1):
-      ARM: dts: qcom: Add support for Samsung Galaxy Tab 4 8.0 Wi-Fi
+A new in-kernel implementation of the pd-mapper (or servreg) service is
+introduced, to replace the userspace dependency for USB Type-C and
+battery management.
 
-Dmitry Baryshkov (6):
-      ARM: dts: qcom: apq8064: drop #power-domain-cells property of GCC
-      ARM: dts: qcom: msm8660: drop #power-domain-cells property of GCC
-      ARM: dts: qcom: msm8960: drop #power-domain-cells property of GCC
-      ARM: dts: qcom: ipq4019: drop #power-domain-cells property of GCC
-      ARM: dts: qcom: ipq8064: drop #power-domain-cells property of GCC
-      ARM: dts: qcom: mdm9615: drop #power-domain-cells property of GCC
+Support for sharing interrupts across multiple bwmon instances is added,
+and a refcount imbalance issue is corrected.
 
-Krzysztof Kozlowski (2):
-      ARM: dts: qcom: use generic node names for Adreno and QFPROM
-      ARM: dts: qcom: apq8064: drop incorrect ranges from QFPROM
+The LLCC support for recent platforms is corrected, and SA8775P support
+is added.
 
-Luca Weiss (5):
-      ARM: dts: qcom: msm8974-hammerhead: Hook up backlight
-      ARM: dts: qcom: msm8974-hammerhead: Update gpio hog node name
-      ARM: dts: qcom: msm8974: Use proper compatible for APCS syscon
-      ARM: dts: qcom: msm8974: Use mboxes properties for APCS
-      ARM: dts: qcom: msm8974: Use mboxes in smsm node
+A new interface is added to SMEM, to expose "feature codes". One example
+of the usecase for this is to indicate to the GPU driver which
+frequencies are available on the given device.
 
-Raymond Hackley (1):
-      ARM: dts: qcom: qcom-msm8226-samsung-ms013g: Add initial device tree
+The interrupt consumer and provider side of SMP2P is updated to provide
+more useful names in interrupt stats.
 
-Rayyan Ansari (1):
-      ARM: dts: qcom: msm8226-microsoft-common: Enable smbb explicitly
+Support for using the mailbox binding and driver for outgoing IPC
+interrupt in the SMSM driver is introduced.
 
-Stanislav Jakubek (1):
-      ARM: dts: qcom: motorola-falcon: add accelerometer, magnetometer
+socinfo driver learns about SDM670 and IPQ5321, as well as get some
+updates to the X1E PMICs.
 
-Valeriy Klimin (2):
-      ARM: dts: qcom: Add Sony Xperia Z3 Compact smartphone
-      ARM: dts: qcom: msm8974-sony-shinano: increase load on l21 for sdhc2
+pmic_glink is bumped to now support managing 3 USB Type-C ports.
 
- arch/arm/boot/dts/qcom/Makefile                    |   5 +
- arch/arm/boot/dts/qcom/msm8226-motorola-falcon.dts |  53 ++
- .../dts/qcom/qcom-apq8026-samsung-milletwifi.dts   | 573 +++++++++++++++++++++
- arch/arm/boot/dts/qcom/qcom-apq8064.dtsi           |   7 +-
- arch/arm/boot/dts/qcom/qcom-apq8084.dtsi           |   2 +-
- arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi           |   1 -
- arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi           |   3 +-
- arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi           |   1 -
- .../dts/qcom/qcom-msm8226-microsoft-common.dtsi    |   4 +
- .../boot/dts/qcom/qcom-msm8226-samsung-ms013g.dts  | 386 ++++++++++++++
- arch/arm/boot/dts/qcom/qcom-msm8226.dtsi           |   4 +-
- arch/arm/boot/dts/qcom/qcom-msm8660.dtsi           |   1 -
- .../dts/qcom/qcom-msm8926-motorola-peregrine.dts   | 121 +++++
- arch/arm/boot/dts/qcom/qcom-msm8960.dtsi           |   1 -
- .../qcom/qcom-msm8974-lge-nexus5-hammerhead.dts    |   6 +-
- .../boot/dts/qcom/qcom-msm8974-samsung-hlte.dts    | 401 ++++++++++++++
- arch/arm/boot/dts/qcom/qcom-msm8974.dtsi           |  28 +-
- arch/arm/boot/dts/qcom/qcom-msm8974pro-htc-m8.dts  | 353 +++++++++++++
- .../qcom-msm8974pro-sony-xperia-shinano-aries.dts  |  44 ++
- ...qcom-msm8974pro-sony-xperia-shinano-common.dtsi |   2 +
- 20 files changed, 1967 insertions(+), 29 deletions(-)
- create mode 100644 arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts
- create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8226-samsung-ms013g.dts
- create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8974-samsung-hlte.dts
- create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8974pro-htc-m8.dts
- create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8974pro-sony-xperia-shinano-aries.dts
+----------------------------------------------------------------
+Abel Vesa (1):
+      soc: qcom: pmic_glink: Increase max ports to 3
+
+Bartosz Golaszewski (14):
+      dt-bindings: firmware: qcom,scm: add memory-region for sa8775p
+      firmware: qcom: add a dedicated TrustZone buffer allocator
+      firmware: qcom: scm: enable the TZ mem allocator
+      firmware: qcom: scm: smc: switch to using the SCM allocator
+      firmware: qcom: scm: make qcom_scm_assign_mem() use the TZ allocator
+      firmware: qcom: scm: make qcom_scm_ice_set_key() use the TZ allocator
+      firmware: qcom: scm: make qcom_scm_lmh_dcvsh() use the TZ allocator
+      firmware: qcom: scm: make qcom_scm_qseecom_app_get_id() use the TZ allocator
+      firmware: qcom: qseecom: convert to using the TZ allocator
+      firmware: qcom: scm: add support for SHM bridge operations
+      firmware: qcom: tzmem: enable SHM Bridge support
+      firmware: qcom: scm: add support for SHM bridge memory carveout
+      firmware: qcom: scm: clarify the comment in qcom_scm_pas_init_image()
+      firmware: qcom: tzmem: export devm_qcom_tzmem_pool_new()
+
+Bjorn Andersson (3):
+      firmware: qcom: uefisecapp: Allow on X1E devices
+      Merge branch '20240430-a750-raytracing-v3-2-7f57c5ac082d@gmail.com' into drivers-for-6.11
+      Merge branch '20240622-qcom-pd-mapper-v9-0-a84ee3591c8e@linaro.org' into drivers-for-6.11
+
+Chen Ni (1):
+      soc: qcom: pmic_glink: Handle the return value of pmic_glink_init
+
+Chris Lew (1):
+      soc: qcom: smp2p: Use devname for interrupt descriptions
+
+Connor Abbott (1):
+      firmware: qcom: scm: Add gpu_init_regs call
+
+Dmitry Baryshkov (5):
+      soc: qcom: pdr: protect locator_addr with the main mutex
+      soc: qcom: pdr: fix parsing of domains lists
+      soc: qcom: pdr: extract PDR message marshalling data
+      soc: qcom: add pd-mapper implementation
+      soc: qcom: add missing pd-mapper dependencies
+
+Jeff Johnson (1):
+      soc: qcom: spm: add missing MODULE_DESCRIPTION()
+
+Kathiravan Thirumoorthy (3):
+      dt-bindings: arm: qcom,ids: Add SoC ID for IPQ5321
+      soc: qcom: socinfo: Add SoC ID for IPQ5321
+      cpufreq: qcom-nvmem: add support for IPQ5321
+
+Konrad Dybcio (3):
+      soc: qcom: socinfo: Update X1E PMICs
+      soc: qcom: Move some socinfo defines to the header
+      soc: qcom: smem: Add a feature code getter
+
+Luca Weiss (4):
+      dt-bindings: soc: qcom,smp2p: Mark qcom,ipc as deprecated
+      dt-bindings: soc: qcom,smsm: Allow specifying mboxes instead of qcom,ipc
+      soc: qcom: smsm: Support using mailbox interface
+      soc: qcom: smsm: Add missing mailbox dependency to Kconfig
+
+Richard Acayan (2):
+      dt-bindings: arm: qcom,ids: Add SoC ID for SDM670
+      soc: qcom: socinfo: Add SDM670 SoC ID table entry
+
+Rohit Agarwal (1):
+      dt-bindings: soc: qcom,aoss-qmp: Document the SDX75 AOSS channel
+
+Sibi Sankar (4):
+      soc: qcom: icc-bwmon: Fix refcount imbalance seen during bwmon_remove
+      dt-bindings: interconnect: qcom,msm8998-bwmon: Remove opp-table from the required list
+      dt-bindings: interconnect: qcom,msm8998-bwmon: Add X1E80100 BWMON instances
+      soc: qcom: icc-bwmon: Allow for interrupts to be shared across instances
+
+Stephen Boyd (1):
+      soc: qcom: rpmh-rsc: Ensure irqs aren't disabled by rpmh_rsc_send_data() callers
+
+Tengfei Fan (2):
+      dt-bindings: cache: qcom,llcc: Add SA8775p description
+      soc: qcom: llcc: Add llcc configuration support for the SA8775p platform
+
+Unnathi Chalicheemala (3):
+      firmware: qcom-scm: Remove QCOM_SMC_WAITQ_FLAG_WAKE_ALL
+      dt-bindings: arm: msm: Add llcc Broadcast_AND register
+      soc: qcom: llcc: Add regmap for Broadcast_AND region
+
+ .../devicetree/bindings/cache/qcom,llcc.yaml       |  55 +-
+ .../devicetree/bindings/firmware/qcom,scm.yaml     |  15 +
+ .../bindings/interconnect/qcom,msm8998-bwmon.yaml  |   3 +-
+ .../bindings/soc/qcom/qcom,aoss-qmp.yaml           |   1 +
+ .../devicetree/bindings/soc/qcom/qcom,smp2p.yaml   |   3 +-
+ .../devicetree/bindings/soc/qcom/qcom,smsm.yaml    |  30 +-
+ MAINTAINERS                                        |   8 +
+ drivers/cpufreq/qcom-cpufreq-nvmem.c               |   1 +
+ drivers/firmware/qcom/Kconfig                      |  31 +
+ drivers/firmware/qcom/Makefile                     |   1 +
+ drivers/firmware/qcom/qcom_qseecom_uefisecapp.c    | 256 +++-----
+ drivers/firmware/qcom/qcom_scm-smc.c               |  30 +-
+ drivers/firmware/qcom/qcom_scm.c                   | 197 ++++--
+ drivers/firmware/qcom/qcom_scm.h                   |   9 +
+ drivers/firmware/qcom/qcom_tzmem.c                 | 467 ++++++++++++++
+ drivers/firmware/qcom/qcom_tzmem.h                 |  13 +
+ drivers/soc/qcom/Kconfig                           |  18 +
+ drivers/soc/qcom/Makefile                          |   2 +
+ drivers/soc/qcom/icc-bwmon.c                       |  16 +-
+ drivers/soc/qcom/llcc-qcom.c                       |  51 +-
+ drivers/soc/qcom/pdr_interface.c                   |   8 +-
+ drivers/soc/qcom/pdr_internal.h                    | 318 +---------
+ drivers/soc/qcom/pmic_glink.c                      |  13 +-
+ drivers/soc/qcom/pmic_glink_altmode.c              |   2 +-
+ drivers/soc/qcom/qcom_pd_mapper.c                  | 677 +++++++++++++++++++++
+ drivers/soc/qcom/qcom_pdr_msg.c                    | 353 +++++++++++
+ drivers/soc/qcom/rpmh-rsc.c                        |   7 +-
+ drivers/soc/qcom/rpmh.c                            |   1 -
+ drivers/soc/qcom/smem.c                            |  33 +
+ drivers/soc/qcom/smp2p.c                           |  11 +-
+ drivers/soc/qcom/smsm.c                            |  51 +-
+ drivers/soc/qcom/socinfo.c                         |  13 +-
+ drivers/soc/qcom/spm.c                             |   1 +
+ include/dt-bindings/arm/qcom,ids.h                 |   2 +
+ include/linux/firmware/qcom/qcom_qseecom.h         |   8 +-
+ include/linux/firmware/qcom/qcom_scm.h             |  37 +-
+ include/linux/firmware/qcom/qcom_tzmem.h           |  56 ++
+ include/linux/soc/qcom/llcc-qcom.h                 |   4 +-
+ include/linux/soc/qcom/smem.h                      |   1 +
+ include/linux/soc/qcom/socinfo.h                   |  34 ++
+ 40 files changed, 2266 insertions(+), 571 deletions(-)
+ create mode 100644 drivers/firmware/qcom/qcom_tzmem.c
+ create mode 100644 drivers/firmware/qcom/qcom_tzmem.h
+ create mode 100644 drivers/soc/qcom/qcom_pd_mapper.c
+ create mode 100644 drivers/soc/qcom/qcom_pdr_msg.c
+ create mode 100644 include/linux/firmware/qcom/qcom_tzmem.h
 
