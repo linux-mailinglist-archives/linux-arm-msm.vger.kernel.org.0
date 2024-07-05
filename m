@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-25322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25323-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E79D92824F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 08:50:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90B7592825C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 08:55:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9180B1F23705
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 06:50:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 46C0D283BDE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 06:55:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92A4F13B293;
-	Fri,  5 Jul 2024 06:49:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17CCC4AECB;
+	Fri,  5 Jul 2024 06:55:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HX5vU1Fq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QZKpIZlV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7916482EF
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jul 2024 06:49:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8A7132804
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jul 2024 06:55:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720162194; cv=none; b=sgNS7UHHcLCuMIpm3ajhVdKVDez6v6P6lRpQtzkPLo+4bZgt+3zq43AhSC+iZwG9J453M8cK77IVAAIaFJeUQihW2pB+zOzkM+WdpTpYE9R5rIU92Ti8yfh9dkUp7OKcWtdici+/xML31kx5P6P2Gt8mfjRDzs2g8Ax+X81JICs=
+	t=1720162517; cv=none; b=mZiM4F1ZFENcYpWGf2mGbavvLAg5KstpH2tNWk5aXbliUwjGv1+E0GFzhwTgiFrSI4bQHREjBmkZ8kxvBtvoRzdeIsa/OIXBE6v2qz7thfI2QBJo1qvk9iA08vdp+6pmoV6Bek3AmLo6FUotFBP9QUvT26cR25BHOlmxFthpVxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720162194; c=relaxed/simple;
-	bh=o1DdgZ0EQ7OY4c/UkadWtlFAVNcUAsrV0b6yjM1MD+o=;
+	s=arc-20240116; t=1720162517; c=relaxed/simple;
+	bh=k1NZLgovLl/0F+8XiZk3oivKTQVUQA8vInhwXDP5jTs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j9UkST4AZlODEmIprp8qfeEcRnD9x6SB5f8jA3KybGtr41aEYFqxBowHtnmqYws+FyKZafNP9If3fXJDizTcQYsPlaBDniIfjwDEqKOPyne3tdVBrSysELk3vDXrHY0L1s6LSM1RFngQuuofxPVlznvBugKfjprg0zFEiQPWCOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HX5vU1Fq; arc=none smtp.client-ip=209.85.167.45
+	 In-Reply-To:Content-Type; b=ppNfesrr9B75xyKxMUpRNH5NVNat0dlkPtdLS/kCVIIn0WaaeotCMwNi/qbO8zL25nG13FSB8Yl4JwXHzEU9+NUMTCb/CCMAkcIATKj5u5B7JZQ8Nz5ZmvAA3Niv2/uXAGKV9YlHVtqDetlG1Nw7QsWjQ3u4QZFka0/vgVLFsHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QZKpIZlV; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52ea79e689eso146631e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jul 2024 23:49:52 -0700 (PDT)
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3678aa359b7so1506025f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jul 2024 23:55:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720162191; x=1720766991; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1720162513; x=1720767313; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=bZPTqVBjKZLx6ScDTOX8Zjeb919/InL+7BVEViyNcUQ=;
-        b=HX5vU1Fq79KN/2nQpuycUtj9/XnQjWW2M+QDQJT7LzTTrslRRMr1cnITEDIdS8d22j
-         jSw5IJW4j+3qcjf89k467dcW0lhCPW/sSJ6n4k9EgV2WxTrU2vFMKX8IZRFsfvoVlwWY
-         xMpmocbnIuvxmc3b6rt5j5rfMCPHZs1kNTsGlYOCeQHqxZYJsl6MJLJLb1mvQoTAnP9D
-         2haE30x8KMHkyq8HvT47ZgRDJ7yxyP+JwpmdLbUlMhTg9OgFh1UW707SCXDiuwMXBWXQ
-         SM++Z1tGSyaOm4smySD9C47eUbRUOGR8scR+7JaUcK6YkD0YaCOBuSb7226cmkAC+OUe
-         7S0g==
+        bh=OAmRb1uAuEAN7hA/+tiYf8M3NwFNbkYNSWLhVUPe0Xs=;
+        b=QZKpIZlVAjDk2Q3DB2jG1YSyU1FB6slrnZxMLyV4tZccNzhd+YBiKzRVf745j+08ej
+         lhnFjazinV8LPztJ18zfM7JtubXQbTxFPeeKNwnv0sSsHu/6VX+keqlfZv5HIfXxygY4
+         i5nBrKZScPwrJBttzqNcKyvjoS/avrPLniXct0kd5m/75167lH/gWgJDETzXsKtK1Dei
+         hJZq9A39lvMB0qF1re7QPrIAdlt9fx8qFca+Tzlg4qbK7a5BiuMkfaWkJxvZzFZVagCM
+         +LBaK2TH7GVxes8YCBnc1cZifjGqMT+bFnhLZOFYbJDHOnRvrNzm/gNIfMy5Ra9Z7Rxu
+         W+8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720162191; x=1720766991;
+        d=1e100.net; s=20230601; t=1720162513; x=1720767313;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bZPTqVBjKZLx6ScDTOX8Zjeb919/InL+7BVEViyNcUQ=;
-        b=cXRmCjNQIeipuQr0SbcVYp8v0/cS028SODbfhM+ue/lPAarcGsKJTvrokYSz6KPQu7
-         lq2P6gZ2ZwNPgqDGOgdaLpL/MD25hNcgLQ0Gmgeea+k6tn/RVYXkvpZDKOcFwLxb4B3z
-         lbcQOTdvsBBXTBH3fNKuQ+fKx5Dijs5uUImlFs+7GT1H54+/ohK5IgIB/ZKdiQyMXCYc
-         +YORJnkyOxSyvvEHIK3+5c/t8N+zwufpX6xZiVqafj1e8pieWIwuyIkzrRriu/ngpodt
-         wTc7Cj0HZEoGQw5sRPe5++I5Bnsb8LnQp0i1t2yAM2Il7RGG22fGHEe52GnFlwdvWIpo
-         bXwQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVBAe8qpxkWemp0rtuxK3gC2RWlJ0VcHLaRWfZmtahMXFQHw/ifkmwdH5140Ncsri3MncHBmBnPnQOSL6iwJ3q6x08LX422Ub+f5uDg7g==
-X-Gm-Message-State: AOJu0YzsuXAucmRJwKGBBco5LShfBJUuieiDQgUTKE6G4o/wglymfGnj
-	JC1zUUhTvrCCSALoFbikD3aQ+Nu9D1vhhSDDO9TaZUXPEsbf8IThqZhlLUNhC5EGk+FJefrE4SJ
-	n
-X-Google-Smtp-Source: AGHT+IEzFmY8dPHpN/aOg/8K6x2uVrWR/wG0y9C3H+CcBt0Mcsixqw1+TalcZXQLFhwOZPcLI9S9aQ==
-X-Received: by 2002:a5d:56ce:0:b0:366:ed80:d052 with SMTP id ffacd0b85a97d-3679dd65911mr3693877f8f.52.1720162170053;
-        Thu, 04 Jul 2024 23:49:30 -0700 (PDT)
+        bh=OAmRb1uAuEAN7hA/+tiYf8M3NwFNbkYNSWLhVUPe0Xs=;
+        b=mzFYrJMy3aFqyQoxevmoVUzaKMVdPStQ0UVkPilnJ3FfhMhgDcGTymlc+9NG6EDD9S
+         OHRFrEFhQpaQckCqdOR7RAEwURQ8Hpw0wy448xTN2Fc2xlKGlyfdFEGVjQXeGu3R7qgV
+         80ipbwyOcKD+rAW8XvsNoOurR4T7x4ua70IWK0P7Bn1LwZmXhQt4XJcJ5/7kse6b9phV
+         SK0f+bKmyRyFq4lJXka9PVXsKFu9zLUEtev0ao+us3JZWl/coeANMY/u69FJzKhyDdbC
+         zjr5RSSrLMwo/nu0uggRJRJyepDnxyU3Z95RahSEynNnDRLuxouG/wp5tyFgAQsqSghC
+         7D4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUZPG7fetzc8Z75tzQtkSIH/TDSffxi84Jj6/g6vSy9+VemC6Ptf0m2cZXAn3QqlHfh/XE5VAmIpA0s0Eg0RQUbpqyDXy2JUKbxhV07Dg==
+X-Gm-Message-State: AOJu0Yyr7APpOyoulIHUfu4npV6TUA6Ig06gue2m2qY+Cv6Ku5K4YOYw
+	/cTot+FxHCgJt3w34DzVc3/ZPD3E96x/br/bGpW3AhLkjuAPittUDkUXcGPZagw=
+X-Google-Smtp-Source: AGHT+IGK7z9chhYagD9KHGxmtlMwhGQiE37n8F+C8lLsywpTCqBTbFpRnoD4zxLycqN+AzVMMTirTw==
+X-Received: by 2002:a05:6000:bc5:b0:367:8fd9:db6b with SMTP id ffacd0b85a97d-3679f6ef565mr3246514f8f.9.1720162513077;
+        Thu, 04 Jul 2024 23:55:13 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-367938a6e97sm5760723f8f.109.2024.07.04.23.49.28
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3679814a276sm4442740f8f.84.2024.07.04.23.55.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jul 2024 23:49:29 -0700 (PDT)
-Message-ID: <b4b94938-903a-40ba-baf3-d04226dc9f90@linaro.org>
-Date: Fri, 5 Jul 2024 08:49:27 +0200
+        Thu, 04 Jul 2024 23:55:12 -0700 (PDT)
+Message-ID: <03e96fa4-b916-4121-a9bd-bfcd40fb10b3@linaro.org>
+Date: Fri, 5 Jul 2024 08:55:10 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +77,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/8] msm8937/msm8976/qcs404 icc patches
+Subject: Re: [PATCH v2 1/8] dt-bindings: interconnect: qcom: Add Qualcomm
+ MSM8976 NoC
 To: Adam Skladowski <a39.skl@gmail.com>
 Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
  Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
@@ -89,6 +89,7 @@ Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
  linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20240704200327.8583-1-a39.skl@gmail.com>
+ <20240704200327.8583-2-a39.skl@gmail.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -135,41 +136,98 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240704200327.8583-1-a39.skl@gmail.com>
+In-Reply-To: <20240704200327.8583-2-a39.skl@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 04/07/2024 22:02, Adam Skladowski wrote:
-> This series introduce new ICC drivers for some legacy socs
-> while at it also updates a bit of qcs404 driver which seems
-> to not receive much attention lately.
-> Please take in consideration i do not own any qcs404 board
-> so i cannot test anything else than if it compiles.
+> Add bindings for Qualcomm MSM8976 Network-On-Chip interconnect devices.
 > 
-> Changes since v1
-> ================
-> 1. Reworded commit messages
-> 2. Adjusted yamls.
-> 3. Adjusted examples.
+> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> ---
+>  .../bindings/interconnect/qcom,msm8976.yaml   | 63 ++++++++++++
+>  .../dt-bindings/interconnect/qcom,msm8976.h   | 97 +++++++++++++++++++
+>  2 files changed, 160 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,msm8976.yaml
+>  create mode 100644 include/dt-bindings/interconnect/qcom,msm8976.h
+> 
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,msm8976.yaml b/Documentation/devicetree/bindings/interconnect/qcom,msm8976.yaml
+> new file mode 100644
+> index 000000000000..fcb50f60dce3
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,msm8976.yaml
+> @@ -0,0 +1,63 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/interconnect/qcom,msm8976.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm MSM8976 Network-On-Chip interconnect
+> +
+> +maintainers:
+> +  - Konrad Dybcio <konradybcio@kernel.org>
+> +
+> +description: |
+> +  The Qualcomm MSM8976 interconnect providers support adjusting the
+> +  bandwidth requirements between the various NoC fabrics.
+> +
+> +  See also:
+> +  - dt-bindings/interconnect/qcom,msm8976.h
 
-Adjusted to what? This is supposed to be specific.
+This is not a valid path. Please correct it, otherwise tools cannot
+validate it.
 
-BTW, you use here odd email address, so:
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,msm8976-bimc
+> +      - qcom,msm8976-pcnoc
+> +      - qcom,msm8976-snoc
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  '#interconnect-cells':
+> +    const: 2
+> +
 
-<form letter>
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC (and consider --no-git-fallback argument). It might
-happen, that command when run on an older kernel, gives you outdated
-entries. Therefore please be sure you base your patches on recent Linux
-kernel.
+I don't know what and why happened here. I asked for different order of
+properties and properties are gone. Provide detailed changelog.
 
-Tools like b4 or scripts/get_maintainer.pl provide you proper list of
-people, so fix your workflow. Tools might also fail if you work on some
-ancient tree (don't, instead use mainline) or work on fork of kernel
-(don't, instead use mainline). Just use b4 and everything should be
-fine, although remember about `b4 prep --auto-to-cc` if you added new
-patches to the patchset.
-</form letter>
+> +patternProperties:
+> +  '^interconnect-[a-z0-9\-]+$':
+> +    type: object
+> +    $ref: qcom,rpm-common.yaml#
+> +    unevaluatedProperties: false
+> +    description:
+> +      The interconnect providers do not have a separate QoS register space,
+> +      but share parent's space.
+> +
+> +    properties:
+> +      compatible:
+> +        const: qcom,msm8976-snoc-mm
+> +
+> +    required:
+> +      - compatible
+> +      - '#interconnect-cells'
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - '#interconnect-cells'
+> +
+
+
+So no schema? Sorry, this is very confusing.
+
+I am not going to review the rest. You implemented some odd changes, not
+what was asked. At least not entirely. With no changelog explaining
+this, you basically expect me to do review from scratch like there was
+no previous review.
+
+That's not how it works.
 
 Best regards,
 Krzysztof
