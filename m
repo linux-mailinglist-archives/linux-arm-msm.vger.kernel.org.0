@@ -1,52 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-25380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3693928931
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 15:05:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87EE29289EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 15:42:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E4ED71C20EFE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 13:05:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A92401C2246C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 13:42:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFAB514A4C9;
-	Fri,  5 Jul 2024 13:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EC4F13C8F9;
+	Fri,  5 Jul 2024 13:42:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="cxj4bz5J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42F00143C79;
-	Fri,  5 Jul 2024 13:04:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F8614B07D
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jul 2024 13:42:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720184699; cv=none; b=JSvfqTsY/c7PygYUEb3IcYmd+g/X0iiHEwPPzRlLoZCMstSEgqOKv0T+OM9sjEWErtkd289udfvoLPqSI/xXm5x/nMK6GxorIrKrjhapBbU6sf1j8LggQZVYXB8h/5o2IMa/Rx7z3xJlzcOYpvRZSm+cS3goJNY+ZZ1l4flYHyA=
+	t=1720186949; cv=none; b=Zk/q9LnzuKU6TYezRtEp5+Da+7SsZ/3lLltZuTK3cYQLRMReYM4wFQhlwO3pdLSJNRPndusFjMUe0DRzBptlYEzHKU6x6raQXm07LESpTIO6ycs5DVO/EvsyjPEQOiu0fbvzqq8ATVDgcW/lzysDTeWMN41KcWwgdgfiTfIyjGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720184699; c=relaxed/simple;
-	bh=EWI4zmWAXKTS95NpgBFwzsLFCqxfVD6ICNOLsknuZDE=;
+	s=arc-20240116; t=1720186949; c=relaxed/simple;
+	bh=xAiLtazfBXSZFhUCuJv5iLA8GUS2Erahe3O/6nbCjGE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dWx4uh9fe752pdxhlWQ//c6/ihA7/mI0Oii85GdM8125wqKDrd/rJnHuFQQl0KrlTk3AMBf2ElzPAsRUSX3qxjApQex3Uu/t2Cp9rDQWmDzrMP1XWEsOq+yyPgpP8e3yoZIKOX/k5+dJtr7kYP59MSExSzsafnl6joeYDK7GdBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 67A83367;
-	Fri,  5 Jul 2024 06:05:21 -0700 (PDT)
-Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 3168C3F762;
-	Fri,  5 Jul 2024 06:04:54 -0700 (PDT)
-Date: Fri, 5 Jul 2024 14:04:51 +0100
-From: Sudeep Holla <sudeep.holla@arm.com>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: <ulf.hansson@linaro.org>, <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>, <linux-kernel@vger.kernel.org>,
-	<arm-scmi@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-	<quic_rgottimu@quicinc.com>, <quic_kshivnan@quicinc.com>,
-	<johan@kernel.org>
-Subject: Re: [PATCH] pmdomain: arm: Fix debugfs node creation failure
-Message-ID: <Zofvc31pPU23mjnp@bogus>
-References: <20240703110741.2668800-1-quic_sibis@quicinc.com>
- <ZoZ6Pk7NSUNDB74i@bogus>
- <064274c4-3783-c59e-e293-dd53a8595d8e@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=UB+QFOeYb99vvprnMbBvGiSkQ0tlgPnB0joCiyDWI/ELeIVcP9Q8TtEVAufD39HLp2kqFLeQJHOQBBuUp8kaHLJaKkZq+mlCGGrjY7IRLvo8bOZl0gqREit+kt1/iNasOD+mRpib8osGdGrHWm5agtorCjc18uDXMHNPW5ri3I4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=cxj4bz5J; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1720186946;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lNWQiXa5WTonO6VnFXHoZW4uvs/niJejriJYafDuJeE=;
+	b=cxj4bz5JmsotFFslY1NW/t9fdOC8FwQQHhvmncDBCllpsDVlTncZF881ABMAOxcBmB/uZP
+	Ik/geTb1L0w2eM+PjmSsSiRRORa7qDScEQgyD7eBQmrjTLGKuHIHD/8mehD5C73ekhu8ga
+	jRZQusc0/fAEky/WeZ8mKr5e3ZmYkww=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-73-aJFkEhOxM4KHggg7L2mUEw-1; Fri, 05 Jul 2024 09:42:25 -0400
+X-MC-Unique: aJFkEhOxM4KHggg7L2mUEw-1
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-79ef8e8387bso76471585a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jul 2024 06:42:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720186945; x=1720791745;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lNWQiXa5WTonO6VnFXHoZW4uvs/niJejriJYafDuJeE=;
+        b=N+Gf6KyVjq1LVqDilbDePo8s89Y/bvI526EqqYGiBPI4XFVxeVMaHfQ//5X7pvKt9H
+         GqSbAiWIMfEytHD9x9wM4dx52CtydJ2eErcYGEaiiSB3jzYqt4TIkaNgi5JrPeyqbSlu
+         aF7iESUmn9VuVeznW1aHS3FFKe5FKbHhjKb7ZMEVz9l3CJsHTG2jqd2ogoiPDR/I/0pc
+         0IkFMZ43Doh2W7IuXCiaRMirVlpGm9PT9zWQoDESiRKgzunYW1VhtnLZIvX1FTe+raZn
+         e6pvkKnGPOf8pdZy7EB7/1Nd8ToPaq1LNQ5eqBwyreA585kMcTBOMRYKQFxcmsndGttF
+         fteA==
+X-Forwarded-Encrypted: i=1; AJvYcCUeC+/QlYSN8t6mOesirqRgDb8ucl+HSgET1WqX37l+Wg5NO65XCDqUepKKlwEZkMNbR1UTIdAmF78mHjQdG89XVm++eJmSbNUvPVKVhw==
+X-Gm-Message-State: AOJu0YyQZWieRd+tEskgSkoFJXk58++N6fXGsqarZvSE5SYgrRGBwOcO
+	ym1/GqlyOu7IQiqwjhZdeG8T5Sxlvx4TxQjXOtFW/uO2dc5gmQuIz7dchd7rFKj3zFZUqJqdL/i
+	z3msmAjAvPOov6oPMsnrkFa/5yw3QP4ZGiCCq0Ciz4wW6ET5oQ3rlFj4p6SE+PwQ=
+X-Received: by 2002:a05:620a:13d2:b0:79d:7e5a:d044 with SMTP id af79cd13be357-79eef4c0f06mr737799185a.28.1720186944981;
+        Fri, 05 Jul 2024 06:42:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHzRoLCo4GeRRFCdesL0t0J6Xc2rhP3ZGCRDtPGGaxotQxYNzT1wzmgDzK5ccFskQ+43Nbdxg==
+X-Received: by 2002:a05:620a:13d2:b0:79d:7e5a:d044 with SMTP id af79cd13be357-79eef4c0f06mr737789985a.28.1720186944583;
+        Fri, 05 Jul 2024 06:42:24 -0700 (PDT)
+Received: from x1gen2nano ([2600:1700:1ff0:d0e0::b])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-79d69299b81sm773174785a.71.2024.07.05.06.42.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Jul 2024 06:42:24 -0700 (PDT)
+Date: Fri, 5 Jul 2024 08:42:19 -0500
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org, 
+	konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	djakov@kernel.org, mturquette@baylibre.com, sboyd@kernel.org, 
+	jassisinghbrar@gmail.com, herbert@gondor.apana.org.au, davem@davemloft.net, 
+	manivannan.sadhasivam@linaro.org, will@kernel.org, joro@8bytes.org, conor@kernel.org, 
+	tglx@linutronix.de, amitk@kernel.org, thara.gopinath@gmail.com, 
+	linus.walleij@linaro.org, wim@linux-watchdog.org, linux@roeck-us.net, rafael@kernel.org, 
+	viresh.kumar@linaro.org, vkoul@kernel.org, edumazet@google.com, kuba@kernel.org, 
+	pabeni@redhat.com, mcoquelin.stm32@gmail.com, robimarko@gmail.com, 
+	bartosz.golaszewski@linaro.org, kishon@kernel.org, quic_wcheng@quicinc.com, 
+	alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org, agross@kernel.org, 
+	gregkh@linuxfoundation.org, quic_tdas@quicinc.com, robin.murphy@arm.com, 
+	daniel.lezcano@linaro.org, rui.zhang@intel.com, lukasz.luba@arm.com, 
+	quic_rjendra@quicinc.com, ulf.hansson@linaro.org, quic_sibis@quicinc.com, 
+	otto.pflueger@abscue.de, luca@z3ntu.xyz, neil.armstrong@linaro.org, abel.vesa@linaro.org, 
+	bhupesh.sharma@linaro.org, alexandre.torgue@foss.st.com, peppe.cavallaro@st.com, 
+	joabreu@synopsys.com, netdev@vger.kernel.org, lpieralisi@kernel.org, kw@linux.com, 
+	bhelgaas@google.com, krzysztof.kozlowski@linaro.org, u.kleine-koenig@pengutronix.de, 
+	dmitry.baryshkov@linaro.org, quic_cang@quicinc.com, danila@jiaxyga.com, 
+	quic_nitirawa@quicinc.com, mantas@8devices.com, athierry@redhat.com, 
+	quic_kbajaj@quicinc.com, quic_bjorande@quicinc.com, quic_msarkar@quicinc.com, 
+	quic_devipriy@quicinc.com, quic_tsoni@quicinc.com, quic_rgottimu@quicinc.com, 
+	quic_shashim@quicinc.com, quic_kaushalk@quicinc.com, quic_tingweiz@quicinc.com, 
+	quic_aiquny@quicinc.com, srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
+	linux-clk@vger.kernel.org, linux-phy@lists.infradead.org, linux-crypto@vger.kernel.org, 
+	linux-scsi@vger.kernel.org, linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	iommu@lists.linux.dev, linux-gpio@vger.kernel.org, linux-watchdog@vger.kernel.org, 
+	linux-pci@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, kernel@quicinc.com
+Subject: Re: [PATCH 29/47] dt-bindings: net: qcom,ethqos: add description for
+ qcs9100
+Message-ID: <gt35pxlulfowpbca3sb6nf5ble4lhq3kolmjyc275vtdcmeixx@gkctewz6tbwv>
+References: <20240703025850.2172008-1-quic_tengfan@quicinc.com>
+ <20240703025850.2172008-30-quic_tengfan@quicinc.com>
+ <u5ekupjqvgoehkl76pv7ljyqqzbnnyh6ci2dilfxfkcdvdy3dp@ehdujhkul7ow>
+ <f4162b7f-d957-4dd6-90a0-f65c1cbc213a@quicinc.com>
+ <add1bdda-2321-4c47-91ef-299f99385bc8@lunn.ch>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,43 +120,40 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <064274c4-3783-c59e-e293-dd53a8595d8e@quicinc.com>
+In-Reply-To: <add1bdda-2321-4c47-91ef-299f99385bc8@lunn.ch>
 
-On Fri, Jul 05, 2024 at 09:16:29AM +0530, Sibi Sankar wrote:
->
-> On 7/4/24 16:02, Sudeep Holla wrote:
-> >
-> > If there are 2 perf domains for a device or group of devices, there must
-> > be something unique about each of these domains. Why can't the firmware
-> > specify the uniqueness or the difference via the name?
-> >
-> > The example above seems firmware is being just lazy to update it. Also
-> > for the user/developer/debugger, the unique name might be more useful
-> > than just this number.
-> >
-> > So please use the name(we must now have extended name if 16bytes are less)
-> > to provide unique names. Please stop working around such silly firmware
-> > bugs like this, it just makes using debugfs for anything useful harder.
->
-> This is just meant to address firmware that are already out in the wild.
-> That being said I don't necessarily agree with the patch either since
-> it's penalizing firmware that actually uses a proper name by appending
-> something inherently less useful to it. Since, the using of an unique
-> domain name isn't required by the spec, the need for it goes under the radar
-> for vendors. Mandating it might be the right thing to do since
-> the kernel seems inherently expect that.
->
+On Thu, Jul 04, 2024 at 06:03:14PM GMT, Andrew Lunn wrote:
+> On Thu, Jul 04, 2024 at 09:13:59AM +0800, Tengfei Fan wrote:
+> > 
+> > 
+> > On 7/3/2024 11:09 PM, Andrew Halaney wrote:
+> > > On Wed, Jul 03, 2024 at 10:58:32AM GMT, Tengfei Fan wrote:
+> > > > Add the compatible for the MAC controller on qcs9100 platforms. This MAC
+> > > > works with a single interrupt so add minItems to the interrupts property.
+> > > > The fourth clock's name is different here so change it. Enable relevant
+> > > > PHY properties. Add the relevant compatibles to the binding document for
+> > > > snps,dwmac as well.
+> > > 
+> > > This description doesn't match what was done in this patch, its what
+> > > Bart did when he made changes to add the sa8775 changes. Please consider
+> > > using a blurb indicating that this is the same SoC as sa8775p, just with
+> > > different firmware strategies or something along those lines?
+> > 
+> > I will update this commit message as you suggested.
+> 
+> Hi Andrew, Tengfei
+> 
+> Please trim emails when replying to just the needed context.
+> 
 
-Well I would love if spec authors can agree and mandate this. But this is
-one of those things I can't argue as I don't necessarily agree with the
-argument. There are 2 distinct/unique domains but firmware authors ran out
-of unique names for them or just can't be bothered to care about it.
+Sorry, I'm always a little guilty of this. In this case I didn't trim
+since the patch was small and trimming the diff out would then make it
+tough to see how my comment about the description relates to the body of
+the patch. But I'll try and trim when appropriate. Just replying here to
+explain myself as this isn't the first time I've been suggested to trim
+more aggressively and I don't want folks to think I'm completely ignoring them.
 
-They can't run out of characters as well in above examples, firmware can
-add some useless domain ID in the name if they can't be bothered or creative.
+Thanks,
+Andrew
 
-So I must admit I can't be bothered as well with that honestly.
---
-Regards,
-Sudeep
 
