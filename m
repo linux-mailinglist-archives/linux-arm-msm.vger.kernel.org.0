@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-25325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35F88928265
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 08:57:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5583F928271
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 09:02:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AA9611F247D3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 06:57:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D92A81F2652F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 07:02:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53777143C48;
-	Fri,  5 Jul 2024 06:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B217144312;
+	Fri,  5 Jul 2024 07:02:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m/bU58LA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="l1psIDfg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79DF481CE
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jul 2024 06:57:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E6A45000
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jul 2024 07:02:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720162668; cv=none; b=JZcZ8J+zdkhMSdTZDDcgZibnd9uKq5a005d7GNigrojefG3gTQePK3veybchV6uz+Vk6eck2WvbNUuXYm217BBRe7XKH8kde8rQmLZpbDX8vjn86KEwjussxgvL8V88jQHJYr16GOg1XcqtC7shGCCUL4Cfsxshyx8rzJcZ/1zs=
+	t=1720162922; cv=none; b=mcwHQwK9o/xx2XaBG7YGU4OOoLMnnzon0S/pkieAJyJaMuJVsEp1QoT7Wh7dJP2GA9PabLsXkKR2w+Xg481P8bJD3CUMWpVAhIT6w4CZYGsac+B0nA/QJJIwRbQ+9KqjAF8V3tJ2rY533MGNmOfk2B31Dm5fqFsKaA/iA8cY6Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720162668; c=relaxed/simple;
-	bh=JnX0yRXMzS9wa68mPGB2tFMXMwPT7CAyUJr8mT2G5Vk=;
+	s=arc-20240116; t=1720162922; c=relaxed/simple;
+	bh=VAKkdcMAV22H5TKYjJn3hZeGBw0A8+NVpjt+azWY8bY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RLUFjaafeGFLgxrEJU5hZ13HLYPEk30KoSzgOtvaHlfOEd5EizsdFmoXBKdpeTfWyzAr/Vjfsy/EA2fZJa34S1hDnlCSIAwwpVojoRS1dylLxok/O2IG5nzeKT1tDJjNMez7fal94VA5BF6qKR0l6+MT0SY7MO02wg7hvcsYHHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m/bU58LA; arc=none smtp.client-ip=209.85.128.47
+	 In-Reply-To:Content-Type; b=LA0/5p1d3EZ1+ze/v/8OA0bZVSnnFUzIVcpRZCFhGX9ZwD2jlVK9fowvkNfXhFn1OM/GCsjCtJDrrmCLyWMQ5sJZGoi/LAEeVfgevMa/jV1HTw+4pLKWQIVWOZaQ7RV9aRQ7X/6kY6QwClIYNkKBnh63ZxPg5i13umtD9kZ1lYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=l1psIDfg; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42567ddf099so8953835e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jul 2024 23:57:46 -0700 (PDT)
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4256aee6e4dso8900365e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jul 2024 00:02:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720162665; x=1720767465; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1720162919; x=1720767719; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=TvJAwy+dBBbtp8Job56ITR8f7xuPPHkzySNnk1vKhj0=;
-        b=m/bU58LAjzYKF48Kk/XEqdcXjKyUR3V34kNMNFvPePSh3wCRSXGvL3mOHda/sh8sWz
-         XHtNbMt7hDbezm9Uw/LDtXL4xzVtqG3iuQFUrwyN00/0jYx952wAmfGelwcK+MMAxMiO
-         UjM8no9W4gf/FrJwDuB0M30L/ua3dltsnVO5nH+/Uj9qoPN8GuVZSmFow7Ic3GuH2M0k
-         ON5UlNQrN2yQF/9McJEV7OMPx4LAVvhc4XnC3eboF523zg37prYz9vpE0nHslLFFmm+1
-         oEvBmeJsWWmhQAR0CUfpA1lS/w+K5R1S0/1zMLPblYtvWe/b9SPXd+nJQyZblJ1zNxPp
-         Tyvg==
+        bh=qxL0nYrDAAM5QZ7OL1HKKyxUv4rZKYb/1zEztV6/A74=;
+        b=l1psIDfgY08kFeGQwp39mNOGAzSJo9CnayoyCyVQJxRLMpHe+yBYYs5F5WfaZhuiDl
+         cm9oSO3T1d4QFyBOB9cMiw6cevDwU1tXGBg0UoS/fMbcn6QkPGcPOnH53jnrGYYcS+1C
+         JeRcd2PHn46+Uo0S8mH5AMvbo1UgopGr4uALNK+I9H/pAnXvfnM2oP4wo6fcznxR/wvr
+         QHla0wezViqZacY8hk5nV7kXaHUZfC0E8iEiijG6L62WX1z3Ll/bQnwpntfkqbA6uWEm
+         NbIBeaBxHvi16W66vrnwbFdCPfUNitDGPGCi9/DG3XdLCO/GoAF8ENh9leQzDKi17ycr
+         O6kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720162665; x=1720767465;
+        d=1e100.net; s=20230601; t=1720162919; x=1720767719;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=TvJAwy+dBBbtp8Job56ITR8f7xuPPHkzySNnk1vKhj0=;
-        b=cWmOsXo70j1P5j+tAVB32Wl1D0ldV215gCYvZhy440PpuSO8r07pCVRuKiHFEAzwpa
-         T1CNXXDYkWVpBKgo/SAOIJ/UC+kAY8iejsdPW8l51xNzzUG3oF+DCerYmkzIK7arT/v5
-         FIx0wLaEVivUIDJljZkunWRQi3Ig+lOxA3LFkrrkoXKRUEDcptQxYpzvV30sZcPqN4lp
-         0h/8vUxvuFP/HwBY8sE+T6jPwnNdKx9f0a9zPrimWN4b1dLHv0g8kXdqGFA9gFwUlVw0
-         PZ7manta+GVoZ/0/Sh0ReFli91s+pINuLwjlpiOPBtv8EL4DdN1IlJjU0FHRf0fklGFA
-         yAaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXQzt0gjGlDn+TGNGlyKUK6iFdTGvFVGn3EcRysTVTjgI+LnyGOcwNvntlA33RLCk1LisskaUbVpXFlvLRGNflYaz+M1pOnuuHMOfH6NQ==
-X-Gm-Message-State: AOJu0YwSt1RvqQfdQxmwq/3s3A1eBS6tQF7Twfnnmrf4tUwM4z2gwxQI
-	M6k/APiXD5n1C98YnqZ/KBtk+dFpg3yKlGGuIYIcQnEsTIT0Jbsrj3R0AfmUkLQ=
-X-Google-Smtp-Source: AGHT+IFIg4WnLn3LIK26q8YQ2ok+z3+hntbTxn/cdI9+Kim0dYAFwCDDulkY710R84hEz0Fu6pQFPA==
-X-Received: by 2002:a05:600c:158b:b0:424:9516:bfcf with SMTP id 5b1f17b1804b1-4264a3d9797mr28459255e9.3.1720162665254;
-        Thu, 04 Jul 2024 23:57:45 -0700 (PDT)
+        bh=qxL0nYrDAAM5QZ7OL1HKKyxUv4rZKYb/1zEztV6/A74=;
+        b=RaEC3zkXoNrR61hWoYAlUSZ4u4hakRwD1Vh+G73t8dEa5gnwEyFpD1WD1S1dmpPZt6
+         VxkVjM2DDeLL3q84pjVZEWftBuJN4HAbk69GsmhZUhuAxmlgQhDDME7NJWuW4WsaxD0y
+         PPXem77AOfyUDtVCUiWR+l/ZO6Mfc+QqEsIxbHhDIAlQqr/zO/hOoMZiAQ40qBp2MCaX
+         Bwk2AF3pfpatYjA6oVXFnbmJ/E2UrobhAc3gpLRjLBd7+ulukUYzMaNDDtREOL0SDPhW
+         lJSiGMYmdrKxk0en6vxnpM7yrEu2cuGtcvWnHOc4CYdBKNIDAHADpQARAjmcnxpBBV+p
+         TtwA==
+X-Forwarded-Encrypted: i=1; AJvYcCWqD7njfN1C/gV02060AiKCydbsf9OYrJ1vbPWXiGSiVYXYwbqqH2eZ1A4ltZVnOTBOBdbgygX0RjBlyDhQRvy+/efBCucXD8dio9n/vw==
+X-Gm-Message-State: AOJu0Ywm1GRYkfF2upzRs+D49tG3eX6b5a9IxaBLJpPaxsl7QgFPMZqM
+	2kTHiO+gMh0WKrkD1bvg40Dqp3oISlvC0hfBsN6x9PXzbNamLqgEEj6ZdweWNGY=
+X-Google-Smtp-Source: AGHT+IHQAG8IK7P+CUqDzGPD2No+Ne3M1+pJ64KJkYb9ZFoSRnlrRaF1wZLZ3R05HAxO4y0JvHLSZA==
+X-Received: by 2002:a05:600c:4204:b0:426:59aa:6755 with SMTP id 5b1f17b1804b1-42659aa68a9mr771105e9.14.1720162919170;
+        Fri, 05 Jul 2024 00:01:59 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4264a1d6435sm48389275e9.15.2024.07.04.23.57.43
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3679ac6d60dsm3593008f8f.39.2024.07.05.00.01.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jul 2024 23:57:44 -0700 (PDT)
-Message-ID: <52ef47d0-8344-4367-b0ee-32e9471bc64e@linaro.org>
-Date: Fri, 5 Jul 2024 08:57:43 +0200
+        Fri, 05 Jul 2024 00:01:58 -0700 (PDT)
+Message-ID: <4141d373-fe12-4cb8-9aed-34477ea29cfe@linaro.org>
+Date: Fri, 5 Jul 2024 09:01:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,19 +77,26 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/8] dt-bindings: interconnect: qcom: msm8939: Fix
- example
-To: Adam Skladowski <a39.skl@gmail.com>
-Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Georgi Djakov <djakov@kernel.org>,
+Subject: Re: [PATCH v1] Coresight: Set correct cs_mode for dummy source to fix
+ disable issue
+To: Jie Gan <quic_jiegan@quicinc.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Konrad Dybcio <konradybcio@gmail.com>, Mike Leach <mike.leach@linaro.org>,
  Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240704200327.8583-1-a39.skl@gmail.com>
- <20240704200327.8583-8-a39.skl@gmail.com>
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: Jinlong Mao <quic_jinlmao@quicinc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Tao Zhang <quic_taozha@quicinc.com>, Trilok Soni <quic_tsoni@quicinc.com>,
+ Song Chai <quic_songchai@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ andersson@kernel.org, quic_yijiyang@quicinc.com, quic_yuanjiey@quicinc.com,
+ quic_liuxin@quicinc.com, quic_yanzl@quicinc.com, quic_xinlon@quicinc.com,
+ quic_xueqnie@quicinc.com, quic_sijiwu@quicinc.com
+References: <20240626040521.1909119-1-quic_jiegan@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -136,35 +143,38 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240704200327.8583-8-a39.skl@gmail.com>
+In-Reply-To: <20240626040521.1909119-1-quic_jiegan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 04/07/2024 22:02, Adam Skladowski wrote:
-> For now example list snoc_mm as children of bimc which is obviously
-> not valid, drop snoc and snoc_mm and leave bimc alone.
+On 26/06/2024 06:05, Jie Gan wrote:
+> The coresight_disable_source_sysfs function should verify the
+> mode of the coresight device before disabling the source.
+> However, the mode for the dummy source device is always set to
+> CS_MODE_DISABLED, resulting in the check consistently failing.
+> As a result, dummy source cannot be properly disabled.
 > 
-> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
-> ---
->  .../bindings/interconnect/qcom,msm8939.yaml         | 13 +------------
->  1 file changed, 1 insertion(+), 12 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,msm8939.yaml b/Documentation/devicetree/bindings/interconnect/qcom,msm8939.yaml
-> index fd15ab5014fb..3aed8b77f35d 100644
-> --- a/Documentation/devicetree/bindings/interconnect/qcom,msm8939.yaml
-> +++ b/Documentation/devicetree/bindings/interconnect/qcom,msm8939.yaml
-> @@ -56,19 +56,8 @@ examples:
->    - |
->      #include <dt-bindings/clock/qcom,rpmcc.h>
->  
-> -    snoc: interconnect@580000 {
-> -        compatible = "qcom,msm8939-snoc";
+> Configure CS_MODE_SYSFS/CS_MODE_PERF during the enablement.
+> Configure CS_MODE_DISABLED during the disablement.
 
-The one correct example would be the snoc, because it is the most
-complete, but well...
+30 email addresses in CC, 90% of them not related to the patch. Sorry,
+this is way too much spamming. Do not Cc unrelated people. Do not Cc me
+on such stuff.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+<form letter>
+Please use scripts/get_maintainers.pl to get a list of necessary people
+and lists to CC (and consider --no-git-fallback argument). It might
+happen, that command when run on an older kernel, gives you outdated
+entries. Therefore please be sure you base your patches on recent Linux
+kernel.
 
+Tools like b4 or scripts/get_maintainer.pl provide you proper list of
+people, so fix your workflow. Tools might also fail if you work on some
+ancient tree (don't, instead use mainline) or work on fork of kernel
+(don't, instead use mainline). Just use b4 and everything should be
+fine, although remember about `b4 prep --auto-to-cc` if you added new
+patches to the patchset.
+</form letter>
 
 Best regards,
 Krzysztof
