@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-25342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 568769284BE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 11:09:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90C4D9284D1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 11:11:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 10AC52868F6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 09:09:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 100001F22342
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 09:11:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F17BF1465B5;
-	Fri,  5 Jul 2024 09:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E7A31465BF;
+	Fri,  5 Jul 2024 09:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pQJeXI//"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oHvNR3Fn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7D61465BF
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jul 2024 09:08:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E19D144313
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jul 2024 09:11:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720170507; cv=none; b=rlqk/csFNiIfG0uALgNONCXQ1f5YmEi4Q5KrL8komkPD3rsjTUJWDLV0GfZk9+IAfcffdzvktfh+nfpvewHeQDwRNftKZxeB7oEJVnXMg03h3ta0Q+RVc7SkFmg26+dwf/U1pfnlU4e68IF8+Gh9AvZYc6SgqPur2VWC3Ij4lCQ=
+	t=1720170685; cv=none; b=oGUGOpTu+DZC1GHN/pnPtdKEfIUoFTv+K57kPU8ZlkhVCbMo2RML1Rw95VQz/AWfE0eoElcpwHlpBvZ5IL9VfWATRQNHhqryodtcZ5RbQgsigjouMvuVekJfnZN3QCraUGG/Ujuf8cJflsv8Rzqg/Og1Ac+UDdTHMdMUTmJtPXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720170507; c=relaxed/simple;
-	bh=Q6CV+cKV3vfp1WIWPz496ePmPxh2p3vMQu3u75CY6A4=;
+	s=arc-20240116; t=1720170685; c=relaxed/simple;
+	bh=Obcusb3z1OoJpJ4NO+mhAvNE7U/tycv2lZGobiVFHIk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iRZljK1vvXLnoBSPpYqG7Zugu2QkRCIcTTfFid9oZSmU8NUvC+Ae++tFjp4yUzgbdkBUalGFKxP29Y1TlzI4g3KN5XNaF22R9VXgm0pOjK2epJ8rX/jbSvkKn+znvScs4dAEK0arOjUl2k/+TP5HUOpIpTfshpypv6MA0H957IY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pQJeXI//; arc=none smtp.client-ip=209.85.221.49
+	 In-Reply-To:Content-Type; b=tXhGvrOGwGoh14F/iINj8TkZMsITttIrZ5jBh0b4yDN+1aU0/B2A/eBmofN3dRi9sFcNgYQUN+0QguNQ4NSpMk3FUMA4cn40djChd+a+F8EKNMYeOJTpzek5BhczTHDnIdhvbFeiYm/H5y+dh+JV7UxrciqOQkUGOWqvtRDaCc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oHvNR3Fn; arc=none smtp.client-ip=209.85.208.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-36796a9b636so1043209f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jul 2024 02:08:25 -0700 (PDT)
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2ec5fad1984so18509751fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jul 2024 02:11:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720170504; x=1720775304; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1720170682; x=1720775482; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=03q+yOKYHARHGbY5lKzGA8asSxn/tzdSW6dNG422NKQ=;
-        b=pQJeXI//w91fJE92JSkMFaRxZEraW1TNoDd2onq9/MVokfBOG/Lo6CfyZcL6/HMjQ1
-         qpJeibYtzXhWzzpYikAsltOShJLpXQUx+ME2/YZzSnYuNd+7WBpm7p3ojYzEnIeA+Juh
-         8pprS+yD+o1OI5i3W7hwjuWhE1GDdMThLMM+ZMPbMPAQwzogmyowCfXoS9XQ33xUpL3r
-         PMDYeueMx+jTpzY5lcLEpD0ZF1dDuVBTZ6KSIxka7yOpuFp7x75tLKy1G3ZNkfbqEEn1
-         7ddTSu5ryXU3p9QBRkYzcDT7UGkGMWeyH+E1ko6/yneb4XKYzJ2g9Nv9phvwzAa/wyaj
-         F3vw==
+        bh=z1Tk2Un/Adzphb3H82iPl6Wyt2tLSdbxVdSmw4USudk=;
+        b=oHvNR3Fnsipg3d4rU8xG7G4K9P2Etp+aLtxEF8c2Ekty37tisiAKD+/h/pdekMkYzW
+         mqELaLgI8bvjd6GZINJOpG3a8EZeyHuZLfjB8pEn0+BN+AYNYSMy8vojOe7VK+aw3DKW
+         NTV85bBy1s64qgg1LiwItOXWX3iFW8qEXBYTx9AuNCEZMLGDI1w5HYCNvkS3aF4hBgsR
+         qoRimzIUY0FFTTZoRbTb5qK79LSbPG5KHbDsI9e1pStl7sGeX1lkbW3f3jbPyvSp6O5D
+         OkWHNYN/yXIPRc+gOR1yx1HvrfirFVSGmxb2GAGICkeep1Q0p7FByuYTSkYUgmU2Vopb
+         gvwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720170504; x=1720775304;
+        d=1e100.net; s=20230601; t=1720170682; x=1720775482;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=03q+yOKYHARHGbY5lKzGA8asSxn/tzdSW6dNG422NKQ=;
-        b=J6k7W8HQwzKXNeM8eLPjFct1cPyJCFE1u8+dUiLZ+A+j0FPGzmWHjOdnKIwcYFiAGM
-         3cxeMeh31TB7/ezFH75edX1GA7rZykBM2vV7i0MotGrLkHMjU4cFh+UEcj8X/PNrMYW1
-         T4CeatYAXEneNgtLNBMdfK/WHtkIR9h4ZTblb5Aqg7wsG1gc7a5TFoPJ54Aun3Jd567e
-         ZIEmICNv8GHcTfF1NrzoKS3TJfiUfbxjV2F9Wo1y1SjWoNoUUFllrsXd3kD04fK+TOAZ
-         95HZSFlWYCJSt7HKQ1kGi/CJWEWK3nYh9ooO3TYSzthGOajptz2G2zMW34h3wm+PHtIj
-         Vl3g==
-X-Forwarded-Encrypted: i=1; AJvYcCXoteKfHr6sjOQ9j8WfXrjN/25lcUpqNcY3W+oHqq8W3ZtkY59nHA+rj76oMUKkEav/HFyX66RCnvpNIDMkdS+oziVQbI7N0EZ/IyAa0Q==
-X-Gm-Message-State: AOJu0YxOzQlVjqEoOOAAg5l5ByWRpfb7/PM3uvNa8R5bKDzMgSwHEnEW
-	EFQh+BjJ6C75nk3OLHiM4hAsPQDtxNcEQp3vazhIfil+DfyiLVO8dA3vwYAKBb0=
-X-Google-Smtp-Source: AGHT+IFkKshORuwAmsZnn8xxofp9a6fcJtaxQLVFg8WAgCFiqFkB3N2AvjI0Q+cJPc7zo1sInebzog==
-X-Received: by 2002:adf:ed52:0:b0:367:96a0:c4b7 with SMTP id ffacd0b85a97d-3679dd73e11mr2952668f8f.62.1720170503963;
-        Fri, 05 Jul 2024 02:08:23 -0700 (PDT)
+        bh=z1Tk2Un/Adzphb3H82iPl6Wyt2tLSdbxVdSmw4USudk=;
+        b=UEythRf82Wv2XhEcyjtjumHoWOOJQMyKulMeWx3EuYExTeuSFSSRhjYtiu8+tR7qwY
+         2w3JoVZSVVgwEOFFERk7y7gt3eeHOVRVAzp/N1s5348dVcFf6w8PvHgpxHBpyIOVnYWq
+         vcD+zIoHmiEP/sOSPCyKoOG2nNyiD1ZE4Q9DB7pvHuF6/cJbvx3MKwzVtEdMNJQ4iweD
+         WzQ9xNenbnNjirLw9RwF8+u+f5FOTvhA53u3uLWgLP1zdj5ZMs4MxlBnfFYdzowCyZfO
+         eflpNlqG6paqUzA8KAbNYRGUuAoyOAUkeA3C0yfMgAeZKuN7elWhDuhkBvyWt5KGamz3
+         +ktw==
+X-Forwarded-Encrypted: i=1; AJvYcCWXMcgUE/k3oX+/lUkGrlNBcUMZT2URaZI1Mr6QSmthUHlrRjfLTRRj8RTj7hyyMuePwlOPE5HCCzLtPfHFICebUGi4dLN2T5Z5MOtCgg==
+X-Gm-Message-State: AOJu0Yxc/7Gs2zcAr0nLGg8TnAF86jx/2sZ+PrY2inp4187bQvbXPLwT
+	bR9qBD/qwv67eM3ISj+COLghLehB674QeuHR4mgqXh2QUVTxBqUGUEg89iqYvR8=
+X-Google-Smtp-Source: AGHT+IHBBdABka3YMuRBJYPjTxRuL3X0L0+YkBKA8/jh33DITaHzCTUN4Ihmx3cNZrqxmFFRYaz/2A==
+X-Received: by 2002:a2e:960a:0:b0:2ee:52d5:c4a3 with SMTP id 38308e7fff4ca-2ee8edff069mr29849661fa.39.1720170681673;
+        Fri, 05 Jul 2024 02:11:21 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36788e37b53sm8830126f8f.45.2024.07.05.02.08.20
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-367938a6e97sm6054962f8f.109.2024.07.05.02.11.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Jul 2024 02:08:23 -0700 (PDT)
-Message-ID: <d25c2dbb-f862-4f06-acb7-a3e7ebe954db@linaro.org>
-Date: Fri, 5 Jul 2024 11:08:18 +0200
+        Fri, 05 Jul 2024 02:11:21 -0700 (PDT)
+Message-ID: <9b502ba5-7042-424e-b0a2-5659e4064462@linaro.org>
+Date: Fri, 5 Jul 2024 11:11:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,8 +77,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: Add CCU and ETR nodes for
- SA8775p
+Subject: Re: [PATCH v2 3/4] Coresight: Add Coresight Control Unit driver
 To: Jie Gan <quic_jiegan@quicinc.com>,
  Mathieu Poirier <mathieu.poirier@linaro.org>,
  Suzuki K Poulose <suzuki.poulose@arm.com>,
@@ -94,7 +93,7 @@ Cc: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
  Tao Zhang <quic_taozha@quicinc.com>, Trilok Soni <quic_tsoni@quicinc.com>,
  Song Chai <quic_songchai@quicinc.com>, linux-arm-msm@vger.kernel.org
 References: <20240705090049.1656986-1-quic_jiegan@quicinc.com>
- <20240705090049.1656986-5-quic_jiegan@quicinc.com>
+ <20240705090049.1656986-4-quic_jiegan@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -141,35 +140,114 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240705090049.1656986-5-quic_jiegan@quicinc.com>
+In-Reply-To: <20240705090049.1656986-4-quic_jiegan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 05/07/2024 11:00, Jie Gan wrote:
-> Add CCU and ETR device tree nodes to enable related functions.
+> The Coresight Control Unit hosts miscellaneous configuration registers
+> which control various features related to TMC ETR sink.
 > 
-> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 163 ++++++++++++++++++++++++++
->  1 file changed, 163 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index 23f1b2e5e624..ef4df5e59ab3 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -1664,6 +1664,38 @@ ice: crypto@1d88000 {
->  			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
->  		};
->  
-> +		ccu@4001000 {
-> +			compatible = "qcom,coresight-ccu";
-> +			reg = <0x0 0x4001000 0x0 0x1000>;
-> +			reg-names = "ccu-base";
+> Based on the trace ID, which is programmed in the related CCU ATID register
+> of a specific ETR, trace data with that trace ID gets into the ETR buffer,
 
-NAK, not tested.
+....
 
-Follow your own internal guidelines - they are precise in what testing
-you must peform.
+> +static int ccu_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct coresight_platform_data *pdata;
+> +	struct ccu_drvdata *drvdata;
+> +	struct coresight_desc desc = { 0 };
+> +	struct resource *res;
+> +
+> +	desc.name = coresight_alloc_device_name(&ccu_devs, dev);
+> +	if (!desc.name)
+> +		return -ENOMEM;
+> +	pdata = coresight_get_platform_data(dev);
+> +	if (IS_ERR(pdata))
+> +		return PTR_ERR(pdata);
+> +	pdev->dev.platform_data = pdata;
+> +
+> +	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+> +	if (!drvdata)
+> +		return -ENOMEM;
+> +	drvdata->dev = &pdev->dev;
+
+Use stored dev variable.
+
+> +	drvdata->atid_offset = 0;
+> +	platform_set_drvdata(pdev, drvdata);
+> +
+> +	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "ccu-base");
+> +	if (!res)
+> +		return -ENODEV;
+> +	drvdata->pbase = res->start;
+
+Drop.
+
+> +
+> +	drvdata->base = devm_ioremap(dev, res->start, resource_size(res));
+
+Use proper wrapper for this two.
+
+> +	if (!drvdata->base)
+> +		return -ENOMEM;
+> +
+> +	desc.type = CORESIGHT_DEV_TYPE_HELPER;
+> +	desc.pdata = pdev->dev.platform_data;
+> +	desc.dev = &pdev->dev;
+> +	desc.ops = &ccu_ops;
+> +
+> +	drvdata->csdev = coresight_register(&desc);
+> +	if (IS_ERR(drvdata->csdev))
+> +		return PTR_ERR(drvdata->csdev);
+> +
+> +	dev_dbg(dev, "CCU initialized: %s\n", desc.name);
+
+Drop.
+
+> +	return 0;
+> +}
+> +
+> +static void ccu_remove(struct platform_device *pdev)
+> +{
+> +	struct ccu_drvdata *drvdata = platform_get_drvdata(pdev);
+> +
+> +	coresight_unregister(drvdata->csdev);
+> +}
+> +
+> +static const struct of_device_id ccu_match[] = {
+> +	{.compatible = "qcom,coresight-ccu"},
+> +	{}
+> +};
+> +
+> +static struct platform_driver ccu_driver = {
+> +	.probe          = ccu_probe,
+> +	.remove         = ccu_remove,
+> +	.driver         = {
+> +		.name   = "coresight-ccu",
+> +		.of_match_table = ccu_match,
+> +		.suppress_bind_attrs = true,
+
+Why?
+
+> +	},
+> +};
+> +
+> +static int __init ccu_init(void)
+> +{
+> +	return platform_driver_register(&ccu_driver);
+> +}
+> +module_init(ccu_init);
+> +
+> +static void __exit ccu_exit(void)
+> +{
+> +	platform_driver_unregister(&ccu_driver);
+> +}
+> +module_exit(ccu_exit);
+
+Why this is not just module platform driver?
 
 Best regards,
 Krzysztof
