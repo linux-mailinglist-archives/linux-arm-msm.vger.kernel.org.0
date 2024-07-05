@@ -1,59 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-25331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EF6092842E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 10:52:56 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0DC2928432
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 10:53:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 716721C22854
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 08:52:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 64FDF1F23B3B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jul 2024 08:53:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F04AD146591;
-	Fri,  5 Jul 2024 08:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD9F8146A60;
+	Fri,  5 Jul 2024 08:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jUBM0O8R"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="o7xokfJE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288FC145FFF;
-	Fri,  5 Jul 2024 08:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADB41465A5;
+	Fri,  5 Jul 2024 08:52:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720169562; cv=none; b=kxcGyNr7N5kIpt7c8OKdrJL8wBqpbGzGjGNP/gX3c52xcjmFUXXcHUdQfrC7uUMMQSKAdaa7oTpllBMXSLcB3rE1qNIO6lDSBRmhg/sVbQSwUHKNDodtWA6V93LO8DnpvHkI2veOa2mfnJISGxgrzgFlEznQ4XzL999CzHmLbkw=
+	t=1720169565; cv=none; b=P9Ow/ud94u/K2JU3xPumVDB2et8ucCv44myNOSXRCoC3yFq41o0DUKQNyuYt5LvMouCW7gjhd3FNWDvVdvafG4T77IDbUVdcCvdENEGvpPzEm6h5OMq5wxittaBs2ZKYIqzmvN1kW9BzZqmT978Dzcp0FqNxuRofvI+d8GOGbNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720169562; c=relaxed/simple;
-	bh=tNFKfuk5Ymyt8xk9GhZ2T11xYTpUmsgjx3Rqz+ObP2g=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=tUPFoMbahzmEp/qgIF1gsqJ8Yg/ByGXbWpsKn6s8gvJvhQjEv0IaQE5JGxi5pDSrepHEcR5YlidWl2k25FKRrigMikMFKJ6SrBVGDF3hxurii5LhdyUTllqBVD4EXidQRqaa8GfX9pDRk9csvCSEhSR4rb8eJfSzwLGAQjv6yAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jUBM0O8R; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1720169565; c=relaxed/simple;
+	bh=SIUGlLhRKeAIPZM7QHaGnWK9y015nY4Rn5oVChh2JoE=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=oy+9IGZuFllW8Bne2+iiRXMrthlpGoP0RxkaSUgoPcHrgk4+yfG/5BMAC7wtkameKU9Rix6XH05QUTTX/icvKnc12X4gPMr5aNesVagEUcPKhCYumIWIu0t9W4kvP8fg8Cb8S3zSgmDc7ddn4al6j0xX9BbrmcoERqG+n8PZPIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=o7xokfJE; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 464Nid1K026603;
-	Fri, 5 Jul 2024 08:52:26 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 464MQLbm003870;
+	Fri, 5 Jul 2024 08:52:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:message-id:mime-version:subject:to; s=
-	qcppdkim1; bh=Sg+a5AmYrZODA6buMyIBZVZhyNMtazQcn/qad/A8YnE=; b=jU
-	BM0O8R1YF3sYtyqUYGaXSuN/CNnkIrwpPgdh6f9A+IaiugGoqHWKJq5vStNCczM3
-	BN+WXiLRim4wThvx2gejIA2vgC8EgeEKHR/S4EvZn+P0XvmW8Y9NmdHURn3m6mZw
-	I12guzaAnPBQp5IN5FEfagSoX7f545LDvtAx+F/c3XSNjB7Ooohz9H1VFNuOwnOU
-	AnDtYMVSXDa1VQa6fiWR/Vpe/Qb8bA6OQdC63fRDQjkYyKJcLUaE+GF8U0BL4QUR
-	neCaGz6/i94gd5NunJ0sQk5LOZcit13AZGeTOR4lhymDru4RINpV9qgd5LafwMHL
-	2yOVJF1Fl8CCkesnzAPA==
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=Of0iC6wmtBTF5LgwlZ/weRxO
+	RI5wtjHBJTrC8rZIsio=; b=o7xokfJEmXfOg0LPESHzzRvcO9o/XSgDVDFvTyr6
+	9XmkLqrl0FNmss9hgh0L7DEX1lAARcD9zJpgz8Mq7Miv+OZ/5Q5UXVieiICidNK6
+	TY5RibGNXcVi5pJZ7JcEegSIcdryBCadK/CUO0hxVgwmseWszA2BnMt7can+pLzc
+	4P2UbzfnqeM/yeNXG4Sw5W0k5E4K3Ma7KmW8a1GfW7NNWZ0/AfQwVAFpajzE4XPO
+	xr/aRT2b1/milFIiwwHy9uPgtPbCeWuTdokcWkH1graGrG+tcVjxMR9U31AtjIVv
+	JljoZWFBU7IUxw0tughjnAIGATxduC2OO4fW0sfrZl4KxA==
 Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 405dbe3r13-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 405dbe3r1c-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 05 Jul 2024 08:52:26 +0000 (GMT)
+	Fri, 05 Jul 2024 08:52:31 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4658qPig019633
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4658qUZv019661
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 5 Jul 2024 08:52:25 GMT
+	Fri, 5 Jul 2024 08:52:30 GMT
 Received: from taozha2-gv.qualcomm.com (10.80.80.8) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 5 Jul 2024 01:52:20 -0700
+ 15.2.1544.9; Fri, 5 Jul 2024 01:52:25 -0700
 From: Tao Zhang <quic_taozha@quicinc.com>
 To: Mathieu Poirier <mathieu.poirier@linaro.org>,
         Suzuki K Poulose
@@ -75,10 +76,12 @@ CC: Tao Zhang <quic_taozha@quicinc.com>,
         Trilok Soni <quic_tsoni@quicinc.com>,
         Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
         Jie Gan <quic_jiegan@quicinc.com>
-Subject: [PATCH v1 0/3] Add source filtering for multi-port output
-Date: Fri, 5 Jul 2024 16:51:49 +0800
-Message-ID: <20240705085152.9063-1-quic_taozha@quicinc.com>
+Subject: [PATCH v1 1/3] dt-bindings: arm: qcom,coresight-static-replicator: Add property for source filtering
+Date: Fri, 5 Jul 2024 16:51:50 +0800
+Message-ID: <20240705085152.9063-2-quic_taozha@quicinc.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20240705085152.9063-1-quic_taozha@quicinc.com>
+References: <20240705085152.9063-1-quic_taozha@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,90 +93,73 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: uWUFv2iMHS_yCMLb3UsUwAt8tRg8SDZa
-X-Proofpoint-GUID: uWUFv2iMHS_yCMLb3UsUwAt8tRg8SDZa
+X-Proofpoint-ORIG-GUID: IIThs8QiZmlXbcbqiQem81RmUIKR9UYW
+X-Proofpoint-GUID: IIThs8QiZmlXbcbqiQem81RmUIKR9UYW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-05_05,2024-07-03_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 malwarescore=0 phishscore=0 clxscore=1011 suspectscore=0
+ bulkscore=0 malwarescore=0 phishscore=0 clxscore=1015 suspectscore=0
  impostorscore=0 mlxlogscore=999 mlxscore=0 priorityscore=1501 adultscore=0
  spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2406140001 definitions=main-2407050066
 
-In our hardware design, by combining a funnel and a replicator, it
-implement a hardware device with one-to-one correspondence between
-output ports and input ports. The programming usage on this device
-is the same as funnel. The software uses a funnel and a static
-replicator to implement the driver of this device. Since original
-funnels only support a single output connection and original
-replicator only support a single input connection, the code needs
-to be modified to support this new feature. The following is a
-typical topology diagram of multi-port output mechanism.
-|----------|     |---------|     |----------|   |---------|
-|  TPDM 0  |     | Source0 |     | Source 1 |   | TPDM 1  |
-|----------|     |---------|     |----------|   |---------|
-      |                |                |             |
-      |                |                |             |
-      |      --------- |                |             |
-      |      |                          |             |
-      |      |                          |             |
-      |      |                          |             |
-   \-------------/ ----------------------             |
-    \  Funnel 0 /  |                                  |
-     -----------   |     ------------------------------
-          |        |     |
-          |        |     |
-        \------------------/
-         \    Funnel 1    /     ----|
-          \--------------/          |
-                  |                 |----> Combine a funnel and a
-                  |                 |      static replicator
-          /-----------------\       |
-         /    replicator 0   \  ----|
-        /---------------------\
-             |     |      |
-             |     |      |-----------|
-             |     |---------|        |
-             |               |TPDM0   |TPDM1
-             |            \-----------------/
-             |             \   TPDA 0      /
-             |              \-------------/
-             |                    |
-             |                    |
-             |Source0/1           |
-          \-------------------------------/
-           \           Funnel 2          /
-            \---------------------------/
+Add a new property "filter_src" to label the source corresponding
+to the output connection for a static replicator. By combining
+a funnel and a static replicator in devicetree, a new device that
+supports multi-port input and multi-port output is implemented.
+In order to match the output port with the input port and
+successfully build the trace path, add this new property to
+indicate the data source corresponding to this output port.
 
-Changes in V1:
-1. Add a static replicator connect to a funnel to implement the
-correspondence between the output ports and the input ports on
-funnels.
--- Suzuki K Poulose
-2. Add filter_src_dev and filter_src_dev phandle to
-"coresight_connection" struct, and populate them if there is one.
--- Suzuki K Poulose
-3. To look at the phandle and then fixup/remove the filter_src
-device in fixup/remove connections.
--- Suzuki K Poulose
-4. When TPDA reads DSB/CMB element size, it is implemented by
-looking up filter src device in the connections.
--- Suzuki K Poulose
+Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+---
+ .../arm/arm,coresight-static-replicator.yaml   | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-Tao Zhang (3):
-  dt-bindings: arm: qcom,coresight-static-replicator: Add property for
-    source filtering
-  coresight: Add source filtering for multi-port output
-  coresight-tpda: Optimize the function of reading element size
-
- .../arm/arm,coresight-static-replicator.yaml  | 18 +++-
- drivers/hwtracing/coresight/coresight-core.c  | 89 ++++++++++++++++---
- .../hwtracing/coresight/coresight-platform.c  | 13 +++
- drivers/hwtracing/coresight/coresight-tpda.c  |  6 +-
- include/linux/coresight.h                     |  5 ++
- 5 files changed, 115 insertions(+), 16 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
+index 1892a091ac35..d9538563f9c6 100644
+--- a/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
++++ b/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
+@@ -45,7 +45,21 @@ properties:
+     patternProperties:
+       '^port@[01]$':
+         description: Output connections to CoreSight Trace bus
+-        $ref: /schemas/graph.yaml#/properties/port
++        $ref: /schemas/graph.yaml#/$defs/port-base
++
++        properties:
++          endpoint:
++            $ref: /schemas/media/video-interfaces.yaml#
++
++            properties:
++              filter_src:
++                $ref: /schemas/types.yaml#/definitions/phandle
++                description:
++                  defines a phandle reference to an associated CoreSight trace device.
++                  When the associated trace device is enabled, then the respective
++                  trace path will be built and enabled.
++
++              remote-endpoint: true
+ 
+ required:
+   - compatible
+@@ -72,6 +86,7 @@ examples:
+                 reg = <0>;
+                 replicator_out_port0: endpoint {
+                     remote-endpoint = <&etb_in_port>;
++                    filter_src = <&tpdm_video>;
+                 };
+             };
+ 
+@@ -79,6 +94,7 @@ examples:
+                 reg = <1>;
+                 replicator_out_port1: endpoint {
+                     remote-endpoint = <&tpiu_in_port>;
++                    filter_src = <&tpdm_mdss>;
+                 };
+             };
+         };
 -- 
 2.17.1
 
