@@ -1,69 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-25438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24CA4929594
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jul 2024 00:05:12 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id F385E929599
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jul 2024 00:05:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 28D361C20B50
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jul 2024 22:05:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2C2ACB21995
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jul 2024 22:05:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 627AB14A0A2;
-	Sat,  6 Jul 2024 22:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5946E14AD10;
+	Sat,  6 Jul 2024 22:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PGm62Djx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D9LbpMJh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3269E149E04;
-	Sat,  6 Jul 2024 22:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C04F149C77;
+	Sat,  6 Jul 2024 22:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720303308; cv=none; b=Wynt1VcNCOa+1a9lDKOMSIp72GRCPBiU6Y9ld6sPLk17YDT9907C4RZ4MwhHl+ofxAJqCB2eLHh8qFR+Cv/kjU9Vjja0rLZsGKNxE3PQeGwUDOahU3SEhzWihg3hIb/y8/R6m/bVU0RAuuskwc0Vo+x1kWYcRxHCI6c75/XFBnU=
+	t=1720303309; cv=none; b=c1/xfntF6fdv7sJG8a++3+7RfXJxwd4IQZ7w1AxCLnqX0E1z09NsFycf2wX7JWdrDgAUqedQWdzB1JBSy11N2yuJyknN/fqrJVpebREfLNzKCXByGdkWMWhhll9HTbXWb3NjuiwjldS2LmZkshWqjMltfHXn+Ls13bJl4FPwHjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720303308; c=relaxed/simple;
-	bh=zJQ+sv70wnU5ECjnANokUAvYNlF6PCMCQach+GmptIw=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j9BQS95IvVNC889i6iaqvEWIxdvn+fQamk3kEKabaR8S60Q2gTNPlLRr/ra86r+oQ+yBQHf1QJ43kk+W5RO/rIilXC/WtN8PDr9Rp641pwY9Wmc1xw9YYK882Dl9K7fZESQArXYt4aTuSBK35NK+c9MHW1WN/OZ0s3jCygxe+eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PGm62Djx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E90C4AF0D;
-	Sat,  6 Jul 2024 22:01:46 +0000 (UTC)
+	s=arc-20240116; t=1720303309; c=relaxed/simple;
+	bh=eG7FtwxNwZFucz8uprXN96tbHHZWCpS08tFsJYfjyjk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=bg4fpotOocMzpJrYirmrqYKT1hiMgXUzYv4Tme81wDVf2QDN8OG/sb9fsgDDA+tECh0wHxpemMBi9Ds9w4aX449hLJubWvCdoa+0npZ7XA8g6FaUw57L/vUBmr6L6etVwLv8rBk7EI30Ea3mtvx/xp1h23cDpCgrfU6+m8E4dZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D9LbpMJh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B712C4AF0A;
+	Sat,  6 Jul 2024 22:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720303308;
-	bh=zJQ+sv70wnU5ECjnANokUAvYNlF6PCMCQach+GmptIw=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=PGm62DjxtiPliLZkuwr2VqqLG2JU2q9OdeDv3RGXNbSlpHWOJvRIm6Hj5yZONeDIK
-	 maTYTtJTifco2nMLOfbiGDxbdX56LkgZFU+9W7xj4FfoSRfyNz/kDmXDkNOiVzAqOl
-	 3lhNc2YWn96NwphvPYgJZJZnP6akzOkBR1PHL9+VV9ODGrA2CSJNuhiCLqTK7Obq+E
-	 BZNh5s6QTh3Yrq0hDfNpjFmCTRr9eaHoqyNNk+jErf9dFmNPGApFZohFo0Ii6qlCGh
-	 x2mKJ7ybR9JNhOBPdqguZGX24VQZY4zN3h/FUcgGSfF22UZFcASZmAicBr8iznu23E
-	 xqVoJgvNVImwQ==
+	s=k20201202; t=1720303309;
+	bh=eG7FtwxNwZFucz8uprXN96tbHHZWCpS08tFsJYfjyjk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=D9LbpMJhFBQN6bthbTzUzC5PbIWKOVO8/+e7f/8yE+Nj1k+SYrZ5cSkqWCT2bIT7q
+	 2s+ZFrCkmwczudU2XOguxa5Wlynxb3LNaLZqtFvNoaslBPhSBvwhnKtjsJ+Hl0hHCb
+	 8kRKW1/YPOQluycGzSKMSH2xgLQ0ohfT1KNzWAygj9uaTa2UqfGmZODAs3oMOrCAdN
+	 Zm3D0EicmlB20Pz+eYQTXgsT1fpKebqNSxIo2g59vk2Ub0WI/7A0gLzB3VJEbkKd2u
+	 aWlI6XSb08vbc+OnTCMtAulVt26+mg2MpC9CSACDoE+Wufk7f2i2TmqUoKVj8rGKQD
+	 BEizZxRCEEe4Q==
 From: Bjorn Andersson <andersson@kernel.org>
-To: mturquette@baylibre.com,
-	sboyd@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	konrad.dybcio@linaro.org,
-	djakov@kernel.org,
-	dmitry.baryshkov@linaro.org,
-	quic_anusha@quicinc.com,
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: robdclark@gmail.com,
 	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	bryan.odonoghue@linaro.org,
-	Varadarajan Narayanan <quic_varada@quicinc.com>
-Subject: Re: (subset) [PATCH v11 0/6] Add interconnect driver for IPQ9574 SoC
-Date: Sat,  6 Jul 2024 17:01:29 -0500
-Message-ID: <172030328815.28909.9070446553779931676.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] arm64: dts: qcom: x1e80100: add Lenovo Yoga Slim 7x support.
+Date: Sat,  6 Jul 2024 17:01:30 -0500
+Message-ID: <172030328804.28909.17560735197150165366.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240430064214.2030013-1-quic_varada@quicinc.com>
-References: <20240430064214.2030013-1-quic_varada@quicinc.com>
+In-Reply-To: <20240703-yoga-slim7x-v2-0-3b297dab8db1@linaro.org>
+References: <20240703-yoga-slim7x-v2-0-3b297dab8db1@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,23 +67,27 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 30 Apr 2024 12:12:08 +0530, Varadarajan Narayanan wrote:
-> MSM platforms manage NoC related clocks and scaling from RPM.
-> However, in IPQ SoCs, RPM is not involved in managing NoC
-> related clocks and there is no NoC scaling.
+On Wed, 03 Jul 2024 20:45:04 +0100, Srinivas Kandagatla wrote:
+> This patchset adds support to Lenovo Yoga Slim 7x based on x1e80100 SoC.
 > 
-> However, there is a requirement to enable some NoC interface
-> clocks for the accessing the peripherals present in the
-> system. Hence add a minimalistic interconnect driver that
-> establishes a path from the processor/memory to those peripherals
-> and vice versa.
+> Tested features:
+> -> Keyboard,
+> -> touch screen
+> -> Display,
+> -> Speakers.
+> -> all 3 usb ports.
+> -> WLAN
+> -> GPU
+> -> NVMe
 > 
 > [...]
 
 Applied, thanks!
 
-[6/6] arm64: dts: qcom: ipq9574: Add icc provider ability to gcc
-      commit: 5d0ab61a700214366dfcca5893b87655261e8c94
+[1/2] dt-bindings: arm: qcom: Add Lenovo Yoga Slim 7x
+      commit: c46a239a24908dda57031589f0db944a5d2e9246
+[2/2] arm64: dts: qcom: x1e80100: add Lenovo Thinkpad Yoga slim 7x devicetree
+      commit: 45247fe17db25594bec804f9db751635c7b6e473
 
 Best regards,
 -- 
