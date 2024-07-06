@@ -1,74 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-25410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25411-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D56C0929388
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jul 2024 14:27:38 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7ECD7929394
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jul 2024 14:31:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E98C0282CE7
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jul 2024 12:27:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DB033B21BB8
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jul 2024 12:31:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 593698120A;
-	Sat,  6 Jul 2024 12:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8E6923BE;
+	Sat,  6 Jul 2024 12:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u16bcXx/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jEbGzdph"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2387D07D
-	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Jul 2024 12:27:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB344C79
+	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Jul 2024 12:31:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720268853; cv=none; b=jMdxOoiM4Se7jaLiPG0F7MX36Oi1iiZAOIceHhUsthyRDVfGBZEWLIT7MF9hD0LMV0iD5+sffpLoWd/bxGJ5gAx1LKZauD/fGjoMQbP1M+J1XxbobRQ/9NZR2lLZx1fqdthEIvc4b5Vm6YA3akMs6S50vLh0ANO0dJwYqHI4e0I=
+	t=1720269110; cv=none; b=ljDLtXAW5v+BbEnoD6VDjaQqQiYYYqP0INSD/cIrevuTc4wHVjf8hBG2OdeO4Wi9pNfwUpOMbKEnXYjr0JW4E9K1AOzxExWzxM7fJRQzV/sx/KQXjQMbgtk3ST8VeiB5joNY8S+TBZ9iLICfEzQqv8jM6tfv5IHCWFVLOzcosPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720268853; c=relaxed/simple;
-	bh=CNh77vBEEcst80YNM8uwqUWtpZsl1u1HS+xSctV9qng=;
+	s=arc-20240116; t=1720269110; c=relaxed/simple;
+	bh=AZeVgGjUhu0VLE0MdVJfGODsbNpLCLUc7QabVgczy4c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FTrgNWAaUQwkLDSeIso0Dxmf8+2Pas0qqvOKEWSkrW+f0qfzlXenOib5sRO7EiLRv8eH0Fric6ev8LFiNVggphg9Xi9TpPY8IqQGQyiFi2+l8dL2VLucKJy/dNzysyzN/8TwXDfCgrre6DdWxeB7ScLJw10EouY8jLFVIOS/lS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u16bcXx/; arc=none smtp.client-ip=209.85.208.170
+	 In-Reply-To:Content-Type; b=DQEAajOW33vDQXk38DL/LoCCZ3sHGm5CqZF8RoSJBsYt2Vhhalu9zJQEYwf82XmskBj8O5jO4UfMCfIyG3u8JFGG1NTpnU6qLC8xG7DKdTCfNinrAukKzHsX/3qijHAwb74dWOujQrRjUtK1YNGG3nUiB5n4vzCvuvDqU3+F2/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jEbGzdph; arc=none smtp.client-ip=209.85.208.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2ee794ebffbso39131371fa.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Jul 2024 05:27:31 -0700 (PDT)
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-57cb9a370ddso3191010a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Jul 2024 05:31:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720268850; x=1720873650; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1720269106; x=1720873906; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=7OzdIv4B3CXoRooPpy7PW3AjhEb9rUJkTARdZztIO/8=;
-        b=u16bcXx//FVL0+fE8XM+dlUblx9eP8E4BGlwx2V1yZalRhfuP1b99XhcaEVMMa9Tuf
-         +s/64o9EW2rPbQGbPjuPkSJ/JXNBEp6nn3InvSP7BH7WhROxs7ZiiXY61zxXOAYHooS7
-         SVDRhJGZljbwqI845zhj7anUBfc1tXQbcOx68NUIrNzCH3cwElFEdFLWWEGlJAKaZyA2
-         rFRm6y6TVL8Wb60Cl0ym01Pizwft6sM1vrlFaTxmtcAuCiq9qU4b43FeMDQCvjqOpN2Z
-         9SWk5dRahP7U27Rnu9fOkpzBgQE+xnV0ENNFcGE1CSFB1guMH/bsq+P18jxnkYQlx+w2
-         XBGQ==
+        bh=WxO9tUoRJ8g2YphFGWhNO5NnoblLdOv7a0AOZSNvnaY=;
+        b=jEbGzdphwYMn99g5rD4CYqpGE1FgTnTeRZTL83RvKQSYiUaetjPXK6CK6gD34Eq+9n
+         qmS7FjaGpVhJegb10zHMr3afEHO29YgW3TnA9ClNuT6X+vvn0YmTNNJJEJsgCy1ygsLU
+         An86qfpKidBEMuYWnaZUiBuun4TbIg8NZBMHj2lLMMxhdbSrJ2QdHPv9Q5dVNquHeBKj
+         BZPgz8c6pmlR6J9sJZyw245ARhVvMiAg7oHlQouf/L9FnLa8gjBSQA8vhUFiHw5gsdhm
+         j83AztYMT/4Q6FFdVA+JR9g/XjEDNPl963RyNysM+PV6F0C8mg6PeIAIU0sriETu9/h5
+         7g6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720268850; x=1720873650;
+        d=1e100.net; s=20230601; t=1720269106; x=1720873906;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7OzdIv4B3CXoRooPpy7PW3AjhEb9rUJkTARdZztIO/8=;
-        b=e/uRU4i6+Yl1Qmdaa0UMcin1WWc/FuTASD8SeJI6fJRr2aRy20epIS6jCPbgPs0AdC
-         PChcwJlVUXOOe9oU/ZhlZWyuzpgEmb1pqC8OmdDs0fImt6RV0w76xajXiYZzKywr7KwB
-         YrANMnWUzTJM7ThJNyo5kkyRbl8C83SOn4iEjIJwhv/WrZ1GkT9LQ4Zb9Z1nPEIAS108
-         gKawpd3EVWptx+Gw7NTYBotOuvh68jBfqxjCKbktHiMoN9Ez/qI/mEDndH7O7bpkNVZK
-         4fHfMikXCgCi2GdYLV9WG/PAkTMVXgY/REfuSaPRpQJhKKs2dJp7F5WK6mFj8W9s2Iyh
-         y0dw==
-X-Gm-Message-State: AOJu0Yxv59RvFWUgBWTRAdiTFFePbyG8xbIjfh3GzPDLk4Xp8mCcNTmC
-	FezJK+fiICmAa3zQTAPkM+5QBujQ86160sIUhPgOeU9PNlSvT+mSfLgTWERbnZ0=
-X-Google-Smtp-Source: AGHT+IG0zM4EoZaIWz2SJ7wgUaWziV/xyRRgtrQtEvnRyahvRk4wDLrwnXeaQF2iTgDHymRZcJ3nSQ==
-X-Received: by 2002:a2e:9ad4:0:b0:2ee:8566:32cb with SMTP id 38308e7fff4ca-2ee8ed91179mr54011221fa.16.1720268848945;
-        Sat, 06 Jul 2024 05:27:28 -0700 (PDT)
+        bh=WxO9tUoRJ8g2YphFGWhNO5NnoblLdOv7a0AOZSNvnaY=;
+        b=G7bdwdLqr3QRBnYpNLSHfYUl4c6+ZtYMLFKOMCmSnbAjbfcXCSQdvrwHUivq4WKXIA
+         Mk0j7n9RTEYmoj4DVqm9BGX+32Hk7qy+Lyj2b8PAub0OjtoEhXsY2ZqeyIwaK1X9b8Qs
+         YHadpV0tgahikqk9x5w+Lcljqb9RAqj7lo8vr1K8V8ZoalhAKEsI2asO0eRdAyBmCXcL
+         xdVhGidUWt5O5SiiobBdC3rUWfe3lZEjDt374MnxCGQj6jRPaO7Z5oWCgtW6bWL23HX+
+         g9/tCRTLsmF0qN3VLO7Z/Wyv9IAwp6NMV+FrWkn8fpjZuNSOjnMPLI5Ub2zACO5MzJvS
+         aaWw==
+X-Forwarded-Encrypted: i=1; AJvYcCWH17rjr4+jhee4bboHGWgfwUYcqDYd8Tlv9NbSTavZhQLt+/8+73pWDWrb4thClucsUV2UdBNCuwYSyj0NnYblaiUuZLJR88sbLVi6sw==
+X-Gm-Message-State: AOJu0YyoqwvifdkDQ1XPPYITUhcYWKW1GiCWsG0Q6hXYG16F6IXryUbg
+	QRFx2vJc65SfrteqzJX7ZFhSgQW8RxxYFd9AUN6RSbfH5ZPADu4uQ6M2jvY7L1m+HDQ0XxuCmhm
+	U
+X-Google-Smtp-Source: AGHT+IFI1cK6dkv274ZfwByVzNk3B8KSxmGMCLvDGsiBoU/kAEVX4B/R+FpPnlJdrcjBGgmV37lYoA==
+X-Received: by 2002:a05:6402:5108:b0:57d:692:92d9 with SMTP id 4fb4d7f45d1cf-58e59265f08mr5744423a12.4.1720269105563;
+        Sat, 06 Jul 2024 05:31:45 -0700 (PDT)
 Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a77dfd03b3fsm70663566b.162.2024.07.06.05.27.27
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-58f63380f3csm2126686a12.58.2024.07.06.05.31.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 06 Jul 2024 05:27:28 -0700 (PDT)
-Message-ID: <635cc297-1111-41fa-b8da-06f69447ba22@linaro.org>
-Date: Sat, 6 Jul 2024 14:27:26 +0200
+        Sat, 06 Jul 2024 05:31:45 -0700 (PDT)
+Message-ID: <c15fc1de-c930-44b6-a9f9-d17e4da002fe@linaro.org>
+Date: Sat, 6 Jul 2024 14:31:42 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,13 +78,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Enable download mode
- register write
-To: Mukesh Ojha <quic_mojha@quicinc.com>, andersson@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240705143443.1491956-1-quic_mojha@quicinc.com>
+Subject: Re: [PATCH] interconnect: qcom: Fix DT backwards compatibility for
+ QoS
+To: Bjorn Andersson <andersson@kernel.org>,
+ Odelu Kukatla <quic_okukatla@quicinc.com>
+Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>,
+ cros-qcom-dts-watchers@chromium.org,
+ "Gustavo A . R . Silva" <gustavoars@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-hardening@vger.kernel.org, quic_rlaggysh@quicinc.com,
+ quic_mdtipton@quicinc.com
+References: <20240704125515.22194-1-quic_okukatla@quicinc.com>
+ <jhfya4mjnckrmogtmusyvwjv4mlyycgqj3apt2kaj5umxprhtv@rfew7c5w3zf5>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -120,18 +130,60 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240705143443.1491956-1-quic_mojha@quicinc.com>
+In-Reply-To: <jhfya4mjnckrmogtmusyvwjv4mlyycgqj3apt2kaj5umxprhtv@rfew7c5w3zf5>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 5.07.2024 4:34 PM, Mukesh Ojha wrote:
-> Enable download mode setting for sc7280 which can help collect
-> ramdump for this SoC.
+On 4.07.2024 7:44 PM, Bjorn Andersson wrote:
+> On Thu, Jul 04, 2024 at 06:25:15PM GMT, Odelu Kukatla wrote:
+>> Add qos_clks_required flag to skip QoS configuration if clocks property
+>> is not populated in devicetree for providers which require clocks to be
+>> enabled for accessing registers. This is to keep the QoS configuration
+>> backwards compatible with devices that have older DTB.
+>>
 > 
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> ---
+> Please read "Describe your changes" [1], and make your commit message
+> start with the problem description - establish to the reader why this
+> change is needed, then follow that with a technical description of the
+> solution (likely in a separate paragraph).
+> 
+> [1] https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
+> 
+>> Reported-by: Bjorn Andersson <andersson@kernel.org>
+>> Closes: https://lore.kernel.org/all/ciji6nlxn752ina4tmh6kwvek52nxpnguomqek6plwvwgvoqef@yrtexkpmn5br/
+>> Signed-off-by: Odelu Kukatla <quic_okukatla@quicinc.com>
+>> ---
+>>  drivers/interconnect/qcom/icc-rpmh.c | 2 +-
+>>  drivers/interconnect/qcom/icc-rpmh.h | 1 +
+>>  drivers/interconnect/qcom/sc7280.c   | 2 ++
+>>  3 files changed, 4 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+>> index 93047defd5e2..f49a8e0cb03c 100644
+>> --- a/drivers/interconnect/qcom/icc-rpmh.c
+>> +++ b/drivers/interconnect/qcom/icc-rpmh.c
+>> @@ -311,7 +311,7 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+>>  		}
+>>  
+>>  		qp->num_clks = devm_clk_bulk_get_all(qp->dev, &qp->clks);
+>> -		if (qp->num_clks < 0) {
+>> +		if (qp->num_clks < 0 || (!qp->num_clks && desc->qos_clks_required)) {
+> 
+> For this new case, I think the dev_info() below makes total sense. I.e.
+> this looks good to me.
+> 
+> 
+> However, the num_clks < 0 case would represent finding a devicetree node
+> with clocks specified, but failing to get these clocks. I believe that
+> this would include EPROBE_DEFER.
+> 
+> I don't think it's correct to print a informational message and continue
+> without QoS. I think we should fail here.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Since setting QoS settings is optional, I'd say we should simply skip trying
+to do so. Unless setting them on some buses (i.e. ones without failing clocks)
+and not on the rest would cause issues. But then, these settings should be
+bus-local, so perhaps it would still be fine?
 
 Konrad
 
