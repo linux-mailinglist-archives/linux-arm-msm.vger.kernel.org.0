@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-25412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DEEA929396
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jul 2024 14:35:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B03589293D5
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jul 2024 15:39:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A8EAB1F21C1E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jul 2024 12:35:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D22F21C20E75
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jul 2024 13:39:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99E3E4C62;
-	Sat,  6 Jul 2024 12:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC97C12F59C;
+	Sat,  6 Jul 2024 13:39:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aaKOB4ok"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oUxT4UJy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA13412B17C
-	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Jul 2024 12:34:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0099D757EA
+	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Jul 2024 13:39:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720269300; cv=none; b=rnXKDPEno6smePxXsZEb4Y9j2KMNDfQEczj4++UtSs8CjCj8m/VjvXFNzNVZESqAufsoytPfAaFOC5rfWMeN9GBiXABDjr5U0iF6CHgk8pVMPk/4D3adra337Whr08mvDi7v6Fd+YfjMWm6LRqDBdA7E7XyLBqYKfi5cMT/+4YE=
+	t=1720273188; cv=none; b=NPt6QshtqDJffj4JYhKJfC11SPatdliQE/sGA/zuZ7FhbCIDpyiePtYen90nOhQackX76dgf5/kbQzWP3pZqwNN1CXUpmqEOdJ8Y71zgjchuLf/R4caYkvdmFR8g10N21e5pi6s0A+bSnNjlTpjDgB0DR1vMJWnt84zzAitds40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720269300; c=relaxed/simple;
-	bh=N8qxiNxOzTF7l2a5E7y2OOw3RhrWWstM6g44ep0jE7g=;
+	s=arc-20240116; t=1720273188; c=relaxed/simple;
+	bh=jqIO9PtF3Kc1L3VYD56gt6cNcLUYYBsDSS5jH3CuGo4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bzNuvBXyhYNT7bd4jXifo2BnhRxIrk0gdoUqCvw9OGGsqySZNjK0Bgjufucw5q2VpL0yR0kJ4MUCd/Qptqllxa6DZjjXarrf192vsohb9DiYbTAtcTlpSZDM26ljlGELCMdm8kEIAL7ZGTW3fGRyeci6C9oNsij3/ds4oDQaMnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aaKOB4ok; arc=none smtp.client-ip=209.85.218.54
+	 In-Reply-To:Content-Type; b=SIkHdtvT+Qc13TPxTyQrh8N0qF3n7BShyF1pWSRSCFaIk/sa3kwNaE7OubR9ze3cvaM74OYJdATjkdr+GkLKJ3p2s0RIbz60kygimEq/cHEQm2ruDeEAp0fl2kRpCyRdNsaki6jlvs9b6lCbGzu8wGBM2XIOrelRUG4VtOG6S80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oUxT4UJy; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a77cbb5e987so168809366b.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Jul 2024 05:34:58 -0700 (PDT)
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a728f74c23dso292849366b.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Jul 2024 06:39:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720269297; x=1720874097; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1720273184; x=1720877984; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=08Kw+l4O9PQ6vVBW6VIbYgR+1zWbPaA4afAxHHCGvu4=;
-        b=aaKOB4ok0OoKsU8nm6DjxpyPRa6o0BuAHfxi5u0w1Yjak8NNhXrQ+Ttq22bPZt5djd
-         yf8jUZfNd4uE9/CrftsBvtpq1Mplq7GyRF6L+yIcCJkq/h3rLhz2lgkJDzC3TOJk1e9h
-         LQvp3rhUrpa79I2kt/9+P/P6So81EHN1FXWR7snYMOG1xA9TxDsVCdHa4DKr9NPbH1Us
-         pzdgEt3MlavKz7Mvh+0hTNrxKyiXtNitHxzh7/u4T8/duvTNs9NmeECV3ul6aBWwVexd
-         zRTRuagHCSshhks3c6yNLQJGQG08HNgl2WLiIgwYQWVV4ow0YXYxyT+oU20oZY0g9ffx
-         ZxgA==
+        bh=aLaGeABuo22IKbCJ19S9kGM6QaZsE7VgK9tDKh+bfiY=;
+        b=oUxT4UJyxbWqgA4xqi8eQNqdq48gNwemhC+4aVFaK+/XO0AThTg55SRhj37yZvmF6C
+         B6M/vx8JDaYYhc0lmhHRDvllO5MFQogcXd3oD7y7LNB9vZoPEbhYWTBb+yynYvsfPsz7
+         k3ZHEgFwvpbM4coz1ctBRQONbEWU+G37jf/EnkpApT04a7VSzZkj43z3BLs02NTQbmNI
+         Fe5NqB6lRloe9CZuRq4sr1nHwXr2y705PSVLj9aFfi3m/8RoDnnHvIHTUqsLuZbEYSJA
+         xy63TKo4TUpD5qzEnVe6i9Nkr3LvzcYl3cYiZSiUwUcvK5TanBPf4WLStsGYoXs2UzKx
+         xbMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720269297; x=1720874097;
+        d=1e100.net; s=20230601; t=1720273184; x=1720877984;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=08Kw+l4O9PQ6vVBW6VIbYgR+1zWbPaA4afAxHHCGvu4=;
-        b=RqpLomRA8QERLPpFYke1AcjUAU7nVMFPuoVEhrAHi8V8ra6zAfOJjeA0rnuCwCkNZD
-         6APifsyQR8vG/DLSByA/Ffj8H5GHdjr/eSTRsx7U981TIFbrShzkigfaDAxnXpasiWtY
-         KdVvQQqHl47xRWopDeA/4o4DgrLwtqUblPwMchV/7DffKZqelU5TMv+FG2a+iK8phbNW
-         lQynetaKARtjTHAnN/Z0mUoTvciNK3etU40HeKqNDdGQk2qg5ptfKhjV9XsZhF2FhRu6
-         CtgXlqgumwAWZ/GnGheiMjZ+aN/ruYnDC5wc4BFgS2pATs/9H23st7doWRbpC48zA6Yc
-         47Sw==
-X-Forwarded-Encrypted: i=1; AJvYcCXric+/Q4iTGAUt3DhSyIFJNVmSLQ9gaq6/FwKAkeBWRL7OIu1oy9WCosjbVJVcDG55MUnf6bWULJx/is+tTjp76gj6m6UOV4vQP2ZfGg==
-X-Gm-Message-State: AOJu0Yy9byU8KAmr0owKIQl1OuZ9YLYOtT2zO6m/G/RHgY8mrqsixVB6
-	Aq9Iv90Xso4P4K69N+hEvNfyWatGQH8KRQreFSHGDsE6UnPDnFiqSrmnpWq4iSg=
-X-Google-Smtp-Source: AGHT+IE9STNKNGTITDsmx9SEfaoEH9cr8oUJZP6k1jkdzI+oKS5bOvRwVpzbbyKMLhZyJ4dq0yK7Xw==
-X-Received: by 2002:a17:906:c116:b0:a72:b361:41df with SMTP id a640c23a62f3a-a77ba72958amr530089566b.73.1720269297074;
-        Sat, 06 Jul 2024 05:34:57 -0700 (PDT)
+        bh=aLaGeABuo22IKbCJ19S9kGM6QaZsE7VgK9tDKh+bfiY=;
+        b=VPNQG+Mw1XJP02GIe8BIJGG9qju/KHoG9EvYw/KEp/CCRBrWViUJFw/s7D7STdol5J
+         hOlHcdCG30EWFs1W7GFsKGczUj0NhAebbi6fQgMZTAYj2wT1qA5kdYpxae834j4+DtW2
+         afMH8fnAZh2vuALq7TE5ZMqmadrv1Y5YDxzZ8DyTPFpATgUw56pQfQldXACOzJLc/muV
+         v6fryW/m04aoKP5N3AVuvH6a9OMKu5g5bq/n0Sb9PabtEDJpf+HYmiMPp2PRfu0EeBvs
+         ETHTbOyjR6Go+r/vt25VhmBrrlvFjYAZCjhJoEM1AZPZFDUuZJash1aVVmF47eVoPIiX
+         uo9g==
+X-Forwarded-Encrypted: i=1; AJvYcCVSo+OCffmbIF1XERuCTq6K+0I1nejbZ8cmFUGiqyWlHRO+iJj6245PMsXwqkBGCAauq9G7tf5/FoTY7Rlgfp/hASBFpXkFIBYa5OILgg==
+X-Gm-Message-State: AOJu0YyU7T1ej+TFRNiE5X0Pj9jRQrcVv/WvtNvOrPLD0f3Iejkr1vvG
+	BztmouGxb4wEUmZQ2F7GePK3Jk5Wk8czY21NBwAqhwnfeRWK6j8KCp17ErNXJFc=
+X-Google-Smtp-Source: AGHT+IFAoehJjp/+4dx7+u2sPKkChGIxTTTUsqzPOJ2ThVjyIiUITZKYrBakHLo9QU6SlWhvQYmPeg==
+X-Received: by 2002:a17:906:7704:b0:a77:c96b:a113 with SMTP id a640c23a62f3a-a77c96ba1b5mr309327266b.60.1720273183969;
+        Sat, 06 Jul 2024 06:39:43 -0700 (PDT)
 Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a77c3925a96sm177284766b.120.2024.07.06.05.34.54
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a72ab0900f1sm763063066b.168.2024.07.06.06.39.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 06 Jul 2024 05:34:56 -0700 (PDT)
-Message-ID: <d17ed113-9293-4286-ad75-4ce2c98e4d12@linaro.org>
-Date: Sat, 6 Jul 2024 14:34:53 +0200
+        Sat, 06 Jul 2024 06:39:43 -0700 (PDT)
+Message-ID: <eb71f14d-bf27-4f23-870e-7dfa01e44e80@linaro.org>
+Date: Sat, 6 Jul 2024 15:39:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,20 +77,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/8] Disable SS instances in parkmode for Gen-1 targets
-To: Krishna Kurapati <quic_kriskura@quicinc.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Baruch Siach <baruch@tkos.co.il>, Kathiravan T <quic_kathirav@quicinc.com>,
- Sivaprakash Murugesan <sivaprak@codeaurora.org>,
- Andy Gross <andy.gross@linaro.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>,
- Douglas Anderson <dianders@chromium.org>, Stephen Boyd
- <swboyd@chromium.org>, Iskren Chernev <me@iskren.info>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
- Vivek Gautam <vivek.gautam@codeaurora.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, quic_ppratap@quicinc.com, quic_jackp@quicinc.com
-References: <20240704152848.3380602-1-quic_kriskura@quicinc.com>
+Subject: Re: [PATCH v2 2/6] clk: qcom: clk-alpha-pll: Update set_rate for
+ Zonda PLL
+To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Stephen Boyd <sboyd@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>
+References: <20240702-camcc-support-sm8150-v2-0-4baf54ec7333@quicinc.com>
+ <20240702-camcc-support-sm8150-v2-2-4baf54ec7333@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -128,22 +130,34 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240704152848.3380602-1-quic_kriskura@quicinc.com>
+In-Reply-To: <20240702-camcc-support-sm8150-v2-2-4baf54ec7333@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 4.07.2024 5:28 PM, Krishna Kurapati wrote:
-> For targets that have only USB3 Gen-1 DWC3 controllers, it is recommended
-> to disable SS instance in park mode to avoid HC died error when working
-> in host mode in situations where the controller is stressed out:
+On 2.07.2024 5:50 PM, Satya Priya Kakitapalli wrote:
+> The Zonda PLL has a 16 bit signed alpha and in the cases where the alpha
+> value is greater than 0.5, the L value needs to be adjusted accordingly.
+> Thus update the logic for the same.
 > 
->  xhci-hcd.12.auto: xHCI host not responding to stop endpoint command
->  xhci-hcd.12.auto: xHCI host controller not responding, assume dead
->  xhci-hcd.12.auto: HC died; cleaning up
+> Also, fix zonda set_rate failure when PLL is disabled. Currently,
+> clk_zonda_pll_set_rate polls for the PLL to lock even if the PLL is
+> disabled. However, if the PLL is disabled then LOCK_DET will never
+> assert and we'll return an error. There is no reason to poll LOCK_DET
+> if the PLL is already disabled, so skip polling in this case.
+> 
+> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+> ---
 
-Thanks for looking into this!
+[...]
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> @@ -2077,9 +2089,15 @@ static int clk_zonda_pll_set_rate(struct clk_hw *hw, unsigned long rate,
+>  	if (ret < 0)
+>  		return ret;
+>  
+> +	if (a & BIT(15))
+> +		zonda_pll_adjust_l_val(rate, prate, &l);
+
+A random check for a seemingly random, undocumented bit only confuses the reader
 
 Konrad
 
