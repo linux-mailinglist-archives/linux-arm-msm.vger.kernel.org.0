@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-25447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F4089297DD
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jul 2024 14:46:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7693D9297E0
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jul 2024 14:47:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 049D11F21099
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jul 2024 12:46:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2C6E91F211AD
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jul 2024 12:47:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31D191CD35;
-	Sun,  7 Jul 2024 12:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FCA31CF8A;
+	Sun,  7 Jul 2024 12:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c8hM+e72"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j/SSDjxd"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F6EB641;
-	Sun,  7 Jul 2024 12:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7691918C31;
+	Sun,  7 Jul 2024 12:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720356386; cv=none; b=cCNSeGfcRIt0xX4DM6PWmi8mdGYp3jCJa3tnook+k0Yqlbs1f+LRaygyHxNqr85XxKgvQz/GLbNki4ky+c5gEYdGzkRJtx6vcGiGl9m50OyzKem9bQi4uKy4nG1+GmO66uit5Y+aPO6zv4jGntfHsYXwYiCCxpUxHYb9mYabytM=
+	t=1720356425; cv=none; b=u30RGxvY0/LpDFYy1RtG8fjwE5DrJeE+5qL3NsrSLCbOMLDOAtJ/Q1pwsPVV1xwZZ/kZHDDixmOQDi0pD1Y7WWD7OJVLjrGpJ6a0zlJYB6L6Ktrt20/KLfusJJdvo52acXzuacRpthdX5XIdsTc9Moi9AeniPAqqLlbk0LMM3P8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720356386; c=relaxed/simple;
-	bh=zV4yHD7y/f2HJEayuc3XEOB00vxrcOFh7lGZS+35yes=;
+	s=arc-20240116; t=1720356425; c=relaxed/simple;
+	bh=tUa18Im2NrzZwuN6YIjmqlyQnmms9tiBpfEKVla0Das=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p9m/MIKb3JNaEnCpqPo00Hgrh3xAkZ2qtssw//zEbNgBa3gbOTK5zdas96DRe3YqTeMhEUmqcAk+sEJb7faVBfsfMtr9vw/I3GHkrlQi+zJcO8TjLjFXl8LcrL4p/9qXm0mznjlK89l81s2afHsGjGIvrix510ITxlY2Bq9FtJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c8hM+e72; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D411CC3277B;
-	Sun,  7 Jul 2024 12:46:21 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=FpdH1Fo4qb+HHEtpi7JS0pMIWf5YSByUvOWJ/jwdPiUOCLY+6T12LM68r7Q6GkXz7JjDVvhL0Grv4MkECwjWV5DOy5hODOIEv2gTfAUWmp4hAQkZxk9aAs8IHGURQdMXGThuSfvzpcCf14QAbpaNg9u+Qx/MjtZN+Z/+Qxb184Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j/SSDjxd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18251C3277B;
+	Sun,  7 Jul 2024 12:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720356385;
-	bh=zV4yHD7y/f2HJEayuc3XEOB00vxrcOFh7lGZS+35yes=;
+	s=k20201202; t=1720356425;
+	bh=tUa18Im2NrzZwuN6YIjmqlyQnmms9tiBpfEKVla0Das=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=c8hM+e72qShL0rk5mW9cQwB4Sq/abfTTyhXVyuMg0xwvWkA3iyYJN6rMoY7VyYA6Z
-	 LJX6WSJTlOrBKqXUx8BYIXj1ApAK4swmXOdQT0wK+sqpRyZGnkRonA4VtyS/HhXPRS
-	 s3Nn/bk/dFdLn4FoXmspfJ1rEqXueymlAlVnZstR3xYAx4ov3fMpDQ1BsITXkhsZez
-	 HaJDvnUdLk98ifrxO1sIymRTh0yWE8aNNmLxIDzRs6mZ8rkX8F+X1BxLBILtAQSYHS
-	 s5y4JJAH7QJpp0qGkIXZS8HDiGH817WUqhRJaBtTjLwKEJ5o2RMuBoHkfOntOr5TMa
-	 0eZpU4zVTnS5g==
-Message-ID: <3b16214b-4693-4754-b62a-fea2e070269c@kernel.org>
-Date: Sun, 7 Jul 2024 14:46:19 +0200
+	b=j/SSDjxdhNKm1DhkHJeM+zEXe0ZD7nePfw9pVimLh3cVwZFMUB9YRIfnIsZAvP3Ey
+	 BzM0v0lfMZ/iTdn9ZNaUh554L5oql6JnF7QhBxRQzHgQBgZNK+02p6Q1/2wKDek3zk
+	 981Oby3fByW8WoW0YonC15m7YEmxVvMrlbxxZBssecoKvEUYv1RGSAwCNrhbA0J/aH
+	 wLFpaFVTiiCYKw1iWzIjOwkdSMJVy2Sh6MtlA3sJSp3jTSiqED/QN/T8AUC7l5Vca2
+	 W5FOsZwIVKCn3aLYOrTPsOvD61nmfwxCiywpagMs0e3HgKTL/Wzf54PQ3PMRiYi6fl
+	 Co/uFbT6iGkhA==
+Message-ID: <50d0bdd6-2262-4404-9a26-29b1f2e6fe92@kernel.org>
+Date: Sun, 7 Jul 2024 14:46:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,14 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: mfd: qcom,tcsr: Add compatible for
- sa8775p
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sa8775p: Add TCSR halt register
+ space
 To: Mukesh Ojha <quic_mojha@quicinc.com>, lee@kernel.org, robh@kernel.org,
  krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
  konrad.dybcio@linaro.org
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20240705153252.1571814-1-quic_mojha@quicinc.com>
+ <20240705153252.1571814-2-quic_mojha@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -103,16 +104,42 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240705153252.1571814-1-quic_mojha@quicinc.com>
+In-Reply-To: <20240705153252.1571814-2-quic_mojha@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 05/07/2024 17:32, Mukesh Ojha wrote:
-> Document the compatible for sa8775p SoC.
+> Enable download mode for sa8775p which can help collect
+> ramdump for this SoC.
 > 
 > Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index 23f1b2e5e624..a46d00b1ddda 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -221,6 +221,7 @@ eud_in: endpoint {
+>  	firmware {
+>  		scm {
+>  			compatible = "qcom,scm-sa8775p", "qcom,scm";
+> +			qcom,dload-mode = <&tcsr 0x13000>;
+>  			memory-region = <&tz_ffi_mem>;
+>  		};
+>  	};
+> @@ -2824,6 +2825,11 @@ tcsr_mutex: hwlock@1f40000 {
+>  			#hwlock-cells = <1>;
+>  		};
+>  
+> +		tcsr: syscon@1fc0000 {
+> +			compatible = "qcom,sa8775p-tcsr", "syscon";
 
-Eh? SA8775p is going to be removed/changed... why adding this?
+The file is going away. This change is very confusing.
+
+Please align first with your colleagues instead of sending conflicting
+work without any explanation.
 
 Best regards,
 Krzysztof
