@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-25487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85C0692A29C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 14:24:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C465A92A2A1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 14:24:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 14790B251B4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 12:24:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3529BB25FAC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 12:24:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9F06139D15;
-	Mon,  8 Jul 2024 12:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EDFF13B290;
+	Mon,  8 Jul 2024 12:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ExEiBYs5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hi7/S844"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B773136E30
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jul 2024 12:23:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887A113A87E
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jul 2024 12:23:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720441393; cv=none; b=f49HrHTrrVr67ztoL3JDdMcLR1GxDeM9iGkVhqn4VSt0HKAjD07drbO7nDlYRFkyyFv4+TrA7dVeMpKVVwiN6+6M5M6BLGP9f/RbpVm12ykB8NRQ4zaAB/Pqi77cLA0C/k7yfAvfWC2yvLwAb/ITnaruymzgELKtOH2Qoh4G2gI=
+	t=1720441396; cv=none; b=Djt2ng2Hr0nJ8C4x5oAdC+pwQioyXpHsX4Ef4LVBngH3DHDf6vu086mHLZ10dX+MecTa/6ZazFfERJAXjcAzHvPtRT7d4xcSlcMuta8bLS2f6iVUeolg5yOZGaiN2gEVqt+ZG5g8NGspi5bOALRQfkny5GNegeYM5vUUZ0tr0G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720441393; c=relaxed/simple;
-	bh=lFhFm8XkOz5Bskd3D5+xaH3dSN5OhtVheagJNvAQMPQ=;
+	s=arc-20240116; t=1720441396; c=relaxed/simple;
+	bh=S4/6dqVzCQ55H+jEzo18/eSt3/yhBjBw+Vgvf5+K9HA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RJbIBB0viJ8oaWngVxZtjx0D2t/i96n5Ran+Sv/bnshU9xjC54VcxIq4IXzToag5OvYc2T26KfwHxpYk3FbU4/opGWhklBTRB2Rgatnz1ZdX+5+zSOQk2h50zpaWKsBwHTjp7TBBaeRrKCDYa2uez7TQhg5F1u9kZ3FsiGhadps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ExEiBYs5; arc=none smtp.client-ip=209.85.218.53
+	 In-Reply-To:To:Cc; b=IfF9VXQ0yNnn3A7xXyPOCmVOoMWOIvKTViaJwmEO9Fztdqh3Aj06uGTpvg5M7tFS/16OpSGWMVBZBUKsMyhlmH8Eejb0lb0oKhD7q14eW4K1+8Io2FhhtK534EzBkkGoe4Ya1d0nFd3Lnd3bhTOmj+JI87icnCqtWVhUBwsEnSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hi7/S844; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a689ad8d1f6so414816566b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2024 05:23:11 -0700 (PDT)
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a7527afa23cso478279866b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2024 05:23:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720441390; x=1721046190; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1720441393; x=1721046193; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=G1uTwXH469EZcpo+8MN3uCbZzqBdHjB+YY0ngrC8PfI=;
-        b=ExEiBYs5gOA+1F78aNQih8+kOiJjznrm29dTDmYneXcDG/QGJbhexi2eEumI+vn447
-         o6cWOBn9O2vXgTLrgp5NGCaeimlPnK21hatWSZaB/5RpbgGNwq3vyBstLTTJGqgbD/1G
-         Zti9YIeM1E/IXNETxKu88ha+zU63mt0Pq/V+yj+UjW+BCqc7FRte9qDLlsnsOh24fmKm
-         lg7lt5aPad/siS44zja0JaUdjp0FBBdEcLgsx7Q4uonW67/Liie4qWbl9SX5pye1Fe6c
-         ZiYzCZXDLTueC0pZA1U1curYXti1AgdubAPm7O4G56eqo5oR25dUIvYWLzafguC++83N
-         5PxA==
+        bh=JS6pi0mbZ0HVf65HjWjlZ5m8NQ5AsGtLpzqZjXxkjCQ=;
+        b=hi7/S8443ET0GeYaRrO34NlP7gPKm8FIxVbGmOSki0bNdU5gQEa7r2Boo1hAiHDGK8
+         ihu/XLIkF9gSoEFreor/C0dX4TNaQ2kjVisiGoEgIbWNPizaAOrn7DqaadmMsWWYdOVC
+         7JSvn66BZnSvv6PxzaKls8Go8bZdn+fx/4aN+Rm0DJ8JKgU++2LC9eIGCDlL9hsJHvzw
+         DBjA1m4amhIIBWUB0qjtwga7pWd8NijWC/WXIjIBG+ixh7n3ZIYnYlcaJoH7ykeoY+O1
+         K2uo2/k4jRjspaby15RXl2/LNxTuBr47fSzlukoVKvHjE88Iz+bM8t836F0LLWgWRWNG
+         waWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720441390; x=1721046190;
+        d=1e100.net; s=20230601; t=1720441393; x=1721046193;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=G1uTwXH469EZcpo+8MN3uCbZzqBdHjB+YY0ngrC8PfI=;
-        b=HY1vEn1akmzA+YSDMYpL7QbMdu4QA4638COJBkQrxFEs1A0kg8zG8zf68saf4Ed2PT
-         vuhrcsHTd5pvBNosobdQNbB1IlOcMs2+xjhWgZ5pMupIR/IS/W8C66QyId0ei3vwa+8P
-         qs+SuN+I8MZ1OfDQ+u0BWAzvRQfxDmBggsnXrBwoafLNgfMfAwmq0zohAH2kRIIP9MDa
-         wca13ZteVg6RXLA57aIZPsPRC2Dn4AM4BFpENSSsApfa5gryIV9N89Km7w9Y5Sjkr9lh
-         IWtxttMvgqVC2sXGc7YUnd20CCkiUhYDEgxwmlZcLFYUjSO2DTg3smXLDP8wO/QAoqO2
-         pzIg==
-X-Forwarded-Encrypted: i=1; AJvYcCXW0xH7LBIVPFtZAQZ9BrHhZNSNmlIVybyZDM6o/JTUOwuK/QoWWuSVcWp4VqpMGwqqREHSfk6+8MfjAgeOh76+ZRedpddpDrvX8kmEQQ==
-X-Gm-Message-State: AOJu0YxoTSy3Ba+snuxywDNQFe7m6bgRWP5oQyfUhJAKDCT17BrUsQJb
-	yCFuGvOGfL0/hRksBrph0q+4VbTRLm9RkeSrmcKPqW36JgDE6Jo5oLyLjakyTts=
-X-Google-Smtp-Source: AGHT+IEzrIE8nTDCnmlFyNmQLCQDmburyEgzq+VfZPoE2qFHfdKrbEcZLGwxoqFHstrY2KSjFmvBDg==
-X-Received: by 2002:a17:907:7212:b0:a77:cf9d:f498 with SMTP id a640c23a62f3a-a77cf9df683mr672501166b.40.1720441390300;
-        Mon, 08 Jul 2024 05:23:10 -0700 (PDT)
+        bh=JS6pi0mbZ0HVf65HjWjlZ5m8NQ5AsGtLpzqZjXxkjCQ=;
+        b=aXOGTD5k71TrEQA4Rg5Khz6Sbkk/EG+TbC/7wxCc/QdWEyfvhcJSaWsltQdtpuBrRX
+         jTygsZQc1Ay7JQBOXyyK30cvFSVttuz6SGcauoLmuFXlaQdGwVoCMdXZj5GyylRGfHzw
+         jy6Jnk9dxJ069mQ/RcM+HxbIi4aGN12blmqtNR39rMH6niQqPB1/LinhEp02unUFWsu2
+         jt9GL/izqDpQnGOyIWOMVfiOB5V/PxbmQNfVZ8dEF3lf6oSXL4fieWO1TdN8DjOVpVKm
+         GryMAaqQX2VUn1RBGzbZ8L6r1zal8ufOX0FAmk/PrDAljEoZdnlDx4YogLeWeTY/hIgS
+         Z7kg==
+X-Forwarded-Encrypted: i=1; AJvYcCUhAQAX0nX4DUmC4cOu2FaBJpnF2NmBdbKndbb7fIVPNJ3lL+lp0WeRa5jy9k2lbCIIIGresoXlihZYx1KvBxgIHjj7GdsAm4IZEMHfgg==
+X-Gm-Message-State: AOJu0Ywmp2+hr56sf24Hy2BJLtAq0n0uKeOZaKmteUlDPaA3A3iaASaU
+	P73u7CkyvGL/y1VSIySAKBuuVc40m64+vack/NaN+uAuZLng5sVTt0GeqkMiaBI=
+X-Google-Smtp-Source: AGHT+IEqCM5zd4aXRr5or3PDC2PLi11dRi2QzgmCl8YdBcyy4aTB4fLnWFVBxZOXWniNk5yrvjX17g==
+X-Received: by 2002:a17:906:24ce:b0:a77:e1fb:7df4 with SMTP id a640c23a62f3a-a77e1fb7f9cmr411901866b.13.1720441392984;
+        Mon, 08 Jul 2024 05:23:12 -0700 (PDT)
 Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a77e52ccf19sm208983666b.147.2024.07.08.05.23.08
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a77e52ccf19sm208983666b.147.2024.07.08.05.23.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jul 2024 05:23:10 -0700 (PDT)
+        Mon, 08 Jul 2024 05:23:12 -0700 (PDT)
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Mon, 08 Jul 2024 14:22:37 +0200
-Subject: [PATCH v15 06/10] soc: qcom: cpr-common: Add support for flat fuse
- adjustment
+Date: Mon, 08 Jul 2024 14:22:38 +0200
+Subject: [PATCH v15 07/10] soc: qcom: cpr: Use u64 for frequency
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240708-topic-cpr3h-v15-6-5bc8b8936489@linaro.org>
+Message-Id: <20240708-topic-cpr3h-v15-7-5bc8b8936489@linaro.org>
 References: <20240708-topic-cpr3h-v15-0-5bc8b8936489@linaro.org>
 In-Reply-To: <20240708-topic-cpr3h-v15-0-5bc8b8936489@linaro.org>
 To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
@@ -99,76 +98,151 @@ Cc: Robert Marko <robimarko@gmail.com>, linux-kernel@vger.kernel.org,
  Marijn Suijten <marijn.suijten@somainline.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, 
  Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+ Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1720441372; l=2082;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1720441372; l=4791;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=FEkMInUlFGjcpdQZXJiXJbXnI1fSzwAHTqwD5lohyQc=;
- b=NK+iXcizWrvtLUoUHu/vS0S0kTwc1u4mGLBKv+flCXlPGC3SJ5V91qAvPd1I7NOa5WZEltNRB
- zQe4a73aENsAHL/qm2+6U71S9C0Oqb7IKxclklhO20xqMzrg8/TpLad
+ bh=S4/6dqVzCQ55H+jEzo18/eSt3/yhBjBw+Vgvf5+K9HA=;
+ b=JNg8MhX1IceKVwxNHOoyy/y2U2abJGJALs6cO2umKguYPDeKiU5SIgPNlLiFqqrhT+D8Q5X0S
+ YUib4hKDlVUB3JPKtjezGFNVSiTsbqXuj8tonaXAcrQaYCfFnPtDSX2
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+32 bits is not enough for over-2.changeGHz frequencies. Move all variables
+that operate on Hz to u64 to avoid overflows.
 
-CPR3 makes use of post-calculation flat value adjustments. Add the
-necessary bits to the common functions to support it.
-
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-[Konrad: separate this patch out of a bigger one]
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/pmdomain/qcom/cpr-common.c | 9 ++++++---
- drivers/pmdomain/qcom/cpr-common.h | 1 +
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ drivers/pmdomain/qcom/cpr-common.c | 13 +++++++------
+ drivers/pmdomain/qcom/cpr-common.h |  9 ++++-----
+ drivers/pmdomain/qcom/cpr.c        |  8 ++++----
+ 3 files changed, 15 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/pmdomain/qcom/cpr-common.c b/drivers/pmdomain/qcom/cpr-common.c
-index ea85f6b4bef8..44c681bbbf13 100644
+index 44c681bbbf13..3e3a4a61cfde 100644
 --- a/drivers/pmdomain/qcom/cpr-common.c
 +++ b/drivers/pmdomain/qcom/cpr-common.c
-@@ -49,7 +49,7 @@ int cpr_populate_ring_osc_idx(struct device *dev,
- EXPORT_SYMBOL_GPL(cpr_populate_ring_osc_idx);
- 
- static int cpr_read_fuse_uV(int init_v_width, int step_size_uV, int ref_uV,
--			    int step_volt, const char *init_v_efuse,
-+			    int adj, int step_volt, const char *init_v_efuse,
- 			    struct device *dev)
- {
- 	int steps, uV;
-@@ -67,6 +67,9 @@ static int cpr_read_fuse_uV(int init_v_width, int step_size_uV, int ref_uV,
- 
- 	uV = ref_uV + steps * step_size_uV;
- 
-+	/* Apply open-loop fixed adjustments to fused values */
-+	uV += adj;
-+
- 	return DIV_ROUND_UP(uV, step_volt) * step_volt;
+@@ -218,7 +218,7 @@ unsigned int cpr_get_fuse_corner(struct dev_pm_opp *opp)
  }
+ EXPORT_SYMBOL_GPL(cpr_get_fuse_corner);
  
-@@ -119,8 +122,8 @@ int cpr_populate_fuse_common(struct device *dev,
+-unsigned long cpr_get_opp_hz_for_req(struct dev_pm_opp *ref,
++u64 cpr_get_opp_hz_for_req(struct dev_pm_opp *ref,
+ 				     struct device *cpu_dev)
+ {
+ 	u64 rate = 0;
+@@ -250,7 +250,7 @@ unsigned long cpr_get_opp_hz_for_req(struct dev_pm_opp *ref,
+ out_ref:
+ 	of_node_put(desc_np);
  
- 	/* Populate uV */
- 	uV = cpr_read_fuse_uV(init_v_width, init_v_step,
--			      fdata->ref_uV, step_volt,
--			      cpr_fuse->init_voltage, dev);
-+			      fdata->ref_uV, fdata->volt_oloop_adjust,
-+			      step_volt, cpr_fuse->init_voltage, dev);
- 	if (uV < 0)
- 		return uV;
+-	return (unsigned long) rate;
++	return rate;
+ }
+ EXPORT_SYMBOL_GPL(cpr_get_opp_hz_for_req);
  
+@@ -260,7 +260,7 @@ int cpr_calculate_scaling(struct device *dev,
+ 			  const struct corner *corner)
+ {
+ 	u32 quot_diff = 0;
+-	unsigned long freq_diff;
++	u64 freq_diff;
+ 	int scaling;
+ 	const struct fuse_corner *fuse, *prev_fuse;
+ 	int ret;
+@@ -280,8 +280,9 @@ int cpr_calculate_scaling(struct device *dev,
+ 	}
+ 
+ 	freq_diff = fuse->max_freq - prev_fuse->max_freq;
+-	freq_diff /= 1000000; /* Convert to MHz */
+-	scaling = 1000 * quot_diff / freq_diff;
++	freq_diff = div_u64(freq_diff, 1000000); /* Convert to MHz */
++	scaling = 1000 * quot_diff;
++	do_div(scaling, freq_diff);
+ 	return min(scaling, fdata->max_quot_scale);
+ }
+ EXPORT_SYMBOL_GPL(cpr_calculate_scaling);
+@@ -289,7 +290,7 @@ EXPORT_SYMBOL_GPL(cpr_calculate_scaling);
+ int cpr_interpolate(const struct corner *corner, int step_volt,
+ 		    const struct fuse_corner_data *fdata)
+ {
+-	unsigned long f_high, f_low, f_diff;
++	u64 f_high, f_low, f_diff;
+ 	int uV_high, uV_low, uV;
+ 	u64 temp, temp_limit;
+ 	const struct fuse_corner *fuse, *prev_fuse;
 diff --git a/drivers/pmdomain/qcom/cpr-common.h b/drivers/pmdomain/qcom/cpr-common.h
-index 1f2ebf9394cf..0aa227617d2f 100644
+index 0aa227617d2f..1b2fa344eb09 100644
 --- a/drivers/pmdomain/qcom/cpr-common.h
 +++ b/drivers/pmdomain/qcom/cpr-common.h
-@@ -22,6 +22,7 @@ struct fuse_corner_data {
- 	int ref_uV;
- 	int max_uV;
- 	int min_uV;
-+	int volt_oloop_adjust;
- 	int max_volt_scale;
- 	int max_quot_scale;
- 	/* fuse quot */
+@@ -42,7 +42,7 @@ struct fuse_corner {
+ 	int step_quot;
+ 	const struct reg_sequence *accs;
+ 	int num_accs;
+-	unsigned long max_freq;
++	u64 max_freq;
+ 	u8 ring_osc_idx;
+ };
+ 
+@@ -54,13 +54,13 @@ struct corner {
+ 	int quot_adjust;
+ 	u32 save_ctl;
+ 	u32 save_irq;
+-	unsigned long freq;
++	u64 freq;
+ 	struct fuse_corner *fuse_corner;
+ };
+ 
+ struct corner_data {
+ 	unsigned int fuse_corner;
+-	unsigned long freq;
++	u64 freq;
+ };
+ 
+ struct acc_desc {
+@@ -92,8 +92,7 @@ int cpr_populate_fuse_common(struct device *dev,
+ int cpr_find_initial_corner(struct device *dev, struct clk *cpu_clk,
+ 			    struct corner *corners, int num_corners);
+ u32 cpr_get_fuse_corner(struct dev_pm_opp *opp);
+-unsigned long cpr_get_opp_hz_for_req(struct dev_pm_opp *ref,
+-				     struct device *cpu_dev);
++u64 cpr_get_opp_hz_for_req(struct dev_pm_opp *ref, struct device *cpu_dev);
+ int cpr_calculate_scaling(struct device *dev,
+ 			  const char *quot_offset,
+ 			  const struct fuse_corner_data *fdata,
+diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
+index 5c83f0c26b29..b2e6e6eaae73 100644
+--- a/drivers/pmdomain/qcom/cpr.c
++++ b/drivers/pmdomain/qcom/cpr.c
+@@ -826,8 +826,8 @@ static int cpr_corner_init(struct cpr_drv *drv)
+ 	struct corner_data *cdata;
+ 	const struct fuse_corner_data *fdata;
+ 	bool apply_scaling;
+-	unsigned long freq_diff, freq_diff_mhz;
+-	unsigned long freq;
++	unsigned long freq_diff_mhz;
++	u64 freq, freq_diff;
+ 	int step_volt = regulator_get_linear_step(drv->vdd_apc);
+ 	struct dev_pm_opp *opp;
+ 
+@@ -866,7 +866,7 @@ static int cpr_corner_init(struct cpr_drv *drv)
+ 		cdata[level - 1].freq = freq;
+ 
+ 		fuse = &drv->fuse_corners[fnum];
+-		dev_dbg(drv->dev, "freq: %lu level: %u fuse level: %u\n",
++		dev_dbg(drv->dev, "freq: %llu level: %u fuse level: %u\n",
+ 			freq, dev_pm_opp_get_level(opp) - 1, fnum);
+ 		if (freq > fuse->max_freq)
+ 			fuse->max_freq = freq;
+@@ -940,7 +940,7 @@ static int cpr_corner_init(struct cpr_drv *drv)
+ 
+ 		if (apply_scaling) {
+ 			freq_diff = fuse->max_freq - corner->freq;
+-			freq_diff_mhz = freq_diff / 1000000;
++			freq_diff_mhz = (u32)div_u64(freq_diff, 1000000);
+ 			corner->quot_adjust = scaling * freq_diff_mhz / 1000;
+ 
+ 			corner->uV = cpr_interpolate(corner, step_volt, fdata);
 
 -- 
 2.45.2
