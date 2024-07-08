@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-25479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 390DE92A076
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 12:45:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F129C92A0B3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 13:07:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1B194B232A7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 10:44:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2DBC71C20D63
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 11:07:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8B6F77F12;
-	Mon,  8 Jul 2024 10:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DFE56A8BE;
+	Mon,  8 Jul 2024 11:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u9Bq4SoT"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="xmMrfjRd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1DD770F3
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jul 2024 10:44:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D681DA4E
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jul 2024 11:07:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720435489; cv=none; b=OzfaquWJX+vwR96g6G7UmOaV4KsBOZol3dt/Z5S6ipD7diwKGkcbXesVPR5l9ZCf0Trb+JxWmXHJC2RZCr5lTjjgdyPoMSwltsDygGgKqM1xVbAx6ihZ8nB3vab9WBo58aHN2pRv7r4AYi82Rv66Y+lgF5aLbsKRAujOJnylLV8=
+	t=1720436835; cv=none; b=h1SQM3yWhxs/aLIgj1kmMcx/WwC3ltgtRY7mtpHQ+JTwh1PrdJDgufuDHJl+GMafYxT0DvO3aeV/jSYGcwoS4eT/h/d1fkRmRbf4xvsbdF4h+HnnOLkVD4QRekthUfLkYKluXWwePs7EiWTaIIfr0LHbnCq2HKlBjh8t9aBaCao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720435489; c=relaxed/simple;
-	bh=qrguO9XYxn1AsUNTBJzMiGlMcI948CMxVWhaabMNExo=;
+	s=arc-20240116; t=1720436835; c=relaxed/simple;
+	bh=gF/lASwGF1+G1/ozeXT25atc6qo0YaD9PZ3IJyqIV8I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=R6oa/3KTz1HkLdsHiXv0tKjGtbWPwl3/1xzE+KvwuAM5h/IVfAgwaKDEssPstcXgAcZledcKnScAmUMEQt87g/M+cT/NHP7oqsGws5u7LPTfT+vb7CQdyMKHsvUdxp4Oi70K/MFBlAzMXiidPSC6McxZUBnTLN5rAnKwFiyPdtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u9Bq4SoT; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-42579b60af1so27010295e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2024 03:44:47 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=CsMEOKFbAgljPsc3KCAZXwFmGagipa9oj4uZmNbKMduAwu7mPFyeN4pOyUN0rRpXMok0LtF2gzxmlMHpQvXiZs4ZXKsy6INyTuRpQZ+yb/CULJrC5Sfo4zT/EsE+Mv+mg7UwG0ph64lFBLB3cnKszEH8RGCcdDCcWlxb2jClo0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=xmMrfjRd; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-367ab50a07aso1856093f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2024 04:07:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720435486; x=1721040286; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=a37xqtAhqBn6RFQufMqGlI4wV85VoVHD0Umy9Ckc/Lc=;
-        b=u9Bq4SoTmS4AbOsUz/JhD8lWwMWURPP24fNQwkaCElNRzke2BVhdyhpfSjLp+2gaSk
-         WOm+AVqyAqCHAdubQSu9Nl3jYyNvhHcKULwqR6v+MkiJOXRsxaj3StZSotaIct67yydY
-         q2OjsdxBLX6oMyE+9hSHgZ7eQufP2aM/WjGJWyengf+AMb2WZ4RXGqQraxJIzRkmtCf3
-         ohu/bGPwKlW6EJCLbujDUc7KyQsqGIeW9QCpmYI57HPtN/yCO5xvCu6wDGTsLhN24YaE
-         Dzx8HmoSsjDU4yfFAaBXIzpMuuEJJ24VyCwrcD0UOVIIJZfE1zdMNeDkd4jw7CnRl8eR
-         tJ4Q==
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1720436831; x=1721041631; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dcsI0Fp4d0lizbnZrWTDYuNRxhLlQN9hrnJVHrPEMm0=;
+        b=xmMrfjRdsofjGgINX0AtnIchHHktBOECv3twZiYoB5hDHYelZ/VKH7KPEME3oGOrrF
+         85BbImFJPrlOSgqHRhpKpzztuuwK7GiuU5hMcOzdoafwINsesJX6nM4sPUzAwZCXrtAr
+         uxjtCYHN7/xmoxt2fEOR/WxeUhaAukw2wvdKT9qVSBkhW46nh6W04ta+0RifV0HQpVP2
+         Zx5UKut9vbLwZh2BnR7xsCSd665T5jt0XsjCruHFIFSyeiKQKIQgsAUOKKv+WOeIyzX7
+         uv2/HU/Ugwgzup5+0iImURPjyhUotpYpwVR2Fq8/TQ0Cb9sH7dRLUy1NYwmtXvQ4RXFf
+         vtug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720435486; x=1721040286;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=a37xqtAhqBn6RFQufMqGlI4wV85VoVHD0Umy9Ckc/Lc=;
-        b=R9TPpnEoc2+76mJexp+x0JFOYCcR5B9lzj0lbS7+yNC5HsNF34kZrO5V+tla01Xck/
-         XfqZ1nOyMzKyzCmZMVeUsS5fAF35Lf00CFObEsH3huVkPeAC4ruIp4Aybu0XhkP0b/c+
-         tHKdjOysDcUe7OlgkMRTgswIW7T6XLPBK5Oyovla3QNq4ENheRIFNmDirgy9OzRUBAJV
-         yah7pJAxoFJVXTj6LkzVsT6qHhRDzk/UzTY35LWtFCL2ItzSDv7t2ZT14duc5xiRpoXk
-         GuF97wzP08l2+8Bh0A2Ivx+UNh/Q44nr78YmMIIlhAuC3AuxIdKhXRQn2Cb/NNq+b+t3
-         zqCw==
-X-Forwarded-Encrypted: i=1; AJvYcCVVCQZPHx2hmKa7k5UGZX2Ae+JUrA0+B80sZcMb+itd4Ojnf2aU9kauB8ASgNq4x3DWt7xocZgsCxhY/qSbqsl9HvVZ2M0IJdDj0IG2Xw==
-X-Gm-Message-State: AOJu0Yyd5Ig54DHAYa8Apb8IrszMUUSGbqVwPR7si6EP8qXtnRFQOK4J
-	ybAH+NS+ZmXjTPJI61teEwzCzBaQxl2gox4GfiBYqak1ZTzRXJCd/NlZdwjdoRE=
-X-Google-Smtp-Source: AGHT+IEX4+Ix+R9k1DiSQE1LFtm+JaPwNJfxzl5UgCb/G8Xy6bP/f5Oerfl19+46U34y0fv2YfKoww==
-X-Received: by 2002:a05:6000:4023:b0:367:8e53:7fe5 with SMTP id ffacd0b85a97d-3679dd353b8mr8685700f8f.40.1720435486564;
-        Mon, 08 Jul 2024 03:44:46 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36798e435c3sm11479442f8f.72.2024.07.08.03.44.44
+        d=1e100.net; s=20230601; t=1720436831; x=1721041631;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dcsI0Fp4d0lizbnZrWTDYuNRxhLlQN9hrnJVHrPEMm0=;
+        b=lw7fIC5K0lc/g/+YksmZytRpLIp0IxTSg1ufKglIKmVnkX/nz5cHKazTIekOaKun8x
+         f2J8KEZxsiXAfvyn+LiN1vZJhX+bDyhJCyJm1xF1M6CUw8reo7K5TqKEYzqBpSb6noc2
+         36JRy535lE/WB+D7FixXCbs9gmICUDsFrp5yt7mRhxlCPHAcu0PZKq6obLdODaCKfN1k
+         STPBi/OYqGEbn6MPJ8ItMb+Y5seo3jawroxRLN97RD9hYxmldBrMx79RYZ4JrDPL+Ea2
+         6n5R4R/ekBJri7qNeCGoJkh7gcOsnYLnlN9iWXxauaurulD9l8XGsxP2jcrZzqnWjHjJ
+         P46g==
+X-Forwarded-Encrypted: i=1; AJvYcCXSk7h16MYTn/aIRHk1pJQ24Ht48R5ALfcXPqk0iDuGComktLKIRRmsvM0FLbZ8pjX4WUkMXNI6ihL4CBzUdxldcmSpBxKWcWaC/KzJ7A==
+X-Gm-Message-State: AOJu0YzB1tMkSRPTohjWU1mwRu5lILPpJPxZka9LDfkzN94rOrVEqBQM
+	EtWEWg8FyicrFGSche0Bt8a0JmnqG6GxqVOXS4d12hW5cCa9Pr/SN4hKNdSb5lTwrYCD1SKQ3aU
+	x
+X-Google-Smtp-Source: AGHT+IEKYdET8KfBw3aNCJckmIjDHRgLhPCL/RlwhYnD8BvFqsYWoobXZB0e3p/fZkpFRo2ReXBUAg==
+X-Received: by 2002:adf:f548:0:b0:366:ec2c:8648 with SMTP id ffacd0b85a97d-3679dd66b0emr7705422f8f.43.1720436830645;
+        Mon, 08 Jul 2024 04:07:10 -0700 (PDT)
+Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3679ac6d60dsm10918074f8f.39.2024.07.08.04.07.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Jul 2024 03:44:46 -0700 (PDT)
-Message-ID: <afd3c7b3-9d12-4ece-a938-c99bf9c5bb7b@linaro.org>
-Date: Mon, 8 Jul 2024 12:44:43 +0200
+        Mon, 08 Jul 2024 04:07:10 -0700 (PDT)
+Message-ID: <2d21db63-4371-45b4-ab24-9a725c29e09a@freebox.fr>
+Date: Mon, 8 Jul 2024 13:07:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,117 +77,84 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] Coresight: Add Coresight Control Unit driver
-To: JieGan <quic_jiegan@quicinc.com>
-Cc: Mathieu Poirier <mathieu.poirier@linaro.org>,
- Suzuki K Poulose <suzuki.poulose@arm.com>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Mike Leach <mike.leach@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- James Clark <james.clark@arm.com>, Jinlong Mao <quic_jinlmao@quicinc.com>,
- Leo Yan <leo.yan@linaro.org>, coresight@lists.linaro.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
- Yuanfang Zhang <quic_yuanfang@quicinc.com>,
- Tao Zhang <quic_taozha@quicinc.com>, Trilok Soni <quic_tsoni@quicinc.com>,
- Song Chai <quic_songchai@quicinc.com>, linux-arm-msm@vger.kernel.org
-References: <20240705090049.1656986-1-quic_jiegan@quicinc.com>
- <20240705090049.1656986-4-quic_jiegan@quicinc.com>
- <9b502ba5-7042-424e-b0a2-5659e4064462@linaro.org>
- <ZotaBxRpv29crRHV@jiegan-gv.ap.qualcomm.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2] drm/msm: add msm8998 hdmi phy/pll support
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-phy@lists.infradead.org,
+ Arnaud Vrac <avrac@freebox.fr>, Pierre-Hugues Husson <phhusson@freebox.fr>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>
+References: <20240704-hdmi-phy-v2-1-a7f5af202cb5@freebox.fr>
+ <5lbtymde3plfiqkvnd2lrjzxhengmsw242uqapnzpvfd5jrm25@x2ik2h6vrdxm>
 Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <ZotaBxRpv29crRHV@jiegan-gv.ap.qualcomm.com>
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+In-Reply-To: <5lbtymde3plfiqkvnd2lrjzxhengmsw242uqapnzpvfd5jrm25@x2ik2h6vrdxm>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 08/07/2024 05:16, JieGan wrote:
+On 05/07/2024 16:34, Dmitry Baryshkov wrote:
+
+> On Thu, Jul 04, 2024 at 06:45:36PM GMT, Marc Gonzalez wrote:
+>
+>> From: Arnaud Vrac <avrac@freebox.fr>
+>>
+>> Ported from the downstream driver.
 > 
->>
->>> +
->>> +	drvdata->base = devm_ioremap(dev, res->start, resource_size(res));
->>
->> Use proper wrapper for this two.
-> Replaced by:
-> res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> drvdata->base = devm_ioremap_resource(dev, res);
+> Please write some sensible commit message.
 
-Why?
+Here's an attempt at expanding the commit message:
 
-Use the wrapper.
+"""
+This code adds support for the HDMI PHY block in the MSM8998.
+It is a copy & paste of the vendor driver downstream:
+https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/drivers/clk/msm/mdss/mdss-hdmi-pll-8998.c
+"""
 
 
-...
+>>  drivers/gpu/drm/msm/Makefile                   |   1 +
+>>  drivers/gpu/drm/msm/hdmi/hdmi.c                |   1 +
+>>  drivers/gpu/drm/msm/hdmi/hdmi.h                |   8 +
+>>  drivers/gpu/drm/msm/hdmi/hdmi_phy.c            |   5 +
+>>  drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c       | 789 +++++++++++++++++++++++++
+>>  drivers/gpu/drm/msm/registers/display/hdmi.xml |  89 +++
+>>  6 files changed, 893 insertions(+)
+> 
+> - Missing changelog
 
->>> +
->>> +static struct platform_driver ccu_driver = {
->>> +	.probe          = ccu_probe,
->>> +	.remove         = ccu_remove,
->>> +	.driver         = {
->>> +		.name   = "coresight-ccu",
->>> +		.of_match_table = ccu_match,
->>> +		.suppress_bind_attrs = true,
->>
->> Why?
-> Sorry, I dont get the point here.
+- Rebase onto v6.10
+- Move drivers/gpu/drm/msm/hdmi/hdmi.xml.h to drivers/gpu/drm/msm/registers/display/hdmi.xml
+- Add copyright attribution
+- Remove all dead/debug/temporary code
 
-You do not get the point why I am asking "why?"?
+> - Missing a pointer to bindings. Ideally bindings should come together with the driver.
 
-Why do you need it?
+"qcom,hdmi-phy-8998" is defined in "HDMI TX support in msm8998" series (Acked by Rob Herring & Vinod Koul)
 
-> We dont need automatic bind/unbind, so the suppress_bind_attrs sets to true.
+> I'm not going to check the math, but it looks pretty close to what we
+> have for msm8996.
 
-But I need it...
+What is the consequence of this?
 
-> We need configure some settings before we register the device.
 
-Hm, is this expected for coresight devices?
+>> +static const char * const hdmi_phy_8998_reg_names[] = {
+>> +	"vdda-pll",
+>> +	"vdda-phy",
+> 
+> Unless you have a strong reason to, please use vcca and vddio here, so
+> that we don't have unnecessary conditionals in schema.
 
-Best regards,
-Krzysztof
+The vendor code uses vddio & vcca for msm8996;
+vdda-pll & vdda-phy for msm8998.
+
+Which is vcca? Which is vddio?
+
+https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8996-mdss-pll.dtsi
+https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998-mdss-pll.dtsi#L121-172
+
+Regards
 
 
