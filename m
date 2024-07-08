@@ -1,130 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-25492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F73992A2E6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 14:37:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2322192A32E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 14:49:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 55FBE1F22003
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 12:37:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 53F281C20AA5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 12:49:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE173811F7;
-	Mon,  8 Jul 2024 12:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0385781728;
+	Mon,  8 Jul 2024 12:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="pdizYSDo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZF0ww9qy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBD780C1D;
-	Mon,  8 Jul 2024 12:37:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A707E0EA
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jul 2024 12:49:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720442222; cv=none; b=JpM/dGJr3sjsQWMC2wIatte4REtpYnnDd2uFZeQvqSVlRKkSbLaxrf9oTevAeoghQr1qObWCE48uCe5g2ud7C+gG1Flzyxi7IlSkUySfJ2Kmn0aOT4/KYK3+RHNQ75m0V3OKY43BqHItnP5hdT0aAtR6PMaGngmE1yuZ8m01u9c=
+	t=1720442977; cv=none; b=bAkEm1MITBmd13cECisR1KRVWREuKgU7fQQfMTgyN24eo2eoIg8F+JbaOZSkbV6/003eRFSnYZU16QRlC9yD3TymdfQsPVXVNfBOibg0EF5I86ZLzqytulmFVbKo/Uc0nPj0Ynt5F8UN13h6wyKz7RyD709q5f5RTnq3w6I0fbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720442222; c=relaxed/simple;
-	bh=k2nKkDwz2QUcUUubz+8bTRR+mcQV8cGn88iaImb1KnI=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=TROVc97HjeXuZMW9CdA3gIJie2NMq0AC/mXylh8Zz8Y5Pqgy+5e3H/nssfVOMecHwL+wWwxw4Pz9Frn3DTq5NHLHdLF6M/AkA6ZmM1v9I3VRH94+IBTzEMAXrX5D3zWSDW769YQ+iM9ZrIMwe13rzFWBmUi/6Z8igziPFZT0Omk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=pdizYSDo; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1720442185; x=1721046985; i=markus.elfring@web.de;
-	bh=cMrB7BHtiDHWjGBwQZ00kQOwlupR+xSgXUFnmpTv91U=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=pdizYSDojXw7AtchFs1pXBqXpZPhlNn+TFbAaM9kML7LGKgr/csRNmmLldbRoVxt
-	 MEUK+boVQhC3GawxnB0xcZfitAJEKz56c9MQlAOzU8P21PfMIxiu//odMNR5xyB9K
-	 TGgqaOU5SyfsTZA9kC9wxLeg5d2umLyMtUUYF3Lxyxhj0kxfpkpvknPdr9Ehojfm5
-	 Fvyg7VMI7Cu7Cwb7oBMuozkNr1jy1kog92n7+Rp+cQrlwsAKQ0LBSp6PXYPmSHcDv
-	 962pDJWpYvYntkyLV0JzZ+I+GSK+ANmJtXvAhRqwxMQodQjcgDXSwOcavMu/0xmys
-	 4dtte0npcteg/f+V8Q==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.21] ([94.31.91.95]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MpTxm-1s3ZHY41vA-00aKyi; Mon, 08
- Jul 2024 14:36:25 +0200
-Message-ID: <25a195a5-9c05-489b-8ad0-909486c15d25@web.de>
-Date: Mon, 8 Jul 2024 14:36:22 +0200
+	s=arc-20240116; t=1720442977; c=relaxed/simple;
+	bh=p/+Q3KCGTxyiImtQLqTBIrwv3NgvjSi5vKpjHp3sj0c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bE66pbdEeQuy82xMXmR6PPxlQtfatTQsDvtM5ndEf/+u3ax0L4cgA82/6cuBzYmQW3MQBMKDRteybytheO70UHAO9s6CyEEf0b1tNipJIgCajoIyjAkFOxeJl6O0m0dbUXbalbqu4ypUm6PFk6GFPDxabGnIrv+TPNhIBWeQPUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZF0ww9qy; arc=none smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-7201cb6cae1so1796536a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2024 05:49:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1720442976; x=1721047776; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=gwJfqVEIoVdfoTsztHNlaZf6K08VAN240cdWOXUU17s=;
+        b=ZF0ww9qyW4Pn2RMYTsGV5UJ+jV81+LiiWy0Nz2QLt42oanXtRX0zcmNiq8dsHkd2iY
+         kS0/8gQTNPFbk16OS2FFAs8nls8qzq6DDECBLPUaMmxNBcNSeaCNmZo5nkFpRyqdvLTT
+         BDRSgrQoJ2wIAN4UGfFmDffZP2IljLOgb7SMLhqC0JPndd8sZ79ehwZCI6GA/H69dQGW
+         WhfMiQWeyIaVhMwVjDN64hepiFqFx01Xa/DA2I6mVIgyiqZREZ+9MuFdb+ucM+wAZYmX
+         AFZ6cfacZJFbILi+4Qnw+6qKFmmut4aM3ERWdP5UuNZiXrgpAUF5jJ4b7QiWRKJbRGEm
+         AX5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720442976; x=1721047776;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gwJfqVEIoVdfoTsztHNlaZf6K08VAN240cdWOXUU17s=;
+        b=sdXUWqgjjTkTOCmbBWH5tI5bZ5CuTaotmpPAw6LyDNyUhNeunJaM/i5NiSLxXptHqj
+         35R5yir8MFtZo0JD3+C1OzqTnxCihbsfnMP0Ok2U8chzoYYAa2ugagPP29LmiAoIVpRB
+         Pe00wQgvLr/pWbyj0xImY9BESR1fEUeLgAmjtBkYFyQRyXdc1DM637dUzSolObHisoFx
+         tEuMs6U4QmbVmLrv2BnG5DW46K+KY+e9nTlVkOt6UzqqvqCVu/jsJTTULtRDYeeDOXxk
+         Nrq7cE31KEthdhsP6s1e46guWJefcLj1WGHOCiQJQtLGDHjhuu76an+yNqWT/pHGSES+
+         KLeQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUKs6K/xPKBnnWHGzqh5CNeNMJWXZ5G0v9Wg93ES2KwIQdhrT/1DujmO3tJldEUG87r+9c0u/5X0gxacfP4j+MscIm+TlVu+4rgLQF6SA==
+X-Gm-Message-State: AOJu0YzTfltpdssvKGNdrBvRYObqGPpuzIQMkDhx8QHXveOEKeKPfvJh
+	wzGSB7ZATN3qsxs2BhHEaKQzhln3TLuE+8dYY+woiBU9gywo3ffGHdchjaxYon3PCqKeX+4heSg
+	2VBSFd+K4yCQcBIxRUi/c3JVKCdvqWrUAXkNRuw==
+X-Google-Smtp-Source: AGHT+IFh+8rVNSdILFoJSTAPdcM4HawcWPM/1UUqpARio3DoOIhOeIUZ96MzfeyAZxWq+ws/d6HRKhGtmB30W5rYgpQ=
+X-Received: by 2002:a17:90b:a4a:b0:2c9:6751:7539 with SMTP id
+ 98e67ed59e1d1-2c99c6ba8cemr6298715a91.44.1720442975629; Mon, 08 Jul 2024
+ 05:49:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Jie Gan <quic_jiegan@quicinc.com>, coresight@lists.linaro.org,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- James Clark <james.clark@arm.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Mike Leach <mike.leach@linaro.org>, Rob Herring <robh@kernel.org>,
- Suzuki Poulouse <suzuki.poulose@arm.com>
-Cc: LKML <linux-kernel@vger.kernel.org>,
- Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
- Song Chai <quic_songchai@quicinc.com>, Tao Zhang <quic_taozha@quicinc.com>,
- Tingwei Zhang <quic_tingweiz@quicinc.com>,
- Trilok Soni <quic_tsoni@quicinc.com>,
- Yuanfang Zhang <quic_yuanfang@quicinc.com>
-References: <20240705090049.1656986-2-quic_jiegan@quicinc.com>
-Subject: Re: [PATCH v2 1/4] Coresight: Add trace_id function to collect trace
- ID
-Content-Language: en-GB
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20240705090049.1656986-2-quic_jiegan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ppbjShWg3ECY6M4nE8zVf+rKqhRfa0Xrt77Ns2HfQrBggCoV4QR
- J3wqtpk2WFk/l1+YrOVH/JF+vrUl7fd2H897VKaOFeJBT1tVTweussO0HSO8jjEdTqeHvqC
- 0vVgvhz3VR1Y3O/DkpJj9cK0xqNvuTbc0BXko4r8L2nle+pUQbGxz2Kmcla6Rny3qZF81kq
- VfY+MkxlbfrugFa+pMmhg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Bot9zNdFTVg=;5Z1ZIogJWU8LIfZLe0Ik57JF8te
- iLlu8HZsNBs3mYuz6h3N/8F0NqaLCgOsIasPV6QaCtyNa1UThySNplj3Qv7txKtZ9AEpV9eS+
- D5XDGSb1DzSHfvF06OfqO4PIyh6zx5cCh2MUpuqBKhh7LCt0qC8SjG8648m7GVZiFZ1LsEmUJ
- 8Va3cd5cYA7fWsxLZrasMTsJTroIoOIt7RZJTOy8LyNMcO/MavtGdz8rbbxT9azQrAwsTVR/D
- yGYS/08/gEbGjXXiRwNodufHQdEU0NLb6Ho5+Aw55wYBhFsThEnhO3VyUfzdlacnAeMOTIotd
- gfmvaysZ8wNB8Js4G4UoCWoJLS8AaTm0vrk9/Rb48rpZod/I3wA5Zs1V8cKDtm9zBD+mNkeEC
- vjAf1Zufqmft+lJqGRClMacljR/Sxfuroij8QplyOwemRcWHaglivwdYqbAmjgoXoizBO4jkH
- eh7+VPSn6eIwekxtJB0huaqY3N/n1/9piLli6vflBYadlvgH+1A7p+bYKn+I23EgC3pJ64cKe
- PG7/PPgd/lfj5frRNTr+b0W6bNJbYD6X39MB9q9+MgWAlicpn+Ga5QHvJhYey4LzapXSRgsD5
- eMFladDFNfuwPNP6RDCZtgqRQjopDYjUsYLDlpmrxAhiltYYC+RlROh4AvadH9d53bOW7yCAU
- mucpSgNYPtJTwXl0RxkWtHSdn3lT0jyUoaSfL2tYHBaOMHZBAFAqrHACx/E3Mb9IqtpR37JPU
- mRmCGTRQjeKVhhnMgYKy6MP7SgyxuKPq2o++NxWfX11xbCGrowmTKK/UxzvZ494IlYcBcmAec
- JVIJ02ZoFjU9Tqj8CgVXtmTQV4DI+AF1T9P3Q0vd4Yrr4=
+References: <20240704-hdmi-phy-v2-1-a7f5af202cb5@freebox.fr>
+ <5lbtymde3plfiqkvnd2lrjzxhengmsw242uqapnzpvfd5jrm25@x2ik2h6vrdxm> <2d21db63-4371-45b4-ab24-9a725c29e09a@freebox.fr>
+In-Reply-To: <2d21db63-4371-45b4-ab24-9a725c29e09a@freebox.fr>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 8 Jul 2024 15:49:23 +0300
+Message-ID: <CAA8EJpqz1SiUdTMpx5hmnax_rBqtpVAtOZsaL8UfHnZ5vZZFHQ@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm: add msm8998 hdmi phy/pll support
+To: Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-phy@lists.infradead.org, Arnaud Vrac <avrac@freebox.fr>, 
+	Pierre-Hugues Husson <phhusson@freebox.fr>, Jeffrey Hugo <quic_jhugo@quicinc.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-> Add 'trace_id' function pointer in ops. It's responsible for collect the
-=E2=80=A6
+On Mon, 8 Jul 2024 at 14:07, Marc Gonzalez <mgonzalez@freebox.fr> wrote:
+>
+> On 05/07/2024 16:34, Dmitry Baryshkov wrote:
+>
+> > On Thu, Jul 04, 2024 at 06:45:36PM GMT, Marc Gonzalez wrote:
+> >
+> >> From: Arnaud Vrac <avrac@freebox.fr>
+> >>
+> >> Ported from the downstream driver.
+> >
+> > Please write some sensible commit message.
+>
+> Here's an attempt at expanding the commit message:
+>
+> """
+> This code adds support for the HDMI PHY block in the MSM8998.
+> It is a copy & paste of the vendor driver downstream:
+> https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/drivers/clk/msm/mdss/mdss-hdmi-pll-8998.c
+> """
 
-                                          It is?               collecting?
+Add support for the HDMI PHY as present on the Qualcomm MSM8998
+platform. The code is mostly c&p of the vendor code from msm-4.4,
+kernel.lnx.4.4.r38-rel.
 
+>
+>
+> >>  drivers/gpu/drm/msm/Makefile                   |   1 +
+> >>  drivers/gpu/drm/msm/hdmi/hdmi.c                |   1 +
+> >>  drivers/gpu/drm/msm/hdmi/hdmi.h                |   8 +
+> >>  drivers/gpu/drm/msm/hdmi/hdmi_phy.c            |   5 +
+> >>  drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c       | 789 +++++++++++++++++++++++++
+> >>  drivers/gpu/drm/msm/registers/display/hdmi.xml |  89 +++
+> >>  6 files changed, 893 insertions(+)
+> >
+> > - Missing changelog
+>
+> - Rebase onto v6.10
+> - Move drivers/gpu/drm/msm/hdmi/hdmi.xml.h to drivers/gpu/drm/msm/registers/display/hdmi.xml
+> - Add copyright attribution
+> - Remove all dead/debug/temporary code
+>
+> > - Missing a pointer to bindings. Ideally bindings should come together with the driver.
+>
+> "qcom,hdmi-phy-8998" is defined in "HDMI TX support in msm8998" series (Acked by Rob Herring & Vinod Koul)
 
-=E2=80=A6
-> +++ b/drivers/hwtracing/coresight/coresight-etm-perf.c
-=E2=80=A6
-> +	sink_data =3D kzalloc(sizeof(*sink_data), GFP_KERNEL);
-> +	if (!sink_data)
-> +		goto fail_end_stop;
-=E2=80=A6
-> +	if (coresight_enable_path(path, CS_MODE_PERF, sink_data)) {
-> +		kfree(sink_data);
->  		goto fail_end_stop;
-> +	}
-=E2=80=A6
+This (and the link to lore) ideally should be a part of the cover
+letter or the comment below '---' in the patch.
 
-Would you like to to benefit any more from further applications of scope-b=
-ased
-resource management by using an attribute like =E2=80=9C__free(kfree)=E2=
-=80=9D?
-https://elixir.bootlin.com/linux/v6.10-rc7/source/include/linux/slab.h#L28=
-2
+>
+> > I'm not going to check the math, but it looks pretty close to what we
+> > have for msm8996.
+>
+> What is the consequence of this?
 
-Regards,
-Markus
+That I won't check the math :-D
+
+>
+>
+> >> +static const char * const hdmi_phy_8998_reg_names[] = {
+> >> +    "vdda-pll",
+> >> +    "vdda-phy",
+> >
+> > Unless you have a strong reason to, please use vcca and vddio here, so
+> > that we don't have unnecessary conditionals in schema.
+>
+> The vendor code uses vddio & vcca for msm8996;
+> vdda-pll & vdda-phy for msm8998.
+>
+> Which is vcca? Which is vddio?
+
+vddio = vdda-phy (1.8V)
+vcca = vdda-pll (lower voltage)
+
+> https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8996-mdss-pll.dtsi
+> https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998-mdss-pll.dtsi#L121-172
+
+-- 
+With best wishes
+Dmitry
 
