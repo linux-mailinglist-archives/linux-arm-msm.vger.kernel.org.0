@@ -1,169 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-25459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC51C929D3A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 09:39:17 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7D2E929D83
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 09:47:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 82DB72819C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 07:39:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EB2E71C21AD1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 07:47:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B84FF22625;
-	Mon,  8 Jul 2024 07:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B28128DC3;
+	Mon,  8 Jul 2024 07:47:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="jAeEtlw8"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="D/V89zxl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B01224CC
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jul 2024 07:39:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA11364A9;
+	Mon,  8 Jul 2024 07:47:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720424352; cv=none; b=ayQv9l8Z2VqV2wUdUazWGdUQaRAHdUPd0i4Vh3VO+GNU6BnkZb2w1y9V5v7xIgVcgHKCzumcA4H5yoG4SlrgMbeoaCLZ48asbj+XCdbMVKkSMfmXQslrZ3uLJARxwC+ah/H7gu1Tm/5DkLVqHSEsFY3XM31UHQtrFzwHG4VmJCE=
+	t=1720424865; cv=none; b=iyhAA7ZvexI2e3wnmUlT60xmGG9oF3mN434/I0O/AZDJCMQiwgYq/IIPxyKFPZpneiMBy+6ad2gVBq3jKvTMmOy3wJdvgKwGjA8FVNfMx7Pfi7mNAlyZ8mHQdDg+fkj6aCZ3DN33XW87udu8j6Ng5U2nHUVqJo8tBkKmNB7mKw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720424352; c=relaxed/simple;
-	bh=OdHQYffnI1MnKOFjaCBGe1+olPDrFei83GYzc+nRjDM=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=eyhDOUJE12UmBA3VMmjecNzMzXADXf65/jan/+ePWANQudtrYwuF0FyN5yz0M+ZakkQNKuDf1p2Ol08PG0BfnuM/lbHf1z60ngSDRCa+2ZAA0PaFoDooaQOq+7SIhod5y0KnDYJOZWTNwVqzjkumdQ/6LXE+FNwOxJPsFFDJGoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=jAeEtlw8; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a77cc44f8aaso137150366b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2024 00:39:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1720424349; x=1721029149; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OdHQYffnI1MnKOFjaCBGe1+olPDrFei83GYzc+nRjDM=;
-        b=jAeEtlw8UVE8r9CzT/9i7D+8PKaNdOkI2syezy1hOIfZ3dKNIBBzV5YE4TITL2GQuW
-         hNWsxWEPGwk8Y+qNClW4DbDQKwAXBdneTFOFReSsoNTdsTmFA84CYXaKCFRTxBJG8FzB
-         sqf3GJu3XTtCz1cMscu/nzVCX5Wve1aDhDp/docqYdMNCRnmH6b/A7dUqXAsT+xisgQa
-         MAyF4ViOyge59UpHnBRhk98IPeakCPaDHl2NiHg8xt0DfFJb/qoSo8JWq+LVHNxyuHwM
-         icaK66dJEstTNAwsuHoKdkeeLli3Cws8ktSuJtwfwYW0jeBEgET0B910tjlhPsJCqHsW
-         V6UQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720424349; x=1721029149;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=OdHQYffnI1MnKOFjaCBGe1+olPDrFei83GYzc+nRjDM=;
-        b=b4LWurKyuiHycO6Fv19AyHQA/QQU8YrlDCfQW2SGg8HfRtTxUdl4tH9+iVmAgqxO1F
-         Zx35dS1oRI820jT1U8yhYyyJ4odCbHeNyA5FrwZwgz2eJt8qp0lz4ivUHJI4hMCkRlHe
-         WczOOhBXHFY9kj4GtTLTNWqCrCEGxL9XHEZ9gozM6CCTHOC4oU11cuX2bXz5uhHXk+BV
-         9cSP+9LA8YF16qa5mONMiLhMZO1WXzld3p1NrAObUP4vh9irlHYevr14YxWjiHNALKa0
-         v5bAKKnuv84Rwe5IrSW7RL0yrmFxML6gZJwjr8WESxMguJhiJ1mhrX7vEBWcnsCqkyfc
-         ZppQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWE1wFpjEL53Zbka+EtYf2xLTVwi+rpDda+ScFe7bd1MrTb8DQMalE4PGZnsGx/dxeizzxichuikYpX/wR+oktk5On/+FfmdrlptgRXWg==
-X-Gm-Message-State: AOJu0YxVAoy6p082vtUo5G0QKDt1AP9UmwLbs9LSAyBnmgnjzAQcLovc
-	ViEEHE3/tK/FEus0/2PMHIY/Gqj5BboXF20G3JjRlq/Aep+eUBw2CTZqEzdwp9QFMMQODSmMCYM
-	W
-X-Google-Smtp-Source: AGHT+IF/1aWOT6fhzPZTuQqzZjdB1GINtas402gNSeNFQ4i1cR0zwoyXLbvlvs8ayC989dd4FtVW9g==
-X-Received: by 2002:a05:6402:1e91:b0:58b:f46f:ae45 with SMTP id 4fb4d7f45d1cf-58e5a4098c6mr9923869a12.23.1720424349166;
-        Mon, 08 Jul 2024 00:39:09 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a77d808b81esm256852266b.151.2024.07.08.00.39.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Jul 2024 00:39:08 -0700 (PDT)
+	s=arc-20240116; t=1720424865; c=relaxed/simple;
+	bh=Lx/WHfEkN4fKqekm+wR2P2juLha3QSRRkg4Husro9WE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=G/uDOftfZz69zO+FyZwVtZ7PP2WSkAgOEyLLUlRTJizwndeLUJ2p7D3Wlzr6r//L7KQNzmcSh/ZbE6yDEN3QSpoLVe/fEVmPuflHX1fzpn0X21b7Lr1YadIHrMdu89uhIsWGaLiRioj8JW/POACNgnxHxS8Eqtljn8oDI/+kEqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=D/V89zxl; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4680RHHV026697;
+	Mon, 8 Jul 2024 07:45:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	CUrEaasZcP96iIVmL1qwVUoCV1iP6X5mUSGG7CJe278=; b=D/V89zxlYAEunKVV
+	toXEImY8NtvS7EfmU+slUSikwYNAgmwpxd7w5ysNiQ0l84+NrueWdaD/xJgNCbxG
+	SaXkk1QGER6Nuw4lW9w8nuqtgGK21EFlouL+xu4MDOMBfwKaCioqDfAoznjCPTDz
+	GsvssgaqSIftpgiAKM4+eUjMwZ/xyBKcMBq8jnhbnr4NfTry/Fp5Cw556pYG+tq+
+	Wpvg7lKvqtRiupzJNMsIbH0IOkAXTAk2iHkyNOeNQpHXfy0lpkEuuYqbPsHvW92I
+	gG/KnbmYFFObHu1kSHWBa6Yn7Hy/+Mm+6LQEYb2tfQoaf1hXOCgTM5NEUZDdsbLs
+	L3vOYg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406we8txru-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 08 Jul 2024 07:45:55 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4687jr5h002187
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 8 Jul 2024 07:45:53 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 8 Jul 2024
+ 00:45:31 -0700
+Message-ID: <7dba494a-54e2-4032-88a1-0a50f301b5da@quicinc.com>
+Date: Mon, 8 Jul 2024 15:45:28 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 08 Jul 2024 09:39:08 +0200
-Message-Id: <D2JZJ6OV854S.JBNP47IB708D@fairphone.com>
-Subject: Re: [PATCH RESEND v3] leds: flash: leds-qcom-flash: limit LED
- current based on thermal condition
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Fenglin Wu" <quic_fenglinw@quicinc.com>, <kernel@quicinc.com>,
- <linux-arm-msm@vger.kernel.org>, "Pavel Machek" <pavel@ucw.cz>, "Lee Jones"
- <lee@kernel.org>
-Cc: <linux-leds@vger.kernel.org>, <linux-kernel@vger.kernel.org>, "David
- Collins" <quic_collinsd@quicinc.com>, "Subbaraman Narayanamurthy"
- <quic_subbaram@quicinc.com>
-X-Mailer: aerc 0.17.0-0-g6ea74eb30457
-References: <20240705-qcom_flash_thermal_derating-v3-1-8e2e2783e3a6@quicinc.com> <D2HO9CAE81NA.3UIL5UZ1N5I4W@fairphone.com> <40dfeb9c-e420-4695-939f-ef9b1985d61c@quicinc.com>
-In-Reply-To: <40dfeb9c-e420-4695-939f-ef9b1985d61c@quicinc.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 29/47] dt-bindings: net: qcom,ethqos: add description for
+ qcs9100
+To: Andrew Lunn <andrew@lunn.ch>
+CC: Andrew Halaney <ahalaney@redhat.com>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <djakov@kernel.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <jassisinghbrar@gmail.com>,
+        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
+        <manivannan.sadhasivam@linaro.org>, <will@kernel.org>,
+        <joro@8bytes.org>, <conor@kernel.org>, <tglx@linutronix.de>,
+        <amitk@kernel.org>, <thara.gopinath@gmail.com>,
+        <linus.walleij@linaro.org>, <wim@linux-watchdog.org>,
+        <linux@roeck-us.net>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
+        <vkoul@kernel.org>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <mcoquelin.stm32@gmail.com>,
+        <robimarko@gmail.com>, <bartosz.golaszewski@linaro.org>,
+        <kishon@kernel.org>, <quic_wcheng@quicinc.com>,
+        <alim.akhtar@samsung.com>, <avri.altman@wdc.com>, <bvanassche@acm.org>,
+        <agross@kernel.org>, <gregkh@linuxfoundation.org>,
+        <quic_tdas@quicinc.com>, <robin.murphy@arm.com>,
+        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
+        <lukasz.luba@arm.com>, <quic_rjendra@quicinc.com>,
+        <ulf.hansson@linaro.org>, <quic_sibis@quicinc.com>,
+        <otto.pflueger@abscue.de>, <luca@z3ntu.xyz>,
+        <neil.armstrong@linaro.org>, <abel.vesa@linaro.org>,
+        <bhupesh.sharma@linaro.org>, <alexandre.torgue@foss.st.com>,
+        <peppe.cavallaro@st.com>, <joabreu@synopsys.com>,
+        <netdev@vger.kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <bhelgaas@google.com>, <krzysztof.kozlowski@linaro.org>,
+        <u.kleine-koenig@pengutronix.de>, <dmitry.baryshkov@linaro.org>,
+        <quic_cang@quicinc.com>, <danila@jiaxyga.com>,
+        <quic_nitirawa@quicinc.com>, <mantas@8devices.com>,
+        <athierry@redhat.com>, <quic_kbajaj@quicinc.com>,
+        <quic_bjorande@quicinc.com>, <quic_msarkar@quicinc.com>,
+        <quic_devipriy@quicinc.com>, <quic_tsoni@quicinc.com>,
+        <quic_rgottimu@quicinc.com>, <quic_shashim@quicinc.com>,
+        <quic_kaushalk@quicinc.com>, <quic_tingweiz@quicinc.com>,
+        <quic_aiquny@quicinc.com>, <srinivas.kandagatla@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-crypto@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <iommu@lists.linux.dev>, <linux-gpio@vger.kernel.org>,
+        <linux-watchdog@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>, <kernel@quicinc.com>
+References: <20240703025850.2172008-1-quic_tengfan@quicinc.com>
+ <20240703025850.2172008-30-quic_tengfan@quicinc.com>
+ <u5ekupjqvgoehkl76pv7ljyqqzbnnyh6ci2dilfxfkcdvdy3dp@ehdujhkul7ow>
+ <f4162b7f-d957-4dd6-90a0-f65c1cbc213a@quicinc.com>
+ <add1bdda-2321-4c47-91ef-299f99385bc8@lunn.ch>
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+In-Reply-To: <add1bdda-2321-4c47-91ef-299f99385bc8@lunn.ch>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: sFPwXVmKHEHL1PGsOXMibBQUqRsvod3U
+X-Proofpoint-GUID: sFPwXVmKHEHL1PGsOXMibBQUqRsvod3U
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-08_02,2024-07-05_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 impostorscore=0
+ bulkscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 mlxlogscore=703 malwarescore=0 mlxscore=0 clxscore=1011
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
+ definitions=main-2407080059
 
-On Mon Jul 8, 2024 at 4:59 AM CEST, Fenglin Wu wrote:
->
->
-> On 7/5/2024 10:23 PM, Luca Weiss wrote:
-> > On Fri Jul 5, 2024 at 9:55 AM CEST, Fenglin Wu via B4 Relay wrote:
-> >> From: Fenglin Wu <quic_fenglinw@quicinc.com>
-> >>
-> >> The flash module has status bits to indicate different thermal
-> >> conditions which are called as OTSTx. For each OTSTx status,
-> >> there is a recommended total flash current for all channels to
-> >> prevent the flash module entering into higher thermal level.
-> >> For example, the total flash current should be limited to 1000mA/500mA
-> >> respectively when the HW reaches the OTST1/OTST2 thermal level.
-> >=20
-> > Hi Fenglin,
-> >=20
-> > Only semi-related to this patch, but I wanted to ask.
-> >=20
-> > Since most phones with a flash also have a thermistor for the flash led=
-,
-> > is there any plan to add support to be able to declare the flash led to
-> > be a "cooling-device" for the relevant thermal zone? That way from a
-> > Linux thermal API standpoint when the zone gets too hot that it can ask
-> > the driver to throttle the brightness or turn the LED off completely.
-> >=20
-> > Right now the only action the kernel can take is with type 'critical' t=
-o
-> > just kill the entire system to mitigate the thermal situation.
-> >=20
-> > Regards
-> > Luca
-> >=20
->
-> Hi Luca,
->
-> This change provides the ability to throttle flash current based on the=
-=20
-> thermal status sensed by the temperature sensor inside the flash module=
-=20
-> HW , it doesn't need to register anything in Linux thermal framework.
->
-> For the case that you mentioned, when an external thermistor is=20
-> installed nearby the flash LED component and normally the ADC_TM driver=
-=20
-> registers a thermal_zone device with it, I agree that having the flash=20
-> LED driver providing a thermal_cooling device so that any cooling=20
-> mapping policy could be defined between the thermal sensor and the=20
-> cooling device would be a good option for better system level thermal=20
-> control. I would assume that this could be added in flash LED framework=
-=20
-> driver instead of the client drivers considering this should be a common=
-=20
-> request because of the big thermal dissipation of flash LED?
 
-Right, the LED core getting the ability to register a cooling device
-would probably be a reasonable solution, that way any flash LED driver
-would be cooling-ready. Apart from decreasing brightness - or worst case
-turning the LED off completely I can't think of many other actions that
-could be taken anyways?
 
-Pavel, Lee, your opinion?
+On 7/5/2024 12:03 AM, Andrew Lunn wrote:
+> On Thu, Jul 04, 2024 at 09:13:59AM +0800, Tengfei Fan wrote:
+>>
+>>
+>> On 7/3/2024 11:09 PM, Andrew Halaney wrote:
+>>> On Wed, Jul 03, 2024 at 10:58:32AM GMT, Tengfei Fan wrote:
+>>>> Add the compatible for the MAC controller on qcs9100 platforms. This MAC
+>>>> works with a single interrupt so add minItems to the interrupts property.
+>>>> The fourth clock's name is different here so change it. Enable relevant
+>>>> PHY properties. Add the relevant compatibles to the binding document for
+>>>> snps,dwmac as well.
+>>>
+>>> This description doesn't match what was done in this patch, its what
+>>> Bart did when he made changes to add the sa8775 changes. Please consider
+>>> using a blurb indicating that this is the same SoC as sa8775p, just with
+>>> different firmware strategies or something along those lines?
+>>
+>> I will update this commit message as you suggested.
+> 
+> Hi Andrew, Tengfei
+> 
+> Please trim emails when replying to just the needed context.
+> 
+> Thanks
+> 	Andrew
 
-Regards
-Luca
+Thank you for pointing out this. In the future, I will pay attention to 
+trimming emails when I reply.
 
->
-> Fenglin
-> >>
-> >> ---
-> >> base-commit: ca66b10a11da3c445c9c0ca1184f549bbe9061f2
-> >> change-id: 20240507-qcom_flash_thermal_derating-260b1f3c757c
-> >>
-> >> Best regards,
-> >=20
-
+-- 
+Thx and BRs,
+Tengfei Fan
 
