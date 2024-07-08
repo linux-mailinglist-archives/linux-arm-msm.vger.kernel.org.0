@@ -1,204 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-25501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7E5492A546
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 16:59:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD90792A616
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 17:50:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7D29628282C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 14:59:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 734861F217B9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 15:50:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AC07142E88;
-	Mon,  8 Jul 2024 14:59:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pZdvM0Iu"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00439143C4D;
+	Mon,  8 Jul 2024 15:49:59 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01BE61420C9;
-	Mon,  8 Jul 2024 14:59:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 533B613D281;
+	Mon,  8 Jul 2024 15:49:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720450766; cv=none; b=srQ7wEYL1wNh2WaidHG+WrWtGca4ogXRe6pIJQhivl/R0CRdh3r0YYgBS68VbQG+Uq91da2njtIcoSJlPltdra6wXr2zUn8urHcmN1o4wk1hnRvcbIwl0/K1RGF8hTgNg4RpofiBnfBgU18ki3ajHiTnwPC0jtKMBVQr7f1yNog=
+	t=1720453799; cv=none; b=d0htTrxFKqclRBLgiGxE0aeaAew4hkg1rl9K+OTp/JbBhxbTOZuufAp96Duuxxr2GjC/p5ZGTQ8+fi1TpSQcZQMAePB2Lm9l6gyjjzYsivTtfajroSua/HC90K0txsEPyD+Lsy50UGmGNKx/2g2Scmg9M9TAF0z65EAbFapJQ4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720450766; c=relaxed/simple;
-	bh=oLZHFnJFNi8m8krEoLGQPvZmgohhon3PIubl9n/KAV0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sJOa/ACZe3kQI8otI3pjfkXnYdOwqzpxFdip3ieolsXJheao5lzp58h3CWK2wV0yLyEx9FMx8riPlSq26fi7i/pWotQpbWvoCbqnOODjZx+7xVu09G1WSbzM/5NdJrFtKJiYOQJ6/Hj+F6m9D53RBUdctHZ0XnH+wmNGDNgoQeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pZdvM0Iu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568C6C4AF0A;
-	Mon,  8 Jul 2024 14:59:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720450765;
-	bh=oLZHFnJFNi8m8krEoLGQPvZmgohhon3PIubl9n/KAV0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pZdvM0Iu0OAPSpNVJKkpK9Vv6BQAv/6gpvZLKeQtspun5Rxp50KwfkVTUFdSLbjI7
-	 eAsCveae79U87T998w3/3UZaUHRqIlMW+xnXJQRzH5LA4a3JmmBhUFGAgGeRSZiBoG
-	 OWxiUxzLSaUZ2IS9b4ONFIiXx+3/nxpL281+IU4BboUJbGLBzXEAX9Tl48hWErU7aq
-	 8gHJnqn9zE1d2yR6kA6tcSLqlxWAOBGcgq+oZMn+unZuTgBujNOS0TmXgoQ/VTZJA7
-	 iJ2RGI3vXm8juu7HyUwWCdRWvwomvFdRdD7TQwnD6p/9X7v8TIG4/f+5jqNuwBlq2E
-	 GLurkwq23lFCA==
-Date: Mon, 8 Jul 2024 16:59:23 +0200
-From: Maxime Ripard <mripard@kernel.org>
-To: Marc Gonzalez <mgonzalez@freebox.fr>
-Cc: Conor Dooley <conor+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, dri-devel@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, Arnaud Vrac <avrac@freebox.fr>, 
-	Pierre-Hugues Husson <phhusson@freebox.fr>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH v3 1/2] dt-bindings: display: bridge: add TI TDP158
-Message-ID: <20240708-ethereal-romantic-piculet-d4ae66@houat>
-References: <20240627-tdp158-v3-0-fb2fbc808346@freebox.fr>
- <20240627-tdp158-v3-1-fb2fbc808346@freebox.fr>
- <20240701-bug-of-great-honeydew-cfb6ef@houat>
- <e7bbbe4e-7deb-46c3-9cce-1922f9b6b3a2@freebox.fr>
+	s=arc-20240116; t=1720453799; c=relaxed/simple;
+	bh=ogOl0ipcrNilhuvwQ0+LIidbO/TV8MjrdeKk9e/EV0s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WYmLb6etxaICf1LEcXHJhOQlmsX2qRD1m4Jo3SN+E7YrzhW4HOn+OscIZUcC3WI/MTuick4hBPDA1sTrLMudJFaI/khJI5RZe4rqRLY+c08VPo3ncwhLu96GmC/aPq9TAUdKMCiJMrD2KK3STEhjb0HYMNCvO0rxz6k1fm2lQT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CBD161042;
+	Mon,  8 Jul 2024 08:50:22 -0700 (PDT)
+Received: from [10.57.74.191] (unknown [10.57.74.191])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 489683F641;
+	Mon,  8 Jul 2024 08:49:55 -0700 (PDT)
+Message-ID: <2fdaac53-3695-45cd-a57a-1afaf365a19a@arm.com>
+Date: Mon, 8 Jul 2024 16:49:53 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="kopfx6abx7uf4ddg"
-Content-Disposition: inline
-In-Reply-To: <e7bbbe4e-7deb-46c3-9cce-1922f9b6b3a2@freebox.fr>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 3/3] coresight-tpda: Optimize the function of reading
+ element size
+Content-Language: en-GB
+To: Tao Zhang <quic_taozha@quicinc.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Mike Leach <mike.leach@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ James Clark <james.clark@arm.com>
+Cc: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
+ coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Trilok Soni <quic_tsoni@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, Jie Gan <quic_jiegan@quicinc.com>
+References: <20240705085152.9063-1-quic_taozha@quicinc.com>
+ <20240705085152.9063-4-quic_taozha@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20240705085152.9063-4-quic_taozha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+On 05/07/2024 09:51, Tao Zhang wrote:
+> Since the new funnel device supports multi-port output scenarios,
+> there may be more than one TPDM connected to one TPDA. In this
+> way, when reading the element size of the TPDM, TPDA driver needs
+> to find the expected TPDM corresponding to the filter source.
+> When TPDA finds a TPDM or a filter source from a input connection,
+> it will read the Devicetree to get the expected TPDM's element
+> size.
+> 
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> ---
+>   drivers/hwtracing/coresight/coresight-tpda.c | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
+> index 52b0201090fb..fc5a4e46cf5d 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpda.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
+> @@ -110,9 +110,12 @@ static int tpda_get_element_size(struct tpda_drvdata *drvdata,
+>   		    csdev->pdata->in_conns[i]->dest_port != inport)
+>   			continue;
+>
+		
+
+> -		if (coresight_device_is_tpdm(in)) {
+> +		if (coresight_device_is_tpdm(in)
+> +		    || csdev->pdata->in_conns[i]->filter_src_dev) {
+
+How can we assume that the filter-source device is always TPDM ?
+It may be true for your test board, but driver must handle all
+possible cases. I would rather prefer:
+
+diff --git a/drivers/hwtracing/coresight/coresight-tpda.c 
+b/drivers/hwtracing/coresight/coresight-tpda.c
+index bfca103f9f84..b1d6f1dd60e3 100644
+--- a/drivers/hwtracing/coresight/coresight-tpda.c
++++ b/drivers/hwtracing/coresight/coresight-tpda.c
+@@ -110,6 +110,13 @@ static int tpda_get_element_size(struct 
+tpda_drvdata *drvdata,
+                     csdev->pdata->in_conns[i]->dest_port != inport)
+                         continue;
+
++               /*
++                * If this port is tied to a source device,
++                * jump to that directly.
++                */
++               if (csdev->pdata->in_conns[i]->filter_src)
++                       in = csdev->pdata->in_conns[i]->filter_src;
++
+                 if (coresight_device_is_tpdm(in)) {
+                         if (drvdata->dsb_esize || drvdata->cmb_esize)
+                                 return -EEXIST;
 
 
---kopfx6abx7uf4ddg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Suzuki
 
-On Mon, Jul 01, 2024 at 05:36:18PM GMT, Marc Gonzalez wrote:
-> On 01/07/2024 15:50, Maxime Ripard wrote:
->=20
-> > On Thu, Jun 27, 2024 at 01:13:03PM GMT, Marc Gonzalez wrote:
-> >
-> >> TDP158 is an AC-coupled DVI / HDMI to TMDS level shifting Redriver.
-> >> It supports DVI 1.0, HDMI 1.4b and 2.0b.
-> >> It supports 4 TMDS channels, HPD, and a DDC interface.
-> >> It supports dual power supply rails (1.1V on VDD, 3.3V on VCC)
-> >> for power reduction. Several methods of power management are
-> >> implemented to reduce overall power consumption.
-> >> It supports fixed receiver EQ gain using I2C or pin strap to
-> >> compensate for different lengths input cable or board traces.
-> >>
-> >> Features
-> >>
-> >> - AC-coupled TMDS or DisplayPort dual-mode physical layer input
-> >> to HDMI 2.0b TMDS physical layer output supporting up to 6Gbps
-> >> data rate, compatible with HDMI 2.0b electrical parameters
-> >> - DisplayPort dual-mode standard version 1.1
-> >> - Programmable fixed receiver equalizer up to 15.5dB
-> >> - Global or independent high speed lane control, pre-emphasis
-> >> and transmit swing, and slew rate control
-> >> - I2C or pin strap programmable
-> >> - Configurable as a DisplayPort redriver through I2C
-> >> - Full lane swap on main lanes
-> >> - Low power consumption (200 mW at 6Gbps, 8 mW in shutdown)
-> >>
-> >> https://www.ti.com/lit/ds/symlink/tdp158.pdf
-> >>
-> >> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
-> >> ---
-> >>  .../bindings/display/bridge/ti,tdp158.yaml         | 51 +++++++++++++=
-+++++++++
-> >>  1 file changed, 51 insertions(+)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/display/bridge/ti,tdp15=
-8.yaml b/Documentation/devicetree/bindings/display/bridge/ti,tdp158.yaml
-> >> new file mode 100644
-> >> index 0000000000000..21c8585c3bb2d
-> >> --- /dev/null
-> >> +++ b/Documentation/devicetree/bindings/display/bridge/ti,tdp158.yaml
-> >> @@ -0,0 +1,51 @@
-> >> +# SPDX-License-Identifier: GPL-2.0-only
-> >> +%YAML 1.2
-> >> +---
-> >> +$id: http://devicetree.org/schemas/display/bridge/ti,tdp158.yaml#
-> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >> +
-> >> +title: TI TDP158 HDMI to TMDS Redriver
-> >> +
-> >> +maintainers:
-> >> +  - Arnaud Vrac <avrac@freebox.fr>
-> >> +  - Pierre-Hugues Husson <phhusson@freebox.fr>
-> >> +
-> >> +properties:
-> >> +  compatible:
-> >> +    const: ti,tdp158
-> >> +
-> >> +  reg:
-> >> +    description: I2C address of the device
-> >> +
-> >> +  enable-gpios:
-> >> +    description: GPIO controlling bridge enable
-> >> +
-> >> +  vcc-supply:
-> >> +    description: Power supply 3.3V
-> >> +
-> >> +  vdd-supply:
-> >> +    description: Power supply 1.1V
-> >> +
-> >> +  ports:
-> >> +    $ref: /schemas/graph.yaml#/properties/ports
-> >> +
-> >> +    properties:
-> >> +      port@0:
-> >> +        $ref: /schemas/graph.yaml#/properties/port
-> >> +        description: Bridge input
-> >> +
-> >> +      port@1:
-> >> +        $ref: /schemas/graph.yaml#/properties/port
-> >> +        description: Bridge output
-> >> +
-> >> +    required:
-> >> +      - port@0
-> >> +      - port@1
-> >=20
-> > The device supports DVI, HDMI or DP input, with various requirements and
-> > capabilities depending on the input. Your binding doesn't address that.
-> >=20
-> > Similarly, it can do lane-swapping, so we should probably have a
-> > property to describe what mapping we want to use.
-> >=20
-> > The i2c register access (and the whole behaviour of the device) is
-> > constrained on the I2C_EN pin status, and you can't read it from the
-> > device, so it's also something we need to have in the DT.
->=20
-> We are using the device in its default configuration.
-> (Power on via OE, then it works as expected)
-
-I know, but that doesn't really matter for a binding.
-
-> Can we leave any additional properties to be defined by whomever needs
-> them in the future?
-
-If you can guarantee that doing so would be backward compatible, sure.
-But that means being able to answer those questions with a reasonable
-plan.
-
-Maxime
-
---kopfx6abx7uf4ddg
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZov+ygAKCRAnX84Zoj2+
-dv/EAYDdyYxojHqIYebCO337L4bW6W074cgkpmwvgnbWAVxCRWViDUMdUTpKAXxf
-odUWQ6IBgJrGQ3od02hFC2F34PHn8/vUxZk9Lb2LuSmabRyII/7jnymhYesMtmfF
-2INbhUBK+A==
-=HW4H
------END PGP SIGNATURE-----
-
---kopfx6abx7uf4ddg--
 
