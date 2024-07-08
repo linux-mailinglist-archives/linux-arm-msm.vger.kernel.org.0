@@ -1,180 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-25473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E38E929FB1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 11:57:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62D28929FCD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 12:04:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC429287B8B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 09:57:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 16EB0284447
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 10:04:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73E6873514;
-	Mon,  8 Jul 2024 09:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5487E5589B;
+	Mon,  8 Jul 2024 10:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZiTlp5YE"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SNhNnXbM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC2F37345B
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jul 2024 09:57:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21C4B66F;
+	Mon,  8 Jul 2024 10:04:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720432640; cv=none; b=iQj1dHqS0U1z0ezccPJgy1J1EAechQmBfMu50BGDB3CWVJExLdjgWuH31DYrGPK97XGLl0Fl8Rr2cWKtFOJJkQ4JBg0DJpOgueY8rBeSEx88W2DC3jibEXZq6f6Vgw9AykO+lTlkUIHe2fPa8cS4/hFpMXMJ4VXZkz7FrJGeZ4Q=
+	t=1720433049; cv=none; b=B55ezsV3GvPMp8bSdRTw5E6UTJhIJt2FriZhkese9Tn5bAcPpSBhi/edYsL9JVgWIT67oY6qPigyIWZ+uEhVpe8aRgEVDVqaXSJ1BnvRS1EMUjPJbYgRMhAFYIMcCCG8YJo4sNyfrgeKw40nFVc4AaVxroK8msSRZGo9Vlt7OKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720432640; c=relaxed/simple;
-	bh=kzpWgPQ+AXdJhpF4uskYQiVLH0Y4/sXVd8yVxupMt1c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=K5YrBbFSV+dFjqg0AE91wXn9xT6aOIKOVYJRuorYQKpOlOigtfod99d4QmxfFwN9c9wVSQP0OmLaHTiXFxyHvr8mbZf9FAA2kT2+3zDmq3UcX1hj7Yl1pM+GllV4pZDGHchZttdZ+1F5Ou8Y0E4IvqU5w1OvN/NcV06jtXDiXRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZiTlp5YE; arc=none smtp.client-ip=209.85.221.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-4f2da6cbe7bso1215121e0c.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2024 02:57:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720432638; x=1721037438; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ugUUhsmVNYwQtoTbN64bwPW2B/pPcC78bhF0bEn6TGc=;
-        b=ZiTlp5YE4gRSn1RssO0HgGeGl0wqB+Iqn/RtNYenKqaoNfASMBU49KISEXd+qpNR64
-         an1mfPUpdnDGI4XZcZxUUpavURz6Vt5ANw7ssWSqroaodnNpmClUXhCMQfL5e8xnKSXz
-         tmIojhrS4p5jXkUyXKNtUt5AHUl62KYjHh3Tmz+xeoo8XthDM+we2Pc2ZOJ8a8FLvX8o
-         +UIwQIyot8y6lQG8F+eB5M2y4q+pKpRN4LxiVx1biqgEbD/myM9jf4x9n4wxFSFvNeDZ
-         EfDum90IEEhptwJcQ5/7Xsptxq7EbZiyNW9koQuM8DhGIEjIeC0Ou6GhiB0I1JFVycJ+
-         OipA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720432638; x=1721037438;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ugUUhsmVNYwQtoTbN64bwPW2B/pPcC78bhF0bEn6TGc=;
-        b=A881s/uKlGD/uofwn2gUoHqASz7GL8JWYRNApYjH2ImWmqvTnfFn2Arf46sRkTCs9H
-         BesE08L8v56OCmPtFObQdl4GqDkdX3CBXwUvwy/Emaw+XTKlOQs0gH/UIwOn5lIEAa8R
-         KCMgaGU4L2wUaeUW+vrwmY6dKdME5C3eS8aZk9smIWBdNnWBxEkDAG27yhE2QasjGRn6
-         +HPUQ0gDQYRuv+GlWRv2yJsQx4qfEdc8Zh27dUK8ivEzuXNa4Qh/Io/z5yQWVN6Eacj8
-         t6K1LlTccgMFAtCJaq4y1hXuKLj1q5SqnToS+OWZ3JNMWTcQIUS7BDLPaN6YWk7cCVIK
-         1wLA==
-X-Forwarded-Encrypted: i=1; AJvYcCUyod7wID8d2Liwzuy2jXqEGDohHx0sV9mMBbMHlAnF4l/vTCPMKueisBbexwvLk2RjHYuWtIm9rE3mDqTc2tbc5inOL01qH20n3fnFkg==
-X-Gm-Message-State: AOJu0Yz1DBXA1oyJse/7swxUibHXhl7Kf/q+uY5b4fOgvopzNqxXFMl+
-	JnG7VxiD268tJEx1LjJHFNLNn7epHOSZ4u0TxEJ/1ywB7m8TX4H+Ors9tAyopcMghjjGBPo3AI1
-	W+swSdAj67z2tWVg+jr33OS12toQ=
-X-Google-Smtp-Source: AGHT+IEM7tiXc2WC9v3MUVQR0LfIGg28NNDwkISptdBpTomakMAfCWq2f7yHwbjnHv81VCajycO06GXEQ2aAsGQJIv8=
-X-Received: by 2002:a05:6122:d22:b0:4f2:d451:97da with SMTP id
- 71dfb90a1353d-4f2f3ff73a1mr11538359e0c.12.1720432637678; Mon, 08 Jul 2024
- 02:57:17 -0700 (PDT)
+	s=arc-20240116; t=1720433049; c=relaxed/simple;
+	bh=J+Z6jMXhU/yw+wHs214cID6sbP15ukU/eqWQzLC8dOE=;
+	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=OFTCf6FDS8Mz2kPAIPrmfCLp7Xo5sPRV16qsUx99LKUvU6TReqexvcMbPUQHRnWvoUpULjgsi/tqBZkHn9aHspBqQO7Iq6XBpr3sg1KojKQD8LNRBPruvqbcuMiTYvnj9peODMxcT/udUupwjBjdNz5mkDpMcdeU0kO3pLSy1Ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SNhNnXbM; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4681PbDv009360;
+	Mon, 8 Jul 2024 10:04:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	9OU9NZ4RxDV8X4ZhAcTVOT9q0olNCw16TW0+r0rOjEU=; b=SNhNnXbM5/3F2BUB
+	SWtxeC1RNI3Dg8+jmSBrP8BtD9fW2ccb4m8eQ4Tnd41xbRnDh1vkWqKgmbEtpnAY
+	kEyDVQLwphbjoTSgAV8bhFf8qSa7SywBZlIKhm0d8yzk1Yh1a83H8PGIbixPttpB
+	XJUDOIDQfs1R6YiInRrdiugKqmhPTJA2pYR5bzIkmR0z9YgAm6e8i8PgqqS5XtrY
+	dAE4k42guzasEDkI4JRBesjaMiO06lDItHd00D7+lXA098uRbfJe277QNGNRYwjp
+	05bZ9HtkiUV93LejVP/lGFrWpr1bTgnFcHhmNDaLyrj8uxV9q8EffwtVWqKUMyCj
+	hsFGpQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406x0t38kx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 08 Jul 2024 10:04:03 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 468A42wP031947
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 8 Jul 2024 10:04:02 GMT
+Received: from [10.214.67.176] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 8 Jul 2024
+ 03:04:00 -0700
+Subject: Re: [PATCH v2] firmware: qcom_scm: Add a padded page to ensure DMA
+ memory from lower 4GB
+To: Mukesh Ojha <quic_mojha@quicinc.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>
+CC: <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1716564705-9929-1-git-send-email-quic_mojha@quicinc.com>
+ <h6omxqre7pod3ztn7x3sckjbgcg32u4btfmtxwn2rkjw7uwsgd@ncdmu5ed4gm3>
+ <d85bf913-b6dc-e9fd-7c54-fe52b79c2593@quicinc.com>
+ <jcvu2irnung4u6v6ticafrqze73kqenpqpy6le6du2q6ag734u@jeqxv5y7pumm>
+ <ZnmK7Nc50gM3HbVI@hu-mojha-hyd.qualcomm.com>
+From: Prakash Gupta <quic_guptap@quicinc.com>
+Message-ID: <b645a400-a932-f7e0-de03-e88833541538@quicinc.com>
+Date: Mon, 8 Jul 2024 15:33:57 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAHCJQqFdDRz7ZyxoeDd1FLu-yjCCHy=Y1Sq2wMDFFH12G1625Q@mail.gmail.com>
- <20240708082132.GA5745@thinkpad>
-In-Reply-To: <20240708082132.GA5745@thinkpad>
-From: Murithi Borona <borona.murithi@gmail.com>
-Date: Mon, 8 Jul 2024 12:57:06 +0300
-Message-ID: <CAHCJQqGPtSHx5LbRF69CJ78x7TwXt332-8cMwXrpVyPWURVFhw@mail.gmail.com>
-Subject: Re: [PROBLEM] bus: mhi: host: pci_generic: SDX24 Channels
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, duke_xinanwen@163.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <ZnmK7Nc50gM3HbVI@hu-mojha-hyd.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: XL5FmoLoaI5xb4UH78wBCIL6YqFdreXi
+X-Proofpoint-ORIG-GUID: XL5FmoLoaI5xb4UH78wBCIL6YqFdreXi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-08_05,2024-07-05_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
+ lowpriorityscore=0 impostorscore=0 adultscore=0 suspectscore=0
+ phishscore=0 mlxlogscore=999 priorityscore=1501 malwarescore=0 spamscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407080078
 
-Here's the sub-vendor/device ids.
 
-Slot:   0003:00:00.0
-Class:  PCI bridge
-Vendor: MEDIATEK Corp.
-Device: Device 7988
-Rev:    01
-ProgIf: 00
 
-Slot:   0003:01:00.0
-Class:  Unassigned class [ff00]
-Vendor: Qualcomm Technologies, Inc
-Device: SDX24 [Snapdragon X24 4G]
-SVendor:        Qualcomm Technologies, Inc
-SDevice:        SDX24 [Snapdragon X24 4G]
-ProgIf: 00
+On 6/24/2024 8:34 PM, Mukesh Ojha wrote:
+> On Sun, Jun 23, 2024 at 07:25:23PM -0500, Bjorn Andersson wrote:
+>> On Wed, May 29, 2024 at 05:24:29PM GMT, Mukesh Ojha wrote:
+>>>
+>>>
+>>> On 5/27/2024 2:16 AM, Bjorn Andersson wrote:
+>>>> On Fri, May 24, 2024 at 09:01:45PM GMT, Mukesh Ojha wrote:
+>>>>> For SCM protection, memory allocation should be physically contiguous,
+>>>>> 4K aligned, and non-cacheable to avoid XPU violations. This granularity
+>>>>> of protection applies from the secure world. Additionally, it's possible
+>>>>> that a 32-bit secure peripheral will access memory in SoCs like
+>>>>> sm8{4|5|6}50 for some remote processors. Therefore, memory allocation
+>>>>> needs to be done in the lower 4 GB range. To achieve this, Linux's CMA
+>>>>> pool can be used with dma_alloc APIs.
+>>>>>
+>>>>> However, dma_alloc APIs will fall back to the buddy pool if the requested
+>>>>> size is less than or equal to PAGE_SIZE. It's also possible that the remote
+>>>>> processor's metadata blob size is less than a PAGE_SIZE. Even though the
+>>>>> DMA APIs align the requested memory size to PAGE_SIZE, they can still fall
+>>>>> back to the buddy allocator, which may fail if `CONFIG_ZONE_{DMA|DMA32}`
+>>>>> is disabled.
+>>>>
+>>>> Does "fail" here mean that the buddy heap returns a failure - in some
+>>>> case where dma_alloc would have succeeded, or that it does give you
+>>>> a PAGE_SIZE allocation which doesn't meeting your requirements?
+>>>
+>>> Yes, buddy will also try to allocate memory and may not get PAGE_SIZE memory
+>>> in lower 4GB(for 32bit capable device) if CONFIG_ZONE_{DMA|DMA32} is
+>>> disabled.
+>>
+>> Is that -ENOMEM or does "not get" mean that the buddy fallback will
+>> provide an allocation above 4GB?
+> 
+> dma_alloc_coherent() returns NULL in that situation.
+> 
+> https://elixir.bootlin.com/linux/v6.10-rc5/source/kernel/dma/direct.c#L142
+> 
+> -Mukesh
+> 
 
-Duke,
+scm device is using DMA mask as 32b. With size <= PAGE_SIZE, call to 
+dma_alloc_contiguous() at [1] will return NULL.
 
-If it helps this is the modem firmware/config as seen by ModemManager.
+With DMA mask as 32b and CONFIG_ZONE_{DMA|DMA32} disabled, the allocation 
+can't be guaranteed within 32b with buddy. Hence will return page as NULL.
 
-manufacturer: quectel
-model: EM120R_GL
-firmware revision: EM120RGLAPR02A07M4G
-carrier config: ROW_Commercial
-config revision: 08010809
-h/w revision: EM120R_GL
+Adding a padded page should allow allocation from CMA region.
 
-Full Firmware Version: M120RGLAPR02A07M4G_10.010.10.010
+Thanks,
+Prakash
 
-On Mon, 8 Jul 2024 at 11:21, Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> + Duke Xin (who is adding Quectel modem support these days)
->
-> On Sun, Jul 07, 2024 at 08:23:57PM +0300, Murithi Borona wrote:
-> > Hello,
-> >
-> > Module: Quectel EM120R-GL
-> >
-> > This module does not appear to work fully with the default SDX24 config=
-uration.
-> > It appears to be another variant of the EM120R-GL (Also FCC-Locked by d=
-efault).
-> >
-> > Issues:
-> > - Debug ports are missing (AT)
-> > - It only works over MBIM/QMI with Qualcomm's RMNET driver.
-> > - In QMI mode it's really unstable and unpredictable with the QMI port
-> > freezing up.
-> >
-> > Are there any missing channels in the SDX24 config or is this a hw/vend=
-or issue.
-> > When using Quectel's drivers (and blacklisting mhi_pci_generic), all
-> > the ports are available.
-> > The configuration for other variants of the same module brings up the
-> > AT port ( with a recurring warning/error).
-> >
->
-> Most likely this device is a derivative product that needs a different
-> configuration than EM120R-GL. Could you please share the sub-vendor/devic=
-e ids?
-> You can just share the output of 'lspci -vmm' command.
->
-> Duke Xin: Are you aware of such derivative product?
->
-> - Mani
->
-> > >> [ 5074.472791] sequence number glitch prev=3D1 curr=3D0
-> >
-> >
-> > mhi_qcom_sdx24_info
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >
-> > lspci: 0003:01:00.0 Unassigned class [ff00]: Qualcomm Technologies,
-> > Inc SDX24 [Snapdragon X24 4G] [17cb:0304]
-> >
-> > ports: mhi_hwip0 (net), mhi_swip0 (net), wwan2mbim0 (mbim), wwan2qcdm0
-> > (ignored), wwan2qmi0 (qmi)
-> >
-> >
-> > mhi_quectel_em1xx_info
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >
-> > lspci: 0003:01:00.0 Unassigned class [ff00]: Qualcomm Technologies,
-> > Inc SDX24 [Snapdragon X24 4G] [17cb:0304]
-> >
-> > ports: wwan0 (net), wwan0at0 (at), wwan0mbim0 (mbim), wwan0qcdm0 (ignor=
-ed)
->
-> --
-> =E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=A3=E0=AF=8D=E0=AE=A3=E0=AE=A9=
-=E0=AF=8D =E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=9A=E0=AE=BF=E0=AE=B5=E0=AE=AE=
-=E0=AF=8D
+[1] https://elixir.bootlin.com/linux/v6.10-rc5/source/kernel/dma/direct.c#L131
+>>
+>> Regards,
+>> Bjorn
+>>
+>>> However, DMA memory would have successful such case if
+>>> padding is added to size to cross > PAGE_SIZE.
+>>>
+>>>>
+>>>>  From this I do find the behavior of dma_alloc unintuitive, do we know if
+>>>> there's a reason for the "equal to PAGE_SIZE" case you describe here?
+>>>
+>>> I am not a memory expert but the reason i can think of could be, <=
+>>> PAGE_SIZE can anyway possible to be requested outside DMA coherent api's
+>>> with kmalloc and friends api and that could be the reason it is falling
+>>> back to buddy pool in DMA api.
+>>>
+>>> -Mukesh
+> 
+
+> 
 
