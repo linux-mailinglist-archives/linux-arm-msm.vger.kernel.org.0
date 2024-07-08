@@ -1,122 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-25514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0F2B92A8A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 20:06:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B324692A8B6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 20:09:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5AF59281AF0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 18:06:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A4152828BC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 18:09:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40297148FFC;
-	Mon,  8 Jul 2024 18:05:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B530114A4D4;
+	Mon,  8 Jul 2024 18:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KeaLQbf2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iSv0hOMT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C449214A619
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jul 2024 18:05:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A181474A8
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jul 2024 18:09:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720461952; cv=none; b=JFDNGBGzjOEEUGkvb7i+lCOeWrx7ydTr0AxuX/1kqFRhEqZvPHHEzl6Ot7/nuayb3y/B2G2V/oxmVUrUrFbe75gfmIhSSAQv6+iWe8ZwYfQwMsvtCLCPFRf/XR5yLyE3hw0ZnrBrF662DaM82MjRhYf5WeOyw9eNHKltC4nIVS8=
+	t=1720462147; cv=none; b=YmlNJTuTm7Ppy3dyCjPkbfTWYMCQq8cSro8bTPQfMzZOza7SbVP7H8Mm5uUgLmeZekbYMQysJkLcJiNrcavJfvSmoGsLCuVMCx4SANsNEzTQtPwOtUhJN1U4CIVEeGhpyqEGXr897zBCihrMZDyCWWuRbrm8cs5fY659d8gIo2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720461952; c=relaxed/simple;
-	bh=sQurFjBE9L3fAEjeupv9dzjJcGbx0I4IJJjL3X9WlHE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RB3hQRwfd9qnlsp12X37Z39RYXD5BcfHhHMbLG6sQRTqvC0eNBI++D0Q+4JXHe4aIhYLEfpP5oKo2pwAeNSOwn/qvialcE6J9/yalUmCunHeX5DtAkzfCavEey1Ye67HsBv3ViSQxKTXPLLLfOBcI4S+VCe2zBHo+bL3qpfD0rU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KeaLQbf2; arc=none smtp.client-ip=209.85.210.41
+	s=arc-20240116; t=1720462147; c=relaxed/simple;
+	bh=CG707koYbJnede1fww7JQ7JLqlDrWGnQkLN5J+JJjnM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GWvbGld9oPD4P2WkR5mjVdrVKLcI7TXGpkmXcgR7hg5NJ9KY7tds49kdBLaB3maAjcLLG7GLSiSq1XCWZMrddNVCOM5D0bqFmZmhplaZ7yrbsgZdlBZv4fe2nxWmS9e+FmPaE4534N+RUnqtsQUoRZYJAGh+H1MnBOQTulK6M+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iSv0hOMT; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-6f8d0a1e500so3918370a34.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2024 11:05:50 -0700 (PDT)
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-57cd26347d3so5544186a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2024 11:09:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720461950; x=1721066750; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qYngg2/AvD5ABD/9akPCHM96QJ+CMJBmjqIZiNK6u3U=;
-        b=KeaLQbf268m2mnCh//+CQ1tbqfpeXynd5ZCLBgYHjLnUM5GzEJonArueM+iKZH184s
-         Q1AmcFw9bP/eZZv5vKZ6mC8NuUUniwA/VT/WHFxAKWmBXjRq2fYKbtVYdWQQz2c+giMw
-         Y0vPCnNW1PFopbFP6fhwEmvFIGMQL0YU9WUXAvSpwkRhIqyY0AMBQHGj/gI1HktKtYLU
-         SqFSwrCLCG2FP6uJV78fNnsKvq8RgE5nT8vB92GgBiaYRgwfqn4qTOATCSommvZ/XtAH
-         LX4lHySvrtArDPdmzcBPo5QDBIkBBLUWHnC9Ufb8ftEw0qWKLIrRcLr7kOd2H2oHrAWK
-         v/XA==
+        d=linaro.org; s=google; t=1720462144; x=1721066944; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=h9SclVHHKmhSqXdWBkdjpfcUGGg73PYZ76UnLpmlrPA=;
+        b=iSv0hOMTxQjy252hK+lJdahNOjRMvdEM754WGhaHmKvdZn+uL5HbMYCm5HzFGCd9Mg
+         Qoh8rPuVsmMt1d0R9toj0TW3zv85+OeMpy0TRr4AJxPM7DROF4Pb7AVTtMF1mzCHIymm
+         m7bXDqZ7oOYAZf4unDE3AMj0MlBzdaqHCUUdsXjQHLVnXB8bOWUCcIRVkpbh/X0lvl7n
+         SEfogpmSKiTN7i1eY8Ro0Z6Y6ja506Ilq3iP+/IQLa5QaNo7iuYwWjeW4xZXsNmTQ9t7
+         pL4zmJ93Uhyx3J11MP7tSG9d/LOi/Azji0lTSgX7jXaaIMEH4A5k9QlBAfk91VgYzBYT
+         paTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720461950; x=1721066750;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qYngg2/AvD5ABD/9akPCHM96QJ+CMJBmjqIZiNK6u3U=;
-        b=P3KEDve8hOnFoxBI/F+z5qdLY42/4tL4T7rkVJDZevCXdh7vViePXWo2Ouc1FYhH6O
-         SqXlkoIlkw56nZNEHKZDSNbCxaazKfg89NNn/vV+Gm6oL2lbgNPZgZ7G+4Dseg9wvMQ4
-         x2xOAqRKWUEZIDUewtGMOa9JTG2z/C1ObVC7sdwasdLytUylZSGzEeD7C8n3AidVg+v+
-         u51sTGxVPi4Vu7BeyLOKNxEwCP0Ylbk8Q8B7bviHn3g3Q9XJHXz3LaXZFd4uckqDH5If
-         rDKXf6K94hi4CzEQaoj6MAddN0WfkyTDgVJoVe2LAOzlTfDsQdiU8T9qXBVWgO8Lb8h3
-         Tx5w==
-X-Forwarded-Encrypted: i=1; AJvYcCXRENHQr1I4RaeyOhCIGaUfHKQuDeC6mIUJV/28kYWreYMLu3hi85G2n6ogSXTbs3/9uv9nFZLVfFc17urtrY1JHBrDziXgLydrzd9tgg==
-X-Gm-Message-State: AOJu0Yx+zynmuwQs1GjyKNIjilPB+4VzJGF7aTngvv2Qfgt8SRKB19m8
-	9B9ji4EPsDjJyxWq63hPUIC00E0O5wWHfq7BoSL8Ab4KUgqOW4maHc+ZDszd4rDPC/SsApqyyPI
-	E
-X-Google-Smtp-Source: AGHT+IFotg/OqzVapLsDoyFgjgyedblYoClmUMzMboNvrP7Hf0zFKYNPw6ZcbTQzYlbt4UCndKAUOw==
-X-Received: by 2002:a05:6830:91d:b0:703:5fba:5e1a with SMTP id 46e09a7af769-70375a0512dmr309192a34.9.1720461949870;
-        Mon, 08 Jul 2024 11:05:49 -0700 (PDT)
-Received: from localhost ([2603:8080:b800:f700:cdd0:d497:b7b2:fe])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-70374f7a2d3sm86559a34.32.2024.07.08.11.05.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jul 2024 11:05:49 -0700 (PDT)
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] PCI: qcom: Potential uninitialized variable in qcom_pcie_suspend_noirq()
-Date: Mon,  8 Jul 2024 13:05:38 -0500
-Message-ID: <20240708180539.1447307-4-dan.carpenter@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240708180539.1447307-1-dan.carpenter@linaro.org>
-References: <20240708180539.1447307-1-dan.carpenter@linaro.org>
+        d=1e100.net; s=20230601; t=1720462144; x=1721066944;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=h9SclVHHKmhSqXdWBkdjpfcUGGg73PYZ76UnLpmlrPA=;
+        b=o7Ic3h/F5XgoBTs08uKSQWZ+5HExSdrIjgWktHJtADH+CX1+xN3qjCnDWhX0fQ9qiO
+         pKuiiKCpJzpRJtlCgeULEkvI51JgdN3xWtNMovhMIB7xaTn+zNUyTSBz1gttuE8okKbI
+         zqjOvvXEgLNY6Uig6Ttxyos4+Sva08RLpLwBrxCp833SluI04+CNITRVx4fsw5v6bBvH
+         HGcxSzsX6DzSSPFab1oOT3arDe4IePN+QUTgvgvtexJjNMyydS0bRmCD1BLsV/yrB39y
+         N7/woCEOo0n5HCy2AVRwxuI2ikpFGwSWtcSL7lRFlTUGikyzZuYRy4huI8vDHF8R5WOv
+         +HlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV/Z5ymvI0Xi3ItceEgHEgNPdWIiocrJSROCznH7EIiv6sWVmMCIldHVcI3r6XYH7UQhBzQ70BWAzRE4zHi/Qd58hhMdXbO0Yw8dW4w+Q==
+X-Gm-Message-State: AOJu0YzsWo8YSyNu1GftKS1Q1gzrnMhmes1V/jBALJZ53tZdJzNl/d0K
+	mLCm1bEtwCEc+jw+BIdBpJ2p504jQVu2IU0nX8uPjcCTLKRppqNuwhLlhsFSUNY=
+X-Google-Smtp-Source: AGHT+IEY4wUlDLgxf2i3rdkVHcpk1OUK0j5ihUIo/iySjtcBRkZ3zUlg7nzE4G/y1pYBhf9gKCamKg==
+X-Received: by 2002:a05:6402:84c:b0:58e:2b65:385b with SMTP id 4fb4d7f45d1cf-594ba0c9e5dmr286249a12.14.1720462143775;
+        Mon, 08 Jul 2024 11:09:03 -0700 (PDT)
+Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-594bda308efsm98182a12.81.2024.07.08.11.08.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Jul 2024 11:09:03 -0700 (PDT)
+Message-ID: <d83ff8c4-15de-4e20-9c27-eb0247184b5f@linaro.org>
+Date: Mon, 8 Jul 2024 20:08:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 23/23] arm64: dts: qcom: starqltechn: add new features
+To: Dzmitry Sankouski <dsankouski@gmail.com>
+Cc: Sebastian Reichel <sre@kernel.org>, Bjorn Andersson
+ <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek <pavel@ucw.cz>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Chanwoo Choi <cw00.choi@samsung.com>,
+ phone-devel@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-input@vger.kernel.org,
+ linux-leds@vger.kernel.org, linux-pwm@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org
+References: <20240618-starqltechn_integration_upstream-v3-0-e3f6662017ac@gmail.com>
+ <20240618-starqltechn_integration_upstream-v3-23-e3f6662017ac@gmail.com>
+ <13fea5c0-5906-4075-b734-52649e35eb69@linaro.org>
+ <CABTCjFDebBxf=XcvTbVtifROFHrQLXtArLtj0wHVF_e529NVAg@mail.gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <CABTCjFDebBxf=XcvTbVtifROFHrQLXtArLtj0wHVF_e529NVAg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Smatch complains that "ret" could be uninitialized if "pcie->icc_mem"
-is NULL and "pm_suspend_target_state == PM_SUSPEND_MEM".  Silence this
-warning by initializing ret to zero.
+On 8.07.2024 5:54 PM, Dzmitry Sankouski wrote:
+> вт, 18 июн. 2024 г. в 17:12, Konrad Dybcio <konrad.dybcio@linaro.org>:
+>>
+>>
+> ...
+>>
+>>>       gpio-reserved-ranges = <0 4>, <27 4>, <81 4>, <85 4>;
+>>
+>> Do you know what these are for?
+>>
+>> Konrad
+> 
+> <85 4> is spi for fingerprint.
+> <27 4> is spi for eSE(embedded Secure Element)
+> The rest shouldn't be reserved.
 
-Fixes: 78b5f6f8855e ("PCI: qcom: Add OPP support to scale performance")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks for digging this up!
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index e06c4ad3a72a..74e2acf4ae11 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1633,7 +1633,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- static int qcom_pcie_suspend_noirq(struct device *dev)
- {
- 	struct qcom_pcie *pcie = dev_get_drvdata(dev);
--	int ret;
-+	int ret = 0;
- 
- 	/*
- 	 * Set minimum bandwidth required to keep data path functional during
--- 
-2.43.0
+Please add a comment for it, like in x1e80100-crd.dts
 
+Konrad
 
