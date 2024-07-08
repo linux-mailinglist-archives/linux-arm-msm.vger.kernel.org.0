@@ -1,75 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-25515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B324692A8B6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 20:09:17 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F004392A8C5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 20:11:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A4152828BC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 18:09:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0C837B21702
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jul 2024 18:11:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B530114A4D4;
-	Mon,  8 Jul 2024 18:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDE7C147C71;
+	Mon,  8 Jul 2024 18:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iSv0hOMT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Mgo15zhu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A181474A8
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jul 2024 18:09:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D2714388F;
+	Mon,  8 Jul 2024 18:11:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720462147; cv=none; b=YmlNJTuTm7Ppy3dyCjPkbfTWYMCQq8cSro8bTPQfMzZOza7SbVP7H8Mm5uUgLmeZekbYMQysJkLcJiNrcavJfvSmoGsLCuVMCx4SANsNEzTQtPwOtUhJN1U4CIVEeGhpyqEGXr897zBCihrMZDyCWWuRbrm8cs5fY659d8gIo2g=
+	t=1720462314; cv=none; b=hmixB9lat5u1VGTQQcXmCa9z/f0tqF9S8Uy2+XOT6V2z4cLSkqjSgd5m7L2hDyrl9mDQyAGIg/k0pCdBMK21OOaq4FzG/3jhTYG4sVrKRmy7rPRvpE5yuqOYvGTRr8QE7ZI5K0SjHk25wCDvyj0eQt9rY/tZUsiWzxWAtig4+dY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720462147; c=relaxed/simple;
-	bh=CG707koYbJnede1fww7JQ7JLqlDrWGnQkLN5J+JJjnM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GWvbGld9oPD4P2WkR5mjVdrVKLcI7TXGpkmXcgR7hg5NJ9KY7tds49kdBLaB3maAjcLLG7GLSiSq1XCWZMrddNVCOM5D0bqFmZmhplaZ7yrbsgZdlBZv4fe2nxWmS9e+FmPaE4534N+RUnqtsQUoRZYJAGh+H1MnBOQTulK6M+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iSv0hOMT; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-57cd26347d3so5544186a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2024 11:09:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720462144; x=1721066944; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=h9SclVHHKmhSqXdWBkdjpfcUGGg73PYZ76UnLpmlrPA=;
-        b=iSv0hOMTxQjy252hK+lJdahNOjRMvdEM754WGhaHmKvdZn+uL5HbMYCm5HzFGCd9Mg
-         Qoh8rPuVsmMt1d0R9toj0TW3zv85+OeMpy0TRr4AJxPM7DROF4Pb7AVTtMF1mzCHIymm
-         m7bXDqZ7oOYAZf4unDE3AMj0MlBzdaqHCUUdsXjQHLVnXB8bOWUCcIRVkpbh/X0lvl7n
-         SEfogpmSKiTN7i1eY8Ro0Z6Y6ja506Ilq3iP+/IQLa5QaNo7iuYwWjeW4xZXsNmTQ9t7
-         pL4zmJ93Uhyx3J11MP7tSG9d/LOi/Azji0lTSgX7jXaaIMEH4A5k9QlBAfk91VgYzBYT
-         paTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720462144; x=1721066944;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=h9SclVHHKmhSqXdWBkdjpfcUGGg73PYZ76UnLpmlrPA=;
-        b=o7Ic3h/F5XgoBTs08uKSQWZ+5HExSdrIjgWktHJtADH+CX1+xN3qjCnDWhX0fQ9qiO
-         pKuiiKCpJzpRJtlCgeULEkvI51JgdN3xWtNMovhMIB7xaTn+zNUyTSBz1gttuE8okKbI
-         zqjOvvXEgLNY6Uig6Ttxyos4+Sva08RLpLwBrxCp833SluI04+CNITRVx4fsw5v6bBvH
-         HGcxSzsX6DzSSPFab1oOT3arDe4IePN+QUTgvgvtexJjNMyydS0bRmCD1BLsV/yrB39y
-         N7/woCEOo0n5HCy2AVRwxuI2ikpFGwSWtcSL7lRFlTUGikyzZuYRy4huI8vDHF8R5WOv
-         +HlQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV/Z5ymvI0Xi3ItceEgHEgNPdWIiocrJSROCznH7EIiv6sWVmMCIldHVcI3r6XYH7UQhBzQ70BWAzRE4zHi/Qd58hhMdXbO0Yw8dW4w+Q==
-X-Gm-Message-State: AOJu0YzsWo8YSyNu1GftKS1Q1gzrnMhmes1V/jBALJZ53tZdJzNl/d0K
-	mLCm1bEtwCEc+jw+BIdBpJ2p504jQVu2IU0nX8uPjcCTLKRppqNuwhLlhsFSUNY=
-X-Google-Smtp-Source: AGHT+IEY4wUlDLgxf2i3rdkVHcpk1OUK0j5ihUIo/iySjtcBRkZ3zUlg7nzE4G/y1pYBhf9gKCamKg==
-X-Received: by 2002:a05:6402:84c:b0:58e:2b65:385b with SMTP id 4fb4d7f45d1cf-594ba0c9e5dmr286249a12.14.1720462143775;
-        Mon, 08 Jul 2024 11:09:03 -0700 (PDT)
-Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-594bda308efsm98182a12.81.2024.07.08.11.08.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Jul 2024 11:09:03 -0700 (PDT)
-Message-ID: <d83ff8c4-15de-4e20-9c27-eb0247184b5f@linaro.org>
-Date: Mon, 8 Jul 2024 20:08:58 +0200
+	s=arc-20240116; t=1720462314; c=relaxed/simple;
+	bh=v3c5CepbkkjKt6gptE+TJUk1F9DMb0UyjaEvOMi9Kpc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=t0+f5ytaNpaLfT9H6fNSuxuMxtq0PJR1OwqwIaZZNcuMvVphY7CYFxcQbXtoqbDDMpleHMxPeuTexxe0Hq4zkp0iQC2PJGdJqcBCghZDMysWtHPu8jAPN4JW7ivEQ8Hj7LAL0QJFJHt/HNcsx7mAD2IA06WCEylawSYxQhb0HCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Mgo15zhu; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 468AMIbf022158;
+	Mon, 8 Jul 2024 18:11:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	IRv0YX0tDp29skyu4SDzayb7EgtbAAvR4vc2HCkWIAs=; b=Mgo15zhuyRWUblmy
+	nBE+Ad4RTiBlolUEFhS0r2PWU+8bCIv5mVlZRHFcYSIUAfR+zX4vRoRBqMtnOamt
+	i/yy3siE6S7ogitUs3hW7pimqONUw//teXYc/PxxiwmKXXXX0KOllpG+cUm2c2bi
+	816H0b4iBXRxmFNfJt52v/3LtXNdHRuahxflQuQCFm7rHISaARCTIhw9fFrAu+lO
+	tmGT/M0rV6pucd3Uv4MRo1b+9mpcS1e5qrf0UezbzkhwTxwCa2effDoL38FIzVP3
+	DsJ/IXW/fyKAR/Lb9djrI/K/IKqv1nuktbikAnaLsv7S2pEnmzmM0bWGFiMXAq3H
+	HU3kOQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406we8vfeu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 08 Jul 2024 18:11:49 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 468IBmDw023223
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 8 Jul 2024 18:11:48 GMT
+Received: from [10.47.206.1] (10.49.16.6) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 8 Jul 2024
+ 11:11:47 -0700
+Message-ID: <da84b5e1-ae11-42e1-8b93-8d93df1862ad@quicinc.com>
+Date: Mon, 8 Jul 2024 11:10:05 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,91 +65,100 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 23/23] arm64: dts: qcom: starqltechn: add new features
-To: Dzmitry Sankouski <dsankouski@gmail.com>
-Cc: Sebastian Reichel <sre@kernel.org>, Bjorn Andersson
- <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek <pavel@ucw.cz>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
- Krzysztof Kozlowski <krzk@kernel.org>, Chanwoo Choi <cw00.choi@samsung.com>,
- phone-devel@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-input@vger.kernel.org,
- linux-leds@vger.kernel.org, linux-pwm@vger.kernel.org,
- linux-samsung-soc@vger.kernel.org
-References: <20240618-starqltechn_integration_upstream-v3-0-e3f6662017ac@gmail.com>
- <20240618-starqltechn_integration_upstream-v3-23-e3f6662017ac@gmail.com>
- <13fea5c0-5906-4075-b734-52649e35eb69@linaro.org>
- <CABTCjFDebBxf=XcvTbVtifROFHrQLXtArLtj0wHVF_e529NVAg@mail.gmail.com>
+Subject: Re: [PATCH] spmi: pmic-arb: use correct node when adding irq domain
+To: Bjorn Andersson <andersson@kernel.org>
+CC: Stephen Boyd <sboyd@kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, Abel Vesa <abel.vesa@linaro.org>,
+        Dan
+ Carpenter <dan.carpenter@linaro.org>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+References: <20240703221157.3640361-1-quic_collinsd@quicinc.com>
+ <wbdccdzncuje5ynof6y27e22dqipqho5j4qtqczlctu7bqhp6z@5qatffxbjykx>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
- BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
- HGWdmtO+RvadOVi6CoUDqALsmfS3MUG5Pj2Ne9+0jRg4hEnB92AyF9rW2G3qisFcwPgvatt7
- TXD5E38mLyOPOUyXNj9XpDbt1hNwKQfiidmPh5e7VNAWRnW1iCMMoKqzM1Anzq7e5Afyeifz
- zRcQPLaqrPjnKqZGL2BKQSZDh6NkI5ZLRhhHQf61fkWcUpTp1oDC6jWVfT7hwRVIQLrrNj9G
- MpPzrlN4YuAqKeIer1FMt8cq64ifgTzxHzXsMcUdclzq2LTk2RXaPl6Jg/IXWqUClJHbamSk
- t1bfif3SnmhA6TiNvEpDKPiT3IDs42THU6ygslrBxyROQPWLI9IL1y8S6RtEh8H+NZQWZNzm
- UQ3imZirlPjxZtvz1BtnnBWS06e7x/UEAguj7VHCuymVgpl2Za17d1jj81YN5Rp5L9GXxkV1
- aUEwONM3eCI3qcYm5JNc5X+JthZOWsbIPSC1Rhxz3JmWIwP1udr5E3oNRe9u2LIEq+wH/toH
- kpPDhTeMkvt4KfE5m5ercid9+ZXAqoaYLUL4HCEw+HW0DXcKDwARAQABzShLb25yYWQgRHli
- Y2lvIDxrb25yYWQuZHliY2lvQGxpbmFyby5vcmc+wsGOBBMBCAA4FiEEU24if9oCL2zdAAQV
- R4cBcg5dfFgFAmQ5bqwCGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQR4cBcg5dfFjO
- BQ//YQV6fkbqQCceYebGg6TiisWCy8LG77zV7DB0VMIWJv7Km7Sz0QQrHQVzhEr3trNenZrf
- yy+o2tQOF2biICzbLM8oyQPY8B///KJTWI2khoB8IJSJq3kNG68NjPg2vkP6CMltC/X3ohAo
- xL2UgwN5vj74QnlNneOjc0vGbtA7zURNhTz5P/YuTudCqcAbxJkbqZM4WymjQhe0XgwHLkiH
- 5LHSZ31MRKp/+4Kqs4DTXMctc7vFhtUdmatAExDKw8oEz5NbskKbW+qHjW1XUcUIrxRr667V
- GWH6MkVceT9ZBrtLoSzMLYaQXvi3sSAup0qiJiBYszc/VOu3RbIpNLRcXN3KYuxdQAptacTE
- mA+5+4Y4DfC3rUSun+hWLDeac9z9jjHm5rE998OqZnOU9aztbd6zQG5VL6EKgsVXAZD4D3RP
- x1NaAjdA3MD06eyvbOWiA5NSzIcC8UIQvgx09xm7dThCuQYJR4Yxjd+9JPJHI6apzNZpDGvQ
- BBZzvwxV6L1CojUEpnilmMG1ZOTstktWpNzw3G2Gis0XihDUef0MWVsQYJAl0wfiv/0By+XK
- mm2zRR+l/dnzxnlbgJ5pO0imC2w0TVxLkAp0eo0LHw619finad2u6UPQAkZ4oj++iIGrJkt5
- Lkn2XgB+IW8ESflz6nDY3b5KQRF8Z6XLP0+IEdLOOARkOW7yEgorBgEEAZdVAQUBAQdAwmUx
- xrbSCx2ksDxz7rFFGX1KmTkdRtcgC6F3NfuNYkYDAQgHwsF2BBgBCAAgFiEEU24if9oCL2zd
- AAQVR4cBcg5dfFgFAmQ5bvICGwwACgkQR4cBcg5dfFju1Q//Xta1ShwL0MLSC1KL1lXGXeRM
- 8arzfyiB5wJ9tb9U/nZvhhdfilEDLe0jKJY0RJErbdRHsalwQCrtq/1ewQpMpsRxXzAjgfRN
- jc4tgxRWmI+aVTzSRpywNahzZBT695hMz81cVZJoZzaV0KaMTlSnBkrviPz1nIGHYCHJxF9r
- cIu0GSIyUjZ/7xslxdvjpLth16H27JCWDzDqIQMtg61063gNyEyWgt1qRSaK14JIH/DoYRfn
- jfFQSC8bffFjat7BQGFz4ZpRavkMUFuDirn5Tf28oc5ebe2cIHp4/kajTx/7JOxWZ80U70mA
- cBgEeYSrYYnX+UJsSxpzLc/0sT1eRJDEhI4XIQM4ClIzpsCIN5HnVF76UQXh3a9zpwh3dk8i
- bhN/URmCOTH+LHNJYN/MxY8wuukq877DWB7k86pBs5IDLAXmW8v3gIDWyIcgYqb2v8QO2Mqx
- YMqL7UZxVLul4/JbllsQB8F/fNI8AfttmAQL9cwo6C8yDTXKdho920W4WUR9k8NT/OBqWSyk
- bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
- nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
- izWDgYvmBE8=
-In-Reply-To: <CABTCjFDebBxf=XcvTbVtifROFHrQLXtArLtj0wHVF_e529NVAg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: David Collins <quic_collinsd@quicinc.com>
+In-Reply-To: <wbdccdzncuje5ynof6y27e22dqipqho5j4qtqczlctu7bqhp6z@5qatffxbjykx>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: OZM6kLUoItK5cuPCoyHwKuTIP6tJalB8
+X-Proofpoint-ORIG-GUID: OZM6kLUoItK5cuPCoyHwKuTIP6tJalB8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-08_09,2024-07-05_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ malwarescore=0 priorityscore=1501 clxscore=1015 impostorscore=0
+ lowpriorityscore=0 spamscore=0 mlxlogscore=999 phishscore=0 mlxscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407080136
 
-On 8.07.2024 5:54 PM, Dzmitry Sankouski wrote:
-> вт, 18 июн. 2024 г. в 17:12, Konrad Dybcio <konrad.dybcio@linaro.org>:
+On 7/3/24 19:30, Bjorn Andersson wrote:
+> On Wed, Jul 03, 2024 at 03:11:57PM GMT, David Collins wrote:
+>> Pass a pointer to the SPMI bus subnode instead of the top-
+>> level PMIC arbiter node when calling irq_domain_add_tree().
+>> This ensures that consumer IRQ mappings can be found
+>> successfully at runtime.
 >>
+>> Here is an example of a consumer device probe deferral that
+>> happens without this fix in place:
 >>
-> ...
+>> [   18.197271] platform c42d000.spmi:qcom,pmk8550@0:pon_hlos@1300:pwrkey:
+>>   deferred probe pending: pm8941-pwrkey: IRQ index 0 not found
+>> [   18.197275] platform c42d000.spmi:qcom,pmk8550@0:pon_hlos@1300:resin:
+>>   deferred probe pending: pm8941-pwrkey: IRQ index 0 not found
 >>
->>>       gpio-reserved-ranges = <0 4>, <27 4>, <81 4>, <85 4>;
->>
->> Do you know what these are for?
->>
->> Konrad
+>> Fixes: 02922ccbb330 ("spmi: pmic-arb: Register controller for bus instead of arbiter")
+>> Fixes: 979987371739 ("spmi: pmic-arb: Add multi bus support")
+>> Signed-off-by: David Collins <quic_collinsd@quicinc.com>
 > 
-> <85 4> is spi for fingerprint.
-> <27 4> is spi for eSE(embedded Secure Element)
-> The rest shouldn't be reserved.
+> Not sure if Stephen was waiting for some fixes tags, but otherwise this
+> was already proposed and reviewed here:
+> 
+> https://lore.kernel.org/all/20240522-topic-spmi_multi_master_irqfix-v2-1-7ec92a862b9f@linaro.org/
 
-Thanks for digging this up!
+Thanks Bjorn for the link to this previous patch.  I was unaware that it
+had been sent out.  I ran into this bug when testing with the recent
+pmic-arb multi-bus support series.  I searched to see if it been
+submitted before and couldn't find mention of it, so I sent out my fix
+for it.
 
-Please add a comment for it, like in x1e80100-crd.dts
+It would be great if Konrad's version of the fix (with Fixes tag(s)
+added) or mine could be picked up.  That will ensure that client IRQ
+usage isn't broken on targets specifying spmi-pmic-arb SPMI bus subnode
+devices in DT.
 
-Konrad
+Thanks,
+David
+
+
+> FWIW:
+> 
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> 
+> Regards,
+> Bjorn
+> 
+>> ---
+>>  drivers/spmi/spmi-pmic-arb.c | 3 +--
+>>  1 file changed, 1 insertion(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
+>> index 791cdc160c51..e6a4bf3abb1f 100644
+>> --- a/drivers/spmi/spmi-pmic-arb.c
+>> +++ b/drivers/spmi/spmi-pmic-arb.c
+>> @@ -1737,8 +1737,7 @@ static int spmi_pmic_arb_bus_init(struct platform_device *pdev,
+>>  
+>>  	dev_dbg(&pdev->dev, "adding irq domain for bus %d\n", bus_index);
+>>  
+>> -	bus->domain = irq_domain_add_tree(dev->of_node,
+>> -					  &pmic_arb_irq_domain_ops, bus);
+>> +	bus->domain = irq_domain_add_tree(node, &pmic_arb_irq_domain_ops, bus);
+>>  	if (!bus->domain) {
+>>  		dev_err(&pdev->dev, "unable to create irq_domain\n");
+>>  		return -ENOMEM;
+
 
