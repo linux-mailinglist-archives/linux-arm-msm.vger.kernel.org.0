@@ -1,137 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-25671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 133E792BD1B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 16:38:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55F5092BD31
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 16:41:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4459C1C23ACC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 14:38:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CBACA1F25517
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 14:41:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC83419DFB9;
-	Tue,  9 Jul 2024 14:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 055C319CCED;
+	Tue,  9 Jul 2024 14:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KvM8Muqj"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="bIM2e2h9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D50819DF95;
-	Tue,  9 Jul 2024 14:35:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AAC1822F2
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jul 2024 14:41:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720535756; cv=none; b=fHOb9Xfa8jVJLoE+t7HmQKrJD0keZGXd1WbbtZB7ELNa4lI6Q4JhGZfS3xPPDXuowN2JZOD5Jusb8Dki1B9pZaLL4G8cR7hTk/CO4mkk4+wVoRjOBFV6vPk3TpqcqvvOkPXm/JFBHOjW71EtLqyvE2Yy75EA+d9UulNl1BgLXj8=
+	t=1720536062; cv=none; b=tgA8UPIyASrkiYDV7SbfaNlzJGwPliq+eQMgfJ9LDtd0rlPsaWQfPO0nH6V0qDHk01oCA6IUTF7LjwJAoFrxDlc0HlX9GryBIpHwvPH4MrQ2rLa7JpA0YC4flMN5GgfbDfKJHY5dHUcsK1v9SoGVJBn+HUuvBcVEj6vXT6Lt6dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720535756; c=relaxed/simple;
-	bh=/7V0EJxNZ4cEHLfTToLfwG5Wl7+cvEDF+WpH3vQtF7w=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=q1x9XpFUXqIC4jucECv5COUGy1BhPkM1MeN+V4/QAa2bcEm9ht1NtCRPuNvHF4JfeG6/E7obknBkHVS9V2GswgQRerQP+EYOKmWsytcwf/io1yR8AHjg902k49o1+fe+AxvXQL4qdNPs4AdcAbbdoohg+e6LaGV8+VlZo8M6u/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KvM8Muqj; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 469AnSba004577;
-	Tue, 9 Jul 2024 14:35:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	k0srZcHoiWjDGghk0/Pm9qidtO9mjix4a5MwTnpiZZY=; b=KvM8MuqjWSyTOivi
-	nT94+it1he54P5muVnSyOrrEhHxhBJfCc2aJeCFAqk0fLxmBAxFW6UPEUma58dwf
-	QhhtRgItOPZrvDuEY0lKhyeDIBf4u5fZLnIddToJ8EFpqSRAL8ijxYx5Q+/Co01i
-	oWCrEtTC6XDxyJYMjWh2C4s9jaSteGggxvbfSFFpoD2Y3GwwkW+gatQPA2ROqggp
-	z4vAdXwJ79XgWi6aTK8Kd7uHvssLUqdBj5WmLbM2RGd4ivjz+ZyuYlmaoMz04erP
-	QTtpXRTgOVXEtAGmC80dEX2x+orKGb1rC/tcXkgGecEYGH5xq8RTPdrT5oPuBDVN
-	FQm55g==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406xa66n1v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 Jul 2024 14:35:51 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 469EZorF030812
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 9 Jul 2024 14:35:50 GMT
-Received: from tengfan-gv.ap.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 9 Jul 2024 07:35:45 -0700
-From: Tengfei Fan <quic_tengfan@quicinc.com>
-Date: Tue, 9 Jul 2024 22:35:30 +0800
-Subject: [PATCH v2 2/2] clk: qcom: rpmh: Add support for QCS9100 rpmh
- clocks
+	s=arc-20240116; t=1720536062; c=relaxed/simple;
+	bh=Jgewn17s9Ey6YUyp0qStVti3zXHXm8kcXfPAYUyBLhQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WKxlEGbMmEqCMEsKkzx5QxLNsu0+u1a9S6oqUX7cf8fSF7AbImpUKA9aQDeccYqdyFrWBBC9nb2+ofirHVylc8UTJZgwo4nZkxQSoNVvJeELFIVysdVW4ykRvllhyPpKmlpl7pKnM81Pra/Y0qiLzHUAIwS9pxcLQlPjHY6UdZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=bIM2e2h9; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1720536060;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=9dNUMlILD/JowgtlDpz/3Xfo0pUbwll0dZL3HCPAgDc=;
+	b=bIM2e2h9Pjg7mRDcdEvJM93WhUHb9cu8xDb19p2FZxe7oGA06lyx1BhFGmjswtuapdl8fa
+	cSQV+/VxGCF3UGiw0/nzJPNwzX8HeWaN8o3cTEAeuO6Pe3gz/MVsr4A0JlnoYV+xuVQsU8
+	WGl79J6AsY3Yvd962u+mjVd5mY66vVQ=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-538-fw_pqNZCPhKHHJqIFuMPDA-1; Tue, 09 Jul 2024 10:40:58 -0400
+X-MC-Unique: fw_pqNZCPhKHHJqIFuMPDA-1
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-79efc957469so556256685a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jul 2024 07:40:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720536058; x=1721140858;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9dNUMlILD/JowgtlDpz/3Xfo0pUbwll0dZL3HCPAgDc=;
+        b=jtVGLuXGdlTj6G6t4ezxHhy74STcTv6Vk2vCDl9Fy5E1XngrRnf/AdhbsYDXK+hcvi
+         juZtMz7qSZ5SiNMo9FIPZ2grOgdGgG/eWND48P+izLiX/qEtULk+dYmz5CZCyFNAg3kn
+         VIRxt7/YklpETm8PZuWHVsJNG1JVshCf8rxmh0uB1NfUzgBu1Czu7m95iF7Zfp3iifJ3
+         RcYsXF44+3UYxWLijb4VDHLgJirv0Z4+XLfKZItmsquulWpl1VSjk4phj0oscjQl/wAc
+         XbPsBDVR6U/lkwf20ywzKIVLYQzBYP1BBimBzUo62RTnPgwFREm9XBKtS0g1SO1wmivn
+         GEvQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUC0bGfrXcbIi5JNqoaXGFHmD2XyDTq7CLKk3Un6+w5SGV6zd1H5GgH9ucQ5pA9cXOWWWYYTHNxmGcdBtsxBqy66DWeMOS5y6Dxk/6ztw==
+X-Gm-Message-State: AOJu0YweJm/GZseRGGn4iQodCMr/Fp3Cw6tXTYRbynJQwv0wsmJLeGio
+	jIL9yE0bQpfbLKOVTDBzgrmAmLg17k2a6cF7hE6O6HNZJWAR09bP13blqh8urkg0ljy/aYXwsDe
+	WlCgtJYsZQ193sdJgqzXe5St/pYVBEmSg9xSlHqFoMTyXBQi7bqa5XMTsuUUfbRU=
+X-Received: by 2002:a05:620a:1926:b0:79f:68a:4d10 with SMTP id af79cd13be357-79f19a64fafmr349732885a.25.1720536058262;
+        Tue, 09 Jul 2024 07:40:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFnyT5xuAnGF3d6+RqcZrSyPI6vPv662QIU9QcvPWdPyiZO1DjY4R2T/cM0JO2WXzwX3CsQiA==
+X-Received: by 2002:a05:620a:1926:b0:79f:68a:4d10 with SMTP id af79cd13be357-79f19a64fafmr349730385a.25.1720536057997;
+        Tue, 09 Jul 2024 07:40:57 -0700 (PDT)
+Received: from x1gen2nano ([2600:1700:1ff0:d0e0::40])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-79f18ff834csm102827385a.5.2024.07.09.07.40.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Jul 2024 07:40:57 -0700 (PDT)
+Date: Tue, 9 Jul 2024 09:40:55 -0500
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Tengfei Fan <quic_tengfan@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>, Jose Abreu <joabreu@synopsys.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, kernel@quicinc.com, netdev@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v2 2/2] net: stmmac: dwmac-qcom-ethqos: add support for
+ emac4 on qcs9100 platforms
+Message-ID: <g7htltug74hz2iyosyn3rbo6wk3zu54ojooshjfkblcivvihv2@vj5vm2nbcw7x>
+References: <20240709-add_qcs9100_ethqos_compatible-v2-0-ba22d1a970ff@quicinc.com>
+ <20240709-add_qcs9100_ethqos_compatible-v2-2-ba22d1a970ff@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240709-add_qcs9100_rpmh_clk_compatible-v2-2-b6f516c36818@quicinc.com>
-References: <20240709-add_qcs9100_rpmh_clk_compatible-v2-0-b6f516c36818@quicinc.com>
-In-Reply-To: <20240709-add_qcs9100_rpmh_clk_compatible-v2-0-b6f516c36818@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Tengfei Fan <quic_tengfan@quicinc.com>
-X-Mailer: b4 0.15-dev-a66ce
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1720535739; l=1122;
- i=quic_tengfan@quicinc.com; s=20240709; h=from:subject:message-id;
- bh=/7V0EJxNZ4cEHLfTToLfwG5Wl7+cvEDF+WpH3vQtF7w=;
- b=VpBE2NUBCpPrPTAvozBOwJ3ZD1QF/Tk8aXbOOt6tGJckq6t95+fFXeHuaWuKvracxK5BktQji
- 3OEMb2MT2E6ABkmXMI36czryXAJ/MNOLudcHMXrk6CeXacppkKGUg2H
-X-Developer-Key: i=quic_tengfan@quicinc.com; a=ed25519;
- pk=4VjoTogHXJhZUM9XlxbCAcZ4zmrLeuep4dfOeKqQD0c=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Izs8vD4YGjESvH9WrxZXJaupdSjquVGc
-X-Proofpoint-ORIG-GUID: Izs8vD4YGjESvH9WrxZXJaupdSjquVGc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-09_04,2024-07-09_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=915
- suspectscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 spamscore=0
- clxscore=1015 adultscore=0 malwarescore=0 mlxscore=0 bulkscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407090095
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240709-add_qcs9100_ethqos_compatible-v2-2-ba22d1a970ff@quicinc.com>
 
-Adds the RPMH clocks present in QCS9100 SoC.
-QCS9100 is drived from SA8775p. Currently, both the QCS9100 and SA8775p
-platform use non-SCMI resource. In the future, the SA8775p platform will
-move to use SCMI resources and it will have new sa8775p-related device
-tree. Consequently, introduce "qcom,qcs9100-rpmh-clk" to the rpmh clock
-device match table.
+These patches are for netdev, so you need to follow the netdev
+rules, i.e. the subject should be have [PATCH net-next] in it, etc as
+documented over here:
 
-Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
----
- drivers/clk/qcom/clk-rpmh.c | 1 +
- 1 file changed, 1 insertion(+)
+    https://docs.kernel.org/process/maintainer-netdev.html#tl-dr
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index bb82abeed88f..8131afba85d6 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -876,6 +876,7 @@ static int clk_rpmh_probe(struct platform_device *pdev)
- }
- 
- static const struct of_device_id clk_rpmh_match_table[] = {
-+	{ .compatible = "qcom,qcs9100-rpmh-clk", .data = &clk_rpmh_sa8775p},
- 	{ .compatible = "qcom,qdu1000-rpmh-clk", .data = &clk_rpmh_qdu1000},
- 	{ .compatible = "qcom,sa8775p-rpmh-clk", .data = &clk_rpmh_sa8775p},
- 	{ .compatible = "qcom,sc7180-rpmh-clk", .data = &clk_rpmh_sc7180},
+On Tue, Jul 09, 2024 at 10:13:18PM GMT, Tengfei Fan wrote:
+> QCS9100 uses EMAC version 4, add the relevant defines, rename the
+> has_emac3 switch to has_emac_ge_3 (has emac greater-or-equal than 3)
+> and add the new compatible.
 
--- 
-2.25.1
+This blurb isn't capturing what's done in this change, please make it
+reflect the patch.
+
+Thanks,
+Andrew
 
 
