@@ -1,173 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-25676-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7504492BD43
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 16:43:00 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F3CB92BD60
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 16:48:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 979FF1C23AAA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 14:42:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3EDE6B22971
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 14:48:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1085194A74;
-	Tue,  9 Jul 2024 14:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CBF615B57D;
+	Tue,  9 Jul 2024 14:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J9QIpnUp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R+QwylVN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3731684AE;
-	Tue,  9 Jul 2024 14:42:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01B41E864;
+	Tue,  9 Jul 2024 14:48:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720536170; cv=none; b=DYO1PWVqoC4ZJY7IUdwwAiQ08j6IslFfoo6YRL3vfAITwwGbKIY2A5Vqe4Ftlv08W7SQ9te1fG1VIDuNOryNGGpo4/o1iFstSo78848VzI/AZsQjIwoITCZuSDb5HZa//nwSd0Axl6RF1HO2jGznG2N4RneA7XvO0COQhByRBf8=
+	t=1720536498; cv=none; b=FhGTJcAd5SPHlCKGCtkmBskmeaGa2buX44A1itcbYf0NFp1YDgK4ucbTGZsSfc0q6PGBgtcgK1I0lp5qd7H0rPVavxquzB7AwcQLgJZt/vBX553Zd+sN1NiDiIm9SGrpnFrYxV9EGU1OVR2KEBpt/OOr0nInJe1/yjgKw7dLvPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720536170; c=relaxed/simple;
-	bh=VQb5HbnAAByGw4UpXRmO5+2h/szz+KBf2dd25NC67wg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=T+jM6jSVxKpyKbCw/YAkoWi8jAOdDzmGVopKycrgatnWEWAfYPcVRMtSeBLE52ZztP7uGJR8CtBHN3J5K/vCdqa+wFvjCIF/OrE1YPn8TSN3YEgFJPsJv3SKsBzv43/Bkyyscdnz0AujJuv22HHlUw9PGcPvn6+HUXZsPGQqw5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J9QIpnUp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB8BC32786;
-	Tue,  9 Jul 2024 14:42:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720536170;
-	bh=VQb5HbnAAByGw4UpXRmO5+2h/szz+KBf2dd25NC67wg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=J9QIpnUpFtPW7X9iVzt18ET+maZ+keqhGsGaUHuaqQFkC1Q4UO+XywiFHGGdi2WJ2
-	 qiLvsB2/UcjtnrKu4AjzB+g2mPZre5hDDFR/cUgD2JBwtLrPGo+rJ26JwwrwTxZJ1K
-	 S5QeeLe5OzFzAePXFaWMuNqcUjjgljCs/DA2l4NOIaWLY8/3Cd+tenZ1nQcymxaa8P
-	 JVnOVnQfTCIDu7aL9rl2K72UDKkcB9b4H2Ck8P4BhcGwT7uZJpu9Y+CpMdcIc/Z6+k
-	 N3R8FX47L4XfCouHCsfEBxC8rPpp1bAUCn6XpWAWT/Sedrnoepx9x7tMMef1BlemDi
-	 9FYEiohFcpH1w==
-Message-ID: <d35f5c94-7a86-4eea-bb0a-3f2785a25465@kernel.org>
-Date: Tue, 9 Jul 2024 16:42:39 +0200
+	s=arc-20240116; t=1720536498; c=relaxed/simple;
+	bh=obvu4AFTHypPGBDGsMt159u0CvdKU5rXLIZAGwgZKQY=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=W0/3NCKdlnIOmpr/CazlpkfhTucZ15nM32Aa/MBwMmEd4TRCfWgwPn3JkGQH9BGSlIn/GjKpueJLyLdan0O3fpvKRwhUKfPNhRSN0Lgjw3Xfy90mxp6ow1KoJAEml98Wtdd7WUPDfVLDf0rrf+cSRIs3+au2xd4+vgDImlcBRHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=R+QwylVN; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 469BaWrs012241;
+	Tue, 9 Jul 2024 14:48:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=h/oZ+UH0tyjqddH19wO2+Q
+	w5NyLzsBuiaahhLERuhEk=; b=R+QwylVNFe1fpvr0jHayQRg5NwElJfVPC9rlP/
+	hLVDmp+V11cZgJksqAAPznCFLaWl8zFtB1IG53aIGg1lfQuImI5un47LoXsJ1i/h
+	5tB44xcGA5E3R1SaW436pKfS5i0PT4rXyvn9NmLMASMyjdv45VQHPhYirK6DLqlV
+	hau3I0wF0hExpmgip2YOQmkCSxJAt+jBcgNGEq3MiyxqS9tqx5srhqcAhT6cTr+z
+	PJcZodeXFRUGc4NyfdGKHeALy8PF+ScSUa1E7wJcJV4ynukjcOCcmPdtmbBY3fQg
+	GVVyaQ8dGxDSgrU0anHXech6PCxNdFGPRyDxWjXTETRgSXtw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406wmmpvr0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Jul 2024 14:48:09 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 469Em8aS014922
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 9 Jul 2024 14:48:08 GMT
+Received: from tengfan-gv.ap.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 9 Jul 2024 07:48:03 -0700
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+Subject: [PATCH v2 0/2] phy: qcom-qmp-pcie: Add QCS9100 x4 lane EP
+ compatible
+Date: Tue, 9 Jul 2024 22:47:53 +0800
+Message-ID: <20240709-add_qcs9100_pcie_phy_compatible-v2-0-c68f1e38560b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 01/10] MAINTAINERS: Include new Qualcomm CPR drivers
- in the file list
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
- Stephen Boyd <sboyd@kernel.org>, Niklas Cassel <nks@flawful.org>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Viresh Kumar <viresh.kumar@linaro.org>, Ulf Hansson
- <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: Robert Marko <robimarko@gmail.com>, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-pm@vger.kernel.org, Jeffrey Hugo <quic_jhugo@quicinc.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Varadarajan Narayanan <quic_varada@quicinc.com>
-References: <20240708-topic-cpr3h-v15-0-5bc8b8936489@linaro.org>
- <20240708-topic-cpr3h-v15-1-5bc8b8936489@linaro.org>
- <cd1c3450-1905-4d71-bcdd-5f880d743820@kernel.org>
- <94b2842b-6093-4c4d-a099-3e0a3198b753@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <94b2842b-6093-4c4d-a099-3e0a3198b753@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJlNjWYC/zXNQQ6DIBCF4asY1sXMYI3aVe/RGEIBdZIWEaypM
+ d69aNLl9xbv31i0gWxkt2xjwS4UaXQJ4pIxPSjXW04mmQkQV6ig4coYOenYIID0mqz0wyr1+PZ
+ qpufL8rJAhcJoUSCy9OKD7eh7Fh5t8kBxHsN6Bhc81v93AaKsS8gFVgKg5sinD2k5W9d3yt0Pk
+ NN5arF23/cf4dg9DLsAAAA=
+To: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Tengfei Fan <quic_tengfan@quicinc.com>
+X-Mailer: b4 0.15-dev-a66ce
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1720536482; l=1699;
+ i=quic_tengfan@quicinc.com; s=20240709; h=from:subject:message-id;
+ bh=obvu4AFTHypPGBDGsMt159u0CvdKU5rXLIZAGwgZKQY=;
+ b=V7VBNC5phjCRasjn68VAavnYa0yjw49YHVN7U42lsPH51cg9hZ/rt3RIx5eXoO1GfdKX+7nc7
+ 9aRDHY4csbzCU/eSqVSYQenKyjDS3xH4sXv1BuBzWPyAfsBr7d4mU13
+X-Developer-Key: i=quic_tengfan@quicinc.com; a=ed25519;
+ pk=4VjoTogHXJhZUM9XlxbCAcZ4zmrLeuep4dfOeKqQD0c=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: JHJaTF6Gud-9QiMBMOuBP0AlehMEgJa-
+X-Proofpoint-ORIG-GUID: JHJaTF6Gud-9QiMBMOuBP0AlehMEgJa-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-09_04,2024-07-09_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 lowpriorityscore=0 spamscore=0 bulkscore=0 adultscore=0
+ impostorscore=0 suspectscore=0 malwarescore=0 mlxscore=0 mlxlogscore=768
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407090096
 
-On 09/07/2024 11:49, Konrad Dybcio wrote:
-> On 9.07.2024 11:04 AM, Krzysztof Kozlowski wrote:
->> On 08/07/2024 14:22, Konrad Dybcio wrote:
->>> Expand the Qualcomm Core Power Reduction section to include the files
->>> concerning CPR3+ support.
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
->>>  MAINTAINERS | 5 +++--
->>>  1 file changed, 3 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/MAINTAINERS b/MAINTAINERS
->>> index dcb37b635f2c..f3e013a52c16 100644
->>> --- a/MAINTAINERS
->>> +++ b/MAINTAINERS
->>> @@ -18687,14 +18687,15 @@ F:	Documentation/accel/qaic/
->>>  F:	drivers/accel/qaic/
->>>  F:	include/uapi/drm/qaic_accel.h
->>>  
->>> -QUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER
->>> +QUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVERS
->>>  M:	Bjorn Andersson <andersson@kernel.org>
->>>  M:	Konrad Dybcio <konrad.dybcio@linaro.org>
->>>  L:	linux-pm@vger.kernel.org
->>>  L:	linux-arm-msm@vger.kernel.org
->>>  S:	Maintained
->>>  F:	Documentation/devicetree/bindings/power/avs/qcom,cpr.yaml
->>> -F:	drivers/pmdomain/qcom/cpr.c
->>> +F:	Documentation/devicetree/bindings/soc/qcom/qcom,cpr3.yaml
->>
->> Maybe combine these two into:
->> Documentation/devicetree/bindings/power/avs/qcom,cpr*
-> 
-> I think avs was proposed to be a subsystem/driver directory at some point
-> and (adaptive voltage source? something like that) and this is the only file
-> in that directory in bindings..
-> 
-> Should we continue with this "class" of devices, or should I move qcom,cpr.yaml
-> to soc?
+Introduce support for the QCS9100 SoC device tree (DTSI) and the
+QCS9100 RIDE board DTS. The QCS9100 is a variant of the SA8775p.
+While the QCS9100 platform is still in the early design stage, the
+QCS9100 RIDE board is identical to the SA8775p RIDE board, except it
+mounts the QCS9100 SoC instead of the SA8775p SoC.
 
-Rather cpr3 should be moved to avs or some other power directory. "soc"
-is fallback, junkyard for things without clear domain.
+The QCS9100 SoC DTSI is directly renamed from the SA8775p SoC DTSI, and
+all the compatible strings will be updated from "SA8775p" to "QCS9100".
+The QCS9100 device tree patches will be pushed after all the device tree
+bindings and device driver patches are reviewed.
 
+The final dtsi will like:
+https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-3-quic_tengfan@quicinc.com/
+
+The detailed cover letter reference:
+https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
+
+Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+---
+Changes in v2:
+  - Split huge patch series into different patch series according to
+    subsytems
+  - Update patch commit message
+
+prevous disscussion here:
+[1] v1: https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
+
+---
+Tengfei Fan (2):
+      dt-bindings: phy: qcom,qmp: Add qcs9100 QMP PCIe PHY
+      phy: qcom-qmp-pcie: add x4 lane EP support for QCS9100
+
+ .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml         | 4 ++++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c                            | 6 ++++++
+ 2 files changed, 10 insertions(+)
+---
+base-commit: 0b58e108042b0ed28a71cd7edf5175999955b233
+change-id: 20240709-add_qcs9100_pcie_phy_compatible-531a12dc2311
 
 Best regards,
-Krzysztof
+-- 
+Tengfei Fan <quic_tengfan@quicinc.com>
 
 
