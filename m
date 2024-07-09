@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-25562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5778692B2C2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 10:57:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B06892B2D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 10:58:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0CB48281CF0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 08:56:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A93E91F20FC7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 08:58:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 064D615530B;
-	Tue,  9 Jul 2024 08:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27F34153804;
+	Tue,  9 Jul 2024 08:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jb1n7ZGx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p4MxdI37"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B80155305;
-	Tue,  9 Jul 2024 08:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACFC153512;
+	Tue,  9 Jul 2024 08:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720515379; cv=none; b=a+0bKMWulmF1bmC5n/XRL9Z2hRZxo0iWMblrDVgCA/xKKSW5w+++KIedPCl82YYonl4cF/ZmKA1H4g7h2ko7EuEupyq5HP968hjcc5OYiCLqWqMeBAvlGB5V3xrULWN00f+tMRgbspRGklkemaMKlQIwlQ3AzVHjYf6EJXPyqBk=
+	t=1720515507; cv=none; b=jgN7UVk+js/Gvs48cuudVB7pHFpkaEC0GGL9AHVSm3NJbRROuWhvj92VU9QuPi40y2BbVwWc4fHg0epP4hTVt0eu1WN6++uevZyxwR2Ig8bvmvIOf6KSF6yXsfOxBQHVCAn5YtET+sCfOcvG1NeK26Uq1XF4HAtnbgyJVBRBbiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720515379; c=relaxed/simple;
-	bh=gHc9RSH+e3j/WwdDodJDVWQCYpvtbgRfjF/TXwAZgEg=;
+	s=arc-20240116; t=1720515507; c=relaxed/simple;
+	bh=b2Wfb3kOckWDMuESImkDZ+giZ/cFZ5g5ADwWWpBn08A=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WT1l2ETpxpQDRonCXvYf6xSgY9Tib6drIMFgqF8zhADOSy/lWdB9yaY3VMFoppY0WJPoexFf/SnoS6PhIKE8v/nfpw1wNvGUn8vsPW9Z+BkMBKhHM4uvoVtrWGZ6uj1FPr0FVW/K69hMfwX+k2LaN+sOcT8NJTGVooPXc0brlHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jb1n7ZGx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DDBC3277B;
-	Tue,  9 Jul 2024 08:56:12 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=hEPungPPpeqqUuybXMsngZah0bXvh6TkHYWUIC2r/LsihlEh+aQ8khUJC/ufYwo/pL2f74yeI1gqJ7DHoQM1cbz0GYiFZ2aHwh5MwkWD8Ve+SrvA7Bnsxma/PBY8S6DK3bj/m03O1XowtgkhFheAmSZKjVoFn9jJCi1PIllJJHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p4MxdI37; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D5F4C3277B;
+	Tue,  9 Jul 2024 08:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720515379;
-	bh=gHc9RSH+e3j/WwdDodJDVWQCYpvtbgRfjF/TXwAZgEg=;
+	s=k20201202; t=1720515506;
+	bh=b2Wfb3kOckWDMuESImkDZ+giZ/cFZ5g5ADwWWpBn08A=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=jb1n7ZGxpv9+KrBXhgQXw5fcbHJQpIIFgYDRLb5ElDunWbiKLlmIp8N/t6vDHwvjk
-	 cGs+wNWsVKFbaOGibSu+Zid5xTiz7FwP5wyJG3eXtGIne8BLjAV5efIR9+AhIzBOjP
-	 uSoFfm+WPygeeubJawbQcm/M3ey2acAc/gyVvA89sh9fiUqQ2QLOJ2T8GS/FF/pFwB
-	 fr5E9NAvYGgmqnxyIAUjwEs52Pgltz6hGmuXCYZP6xphvdsamLiXBOZiSkFTXxrcNz
-	 1FI0j8xfvw5wvn6Xj75rplujAVSa3Qz4XNnxKUNp1OLq2pq1pQBrcF9pj47mO1CeNJ
-	 6ROYMpiGKrMKA==
-Message-ID: <3ba8bcde-496c-4084-8941-397b4dd7f55f@kernel.org>
-Date: Tue, 9 Jul 2024 10:56:10 +0200
+	b=p4MxdI376o+n7vsoiq3K2I7WOj3XJQZ1+j9Li9yGDf1I4YSwgXHb430aIV7HFaU9T
+	 LcNAJ9eYrE9+cPwUtZN7jV6swLDE8LCmd0zs0rsCATaNb9D9VDpt3jRoktPh/ff8lS
+	 AzPw7ey4mOkH0T0yJ15sL7qNPyCJRd7J0eQoKVYI0gJwhqpcbCraOhrZbaV4Ka4SYn
+	 yWmNtUhtnHlR06QyrjVGQURToXtIG3w3ankcDltO92pfoJg+F6VT6iPXNq7TzHdXzJ
+	 zTRbdofz51zlchLsmP7Os7gDXnTovQDyH6L+fR3a8fGlkou+bYG+aNJ20m8x8mMMGC
+	 4llHgd3pg4Yfw==
+Message-ID: <becdf6b3-6eaf-497d-a7c3-d4783b7683b4@kernel.org>
+Date: Tue, 9 Jul 2024 10:58:16 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/2] dt-bindings: net: qcom: ethernet: Add interconnect
- properties
+Subject: Re: [PATCH v4 0/2] Add interconnect support for stmmac driver.
 To: Sagar Cheluvegowda <quic_scheluve@quicinc.com>,
  Vinod Koul <vkoul@kernel.org>,
  Alexandre Torgue <alexandre.torgue@foss.st.com>,
@@ -68,7 +67,6 @@ Cc: kernel@quicinc.com, Andrew Halaney <ahalaney@redhat.com>,
  linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
  devicetree@vger.kernel.org
 References: <20240708-icc_bw_voting_from_ethqos-v4-0-c6bc3db86071@quicinc.com>
- <20240708-icc_bw_voting_from_ethqos-v4-1-c6bc3db86071@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -114,34 +112,33 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240708-icc_bw_voting_from_ethqos-v4-1-c6bc3db86071@quicinc.com>
+In-Reply-To: <20240708-icc_bw_voting_from_ethqos-v4-0-c6bc3db86071@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 08/07/2024 23:30, Sagar Cheluvegowda wrote:
-> Add documentation for the interconnect and interconnect-names
-> properties required when voting for AHB and AXI buses.
+On 08/07/2024 23:29, Sagar Cheluvegowda wrote:
+> Interconnect is a software framework to access NOC bus topology
+> of the system, this framework is designed to provide a standard
+> kernel interface to control the settings of the interconnects on
+> an SoC.
+> The interconnect support is now being added to the stmmac driver
+> so that any vendors who wants to use this feature can just
+> define corresponging dtsi properties according to their
+> NOC bus topologies.
 > 
-> Suggested-by: Andrew Halaney <ahalaney@redhat.com>
+> here is a patch series which is enabling interconnect support
+> for ethernet node of SA8775P
+> https://lore.kernel.org/all/20240708-icc_bw_voting_emac_dtsi-v1-1-4b091b3150c0@quicinc.com/ 
+> 
 > Signed-off-by: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
+> ---
+> Changes in v4:
+> - Add reference to the series which is enabling interconnect-properties defined in this series
+> - Link to v3: https://lore.kernel.org/r/20240703-icc_bw_voting_from_ethqos-v3-0-8f9148ac60a3@quicinc.com
 
-<form letter>
-This is a friendly reminder during the review process.
-
-It looks like you received a tag and forgot to add it.
-
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-If a tag was not added on purpose, please state why and what changed.
-</form letter>
+You got two or three times review, but you keep ignoring it. You are
+expecting the community to keep doing the same work, which is waste of
+our time and resources.
 
 Best regards,
 Krzysztof
