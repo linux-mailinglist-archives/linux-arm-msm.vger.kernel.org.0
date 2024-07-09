@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-25696-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25697-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4A2292BE60
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 17:29:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05E9992BE65
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 17:30:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C7BDA1C230E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 15:29:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B10F8289264
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 15:29:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D31B919DF99;
-	Tue,  9 Jul 2024 15:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B76219E801;
+	Tue,  9 Jul 2024 15:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="USC/nyOG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DyLy/oCA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0362119DF51
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jul 2024 15:28:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD6019E7F2
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jul 2024 15:28:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720538930; cv=none; b=TbHCRMhy1YIzIo4rTmSBoJNUsQwZsHW5Q6rg3PDS8db8Nq7RmkvjDxo/o2DGNj6aRfk7EfmkI6rk5maqxZpWtH+w9V6YlQXVA9gsd8slBXoHjModbtcERc596n1Hcscz6+QulZe3Y8iFbZxtHcFvW6AoQN3caqAx02LJxbNFaw8=
+	t=1720538934; cv=none; b=GBgiipZMwx0f+7hKNjEy71R/K8hFdMJiT4/AnUEKLvnGabuwX3kyRfOlWMLCecYAEXZryLJsfP/tJkSqPCBPvoBQy2tHTLbmbTbO0sTb98BDpCz0+fwnlm2KtLnTUhBj8ukCQZNAEH8RYoNe4PIPfgZsEl4rgPL05NR2GfZGUmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720538930; c=relaxed/simple;
-	bh=Xq8uJAy88lv1uxCiheZGM9OSarqyJTMwcEDG1B96A2Y=;
+	s=arc-20240116; t=1720538934; c=relaxed/simple;
+	bh=3PoSvU8RpFcazekfoaaScSpR1wxv8/6f43Gz5oYx63w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gWU+0Ea/j5pbpeoW+LhKJx4Ebrpy4VDhQzfx+agDCjoAVD/Rl3hYgBEFAPbHTCVl2kv/iLCNw/8q/y5P/n+yausOs93etxeXx23zde1NfHpQV9pOQq0LHLkC9MGrQt43zhyFxiVsFpJyqwc6HDCPAZpw+UWYshQIMSxhLUE5xcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=USC/nyOG; arc=none smtp.client-ip=209.85.128.41
+	 MIME-Version; b=cpCAeG/o0cbuOKrQWwaw+FedYioKwtSDMDJuBfQ9Asx2f6ZxA8jljBaG0f15GXMxj2i53j1oBSCnpdqFCSD30D/F6jmc1VcFg156rVP6aUs4er9q/ZA/620A6Pn7pourUbs6YE+bSSwnXvXhvuSKAR1rVE4Y05nnPgYtCv5oQZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DyLy/oCA; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-42679f33fefso5048185e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jul 2024 08:28:48 -0700 (PDT)
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-42671a676c7so7905535e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jul 2024 08:28:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720538927; x=1721143727; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1720538931; x=1721143731; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DNtSueuDtXsARVEbcRgGrAWRHcIqldsm424wzohUyiY=;
-        b=USC/nyOGym9uD8D9PN4NldFBkE0D/SuRbr/fdEdx0zKNph4f0yOz/Imit4zsHVeLv8
-         yII0uFILGQTf9xj4x4mS3v8VC2l5xY1WEI44oC7tXfhSXodz0gTfUIvVKEXLel5T2pC/
-         ZsEiij8+/xe2CabCfPzLzEzyk0Rr9qPd+BZJT6222wAWV8oqCG6FSA6tlfSwuWwEvwjN
-         4lzyvW/3qC4Q+CyPlMi+xBvr5+mPP1GFMrn0cQrR1haAi+060eqvi2rFRrc0Iuj+4/Li
-         QXT1Tj9oLg+QfCpmlPkE0ukI8J8EyhOCFAdPxu8boqfJkFU/ArvXq76MragiV+rIKD3F
-         RteA==
+        bh=rr3GSFWqoAD9HFFPG7fGztnMb9LgjvrtTWNplj4lKO0=;
+        b=DyLy/oCAQ3krLJ+rvFrbNSlHVwPlQ2xBdMqCRfIDBMu1wxS4JlDSDWNzCj7JRnPeL/
+         fq2H2szFVYPdGE/AdaFBlZc3BYtW5N6eJHfwTRxDVtulXzxNH5LH4GdCOSL5zwOa7IJn
+         egDw8CqyBFXksSIlDyuEEvAR+ySfqoG4awh2WUZOKTCXjCidhDCpC0F385nJ9dz92qlu
+         Ytld2VdxxflOczH7p1MGQrlNKC9eI+2a1YmhOmVv1kC7dAc+VBqR88iGzwTfsHMh9AI0
+         FLjzhiyR1SuheQ1rV5OvPFXnGwh2ujlver3aggOUgXir6tiXP2osXj6Dtl3EHB8svi4E
+         y4SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720538927; x=1721143727;
+        d=1e100.net; s=20230601; t=1720538931; x=1721143731;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DNtSueuDtXsARVEbcRgGrAWRHcIqldsm424wzohUyiY=;
-        b=s7m3XhlXDb6/7HiX5X1YVC/R0wkdc/Y7GwhVwVeXi9GC7CjCTs3rNgWzGROWCe3Urh
-         RFIWvT1BhRuDBJvPL9wt4qPOmi0mOeY8haIAYi3ifizgt4gufZERgL+xRbg0t5zP5gG6
-         weJUCWrCbK0JB+kMBiZP0G6wZkpgzCv+KgZh1pcdqBP4a38KR6SAMCnHViAPdGIa5GIM
-         byJ9pc04Alr+0pUSEguY7tY0d20DCxvCWhpTsoSE3OQSirIT1IQI5nUSMzogroIA5v+F
-         Gy523qTKYPYkVlqNJJ1rq6wxysfcxiRcW988Xnzpz+VnJu+4+mklEgXf4DEbIKH23b60
-         Tmqw==
-X-Forwarded-Encrypted: i=1; AJvYcCU7dEp22uxfv7tJeFLvtHxUqsz5pFnE3kXxsTF9V6PLR68cB4SJc9ZRz0YfWPuHw3XVXL5tuNmHccSFzrKMwNGP3Ga7w0GcX6EidlNotA==
-X-Gm-Message-State: AOJu0YydDKeAFJM0uJrGa8Zk7+c6KFtQH4O7p38/uwDg0/fzMBfbjLhB
-	rMCZgEPKdSoq+uanf4E89J4mB3FUsUR47WIst/zHdRFptXn8wS6lsWiLntWv21c=
-X-Google-Smtp-Source: AGHT+IEiiEdiOEJvS824Y/O3HEpYDyOdjBG53LXdLiwlz6IeDKbNx00nUjCQ8cB6GpjwQh1jLEsC5w==
-X-Received: by 2002:a05:600c:4a05:b0:426:6618:146a with SMTP id 5b1f17b1804b1-426707cf1c8mr19505775e9.2.1720538927353;
-        Tue, 09 Jul 2024 08:28:47 -0700 (PDT)
+        bh=rr3GSFWqoAD9HFFPG7fGztnMb9LgjvrtTWNplj4lKO0=;
+        b=j+kvgniwlZyplADgZVUjnG9jBU+dQmECVTeqbQwF7N7t1EOS7u7LUp1y/vASmOGJQ8
+         RJhABLtUPdlHL7rKfVAQSFSNUuwSmUMjj+HAuka+gqzG6E5RCuH6jqiVWZWFR/jkrwop
+         I2rP1qkGPfSThagnAn2+4ssHXCoE2HrmIDR+MPGr9V28UcIrimFNz9lHO4yD4BddKMLo
+         BxUR5L6HdrdgpOwceuZi26nI6E4PjpfDUEfYIE4oV5y+UMyGSvb2mk55FGvAhOazepQx
+         zRv4Glzqk3DAfattZaf6CxIIy4A7irkLHu6TQZKnjldZAjbIs0QmgVv17EOjpt9OYaso
+         z6UQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWYzb5z3ywHWgNsLuX+p27tkeaSD3qqnO9dHz9h5Nl9LDM6K0N0ixzoaBY/XyKoIs6DEJJraInKx+nUel8eW/CgizXhZazlLrSbBeGI0A==
+X-Gm-Message-State: AOJu0Yy33TEeMJ//LWROFyV1O73VSibwA7qs21rheWhwT9S1jDRFdAC9
+	6GV9kjDxWF4SqtY0RXomlhV6UV3jhhSVCv5ZJ8hxRMUSDIw/Xy9ggxMAROP46MU=
+X-Google-Smtp-Source: AGHT+IF4NFy7/t/rb7zZIftACNCfbYCcto8cUw9zZFhNxIMxce8lrJOhUjAw1tc171MTvAxJ5BdJSA==
+X-Received: by 2002:a05:600c:6d4:b0:426:6b85:bafb with SMTP id 5b1f17b1804b1-426707db6e7mr16978265e9.20.1720538931001;
+        Tue, 09 Jul 2024 08:28:51 -0700 (PDT)
 Received: from rayyan-pc.broadband ([2a0a:ef40:ee7:2401:197d:e048:a80f:bc44])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4266f6f5a32sm45883775e9.24.2024.07.09.08.28.46
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4266f6f5a32sm45883775e9.24.2024.07.09.08.28.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jul 2024 08:28:47 -0700 (PDT)
+        Tue, 09 Jul 2024 08:28:50 -0700 (PDT)
 From: Rayyan Ansari <rayyan.ansari@linaro.org>
 To: devicetree@vger.kernel.org
 Cc: Rayyan Ansari <rayyan.ansari@linaro.org>,
@@ -81,9 +81,9 @@ Cc: Rayyan Ansari <rayyan.ansari@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 1/2] ASoC: dt-bindings: qcom,msm8916-wcd-digital-codec: convert to dtschema
-Date: Tue,  9 Jul 2024 16:24:42 +0100
-Message-ID: <20240709152808.155405-2-rayyan.ansari@linaro.org>
+Subject: [PATCH 2/2] ASoC: dt-bindings: qcom,apq8096-sndcard: use dtschema
+Date: Tue,  9 Jul 2024 16:24:43 +0100
+Message-ID: <20240709152808.155405-3-rayyan.ansari@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240709152808.155405-1-rayyan.ansari@linaro.org>
 References: <20240709152808.155405-1-rayyan.ansari@linaro.org>
@@ -95,103 +95,162 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Convert the Qualcomm MSM8916 WCD Digital Audio Codec bindings from text
-to yaml dt schema format.
-Make bindings complete by adding #sound-dai-cells.
+Remove old txt bindings and add apq8096 soundcard entry to existing
+dt schema.
 
 Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
 ---
- .../sound/qcom,msm8916-wcd-digital-codec.yaml | 53 +++++++++++++++++++
- .../sound/qcom,msm8916-wcd-digital.txt        | 20 -------
- 2 files changed, 53 insertions(+), 20 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/sound/qcom,msm8916-wcd-digital-codec.yaml
- delete mode 100644 Documentation/devicetree/bindings/sound/qcom,msm8916-wcd-digital.txt
+ .../bindings/sound/qcom,apq8096.txt           | 128 ------------------
+ .../bindings/sound/qcom,sm8250.yaml           |   1 +
+ 2 files changed, 1 insertion(+), 128 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/sound/qcom,apq8096.txt
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,msm8916-wcd-digital-codec.yaml b/Documentation/devicetree/bindings/sound/qcom,msm8916-wcd-digital-codec.yaml
-new file mode 100644
-index 000000000000..5e7d15b61ad6
---- /dev/null
-+++ b/Documentation/devicetree/bindings/sound/qcom,msm8916-wcd-digital-codec.yaml
-@@ -0,0 +1,53 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/sound/qcom,msm8916-wcd-digital-codec.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm MSM8916 WCD Digital Audio Codec
-+
-+maintainers:
-+  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+
-+description:
-+  The digital WCD audio codec found on Qualcomm MSM8916 LPASS.
-+
-+properties:
-+  compatible:
-+    const: qcom,msm8916-wcd-digital-codec
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    minItems: 2
-+    maxItems: 2
-+
-+  clock-names:
-+    items:
-+      - const: ahbix-clk
-+      - const: mclk
-+
-+  '#sound-dai-cells':
-+    const: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - '#sound-dai-cells'
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,gcc-msm8916.h>
-+    audio-codec@771c000 {
-+        compatible = "qcom,msm8916-wcd-digital-codec";
-+        reg = <0x0771c000 0x400>;
-+        clocks = <&gcc GCC_ULTAUDIO_AHBFABRIC_IXFABRIC_CLK>,
-+                 <&gcc GCC_CODEC_DIGCODEC_CLK>;
-+        clock-names = "ahbix-clk", "mclk";
-+        #sound-dai-cells = <1>;
-+    };
-diff --git a/Documentation/devicetree/bindings/sound/qcom,msm8916-wcd-digital.txt b/Documentation/devicetree/bindings/sound/qcom,msm8916-wcd-digital.txt
+diff --git a/Documentation/devicetree/bindings/sound/qcom,apq8096.txt b/Documentation/devicetree/bindings/sound/qcom,apq8096.txt
 deleted file mode 100644
-index 1c8e4cb25176..000000000000
---- a/Documentation/devicetree/bindings/sound/qcom,msm8916-wcd-digital.txt
+index e1b9fa8a5bf8..000000000000
+--- a/Documentation/devicetree/bindings/sound/qcom,apq8096.txt
 +++ /dev/null
-@@ -1,20 +0,0 @@
--msm8916 digital audio CODEC
+@@ -1,128 +0,0 @@
+-* Qualcomm Technologies APQ8096 ASoC sound card driver
 -
--## Bindings for codec core in lpass:
+-This binding describes the APQ8096 sound card, which uses qdsp for audio.
 -
--Required properties
-- - compatible = "qcom,msm8916-wcd-digital-codec";
-- - reg: address space for lpass codec.
-- - clocks: Handle to mclk and ahbclk
-- - clock-names: should be "mclk", "ahbix-clk".
+-- compatible:
+-	Usage: required
+-	Value type: <stringlist>
+-	Definition: must be "qcom,apq8096-sndcard"
+-
+-- audio-routing:
+-	Usage: Optional
+-	Value type: <stringlist>
+-	Definition:  A list of the connections between audio components.
+-		  Each entry is a pair of strings, the first being the
+-		  connection's sink, the second being the connection's
+-		  source. Valid names could be power supplies, MicBias
+-		  of codec and the jacks on the board:
+-		  Valid names include:
+-
+-		Board Connectors:
+-			"Headphone Left"
+-			"Headphone Right"
+-			"Earphone"
+-			"Line Out1"
+-			"Line Out2"
+-			"Line Out3"
+-			"Line Out4"
+-			"Analog Mic1"
+-			"Analog Mic2"
+-			"Analog Mic3"
+-			"Analog Mic4"
+-			"Analog Mic5"
+-			"Analog Mic6"
+-			"Digital Mic2"
+-			"Digital Mic3"
+-
+-		Audio pins and MicBias on WCD9335 Codec:
+-			"MIC_BIAS1"
+-			"MIC_BIAS2"
+-			"MIC_BIAS3"
+-			"MIC_BIAS4"
+-			"AMIC1"
+-			"AMIC2"
+-			"AMIC3"
+-			"AMIC4"
+-			"AMIC5"
+-			"AMIC6"
+-			"AMIC6"
+-			"DMIC1"
+-			"DMIC2"
+-			"DMIC3"
+-
+-- model:
+-	Usage: required
+-	Value type: <stringlist>
+-	Definition: The user-visible name of this sound card.
+-
+-- aux-devs
+-	Usage: optional
+-	Value type: <array of phandles>
+-	Definition: A list of phandles for auxiliary devices (e.g. analog
+-		    amplifiers) that do not appear directly within the DAI
+-		    links. Should be connected to another audio component
+-		    using "audio-routing".
+-
+-= dailinks
+-Each subnode of sndcard represents either a dailink, and subnodes of each
+-dailinks would be cpu/codec/platform dais.
+-
+-- link-name:
+-	Usage: required
+-	Value type: <string>
+-	Definition: User friendly name for dai link
+-
+-= CPU, PLATFORM, CODEC dais subnodes
+-- cpu:
+-	Usage: required
+-	Value type: <subnode>
+-	Definition: cpu dai sub-node
+-
+-- codec:
+-	Usage: Optional
+-	Value type: <subnode>
+-	Definition: codec dai sub-node
+-
+-- platform:
+-	Usage: Optional
+-	Value type: <subnode>
+-	Definition: platform dai sub-node
+-
+-- sound-dai:
+-	Usage: required
+-	Value type: <phandle with arguments>
+-	Definition: dai phandle/s and port of CPU/CODEC/PLATFORM node.
+-
+-Obsolete:
+-	qcom,model: String for soundcard name (Use model instead)
+-	qcom,audio-routing: A list of the connections between audio components.
+-			    (Use audio-routing instead)
 -
 -Example:
 -
--audio-codec@771c000{
--	compatible = "qcom,msm8916-wcd-digital-codec";
--	reg = <0x0771c000 0x400>;
--	clocks = <&gcc GCC_ULTAUDIO_AHBFABRIC_IXFABRIC_CLK>,
--		 <&gcc GCC_CODEC_DIGCODEC_CLK>;
--	clock-names = "ahbix-clk", "mclk";
--	#sound-dai-cells = <1>;
+-audio {
+-	compatible = "qcom,apq8096-sndcard";
+-	model = "DB820c";
+-
+-	mm1-dai-link {
+-		link-name = "MultiMedia1";
+-		cpu {
+-			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
+-		};
+-	};
+-
+-	hdmi-dai-link {
+-		link-name = "HDMI Playback";
+-		cpu {
+-			sound-dai = <&q6afe HDMI_RX>;
+-		};
+-
+-		platform {
+-			sound-dai = <&q6adm>;
+-		};
+-
+-		codec {
+-			sound-dai = <&hdmi 0>;
+-		};
+-	};
 -};
+diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+index b2e15ebbd1bc..c9076dcd44c1 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+@@ -28,6 +28,7 @@ properties:
+           - const: qcom,sm8450-sndcard
+       - enum:
+           - qcom,apq8016-sbc-sndcard
++          - qcom,apq8096-sndcard
+           - qcom,msm8916-qdsp6-sndcard
+           - qcom,qcm6490-idp-sndcard
+           - qcom,qcs6490-rb3gen2-sndcard
 -- 
 2.45.2
 
