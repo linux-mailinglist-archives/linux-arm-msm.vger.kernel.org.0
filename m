@@ -1,139 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-25538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68B7C92ACD3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 02:00:22 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DE8D92AD12
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 02:24:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0FFEE1F21D2B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 00:00:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C348AB21DC6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 00:24:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98E211514F8;
-	Tue,  9 Jul 2024 00:00:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="N0AlmxtG"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B07B526AD0;
+	Tue,  9 Jul 2024 00:24:29 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E6779DC5
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jul 2024 00:00:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D34AEA4
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jul 2024 00:24:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720483216; cv=none; b=TjED8KKm/tlm+svDbiCndFcteuAEDfLjw4XVfcz0c4VAf4hZF0Net8j75KSNI4WhYFM5iNqrx10OLNHwvC7Zf/jLp1eAv97K8iHvc4ulQ6QAtvgXo5R6EY6IwEJexqERQ29apH9lCN+twUlMOheDszlygaM7cTwrXDiDKXU31m4=
+	t=1720484669; cv=none; b=fuB/HQfySvPrfe6cFcGYkpuCdhZlXlz3ZgVpjKr1vqnEkRhwQiAFATZ3EvdxGNarn9RlcHjAffZujkh/6+d/KWAB3u/QvsjVkzZLAn/xIcIQ/rA9jRh99w2Ub5ONC+gQaHgUq/bkhWTlWWYxKuZZGFrsnaMyfOXfR4LxEKowxs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720483216; c=relaxed/simple;
-	bh=/QOqCulkZsfJOvKr8tAyY6TDc5VsuMJQgVKvIy7i6Qs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HOn5BiOQOeZQKYKLnKDh71xuDR9DWoSPM7tqi8B/ZB/CVe63jQ1NGBo+eg4KdFpHcMbC1gqw6wjKx9pON2JwrlWT/+wxsjHLPPy0J71UxM96f17yU+CVKEnEYFHX6jIiYqYIX1klF8UHq23LmtCOqqC/Vl2Wb2BFQKwsZL0LfQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=N0AlmxtG; arc=none smtp.client-ip=209.85.222.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-79f16cad2a7so53980285a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2024 17:00:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1720483212; x=1721088012; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=osmmEbE4YrUJJsgw8B/lNsRFY328cYQyEWy+PHmk7lU=;
-        b=N0AlmxtGWogx00M0ebnvDMXvNXVOHpbM+JeaXuuGff3UujfIEnv+9HSLzz3pSVrIJ4
-         /Sau7eKa3zFTzlwbNuOzL9ZVcp/jViZmsIwbR85VgcFQ0/f6zXnrH8BlmofulgqTnB7z
-         cn7AROibVXQm6cHNRA6O7oMdKZNZ2il9bMm5A=
+	s=arc-20240116; t=1720484669; c=relaxed/simple;
+	bh=OXijfxSktD32jVhvGlHifwLx3aNVOhgOTQl728nchT0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gO05U6UtTrBSHjjHwTsG1P9jr15YxhSyVqhJXfui1pxLJqP38txmXAjGK+mNysFinJLvH31WUYp5tT1BoqtWy48P7phskraFnOUK1heS/i8wyXeacIjJi4dH1BZe6YeEPeLKfvGUIs1nT1zQJkNdMqxO8y3oMoPxl1UpSr30j/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=baylibre.com; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1fb0d88fd25so29435975ad.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2024 17:24:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720483212; x=1721088012;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=osmmEbE4YrUJJsgw8B/lNsRFY328cYQyEWy+PHmk7lU=;
-        b=Dx095CLCn8HLC2OlPVwY8p/6QcUvoR6kSaqlJiFhgXx73qjak/uYyLSyagd+Bv/S0w
-         fcgTrW+CKwAJbdEQQnQyyGwx4ARvrpIpOew4fkmF13nZEggKvrXHEqlRjtEVyRmq2ej8
-         W6juNJQJEh8sxswIpxnUCJFLDITWTV/fyLShDudaCrxRwVfy2W/I/Q9Ept0Q0ukg7DHP
-         SQU/x4EvuDL/0mYQ5GX7X1YDUFDjhGxvrMtlPLTEcah6dfKtZc+rJtIm2SXlNEleK/X6
-         7c+lBwEGei1Fq0gQAhYbpcXdr0BGG9lMx0nXGv1r+gEqVjr2hPlHQPuitiQpd9gauF5D
-         1y2w==
-X-Forwarded-Encrypted: i=1; AJvYcCUmzUS+3NGq4FfRxd/q3qCGKZLmggs+z6g+gYwC21cVuWpDsXz16YwJeNaZZ6DmubgWlyCpwLAlXzSjM9hyUGaFP/PWO6LBSS2irgleKA==
-X-Gm-Message-State: AOJu0Ywye773HYGLti9DZvijr8xFKg35+iplr309t7IjelduaKrLWdlm
-	ma2weVZThacibThoLHtFwipvEJ4U1s3pufgC3XZKcxOYcsNPBOna8SyK+Jqqf0/l6ZO7Ng0PSTC
-	UL1QI
-X-Google-Smtp-Source: AGHT+IEaXaEplSjzmEJRQt/KMVj3oAX18ok5pselyDAM/0qJAz6P4C2L/aRv8OVr8MhPtqx/jpoqYg==
-X-Received: by 2002:a05:620a:3f97:b0:79f:15ca:b782 with SMTP id af79cd13be357-79f19a6867fmr143600085a.35.1720483212558;
-        Mon, 08 Jul 2024 17:00:12 -0700 (PDT)
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com. [209.85.160.179])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-79f1908973dsm40287385a.86.2024.07.08.17.00.12
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Jul 2024 17:00:12 -0700 (PDT)
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-447df43324fso77051cf.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2024 17:00:12 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCU8jGvkbodGy4JwKY+BAFcUjF9Jb/whXrE38u/dfdAJJiaaKzk5+XC5a0Fyt404AdlrGRK7THDLu82kGhzHYQrGNOLBqAZcOBpaUxRd4Q==
-X-Received: by 2002:ac8:74d:0:b0:447:f21e:4d5b with SMTP id
- d75a77b69052e-447fba68a15mr1320821cf.18.1720483210739; Mon, 08 Jul 2024
- 17:00:10 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720484666; x=1721089466;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wlo3UWV9lkDtVHiC3tnceLIBeIIjDfMxY69ysONeH1A=;
+        b=KoJfaAr0tvMMmbQZ/MTSmM6HkKJQIKmZIMJwQTL35irUVsdwQ+Zu3l9TGLBrHnI1Hb
+         kqwZ+xOX+f+oQx28D2d033b01rGaUmGz4lQh6Jhja5S9+hotMVr7jNDpFngWrR2PEt2W
+         SLt0nZ4zNvYpRsdS+hnl3vPy7+QGEiDjbcWYCDTP97NmsEhg9ARvXw03nmNNhH7OSMAq
+         kPxxYpceWnPV3PChry7SsaEvfV6E6mTdv6jwCo8hSYBzJIvh3cOSkOiFfT3EoxDhXTfR
+         yxLrxRSY1TaZJUSpDN9vAwBW7ivedrL429HssTKwV1F8FmL1D9NdjV/xP6A7M3Z853h8
+         sL7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUwWBldEOdOJmOfpOp6AYN9Z+e1Jn7r/ob+eqEAJN2XbxRSEJS7NkGuTKqvkdfeNPEIFqCy9qH3b3dO9k7fyWFf7ucdPrhXVVIJacLwoQ==
+X-Gm-Message-State: AOJu0YwCucDmO7xF+rH3tXL1+t/8XIiNLvlLj0KoKPfaISRD+331EGqE
+	AE85beViK/OWb/0lEh7u4988trwExePbCSSiH6oXoLJm5flV/9+SYXl/U7a2Ofs=
+X-Google-Smtp-Source: AGHT+IFdw3EaveRM2ZTHoRq8dYxA8E7q05nixOcYOGorj2dRL4w7J12n220WAjIf2IctJiJkVfxTEw==
+X-Received: by 2002:a17:902:db0e:b0:1f4:a04e:8713 with SMTP id d9443c01a7336-1fbb804725emr12528595ad.28.1720484666359;
+        Mon, 08 Jul 2024 17:24:26 -0700 (PDT)
+Received: from localhost (97-126-77-189.tukw.qwest.net. [97.126.77.189])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fbb6ab7d2dsm4321415ad.180.2024.07.08.17.24.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Jul 2024 17:24:25 -0700 (PDT)
+From: Kevin Hilman <khilman@kernel.org>
+To: Viresh Kumar <viresh.kumar@linaro.org>, "Rafael J. Wysocki"
+ <rafael@kernel.org>, Viresh Kumar <viresh.kumar@linaro.org>, Huang Rui
+ <ray.huang@amd.com>, "Gautham R. Shenoy" <gautham.shenoy@amd.com>, Mario
+ Limonciello <mario.limonciello@amd.com>, Perry Yuan <perry.yuan@amd.com>,
+ Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>, Alyssa
+ Rosenzweig <alyssa@rosenzweig.io>, Markus Mayer <mmayer@broadcom.com>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>, Srinivas Pandruvada
+ <srinivas.pandruvada@linux.intel.com>, Len Brown <lenb@kernel.org>,
+ Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin
+ <npiggin@gmail.com>, Christophe Leroy <christophe.leroy@csgroup.eu>,
+ "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>, Sudeep Holla
+ <sudeep.holla@arm.com>, Cristian Marussi <cristian.marussi@arm.com>,
+ Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter
+ <jonathanh@nvidia.com>, Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: linux-pm@vger.kernel.org, Vincent Guittot <vincent.guittot@linaro.org>,
+ Lizhe <sensor1010@163.com>, linux-kernel@vger.kernel.org,
+ asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-omap@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+ linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+ linux-mediatek@lists.infradead.org
+Subject: Re: [PATCH 4/4] cpufreq: Make cpufreq_driver->exit() return void
+In-Reply-To: <3f73fda736818128558b61ad5fe2bed5dce3ddc4.1720075640.git.viresh.kumar@linaro.org>
+References: <cover.1720075640.git.viresh.kumar@linaro.org>
+ <3f73fda736818128558b61ad5fe2bed5dce3ddc4.1720075640.git.viresh.kumar@linaro.org>
+Date: Mon, 08 Jul 2024 17:24:25 -0700
+Message-ID: <7hplrn76py.fsf@baylibre.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240704101805.30612-1-johan+linaro@kernel.org> <20240704101805.30612-4-johan+linaro@kernel.org>
-In-Reply-To: <20240704101805.30612-4-johan+linaro@kernel.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Mon, 8 Jul 2024 16:59:59 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VHOTQKNNbkWX17o57weP_wTm__MCSGPhFHQ+uG1CD+Bw@mail.gmail.com>
-Message-ID: <CAD=FV=VHOTQKNNbkWX17o57weP_wTm__MCSGPhFHQ+uG1CD+Bw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] serial: qcom-geni: do not kill the machine on fifo underrun
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi,
+Viresh Kumar <viresh.kumar@linaro.org> writes:
 
-On Thu, Jul 4, 2024 at 3:19=E2=80=AFAM Johan Hovold <johan+linaro@kernel.or=
-g> wrote:
+> From: Lizhe <sensor1010@163.com>
 >
-> The Qualcomm GENI serial driver did not handle buffer flushing and used
-> to print discarded characters when the circular buffer was cleared.
-> Since commit 1788cf6a91d9 ("tty: serial: switch from circ_buf to kfifo")
-> this instead resulted in a hard lockup due to
-> qcom_geni_serial_send_chunk_fifo() spinning indefinitely in the
-> interrupt handler.
+> The cpufreq core doesn't check the return type of the exit() callback
+> and there is not much the core can do on failures at that point. Just
+> drop the returned value and make it return void.
 >
-> The underlying bugs have now been fixed, but make sure to output NUL
-> characters instead of killing the machine if a similar driver bug is
-> ever reintroduced.
->
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Lizhe <sensor1010@163.com>
+> [ Viresh: Reworked the patches to fix all missing changes together. ]
+> Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 > ---
->  drivers/tty/serial/qcom_geni_serial.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/q=
-com_geni_serial.c
-> index b2bbd2d79dbb..69a632fefc41 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -878,7 +878,7 @@ static void qcom_geni_serial_send_chunk_fifo(struct u=
-art_port *uport,
->                 memset(buf, 0, sizeof(buf));
->                 tx_bytes =3D min(remaining, BYTES_PER_FIFO_WORD);
->
-> -               tx_bytes =3D uart_fifo_out(uport, buf, tx_bytes);
-> +               uart_fifo_out(uport, buf, tx_bytes);
 
-FWIW I would have rather we output something much more obviously wrong
-in this case instead of a NUL byte. Maybe we should fill it with "@"
-characters or something? As you said: the driver shouldn't get into
-this error condition so it shouldn't matter, but if we have a bug in
-the future I'd rather it be an obvious bug instead of a subtle bug.
-I'm happy to post a patch or provide a Reviewed-by if you want to post
-a patch. Let me know.
+[...]
 
--Doug
+>  drivers/cpufreq/omap-cpufreq.c         |  3 +--
+
+For OMAP:
+
+Acked-by: Kevin Hilman <khilman@baylibre.com>
 
