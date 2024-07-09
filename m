@@ -1,164 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-25627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B10492B94E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 14:22:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F5E392B9DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 14:46:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 16C942877DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 12:22:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 331A11C21E4D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 12:46:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E43515A874;
-	Tue,  9 Jul 2024 12:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC57E15B10D;
+	Tue,  9 Jul 2024 12:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NuS/Ze8v"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="j/Sed078"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D07E1586F2
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jul 2024 12:19:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4D815ADB2;
+	Tue,  9 Jul 2024 12:46:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720527580; cv=none; b=ceo78P6ogpc7K19sbXDP6/o1EJ1PGyVA4bEAtkpEVI3rLMn7xTEUmFEIPBw/Irb39qmw4JFsKhVeWW5+55bklsWMpX9pxAO4D8L+tbNmi+ykc6+50UMSKgSaCbgMEfcgoRPIyBMDwGr8zs4mJ4svxR/8GVfi3JSqmpItSE9JSVM=
+	t=1720529205; cv=none; b=TqEYy3FXgifDBfJpxRPqlcWoq8C5eKSS6BRs92zMqu1iF6POsx6HYk2dsS1x8y0zUxKKC6by2LpZOgiwyVTOH7L0GQEoEYNeVYES8uRl5Jic8DyqhycESmxxiPzK7VjeVrxUFr2kO9H5iB1d/daY8ZOzJSbPlK0qHTM5p0NqEYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720527580; c=relaxed/simple;
-	bh=wwg9T7d2yBCHnXt74rxBEjB7TDXiUZKfjUZmjmOG3eE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rFFCmcUcGKBye6sLHgzddUY1br9Zv1jehyyfhiWj77UwNM0dyNFOUlfV0umGFjdS+wGdJf86Imnd7+SoHIh6f6a/p6RRnyNAvEFzPn6Bha3zWl2MuE9ME7Qzu/PXuBnuNYh5d7X/wsU33NU/wBE+Enp6lsBi0r9Em3HT+Q/ArRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NuS/Ze8v; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-58d24201934so7967548a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jul 2024 05:19:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720527576; x=1721132376; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=K0JcjxVLv/i0PeVxmJo/2AeXjlP7/Xz2DM4bSUFo9xw=;
-        b=NuS/Ze8vVcheBfafQXmUT0jE0+bwJGRbJdIDCUTrQbEdJXdjFnqp6Lv+Z807buQ4UH
-         oKid0/bLKrP76rHa6JldKsZNXVSALiD0EIRna2O2mv7XGA3UfNqqiOqr1ifXuYySDuid
-         +Q1P6Akk9yRDBjiwe/Bm/LRS0TQeM2BhDadz0vnQtHsXQQr9PJ4vCm2D6tLzfG39FRU6
-         xa/11hhqfZ1mHW1dT/o7yktd3ZVcSSFP3LF1wdIAZYh5quQxTPHmBxkO1bxcJLLtir6E
-         uXflvjliPgQDPL1r18V/dBbJr4hFcSxWIpfgtilpvsXltqzOfxWtFTTt1NvkNAKMzt+3
-         h9jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720527576; x=1721132376;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K0JcjxVLv/i0PeVxmJo/2AeXjlP7/Xz2DM4bSUFo9xw=;
-        b=ISCN/FTXGTCKHViRuLLPX7agueJ4blF829u2A6mA3kxkjqltu4rUHNf1uSCbvtCNzn
-         4KGiRWLZ/+DSm5J2k+vxU8TJGynIQHQ9dQmqv6FV3pg789xepfrU++EYHSVsNZrZ3pAN
-         PE92ajHHHOCAYgESv3T3WjtuXmxPIiB2FLncEgrSlfg3qku/HZgdESI6ZKTxGYKXG6hH
-         gUnUOswbXf4ktjUgYO86XpXN5B3vupy54UMR1mBMHYFJxd7VvB5wfMLhp/B5cdZX859m
-         G+GN39QjAOnwYGoI59FyrfldqEGN5q+mMsHgce6dlZZ4mJGwG/qfYkK71vyIQ4x/jMy7
-         Ilew==
-X-Gm-Message-State: AOJu0YwdrpKHqxM1p+C26sU8l4oHHk14LHdU5JWHoTQER2PfjTFnT5sG
-	bfWTAFbLiPuVD5TtwIHjw9Uhn3/UqEJHal5ey/YgfIvJwoonlGNTZgfv5JFoQGM=
-X-Google-Smtp-Source: AGHT+IETP+x6ceMtCRXfaP1AJJDwtxfBU1Wtet4Ur+40MKTLTGbV1kvJ/b3uu1sOGoj/YhsZa/8NSg==
-X-Received: by 2002:a05:6402:2708:b0:57c:6a05:afd0 with SMTP id 4fb4d7f45d1cf-594dd2555b7mr1431568a12.14.1720527575789;
-        Tue, 09 Jul 2024 05:19:35 -0700 (PDT)
-Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-594bda30f76sm997747a12.97.2024.07.09.05.19.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jul 2024 05:19:35 -0700 (PDT)
-Message-ID: <6af7308b-ab84-4173-968f-c67fc1aef04b@linaro.org>
-Date: Tue, 9 Jul 2024 14:19:33 +0200
+	s=arc-20240116; t=1720529205; c=relaxed/simple;
+	bh=JGyPpjmrhsfqcLhBLrd1A38OzaoCKd0tq/wkHGWp57M=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=J3/ECn+RjwobtQAlObR2iPb3YV3nzKwNseBWMNVrdxsgcgSvi+V2s2P5fkH81qc0SQWqmsbh8TBw5cA6Fo4h2Xxq4Z+L43UwV3+jZt18AgDeH4HmTgz0JOC44Ch4WrmPNJ7qtmx2ZTTtYprE88tryRfz1DEbtXshiOgdr0JjRIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=j/Sed078; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 469C1Sb8016208;
+	Tue, 9 Jul 2024 12:46:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=B75fg+7MGETPksCZcZVLPi
+	Vl5b+K7TaIT1sCh9FBYPo=; b=j/Sed078igS0+u1pqnRyuB5mDS3DIIw/kDhzd7
+	LFU42yDurpcDzc3YIdxWBQkr3s6Qh4EJmdFO/mCs5F/znWfzGq7nNwxlVtY/0Ijk
+	F7Kqfd3yDjbp2UGS7HoITcej+KhQlmnJyRspKgMyTqaOR4UNRNENXioOWdPfgnsX
+	Qx/17uIj8IdddjZAE7SeVuLNUH0HV4Ad4tE0321IXJpatZgCHb6eDv7Ciz1vSbac
+	yaCa9DFEL8IZGPx4Y8HnnYHVs6hhu3LcaDKt+uQBQG7tVvpmMzgb56iZJYgPGzgV
+	MmRnqIGQteOekh2CGggFF3Bp1gmus/QP7fMAiF3V1y9hA59A==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406x516kn9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Jul 2024 12:46:39 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 469CkdZg011255
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 9 Jul 2024 12:46:39 GMT
+Received: from tengfan-gv.ap.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 9 Jul 2024 05:46:33 -0700
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+Date: Tue, 9 Jul 2024 20:46:19 +0800
+Subject: [PATCH v2] dt-bindings: phy: qcom,usb-snps-femto-v2: Add bindings
+ for QCS9100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: Add interconnects for ethernet
-To: Sagar Cheluvegowda <quic_scheluve@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Andrew Lunn <andrew@lunn.ch>,
- Andrew Halaney <ahalaney@redhat.com>, kernel@quicinc.com
-References: <20240708-icc_bw_voting_emac_dtsi-v1-1-4b091b3150c0@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20240708-icc_bw_voting_emac_dtsi-v1-1-4b091b3150c0@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-ID: <20240709-document_qcs9100_usb_hs_phy_compatible-v2-1-c84fbbafa9d6@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIABoxjWYC/5WOQQ6CMBBFr2K6tmQ6UAVX3sOYhpZRJtGCFIiEc
+ HcLiQuXLt9fvPdnEahjCuK0m0VHIwdufATc74SrS38nyVVkgYAZHKGQVeOGJ/nevFwoFIAZgjV
+ 1MG09Gdc827Jn+yCZ29QWzh50mpOIsrajG7+30OUauebQN920dUdc128iBdS5hgTVEQFyqeRrY
+ Gd68vdb6c8rsHdJbK3ef3+NGIUOldapzgpU8CO8LsvyAWCRRdETAQAA
+To: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, Tengfei Fan <quic_tengfan@quicinc.com>
+X-Mailer: b4 0.15-dev-a66ce
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1720529193; l=2460;
+ i=quic_tengfan@quicinc.com; s=20240709; h=from:subject:message-id;
+ bh=JGyPpjmrhsfqcLhBLrd1A38OzaoCKd0tq/wkHGWp57M=;
+ b=7qjR3zuvGxwujGiBpy2UQ1NPZVX7GQG+Feb3Fouh9sZrsQTIjt6N3VxUam51jyDohkno6Tz1W
+ 6U3fwqwUCgXAzYFMYWPK/k0qIBw112eh02MYkYC587FWTaDVnbCA2Gy
+X-Developer-Key: i=quic_tengfan@quicinc.com; a=ed25519;
+ pk=4VjoTogHXJhZUM9XlxbCAcZ4zmrLeuep4dfOeKqQD0c=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 1RErOJMKbgO4QvJLX4zq1LZ7NA1vRNMu
+X-Proofpoint-ORIG-GUID: 1RErOJMKbgO4QvJLX4zq1LZ7NA1vRNMu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-09_02,2024-07-09_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ suspectscore=0 impostorscore=0 mlxlogscore=837 mlxscore=0 bulkscore=0
+ priorityscore=1501 malwarescore=0 lowpriorityscore=0 phishscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407090081
 
-On 8.07.2024 11:14 PM, Sagar Cheluvegowda wrote:
-> Define interconnect properties for ethernet hardware.
-> 
-> Suggested-by: Andrew Halaney <ahalaney@redhat.com>
-> Signed-off-by: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
-> ---
-> Adding interconnect dtsi properties within ethernet node of SA8775P,
-> this patch is adding support for the interconnect properties defined
-> in the series ->  
-> https://lore.kernel.org/all/20240703-icc_bw_voting_from_ethqos-v3-0-8f9148ac60a3@quicinc.com/
-> ---
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index 23f1b2e5e624..7ebf03953b7b 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -3464,6 +3464,12 @@ ethernet1: ethernet@23000000 {
->  				      "ptp_ref",
->  				      "phyaux";
->  
-> +			interconnect-names = "mac-mem", "cpu-mac";
-> +			interconnects = <&aggre1_noc MASTER_EMAC_1 QCOM_ICC_TAG_ALWAYS
-> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
-> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
-> +					 &config_noc SLAVE_EMAC1_CFG QCOM_ICC_TAG_ALWAYS>;
+Document the compatible string for USB phy found in Qualcomm QCS9100
+SoC.
+QCS9100 is drived from SA8775p. Currently, both the QCS9100 and SA8775p
+platform use non-SCMI resource. In the future, the SA8775p platform will
+move to use SCMI resources and it will have new sa8775p-related device
+tree. Consequently, introduce "qcom,qcs9100-usb-hs-phy" to describe
+non-SCMI based USB phy.
 
-property
-property-names
+Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+---
+Introduce support for the QCS9100 SoC device tree (DTSI) and the
+QCS9100 RIDE board DTS. The QCS9100 is a variant of the SA8775p.
+While the QCS9100 platform is still in the early design stage, the
+QCS9100 RIDE board is identical to the SA8775p RIDE board, except it
+mounts the QCS9100 SoC instead of the SA8775p SoC.
 
-please
+The QCS9100 SoC DTSI is directly renamed from the SA8775p SoC DTSI, and
+all the compatible strings will be updated from "SA8775p" to "QCS9100".
+The QCS9100 device tree patches will be pushed after all the device tree
+bindings and device driver patches are reviewed.
 
-otherwise lgtm
+The final dtsi will like:
+https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-3-quic_tengfan@quicinc.com/
 
-Konrad
+The detailed cover letter reference:
+https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
+---
+Changes in v2:
+  - Split huge patch series into different patch series according to
+    subsytems
+  - Update patch commit message
+
+prevous disscussion here:
+[1] v1: https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
+---
+ Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
+index 519c2b403f66..cd0a723590f0 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,usb-snps-femto-v2.yaml
+@@ -17,6 +17,7 @@ properties:
+     oneOf:
+       - items:
+           - enum:
++              - qcom,qcs9100-usb-hs-phy
+               - qcom,sa8775p-usb-hs-phy
+               - qcom,sc8280xp-usb-hs-phy
+           - const: qcom,usb-snps-hs-5nm-phy
+
+---
+base-commit: 0b58e108042b0ed28a71cd7edf5175999955b233
+change-id: 20240709-document_qcs9100_usb_hs_phy_compatible-8b3b9cb6538e
+
+Best regards,
+-- 
+Tengfei Fan <quic_tengfan@quicinc.com>
+
 
