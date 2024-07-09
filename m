@@ -1,165 +1,375 @@
-Return-Path: <linux-arm-msm+bounces-25650-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25651-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF42B92BB73
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 15:36:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3840992BBA0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 15:43:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0ED13B21689
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 13:36:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 52BE21C221AC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 13:43:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B815715FCE5;
-	Tue,  9 Jul 2024 13:35:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FqOumSBJ"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BB2C15ECCD;
+	Tue,  9 Jul 2024 13:43:06 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2615015749F;
-	Tue,  9 Jul 2024 13:35:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D28015FA78;
+	Tue,  9 Jul 2024 13:43:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720532126; cv=none; b=IjARprZifN/92K1J6HzdmBmm2ATK74LelhDFSZkQ6cFeEsyWADdUpZB9JXOxsZCyqp6DZxht+tP1xAyUEud4i9uyYDarBQShd/rlJ3+iOhJe10x6DQ2iRSMVpcDuAYtbwCZ7v1vD/BioyHPdwtXCEuOS1bS3+Jp6Qg3Yq46GJjQ=
+	t=1720532586; cv=none; b=luO8rqcul81sUQvxWXfHrS12wYQxETkLwollUF9i9uyIFWTDbqUtRiGBatRRrqtrooGLLhaZLFaFx94Tx+eUcrY1Hj2yIICLWXbAlNJPu0vP/25hyCWH8T+339WNBvwdq5w9Uv+Ji2Bz3upRNQbM+aYvRqkx47JQ2+ZYNUAPagk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720532126; c=relaxed/simple;
-	bh=DU3VRQnrYNqDNAW1kRz+FjafMjZRpBs2Xr3aTHym4Rw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=uP5ydGjWAj6lXqR+pSzlafOTP/hexgUGtEbu01noNs5xPmKEneVPytj2Tn7+wquH3Wk1FS4mraWDCD2nYrAwQfCdoQSnvWjdPBlS2PeUJX8VFuCGzjHTrSzOobX0InjeN2+Wj5Cnj/zkufGhHxTEZMlh69xWwxfVIRSJbgg81k8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FqOumSBJ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 469AF32V003367;
-	Tue, 9 Jul 2024 13:34:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=rJHuFR7kdC5Bjk0We68ws0
-	8urMZfuY363j5+cZKIEJc=; b=FqOumSBJUMv7GICTS7iSidR1uNIsCJj0i25PZz
-	DgZE2qiGDwvuQjvCWuun/3v8bSLTeCkXp34kJXMJNe2Yt3hGgbFKNxLW5TpqNIPg
-	8wglncJ/T+Ly4SaBc1J+oNU4mnX/VWUJ7BTAAp1wQM7c0w1ou/CjjOE8Kr+p06kS
-	JIPoekePTdEYCsbIjrow2RSWo3e4FgVqbz8FoMrL+Mkd3a7sztLVUbvs3tFhhZHk
-	azbhXyOaMT5Mkfx/TOH6dZqsQjUY1lPT23ZbSdU4qpGdu3SZbcyWhZ/sFCEfTM+x
-	Fy9joXulxgsnhEIEEl0rVwqyhIIilZ6hzh3oSKUCxcCCo21Q==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406wjn6t2h-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 Jul 2024 13:34:16 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 469DYFd1015308
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 9 Jul 2024 13:34:15 GMT
-Received: from tengfan-gv.ap.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 9 Jul 2024 06:34:10 -0700
-From: Tengfei Fan <quic_tengfan@quicinc.com>
-Date: Tue, 9 Jul 2024 21:34:00 +0800
-Subject: [PATCH v2] dt-bindings: crypto: qcom,prng: document QCS9100
+	s=arc-20240116; t=1720532586; c=relaxed/simple;
+	bh=K1QCnYS7irbKQpozMKsnBUXKg+f/3Bee2dMpwIP7tf8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CF5YW438l6vKw9+2Rk1Y7N6Je3WV+6wpVID5IcPgG9GSIiIilIHq4ISAFo+MkBwuGho0cFPwUI48q/G+tEvMA1sni3K/isq82r9vCgAWCYXcX1tUic3hiWDJbngxzNIKWlqdojUUBVzDiuwwMkZEht9SnoN+zDOH3hIWFGy6Kck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B59DD153B;
+	Tue,  9 Jul 2024 06:43:27 -0700 (PDT)
+Received: from [10.57.74.191] (unknown [10.57.74.191])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 135343F766;
+	Tue,  9 Jul 2024 06:42:58 -0700 (PDT)
+Message-ID: <8254b93b-0d18-4bd9-817b-b885de6a480d@arm.com>
+Date: Tue, 9 Jul 2024 14:42:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/3] coresight: Add source filtering for multi-port
+ output
+Content-Language: en-GB
+To: Tao Zhang <quic_taozha@quicinc.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Mike Leach <mike.leach@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ James Clark <james.clark@arm.com>, james.clark@linaro.org
+Cc: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
+ coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Trilok Soni <quic_tsoni@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, Jie Gan <quic_jiegan@quicinc.com>
+References: <20240705085152.9063-1-quic_taozha@quicinc.com>
+ <20240705085152.9063-3-quic_taozha@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20240705085152.9063-3-quic_taozha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240709-document_qcs9100_trng_compatible-v2-1-3a924ee68511@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAEc8jWYC/zXNQQqDMBCF4atI1o2MMVbtqvcoIhpHHaiJJlFax
- Ls3Cl1+b/H+nTm0hI49op1Z3MiR0QHiFjE1NnpATl0wEyAk5FDyzqh1Qu3rRbkyAai91UOtzDQ
- 3nto38hblvUtB5rKQLNzMFnv6XIlXFTyS88Z+r+KWnOv/PAWRFRnEIskFQMETvqykao966Bv9P
- EFaxaHFquM4fkURvSG8AAAA
-To: Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Vinod Koul
-	<vkoul@kernel.org>
-CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-crypto@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Tengfei Fan <quic_tengfan@quicinc.com>
-X-Mailer: b4 0.15-dev-a66ce
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1720532049; l=2396;
- i=quic_tengfan@quicinc.com; s=20240709; h=from:subject:message-id;
- bh=DU3VRQnrYNqDNAW1kRz+FjafMjZRpBs2Xr3aTHym4Rw=;
- b=eoYm9hAAGEpoD5+EdVl0NLpFh5UQ/n9pGZscfw4+/7b8zEkDKOrIFM3LZHAULQ8+yfd6SM1an
- sqzO0T/RdBCBLVvQVXgBLWoJfLkG8dzo8UmhfzTJXWX05Vd+aMIYvxS
-X-Developer-Key: i=quic_tengfan@quicinc.com; a=ed25519;
- pk=4VjoTogHXJhZUM9XlxbCAcZ4zmrLeuep4dfOeKqQD0c=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8ZF87UzU--WJ7Fkvlj1LdnXKuL7cHp0o
-X-Proofpoint-GUID: 8ZF87UzU--WJ7Fkvlj1LdnXKuL7cHp0o
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-09_03,2024-07-09_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=946 clxscore=1015
- mlxscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 phishscore=0 malwarescore=0 bulkscore=0 impostorscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407090087
 
-Document QCS9100 compatible for the True Random Number Generator.
-QCS9100 is drived from SA8775p. Currently, both the QCS9100 and SA8775p
-platform use non-SCMI resource. In the future, the SA8775p platform will
-move to use SCMI resources and it will have new sa8775p-related device
-tree. Consequently, introduce "qcom,qcs9100-trng" to describe non-SCMI
-based TRNG.
+On 05/07/2024 09:51, Tao Zhang wrote:
+> In order to enable the output ports of multi-port output devices,
+> such as static replicator, to correspond to designated sources,
+> a mechanism for filtering data sources is introduced for the
+> output ports.
+> 
+> The specified source will be marked like below in the Devicetree.
+> test-replicator {
+>      ... ... ... ...
+>      out-ports {
+>          ... ... ... ...
+>          port@0 {
+>              reg = <0>;
+>              xxx: endpoint {
+>                  remote-endpoint = <&xxx>;
+>                  filter_src = <&xxx>; <-- To specify the source to
+>              };                           be filtered out here.
+>          };
+> 
+>          port@1 {
+>              reg = <1>;
+>              yyy: endpoint {
+>                  remote-endpoint = <&yyy>;
+>                  filter_src = <&yyy>; <-- To specify the source to
+>              };                           be filtered out here.
+>          };
+>      };
+> };
+> 
+> Then driver will find the expected source marked in the Devicetree, and
+> save it to the coresight path. When the function needs to filter the
+> source, it could obtain it from coresight path parameter. Finally,
+> the output port knows which source it corresponds to, and it also knows
+> which input port it corresponds to.
+> 
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> ---
+>   drivers/hwtracing/coresight/coresight-core.c  | 89 ++++++++++++++++---
+>   .../hwtracing/coresight/coresight-platform.c  | 13 +++
+>   include/linux/coresight.h                     |  5 ++
+>   3 files changed, 94 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
+> index 5dde597403b3..1c58b64f0031 100644
+> --- a/drivers/hwtracing/coresight/coresight-core.c
+> +++ b/drivers/hwtracing/coresight/coresight-core.c
+> @@ -113,15 +113,62 @@ struct coresight_device *coresight_get_percpu_sink(int cpu)
+>   }
+>   EXPORT_SYMBOL_GPL(coresight_get_percpu_sink);
+>   
+> +static struct coresight_device *coresight_get_source(struct list_head *path)
+> +{
+> +	struct coresight_device *csdev;
+> +
+> +	if (!path)
+> +		return NULL;
+> +
+> +	csdev = list_first_entry(path, struct coresight_node, link)->csdev;
+> +	if (csdev->type != CORESIGHT_DEV_TYPE_SOURCE)
+> +		return NULL;
+> +
+> +	return csdev;
+> +}
+> +
+> +/**
+> + * coresight_source_filter - checks whether the connection matches the source
+> + * of path if connection is binded to specific source.
+> + * @path:	The list of devices
+> + * @conn:	The connection of one outport
+> + *
+> + * Return zero if the connection doesn't have a source binded or source of the
+> + * path matches the source binds to connection.
+> + */
+> +static int coresight_source_filter(struct list_head *path,
 
-Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
----
-Introduce support for the QCS9100 SoC device tree (DTSI) and the
-QCS9100 RIDE board DTS. The QCS9100 is a variant of the SA8775p.
-While the QCS9100 platform is still in the early design stage, the
-QCS9100 RIDE board is identical to the SA8775p RIDE board, except it
-mounts the QCS9100 SoC instead of the SA8775p SoC.
+Instead of path, you may need to switch to "source" device. See below.
 
-The QCS9100 SoC DTSI is directly renamed from the SA8775p SoC DTSI, and
-all the compatible strings will be updated from "SA8775p" to "QCS9100".
-The QCS9100 device tree patches will be pushed after all the device tree
-bindings and device driver patches are reviewed.
+> +			struct coresight_connection *conn)
+> +{
+> +	int ret = 0;
+> +	struct coresight_device *source = NULL;
+> +
+> +	if (!conn->filter_src_dev)
+> +		return ret;
+> +
+> +	source = coresight_get_source(path);
+> +	if (!source)
+> +		return ret;
+> +
+> +	if (conn->filter_src_dev == source)
+> +		ret = 0;
+> +	else
+> +		ret = -1;
+> +
+> +	return ret;
+> +}
+> +
+>   static struct coresight_connection *
+>   coresight_find_out_connection(struct coresight_device *src_dev,
+> -			      struct coresight_device *dest_dev)
+> +			      struct coresight_device *dest_dev,
+> +			      struct list_head *path)
+>   {
+>   	int i;
+>   	struct coresight_connection *conn;
+>   
+>   	for (i = 0; i < src_dev->pdata->nr_outconns; i++) {
+>   		conn = src_dev->pdata->out_conns[i];
+> +		if (coresight_source_filter(path, conn))
+> +			continue;
+>   		if (conn->dest_dev == dest_dev)
+>   			return conn;
+>   	}
+> @@ -312,7 +359,8 @@ static void coresight_disable_sink(struct coresight_device *csdev)
+>   
+>   static int coresight_enable_link(struct coresight_device *csdev,
+>   				 struct coresight_device *parent,
+> -				 struct coresight_device *child)
+> +				 struct coresight_device *child,
+> +				 struct list_head *path)
+>   {
+>   	int ret = 0;
+>   	int link_subtype;
+> @@ -321,8 +369,8 @@ static int coresight_enable_link(struct coresight_device *csdev,
+>   	if (!parent || !child)
+>   		return -EINVAL;
+>   
+> -	inconn = coresight_find_out_connection(parent, csdev);
+> -	outconn = coresight_find_out_connection(csdev, child);
+> +	inconn = coresight_find_out_connection(parent, csdev, path);
+> +	outconn = coresight_find_out_connection(csdev, child, path);
+>   	link_subtype = csdev->subtype.link_subtype;
+>   
+>   	if (link_subtype == CORESIGHT_DEV_SUBTYPE_LINK_MERG && IS_ERR(inconn))
+> @@ -341,7 +389,8 @@ static int coresight_enable_link(struct coresight_device *csdev,
+>   
+>   static void coresight_disable_link(struct coresight_device *csdev,
+>   				   struct coresight_device *parent,
+> -				   struct coresight_device *child)
+> +				   struct coresight_device *child,
+> +				   struct list_head *path)
+>   {
+>   	int i;
+>   	int link_subtype;
+> @@ -350,8 +399,8 @@ static void coresight_disable_link(struct coresight_device *csdev,
+>   	if (!parent || !child)
+>   		return;
+>   
+> -	inconn = coresight_find_out_connection(parent, csdev);
+> -	outconn = coresight_find_out_connection(csdev, child);
+> +	inconn = coresight_find_out_connection(parent, csdev, path);
+> +	outconn = coresight_find_out_connection(csdev, child, path);
+>   	link_subtype = csdev->subtype.link_subtype;
+>   
+>   	if (link_ops(csdev)->disable) {
+> @@ -507,7 +556,7 @@ static void coresight_disable_path_from(struct list_head *path,
+>   		case CORESIGHT_DEV_TYPE_LINK:
+>   			parent = list_prev_entry(nd, link)->csdev;
+>   			child = list_next_entry(nd, link)->csdev;
+> -			coresight_disable_link(csdev, parent, child);
+> +			coresight_disable_link(csdev, parent, child, path);
+>   			break;
 
-The final dtsi will like:
-https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-3-quic_tengfan@quicinc.com/
+Disable path from could be called with a "partial path" with the
+"source" stripped off. e.g, if the enabling of the components failed
+mid-point in the path. So, source_from_path() above is WRONG csdev.
+Instead you should make sure we pass the "source", which must be
+available with the caller.
 
-The detailed cover letter reference:
-https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
----
-Changes in v2:
-  - Split huge patch series into different patch series according to
-    subsytems
-  - Update patch commit message
 
-prevous disscussion here:
-[1] v1: https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
----
- Documentation/devicetree/bindings/crypto/qcom,prng.yaml | 1 +
- 1 file changed, 1 insertion(+)
+>   		default:
+>   			break;
+> @@ -588,7 +637,7 @@ int coresight_enable_path(struct list_head *path, enum cs_mode mode,
+>   		case CORESIGHT_DEV_TYPE_LINK:
+>   			parent = list_prev_entry(nd, link)->csdev;
+>   			child = list_next_entry(nd, link)->csdev;
+> -			ret = coresight_enable_link(csdev, parent, child);
+> +			ret = coresight_enable_link(csdev, parent, child, path);
+>   			if (ret)
+>   				goto err;
+>   			break;
+> @@ -802,7 +851,8 @@ static void coresight_drop_device(struct coresight_device *csdev)
+>    */
+>   static int _coresight_build_path(struct coresight_device *csdev,
+>   				 struct coresight_device *sink,
+> -				 struct list_head *path)
+> +				 struct list_head *path,
+> +				 struct coresight_device *trace_source)
+>   {
+>   	int i, ret;
+>   	bool found = false;
+> @@ -814,7 +864,7 @@ static int _coresight_build_path(struct coresight_device *csdev,
+>   
+>   	if (coresight_is_percpu_source(csdev) && coresight_is_percpu_sink(sink) &&
+>   	    sink == per_cpu(csdev_sink, source_ops(csdev)->cpu_id(csdev))) {
+> -		if (_coresight_build_path(sink, sink, path) == 0) {
+> +		if (_coresight_build_path(sink, sink, path, trace_source) == 0) {
+>   			found = true;
+>   			goto out;
+>   		}
+> @@ -825,8 +875,13 @@ static int _coresight_build_path(struct coresight_device *csdev,
+>   		struct coresight_device *child_dev;
+>   
+>   		child_dev = csdev->pdata->out_conns[i]->dest_dev;
+> +
+> +		if (csdev->pdata->out_conns[i]->filter_src_dev
+> +		    && (csdev->pdata->out_conns[i]->filter_src_dev != trace_source))
+> +			continue;
+> +
+>   		if (child_dev &&
+> -		    _coresight_build_path(child_dev, sink, path) == 0) {
+> +		    _coresight_build_path(child_dev, sink, path, trace_source) == 0) {
+>   			found = true;
+>   			break;
+>   		}
+> @@ -871,7 +926,7 @@ struct list_head *coresight_build_path(struct coresight_device *source,
+>   
+>   	INIT_LIST_HEAD(path);
+>   
+> -	rc = _coresight_build_path(source, sink, path);
+> +	rc = _coresight_build_path(source, sink, path, source);
+>   	if (rc) {
+>   		kfree(path);
+>   		return ERR_PTR(rc);
+> @@ -1395,6 +1450,9 @@ static int coresight_orphan_match(struct device *dev, void *data)
+>   			/* This component still has an orphan */
+>   			still_orphan = true;
+>   		}
+> +		if ((conn->filter_src_fwnode) && dst_csdev
+> +		    && (conn->filter_src_fwnode == dst_csdev->dev.fwnode))
+> +			conn->filter_src_dev = dst_csdev;
+>   	}
+>   
+>   	src_csdev->orphan = still_orphan;
+> @@ -1424,6 +1482,11 @@ static void coresight_remove_conns(struct coresight_device *csdev)
+>   	 */
+>   	for (i = 0; i < csdev->pdata->nr_outconns; i++) {
+>   		conn = csdev->pdata->out_conns[i];
+> +		if (conn->filter_src_dev) {
+> +			conn->filter_src_dev = NULL;
+> +			conn->filter_src_fwnode = NULL;
+> +		}
+> +
 
-diff --git a/Documentation/devicetree/bindings/crypto/qcom,prng.yaml b/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
-index 89c88004b41b..e97226eb7a50 100644
---- a/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
-+++ b/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
-@@ -17,6 +17,7 @@ properties:
-           - qcom,prng-ee  # 8996 and later using EE
-       - items:
-           - enum:
-+              - qcom,qcs9100-trng
-               - qcom,sa8775p-trng
-               - qcom,sc7280-trng
-               - qcom,sm8450-trng
+Similarly we should reset the "filter_src_dev" if the "src" csdev is
+being removed.  You may need a new function for that, which scans
+through all devices and looks for a conn->filter_src_dev == csdev.
+Something like:
 
----
-base-commit: 0b58e108042b0ed28a71cd7edf5175999955b233
-change-id: 20240709-document_qcs9100_trng_compatible-be46d3047484
 
-Best regards,
--- 
-Tengfei Fan <quic_tengfan@quicinc.com>
+
+>   		if (!conn->dest_dev)
+>   			continue;
+>   
+> diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
+> index 9d550f5697fa..a9f5b0700310 100644
+> --- a/drivers/hwtracing/coresight/coresight-platform.c
+> +++ b/drivers/hwtracing/coresight/coresight-platform.c
+> @@ -243,6 +243,19 @@ static int of_coresight_parse_endpoint(struct device *dev,
+>   		conn.dest_fwnode = fwnode_handle_get(rdev_fwnode);
+>   		conn.dest_port = rendpoint.port;
+>   
+> +		/*
+> +		 * Get the firmware node of the filter source through the
+> +		 * reference. This could be used to filter the source in
+> +		 * building path.
+> +		 */
+> +		conn.filter_src_fwnode =
+> +			fwnode_find_reference(&ep->fwnode, "filter_src", 0);
+> +		if (IS_ERR(conn.filter_src_fwnode))
+> +			conn.filter_src_fwnode = NULL;
+> +		else
+> +			conn.filter_src_dev =
+> +			 coresight_find_csdev_by_fwnode(conn.filter_src_fwnode);
+
+We should warn, if the filter_src_dev is of not the type DEV_TYPE_SOURCE.
+
+> +
+>   		new_conn = coresight_add_out_conn(dev, pdata, &conn);
+>   		if (IS_ERR_VALUE(new_conn)) {
+>   			fwnode_handle_put(conn.dest_fwnode);
+> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+> index e8b6e388218c..0a7ec0978605 100644
+> --- a/include/linux/coresight.h
+> +++ b/include/linux/coresight.h
+> @@ -171,6 +171,9 @@ struct coresight_desc {
+>    * @dest_dev:	a @coresight_device representation of the component
+>   		connected to @src_port. NULL until the device is created
+>    * @link: Representation of the connection as a sysfs link.
+> + * @filter_src_fwnode: filter source component's fwnode handle.
+> + * @filter_src_dev: a @coresight_device representation of the component that
+> +		needs to be filtered.
+>    *
+>    * The full connection structure looks like this, where in_conns store
+>    * references to same connection as the source device's out_conns.
+> @@ -199,6 +202,8 @@ struct coresight_connection {
+>   	struct coresight_device *dest_dev;
+>   	struct coresight_sysfs_link *link;
+>   	struct coresight_device *src_dev;
+> +	struct fwnode_handle *filter_src_fwnode;
+> +	struct coresight_device *filter_src_dev;
+>   	atomic_t src_refcnt;
+>   	atomic_t dest_refcnt;
+>   };
+
+Suzuki
 
 
