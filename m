@@ -1,61 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-25742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id B54D492C3F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 21:38:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C52F292C3FC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 21:39:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5C1F9B21502
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 19:38:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB2061C22445
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 19:39:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDC40839E4;
-	Tue,  9 Jul 2024 19:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD4BD18003A;
+	Tue,  9 Jul 2024 19:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U7Qreu3l"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q0Q0VAAt"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CC61B86DE
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jul 2024 19:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83690839E4;
+	Tue,  9 Jul 2024 19:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720553926; cv=none; b=tYNF1KDNp1U31lxm7NZLQstBPdyxOYBpED+SkYy3qfqNKuWmS3E+aPmEF2H/H8d1+IMy81k13UpC8L6XojmQstMH9YFAjsxp2lUDE5j80zH0hJo4YanoB9mEOxqaHBkkVgcAFcbndGCEyTTk8ECrdDpVQleYjHbTfQY8rpt5Tn8=
+	t=1720553979; cv=none; b=YsQwkrKgkXOe5W7472Yq63NU75v94kpp5aAXVEAw6PYU1rg0udZGZOmghriNQcHkhBqnEOVhz2K2Q1JBT1armtHCgbbvM8H6z/SolTAYpzAtwALXIQ+MiO0WIPPGhlyH/mVzF4zETj2clcYr1ArQpltQ/s2GJ6l22/ScshOwCZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720553926; c=relaxed/simple;
+	s=arc-20240116; t=1720553979; c=relaxed/simple;
 	bh=I89yLdaDuR7xDwlnar8naIjNdxnNqs0sCv2ibNzBMf4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FBzsiLMs6MMlqQ0968WE8wJVBmdJu/CZQCzOaPyh62hkAOluuqJCp66bX3EsurinLcg9KzwWedVkn844HKo26jg53+7fI+OEJhlR+cx9RH+6mRATKXyL7vzhL5Lrxwl2b8ByM65mjH0QFwlnQiNOVbPtl24ZxAsYuy9/a3rnZJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U7Qreu3l; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1755AC3277B;
-	Tue,  9 Jul 2024 19:38:36 +0000 (UTC)
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=m9qmw4Fi6QlStFvcTnmLCwaN4l9YnyFz/HdOU6NWMFMjA4cuBJO9e4aUhNYNKfQIss0SP80FtqsNwy6E4kCosc5D7y3wsLLft1YzI7XIno6G1JJkKSwJUR/Xok/C+1uJzwNjchJ52JB4lqvXoeKItja1k9QzwCCE+bZdS6RwBRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q0Q0VAAt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E20EFC3277B;
+	Tue,  9 Jul 2024 19:39:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720553926;
+	s=k20201202; t=1720553979;
 	bh=I89yLdaDuR7xDwlnar8naIjNdxnNqs0sCv2ibNzBMf4=;
-	h=From:List-Id:To:Cc:Subject:Date:From;
-	b=U7Qreu3lLj6r3RLUWrRBktTAw23d9WFavv35stcvwuFDzcyPqOIqShKBfpjX8nFHa
-	 MAnaYiWpMSdUDTQLBdvNLNyLeUtV/6pwatxOmdpw0wCYEM/tlzHJWhdo12+uJXlVH2
-	 lXZsDu+7rGIE6+2nm7b2SRkpN5K2EODUsoKTQ08LlNoK3ppjfgqMiKoeXGoUW50Gis
-	 IWoEd10D0OIiLGKhQ0nGppWbY4Lrzu5B2RjjQS9om3NHGTce/3xsSOeAFv5RaW2Xo4
-	 RMFpTa4zWeet6KMJEjQnrE55PGTiDPJ49snu3coDv5HCmaQFeOPu42IOF/GkO11DsM
-	 R+wGMJipEejbg==
+	h=From:To:Cc:Subject:Date:From;
+	b=q0Q0VAAtDbxC4ZkNK5MS8jtMvc2DVgqJq1EHOeJQDQz5aUx2nMPHx7yma5NuUK1rq
+	 yP64ecPOEICPec7JBv26EGhZmvbuC5Ywp4Mv7C4hKyINHCseKvlmwg/C3P9qQ7C4Ge
+	 35Fv0p8bUkNEiCJRYAaOXHf/nNthw2VCgPT5h/NO1PhpyqpzDeclyhWuImwexayIqY
+	 qDUQVMn/n+JliOyGiRcBnWw1kET3MOo8Wotn2R0cltoSEPJqzLuCsBaYoVkOH0sFhN
+	 UoLRDwkMviNcdhBAGiLDrPdvz3f5kIfRKK+C0pDzhRReHbM0HJxSz9oLoQE6dkVLko
+	 T4qBDwVPB2IYA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: arm@kernel.org,
-	soc@kernel.org
+To: Stephen Boyd <sboyd@kernel.org>,
+	linux-clk@vger.kernel.org
 Cc: linux-arm-msm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
-	Arnd Bergmann <arnd@arndb.de>,
-	Olof Johansson <olof@lixom.net>,
-	Kevin Hilman <khilman@baylibre.com>,
 	Varadarajan Narayanan <quic_varada@quicinc.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Chen Ni <nichen@iscas.ac.cn>,
 	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 Subject: [GIT PULL] A few more Qualcomm clk updates for v6.11
-Date: Tue,  9 Jul 2024 14:38:31 -0500
-Message-ID: <20240709193832.4270-1-andersson@kernel.org>
+Date: Tue,  9 Jul 2024 14:39:27 -0500
+Message-ID: <20240709193927.4424-1-andersson@kernel.org>
 X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
