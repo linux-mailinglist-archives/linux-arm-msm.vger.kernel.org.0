@@ -1,153 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-25540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D84792ADF4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 03:58:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BFD9692AF01
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 06:19:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5F40F1C21519
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 01:58:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F267F1C21B06
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 04:19:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2398E2BAEF;
-	Tue,  9 Jul 2024 01:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 267AC78C88;
+	Tue,  9 Jul 2024 04:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="bw/1shH5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="V2syuKe+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A8672A8FE;
-	Tue,  9 Jul 2024 01:58:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E89620;
+	Tue,  9 Jul 2024 04:19:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720490327; cv=none; b=Gcc7u0Y5rlnTvHVRKkMIXRFBuNZh4X6eOcJF7Uqg4h6udGSw1M/PknzUbaITGgBRmU9XQoQwJhP/OrfM20M8uJs7H00w9QBwiUAtYHmCVzusOuv2GylpAUuxgnef2S7S26ekOT4mBNPs5baeb/5Im8kiqatcCisNo657KEVffBg=
+	t=1720498768; cv=none; b=DbqbEDSQVAon8gzGqKQeyy3wUO6nkqG9uiI/zAstUoly2YhGzt8cGCj4sF8k4KLm1YrbcUpGRBdaoVf22EBuyDC5cOWhoajS//zCizvu/J15VInjGQGvX3fFGR6UTPe8xiq6phi5aucvlAv+mg2zuTS/ygde9m2xZHsVtbj960M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720490327; c=relaxed/simple;
-	bh=SbITn/NJ0ImuVnQwIG27scr/uaOrxyWh6qpM8UCbrgo=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=FDoMPabs4kj4zDhoy89xl1j1brsbRjOiLteEj1pFxU4df8XosVd+Qh93eswYr1hNZD9PMOE6Dx9xgyL1kjSgGDPY7aezF2GsJfazoTie4mLimu6NJIJF//8OH+pMJRirv/TofFLNu/B421FdPgnjUYvYt6+TVnaLWjvorICfIuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=bw/1shH5; arc=none smtp.client-ip=220.197.31.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=NyHkN
-	eqq5bZSo8OxYkVnYsj99xGwfUPsdu6iemJRJaY=; b=bw/1shH5OUfAeXTxmM7Bh
-	Nrzr/7d103g4b2GZPFCz5KiIC+6ot8GfbuIc5JU9Dz2EWmNwx/l5HJsRTXmI4Z6P
-	0UCGF3qYFhl6T8AhVnADjpAtzKvT4iCOkzG/L/uOBMJcd9P+1Cf2Wgl1QCkPiVIC
-	fbx2+i5jes1EJGLnw8i6w4=
-Received: from localhost.localdomain (unknown [223.104.68.188])
-	by gzga-smtp-mta-g2-2 (Coremail) with SMTP id _____wD3n_k9mYxmjur5Ag--.7452S2;
-	Tue, 09 Jul 2024 09:58:22 +0800 (CST)
-From: Slark Xiao <slark_xiao@163.com>
-To: manivannan.sadhasivam@linaro.org
-Cc: mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Slark Xiao <slark_xiao@163.com>
-Subject: [PATCH] bus: mhi: host: Add firehose support for Foxconn SDX24/SDX55/SDX65
-Date: Tue,  9 Jul 2024 09:58:18 +0800
-Message-Id: <20240709015818.110384-1-slark_xiao@163.com>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1720498768; c=relaxed/simple;
+	bh=30xitU9m3pbC38fhFhR2exRe8dNHDVsbQb29IhiB1lg=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=txK8vLge5uG3LoP5VREEwAdM7BUa3HwbtXnHztUL7jvl7CbgstFydhcEm18D3nQWwzJcPfOoBil8DUGdyzGCyClHH+gieCPQfAWaz2GnjHULVoW8C4EcqktRVjS9pvplcDqKiRtQh5AHZAzbIUlfTLZ5+4VX1Br7tbOkSAvT0kI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=V2syuKe+; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 468Mo2QK015544;
+	Tue, 9 Jul 2024 03:51:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Zet6s/oJP3P7PB+e0PNHbJL8LTPKBRrFKa+rhqJU4Qk=; b=V2syuKe+AVDrV5TW
+	gp75/7tAZ8uXVjLjfKCvLJqqe7Qj/ZGjHqS2ngEklwsSxqH3RI3EkBphDdQStSuQ
+	NV6avtp5mdRaAHEmW8lpRrT1o+08SWnB7/9Twl+dbj1nZLQenGmwJfMR7dv3OEKL
+	y9IcTEPDyp9dQn7Onh5Jl2XU1LRXHj8nIfOX2pPVJghA/jEobu1S0dpoz3RMrmb8
+	G8ZeP4AHGV57XZTcsKZcpq8RnDDoap83Aq+IXsr0Oh290v9hL/xQQQ4MRW72etbo
+	rmVbuBax29XuOwyC1S+XgcgZBwecypM6sKTzZzcnKTIeVoaUssfGYQ5VUYyk2JHE
+	P/VzGQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406we8w6tr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Jul 2024 03:51:01 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4693p0GM025417
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 9 Jul 2024 03:51:00 GMT
+Received: from [10.110.80.193] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 8 Jul 2024
+ 20:50:58 -0700
+Message-ID: <fadca811-fabd-92b0-0482-c317344de2d7@quicinc.com>
+Date: Mon, 8 Jul 2024 20:50:58 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wD3n_k9mYxmjur5Ag--.7452S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxZF4UAr4rKr18Aw18GFWxJFb_yoW5KFWDpF
-	na9r4rJw4ktFWfKrs7Aw1kCwn3Crs09ryxt3ZxG342yr15A3yqqF4DG3W29w45Z3s7Jr1I
-	vF98WFWDC3Z7JF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0picyCdUUUUU=
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiRwEXZGV4KMAVPgAAsr
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v5 3/4] firmware: psci: Read and use vendor reset types
+Content-Language: en-US
+From: Trilok Soni <quic_tsoni@quicinc.com>
+To: Elliot Berman <quic_eberman@quicinc.com>,
+        Sudeep Holla
+	<sudeep.holla@arm.com>
+CC: Sebastian Reichel <sre@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Andy Yan
+	<andy.yan@rock-chips.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        "Mark
+ Rutland" <mark.rutland@arm.com>,
+        Bartosz Golaszewski
+	<bartosz.golaszewski@linaro.org>,
+        Satya Durga Srinivasu Prabhala
+	<quic_satyap@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Shivendra Pratap <quic_spratap@quicinc.com>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Florian Fainelli <florian.fainelli@broadcom.com>,
+        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <20240617-arm-psci-system_reset2-vendor-reboots-v5-0-086950f650c8@quicinc.com>
+ <20240617-arm-psci-system_reset2-vendor-reboots-v5-3-086950f650c8@quicinc.com>
+ <20240619135143.kr2tx4ynxayc5v3a@bogus>
+ <20240619080933071-0700.eberman@hu-eberman-lv.qualcomm.com>
+ <20240620162547309-0700.eberman@hu-eberman-lv.qualcomm.com>
+ <ZnmTtmZB8epgbUTN@bogus>
+ <20240702155630416-0700.eberman@hu-eberman-lv.qualcomm.com>
+ <1bdc4d4c-9cf1-a8bd-80de-7463cecd2c78@quicinc.com>
+In-Reply-To: <1bdc4d4c-9cf1-a8bd-80de-7463cecd2c78@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: np-jJaWPBl7FoRWLTFcEOK4UClUtoSca
+X-Proofpoint-GUID: np-jJaWPBl7FoRWLTFcEOK4UClUtoSca
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-08_15,2024-07-08_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 impostorscore=0
+ bulkscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 mlxlogscore=999 malwarescore=0 mlxscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
+ definitions=main-2407090023
 
-Since we implement the FIREHOSE channel support in foxconn mhi
-channels, that means each product which use this channel config
-would support FIREHOSE. But according to the trigger_edl feature,
-we need to enable it by adding '.edl_trigger = true' in device
-info struct.
-Also, we update all edl image path from 'qcom' to 'fox' in case of
-conflicting with other vendors.
+On 7/2/2024 4:42 PM, Trilok Soni wrote:
+> On 7/2/2024 4:06 PM, Elliot Berman wrote:
+>> Hi Sudeep,
+>>
+>> On Mon, Jun 24, 2024 at 04:41:42PM +0100, Sudeep Holla wrote:
+>>> Sorry, I completely missed to see that you had already answered those
+>>> in your commit message. As mentioned earlier I haven't looked at the
+>>> reboot mode framework completely yet, so I can't comment on it yet.
+>>>
+>>> I don't want to be blocker though if others are happy with this.
+>>
+>> I think folks are satisfied with the other parts of the series and now
+>> looking for your conclusion on the PSCI driver part.
+> 
+> I will be nice to get these patches picked up before 4th July holiday in US :).
 
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
----
- drivers/bus/mhi/host/pci_generic.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+Sorry to bug you again Sudeep - but I need confirmation that these patches looks good to you
+and you will pick them up. Thanks. 
+ 
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 14a11880bcea..440609b81e57 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -433,8 +433,8 @@ static const struct mhi_controller_config modem_foxconn_sdx72_config = {
- 
- static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
- 	.name = "foxconn-sdx55",
--	.fw = "qcom/sdx55m/sbl1.mbn",
--	.edl = "qcom/sdx55m/edl.mbn",
-+	.edl = "fox/sdx55m/prog_firehose_sdx55.mbn",
-+	.edl_trigger = true,
- 	.config = &modem_foxconn_sdx55_config,
- 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
- 	.dma_data_width = 32,
-@@ -444,8 +444,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
- 
- static const struct mhi_pci_dev_info mhi_foxconn_t99w175_info = {
- 	.name = "foxconn-t99w175",
--	.fw = "qcom/sdx55m/sbl1.mbn",
--	.edl = "qcom/sdx55m/edl.mbn",
-+	.edl = "fox/sdx55m/prog_firehose_sdx55.mbn",
-+	.edl_trigger = true,
- 	.config = &modem_foxconn_sdx55_config,
- 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
- 	.dma_data_width = 32,
-@@ -455,8 +455,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w175_info = {
- 
- static const struct mhi_pci_dev_info mhi_foxconn_dw5930e_info = {
- 	.name = "foxconn-dw5930e",
--	.fw = "qcom/sdx55m/sbl1.mbn",
--	.edl = "qcom/sdx55m/edl.mbn",
-+	.edl = "fox/sdx55m/prog_firehose_sdx55.mbn",
-+	.edl_trigger = true,
- 	.config = &modem_foxconn_sdx55_config,
- 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
- 	.dma_data_width = 32,
-@@ -466,6 +466,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_dw5930e_info = {
- 
- static const struct mhi_pci_dev_info mhi_foxconn_t99w368_info = {
- 	.name = "foxconn-t99w368",
-+	.edl = "fox/sdx65m/prog_firehose_lite.elf",
-+	.edl_trigger = true,
- 	.config = &modem_foxconn_sdx55_config,
- 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
- 	.dma_data_width = 32,
-@@ -475,6 +477,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w368_info = {
- 
- static const struct mhi_pci_dev_info mhi_foxconn_t99w373_info = {
- 	.name = "foxconn-t99w373",
-+	.edl = "fox/sdx65m/prog_firehose_lite.elf",
-+	.edl_trigger = true,
- 	.config = &modem_foxconn_sdx55_config,
- 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
- 	.dma_data_width = 32,
-@@ -484,6 +488,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w373_info = {
- 
- static const struct mhi_pci_dev_info mhi_foxconn_t99w510_info = {
- 	.name = "foxconn-t99w510",
-+	.edl = "fox/sdx24m/prog_firehose_sdx24.mbn",
-+	.edl_trigger = true,
- 	.config = &modem_foxconn_sdx55_config,
- 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
- 	.dma_data_width = 32,
-@@ -493,6 +499,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w510_info = {
- 
- static const struct mhi_pci_dev_info mhi_foxconn_dw5932e_info = {
- 	.name = "foxconn-dw5932e",
-+	.edl = "fox/sdx65m/prog_firehose_lite.elf",
-+	.edl_trigger = true,
- 	.config = &modem_foxconn_sdx55_config,
- 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
- 	.dma_data_width = 32,
 -- 
-2.25.1
+---Trilok Soni
 
 
