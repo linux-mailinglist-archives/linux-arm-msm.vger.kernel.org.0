@@ -1,75 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-25654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 809BD92BBC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 15:48:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72A1992BC40
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 15:58:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A342F1C21B00
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 13:48:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F1FCD1F23484
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 13:58:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE83316630E;
-	Tue,  9 Jul 2024 13:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16AF818C352;
+	Tue,  9 Jul 2024 13:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tUJ3vxGF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MWJNPbo/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEBD1802A4
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jul 2024 13:48:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9570E1850A2;
+	Tue,  9 Jul 2024 13:57:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720532918; cv=none; b=o/Bor5Eq0tknJrz76g3nltBUN30vvwWRdEPXNYjnhqr+A61qAgc29WDhfwtGLJbCrMEkuWK7LYklVuOJVwoUf85Cd8WopdipvC28Lzf5nzlvpHzRf6XVsEc858ud7w+LYkz8/CZ4Cag8rAATC+zLrNUz5JLnumtU2EA1cqc/QBg=
+	t=1720533442; cv=none; b=qWHgOJ20lR+W/Nu4MQD8xeyTsRcMUwe6Pqcy8WlIFSXCTND830PJ7cAT9mSEFyZdRbi5S8Bn7LJVzPxzDmSdfQuwjXZyLEMh9PqehoJYW3OdWkkrGOl6Atb1iI0TmCshsaRh5VIzdxXjefZDEdx3XUpxwUu3LD4WK3mj71d/uwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720532918; c=relaxed/simple;
-	bh=5MmuIH9/ptcSX8goq+NiIFoXU3SW2qDd+IHPfO869oE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WShHiRKmIQ/d1bk6y4zxpQzDZ92OgG908GhUSWcuE0uFORQfKpCDazkwYgGfvKoOIxw3750pCKhWW223BdPeU7j670Hk3ReVlMPuKHPnytf1U37e6GGxNrWRjie3Ky0Ps0Oqg5zL4tuKvZkJwjqTPwjE4IROfQ+R4fVQUq6Gjwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tUJ3vxGF; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-52ea7bdde68so4573178e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jul 2024 06:48:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720532909; x=1721137709; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IVsuhaP11rLzifuOYfoCT/JsmgFit3NDN+KhNk6m6Fg=;
-        b=tUJ3vxGF8nqPp/D6WnGgxgUEuPqBcGajpXV14TNFcT4Mh1+JZKEgTISIBeKGxY86Iv
-         pj2ns1uVG3xe/BKmQw0Njvt8+Qp/Nq+hcBY0xrTIxd0GqelgX3X/S7UMcBnWhyTk0nv0
-         vjNYxdmUgfc5LAz15N0qbxguMcQwIod8xNIKk+RIqefobvfTXPCO10rYtDaLPuZqNkhd
-         OvBk97ZW8VwGF6ivLIoIJ7fAR9uny5oqr1HS2yoaUXf7jldAXvNmpjAo7mrbfF/No1TV
-         e+9JeB1C1unMW5Uq1RMp4QmvG/pq8rD+QRSFPmVFxZokI2Atd1mU2B3ncQFunO4yGe4g
-         dcsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720532909; x=1721137709;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IVsuhaP11rLzifuOYfoCT/JsmgFit3NDN+KhNk6m6Fg=;
-        b=PQPs7Q7KlBj2iYyIh2pJ4EghsxHV4yQKLZrMs3+a62Fyaiupn9pv+jZxXb3elPkEVt
-         KRdvTtzwNsO7I98mZBwm4oEQFQbJ5IWeXdukMA4qJoHpgyE+0SCmT0+48D9kRwaBTerd
-         mDn9AELMRdd75hSD/htGp5pkBG51p+tPiTbIvWfvmgzqtWwLcrurwn/fL0MdjcvU2Uc1
-         atg75WCDCfJSDGIlpL4aIOto+BptgxFveSnWedsmJaxxKEk3ZqGCjcasUX2JF/cFaqi/
-         AOiFEhB/A0u6iH3IpS+ifnhIlRE2zJVo3qrzqHL2ltGIYfK7oxw3uPjifAfLo7zW1Ffo
-         g5lQ==
-X-Gm-Message-State: AOJu0YxmPuJ3XTp9CM4WzQ/lZvMtr9HPwEm6rYvRV4MG4p+wWIhtdi0V
-	PN0ysleGpb79kWIeyWMjFd6YIWbuX1dVCvdrOtwrnoBCcdJPc2JPITPscRqvsk2RxPkl8E4wfkm
-	vN0s=
-X-Google-Smtp-Source: AGHT+IEaDUQIyebHpQsxc8nw3fDHAFZgaEz1nXPH9SPNxdY+OR16Je0rKup8mDiVn9/F2IwT3VnrBg==
-X-Received: by 2002:a05:6512:752:b0:52e:95dd:a8ed with SMTP id 2adb3069b0e04-52eb99a199fmr1263558e87.35.1720532909315;
-        Tue, 09 Jul 2024 06:48:29 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52eb8e4959csm250297e87.82.2024.07.09.06.48.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jul 2024 06:48:28 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 09 Jul 2024 16:48:23 +0300
-Subject: [PATCH 2/2] drm/msm/dpu: don't play tricks with debug macros
+	s=arc-20240116; t=1720533442; c=relaxed/simple;
+	bh=HEr0HPxjelqJ3oX82GEVZTV5xdIMPqGPD+jcTVomdDY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=B9hGEmNGHzgqKigw6yBDudxH+dVxqlkN5H4ay8CfMSVYWeI5JE4QBrqlATwdeGQIYcAMezM9KKhdhs5NuNYaKYpig4dwrOcKWI0rt6sxgC/fZ0AAIXhvSvE7nMjXe0/MSXi6cRFv7mLXSkkfAWPDzGJkpg9Q8CfhQeft6jKgc6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MWJNPbo/; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 469Bm52g015976;
+	Tue, 9 Jul 2024 13:57:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=pSoKKJd+KGOwGbP1EvBI7g
+	R5LzyKw21ySidDByFY1eI=; b=MWJNPbo/1M6ihvrCOQlFu7uT6uCL6joPdH8l1Y
+	/83W4SvabTPz+xMY8HinRdFawXEi3YAxdzg9hTJtGOliXfT3G2O7PGChTAUdqPwy
+	Q85lVfrs1g3smu7KQnf7q6nKyklXLQTiG72QzuhQiWQ/45+GhSF3WrtSa+UOfC5h
+	rFmPC6rbMEn95sPbVO4F/ii141pp70ZYHSBymw4VWA1a1h/Y3yuh7Xt4Y/iEJ9Oe
+	3MnrrgQ5bvgdJEVrctS416roBZxVdRY56L9H/3HlJwTKmkZ42mncWxE0l0LCqyzY
+	zmBvEuZp1KaIXONNPGyOvFgVl8qTtb6FwzSdg/fsCXAsrZGg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406y3hebn5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Jul 2024 13:57:07 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 469Dv6eL008307
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 9 Jul 2024 13:57:06 GMT
+Received: from tengfan-gv.ap.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 9 Jul 2024 06:57:01 -0700
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+Date: Tue, 9 Jul 2024 21:56:45 +0800
+Subject: [PATCH v2] dt-bindings: interrupt-controller: qcom,pdc: document
+ pdc on QCS9100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,80 +66,98 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240709-dpu-fix-wb-v1-2-448348bfd4cb@linaro.org>
-References: <20240709-dpu-fix-wb-v1-0-448348bfd4cb@linaro.org>
-In-Reply-To: <20240709-dpu-fix-wb-v1-0-448348bfd4cb@linaro.org>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Jordan Crouse <jordan@cosmicpenguin.net>, 
- Chandan Uddaraju <chandanu@codeaurora.org>, 
- Rajesh Yadav <ryadav@codeaurora.org>, 
- Sravanthi Kollukuduru <skolluku@codeaurora.org>, 
- Archit Taneja <architt@codeaurora.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Jeykumar Sankaran <jsanka@codeaurora.org>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2037;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=5MmuIH9/ptcSX8goq+NiIFoXU3SW2qDd+IHPfO869oE=;
- b=owGbwMvMwMXYbdNlx6SpcZXxtFoSQ1qv/Qof//Jj7Pw+y0yYutVkmev9z8YY/z7xmP0Fk3LWV
- ffpgZ6djMYsDIxcDLJiiiw+BS1TYzYlh33YMbUeZhArE8gUBi5OAZjI+V3s/wzDDrWdCnywurzf
- +9I25rTUQxqHj591S21Ikv/lmOR4tLmB85VMXOFJHeea6mWCTKmbunc7rTqW6HTPcNcfqefx/1w
- sPsV0ZNm/ce7XP3MriNPsowT7rrr49z6Mkzp4Xmu84t04572XTU7tgdb3rxY2Hltx+66hzoxLzS
- 1PJpcci9xg0b7YN6MoZveaKX4eR3d+ddk8e7vG5ucL590X3HFkfXShVu5RSQ8P4SzzAJbg7T3sA
- ho8zOv5XpY9qwtaOddC8yBXaCh/Cscp3shKzbLAxc4zw+Rc1wgnca3mT2iIT1pdL6ni7nO7Zcv3
- F+qfI5lus5j7xG5a8PuYtMEZ7rO207veRnHd+Pth3SdNAA==
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Message-ID: <20240709-document_qcs9100_pdc_compatible-v2-1-83619dcd2658@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAJ1BjWYC/zWNWwqDMBQFtyL5buQm9dmv7qOIaLzqhZpoEqVF3
+ Huj0M85cGZ25tASOvaIdmZxI0dGB5C3iKmx0QNy6gIzCTKBHEreGbVOqH29KFcKgHruVK3MNDe
+ e2jfyLMUEsqwVuSxYsMwWe/pchVcVeCTnjf1ewU2c6999B5kWKcQyXAEKLviykqo96qFv9PME0
+ ioOLVYdx/EDjQQdWbsAAAA=
+To: Thomas Gleixner <tglx@linutronix.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tengfei Fan
+	<quic_tengfan@quicinc.com>
+X-Mailer: b4 0.15-dev-a66ce
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1720533420; l=2372;
+ i=quic_tengfan@quicinc.com; s=20240709; h=from:subject:message-id;
+ bh=HEr0HPxjelqJ3oX82GEVZTV5xdIMPqGPD+jcTVomdDY=;
+ b=sZX0BRLqszm6V6A4pIeEj+L+LBXW9bIwgkLDp81HJiUBSXTCSUAzV2tYVgVnZIegsz4ANovZc
+ +DmrWB1Cj4GBolw6iPzR3Py0BTOPNkLCFpfAGdLeZBayyt6c+2J7pe9
+X-Developer-Key: i=quic_tengfan@quicinc.com; a=ed25519;
+ pk=4VjoTogHXJhZUM9XlxbCAcZ4zmrLeuep4dfOeKqQD0c=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 9wpC2PsmCgA261EYisKVb3HL2jBcoBie
+X-Proofpoint-GUID: 9wpC2PsmCgA261EYisKVb3HL2jBcoBie
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-09_04,2024-07-09_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ spamscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0
+ clxscore=1015 mlxlogscore=835 impostorscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407090090
 
-DPU debugging macros need to be converted to a proper drm_debug_*
-macros, however this is a going an intrusive patch, not suitable for a
-fix. Wire DPU_DEBUG and DPU_DEBUG_DRIVER to always use DRM_DEBUG_DRIVER
-to make sure that DPU debugging messages always end up in the drm debug
-messages and are controlled via the usual drm.debug mask.
+The QCS9100 SoC includes a PDC, document it.
+QCS9100 is drived from SA8775p. Currently, both the QCS9100 and SA8775p
+platform use non-SCMI resource. In the future, the SA8775p platform will
+move to use SCMI resources and it will have new sa8775p-related device
+tree. Consequently, introduce "qcom,qcs9100-pdc" to describe non-SCMI
+based pdc.
 
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+Introduce support for the QCS9100 SoC device tree (DTSI) and the
+QCS9100 RIDE board DTS. The QCS9100 is a variant of the SA8775p.
+While the QCS9100 platform is still in the early design stage, the
+QCS9100 RIDE board is identical to the SA8775p RIDE board, except it
+mounts the QCS9100 SoC instead of the SA8775p SoC.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-index e2adc937ea63..935ff6fd172c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-@@ -31,24 +31,14 @@
-  * @fmt: Pointer to format string
-  */
- #define DPU_DEBUG(fmt, ...)                                                \
--	do {                                                               \
--		if (drm_debug_enabled(DRM_UT_KMS))                         \
--			DRM_DEBUG(fmt, ##__VA_ARGS__); \
--		else                                                       \
--			pr_debug(fmt, ##__VA_ARGS__);                      \
--	} while (0)
-+	DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
- 
- /**
-  * DPU_DEBUG_DRIVER - macro for hardware driver logging
-  * @fmt: Pointer to format string
-  */
- #define DPU_DEBUG_DRIVER(fmt, ...)                                         \
--	do {                                                               \
--		if (drm_debug_enabled(DRM_UT_DRIVER))                      \
--			DRM_ERROR(fmt, ##__VA_ARGS__); \
--		else                                                       \
--			pr_debug(fmt, ##__VA_ARGS__);                      \
--	} while (0)
-+	DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
- 
- #define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
- #define DPU_ERROR_RATELIMITED(fmt, ...) pr_err_ratelimited("[dpu error]" fmt, ##__VA_ARGS__)
+The QCS9100 SoC DTSI is directly renamed from the SA8775p SoC DTSI, and
+all the compatible strings will be updated from "SA8775p" to "QCS9100".
+The QCS9100 device tree patches will be pushed after all the device tree
+bindings and device driver patches are reviewed.
 
+The final dtsi will like:
+https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-3-quic_tengfan@quicinc.com/
+
+The detailed cover letter reference:
+https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
+---
+Changes in v2:
+  - Split huge patch series into different patch series according to
+    subsytems
+  - Update patch commit message
+
+prevous disscussion here:
+[1] v1: https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
+---
+ Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+index 985fa10abb99..41fbfce838fa 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
+@@ -26,6 +26,7 @@ properties:
+   compatible:
+     items:
+       - enum:
++          - qcom,qcs9100-pdc
+           - qcom,qdu1000-pdc
+           - qcom,sa8775p-pdc
+           - qcom,sc7180-pdc
+
+---
+base-commit: 0b58e108042b0ed28a71cd7edf5175999955b233
+change-id: 20240709-document_qcs9100_pdc_compatible-65e4066b1728
+
+Best regards,
 -- 
-2.39.2
+Tengfei Fan <quic_tengfan@quicinc.com>
 
 
