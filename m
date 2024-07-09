@@ -1,112 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-25539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DE8D92AD12
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 02:24:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D84792ADF4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 03:58:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C348AB21DC6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 00:24:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5F40F1C21519
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 01:58:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B07B526AD0;
-	Tue,  9 Jul 2024 00:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2398E2BAEF;
+	Tue,  9 Jul 2024 01:58:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="bw/1shH5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D34AEA4
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jul 2024 00:24:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A8672A8FE;
+	Tue,  9 Jul 2024 01:58:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720484669; cv=none; b=fuB/HQfySvPrfe6cFcGYkpuCdhZlXlz3ZgVpjKr1vqnEkRhwQiAFATZ3EvdxGNarn9RlcHjAffZujkh/6+d/KWAB3u/QvsjVkzZLAn/xIcIQ/rA9jRh99w2Ub5ONC+gQaHgUq/bkhWTlWWYxKuZZGFrsnaMyfOXfR4LxEKowxs8=
+	t=1720490327; cv=none; b=Gcc7u0Y5rlnTvHVRKkMIXRFBuNZh4X6eOcJF7Uqg4h6udGSw1M/PknzUbaITGgBRmU9XQoQwJhP/OrfM20M8uJs7H00w9QBwiUAtYHmCVzusOuv2GylpAUuxgnef2S7S26ekOT4mBNPs5baeb/5Im8kiqatcCisNo657KEVffBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720484669; c=relaxed/simple;
-	bh=OXijfxSktD32jVhvGlHifwLx3aNVOhgOTQl728nchT0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gO05U6UtTrBSHjjHwTsG1P9jr15YxhSyVqhJXfui1pxLJqP38txmXAjGK+mNysFinJLvH31WUYp5tT1BoqtWy48P7phskraFnOUK1heS/i8wyXeacIjJi4dH1BZe6YeEPeLKfvGUIs1nT1zQJkNdMqxO8y3oMoPxl1UpSr30j/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=baylibre.com; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1fb0d88fd25so29435975ad.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jul 2024 17:24:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720484666; x=1721089466;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wlo3UWV9lkDtVHiC3tnceLIBeIIjDfMxY69ysONeH1A=;
-        b=KoJfaAr0tvMMmbQZ/MTSmM6HkKJQIKmZIMJwQTL35irUVsdwQ+Zu3l9TGLBrHnI1Hb
-         kqwZ+xOX+f+oQx28D2d033b01rGaUmGz4lQh6Jhja5S9+hotMVr7jNDpFngWrR2PEt2W
-         SLt0nZ4zNvYpRsdS+hnl3vPy7+QGEiDjbcWYCDTP97NmsEhg9ARvXw03nmNNhH7OSMAq
-         kPxxYpceWnPV3PChry7SsaEvfV6E6mTdv6jwCo8hSYBzJIvh3cOSkOiFfT3EoxDhXTfR
-         yxLrxRSY1TaZJUSpDN9vAwBW7ivedrL429HssTKwV1F8FmL1D9NdjV/xP6A7M3Z853h8
-         sL7Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUwWBldEOdOJmOfpOp6AYN9Z+e1Jn7r/ob+eqEAJN2XbxRSEJS7NkGuTKqvkdfeNPEIFqCy9qH3b3dO9k7fyWFf7ucdPrhXVVIJacLwoQ==
-X-Gm-Message-State: AOJu0YwCucDmO7xF+rH3tXL1+t/8XIiNLvlLj0KoKPfaISRD+331EGqE
-	AE85beViK/OWb/0lEh7u4988trwExePbCSSiH6oXoLJm5flV/9+SYXl/U7a2Ofs=
-X-Google-Smtp-Source: AGHT+IFdw3EaveRM2ZTHoRq8dYxA8E7q05nixOcYOGorj2dRL4w7J12n220WAjIf2IctJiJkVfxTEw==
-X-Received: by 2002:a17:902:db0e:b0:1f4:a04e:8713 with SMTP id d9443c01a7336-1fbb804725emr12528595ad.28.1720484666359;
-        Mon, 08 Jul 2024 17:24:26 -0700 (PDT)
-Received: from localhost (97-126-77-189.tukw.qwest.net. [97.126.77.189])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fbb6ab7d2dsm4321415ad.180.2024.07.08.17.24.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jul 2024 17:24:25 -0700 (PDT)
-From: Kevin Hilman <khilman@kernel.org>
-To: Viresh Kumar <viresh.kumar@linaro.org>, "Rafael J. Wysocki"
- <rafael@kernel.org>, Viresh Kumar <viresh.kumar@linaro.org>, Huang Rui
- <ray.huang@amd.com>, "Gautham R. Shenoy" <gautham.shenoy@amd.com>, Mario
- Limonciello <mario.limonciello@amd.com>, Perry Yuan <perry.yuan@amd.com>,
- Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>, Alyssa
- Rosenzweig <alyssa@rosenzweig.io>, Markus Mayer <mmayer@broadcom.com>,
- Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>, Srinivas Pandruvada
- <srinivas.pandruvada@linux.intel.com>, Len Brown <lenb@kernel.org>,
- Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin
- <npiggin@gmail.com>, Christophe Leroy <christophe.leroy@csgroup.eu>,
- "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>, Sudeep Holla
- <sudeep.holla@arm.com>, Cristian Marussi <cristian.marussi@arm.com>,
- Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter
- <jonathanh@nvidia.com>, Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: linux-pm@vger.kernel.org, Vincent Guittot <vincent.guittot@linaro.org>,
- Lizhe <sensor1010@163.com>, linux-kernel@vger.kernel.org,
- asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
- linux-omap@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
- linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
- linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH 4/4] cpufreq: Make cpufreq_driver->exit() return void
-In-Reply-To: <3f73fda736818128558b61ad5fe2bed5dce3ddc4.1720075640.git.viresh.kumar@linaro.org>
-References: <cover.1720075640.git.viresh.kumar@linaro.org>
- <3f73fda736818128558b61ad5fe2bed5dce3ddc4.1720075640.git.viresh.kumar@linaro.org>
-Date: Mon, 08 Jul 2024 17:24:25 -0700
-Message-ID: <7hplrn76py.fsf@baylibre.com>
+	s=arc-20240116; t=1720490327; c=relaxed/simple;
+	bh=SbITn/NJ0ImuVnQwIG27scr/uaOrxyWh6qpM8UCbrgo=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=FDoMPabs4kj4zDhoy89xl1j1brsbRjOiLteEj1pFxU4df8XosVd+Qh93eswYr1hNZD9PMOE6Dx9xgyL1kjSgGDPY7aezF2GsJfazoTie4mLimu6NJIJF//8OH+pMJRirv/TofFLNu/B421FdPgnjUYvYt6+TVnaLWjvorICfIuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=bw/1shH5; arc=none smtp.client-ip=220.197.31.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=NyHkN
+	eqq5bZSo8OxYkVnYsj99xGwfUPsdu6iemJRJaY=; b=bw/1shH5OUfAeXTxmM7Bh
+	Nrzr/7d103g4b2GZPFCz5KiIC+6ot8GfbuIc5JU9Dz2EWmNwx/l5HJsRTXmI4Z6P
+	0UCGF3qYFhl6T8AhVnADjpAtzKvT4iCOkzG/L/uOBMJcd9P+1Cf2Wgl1QCkPiVIC
+	fbx2+i5jes1EJGLnw8i6w4=
+Received: from localhost.localdomain (unknown [223.104.68.188])
+	by gzga-smtp-mta-g2-2 (Coremail) with SMTP id _____wD3n_k9mYxmjur5Ag--.7452S2;
+	Tue, 09 Jul 2024 09:58:22 +0800 (CST)
+From: Slark Xiao <slark_xiao@163.com>
+To: manivannan.sadhasivam@linaro.org
+Cc: mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Slark Xiao <slark_xiao@163.com>
+Subject: [PATCH] bus: mhi: host: Add firehose support for Foxconn SDX24/SDX55/SDX65
+Date: Tue,  9 Jul 2024 09:58:18 +0800
+Message-Id: <20240709015818.110384-1-slark_xiao@163.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wD3n_k9mYxmjur5Ag--.7452S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxZF4UAr4rKr18Aw18GFWxJFb_yoW5KFWDpF
+	na9r4rJw4ktFWfKrs7Aw1kCwn3Crs09ryxt3ZxG342yr15A3yqqF4DG3W29w45Z3s7Jr1I
+	vF98WFWDC3Z7JF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0picyCdUUUUU=
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbiRwEXZGV4KMAVPgAAsr
 
-Viresh Kumar <viresh.kumar@linaro.org> writes:
+Since we implement the FIREHOSE channel support in foxconn mhi
+channels, that means each product which use this channel config
+would support FIREHOSE. But according to the trigger_edl feature,
+we need to enable it by adding '.edl_trigger = true' in device
+info struct.
+Also, we update all edl image path from 'qcom' to 'fox' in case of
+conflicting with other vendors.
 
-> From: Lizhe <sensor1010@163.com>
->
-> The cpufreq core doesn't check the return type of the exit() callback
-> and there is not much the core can do on failures at that point. Just
-> drop the returned value and make it return void.
->
-> Signed-off-by: Lizhe <sensor1010@163.com>
-> [ Viresh: Reworked the patches to fix all missing changes together. ]
-> Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-> ---
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
+---
+ drivers/bus/mhi/host/pci_generic.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-[...]
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 14a11880bcea..440609b81e57 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -433,8 +433,8 @@ static const struct mhi_controller_config modem_foxconn_sdx72_config = {
+ 
+ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+ 	.name = "foxconn-sdx55",
+-	.fw = "qcom/sdx55m/sbl1.mbn",
+-	.edl = "qcom/sdx55m/edl.mbn",
++	.edl = "fox/sdx55m/prog_firehose_sdx55.mbn",
++	.edl_trigger = true,
+ 	.config = &modem_foxconn_sdx55_config,
+ 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+ 	.dma_data_width = 32,
+@@ -444,8 +444,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+ 
+ static const struct mhi_pci_dev_info mhi_foxconn_t99w175_info = {
+ 	.name = "foxconn-t99w175",
+-	.fw = "qcom/sdx55m/sbl1.mbn",
+-	.edl = "qcom/sdx55m/edl.mbn",
++	.edl = "fox/sdx55m/prog_firehose_sdx55.mbn",
++	.edl_trigger = true,
+ 	.config = &modem_foxconn_sdx55_config,
+ 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+ 	.dma_data_width = 32,
+@@ -455,8 +455,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w175_info = {
+ 
+ static const struct mhi_pci_dev_info mhi_foxconn_dw5930e_info = {
+ 	.name = "foxconn-dw5930e",
+-	.fw = "qcom/sdx55m/sbl1.mbn",
+-	.edl = "qcom/sdx55m/edl.mbn",
++	.edl = "fox/sdx55m/prog_firehose_sdx55.mbn",
++	.edl_trigger = true,
+ 	.config = &modem_foxconn_sdx55_config,
+ 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+ 	.dma_data_width = 32,
+@@ -466,6 +466,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_dw5930e_info = {
+ 
+ static const struct mhi_pci_dev_info mhi_foxconn_t99w368_info = {
+ 	.name = "foxconn-t99w368",
++	.edl = "fox/sdx65m/prog_firehose_lite.elf",
++	.edl_trigger = true,
+ 	.config = &modem_foxconn_sdx55_config,
+ 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+ 	.dma_data_width = 32,
+@@ -475,6 +477,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w368_info = {
+ 
+ static const struct mhi_pci_dev_info mhi_foxconn_t99w373_info = {
+ 	.name = "foxconn-t99w373",
++	.edl = "fox/sdx65m/prog_firehose_lite.elf",
++	.edl_trigger = true,
+ 	.config = &modem_foxconn_sdx55_config,
+ 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+ 	.dma_data_width = 32,
+@@ -484,6 +488,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w373_info = {
+ 
+ static const struct mhi_pci_dev_info mhi_foxconn_t99w510_info = {
+ 	.name = "foxconn-t99w510",
++	.edl = "fox/sdx24m/prog_firehose_sdx24.mbn",
++	.edl_trigger = true,
+ 	.config = &modem_foxconn_sdx55_config,
+ 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+ 	.dma_data_width = 32,
+@@ -493,6 +499,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w510_info = {
+ 
+ static const struct mhi_pci_dev_info mhi_foxconn_dw5932e_info = {
+ 	.name = "foxconn-dw5932e",
++	.edl = "fox/sdx65m/prog_firehose_lite.elf",
++	.edl_trigger = true,
+ 	.config = &modem_foxconn_sdx55_config,
+ 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+ 	.dma_data_width = 32,
+-- 
+2.25.1
 
->  drivers/cpufreq/omap-cpufreq.c         |  3 +--
-
-For OMAP:
-
-Acked-by: Kevin Hilman <khilman@baylibre.com>
 
