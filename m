@@ -1,75 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-25587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D91192B4D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 12:10:49 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C62D692B510
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 12:21:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 52B30281764
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 10:10:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 23C8BB2381B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 10:21:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99B27155730;
-	Tue,  9 Jul 2024 10:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8592315665C;
+	Tue,  9 Jul 2024 10:21:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cO7XRAQD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="azewGR1F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271FB12CDB6
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jul 2024 10:10:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C7414EC61
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jul 2024 10:21:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720519844; cv=none; b=iaWmfMfFo4Ro38gJ2z1YxLLwLr5Eh9DUaUM+F7SEyZk0lXe8yp8zMO8DDaIoPWYtQlJIHcMIWhKf+31WKwKX3iwyE/MoR1vJHm/apyDJuAeGG1rdl8iztmieCfPFQqmO2c9tI6k83xF9bPXXpJ2/Zopas3QIRYq6pnhXC1buEH8=
+	t=1720520467; cv=none; b=ApqR/pCaKKVqwE2090H05k2H+ir0SvoJ5y+EsNkKWQDqxGqGAvZFpqOZrYB2oAm3sjiaqe3etQIN1rzNTCPUIKUx9KP7quVSE1FjaC6+qUoXntGftENKNTQWMJjKz0RiVzwbSPjq9IYcvTvOCuanhDnNLQdpoajYqOwWzqmIn84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720519844; c=relaxed/simple;
-	bh=NPDJQWFMBg1N7Ij6Du+SoVPn1EVzMY6sx/kDXOi+R70=;
+	s=arc-20240116; t=1720520467; c=relaxed/simple;
+	bh=FI8Ai9at4PJrxIU/sJac80olr10NbpFwsfq+R3rThC8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eIT5/hC+6nUR6bCQ7Fk6VW3UAve40VFwqJ5/62Puyfyg4rg6aREbpLu2slrjjDbGdRqQa6ZgZdsOqnrGhhYjeu91vql+w9wj1zqIRLXEwHFls11YVC6oDX7DaS2asyYGzIuOWTDFVRJ9HGdF+ZYCFSWIBAPvDt748YG1Q1m6QRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cO7XRAQD; arc=none smtp.client-ip=209.85.210.179
+	 In-Reply-To:Content-Type; b=BEcwSyv0AWxrQqymyAtAdQ3NJHSvu2eGeqhF8oFbnHxLORgWJpE04+CoyqQy+uv7FPA35HOyv4C17vz4MCTQhs7Z3DHmZ317khI9pZGAIUnqirbOpxNbj5QKFlyRTute1NJE/HXZetlVwN0tIzRcbNQZf9N6Lqrqh4g5PxoxCIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=azewGR1F; arc=none smtp.client-ip=209.85.208.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-70b04cb28acso3314930b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jul 2024 03:10:43 -0700 (PDT)
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-595856e2332so293591a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jul 2024 03:21:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720519842; x=1721124642; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1720520463; x=1721125263; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=nnPeUwagpX34GrQVUm/eQerepI0eGCCGd1FU50bUkf0=;
-        b=cO7XRAQDPKe3qPpjgEUuULiFCnv7YEZBTsTRcm+kM2nyAQb8OfTgKsHz4ysoeGcHYE
-         tuArtDrSnsUC7ylk1Po2f2C84hLkzePmdToDaY6mEYkbAaHQP/J26ET/VE0rjp+5POHh
-         PWTDyk8qUgHaxD+8sPIqvxyDmgI2J0ofp6cxdJIErj2vsj7DH3jTupEzKDV2UmhSUZQJ
-         /WzemXJfSMkU9mOpiaGAd+lTXL3AmHapukD3/IsZX1HmoCLVH/HExmfLuDhcrsg3Y3Fy
-         cFDt3qXvvJw4u9bhVkAVBu9/yJtUg0aJ0URy7DIkqUvp00Q1rsdPLM5GvVTPNYKjvHXv
-         CRWQ==
+        bh=G+hQCp/WCknSoDGq7wdhhIY0ZHD5OUQb2BcFzfGm0fg=;
+        b=azewGR1FQjTS2Khk+Mq7A0axycscNFRmF53K04vavVdeygYO0pr+XHAxCqfYg0y/AS
+         Gxx+rPdQmi3pokdGcroj2Z83BWGUUmnS9wRAoS2+dCMyPbVbkKkQD1zqYXZM8h0p3OZT
+         LXsu4WNKHkD61rPrF+yqecFskRmP4OWMAQwFcZYkdyR6lrGBNglan7Y31ERQy4QWvXbn
+         ErVXJhBPljDyaeGDuHlSIu9tvhuYjNBmdP6yVPRwQ9l/qNolvGJloE9zf8nNTRZJqCW1
+         G2v8RnJkudpOcv9Xd8qyWTHgIbBMj17o0otQu4AhNCssog8f0mJW04BqlLse7lDzUbYA
+         Muag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720519842; x=1721124642;
+        d=1e100.net; s=20230601; t=1720520463; x=1721125263;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nnPeUwagpX34GrQVUm/eQerepI0eGCCGd1FU50bUkf0=;
-        b=WAH9961nN5kKQdel15FZWtTdrH3h1BUnYC89Xtsf1+YcAP6D8hLAO9flwOUpehG9zQ
-         HtdIpUz72Gc35SfRdleC8cEiLQmCc2YozgNZbTTqfZ6ynKMxqo9L3Ufp4LS8dZscKl6I
-         /Bakq0E5mEE4sOgszxBtGETM1Kdx9O56AI/+0/lH2Wa3y6u967+Tq+uODGyWQHj7KRYu
-         ++CtjyG2pI0Jp9buTPba8zwIkCf1FhqtMTODamL/EmCf9Zhi2l9ZWWz7pQfGi0GU1+c1
-         CiopiY6430ppSk4vI3KNKoAcjd2u1mwhaAZCqw2KqlGH7YZg+9qGYWI/1GNWpBFimI76
-         95Dg==
-X-Forwarded-Encrypted: i=1; AJvYcCXOuSPeVSkMqOn/AwwPxhW56UNnEMZahfctfkuTZxPMbEyLqkosEcRjYI8eKQllf3wssx7YSkGmM+Xgb3RvsPlJkMyDGv5bwjJ7ndJSqw==
-X-Gm-Message-State: AOJu0Yye3F+veMZJw2wCXs1USO1GIl5PXfc6hTHHPlN5jp4J9v7XgZRE
-	17gIDsO6ZKOXWKoFbnxn1ntUuvuSbB2hK/9cYKBEDLoqfsoKKzrKvFltyNh/V+4=
-X-Google-Smtp-Source: AGHT+IGY1Pe1r//Dd07K6/Nl+QdtHZ9ZtoZxqKzqVdSu70UadlzYzvyA0dW27fLhNu8Dx+V1hklbLQ==
-X-Received: by 2002:a05:6a00:2190:b0:706:938a:5d49 with SMTP id d2e1a72fcca58-70b44e02bbamr2756913b3a.14.1720519842470;
-        Tue, 09 Jul 2024 03:10:42 -0700 (PDT)
+        bh=G+hQCp/WCknSoDGq7wdhhIY0ZHD5OUQb2BcFzfGm0fg=;
+        b=T9MegopmC0fQLYdKapI8KZ2fGyJAmgtS+CbO18v6P1BfrCX7en/4pC0R5ZfKNkPuOH
+         oZj3UM1WsJFCMcBnNLd9HD0Fcn01GRowj83qUpVNvlou+ZctP3RmAqPpvzdZV0J64XP4
+         E/l0o+FXT/NhpyVuz1mNFj1Wai823Cutmv8Oqpp1Sg3j5ssrV5cNXm4tZ538lNlCkgrF
+         HxUPghSBlqZhcKPfShClhAXn8h0YMoqm0DIKDo7jc+P7v49uj1Oib5qSrvtQS+WefeYS
+         u84okx/zIJbhLGbZUFnsWvf5U5mVzyeO9pJWYSbOuoh3RBtDhFvU8PrxPXejeyyHQk7s
+         Cb3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUcSGeR7yPgVxa5wRv+v2ecxdEmRxn5F/x6uFlvG+Vt/86yq4f26rEzyAqU/O0B8Ljn9HDnsh7h+QzT6pFozkbMN1bn0I22UM4NnO8fCA==
+X-Gm-Message-State: AOJu0YzlLM/hE8bQx3D5Nt406qP3tkv0+ZmZbD4l5nC7i8lMOTCGlwC7
+	whvrLMYm/GtK0DcTAYqCeAuIoh3w7nVhx2zKiu81kC8ntxu4NUGrc755QWA8x3ClWU7g6h0GrOz
+	W
+X-Google-Smtp-Source: AGHT+IE8wRZVW5baYXcFgEod6huJCvs7buDOLjTRsbZJLUCRnhrR5H9aEISZRauj8dj9XbSi2DU2Sg==
+X-Received: by 2002:a05:6402:2742:b0:57c:610a:6e7f with SMTP id 4fb4d7f45d1cf-594baf8719fmr1848926a12.11.1720520462835;
+        Tue, 09 Jul 2024 03:21:02 -0700 (PDT)
 Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70b43899614sm1465109b3a.17.2024.07.09.03.10.39
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-594bb9605c2sm893973a12.13.2024.07.09.03.21.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jul 2024 03:10:42 -0700 (PDT)
-Message-ID: <2b278a27-f527-448c-99b5-fc307d792127@linaro.org>
-Date: Tue, 9 Jul 2024 12:10:36 +0200
+        Tue, 09 Jul 2024 03:21:02 -0700 (PDT)
+Message-ID: <6c79bb76-d865-4b77-b877-f7dbae6ce362@linaro.org>
+Date: Tue, 9 Jul 2024 12:20:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,17 +78,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC V3 2/4] firmware: arm_scmi: vendors: Add ARM SCMI QCOM
- vendor protocol v1.0
-To: Sibi Sankar <quic_sibis@quicinc.com>, sudeep.holla@arm.com,
- cristian.marussi@arm.com, andersson@kernel.org, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org,
- Amir Vajid <avajid@quicinc.com>
-References: <20240702191440.2161623-1-quic_sibis@quicinc.com>
- <20240702191440.2161623-3-quic_sibis@quicinc.com>
+Subject: Re: [PATCH v4 4/5] drm/msm/adreno: Redo the speedbin assignment
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20240625-topic-smem_speedbin-v4-0-f6f8493ab814@linaro.org>
+ <20240625-topic-smem_speedbin-v4-4-f6f8493ab814@linaro.org>
+ <20240630102955.uencakbjiugszphw@hu-akhilpo-hyd.qualcomm.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -125,26 +130,41 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240702191440.2161623-3-quic_sibis@quicinc.com>
+In-Reply-To: <20240630102955.uencakbjiugszphw@hu-akhilpo-hyd.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 2.07.2024 9:14 PM, Sibi Sankar wrote:
-> The ARM SCMI QCOM vendor protocol provides a generic way of exposing a
-> number of Qualcomm SoC specific features (like memory bus scaling) through
-> a mixture of pre-determined algorithm strings and param_id pairs hosted on
-> the SCMI controller.
-> 
+On 30.06.2024 12:29 PM, Akhil P Oommen wrote:
+> On Tue, Jun 25, 2024 at 08:28:09PM +0200, Konrad Dybcio wrote:
+>> There is no need to reinvent the wheel for simple read-match-set logic.
+>>
+>> Make speedbin discovery and assignment generation independent.
+>>
+>> This implicitly removes the bogus 0x80 / BIT(7) speed bin on A5xx,
+>> which has no representation in hardware whatshowever.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
 
 [...]
 
-> +/**
-> + * qcom_scmi_vendor_protocol_cmd - vendor specific commands supported by Qualcomm SCMI
-> + *                                 vendor protocol.
+>> +
+>> +	/* Traverse the known speedbins */
+>> +	for (int i = 0; info->speedbins[i].fuse != SHRT_MAX; i++) {
+>> +		if (info->speedbins[i].fuse == fuse) {
+>> +			supp_hw = BIT(info->speedbins[i].speedbin);
+>> +			return devm_pm_opp_set_supported_hw(dev, &supp_hw, 1);
+> 
+> Can we do this if supp_hw property is not present in opp table?
 
-include the word 'enum' or:
+No, but this is also the case without this patchset (a.k.a. no change in behavior).
 
-warning: cannot understand function prototype: 'enum qcom_scmi_vendor_protocol_cmd '
+We shouldn't add code complexity to support that case, as having speedbin data
+in the driver and not the dt means the DT is incomplete, which is not a case we
+should care about
+
+I can however try and add a clearer error path that would perhaps not crash the
+kernel in this situation.. in a separate patchset
 
 Konrad
 
