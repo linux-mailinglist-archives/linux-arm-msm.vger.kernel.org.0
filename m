@@ -1,185 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-25741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 845F492C3F2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 21:34:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A84292C3FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 21:39:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0E7581F21631
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 19:34:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5D0581C22300
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 19:39:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 609641B86DE;
-	Tue,  9 Jul 2024 19:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 370FE18003A;
+	Tue,  9 Jul 2024 19:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iRMYNtZX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jpo4jrcM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF391B86D5
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jul 2024 19:34:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87AA8839E4;
+	Tue,  9 Jul 2024 19:39:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720553666; cv=none; b=gzT84d+ykkwgtY+Ow5JVvEgzaYDqzTREjOnWqKqevTLIHTILFcDN0p9czQ4GjuEtvPNowHePPzE71IqwOUN9qoqmqUZ5w/WHcutVJmH+0oZZtp9OV4TVnLeIXfAuLr+pu7wV3LQMXWcD7WkxST5CV86nz5ZbnXRvXPgtWDRelUE=
+	t=1720553967; cv=none; b=us9qxiqRAHtUsH/4XJbtS40Bfgl/NkrqOoLwQ9/78imEjEw8f6w3iwagKjdw49woJSov08e4FYAXLlUyGzyzGk8dGt1JsUi042xd96j4Gc4n1W1tzp1dNzr0avg1sqhQBEiPWhWRo5b7rcDlTBe42CXM23PHt6ec59VlHCS2cp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720553666; c=relaxed/simple;
-	bh=u2Ozh3ERh2tfcTBLIo2nR6uOP9hkHoSipLqpoQ1figU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Czpxp5xCfWjZoPnz3vlqX+5T9jkwQ/kp7upikcQFiI9hMMKKvmS5eYDjaEciokHg0uGpPA+ltEMYCYvmwbiv6Cng0HCA5+XId8ljPTg5leKBVSQcY2i1gDPf/PKE9YzQvRIYm0P5xvVQfGduvuLnCy2TCNvWjAcR8gmSHoKNijw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iRMYNtZX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FAA3C3277B;
-	Tue,  9 Jul 2024 19:34:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720553665;
-	bh=u2Ozh3ERh2tfcTBLIo2nR6uOP9hkHoSipLqpoQ1figU=;
-	h=From:List-Id:To:Cc:Subject:Date:From;
-	b=iRMYNtZXy4vEWpQ4Msf3hkHedpvyCT+LERQit6mWmn4CSLkqBcCP5M4Jh232KXYyu
-	 jOqW7cRdjmRj/HPl3KwcjxuMr1a6K4ntT9E0YxlO5u5FRa9Egla3vgwXjIdvNejZSE
-	 beBv2lkYqZv6s0wZd1qjKPbPsjoyH0dXy48BEg6TzqlDAJ9S3/hzowSnof4qEfkmcu
-	 F98K8GCcxBkytUIyT9zVcDDNi9CvwM+4Srbk3VnuyZTHv8yTjxR34mbbMJUnQ38P7+
-	 LV1fWK7GqLWuxihIBqNnWv7PrHSa1ByojeBTK3VjfTc6ZFM612jg5Ft4HWfQlml3G5
-	 U5VIEApzRyaIA==
-From: Bjorn Andersson <andersson@kernel.org>
-To: arm@kernel.org,
-	soc@kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Arnd Bergmann <arnd@arndb.de>,
-	Olof Johansson <olof@lixom.net>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Varadarajan Narayanan <quic_varada@quicinc.com>,
-	Anton Bambura <jenneron@postmarketos.org>,
-	Cristian Cozzolino <cristian_ci@protonmail.com>,
-	Jens Reidel <adrian@travitia.xyz>,
-	Luca Weiss <luca@lucaweiss.eu>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Nikita Travkin <nikita@trvn.ru>,
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Subject: [GIT PULL] A few more Arm64 DeviceTree updates for v6.11
-Date: Tue,  9 Jul 2024 14:34:05 -0500
-Message-ID: <20240709193406.3966-1-andersson@kernel.org>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1720553967; c=relaxed/simple;
+	bh=Tuc3Josad+Eb8/QMMfhE4ENri/1snAxANRMNkQgGwRQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
+	 In-Reply-To:Content-Type; b=UwVQ6IeEzNVQqHyo9bWePwlsBXpVvCmZhWUYsNCXg4OmKrkUnHu2hHGCAXguoXI/OdPYvZgDGl6DUeCDI8acIQ484VILjuPX6m4vcYcZJgGy4USuYBG3XpeDytj3XC1xmuq9luYjz15K/lAlwHurPHaTnTr5s+JfVmk8qARjoX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jpo4jrcM; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 469GgFDc025652;
+	Tue, 9 Jul 2024 19:38:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ay5oBrHSb2YL73YTY5mpyQMrO+3FJd7t8ZkpRjje6dM=; b=jpo4jrcMa1PYT1Hz
+	B/H88h/SwhPzHsKpo9u2/cDjbXHLWhtNHbLqoH9IkuCiFwsIBT4nG08RjVDRypnw
+	kqmwcI31votZ4naM/I5cx9rIfhLQU4pD+rMpkjaF56gIhqUNB/DayPmS//91zpiL
+	BDfN9bmxcO7raEaG748rv35YEZ9K9OURJC9lHxj/kQr9H89BjOsdx3mUE+ETsPem
+	lgo0EDOjEJ7CmzE9XaYnjl6KrMpYbV8FEET9TuiGbc8L3Rl6OZdxISwPRn89pJAb
+	KaiYhKXrFGYqhHhdQFb+vQsu2YSva/M5sRmZiHnWh9uqVPYzoyzRrxZrp3fW7vd/
+	I3l6Yw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4091jdhqs0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Jul 2024 19:38:16 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 469JcFsE032048
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 9 Jul 2024 19:38:15 GMT
+Received: from [10.71.110.34] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 9 Jul 2024
+ 12:38:13 -0700
+Message-ID: <46487222-6818-b0bf-e5cc-2310d62b5fe6@quicinc.com>
+Date: Tue, 9 Jul 2024 12:38:00 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: Re: [PATCH 2/2] drm/msm/dpu: don't play tricks with debug macros
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Chandan
+ Uddaraju <chandanu@codeaurora.org>,
+        Rajesh Yadav <ryadav@codeaurora.org>,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
+        Archit Taneja
+	<architt@codeaurora.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Jeykumar
+ Sankaran <jsanka@codeaurora.org>
+References: <20240709-dpu-fix-wb-v1-0-448348bfd4cb@linaro.org>
+ <20240709-dpu-fix-wb-v1-2-448348bfd4cb@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20240709-dpu-fix-wb-v1-2-448348bfd4cb@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: nwCNJHvQJK8e2IG-3esDB5ADKXGgn6BK
+X-Proofpoint-ORIG-GUID: nwCNJHvQJK8e2IG-3esDB5ADKXGgn6BK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-09_08,2024-07-09_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 malwarescore=0 mlxlogscore=999
+ mlxscore=0 priorityscore=1501 phishscore=0 clxscore=1015 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
+ definitions=main-2407090132
 
 
-The following changes since commit 968178e35e78e566f75dbb7fbfc4dd1436ce8309:
 
-  dt-bindings: arm: qcom: Document samsung,ms013g (2024-07-02 22:15:29 -0500)
+On 7/9/2024 6:48 AM, Dmitry Baryshkov wrote:
+> DPU debugging macros need to be converted to a proper drm_debug_*
+> macros, however this is a going an intrusive patch, not suitable for a
+> fix. Wire DPU_DEBUG and DPU_DEBUG_DRIVER to always use DRM_DEBUG_DRIVER
+> to make sure that DPU debugging messages always end up in the drm debug
+> messages and are controlled via the usual drm.debug mask.
+> 
 
-are available in the Git repository at:
+These macros have been deprecated, is this waht you meant by the 
+conversion to proper drm_debug_*?
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-for-6.11-2
+/* NOTE: this is deprecated in favor of drm_dbg(NULL, ...). */
+#define DRM_DEBUG_DRIVER(fmt, ...)                                      \
+         __drm_dbg(DRM_UT_DRIVER, fmt, ##__VA_ARGS__)
 
-for you to fetch changes up to 2881fcfc8f32c536a4bf708066d6fea9ba762e86:
+I think all that this macro was doing was to have appropriate DRM_UT_* 
+macros enabled before calling the corresponding DRM_DEBUG_* macros. But 
+I think what was incorrect here is for DPU_DEBUG, we could have used 
+DRM_UT_CORE instead of DRM_UT_KMS.
 
-  mailmap: Update Luca Weiss's email address (2024-07-08 12:08:35 -0500)
+And DRM_DEBUG_DRIVER should have been used instead of DRM_ERROR.
 
-----------------------------------------------------------------
-A few more Arm64 DeviceTree updates for v6.11
+Was this causing the issue of the prints not getting enabled?
 
-This introduces support for Lenovo Thinkpad Yoga slim 7x, LG Leon LTE,
-and LG K10 (K420n).
-
-In addition to this, all Gen-1 platforms gets the DWC3 quirk to disable
-"SuperSpeed in park mode", which resolves an instabliity issue seen in
-host mode.
-
-For Fairphone 4, PM6150L and PMK8003 thermal sensors are added and
-thermal zones defined.
-
-Two fastrpc contexts on SM6350 are marked as non-secure, to allow
-non-secure usage.
-
-The video clock controller on SM8150 is introduced. IPQ9574 GCC is
-marked as a interconnect provider. The vibrator block in the PM6150 is
-described.
-
-On SC7280 the download mode register is defined for SCM, allowing it to
-enable/disable the ramdump support during a system crash.
-
-Lastly, add a mailmap entry for Luca Weiss.
-
-----------------------------------------------------------------
-Anton Bambura (1):
-      arm64: dts: qcom: msm8916-lg-c50: add initial dts for LG Leon LTE
-
-Bjorn Andersson (1):
-      Merge branch '20240430064214.2030013-3-quic_varada@quicinc.com' into arm64-for-6.11
-
-Cristian Cozzolino (1):
-      arm64: dts: qcom: msm8916-lg-m216: Add initial device tree
-
-Jens Reidel (1):
-      arm64: dts: qcom: pm6150: Add vibrator
-
-Krishna Kurapati (8):
-      arm64: dts: qcom: ipq6018: Disable SS instance in Parkmode for USB
-      arm64: dts: qcom: ipq8074: Disable SS instance in Parkmode for USB
-      arm64: dts: qcom: msm8998: Disable SS instance in Parkmode for USB
-      arm64: dts: qcom: sdm630: Disable SS instance in Parkmode for USB
-      arm64: dts: qcom: sm6115: Disable SS instance in Parkmode for USB
-      arm64: dts: qcom: sm6350: Disable SS instance in Parkmode for USB
-      arm64: dts: qcom: msm8996: Disable SS instance in Parkmode for USB
-      arm64: dts: qcom: sdm845: Disable SS instance in Parkmode for USB
-
-Luca Weiss (4):
-      arm64: dts: qcom: sm6350: Add missing qcom,non-secure-domain property
-      arm64: dts: qcom: sm7225-fairphone-fp4: Add PMK8003 thermals
-      arm64: dts: qcom: sm7225-fairphone-fp4: Add PM6150L thermals
-      mailmap: Update Luca Weiss's email address
-
-Mukesh Ojha (1):
-      arm64: dts: qcom: sc7280: Enable download mode register write
-
-Nikita Travkin (1):
-      dt-bindings: arm: qcom: Add msm8916 based LG devices
-
-Satya Priya Kakitapalli (1):
-      arm64: dts: qcom: sm8150: Add video clock controller node
-
-Srinivas Kandagatla (2):
-      dt-bindings: arm: qcom: Add Lenovo Yoga Slim 7x
-      arm64: dts: qcom: x1e80100: add Lenovo Thinkpad Yoga slim 7x devicetree
-
-Varadarajan Narayanan (2):
-      dt-bindings: interconnect: Add Qualcomm IPQ9574 support
-      arm64: dts: qcom: ipq9574: Add icc provider ability to gcc
-
- .mailmap                                           |   1 +
- Documentation/devicetree/bindings/arm/qcom.yaml    |   3 +
- .../bindings/clock/qcom,ipq9574-gcc.yaml           |   3 +
- arch/arm64/boot/dts/qcom/Makefile                  |   3 +
- arch/arm64/boot/dts/qcom/ipq6018.dtsi              |   1 +
- arch/arm64/boot/dts/qcom/ipq8074.dtsi              |   2 +
- arch/arm64/boot/dts/qcom/ipq9574.dtsi              |   2 +
- arch/arm64/boot/dts/qcom/msm8916-lg-c50.dts        | 140 ++++
- arch/arm64/boot/dts/qcom/msm8916-lg-m216.dts       | 251 ++++++
- arch/arm64/boot/dts/qcom/msm8996.dtsi              |   1 +
- arch/arm64/boot/dts/qcom/msm8998.dtsi              |   1 +
- arch/arm64/boot/dts/qcom/pm6150.dtsi               |   6 +
- arch/arm64/boot/dts/qcom/sa8155p.dtsi              |   4 +
- arch/arm64/boot/dts/qcom/sc7280.dtsi               |   1 +
- arch/arm64/boot/dts/qcom/sdm630.dtsi               |   1 +
- arch/arm64/boot/dts/qcom/sdm845.dtsi               |   2 +
- arch/arm64/boot/dts/qcom/sm6115.dtsi               |   1 +
- arch/arm64/boot/dts/qcom/sm6350.dtsi               |   3 +
- arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts  | 212 +++++
- arch/arm64/boot/dts/qcom/sm8150.dtsi               |  14 +
- .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 929 +++++++++++++++++++++
- include/dt-bindings/interconnect/qcom,ipq9574.h    |  59 ++
- 22 files changed, 1640 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8916-lg-c50.dts
- create mode 100644 arch/arm64/boot/dts/qcom/msm8916-lg-m216.dts
- create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
- create mode 100644 include/dt-bindings/interconnect/qcom,ipq9574.h
+> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 14 ++------------
+>   1 file changed, 2 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> index e2adc937ea63..935ff6fd172c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> @@ -31,24 +31,14 @@
+>    * @fmt: Pointer to format string
+>    */
+>   #define DPU_DEBUG(fmt, ...)                                                \
+> -	do {                                                               \
+> -		if (drm_debug_enabled(DRM_UT_KMS))                         \
+> -			DRM_DEBUG(fmt, ##__VA_ARGS__); \
+> -		else                                                       \
+> -			pr_debug(fmt, ##__VA_ARGS__);                      \
+> -	} while (0)
+> +	DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
+>   
+>   /**
+>    * DPU_DEBUG_DRIVER - macro for hardware driver logging
+>    * @fmt: Pointer to format string
+>    */
+>   #define DPU_DEBUG_DRIVER(fmt, ...)                                         \
+> -	do {                                                               \
+> -		if (drm_debug_enabled(DRM_UT_DRIVER))                      \
+> -			DRM_ERROR(fmt, ##__VA_ARGS__); \
+> -		else                                                       \
+> -			pr_debug(fmt, ##__VA_ARGS__);                      \
+> -	} while (0)
+> +	DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
+>   
+>   #define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
+>   #define DPU_ERROR_RATELIMITED(fmt, ...) pr_err_ratelimited("[dpu error]" fmt, ##__VA_ARGS__)
+> 
 
