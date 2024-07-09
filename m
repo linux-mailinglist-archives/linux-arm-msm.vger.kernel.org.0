@@ -1,148 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-25727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CF3092C2F2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 19:58:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 031C292C302
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 20:01:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CDC551C2252C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 17:58:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B310D2814C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 18:01:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 503FC17DE1A;
-	Tue,  9 Jul 2024 17:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C631A17B050;
+	Tue,  9 Jul 2024 18:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hSUtqeMc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gQ0g/0fx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D374E17B02D
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jul 2024 17:58:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0924C6F2E6;
+	Tue,  9 Jul 2024 18:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720547915; cv=none; b=A2SHrYgX8+rFNOUo1m6CDUpdIHNr9DTkiL0LQHXSmuvTSwCmVmcY4nW2NSbH5Vym54R4Qgt4WQO5xIw1FY4eCdPjvFfz1U8M9aGZkiwda4+RcWOXf8dRikEDBC/eJYnCVeKXFUVhgAmQU6dcg7HTg6qZFRTO0ZZtg4YuBFNTB1c=
+	t=1720548094; cv=none; b=l1hlHR93KckT9o6elgfXFc//W2ytUA/9E7pZ+OZzU0T8VS5s1vih1ymwZoNH+JKoH90Gdl8Lyg1KtlMo9VCULk4a8G4kMO4uGsQRKilqRTe7TO8yVo6fqjknQTonHlP7fg2eUFljkBDUYDfngKSRMt/ICfB+iDLknMoeJBYSEQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720547915; c=relaxed/simple;
-	bh=+/+EC2l+olOF7KyGXIXNGZzNzi+/+As1tcpMx62bp4I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ddbGkT5FDOYCFm3w35Q0od3ORJN5LE0WYXADEZQo8XejWh6ng9qE1hAhHiZaK0XvyWcdwOkxMsD5hxQtqFEKvG69+qwOJwzLBbZR2LtRPPTb0UEN4VC8CnSvVvNfa4B61+4Vb2UYfN15mdIeuXCw991LuLRL//b/uqv6En3FXnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hSUtqeMc; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1fb72eb3143so43775ad.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jul 2024 10:58:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720547912; x=1721152712; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=akLpSFPHdkCvX8sa/CAhBoiIqmBtSWHSGyWXF/WIX2o=;
-        b=hSUtqeMcYpwX1GU75LrK8Vmb/HUmegrPhyzc5tspqVTl7IP/h2w2irN/igVSUdP3WQ
-         0vFZc7dhhFUwNIRwGdR7dIWGrkifRDhk6OMLh86AzVd4wtD6kNny8JXf/DeTcRQFbofY
-         laJfTZhpaJEA83Y6Nq8Cp9Ey5RspuLBEklPnGwEdrzsESm5mPv8M1o48r9Ntd90eKUwl
-         L9GPOBHJ7qBSHusKh6LG3LjVpteSki/67WDZSUKr9T9/BMv32IXPiZv/oUfPsqz6NZ7U
-         V2BiwxTKMsWOnUHh8QpjvOO4+FVzQEH5tQyOtlmZHYPddGgpTCUbuIe3Yv2NylVRtlD7
-         cK/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720547912; x=1721152712;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=akLpSFPHdkCvX8sa/CAhBoiIqmBtSWHSGyWXF/WIX2o=;
-        b=LC3IUdliuzxJ8cd9H41Hdie5uZcgX+seBociW3DVWMLFjzm2nHeoJpITuvxAzGGaC+
-         OZL1C34fwGUOR+6RHFj/aE/NHKtDyp1nsKbbX9yM3Mo7RFV5GOi4hLf3LNBLnjnBPKn+
-         pQ0E4nubmWSmpxlu3yO+uBwFJm5cjzXJNBFZloOity6H8fCxsTuM5owyTTQHCpkumK0g
-         Mj2eEt1oLXjKKZceqadMwTLRbj3d7Jvi2YzOhmr2GwUHAXzFqn+pYLd5R0hanmqMjdrx
-         8K1IvIHMwG+y4bBH4zEA0/E37j9A+wEaXzWXAKGOe2dnF7Zb3TV15GFG7mU96ZtFLr6+
-         9Dug==
-X-Forwarded-Encrypted: i=1; AJvYcCX0qB0QkpEIugMcSG0Su4XieWj3Fxzaj8eUOQjpaR3tg1aMHpWvDWet5aJmzkQyynxnHnyIW82mP3/XBAAerydO/AP5dwdswXwRZ53m/g==
-X-Gm-Message-State: AOJu0YxV/LGjp6StQZ6e2siTqb0n/EL/PYwBLuUfgKFv9XPb0rkaBQ8t
-	OE7nCOy+llg2v2MNnxJ4Bukt5ALtF4uTuY6iA0G2NP0hA+OslcnyaRPRVdnQvw==
-X-Google-Smtp-Source: AGHT+IFVh2IfVOJVgTJ8rxZyJ6qhLDArqH/TiLZO7RAzJ4aVX61SuWXJwMdf52YpYAsJ0SEWy7Yk/g==
-X-Received: by 2002:a17:902:fc4e:b0:1fb:58e3:717d with SMTP id d9443c01a7336-1fbb7fc8302mr48538235ad.12.1720547912078;
-        Tue, 09 Jul 2024 10:58:32 -0700 (PDT)
-Received: from thinkpad ([117.193.213.131])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fbb6ab7debsm19019685ad.166.2024.07.09.10.58.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jul 2024 10:58:31 -0700 (PDT)
-Date: Tue, 9 Jul 2024 23:28:23 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Tengfei Fan <quic_tengfan@quicinc.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>, kernel@quicinc.com,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] PCI: qcom: Add QCS9100 PCIe compatible
-Message-ID: <20240709175823.GB44420@thinkpad>
-References: <20240709-add_qcs9100_pcie_compatible-v2-0-04f1e85c8a48@quicinc.com>
+	s=arc-20240116; t=1720548094; c=relaxed/simple;
+	bh=Ie/cA6P/3uKrFYB6QT8wxFA2AMrE4qFcEz3hTHvYjAM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ofB3LjTCUKwEWlv0a+adMdNICGrO8ekyGd18OU+OGj9Rj0giPT2UylPsaCghxpRoVYxsY8zxFdIWmECdU3fpDpxFh1JvTOzgfyhEnnSEqPU4n7ZAVOJEFdXniXswxrGy5JrE+3BJB1JPt4i4hVM7qeIs6c6F7nnojMkMy8so8YY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gQ0g/0fx; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 469AClT8015045;
+	Tue, 9 Jul 2024 18:01:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ckbc1aApQyQvJVHtxNFftIi/hYatRS4haFz7C8Uy4PI=; b=gQ0g/0fxCV2ZsAez
+	+I6iPHngo+babc30b+t7QNxBDdq/a2Sb7IWonSJkLCpwhia0//vT8QQ3740y+Fq2
+	yrufpFv4lPl5t//0JepkJP9S73hPNC+yL+VCdDoP1q/jhhNxXl8yX0jzRpgdxNjK
+	CxacFfJGWJrLlHP4aA7//IHnQQWMfW4CRtt7sSPJkUBGrT0FVdEEJHMuygu0Ip6c
+	45+ynpYeCPBPTv7Aiwn52fCuVhFAODkENCfMEBCLBkv+iMqsd4498dELwN0W55yH
+	gyoK3PMoGYm1oWtSMgiQ+8GFKzgSienTQ08XwO4bdU50OgLi4rWBbZw42KJlEl/b
+	p7vsaw==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406x0t7fts-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Jul 2024 18:01:07 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 469I15O5020027
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 9 Jul 2024 18:01:05 GMT
+Received: from [10.110.47.59] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 9 Jul 2024
+ 11:01:02 -0700
+Message-ID: <f8ea46eb-61dc-4869-843c-a7fe9a37881e@quicinc.com>
+Date: Tue, 9 Jul 2024 11:01:02 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240709-add_qcs9100_pcie_compatible-v2-0-04f1e85c8a48@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/2] dt-bindings: net: qcom: ethernet: Add interconnect
+ properties
+To: Krzysztof Kozlowski <krzk@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu
+	<joabreu@synopsys.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet
+	<edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni
+	<pabeni@redhat.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        "Russell
+ King" <linux@armlinux.org.uk>, Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Bhupesh
+ Sharma" <bhupesh.sharma@linaro.org>
+CC: <kernel@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>,
+        Andrew Lunn
+	<andrew@lunn.ch>, <linux-arm-msm@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20240708-icc_bw_voting_from_ethqos-v4-0-c6bc3db86071@quicinc.com>
+ <20240708-icc_bw_voting_from_ethqos-v4-1-c6bc3db86071@quicinc.com>
+ <3ba8bcde-496c-4084-8941-397b4dd7f55f@kernel.org>
+Content-Language: en-US
+From: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
+In-Reply-To: <3ba8bcde-496c-4084-8941-397b4dd7f55f@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: yDvVNb0LXaXMTeKNf3sPdFREp4zrUFxu
+X-Proofpoint-ORIG-GUID: yDvVNb0LXaXMTeKNf3sPdFREp4zrUFxu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-09_07,2024-07-09_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ lowpriorityscore=0 impostorscore=0 adultscore=0 suspectscore=0
+ phishscore=0 mlxlogscore=999 priorityscore=1501 malwarescore=0 spamscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407090121
 
-On Tue, Jul 09, 2024 at 10:59:28PM +0800, Tengfei Fan wrote:
-> Introduce support for the QCS9100 SoC device tree (DTSI) and the
-> QCS9100 RIDE board DTS. The QCS9100 is a variant of the SA8775p.
-> While the QCS9100 platform is still in the early design stage, the
-> QCS9100 RIDE board is identical to the SA8775p RIDE board, except it
-> mounts the QCS9100 SoC instead of the SA8775p SoC.
-> 
-> The QCS9100 SoC DTSI is directly renamed from the SA8775p SoC DTSI, and
-> all the compatible strings will be updated from "SA8775p" to "QCS9100".
-> The QCS9100 device tree patches will be pushed after all the device tree
-> bindings and device driver patches are reviewed.
-> 
 
-Are you going to remove SA8775p compatible from all drivers as well?
 
-- Mani
-
-> The final dtsi will like:
-> https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-3-quic_tengfan@quicinc.com/
+On 7/9/2024 1:56 AM, Krzysztof Kozlowski wrote:
+> On 08/07/2024 23:30, Sagar Cheluvegowda wrote:
+>> Add documentation for the interconnect and interconnect-names
+>> properties required when voting for AHB and AXI buses.
+>>
+>> Suggested-by: Andrew Halaney <ahalaney@redhat.com>
+>> Signed-off-by: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
 > 
-> The detailed cover letter reference:
-> https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
+> <form letter>
+> This is a friendly reminder during the review process.
 > 
-> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
-> ---
-> Changes in v2:
->   - Split huge patch series into different patch series according to
->     subsytems
->   - Update patch commit message
+> It looks like you received a tag and forgot to add it.
 > 
-> prevous disscussion here:
-> [1] v1: https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
+> If you do not know the process, here is a short explanation:
+> Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+> versions, under or above your Signed-off-by tag. Tag is "received", when
+> provided in a message replied to you on the mailing list. Tools like b4
+> can help here. However, there's no need to repost patches *only* to add
+> the tags. The upstream maintainer will do that for tags received on the
+> version they apply.
 > 
-> ---
-> Tengfei Fan (2):
->       dt-bindings: PCI: Document compatible for QCS9100
->       PCI: qcom: Add support for QCS9100 SoC
+> https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
 > 
->  Documentation/devicetree/bindings/pci/qcom,pcie-sa8775p.yaml | 5 ++++-
->  drivers/pci/controller/dwc/pcie-qcom.c                       | 1 +
->  2 files changed, 5 insertions(+), 1 deletion(-)
-> ---
-> base-commit: 0b58e108042b0ed28a71cd7edf5175999955b233
-> change-id: 20240709-add_qcs9100_pcie_compatible-ceec013a335d
+> If a tag was not added on purpose, please state why and what changed.
+> </form letter>
 > 
 > Best regards,
-> -- 
-> Tengfei Fan <quic_tengfan@quicinc.com>
+> Krzysztof
 > 
 
--- 
-மணிவண்ணன் சதாசிவம்
+
+Thanks Krzysztof for the explanation, i will make a note of it.
 
