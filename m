@@ -1,191 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-25577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7909F92B342
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 11:09:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB97E92B35C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 11:13:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 96FB31C22781
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 09:09:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B2E3282418
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 09:13:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 960E514D6F6;
-	Tue,  9 Jul 2024 09:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB5F61534FD;
+	Tue,  9 Jul 2024 09:13:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tYgHNpLw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X6xu6d/E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC916153820
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jul 2024 09:09:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE016146016;
+	Tue,  9 Jul 2024 09:13:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720516153; cv=none; b=D9iaPO31i2VI55StfJC5JQwHksTUDP3Mnj9Xs9unVU8JCiOsuve4PxbNSxpCKKDCndfx+oZK17Jyr0TymtEjI+TNrOOD1RIFeJcR6fbVk2Az2PO2hEaUbYMJJtBq9EBDW1J5toVPG5oVTkM93Ze/cz7dznloOuiWmNFgdqRO5iI=
+	t=1720516429; cv=none; b=J/rraF1EbDwU4Rf7RRUS+winlwraPHRLxE/6Fm+7zoftAr83+lhJa/6JlsDJThJW/cSgRdno6wq4ZTZQjMEqxS2QkmHuFXPy1SbKmzeBThb1RtjMJg7lLU+5swClVBcgoS2AK4Sk+Rz5wlel2Eu4O2idxcp+UF/qMgiTsZrIgzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720516153; c=relaxed/simple;
-	bh=8SpJPrGRDofaiL3gGwiVk3Jc6VN4ix1MJ5tptUCTc/s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C5AZCZhjAgg/2IY1uhnXmJa+ltHuwNdDwjIhbMKr1N/IYvPX7ASWQsbl2DVswWugh0foGG6isUKrZumDnseJ691Cy4QzPA5QwkewwdnwcqCkuot4Hbm85vtmh0/ukol82qt02E9dqaF1PSwrTtmvGzWkyVadgzbWQwcuu26vhpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tYgHNpLw; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2ec61eeed8eso58945341fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jul 2024 02:09:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720516150; x=1721120950; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qv9lANot2jKFJ0zTQr4F4np1tgcqhWjzrVsRubY+klU=;
-        b=tYgHNpLwp778F8fZzekDAXMqx2YCKivIX9JvZfhywgtw8m+5MfDpbrxJ1ekOH2eDFL
-         stDzZSJscHWYfETgWzUfEyLKSO3T2mhV5v4Gu3pzNoxOOtTwhfxiyRwSN0TATm77QXXE
-         r3NCxYjzeGckEoK315fJBduz0I+xMW8zbTC4Ff0824UXv7G9weFPreMMI6aZglcyZMnx
-         r3r9QiyhKVbEfnPysk1PeoM9zRQpOD8Sn/QlHldvWopuAGeJV6zMDAlbs+CZhZp3qmPj
-         kI6yGP8r3Ppbyx0haYGiKNCBZHym0wOHqOqokCL4veghh2+l4kT49SBds8ZYDHHyEuW2
-         lY2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720516150; x=1721120950;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Qv9lANot2jKFJ0zTQr4F4np1tgcqhWjzrVsRubY+klU=;
-        b=xCmaAdMYv50WB9VaGlQjDQq21hL+9mB1F1S5xFcx327C/bJjq7ny2wSs6aknwp/cBE
-         LD4SSQ8ttuOEzZm77smViBhg7yNHKl9zgG+NN79Dona+isR0kFgwqxOKvI3hlExgKPzf
-         ctPW5Xuqz0Fi8SMuvA/ifdMrdvDx7/9Pw5GzrbxhS13dI6EmDugdIeS4ebeCbCOdg1Ps
-         t78LD9KNJwso03aucJFohmjfVd1Ccr2GeZ3A5pkHuU/W2y12G0s5GL4ElciY5VCMiKdX
-         4fWpnO+9fSmlRfdO3U4+cFAZJATBS6M9wJjJ4Kvv1COw4EZ9ZiIkiGHw0H24nNNcxcwF
-         22DQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVe5K5lMAVHvCJewiuQrA930Mk9KpI5qlJEjggvMihCpMbQ6x8PK0aY26HS2OEQaOICi4yNseF9IrA436BvLS0HxJ1ovkUcl6uYJhzuUg==
-X-Gm-Message-State: AOJu0YyhovUihNmTTAuNPRyjw9JXy7dFNpQiYZomcfWp4msvdEKU/fdX
-	ANDjYsr1oz31yCqR8VrI3ojCPI8aRbBIcP639xWEK1KeLEIpiANugCvCdrOFEzM=
-X-Google-Smtp-Source: AGHT+IFeFlfTdKi41avXy1BRY/iaFIgu0fSJLXT0FUHRhtwAU6RF++Fw/8jxACOm987qRFPVK8E4ZQ==
-X-Received: by 2002:a2e:740c:0:b0:2ee:7a92:610 with SMTP id 38308e7fff4ca-2eeb318a0e1mr12631771fa.39.1720516150068;
-        Tue, 09 Jul 2024 02:09:10 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4266f7416bcsm31336915e9.43.2024.07.09.02.09.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jul 2024 02:09:09 -0700 (PDT)
-Message-ID: <a60d8d3d-0de2-4e31-8d85-8bbce90304d8@linaro.org>
-Date: Tue, 9 Jul 2024 11:09:07 +0200
+	s=arc-20240116; t=1720516429; c=relaxed/simple;
+	bh=x1XdS8sKH3KmEUOLFiabC/tDkWsyh/TjaOkJAyqIhoo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=grTaOp3apTvch+czGA+gd18Gd0j0CqaPIh2skSiADwClsZIIU+FPQm4emsVUeLgIgSxgpUuTlJFugzS7YIe5mpN5e9mej7UF29i/Y+C9015JTQGnnuMOIJkI/9Bl7ZxdJDQfQfX+pswR/AaBf3lIP4gphM60Hv3weVePV2gN7gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X6xu6d/E; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D00C3277B;
+	Tue,  9 Jul 2024 09:13:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720516429;
+	bh=x1XdS8sKH3KmEUOLFiabC/tDkWsyh/TjaOkJAyqIhoo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=X6xu6d/Ecbt8NTFXeHQHt3J9nvPLV1A3Gf4kg2p0zaScrAite9J269SEnxil95dHK
+	 C/mG/2nGWeSL4pmSia13hpy/XzR4DLke+XwP9xiPWWr96dJg3goQMS8wNBXQSbTT0Q
+	 z8WBJgS9EEs/dmAw7xSXxkTHQ+XkPZIp50pwemRBbc1zZJUSWRdsdcX0y0mTpaDejq
+	 6GOZB/o380b7TipD4IjkzhI3dqR9/4TPFx7bwZs8365fYFwUNvIFzjLhMnNXvvMED1
+	 niEL4bgzbRiXwdEyCC0KSOf6IhdiD3Vz+dlhQFZjz+QEVuVCzSTdkuXhIWftIAuoP7
+	 RqH5jSv9ZdsnQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sR6v4-0000000055L-158T;
+	Tue, 09 Jul 2024 11:13:55 +0200
+Date: Tue, 9 Jul 2024 11:13:54 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org,
+	konrad.dybcio@linaro.org, jassisinghbrar@gmail.com,
+	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	dmitry.baryshkov@linaro.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com,
+	conor+dt@kernel.org, quic_nkela@quicinc.com,
+	quic_psodagud@quicinc.com, abel.vesa@linaro.org
+Subject: Re: [PATCH V6 5/5] arm64: dts: qcom: x1e80100: Enable cpufreq
+Message-ID: <Zoz_UmPBWKHA37Kq@hovoldconsulting.com>
+References: <20240612124056.39230-1-quic_sibis@quicinc.com>
+ <20240612124056.39230-6-quic_sibis@quicinc.com>
+ <ZoQjAWse2YxwyRJv@hovoldconsulting.com>
+ <f53bc00f-8217-1dc8-5203-1a83c24d353d@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: clock: qcom: Remove required-opps from
- required list on SM8650
-To: Jagadeesh Kona <quic_jkona@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Taniya Das <quic_tdas@quicinc.com>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>,
- Ajit Pandey <quic_ajipan@quicinc.com>, kernel test robot <lkp@intel.com>
-References: <20240708130836.19273-1-quic_jkona@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240708130836.19273-1-quic_jkona@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f53bc00f-8217-1dc8-5203-1a83c24d353d@quicinc.com>
 
-On 08/07/2024 15:08, Jagadeesh Kona wrote:
-> On SM8650, the minimum voltage corner supported on MMCX from cmd-db is
-> sufficient for clock controllers to operate and there is no need to specify
-> the required-opps. Hence remove the required-opps property from the list of
-> required properties for SM8650 camcc and videocc bindings.
+Hi Sibi,
 
-<form letter>
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC (and consider --no-git-fallback argument). It might
-happen, that command when run on an older kernel, gives you outdated
-entries. Therefore please be sure you base your patches on recent Linux
-kernel.
+On Wed, Jul 03, 2024 at 01:29:11AM +0530, Sibi Sankar wrote:
+> On 7/2/24 21:25, Johan Hovold wrote:
+> > On Wed, Jun 12, 2024 at 06:10:56PM +0530, Sibi Sankar wrote:
+> >> Enable cpufreq on X1E80100 SoCs through the SCMI perf protocol node.
 
-Tools like b4 or scripts/get_maintainer.pl provide you proper list of
-people, so fix your workflow. Tools might also fail if you work on some
-ancient tree (don't, instead use mainline) or work on fork of kernel
-(don't, instead use mainline). Just use b4 and everything should be
-fine, although remember about `b4 prep --auto-to-cc` if you added new
-patches to the patchset.
-</form letter>
-
+> > This series gives a nice performance boost on the x1e80100 CRD, but I'm
+> > seeing a bunch of warnings and errors that need to be addressed:
+> > 
+> > [    9.533053] arm-scmi firmware:scmi: Failed to get FC for protocol 13 [MSG_ID:6 / RES_ID:0] - ret:-95. Using regular messaging.
+> > [    9.549458] arm-scmi firmware:scmi: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> > [    9.563925] arm-scmi firmware:scmi: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> > [    9.572835] arm-scmi firmware:scmi: Failed to get FC for protocol 13 [MSG_ID:6 / RES_ID:1] - ret:-95. Using regular messaging.
+> > [    9.609471] arm-scmi firmware:scmi: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> > [    9.633341] arm-scmi firmware:scmi: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+> > [    9.650000] arm-scmi firmware:scmi: Failed to get FC for protocol 13 [MSG_ID:6 / RES_ID:2] - ret:-95. Using regular messaging.
 > 
-> This fixes:
-> arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: clock-controller@aaf0000:
-> 'required-opps' is a required property
+> X1E uses fast channels only for message-id: 7 (level set) and regular
+> channels for all the other messages. The spec doesn't mandate fast
+> channels for any of the supported message ids for the perf protocol.
+> So nothing to fix here.
+
+I didn't look at this in any detail, but if the firmware is spec
+compliant you should not be spamming the logs with warnings. Not sure
+how best to address that, but you could, for example, add a quirk for
+qcom fw or at a minimum demote this mess to info level.
+
+Also the failure to add oops_by_lvl appears to be a separate issue (e.g.
+related to the duplicate entries).
+
+> > [    9.727098] cpu cpu4: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq: 3417600000, volt: 0, enabled: 1
+> > [    9.737157] cpu cpu4: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq: 3417600000, volt: 0, enabled: 1
+> > [    9.875039] cpu cpu8: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq: 3417600000, volt: 0, enabled: 1
+> > [    9.888428] cpu cpu8: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq: 3417600000, volt: 0, enabled: 1
 > 
-> arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: clock-controller@ade0000:
-> 'required-opps' is a required property
+> The duplicate entries reported by the perf protocol come directly from
+> the speed bins. I was told the duplicate entry with volt 0 is meant to
+> indicate a lower power way of achieving the said frequency at a lower
+> core count. We have no way of using it in the kernel and it gets safely
+> discarded. So again nothing to fix in the kernel.
+
+Again, you should not be spamming the logs with warnings for things are
+benign (e.g. as it may prevent people from noticing real issues).
+
+Also these duplicate entries do not seem to get safely discarded as they
+result in a bunch of operations failing loudly at boot (e.g. the
+oops_by_lvl warning above) and similarly at resume as I recently
+noticed:
+
+[   42.690569] CPU4: Booted secondary processor 0x0000010000 [0x511f0011]
+[   42.704360] cpu cpu4: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq: 3417600000, volt: 0, enabled: 1
+[   42.737865] cpu cpu4: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq: 3417600000, volt: 0, enabled: 1
+[   42.752943] debugfs: File 'cpu5' in directory 'opp' already present!
+[   42.759956] debugfs: File 'cpu6' in directory 'opp' already present!
+[   42.766641] debugfs: File 'cpu7' in directory 'opp' already present!
+...
+[   42.855520] CPU8: Booted secondary processor 0x0000020000 [0x511f0011]
+[   42.865188] cpu cpu8: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq: 3417600000, volt: 0, enabled: 1
+[   42.898494] cpu cpu8: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq: 3417600000, volt: 0, enabled: 1
+[   42.913559] debugfs: File 'cpu9' in directory 'opp' already present!
+[   42.920265] debugfs: File 'cpu10' in directory 'opp' already present!
+[   42.927029] debugfs: File 'cpu11' in directory 'opp' already present!
+
+Perhaps you can find some way to filter out the unused, duplicate
+entries for qualcomm fw so that all of these issues go away.
+
+> > [    9.913506] debugfs: Directory 'NCC' with parent 'pm_genpd' already present!
+> > [    9.922198] debugfs: Directory 'NCC' with parent 'pm_genpd' already present!
 > 
-> Fixes: a6a61b9701d1 ("dt-bindings: clock: qcom: Add SM8650 video clock controller")
-> Fixes: 1ae3f0578e0e ("dt-bindings: clock: qcom: Add SM8650 camera clock controller")
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202407070147.C9c3oTqS-lkp@intel.com/
-> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> ---
+> Yeah I did notice ^^ during dev, the series isn't the one introducing it
+> so it shouldn't block the series acceptance. Meanwhile I'll spend some
+> cycles to get this warn fixed.
 
+I didn't try to track down where this comes from, but figured it could
+be related to the duplicate entries. Either way, these are actually
+errors (not just warnings) that need to be addressed in some way.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+Johan
 
