@@ -1,157 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-25559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78F1F92B0BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 09:01:55 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C44EB92B0DC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 09:09:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2E1E828147D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 07:01:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2FE1AB21016
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 07:09:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41F9F1420A8;
-	Tue,  9 Jul 2024 07:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D40BA1420A8;
+	Tue,  9 Jul 2024 07:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Xg0BRq4p"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="G3iN3ZOH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9946CC148;
-	Tue,  9 Jul 2024 07:01:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11E813A27D
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jul 2024 07:09:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720508505; cv=none; b=QlEpyGBoPWMol0Vn9pNhng5QwCEOSReTbqdX9cPaXp2Bm7xdkIuFdzJylc0ZNdsv5NY8t2iNq0/z+O82lflVuNXpdawcNo+6K10thavcVtTqiSWvTKxO7A7E1o8Mi1RbX/a2agjGNeJtEMFnjTE0jUfLQ/x15CaVDco8hftS39I=
+	t=1720508966; cv=none; b=XJyA/rgz1T7iwuQwOlYOUxVzAA3rUPVIO2wfIO3VKGrj1SiCifGmzfpEpXb8qZRxNgUIphJ0b9ZxG+tPfC46NEWbbg4myQLNcK3qnJpH/HJ4PF6RR3RO6AvyH2QFMlZDxnSActwqy0oGyVbTuNn130kK19ttEVFfJ23AtOAbcY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720508505; c=relaxed/simple;
-	bh=tkxHSt+B95UwmZobLotNEd2km4xRfzDRpmtKe5OC7N4=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FTbalzGQESx7F1UrUQ9vmtqhTzT25ACioYgtGF1cYfzz77Vb7+pRi/qThnPJvs5fB4UZaxNhybx+vB2iBbniBPsD7n2F6fZ5PM5trpBCmoXg6bciz6cOYBjnbEeShJwJo3+5l9O9oYrAl0u8ugEMSAMp4SO+p8MAmCM+Sv/1ZyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Xg0BRq4p; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 468LeTLr003367;
-	Tue, 9 Jul 2024 07:01:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=xr+9HQV02Fcj9GHm1nozqD3P
-	M0XQKi6JALqEWo018nU=; b=Xg0BRq4ptQzGsR92sTgnq6qpKyHDN1ZMT1bqi85i
-	4cuXKoaCrcnXFxntJ1CFZD6TgMuIBHOg4x1R1uxfny7dS3QhC9PVSqrph299yKaJ
-	gOacg4cthVLy28yJrMjA/Ps6x2L4V00sqme0FT9A7whEdOj7zVArfsywCLxiA5bz
-	d3cdBOhY8lvYL/qfylPsxdk9ChtquY0LrZCiv3kjZ4lyNep8JbC/106MFaWoXrjU
-	SqT4yn9iSHaWzBuEIk3NEYZRhOjzGDEUJ4c8wKMl4eJ6px3feMC725WIM3yojk9I
-	kfDqRJvKto/RLgXg/joOrykyL4HmGTeXoENvEWiT44HNqQ==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406wjn5tj5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 Jul 2024 07:01:21 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46971KaQ025688
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 9 Jul 2024 07:01:20 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 9 Jul 2024 00:01:11 -0700
-Date: Tue, 9 Jul 2024 12:31:08 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: <konrad.dybcio@linaro.org>
-CC: <vireshk@kernel.org>, <nm@ti.com>, <sboyd@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <angelogioacchino.delregno@collabora.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
-        <ilia.lin@kernel.org>, <rafael@kernel.org>, <ulf.hansson@linaro.org>,
-        <quic_sibis@quicinc.com>, <quic_rjendra@quicinc.com>,
-        <quic_rohiagar@quicinc.com>, <abel.vesa@linaro.org>,
-        <otto.pflueger@abscue.de>, <danila@jiaxyga.com>,
-        <quic_ipkumar@quicinc.com>, <luca@z3ntu.xyz>,
-        <stephan.gerhold@kernkonzept.com>, <nks@flawful.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>
-Subject: Re: [PATCH v4 09/10] dt-bindings: opp: v2-qcom-level: Update
- minItems for oloop-vadj & cloop-vadj
-Message-ID: <ZozgNAYKAvhPr0qk@hu-varada-blr.qualcomm.com>
-References: <20240703091651.2820236-1-quic_varada@quicinc.com>
- <20240703091651.2820236-10-quic_varada@quicinc.com>
- <20240708155529.GA3244015-robh@kernel.org>
+	s=arc-20240116; t=1720508966; c=relaxed/simple;
+	bh=0EbaZGBCGAlDdaBpz5q6jU7//pUs+PQe1Irem1Hb25U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gEe5KKUbH44o2HZJv4dgRMvNT1TJ/eKlh/qmB2OTqCjM1G5LTRfgU0Ib8rCrPY5yXyOPq8+GYB3T3AvuZ38z/Thh9vyYuU63s+T8xsUW4Our/Wq8o90p8oSBK/qk8wWSdSinB0Af48QgTbLEFjsJN3H6/+oRsQxehwYu6XJ3BBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=G3iN3ZOH; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-70aec66c936so3225243b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jul 2024 00:09:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1720508963; x=1721113763; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ktSm4q1vxdmtkavfLnfXdh6fXORXctBwSCyUPkuRKh8=;
+        b=G3iN3ZOHopm3mtgq9x4VbtBLd7+87pueMbEYcQnnSp50fQkEH9BunryS3idlc32bpT
+         lICEHU3GZHkY6Fwt7b9n/M5TKQFOVUQZvoD74yUU+EpI3lFFb8632YEi03ZfU+Qi5bnJ
+         4idXjAj9chCnjQ10t+syErNh4P75UXzPKEs+Tz59s2qZo2Ovi/589E5YmZu8JIV+LHKy
+         jzKgFEDncvzG8JmfsCPJJ8u97LtgXRSHL1jyNzPe7YOmQZSklLEXEV/3FUMbBhu+vgi5
+         2aS5lOpQPue0NMExEIelXgPamT6oLqKd1j2UffxQpiGZKmHarRAwnIy17hJ8C0wWXYgb
+         mLoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720508963; x=1721113763;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ktSm4q1vxdmtkavfLnfXdh6fXORXctBwSCyUPkuRKh8=;
+        b=i7BtQbz66g2OgP64dAi1KkVOfJ6S2YE0GlxA9IixOZkKenoE25SQIxW8PDTuzfhbs/
+         sohemkapmHrVOd+gamRtIuQH4oVk0kDUh0MWZCcxORAjE2U2bZb2LUvxEJei/yZCjHIs
+         rI+wykXxmscrMlEt5NeUzfnFPfE2y9m0coLojkLyRaDBojIapQ7ajQMey5CYSwpsZMo3
+         /INnZXVIVL7qgV+7JjZjf97SLji2N3oFzMhsFVoX5BdNgULfGxBx3Wu9HxwmB+2rnaVW
+         HwtdpyJSbrk0HTMa4HpGGg3my3EAnFh5vUnPROhmqVKi+RrlhrmhmQMqSWWkLH2oYhbA
+         Ys4g==
+X-Forwarded-Encrypted: i=1; AJvYcCXqkSigdyYJZd3L6WEtLTZGrnT4e7KOkBuzbwXEQNDVg/nhcs7EYiQ0HuWYL1QeMMQ0HWyHg3ZlLlPPDKWQIhB5/+F0u7Zs0kXBP1N2ww==
+X-Gm-Message-State: AOJu0Yy3z+wApOT+UmhoTEt0XP0IOGpOLGuZDfb30iOdRepK599muJuT
+	x1X8j0wJ5LMLCUE7pTjD+C1GdikxmGAb7GeLH4TPfYZhf1b0vinVxwFTPbhYNg==
+X-Google-Smtp-Source: AGHT+IFqpYgrrt5uc3kzJJ3RWffhZnZTxn37z39ek238VkDPJg7zYx6wk2uXBCCVizNNoOnNVTUF1w==
+X-Received: by 2002:a05:6a00:2352:b0:70b:1525:9adf with SMTP id d2e1a72fcca58-70b4364fe15mr2135383b3a.22.1720508963273;
+        Tue, 09 Jul 2024 00:09:23 -0700 (PDT)
+Received: from thinkpad ([120.60.141.33])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70b438c27b0sm1064532b3a.64.2024.07.09.00.09.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Jul 2024 00:09:22 -0700 (PDT)
+Date: Tue, 9 Jul 2024 12:39:15 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+	bhelgaas@google.com, quic_krichai@quicinc.com,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1] pci: qcom: Fix 'opp' variable usage
+Message-ID: <20240709070915.GA7865@thinkpad>
+References: <20240709063620.4125951-1-quic_varada@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240708155529.GA3244015-robh@kernel.org>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ykjOmWRJUdJvIsIxFljEaW9CMVfJaX3Q
-X-Proofpoint-GUID: ykjOmWRJUdJvIsIxFljEaW9CMVfJaX3Q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-08_15,2024-07-08_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 clxscore=1015
- mlxscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 phishscore=0 malwarescore=0 bulkscore=0 impostorscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407090046
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240709063620.4125951-1-quic_varada@quicinc.com>
 
-On Mon, Jul 08, 2024 at 09:55:29AM -0600, Rob Herring wrote:
-> On Wed, Jul 03, 2024 at 02:46:50PM +0530, Varadarajan Narayanan wrote:
-> > Since IPQ9574 has only one CPR thread it will specify
-> > only one voltage adjustment value. Hence update min items
-> > accordingly for oloop-vadj and cloop-vadj. Without
-> > constraining min items, dt_binding_check gives errors
-> >
-> > 	opp-table-cpr4:opp-0:qcom,opp-cloop-vadj:0: [0] is too short
-> > 	opp-table-cpr4:opp-0:qcom,opp-oloop-vadj:0: [0] is too short
-> >
-> > 	Failed validating 'minItems' in schema . . .
-> > 		{'maxItems': 2, 'minItems': 2}
-> >
-> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > ---
-> > v4: Fix dt_bindings_check error
-> > ---
-> >  Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml | 2 ++
-> >  1 file changed, 2 insertions(+)
->
-> This is going to need to be rolled into your dependency because it needs
-> the same fix.
+On Tue, Jul 09, 2024 at 12:06:20PM +0530, Varadarajan Narayanan wrote:
+> qcom_pcie_icc_opp_update() calls 'dev_pm_opp_put(opp)' regardless
+> of the success of dev_pm_opp_find_freq_exact().
+> 
+> If dev_pm_opp_find_freq_exact() had failed and 'opp' had some
+> error value, the subsequent dev_pm_opp_put(opp) results in a
+> crash. Hence call dev_pm_opp_put(opp) only if 'opp' has a valid
+> value.
+> 
+> Fixes: 78b5f6f8855e ("PCI: qcom: Add OPP support to scale performance")
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 
-Konrad,
+Fix was already submitted: https://lore.kernel.org/linux-pci/20240708180539.1447307-3-dan.carpenter@linaro.org/
 
-Can you please squash this into https://lore.kernel.org/lkml/20230217-topic-cpr3h-v14-2-9fd23241493d@linaro.org/
+- Mani
 
-Thanks
-Varada
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 26405fcfa499..2a80d4499c25 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1443,8 +1443,8 @@ static void qcom_pcie_icc_opp_update(struct qcom_pcie *pcie)
+>  			if (ret)
+>  				dev_err(pci->dev, "Failed to set OPP for freq (%lu): %d\n",
+>  					freq_kbps * width, ret);
+> +			dev_pm_opp_put(opp);
+>  		}
+> -		dev_pm_opp_put(opp);
+>  	}
+>  }
+>  
+> -- 
+> 2.34.1
+> 
 
-> > diff --git a/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml b/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
-> > index b203ea01b17a..1c1a9e12d57a 100644
-> > --- a/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
-> > +++ b/Documentation/devicetree/bindings/opp/opp-v2-qcom-level.yaml
-> > @@ -39,6 +39,7 @@ patternProperties:
-> >            An array of per-thread values representing the closed-loop
-> >            voltage adjustment value associated with this OPP node.
-> >          $ref: /schemas/types.yaml#/definitions/int32-array
-> > +        minItems: 1
-> >          maxItems: 2
-> >
-> >        qcom,opp-oloop-vadj:
-> > @@ -46,6 +47,7 @@ patternProperties:
-> >            An array of per-thread values representing the open-loop
-> >            voltage adjustment value associated with this OPP node.
-> >          $ref: /schemas/types.yaml#/definitions/int32-array
-> > +        minItems: 1
-> >          maxItems: 2
-> >
-> >      required:
-> > --
-> > 2.34.1
-> >
+-- 
+மணிவண்ணன் சதாசிவம்
 
