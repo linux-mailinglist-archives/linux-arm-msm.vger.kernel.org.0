@@ -1,438 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-25719-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 716D392BFEB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 18:28:15 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99F7692C117
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 18:51:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E51D21F23758
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 16:28:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BFA5C1C22DC6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jul 2024 16:51:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 681F71ACE81;
-	Tue,  9 Jul 2024 16:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDBF31A4F19;
+	Tue,  9 Jul 2024 16:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WNGTmAyL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IDBLvmZB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F67A1AC449
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jul 2024 16:21:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13D01A4F07;
+	Tue,  9 Jul 2024 16:26:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720542062; cv=none; b=CdIkThPzprdchxfFcGQSYYY19eZxaFqrkLAXfGGGY6KM8rVe3OAybYE5qyyMKVeXZd1nDiaZcAzDXd10IMsKVzIUdq7HQZW1O5wgLRIqbyQHSyDwkbA3buj/hlrbxjffEDlKAiim8k89npqvG6tcCYRgCn+etL5o1NSPJyEjoy8=
+	t=1720542378; cv=none; b=seG3k32gfkFOUR74rpVtH+w3Z/aEKkMJ/C7qmKMYVmXwpIOSx6iFT3kz7ocMrC+heoNt/i+Y7tf7MRcgBCvEPV4Nftas3QhQG9wPrmDpkgveg5WRPL6nFqV9JG8+kgMMgcfKqoGE/NSCyFbUKAELisY+BkdJwo6nRh5yw2dMayo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720542062; c=relaxed/simple;
-	bh=K5IDHOGwur5M1wxz6gR+ee2Yecqq87yweHl0ice3ziY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PGNB1wzf0Rb83jnfdRQlZhooxu+cU5EPtzSFQDA1eUFojTjEpB7fYp4xm5w1P4pysgiu61QatRncypxpbno0MF6oqcjkkD294pOXxT56wTtPwV+MXeds9WH3wLZ+JFm4PT1qeRSfFvSHkOJWzEgkuf09etFaW0Np6aGXMBUOCcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WNGTmAyL; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-426717a2d12so7201525e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jul 2024 09:21:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720542059; x=1721146859; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QZURG4DQ86OmYUEBMJ73gjiu+OgC68nhtpPKYr4JjTk=;
-        b=WNGTmAyLKztkkcKDTtXHrg7WgBuD4WP/YUklpOIiFvCa4fU9/G8rP8vwzHIOvNjrpf
-         n95Rf9eYxSc1hexXaSZAk1xc6lMI8D9a8bQEfuDSV2FGav8DsPnr3GXYcbtejLBdn8KT
-         hD2tMcM/KO6W0ldJJdCdp4+oaPNxxvpHfyfdQC5xx2bF/GAwn4qreBx8ruG5lbDJu4nK
-         OUgf90nXwW5NEysCdgziu3QL2qdrKNacavmVGsvYNzY5okSm3ETAuE4VgkavF09IaMjL
-         LalontQ1CpQCqZ5RUrn+K3WdSodnFwpdvqiq49VvMIH0K3q9x3juQ0JCpDnPZ5X9TO7N
-         z0hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720542059; x=1721146859;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QZURG4DQ86OmYUEBMJ73gjiu+OgC68nhtpPKYr4JjTk=;
-        b=OTQP8k2hAB6/gPJRKbofiZsbP468kVj2SDwotalWfU5NrvSrs0Av0SmRCMG1Sw7m+u
-         XC2yhQsjjxhgCbj9eUfTGEeUR0D/2pfSPZ54cOf4nr1ElnoHhzimu+c/L2y1VltMBgVq
-         RMoeIPNb2H4TwGv5UUwpiR9Y5oT9B0cXDP5r6FJXTy81A3qSUFu6P1WwdjZTrr4blKwV
-         xT+l5vnB/DT8UsddeLAo13G9AQbKZYQ29juB0vxjXMnKkbByNCZY+nd1OSuMe7cDHCyf
-         M1Q2gj28+nxIPDRX9lF2Sq0nJNOQ+aFZyziR0AbQNT2gU+QGYLtqWt64puiWwfW17t7/
-         wbiA==
-X-Forwarded-Encrypted: i=1; AJvYcCX9iqq7NUQsYk09QT6nxS/vfaPktWTfhg2kvNkd6w8u6L+OzSJoXzIYaEYwu/LOip97h+vFvADDa0ipNzGHDkJUJKAvTqfLgwEyCdI8zg==
-X-Gm-Message-State: AOJu0YxWmMoUWgs3AOQ3yJNjWm8LrZDCj9R+c94Ltnq+1jZ2gnD3abqW
-	ut9ToUBICdlIpeuvYtPHYAYmG5OO09poIiynjRyYsKRg6sE0YZXQ8NRkZEtd9jY=
-X-Google-Smtp-Source: AGHT+IHJe6Owzua4x6G16KkskCgOHlwfWxLCcRpIy7XL32/xCG893IE+O2YynuqUNB0HAJGA159CzA==
-X-Received: by 2002:a05:600c:378d:b0:426:6981:1bd with SMTP id 5b1f17b1804b1-426722d4b4emr24632085e9.5.1720542058698;
-        Tue, 09 Jul 2024 09:20:58 -0700 (PDT)
-Received: from rayyan-pc.broadband ([2a0a:ef40:ee7:2401:197d:e048:a80f:bc44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-367cde7e07fsm2966955f8f.17.2024.07.09.09.20.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jul 2024 09:20:58 -0700 (PDT)
-From: Rayyan Ansari <rayyan.ansari@linaro.org>
-To: devicetree@vger.kernel.org
-Cc: Rayyan Ansari <rayyan.ansari@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+	s=arc-20240116; t=1720542378; c=relaxed/simple;
+	bh=+bZLGqWY1DDBcyTEH10hsAqp0+mebKEECO2I2Lb/wl8=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=cKTYgS6+0y02D5Agn+k8Q3TCAyJX8LGBys+E+wOSZo2sb92ayoG9Unz9RARG+kCLu0C4iAa6RBiYDJVnhdwb9qXTKjU6UEAqq6f5C9YFB5tJ99/+ySwNMP0wShIA8+Q6ep/eTAq+Oi3jQ0Hbh4lwy3ycXHIQ/ZRdvWkLkJPFavI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IDBLvmZB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03FCBC3277B;
+	Tue,  9 Jul 2024 16:26:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720542378;
+	bh=+bZLGqWY1DDBcyTEH10hsAqp0+mebKEECO2I2Lb/wl8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=IDBLvmZBCCFufsM+sPjL6bm0hoX51V5WbYI6jjJCmWNdXwhUXuEWUtbmUAVlSVtaY
+	 7VUq0dOWOd5vPkGKLT6vEIzv94XAWqZLNJ0yNkJYm9G7wTSvtjbe/j+RIa4fNLaHvQ
+	 eVe67BFLUV9sbdO/iuphzr8kwE/ZExgNxGeTcHa1LKQV0Ig+5Py1irT1nVCktdT/xt
+	 N7Gzb3U01PW2GVllWF9hXRL3FDHxBhuSbtnJ/BDkR6J0GhrLKlgbTEUzCh9k32nLVb
+	 90Ve4y/HS6L+EKvDda1dkV+pYt8E0xyUFicvcX9xixXBZ+tIDg/VWptNhM+M8k5Yl0
+	 /RqOzI/LgAMVQ==
+Date: Tue, 9 Jul 2024 11:26:16 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Tengfei Fan <quic_tengfan@quicinc.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Rob Herring <robh@kernel.org>
-Subject: [PATCH 4/4] dt-bindings: pinctrl: qcom,apq8084-pinctrl: convert to dtschema
-Date: Tue,  9 Jul 2024 17:17:56 +0100
-Message-ID: <20240709162009.5166-5-rayyan.ansari@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240709162009.5166-1-rayyan.ansari@linaro.org>
-References: <20240709162009.5166-1-rayyan.ansari@linaro.org>
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] PCI: qcom: Add support for QCS9100 SoC
+Message-ID: <20240709162616.GA175928@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240709-add_qcs9100_pcie_compatible-v2-2-04f1e85c8a48@quicinc.com>
 
-Convert the Qualcomm APQ8084 TLMM block bindings from text to yaml dt
-schema format.
+On Tue, Jul 09, 2024 at 10:59:30PM +0800, Tengfei Fan wrote:
+> Add support for QCS9100 SoC that uses controller version 5.90
+> reusing the 1.9.0 config.
 
-Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
----
- .../bindings/pinctrl/qcom,apq8084-pinctrl.txt | 188 ------------------
- .../pinctrl/qcom,apq8084-pinctrl.yaml         | 129 ++++++++++++
- 2 files changed, 129 insertions(+), 188 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,apq8084-pinctrl.txt
- create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,apq8084-pinctrl.yaml
+Add blank line here if this is a paragraph break.
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,apq8084-pinctrl.txt b/Documentation/devicetree/bindings/pinctrl/qcom,apq8084-pinctrl.txt
-deleted file mode 100644
-index c9782397ff14..000000000000
---- a/Documentation/devicetree/bindings/pinctrl/qcom,apq8084-pinctrl.txt
-+++ /dev/null
-@@ -1,188 +0,0 @@
--Qualcomm APQ8084 TLMM block
--
--This binding describes the Top Level Mode Multiplexer block found in the
--MSM8960 platform.
--
--- compatible:
--	Usage: required
--	Value type: <string>
--	Definition: must be "qcom,apq8084-pinctrl"
--
--- reg:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: the base address and size of the TLMM register space.
--
--- interrupts:
--	Usage: required
--	Value type: <prop-encoded-array>
--	Definition: should specify the TLMM summary IRQ.
--
--- interrupt-controller:
--	Usage: required
--	Value type: <none>
--	Definition: identifies this node as an interrupt controller
--
--- #interrupt-cells:
--	Usage: required
--	Value type: <u32>
--	Definition: must be 2. Specifying the pin number and flags, as defined
--		    in <dt-bindings/interrupt-controller/irq.h>
--
--- gpio-controller:
--	Usage: required
--	Value type: <none>
--	Definition: identifies this node as a gpio controller
--
--- #gpio-cells:
--	Usage: required
--	Value type: <u32>
--	Definition: must be 2. Specifying the pin number and flags, as defined
--		    in <dt-bindings/gpio/gpio.h>
--
--- gpio-ranges:
--	Usage: required
--	Definition:  see ../gpio/gpio.txt
--
--- gpio-reserved-ranges:
--	Usage: optional
--	Definition: see ../gpio/gpio.txt
--
--Please refer to ../gpio/gpio.txt and ../interrupt-controller/interrupts.txt for
--a general description of GPIO and interrupt bindings.
--
--Please refer to pinctrl-bindings.txt in this directory for details of the
--common pinctrl bindings used by client devices, including the meaning of the
--phrase "pin configuration node".
--
--The pin configuration nodes act as a container for an arbitrary number of
--subnodes. Each of these subnodes represents some desired configuration for a
--pin, a group, or a list of pins or groups. This configuration can include the
--mux function to select on those pin(s)/group(s), and various pin configuration
--parameters, such as pull-up, drive strength, etc.
--
--
--PIN CONFIGURATION NODES:
--
--The name of each subnode is not important; all subnodes should be enumerated
--and processed purely based on their content.
--
--Each subnode only affects those parameters that are explicitly listed. In
--other words, a subnode that lists a mux function but no pin configuration
--parameters implies no information about any pin configuration parameters.
--Similarly, a pin subnode that describes a pullup parameter implies no
--information about e.g. the mux function.
--
--
--The following generic properties as defined in pinctrl-bindings.txt are valid
--to specify in a pin configuration subnode:
--
--- pins:
--	Usage: required
--	Value type: <string-array>
--	Definition: List of gpio pins affected by the properties specified in
--		    this subnode.  Valid pins are:
--		    gpio0-gpio146,
--		    sdc1_clk,
--		    sdc1_cmd,
--		    sdc1_data
--		    sdc2_clk,
--		    sdc2_cmd,
--		    sdc2_data
--
--- function:
--	Usage: required
--	Value type: <string>
--	Definition: Specify the alternative function to be configured for the
--		    specified pins. Functions are only valid for gpio pins.
--		    Valid values are:
--		    adsp_ext, audio_ref, blsp_i2c1, blsp_i2c2, blsp_i2c3,
--		    blsp_i2c4, blsp_i2c5, blsp_i2c6, blsp_i2c7, blsp_i2c8,
--		    blsp_i2c9, blsp_i2c10, blsp_i2c11, blsp_i2c12,
--		    blsp_spi1, blsp_spi2, blsp_spi3, blsp_spi4, blsp_spi5,
--		    blsp_spi6, blsp_spi7, blsp_spi8, blsp_spi9, blsp_spi10,
--		    blsp_spi11, blsp_spi12, blsp_uart1, blsp_uart2, blsp_uart3,
--		    blsp_uart4, blsp_uart5, blsp_uart6, blsp_uart7, blsp_uart8,
--		    blsp_uart9, blsp_uart10, blsp_uart11, blsp_uart12,
--		    blsp_uim1, blsp_uim2, blsp_uim3, blsp_uim4, blsp_uim5,
--		    blsp_uim6, blsp_uim7, blsp_uim8, blsp_uim9, blsp_uim10,
--		    blsp_uim11, blsp_uim12, cam_mclk0, cam_mclk1, cam_mclk2,
--		    cam_mclk3, cci_async, cci_async_in0, cci_i2c0, cci_i2c1,
--		    cci_timer0, cci_timer1, cci_timer2, cci_timer3, cci_timer4,
--		    edp_hpd, gcc_gp1, gcc_gp2, gcc_gp3, gcc_obt, gcc_vtt,i
--		    gp_mn, gp_pdm0, gp_pdm1, gp_pdm2, gp0_clk, gp1_clk, gpio,
--		    hdmi_cec, hdmi_ddc, hdmi_dtest, hdmi_hpd, hdmi_rcv, hsic,
--		    ldo_en, ldo_update, mdp_vsync, pci_e0, pci_e0_n, pci_e0_rst,
--		    pci_e1, pci_e1_rst, pci_e1_rst_n, pci_e1_clkreq_n, pri_mi2s,
--		    qua_mi2s, sata_act, sata_devsleep, sata_devsleep_n,
--		    sd_write, sdc_emmc_mode, sdc3, sdc4, sec_mi2s, slimbus,
--		    spdif_tx, spkr_i2s, spkr_i2s_ws, spss_geni, ter_mi2s, tsif1,
--		    tsif2, uim, uim_batt_alarm
--
--- bias-disable:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configured as no pull.
--
--- bias-pull-down:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configured as pull down.
--
--- bias-pull-up:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins should be configured as pull up.
--
--- output-high:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are configured in output mode, driven
--		    high.
--		    Not valid for sdc pins.
--
--- output-low:
--	Usage: optional
--	Value type: <none>
--	Definition: The specified pins are configured in output mode, driven
--		    low.
--		    Not valid for sdc pins.
--
--- drive-strength:
--	Usage: optional
--	Value type: <u32>
--	Definition: Selects the drive strength for the specified pins, in mA.
--		    Valid values are: 2, 4, 6, 8, 10, 12, 14 and 16
--
--Example:
--
--	tlmm: pinctrl@fd510000 {
--		compatible = "qcom,apq8084-pinctrl";
--		reg = <0xfd510000 0x4000>;
--
--		gpio-controller;
--		#gpio-cells = <2>;
--		gpio-ranges = <&tlmm 0 0 147>;
--		interrupt-controller;
--		#interrupt-cells = <2>;
--		interrupts = <0 208 0>;
--
--		uart2: uart2-default {
--			mux {
--				pins = "gpio4", "gpio5";
--				function = "blsp_uart2";
--			};
--
--			tx {
--				pins = "gpio4";
--				drive-strength = <4>;
--				bias-disable;
--			};
--
--			rx {
--				pins = "gpio5";
--				drive-strength = <2>;
--				bias-pull-up;
--			};
--		};
--	};
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,apq8084-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,apq8084-pinctrl.yaml
-new file mode 100644
-index 000000000000..38877d8b97ff
---- /dev/null
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,apq8084-pinctrl.yaml
-@@ -0,0 +1,129 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/pinctrl/qcom,apq8084-pinctrl.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm Technologies, Inc. APQ8084 TLMM block
-+
-+maintainers:
-+  - Bjorn Andersson <bjorn.andersson@linaro.org>
-+
-+description: |
-+  Top Level Mode Multiplexer pin controller in Qualcomm APQ8084 SoC.
-+
-+allOf:
-+  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
-+
-+properties:
-+  compatible:
-+    const: qcom,apq8084-pinctrl
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  gpio-reserved-ranges: true
-+
-+patternProperties:
-+  "-state$":
-+    oneOf:
-+      - $ref: "#/$defs/qcom-apq8084-tlmm-state"
-+      - patternProperties:
-+          "-pins$":
-+            $ref: "#/$defs/qcom-apq8084-tlmm-state"
-+        additionalProperties: false
-+
-+$defs:
-+  qcom-apq8084-tlmm-state:
-+    type: object
-+    description:
-+      Pinctrl node's client devices use subnodes for desired pin configuration.
-+      Client device subnodes use below standard properties.
-+    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
-+    unevaluatedProperties: false
-+
-+    properties:
-+      pins:
-+        description:
-+          List of gpio pins affected by the properties specified in this
-+          subnode.
-+        items:
-+          oneOf:
-+            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-3][0-9]|14[0-6])$"
-+            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk, sdc2_cmd,
-+                      sdc2_data ]
-+        minItems: 1
-+        maxItems: 36
-+
-+      function:
-+        description:
-+          Specify the alternative function to be configured for the specified
-+          pins.
-+        enum: [ adsp_ext, audio_ref, blsp_i2c1, blsp_i2c2, blsp_i2c3,
-+                blsp_i2c4, blsp_i2c5, blsp_i2c6, blsp_i2c7, blsp_i2c8,
-+                blsp_i2c9, blsp_i2c10, blsp_i2c11, blsp_i2c12,
-+                blsp_spi1, blsp_spi1_cs1, blsp_spi1_cs2, blsp_spi1_cs3,
-+                blsp_spi2, blsp_spi3, blsp_spi3_cs1, blsp_spi3_cs2,
-+                blsp_spi3_cs3, blsp_spi4, blsp_spi5, blsp_spi6,
-+                blsp_spi7, blsp_spi8, blsp_spi9, blsp_spi10,
-+                blsp_spi10_cs1, blsp_spi10_cs2, blsp_spi10_cs3,
-+                blsp_spi11, blsp_spi12, blsp_uart1, blsp_uart2,
-+                blsp_uart3, blsp_uart4, blsp_uart5, blsp_uart6,
-+                blsp_uart7, blsp_uart8, blsp_uart9, blsp_uart10,
-+                blsp_uart11, blsp_uart12, blsp_uim1, blsp_uim2,
-+                blsp_uim3, blsp_uim4, blsp_uim5, blsp_uim6, blsp_uim7,
-+                blsp_uim8, blsp_uim9, blsp_uim10, blsp_uim11,
-+                blsp_uim12, cam_mclk0, cam_mclk1, cam_mclk2, cam_mclk3,
-+                cci_async, cci_async_in0, cci_i2c0, cci_i2c1,
-+                cci_timer0, cci_timer1, cci_timer2, cci_timer3,
-+                cci_timer4, edp_hpd, gcc_gp1, gcc_gp2, gcc_gp3,
-+                gcc_obt, gcc_vtt, gp_mn, gp_pdm0, gp_pdm1, gp_pdm2,
-+                gp0_clk, gp1_clk, gpio, hdmi_cec, hdmi_ddc, hdmi_dtest,
-+                hdmi_hpd, hdmi_rcv, hsic, ldo_en, ldo_update,
-+                mdp_vsync, pci_e0, pci_e0_n, pci_e0_rst, pci_e1,
-+                pci_e1_rst, pci_e1_rst_n, pci_e1_clkreq_n, pri_mi2s,
-+                qua_mi2s, sata_act, sata_devsleep, sata_devsleep_n,
-+                sd_write, sdc_emmc_mode, sdc3, sdc4, sec_mi2s, slimbus,
-+                spdif_tx, spkr_i2s, spkr_i2s_ws, spss_geni, ter_mi2s,
-+                tsif1, tsif2, uim, uim_batt_alarm ]
-+
-+    required:
-+      - pins
-+
-+required:
-+  - compatible
-+  - reg
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    tlmm: pinctrl@fd510000 {
-+        compatible = "qcom,apq8084-pinctrl";
-+        reg = <0xfd510000 0x4000>;
-+
-+        gpio-controller;
-+        #gpio-cells = <2>;
-+        gpio-ranges = <&tlmm 0 0 147>;
-+        interrupt-controller;
-+        #interrupt-cells = <2>;
-+        interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-+
-+        uart-state {
-+            rx-pins {
-+                pins = "gpio5";
-+                function = "blsp_uart2";
-+                bias-pull-up;
-+            };
-+
-+            tx-pins {
-+                pins = "gpio4";
-+                function = "blsp_uart2";
-+                bias-disable;
-+            };
-+        };
-+    };
--- 
-2.45.2
-
+> QCS9100 is drived from SA8775p. Currently, both the QCS9100 and SA8775p
+> platform use non-SCMI resource. In the future, the SA8775p platform will
+> move to use SCMI resources and it will have new sa8775p-related device
+> tree. Consequently, introduce "qcom,pcie-qcs9100" to the PCIe device
+> match table.
+> 
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 26405fcfa499..ea3fddc74498 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1722,6 +1722,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+>  	{ .compatible = "qcom,pcie-ipq8074-gen3", .data = &cfg_2_9_0 },
+>  	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
+>  	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
+> +	{ .compatible = "qcom,pcie-qcs9100", .data = &cfg_sc8280xp },
+>  	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_sc8280xp },
+>  	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_34_0},
+>  	{ .compatible = "qcom,pcie-sc7280", .data = &cfg_1_9_0 },
+> 
+> -- 
+> 2.25.1
+> 
 
