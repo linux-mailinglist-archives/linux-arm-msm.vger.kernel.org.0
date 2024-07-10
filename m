@@ -1,116 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-25846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8ADA792D1C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 14:41:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B48F92D289
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 15:15:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4154B1F25449
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 12:41:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 45F841F2345C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 13:15:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AB3C19066D;
-	Wed, 10 Jul 2024 12:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A561B192B84;
+	Wed, 10 Jul 2024 13:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="gBKxwxnF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GVIEhoPs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0221922CC
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jul 2024 12:41:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9DF192492;
+	Wed, 10 Jul 2024 13:15:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720615267; cv=none; b=JqwnX5Cvs3mJMIMSNPwRo0hG6V6Wqkmyze+95Rd4ljj/7dLIVhxDUTnojJNqH0JdkmeRE+CdEf2yugW8eU21jsMuLx42AVfVWd9Sm0AeifMmPsEqy1OpJBSJ8nbh1gbHIaEifn07ajgtlUEA7LX/TFiRMvUrQb/z+vem0cNTtuE=
+	t=1720617305; cv=none; b=dk0yyHP7jNkfxN4T1vpmT2NiheC3krKmzoMVI9pza3bCq1XSUxopEma3lovuwEs9BjZRuKBr5QNYG/w3pvr95IJDI8UAgYzdDHW5ZVx5hyZd02tN1tL6pT3zVLfmlZ5aZXpYySCB+5ZBudyo27yWSSTRoIfBN4uGUAeEPi33VIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720615267; c=relaxed/simple;
-	bh=Ool8JEcomupLYFCAVUceeyirLvgRl1G6dqSHkrYH0y8=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=i9465dftGrdrzbkMrp1zk2/wm8/InsqZesmfxkug3ayCdYwl6QZGf2m2bQDrVb27nxyQs9KDP/H4KgMATh7gBKTOl5QfJDcwip4wK9eleOXcx5DhGGAU4v1IH8F3jwXxFbzAYuyJNuRolVqlByKQS/dLaAGJdHjhm28qTifa6+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=gBKxwxnF; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-42797bcfc77so34405e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jul 2024 05:41:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1720615263; x=1721220063; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MQLVDFNoFuKRZg7eJdxMfqN4N8nKsyXTgSDfnf3uLGM=;
-        b=gBKxwxnFgp9AOzK/2lb/jr8A/NhFbZkPUvlg5TH0mYbtG80V2yXBxIIGQvh4g7ceFq
-         /p8TADEAgk5hHMbeU8Tukh32d9OIGqzZmfx95mc6DLzqR8snLBQlJQCAs/BkM6qpK4Hp
-         N6T2dw64rhaATV3XQn682pDmYgzZnjOyUe28zGdBZk9rtBdEKvAwBxUwtyxngbHCS4QR
-         zL2fucGqKtrty8SgITaWWyVyRhze8rY5iLuZ+Q4jsuVNssqLydBEXXYq86zPrfcvVZKI
-         3rTFR/GdzADTnvoVz8gMZo3ox3VRVv1SB7RBvQfcFu9D6CIOG9HqeYx5XbK+gFgGgdmn
-         u7QA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720615263; x=1721220063;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MQLVDFNoFuKRZg7eJdxMfqN4N8nKsyXTgSDfnf3uLGM=;
-        b=PyzvbGjnNURe44WDZTi4rW8py8n6Yljrn1nbc6DX/odGyNb9sSoLfPxtwl9iH1A99s
-         /TeiQVH5En8maCSc8MmE5YMisYUdDAcKYDNQeP/jhlfotuuI2v8k6lWpybcwF9qO94id
-         7cwVIJ5ExwIcGfnxOU/arN/S66MsUpnt4SaXXqbgWz2+xvvLejBflxEAvbITEd6lzjpy
-         FLmS6WkjV8BFCSLCEIBcHJpwPJwDbM69N3aTyJdwIjOIyeqcZjhtdWPrTRhNTUHCxERB
-         HWn2aGhDBR0+SFbJxXNDbP2pizJyY6KMiEj2L1meyqY2LG1S1sEXQ3ZXB7/U0a/2Obo7
-         xklw==
-X-Forwarded-Encrypted: i=1; AJvYcCWid3OuqpFn3C3SuxsJCIERfXYjHvPQ9KobP3Zav11f2rBZdXv4s8WGHw80yc4FpkVqkzC912J+IUCkgGpkXYGaaBXzr/nEP8RArDW2Eg==
-X-Gm-Message-State: AOJu0Yz9vPI3nKwgob+BtNFqGNgD5wPKBFcw4g4dQOB+yJ8QzfXV9PK9
-	fpezq6Rft5PKBKCYggsj93kvoFt+OHD2LdsrogVO1wdQrnxIN4wf4AMXSwY35co=
-X-Google-Smtp-Source: AGHT+IGT5ilXJSn/KNzsrB9+RCqhsbkJiqU3dqpEBIzoFB+Fcmer/Kih8Fhroy2GBRX27ac1gAp6gw==
-X-Received: by 2002:a05:600c:6c51:b0:426:51e8:5192 with SMTP id 5b1f17b1804b1-426709fac0bmr30666695e9.41.1720615262749;
-        Wed, 10 Jul 2024 05:41:02 -0700 (PDT)
-Received: from toaster.baylibre.com ([2a01:e0a:3c5:5fb1:f3cc:df72:f495:3b49])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-367cde890f6sm5214025f8f.53.2024.07.10.05.41.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jul 2024 05:41:02 -0700 (PDT)
-From: Jerome Brunet <jbrunet@baylibre.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Kevin Hilman <khilman@baylibre.com>, 
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
- Vladimir Zapolskiy <vz@mleia.com>, Bjorn Andersson <andersson@kernel.org>, 
- Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Samuel Holland <samuel@sholland.org>, Michal Simek <michal.simek@amd.com>, 
- Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Cc: linux-amlogic@lists.infradead.org, linux-clk@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-sunxi@lists.linux.dev
-In-Reply-To: <20240703-clk-const-regmap-v1-0-7d15a0671d6f@gmail.com>
-References: <20240703-clk-const-regmap-v1-0-7d15a0671d6f@gmail.com>
-Subject: Re: (subset) [PATCH 00/10] clk: constify struct regmap_config
-Message-Id: <172061526145.2117005.2499091095196670705.b4-ty@baylibre.com>
-Date: Wed, 10 Jul 2024 14:41:01 +0200
+	s=arc-20240116; t=1720617305; c=relaxed/simple;
+	bh=DGfVoZNfPdaJiCC+VkpyJKmwJ+ljufKF/kBN7p8Ex/U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=mSFKr1oE4v96AIcWXhDfbTJpbl7uYFo07RYni5lV/WlaujJ0J1EOy0tQPRhVg+6G8ln4QnZNgcbBlBQ6T8amVEVa++Pv1r8dp2fMxoWvbiFRawPiBaxMlkOi+mavjexBubaazTqnkj5WhS62/j5oPCF1nfMnpcEfhfc1aMF6c3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GVIEhoPs; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46ACU7SX009474;
+	Wed, 10 Jul 2024 13:14:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	xIzS/n1i16QTfubuhek/ODHZ/H5HNuwuEmZGlaTudYc=; b=GVIEhoPsp9qnIMcj
+	p4h8bWoKha/n6pE7F1veaDVm9eV5/2uLnPXuRMnZkEzkHkznJubOo6+Z+nvHWzG/
+	Gndp+elVQJ5S9UXBkXSel58DiZ0eVgWNJbnXouaVLST/lfYdrKCH3qOmvyJhhj8+
+	K5AKNlWENCA0x09nd2HKb091TPhdGjB/YBUQErxGlT2ZPCCJA1oXUTLlJcbNL4Nr
+	Nq7SRPPSts9s303NaAvD9FQ0FUILtr6p+WZReoKVBcjy0Yg2nKNda00zozux0kHL
+	iqmzKD1kEP9rXOKFFpqlJeF/bfwPgR1jnJ8pwi7ntf/FP04TM5/UGiFoTocSGZSv
+	ermIjA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 408w0rc8jh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jul 2024 13:14:58 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46ADEvhF020617
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jul 2024 13:14:57 GMT
+Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 10 Jul
+ 2024 06:14:51 -0700
+Message-ID: <2ab60446-7187-43c9-893b-68cac8c9b96f@quicinc.com>
+Date: Wed, 10 Jul 2024 21:14:49 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/13] media: qcom: camss: csiphy-3ph: Add Gen2 v1.2
+ two-phase MIPI CSI-2 DPHY init
+To: Krzysztof Kozlowski <krzk@kernel.org>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>
+CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
+References: <20240709160656.31146-1-quic_depengs@quicinc.com>
+ <20240709160656.31146-9-quic_depengs@quicinc.com>
+ <e1b298df-05da-4881-a628-149a8a625544@kernel.org>
+Content-Language: en-US
+From: Depeng Shao <quic_depengs@quicinc.com>
+In-Reply-To: <e1b298df-05da-4881-a628-149a8a625544@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.0
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: gvrLUFD4Czg5RT3Ve2NcwOzvn-dSwMuv
+X-Proofpoint-GUID: gvrLUFD4Czg5RT3Ve2NcwOzvn-dSwMuv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-10_08,2024-07-10_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ impostorscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=999
+ phishscore=0 spamscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407100092
 
-Applied to clk-meson (clk-meson-next), thanks!
 
-[01/10] clk: meson: a1: peripherals: Constify struct regmap_config
-        https://github.com/BayLibre/clk-meson/commit/4a7665b885b6
-[02/10] clk: meson: a1: pll: Constify struct regmap_config
-        https://github.com/BayLibre/clk-meson/commit/5c6ffe3537d5
-[03/10] clk: meson: c3: peripherals: Constify struct regmap_config
-        https://github.com/BayLibre/clk-meson/commit/af3e4505e6bc
-[04/10] clk: meson: c3: pll: Constify struct regmap_config
-        https://github.com/BayLibre/clk-meson/commit/11c7c1b94059
-[05/10] clk: meson: s4: peripherals: Constify struct regmap_config
-        https://github.com/BayLibre/clk-meson/commit/02cc1df92d75
-[06/10] clk: meson: s4: pll: Constify struct regmap_config
-        https://github.com/BayLibre/clk-meson/commit/3d0e8b6edd6b
 
-Best regards,
---
-Jerome
+On 7/10/2024 7:09 PM, Krzysztof Kozlowski wrote:
+> On 09/07/2024 18:06, Depeng Shao wrote:
+>> Add a PHY configuration sequence for the SM8550 which uses a Qualcomm
+>> Gen 2 version 1.2 CSI-2 PHY.
+>>
+>> The PHY can be configured as two phase or three phase in C-PHY or D-PHY
+>> mode. This configuration supports two-phase D-PHY mode.
+>>
+>> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+>> ---
+>>   .../qcom/camss/camss-csiphy-3ph-1-0.c         | 105 ++++++++++++++++++
+>>   1 file changed, 105 insertions(+)
+>>
+>> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> index 1219a25ec55b..b6d5a27b94a6 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> @@ -324,6 +324,111 @@ csiphy_lane_regs lane_regs_sm8250[] = {
+>>   	{0x0884, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>   };
+>>   
+>> +/* GEN2 1.2 2PH */
+>> +static const struct
+>> +csiphy_lane_regs lane_regs_sm8550[] = {
+> 
+> This should sparkle warnings.
+> 
+> There is no user of it. You must organize your patches in logical junks.
+> Adding piece of structure without users is not a logical chunk.
+> 
+> Best regards,
+> Krzysztof
+> 
+
+Hi Krzysztof,
+
+Sure, will move this patch to "media: qcom: camss: Add sm8550 support",
+It is used in below code.
+
+> +	case CAMSS_8550:
+> +		regs->lane_regs = &lane_regs_sm8550[0];
+> +		regs->lane_array_size = ARRAY_SIZE(lane_regs_sm8550);
+> +		regs->offset = 0x1000;
+> +		break;
+>  	default:
+
+Thanks,
+Depeng
 
 
