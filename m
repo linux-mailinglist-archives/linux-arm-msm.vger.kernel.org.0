@@ -1,144 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-25818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D591592D048
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 13:11:59 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76CCA92D043
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 13:11:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 88350B2688F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 11:10:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A4321C20A0F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 11:11:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F376718FC90;
-	Wed, 10 Jul 2024 11:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8559918FC90;
+	Wed, 10 Jul 2024 11:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ojNvR54z"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eCv/rKFS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC65417FD;
-	Wed, 10 Jul 2024 11:09:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE2518FA32;
+	Wed, 10 Jul 2024 11:10:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720609796; cv=none; b=DVPhjfyjklgGL6bBCwAGyBC253VA9myKrkf/PUos0jRhT+yF5Z/ivbbCyPFHEDUejUWz7NXAa1EYjYm+EXrLJXRIl9SjJMfn/i2Ocpa0PTqojnpTfCqsxXpHF68QiYVgAGrsAkb3rBbFmE0yra9ZAD63ZynNwxqGL07ILkIqUFo=
+	t=1720609860; cv=none; b=A/pG0rAQmRb4MohbwAZhZanNquo2L90gRMXOUOYfubBw6Vf7oNkoRlOhbK8idGRxW251TRE+BlUIZHzQsbMGLo56goWdlMhvidABT/0yXvwqHzmvfG1RDh93x2k197o8lMwF8aG9VaUXxUdZJ/C1VS2s7Efe92N92dYIzwiCbB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720609796; c=relaxed/simple;
-	bh=1CT3iKKMlOGrekEfAXeEzm3icuoAE70XVGeEXl1PFZk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cktXMSBwmq51K2Ivb6WIJ9Ne7XXYAQtsO7nibBV0w6mMP2zEWVIBsXTDC04sbdDeaWcGZkg1eE2I8WYtaV0VxPFUULtqg6rgteT1UyTErIl3uGG87ZGmYEXx5MS30bBJC7PK4Ar5KZBQLdW4Nf6k6EbmnEZQf4BkNzeeVQEfucw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ojNvR54z; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5E4C32781;
-	Wed, 10 Jul 2024 11:09:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720609796;
-	bh=1CT3iKKMlOGrekEfAXeEzm3icuoAE70XVGeEXl1PFZk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ojNvR54zGNXeySLrVsWmZWRdKi2nERMczdcUqlmxJ1MQgaoxTl9nt1yYf8UR+6ZVs
-	 FBkKURT4zv9LLMx1jSw5oHtFvyO97OMK0j4ATZ2tgV7PMOVzPR4yf+PRKhJ7y186Y9
-	 r7+k/hwck+jE98JyfqqOxRq1+VmEpBt6AkTGwsRPeeIFmA0BdPnGiX8CUzhum2I6my
-	 U/tUrVcVJZVmbZFN5UFlhZb2Y6GXpbkrW8HIQaJBk3wP8Iw+QC+rbj6OzU/CrL+u56
-	 VPVcxwLdUb3nv6zUUBqZ/NhhEQtKfYH7DAmp4HDm75QnWt5Ykz4gdszp6Pwd61xJxy
-	 TUhyHXagOj2ow==
-Message-ID: <e1b298df-05da-4881-a628-149a8a625544@kernel.org>
-Date: Wed, 10 Jul 2024 13:09:51 +0200
+	s=arc-20240116; t=1720609860; c=relaxed/simple;
+	bh=bJ7UMNrJhy/yiqIhlNGo85s491lo6a1mzP3pH0oIg8Y=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HSJSuBzswcV1O0yPcK1vbm0+57J7xUXw8Z8x1Q5KKcHB3zYDXG3whlEAv0WsuAoked1+W9AsJ0XCVtijneWeF+Tt3Px5IHUY5YUCV1XWvuwSR5S4QV12WAiyL3jZBavcuil+Mj4UakCdmSIp33+sbBKxDawCkJYcbpL/FTgFCq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eCv/rKFS; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46A5per4001981;
+	Wed, 10 Jul 2024 11:10:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=DakjzVf8c5gxPDRSJYZ/afTX
+	K/uKlCpAbl68FU+/wfA=; b=eCv/rKFSSRJKwHopYCOMuKgIYSnb8cXx72hlNQDY
+	DvE04ssag2gCs2i3i2612E8BTlgaB8r8j+OxDdjBfvZZ0h+Bva8S+2+ffv/uVGA4
+	6zgxu7HHT3V4e1JVvK4qXwRJz2bXoTphznCk/mgLGddav0lgB6QAxZyV8JJHY15X
+	0m8S6ZojDk5F1MfEUhhdz9+NUgEt6+VV9WQ+tHHbxt78ypUU9MScLVRmsTGUL91z
+	k83XNsR28qCKtyY87HCdlARVJb5/TrGDjYBwknhlQWR1Q5YtSGP8xUHYFei6rslB
+	14hHN5bzBeSdZdp5Oiw0VzMDgy24HIGtS922P4L904ns1w==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406we90yp5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jul 2024 11:10:43 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46ABAgl4031750
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jul 2024 11:10:42 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 10 Jul 2024 04:10:35 -0700
+Date: Wed, 10 Jul 2024 16:40:31 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+CC: <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <ilia.lin@kernel.org>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
+        <ulf.hansson@linaro.org>, <quic_sibis@quicinc.com>,
+        <quic_rjendra@quicinc.com>, <danila@jiaxyga.com>,
+        <neil.armstrong@linaro.org>, <otto.pflueger@abscue.de>,
+        <abel.vesa@linaro.org>, <luca@z3ntu.xyz>, <geert+renesas@glider.be>,
+        <stephan.gerhold@kernkonzept.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <linux-clk@vger.kernel.org>
+Subject: Re: [PATCH v6 1/9] soc: qcom: cpr3: Fix 'acc_desc' usage
+Message-ID: <Zo5sJ1Uk7wAzWflg@hu-varada-blr.qualcomm.com>
+References: <20240710061102.1323550-1-quic_varada@quicinc.com>
+ <20240710061102.1323550-2-quic_varada@quicinc.com>
+ <325a45b7-bb02-4a32-8590-6abc14ad9619@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/13] media: qcom: camss: csiphy-3ph: Add Gen2 v1.2
- two-phase MIPI CSI-2 DPHY init
-To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: quic_eberman@quicinc.com, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20240709160656.31146-1-quic_depengs@quicinc.com>
- <20240709160656.31146-9-quic_depengs@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240709160656.31146-9-quic_depengs@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <325a45b7-bb02-4a32-8590-6abc14ad9619@linaro.org>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: aB0tn39dEoel6FhajxL5jKgoeTXpIBVR
+X-Proofpoint-GUID: aB0tn39dEoel6FhajxL5jKgoeTXpIBVR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-10_06,2024-07-10_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 impostorscore=0
+ bulkscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 mlxlogscore=740 malwarescore=0 mlxscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
+ definitions=main-2407100077
 
-On 09/07/2024 18:06, Depeng Shao wrote:
-> Add a PHY configuration sequence for the SM8550 which uses a Qualcomm
-> Gen 2 version 1.2 CSI-2 PHY.
-> 
-> The PHY can be configured as two phase or three phase in C-PHY or D-PHY
-> mode. This configuration supports two-phase D-PHY mode.
-> 
-> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
-> ---
->  .../qcom/camss/camss-csiphy-3ph-1-0.c         | 105 ++++++++++++++++++
->  1 file changed, 105 insertions(+)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> index 1219a25ec55b..b6d5a27b94a6 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
-> @@ -324,6 +324,111 @@ csiphy_lane_regs lane_regs_sm8250[] = {
->  	{0x0884, 0x01, 0x00, CSIPHY_DEFAULT_PARAMS},
->  };
->  
-> +/* GEN2 1.2 2PH */
-> +static const struct
-> +csiphy_lane_regs lane_regs_sm8550[] = {
+On Wed, Jul 10, 2024 at 01:05:12PM +0200, Konrad Dybcio wrote:
+> On 10.07.2024 8:10 AM, Varadarajan Narayanan wrote:
+> > cpr3 code assumes that 'acc_desc' is available for SoCs
+> > implementing CPR version 4 or less. However, IPQ9574 SoC
+> > implements CPRv4 without ACC. This causes NULL pointer accesses
+> > resulting in crashes. Hence, check if 'acc_desc' is populated
+> > before using it.
+> >
+> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > ---
+>
+> Does it not work if you drop this patch?
+>
+> In v15, drv->tcsr is left NULL (from kzalloc), unless data->acc_desc
+> is present
 
-This should sparkle warnings.
+It crashed for me with NULL pointer access.
 
-There is no user of it. You must organize your patches in logical junks.
-Adding piece of structure without users is not a logical chunk.
+	Unable to handle kernel NULL pointer dereference at virtual address 0000000000000010
+	input: gpio-keys as /devices/platform/gpio-keys/input/input0
+	Mem abort info:
+	  ESR = 0x0000000096000004
+	  EC = 0x25: DABT (current EL), IL = 32 bits
+	  SET = 0, FnV = 0
+	  EA = 0, S1PTW = 0
+	clk: Disabling unused clocks
+	  FSC = 0x04: level 0 translation fault
+	Data abort info:
+	  ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+	  CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+	PM: genpd: Disabling unused power domains
+	  GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+	[0000000000000010] user address but active_mm is swapper
+	Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+	Modules linked in:
+	CPU: 0 UID: 0 PID: 74 Comm: sugov:0 Not tainted 6.10.0-rc6-next-20240703-00018-g3dfa5a2e6f31-dirty #13
+	Hardware name: Qualcomm Technologies, Inc. IPQ9574/AP-AL02-C7 (DT)
+	pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+	pc : cpr_commit_state+0x228/0x2a8
+	lr : cpr_commit_state+0x10c/0x2a8
+	sp : ffff800086163a90
+	x29: ffff800086163a90 x28: 0000000000000000 x27: 0000000000000000
+	x26: 0000000000000000 x25: ffff000006953080 x24: ffff000006913280
+	x23: 00000000000fa3e8 x22: 00000000000fa3e8 x21: 00000000000fa3e8
+	x20: 0000000000000003 x19: 00000000000fa3e8 x18: 0000000000000000
+	x17: 63682d6963687820 x16: 0000000000000000 x15: ffff00003fc8fd00
+	x14: 0000000000000000 x13: 0000000000000001 x12: ffff8000814e8c60
+	x11: 0000000000000000 x10: 00000000000009b0 x9 : 0000000000000000
+	x8 : ffff00003fc87f40 x7 : 0000000000000240 x6 : 0000000000000002
+	x5 : 000000000000007f x4 : 0000000000000000 x3 : 0000000000000000
+	x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
+	Call trace:
+	 cpr_commit_state+0x228/0x2a8
+	 cpr_set_performance_state+0x94/0xf4
+	 _genpd_set_performance_state+0x190/0x1ac
+	 genpd_set_performance_state.isra.0+0xbc/0xdc
+	 genpd_dev_pm_set_performance_state+0x60/0xc0
+	 dev_pm_domain_set_performance_state+0x24/0x3c
+	 _set_opp+0xb4/0x51c
+	 dev_pm_opp_set_opp+0x70/0xfc
+	 _set_required_opps.isra.0+0x74/0xd4
+	 _set_opp+0x90/0x51c
+	 dev_pm_opp_set_rate+0x184/0x274
+	 set_target+0x34/0x40
+	 __cpufreq_driver_target+0x250/0x698
+	 sugov_work+0x54/0x70
+	 kthread_worker_fn+0xc4/0x174
+	 kthread+0x110/0x114
+	 ret_from_fork+0x10/0x20
 
-Best regards,
-Krzysztof
-
+Thanks
+Varada
 
