@@ -1,126 +1,293 @@
-Return-Path: <linux-arm-msm+bounces-25880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39C0292D7AE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 19:44:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64E8592D7B2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 19:45:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E48841F21289
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 17:44:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A9BE280FCC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 17:45:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03A951953B9;
-	Wed, 10 Jul 2024 17:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AB4A194C6B;
+	Wed, 10 Jul 2024 17:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="LFsTWCmM"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EUXI7P4U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717A934545
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jul 2024 17:42:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C404192483;
+	Wed, 10 Jul 2024 17:44:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720633365; cv=none; b=trqIC9OizYgoVJ9Jmy2LiRdHE7kUKBTV6l5e1j2d/qYyCWl6usH1G6L6Ryd4lnw/5wr3qDMPakc8haB+HfFjKbWUm6V26OY/dT1UJuSn6qU+9YHCx9j0BAg1x1EMltB6Mw+keOtloaBwdvAkmXgAdaLCaMWccCD4jIebtu26eP4=
+	t=1720633500; cv=none; b=FLthkwXiXqQSPx+4lYnspPIRLQwON6XtHuOQh2jzSmLxkWyGDOaY/5daObMAAEZZYbK/HL+EvMzb7TADonFd6gygmNRXGGa3XBoVOjr712MNTXKUJvrBfdV6n6CPZyM5XjCBo7i4XxPrUVnBanjcpukV8suwa+J/biXGwrbNcWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720633365; c=relaxed/simple;
-	bh=Uo4AsETtYXAveM1Xc57Wf8CaUxSqYIgmAdQWMhqNmic=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fk79chdOTrGG+t2hnkOFp2ZQmzLhzpJ83UFHAVu6QhbDbUTflZaAUjQF3MQlPXhtLDu2M1+jzd23NMm0IBxBeA/lUL54TIjke0Fe3poEtbzTe1mXfmQMYwALZYEvJRrf0gu2d/3/uOZ4YSTxrxEqRLOdGslSmjuwfoAOotZC/qM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=LFsTWCmM; arc=none smtp.client-ip=209.85.166.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-7ebde93bf79so1417139f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jul 2024 10:42:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1720633363; x=1721238163; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zOdeMjN8zn02u2RJwNFjQMEU7jlojgabQSgPR5kH/Pk=;
-        b=LFsTWCmMy73abxkVq2Q/jIkZndy0ygLsBpEvhZ2WuqO4LRSQQyPockRePfA+6duzcH
-         GeD1bZsz44I9isa3ZofHjF8ubKk+OsEGW5S6+lHiD+j1mSxSjWjZc0Nq8R41eRLMdzhx
-         Xgqdw2ZJxYtD+rqQMEdsBFoRtKnj3e80QyqPE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720633363; x=1721238163;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zOdeMjN8zn02u2RJwNFjQMEU7jlojgabQSgPR5kH/Pk=;
-        b=nxEhsd1R1UKy1CDYGph32KWk636OWBOLlvakDsArOHBIrVXo+u+CV2KbNZIwqYltdY
-         b+hK02799OXMoUytpHEXHleVx4WND5oNoRItE+/XxQ8JskbiYZzlAXvRPp7PqmF2BhCw
-         8J2Dsv+nkq4x/PGkak54MjaUJhKsaqcUJ5c9koJ41ffrXwv+5qFKc1hXXDSYdAFE3NOU
-         /4XOPe6/NHlG1LLcRmNE3cp4rW1KsS/4AJNpQP9wut1Yh0cpSwIiGmxAf4ovaIDQsJoV
-         jhq1fu3wqggBqVZVjGxeDgGIaMci+iPCBlA+GE2/eW50ZFQHSz1NbzqjfXWJGEllyJci
-         PvAw==
-X-Forwarded-Encrypted: i=1; AJvYcCUrmwWxYVOpBocuIGGYWj3bOUrVxAvjpY44u0hT9NUBuWFFLswoOuXCZuyCJgPjyAZPzrYw60BL/m5FnWoDkySLm5N21d0c8uCiE2cwlg==
-X-Gm-Message-State: AOJu0YxOOOWGQSYZ4+2Cepafv4mtkX+odiCaV9ayM3TrWDBVwccetcEf
-	Rqa8J5pTr3yph6SgkJ12mpbNJhVFuL2nt8phNW0YIAO+GJJ8ISdNNMHQevC7mWo9IGKRLgHo6eo
-	sgQ==
-X-Google-Smtp-Source: AGHT+IFVnYlT3OOcakQKwAVC0jCGHrtCQRQyBH7mmKMtqxq3SFkuRqLplTiGXCwYJSbrWa01vVlKRw==
-X-Received: by 2002:a6b:4417:0:b0:803:5e55:ecb2 with SMTP id ca18e2360f4ac-8035e55edc3mr454420039f.0.1720633362894;
-        Wed, 10 Jul 2024 10:42:42 -0700 (PDT)
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com. [209.85.166.177])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4c0b1c2c72esm1295476173.170.2024.07.10.10.42.42
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Jul 2024 10:42:42 -0700 (PDT)
-Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-375fc24a746so7255ab.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jul 2024 10:42:42 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWZx4gioLF17hz/q8UOU1JWfeNs/+S0TcBSC8dqKvwaOtUNfvi4ianHSTicXjSjMtdTBMboS7PzRcIfU+ZYHIaPixwKsMLzuzsLfVtyHQ==
-X-Received: by 2002:ac8:7773:0:b0:447:d97f:9765 with SMTP id
- d75a77b69052e-44d0b00f42cmr42181cf.16.1720632956811; Wed, 10 Jul 2024
- 10:35:56 -0700 (PDT)
+	s=arc-20240116; t=1720633500; c=relaxed/simple;
+	bh=FgM3xJnGYMIrgDo54wlCuc8Bz/+nAdzGA+tZUGU3fQM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=OAfoLjuOkiAOCY6f8yqqqtSEjrnn3oHiUueUiBYJWS1dCiLFigO7JXLMh/VcSbHNGVNiRCQiLDDVER7N9POSH0yixaKPANGCX+wLlY1+DEQ+pX1cEl9kTH38fQn6Dc3lY1bBPBTWfVj4pMtEnlgNaIbGwoABilC1DH/N6J9c+kA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EUXI7P4U; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46AC5XD4026786;
+	Wed, 10 Jul 2024 17:44:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	4eoj4VCYfhXxpqbrJfu/tlhin7ADq4NxTnyFzn4x4t0=; b=EUXI7P4UK6ViCz/d
+	mEHBhfO3citaKvqg7UE0L1/Bl1CrarHKm2il+qy7PLUb6WC8C+zYNtT3d7HYxS1M
+	rOb07vs/wdl7ru7qP020UiUL9Sz/liNRPUJOfW8xseS9lvCANnLxx60Pjgt3dgNz
+	XuIxR8xo7ubPlahbrZ4pVlsRMY9fbQcHHMOLBlweRlQskM6nTk8VTu1tYTqmajSM
+	kUv0GcYJn9wwOYAq474mKX/FjAFfNAVORwbezGSBd6JFNMG4u8Eb7+Ou/IOqYoTX
+	t0xH4gagt5YddFvLKwahoBkDiJtnwTZ3HSTMENc6AvY3Yh+bbXUcFyk4PI/rU87I
+	TAvrYg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406wg42bce-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jul 2024 17:44:43 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46AHigHg005403
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jul 2024 17:44:42 GMT
+Received: from [10.216.7.89] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 10 Jul
+ 2024 10:44:37 -0700
+Message-ID: <ff8c1960-65de-4d73-b563-213eab8bfcde@quicinc.com>
+Date: Wed, 10 Jul 2024 23:14:27 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240710-x1e80100-crd-backlight-v1-0-eb242311a23e@linaro.org> <20240710-x1e80100-crd-backlight-v1-3-eb242311a23e@linaro.org>
-In-Reply-To: <20240710-x1e80100-crd-backlight-v1-3-eb242311a23e@linaro.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Wed, 10 Jul 2024 10:35:45 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X=rL9Jr91BXFX+a=X+SCjYX7vGhztbh9tEUVn9iLViJQ@mail.gmail.com>
-Message-ID: <CAD=FV=X=rL9Jr91BXFX+a=X+SCjYX7vGhztbh9tEUVn9iLViJQ@mail.gmail.com>
-Subject: Re: [PATCH 3/5] Revert "drm/panel-edp: Add SDC ATNA45AF01"
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 4/6] iommu/arm-smmu: add ACTLR data and support for
+ SM8550
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <robdclark@gmail.com>, <will@kernel.org>, <robin.murphy@arm.com>,
+        <joro@8bytes.org>, <jgg@ziepe.ca>, <jsnitsel@redhat.com>,
+        <robh@kernel.org>, <krzysztof.kozlowski@linaro.org>,
+        <quic_c_gdjako@quicinc.com>, <konrad.dybcio@linaro.org>,
+        <iommu@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>
+References: <20240628140435.1652374-1-quic_bibekkum@quicinc.com>
+ <20240628140435.1652374-5-quic_bibekkum@quicinc.com>
+ <ueuhu5xfzp2rnuxzeqqd6cho476adidztgx7oq2tbiufauv6h4@obblpxvqwnno>
+ <6da77880-2ba4-4b02-8b3e-cb0fbd0a9daf@quicinc.com>
+ <CAA8EJpqXfqKSi-j3NsAzQA4hOLndFZSPAiL1YpwnxMgbgrWokA@mail.gmail.com>
+Content-Language: en-US
+From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+In-Reply-To: <CAA8EJpqXfqKSi-j3NsAzQA4hOLndFZSPAiL1YpwnxMgbgrWokA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: MEgU37TmdjJfpeA5DH7RKTetCybn6Zdo
+X-Proofpoint-GUID: MEgU37TmdjJfpeA5DH7RKTetCybn6Zdo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-10_12,2024-07-10_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=999 clxscore=1015 impostorscore=0 malwarescore=0 mlxscore=0
+ bulkscore=0 spamscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407100124
 
-Hi,
 
-On Wed, Jul 10, 2024 at 10:05=E2=80=AFAM Stephan Gerhold
-<stephan.gerhold@linaro.org> wrote:
->
-> This reverts commit 8ebb1fc2e69ab8b89a425e402c7bd85e053b7b01.
->
-> The panel should be handled through the samsung-atna33xc20 driver for
-> correct power up timings. Otherwise the backlight does not work correctly=
-.
->
-> We have existing users of this panel through the generic "edp-panel"
-> compatible (e.g. the Qualcomm X1E80100 CRD), but the screen works only
-> partially in that configuration: It works after boot but once the screen
-> gets disabled it does not turn on again until after reboot. It behaves th=
-e
-> same way with the default "conservative" timings, so we might as well dro=
-p
-> the configuration from the panel-edp driver. That way, users with old DTB=
-s
-> will get a warning and can move to the new driver.
->
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> ---
->  drivers/gpu/drm/panel/panel-edp.c | 2 --
->  1 file changed, 2 deletions(-)
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+On 7/4/2024 4:53 PM, Dmitry Baryshkov wrote:
+> On Wed, 3 Jul 2024 at 15:15, Bibek Kumar Patro
+> <quic_bibekkum@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 7/2/2024 12:04 AM, Dmitry Baryshkov wrote:
+>>> On Fri, Jun 28, 2024 at 07:34:33PM GMT, Bibek Kumar Patro wrote:
+>>>> Add ACTLR data table for SM8550 along with support for
+>>>> same including SM8550 specific implementation operations.
+>>>>
+>>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+>>>> ---
+>>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 89 ++++++++++++++++++++++
+>>>>    1 file changed, 89 insertions(+)
+>>>>
+>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>> index 77c9abffe07d..b4521471ffe9 100644
+>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>>> @@ -23,6 +23,85 @@
+>>>>
+>>>>    #define CPRE                       (1 << 1)
+>>>>    #define CMTLB                      (1 << 0)
+>>>> +#define PREFETCH_SHIFT              8
+>>>> +#define PREFETCH_DEFAULT    0
+>>>> +#define PREFETCH_SHALLOW    (1 << PREFETCH_SHIFT)
+>>>> +#define PREFETCH_MODERATE   (2 << PREFETCH_SHIFT)
+>>>> +#define PREFETCH_DEEP               (3 << PREFETCH_SHIFT)
+>>>> +
+>>>> +static const struct actlr_config sm8550_apps_actlr_cfg[] = {
+>>>> +    { 0x18a0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>>> +    { 0x18e0, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>>> +    { 0x0800, 0x0020, PREFETCH_DEFAULT | CMTLB },
+>>>> +    { 0x1800, 0x00c0, PREFETCH_DEFAULT | CMTLB },
+>>>> +    { 0x1820, 0x0000, PREFETCH_DEFAULT | CMTLB },
+>>>> +    { 0x1860, 0x0000, PREFETCH_DEFAULT | CMTLB },
+>>>> +    { 0x0c01, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>>
+>>> - Please keep the list sorted
+>>
+>> Sure Dmitry, will sort this list in reverse-christmas-tree order
+>> in next iteration. Thanks for this input.
+> 
+> Why? Just sort basing on SID.
+> 
+
+Apologies for delayed response.
+It's initially sorted based on SID only, but as I see few of them are
+not which you're pointing to.
+I will check the table again and sort the SIDs which are left unsorted.
+
+>>
+>>> - Please comment, which devices use these settings.
+>>
+>> As discussed in earlier versions of this patch, these table entries
+>> are kind of just blind values for SMMU device, where SMMU do not have
+>> idea on which SID belong to which client. During probe time when the
+>> clients' Stream-ID has corresponding ACTLR entry then the driver would
+>> set value in register.
+>> Also some might have their prefetch settings as proprietary.
+>> Hence did not add the comments for device using these settings.
+> 
+> Please mention devices that are going to use the SIDs.
+> 
+
+Interested to know if there's a compelling reason to mention the device
+name.
+ From SMMU driver perspective there's not much value proposition by
+mentioning the names of devices using the SIDs.
+Also sometimes it would be possible that the the SID value might change
+a bit for each client from hardware perspective which would need to be
+updated back in the driver <kind of an additional overhead for SMMU
+driver>.
+Hence I was in favour to avoid mentioning the name of devices, not
+making it look like a placeholder for SIDs and corresponding ACTLR
+values.
+Please let me know if you still feel otherwise.
+
+Thanks & regards,
+Bibek
+>>
+>>
+>> Thanks & regards,
+>> Bibek
+>>
+>>>
+>>>> +    { 0x0c02, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x0c03, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x0c04, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x0c05, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x0c06, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x0c07, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x0c08, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x0c09, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x0c0c, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x0c0d, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x0c0e, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x0c0f, 0x0020, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x1961, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x1962, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x1963, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x1964, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x1965, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x1966, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x1967, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x1968, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x1969, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x196c, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x196d, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x196e, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x196f, 0x0000, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x19c1, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x19c2, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x19c3, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x19c4, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x19c5, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x19c6, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x19c7, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x19c8, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x19c9, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x19cc, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x19cd, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x19ce, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x19cf, 0x0010, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +    { 0x1c00, 0x0002, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>>> +    { 0x1c01, 0x0000, PREFETCH_DEFAULT | CMTLB },
+>>>> +    { 0x1920, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>>> +    { 0x1923, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>>> +    { 0x1924, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>>> +    { 0x1940, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>>> +    { 0x1941, 0x0004, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>>> +    { 0x1943, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>>> +    { 0x1944, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>>> +    { 0x1947, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
+>>>> +};
+>>>> +
+>>>> +static const struct actlr_config sm8550_gfx_actlr_cfg[] = {
+>>>> +    { 0x0000, 0x03ff, PREFETCH_DEEP | CPRE | CMTLB },
+>>>> +};
+>>>> +
+>>>> +static const struct actlr_variant sm8550_actlr[] = {
+>>>> +    {
+>>>> +            .io_start = 0x15000000,
+>>>> +            .actlrcfg = sm8550_apps_actlr_cfg,
+>>>> +            .num_actlrcfg = ARRAY_SIZE(sm8550_apps_actlr_cfg)
+>>>> +    }, {
+>>>> +            .io_start = 0x03da0000,
+>>>> +            .actlrcfg = sm8550_gfx_actlr_cfg,
+>>>> +            .num_actlrcfg = ARRAY_SIZE(sm8550_gfx_actlr_cfg)
+>>>> +    },
+>>>> +};
+>>>>
+>>>>    static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
+>>>>    {
+>>>> @@ -606,6 +685,15 @@ static const struct qcom_smmu_match_data sdm845_smmu_500_data = {
+>>>>       /* Also no debug configuration. */
+>>>>    };
+>>>>
+>>>> +
+>>>> +static const struct qcom_smmu_match_data sm8550_smmu_500_impl0_data = {
+>>>> +    .impl = &qcom_smmu_500_impl,
+>>>> +    .adreno_impl = &qcom_adreno_smmu_500_impl,
+>>>> +    .cfg = &qcom_smmu_impl0_cfg,
+>>>> +    .actlrvar = sm8550_actlr,
+>>>> +    .num_smmu = ARRAY_SIZE(sm8550_actlr),
+>>>> +};
+>>>> +
+>>>>    static const struct qcom_smmu_match_data qcom_smmu_500_impl0_data = {
+>>>>       .impl = &qcom_smmu_500_impl,
+>>>>       .adreno_impl = &qcom_adreno_smmu_500_impl,
+>>>> @@ -640,6 +728,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+>>>>       { .compatible = "qcom,sm8250-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>>>>       { .compatible = "qcom,sm8350-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>>>>       { .compatible = "qcom,sm8450-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>>>> +    { .compatible = "qcom,sm8550-smmu-500", .data = &sm8550_smmu_500_impl0_data },
+>>>>       { .compatible = "qcom,smmu-500", .data = &qcom_smmu_500_impl0_data },
+>>>>       { }
+>>>>    };
+>>>> --
+>>>> 2.34.1
+>>>>
+>>>
+> 
+> 
+> 
+> --
+> With best wishes
+> Dmitry
 
