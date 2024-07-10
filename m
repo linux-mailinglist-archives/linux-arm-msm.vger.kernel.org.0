@@ -1,140 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-25867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34E5692D6CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 18:45:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08F0F92D6EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 18:53:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8F16F280D9C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 16:45:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 893001F210C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 16:53:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9D88193469;
-	Wed, 10 Jul 2024 16:45:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YxFQKRIX"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B818194AF7;
+	Wed, 10 Jul 2024 16:53:46 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12857189F54;
-	Wed, 10 Jul 2024 16:45:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E6A1922DC;
+	Wed, 10 Jul 2024 16:53:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720629940; cv=none; b=BRNu3LobG2ux4nms1DOJWJPZW+rn7erPEn9a5+06V/hPjjNzMo77onlkmS2D98xk/sZz4sLJ89xVpLsm2++ZMlLGHIsuM5qlIsT13jEUY9fewbIJ0dWzOMqDxObLK3itKQKl+iZLEvwFXEcLnylmTPlB9h6Xw2raHEJ14MJizc0=
+	t=1720630426; cv=none; b=qAQGcvZ693tk7qH+hurAyvmGMOXPuQlckfVE0joLe4MvFxzkoH5YNI7Rw1CpB1rnCHDVn9sy7Gb527gqF6JS7PBaspgF39oBA0igRqEWxY8f1KXSP+TfAq5W3C3pZSHWzo+nzBHC0eZLKydTobp9aowR4XzRh/XYWuDI/NzeVr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720629940; c=relaxed/simple;
-	bh=ikUW+vPhF/kzlKZiQwKW5Ysxf41ejHqycbCX6ngMcMg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=o0PzR22tUqNrFD1n1EqfxnPwGU/KsNDtULIcM1Xsqt6eYX2G+gwkjOnHwg6kaE0aptEHlJvT74sj+SXIESyhx+CZ7Vj4AkDQ9KvituqisSwM6aaTwIVnKId469+ghpZvUNYSzRW36vc2GY6PCfFcf5iAs2cFFwfKhTuG/CVjy6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YxFQKRIX; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46A9avof016973;
-	Wed, 10 Jul 2024 16:45:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	G6LwVwxoe1zXgroiWAGG01bsemNaFzH2jQrDan8X8XU=; b=YxFQKRIXKp1iLhGp
-	13xWuMZ2xCXHenujZi3TleVUCjn2p3x6godAVHghdvT6JLFvKZwSz5fLBwp8Qhp4
-	Wq5LGos1zikBDsGBjeFWrus5tbGkdIY4QRXtinVvTopbDZtHLLagMS/TNdytn60P
-	Z5LgzOAeuGPbzAPsObnL07mOtgqtqHNognAMMONPjgtoiHfOkeIX40jb3Qa7aKh5
-	LY4yall+q/fPdcGw4vxVXDWTi6q4GXU4ej7Su0phbrNqgvsRsv3mTpajKwAlMseb
-	rmosSzw9E2CQS9wVQqYIISIOH/LQsMeO2xvz62KOlhsZCsshOuuWyA8hECXydmIh
-	sgqLAA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406y3hhhxr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jul 2024 16:45:32 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46AGjJMO006063
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jul 2024 16:45:19 GMT
-Received: from [10.110.80.193] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 10 Jul
- 2024 09:45:15 -0700
-Message-ID: <3b8684f0-c89d-1a76-6bc5-93ced59dc51c@quicinc.com>
-Date: Wed, 10 Jul 2024 09:45:14 -0700
+	s=arc-20240116; t=1720630426; c=relaxed/simple;
+	bh=yXIFSh5lnPGvTePfPUmjGwXfH2aiY6Jdg/YeOXwdkyo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=agH0cd/ytoDrqTJyYcNxmkOlP7yXDU1aU+geEfoPDEsxKhzx/EPRLgU0aN6j5VhwNm8s0gZ/cVvm3hWcEWfc9k6KX37IM33heYtcB/Z3Kax+b2smEcL9Wrk/XzehphEcWMUIKtVYtMi/Tk03bSFDESLcaSlCTlIi0jHoGNxKt5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=csie.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=csie.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-52ea33671ffso6155797e87.3;
+        Wed, 10 Jul 2024 09:53:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720630420; x=1721235220;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XpiULvgBKLSjZABIaTgqmq90IKC/N4ETs7/rDViqHSU=;
+        b=hnT5G505zJRGLqlSaikM2G7gnipeAHFCHsZWNncHklDC1EN/AUFUMy0xr1x+37wJu7
+         4X1WKLJI6i3cCXULY2I4qz2UVRnxUgll6c99Cr28JgqTLQ1A4RU/TpgCHqO/5I+YRZuP
+         eJsUnO04gNCuD9CJvMF05R6j0l+n3vzR5XzYxKS6qvocoFb5RSq+2GFVzbA1jqy28khq
+         zGMJzbXMmySfGhLjw0mv++mPGBEsjj7cRRscM5L5EhlLJzmwMdQR4pS3cqencH2PmLO3
+         bBhS7IXsnyNnVrL4hFaoXWLUmEMYVXjLmRK/ogCixlw8/iSnuT3sjA/5L6o51A/gowt+
+         BCAg==
+X-Forwarded-Encrypted: i=1; AJvYcCWl5Ou0I+/er4C/N323DhZnOdrVe+3junbAp+r2LCuiZxLJO/e+TzaUsWwlqA3TL8rTCrdOMg84upNV0sgCZPnWCpyKBWQccXYRDYJEgxl9aOewaW/jKY453N5D38BTFLVJ0I0AE6SE2XBMT96EHVFgSXamOZbdRg3+wbHUoARJY2L72Ju/6g==
+X-Gm-Message-State: AOJu0YwmS0BPa7x9wqkB++PXJPibXwBS9H7V3ylDVM384zoASta8rhz8
+	eFx7yDqyuaJFupn8l8C3Y0kNcOO6mKR/t89ke6VHqx/JmDBtAPnQ9+d1/GAcNAQ=
+X-Google-Smtp-Source: AGHT+IGctMZyIpt80a6oFsVDy+CJ5enmWlm166NBsI5hSCDrroyjZQS+lKWSJ9VKHLHnpFV8mgZjUA==
+X-Received: by 2002:a05:6512:5d6:b0:52e:941d:7039 with SMTP id 2adb3069b0e04-52eb99d6c88mr3157402e87.59.1720630419854;
+        Wed, 10 Jul 2024 09:53:39 -0700 (PDT)
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com. [209.85.208.180])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52eb8e4913csm663255e87.86.2024.07.10.09.53.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Jul 2024 09:53:39 -0700 (PDT)
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2eeb1ba0468so32466971fa.0;
+        Wed, 10 Jul 2024 09:53:38 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXQx242p/8frZCBsiVaf+etTfLkZhje35FfQ5PcPSZetFOz0PZ2Ik5z3Pw6a3YTD69+5kpjnw5bNpVOoqcC8PeiUFnhPl/WTeE2NMv/qSl2E51PmDXBpf8oZtXIhsuFCNNLTzTghsZ0uzDRx9e3M2CjJxaL4Dmmzqm+dDQdqDFf5ng+YUhshg==
+X-Received: by 2002:a2e:9016:0:b0:2ee:7a3e:4721 with SMTP id
+ 38308e7fff4ca-2eeb318a3b2mr39735341fa.39.1720630418140; Wed, 10 Jul 2024
+ 09:53:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v2] dt-bindings: phy: qcom,usb-snps-femto-v2: Add bindings
- for QCS9100
-Content-Language: en-US
-To: Rob Herring <robh@kernel.org>, Tengfei Fan <quic_tengfan@quicinc.com>
-CC: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-References: <20240709-document_qcs9100_usb_hs_phy_compatible-v2-1-c84fbbafa9d6@quicinc.com>
- <20240710162745.GA3212156-robh@kernel.org>
-From: Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <20240710162745.GA3212156-robh@kernel.org>
+References: <20240703-clk-const-regmap-v1-0-7d15a0671d6f@gmail.com>
+ <20240703-clk-const-regmap-v1-9-7d15a0671d6f@gmail.com> <20240703121750.0dc2eb3a@donnerap.manchester.arm.com>
+In-Reply-To: <20240703121750.0dc2eb3a@donnerap.manchester.arm.com>
+Reply-To: wens@csie.org
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Thu, 11 Jul 2024 00:53:25 +0800
+X-Gmail-Original-Message-ID: <CAGb2v66ox-vu2T=CnBkV70k5E=aVBGm6Sg4pcK5kYB+t9uSvxA@mail.gmail.com>
+Message-ID: <CAGb2v66ox-vu2T=CnBkV70k5E=aVBGm6Sg4pcK5kYB+t9uSvxA@mail.gmail.com>
+Subject: Re: [PATCH 09/10] clk: sunxi-ng r40: Constify struct regmap_config
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Andre Przywara <andre.przywara@arm.com>, 
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jerome Brunet <jbrunet@baylibre.com>, Michael Turquette <mturquette@baylibre.com>, 
+	Kevin Hilman <khilman@baylibre.com>, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Vladimir Zapolskiy <vz@mleia.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Samuel Holland <samuel@sholland.org>, Michal Simek <michal.simek@amd.com>, 
+	linux-amlogic@lists.infradead.org, linux-clk@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-sunxi@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: eK17DbsDWlOOU_1KyisRLNdD1-0qkt-C
-X-Proofpoint-GUID: eK17DbsDWlOOU_1KyisRLNdD1-0qkt-C
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-10_12,2024-07-10_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- spamscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0
- clxscore=1011 mlxlogscore=999 impostorscore=0 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407100117
+Content-Transfer-Encoding: quoted-printable
 
-On 7/10/2024 9:27 AM, Rob Herring wrote:
-> On Tue, Jul 09, 2024 at 08:46:19PM +0800, Tengfei Fan wrote:
->> Document the compatible string for USB phy found in Qualcomm QCS9100
->> SoC.
->> QCS9100 is drived from SA8775p. Currently, both the QCS9100 and SA8775p
->> platform use non-SCMI resource. In the future, the SA8775p platform will
->> move to use SCMI resources and it will have new sa8775p-related device
->> tree. Consequently, introduce "qcom,qcs9100-usb-hs-phy" to describe
->> non-SCMI based USB phy.
->>
->> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->> ---
->> Introduce support for the QCS9100 SoC device tree (DTSI) and the
->> QCS9100 RIDE board DTS. The QCS9100 is a variant of the SA8775p.
->> While the QCS9100 platform is still in the early design stage, the
->> QCS9100 RIDE board is identical to the SA8775p RIDE board, except it
->> mounts the QCS9100 SoC instead of the SA8775p SoC.
->>
->> The QCS9100 SoC DTSI is directly renamed from the SA8775p SoC DTSI, and
->> all the compatible strings will be updated from "SA8775p" to "QCS9100".
->> The QCS9100 device tree patches will be pushed after all the device tree
->> bindings and device driver patches are reviewed.
-> 
-> I'm not convinced this is not just pointless churn. Aren't we going to 
-> end up with 2 compatible strings for everything? SCMI should just change 
-> the providers, but otherwise the consumers are the same. I suppose if 
-> clocks are abstracted into power-domains (an abuse IMO) then the 
-> bindings change.
-> 
-> Why do we need to support both SCMI and not-SCMI for the same chip?
+On Wed, Jul 3, 2024 at 7:19=E2=80=AFPM Andre Przywara <andre.przywara@arm.c=
+om> wrote:
+>
+> On Wed, 03 Jul 2024 11:50:22 +0200
+> Javier Carrasco <javier.carrasco.cruz@gmail.com> wrote:
+>
+> > `sun8i_r40_ccu_regmap_config` is not modified and can be declared as
+> > const to move its data to a read-only section.
+> >
+> > Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+>
+> Looks alright, we indeed don't change it, and the only user takes a const
+> pointer. Also the compiler seems happy.
+>
+> Reviewed-by: Andre Przywara <andre.przywara@arm.com>
 
-IOT SKU of this SOC is using the non-SCMI solution and Auto SKU
-of this SOC is using the SCMI based solution due to additional
-safety requirements. 
+Acked-by: Chen-Yu Tsai <wens@csie.org>
+
+Stephen, can you merge this one directly? It doesn't look like we'll
+have any more stuff to send for this cycle.
+
+ChenYu
 
 
--- 
----Trilok Soni
-
+> Cheers,
+> Andre
+>
+> > ---
+> >  drivers/clk/sunxi-ng/ccu-sun8i-r40.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/clk/sunxi-ng/ccu-sun8i-r40.c b/drivers/clk/sunxi-n=
+g/ccu-sun8i-r40.c
+> > index 984ad3f76b18..2f51ceab8016 100644
+> > --- a/drivers/clk/sunxi-ng/ccu-sun8i-r40.c
+> > +++ b/drivers/clk/sunxi-ng/ccu-sun8i-r40.c
+> > @@ -1292,7 +1292,7 @@ static bool sun8i_r40_ccu_regmap_accessible_reg(s=
+truct device *dev,
+> >       return false;
+> >  }
+> >
+> > -static struct regmap_config sun8i_r40_ccu_regmap_config =3D {
+> > +static const struct regmap_config sun8i_r40_ccu_regmap_config =3D {
+> >       .reg_bits       =3D 32,
+> >       .val_bits       =3D 32,
+> >       .reg_stride     =3D 4,
+> >
+>
 
