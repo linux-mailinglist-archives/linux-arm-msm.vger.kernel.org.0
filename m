@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-25781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25782-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76BFE92CCF0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 10:26:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48EF892CCF8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 10:27:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2973428196E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 08:26:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 79FD41C208D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 08:27:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7088C127E18;
-	Wed, 10 Jul 2024 08:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63693128812;
+	Wed, 10 Jul 2024 08:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cslxb1Mi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lug/6Gx3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41CF486AEE;
-	Wed, 10 Jul 2024 08:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306E264A;
+	Wed, 10 Jul 2024 08:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720599961; cv=none; b=GvZKQTbQj7+vj++ggExk4j9CRL8zHh3CyCuxZn6/c4SFPCksImjbKbmO1TqXwNIV36B+h7iewxBzUXOwJdqIISgEtPhei40Savj1ZcsbLIMykvDjOiNV2KRGK4MQ0Dbv25oCgi0ZlOMtVYMjnwadL9foPCzgSZ8RXLig4qNblb4=
+	t=1720600041; cv=none; b=EcumZsHk4c/GRpKRdRB4JjxK3GUP+6wIdKC15nw7k2XbU3sxSOe8/1XtL5RBhm5BRPhTrkJa0HjHzZk4scMiOqjRyB/dT2D99eDpR46AHX0mrV0SzKrh56uow+Lj+ecfO/HMRmsfBruDoeccfP9xtV4x0w4K1NW9v5pr1YJt6qA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720599961; c=relaxed/simple;
-	bh=fvB2g0Xiz+QuOEyjJz2Jei/hZ/zPhy+LZkMMMFz6D6U=;
+	s=arc-20240116; t=1720600041; c=relaxed/simple;
+	bh=AtEcfmnTvOwc9nEyYBFY1bYCvXjYsG6hq/Lk6iuvbrI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f0fmFVQfeKt52FDEEiGXDYDnb6fJM4ZbLzdc1jjFuu3Cm/RymQajw1Z+QQGV5VgAmMdJI/33HxlyxnshIFVidTFe0JhFjaUA3ZvolBAuM0DZcL1fG4QAQix2gTAW/gEZTWboVbZWok+lTUaa4YyAq3zOyXtBmS8UWC7d7Lpp35s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cslxb1Mi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77AC9C32786;
-	Wed, 10 Jul 2024 08:25:56 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=JU70OIyx2vlcmqU3GlLRa60yp/mE/f+raL+TPRwT+CVAd4VR1INJtZvrLNMyZF5qwTHVS5+OscEj+X4ACW0U8J+rPMQ0obh9AtE+CV23PPVzS/jVdGfZBCtTXF0qvdrwSNqfHwp6foQcDoQHlLB1857+Q6WWPFb7TD8tvDMl8KU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lug/6Gx3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3727C32781;
+	Wed, 10 Jul 2024 08:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720599960;
-	bh=fvB2g0Xiz+QuOEyjJz2Jei/hZ/zPhy+LZkMMMFz6D6U=;
+	s=k20201202; t=1720600040;
+	bh=AtEcfmnTvOwc9nEyYBFY1bYCvXjYsG6hq/Lk6iuvbrI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Cslxb1MiQ0wVZ3OJrJ2gefb4pb+I0KCz1MOLyTf1TGKk1WAux/905mxPolVTgsMXb
-	 rQecD0l7dDKDib+wKzTxVoAazgQmKZYa/zVjS6Z6+xH5YgNthm9B5I0cCtpVaXk8HU
-	 i1/Zz09xnFoXa3bdC4GkMVlM+EL6pFz7Vx3zdRmqK6+5mp1P8t0LU5VCo7P/XD+L9E
-	 mx4HDYP+/xKCqkCpX3WQuTm6cRSH6BbgycJDKt4OgXnT49jK52Efq7bB9UjUxWl8Qp
-	 K7gzn8TpDp5lJYvAUJecQWbQBxnl69ecOlm0HbrYfLN7klIfAPtt/Oi//UJ1/bN2Cq
-	 Yhnl7yTpZDTLg==
-Message-ID: <9f1d3c63-8b1c-43a8-b002-5399a81e704d@kernel.org>
-Date: Wed, 10 Jul 2024 10:25:53 +0200
+	b=lug/6Gx3pnGyoxU5EuJ/HJBOca8L/gxQ9rHAdan9CN5dT8GjFPE/lv+FYKzaLs2Qb
+	 EUjDren1/4ov4s7Y4HTrENKzzaXVeZUQtaX7HRs9ciz0Y7q+16fgVjl0oxQB6pDtr0
+	 E/r6m4pW0Cjj7+kBUL59ML2rj87RyCTlQkgW6Y6dmyH2mG0/U60CYFMItDLrPSCRqA
+	 Sn2oCsDmZriyW+ToukELG6OYpnAXSS5RFQ43/6vGysQxxq6694zKShIj+gQH+vwcKx
+	 aQRKYtcGRb7YCztYuQ5oSKollHaw5r2bKkUnkKAgS8nhAzmHGHYdrwCDaxVqHe4WXA
+	 4TsVPOXksuDBQ==
+Message-ID: <7940d869-5cd8-4ef3-a50c-486ffd940b84@kernel.org>
+Date: Wed, 10 Jul 2024 10:27:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] ASoC: dt-bindings: qcom,msm8916-wcd-digital-codec:
- convert to dtschema
+Subject: Re: [PATCH 2/2] ASoC: dt-bindings: qcom,apq8096-sndcard: use dtschema
 To: Rayyan Ansari <rayyan.ansari@linaro.org>, devicetree@vger.kernel.org
 Cc: alsa-devel@alsa-project.org, Banajit Goswami <bgoswami@quicinc.com>,
  Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
@@ -61,7 +60,7 @@ Cc: alsa-devel@alsa-project.org, Banajit Goswami <bgoswami@quicinc.com>,
  Rob Herring <robh@kernel.org>,
  Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 References: <20240709152808.155405-1-rayyan.ansari@linaro.org>
- <20240709152808.155405-2-rayyan.ansari@linaro.org>
+ <20240709152808.155405-3-rayyan.ansari@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,54 +106,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240709152808.155405-2-rayyan.ansari@linaro.org>
+In-Reply-To: <20240709152808.155405-3-rayyan.ansari@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 09/07/2024 17:24, Rayyan Ansari wrote:
-> Convert the Qualcomm MSM8916 WCD Digital Audio Codec bindings from text
-> to yaml dt schema format.
-> Make bindings complete by adding #sound-dai-cells.
+> Remove old txt bindings and add apq8096 soundcard entry to existing
+> dt schema.
+> 
+> Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
 
 
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,msm8916-wcd-digital-codec
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    minItems: 2
-
-You can drop minItems if they equal max.
-
-> +    maxItems: 2
-> +
-> +  clock-names:
-> +    items:
-> +      - const: ahbix-clk
-> +      - const: mclk
-> +
-> +  '#sound-dai-cells':
-> +    const: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - '#sound-dai-cells'
-> +
-
-You need here allOf: with $ref to dai-common.yaml.
-
-> +additionalProperties: false
-
-... and this then becomes:
-unevaluatedProperties: false
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
