@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-25790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5C7B92CE74
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 11:44:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 847BE92CE79
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 11:45:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D77881C23230
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 09:44:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B66DF1C2287E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 09:45:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AFA218FA10;
-	Wed, 10 Jul 2024 09:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AD3518FC79;
+	Wed, 10 Jul 2024 09:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HIcgyK6B"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UNN2aqoF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2717C18EFF9;
-	Wed, 10 Jul 2024 09:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A7818FC76;
+	Wed, 10 Jul 2024 09:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720604673; cv=none; b=KhpM4vkIJyvOfIg36Ry7YoSXL/iJsl5HinsyKnMxWYs7J9nRRf2hMo0GZkACptSHcUlyYf9hWjJjFNT3ceVkn18NqlbzQhSef33LcuQ/huYQo4/xYGCjouAj+3hS7dWXaNvnCmXxMGUJBDVBrHRsFTLvqR6FflkvaMwdiwG/4kA=
+	t=1720604708; cv=none; b=OEGZUbmkamnlUj2HT5ATFE8jLQDBV7zzWW7tzTPxZefHXa9ojLSHXay9k+pAXMgAqzQcIym/aGv2qruzchmgEpB+3Z1J+bxi2H1/RE9uDeQ6N2IqHouAMMUnnlOpUBUUvpmpW1/rcKjv7/wIXIUQhe6mIztvcEsL4nOYJ5eGFhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720604673; c=relaxed/simple;
-	bh=y1GKYKFAqb5LKcLugeiK1HeS2qc9cFNbld9e01Ktubg=;
+	s=arc-20240116; t=1720604708; c=relaxed/simple;
+	bh=lC2q9hw6vrd5GKebrfAdfev9DYDFJlvNG5u+kkHvdDM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QfaraoK3+GLIGwA70yEUQD66pnGfOA2cCv6DGWehZOiNUUOh3PSCcFvbQpvt8Q5iFiE5PAkojOOmfSX0ri6Z/n4g6kY3LCMJuDuQCy+Icr9TIax8Pzv12KlS4NtMLbbzPMMPCZHxUxJsvaT8BD9CkkTyLp5KMNF6ZzQTQKVrpIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HIcgyK6B; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FA3C32781;
-	Wed, 10 Jul 2024 09:44:29 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=R1MAhdI+wBCGV8WbBlCkI6EApNXfv/1bgwZsSIFynjHWoaovcHWkptDCVkZa28y7tmtJaim7zz5Ah0UbOJYJra4Tuyq+JEYJ8qNpKGRYjokAlY8Spj5ehryL0FGsbqi43hs8m3qPC+CkZaGcZnMUMtlqhO2LLy7NdBPbwF4m2ZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UNN2aqoF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3507CC32786;
+	Wed, 10 Jul 2024 09:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720604672;
-	bh=y1GKYKFAqb5LKcLugeiK1HeS2qc9cFNbld9e01Ktubg=;
+	s=k20201202; t=1720604707;
+	bh=lC2q9hw6vrd5GKebrfAdfev9DYDFJlvNG5u+kkHvdDM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HIcgyK6BEnX7Dly/GUaE+qvW0L4V89VNfp0D7Q6rCXHhNFCVcM/fBnaaCaCvcHd+A
-	 INabqAwBEAgtHtMjfky1Vym9v/UltOlyy0vEbdvL4yeJm7+IcECXYk+LTWE9l4W0kl
-	 1/7BGARwPuwZ1eqsQMhRTEesHsVE9LdJB6jD8f/qcnuQ4cqQ/Etk4IUJPDxuVznKHs
-	 KDFnYTGXT7nzmPOQH//0ruih886ZK+OXmgkl9Pr203UBuwbbiHdBzmVyzb3nSfc1gt
-	 LSXXUu27qg/6/rePp4MAYeEsuLylRGRRPGRQZu6968OfOrpWzIoUB/vkQgT5sPqNDF
-	 B/Uk1g+/lEfIw==
-Message-ID: <ca59b8a8-847a-4101-bcd8-bebc14420a9c@kernel.org>
-Date: Wed, 10 Jul 2024 11:44:27 +0200
+	b=UNN2aqoFbfXmFjqvZ4s03RT8LelFMjzHn3zo8kWNi52hehvCIsGi0x03EkO63++Qb
+	 iHfK3qYj4wUZkc6rXRsa+WZsLGr46kckUNylodwf7whjuWezBl9Fn9cP+7nPq+4U4B
+	 7/4LZsHunD/cRj+3t9pZ0UCIhKDaQ89Ix63OuGWPGEcN4P1zkLzeqsK7XbbWzr1FAB
+	 0pOOY+0tjCjOFgmXP1tWCuBj4tzPjsRcwmdyUU3Qsb76n/mMZ+GWjq9XegP8OXEAvZ
+	 viGmgHHGYGLYt5F3qRC0UE67o1bsdfpgsM//2gl01DL6Srru0L+ZTkUJUZRGUjSDhF
+	 novokT/CE7kJw==
+Message-ID: <daaa0e56-9042-417b-a39f-d56084a0ce76@kernel.org>
+Date: Wed, 10 Jul 2024 11:45:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] ARM: dts: qcom: ipq8064: adhere to pinctrl dtschema
+Subject: Re: [PATCH 3/3] ARM: dts: qcom: ipq4019: adhere to pinctrl dtschema
 To: Rayyan Ansari <rayyan.ansari@linaro.org>, linux-arm-msm@vger.kernel.org
 Cc: Bjorn Andersson <andersson@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, devicetree@vger.kernel.org,
@@ -58,7 +58,7 @@ Cc: Bjorn Andersson <andersson@kernel.org>, Conor Dooley
  Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org,
  Rob Herring <robh@kernel.org>
 References: <20240710084250.11342-1-rayyan.ansari@linaro.org>
- <20240710084250.11342-3-rayyan.ansari@linaro.org>
+ <20240710084250.11342-4-rayyan.ansari@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,20 +104,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240710084250.11342-3-rayyan.ansari@linaro.org>
+In-Reply-To: <20240710084250.11342-4-rayyan.ansari@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 10/07/2024 10:41, Rayyan Ansari wrote:
-> Pass dt_binding_check for qcom,ipq8064-pinctrl.yaml.
-> Also remove invalid "bias-none" property, which I have assumed to mean
-> "bias-disable".
+> Pass dt_binding_check for qcom,ipq4019-pinctrl.yaml.
 > 
 > Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
 > ---
->  arch/arm/boot/dts/qcom/qcom-ipq8064-ap148.dts |  11 +-
->  .../arm/boot/dts/qcom/qcom-ipq8064-rb3011.dts |  76 +++++-------
->  arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi      | 114 ++++++++----------
+>  .../boot/dts/qcom/qcom-ipq4018-ap120c-ac.dtsi | 34 ++++++++-----------
+>  .../boot/dts/qcom/qcom-ipq4018-jalapeno.dts   | 27 ++++++---------
+>  .../boot/dts/qcom/qcom-ipq4019-ap.dk01.1.dtsi | 26 +++++---------
+>  .../boot/dts/qcom/qcom-ipq4019-ap.dk04.1.dtsi | 14 ++++----
+>  .../dts/qcom/qcom-ipq4019-ap.dk07.1-c1.dts    |  8 ++---
+>  .../dts/qcom/qcom-ipq4019-ap.dk07.1-c2.dts    |  2 +-
+>  .../boot/dts/qcom/qcom-ipq4019-ap.dk07.1.dtsi |  6 ++--
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
