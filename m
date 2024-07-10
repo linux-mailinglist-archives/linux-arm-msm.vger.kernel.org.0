@@ -1,75 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-25806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 161E692CFC5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 12:51:26 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB22D92D00B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 13:05:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF5001F234CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 10:51:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 00E2CB24CDF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 10:59:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EED8F18FA34;
-	Wed, 10 Jul 2024 10:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F79218FDB0;
+	Wed, 10 Jul 2024 10:59:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cQ3cuRsj"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l9c/6mNY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E16E1514C6
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jul 2024 10:49:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0632F18FA26;
+	Wed, 10 Jul 2024 10:59:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720608559; cv=none; b=DlCuww3I9srSpAVStEu1dD8YGU+PvzurgT7WgOo1qsrpDV4nQ2w+UM/6BjQadmjLeEYIDf5KHBQ1OiF/e7R1lswO+h0bArprixllH6IVaEAaKB8q3PjWbDoI3Ld1Z14LMP4h3lcWoeSMIb5X4SEq8m1blSq264BhwCMtxcFsLqQ=
+	t=1720609181; cv=none; b=epG0r9ue7KQqXBq7lupWERQDpzNcz2Y8va1Z7K7hiWkMN1UPSrfGGVRW6Lvv0o4ZE00TpBWDoFXrcKpEA9w4PJZ5SOdN+LJ6nR92YAsl6S+FZww9MgIepkEvT16u4D+1tUPGGKZYodOEHovfZnVdPLoM+rrdg5vasOxvlgcZ7GQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720608559; c=relaxed/simple;
-	bh=bbaLeSmE37zgEmxjhsm3MgKlF7I7utb0zJojaDQSFPQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=shnzRIPN/sHaOAV14VnTrvHjj0/AkQdFgBH6xSB0ykZu2yJ2sRFdv2Mg9+TD8Hs2wetmIh2eG0wef6PObcLCTJUVjSXHwkAJ7m0ymROf7fdPhtO9sovLLAlMorfxJxy8Kx9yO+jKhKwc84Ux1oakwxW1+q6UMtTRbF1LHynvjZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cQ3cuRsj; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a77b550128dso774460466b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jul 2024 03:49:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720608556; x=1721213356; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=p2SmmD8lFnK+3ph0iUIhMMBa+ayR7kGRg2lbUgLnUKk=;
-        b=cQ3cuRsjQjxzycuQulvSBpAp0d3dNgTkYHhxP+1pZxBhP1i9fh4PmwuvZKxu5TB8xb
-         bOQ9hKROK1reSQ9BnNmy78AMOtacNgWyRlXMXlLS83ywTp4TsIZOHVA3I8OX/k1+iuQz
-         MsWGzzEbowGRY1gBKm1OYiR+YWqjUAYkeByS3gAjGmtTjPZm6E4fya9udS2tJulVGkWd
-         IP+/2UGfRQUSdFu3oHmJ/lUMiRJsBTIAklLMBMoE0ydmOHrOKKjK+QuGjX8F8CSWPhPA
-         G1lvMRKgHu+srwd2aO/Z/SXNrBCJe5JKFNMKqawz7OUMgIBYCB2cdC03J6KV/c8QXqcF
-         tNRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720608556; x=1721213356;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p2SmmD8lFnK+3ph0iUIhMMBa+ayR7kGRg2lbUgLnUKk=;
-        b=Ijo0LFTXJWJ+19pXZ6rMPYvO5CkNfKYS4Z0D/y8N0pm+hP7HmX609Iz8iZV55mWNE2
-         pp+NUy0D6Zpo6JSvTw+tn+nXIn2xqYPa3xMrUj4OxB6ygHoIgUz6aHtY094IMJmBDL5/
-         M1iVU6tnAuDb7cZNzAeRonC8sewlEnSuDRtoQ6UZEpBNW5UYbIFFPhFY47TtiQGyh1/v
-         Y/sETfMHPUl6hqOLtUUE4YI1jFw+cqfytLfmYdqy78HKgTGR2RolQQ0NGzf+wVNAzPie
-         nE5KUqblGdXR+Cu75mkG9zE1WvNXN9APrPMF4O1X2/ljEXlIYzTFDHF+ZNg6D9XRQRFm
-         +r7g==
-X-Forwarded-Encrypted: i=1; AJvYcCW8HF/IQeAO4mhOcjfTBRGnE+5O4QBOb9JDlOyKMzt3FMZ8azdhHkkzgipyIBr/tUd+fvtop1H84EYrX1DfNV1Q6FPady4pmhSjeLNK8w==
-X-Gm-Message-State: AOJu0Yx19lFOX/cMWKthkhCF+66l3sfrsWytRYZGwkUMoa1Sb5jmAqH3
-	25PGtkQeJnEPsSv37E/s5nRqtT7oDNgoidWgsMvml+NFB+5bVy+hxfjU+8hDURA=
-X-Google-Smtp-Source: AGHT+IG3kAOB3GOzFDTrAkyUAM0HTc3HljgITzx2bz5AFyIbijHZglmfyD1oe5cVWg1XVEjLEK7DfA==
-X-Received: by 2002:a17:907:7e9c:b0:a6f:e3cf:2b8e with SMTP id a640c23a62f3a-a780b89dd3bmr501964266b.76.1720608556339;
-        Wed, 10 Jul 2024 03:49:16 -0700 (PDT)
-Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a780a856dd6sm148649466b.180.2024.07.10.03.49.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Jul 2024 03:49:16 -0700 (PDT)
-Message-ID: <a4deabfa-1366-47ef-993f-2fae3e206a44@linaro.org>
-Date: Wed, 10 Jul 2024 12:49:13 +0200
+	s=arc-20240116; t=1720609181; c=relaxed/simple;
+	bh=kg0MHbQo7mTSIs0kpGcsnsZLqG7Um6RBEDqFM46iOdc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=NEn17mU0x2W858tIdQWdBR0u33cq06W+P2wDPzd5C3S9ZC93lKguwlM0hQdd8VcM3+aKHiKz+rY034RpVz0kfx9Semx1CtQVvxkOpOukMdYtQ/JyQz8v4uQAno2c9Qf7Q/bvqLp1xXpNbpDRUgBk/EnSYwbxti8g/a/IsiSv1WA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l9c/6mNY; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46A1nhb1017547;
+	Wed, 10 Jul 2024 10:59:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	hvCj65ZqytZh3T8+jyBogQeubZVkc9QK22BYOoEszuM=; b=l9c/6mNYO47N186t
+	gf81ik6GfhN8LOWPRceo6S4as7Dtg6SPGIfbjVwUfSOHfoq9P2VFbeDca9HLAuU6
+	TXETpNSMIxeROZ6zdqwl21S5jPynzsAhV8TCODKbbvMLGmMK10hKqbW3vQMj/+5P
+	d0KDMyK2gvM7c8DBkQsBHRhBLrcwBdlBpQZVz10MDxcA/N3aAUL3ZOonnNUE7qPc
+	APfAe/75XQ9zHZ+Q3/31m4ASu6rTLblTHVXYBvQKR9+ulDKNaigCk4PYSAfG/pMB
+	GsYHopxs3iaTXfN4otFhIYOcPzxno/72mBgOoXdYg7QQsYDx89rKNlq2DPZGR940
+	eI1vpA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406wg41ayu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jul 2024 10:59:30 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46AAxTuq012360
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jul 2024 10:59:29 GMT
+Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 10 Jul
+ 2024 03:59:24 -0700
+Message-ID: <9acab683-dd6e-4257-8a52-fe2be8945290@quicinc.com>
+Date: Wed, 10 Jul 2024 18:59:21 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,91 +65,125 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] arm64: dts: qcom: ipq5332: Add icc provider
- ability to gcc
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, djakov@kernel.org,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org
-References: <20240709063949.4127310-1-quic_varada@quicinc.com>
- <20240709063949.4127310-4-quic_varada@quicinc.com>
- <cef54c07-4ecb-44bd-ad7c-aea475b89ffb@linaro.org>
- <Zo5lfDVVdgZ/iwi3@hu-varada-blr.qualcomm.com>
+Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
+ binding
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
+CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        Yongsheng Li
+	<quic_yon@quicinc.com>
+References: <20240709160656.31146-1-quic_depengs@quicinc.com>
+ <20240709160656.31146-8-quic_depengs@quicinc.com>
+ <01f6c25a-5803-4986-b754-0a3661d435b0@linaro.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <Zo5lfDVVdgZ/iwi3@hu-varada-blr.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Depeng Shao <quic_depengs@quicinc.com>
+In-Reply-To: <01f6c25a-5803-4986-b754-0a3661d435b0@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: WmwbdQdPll9-PCVDnrGWS4dyCOE375yl
+X-Proofpoint-GUID: WmwbdQdPll9-PCVDnrGWS4dyCOE375yl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-10_06,2024-07-10_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=999 clxscore=1015 impostorscore=0 malwarescore=0 mlxscore=0
+ bulkscore=0 spamscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407100075
 
-On 10.07.2024 12:42 PM, Varadarajan Narayanan wrote:
-> On Tue, Jul 09, 2024 at 11:53:41AM +0200, Konrad Dybcio wrote:
->> On 9.07.2024 8:39 AM, Varadarajan Narayanan wrote:
->>> IPQ SoCs dont involve RPM in managing NoC related clocks and
->>> there is no NoC scaling. Linux itself handles these clocks.
->>> However, these should not be exposed as just clocks and align
->>> with other Qualcomm SoCs that handle these clocks from a
->>> interconnect provider.
->>>
->>> Hence include icc provider capability to the gcc node so that
->>> peripherals can use the interconnect facility to enable these
->>> clocks.
->>>
->>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
->>> ---
+
+On 7/10/2024 5:37 PM, Bryan O'Donoghue wrote:
+> On 09/07/2024 17:06, Depeng Shao wrote:
+>> Add bindings for qcom,sm8550-camss in order to support the camera
+>> subsystem for sm8550
 >>
->> Doesn't the USB host need to have its path described to keep working?
+>> Co-developed-by: Yongsheng Li <quic_yon@quicinc.com>
+>> Signed-off-by: Yongsheng Li <quic_yon@quicinc.com>
+>> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+>> ---
 > 
-> Presently, USB host enables GCC_SNOC_USB_CLK directly using
-> the clocks/clock-name entries. So it is not dependent on ICC.
+> Hey Depeng,
 > 
-> Shall I update the USB DT node to use interconnects now itself,
-> or wait until this IPQ5332 ICC enablement series is approved?
-> Please let me know.
+> Thank you for your submission, looks good. I have a few comments below.
+> 
+>> +  clock-names:
+>> +    items:
+>> +      - const: cam_ahb_clk
+>> +      - const: cam_hf_axi
+>> +      - const: cam_sf_axi
+>> +      - const: camnoc_axi
+>> +      - const: camnoc_axi_src
+> 
+> These "_src" clocks are almost certainly not necessary. The CAMCC should 
+> have camnoc_axi_src as the parent clock of camnoc_axi, so you don't need 
+> ot list the "_src" clock.
+> 
+> Please go through this list in your yaml, dts and .c code and remove.
+> 
+> There may be an exception where a _src clock is required but my 
+> expectation is that all of those _src clocks can be removed.
+> 
+> 
 
-Definitely so. Now that you registered that clock with the
-interconnect framework, the current usage is essentially
-circumventing it..
+Hey Bryan,
 
-Say some consumers casted an ICC vote on that node, and then
-the USB driver called set_rate on the clock.. The data from
-icc-clk would be discarded
+Thanks for the reviewing. I will try to move all the _src clk and verify 
+again.
 
-Konrad
+>> +  power-domains:
+>> +    items:
+>> +      - description: IFE0 GDSC - Image Front End, Global Distributed 
+>> Switch Controller.
+>> +      - description: IFE1 GDSC - Image Front End, Global Distributed 
+>> Switch Controller.
+>> +      - description: IFE2 GDSC - Image Front End, Global Distributed 
+>> Switch Controller.
+>> +      - description: Titan GDSC - Titan ISP Block, Global Distributed 
+>> Switch Controller.
+> 
+> Please name these power-domains in the next iteration of the series.
+> 
+> The dependency on the ordering of the power-domains is a bug which new 
+> SoC submissions won't be replicating.
+> 
+> https://lore.kernel.org/linux-arm-msm/fcdb072d-6099-4423-b4b5-21e9052b82cc@linaro.org/
+> 
+
+Sure, will add this in new patch set.
+power-domain-names = "ife0",
+		    "ife1",
+                     "ife2",
+		    "top";
+
+>> +
+>> +            interconnects =
+>> +                    <&gem_noc         MASTER_APPSS_PROC          0 
+>> &config_noc SLAVE_CAMERA_CFG  0>,
+>> +                    <&mmss_noc        MASTER_CAMNOC_HF           0 
+>> &mc_virt SLAVE_EBI1           0>,
+>> +                    <&mmss_noc        MASTER_CAMNOC_SF           0 
+>> &mc_virt SLAVE_EBI1           0>,
+>> +                    <&mmss_noc        MASTER_CAMNOC_ICP          0 
+>> &mc_virt SLAVE_EBI1           0>;
+> 
+> This tabbing looks weird, do none of the checking tools complain about it ?
+> 
+> See:
+> Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
+> 
+
+Looks like no complain about this, but will update it.
+
+> ---
+> bod
+
+Thanks,
+Depeng
 
