@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-25843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FB0B92D195
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 14:30:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC14F92D19B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 14:30:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BD0B02856FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 12:30:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A8C9C285972
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 12:30:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2FC6190059;
-	Wed, 10 Jul 2024 12:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEE7E190485;
+	Wed, 10 Jul 2024 12:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mlWtW8hR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RlyZ1Umo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E7B1E4AF;
-	Wed, 10 Jul 2024 12:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA251E489;
+	Wed, 10 Jul 2024 12:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720614611; cv=none; b=qmQtng371Fb8ch4sLuaAtm9nFYdBfW0nccVriVtT0pBPqj/JRxM7KOEk2Zr+p0Dscoo4ZUegMyLPWOsYSjTJe+NgqI2s3cOlojMHGsi8ny9pCp5jgqdieHcbUcEKzyIScS+wJ0qj3ozhM0C6i+snbixGnRZ7V1uJhvp+zida+7s=
+	t=1720614633; cv=none; b=QWpB0vz+i9kX+ESM2u9Yjw5dQpKnjBKYS7HULT540MmsWAakKEIQq4DZ4srRzbsaE+ISLNrhtos2dY0CN4nbr64449BlsbUs9LX43DGSou+N13qaegPwpO9haxxA/bk1DMK50kxy5COxDgDlNc49/c1Z8nqUXvuex6FvhRgD8/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720614611; c=relaxed/simple;
-	bh=Q26aL892K0l+LyyYgM0jUhvcj2Dc0Hq5zyGMegKD5TM=;
+	s=arc-20240116; t=1720614633; c=relaxed/simple;
+	bh=Ty/jMZEzrJPaGaO+ljAa2VN2lH5jfuLfI0l0KW2KEi0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=c7zqdZuEMhu0eGw6h0VOtZcPyT6sz5TetvayBX546Bbkj62j6Fkg22gHtBUlKZOsC8VB353orv+bIW6Ms95LmnhPPbpA1XSYyRV1Z0ss2I4MxEI6eWdqs3aNQl4lMBmPg1XFGvA2uvXvbbre+s+wJ1z01m4c3bT3dt6mHDinpBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mlWtW8hR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA09C32782;
-	Wed, 10 Jul 2024 12:30:05 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=OOrqw4btF3BvQ+o3AI2vgGfbmxV5Bwwfs3FZlk5M7fMToLLGNDlTw/JsqWb7n/y56bjRYtiJAgknDjdsWT+RHVDfwhzkz9iSRamPGEXxJ3cFZJ4XM9u/bUuLQfdl0n+uFJASusftUZOlPWQwSSK5dincS99P3gRQZTRZkvw+yWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RlyZ1Umo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0148FC32782;
+	Wed, 10 Jul 2024 12:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720614611;
-	bh=Q26aL892K0l+LyyYgM0jUhvcj2Dc0Hq5zyGMegKD5TM=;
+	s=k20201202; t=1720614633;
+	bh=Ty/jMZEzrJPaGaO+ljAa2VN2lH5jfuLfI0l0KW2KEi0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=mlWtW8hRbQSvovcDiDXBskauLgXt0Y+GVyBEaV5okO9Dd5yTMYt1Ef8J7qSIt8EYZ
-	 Xfz3BWd67AO20WHpAHPO3T2DzYfnbiSMJvzxEkZ6Zk4yBlD/51h5wxSba3CU76fwt4
-	 TjvB+2IkLUzAdOisWKzGIW+e7BSxX1hZN1RGjxSoiXm70RbCJKNCLJOdnY0zUHfhHb
-	 epapw73s6Tv42UKocsLMhbfIOI9R5rT1z1+YmI1TEeG+Ih9ej9AasskIrFVXfOMW3W
-	 1AvQ6OqiU45L1hkyfDq7gnJIpXUi/JH7tr8mexnZbG+GbJYOOaItrzXtFpsJguVRKB
-	 DGNACBVMjjbRw==
-Message-ID: <d72ec08a-bd5c-482b-8af9-3fc923820d25@kernel.org>
-Date: Wed, 10 Jul 2024 14:30:02 +0200
+	b=RlyZ1UmoLiJKtORUGcPp1loR3iRPoJGcTToZDD6EQ3W9IO1b4jYYLwscez/wYwrxz
+	 Q8SR7IdKUcUdArfJTq7bAzPFpzKodKlCWjXEcfqYI3hgIfu69g5CaoRBeAkUFR0sjW
+	 tTwC9XBjBjuEF1339vBUMLr7PkOnW2rKEoBw6qOaaYwLjh8UMSEyg4ZxfpGcB97iLq
+	 D7QvZmr70vKD54Vetjs9xBIsctl0grm/YL5vYp2k4STwFjydwXaFKvWftbACcm7+kc
+	 LCYmtjGLIv1lOPNc5gYXbfpsWgFFC2v506y8prMQ6PZTN/75OH3nI1ywpVG6VlcTwm
+	 MaEM3YStGm2tA==
+Message-ID: <398f11ce-f3ac-495c-a0ef-f1201efcd799@kernel.org>
+Date: Wed, 10 Jul 2024 14:30:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 00/13] media: qcom: camss: Add sm8550 support
-To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: quic_eberman@quicinc.com, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20240709160656.31146-1-quic_depengs@quicinc.com>
- <55e850dd-1b45-4bad-a11f-f645cca07f2a@kernel.org>
- <d8d6574a-2823-4955-898d-d6637e40946e@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2 1/2] ASoC: dt-bindings: qcom,msm8916-wcd-digital-codec:
+ convert to dtschema
+To: Rayyan Ansari <rayyan.ansari@linaro.org>, devicetree@vger.kernel.org
+Cc: alsa-devel@alsa-project.org, Banajit Goswami <bgoswami@quicinc.com>,
+ Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-sound@vger.kernel.org, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh@kernel.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+References: <20240710113833.39859-1-rayyan.ansari@linaro.org>
+ <20240710113833.39859-2-rayyan.ansari@linaro.org>
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -105,42 +107,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <d8d6574a-2823-4955-898d-d6637e40946e@quicinc.com>
+In-Reply-To: <20240710113833.39859-2-rayyan.ansari@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10/07/2024 13:27, Depeng Shao wrote:
+On 10/07/2024 13:36, Rayyan Ansari wrote:
+> Convert the Qualcomm MSM8916 WCD Digital Audio Codec bindings from text
+> to yaml dt schema format.
+> Make bindings complete by adding #sound-dai-cells.
 > 
-> 
-> On 7/10/2024 7:08 PM, Krzysztof Kozlowski wrote:
->> On 09/07/2024 18:06, Depeng Shao wrote:
->>> V3:
->>> - Rebased the change based on below change which will be merged firstly.
->>>    "Move camss version related defs in to resources"
->>> Link: https://lore.kernel.org/all/20240522154659.510-1-quic_grosikop@quicinc.com/
->>> - Rebased the change based on Bryan's csiphy optimization change and add
->>> these changes into this series, so that the new csiphy-3ph driver don't
->>> need to add duplicate code. This has got Bryan's permission to add his
->>> patches into this series.
->>> - Refactor some changes based on the comments to move the random code to
->>> patches where they are used.
->>> - Remove the vfe780 irq function since it isn't doing the actual work.
->>> - Add dt-binding for sm8550 camss driver.
->>> Link to V2: https://lore.kernel.org/all/20240320141136.26827-1-quic_depengs@quicinc.com/
->>
->> I asked for reference to upstream DTS - where can I find the DTS patches?
->>
->> Best regards,
->> Krzysztof
->>
-> 
-> Hi Krzysztof,
-> 
-> Sorry for that, I thought add the dt-binding is also fine, since I saw 
-> other patches also do like this. Will add add the DTS in next patch set.
+> Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
+> ---
+> v1 -> v2: removed unneeded minItems, added ref to dai-common.yaml
 
-DTS should not be part of this patchset, but sent separately.  It's
-enough if you post a lore link to it.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
