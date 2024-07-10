@@ -1,107 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-25887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4520692D988
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 21:50:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6721892D9A5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 21:58:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F248F2826F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 19:50:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B6030B21477
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 19:58:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94753197552;
-	Wed, 10 Jul 2024 19:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D317119645C;
+	Wed, 10 Jul 2024 19:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sb9rO8xJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZokzrRdC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA6315E88;
-	Wed, 10 Jul 2024 19:50:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135D88F66;
+	Wed, 10 Jul 2024 19:58:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720641035; cv=none; b=O1NJA75MMMnR8rgbiCTG6FKxBSoi2ApwLhnULmzigAIbN+LVyFoqumIxLyGbvOkI5E+Ms9a8CnoWNkjaNxpE+SkdO1SDQOfUiF2G0qODNwxR3snuCTlfIHzeZQcZZHns8mMGfXfPhA76RLNnKZW0iG4/UwRs9eqsCe8ncxBOkbE=
+	t=1720641492; cv=none; b=QqUezpsnvcMo3V+07a0Qmxv4DpIne9DJvYNUKEBDuInu0EPobgECmZj4C1wVSZMo8seCBROl0FSgGtYsbAHFOAdt5Nr+1clDcRPxQCV7dsf7NjTAOXOYXlrbsbUWXzOUB+SQSZhQwfEngW23mILMk/hxuAQq7dk4X2NeVYw/KvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720641035; c=relaxed/simple;
-	bh=xihsmeAWmOXJW0TEj1iF/9CEInbgkYEYZIMDRf7/TMA=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=d2GjEDh8Fjl5Q1JJlnifH8KO46OgoFELi4tC9byoDfNjMpYzHojhTDi+qMbFRehvvs4kzx0+CslGXeLSUaY4rhXxiibZ6gTzJB4kYyg7KLuHeiraOrBMkkp1CUK4/NGec39FE3hcZ0eMcv/ZVOTFVAhh4jnV/oIjt5rnVosTxNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sb9rO8xJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D4CB7C4AF0D;
-	Wed, 10 Jul 2024 19:50:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720641034;
-	bh=xihsmeAWmOXJW0TEj1iF/9CEInbgkYEYZIMDRf7/TMA=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=Sb9rO8xJAUR8kNxOjj2HYw1jog4jC1IbJUlPgzGwTcUCYX6/rSOD7FjLhcjpin5y1
-	 YMUOTErXKxgr9wsihtzojt4pwdMb6XSucltspyo7KKJupEAR1sDtoBIXj7gbWqKZTR
-	 FRnz3zolywukR2t1NrViHp2Y5PDAw4Ig/ggTquwBOUGf5bQKs9gczVtKP0uR/BsyA3
-	 IsMyKNrQ7lr/Urj7OLKX7dAXZeQWO0s18gZjNKWpqtwVQBOtTHfnaEGkH9avIz9xsw
-	 LVz+Vlj2Mob/7ZGnDhVPyMREE4K3YZ1Xkp/qBT7kxng+y0JOkAoRtXaWNg9UGZQOTc
-	 GiCOCnfZoUlNQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C419AC4332E;
-	Wed, 10 Jul 2024 19:50:34 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1720641492; c=relaxed/simple;
+	bh=+gR3q10wxHVkIFkAz79jK6nbBeOfiCGBURlUBKgbsus=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=X1dRqKyHwOssEIBOdQCtX/1woOaFl4ebZqXwMstXkHHX+GeIjuZ9bF2fFns2Y2Ti9WsIOcsU+toj+hfZgSMkzWEDh8itihP5kLWbqrZMRf9dqqReIlk1x8NE1nmR9BJF20xEK5NSLR0xnWdIqPqUvDRX8EabbaByhG9FPUP7NjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZokzrRdC; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46ABrgcu013428;
+	Wed, 10 Jul 2024 19:58:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	yK8WpDsctH5uUuSiIfXEO5S4d0JYL6hL5LkGzcQ5Ifk=; b=ZokzrRdC/lGYGN3L
+	kbfbmOMU9bdxsjPLgUrBBUZ59QK+9YuVuqGdjFhdboDvmKisCKD9ckGOiigCHnNU
+	su4XvwBIG+M2KSFpOuf0IcD4N6SnohXagj+h1WJ21BQLMQLFTHWXs3ePpIB4I04j
+	3VhQFmX+V56Rb5WWN54OGVUNFI7ZbYKXvwA0YVgVzA3UnZA23L4srS33UAvOJizA
+	th8ZImH5L9q9V2CpAmT1l7kczxywY0SXwyqqjNsGCeUXgtDX/orNFAyfVzbniwMy
+	XKUjhjyKY+4q51Pi2ZIEyyFqdqDWiruE4IuerM9q2HgRXsQmFRMwPg1TP3Ls0SOe
+	xLuzGQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406wmmthdm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jul 2024 19:58:06 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46AJw5JN017348
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jul 2024 19:58:05 GMT
+Received: from [10.110.122.74] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 10 Jul
+ 2024 12:58:02 -0700
+Message-ID: <24302005-d9a5-400e-a28c-40276a3f7250@quicinc.com>
+Date: Wed, 10 Jul 2024 12:58:01 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 0/6] Bluetooth: hci_qca: use the power sequencer for
- wcn7850
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <172064103479.11923.11962118903624442308.git-patchwork-notify@kernel.org>
-Date: Wed, 10 Jul 2024 19:50:34 +0000
-References: <20240709-hci_qca_refactor-v3-0-5f48ca001fed@linaro.org>
-In-Reply-To: <20240709-hci_qca_refactor-v3-0-5f48ca001fed@linaro.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: marcel@holtmann.org, luiz.dentz@gmail.com, davem@davemloft.net,
- edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, quic_bgodavar@quicinc.com,
- quic_rjliao@quicinc.com, andersson@kernel.org, konrad.dybcio@linaro.org,
- linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, bartosz.golaszewski@linaro.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] dt-bindings: soc: qcom,aoss-qmp: Document the QCS9100
+ AOSS channel
+To: Tengfei Fan <quic_tengfan@quicinc.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240709-document_qcs9100_aoss_qmp_compatible-v2-1-6c7f35bc9ec3@quicinc.com>
+Content-Language: en-US
+From: Chris Lew <quic_clew@quicinc.com>
+In-Reply-To: <20240709-document_qcs9100_aoss_qmp_compatible-v2-1-6c7f35bc9ec3@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: g7CZcu1snt0AASDvXEBMtu__PlMXLa3F
+X-Proofpoint-ORIG-GUID: g7CZcu1snt0AASDvXEBMtu__PlMXLa3F
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-10_14,2024-07-10_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
+ priorityscore=1501 lowpriorityscore=0 spamscore=0 bulkscore=0 adultscore=0
+ impostorscore=0 suspectscore=0 malwarescore=0 mlxscore=0 mlxlogscore=999
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407100141
 
-Hello:
+Hi Tengfei,
 
-This series was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+On 7/9/2024 7:24 AM, Tengfei Fan wrote:
+> Document the Always-On Subsystem side channel on the QCS9100 Platform.
+> QCS9100 is drived from SA8775p. Currently, both the QCS9100 and SA8775p
 
-On Tue, 09 Jul 2024 14:18:31 +0200 you wrote:
-> The following series extend the usage of the power sequencing subsystem
-> in the hci_qca driver.
+/s/drived/derived/
+
+> platform use non-SCMI resource. In the future, the SA8775p platform will
+> move to use SCMI resources and it will have new sa8775p-related device
+> tree. Consequently, introduce "qcom,qcs9100-aoss-qmp" to describe
+> non-SCMI based AOSS channel.
+>
+
+Were there any differences between non-SCMI and SCMI based platforms 
+specifically for the qcom_aoss.com driver?
+
+
+> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> ---
+> Introduce support for the QCS9100 SoC device tree (DTSI) and the
+> QCS9100 RIDE board DTS. The QCS9100 is a variant of the SA8775p.
+> While the QCS9100 platform is still in the early design stage, the
+> QCS9100 RIDE board is identical to the SA8775p RIDE board, except it
+> mounts the QCS9100 SoC instead of the SA8775p SoC.
 > 
-> The end goal is to convert the entire driver to be exclusively pwrseq-based
-> and simplify it in the process. However due to a large number of users we
-> need to be careful and consider every case separately.
+> The QCS9100 SoC DTSI is directly renamed from the SA8775p SoC DTSI, and
+> all the compatible strings will be updated from "SA8775p" to "QCS9100".
+> The QCS9100 device tree patches will be pushed after all the device tree
+> bindings and device driver patches are reviewed.
 > 
-> [...]
-
-Here is the summary with links:
-  - [v3,1/6] dt-bindings: bluetooth: qualcomm: describe the inputs from PMU for wcn7850
-    https://git.kernel.org/bluetooth/bluetooth-next/c/e1c54afa8526
-  - [v3,2/6] Bluetooth: hci_qca: schedule a devm action for disabling the clock
-    https://git.kernel.org/bluetooth/bluetooth-next/c/a887c8dede8e
-  - [v3,3/6] Bluetooth: hci_qca: unduplicate calls to hci_uart_register_device()
-    https://git.kernel.org/bluetooth/bluetooth-next/c/cdd10964f76f
-  - [v3,4/6] Bluetooth: hci_qca: make pwrseq calls the default if available
-    https://git.kernel.org/bluetooth/bluetooth-next/c/958a33c3f9fc
-  - [v3,5/6] Bluetooth: hci_qca: use the power sequencer for wcn7850 and wcn6855
-    https://git.kernel.org/bluetooth/bluetooth-next/c/4fa54d8731ec
-  - [v3,6/6] arm64: dts: qcom: sm8650-qrd: use the PMU to power up bluetooth
-    (no matching commit)
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+> The final dtsi will like:
+> https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-3-quic_tengfan@quicinc.com/
+> 
+> The detailed cover letter reference:
+> https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
+> ---
+> Changes in v2:
+>    - Split huge patch series into different patch series according to
+>      subsytems
+>    - Update patch commit message
+> 
+> prevous disscussion here:
+> [1] v1: https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
+> ---
+>   Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml
+> index 7afdb60edb22..80e1a8b43586 100644
+> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml
+> @@ -25,6 +25,7 @@ properties:
+>     compatible:
+>       items:
+>         - enum:
+> +          - qcom,qcs9100-aoss-qmp
+>             - qcom,qdu1000-aoss-qmp
+>             - qcom,sa8775p-aoss-qmp
+>             - qcom,sc7180-aoss-qmp
+> 
+> ---
+> base-commit: 0b58e108042b0ed28a71cd7edf5175999955b233
+> change-id: 20240709-document_qcs9100_aoss_qmp_compatible-a7376629ea6c
+> 
+> Best regards,
 
