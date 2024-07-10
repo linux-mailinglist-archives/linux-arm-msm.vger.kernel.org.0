@@ -1,128 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-25844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC14F92D19B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 14:30:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B3AC592D1BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 14:39:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A8C9C285972
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 12:30:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6C291286C28
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 12:39:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEE7E190485;
-	Wed, 10 Jul 2024 12:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CCEE1922F6;
+	Wed, 10 Jul 2024 12:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RlyZ1Umo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NgOTl8Hi"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA251E489;
-	Wed, 10 Jul 2024 12:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF44A1922E3;
+	Wed, 10 Jul 2024 12:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720614633; cv=none; b=QWpB0vz+i9kX+ESM2u9Yjw5dQpKnjBKYS7HULT540MmsWAakKEIQq4DZ4srRzbsaE+ISLNrhtos2dY0CN4nbr64449BlsbUs9LX43DGSou+N13qaegPwpO9haxxA/bk1DMK50kxy5COxDgDlNc49/c1Z8nqUXvuex6FvhRgD8/Q=
+	t=1720615153; cv=none; b=YHQdF1yzcJTbc3iOAQtbAGaV21yhjKrO2Wa/JxlTfVmD1oZnsrIMqXMLOxIPBUQmCdaSjBK1EtwMwrgCIDkzpqy3lGHFH+7pjsW82vyjR4vbia8HbVy6023yBhNghFxbS7gIFmLujyR4S55uGMF1TM9MovN7W/zSfCLkFff7AbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720614633; c=relaxed/simple;
-	bh=Ty/jMZEzrJPaGaO+ljAa2VN2lH5jfuLfI0l0KW2KEi0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OOrqw4btF3BvQ+o3AI2vgGfbmxV5Bwwfs3FZlk5M7fMToLLGNDlTw/JsqWb7n/y56bjRYtiJAgknDjdsWT+RHVDfwhzkz9iSRamPGEXxJ3cFZJ4XM9u/bUuLQfdl0n+uFJASusftUZOlPWQwSSK5dincS99P3gRQZTRZkvw+yWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RlyZ1Umo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0148FC32782;
-	Wed, 10 Jul 2024 12:30:28 +0000 (UTC)
+	s=arc-20240116; t=1720615153; c=relaxed/simple;
+	bh=TY4sY5oPjVbGQAENFz0Pqdu8obOb5jPNxo+VfH0FRYI=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=h4ZdYNKQlJ9KNuJQT3OW33rM2+h5UvmXSbzW2FJfO91e8vFDZBvbg1fzbXJtwg85fiu7QkxGtR5bHWU9JGWSJnaEQeoA6o7FzshCoD1WmqedZJ3EhlXlzHlVyhmfrNFJZshZANMSDEZDDjIRCotpLkSKZTzIH+A8x5/9C1mdg5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NgOTl8Hi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA14C32782;
+	Wed, 10 Jul 2024 12:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720614633;
-	bh=Ty/jMZEzrJPaGaO+ljAa2VN2lH5jfuLfI0l0KW2KEi0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RlyZ1UmoLiJKtORUGcPp1loR3iRPoJGcTToZDD6EQ3W9IO1b4jYYLwscez/wYwrxz
-	 Q8SR7IdKUcUdArfJTq7bAzPFpzKodKlCWjXEcfqYI3hgIfu69g5CaoRBeAkUFR0sjW
-	 tTwC9XBjBjuEF1339vBUMLr7PkOnW2rKEoBw6qOaaYwLjh8UMSEyg4ZxfpGcB97iLq
-	 D7QvZmr70vKD54Vetjs9xBIsctl0grm/YL5vYp2k4STwFjydwXaFKvWftbACcm7+kc
-	 LCYmtjGLIv1lOPNc5gYXbfpsWgFFC2v506y8prMQ6PZTN/75OH3nI1ywpVG6VlcTwm
-	 MaEM3YStGm2tA==
-Message-ID: <398f11ce-f3ac-495c-a0ef-f1201efcd799@kernel.org>
-Date: Wed, 10 Jul 2024 14:30:26 +0200
+	s=k20201202; t=1720615153;
+	bh=TY4sY5oPjVbGQAENFz0Pqdu8obOb5jPNxo+VfH0FRYI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=NgOTl8Hi98oOvg9/W8Zhn7iI6SoavNvy3cQuT63uzjYmFDgFKVGivaW4FNiSIRyOb
+	 JtXVwLpk6GXGfW/dT5gM1LbCS3bEuLZlIpv/TAqwB3vWKbza4D/N7EkdrtdYpq7wgP
+	 AsBBz3a0qdT4PxCW8DxubFhNUhuc6C8rgaAqNBY9D0hDR7/RNYQtktiUdg3/HFoCUn
+	 gGIU5ckQFjUs8HYEj979XYtrwpZltRIq4iCSrp94khyE53NFHqs2BIm6Z4IJhub3YM
+	 5rEPIEdbkvP2BHZDtXGAdoM+4ZfjRawQ+b7+zTUx+XAVEJiz+FRe6I5TFKAdO8v5jz
+	 6jFOKgBN8jOTA==
+From: Will Deacon <will@kernel.org>
+To: Joerg Roedel <joro@8bytes.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	David Heidelberg <david@ixit.cz>
+Cc: catalin.marinas@arm.com,
+	kernel-team@android.com,
+	Will Deacon <will@kernel.org>,
+	iommu@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v7] dt-bindings: iommu: Convert msm,iommu-v0 to yaml
+Date: Wed, 10 Jul 2024 13:39:04 +0100
+Message-Id: <172061359238.625684.18062139914170368860.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20240705221520.109540-1-david@ixit.cz>
+References: <20240705221520.109540-1-david@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] ASoC: dt-bindings: qcom,msm8916-wcd-digital-codec:
- convert to dtschema
-To: Rayyan Ansari <rayyan.ansari@linaro.org>, devicetree@vger.kernel.org
-Cc: alsa-devel@alsa-project.org, Banajit Goswami <bgoswami@quicinc.com>,
- Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-sound@vger.kernel.org, Mark Brown <broonie@kernel.org>,
- Rob Herring <robh@kernel.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-References: <20240710113833.39859-1-rayyan.ansari@linaro.org>
- <20240710113833.39859-2-rayyan.ansari@linaro.org>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240710113833.39859-2-rayyan.ansari@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On 10/07/2024 13:36, Rayyan Ansari wrote:
-> Convert the Qualcomm MSM8916 WCD Digital Audio Codec bindings from text
-> to yaml dt schema format.
-> Make bindings complete by adding #sound-dai-cells.
+On Fri, 05 Jul 2024 15:14:54 -0700, David Heidelberg wrote:
+> Convert Qualcomm IOMMU v0 implementation to yaml format.
 > 
-> Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
-> ---
-> v1 -> v2: removed unneeded minItems, added ref to dai-common.yaml
+> iommus part being ommited for the other bindings, as mdp4 one.
+> 
+> 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Applied to iommu (qualcomm/msm), thanks!
 
-Best regards,
-Krzysztof
+[1/1] dt-bindings: iommu: Convert msm,iommu-v0 to yaml
+      https://git.kernel.org/iommu/c/b577060ac7ba
 
+Cheers,
+-- 
+Will
+
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
 
