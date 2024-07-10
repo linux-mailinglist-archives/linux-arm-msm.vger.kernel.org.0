@@ -1,125 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-25848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6D2B92D2E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 15:34:12 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16FEF92D368
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 15:53:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B8941F23A2F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 13:34:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C574C282E68
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 13:53:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6903C19308C;
-	Wed, 10 Jul 2024 13:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36113193098;
+	Wed, 10 Jul 2024 13:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="k2TSwLen"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z30DtUh9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEA411922C9;
-	Wed, 10 Jul 2024 13:33:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6605281723
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jul 2024 13:52:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720618431; cv=none; b=E8tlmXdd/T6sSN1w7X54mK2bhxDjNm9T10WHz7LQfFKqsLRkCAFeYssv9oyCu/qr9m/YzeVWVzwuuzrAYgMyjuMvM3If37n/gzDBIUaLPft2pcFw7QzjlVPPmq1QjuSYKpzq0aLtddOOfq+oLfJaiFdvmU4tP1bsCceXL2tUwyM=
+	t=1720619565; cv=none; b=P7jIm+sXzXk4juLQeJcdThktcpuF4mctfFxNQeeJW2jCC+gyFM0d/o4+4MAZTp64PZLQUxJ+z1a3tOvKE5A3LUB1Konu9Ga9W/hSHYbRk14TlStEzH/TAH7Bl4AkZ+7PeVUqaPxTPW3q947GhZb29q1EzTcU5+gM9U+qUrPbndM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720618431; c=relaxed/simple;
-	bh=JxC1b1DOzM6+22LaPEwtC9M+vPgX91o112/b/28+6Ic=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ODJjfD1LWUW2siq20H9YCn1yXJxuU24QaJ2dSSOPyAavYIW+uGR7yJxLC4OvXd2eN/hyFq/rDy1i0HXIhvcMCwD1NC/83roXWqBDUdNrm6mARtpvnUH7EeJ7MfyVK8Aw2csDUU//MXhFQs0qKPCLf1A8phu1/89uC7w14RQZAvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=k2TSwLen; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46A7ngLF026708;
-	Wed, 10 Jul 2024 13:33:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/CHTQcGxnfbCSKtvZW1zamqa2/4lL+6xBB0Ei/bCngs=; b=k2TSwLenybgB6JfU
-	GvrIf9Hgr6+yl5QONA8DteaNYmwx7k79pdZdL+1u9GSSfsJ2XBN7tk8n4aI0VPep
-	qKUi/tCrv1mfaJV2apS1EdYBNHo/i4WWkOri8+YrgxKe+/LErT3HDOT8GkzxuIbe
-	6pVQSTzLOGP81etdxO1Z1JQ/CVS0alyrKc2s4xQERaydP6Ju2ZiNIT//1NZsVHOl
-	p3vf5/ujfyoyDk3v9EXCOho3CoxNVJbYiuQv6RQj0fgE2kxPmQigGvYfu0KFLG9V
-	sNgNq7nvAyA7Gh9YY+wwFcJIyKVd7YOyphPkdnRMRXFXokhQfAajiOl1RzBfSJK0
-	o0kXig==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4091jdkrcv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jul 2024 13:33:45 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46ADXjsB015226
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jul 2024 13:33:45 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 10 Jul
- 2024 06:33:39 -0700
-Message-ID: <70cb6434-76af-42f7-9bb4-810ac561c0e3@quicinc.com>
-Date: Wed, 10 Jul 2024 21:33:37 +0800
+	s=arc-20240116; t=1720619565; c=relaxed/simple;
+	bh=xCLRTG7ipn4tiGh+nXkgwfMZfAsmNK9dFGTdCsvf/7E=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=oHdy3RW3ehx2tHOSIJ7PIXwHOFp2Z7EmEeR6OXfNZzvy9kWnwK1E3cHfY6kTZ+x9I0NskEEp4NKmLMFe07QsjSOAC4zbIz0hzjBKMKLVQ20Ad/XN+4TgVI7CuVDsjaWhYTDufIxF7JUcOUzUX6JixLK3yoTC/AHifctxRIxrycc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Z30DtUh9; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52ea79e689eso7520960e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jul 2024 06:52:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1720619561; x=1721224361; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eG+Sr5tcj4iLYaVgjAszjSri4jbIahacA3U2hkyfLzQ=;
+        b=Z30DtUh9N6QdpXwDi9fRAFVXM5278EZUIjTiilVZ64Kr3iW5kngSc/zAcEa/iXvwPn
+         SKl10LTI+QrUb6Gz+jY+oHQ4sEHXVMw18T6Civ5C2GXUL08SgBEk7Du5MlVbbP+9k9xo
+         VDjRACERs3JfRO4ctVMoQPqMv3QCyPgZtq63k1R9xXn8SPU0Ki2NYnp3u6G1ZCEoa/H3
+         a0CwcPFD2uM+BI4kvzFi2Lgy4ahTHowTVNOtCcYOcb6HgVHg7r+TXg6czMuBWUweF5XW
+         ni6F2pEZ9/rJ1M/63a8axS14IcQ4ZmbCKUFimjOCgKGga14SHs4sz3Omb6D33iLPZ2wI
+         epLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720619561; x=1721224361;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eG+Sr5tcj4iLYaVgjAszjSri4jbIahacA3U2hkyfLzQ=;
+        b=qLgko2xrelzqrdCOmTwZarsO6gVvq2DHhGPIAdet2m1k/VZxredFm0/VKHPzbc71s8
+         erB3Q12O79mKW/jYTwDAHal4lHj47hqyEanwvJw9BL0jKUHO1xSMm9yXGExkSMqrV/zN
+         KDj4jErHC8sL3SaObP2oi+HhdVHVor8vUHtO/GYGhxb/hzPucgnxwb1k9r+iJ0oxIYoS
+         eMdkySSUHx+mQwUKRKp7niCYv1CHxbj/4WuNoqktXM9j0TXyKdJxMaO3yl2mU+KvzTDy
+         NGiOWnc2VPSlll0OWKoFLKKE2Eogf9lmCP9wcA8oMM4797xDkbACtUfpnEeChxLIWbwP
+         VSUg==
+X-Forwarded-Encrypted: i=1; AJvYcCWR9oMmW5+Mj1tpMEV5ldsFTpHS3Kf4mG4Ys4+thZTwJcEDT1ZicqrkpdrCmDiPQpWlNt+T/BODqG4tmzfDUtoJo/YOhdgYY4Mpi059zg==
+X-Gm-Message-State: AOJu0YwSIPqAu8soaDjc3eJYGcXQ5KY372qxpeJ9mwwypoXEB7hIJFMx
+	QdO/lfGHIWK7iIA3o/PJK8UttslJfZ48hoKvZ96siXo/O4zK7nXN+pfGXTFBcybGS74P5bC6njZ
+	R
+X-Google-Smtp-Source: AGHT+IGI74Tkk+bMOUOiLt7ShAbiFrBfr/fOEAEBbMRa7tJDzVxniq8rJ4ZAffl1kUcxrWh4qs60mQ==
+X-Received: by 2002:a19:7708:0:b0:52e:9921:6dff with SMTP id 2adb3069b0e04-52eb999c2damr3844744e87.26.1720619560886;
+        Wed, 10 Jul 2024 06:52:40 -0700 (PDT)
+Received: from [127.0.1.1] ([178.197.219.137])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a780a8551afsm160440366b.166.2024.07.10.06.52.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Jul 2024 06:52:40 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 0/4] ASoC: codecs: wsa88xx: Few cleanups
+Date: Wed, 10 Jul 2024 15:52:29 +0200
+Message-Id: <20240710-asoc-wsa88xx-version-v1-0-f1c54966ccde@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/13] media: qcom: camss: csiphy-3ph: Add Gen2 v1.2
- two-phase MIPI CSI-2 DPHY init
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
-CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <20240709160656.31146-1-quic_depengs@quicinc.com>
- <20240709160656.31146-9-quic_depengs@quicinc.com>
- <02e34bdd-3e84-4f93-b9a8-a814fcfd465b@linaro.org>
-Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <02e34bdd-3e84-4f93-b9a8-a814fcfd465b@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WKTpgsn9z9sADuTfwZP6HXZtzKU-smjN
-X-Proofpoint-ORIG-GUID: WKTpgsn9z9sADuTfwZP6HXZtzKU-smjN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-10_09,2024-07-10_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- lowpriorityscore=0 adultscore=0 spamscore=0 malwarescore=0 mlxlogscore=901
- mlxscore=0 priorityscore=1501 phishscore=0 clxscore=1015 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
- definitions=main-2407100094
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAB2SjmYC/x3MPQqAMAxA4atIZgOx/nsVcSg2ahaVBrRQvLvV8
+ Q3fi6DshRWGLILnS1SOPUWRZzBvdl8ZxaUGQ6aitiC0esx4q+26EPBi/wF0jqjsTVObqoZET8+
+ LhH87Ts/zAvQQhONmAAAA
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>
+Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org, 
+ linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=735;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=xCLRTG7ipn4tiGh+nXkgwfMZfAsmNK9dFGTdCsvf/7E=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmjpIgOoSVr2Zwu1wsDHRIcZrveKRJRSIuDq8nt
+ RPtif7BrGWJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZo6SIAAKCRDBN2bmhouD
+ 1wh/D/9lsgACXVjSoXDNyKh/50MNApgsGUF1FAG7hSEA8wgGCwfXTAlF+T6iLK/CwOAkjjYnr/X
+ cmNfVrwGDq8BVLYIMRKbC2HNV2obW+l+Ujo07/fLa+g9aQUhC7ZEP4tHAm8qrlY/m3aK5hPDBuf
+ z6IZTOW4byybU0zESW2OFb82RYXE1kt2ykvp+Q10qcYohOJloV/KKrC0YByHeLAv1/58adeBjeo
+ gcSIsfPleSMx29G2WjbpQ7tXT5wWDIANzMl4+PkUGgZrbd27unoL+xYm+0NqyGqis0G/BXI4JqH
+ +yErT3gQKDJaI4RNI8edaxLj3mkY5KYSQbSiQ75wklEz+xLdGmiQ7hdduSwxr+JagfZNuKIeaZe
+ jEuRBkbyQ4lQGu4kzyMJkXOWgFTWo1gDOSBVIvc0HcWvRtWs+Xtw3jiNjg7EJVGEnxyAy36AjBq
+ f2hQCZncbX3Kz85G7x/ARpGU79aXANhLFec/a/mWVqG5sqowgfvYq4Yh4Jax9Vyzfe1DODtHWLz
+ Y+Z39HzUJqBiosEnlz/+5ptF4y+/rUSDig+76co81LY2E3B6BzDxg7II0oZtO8pwoVfS9ivMuzv
+ C20tQU+/QOyG+ZDA2TVW688bOr4jgRDpAGFngu4vigPD0N5Of9bXOj5fnwQQWS1reYa49NMsF2u
+ B8nHm7ztuwmkKjA==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
+Hi,
 
+Few cleanups around wsa88xx codecs.
 
-On 7/10/2024 7:13 PM, Bryan O'Donoghue wrote:
-> On 09/07/2024 17:06, Depeng Shao wrote:
->> +/* GEN2 1.2 2PH */
->> +static const struct
->> +csiphy_lane_regs lane_regs_sm8550[] = {
->> +    {0x0E90, 0x0f, 0x00, CSIPHY_DEFAULT_PARAMS},
->> +    {0x0E98, 0x08, 0x00, CSIPHY_DEFAULT_PARAMS},
-> 
-> Definitely not DPHY 1.2 init sequence.
-> 
-> Could you update to something like /* GEN2 2.x - two phase 5 Gbps DPHY 
-> mode 4 lanes */
-> 
-> Since the PHY can be in DPHY or CPHY mode at different data-rates it 
-> would be nice to call out the exact mode we are upstreaming here.
-> 
-> ---
-> bod
+Best regards,
+Krzysztof
 
+---
+Krzysztof Kozlowski (4):
+      ASoC: codecs: wsa881x: Drop unused version readout
+      ASoC: codecs: wsa883x: Handle reading version failure
+      ASoC: codecs: wsa883x: Simplify handling variant/version
+      ASoC: codecs: wsa884x: Simplify handling variant
 
-Yes, this isn't 1.2, it should be GEN2 2.1.2, thanks for catching this.
+ sound/soc/codecs/wsa881x.c |  2 --
+ sound/soc/codecs/wsa883x.c | 33 ++++++++++++++++++---------------
+ sound/soc/codecs/wsa884x.c |  5 ++---
+ 3 files changed, 20 insertions(+), 20 deletions(-)
+---
+base-commit: 0b58e108042b0ed28a71cd7edf5175999955b233
+change-id: 20240710-asoc-wsa88xx-version-dd0039265245
 
-Thanks,
-Depeng
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
