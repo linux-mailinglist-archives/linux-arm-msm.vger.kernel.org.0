@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-25789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CDA1692CE6F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 11:43:45 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5C7B92CE74
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 11:44:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4F6BF1F21F4E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 09:43:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D77881C23230
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 09:44:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC51A18FA10;
-	Wed, 10 Jul 2024 09:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AFA218FA10;
+	Wed, 10 Jul 2024 09:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lrWWzOMT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HIcgyK6B"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08EF127B56;
-	Wed, 10 Jul 2024 09:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2717C18EFF9;
+	Wed, 10 Jul 2024 09:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720604622; cv=none; b=S8tcLAbU+XRnLKvN01PEVs96JDvXAAuYvn5ZFS0+SvXKeSQ49Q4jTybBCNAB7J5GsGPXp+BKnLX1+xl1WxUFRDsXVdGgVFE0vmzWueF91LWjP6wW/F1feEr8pbapQljnkxHBFM7+OiX9H+Fsw0U5jt2CTdGx557pDdOCo8kpCU0=
+	t=1720604673; cv=none; b=KhpM4vkIJyvOfIg36Ry7YoSXL/iJsl5HinsyKnMxWYs7J9nRRf2hMo0GZkACptSHcUlyYf9hWjJjFNT3ceVkn18NqlbzQhSef33LcuQ/huYQo4/xYGCjouAj+3hS7dWXaNvnCmXxMGUJBDVBrHRsFTLvqR6FflkvaMwdiwG/4kA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720604622; c=relaxed/simple;
-	bh=V6/rLI5eK2Bd/k+91a+tVhir4BqHhZO2eZehfW1uqPg=;
+	s=arc-20240116; t=1720604673; c=relaxed/simple;
+	bh=y1GKYKFAqb5LKcLugeiK1HeS2qc9cFNbld9e01Ktubg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=N+eNef4VWQqpVWyrdezVYJis+C4znXYE6ig/QsI1X6Q8rbmMgIO4gxM8Grs1ALDuzRywDOp8k4rDmyGdlpxmQXyehR4GfcJcBRVktEBjFkEhf7s9JLPpJwzTWj0hPElYSZsGjfwyPSjWe8RZtbU3iAINC72/dve++mfdAqEBRsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lrWWzOMT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8E3C32782;
-	Wed, 10 Jul 2024 09:43:38 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=QfaraoK3+GLIGwA70yEUQD66pnGfOA2cCv6DGWehZOiNUUOh3PSCcFvbQpvt8Q5iFiE5PAkojOOmfSX0ri6Z/n4g6kY3LCMJuDuQCy+Icr9TIax8Pzv12KlS4NtMLbbzPMMPCZHxUxJsvaT8BD9CkkTyLp5KMNF6ZzQTQKVrpIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HIcgyK6B; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FA3C32781;
+	Wed, 10 Jul 2024 09:44:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720604622;
-	bh=V6/rLI5eK2Bd/k+91a+tVhir4BqHhZO2eZehfW1uqPg=;
+	s=k20201202; t=1720604672;
+	bh=y1GKYKFAqb5LKcLugeiK1HeS2qc9cFNbld9e01Ktubg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=lrWWzOMTHoxOFmlV9CuqamyfElDVz8QFUOgnfRl8X3iAPdUtY2DHwDwEwL7E21KJj
-	 Jwa8hTy7aXTckqoPQBKcmiOLDI5cEG2058JIX4CwFggCxGQBN85r61QdyVKRRHJjqn
-	 HNv9rGwFLbSSf972+xYY45ilG4FMNU0Wyoy2b6ELCJZ0Y9p/a4AHuFE3olGUV85erM
-	 KKr2JS3kzMAV1ILnDPFJvtKSu4vzxKMNUT1/3kj0E6TVZnzy9TOEG4QZ//WMTcXTLT
-	 woyuOAq1Ew51/l5nVQcLvF8phDoyd9w/f0iIjn385AtQBwgUFDzBjS/rGNMpUG3wAe
-	 3s+jPQMt6oXRg==
-Message-ID: <8854136e-c75f-40de-9ba1-a2f3cf0211a1@kernel.org>
-Date: Wed, 10 Jul 2024 11:43:36 +0200
+	b=HIcgyK6BEnX7Dly/GUaE+qvW0L4V89VNfp0D7Q6rCXHhNFCVcM/fBnaaCaCvcHd+A
+	 INabqAwBEAgtHtMjfky1Vym9v/UltOlyy0vEbdvL4yeJm7+IcECXYk+LTWE9l4W0kl
+	 1/7BGARwPuwZ1eqsQMhRTEesHsVE9LdJB6jD8f/qcnuQ4cqQ/Etk4IUJPDxuVznKHs
+	 KDFnYTGXT7nzmPOQH//0ruih886ZK+OXmgkl9Pr203UBuwbbiHdBzmVyzb3nSfc1gt
+	 LSXXUu27qg/6/rePp4MAYeEsuLylRGRRPGRQZu6968OfOrpWzIoUB/vkQgT5sPqNDF
+	 B/Uk1g+/lEfIw==
+Message-ID: <ca59b8a8-847a-4101-bcd8-bebc14420a9c@kernel.org>
+Date: Wed, 10 Jul 2024 11:44:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] ARM: dts: qcom: apq8064: adhere to pinctrl dtschema
+Subject: Re: [PATCH 2/3] ARM: dts: qcom: ipq8064: adhere to pinctrl dtschema
 To: Rayyan Ansari <rayyan.ansari@linaro.org>, linux-arm-msm@vger.kernel.org
 Cc: Bjorn Andersson <andersson@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, devicetree@vger.kernel.org,
@@ -58,7 +58,7 @@ Cc: Bjorn Andersson <andersson@kernel.org>, Conor Dooley
  Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org,
  Rob Herring <robh@kernel.org>
 References: <20240710084250.11342-1-rayyan.ansari@linaro.org>
- <20240710084250.11342-2-rayyan.ansari@linaro.org>
+ <20240710084250.11342-3-rayyan.ansari@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,165 +104,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240710084250.11342-2-rayyan.ansari@linaro.org>
+In-Reply-To: <20240710084250.11342-3-rayyan.ansari@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 10/07/2024 10:41, Rayyan Ansari wrote:
-> Pass dt_binding_check for qcom,apq8064-pinctrl.yaml.
-
-dtbs_check
-
-> Also correct spelling error ("drive-strengh" -> "drive-strength").
+> Pass dt_binding_check for qcom,ipq8064-pinctrl.yaml.
+> Also remove invalid "bias-none" property, which I have assumed to mean
+> "bias-disable".
 > 
 > Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
 > ---
->  .../dts/qcom/qcom-apq8064-asus-nexus7-flo.dts |   4 -
->  .../boot/dts/qcom/qcom-apq8064-cm-qs600.dts   |  25 +-
->  .../boot/dts/qcom/qcom-apq8064-ifc6410.dts    |  25 +-
->  arch/arm/boot/dts/qcom/qcom-apq8064-pins.dtsi | 362 +++++++-----------
->  .../qcom-apq8064-sony-xperia-lagan-yuga.dts   |  10 +-
->  arch/arm/boot/dts/qcom/qcom-apq8064.dtsi      |  34 +-
->  6 files changed, 172 insertions(+), 288 deletions(-)
-> 
-> diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064-asus-nexus7-flo.dts b/arch/arm/boot/dts/qcom/qcom-apq8064-asus-nexus7-flo.dts
-> index d460743fbb94..947183992850 100644
-> --- a/arch/arm/boot/dts/qcom/qcom-apq8064-asus-nexus7-flo.dts
-> +++ b/arch/arm/boot/dts/qcom/qcom-apq8064-asus-nexus7-flo.dts
-> @@ -125,8 +125,6 @@ &gsbi1 {
->  &gsbi1_i2c {
->  	status = "okay";
->  	clock-frequency = <200000>;
-> -	pinctrl-0 = <&i2c1_pins>;
-> -	pinctrl-names = "default";
+>  arch/arm/boot/dts/qcom/qcom-ipq8064-ap148.dts |  11 +-
+>  .../arm/boot/dts/qcom/qcom-ipq8064-rb3011.dts |  76 +++++-------
+>  arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi      | 114 ++++++++----------
 
-This looks unrelated - probably candidate for its own patch.
-
->  
->  	eeprom@52 {
->  		compatible = "atmel,24c128";
-> @@ -148,8 +146,6 @@ &gsbi3 {
->  
->  &gsbi3_i2c {
->  	clock-frequency = <200000>;
-> -	pinctrl-0 = <&i2c3_pins>;
-> -	pinctrl-names = "default";
->  	status = "okay";
->  
->  	trackpad@10 {
-> diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064-cm-qs600.dts b/arch/arm/boot/dts/qcom/qcom-apq8064-cm-qs600.dts
-> index 671d58cc2741..178c55c1efeb 100644
-> --- a/arch/arm/boot/dts/qcom/qcom-apq8064-cm-qs600.dts
-> +++ b/arch/arm/boot/dts/qcom/qcom-apq8064-cm-qs600.dts
-> @@ -188,24 +188,17 @@ &sdcc4 {
->  };
->  
->  &tlmm_pinmux {
-> -	card_detect: card_detect {
-> -		mux {
-> -			pins = "gpio26";
-> -			function = "gpio";
-> -			bias-disable;
-> -		};
-> +	card_detect: card-detect-state {
-> +		pins = "gpio26";
-> +		function = "gpio";
-> +		bias-disable;
->  	};
->  
-> -	pcie_pins: pcie_pinmux {
-> -		mux {
-> -			pins = "gpio27";
-> -			function = "gpio";
-> -		};
-> -		conf {
-> -			pins = "gpio27";
-> -			drive-strength = <12>;
-> -			bias-disable;
-> -		};
-> +	pcie_pins: pcie-state {
-> +		pins = "gpio27";
-> +		function = "gpio";
-> +		drive-strength = <12>;
-> +		bias-disable;
->  	};
->  };
->  
-> diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064-ifc6410.dts b/arch/arm/boot/dts/qcom/qcom-apq8064-ifc6410.dts
-> index ed86b24119c9..b3ff8010b149 100644
-> --- a/arch/arm/boot/dts/qcom/qcom-apq8064-ifc6410.dts
-> +++ b/arch/arm/boot/dts/qcom/qcom-apq8064-ifc6410.dts
-> @@ -321,24 +321,17 @@ &sdcc4 {
->  };
->  
->  &tlmm_pinmux {
-> -	card_detect: card_detect {
-> -		mux {
-> -			pins = "gpio26";
-> -			function = "gpio";
-> -			bias-disable;
-> -		};
-> +	card_detect: card-detect-state {
-> +		pins = "gpio26";
-> +		function = "gpio";
-> +		bias-disable;
->  	};
->  
-> -	pcie_pins: pcie_pinmux {
-> -		mux {
-> -			pins = "gpio27";
-> -			function = "gpio";
-> -		};
-> -		conf {
-> -			pins = "gpio27";
-> -			drive-strength = <12>;
-> -			bias-disable;
-> -		};
-> +	pcie_pins: pcie-state {
-> +		pins = "gpio27";
-> +		function = "gpio";
-> +		drive-strength = <12>;
-> +		bias-disable;
->  	};
->  };
->  
-> diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064-pins.dtsi b/arch/arm/boot/dts/qcom/qcom-apq8064-pins.dtsi
-> index 7c545c50847b..e53de709e9d1 100644
-> --- a/arch/arm/boot/dts/qcom/qcom-apq8064-pins.dtsi
-> +++ b/arch/arm/boot/dts/qcom/qcom-apq8064-pins.dtsi
-> @@ -1,318 +1,218 @@
->  // SPDX-License-Identifier: GPL-2.0
->  
->  &tlmm_pinmux {
-> -	sdc4_gpios: sdc4-gpios {
-> -		pios {
-> -			pins = "gpio63", "gpio64", "gpio65", "gpio66", "gpio67", "gpio68";
-> -			function = "sdc4";
-> -		};
-> -	};
-> -
-> -	sdcc1_pins: sdcc1-pin-active {
-> -		clk {
-> +	sdcc1_default_state: sdcc1-default-state {
-> +		clk-pins {
->  			pins = "sdc1_clk";
-> -			drive-strengh = <16>;
-> +			drive-strength = <16>;
-
-Such corrections should be separate patches.
-
->  			bias-disable;
->  		};
->  
-
-> -		cmd {
-> +		cmd-pins {
->  			pins = "sdc1_cmd";
-> -			drive-strengh = <10>;
-> +			drive-strength = <10>;
->  			bias-pull-up;
->  		};
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
