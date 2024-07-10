@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-25791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 847BE92CE79
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 11:45:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A5D9892CE88
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 11:47:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B66DF1C2287E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 09:45:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C90441C233B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 09:47:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AD3518FC79;
-	Wed, 10 Jul 2024 09:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ADA418F2EF;
+	Wed, 10 Jul 2024 09:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UNN2aqoF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="edHrWMtv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A7818FC76;
-	Wed, 10 Jul 2024 09:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03462B9C6;
+	Wed, 10 Jul 2024 09:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720604708; cv=none; b=OEGZUbmkamnlUj2HT5ATFE8jLQDBV7zzWW7tzTPxZefHXa9ojLSHXay9k+pAXMgAqzQcIym/aGv2qruzchmgEpB+3Z1J+bxi2H1/RE9uDeQ6N2IqHouAMMUnnlOpUBUUvpmpW1/rcKjv7/wIXIUQhe6mIztvcEsL4nOYJ5eGFhU=
+	t=1720604846; cv=none; b=Zzzsr0ppUgAixlSjhgKpj01kmpH7ZQGnNgZOBsgtbNtqS7AzceDTM74lO2aaj8FqXOYhMqWDR1Ho2uHVL7Xrm661P2anTOBMtqIqZX3JpFPRdUs09WZHnLz2hDQALvdMOUKL5o/pkVsF6zpJ0wsxqz00bUVCXdX4sQzjS35RcoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720604708; c=relaxed/simple;
-	bh=lC2q9hw6vrd5GKebrfAdfev9DYDFJlvNG5u+kkHvdDM=;
+	s=arc-20240116; t=1720604846; c=relaxed/simple;
+	bh=GRu4FfEYbm8whxTEYwcDaM/6D1f5Whjh+UNZLviD5Bg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=R1MAhdI+wBCGV8WbBlCkI6EApNXfv/1bgwZsSIFynjHWoaovcHWkptDCVkZa28y7tmtJaim7zz5Ah0UbOJYJra4Tuyq+JEYJ8qNpKGRYjokAlY8Spj5ehryL0FGsbqi43hs8m3qPC+CkZaGcZnMUMtlqhO2LLy7NdBPbwF4m2ZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UNN2aqoF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3507CC32786;
-	Wed, 10 Jul 2024 09:45:03 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=h8hJgDcr6rGPs3EE1CeplQBPBpvGtYvBguzXgxuJ9FqdOcCqwcpe+1YnhxMB/Walcz0wBD8KJy1BlQLVla19G6g6cpslTFaBpXvO0my5hjq0/WZs06IADdT6WqpyH8H5UJ53J49VJ2goQUymRurvkwoJlGpD79FZEdX7yFd+R6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=edHrWMtv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A579C32781;
+	Wed, 10 Jul 2024 09:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720604707;
-	bh=lC2q9hw6vrd5GKebrfAdfev9DYDFJlvNG5u+kkHvdDM=;
+	s=k20201202; t=1720604845;
+	bh=GRu4FfEYbm8whxTEYwcDaM/6D1f5Whjh+UNZLviD5Bg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=UNN2aqoFbfXmFjqvZ4s03RT8LelFMjzHn3zo8kWNi52hehvCIsGi0x03EkO63++Qb
-	 iHfK3qYj4wUZkc6rXRsa+WZsLGr46kckUNylodwf7whjuWezBl9Fn9cP+7nPq+4U4B
-	 7/4LZsHunD/cRj+3t9pZ0UCIhKDaQ89Ix63OuGWPGEcN4P1zkLzeqsK7XbbWzr1FAB
-	 0pOOY+0tjCjOFgmXP1tWCuBj4tzPjsRcwmdyUU3Qsb76n/mMZ+GWjq9XegP8OXEAvZ
-	 viGmgHHGYGLYt5F3qRC0UE67o1bsdfpgsM//2gl01DL6Srru0L+ZTkUJUZRGUjSDhF
-	 novokT/CE7kJw==
-Message-ID: <daaa0e56-9042-417b-a39f-d56084a0ce76@kernel.org>
-Date: Wed, 10 Jul 2024 11:45:01 +0200
+	b=edHrWMtvHoKEFL0ZQH5OlsDvT8qGJAF6C5MsjNbE680BCrAa0/UAWf+nsWmGBLcWS
+	 jBL8Us+1vlnwZ9/o+TtCvlRDRTGAF/Y7Rb8neXQm3yhvEUe/XZq5S9azi2K7UEa2Be
+	 0LHxLvt796KBBfF1KZcf1xMAzkavUcpInenxIaE/JStAkl289XNQGiwA0+Ce20CZNr
+	 jgPC9+U2w81bkvbLGsSGeB6NCcUvF382cPT6FXboLrOwyukZZnEWKSFbaxR1xCJU+A
+	 UCImvDRZ7dITjqa5+kePeU+Kk6CBBUfuiHurIADXCaHMCLzXKHTRGGkk27awZjoGKt
+	 3Sy9UWCuqZ3Bw==
+Message-ID: <2e309d52-8180-4922-9a5a-022fc8bf8ef5@kernel.org>
+Date: Wed, 10 Jul 2024 11:47:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,15 +50,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] ARM: dts: qcom: ipq4019: adhere to pinctrl dtschema
-To: Rayyan Ansari <rayyan.ansari@linaro.org>, linux-arm-msm@vger.kernel.org
-Cc: Bjorn Andersson <andersson@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, devicetree@vger.kernel.org,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org,
- Rob Herring <robh@kernel.org>
-References: <20240710084250.11342-1-rayyan.ansari@linaro.org>
- <20240710084250.11342-4-rayyan.ansari@linaro.org>
+Subject: Re: [PATCH v1] arm64: dts: qcom: sa8775p: Add UART node
+To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+ linux-arm-msm@vger.kernel.org, conor+dt@kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
+References: <20240710094149.13299-1-quic_vdadhani@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,24 +102,49 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240710084250.11342-4-rayyan.ansari@linaro.org>
+In-Reply-To: <20240710094149.13299-1-quic_vdadhani@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10/07/2024 10:41, Rayyan Ansari wrote:
-> Pass dt_binding_check for qcom,ipq4019-pinctrl.yaml.
+On 10/07/2024 11:41, Viken Dadhaniya wrote:
+> Add missing UART configuration for sa8775.
 > 
-> Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
+> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
 > ---
->  .../boot/dts/qcom/qcom-ipq4018-ap120c-ac.dtsi | 34 ++++++++-----------
->  .../boot/dts/qcom/qcom-ipq4018-jalapeno.dts   | 27 ++++++---------
->  .../boot/dts/qcom/qcom-ipq4019-ap.dk01.1.dtsi | 26 +++++---------
->  .../boot/dts/qcom/qcom-ipq4019-ap.dk04.1.dtsi | 14 ++++----
->  .../dts/qcom/qcom-ipq4019-ap.dk07.1-c1.dts    |  8 ++---
->  .../dts/qcom/qcom-ipq4019-ap.dk07.1-c2.dts    |  2 +-
->  .../boot/dts/qcom/qcom-ipq4019-ap.dk07.1.dtsi |  6 ++--
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 231 ++++++++++++++++++++++++++
+>  1 file changed, 231 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index 23f1b2e5e624..c107ee40341d 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: BSD-3-Clause
+>  /*
+>   * Copyright (c) 2023, Linaro Limited
+> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
+>  
+>  #include <dt-bindings/interconnect/qcom,icc.h>
+> @@ -657,6 +658,21 @@
+>  				status = "disabled";
+>  			};
+>  
+> +			uart14: serial@880000 {
+> +				compatible = "qcom,geni-uart";
+> +				reg = <0x0 0x00880000 0x0 0x4000>;
+> +				interrupts = <GIC_SPI 373 IRQ_TYPE_LEVEL_HIGH>;
+> +				clocks = <&gcc GCC_QUPV3_WRAP2_S0_CLK>;
+> +				clock-names = "se";
+> +				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
+> +						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
+> +						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+> +						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
+> +				interconnect-names = "qup-core", "qup-config";
+> +				power-domains = <&rpmhpd SA8775P_CX>;
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+All the clocks, interconenct and power domains look to me questionable.
+AFAIK, most of it (if not all) is going to be removed.
 
 Best regards,
 Krzysztof
