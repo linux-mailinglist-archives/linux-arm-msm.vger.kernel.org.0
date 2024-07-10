@@ -1,175 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-25817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99E4492D03F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 13:10:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47C6692D02C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 13:09:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E1164B245EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 11:10:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F186D1F259F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 11:09:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62FE719149E;
-	Wed, 10 Jul 2024 11:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7808F19049A;
+	Wed, 10 Jul 2024 11:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Fn4UcLnB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G/Xe+T9F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E338318FDDE;
-	Wed, 10 Jul 2024 11:08:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D5819048C;
+	Wed, 10 Jul 2024 11:08:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720609739; cv=none; b=K1mjvV8mi8wFmnLCBpNO7G1xDNKS9PQo1gMqyQEHw2nN1OGPJHPLh6/McmxazLeaI1x0wabxvGKI7sNdrkzHLUIwTbV1Mi6ASFiCMRyS/eP50UuGeGZsstr1o38zvgzECDqPY2/SmjC4isBoLMoH1RsOy+vNSblXwZCQkRZpySs=
+	t=1720609730; cv=none; b=QLbPnDLw5JHfrW945TXStwhKZFqH+Wz/o+dXHCOB/03d77kL/7QNRChzRb2s8xfOAj9bsHLYQ//ENtX7TX1GPyf16i0WagDgUk/TEzvbt47PhkemsHu5KoHfE2nHBLlnAKbIYrzeQnmXBoGdy5Ct3U83d8ZhPlmCQwoaZ3HfQBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720609739; c=relaxed/simple;
-	bh=sNSmlaFT8GMQD/kiM+wV8aqxn2SQiVisO8vrATvj/Z8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=BWlRFy2k8lwOqHwvWOR/80IlWWK0BQna8fdhvchn9R4vR3VAWJssBKGhdLRYZFIF0zkRjUq6JPoRRcVRdGCjv7p1qUe+cjHtK+9n0GpW83fICb+sB/i8X4a798WL2kxnqlX+RLzcVsQxZMop//umOBhHVqjfLLjD7ALZa1gLTfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Fn4UcLnB; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46A4NXn4030713;
-	Wed, 10 Jul 2024 11:08:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	lkltbZ8Rj0N7ZQ2MS8y2Uf/sIKt4S6/RYtcBe+ypCe0=; b=Fn4UcLnBX4CdYvFq
-	U3QduBVHkuEBCUKUSN2rW3OQNl/UJG5vl/0Fn5YtUyIllgV7gm3xVMDg0liRoVMc
-	IvmuvgzWEtpp0dfBx/10hrQnwvckEouoFllFj/cEmvxK+kK34veq2jBvfUBZqF6s
-	DOyDzDy4R1uNr8NChJ3zdffm6/Rgi03Xx2oWRW3PLuVoSs/SvmdJ/Hdy4aECmz8N
-	MOJeJnQkxesmTy6Vje9u8Iw/S7TOe1R7qnj4ZA+7kA2Ja/Rmd2jj6aCDYL6oraYP
-	zrwa5ni8TfRq5lMextxg8rIAbv1wX1MOdRXdpt30tJFRlF+AISVlPL5eeA1F+wQJ
-	itaAGQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406we90yhj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jul 2024 11:08:47 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46AB8k5d025122
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jul 2024 11:08:46 GMT
-Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 10 Jul 2024 04:08:40 -0700
-From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Date: Wed, 10 Jul 2024 16:38:17 +0530
-Subject: [PATCH v7 4/4] PCI: epf-mhi: Add support for handling D-state
- notify from EPC
+	s=arc-20240116; t=1720609730; c=relaxed/simple;
+	bh=63/n+sg/NTzv92plEkDhlWcotwSPCPx4HRsm4hAX+LQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Zl+pysWG7Kzq8G2LV3E9CqEEiAVSjUE3SOIFxUOvW77RrHKk/8zWLp5e2HqtHL2MruIhk25Iwe61j4qMxdofY3n6VKkw0IFgvnyKiwuEFLLdbWRmHfn+uZuErxAY0hJlNFYZI8tlaYbzosj4GZezj+T4iMiHtd5uZloeAtLmLrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G/Xe+T9F; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4CBEC32781;
+	Wed, 10 Jul 2024 11:08:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720609729;
+	bh=63/n+sg/NTzv92plEkDhlWcotwSPCPx4HRsm4hAX+LQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=G/Xe+T9F/sss+paR8S/7um4peTEP9D5SV5fYLmpcJEaCL6Esogt4RilpExM5KXazB
+	 aJQFBcDI1xoT+HVZSimfd/2lyZ7jBnse0oTywJwzu7fe0048EpZ7uPq6nB30bMiK1i
+	 kICo474Cj4inKwOqhISGmOtPWTd4SDjqFHq5W0cc2oyB6gAhSrh5tA1AYQZ6yFlDgt
+	 yjisuLCYvgKbrXDJ+LQvtb3u6kZqaQNgeXDqwov65q47TB8zYmavgDRoEldPeJ9bmL
+	 P3pD3tPP6UOXFRCLFWP0jmHJnStMSC2IOnvyD6lHf1dJOIUppGs9ofpJj0RNMRY3X+
+	 NfRMs62cYw3cw==
+Message-ID: <55e850dd-1b45-4bad-a11f-f645cca07f2a@kernel.org>
+Date: Wed, 10 Jul 2024 13:08:45 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 00/13] media: qcom: camss: Add sm8550 support
+To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: quic_eberman@quicinc.com, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20240709160656.31146-1-quic_depengs@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240709160656.31146-1-quic_depengs@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240710-dstate_notifier-v7-4-8d45d87b2b24@quicinc.com>
-References: <20240710-dstate_notifier-v7-0-8d45d87b2b24@quicinc.com>
-In-Reply-To: <20240710-dstate_notifier-v7-0-8d45d87b2b24@quicinc.com>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Kishon Vijay Abraham I
-	<kishon@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>, Jonathan Corbet
-	<corbet@lwn.net>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Rob Herring
-	<robh@kernel.org>
-CC: <linux-pci@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <mhi@lists.linux.dev>, <quic_vbadigan@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
-        <quic_skananth@quicinc.com>, <quic_parass@quicinc.com>,
-        "Krishna chaitanya
- chundru" <quic_krichai@quicinc.com>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1720609699; l=1803;
- i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
- bh=sNSmlaFT8GMQD/kiM+wV8aqxn2SQiVisO8vrATvj/Z8=;
- b=RnCkMXimzqjTSLGhyAjfHzalAWF1i1gsJB+BgYE+0lj42Pd/YI4QVZ5LLGb53yqONRm5h7Itq
- FqoX50NO2rzA2aJvwrZjD01RCABdAREvaxfA4/Sh9n/7gyRs7zjDJjh
-X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
- pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: EhlpC7mepEndcM4bfwMkL-ZxePXrOYyU
-X-Proofpoint-GUID: EhlpC7mepEndcM4bfwMkL-ZxePXrOYyU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-10_06,2024-07-10_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 impostorscore=0
- bulkscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 phishscore=0
- priorityscore=1501 mlxlogscore=859 malwarescore=0 mlxscore=0 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
- definitions=main-2407100076
 
-Add support for handling D-state notify for MHI EPF.
+On 09/07/2024 18:06, Depeng Shao wrote:
+> V3:
+> - Rebased the change based on below change which will be merged firstly.
+>   "Move camss version related defs in to resources"
+> Link: https://lore.kernel.org/all/20240522154659.510-1-quic_grosikop@quicinc.com/
+> - Rebased the change based on Bryan's csiphy optimization change and add
+> these changes into this series, so that the new csiphy-3ph driver don't
+> need to add duplicate code. This has got Bryan's permission to add his
+> patches into this series.
+> - Refactor some changes based on the comments to move the random code to
+> patches where they are used.
+> - Remove the vfe780 irq function since it isn't doing the actual work.
+> - Add dt-binding for sm8550 camss driver.
+> Link to V2: https://lore.kernel.org/all/20240320141136.26827-1-quic_depengs@quicinc.com/
 
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
----
- drivers/pci/endpoint/functions/pci-epf-mhi.c | 11 +++++++++++
- include/linux/mhi_ep.h                       |  3 +++
- 2 files changed, 14 insertions(+)
+I asked for reference to upstream DTS - where can I find the DTS patches?
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-index 7d070b1def11..6de9014e6e53 100644
---- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-@@ -863,6 +863,16 @@ static int pci_epf_mhi_bus_master_enable(struct pci_epf *epf)
- 	return 0;
- }
- 
-+static int pci_epf_mhi_dstate_notify(struct pci_epf *epf, pci_power_t state)
-+{
-+	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-+	struct mhi_ep_cntrl *mhi_cntrl = &epf_mhi->mhi_cntrl;
-+
-+	mhi_cntrl->dstate = state;
-+
-+	return 0;
-+}
-+
- static int pci_epf_mhi_bind(struct pci_epf *epf)
- {
- 	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-@@ -921,6 +931,7 @@ static const struct pci_epc_event_ops pci_epf_mhi_event_ops = {
- 	.link_up = pci_epf_mhi_link_up,
- 	.link_down = pci_epf_mhi_link_down,
- 	.bus_master_enable = pci_epf_mhi_bus_master_enable,
-+	.dstate_notify = pci_epf_mhi_dstate_notify,
- };
- 
- static int pci_epf_mhi_probe(struct pci_epf *epf,
-diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
-index 7b40fc8cbe77..7c9e5895ea2c 100644
---- a/include/linux/mhi_ep.h
-+++ b/include/linux/mhi_ep.h
-@@ -8,6 +8,7 @@
- 
- #include <linux/dma-direction.h>
- #include <linux/mhi.h>
-+#include <linux/pci.h>
- 
- #define MHI_EP_DEFAULT_MTU 0x8000
- 
-@@ -167,6 +168,8 @@ struct mhi_ep_cntrl {
- 
- 	enum mhi_state mhi_state;
- 
-+	pci_power_t dstate;
-+
- 	u32 max_chan;
- 	u32 mru;
- 	u32 event_rings;
-
--- 
-2.42.0
+Best regards,
+Krzysztof
 
 
