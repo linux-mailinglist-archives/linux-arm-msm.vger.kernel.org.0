@@ -1,144 +1,335 @@
-Return-Path: <linux-arm-msm+bounces-25799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54B9B92CF31
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 12:33:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2A9692CF48
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 12:35:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 77BA51C23980
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 10:33:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 430B41F218A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 10:35:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB38D19007C;
-	Wed, 10 Jul 2024 10:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8796C18FA06;
+	Wed, 10 Jul 2024 10:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nykAWGN5"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="TBmZyMIw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mailout2.samsung.com (mailout2.samsung.com [203.254.224.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C50F190068;
-	Wed, 10 Jul 2024 10:26:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABBF3C39
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jul 2024 10:31:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720607199; cv=none; b=J/FZBVnsbY3YOHRVqdunn2BkojHjefS7YZcOVMayD/CxmJ3wtfSk7eIkr8rU9cNKPI+pApZAkBsqxPkfoJQHldx8a5Ybd0ykOmVM4m0RihaCzpTfK6M4E32YcYjO7/jGKz6qXaXU8sT0wePG06R9VrT0OItNeyUZ1mfM9EDE+dw=
+	t=1720607471; cv=none; b=qULAoS5ri26ecSEW4Q/7+dWmY4lNR7Sh/ahaitROs32xups5v3Jbk0y1FMfh5C0AG7Msfe103STXwkeRI0QVMPN064VxFm4a9k0uHlmziLC/EXrn4GD2OgY+CCwgr8NHuB/rPYNwzdnfys5lfuY+7iduf92q/zBnlb9hXQLjvjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720607199; c=relaxed/simple;
-	bh=u97rYeUjchKaCKTVKQru5rzX9hbGOoIh61zXNDjCYIk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=py1TVXxPYmZML6o9tb6v8ScQQEEynxRTVkjmV0UvWxi7U2KroqG5KFchPuKEFDh0Oh3krmBsFHg9+8OH1Jp0nuzYbjFs7xlh37mYkBc821xSohgTdHWSCS67LHHL3E8mkmvPiAfyovQu6dbs4ysjxOV/d/BQJFKwNtvakVxMgrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nykAWGN5; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46A7E4LR026771;
-	Wed, 10 Jul 2024 10:26:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5FMNn2jFPQzv9jsNISMUwvcbpmzjCI0Ard70E7jNRoQ=; b=nykAWGN5/Z2QTG+X
-	t+j+K/eKe98mistcfBfIYH/pKFTTTyQdmXD+1qQEntLDApOzPK10VrsOhGDbzguv
-	Rj1uPvqk3cbY9/c7n+Dm39Db14WzTRZRN0nnPvdwgaECVNQ+He+EJivYAR8YkWOK
-	7947Z98KYeAem1dmimLUCnROseC68oneh0kacUs756aUD8RNC3PcZESMFKjuVKB2
-	hMFjwMB4ENpV7F0Vao2gBqkCE8BOwQZAveHEfeeuqsHJKOk88Sfb6BLS+qe/xJAb
-	mbvLGi3lckIMuzvjHyQJHxdc4NtcDuGz+L0fe8+iCOu6uMb19mADaPzKbFFR+plu
-	xUecKw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4091jdka4m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jul 2024 10:26:34 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46AAQYuQ030367
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jul 2024 10:26:34 GMT
-Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 10 Jul
- 2024 03:26:28 -0700
-Message-ID: <03a18462-335f-43ec-81e3-4d08ba3b6434@quicinc.com>
-Date: Wed, 10 Jul 2024 18:26:25 +0800
+	s=arc-20240116; t=1720607471; c=relaxed/simple;
+	bh=7Lhie7ob6XN2MfK3M+u9hh6fDPhqpPGPGWl4Rs6GGlY=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
+	 Content-Type:References; b=tyOajjHG6ritpdg7tQ2hrdVu0HLxpBt2H8pV8lAnFoLaePANO67nUgpv0/3JFFWbsig8uquFKbjzmgxwTsnwhm+6I2mUEmFLkL3NphRdJUpz9WHnGYHIq25LaS1zzxvlK7dpkDL66oepDeXjwFdkUxFoPvJ1Nur7cey5a1da1tE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=TBmZyMIw; arc=none smtp.client-ip=203.254.224.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+	by mailout2.samsung.com (KnoxPortal) with ESMTP id 20240710103106epoutp02bbb83c113e98c22eb555fbae57784839~g01-dXM9k1850418504epoutp02Q
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jul 2024 10:31:06 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.samsung.com 20240710103106epoutp02bbb83c113e98c22eb555fbae57784839~g01-dXM9k1850418504epoutp02Q
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1720607466;
+	bh=nbk9Pdg7OYXICEjwvvLvJ1kmU48SoJWAfgQWramsV64=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+	b=TBmZyMIwS1pd/aImfWEPhNtY9EgLmeDw6VIiO5qt34hHFPuPpxVf60svoUjQE5Pir
+	 iw1gPCTHb9EilEUt9jA0eVr976byne3JiXS7I+5/320vA3TpJaDhJ4LsR6Z+O0Jqv9
+	 9pELQ5IffCZyoT6mqsKCnimm2whyN0oUgeES4nfM=
+Received: from epsnrtp4.localdomain (unknown [182.195.42.165]) by
+	epcas5p2.samsung.com (KnoxPortal) with ESMTP id
+	20240710103105epcas5p2fe1d0154c7bca0415a1c3a44f12e6de1~g01_7maka1040310403epcas5p2Y;
+	Wed, 10 Jul 2024 10:31:05 +0000 (GMT)
+Received: from epsmges5p3new.samsung.com (unknown [182.195.38.178]) by
+	epsnrtp4.localdomain (Postfix) with ESMTP id 4WJvK42xdHz4x9Q1; Wed, 10 Jul
+	2024 10:31:04 +0000 (GMT)
+Received: from epcas5p2.samsung.com ( [182.195.41.40]) by
+	epsmges5p3new.samsung.com (Symantec Messaging Gateway) with SMTP id
+	53.0E.06857.8E26E866; Wed, 10 Jul 2024 19:31:04 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+	epcas5p1.samsung.com (KnoxPortal) with ESMTPA id
+	20240710103103epcas5p1e4d33af6169900a1395c0c62e20fc1c3~g018-gFuM2946029460epcas5p1U;
+	Wed, 10 Jul 2024 10:31:03 +0000 (GMT)
+Received: from epsmgmcp1.samsung.com (unknown [182.195.42.82]) by
+	epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+	20240710103103epsmtrp1c03e6e073d00f653bc70b3a918af22ee~g018_ReTl2327923279epsmtrp1S;
+	Wed, 10 Jul 2024 10:31:03 +0000 (GMT)
+X-AuditID: b6c32a4b-88bff70000021ac9-48-668e62e8493a
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+	epsmgmcp1.samsung.com (Symantec Messaging Gateway) with SMTP id
+	2A.D1.18846.7E26E866; Wed, 10 Jul 2024 19:31:03 +0900 (KST)
+Received: from INBRO002756 (unknown [107.122.12.5]) by epsmtip1.samsung.com
+	(KnoxPortal) with ESMTPA id
+	20240710103100epsmtip196e11e56159895c3b6822ba649ce5c85~g0152aB1u2202122021epsmtip1C;
+	Wed, 10 Jul 2024 10:31:00 +0000 (GMT)
+From: "Alim Akhtar" <alim.akhtar@samsung.com>
+To: "'Krzysztof Kozlowski'" <krzysztof.kozlowski@linaro.org>, "'Rafael J.
+ Wysocki'" <rafael@kernel.org>, "'Daniel Lezcano'"
+	<daniel.lezcano@linaro.org>, "'Zhang Rui'" <rui.zhang@intel.com>, "'Lukasz
+ Luba'" <lukasz.luba@arm.com>, "'Florian Fainelli'"
+	<florian.fainelli@broadcom.com>, "'Ray Jui'" <rjui@broadcom.com>, "'Scott
+ Branden'" <sbranden@broadcom.com>, "'Broadcom internal kernel review list'"
+	<bcm-kernel-feedback-list@broadcom.com>, "'Bartlomiej Zolnierkiewicz'"
+	<bzolnier@gmail.com>, "'Krzysztof Kozlowski'" <krzk@kernel.org>, "'Shawn
+ Guo'" <shawnguo@kernel.org>, "'Sascha Hauer'" <s.hauer@pengutronix.de>,
+	"'Pengutronix Kernel Team'" <kernel@pengutronix.de>, "'Fabio Estevam'"
+	<festevam@gmail.com>, "'Amit Kucheria'" <amitk@kernel.org>, "'Thara
+ Gopinath'" <thara.gopinath@gmail.com>
+Cc: <linux-pm@vger.kernel.org>, <linux-rpi-kernel@lists.infradead.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+	<linux-samsung-soc@vger.kernel.org>, <imx@lists.linux.dev>,
+	<linux-arm-msm@vger.kernel.org>
+In-Reply-To: <20240709-thermal-probe-v1-4-241644e2b6e0@linaro.org>
+Subject: RE: [PATCH 04/12] thermal/drivers/exynos: simplify probe() with
+ local dev variable
+Date: Wed, 10 Jul 2024 16:00:58 +0530
+Message-ID: <019601dad2b4$439c8b90$cad5a2b0$@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: add qcs9100-tlmm compatible
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240709-add_qcs9100_tlmm_compatible-v2-0-d025b58ea196@quicinc.com>
- <20240709-add_qcs9100_tlmm_compatible-v2-1-d025b58ea196@quicinc.com>
- <1b6e63fe-cbd2-4d59-a863-c246267a0e89@kernel.org>
-From: Tengfei Fan <quic_tengfan@quicinc.com>
-In-Reply-To: <1b6e63fe-cbd2-4d59-a863-c246267a0e89@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JxMX5qJ4_dfL_lp_0TwtG3ke2OuiCc1k
-X-Proofpoint-ORIG-GUID: JxMX5qJ4_dfL_lp_0TwtG3ke2OuiCc1k
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-10_06,2024-07-09_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- lowpriorityscore=0 adultscore=0 spamscore=0 malwarescore=0 mlxlogscore=999
- mlxscore=0 priorityscore=1501 phishscore=0 clxscore=1015 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
- definitions=main-2407100071
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQILhc/2wHZoSi9ND1AGTvp0WerExgJCFhw7Asyq3nOxZeaNUA==
+Content-Language: en-us
+X-Brightmail-Tracker: H4sIAAAAAAAAA01TbUxTZxT2bcttYYFcCo7XTjbWCAy3QitQXghMnMTdDI0YF1lYFijttRBK
+	W3vLxlyIZAJOOkCGMmgQpiAflTFSsFJA3AA/N6xEPmSMrwoZjA9BlsDWkKz0ouPfc57znPec
+	57w5HCb3LJvHSVVqSY1SouBjLixTT8A7gtnkwpPCRyM46qnKRD8W3GGhtdZhBqpc9UZTg0dR
+	k2mcicrHczFkuGRmIYulmY1uzd9gI+OzISdUfLuPjZ60V2BotaAXoOJRe7bM0sVAV77OYaPL
+	f19iopnyFgxNTxViaOOmkYWWrk8DNNvqhQYay7BoSDRWNgJCP9GHEWb9GJuo7pxjEEbDeYz4
+	Y6gTI1pqzhCzLeWAKNoQEqvGN+NcEtIiU0iJjNT4kEqpSpaqlEfxY48nHkwMFQtFAlE4CuP7
+	KCXpZBQ/5nCc4FCqwm6X7/O5RJFhp+IkFMUPej9So8rQkj4pKkobxSfVMoU6RB1ISdKpDKU8
+	UElqI0RC4b5QuzApLWX52xm22iTKtH4/BbLBpH8+cOZAPAR2NvU4bWIu3gFgV5lbPnCx4xcA
+	XjCVgVeB6UY162VF7WIdm06YAawvKWTSwSyAL6obwKYKwwWwrToP20x44k0YfNxhcARMfAXA
+	P//9HdtUOeMfwIZ1k+NdD/wzeP/xVUc1C/eFNn2Vg3fFw2H9o3ZAY3f4oHzawTPxt+DNxQom
+	PZMP/Gem1uHC0/5m7dAIoDVecO5Or2NWiF93htm2Jie6IAYO9xcwaOwB/7rXyqYxD84V5W3h
+	NHivX4/ROBPqcle2+P3QbB2xD8GxNwiAP7UH0b3cYIFtmrFJQ9wVfpPHpdW+8OzS4Nbq3oDF
+	Op0TLSFgqcnjAnhbv82Yfpsx/TYD+v97/QBYBrCLVFPpcpIKVQcryS9efbhUlW4EjmvYG9sG
+	rJPLgd2AwQHdAHKYfE/Xqqe6k1xXmeTL06RGlajJUJBUNwi1b7uYydspVdnPSalNFIWEC0PE
+	YnFIeLBYxPdync+9LOPicomWTCNJNal5WcfgOPOyGVz/eRf89LmLJwxtQzuy9P6cuvf6OzS8
+	JKrS5l9Mhk7U1aDXguSkIX3PsjwwQarzOzYsW9hZOjzV5mVbr4ha2m3ODnv9VHD+vkLcIli7
+	Gx3sjiqv9bLDs/0GOIPSSF7AfGvyM4/O2wt9qQ/u6yKTknd1EO4x39X/PHaurLn+4gFriYfp
+	4CdhY36FK7V1X8Wbu5/AAYnxQKnYW7S7SSHNSjjiLYh3n/D9MHr507WZxY8DD9fpB9YiflsX
+	qD4ajYlTPFx4nmOKPDQ6Xqtv3vFrybrwmHXoeNu7e4663Xoq35ATlgjriZRrWfE15jP7bTmW
+	q113GxqrzxcJn5snH8YSv5zis6gUiWgvU0NJ/gOL2hillgQAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJIsWRmVeSWpSXmKPExsWy7bCSnO7zpL40g9ezlCwOz6+wWNt7lMXi
+	+5brTBbzPstaPLzqb7Fu2z1mi5n3WtksVk3dyWJx/vwGdou9r7eyW2x6fI3VYuL+s+wWl3fN
+	YbP43HuE0WLibaDsjPP7mCwWNrWwW8z9MpXZ4unMzWwWTx72sVn83b6JxeLd6ieMFi+2iFtc
+	WTODzUHCY828NYwes+6fZfPYOesuu8fiPS+ZPDat6mTzuHNtD5vH5iX1Hi82z2T06P9r4PF5
+	k1wAVxSXTUpqTmZZapG+XQJXxoeep+wF2wwrHk1/yNjA+EC9i5GTQ0LARGLZ2+XsXYxcHEIC
+	2xklnv/tZYVISEtc3ziBHcIWllj57zlU0TNGiZkbPjCBJNgEdCV2LG5jA7FFBHawScy64gRS
+	xCzwnVHiY+9SVoiOk4wSC7dNYQGp4hRwklj5YxuYLSwQLTFx/mWwbhYBVYnfs+aDxXkFLCVW
+	nNvFCGELSpyc+QQsziygLfH05lMoW15i+9s5zBDnKUj8fLqMFeIKJ4ll124yQtSIS7w8eoR9
+	AqPwLCSjZiEZNQvJqFlIWhYwsqxiFE0tKM5Nz00uMNQrTswtLs1L10vOz93ECE4NWkE7GJet
+	/6t3iJGJg/EQowQHs5II7/wb3WlCvCmJlVWpRfnxRaU5qcWHGKU5WJTEeZVzOlOEBNITS1Kz
+	U1MLUotgskwcnFINTHWe8fuzarfpsGoqOc9Yx8dsEvLZLy1s+U4Xxr/2769P2l/29ta+7WmL
+	ax99UbBeHv78i8oUufdX/b568X2pXGyh4G1b90/HqFCyaBnPlTULX3FH7RIt70/buneSTkeo
+	Ux/TuedC0Ywvb9j0u0SImv1aHOxz+5Rh8d9dNbIxdrLh54S/6K+OnfFzuZnrgfPXmOtny23Y
+	fXKGYcKJgoOM4sFy9avnGOruOPer4PfF4uQlz+d9f3D5zK1LldxPqzuvZMhUVXbtrnNiD7mu
+	wrNRqVtn8b7fc+oYqmIlN5dqsH5c++np4j2t1kvaN/5Yk76fd8cfU/+OHbMvl3r+L2cL9Lnw
+	sbRg3cut79X2F8h9MFJiKc5INNRiLipOBACs0ki0fAMAAA==
+X-CMS-MailID: 20240710103103epcas5p1e4d33af6169900a1395c0c62e20fc1c3
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20240709130006epcas5p186c04ed3c733d13e59d58349a6043f92
+References: <20240709-thermal-probe-v1-0-241644e2b6e0@linaro.org>
+	<CGME20240709130006epcas5p186c04ed3c733d13e59d58349a6043f92@epcas5p1.samsung.com>
+	<20240709-thermal-probe-v1-4-241644e2b6e0@linaro.org>
 
+Hello Krzysztof
 
-
-On 7/10/2024 6:14 PM, Krzysztof Kozlowski wrote:
-> On 09/07/2024 15:04, Tengfei Fan wrote:
->> Add qcs9100-tlmm compatible for QCS9100 SoC.
->> QCS9100 is drived from SA8775p. Currently, both the QCS9100 and SA8775p
->> platform use non-SCMI resource. In the future, the SA8775p platform will
->> move to use SCMI resources and it will have new sa8775p-related device
->> tree. Consequently, introduce "qcs9100-tlmm" to describe non-SCMI based
->> pinctrl.
->>
->> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->> ---
->>   Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml | 5 ++++-
->>   1 file changed, 4 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml
->> index e9abbf2c0689..1bdec08efc4a 100644
->> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml
->> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml
->> @@ -17,7 +17,10 @@ allOf:
->>   
->>   properties:
->>     compatible:
->> -    const: qcom,sa8775p-tlmm
->> +    items:
+> -----Original Message-----
+> From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Sent: Tuesday, July 9, 2024 6:30 PM
+> To: Rafael J. Wysocki <rafael@kernel.org>; Daniel Lezcano
+> <daniel.lezcano@linaro.org>; Zhang Rui <rui.zhang@intel.com>; Lukasz Luba
+> <lukasz.luba@arm.com>; Florian Fainelli <florian.fainelli@broadcom.com>;
+> Ray Jui <rjui@broadcom.com>; Scott Branden <sbranden@broadcom.com>;
+> Broadcom internal kernel review list <bcm-kernel-feedback-
+> list@broadcom.com>; Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>;
+> Krzysztof Kozlowski <krzk@kernel.org>; Alim Akhtar
+> <alim.akhtar@samsung.com>; Shawn Guo <shawnguo@kernel.org>; Sascha
+> Hauer <s.hauer@pengutronix.de>; Pengutronix Kernel Team
+> <kernel@pengutronix.de>; Fabio Estevam <festevam@gmail.com>; Amit
+> Kucheria <amitk@kernel.org>; Thara Gopinath <thara.gopinath@gmail.com>
+> Cc: linux-pm@vger.kernel.org; linux-rpi-kernel@lists.infradead.org; linux-
+> arm-kernel@lists.infradead.org; linux-kernel@vger.kernel.org; linux-
+> samsung-soc@vger.kernel.org; imx@lists.linux.dev; linux-arm-
+> msm@vger.kernel.org; Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org>
+> Subject: [PATCH 04/12] thermal/drivers/exynos: simplify probe() with local
+> dev variable
 > 
-> Same comment as in other patchset, so apparently you made all of patches
-> in similar way. No need to add items.
+> Simplify the probe() function by using local 'dev' instead of &pdev->dev.
+> While touching devm_kzalloc(), use preferred sizeof(*) syntax.
 > 
-> Best regards,
-> Krzysztof
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+
+Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+
+>  drivers/thermal/samsung/exynos_tmu.c | 42 +++++++++++++++++----------
+> ---------
+>  1 file changed, 20 insertions(+), 22 deletions(-)
 > 
+> diff --git a/drivers/thermal/samsung/exynos_tmu.c
+> b/drivers/thermal/samsung/exynos_tmu.c
+> index 6482513bfe66..1152871cc982 100644
+> --- a/drivers/thermal/samsung/exynos_tmu.c
+> +++ b/drivers/thermal/samsung/exynos_tmu.c
+> @@ -1004,11 +1004,11 @@ static const struct thermal_zone_device_ops
+> exynos_sensor_ops = {
+> 
+>  static int exynos_tmu_probe(struct platform_device *pdev)  {
+> +	struct device *dev = &pdev->dev;
+>  	struct exynos_tmu_data *data;
+>  	int ret;
+> 
+> -	data = devm_kzalloc(&pdev->dev, sizeof(struct exynos_tmu_data),
+> -					GFP_KERNEL);
+> +	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+>  	if (!data)
+>  		return -ENOMEM;
+> 
+> @@ -1020,7 +1020,7 @@ static int exynos_tmu_probe(struct
+> platform_device *pdev)
+>  	 * TODO: Add regulator as an SOC feature, so that regulator enable
+>  	 * is a compulsory call.
+>  	 */
+> -	ret = devm_regulator_get_enable_optional(&pdev->dev, "vtmu");
+> +	ret = devm_regulator_get_enable_optional(dev, "vtmu");
+>  	switch (ret) {
+>  	case 0:
+>  	case -ENODEV:
+> @@ -1028,8 +1028,7 @@ static int exynos_tmu_probe(struct
+> platform_device *pdev)
+>  	case -EPROBE_DEFER:
+>  		return -EPROBE_DEFER;
+>  	default:
+> -		dev_err(&pdev->dev, "Failed to get enabled regulator:
+> %d\n",
+> -			ret);
+> +		dev_err(dev, "Failed to get enabled regulator: %d\n", ret);
+>  		return ret;
+>  	}
+> 
+> @@ -1037,44 +1036,44 @@ static int exynos_tmu_probe(struct
+> platform_device *pdev)
+>  	if (ret)
+>  		return ret;
+> 
+> -	data->clk = devm_clk_get(&pdev->dev, "tmu_apbif");
+> +	data->clk = devm_clk_get(dev, "tmu_apbif");
+>  	if (IS_ERR(data->clk)) {
+> -		dev_err(&pdev->dev, "Failed to get clock\n");
+> +		dev_err(dev, "Failed to get clock\n");
+>  		return PTR_ERR(data->clk);
+>  	}
+> 
+> -	data->clk_sec = devm_clk_get(&pdev->dev, "tmu_triminfo_apbif");
+> +	data->clk_sec = devm_clk_get(dev, "tmu_triminfo_apbif");
+>  	if (IS_ERR(data->clk_sec)) {
+>  		if (data->soc == SOC_ARCH_EXYNOS5420_TRIMINFO) {
+> -			dev_err(&pdev->dev, "Failed to get triminfo
+> clock\n");
+> +			dev_err(dev, "Failed to get triminfo clock\n");
+>  			return PTR_ERR(data->clk_sec);
+>  		}
+>  	} else {
+>  		ret = clk_prepare(data->clk_sec);
+>  		if (ret) {
+> -			dev_err(&pdev->dev, "Failed to get clock\n");
+> +			dev_err(dev, "Failed to get clock\n");
+>  			return ret;
+>  		}
+>  	}
+> 
+>  	ret = clk_prepare(data->clk);
+>  	if (ret) {
+> -		dev_err(&pdev->dev, "Failed to get clock\n");
+> +		dev_err(dev, "Failed to get clock\n");
+>  		goto err_clk_sec;
+>  	}
+> 
+>  	switch (data->soc) {
+>  	case SOC_ARCH_EXYNOS5433:
+>  	case SOC_ARCH_EXYNOS7:
+> -		data->sclk = devm_clk_get(&pdev->dev, "tmu_sclk");
+> +		data->sclk = devm_clk_get(dev, "tmu_sclk");
+>  		if (IS_ERR(data->sclk)) {
+> -			dev_err(&pdev->dev, "Failed to get sclk\n");
+> +			dev_err(dev, "Failed to get sclk\n");
+>  			ret = PTR_ERR(data->sclk);
+>  			goto err_clk;
+>  		} else {
+>  			ret = clk_prepare_enable(data->sclk);
+>  			if (ret) {
+> -				dev_err(&pdev->dev, "Failed to enable
+> sclk\n");
+> +				dev_err(dev, "Failed to enable sclk\n");
+>  				goto err_clk;
+>  			}
+>  		}
+> @@ -1085,33 +1084,32 @@ static int exynos_tmu_probe(struct
+> platform_device *pdev)
+> 
+>  	ret = exynos_tmu_initialize(pdev);
+>  	if (ret) {
+> -		dev_err(&pdev->dev, "Failed to initialize TMU\n");
+> +		dev_err(dev, "Failed to initialize TMU\n");
+>  		goto err_sclk;
+>  	}
+> 
+> -	data->tzd = devm_thermal_of_zone_register(&pdev->dev, 0, data,
+> +	data->tzd = devm_thermal_of_zone_register(dev, 0, data,
+>  						  &exynos_sensor_ops);
+>  	if (IS_ERR(data->tzd)) {
+>  		ret = PTR_ERR(data->tzd);
+>  		if (ret != -EPROBE_DEFER)
+> -			dev_err(&pdev->dev, "Failed to register sensor:
+> %d\n",
+> -				ret);
+> +			dev_err(dev, "Failed to register sensor: %d\n", ret);
+>  		goto err_sclk;
+>  	}
+> 
+>  	ret = exynos_thermal_zone_configure(pdev);
+>  	if (ret) {
+> -		dev_err(&pdev->dev, "Failed to configure the thermal
+> zone\n");
+> +		dev_err(dev, "Failed to configure the thermal zone\n");
+>  		goto err_sclk;
+>  	}
+> 
+> -	ret = devm_request_threaded_irq(&pdev->dev, data->irq, NULL,
+> +	ret = devm_request_threaded_irq(dev, data->irq, NULL,
+>  					exynos_tmu_threaded_irq,
+>  					IRQF_TRIGGER_RISING
+>  						| IRQF_SHARED |
+> IRQF_ONESHOT,
+> -					dev_name(&pdev->dev), data);
+> +					dev_name(dev), data);
+>  	if (ret) {
+> -		dev_err(&pdev->dev, "Failed to request irq: %d\n", data-
+> >irq);
+> +		dev_err(dev, "Failed to request irq: %d\n", data->irq);
+>  		goto err_sclk;
+>  	}
+> 
+> 
+> --
+> 2.43.0
 
-I will use an enum directly in all the patches with similar 
-modifications in the next patch series.
 
--- 
-Thx and BRs,
-Tengfei Fan
 
