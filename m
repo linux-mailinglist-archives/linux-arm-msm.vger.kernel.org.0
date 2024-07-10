@@ -1,151 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-25754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25755-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35CE092C8D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 05:03:14 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFFE892CA2C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 07:35:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 66E0A1C2213B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 03:03:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2949BB20C93
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 05:35:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D0A2168D0;
-	Wed, 10 Jul 2024 03:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AECEF23776;
+	Wed, 10 Jul 2024 05:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="haN4Tup5"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvEL3BFd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C083A28683;
-	Wed, 10 Jul 2024 03:03:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B841CA87;
+	Wed, 10 Jul 2024 05:35:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720580590; cv=none; b=uOv4RvfE/gejFlSQw1by8ig7mudyAD6s3Nktbv/mSD38seIOtvDzZ4bkNQTcS+LDhYlzWbijVrDv2rGAIJC2lsW24zd32N6QDdPZeBVRwqpOtTi8D85GfU14Ycjt7mkz73WXZqu8TijT66VnGEBrOfYHwLEI9tE3ez7t6rieJzQ=
+	t=1720589728; cv=none; b=UkaU6ZS+PfvLZu5t3iUfA3OP5DO//7/M5E9B2Op4raXFax0rZLnzPn51hu8sB6sWomQz/aEdRrRyURo8dqN7YtSa/iIQTA3Hx/i6GMeSk+8ez2RAythoS1JlyLSbJuOfofus8PqgPLJayqdJbBg+IhyRf5cCfjyQ3e5hvcBU+qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720580590; c=relaxed/simple;
-	bh=vj3EZHh+cyhBwM9f3Cj9CtNJUkdikJTO4Lr1tknkKS0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=uUPlQ5oD4YV1/NdzDN2Dy/3glWPKxHXv3iEVMB8wd2rR44i4gLzXDi681cmzvcK1bOjOE6hghSoh3+92elRKv/zpGhF6xLw5y0voSXJrTe8775Eip6yRM3FkBpQjaNBgpKzuTrmykPQqyIHYEXB14Nfm19t5D3lhY5bfYkiWrXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=haN4Tup5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46A29Wdn005080;
-	Wed, 10 Jul 2024 03:02:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	lfXAEh/ioXo7cDT+0Js7N54BBYq5FrYayoZsXDhm3hQ=; b=haN4Tup5m8F5xiGd
-	PQF/RmC5btZ0pbuMA+kY1zmYjBfKRhX3tMavkKZdbCIYYZ5Ngasj7yr80PuQww2V
-	dW4ILKz0rqfp3x0c+QkyftbWEaM/+mZVLW5HLJ0nr+9dsN4zgRFooTnnSz5Rcbkw
-	4AyOwKlwzu6oM3D9Ujr2FViVMmW0oZLSEVvUtm+bXkQeTjvDFMDBT/qnLf/sSIRx
-	8+xYQgaAQ3B90JJ2bzYfJ82frXgGlOXBZeX4RqBCWMGIXyqkzBpPuOT77M2uEDTC
-	9ZsFUlMK2gGqRpZ7ICtnE1Fdx1HPYl34KvXjvxil/Rzmzd9S1gLrRnsCFbMcKT6j
-	0k5Y3w==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 408w0rax9r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jul 2024 03:02:38 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46A32bYP024099
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jul 2024 03:02:37 GMT
-Received: from [10.239.132.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 9 Jul 2024
- 20:02:29 -0700
-Message-ID: <5884288e-48ad-476c-b325-bce51c06720f@quicinc.com>
-Date: Wed, 10 Jul 2024 11:02:26 +0800
+	s=arc-20240116; t=1720589728; c=relaxed/simple;
+	bh=WDWPVUbSRnIeyuU8ZbS7Y1vRv/cIIU76QodPkaiYZgg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EV9flr0/5jO333Q1yFQ8+7FqzcNCncgP6lfp3OWvxPNnOq9VS9+9XF0Z8XaQ0LU/CpDnacKaFpTzfDThu9+mqcUIxzcBajTMC1bKdkTRt90M2ijrar0Lzn1qPVmkazZ/lutfIivhgdaPeeVmExU3zB3Z25Sr6XlUGtGyEb2dqDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvEL3BFd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D7B9C32781;
+	Wed, 10 Jul 2024 05:35:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1720589727;
+	bh=WDWPVUbSRnIeyuU8ZbS7Y1vRv/cIIU76QodPkaiYZgg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FvEL3BFdTytBBRTkgeOiUtO5KKMn6/VlPWCmetTCqwXk18EsJnfTMTmTuqz1WmFXS
+	 eZb7L1m5Aqc6jVNUgLkyNc4ypJeP6ycCYFzToTb6K2wFuat4Xhpc0W0pmDSrkO9GJK
+	 RuOoXYDOJK3QSNQRIdeSZF/NDvkbenVG5UQWserY=
+Date: Wed, 10 Jul 2024 07:35:24 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Douglas Anderson <dianders@chromium.org>
+Cc: Johan Hovold <johan@kernel.org>, Jiri Slaby <jirislaby@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-serial@vger.kernel.org
+Subject: Re: [PATCH] serial: qcom-geni: Show '@' characters if we have a FIFO
+ underrun
+Message-ID: <2024071001-justice-catfight-37f0@gregkh>
+References: <20240709162841.1.I93bf39f29d1887c46c74fbf8d4b937f6497cdfaa@changeid>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] net: stmmac: dwmac-qcom-ethqos: add support for
- emac4 on qcs9100 platforms
-To: Andrew Lunn <andrew@lunn.ch>, Andrew Halaney <ahalaney@redhat.com>
-CC: Tengfei Fan <quic_tengfan@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Giuseppe Cavallaro
-	<peppe.cavallaro@st.com>,
-        Jose Abreu <joabreu@synopsys.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>, <kernel@quicinc.com>,
-        <netdev@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20240709-add_qcs9100_ethqos_compatible-v2-0-ba22d1a970ff@quicinc.com>
- <20240709-add_qcs9100_ethqos_compatible-v2-2-ba22d1a970ff@quicinc.com>
- <g7htltug74hz2iyosyn3rbo6wk3zu54ojooshjfkblcivvihv2@vj5vm2nbcw7x>
- <2427a6fe-834c-432c-8e5a-4981354645d2@lunn.ch>
-From: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <2427a6fe-834c-432c-8e5a-4981354645d2@lunn.ch>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: enofHbuVspE7v8owRZl-e3-8SXzlhaFk
-X-Proofpoint-GUID: enofHbuVspE7v8owRZl-e3-8SXzlhaFk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-09_12,2024-07-09_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 adultscore=0
- impostorscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=999
- phishscore=0 spamscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407100022
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240709162841.1.I93bf39f29d1887c46c74fbf8d4b937f6497cdfaa@changeid>
 
-
-
-On 7/9/2024 11:33 PM, Andrew Lunn wrote:
-> On Tue, Jul 09, 2024 at 09:40:55AM -0500, Andrew Halaney wrote:
->> These patches are for netdev, so you need to follow the netdev
->> rules, i.e. the subject should be have [PATCH net-next] in it, etc as
->> documented over here:
->>
->>     https://docs.kernel.org/process/maintainer-netdev.html#tl-dr
->>
->> On Tue, Jul 09, 2024 at 10:13:18PM GMT, Tengfei Fan wrote:
->>> QCS9100 uses EMAC version 4, add the relevant defines, rename the
->>> has_emac3 switch to has_emac_ge_3 (has emac greater-or-equal than 3)
->>> and add the new compatible.
->>
->> This blurb isn't capturing what's done in this change, please make it
->> reflect the patch.
+On Tue, Jul 09, 2024 at 04:28:45PM -0700, Douglas Anderson wrote:
+> As of commit 2ac33975abda ("serial: qcom-geni: do not kill the machine
+> on fifo underrun") a FIFO underrun will no longer hard lockup the
+> machine. Instead, a FIFO underrun will cause the UART to output a
+> bunch of '\0' characters. The '\0' characters don't seem to show up on
+> most terminal programs and this hides the fact that we had an
+> underrun. An underrun is aq sign of problems in the driver and
+> should be obvious / debugged.
 > 
-> Hi Tengfei
+> Change the driver to put '@' characters in the case of an underrun
+> which should make it much more obvious.
 > 
-> If i remember correctly, there was a similar comment made to one of
-> the patches in the huge v1 series.
+> Adding this extra initialization doesn't add any real overhead. In
+> fact, this patch reduces code size because the code was calling
+> memset() to init 4 bytes of data. Disassembling the new code shows
+> that early in the function w22 is setup to hold the '@@@@' constant:
+>   mov     w22, #0x40404040
 > 
-> The commit messages are very important, just as important as the code
-> itself. Please review them all and fixup issues like this before you
-> repost.
-
-Thx Andrew L for the info.
+> Each time through the loop w22 is simply stored:
+>   str     w22, [sp, #4]
 > 
->     Andrew
-> 
+> Cc: Johan Hovold <johan@kernel.org>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
-> pw-bot: cr
+> 
+>  drivers/tty/serial/qcom_geni_serial.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> index 69a632fefc41..332eaa2faa2b 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -872,10 +872,10 @@ static void qcom_geni_serial_send_chunk_fifo(struct uart_port *uport,
+>  {
+>  	struct qcom_geni_serial_port *port = to_dev_port(uport);
+>  	unsigned int tx_bytes, remaining = chunk;
+> -	u8 buf[BYTES_PER_FIFO_WORD];
+>  
+>  	while (remaining) {
+> -		memset(buf, 0, sizeof(buf));
+> +		u8 buf[BYTES_PER_FIFO_WORD] = { '@', '@', '@', '@' };
 
--- 
-Thx and BRs,
-Aiqun(Maria) Yu
+Why is '@' a valid character for an underrun?  Why would any characters
+be ok?  Where is this now documented?
+
+And shouldn't you use a memset to get the BYTES_PER_FIFO_WORD amount of
+'@' here?
+
+thanks,
+
+greg k-h
 
