@@ -1,72 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-25863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5310992D5F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 18:14:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 708F192D616
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 18:16:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D2550B263BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 16:14:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E7648B21CA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 16:16:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB180198E99;
-	Wed, 10 Jul 2024 16:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6E7D194A6C;
+	Wed, 10 Jul 2024 16:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BdwAh+dN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fMaxg75q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8042E197A65;
-	Wed, 10 Jul 2024 16:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E1D1803D;
+	Wed, 10 Jul 2024 16:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720627893; cv=none; b=A8197uxwiwZNou8WLfShfiLw1k+qmPu0UJ4i3Qwemx15RIOw+wLaCW5K7C7d+zSYK8soJMkRdKNZS96ttzDjSQOkpZV9xas1z15PJTTl3vfkSjnhd6QP1SVRTb2fw331qG6tq6ebgFgqj0boRqLq/8CVG4Cziy+2EMB/2c+LmQo=
+	t=1720628152; cv=none; b=al7sCuZiKOLWYEfTy08mNC1aSnGtKJwG2QHwoic/VOKAOo9SKF3+aAVMOtJxa4M2QKICNMFvqg1upT4RIc7sqrLHRpKz/U8J49F5+0GSOvLAlK4x+w2eah3bemTIbvxYJDUULGjCDilB+S9zd09mCouiq6yu7EzVZ2JQYlAKKLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720627893; c=relaxed/simple;
-	bh=a+7WKy915cYtcjH7UwZEbtB/L6kz1ndbvjx3AaxaK30=;
+	s=arc-20240116; t=1720628152; c=relaxed/simple;
+	bh=Y89/WY8lavOdGYJXlEhyTDXv6Bi38yp2eX7+OnkOJHs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ViAxef5uePHabAmmPyA/TP8/NFKGR3+Dg0KSClOn5ak+23lV3PYYWrBc+OddYaGwIbwFekhHiVp9lnIGpzjnvH+ySshznyPDxRHqXw3Qu4a2fEdCWmNNW+aWlmQmbJdjdW9ifdcW050FNSBO4CDmer9CE/beJDMKHqjvwi7x3Uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BdwAh+dN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62B2C4AF0A;
-	Wed, 10 Jul 2024 16:11:32 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=t/oFSU6AdKy1qr/pDkG/rBaVON9Yw5h/YYFn0abYTNVbQFH9ifulBYJYN2Z31l236WC8HBiPCsvhl62CFlxw8wdrjrjrKcQhHjZo1eDmUbQVT96F7VQUbjyYFQrpqk8Rm4WNSAnlbuSUYiHbxxL+tWSD0cFiSuW0Wi9i2Fq9Z/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fMaxg75q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFEEBC32781;
+	Wed, 10 Jul 2024 16:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720627892;
-	bh=a+7WKy915cYtcjH7UwZEbtB/L6kz1ndbvjx3AaxaK30=;
+	s=k20201202; t=1720628152;
+	bh=Y89/WY8lavOdGYJXlEhyTDXv6Bi38yp2eX7+OnkOJHs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BdwAh+dNSn6JErm1pydRtzjQ4/A74kobkcw3ruKNPrJTfnzZ7LFJgu25e8HIraQPv
-	 uvlS/RLvof+nQdHtMbpUAPrZ+xFLffJ39TwJNTWSk6ObSRxPu4da+/vMhWPdC2wo6w
-	 fmf2prSUTwNnWuWzsuJBTvE8LZOiFc1o0gY6gTzgy0VpVvlnawGfDHQG1TPnDqLH1c
-	 5WSy0EF8jjMEj0xL/4ltPqKOSytJF1E91s1muNNUWUBteUJTNua0+rpluB6PS5d0Gl
-	 ilK1vuPd+xx1nsKC83ptMtaKnn4kE4RQ40uxiHIDdOIW95o6jML386eya5qXMFoXKv
-	 MjPh0lw5Xsp7Q==
-Date: Wed, 10 Jul 2024 10:11:31 -0600
+	b=fMaxg75qmt4ABmx/LmDAVm3Jm2sVASR3uIDZ7aVJ/JRwI+pP23r/b63F0sdF8491T
+	 OuxNvH/zWEP4YKOEy0jWZJ7gaPQAr/mi199XzR75XUlXXWfj0QsmDiaFrReRZYe4eh
+	 GIYv7AepbGkNGv3qahvXXLdq4N6dWUfF2wYpcSKqWifQRYQe2l9/zELes2qduSAuZg
+	 OOTnwUnpp9LASZ/nSmMLeLUPSyisiRQwgtmlxRQdEXBhARiANlKzpxQ5v1i0pmUH6j
+	 zihlKmhJwSBPKqb25wK6h9GAGjfzG9fGv96eo8fjlutbzykV8g+RCK7FuGuUqNYo0A
+	 x+ZcVbCfBq+yQ==
+Date: Wed, 10 Jul 2024 10:15:50 -0600
 From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Adam Skladowski <a39.skl@gmail.com>
-Cc: Sibi Sankar <quic_sibis@quicinc.com>, Georgi Djakov <djakov@kernel.org>,
-	Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-	devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Jakub Kicinski <kuba@kernel.org>, Marcel Holtmann <marcel@holtmann.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	linux-bluetooth@vger.kernel.org, Eric Dumazet <edumazet@google.com>,
+	Rocky Liao <quic_rjliao@quicinc.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Vladimir Lypak <vladimir.lypak@gmail.com>,
-	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Rohit Agarwal <quic_rohiagar@quicinc.com>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	~postmarketos/upstreaming@lists.sr.ht,
-	Conor Dooley <conor+dt@kernel.org>,
-	Barnabas Czeman <barnabas.czeman@mainlining.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>, netdev@vger.kernel.org,
 	Bjorn Andersson <andersson@kernel.org>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-kernel@vger.kernel.org, Danila Tikhonov <danila@jiaxyga.com>,
-	linux-pm@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>
-Subject: Re: [PATCH v3 9/9] dt-bindings: interconnect: qcom: msm8953: Fix
- 'See also' in description
-Message-ID: <172062789070.3205605.3268441513464795042.robh@kernel.org>
-References: <20240709102728.15349-1-a39.skl@gmail.com>
- <20240709102728.15349-10-a39.skl@gmail.com>
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	linux-kernel@vger.kernel.org,
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
+	devicetree@vger.kernel.org, "David S. Miller" <davem@davemloft.net>
+Subject: Re: [PATCH v3 1/6] dt-bindings: bluetooth: qualcomm: describe the
+ inputs from PMU for wcn7850
+Message-ID: <172062814990.3211927.13043381327085522946.robh@kernel.org>
+References: <20240709-hci_qca_refactor-v3-0-5f48ca001fed@linaro.org>
+ <20240709-hci_qca_refactor-v3-1-5f48ca001fed@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,18 +70,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240709102728.15349-10-a39.skl@gmail.com>
+In-Reply-To: <20240709-hci_qca_refactor-v3-1-5f48ca001fed@linaro.org>
 
 
-On Tue, 09 Jul 2024 12:22:54 +0200, Adam Skladowski wrote:
-> "See also" in description seems to be wrongly defined,
-> make it inline with other yamls.
+On Tue, 09 Jul 2024 14:18:32 +0200, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Fixes: 791ed23f735b ("dt-bindings: interconnect: qcom: Add Qualcomm MSM8953 NoC")
-> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> Drop the inputs from the host and instead expect the Bluetooth node to
+> consume the outputs of the internal PMU. This model is closer to reality
+> than how we represent it now.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
->  .../devicetree/bindings/interconnect/qcom,msm8953.yaml         | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+>  .../bindings/net/bluetooth/qualcomm-bluetooth.yaml     | 18 +++++++++++++-----
+>  1 file changed, 13 insertions(+), 5 deletions(-)
 > 
 
 Acked-by: Rob Herring (Arm) <robh@kernel.org>
