@@ -1,221 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-25810-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25812-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82F0C92D030
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 13:09:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C6F492D021
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 13:08:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E71E8B250BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 11:08:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 117DA2837FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 11:08:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4563718FC64;
-	Wed, 10 Jul 2024 11:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C95118FA35;
+	Wed, 10 Jul 2024 11:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eeg9wG8X"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Cok2fXTK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE8B1B86ED;
-	Wed, 10 Jul 2024 11:07:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1138518FA34;
+	Wed, 10 Jul 2024 11:08:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720609679; cv=none; b=DJYcUSRJbgt9GVhuJXkb7GY6dYVxTB4Pbyzn9uQv1x7TyQek72/UKamQ1eqw8b4nKo5jolUDTZc43yVSwoEIqjpXCgs6WMI9hKXOaUtlPmJpdjC64GlK2e2BD1d1cn5dXekxeZs6QVA5BiTzrTAeAMLtPqiMEgJZ6HPoUF5dsbQ=
+	t=1720609718; cv=none; b=AuaOVEySdfr/Y9I2/PSRIYz+vw6bp+/8RbrJFV5EswPVjJRDMibYRsVF0v907YbQ56aY5xTe15crorJ8oR5d977h0VqMYHQucyBSO1hZJ/KCK6mcieMLC06U9Q7lw8IW+cBrSeV6UvVlMSb6Jfj37EMcsAlUmy4JRgUX8i9ujw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720609679; c=relaxed/simple;
-	bh=QB3UOI1KEGMUrpOayx9L/cdLb0ywpon1cMVLsZARrwE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BVPQZzY4Fsw7CE1n0jsQLSNZkLDTgUMcrQF8hSQyEK08qrHRN55Pjp89FwdBlD+9mxn+MwkrubzU0aR/YTngGkn8ALKr4fYVyc8Of7jq5C/rmb51YnfmFg0/PMEUQpI6fumebJJW5hbm+Jd05ngRuHsiwShWCvimicGxieiIzaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eeg9wG8X; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58BA8C32781;
-	Wed, 10 Jul 2024 11:07:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720609678;
-	bh=QB3UOI1KEGMUrpOayx9L/cdLb0ywpon1cMVLsZARrwE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=eeg9wG8X0U5MiMwN2iaz6k6vw/72Yt+irvrFqW5Qd7cIIiqSYBtQ2SuXuW2wWzfST
-	 zLnL6EsqVv3ZDH5gAu65fO/tkCMI0r20yhbu1T7UQ0YT/wsJq3/yhRXsly9Js5/B4t
-	 sdrNZuvNQGX2hLlwHWWqi82c2AT7kmm0VWYfMQxeyqW4ACmElEG3LwQuVc7062dHuE
-	 UfC7E0IAXb7XRUae0hpkcXr0nkuhHy64RrWkpafr6K4zceMIvjwVlnQM4nCrDCmzMD
-	 zSyCn7ZZ7utLU4qhIRzoRBv9RkVlhdgd9qhQFLz8PsC3dCjrLoA+BkXTtYCdekORcQ
-	 YQaaIJGg9hGkw==
-Message-ID: <0a3105c5-7cb4-411a-9779-d89600925dfe@kernel.org>
-Date: Wed, 10 Jul 2024 13:07:53 +0200
+	s=arc-20240116; t=1720609718; c=relaxed/simple;
+	bh=lnEmNUrZVKMUb3Zni61Oi8AYwUR/5XFHpGCQCXIYX4o=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=IzaqOW4OHjjKhSFifJZ07ywamdiz0guMIX0yrx7LOCTscE/Ihrfpm2ldvQI7U7JtRaZI+a+rBhdY5faec3r4ZoPgrsFKk19vIXOVdyety8YCfzR6yjh0e23Oj/XEkbjHJLWLh7nni66FBGTbdrDDOQ8T9cDO+nQn/5qsRBHeGoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Cok2fXTK; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46A29WU9005080;
+	Wed, 10 Jul 2024 11:08:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=rY7ukcT6x6DTecR1+lqSVc
+	JxN2MKM+D2xH/UXR4S8Bs=; b=Cok2fXTKPYFGaxIPpOJNjtRhZKsj4wAekRb2t6
+	c4ArLVOI3wqz9eY/mt/iuUZQkImYJOlzyeN8K9+P8iVQ8OQox2Af6d6HekAF6FIG
+	CC5RmGxLAYI0jDCLz+stUM/HyRwWkdY8pUsMom28QM4qNml0/TC1bjrHMGwLf6ti
+	fXilw47oLiZlvRvEKPcrCfAytXt2bu/Fmx+sMTBPtp5TwehJQHl+XinKtYUw9Jdp
+	QbYaoVCgA30gColzWWhB702IHajIJicU5VKjvina3dBb91hB0wTp9lGQCgNzzMat
+	q1H7m7sjRuqra98ggFKGz2UkYlYD8vq3mImup9udi7zrHtaw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 408w0rbye2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jul 2024 11:08:25 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46AB8ONx004543
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jul 2024 11:08:24 GMT
+Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 10 Jul 2024 04:08:19 -0700
+From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: [PATCH v7 0/4] PCI: endpoint: add D-state change notifier support
+Date: Wed, 10 Jul 2024 16:38:13 +0530
+Message-ID: <20240710-dstate_notifier-v7-0-8d45d87b2b24@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
- binding
-To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: quic_eberman@quicinc.com, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com,
- Yongsheng Li <quic_yon@quicinc.com>
-References: <20240709160656.31146-1-quic_depengs@quicinc.com>
- <20240709160656.31146-8-quic_depengs@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240709160656.31146-8-quic_depengs@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJ1rjmYC/x3MQQqAIBBG4avErBNsEISuEhGlvzUbDZUIorsnL
+ b/Few8VZEGhsXso45IiKTbYviN3rHGHEt9MrNloO2jlS10rlpiqBEFW7DgY8GYAT606M4Lc/3G
+ a3/cDNMpxYWEAAAA=
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Kishon Vijay Abraham I
+	<kishon@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>, Jonathan Corbet
+	<corbet@lwn.net>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring
+	<robh@kernel.org>
+CC: <linux-pci@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <mhi@lists.linux.dev>, <quic_vbadigan@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_skananth@quicinc.com>, <quic_parass@quicinc.com>,
+        "Krishna chaitanya
+ chundru" <quic_krichai@quicinc.com>,
+        Manivannan Sadhasivam <mani@kernel.org>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1720609699; l=1933;
+ i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
+ bh=lnEmNUrZVKMUb3Zni61Oi8AYwUR/5XFHpGCQCXIYX4o=;
+ b=V065DTfjdyMA4QSQ0X0j1l94+d0jzwUjy/7IKIBy29ub3y/bs2bpPfCtzKzpv3awNyFJkbVjA
+ BKDxS+7Np/hCXQQ+FeDB/lSi+sZPnZRahMZLlRIQQBOnm+mOgHFCycC
+X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
+ pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: kdssdNB2yapj9PoiaPUzUaTDDZvVTU6v
+X-Proofpoint-GUID: kdssdNB2yapj9PoiaPUzUaTDDZvVTU6v
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-10_06,2024-07-10_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 adultscore=0
+ impostorscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=837
+ phishscore=0 spamscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407100076
 
-On 09/07/2024 18:06, Depeng Shao wrote:
-> Add bindings for qcom,sm8550-camss in order to support the camera
-> subsystem for sm8550
-> 
-> Co-developed-by: Yongsheng Li <quic_yon@quicinc.com>
-> Signed-off-by: Yongsheng Li <quic_yon@quicinc.com>
-> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
-> ---
->  .../bindings/media/qcom,sm8550-camss.yaml     | 545 ++++++++++++++++++
->  1 file changed, 545 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/media/qcom,sm8550-camss.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-camss.yaml
-> new file mode 100644
-> index 000000000000..d002b0ff119e
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-camss.yaml
-> @@ -0,0 +1,545 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/media/qcom,sm8550-camss.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm SM8550 Camera Subsystem (CAMSS)
-> +
-> +maintainers:
-> +  - Depeng Shao <quic_depengs@quicinc.com>
-> +
-> +description: |
+In this series we added the support to nofity the EPF driver
+whenever there is change in the D-state if the EPF driver
+registered for it.
 
-Do not need '|' unless you need to preserve formatting.
+This series needed by the following series for epf driver to know
+whether link is in D3Cold or D3hot to wake the host because EPF driver
+needs to send PME when the link is D3hot and toggle wake when the link
+is in D3Cold('PCI: EPC: Add support to wake up host from D3 states').
 
-This wasn't tested so I am not going to perform full review.
+The following link is for older series a newer series will be sent after
+rebasing on this series.
+https://lore.kernel.org/linux-pci/1690952359-8625-4-git-send-email-quic_krichai@quicinc.com/T/
 
-Look at "Re: [PATCH 1/6] media: dt-bindings: media: camss: Add
-qcom,sc7280-camss binding" - all comments apply.
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+---
+Changes from v6:
+	- Rebased on linux next.
+	- Link to v6: https://lore.kernel.org/all/20230908-dstate_change-v6-0-b414a6edd765@quicinc.com/T/
+Changes from v5:
+	- Fixed compilation errors & removed checks in the dstate_notify()
+	  function as suggested by bjorn.
 
-...
+---
+Krishna chaitanya chundru (4):
+      PCI: endpoint: Add D-state change notifier support
+      PCI: qcom-ep: Add support for D-state change notification
+      PCI: qcom-ep: Print D-state name to distinguish D3hot/D3cold
+      PCI: epf-mhi: Add support for handling D-state notify from EPC
 
-> +
-> +required:
-> +  - clock-names
-> +  - clocks
-> +  - compatible
-
-Keep the same order as in "properties:'.
-
-> +  - interconnects
-> +  - interconnect-names
-> +  - interrupts
-> +  - interrupt-names
-> +  - iommus
-> +  - power-domains
-> +  - reg
-> +  - reg-names
-> +  - vdda-phy-supply
-> +  - vdda-pll-supply
-> +  - ports
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,sm8550-camcc.h>
-> +    #include <dt-bindings/clock/qcom,sm8550-gcc.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/power/qcom-rpmpd.h>
-> +    #include <dt-bindings/clock/qcom,rpmh.h>
-> +    #include <dt-bindings/interconnect/qcom,sm8550-rpmh.h>
-> +
-> +    soc {
-> +        #address-cells = <2>;
-> +        #size-cells = <2>;
-> +
-> +        camss: camss@ace4000 {
-> +            compatible = "qcom,sm8550-camss";
-> +
-> +            reg = <0 0x0ace4000 0 0x2000>,
-> +                  <0 0x0ace6000 0 0x2000>,
-> +                  <0 0x0ace8000 0 0x2000>,
-> +                  <0 0x0acea000 0 0x2000>,
-> +                  <0 0x0acec000 0 0x2000>,
-> +                  <0 0x0acee000 0 0x2000>,
-> +                  <0 0x0acf0000 0 0x2000>,
-> +                  <0 0x0acf2000 0 0x2000>,
-> +                  <0 0x0acb7000 0 0xd00>,
-> +                  <0 0x0acb9000 0 0xd00>,
-> +                  <0 0x0acbb000 0 0xd00>,
-> +                  <0 0x0acca000 0 0xa00>,
-> +                  <0 0x0acce000 0 0xa00>,
-> +                  <0 0x0acb6000 0 0x1000>,
-> +                  <0 0x0ac62000 0 0xf000>,
-> +                  <0 0x0ac71000 0 0xf000>,
-> +                  <0 0x0ac80000 0 0xf000>,
-> +                  <0 0x0acca000 0 0x2800>,
-> +                  <0 0x0acce000 0 0x2800>;
-> +            reg-names = "csiphy0",
-> +                    "csiphy1",
-> +                    "csiphy2",
-> +                    "csiphy3",
-
-These (and many others further) looks misaligned.
+ Documentation/PCI/endpoint/pci-endpoint.rst  |  3 +++
+ drivers/pci/controller/dwc/pcie-qcom-ep.c    | 10 ++++++++--
+ drivers/pci/endpoint/functions/pci-epf-mhi.c | 11 +++++++++++
+ drivers/pci/endpoint/pci-epc-core.c          | 24 ++++++++++++++++++++++++
+ include/linux/mhi_ep.h                       |  3 +++
+ include/linux/pci-epc.h                      |  2 ++
+ include/linux/pci-epf.h                      |  2 ++
+ 7 files changed, 53 insertions(+), 2 deletions(-)
+---
+base-commit: 82d01fe6ee52086035b201cfa1410a3b04384257
+change-id: 20240710-dstate_notifier-2c2f4e2b4eed
 
 Best regards,
-Krzysztof
+-- 
+Krishna chaitanya chundru <quic_krichai@quicinc.com>
 
 
