@@ -1,110 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-25811-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25813-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A99EC92D01F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 13:08:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E53A92D025
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 13:09:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5EAA328334F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 11:08:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 427AB283149
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 11:09:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA3CE18FC7B;
-	Wed, 10 Jul 2024 11:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C52F18FC89;
+	Wed, 10 Jul 2024 11:08:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iLOyAksa"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nUeeJrZF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D09918FA35;
-	Wed, 10 Jul 2024 11:08:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5C718FA34;
+	Wed, 10 Jul 2024 11:08:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720609701; cv=none; b=JxfWuoOZM1wJ3ZVDctONuEwyjiF/XX0dI/y6Q3u6u49PJe4p/w7NCKd6otz3NEh0eBO6I4L0Ux8325TDg4Eegq8QJAdCkFx/aKvWhvHVWZxIb6fYaTM1skpb20DzjSWBLK6UwDkWUdQH7p8HPt7HOTGfmckz+7HyR8Cl0rH2hCw=
+	t=1720609727; cv=none; b=YFntxnOAs8nH574n6UJPYYXXvAmG4i8JQBiRejll5cPTweipVgUDo2JeN46oGMAVksc8SCTLMnYYwTHvEVt+B5S8FUotauUup9H2zWEttvsPSqWgm63o6z9T4B2MYH3m5KE8paijxZXhjjd9Y4H7iRlOLVTjKZDnxV3L8xx0vzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720609701; c=relaxed/simple;
-	bh=SwL5TVDUykkBPz8CWYeHIj/sJyJG+DCt2K/keOZiI/w=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=m/tznSEyJTYYJhZQ3fQOUorDRVU5MX3BoyNY/8mV9R00YO5tXla2iIoocfe8NMBp6YKIvvZvanj7Bkyo4ueSRYVNc9c93/1aeyRmEtGRLmXNIMxf5lQeghXnpOZdUsylnHraf9F118IppDcbCLGmIusjsYM1tQt5M9b9IbBXFNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iLOyAksa; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-70b04cb28acso546028b3a.0;
-        Wed, 10 Jul 2024 04:08:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720609700; x=1721214500; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9MLBAAq/8WgkXtZstYMuDUrrVfHrmeGeX9XzyNmKcDY=;
-        b=iLOyAksaIQVRSDT9qSS7DvTCBH+H9zDW7zJc7+vXlzcx0530E4ZLyaXn9fwWUffW5B
-         MRcSLjuaUize5gGeAg6g+ZhbYyIDLnxhmaAD9lDEuzcIS4O+MniVYiJSb+xyV3WGZ32+
-         ANgX70M10ayoO6Zennoj8p+YR2C06ys2Ox3MEMmoK1kaPqqmj9g7zd4oM0eHI+JMrK40
-         qDXQ5dYcklj3ZvwddCBoCkpxTPzuak879FePi69Qm/LNTASlD1j1Yc+EReT3fFxsjqww
-         Vaj4VmopoTAjdac+S3SmC2Sc0mpCQwoXZmglJETeI4BIFoUL0GbJjSwEkQzUIhlhNiSO
-         P0Sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720609700; x=1721214500;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9MLBAAq/8WgkXtZstYMuDUrrVfHrmeGeX9XzyNmKcDY=;
-        b=IrmvVHrAUWrDzXZr+Z+Gk0aId6cgmZX39G4+vubkubXpKJF0xn9Ikem1MysjrsQBsF
-         6gWoXHznGsxk97BjgmkdVv3OgbpbtIoz9B2C/zQ8mNcLckL9jCJEhI2SIM4uEa0pto1C
-         QthEs7MjEn30K+ppFuG+mS5iSZ55R91ht033LKveKAODGQhgULCFA+SPAuqRds0QrO13
-         3HTaaisIDrFJE9rMuwgBebLJft3TkxrPyXA9rEc5wD39M0Y8nmEkP9vaNkarwi21i6s/
-         YigrwxUVAzFuuw99XjkLuW2auHyrTjj+RzscC1sr7XQWjE489l60Fg7YDjU3jPG+KXSH
-         +mqg==
-X-Forwarded-Encrypted: i=1; AJvYcCXIB7P4iEfNe5C/Bje8SsCCi86WulzOZ9uSMljBNelGcfelheuprWBGE1eTW8do43/j4kfCO4RfP7bYXlLtEgp7Z6DCwydLlmzEas/4sZZr//GHAana78LYF0JIXdg3VpPzCAivg3JQM0DXxA==
-X-Gm-Message-State: AOJu0YxOYXgIoC7uDxM5b1bkn/MiZMtejM8jRVA8zctxLohV/nbG2yaU
-	CQo0xa7dwA9Rn/vwuPZ6l7BJn3unr2AMhpjow52ezig0GafqR7P3tMKAOQ==
-X-Google-Smtp-Source: AGHT+IHc7aGV3hUz/Oxgaox34zwvQkHcSeFQ8Mx+i7UcoqC1Hom/gQ3uftn0TTI5zfpnw+/wHiUMeA==
-X-Received: by 2002:a05:6a00:6903:b0:706:a97d:ca1c with SMTP id d2e1a72fcca58-70b44d60dadmr5941791b3a.6.1720609699681;
-        Wed, 10 Jul 2024 04:08:19 -0700 (PDT)
-Received: from bnew-VirtualBox ([2405:201:3020:7812:b416:d4b5:f43f:6324])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70b43899705sm3491936b3a.1.2024.07.10.04.08.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jul 2024 04:08:18 -0700 (PDT)
-Date: Wed, 10 Jul 2024 16:38:13 +0530
-From: Ankit Agrawal <agrawal.ag.ankit@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Thomas Gleixner <tglx@linutronix.de>, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] drivers/clocksource/qcom: Add missing iounmap() on error
- when reading clock frequency.
-Message-ID: <20240710110813.GA15351@bnew-VirtualBox>
+	s=arc-20240116; t=1720609727; c=relaxed/simple;
+	bh=SvjP1T+EEQd7I8bwYjYD3cq6rvIqSMYXru+9AZEaQiU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
+	 In-Reply-To:To:CC; b=rAssmk4ZHh/fyUejJ0mIae22f4hjP9NuKnFvefOb8SsgXfUBWUyLQB/H92NSAIJXHAelQ3x/niG0Xhw90b7fvWOzamH7mQzGwH4YbRAnqri2b+BCBotnJIqk2pd382XnnE0hv9Gm8UGS24+nYzPF8N82DiT0vYZn6MydQdhwkUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nUeeJrZF; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46A9hHp9029428;
+	Wed, 10 Jul 2024 11:08:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	zciwMdZ6NZHjy0VGYyE8FFd257osghz8T+oYjLhMYec=; b=nUeeJrZFYkKlyPTB
+	GIE3Do5vbdEimiJs3m96zLQmt2N3G6H1PwCxdJSZO0ETALeBAKvYY3twHtWYnEZw
+	lDocXv9SKbM7H+PXYKfwPQHN/GTpUey58YUBaUpnhjljpE3sevDmkEUqIoEmZ4Do
+	Osk+P7twIu0lQ95c11++8ccPTs8rqZpxhhuzLnV5xEwYfwKwmfZYEzpQqg0dc1NZ
+	EmVZihRsdPilB4yNkXQQOcJrOI0SYgyHRjarpRVRm45lkvaScCLGdaDVeFtY/ser
+	iv6tmzR4gxLFMmkz4kl6nu8C7GwLL0cla+AJZgQ+wtNVTJ1MSGcK/5QZ2kNqD6J1
+	B0Fy5g==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406xa691wa-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jul 2024 11:08:31 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46AB8TZg004636
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jul 2024 11:08:29 GMT
+Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 10 Jul 2024 04:08:24 -0700
+From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Date: Wed, 10 Jul 2024 16:38:14 +0530
+Subject: [PATCH v7 1/4] PCI: endpoint: Add D-state change notifier support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240710-dstate_notifier-v7-1-8d45d87b2b24@quicinc.com>
+References: <20240710-dstate_notifier-v7-0-8d45d87b2b24@quicinc.com>
+In-Reply-To: <20240710-dstate_notifier-v7-0-8d45d87b2b24@quicinc.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Kishon Vijay Abraham I
+	<kishon@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>, Jonathan Corbet
+	<corbet@lwn.net>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring
+	<robh@kernel.org>
+CC: <linux-pci@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <mhi@lists.linux.dev>, <quic_vbadigan@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_skananth@quicinc.com>, <quic_parass@quicinc.com>,
+        "Krishna chaitanya
+ chundru" <quic_krichai@quicinc.com>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1720609699; l=3524;
+ i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
+ bh=SvjP1T+EEQd7I8bwYjYD3cq6rvIqSMYXru+9AZEaQiU=;
+ b=WMao6p06eazJVryGf6h1KPbZ9mqkl+5VGfhnRG9m8Mn7ADBuqpkxI/OL3u27fFNcMLvImhrEl
+ h6usjDmFWSlAObz1RJlAQp1soSZf0zAQTICdXcCX7njca4PmsM+9MZ3
+X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
+ pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ZLwqFKSr_e5CpOv0rXHaFA78kS3T_DSp
+X-Proofpoint-ORIG-GUID: ZLwqFKSr_e5CpOv0rXHaFA78kS3T_DSp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-10_06,2024-07-10_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=810
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 spamscore=0
+ clxscore=1015 adultscore=0 malwarescore=0 mlxscore=0 bulkscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407100076
 
-Add the missing iounmap() when clock frequency fails to get read by the
-of_property_read_u32() call.
+Add support to notify the EPF device about the D-state change event
+from the EPC device.
 
-Signed-off-by: Ankit Agrawal <agrawal.ag.ankit@gmail.com>
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 ---
- drivers/clocksource/timer-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/PCI/endpoint/pci-endpoint.rst |  3 +++
+ drivers/pci/endpoint/pci-epc-core.c         | 24 ++++++++++++++++++++++++
+ include/linux/pci-epc.h                     |  2 ++
+ include/linux/pci-epf.h                     |  2 ++
+ 4 files changed, 31 insertions(+)
 
-diff --git a/drivers/clocksource/timer-qcom.c b/drivers/clocksource/timer-qcom.c
-index b4afe3a67..a66fa7f8e 100644
---- a/drivers/clocksource/timer-qcom.c
-+++ b/drivers/clocksource/timer-qcom.c
-@@ -233,6 +233,7 @@ static int __init msm_dt_timer_init(struct device_node *np)
- 	}
+diff --git a/Documentation/PCI/endpoint/pci-endpoint.rst b/Documentation/PCI/endpoint/pci-endpoint.rst
+index 21507e3cc238..3eb5648ca7ec 100644
+--- a/Documentation/PCI/endpoint/pci-endpoint.rst
++++ b/Documentation/PCI/endpoint/pci-endpoint.rst
+@@ -77,6 +77,9 @@ by the PCI controller driver.
  
- 	if (of_property_read_u32(np, "clock-frequency", &freq)) {
-+		iounmap(cpu0_base);
- 		pr_err("Unknown frequency\n");
- 		return -EINVAL;
- 	}
+    Cleanup the pci_epc_mem structure allocated during pci_epc_mem_init().
+ 
++* pci_epc_dstate_notify()
++
++   Notify all the function drivers that the EPC device has changed its D-state.
+ 
+ EPC APIs for the PCI Endpoint Function Driver
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
+index 84309dfe0c68..e2b9c458f2c4 100644
+--- a/drivers/pci/endpoint/pci-epc-core.c
++++ b/drivers/pci/endpoint/pci-epc-core.c
+@@ -828,6 +828,30 @@ void pci_epc_bus_master_enable_notify(struct pci_epc *epc)
+ }
+ EXPORT_SYMBOL_GPL(pci_epc_bus_master_enable_notify);
+ 
++/**
++ * pci_epc_dstate_notify() - Notify the EPF driver that EPC device D-state
++ *			has changed
++ * @epc: the EPC device which has change in D-state
++ * @state: the changed D-state
++ *
++ * Invoke to Notify the EPF device that the EPC device D-state has
++ * changed.
++ */
++void pci_epc_dstate_notify(struct pci_epc *epc, pci_power_t state)
++{
++	struct pci_epf *epf;
++
++	mutex_lock(&epc->list_lock);
++	list_for_each_entry(epf, &epc->pci_epf, list) {
++		mutex_lock(&epf->lock);
++		if (epf->event_ops && epf->event_ops->dstate_notify)
++			epf->event_ops->dstate_notify(epf, state);
++		mutex_unlock(&epf->lock);
++	}
++	mutex_unlock(&epc->list_lock);
++}
++EXPORT_SYMBOL_GPL(pci_epc_dstate_notify);
++
+ /**
+  * pci_epc_destroy() - destroy the EPC device
+  * @epc: the EPC device that has to be destroyed
+diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
+index 85bdf2adb760..e473d1780928 100644
+--- a/include/linux/pci-epc.h
++++ b/include/linux/pci-epc.h
+@@ -276,6 +276,8 @@ void __iomem *pci_epc_mem_alloc_addr(struct pci_epc *epc,
+ void pci_epc_mem_free_addr(struct pci_epc *epc, phys_addr_t phys_addr,
+ 			   void __iomem *virt_addr, size_t size);
+ 
++void pci_epc_dstate_notify(struct pci_epc *epc, pci_power_t state);
++
+ #else
+ static inline void pci_epc_init_notify(struct pci_epc *epc)
+ {
+diff --git a/include/linux/pci-epf.h b/include/linux/pci-epf.h
+index 18a3aeb62ae4..d88063cdb067 100644
+--- a/include/linux/pci-epf.h
++++ b/include/linux/pci-epf.h
+@@ -75,6 +75,7 @@ struct pci_epf_ops {
+  * @link_up: Callback for the EPC link up event
+  * @link_down: Callback for the EPC link down event
+  * @bus_master_enable: Callback for the EPC Bus Master Enable event
++ * @dstate_notify: Callback for the EPC D-state change event
+  */
+ struct pci_epc_event_ops {
+ 	int (*epc_init)(struct pci_epf *epf);
+@@ -82,6 +83,7 @@ struct pci_epc_event_ops {
+ 	int (*link_up)(struct pci_epf *epf);
+ 	int (*link_down)(struct pci_epf *epf);
+ 	int (*bus_master_enable)(struct pci_epf *epf);
++	int (*dstate_notify)(struct pci_epf *epf, pci_power_t state);
+ };
+ 
+ /**
+
 -- 
-2.25.1
+2.42.0
 
 
