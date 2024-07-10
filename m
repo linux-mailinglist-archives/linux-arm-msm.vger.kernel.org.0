@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-25794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92C4192CEFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 12:28:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFB2392CF08
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 12:29:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C3C21F24D5C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 10:28:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0D33E1C223CF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jul 2024 10:29:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 671EF190671;
-	Wed, 10 Jul 2024 10:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AEFE18FA35;
+	Wed, 10 Jul 2024 10:16:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P9dyqSEB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NQ47jDBo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389D418FC7C;
-	Wed, 10 Jul 2024 10:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69EFE43156;
+	Wed, 10 Jul 2024 10:16:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720606473; cv=none; b=b50i1DU7kpyxCKkb07cw+VxzRMpoXw19a/mbTgGewzqPCl5dcuh1ZmprcACezElvHbogM/KbelAB6YQjFyuN3rgL+ZdB9PDDSu00x6LqhWG4h2IxqPiYrauCFJjx6D8gNbDi8ldcFB5xsn3R3ENekoPKPT7LBvlW4mFGZwKNwZI=
+	t=1720606604; cv=none; b=RsNsJ2fKcyHL/+b5inTy71o1aMiWaocoqMJsQqHc/l5COVWpDcxHqIySmO8qCu1JmQLA2ZFwYlVhiNgL/ikx+iie90Q7QluUqIX0l3aKxD7rLkDleVEgdiexTVeLY2Vv1YyY59PZRaEf+AdFy+HHFaiToHrJRo7+IPSlDHRWLTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720606473; c=relaxed/simple;
-	bh=OKhyUQJrcgTkjCaPrangKtL82cxX+Hgx6uNOr08+das=;
+	s=arc-20240116; t=1720606604; c=relaxed/simple;
+	bh=U7dgn9dmaT4kFFMdzpD5tq88iR5f2B4PoeVtqNnA54w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=n/cELs6dgAdCnWlct0c54Bt9dMEGzKvjmr6v1yqrdWH12u91o18tA7Z3JCDkLFyJ+TuZ6xZ9b/LLzPBzilvfIwO27FvWnoe3xar7DTesJEnzC9lt1jiC1XCWcjRQBDhngJccUfO52iiULrvgPCiiaGi6IgXq1hfxNQgCwj2H72w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P9dyqSEB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4219AC32781;
-	Wed, 10 Jul 2024 10:14:30 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Goir6YSLeU6gnnwfAt701MS/bRFTKT3voO8v1RDgIz0a/eOtUZZ1qi34KMCO3d3FL/gODDlUHPvqebNYtLUn03rgzyDFBy3i6o37QvOxzj41ScRuK8ZYYPqD+loHwkgLb8izsCXHcsk4PABwbNmyKW9R0WWBbq09pF7+slfrgUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NQ47jDBo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF59C32781;
+	Wed, 10 Jul 2024 10:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720606472;
-	bh=OKhyUQJrcgTkjCaPrangKtL82cxX+Hgx6uNOr08+das=;
+	s=k20201202; t=1720606603;
+	bh=U7dgn9dmaT4kFFMdzpD5tq88iR5f2B4PoeVtqNnA54w=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=P9dyqSEBWvEP7oEYrhrqnuic0LMalLOfbYpcI2duueQ9R+I0YAZO4sZZmNE24J/3c
-	 CZhnRVdZ5YjpLiEff5HVRImkeMlZJ+gXGGQLH1VQsqbbsucJtwXCSkTy+8Cm1aQG6q
-	 velOdBu8cDDrY/XXAd0OjWvkrIahxIyg87S7tL1OJddd4raBJfM9LVj5dJ4gwhapZ6
-	 Gqpil63S9IAngVMe6DKgw6choplpVmOSo8zZe2/vv/Jwrc3UD1uvNm93rfl6UWL/ke
-	 eV/YZHGI/WAqviuJSKsUQYxhQd1eJkrC1a/BmF1mkjFOKwpQMskcqEnmPUf0MYOpYo
-	 Trcdqbaop2CEA==
-Message-ID: <1b6e63fe-cbd2-4d59-a863-c246267a0e89@kernel.org>
-Date: Wed, 10 Jul 2024 12:14:28 +0200
+	b=NQ47jDBoLRVBbfQi6CBg5EnjQGfbt6+dyMLWGRXHgKRxznP29SwUrUSLQ872b4YDN
+	 WgyevyuSalCxSkTPYW4pVo04hzazF4nET6m/W8LkiYpkO+MHkwJvV01i/GtzGxIhae
+	 kx38xLGkeI5/FJdiya96gSSpaxHXDuSIulC/f+GNhm3Swb3JpPS0gM+TJtU4pPzPF7
+	 +lKRdOVI8kIFfoDNMLTpuNBzOkyQMEkpMzLe9F97c5uGsTw6WXIGc814CNVpg+8FwH
+	 G+kjbxOhd75pVuhbFz+67WnXNsXwbpbTwKPRhAcpd6hl8PDkAiNsNO8N6va+GsjypO
+	 QSaMaeS7+Lz5g==
+Message-ID: <46239515-badb-4ad7-8280-91074eae47bf@kernel.org>
+Date: Wed, 10 Jul 2024 12:16:39 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,19 +50,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: add qcs9100-tlmm compatible
+Subject: Re: [PATCH v2] dt-bindings: crypto: ice: Document QCS9100 inline
+ crypto engine
 To: Tengfei Fan <quic_tengfan@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
+ Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
- linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240709-add_qcs9100_tlmm_compatible-v2-0-d025b58ea196@quicinc.com>
- <20240709-add_qcs9100_tlmm_compatible-v2-1-d025b58ea196@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel@quicinc.com, Maria Yu <quic_aiquny@quicinc.com>
+References: <20240709-documnet_qcs9100_crypto_engine_compatible-v2-1-59bd16b1a99c@quicinc.com>
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -106,36 +106,44 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240709-add_qcs9100_tlmm_compatible-v2-1-d025b58ea196@quicinc.com>
+In-Reply-To: <20240709-documnet_qcs9100_crypto_engine_compatible-v2-1-59bd16b1a99c@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 09/07/2024 15:04, Tengfei Fan wrote:
-> Add qcs9100-tlmm compatible for QCS9100 SoC.
+On 09/07/2024 15:08, Tengfei Fan wrote:
+> Document the compatible used for the inline crypto engine found on
+> QCS9100.
+> 
 > QCS9100 is drived from SA8775p. Currently, both the QCS9100 and SA8775p
 > platform use non-SCMI resource. In the future, the SA8775p platform will
 > move to use SCMI resources and it will have new sa8775p-related device
-> tree. Consequently, introduce "qcs9100-tlmm" to describe non-SCMI based
-> pinctrl.
+> tree. Consequently, introduce "qcom,qcs9100-inline-crypto-engine" to
+> describe non-SCMI based crypto engine.
 > 
 > Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+> Introduce support for the QCS9100 SoC device tree (DTSI) and the
+> QCS9100 RIDE board DTS. The QCS9100 is a variant of the SA8775p.
+> While the QCS9100 platform is still in the early design stage, the
+> QCS9100 RIDE board is identical to the SA8775p RIDE board, except it
+> mounts the QCS9100 SoC instead of the SA8775p SoC.
 > 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml
-> index e9abbf2c0689..1bdec08efc4a 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml
-> @@ -17,7 +17,10 @@ allOf:
+> The QCS9100 SoC DTSI is directly renamed from the SA8775p SoC DTSI, and
+> all the compatible strings will be updated from "SA8775p" to "QCS9100".
+> The QCS9100 device tree patches will be pushed after all the device tree
+> bindings and device driver patches are reviewed.
+> 
+> The final dtsi will like:
+> https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-3-quic_tengfan@quicinc.com/
 >  
->  properties:
->    compatible:
-> -    const: qcom,sa8775p-tlmm
-> +    items:
+> The detailed cover letter reference:
+> https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
+> 
+> Co-developed-by: Maria Yu <quic_aiquny@quicinc.com>
+> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
 
-Same comment as in other patchset, so apparently you made all of patches
-in similar way. No need to add items.
+This looks messy - wrongly placed, not in correct DCO order. Some tools
+will just ignore it, some might produce wrong result.
 
 Best regards,
 Krzysztof
