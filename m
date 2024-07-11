@@ -1,145 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-25999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E684292ED69
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 19:05:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7060092EE62
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 20:09:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 914691F22F46
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 17:05:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1816F1F21158
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 18:09:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DEFD16CD39;
-	Thu, 11 Jul 2024 17:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25DA916DEC1;
+	Thu, 11 Jul 2024 18:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VweLSb3c"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZPxjZNUG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052CD450FA;
-	Thu, 11 Jul 2024 17:04:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E94116D33F;
+	Thu, 11 Jul 2024 18:04:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720717497; cv=none; b=Z4cw74cet8dMyVNYtrBRiVa9q8KYQ0D0f+lLVTJKuvsb6rRx4j1jevS7LSksrAW1Oy8OuYDFuOUe4fC8IP7x7K3hzHbE4ELpieoBwAjRvvoue5IHZ8FSNkwNrfJSx78V1OEm9OHNMmxj7vmL+84kjvOnzVbY+a9ZW4Gamn4vXYU=
+	t=1720721073; cv=none; b=dlYmfu2vcOAx/0cb2A0cTF459o/hrWMzKOMgvevyFA3WLlLGruWJPzPyTOdljiNYF4tfvSNS7PcSgX2ghVmLEAOE957s4tjF+fJeJamCIL5vPq8b7dyqXPfLYBHzh6QLvAGl0l+sq0FEqTZ8B91NW7FIsYZLgfgxI2t3Fy7OIQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720717497; c=relaxed/simple;
-	bh=8bA1Af5JkTKsPfzcax7n6cvmceZSVM+9DQAXTzJTRpc=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=hVkl1p7txz8RPwZbPiaNiOZ0Yf3uFAKQIGGh3y/lEoKZrL9Qkw2P5X0p66L9zZr+uO4V8pGUIjdUCGxTbzJ0VROoXOxTLhSjjzeWRiKRuiHHtvqo/H9jnDble+acZve3gyaRKMNzVGmEcikkowmR4Pr+A75dkYC55gAL4KaHKFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VweLSb3c; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B3EC116B1;
-	Thu, 11 Jul 2024 17:04:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720717496;
-	bh=8bA1Af5JkTKsPfzcax7n6cvmceZSVM+9DQAXTzJTRpc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=VweLSb3cn8veFY/O7cKAlfEIwL3f2HLsE7eAtPdboROuKAnEbFm8vDuj3NQQ0noao
-	 dN7r3qfljVRi538GReGxRpj/BZP6uhySPravw3Uif9gWH09HvlUsmyMNqhJWCN2tiY
-	 x0gVO7rJZxk8OL2BbRGPUUPmGfyW/FA4bQ35Lco/dQlFGfQ1t+daYbjcQ0dezjNRcQ
-	 Js4nQR/KKCirmE+Yn0JLq6WCIHpsGVNO4Taf0Lk16eAsHo+vvB9oWCGeMwhv1D6zbn
-	 irDjHcQbE+kCucOfJrocRzdzuxEnojQ+F1ZaM4ay4bcSKmAVQUE04h07Ef6Et2QUwQ
-	 VbuDzDmJbTkxQ==
-Date: Thu, 11 Jul 2024 12:04:54 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jonathan Corbet <corbet@lwn.net>, Jingoo Han <jingoohan1@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
-	quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
-	quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-	quic_parass@quicinc.com
-Subject: Re: [PATCH v6 3/5] PCI: qcom-ep: Add wake up host op to
- dw_pcie_ep_ops
-Message-ID: <20240711170454.GA287440@bhelgaas>
+	s=arc-20240116; t=1720721073; c=relaxed/simple;
+	bh=XBxod0zA2kJaQ30eaGrg8Gyqs6HEr8W4h16bYV+ocEE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=EAZuCXnWhSlcekW16bLNvMe81MCdXVsSwLdimeZVrb7NVTlmQ90ZZE8wq0/8GangP51pkK0fDlWXrl0/su7wkXc9RGhFoOC1TEj7GQGIibjZf04gMw26tqiOFNVsVcrea2jc/vAjwkA6iBVKjX+6hSi4P7V7XinNXP4Zp4oEmDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZPxjZNUG; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46BE01tH017618;
+	Thu, 11 Jul 2024 18:03:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	nONQeuYbHLvRucyD7QhZjwXI2y6eI9gKzj/PG28Mnsk=; b=ZPxjZNUGsmcBi+5G
+	ffrG48WhB5Ds2J8F+jwTYQAu5L/qXaZxoOOxr5rnjGEMfj6tl6q0shuyZ5jAMRMc
+	uU4pzGMliYR0ukjzaZsfzJHkAIzdYX/2VSi8Ja3YKhUpfdE61Y/HjQ90ddyLEI0i
+	Cs1b0LTi9ycSqyCgVnPtPcOkZEedqPvEpx8cU+eohQz3BMq4K8/VqcHYdw9pxW/1
+	6CwLwCHzp6hjMPukcS9P42otWV9XZp7cavX+mBAfpgj1OQUKX+Eig6mx2T1OlDBj
+	B26qq41YNVGTqIhmQsdlJd5OFkBuJyLpdYPc+Rjvb09oEKMbFLA+JfP2WRGxpZvm
+	MDFdaA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40a8uhsxh6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Jul 2024 18:03:25 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46BI3Nbb015261
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Jul 2024 18:03:23 GMT
+Received: from [10.110.44.137] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 11 Jul
+ 2024 11:03:22 -0700
+Message-ID: <fb285034-ed4c-4f20-ab80-cf91d36fc67c@quicinc.com>
+Date: Thu, 11 Jul 2024 11:03:15 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240710-wakeup_host-v6-3-ef00f31ea38d@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] drm/msm/dpu: don't play tricks with debug macros
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Rajesh Yadav
+	<ryadav@codeaurora.org>,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
+        Archit Taneja <architt@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Jeykumar Sankaran <jsanka@codeaurora.org>
+References: <20240709-dpu-fix-wb-v1-0-448348bfd4cb@linaro.org>
+ <20240709-dpu-fix-wb-v1-2-448348bfd4cb@linaro.org>
+ <46487222-6818-b0bf-e5cc-2310d62b5fe6@quicinc.com>
+ <CAA8EJpq7Lp-3V_AsLxO9ZOt8ZW1ZZ=FjhXV6R9jvH=sQ8XQE9w@mail.gmail.com>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpq7Lp-3V_AsLxO9ZOt8ZW1ZZ=FjhXV6R9jvH=sQ8XQE9w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: FknxQBwkKNIhvDX2H5RiooBpUZc2PoF1
+X-Proofpoint-ORIG-GUID: FknxQBwkKNIhvDX2H5RiooBpUZc2PoF1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-11_13,2024-07-11_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 bulkscore=0 clxscore=1015 mlxscore=0 malwarescore=0
+ mlxlogscore=999 lowpriorityscore=0 suspectscore=0 spamscore=0 phishscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407110125
 
-On Wed, Jul 10, 2024 at 04:46:10PM +0530, Krishna chaitanya chundru wrote:
-> Add wakeup host op to dw_pcie_ep_ops to wake up host.
-> If the wakeup type is PME, then trigger inband PME by writing to the PARF
-> PARF_PM_CTRL register, otherwise toggle #WAKE.
 
-Wrap into single paragraph or add blank line between.
 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom-ep.c | 25 +++++++++++++++++++++++++
->  1 file changed, 25 insertions(+)
+On 7/10/2024 12:40 AM, Dmitry Baryshkov wrote:
+> On Tue, 9 Jul 2024 at 22:39, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 7/9/2024 6:48 AM, Dmitry Baryshkov wrote:
+>>> DPU debugging macros need to be converted to a proper drm_debug_*
+>>> macros, however this is a going an intrusive patch, not suitable for a
+>>> fix. Wire DPU_DEBUG and DPU_DEBUG_DRIVER to always use DRM_DEBUG_DRIVER
+>>> to make sure that DPU debugging messages always end up in the drm debug
+>>> messages and are controlled via the usual drm.debug mask.
+>>>
+>>
+>> These macros have been deprecated, is this waht you meant by the
+>> conversion to proper drm_debug_*?
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> index 627a33a1c5ca..d17e8542d07a 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> @@ -97,6 +97,7 @@
->  /* PARF_PM_CTRL register fields */
->  #define PARF_PM_CTRL_REQ_EXIT_L1		BIT(1)
->  #define PARF_PM_CTRL_READY_ENTR_L23		BIT(2)
-> +#define PARF_PM_CTRL_XMT_PME			BIT(4)
->  #define PARF_PM_CTRL_REQ_NOT_ENTR_L1		BIT(5)
->  
->  /* PARF_MHI_CLOCK_RESET_CTRL fields */
-> @@ -817,10 +818,34 @@ static void qcom_pcie_ep_init(struct dw_pcie_ep *ep)
->  		dw_pcie_ep_reset_bar(pci, bar);
->  }
->  
-> +static bool qcom_pcie_ep_wakeup_host(struct dw_pcie_ep *ep, u8 func_no, bool send_pme)
-> +{
-> +	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
-> +	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
-> +	struct device *dev = pci->dev;
-> +	u32 val;
-> +
-> +	if (send_pme) {
-> +		dev_dbg(dev, "Waking up the host using PME\n");
-> +		val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
-> +		writel_relaxed(val | PARF_PM_CTRL_XMT_PME, pcie_ep->parf + PARF_PM_CTRL);
-> +		writel_relaxed(val, pcie_ep->parf + PARF_PM_CTRL);
-> +
-> +	} else {
-> +		dev_dbg(dev, "Waking up the host by toggling WAKE#\n");
-> +		gpiod_set_value_cansleep(pcie_ep->wake, 1);
-> +		usleep_range(WAKE_DELAY_US, WAKE_DELAY_US + 500);
-
-PCIe r6.0, sec 5.3.3.2, says
-
-  When WAKE# is used as a wakeup mechanism, once WAKE# has been
-  asserted, the asserting Function must continue to drive the signal
-  low until main power has been restored to the component as indicated
-  by Fundamental Reset going inactive.
-
-That doesn't seem compatible with a simple delay as you have here.
-
-> +		gpiod_set_value_cansleep(pcie_ep->wake, 0);
-> +	}
-> +
-> +	return true;
-> +}
-> +
->  static const struct dw_pcie_ep_ops pci_ep_ops = {
->  	.init = qcom_pcie_ep_init,
->  	.raise_irq = qcom_pcie_ep_raise_irq,
->  	.get_features = qcom_pcie_epc_get_features,
-> +	.wakeup_host = qcom_pcie_ep_wakeup_host,
->  };
->  
->  static int qcom_pcie_ep_probe(struct platform_device *pdev)
+> Yes. Drop the driver-specific wrappers where they don't make sense.
+> Use sensible format strings in the cases where it actually does (like
+> VIDENC or _PLANE)
 > 
-> -- 
-> 2.42.0
+
+Ack but we need to not just drop the wrappers but drop the usage of 
+these macros as well because it is documented that they are deprecated.
+
+So I assume you want to get this in and do that as a follow up change?
+
+>>
+>> /* NOTE: this is deprecated in favor of drm_dbg(NULL, ...). */
+>> #define DRM_DEBUG_DRIVER(fmt, ...)                                      \
+>>           __drm_dbg(DRM_UT_DRIVER, fmt, ##__VA_ARGS__)
+>>
+>> I think all that this macro was doing was to have appropriate DRM_UT_*
+>> macros enabled before calling the corresponding DRM_DEBUG_* macros. But
+>> I think what was incorrect here is for DPU_DEBUG, we could have used
+>> DRM_UT_CORE instead of DRM_UT_KMS.
+> 
+> It pretty much tries to overplay the existing drm debugging mechanism
+> by either sending the messages to the DRM channel or just using
+> pr_debug. With DYNAMIC_DEBUG being disabled pr_debug is just an empty
+> macro, so all the messages can end up in /dev/null. We should not be
+> trying to be too smart, using standard DRM_DEBUG_DRIVER should be
+> enough. This way all driver-related messages are controlled by
+> drm.debug including or excluding the 0x02 bit.
+> 
+> 
+>>
+>> And DRM_DEBUG_DRIVER should have been used instead of DRM_ERROR.
+>>
+>> Was this causing the issue of the prints not getting enabled?
+> 
+> I pretty much think so.
+> 
+
+Alright, I am okay with the approach, just one minor suggestion, to keep 
+the behavior intact, previously the code wanted DPU_DEBUG to be 
+controlled by DRM_UT_KMS and DPU_DEBUG_DRIVER controlled by DRM_UT_DRIVER.
+
+Keeping that intact, we need to use DRM_DEBUG_KMS for DPU_DEBUG?
+
+>>
+>>> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 14 ++------------
+>>>    1 file changed, 2 insertions(+), 12 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+>>> index e2adc937ea63..935ff6fd172c 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+>>> @@ -31,24 +31,14 @@
+>>>     * @fmt: Pointer to format string
+>>>     */
+>>>    #define DPU_DEBUG(fmt, ...)                                                \
+>>> -     do {                                                               \
+>>> -             if (drm_debug_enabled(DRM_UT_KMS))                         \
+>>> -                     DRM_DEBUG(fmt, ##__VA_ARGS__); \
+>>> -             else                                                       \
+>>> -                     pr_debug(fmt, ##__VA_ARGS__);                      \
+>>> -     } while (0)
+>>> +     DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
+>>>
+>>>    /**
+>>>     * DPU_DEBUG_DRIVER - macro for hardware driver logging
+>>>     * @fmt: Pointer to format string
+>>>     */
+>>>    #define DPU_DEBUG_DRIVER(fmt, ...)                                         \
+>>> -     do {                                                               \
+>>> -             if (drm_debug_enabled(DRM_UT_DRIVER))                      \
+>>> -                     DRM_ERROR(fmt, ##__VA_ARGS__); \
+>>> -             else                                                       \
+>>> -                     pr_debug(fmt, ##__VA_ARGS__);                      \
+>>> -     } while (0)
+>>> +     DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
+>>>
+>>>    #define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
+>>>    #define DPU_ERROR_RATELIMITED(fmt, ...) pr_err_ratelimited("[dpu error]" fmt, ##__VA_ARGS__)
+>>>
+> 
+> 
 > 
 
