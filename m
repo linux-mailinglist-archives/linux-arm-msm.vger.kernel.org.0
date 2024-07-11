@@ -1,139 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-25922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A06A92E1F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 10:20:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28A5D92E1F7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 10:20:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5B81E1C2171D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 08:20:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5A3C61C2093D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 08:20:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8244B1534EC;
-	Thu, 11 Jul 2024 08:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 386951514EF;
+	Thu, 11 Jul 2024 08:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oWO8OERk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gFCuKmKb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9332555B;
-	Thu, 11 Jul 2024 08:20:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994F81514F4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 08:20:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720686014; cv=none; b=rODIg/y5h9o6H5h2FI8tVkBYxMdmgsCysgRpiRSxYSh2+EtsQ4gCF2+pvoMJH+3q6Tu4ideBRUygfWPhiiHeOQrnXoKOsVNf8Hs9f0RE0oCwHjie84WXI96zEsX2LL/R1eQppiG35sl4PhT6flzviuRUbgCzAEcuD0Fyt5Ixjnk=
+	t=1720686008; cv=none; b=Mtwf0chbi+nTYMjo9svOrMHKBfvdn3ybdZ7gZ8suLqW/kAu9jSTbV8El0Sp3lWVH1lGyIf2e8fBGRXYAUDJrWdYZBvNiEKHpD71I9hzUlnTlCoEVVnUNg3CvuQK9LlTr1kxRKhRezXXG+qaAl8CcgZTRN3txLL0YlXjTHs+QTCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720686014; c=relaxed/simple;
-	bh=ECDjUX7sMoLGKS78SvFADoo7Z8KxnHERvqRD6Yv4Jd4=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i1M606MViJgso0WhooRD+p7QLgAl62gboWGRbz3TAoheBsJS0NDBcaBi5TcPwckjNbqPuXpDOft2aaxsury0Qc37FCS6g+apAf2Av6u9Pqrf7P/dI4Zzaie9tm8xJEHLfE7Vd5FEvmfYEyKyjsSujqwNQQbh0V7TkqYZcsKo+Fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oWO8OERk; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46B4mr6f008781;
-	Thu, 11 Jul 2024 08:19:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=nDMGiZZIwHKkvAsjKVbyuA1P
-	GVr/46NInHQRhNbuLxo=; b=oWO8OERkrQ1/SGZTana4Wu+V2wexz5rgqbe9F8du
-	fumAFOTKr0xlHUzIJypI+I0jSqjpN/8v1csf1HCn2S28czPbh6rXzzNzh0pmuC7/
-	yeHacN8rzoQfSZcC8A6y1l55iEzvOdJjMFwdDv8A7dOSX9KQw7lQSBA76d54TIl4
-	EZVDmxp4bkYwZQ6cEUGKFTThYfbCukuirRo7ilahzivIpBZnw84LgbZQ2vALmYA1
-	6aeoN19XJEvZn5njFOVSmRpqxg0zhQ3Xqfi1SVEXkJy6jBcuCI3jaUAUfRMXJ9P1
-	ZsEgI116SrOrZyanEGE1skNNDiYuhtRHdCAH+8cLZMQ1CA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406x51bveq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jul 2024 08:18:59 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46B8Iwdq004815
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jul 2024 08:18:59 GMT
-Received: from taozha2-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 11 Jul 2024 01:18:55 -0700
-From: Tao Zhang <quic_taozha@quicinc.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Leo Yan
-	<leo.yan@linux.dev>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>
-CC: Tao Zhang <quic_taozha@quicinc.com>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: [PATCH v2 3/3] coresight-tpda: Optimize the function of reading element size
-Date: Thu, 11 Jul 2024 16:17:50 +0800
-Message-ID: <20240711081750.21792-4-quic_taozha@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240711081750.21792-1-quic_taozha@quicinc.com>
-References: <20240711081750.21792-1-quic_taozha@quicinc.com>
+	s=arc-20240116; t=1720686008; c=relaxed/simple;
+	bh=zUXuuTdZC1gW6ONubxV+eGQkbjsKypgRFVdFLS0VZRM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aiAgpd/39aMQZ6/66CiHDPBoU4gvaciMPo2a4MEskt2y4kRgL8HZDYUzxgu6E6huNW7mvgnZ0XGRgTbXqMepMUhpzs+bY5kXwhnpWQer9FXVz0pfDbZm/yaWwT2BX2i0dAub4UZYZcfshW1mQMOh845Avoc//HDqcZoH2/52MpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gFCuKmKb; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-6561850a7bcso5836887b3.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 01:20:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1720686005; x=1721290805; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=yCOXCel+OkgFY3x3XxhTpu9K68s0AxsfBCkZfuzSswU=;
+        b=gFCuKmKbJ0Y+tzsp6D7knrd7jxrUSwmh9Fc7aqc5S+Y/IjI0wfny0Hai5Ns3teRqaT
+         kOvCLHiAQL0/oIt51/ODE0Zz4R0FDuK7rxRLK5rHNayE+azKhM6XUk0FGWNp+P0G0MjV
+         MvcAE+T1i12ND5CqG1urUanIoJvAG38k+s0plmgmqKN8Swct9NM3TLLYTh63qu8XsqEG
+         78OglYp5SLEB3IpY4pwVaBVbxrBXC2TJ85RSN5q40twCQYKCGp1UhALHZyimQPJPima4
+         m8/w5Z/4ISud+/GO9e5FEBgQCJoWmkOHznb2LmTDMm9Ssenkz7GigJ+ch8T5MufLGSQK
+         CS6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720686005; x=1721290805;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yCOXCel+OkgFY3x3XxhTpu9K68s0AxsfBCkZfuzSswU=;
+        b=ZySFxG9vcfiVckt1CLjwtkLDUz+x9SQ6dh+e/NSOy7XmEyWe911hNRq3FhhEwtknUZ
+         WnxwpiDYcYaN57EQVJTbhkMYYnPKg2Z00bwRdFOX6nHVXkZ381CQlfobTme8P4ndGvnX
+         8tiS9HZHhVYrezT9e51leMyNlsfxGe4fMIubzdGlBBmFG17VJpw7F8j4umC16OuoCEHm
+         KoiqU/v3IxFrGcz+dw9EHKO7qvGSJfMmAb6GCE6sN+VYGK3OKQxs8vY4ViH0ZxkSmj9a
+         W1N9nsunUwecS9NWv3dwzZc8YoKRU7Mj5AAhqGLCiHMoJ05VoZnOGxhpGQSZpCVIt1UW
+         VrGw==
+X-Forwarded-Encrypted: i=1; AJvYcCX8BWgDhWKlG3UeNaT5uKKpOj23QJpOG/C2KxfW12d68RL1P+X50dnLzfhV3LDLBls2gE48yYPJIwZMYR0WCge5oMOwBrEeCih0VoQk0A==
+X-Gm-Message-State: AOJu0YwrHsA3a1NKG7DZcGHZx68M8cWc4IZbXHGHJYhP9rMHHMlOC6Nu
+	qvNPozsMx9doNlcUS7smaFMjZ7v//h6beBrSOjzcheDpzWQX/UQdeppJNLLgPnf9N5fM6ID66ZY
+	2E5wkNMGdHVt7Ph2FiE22y5NyD6g5mLj+6DAIRw==
+X-Google-Smtp-Source: AGHT+IHES1E6Jos117gUDZhq9HN4sMFmUNFMxL9n1Xf9pBOpCOipbf6kJgCp8kRnNRqsB2zfpRqhPvb9GEPeIaC9oZk=
+X-Received: by 2002:a81:b50f:0:b0:632:58ba:cbae with SMTP id
+ 00721157ae682-658f0fb34d3mr73868857b3.52.1720686005368; Thu, 11 Jul 2024
+ 01:20:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Py0Jf22VgcsTHbipkSopWNKQv4Lhpa99
-X-Proofpoint-ORIG-GUID: Py0Jf22VgcsTHbipkSopWNKQv4Lhpa99
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-11_04,2024-07-10_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- suspectscore=0 impostorscore=0 mlxlogscore=999 mlxscore=0 bulkscore=0
- priorityscore=1501 malwarescore=0 lowpriorityscore=0 phishscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407110057
+References: <20240628-gpucc-no-request-v1-0-b680c2f90817@linaro.org>
+ <20240628-gpucc-no-request-v1-1-b680c2f90817@linaro.org> <5153b8f8a6c6ffdc1254e00c47a888ed.sboyd@kernel.org>
+ <CAA8EJpqOD-JKGCJiC7yAkiG3oAOEbHQ-_aCmDiP5HdeEVZm8fw@mail.gmail.com> <9cb3f57ed4b41fb51600610a3a1c9437.sboyd@kernel.org>
+In-Reply-To: <9cb3f57ed4b41fb51600610a3a1c9437.sboyd@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 11 Jul 2024 11:19:54 +0300
+Message-ID: <CAA8EJpq+Mgbrh_M+WN7VT90hC=5TPAC1dkgC5PzSeO22WOyGUw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] clk: qocm: add qcom_cc_map_norequest
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org, 
+	linux-clk@vger.kernel.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Since the new funnel device supports multi-port output scenarios,
-there may be more than one TPDM connected to one TPDA. In this
-way, when reading the element size of the TPDM, TPDA driver needs
-to find the expected TPDM corresponding to the filter source.
-When TPDA finds a TPDM or a filter source from a input connection,
-it will read the Devicetree to get the expected TPDM's element
-size.
+On Thu, 11 Jul 2024 at 03:04, Stephen Boyd <sboyd@kernel.org> wrote:
+>
+> Quoting Dmitry Baryshkov (2024-07-10 16:32:18)
+> > On Tue, 9 Jul 2024 at 01:30, Stephen Boyd <sboyd@kernel.org> wrote:
+> > >
+> > > Quoting Dmitry Baryshkov (2024-06-27 22:20:22)
+> > > > The GPU clock controllers use memory region that is a part of the GMU's
+> > > > memory region. Add qcom_cc_map_norequest() to be used by GPUCC, so that
+> > > > GPU driver can use devm_ioremap_resource for GMU resources.
+> > >
+> > > Why does GMU map the gpu clk controller? Does it use those registers? We
+> > > don't want to allow two different drivers to map the same region because
+> > > then they don't coordinate and write over things.
+> >
+> > It's not that GMU maps gpu CC separately. It looks more like gpucc is
+> > a part of the GMU address space. I think GMU manages some of the
+> > clocks or GDSCs directly.
+> >
+>
+> I imagine GMU is a collection of stuff, so the register range is large
+> because it's basically a subsystem unto itself. Can the range in DT be
+> split up, or changed so that different devices within GMU are split out?
 
-Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
----
- drivers/hwtracing/coresight/coresight-tpda.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+No, we have to remain compatible with existing DT. It's not a problem
+of a single new platform, the issue has always been present there.
 
-diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
-index bfca103f9f84..4936ba4a7625 100644
---- a/drivers/hwtracing/coresight/coresight-tpda.c
-+++ b/drivers/hwtracing/coresight/coresight-tpda.c
-@@ -110,6 +110,8 @@ static int tpda_get_element_size(struct tpda_drvdata *drvdata,
- 		    csdev->pdata->in_conns[i]->dest_port != inport)
- 			continue;
- 
-+		if (csdev->pdata->in_conns[i]->filter_src_dev)
-+			in = csdev->pdata->in_conns[i]->filter_src_dev;
- 		if (coresight_device_is_tpdm(in)) {
- 			if (drvdata->dsb_esize || drvdata->cmb_esize)
- 				return -EEXIST;
-@@ -124,7 +126,6 @@ static int tpda_get_element_size(struct tpda_drvdata *drvdata,
- 		}
- 	}
- 
--
- 	return rc;
- }
- 
+> Or maybe the gpu clk controller can be made into a child of some GMU
+> node, where the GMU node has a driver that populates devices that match
+> drivers in different subsystems.
+
+Well... Technically yes, but this brings another pack of issues. There
+is no separate GMU driver, so we will likely have a chicken-and-egg
+problem, as probing of the GPU driver will also create the gpucc
+device which is further used by the GPU.
+
 -- 
-2.17.1
-
+With best wishes
+Dmitry
 
