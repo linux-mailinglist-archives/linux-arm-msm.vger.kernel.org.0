@@ -1,135 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-26002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA20B92F014
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 22:04:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 233F992F245
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 00:49:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7F7C92836CD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 20:04:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C8B441F22440
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 22:49:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8A9314F121;
-	Thu, 11 Jul 2024 20:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E17961A01B8;
+	Thu, 11 Jul 2024 22:49:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CP4iRO7D"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kpuoKTSg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2EA12E1CA;
-	Thu, 11 Jul 2024 20:03:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1ED19FA96;
+	Thu, 11 Jul 2024 22:49:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720728236; cv=none; b=ig1LLWlSS46y+OQPVB7JZB+jzSHdW5/4qBRELbWuXo2LGTLki5V3q/3wTzGlC8I79ohDaYYjc5D/MKZ6KRZ+QPgR75wChTGtSAN+4AP2aNklzPXlIy+tfCAlbunzRU8JJyWLPNPZU7ZDj8PckP2xDVMvKerApOSFauGpkLrWI28=
+	t=1720738154; cv=none; b=M8hN7AzFI3+qpGnWzBEqS5K2FF2miKeVSngiNnjDFl1X7k7ejXwz6CzKBUymnv4YhvwGZR+/8F9WOFWMlwA7tuFAuCQnfsPzfTXqRSzY/PMX6ZzF1pmX27FnBmziNf4CKJk7UTnkPGHlPZybchzloJCcBl08bZFv/ay4q18pHHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720728236; c=relaxed/simple;
-	bh=MydOLmn4tsc58jf8mTfT8rJyt1fE6WW3Aq9AAAEZl2I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BWSNlS569Tu0FYWLDNMNRQGJZdNAP6nKo5DZM2t7YP69me8CWJbw42W98KQW3wAqeUSrZ5hWNkjlfBeOCJe39Nd7plGO9+XYW5OWwRbXQhDhaCRu5EFGprevEgDvlbsqJEHyge9ZETXfiJr4CQ2Z7NNRTKl47DHGORL02NysOOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CP4iRO7D; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2143C116B1;
-	Thu, 11 Jul 2024 20:03:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720728236;
-	bh=MydOLmn4tsc58jf8mTfT8rJyt1fE6WW3Aq9AAAEZl2I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CP4iRO7DI8ej5/jS7utl7rgggWNrTey+CR14BQ4luX8o90XEkEdFFcHe1aOerXyxS
-	 6kdWR2fxDdvmER8g+QNZHZcffxbSH2bVW8lgXvVQwBm41SrYlswEdAWMRbv7q2QlS1
-	 1j63usIMpld4T8YqOa4KzvsV8wFbBeBMUKlSmTnODLbJ9yAXTlqpg9YjYdGL/jKj7m
-	 uRsVWbCrovYIBnktPDDuPgLeAh5qWAojN8fTA+yl4HSJASPglUDh3gMdWh8bohoy42
-	 xsIanflSye/FxkiceKajZsZ1wilnKNA9C71quwlOM4KA/Bky5HxSum8k3fss0Fm1Or
-	 I+ZieGL80dNfQ==
-Date: Thu, 11 Jul 2024 14:03:54 -0600
-From: Rob Herring <robh@kernel.org>
-To: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
-Cc: Trilok Soni <quic_tsoni@quicinc.com>,
-	Tengfei Fan <quic_tengfan@quicinc.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	kernel@quicinc.com
-Subject: Re: [PATCH v2] dt-bindings: phy: qcom,usb-snps-femto-v2: Add
- bindings for QCS9100
-Message-ID: <20240711200354.GA2482879-robh@kernel.org>
-References: <20240709-document_qcs9100_usb_hs_phy_compatible-v2-1-c84fbbafa9d6@quicinc.com>
- <20240710162745.GA3212156-robh@kernel.org>
- <3b8684f0-c89d-1a76-6bc5-93ced59dc51c@quicinc.com>
- <51302de0-5e4c-4e2a-85a0-e22549baa13c@quicinc.com>
+	s=arc-20240116; t=1720738154; c=relaxed/simple;
+	bh=olM2mbaQpFRDawu3ZuxhvtjY5RvgK/2qLifh2Btcsjo=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=frYLN3gWaMFvRXO4hCLMWvxJMpSt6YtkT+Wb9MF2E5F/WzuX0ADoo4l/W4oNlYOiTLcN/gaXSmG+MhgqQ8L8h7ysqQuilkUGrIcUTcfJp3f2ml/HWvpWIYAeVYLjUK7b4w4bTLMLHt05f3pny/AMVoMUzrWF1JFyXm6qq+vODjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kpuoKTSg; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46BD5Ux4016488;
+	Thu, 11 Jul 2024 22:49:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=7R+FP3GMLetxfcfS2kCF2M
+	bPrUJVtVu9hdgSH1cE+KY=; b=kpuoKTSgOKhzf+vg4/5p5L3VfeBZJC1n5RotV/
+	rm0Z0pW0rawrkHsOVFdrRB7g30LW0TE81+xvMKTudq48PGkncDTK2E/fGw4SUEfb
+	4WPNi2UaGrigeaBu88m4XlKBoC/bfBqE6xB8TyAaYoNJEJNyUUe6kCFeKlZlOLOf
+	EJh6dw7cqaOsQFsQb/jNtfNlK09cpisV1R6pf5rFLMaxagxbIaJeXAPkBepe8zrG
+	4CYWPpYsluHiXy06hkBxBpIotn3/bAgOsxgRYo+1RgLd/FI6UKbjbHywTuyRs+mU
+	EQpjKQ+rEjcqfY9bQntj7jcEtYKnSMeypK8IKxVcfbdMyYMQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 409kdtnev2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Jul 2024 22:49:02 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46BMn0Pb030968
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Jul 2024 22:49:00 GMT
+Received: from abhinavk-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 11 Jul 2024 15:48:59 -0700
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+To: <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Daniel
+ Vetter" <daniel@ffwll.ch>
+CC: <dri-devel@lists.freedesktop.org>, <quic_jesszhan@quicinc.com>,
+        <swboyd@chromium.org>, <dianders@chromium.org>,
+        <neil.armstrong@linaro.org>, <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH] drm/msm/dp: enable widebus on all relevant chipsets
+Date: Thu, 11 Jul 2024 15:48:50 -0700
+Message-ID: <20240711224850.1672662-1-quic_abhinavk@quicinc.com>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <51302de0-5e4c-4e2a-85a0-e22549baa13c@quicinc.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: jgZH0tXYJ3JIeUHNZGO_Eyohse8GymMw
+X-Proofpoint-GUID: jgZH0tXYJ3JIeUHNZGO_Eyohse8GymMw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-11_17,2024-07-11_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
+ impostorscore=0 mlxlogscore=999 lowpriorityscore=0 malwarescore=0
+ adultscore=0 suspectscore=0 phishscore=0 bulkscore=0 priorityscore=1501
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407110161
 
-On Thu, Jul 11, 2024 at 06:05:57PM +0800, Aiqun Yu (Maria) wrote:
-> 
-> 
-> On 7/11/2024 12:45 AM, Trilok Soni wrote:
-> > On 7/10/2024 9:27 AM, Rob Herring wrote:
-> >> On Tue, Jul 09, 2024 at 08:46:19PM +0800, Tengfei Fan wrote:
-> >>> Document the compatible string for USB phy found in Qualcomm QCS9100
-> >>> SoC.
-> >>> QCS9100 is drived from SA8775p. Currently, both the QCS9100 and SA8775p
-> >>> platform use non-SCMI resource. In the future, the SA8775p platform will
-> >>> move to use SCMI resources and it will have new sa8775p-related device
-> >>> tree. Consequently, introduce "qcom,qcs9100-usb-hs-phy" to describe
-> >>> non-SCMI based USB phy.
-> >>>
-> >>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
-> >>> ---
-> >>> Introduce support for the QCS9100 SoC device tree (DTSI) and the
-> >>> QCS9100 RIDE board DTS. The QCS9100 is a variant of the SA8775p.
-> >>> While the QCS9100 platform is still in the early design stage, the
-> >>> QCS9100 RIDE board is identical to the SA8775p RIDE board, except it
-> >>> mounts the QCS9100 SoC instead of the SA8775p SoC.
-> >>>
-> >>> The QCS9100 SoC DTSI is directly renamed from the SA8775p SoC DTSI, and
-> >>> all the compatible strings will be updated from "SA8775p" to "QCS9100".
-> >>> The QCS9100 device tree patches will be pushed after all the device tree
-> >>> bindings and device driver patches are reviewed.
-> >>
-> >> I'm not convinced this is not just pointless churn. Aren't we going to 
-> >> end up with 2 compatible strings for everything? SCMI should just change 
-> >> the providers, but otherwise the consumers are the same. I suppose if 
-> >> clocks are abstracted into power-domains (an abuse IMO) then the 
-> >> bindings change.
-> >>
-> >> Why do we need to support both SCMI and not-SCMI for the same chip?
-> > 
-> > IOT SKU of this SOC is using the non-SCMI solution and Auto SKU
-> > of this SOC is using the SCMI based solution due to additional
-> > safety requirements. 
-> 
-> More add-on information, IOT SKU which have qcs9100 soc mounted will
-> have firmware releases which support non-scmi solution.
-> And AUTO SKU which mounted with SA8775p will have different firmware
-> releases which support SCMI solution.
+Hardware document indicates that widebus is recommended on DP on all
+MDSS chipsets starting version 5.x.x and above.
 
-Yes, I understand the difference. My question is why should upstream 
-support that? Normally, I wouldn't notice or care, but the churn of 
-renaming everything makes me notice. Why do the maintainers need to 
-review all these extra changes because QCom couldn't figure out their 
-plans?
+Follow the guideline and mark widebus support on all relevant
+chipsets for DP.
 
-So after you duplicate all the compatible strings, what's next? Changing 
-all the SA8775p bindings which is an ABI break? Presumably, some 
-bindings may not change at all? In that case, you don't need any rename.
-I have no visibility into what's coming next, so please educate me.
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-The minimal amount of changes here is you are stuck with the existing 
-identifiers for the non-SCMI SKU. Then you can add a "new SoC" for the 
-SCMI SKU. You might not like the names now, but you picked them and are 
-kind of stuck with them.
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 9622e58dce3e..e1228fb093ee 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -119,7 +119,7 @@ struct msm_dp_desc {
+ };
+ 
+ static const struct msm_dp_desc sc7180_dp_descs[] = {
+-	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0 },
++	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+ 	{}
+ };
+ 
+@@ -130,9 +130,9 @@ static const struct msm_dp_desc sc7280_dp_descs[] = {
+ };
+ 
+ static const struct msm_dp_desc sc8180x_dp_descs[] = {
+-	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0 },
+-	{ .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1 },
+-	{ .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2 },
++	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
++	{ .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
++	{ .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
+ 	{}
+ };
+ 
+@@ -149,7 +149,7 @@ static const struct msm_dp_desc sc8280xp_dp_descs[] = {
+ };
+ 
+ static const struct msm_dp_desc sm8650_dp_descs[] = {
+-	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0 },
++	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+ 	{}
+ };
+ 
+-- 
+2.44.0
 
-Rob
 
