@@ -1,152 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-25917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E534192E1C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 10:15:02 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A983292E1ED
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 10:19:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0426282E89
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 08:15:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0D6CDB248E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 08:19:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E614E15535A;
-	Thu, 11 Jul 2024 08:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF3B61514E0;
+	Thu, 11 Jul 2024 08:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fRhRq6t4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FrOSLsjq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF9B155308
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 08:13:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A5B84DFF;
+	Thu, 11 Jul 2024 08:19:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720685624; cv=none; b=LObZ9WBoEpSfPYJEF4J/Bsh/wP4G68K2Nseh6sHoUb+t3KT1MoPI94tdNJMhfxSzH0ttmtzR+NlMl9HxHENAelHFlhqky8qLWpZ9emiNVJ2pMucE5v1rtvio/TephWLxiRka7Z0TFHZ0BYLbKhU3tRSP8dAXwOH9rTF60cJn4M8=
+	t=1720685964; cv=none; b=UEXh/ffx+LR4jys9aa+PZ4QBAEgCvbNBBuzTIx6J5jEqOGdKlF6ijLxzHcQ4OHH6DjcReDCdNpbjYgRzX7BGanc6XNTCCyLHoIMlxRt/WGB3i3vJcfsS44QENLHmthZB5mCeJOw7lk4Uox/hwwEtyBi7uF9Pkrkc9QOSyT6dsLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720685624; c=relaxed/simple;
-	bh=eI/hajbdA+0Rm/p6P9F4jJIv5qhR/mAL+TsDqW7Y3as=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=co3BHuk9dQIQ5v9n5LoH/rTpydEAbYslIYPGNpWaZcpZkyCyJK/PajyL8XadW0inQlayp+nKLFqNeaIVpdof9kPBqhvoPmjL8LENJ40OKDMWyFcR21ZEzpcaE3lfcLIB0wxmSCefM2G0oasiF+EwLU8nhfoYVPt7sQDou8WuMFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fRhRq6t4; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-59559ea9cfdso669733a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 01:13:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720685621; x=1721290421; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=IvTe9WRrtDlz1Jy2LpZjEQGJotsWMz6Pvf+dzDrN3iE=;
-        b=fRhRq6t46btwedVqHYka3HYI/ehBxGMR+tySNwBUxkpJIrEm7F1hbs7A0kOsjsZkA3
-         swJOYY5gC8JRpLWEjDxXyZjorpzlawH1foga9+fzXs0QE5RP3Ahz7CqTEItjOVT22e2D
-         8V9ovE0UQjyfhvLNqXZZhNU3Ogroe11U6oY3cwvIjc7uPXEvGSz8/mL/1cQlflIPJctY
-         2DUZB4KZ609Tg9MQLPG1SWr1EGmqn9EmnvuqMFw+uiRfvHeCYOD5K3ndQmA0vvnQE+p7
-         L3IWveHuzED3ACijODlYSEIjq1iO7ahB7H17HjjAHDEUp8ITJqRABc3WquKDXBl9NKFM
-         cW1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720685621; x=1721290421;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IvTe9WRrtDlz1Jy2LpZjEQGJotsWMz6Pvf+dzDrN3iE=;
-        b=OIxH1FCwdgM+ySG49j1h6ny/qeiUmkNp157YDVsVcXTa2TVCD9rNFn93AI0LmPd/9p
-         a7K+yqj0SRY9N2ObpJuKicMr5MWcWHZbljynab4aLgKxzdwOcgsBLBljAB/xByj2zNGi
-         V7FWX6uOi/LOI1pOREL0SZCSlEcNB6rTDYD7R1Xgb8ZFsamHVIp+4IxVp9NsdB+Aj/yH
-         T6SD5teer4V/L9ph2oEohhagEY+JdYRU8BmpcA0vUFZzElHb+RK93V+bk6wNzTxFQDy4
-         a/csqSVqg7f0aGFIwiNSklytsfdsfRPRso9c3heX3gTnQjKyreALfu5OPMy4iQTjdNPb
-         T8dg==
-X-Forwarded-Encrypted: i=1; AJvYcCXIGfcpn/m3Jp+f5wKzHROHv9c1EKySN3jGZHGusVrkqTSdwi5cteXNQsRlWGB9tVcDCe9AMcJzvnoEMg5OFaRLMoODXuxi07H2jsifnA==
-X-Gm-Message-State: AOJu0YzHjptttVFHPGHBMbLgNhasadxryVfQ/kZy/q9JAdeHcduCYoyb
-	jjCk2DENqwzKDsWpumreOa1uTo2OBBB2BbYCvfeEZoUUU/eI6OtJX+U8KzBl9W8=
-X-Google-Smtp-Source: AGHT+IH0DQ63yM5AH6DvvXzYYY41PJu/2xwyhi0Q2SOrjQgcllimfZ5GRDL0RyenxtLJEbGV6Jl+ag==
-X-Received: by 2002:a17:906:245a:b0:a72:518e:7c8b with SMTP id a640c23a62f3a-a780b689fb3mr601415066b.11.1720685620585;
-        Thu, 11 Jul 2024 01:13:40 -0700 (PDT)
-Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a780a856251sm234228466b.185.2024.07.11.01.13.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jul 2024 01:13:40 -0700 (PDT)
-Message-ID: <069282eb-d891-4537-bdc0-85de17b5e61f@linaro.org>
-Date: Thu, 11 Jul 2024 10:13:38 +0200
+	s=arc-20240116; t=1720685964; c=relaxed/simple;
+	bh=YdS730IoGZkqSsEaROsIU5sPMwoeLFyrlQ3TRFzWw2A=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=l+pEjwseYbhcXdFVVqp/X5ADCOydwhM/SKpmWN8ds74UdCy12Pbrrt4kpCw2oZqBsZU5cFGKEbupQb+k5eY6Ac9GO/EuI4kQQIe3TW0oFPxquS/M5F4tir629+3PcG4pKs1GFBmc7nzQUiqR/qk1aObJBNRcJEPBJoFocssX9KM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FrOSLsjq; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46B4mmRs016386;
+	Thu, 11 Jul 2024 08:18:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:message-id:mime-version:subject:to; s=
+	qcppdkim1; bh=OAx9bejEu4tuB2DuaKFWyvCDpqnDDZTBlgKcsRJyo6Y=; b=Fr
+	OSLsjqF96kYbK+5o96jI/Ud7BRCH+DNvH+Jg4b8TJGj73ZK6W4fG2oTlOrLe9y3S
+	oFQRkdpxXa6hKXkK2pRvRt3EGiVK5uZlkX5IzOgzgYoOkQReZxrV+8tDxMqYBL3F
+	lc+rSB3HHeSsLT0pMuUcGpHcT8g6qfq2hL2vWIVuAMkPBO40Xr2VB9fsncoCBQGC
+	nvENIf+vSnI0D04juDSHDtY9OqrP11o6Qxrcd8vgqR3FEsISWmhZ3yrHciWpvhBT
+	I3OZ9UV9eFFi56z2Mgc1nN6Y/y/aLclpy6QqpQ496PcXpDKm+6hmnoQZffnptFPm
+	GnT2jxYYGohQSMvVUetg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406y3hk8ev-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Jul 2024 08:18:48 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46B8IlfG004931
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 11 Jul 2024 08:18:47 GMT
+Received: from taozha2-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 11 Jul 2024 01:18:43 -0700
+From: Tao Zhang <quic_taozha@quicinc.com>
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Leo Yan
+	<leo.yan@linux.dev>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+CC: Tao Zhang <quic_taozha@quicinc.com>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH v2 0/3] Add source filtering for multi-port output
+Date: Thu, 11 Jul 2024 16:17:47 +0800
+Message-ID: <20240711081750.21792-1-quic_taozha@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drivers/clocksource/qcom: Add missing iounmap() on error
- when reading clock frequency.
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-To: Ankit Agrawal <agrawal.ag.ankit@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Thomas Gleixner <tglx@linutronix.de>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240710110813.GA15351@bnew-VirtualBox>
- <2a3561cc-c6b3-4823-b488-fc8ebc53e1a6@linaro.org>
- <20240711054934.GA37910@bnew-VirtualBox>
- <793b70b2-d6c1-4e4b-96a5-8a257837eafb@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <793b70b2-d6c1-4e4b-96a5-8a257837eafb@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: rmCNo0K1LOOu2NKcGfFIeSlW31zgNoSZ
+X-Proofpoint-GUID: rmCNo0K1LOOu2NKcGfFIeSlW31zgNoSZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-11_04,2024-07-10_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ spamscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0
+ clxscore=1011 mlxlogscore=999 impostorscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407110057
 
-On 11.07.2024 10:11 AM, Konrad Dybcio wrote:
-> On 11.07.2024 7:49 AM, Ankit Agrawal wrote:
->> On Wed, Jul 10, 2024 at 01:54:01PM +0200, Konrad Dybcio wrote:
->>> On 10.07.2024 1:08 PM, Ankit Agrawal wrote:
+In our hardware design, by combining a funnel and a replicator, it
+implement a hardware device with one-to-one correspondence between
+output ports and input ports. The programming usage on this device
+is the same as funnel. The software uses a funnel and a static
+replicator to implement the driver of this device. Since original
+funnels only support a single output connection and original
+replicator only support a single input connection, the code needs
+to be modified to support this new feature. The following is a
+typical topology diagram of multi-port output mechanism.
+|----------|     |---------|     |----------|   |---------|
+|  TPDM 0  |     | Source0 |     | Source 1 |   | TPDM 1  |
+|----------|     |---------|     |----------|   |---------|
+      |                |                |             |
+      |                |                |             |
+      |      --------- |                |             |
+      |      |                          |             |
+      |      |                          |             |
+      |      |                          |             |
+   \-------------/ ----------------------             |
+    \  Funnel 0 /  |                                  |
+     -----------   |     ------------------------------
+          |        |     |
+          |        |     |
+        \------------------/
+         \    Funnel 1    /     ----|
+          \--------------/          |
+                  |                 |----> Combine a funnel and a
+                  |                 |      static replicator
+          /-----------------\       |
+         /    replicator 0   \  ----|
+        /---------------------\
+             |     |      |
+             |     |      |-----------|
+             |     |---------|        |
+             |               |TPDM0   |TPDM1
+             |            \-----------------/
+             |             \   TPDA 0      /
+             |              \-------------/
+             |                    |
+             |                    |
+             |Source0/1           |
+          \-------------------------------/
+           \           Funnel 2          /
+            \---------------------------/
 
-[...]
 
-> 
-> Ohh right source_base is a global variable.. perhaps the original patch
-> here makes more sense given we definitely don't wanna unmap that..
-> 
-> So I'd say let's go with this one after all
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Changes in V2:
+1. Change the reference for endpoint property in dt-binding.
+-- Krzysztof Kozlowski
+2. Change the property name "filter_src" to "filter-src".
+-- Krzysztof Kozlowski
+3. Fix the errors in running 'make dt_binding_check'.
+-- Rob Herring
+4. Pass in the source parameter instead of path.
+-- Suzuki K Poulose
+5. Reset the "filter_src_dev" if the "src" csdev is being removed.
+-- Suzuki K Poulose
+6. Add a warning if the "filter_src_dev" is of not the
+type DEV_TYPE_SOURCE.
+-- Suzuki K Poulose
+7. Optimize the procedure for handling all possible cases.
+-- Suzuki K Poulose
 
-We should probably also check if msm_timer_init() succeeds and unmap
-if that fails.. we can just check the return value of that function
-and if it's non-zero, call iounmap
+Changes in V1:
+1. Add a static replicator connect to a funnel to implement the
+correspondence between the output ports and the input ports on
+funnels.
+-- Suzuki K Poulose
+2. Add filter_src_dev and filter_src_dev phandle to
+"coresight_connection" struct, and populate them if there is one.
+-- Suzuki K Poulose
+3. To look at the phandle and then fixup/remove the filter_src
+device in fixup/remove connections.
+-- Suzuki K Poulose
+4. When TPDA reads DSB/CMB element size, it is implemented by
+looking up filter src device in the connections.
+-- Suzuki K Poulose
 
-Konrad
+Tao Zhang (3):
+  dt-bindings: arm: qcom,coresight-static-replicator: Add property for
+    source filtering
+  coresight: Add source filtering for multi-port output
+  coresight-tpda: Optimize the function of reading element size
+
+ .../arm/arm,coresight-static-replicator.yaml  |  19 ++-
+ drivers/hwtracing/coresight/coresight-core.c  | 125 ++++++++++++++++--
+ .../hwtracing/coresight/coresight-platform.c  |  18 +++
+ drivers/hwtracing/coresight/coresight-tpda.c  |   3 +-
+ include/linux/coresight.h                     |   5 +
+ 5 files changed, 155 insertions(+), 15 deletions(-)
+
+-- 
+2.17.1
+
 
