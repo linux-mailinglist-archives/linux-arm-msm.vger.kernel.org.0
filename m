@@ -1,313 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-25993-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EB3292EBC0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 17:34:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id ABF2392EC80
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 18:20:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AC12FB20B46
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 15:34:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3A3A31F22431
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 16:20:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B4C812DDA9;
-	Thu, 11 Jul 2024 15:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9507116CD2A;
+	Thu, 11 Jul 2024 16:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KibOrYWg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mbEW4lbV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA1A1642B;
-	Thu, 11 Jul 2024 15:34:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB3D16CD12
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 16:19:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720712052; cv=none; b=hdI/jL1v1AqNZBPD6kDpw3XSZqbLkfmxaSrsXVbUdolPBeOwySjiMdBHWwK+dKz9sY4uoxWSG/ElNGvh8HxIeZipfRl+uZj0PauQIhZcUnZ0RbnpnBG9mzII5FMCkUUIHqh5w8RO6sTO1lop7YtQYZQocrDuXXrLEVtj8TxSab4=
+	t=1720714794; cv=none; b=UCvT1YtbON3IlnDjQVW4aNg7ndt8exhVpUKf1MwpD8e+/X7SoaRyb2WTpOHZil8WepvVutVP5G2AuLeh9SZNcaUkRkj0lcoVNjeKF0fJtcZqlnuV6752pLkB1V7WoADzbBqsxrAZa3NxBzjRsPDvmA583AmR0wWcNcKrkyJSpmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720712052; c=relaxed/simple;
-	bh=2ECKbJOAl1I4ejRED+BC4GWb8aavgKbho12qFEo0pkw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=VJMgo6zs1SsoNbKxi+Sfmo5PUlNcQdM0s1Gsk0KJWaRl5lr7CAnwyQfi0NFphSy86h3o8tBfGQimhJhSOlGq1oF1VAdsotHDX56Foq/VkP7czxrFdp219wKf8koWQOt2gtFnFO5iNZ78JG1b5ij7xnxZgBQkn2kyIj8INOYfipc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KibOrYWg; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46BBYugt024165;
-	Thu, 11 Jul 2024 15:34:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	TLv239LCKbAksyk9+YP/RuXxIdndLsF1f28qyIKCIbg=; b=KibOrYWgXdq9Vn6J
-	15F9RU6/aiw8dO5Sz1nE5MjT72ojcIcY7+G0Zede0VV9x8OsoQMOpGx1nazyCtRb
-	nVgOyNvm6ls1xJ+9xZZpnbZnXZY5Pjxony4egPEQzw61fesIVeXU051I5vdGcqfc
-	Ic4FNdG5L9Woh2lQfu624Sai8yX8cGw7Bc/8QjGlhl9URJMR0JiHJWCpTDW7SaWn
-	kPIvPDTpGm7SesJ6AajYFheU/n9M1YIJzav8X9HWfCSwn0hhQjTAg9bAh71cq5xn
-	hfRPmH3u5/cmXzaP0Gxt3sc6PrNYHA0LUOfTZ6Plw/VkOkBeAS8p1XXNwYId8KH8
-	PkC+gw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406xpdvhkr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jul 2024 15:34:05 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46BFY5VY028145
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jul 2024 15:34:05 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 11 Jul
- 2024 08:33:58 -0700
-Message-ID: <eeaf4f4e-5200-4b13-b38f-3f3385fc2a2b@quicinc.com>
-Date: Thu, 11 Jul 2024 23:33:56 +0800
+	s=arc-20240116; t=1720714794; c=relaxed/simple;
+	bh=j572HuMq147T8C8MRpPHgT+aMLgJgejQdQMvLVHwt30=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZsZBeSbiniVbPWm3K3R0XBaUVZ9Zx3nbAZ3U+J3I/+MFzgcwCT9FRMD1yXTIzRZPeR8gQ6VCNBAXOpJL+KXmmGY1rpnxyDuANVksYQL37Iy5i9hYdmiRu6M0jae8pBdpGulc2hRng81lithmGZmnuhxIYRWeA2QsboXSYeG8fRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mbEW4lbV; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2c9a8313984so914541a91.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 09:19:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1720714792; x=1721319592; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=1AGMClvB41s+iwsgH79Eua1IbGQFm18N5jS+AOAWcdM=;
+        b=mbEW4lbVtIkxl5llZ2lOKVpc1mehq1jyr/UyFUp22Q+D/DvXKFDmgwknpZ8KciJRyO
+         gc2UnugiaMvPziAE7lHvFKQN/KFcE5XgGEjeFQKN4eQftGnW07NC1FSu8s+RebDD+Jft
+         WVFGtAq7ISg8wh5p+MCkAXSoH9SOQJTEbpeFyYha60dW9TIxFR4MLrGhkAIhfqcCuNQl
+         GcfxVz5vPd5Tsa99/+iU5yLIsmluQ4Ihz55r6v/Y5mxMBASZwBSsFpm+39yx6F1vR2vP
+         c86xPmu6RhjBl+GN0wvrJRq9XLI2f7O2AAR+yVTekeckM17Re9YOpSZGLnwOIMSKD1LB
+         LF7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720714792; x=1721319592;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1AGMClvB41s+iwsgH79Eua1IbGQFm18N5jS+AOAWcdM=;
+        b=Q/mKz6+mSwdYVaRnYkpIdlk7kl3NZ7Q5l3PJmS4TORfoXnlarsZluWYCU6UyE7O0mT
+         5aUEBsY/L9UxP+l82ELb604xJ17iYlW7WOuljAZQjhGvrCRW7ZZCA+ss4/geyyCvQ9+5
+         LmFEehPcY+4sTcJvas2y5H9dWP4L23210pnTz2QxtislCAkAvLHRMPcXD/sFUy8hhh5F
+         JIgT9V7f7rkVORLzd7K95xNAWyVTB81Go7QrQdP8HVgxePZyOLOGJUZgzSq3vPjyE4sq
+         cluhQ3BKOtpKWRa+4KPkH/TCBbnjyUhEhHc0dloPV9KajpgN9hDGxIdqZTEDUz18LLhs
+         qf0A==
+X-Forwarded-Encrypted: i=1; AJvYcCVJUCeEKx0evlfMFRRIuc2pB6TYNViFe+zGFgXQ52CbpzqwsSOmRYRTC34YWdY2GCpjZiSLwjpmRYEQISHa+tT2YgkBc/NQLoEeFdTDPA==
+X-Gm-Message-State: AOJu0YyjWdsoBK/QV+DTX+hi7xGDRTPNZ6Tno5dz+0YDob5DKHN3/yG7
+	DoUXwa1qbzWrrJfzWpTrSWzGfvWQCgTiox2ISOlHCdyTmo3Hu/5vCcEA4cvtFQ==
+X-Google-Smtp-Source: AGHT+IGahlfHHkRsDhkkhgFzdLCYpTrk09/0DiL56RDxZm+D8+vubukWJs0Zk4n8L1sX5nNqOnWxew==
+X-Received: by 2002:a17:90b:612:b0:2c4:af69:5c39 with SMTP id 98e67ed59e1d1-2ca35c2946bmr7256786a91.13.1720714792174;
+        Thu, 11 Jul 2024 09:19:52 -0700 (PDT)
+Received: from thinkpad ([120.56.197.247])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ca34e6e9c3sm5914081a91.20.2024.07.11.09.19.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jul 2024 09:19:51 -0700 (PDT)
+Date: Thu, 11 Jul 2024 21:49:47 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: enable GICv3 ITS for PCIe
+Message-ID: <20240711161947.GA4434@thinkpad>
+References: <20240711090250.20827-1-johan+linaro@kernel.org>
+ <f7e74a6f-0548-4caa-a8fc-8180c619c9aa@linaro.org>
+ <Zo-ssBBDbHRLtAwG@hovoldconsulting.com>
+ <Zo_zu-RmbZyKijVQ@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/13] media: qcom: camss: Add CSID Gen3 support for
- SM8550
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
-CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        Yongsheng Li
-	<quic_yon@quicinc.com>
-References: <20240709160656.31146-1-quic_depengs@quicinc.com>
- <20240709160656.31146-10-quic_depengs@quicinc.com>
- <e118f980-e10f-450c-8270-76602cc50b27@linaro.org>
-Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <e118f980-e10f-450c-8270-76602cc50b27@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: IhoCUpdVc9G2bTshws54_VnSTIwujG49
-X-Proofpoint-ORIG-GUID: IhoCUpdVc9G2bTshws54_VnSTIwujG49
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-11_11,2024-07-11_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
- adultscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999 spamscore=0
- clxscore=1015 lowpriorityscore=0 priorityscore=1501 malwarescore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407110110
+In-Reply-To: <Zo_zu-RmbZyKijVQ@hovoldconsulting.com>
 
-Hi Bryan,
-
-On 7/10/2024 7:28 PM, Bryan O'Donoghue wrote:
-> On 09/07/2024 17:06, Depeng Shao wrote:
->> The CSID in SM8550 is gen3, it has new register offset and new
->> functionality. The buf done irq,register update and reset are
->> moved to CSID gen3. And CSID gen3 has a new register block which
->> is named as CSID top, it controls the output of CSID, since the
->> CSID can connect to Sensor Front End (SFE) or original VFE, the
->> register in top block is used to control the HW connection.
->>
->> Co-developed-by: Yongsheng Li <quic_yon@quicinc.com>
->> Signed-off-by: Yongsheng Li <quic_yon@quicinc.com>
->> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
->> ---
->>   drivers/media/platform/qcom/camss/Makefile    |   1 +
->>   .../platform/qcom/camss/camss-csid-gen3.c     | 445 ++++++++++++++++++
->>   .../platform/qcom/camss/camss-csid-gen3.h     |  26 +
->>   .../media/platform/qcom/camss/camss-csid.h    |   2 +
->>   4 files changed, 474 insertions(+)
->>   create mode 100644 drivers/media/platform/qcom/camss/camss-csid-gen3.c
->>   create mode 100644 drivers/media/platform/qcom/camss/camss-csid-gen3.h
->>
-
->> +
->> +#define        REG_UPDATE_RDI        reg_update_rdi
->> +
->> +static void __csid_configure_rx(struct csid_device *csid,
->> +                struct csid_phy_config *phy, int vc)
->> +{
->> +    int val;
->> +
->> +    val = (phy->lane_cnt - 1) << CSI2_RX_CFG0_NUM_ACTIVE_LANES;
->> +    val |= phy->lane_assign << CSI2_RX_CFG0_DL0_INPUT_SEL;
->> +    val |= (phy->csiphy_id + CSI2_RX_CFG0_PHY_SEL_BASE_IDX) << 
->> CSI2_RX_CFG0_PHY_NUM_SEL;
->> +
->> +    writel_relaxed(val, csid->base + CSID_CSI2_RX_CFG0);
->> +
->> +    val = 1 << CSI2_RX_CFG1_PACKET_ECC_CORRECTION_EN;
->> +    if (vc > 3)
->> +        val |= 1 << CSI2_RX_CFG1_VC_MODE;
+On Thu, Jul 11, 2024 at 05:01:15PM +0200, Johan Hovold wrote:
+> [ +CC: Mani ]
 > 
-> I realise downstream does these shifts but, I think in upstream we 
-> should just define a BIT(x)
+> On Thu, Jul 11, 2024 at 11:58:08AM +0200, Johan Hovold wrote:
+> > On Thu, Jul 11, 2024 at 11:54:15AM +0200, Konrad Dybcio wrote:
+> > > On 11.07.2024 11:02 AM, Johan Hovold wrote:
+> > > > The DWC PCIe controller can be used with its internal MSI controller or
+> > > > with an external one such as the GICv3 Interrupt Translation Service
+> > > > (ITS).
+> > > > 
+> > > > Add the msi-map properties needed to use the GIC ITS. This will also
+> > > > make Linux switch to the ITS implementation, which allows for assigning
+> > > > affinity to individual MSIs.
 > 
-> #define CSI2_RX_CFG1_VC_MODE BIT(2)
+> > > X1E CRD throws tons of correctable errors with this on PCIe6a:
 > 
-> val |= CSI2_RX_CFG1_VC_MODE;
+> > What branch are you using? Abel reported seeing this with his branch
+> > which has a few work-in-progress patches that try to enable 4-lane PCIe.
+> > 
+> > There are no errors with my wip branch based on rc7, and I have the same
+> > drive as Abel.
+> 
+> For some reason I don't get these errors on my machine, but this has now
+> been confirmed by two other people running my rc branch (including Abel)
+> so something is broken here, for example, with the PHY settings.
 > 
 
-Here CSI2_RX_CFG1_VC_MODE just means a register bit offset, not a 
-register configuration.
+I saw AER errors on Abel's machine during probe with 4-lane PHY settings. And
+that might be the indication why the link width got downgraded to x2. This is
+still not yet resolved.
 
-Some fixed configuration can do this, but some register bits value are 
-configured based on actual parameter.
-e.g.;  val = (phy->lane_cnt - 1) << CSI2_RX_CFG0_NUM_ACTIVE_LANES;
-
-If we want to use macro definition, maybe we can do like below.
-
-#define CSI2_RX_CFG1_VC_MODE(n) ((n) << 2)
-val |= CSI2_RX_CFG1_VC_MODE(1);
-
-
-#define CSI2_RX_CFG0_DL0_INPUT_SEL(n) ((n) << 4)
-val |= CSI2_RX_CFG0_DL0_INPUT_SEL(phy->lane_assign)
-
-Could you please comment if we really need to do like this?
-
-
->> +    writel_relaxed(val, csid->base + CSID_CSI2_RX_CFG1);
->> +}
->> +
->> +static void __csid_ctrl_rdi(struct csid_device *csid, int enable, u8 
->> rdi)
->> +{
->> +    int val;
->> +
->> +    if (enable)
->> +        val = 1 << RDI_CTRL_START_CMD;
->> +    else
->> +        val = 0 << RDI_CTRL_START_CMD;
+> I saw five correctable errors once, when running linux-next, but it took
+> several minutes and they were still minutes apart.
 > 
-> Here is an example of how the bit shifting is weird
+> > Also note that the errors happen also without this patch applied, they
+> > are just being reported now.
 > 
-> (0 << anything) is still zero
+> I guess we need to track down what is causing these errors before
+> enabling ITS (and thereby the error reporting). 
+> 
+> At least L0s is not involved here, as it was with sc8280xp, as the
+> NVMe controllers in question do not support it.
+> 
+> Perhaps something is off because we're running the link at half width?
 > 
 
-Understood, the value is same, but we can know the configuration clearly 
-on this register bit. If we do like above way, then it likes below.
+My hunch is the PHY settings. But Abel cross checked the PHY settings with
+internal documentation and they seem to match. Also, Qcom submitted a series
+that is supposed to fix stability issues with Gen4 [1]. With this series, Gen 4
+x4 setup is working on SA8775P-RIDE board as reported by Qcom. But Abel
+confirmed that it didn't help him with the link downgrade issue.
 
-#define RDI_CTRL_START_CMD(n) ((n) << 0)  --> it is same with (n), but 
-we don't know the register bit offset clearly if we use (n).
+Perhaps you can give it a try and see if it makes any difference for this issue?
 
-if (enable)
-	val = RDI_CTRL_START_CMD(1);
-else
-	val = RDI_CTRL_START_CMD(0);
+Meantime, I'm checking with Qcom contacts on this.
 
->> +    writel_relaxed(val, csid->base + CSID_RDI_CTRL(rdi));
->> +}
->> +
->> +static void __csid_configure_top(struct csid_device *csid)
->> +{
->> +    u32 val;
->> +
->> +    /* CSID "top" is a new function in Titan780.
->> +     * CSID can connect to VFE & SFE(Sensor Front End).
->> +     * This connection is ontrolled by CSID "top".
->> +     * Only enable VFE path in current driver.
->> +     */
->> +    if (csid->top_base) {
-> 
-> When is csid->top_base NULL ?
-> 
-> Its required in your yaml.
-> 
+- Mani
 
-csid->top_base is NULL when it is csid lite, I will add this info in yaml.
+[1] https://lore.kernel.org/linux-pci/20240320071527.13443-1-quic_schintav@quicinc.com/
 
-
->> +
->> +static void csid_configure_stream(struct csid_device *csid, u8 enable)
->> +{
->> +    u8 i;
->> +
->> +    /* Loop through all enabled VCs and configure stream for each */
->> +    for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS; i++)
->> +        if (csid->phy.en_vc & BIT(i)) {
->> +            /* Configure CSID "top" */
->> +            __csid_configure_top(csid);
->> +            __csid_configure_rdi_stream(csid, enable, i);
->> +            __csid_configure_rx(csid, &csid->phy, i);
->> +            __csid_ctrl_rdi(csid, enable, i);
->> +        }
->> +}
-> 
-> I really like this breakdown
-
-Sorry, I don't get it, do you mean you like that configuring the 
-different block use different functions, and no other meaning?
-
->> +
->> +static int csid_configure_testgen_pattern(struct csid_device *csid, 
->> s32 val)
->> +{
->> +    if (val > 0 && val <= csid->testgen.nmodes)
->> +        csid->testgen.mode = val;
-> 
-> Surely you should just set the val parameter directly ?
-> 
-> Also why is this a signed integer and how does it get assigned a 
-> negative value which we need to mitigate against here  >
-
-This was copied from csid-gen2 driver, they are same, so we can move to 
-common file.
-
-And the val comes from ctrl->val, so I guess this is the reason why this 
-agrument is signed integer.
-
-struct v4l2_ctrl {
-	...
-	s32 val;
-	...
-};
-
-
-
->> +
->> +static u32 csid_src_pad_code(struct csid_device *csid, u32 sink_code,
->> +                 unsigned int match_format_idx, u32 match_code)
->> +{
->> +    switch (sink_code) {
->> +    case MEDIA_BUS_FMT_SBGGR10_1X10:
->> +    {
->> +        u32 src_code[] = {
->> +            MEDIA_BUS_FMT_SBGGR10_1X10,
->> +            MEDIA_BUS_FMT_SBGGR10_2X8_PADHI_LE,
->> +        };
->> +
->> +        return csid_find_code(src_code, ARRAY_SIZE(src_code),
->> +                      match_format_idx, match_code);
->> +    }
->> +    case MEDIA_BUS_FMT_Y10_1X10:
->> +    {
->> +        u32 src_code[] = {
->> +            MEDIA_BUS_FMT_Y10_1X10,
->> +            MEDIA_BUS_FMT_Y10_2X8_PADHI_LE,
->> +        };
->> +
->> +        return csid_find_code(src_code, ARRAY_SIZE(src_code),
->> +                      match_format_idx, match_code);
->> +    }
->> +    default:
->> +        if (match_format_idx > 0)
->> +            return 0;
->> +
->> +        return sink_code;
->> +    }
->> +}
-> 
-> Same code as in gen2.
-> 
-> You could move the gen2 version of this into camss-csid.c and just reuse 
-> in both.
-> 
-
-Sure, it is same with the comments in vfe driver, I will try to move 
-same code to camss-csid.c
-
-Thanks,
-Depeng
+-- 
+மணிவண்ணன் சதாசிவம்
 
