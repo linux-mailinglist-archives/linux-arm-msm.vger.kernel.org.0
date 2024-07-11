@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-25985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 567E092E9B0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 15:36:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96DCC92E9DF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 15:50:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CE6221F21CA8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 13:36:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BA3791C233E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 13:49:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7162015EFC1;
-	Thu, 11 Jul 2024 13:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5941B1607AA;
+	Thu, 11 Jul 2024 13:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ldMwUvr7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UrONOB9X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66F215ECD6
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 13:36:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995C215ECF9
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 13:49:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720704993; cv=none; b=izF0ewt0AxOwsCMs2n3zJKXqWk0CwBqhqtp1g6Fya7GJw1jSh5dwibntQ1Zba+MEqn5aY/uuXhMJ/2WFVOZlhnQlYT/IVj200ZVvbwGSFKlFvJuVVkedROqX/iDxp6ipps/9eGnxrCEToIHu5iMYhmAZ+GASUTJ9WtTer0fCWWE=
+	t=1720705786; cv=none; b=RzsbNuvpuEWPiPiHaiOJ1OvK51r0qXW7fiyNdulGo5MpXCP3w7yMcyGxO3yhiPqG1oDaKBXTDuANIbcZeMJCVe++kSCgA/Q/iSZVdkLtpy28iiiJNePowP/1gTgLGNTgxi1I40hy52cJBx7cL/ei0ZzVsrYmGjZc545NXa2rKNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720704993; c=relaxed/simple;
-	bh=ZJBtzydDNvnzwNjEXYE/Z8NIvItAF0eOwb6jFiFqgd8=;
+	s=arc-20240116; t=1720705786; c=relaxed/simple;
+	bh=79K5RvD5IB3o9mofuT2vT2hegIrucvFX0OKam3V6pJk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RaHmmOBbR6RWZr2/GINob7xQ7px0xGahpfpAfNXcWsk+kPw0Gk5/chdjBY1o4RcJsaxImBeDSgFG0Z/brFmjZqbQkF6lEXbYzYVNSPppiSf+BgdeI3jEHXtuN0ORNq/coNTTdfuUhmqp0b0YaH6Yi1itFtLKI6iz6MfQZ8xZEqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ldMwUvr7; arc=none smtp.client-ip=209.85.208.172
+	 In-Reply-To:Content-Type; b=LP8M21DI7HCb/ph5Dcf2DPUft0FuFDJpVh3YTrMxVxZDKhXbwyI2XViS38SPsZ+HeqcBDOTm8HH3cJadchTnnNPzkRKkfXq8jWWm4Q/OWajjuf/G7Q3kYW7jArwIu5+Eh8+RuMTKfkX6c6jtNp1wWsL9xGZTeJhxhwEolj685AE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UrONOB9X; arc=none smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2ebe40673d8so12353631fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 06:36:31 -0700 (PDT)
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-595712c49ebso1200685a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 06:49:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720704990; x=1721309790; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1720705783; x=1721310583; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DVLJo0/MBfbDMXoMGmbxkF4EVNMrx/VG4OOfR+Do5os=;
-        b=ldMwUvr7K0mLW7Pabrb54oRls71XDYGeMkO2WSdBQESubbUUoACQQB3LT3W87fDnAn
-         GX83XU84qg3YtFvo5a0xGtFpeHk8SpABlYqFXiqTHrh+WjfsToPQvp14mASu9RXkaVQl
-         jBBQAK8LYW12TswA2/oJryXMMaTX0SsT0naJqV0+Z5K4CqabrhIFWxHQGoQ2ymDPZ2ZT
-         EA48tEqIS2eBdH9Tta9JmFNIbR2V2ZVM03wELFrmSivDNGs2pEMlGNpo0CKenUsnv9dh
-         x3VEK+Am+VJHmaySn0lSQS2b7Qgu+RcTsXTc/HJvtKfxNY/3xETWb69jzIqDTyg2q4nd
-         qMGg==
+        bh=Jht1ossHcfC6SBXpPEySR0HVenV9ReWoiNiZQcr06jg=;
+        b=UrONOB9X6RrVYM7RUSBlxNWoV26J7MXTWAJArrmI/wLmVpaag/L91H/e7fjGs5HC0n
+         XPdi/a2O/7zZ6XJt0rUAloRA2s5SRRJLImMyBiZi/XKswchyCtmJ06DsxGUnUrQZapCS
+         JglTKUak2LyRNZN8WyIk4OcmFCsMPOwdzjcpTU/JCoLZO20BBhFNn9wDj0jbM5k/PoBS
+         J4LEfnZLCi1sO/sbTE/s2hrJgvhx0e4Um8og83NI7w9bxrivm5fnuSBzwLwvHj/xEyGL
+         ql1c2bDUYBTV47MOsFomvYg9oWOy0i8dXZq3ErOjQatGc+trBHOxTo8bpPrehjcQVPpJ
+         Vt7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720704990; x=1721309790;
+        d=1e100.net; s=20230601; t=1720705783; x=1721310583;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DVLJo0/MBfbDMXoMGmbxkF4EVNMrx/VG4OOfR+Do5os=;
-        b=rLLi8zYl780X8R3jkOrwQYE75tMcfWK2UlqcesMrPkEXLyFEl8aAQT1UdTacobReTX
-         jAqzXPl+m+1m1A/SVXgJqEz52Bp5hvyNqXzudMwKHMDIudJtjjmDbSaZarfLy4aoNL3R
-         CREq5WvY4CLk1EpWRVx+EFQHCGD3I2T3tSMHvNpGFSYMgnTGFyU6WKygkjIXLudYihJj
-         iX0HMcIjwuaAthhNpLzSy18RWcZaCvsmZrkYmR3ML2g6u1eOsIcfsLFEVf+duqxFyAfZ
-         uDfhc8HUTYP54MsxGz9MrOLqMAndHAM9kjLMlEIc9sZ4Q6xERe2VZRMBrPSHkYurLuv6
-         bJTA==
-X-Forwarded-Encrypted: i=1; AJvYcCXIlgjBmyHoJKPmVQmVYvWOJpg0mLW8iAsM7BQpz05jhZdCpoegip1SyicUwjJvjnLTGV3fVo8uvDgc1pSxKbyhqjpgfvO5qGoyhN9uVQ==
-X-Gm-Message-State: AOJu0YywvRidyF/3rK7qOcQyGlGJxfP+rllR2l2bRqU84I0qx56r0MMh
-	4p+GrPa924hO2B2q8hY43/DbZs092Hxc0Y6BBTM+ReX//wgKFxxiUXl/kQd0tQk=
-X-Google-Smtp-Source: AGHT+IGW1LfxEoPM8hrXbZlHQULLyAdwEerywPN0lSOYfjGLLYcyS8HeP866p3l1Hln9aIe3MLhEGg==
-X-Received: by 2002:a2e:b0d8:0:b0:2ec:419b:429e with SMTP id 38308e7fff4ca-2eeb30bbb7bmr52639441fa.2.1720704989535;
-        Thu, 11 Jul 2024 06:36:29 -0700 (PDT)
+        bh=Jht1ossHcfC6SBXpPEySR0HVenV9ReWoiNiZQcr06jg=;
+        b=jXbjr3MSquJHigLhaMbuslY8nR2njl8rHRDc14aaWxuCqzB83WQ3/5+P/HJ6UTLy5b
+         OigsTunjXrl3nf3BchXFT4jeS3QF1pTezK45OxBvZRB7YpGwqAtmyyEqRp9sdWoXM2lF
+         Gzaw5pVw+Kv0FsvrcnyV3c417YrWXjTNeR2tKLOaSsHeqAUoXq5JOF3RjKynW15ta87y
+         t1ayx598CYUjnT441ETGhr0wozO7Z/CxkM3JuSBX87/OimHY/r6PIAuPab9J+aBHZ4fK
+         mqEYsAldwibW4TYwf9hOtFW4QyB7XkvQUGhJul2v9jO8g6A2Ktbo54SFP45j9l3BO2/n
+         wjKw==
+X-Forwarded-Encrypted: i=1; AJvYcCXFEhyKMWEszPwD7rVHARvZ0LicjXo628TLprtr+wtBZBhgoVrsx0gmecXrPilg+nxXGaIsmNBjgrz8f1E8DqwUetdCvSE7P7VsafE3OA==
+X-Gm-Message-State: AOJu0YzHICgIdVnHLLUV2xDjGA7Aq8wq1TrI1NxwR4cMJ2hrp5ndIfDw
+	typU472HfvbnZW6EOBPs6beIbYKrh27uC9sdTXo3reOGbwr1mVObfsuB+KV4mDE=
+X-Google-Smtp-Source: AGHT+IFZSfQX5oRfhZPETXG+pYSZL0uF4d4lvoVQ2JrD0NeHIgASPF+evjiL5YQsPHKu+xzpUPIMEQ==
+X-Received: by 2002:a05:6402:2707:b0:57c:6234:e95b with SMTP id 4fb4d7f45d1cf-594ba98fafdmr6851324a12.5.1720705782855;
+        Thu, 11 Jul 2024 06:49:42 -0700 (PDT)
 Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-594bbe2d006sm3433632a12.31.2024.07.11.06.36.27
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-594bbe2cc6asm3443557a12.24.2024.07.11.06.49.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jul 2024 06:36:28 -0700 (PDT)
-Message-ID: <b61f7707-8b9d-49b9-a5d8-62e0cca37dd8@linaro.org>
-Date: Thu, 11 Jul 2024 15:36:26 +0200
+        Thu, 11 Jul 2024 06:49:42 -0700 (PDT)
+Message-ID: <1b87b280-07da-4257-b3a8-771166086cd3@linaro.org>
+Date: Thu, 11 Jul 2024 15:49:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,15 +77,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/5] ARM: dts: qcom: apq8064-pins: correct error in
- drive-strength property
+Subject: Re: [PATCH v2 2/5] ARM: dts: qcom: asus,nexus7-flo: remove duplicate
+ pinctrl handle in i2c nodes
 To: Rayyan Ansari <rayyan.ansari@linaro.org>, linux-arm-msm@vger.kernel.org
 Cc: Bjorn Andersson <andersson@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, devicetree@vger.kernel.org,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org,
  Rob Herring <robh@kernel.org>
 References: <20240711110545.31641-2-rayyan.ansari@linaro.org>
- <20240711110545.31641-3-rayyan.ansari@linaro.org>
+ <20240711110545.31641-4-rayyan.ansari@linaro.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -123,16 +123,20 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240711110545.31641-3-rayyan.ansari@linaro.org>
+In-Reply-To: <20240711110545.31641-4-rayyan.ansari@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 11.07.2024 1:01 PM, Rayyan Ansari wrote:
-> The "drive-strength" property was incorrectly spelt as "drive-strengh".
-> Correct this.
+> Remove duplicate handle to i2c pins in the device tree, as they are
+> already set in qcom-apq8064.dtsi.
 > 
 > Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
 > ---
+
+The difference here is that the SoC DTSI also has sleep mode
+
+but I suppose that's only a gain
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
