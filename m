@@ -1,189 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-25950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01C4792E503
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 12:47:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 400A592E545
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 12:59:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0EFB282919
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 10:47:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EEE3428197E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 10:59:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C488149C7C;
-	Thu, 11 Jul 2024 10:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82A2315A87F;
+	Thu, 11 Jul 2024 10:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="j+CuF7av"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mXAwW7MI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C1929CF0;
-	Thu, 11 Jul 2024 10:47:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A905E15A851
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 10:58:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720694830; cv=none; b=cTdQ12qK2sttIrM3QJlKDHwZmkRcyx7iUh6tWm5E845VEx5Kh5kl+y4s+PnSJkJI+NCKVD3ldHYNSccVSUM8aVH88zyovDWkHWmQfzirddRDmxdeUL8sTnkqDPeYT19gFzOgPDctJHKUtB0LWhC0/EwFGvedkgkbuIHg0tUUhxs=
+	t=1720695540; cv=none; b=USBAUy8jJEQ26f4ReSn7Q9uJBFSdqTooVFI/xqzySFqO+llAoGN7t6RtRaPpmQzh1fCgN/OKHQFHhBH3sN24HnmxclEHq2vtiWurj/99L/WDs+oCXNavXASjbPzwmjGnuCm9V0UMlunEEHOfxBloJc1pIqBY4w4thpPzthTPp7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720694830; c=relaxed/simple;
-	bh=f1ovXvPk52+ctLuYR1CD6jYCIGjkmFOkye8IjwVvGxQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bo0KdGfRi+/V7EaSMg8n0o4TM0ShC8sOIQERtgSTdafHW63m8cHeLdtagq7a5wgpG/Hw5JAaiYOm8Dn57C8H+hrvDIMQYNCew7WbGnC6Jp3xpFro7gdd1dGmSrQzKevsFfzp755O5lsCroTflP7jWYKHUmT4h/9co36VnYRpnuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=j+CuF7av; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46B4mu5g008802;
-	Thu, 11 Jul 2024 10:47:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	HMgmTT5lVtF+KlTpkcTEciTG+//l2SalS78yhnkfc6E=; b=j+CuF7avC2dM5Ous
-	ngjYfGiD2Z1RlS1UEPXvntSmWWKPyj4SdAGJBGfPyvnI+erFytvYUfFg1OtA6/cD
-	FgUUUEebmM0bPQ/LEXROnvq9mYsnTU7TeyQtVANqZCBJCOKGq1VlIusdnLVLGUDu
-	pkFW7oGYuxCzqXepSsrpvT18VEL3FPy6gQqkfU5p3SzM6yV49qkhWXZu3WvubA/Q
-	sCPtkoK4AuMERhbpdP1rI6qPfQqlkY0ZuPn9ZaclDRMdux3qQLitwYPbvv326tAO
-	Y5Nzy1zgsYYS+wocs8jY67cNe8zn7LKLZxE7WOiTQ5m0+p4Ok55HZAGjZv43oAT5
-	z8qwgg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406x51c8x5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jul 2024 10:47:01 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46BAl1O3019021
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jul 2024 10:47:01 GMT
-Received: from [10.239.132.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 11 Jul
- 2024 03:46:55 -0700
-Message-ID: <fad016b1-4079-468f-a2a6-a482c3aab66f@quicinc.com>
-Date: Thu, 11 Jul 2024 18:46:52 +0800
+	s=arc-20240116; t=1720695540; c=relaxed/simple;
+	bh=8F5cu1Nbgdv4LRNHCnmFtoPrKLEu6NjO08uCvgHdr/o=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=gs1oHTSCsDqOjSmbmkWs2ScLZa8mSrHrHg3wm4pl75UMUv2f40Ncf7yA2bhCt4RAcyUQXO1y8OIMg+54esmKqTPMSUbN9Vt6nlgsVtGWoLOJ3gDuNcTUrvwH2J/p+Rd4nHXYsVTAEmBjCd7coV//uYkLkn7ErZW7lLcFqKEVWQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mXAwW7MI; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a77e7420697so108170466b.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 03:58:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1720695537; x=1721300337; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LvJE+2dq9rYOh/AV+Ot4mrkMQ+gmhep7qxXNI0HNNrY=;
+        b=mXAwW7MIpTWwhasTk4BcsKls1TvBkVVDHPRCXUlFK+1DRXF6qlJJrwwzGl9GnXRQcx
+         lO5Dmcc9FNkcAAqzPb01fCJCuAM4TgXn8ZRtsVEunc4dPUC7g4RGFPqenemAhR10hCjh
+         TstoEHdO6DfL8t7Y705+kJF61b53bphO5VINyGRcMEUAf8LPYfiqp8wlcaxW1T5AGsAR
+         D8CwZ5MS54elnx5OXk8RdmwIGvKUiCb415NoXsY5xwdzvaRZyNIoJsjY9H2MWybK+Kd0
+         +VGW+XPyLH4vSlCMobTsd10P3qP+64cEc8vFesa/6jHUmcHu2Oz/rxYtBDe49zdu35Ij
+         h7Ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720695537; x=1721300337;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LvJE+2dq9rYOh/AV+Ot4mrkMQ+gmhep7qxXNI0HNNrY=;
+        b=nghTMFWBfrwTwddbOKm4Q1TdlS1nX6iXCLUb+OBlp3K3NwNHHBEctqmJuTXocM4Xh/
+         sdIg7MfVn1ASaXNsWan2USfJE12ZkE0IHUXx1C0U551uYDJ5ldFcZNpcvpp2dSFpA3Ui
+         +l7nG9wibZgmkDBNWQkoMNlDVWZ0pKi1xGLpLX+pUvtbH94FSIq8Bu28Vhrb241JVDFM
+         DBrDM7ZRogcW9PNIfTrHbSyVmAt7DKDPE4AAWaNpTQa6jKX80pq8fPRW0TIwgzKXej6U
+         My20FWK5JoRVUSGbC5z3rJfqsXTZGUoe0SSRW7vZZn/A0tOZa3jX1xyDVFtVfKlUL0F4
+         MlmQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVl63PGTTAYCO7JHq0iYlWTPI7TNTtdVW6gMsuhAWvYqKqbBQ3dkBCjnNwK9VrMa03zh1LR88hZL39jezLljvHHu+5qcJkPAO8zcJk/6g==
+X-Gm-Message-State: AOJu0YxA3Gme+2GsFLwwiBpSIn+B2321kyYxtrXVvpt1Q192k6ca31We
+	bKe+aALxZ2bs1krZEU4sMJZX7BEnofO9ePmDNYD98L4Rv6KOwHzQIETrgs1pyIw=
+X-Google-Smtp-Source: AGHT+IEAW01nZBJFD5VdSSV3PecfmH4qafPWxkDUGCRoxv1ctIabspJoRoPmVVEBMq++Ku3GjQ0X4A==
+X-Received: by 2002:a17:907:868c:b0:a77:c548:6452 with SMTP id a640c23a62f3a-a780b6fe882mr729736466b.41.1720695536680;
+        Thu, 11 Jul 2024 03:58:56 -0700 (PDT)
+Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a780a871f2fsm244209966b.202.2024.07.11.03.58.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jul 2024 03:58:56 -0700 (PDT)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/2] x1e80100 dt cleanups
+Date: Thu, 11 Jul 2024 12:58:45 +0200
+Message-Id: <20240711-topic-hhh-v1-0-a1b6b716685f@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] dt-bindings: soc: qcom,aoss-qmp: Document the QCS9100
- AOSS channel
-To: Chris Lew <quic_clew@quicinc.com>, Tengfei Fan <quic_tengfan@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240709-document_qcs9100_aoss_qmp_compatible-v2-1-6c7f35bc9ec3@quicinc.com>
- <24302005-d9a5-400e-a28c-40276a3f7250@quicinc.com>
-Content-Language: en-US
-From: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
-In-Reply-To: <24302005-d9a5-400e-a28c-40276a3f7250@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: qZhCkWpSRu7vt9ewYO5Fr8X0oYyaqyRR
-X-Proofpoint-ORIG-GUID: qZhCkWpSRu7vt9ewYO5Fr8X0oYyaqyRR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-11_06,2024-07-11_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- suspectscore=0 impostorscore=0 mlxlogscore=999 mlxscore=0 bulkscore=0
- priorityscore=1501 malwarescore=0 lowpriorityscore=0 phishscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407110076
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOW6j2YC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDc0ND3ZL8gsxk3YyMDF2L5BTj1BQLM4MUCxMloPqCotS0zAqwWdGxtbU
+ AikauXFsAAAA=
+To: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1720695535; l=833;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=8F5cu1Nbgdv4LRNHCnmFtoPrKLEu6NjO08uCvgHdr/o=;
+ b=hdWv2NmA9+0va34hfJCJrN8qQiSgnY7I8O9TBjBXpybIHbC1QZhFtcGOkGe+1jRnaGJeuHsns
+ YFR8Ay56WlmDEELQyUpJTOi6JLKxsq2OFmDZW0+F1nN2MPoXVj6S/i6
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
+no functional changes
 
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (2):
+      arm64: dts: qcom: x1e80100: Fix up hex style
+      arm64: dts: qcom: x1e80100: Disable SMB2360_2 by default
 
-On 7/11/2024 3:58 AM, Chris Lew wrote:
-> Hi Tengfei,
-> 
-> On 7/9/2024 7:24 AM, Tengfei Fan wrote:
->> Document the Always-On Subsystem side channel on the QCS9100 Platform.
->> QCS9100 is drived from SA8775p. Currently, both the QCS9100 and SA8775p
-> 
-> /s/drived/derived/
-> 
->> platform use non-SCMI resource. In the future, the SA8775p platform will
->> move to use SCMI resources and it will have new sa8775p-related device
->> tree. Consequently, introduce "qcom,qcs9100-aoss-qmp" to describe
->> non-SCMI based AOSS channel.
->>
-> 
-> Were there any differences between non-SCMI and SCMI based platforms
-> specifically for the qcom_aoss.com driver?
+ .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   |  4 --
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts          |  4 ++
+ .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  |  4 ++
+ arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi       |  2 +
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts          | 12 ++--
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 78 +++++++++++-----------
+ 6 files changed, 57 insertions(+), 47 deletions(-)
+---
+base-commit: f477dd6eede3ecedc8963478571d99ec3bf3f762
+change-id: 20240711-topic-hhh-8cd3ed860d84
 
-Hi Chris, the non-SCMI solution and SCMI solution is different from the
-clk resource etc. So for current qcom_aoss.com driver, I am expecting
-the qdss clk resource feature inside this driver may have some different
-design. More details is discussed via other internal emails as well.
-
-Currently, we want to have qcs9100(non-scmi) compatible added to
-differentiate sa8775p(scmi) compatible firstly to not blocking IOT and
-AUTO separately. Currently it is a looping dependency for moving forward.
-
-Feel free to let us know if you have other opinions.
-> 
-> 
->> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->> ---
->> Introduce support for the QCS9100 SoC device tree (DTSI) and the
->> QCS9100 RIDE board DTS. The QCS9100 is a variant of the SA8775p.
->> While the QCS9100 platform is still in the early design stage, the
->> QCS9100 RIDE board is identical to the SA8775p RIDE board, except it
->> mounts the QCS9100 SoC instead of the SA8775p SoC.
->>
->> The QCS9100 SoC DTSI is directly renamed from the SA8775p SoC DTSI, and
->> all the compatible strings will be updated from "SA8775p" to "QCS9100".
->> The QCS9100 device tree patches will be pushed after all the device tree
->> bindings and device driver patches are reviewed.
->>
->> The final dtsi will like:
->> https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-3-quic_tengfan@quicinc.com/
->>
->> The detailed cover letter reference:
->> https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
->> ---
->> Changes in v2:
->>    - Split huge patch series into different patch series according to
->>      subsytems
->>    - Update patch commit message
->>
->> prevous disscussion here:
->> [1] v1:
->> https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
->> ---
->>   Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git
->> a/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml
->> b/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml
->> index 7afdb60edb22..80e1a8b43586 100644
->> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml
->> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml
->> @@ -25,6 +25,7 @@ properties:
->>     compatible:
->>       items:
->>         - enum:
->> +          - qcom,qcs9100-aoss-qmp
->>             - qcom,qdu1000-aoss-qmp
->>             - qcom,sa8775p-aoss-qmp
->>             - qcom,sc7180-aoss-qmp
->>
->> ---
->> base-commit: 0b58e108042b0ed28a71cd7edf5175999955b233
->> change-id: 20240709-document_qcs9100_aoss_qmp_compatible-a7376629ea6c
->>
->> Best regards,
-
+Best regards,
 -- 
-Thx and BRs,
-Aiqun(Maria) Yu
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
 
