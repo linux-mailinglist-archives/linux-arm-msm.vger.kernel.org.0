@@ -1,133 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-25935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F39B292E392
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 11:39:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0087A92E3C6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 11:51:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7BE76B222F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 09:39:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A3BFC284BAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 09:51:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4704156C6A;
-	Thu, 11 Jul 2024 09:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1431F155CBA;
+	Thu, 11 Jul 2024 09:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="VH2EbyHO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DANXKutz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1905E093
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 09:38:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EB815572D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 09:51:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720690736; cv=none; b=Col9eqVh7sT7XFw1W1S+kgrALXidljLwfwccPJta9c1lM2i2+TgJQHajNgRER81cQiByBaARHJsoSePN5K98S0EjKxiGZ838HpLRa33o4nwerASP81dmiX0UiKi6uKdqbHS1O/86cmv3oPWQ5mshQa8lXYcBBBu/oE9G67Q8LCo=
+	t=1720691511; cv=none; b=FRdG2sK+04UUv3bMS59QvXvGQoxKnRFNy6s/XB9cWwREOnJVzbU7l2rylfb5FR6TVYgZZGBFjJ5dU9P8JJnyoFxXqGDrx24Ob+90c1fU5O+TCa23SWYvOHKmzwaLxPa95XJ/oXd9SodBPzknroo8msMmLTBcvCeTC8ATrUAEXK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720690736; c=relaxed/simple;
-	bh=pikkcTYggb8u6JWSfeF94wMpQIB37+wYenmi0I2i+os=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G5w0lAvLpxefvB4oMUCjxTXwQcBUotot1C9Ewy3Y3HMaxAPoxWZNZ+wZS/Q833ObsCPBcWE0LfYuhhBeQz8BcQSCjS29tS5J8/b1ZQ6ZHuzSmpIaMn4NEJcAY2jNgTBUgqtOYsNcHcBx7t8ygckzgFMvPTg9Z0MAzACE3lWBFMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=VH2EbyHO; arc=none smtp.client-ip=194.117.254.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	sang-engineering.com; h=date:from:to:cc:subject:message-id
-	:references:mime-version:content-type:in-reply-to; s=k1; bh=pikk
-	cTYggb8u6JWSfeF94wMpQIB37+wYenmi0I2i+os=; b=VH2EbyHOCWZAK9wNKOzj
-	pC+jtE6ioTFfQrePdbqSobn7QFaFyhJOMcQ8KGuS/+RUts+ZgcpN/whp9ok1BU81
-	A8CG39dWpFLp8SoIEd/dqgyARndAjNVBUwEmGiZolNoJrdFKE3S4KFYo8vEXy9UI
-	qKsb7E3WdidxU6jktaAs/C1Szj/KpDAOjlT3Y6ClOu4//vx0G8+UpYTq5nRQ8Eoh
-	N17eYOLSfZiv8tsElbamXAshrup0RDxgw+zm+I8VIswGxMWIbjfUyebe3WkGmCEf
-	jJoP7BDXBREHxQWRUTaNgae4R4zH1r+n7J+CTXsgzunlojetYt+49stvtqD5Iran
-	3A==
-Received: (qmail 797100 invoked from network); 11 Jul 2024 11:38:51 +0200
-Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 11 Jul 2024 11:38:51 +0200
-X-UD-Smtp-Session: l3s3148p1@pLXRh/UcVt4gAwDPXwmZAIsFIv4n+Dpm
-Date: Thu, 11 Jul 2024 11:38:51 +0200
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>
-Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jagadeesh Kona <quic_jkona@quicinc.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Loic Poulain <loic.poulain@linaro.org>,
-	Robert Foss <rfoss@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-i2c@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] dt-bindings: i2c: qcom-cci: Document sm8550
- compatible
-Message-ID: <Zo-oK1w3VRNP_Q_b@shikoro>
-Mail-Followup-To: Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jagadeesh Kona <quic_jkona@quicinc.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Loic Poulain <loic.poulain@linaro.org>,
-	Robert Foss <rfoss@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-i2c@vger.kernel.org
-References: <20240612215835.1149199-1-vladimir.zapolskiy@linaro.org>
- <20240612215835.1149199-2-vladimir.zapolskiy@linaro.org>
- <glda7ssote475kihs5c2wuff6k4slklzjb532uxiatxi5mdlfr@aiywubn3kert>
+	s=arc-20240116; t=1720691511; c=relaxed/simple;
+	bh=6W/qVczYJkuz3Z8DNHsspunOTZVIxcTUdrjw9u/h48E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kMt4zZc3YrG19uxvlmvkqUheZ4nSi3QcOMRQGTOqYN+ocGQv0D/uQ4ZTEvfQXAmkNmtjiqfx3o5e3U0GKHNAAIBpIFwhmYCyIzcuxRX2T/RTqzULQsAWEprmYCP7E6Ov/kgwM63ZP3GiNjSbBvC4gZXY0CvTKhE30+hybrYtYqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DANXKutz; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-356c4e926a3so405075f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 02:51:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1720691508; x=1721296308; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=p4smDoC8Q8mWiYpTnz73mXw1qS9kVwzA6CajD1cC+rw=;
+        b=DANXKutzYjdK7YMIIU2/uRYJQOBKdH9z4XEXz3WWyFgEMmIr5YOHqNToBg+454eo3e
+         IzptyStDAd9Z8sHwxecJuLsgtrNYwL+gh8aVy5fDXoDA8AeVAmQDPNTUt6Zp1rwf7wIo
+         Ixaug0kgOmnW+AUaPar+u4QKrBPqvJzXf9+WIzfGtUANmILxxqyrOTAv39TyEZIpu5ZI
+         SCLysRR7aOz8+8EfCi//XY+RBYYbZFIAY2+V4UjiLhWHZTX198XzD8E2gwxyS9vF/yOr
+         QVXNStei7cHeffZbbagp7/L+R6uH5FDIWJskNTcD+1s3S61IWEJPIjvd5CyHtMK7FBfV
+         ahDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720691508; x=1721296308;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=p4smDoC8Q8mWiYpTnz73mXw1qS9kVwzA6CajD1cC+rw=;
+        b=sm3NuvStSiT8hVHN8zoohe/S8wyEtNnIEqM693rMqiZ96Ga8eOhyiQr5BgevA1Zs3E
+         6kt0maYkrw4Lmfg5AJk7ZO1uhEUVaeEu/l3rOcmEOK7EdIeruLv7o6XZOYcV/cPQR0gY
+         cPsYtI8uJ3o0P7UPo721upPVx2jgUHJr3M4CFsaykSvhcR+e21OYaZ8udEyp+O0V7DW0
+         bRb3X5q+5oIxiwpUDxwIdCwsVxRaeAWaBizO9tdVIQgKsmByRlnUy2U2MySAbrIlfbmx
+         DlL9fy8kf2jQ7SDhBIe8xfm20FmcRAKpoJ167o1JeT0aIeQ6YxqlknkNZgBAjVF5Nkyr
+         nwKA==
+X-Forwarded-Encrypted: i=1; AJvYcCXNjQGeSvZD9r3i2NH5ELXHklWqkgOIYRKXH/6W9L8Lc4H3DDGAl7r7Lmt00rKtwGxZpjaUhf64+unrs9SunciTr4mwC1k+9hpkkSljSg==
+X-Gm-Message-State: AOJu0YyU5GKBxnjp8THDjSgMIq0wVGIeMzRDgN6xBKjaGv7CyQ86/cY7
+	651W6qe2H7vRaoAMizAA1+Euw32AcuyTASd91W8B0U/cbb3mKeHwTgWhvu/Ftis=
+X-Google-Smtp-Source: AGHT+IFtPH1XXTzpe+ZeiotMiBUKnIw0rtLtXdrEEVTNTDfCBJZjKL4CcUCeuZDut/QwViYvR4OaUg==
+X-Received: by 2002:adf:ea8d:0:b0:367:99fd:a9a8 with SMTP id ffacd0b85a97d-367cea73735mr5694718f8f.26.1720691507676;
+        Thu, 11 Jul 2024 02:51:47 -0700 (PDT)
+Received: from [192.168.0.16] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-367cde7e19dsm7274556f8f.15.2024.07.11.02.51.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Jul 2024 02:51:47 -0700 (PDT)
+Message-ID: <f4072105-e0e2-46c8-82ed-92105b43a345@linaro.org>
+Date: Thu, 11 Jul 2024 10:51:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="JYhQc9Xxk3rR1lI/"
-Content-Disposition: inline
-In-Reply-To: <glda7ssote475kihs5c2wuff6k4slklzjb532uxiatxi5mdlfr@aiywubn3kert>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/6] clk: qcom: Add camera clock controller driver for
+ SM8150
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
+ Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@codeaurora.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ Ajit Pandey <quic_ajipan@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>
+References: <20240702-camcc-support-sm8150-v2-0-4baf54ec7333@quicinc.com>
+ <20240702-camcc-support-sm8150-v2-5-4baf54ec7333@quicinc.com>
+ <xbe7kmaxhfwy26qzxrmwgiijaaiap4kdkruaxjs6ymihaw5taf@hvj57wyncfea>
+ <cc1957af-17bc-cd71-e6da-013e3a740014@quicinc.com>
+ <CAA8EJpqmJZJfd2famarx-FKFb1_+-nZM3N+FwK_hiOurG8n9=A@mail.gmail.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <CAA8EJpqmJZJfd2famarx-FKFb1_+-nZM3N+FwK_hiOurG8n9=A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 10/07/2024 23:10, Dmitry Baryshkov wrote:
+>>> - Why is cam_cc_gdsc_clk not modelled in the clock framework?
+>>
+>> This clock is kept enabled from probe, hence not required to be modelled
+>> explicitly.
+> Yes, I'm asking why it's kept up enabled from probe rather than via
+> clock framework?
 
---JYhQc9Xxk3rR1lI/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+FWIW my preference is to do it as Dmitry is suggesting here.
 
-On Tue, Jun 25, 2024 at 10:36:43PM -0500, Bjorn Andersson wrote:
-> On Thu, Jun 13, 2024 at 12:58:32AM GMT, Vladimir Zapolskiy wrote:
-> > Add sm8550 compatible consistent with CAMSS CCI interfaces, the list of
-> > clocks is reduced by removing "slow_ahb_src" clock, which is derived
-> > from "cpas_ahb" clock.
-> >=20
-> > Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->=20
-> Andi, could you please take the two binding patches from this series
-> (patch 1 and 2) through your tree, so that I can take the dts changes
-> through the Qualcomm DeviceTree tree?
+I'm not a big fan of hitting the register and leaving it as-is, would 
+much prefer to move to the model of having the CCF do it - so that for 
+example the clock appears in the /sys clock summary.
 
-Andi, ping for patches 1+2
-
-
---JYhQc9Xxk3rR1lI/
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmaPqCsACgkQFA3kzBSg
-KbZgxw//W7LDLHU2p3IAzUD4BKzmCs0uazlECPHmQo5yCqXM7VNO5+PO+gOkBCKT
-6geZFNsIU98jzR3E5rRCkibjOMNW2V4bzYxezP8cYPUtRuHaG2hboBhYCwmoHjC2
-SrNGyxEGiM3wFlg0tTj+JHpxIYUN+UUYgknzRO6jk93Hjd35AGSeNfCgJzXvMchx
-yhhV/KRSaz1JRvVt4Vkq3ik65eANQUARMTn99XhvYMlrXGU+kupZZ1sfX2C7Qhr6
-9D7zwDYV55Hj4Dnh+nT4p8VSjdmjCd5fMigEqiHbLhZ8xqEh5H/hh0w39M6s9rsP
-9HGox2auembLWwLYvIM+WXSlPFHx0hovT2CtlP+GB5JPKrGD3L0Lr+TpZiImk/f7
-CSP6QfxBbaibXgqUR38Bpw0dRZl9N5QaDd8TxVATjO1OEjkstwh2MQoA9eJMb+Oe
-+LZreor5De5JunxM22uSX8SFrzU6/t3BdBKS+mKqf0DGERlChlGrROzfmBr5w4eQ
-By6JXBDdOsiKtsAzZM3I3z+1pwdfdSPqYzQa0LgT1c2GOXTWNgA/bxm754fRpMB1
-SzzK1/v2UhZcDfH5plK1LBCOLBbzP66TXxj+8/aFUhBEKw4XIizntAAuzFulJytA
-yJV71ymHQSc8gkndHOiLbskCb0jeluH4Ily4wkP3zJOkqnL9HCw=
-=WBow
------END PGP SIGNATURE-----
-
---JYhQc9Xxk3rR1lI/--
+---
+bod
 
