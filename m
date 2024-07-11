@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-25988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AEE792EA2E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 16:04:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A5AB92EA33
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 16:05:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 167C91F22AC4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 14:04:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0EAB41F229FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 14:05:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 876DA16133E;
-	Thu, 11 Jul 2024 14:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC578160883;
+	Thu, 11 Jul 2024 14:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eiTlOVTM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CNnqMghO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550F7161328;
-	Thu, 11 Jul 2024 14:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CFE614BFA2;
+	Thu, 11 Jul 2024 14:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720706645; cv=none; b=lJPhSHZaGspPNK8sjY09jUP4zDaAR3XcuCiesvZKiYbKA6SaiVpSr+FNPNyLMLYeJtM16MvqBiFnJKRRmi4obHFo5bAJXj0zxLYoqaF13Uile2BhLntPLk45DVpMYtGw4Id1/OeWMpJnw9ucenKJozOE4CBfniYCSP+3DSC04AE=
+	t=1720706690; cv=none; b=Y4hOKLr8pNKbUAL3t38FWKiTXT90KxvqnDG15PPKO7pgwzijtju4yOoNYqL+7QynFao4TrZHsVROUwd9XegaHqYhFcOCd+qHH2vmHnx8oFU5x9PJ/rZrE9RgOmYwPAhRaVArP+kridAPWkJkE3XELYk8+qkSnyGRL77szfKued4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720706645; c=relaxed/simple;
-	bh=4/X2DYniTxnf4oRK0QXnJTfqGPrwHJG5s4N8w1eoP9Y=;
+	s=arc-20240116; t=1720706690; c=relaxed/simple;
+	bh=6FKCONExnD/KNoizVW6GlpBz8h/1JwDcxOS8N1c8ER0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KdtrhCGCzYar9CXpnTYrNRteOGXil/AF8T57205/mpjkUEoUrYS0KenSOvy87efV1sMMcUOl4lkiafLNq5vCAtCpWADf57kTRcI/Mi17xWI/rhlIKHuMoc6vxTMoeywKqGgP/gjDtIWJe/P7FMtGyFR9EWmheeQk9ovhXLKQBBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eiTlOVTM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98268C116B1;
-	Thu, 11 Jul 2024 14:04:02 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=h+O/WeS+eWFy9uNFpcspP8PgXLnADuBZiQTWwrCJn1ULDF1ZRapaoHNIIFzRO6iHIsgVtOQNmdY+pxReN8JdppblFMXUrxJu3BriolSybMtO2C2pOCjiiP9ljpt0ITSMsFVwiSabApZSFEJtP0RZh2rQB+JVSos1OEsQnXMl//w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CNnqMghO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F7AAC4AF0C;
+	Thu, 11 Jul 2024 14:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720706644;
-	bh=4/X2DYniTxnf4oRK0QXnJTfqGPrwHJG5s4N8w1eoP9Y=;
+	s=k20201202; t=1720706690;
+	bh=6FKCONExnD/KNoizVW6GlpBz8h/1JwDcxOS8N1c8ER0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=eiTlOVTMaZN8Cr+my1OoSCcetd/lH16uH9TU7OuVcWX1vXV7PTzlyYAGedu73Cii4
-	 W52Nuj86e7J3RnNP1TYA8DJtD9AE2ImK24Hh3nxUsmFhXkYFBFt3odVT8PnEiimjav
-	 g1Q8CxX3ejubE13m6pe53nUfQ0qtgeYZg2Mmsc0QuAGCpD2tsTC5ny+hiK3ch0hreo
-	 lDKy2nF7zD1rWcDdDBv1BDMCOqFek7MDUx4CGoWx/RPItC6sUR3tpcBknA+P5ctRXj
-	 gq7abN0NajRjyiqd7F/+bS3qaiD0XRCmMzZ3808rbJJ/YpFz7ZdiHcDWpK9rVBGQtl
-	 eFwoU9AztV6bQ==
-Message-ID: <2a6afc1c-82d9-4472-a185-373183dcde93@kernel.org>
-Date: Thu, 11 Jul 2024 16:04:00 +0200
+	b=CNnqMghOku+1hFsfj1MHWpCchPbx8di+ywiAyLGlVlW3y9pcoP+5grGDDyMBg6FJb
+	 ClZIt/tyDVWtbPKrH7l+piNb/ih3SUwG8ovAxwxrGpV1n6kQAjAwpchArflkpEaAHl
+	 V+k9DgpHahCzGDymRBoyZv8qDTY9+BnCQPnByejaiK2EyxVYLondk2dc46yPtKJ97n
+	 H1N7z02IImIHEhf8a+rSqt1JO7lS+reX00oA8krDno0Ec57ZTjSNM+hdtRwMm/+G4w
+	 1170vZLWpz6Lhq8FCfJmUB9DyyWdot9+PPzw+y3lLOnJW3kcLh95edArhEfO2lPFPt
+	 7gyGuB8mvLA4A==
+Message-ID: <3d95237c-e171-4db8-9d7e-1feeb73f063e@kernel.org>
+Date: Thu, 11 Jul 2024 16:04:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] ARM: dts: qcom: asus,nexus7-flo: remove duplicate
- pinctrl handle in i2c nodes
+Subject: Re: [PATCH v2 3/5] ARM: dts: qcom: apq8064: adhere to pinctrl
+ dtschema
 To: Rayyan Ansari <rayyan.ansari@linaro.org>, linux-arm-msm@vger.kernel.org
 Cc: Bjorn Andersson <andersson@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, devicetree@vger.kernel.org,
@@ -59,7 +59,7 @@ Cc: Bjorn Andersson <andersson@kernel.org>, Conor Dooley
  Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org,
  Rob Herring <robh@kernel.org>
 References: <20240711110545.31641-2-rayyan.ansari@linaro.org>
- <20240711110545.31641-4-rayyan.ansari@linaro.org>
+ <20240711110545.31641-5-rayyan.ansari@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,15 +105,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240711110545.31641-4-rayyan.ansari@linaro.org>
+In-Reply-To: <20240711110545.31641-5-rayyan.ansari@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 11/07/2024 13:01, Rayyan Ansari wrote:
-> Remove duplicate handle to i2c pins in the device tree, as they are
-> already set in qcom-apq8064.dtsi.
+> Pass dtbs_check for qcom,apq8064-pinctrl.yaml.
 > 
 > Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
+> ---
+> v1 -> v2: split previous 2 commits from this patch, corrected commit message
+> 
+>  .../boot/dts/qcom/qcom-apq8064-cm-qs600.dts   |  25 +-
+>  .../boot/dts/qcom/qcom-apq8064-ifc6410.dts    |  25 +-
+>  arch/arm/boot/dts/qcom/qcom-apq8064-pins.dtsi | 350 +++++++-----------
+>  .../qcom-apq8064-sony-xperia-lagan-yuga.dts   |  10 +-
+>  arch/arm/boot/dts/qcom/qcom-apq8064.dtsi      |  34 +-
+>  5 files changed, 166 insertions(+), 278 deletions(-)
+> 
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
