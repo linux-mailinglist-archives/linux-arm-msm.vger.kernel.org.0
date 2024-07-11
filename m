@@ -1,118 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-25907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25B5892DFC7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 07:49:49 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5898E92DFF7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 08:17:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 575511C222C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 05:49:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E8284B224E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 06:17:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67A8842AAF;
-	Thu, 11 Jul 2024 05:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09D7E7FBBD;
+	Thu, 11 Jul 2024 06:17:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NJ+56EeI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NYpBM/+/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB202119;
-	Thu, 11 Jul 2024 05:49:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16131C14;
+	Thu, 11 Jul 2024 06:17:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720676982; cv=none; b=ASNVsNfJEK4j+72UrIZUzZgj1hjd8YZjLxmryJ25IturZtco/2sv3biYXqMwE+Guqyvi4QefwkQQGLycbhg6tnldod2B57agiG8T3m/Vy0TMPen7oZS1wb+mubmOgdpdQ9mtATQvzep0820rHiZkSR5G5kpuv8Gzcpnc9FmQa+M=
+	t=1720678664; cv=none; b=Dta7ToKwqEcgOuJOAQsRGmdIv+ojxlFvg3G8DRPTY3g8V9E1oMGloJjzCHZ9u4TZcC71moeZjrJytat+iccWbDQjDPqYnfQzc6zC6pwmRY4WkP96xQGWBM0nWwBbkUIWbmwS0OhQNAj8r9ym5ZdxR7Xa10wJvDHd8Z7z67VkSEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720676982; c=relaxed/simple;
-	bh=IMMNbmISKN3AN3uDo01jjPKhfgtYPUQvEhZlKFLT7lA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WkgH+IIhq5MlwCTQie6XdL5hcOFNX6zT9VW4OqYC6WyyVUgjTEd63TkY3/z37K5EhWmvyWKa6i7iH9uxdKvoYE6msqa4mSB4f22PlVVWs3pBDJZOsIa1deXe5qZS870GWMXCSG05nvKFCfUg9WQkEDvVs4lK+616k7njsve19BI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NJ+56EeI; arc=none smtp.client-ip=209.85.167.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3d9272287easo277423b6e.2;
-        Wed, 10 Jul 2024 22:49:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720676980; x=1721281780; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hCHZzAU8rNlCfCBN32z5tdinaQoz+7lypLVImk4abyM=;
-        b=NJ+56EeIRyK5y4dtRFB76MlGlIB3zcRPKM+GK+IQNat+ud9AuqXZsNkJ3x8RxbtHK6
-         sqpao7cr9PeeYMn5VTNECeq4Qfoiz3KKb2AaOqwGBrWcp20EMsTOKhJZrGZzTvV2ymVP
-         Y+drqvx9UulbIE46LONObBD1yIVWUkALdHAoTBJ95aM62qnnd4gR8BUeba/k91hRy2xs
-         iY15uTr2IxwLl4a0nwrRBihwUPbOlKxiQfCpK/a1azt/mvCGnKGD41o6xWZpxQ26ApU4
-         Ak5nHZnc6QeYfvs5NGiBxa9q4z+pPcJoQNhhVBWOjFfPEN7VetCJF7Bm4sjSU8O3Rz0C
-         HE2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720676980; x=1721281780;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hCHZzAU8rNlCfCBN32z5tdinaQoz+7lypLVImk4abyM=;
-        b=MCPp/eL8y5AJ/V9VTPcKuEoFUS9Ck7Zqgb/BCoSWGQ2gUojNRbDdXLaWAfG8IQaOYU
-         KQgbwVf754KhgACYnj7j86RsEwX3r3WwacB5IfjM6cj4CG7RxSOJ1O1Yzq7GYuJXPF1S
-         4vkVr55z9UB6Sju5LboYS5zBcESe7JE+ff5eQirrafW9uBxjkkqD/VWlsWMaD8Wal45S
-         Xv5RmF2F1J38e23KgmqjTj9MU2scS6ZwP35g55Vp4YN/ZuXHtzr9hq8FHXwlmL1REIAd
-         QiwYo6hQ0yMa3ULuwm0kvVFD3moExwXTP1voy+8Ic4gHkgiQ97DpPRAiEavRkUtyBHQB
-         G4+w==
-X-Forwarded-Encrypted: i=1; AJvYcCVtH2dM/RXhNdFfJIKEpINeKGt5ftfleIHEP+WcB2ebRNEKSRrK8iMzccPB3XSwwOdQxaZDmRw/2DvvtaQnYe5WInGldS/+2uaWxuyetrItmV7cAW3hFd4M975Pco+MBCHgZD2ZoLMZD03T3w==
-X-Gm-Message-State: AOJu0YxjG8yhdEErRUdD8K3U6DiUT/dy1i0cCbWMNC4TWxbepRySxms0
-	rnmgua4mCkNrAIYmwaiyb5BkEYdZ3UOz+Rtk1gyQy9XYNPXZ9b6D
-X-Google-Smtp-Source: AGHT+IEFoGyxuqLL8qcwW8QVwzy8KwhCryR/Jet3lHCc4LS5wiSziHX270IbTD0y1y3Sh1aUD5IOHw==
-X-Received: by 2002:a05:6808:238a:b0:3d9:2190:9d45 with SMTP id 5614622812f47-3d93bdd1404mr8494576b6e.10.1720676979923;
-        Wed, 10 Jul 2024 22:49:39 -0700 (PDT)
-Received: from bnew-VirtualBox ([2405:201:3020:7812:b416:d4b5:f43f:6324])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-77d667ec466sm3094454a12.60.2024.07.10.22.49.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jul 2024 22:49:39 -0700 (PDT)
-Date: Thu, 11 Jul 2024 11:19:34 +0530
-From: Ankit Agrawal <agrawal.ag.ankit@gmail.com>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Thomas Gleixner <tglx@linutronix.de>, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drivers/clocksource/qcom: Add missing iounmap() on error
- when reading clock frequency.
-Message-ID: <20240711054934.GA37910@bnew-VirtualBox>
-References: <20240710110813.GA15351@bnew-VirtualBox>
- <2a3561cc-c6b3-4823-b488-fc8ebc53e1a6@linaro.org>
+	s=arc-20240116; t=1720678664; c=relaxed/simple;
+	bh=jND/C+0AKRS7itmNbUxH+HyXD2yIDcCtXMYb66vyvT0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=erTunuXsl/iaTe8fNzoNcPULyQAKhOCh20zEIKSvFHjJ4jAObJoKRNRes46MMjmNyrOG7FOXgSNcqJ7vXEAsFHpDOkBRzDIcAGV3xiYkmER8JAs382NkErzdwhgoDv+LSQ8P7RjeG/2FJKbOlfO8VratDr2yAnjqqNlcWe47awY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NYpBM/+/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88B9C116B1;
+	Thu, 11 Jul 2024 06:17:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720678664;
+	bh=jND/C+0AKRS7itmNbUxH+HyXD2yIDcCtXMYb66vyvT0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=NYpBM/+/xG8Lld8gtod/Nx/EtUXKTAjVzNsmPfQFu/lqW53i+AWbvOyC6oT8hcrZ3
+	 RJgma7qp0gBytx7mmrCgxKu8uL2cFejDhBJ1QO7cd6wdXmcvalYh9KMjPam+ZsIXSg
+	 INXtHsefRaz3mbHJLX+W2SN0oc67R9XtrFzt5imO2pPvRXrWIlLU2MBc66QEDxRveC
+	 bCsbA4HSgzhgnTc08eNXK5VPG5jzsUc5y7gVbriv5+zq68luM9IYS4uhhTgcxmglZ0
+	 Twk+9u/pgesSP+FoCdbOLNgsE/CymroXVsUT0uJTrGE6Q6zqM/dRh8936SlilZrEbY
+	 yrIh1uAq0obYg==
+Message-ID: <b2c88f85-eefb-411c-bfe0-6a476b449753@kernel.org>
+Date: Thu, 11 Jul 2024 08:17:39 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2a3561cc-c6b3-4823-b488-fc8ebc53e1a6@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] arm64: dts: qcom: sa8775p: Add UART node
+To: Viken Dadhaniya <quic_vdadhani@quicinc.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, andersson@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ conor+dt@kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
+References: <20240710094149.13299-1-quic_vdadhani@quicinc.com>
+ <2e309d52-8180-4922-9a5a-022fc8bf8ef5@kernel.org>
+ <f5ed3285-82da-4ba8-9b4d-a0cc7323fde4@linaro.org>
+ <fa189b4c-d407-4d48-9677-528f07f81efa@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <fa189b4c-d407-4d48-9677-528f07f81efa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jul 10, 2024 at 01:54:01PM +0200, Konrad Dybcio wrote:
-> On 10.07.2024 1:08 PM, Ankit Agrawal wrote:
-> > Add the missing iounmap() when clock frequency fails to get read by the
-> > of_property_read_u32() call.
-> > 
-> > Signed-off-by: Ankit Agrawal <agrawal.ag.ankit@gmail.com>
-> > ---
+On 11/07/2024 07:04, Viken Dadhaniya wrote:
+>>>> +				clock-names = "se";
+>>>> +				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
+>>>> +						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
+>>>> +						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+>>>> +						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
+>>>> +				interconnect-names = "qup-core", "qup-config";
+>>>> +				power-domains = <&rpmhpd SA8775P_CX>;
+>>>
+>>> All the clocks, interconenct and power domains look to me questionable.
+>>> AFAIK, most of it (if not all) is going to be removed.
+>>
+>> Yeah.. I'm lukewarm on accepting any sa8775p changes until that qcs9100(?)
+>> situation is squared out first
+>>
+>> Konrad
 > 
-> Or even better, you can extract:
-> 
-> drivers/platform/x86/intel/pmc/core_ssram.c
-> 32:DEFINE_FREE(pmc_core_iounmap, void __iomem *, iounmap(_T));
-> 
-> into a common header, call it something less intel-specific and use
-> it with __free() here
+> Thanks for clarification. Please help to sign-off or let me know in case 
+> of any concern.
 
-Can you please give a place where adding it would be appropriate? I am
-new to contributing here, so any guidance on where to add the
-DEFINE_FREE would be really helpful!
+I think I was quite explicit, so I feel above suggestion as still
+pushing your choice even though to reviewers gave you their opinion.
 
-Also, just trying to think out loud. Will the cpu0_base pointer (and
-also the source_base pointer) be required once this function exits? If
-so, I think I will also need to use no_free_ptr() to ensure that the
-memory doesn't get iounmap-ed once the function exits.
+In such case:
 
-Thanks!
-Ankit
+No, NAK, for the reasons stated above.
+
+Best regards,
+Krzysztof
+
 
