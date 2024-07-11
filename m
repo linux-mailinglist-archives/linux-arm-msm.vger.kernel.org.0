@@ -1,210 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-26000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7060092EE62
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 20:09:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 171BF92EF1F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 20:48:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1816F1F21158
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 18:09:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C5A3E283C2B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 18:48:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25DA916DEC1;
-	Thu, 11 Jul 2024 18:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13FE316EB5B;
+	Thu, 11 Jul 2024 18:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZPxjZNUG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LZygdmSj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E94116D33F;
-	Thu, 11 Jul 2024 18:04:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9F816EB47;
+	Thu, 11 Jul 2024 18:48:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720721073; cv=none; b=dlYmfu2vcOAx/0cb2A0cTF459o/hrWMzKOMgvevyFA3WLlLGruWJPzPyTOdljiNYF4tfvSNS7PcSgX2ghVmLEAOE957s4tjF+fJeJamCIL5vPq8b7dyqXPfLYBHzh6QLvAGl0l+sq0FEqTZ8B91NW7FIsYZLgfgxI2t3Fy7OIQA=
+	t=1720723725; cv=none; b=OegOGU06SvUvw0iIWp2M5WFYKelI35Zezklam36Bmvyt6SWLhOppke6e6U4SAyEslqiM93imGAhTusryKxcxnixwTHavGjdSnqbJcde/ltaOKVBXLfrbiEed8BS8Df7ul6KgtU5rMEGoKcjyu+ZF5uTUr/siFzNCMA8u7qopNCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720721073; c=relaxed/simple;
-	bh=XBxod0zA2kJaQ30eaGrg8Gyqs6HEr8W4h16bYV+ocEE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=EAZuCXnWhSlcekW16bLNvMe81MCdXVsSwLdimeZVrb7NVTlmQ90ZZE8wq0/8GangP51pkK0fDlWXrl0/su7wkXc9RGhFoOC1TEj7GQGIibjZf04gMw26tqiOFNVsVcrea2jc/vAjwkA6iBVKjX+6hSi4P7V7XinNXP4Zp4oEmDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZPxjZNUG; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46BE01tH017618;
-	Thu, 11 Jul 2024 18:03:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	nONQeuYbHLvRucyD7QhZjwXI2y6eI9gKzj/PG28Mnsk=; b=ZPxjZNUGsmcBi+5G
-	ffrG48WhB5Ds2J8F+jwTYQAu5L/qXaZxoOOxr5rnjGEMfj6tl6q0shuyZ5jAMRMc
-	uU4pzGMliYR0ukjzaZsfzJHkAIzdYX/2VSi8Ja3YKhUpfdE61Y/HjQ90ddyLEI0i
-	Cs1b0LTi9ycSqyCgVnPtPcOkZEedqPvEpx8cU+eohQz3BMq4K8/VqcHYdw9pxW/1
-	6CwLwCHzp6hjMPukcS9P42otWV9XZp7cavX+mBAfpgj1OQUKX+Eig6mx2T1OlDBj
-	B26qq41YNVGTqIhmQsdlJd5OFkBuJyLpdYPc+Rjvb09oEKMbFLA+JfP2WRGxpZvm
-	MDFdaA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40a8uhsxh6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jul 2024 18:03:25 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46BI3Nbb015261
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jul 2024 18:03:23 GMT
-Received: from [10.110.44.137] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 11 Jul
- 2024 11:03:22 -0700
-Message-ID: <fb285034-ed4c-4f20-ab80-cf91d36fc67c@quicinc.com>
-Date: Thu, 11 Jul 2024 11:03:15 -0700
+	s=arc-20240116; t=1720723725; c=relaxed/simple;
+	bh=xImh/e9JhSxNtzbEgiJpo+w6gMpGyqEXopSKCcJ76JE=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=oSBnDCjDtyEc1giFbc4oNF8ox+s8aLQVF8i9xzmzVibSNrfxGk9TG7Purwyl2f4nvYfBNvl/PI0mEWR4wjQ8Z56ufxW936bOIfQ049/baHOwKWkFNyiSw4QYlsYtMoihRJZTATJiBiZ7fxFXSMWNTaAjiqCYNPn5ie0cSSiwwks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LZygdmSj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C3AC116B1;
+	Thu, 11 Jul 2024 18:48:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720723724;
+	bh=xImh/e9JhSxNtzbEgiJpo+w6gMpGyqEXopSKCcJ76JE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=LZygdmSjEBpl4BTzHjE4t6PNNOmKPMRI7FZ/b1BLxrLEXxaj8fb4aIjEFQNjxcYoz
+	 PS6pWF6WsLll9Lm97lHZxJUp5EMg0QhRasnMH++9lIhSWQE9EiYRulC6i3E29wKIJm
+	 EgQ/e6l6JHagNIE9p2YTnS0RKbuxF0+SYDd6fwSoYifX5W4kL91Xywnx3dSdzIBr/2
+	 iYuBu5xUHRJteBQbjTGqISKKM2NpN7GsRB0WzDkoa5ecwVxOIrpxaaLvuz8nK5cImL
+	 K8rELPM3xoktpef/j0j0HJ8Cu7qBURte99paPdTDbtyH1qAe4CDpYNTgJ8WwUF+KxO
+	 0gLOhoseGdpMg==
+Date: Thu, 11 Jul 2024 13:48:42 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
+	quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+	quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+	quic_parass@quicinc.com, Manivannan Sadhasivam <mani@kernel.org>
+Subject: Re: [PATCH v7 2/4] PCI: qcom-ep: Add support for D-state change
+ notification
+Message-ID: <20240711184842.GA285502@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] drm/msm/dpu: don't play tricks with debug macros
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn
- Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Rajesh Yadav
-	<ryadav@codeaurora.org>,
-        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
-        Archit Taneja <architt@codeaurora.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Jeykumar Sankaran <jsanka@codeaurora.org>
-References: <20240709-dpu-fix-wb-v1-0-448348bfd4cb@linaro.org>
- <20240709-dpu-fix-wb-v1-2-448348bfd4cb@linaro.org>
- <46487222-6818-b0bf-e5cc-2310d62b5fe6@quicinc.com>
- <CAA8EJpq7Lp-3V_AsLxO9ZOt8ZW1ZZ=FjhXV6R9jvH=sQ8XQE9w@mail.gmail.com>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJpq7Lp-3V_AsLxO9ZOt8ZW1ZZ=FjhXV6R9jvH=sQ8XQE9w@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: FknxQBwkKNIhvDX2H5RiooBpUZc2PoF1
-X-Proofpoint-ORIG-GUID: FknxQBwkKNIhvDX2H5RiooBpUZc2PoF1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-11_13,2024-07-11_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 bulkscore=0 clxscore=1015 mlxscore=0 malwarescore=0
- mlxlogscore=999 lowpriorityscore=0 suspectscore=0 spamscore=0 phishscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407110125
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a56de2dc-30a0-a292-c03c-16ec5393eea8@quicinc.com>
 
+On Thu, Jul 11, 2024 at 11:57:35AM +0530, Krishna Chaitanya Chundru wrote:
+> On 7/10/2024 5:41 PM, Bjorn Helgaas wrote:
+> > On Wed, Jul 10, 2024 at 04:38:15PM +0530, Krishna chaitanya chundru wrote:
+> > > Add support to pass D-state change notification to Endpoint
+> > > function driver.
+> ...
 
+> > I don't understand the connection between PERST# state and the device
+> > D state.  D3cold is defined to mean main power is absent.  Is the
+> > endpoint firmware still running when main power is absent?
+>
+> Host as part of its d3cold sequence will assert the perst. so we are
+> reading perst to know the link the state.
 
-On 7/10/2024 12:40 AM, Dmitry Baryshkov wrote:
-> On Tue, 9 Jul 2024 at 22:39, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>
->>
->>
->> On 7/9/2024 6:48 AM, Dmitry Baryshkov wrote:
->>> DPU debugging macros need to be converted to a proper drm_debug_*
->>> macros, however this is a going an intrusive patch, not suitable for a
->>> fix. Wire DPU_DEBUG and DPU_DEBUG_DRIVER to always use DRM_DEBUG_DRIVER
->>> to make sure that DPU debugging messages always end up in the drm debug
->>> messages and are controlled via the usual drm.debug mask.
->>>
->>
->> These macros have been deprecated, is this waht you meant by the
->> conversion to proper drm_debug_*?
-> 
-> Yes. Drop the driver-specific wrappers where they don't make sense.
-> Use sensible format strings in the cases where it actually does (like
-> VIDENC or _PLANE)
-> 
+I think it's true that when the device is in D3cold, PERST# will be
+asserted (PCIe CEM r5.0, sec 2.2.3, fig 2-6).
 
-Ack but we need to not just drop the wrappers but drop the usage of 
-these macros as well because it is documented that they are deprecated.
+But I don't think it's necessarily true that when PERST# is asserted,
+the device is in D3cold.  For example, PCIe Mini CEM r2.1, sec
+3.2.5.3, says "The system may also use PERST# to cause a warm reset of
+the add-in card."  In a warm reset, the component remains powered up,
+i.e., it is not in D3cold (PCIe r6.0, sec 6.6.1).
 
-So I assume you want to get this in and do that as a follow up change?
+I would think the endpoint firmware would be able to directly read the
+state of main power or the LTSSM state of the link, without having to
+use PERST# to infer it.
 
->>
->> /* NOTE: this is deprecated in favor of drm_dbg(NULL, ...). */
->> #define DRM_DEBUG_DRIVER(fmt, ...)                                      \
->>           __drm_dbg(DRM_UT_DRIVER, fmt, ##__VA_ARGS__)
->>
->> I think all that this macro was doing was to have appropriate DRM_UT_*
->> macros enabled before calling the corresponding DRM_DEBUG_* macros. But
->> I think what was incorrect here is for DPU_DEBUG, we could have used
->> DRM_UT_CORE instead of DRM_UT_KMS.
-> 
-> It pretty much tries to overplay the existing drm debugging mechanism
-> by either sending the messages to the DRM channel or just using
-> pr_debug. With DYNAMIC_DEBUG being disabled pr_debug is just an empty
-> macro, so all the messages can end up in /dev/null. We should not be
-> trying to be too smart, using standard DRM_DEBUG_DRIVER should be
-> enough. This way all driver-related messages are controlled by
-> drm.debug including or excluding the 0x02 bit.
-> 
-> 
->>
->> And DRM_DEBUG_DRIVER should have been used instead of DRM_ERROR.
->>
->> Was this causing the issue of the prints not getting enabled?
-> 
-> I pretty much think so.
-> 
+I guess the ultimate point of figuring out D3hot vs D3cold is to
+figure out whether to use PME or WAKE#?  I'm a little bit dubious
+about that being racy, as I mentioned elsewhere.  If there were a way
+to attempt PME and fall back to WAKE# if you can determine that PME
+failed, maybe that would be safer and obviate the need for the D-state
+tracking?
 
-Alright, I am okay with the approach, just one minor suggestion, to keep 
-the behavior intact, previously the code wanted DPU_DEBUG to be 
-controlled by DRM_UT_KMS and DPU_DEBUG_DRIVER controlled by DRM_UT_DRIVER.
-
-Keeping that intact, we need to use DRM_DEBUG_KMS for DPU_DEBUG?
-
->>
->>> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 14 ++------------
->>>    1 file changed, 2 insertions(+), 12 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->>> index e2adc937ea63..935ff6fd172c 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
->>> @@ -31,24 +31,14 @@
->>>     * @fmt: Pointer to format string
->>>     */
->>>    #define DPU_DEBUG(fmt, ...)                                                \
->>> -     do {                                                               \
->>> -             if (drm_debug_enabled(DRM_UT_KMS))                         \
->>> -                     DRM_DEBUG(fmt, ##__VA_ARGS__); \
->>> -             else                                                       \
->>> -                     pr_debug(fmt, ##__VA_ARGS__);                      \
->>> -     } while (0)
->>> +     DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
->>>
->>>    /**
->>>     * DPU_DEBUG_DRIVER - macro for hardware driver logging
->>>     * @fmt: Pointer to format string
->>>     */
->>>    #define DPU_DEBUG_DRIVER(fmt, ...)                                         \
->>> -     do {                                                               \
->>> -             if (drm_debug_enabled(DRM_UT_DRIVER))                      \
->>> -                     DRM_ERROR(fmt, ##__VA_ARGS__); \
->>> -             else                                                       \
->>> -                     pr_debug(fmt, ##__VA_ARGS__);                      \
->>> -     } while (0)
->>> +     DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
->>>
->>>    #define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
->>>    #define DPU_ERROR_RATELIMITED(fmt, ...) pr_err_ratelimited("[dpu error]" fmt, ##__VA_ARGS__)
->>>
+> Qcom devices are drawing power from the PCIe, so even when PCIe is in
+> D3cold endpoint firmware can still run.
 > 
-> 
-> 
+> - Krishna Chaitanya.
+> > > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > > ---
+> > >   drivers/pci/controller/dwc/pcie-qcom-ep.c | 8 +++++++-
+> > >   1 file changed, 7 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > > index 236229f66c80..817fad805c51 100644
+> > > --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > > +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > > @@ -648,6 +648,7 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
+> > >   	struct device *dev = pci->dev;
+> > >   	u32 status = readl_relaxed(pcie_ep->parf + PARF_INT_ALL_STATUS);
+> > >   	u32 mask = readl_relaxed(pcie_ep->parf + PARF_INT_ALL_MASK);
+> > > +	pci_power_t state;
+> > >   	u32 dstate, val;
+> > >   	writel_relaxed(status, pcie_ep->parf + PARF_INT_ALL_CLEAR);
+> > > @@ -671,11 +672,16 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
+> > >   		dstate = dw_pcie_readl_dbi(pci, DBI_CON_STATUS) &
+> > >   					   DBI_CON_STATUS_POWER_STATE_MASK;
+> > >   		dev_dbg(dev, "Received D%d state event\n", dstate);
+> > > -		if (dstate == 3) {
+> > > +		state = dstate;
+> > > +		if (dstate == PCI_D3hot) {
+> > >   			val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
+> > >   			val |= PARF_PM_CTRL_REQ_EXIT_L1;
+> > >   			writel_relaxed(val, pcie_ep->parf + PARF_PM_CTRL);
+> > > +
+> > > +			if (gpiod_get_value(pcie_ep->reset))
+> > > +				state = PCI_D3cold;
+> > >   		}
+> > > +		pci_epc_dstate_notify(pci->ep.epc, state);
+> > >   	} else if (FIELD_GET(PARF_INT_ALL_LINK_UP, status)) {
+> > >   		dev_dbg(dev, "Received Linkup event. Enumeration complete!\n");
+> > >   		dw_pcie_ep_linkup(&pci->ep);
+> > > 
+> > > -- 
+> > > 2.42.0
+> > > 
 
