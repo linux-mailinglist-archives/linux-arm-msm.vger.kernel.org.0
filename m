@@ -1,110 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-25939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7DDB92E3E9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 11:58:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C8EE92E408
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 12:02:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D6C591C21818
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 09:58:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5731F2849F3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 10:02:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 875A115747C;
-	Thu, 11 Jul 2024 09:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA65C152533;
+	Thu, 11 Jul 2024 10:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OJMqlAFo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NfXB027K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583A74206C;
-	Thu, 11 Jul 2024 09:58:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F95157492;
+	Thu, 11 Jul 2024 10:02:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720691892; cv=none; b=ucKp7LovD6iBcJK2Cf0iObI0ovKrgiBRZaMkxdZKb20/7TF5XdRQuJYqPW4oG0YBe5QlyRyjEHISrajP1Gbiq5bfyujxLk8OsmyfckYw30Ua1XxS4ztrU4eoDuatD15sAtI0IL4KB4Ql2BLYQEXZU8RWCFoB7+RoVXI1tyLw8GA=
+	t=1720692151; cv=none; b=r6pDeJR9CV0xCtSQYFYmVFDsoYJKCCu7+ZH1JV4oLQ0VlCkrsI29sxjW1klHQjKNuz9SJ4v1Hl/6Wyz8T1Cd+1zKD/RLLID6zJNLnuB9xTayIWR3F2LRPZhfCcDArFAsH9UiSuS72sSLNBr7VFX+2YDVMZhp9EBAYRGIO9vr3KA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720691892; c=relaxed/simple;
-	bh=ncnxaFRqorC/TSjbe7bjM9rmO5kPpfSobbD+7/XQVc4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HGlX7feyWoSIUYHU+zWQi4HFY3TbHOoVumnZ2cKXoosfr8DW0XnsEDtxxxuHvr39aNSCae2cjrWVRg8zAkjujU3VTgiOT+irqhpSiDF7bq/wPrOz6RaUHo+oFlmupUYKdm7gSFwviHMikH7ucQBOen3jhZ4Zb1jjBWnfTrhZdb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OJMqlAFo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E13C116B1;
-	Thu, 11 Jul 2024 09:58:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720691891;
-	bh=ncnxaFRqorC/TSjbe7bjM9rmO5kPpfSobbD+7/XQVc4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OJMqlAFoTSxTo3Ttae/tkII9VmnIZRsQoAWxJKyXP5VXFqYl0H+a9Wo8eihLjvP5d
-	 ZWsdQaXtVG24qneYwPNaShxPDfGmQUWUQptk5muRvIsr5BPEQSM4tUqPsvCRxv5FBR
-	 23PTxIbBrzSaWOOo00cmjG6tpaCDY4mNVy/tbP+QWpgm/LRDqpXqtu1UcYtJMkGgB+
-	 D2Ea1ve3U/OhdWZf1YIseCeVX3QyPfYnpnHrislIDJtFGKJhEG8xBsOwHRj3gn2r+7
-	 7aiRQi9kPXBSfSg3bvEfv7fmX0qKahiJXWqdgbx3jyhxbkp5QyoegBZsXlIgLlOq68
-	 cF7c0XMGxTrXg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1sRqYy-000000007Fh-0vN5;
-	Thu, 11 Jul 2024 11:58:08 +0200
-Date: Thu, 11 Jul 2024 11:58:08 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: enable GICv3 ITS for PCIe
-Message-ID: <Zo-ssBBDbHRLtAwG@hovoldconsulting.com>
-References: <20240711090250.20827-1-johan+linaro@kernel.org>
- <f7e74a6f-0548-4caa-a8fc-8180c619c9aa@linaro.org>
+	s=arc-20240116; t=1720692151; c=relaxed/simple;
+	bh=kmgWtyOZTKJM+sAzcAkBvL0QpNbdfAmZ7s3njzEU70M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=a8tnD9/pqvtn2YQlHPWivUGJn8hp8VKPKBm86Kjz7/k83FvFGI9JqcTmJRMH21YVbblKe8oMUL0EbpNtFA+nkxlVOsY9jdZlDmn5MJSSEoaTXUCe+F8BJBVgab9kLQKE7FFp05sTnvmjDrdQErjxVZnn66SuB05bppat+s9xlxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NfXB027K; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-58bac81f419so820503a12.0;
+        Thu, 11 Jul 2024 03:02:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720692149; x=1721296949; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=W7LlhYWp7nTMZ7K5CSP3BcZJAn5u5YMEvoL0KoMR+4c=;
+        b=NfXB027Kz7BwV7gH5O20EQcayiXelJ8NOdw6gh2RAj10vGp1+0AJxTYf575BhzMZmz
+         IoOUm++IBQHHGrco9ptq2fOnZVbm2zixByQwbToYZvf+JLSIBbbBqiqumXbeH+KGGsIT
+         wskYhw3TZ7LrprmI/qE09zvufwRkMdkVEVfJ87voRc76K6xVoEhnCpNYtal1wdZzQkHB
+         7EKo9gqtMLMh2tOBXy+cCvWfW4tpRdIjVe3r8EyDF4662N1KMgltcB5hhoExatLiWrm1
+         mrVZV0KvfKwimH/Ur0U21AfD/KTvfSKOjHTOusJyw9aKFklkAUxWOAPIxkCPCreKxcjZ
+         82kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720692149; x=1721296949;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=W7LlhYWp7nTMZ7K5CSP3BcZJAn5u5YMEvoL0KoMR+4c=;
+        b=GOBYMbKxcACLCVKZxJ+a2tC1T2z5uDfXYuQJO03qYKCv0lGNN6mquBk3+sixp0oV9M
+         0cvIHeTmZv/E0jV6NEeEIKxOl3L352eYOp8q9xR4+hSWtacvQdX83KNtI/OJ1nnD0Zqi
+         9MyXFfJ5MlavKss0vZWtbq01GZKt7ML26vSGzSPwaPJnbfJP6rDbMDrgKm8wBHQKez+R
+         UlXzPOOgdiEjl3vLS1BEaCoC3A5jdDOu24Sa9yHqZ8gmQsnyBFU0Sh/yVGaarBHfWaCC
+         O3CETVfUC/xC8qftXYlTOtR6+KpE36vQUBEotuTeMvGWt41IYnfTG4lUWey5BRC5bdvN
+         smGg==
+X-Forwarded-Encrypted: i=1; AJvYcCXclwg10vgGxB3qr0QX0JKm7gW8aCjw8OrMGj2R8a3ljYU0Y50i7GrNgIhdGCtTFlCtmEOpc52MgtFPWi+1jf+GBYv9OTaadXjceQIafkEG3EJ8z/BCWrx0yz7N/OZ5Pxxc7CXx8n33cVRGFA==
+X-Gm-Message-State: AOJu0Yyf0IDYPl3pV0ZPeGrJ9sTr9gRSEf92HFXMiBoyBh7ua2386aHf
+	VdGTmQSRfhr7s0W2Rqr68/0DHDOh6Ckv761A5cH2wLUV3q7A8of+
+X-Google-Smtp-Source: AGHT+IGYQg8AZUImmAxC1jDm80glcTQzVnRnDnAM3C088/0+jlZf/fyKMvJlBHWFkzqB9e2hoZAe8Q==
+X-Received: by 2002:a17:906:378b:b0:a77:dd1c:6270 with SMTP id a640c23a62f3a-a780b688911mr513379166b.5.1720692148336;
+        Thu, 11 Jul 2024 03:02:28 -0700 (PDT)
+Received: from localhost.localdomain (public-nat-01.vpngate.v4.open.ad.jp. [219.100.37.233])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a780a6bc876sm239207666b.5.2024.07.11.03.02.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jul 2024 03:02:27 -0700 (PDT)
+From: Vladimir Lypak <vladimir.lypak@gmail.com>
+To: Vladimir Lypak <vladimir.lypak@gmail.com>
+Cc: Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Jordan Crouse <jordan@cosmicpenguin.net>,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/4] fixes for Adreno A5Xx preemption
+Date: Thu, 11 Jul 2024 10:00:17 +0000
+Message-ID: <20240711100038.268803-1-vladimir.lypak@gmail.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f7e74a6f-0548-4caa-a8fc-8180c619c9aa@linaro.org>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jul 11, 2024 at 11:54:15AM +0200, Konrad Dybcio wrote:
-> On 11.07.2024 11:02 AM, Johan Hovold wrote:
-> > The DWC PCIe controller can be used with its internal MSI controller or
-> > with an external one such as the GICv3 Interrupt Translation Service
-> > (ITS).
-> > 
-> > Add the msi-map properties needed to use the GIC ITS. This will also
-> > make Linux switch to the ITS implementation, which allows for assigning
-> > affinity to individual MSIs.
-> > 
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > ---
-> 
-> X1E CRD throws tons of correctable errors with this on PCIe6a:
-> 
-> [    9.358915] pcieport 0007:00:00.0: PCIe Bus Error: severity=Correctable, type=Physical Layer, (Receiver ID)
-> [    9.358916] pcieport 0007:00:00.0:   device [17cb:0111] error status/mask=00000001/0000e000
-> [    9.358917] pcieport 0007:00:00.0:    [ 0] RxErr                 
-> [    9.358921] pcieport 0007:00:00.0: AER: Multiple Correctable error message received from 0007:00:00.0
-> [    9.358952] pcieport 0007:00:00.0: AER: found no error details for 0007:00:00.0
-> [    9.358953] pcieport 0007:00:00.0: AER: Multiple Correctable error message received from 0007:00:00.0
-> [    9.359003] pcieport 0007:00:00.0: AER: found no error details for 0007:00:00.0
-> [    9.359004] pcieport 0007:00:00.0: AER: Multiple Correctable error message received from 0007:01:00.0
-> [    9.359008] pcieport 0007:00:00.0: PCIe Bus Error: severity=Correctable, type=Physical Layer, (Transmitter ID)
-> [    9.359009] pcieport 0007:00:00.0:   device [17cb:0111] error status/mask=00001001/0000e000
-> [    9.359010] pcieport 0007:00:00.0:    [ 0] RxErr                 
-> [    9.359011] pcieport 0007:00:00.0:    [12] Timeout  
+There are several issues with preemption on Adreno A5XX GPUs which
+render system unusable if more than one priority level is used. Those
+issues include persistent GPU faults and hangs, full UI lockups with
+idling GPU.
 
-What branch are you using? Abel reported seeing this with his branch
-which has a few work-in-progress patches that try to enable 4-lane PCIe.
+---
+Vladimir Lypak (4):
+  drm/msm/a5xx: disable preemption in submits by default
+  drm/msm/a5xx: properly clear preemption records on resume
+  drm/msm/a5xx: fix races in preemption evaluation stage
+  drm/msm/a5xx: workaround early ring-buffer emptiness check
 
-There are no errors with my wip branch based on rc7, and I have the same
-drive as Abel.
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c     | 18 ++++++++++----
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.h     | 12 ++++++---
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 30 ++++++++++++++++++++---
+ 3 files changed, 47 insertions(+), 13 deletions(-)
+---
+base-commit: 523b23f0bee3014a7a752c9bb9f5c54f0eddae88
+-- 
+2.45.2
 
-Also note that the errors happen also without this patch applied, they
-are just being reported now.
-
-Johan
 
