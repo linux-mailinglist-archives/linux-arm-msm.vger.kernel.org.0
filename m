@@ -1,166 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-25938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C186692E3E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 11:55:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7DDB92E3E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 11:58:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 429F51F22146
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 09:55:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D6C591C21818
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 09:58:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30FB2157491;
-	Thu, 11 Jul 2024 09:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 875A115747C;
+	Thu, 11 Jul 2024 09:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GpAK8J1c"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OJMqlAFo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE374206C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 09:55:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583A74206C;
+	Thu, 11 Jul 2024 09:58:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720691746; cv=none; b=A+dOJUG/ytMJDudqZoCPLPCicdh71gSrrjAobo/stY6k5v6e1y+Of1Y8W+2KndOLtZG8N9yeInF0fHGDgf0oBJnAvcvmpyahcYjcrpRBClI2NUK1NshvISn107MEszXpREKC/mqiXyT6lSp93+vA5sLHqcEhNSm3bARHfPQBark=
+	t=1720691892; cv=none; b=ucKp7LovD6iBcJK2Cf0iObI0ovKrgiBRZaMkxdZKb20/7TF5XdRQuJYqPW4oG0YBe5QlyRyjEHISrajP1Gbiq5bfyujxLk8OsmyfckYw30Ua1XxS4ztrU4eoDuatD15sAtI0IL4KB4Ql2BLYQEXZU8RWCFoB7+RoVXI1tyLw8GA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720691746; c=relaxed/simple;
-	bh=yYWC/VveCTOiGUoQj5SkfspQMI1tcDAhWmZ6kBA+/YE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QVM+T5UwUGg1nkLgg6qPbFh2e7KOY5cLIVc+eBk4CwywbLS62VXh/1Y6a1iarVfc0W3nvwu+19IqW2TbnA4iuGa/1xiGlZOgyLozNjVhm6zrH6YGww9gG4EBpVo9v/wEApTdA1UaTL0knyhYrvHjmivBDgJr8FBIkS+ql6AcJ3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GpAK8J1c; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-58b0dddab8cso1245088a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 02:55:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720691741; x=1721296541; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=maLqMD3ICvk1EK1NREQo247Hu1y1Wvub0TIIfxIt6Vw=;
-        b=GpAK8J1c5wH9+cIkvnvEGOII0m9UX4IZ3OH/VRprbJ4K766BCRRlTvPNvYdYacZ4c/
-         2qGPL1FxH+EWfaBw1Z5CXMKcJzVJ4JtrUfMTiLvCjhaSRL0L5ZCfgCPuYHpQI96sSUKt
-         A7P2q1YeviwGBRtdOvTDEuwCqQnjkPRNqfSR3i21g+CDCrTIDFpBeXQnW92jPjuS5fmw
-         CM7PsYWyLtFAqZju4zmnzsC4sSa019ugXpRu81sIfuFOgKra7oJ8MQbQIiu+9SSiLCGG
-         nUd/yLZx/d7Xi9u/5dLOMuaXi6Lafau+/Vz0Dz1So8DaePQuuuQZSnAM2JIvWRFTp1WB
-         /z8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720691741; x=1721296541;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=maLqMD3ICvk1EK1NREQo247Hu1y1Wvub0TIIfxIt6Vw=;
-        b=V1iXD6XXYFMs+Qq3mQn/WLaHJqD8d/aypsgMo3n/hWx54YnGYc+z7BRz59ZWIVj2p2
-         tvxoghoAUzj9Cjzp7a3/VmYIHMoxMP0ah0FzCsxgAYYTF0Gm29tBwWa1gwBKXFna+LIL
-         qCZ90cp42SQvV3CcC6niPXLP8/xdkCegpMIyta8r6Ncda5QrIvoNH7/ceGVtxsr6HrMj
-         KpGr30ZGhCcN0whv+UqjvSwHrwDSQhMyhvag7XqsP6lukezU1Vpt9nOzKIJcg8JIMuvc
-         hEWspPRCpY7fXNvtHVZvhHsbs6U5+n3a6zHgKnx2+fRcRGOmM7S2CSkYdCBuNFKeqdZj
-         mg7w==
-X-Gm-Message-State: AOJu0YwmLJGQRnseK1ugvf91SU79/w3Gx4Q6oMapZRO0AMBZo8s24rBx
-	aCpBM7qA9u9gpARa4DE9Yhksx4eNSj/H6kGzsiJykIuavHNOviFSLb4kKDOatFM=
-X-Google-Smtp-Source: AGHT+IExGLqNXPyV85QLGJwuneesorCc1iI3eg2vhxQ8Am7jEngbHqpcbHnK1n/eI7Hqf5CY4Tsk9Q==
-X-Received: by 2002:a05:6402:210f:b0:58b:6096:5554 with SMTP id 4fb4d7f45d1cf-594bcba7e40mr6465201a12.37.1720691740940;
-        Thu, 11 Jul 2024 02:55:40 -0700 (PDT)
-Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-594bbe2cf93sm3251364a12.33.2024.07.11.02.55.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jul 2024 02:55:40 -0700 (PDT)
-Message-ID: <95a835e2-9fd9-467b-bd0a-8eeb80ddf678@linaro.org>
-Date: Thu, 11 Jul 2024 11:55:37 +0200
+	s=arc-20240116; t=1720691892; c=relaxed/simple;
+	bh=ncnxaFRqorC/TSjbe7bjM9rmO5kPpfSobbD+7/XQVc4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HGlX7feyWoSIUYHU+zWQi4HFY3TbHOoVumnZ2cKXoosfr8DW0XnsEDtxxxuHvr39aNSCae2cjrWVRg8zAkjujU3VTgiOT+irqhpSiDF7bq/wPrOz6RaUHo+oFlmupUYKdm7gSFwviHMikH7ucQBOen3jhZ4Zb1jjBWnfTrhZdb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OJMqlAFo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E13C116B1;
+	Thu, 11 Jul 2024 09:58:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720691891;
+	bh=ncnxaFRqorC/TSjbe7bjM9rmO5kPpfSobbD+7/XQVc4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OJMqlAFoTSxTo3Ttae/tkII9VmnIZRsQoAWxJKyXP5VXFqYl0H+a9Wo8eihLjvP5d
+	 ZWsdQaXtVG24qneYwPNaShxPDfGmQUWUQptk5muRvIsr5BPEQSM4tUqPsvCRxv5FBR
+	 23PTxIbBrzSaWOOo00cmjG6tpaCDY4mNVy/tbP+QWpgm/LRDqpXqtu1UcYtJMkGgB+
+	 D2Ea1ve3U/OhdWZf1YIseCeVX3QyPfYnpnHrislIDJtFGKJhEG8xBsOwHRj3gn2r+7
+	 7aiRQi9kPXBSfSg3bvEfv7fmX0qKahiJXWqdgbx3jyhxbkp5QyoegBZsXlIgLlOq68
+	 cF7c0XMGxTrXg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sRqYy-000000007Fh-0vN5;
+	Thu, 11 Jul 2024 11:58:08 +0200
+Date: Thu, 11 Jul 2024 11:58:08 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: enable GICv3 ITS for PCIe
+Message-ID: <Zo-ssBBDbHRLtAwG@hovoldconsulting.com>
+References: <20240711090250.20827-1-johan+linaro@kernel.org>
+ <f7e74a6f-0548-4caa-a8fc-8180c619c9aa@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 8/8] arm64: dts: qcom: sm4450: add camera, display and
- gpu clock controller
-To: Ajit Pandey <quic_ajipan@quicinc.com>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Vinod Koul <vkoul@kernel.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Taniya Das <quic_tdas@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-References: <20240611133752.2192401-1-quic_ajipan@quicinc.com>
- <20240611133752.2192401-9-quic_ajipan@quicinc.com>
- <76f5e3c7-a90b-42d2-8169-e5e2211a14a1@linaro.org>
- <ba7d12d3-c582-45ec-beed-e81182fe3252@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <ba7d12d3-c582-45ec-beed-e81182fe3252@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f7e74a6f-0548-4caa-a8fc-8180c619c9aa@linaro.org>
 
-On 3.07.2024 11:16 AM, Ajit Pandey wrote:
+On Thu, Jul 11, 2024 at 11:54:15AM +0200, Konrad Dybcio wrote:
+> On 11.07.2024 11:02 AM, Johan Hovold wrote:
+> > The DWC PCIe controller can be used with its internal MSI controller or
+> > with an external one such as the GICv3 Interrupt Translation Service
+> > (ITS).
+> > 
+> > Add the msi-map properties needed to use the GIC ITS. This will also
+> > make Linux switch to the ITS implementation, which allows for assigning
+> > affinity to individual MSIs.
+> > 
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
 > 
+> X1E CRD throws tons of correctable errors with this on PCIe6a:
 > 
-> On 6/13/2024 1:11 PM, Konrad Dybcio wrote:
->>
->>
->> On 6/11/24 15:37, Ajit Pandey wrote:
->>> Add device node for camera, display and graphics clock controller on
->>> Qualcomm SM4450 platform.
->>>
->>> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
->>> ---
->>
->> None of these nodes reference a power domain (which would usually be
->> CX/MX/MMCX). This way, the RPMhPDs will never be scaled.
->>
->> The current upstream implementation only allows one power domain to be
->> scaled, but that's better than none (see other DTs for recent SoCs).
->>
->> Konrad
-> 
-> SM4450 doesn't support MMCX and CX/MX domains will remain active so
-> power-domains property is actually not required for SM4450 clock nodes.
+> [    9.358915] pcieport 0007:00:00.0: PCIe Bus Error: severity=Correctable, type=Physical Layer, (Receiver ID)
+> [    9.358916] pcieport 0007:00:00.0:   device [17cb:0111] error status/mask=00000001/0000e000
+> [    9.358917] pcieport 0007:00:00.0:    [ 0] RxErr                 
+> [    9.358921] pcieport 0007:00:00.0: AER: Multiple Correctable error message received from 0007:00:00.0
+> [    9.358952] pcieport 0007:00:00.0: AER: found no error details for 0007:00:00.0
+> [    9.358953] pcieport 0007:00:00.0: AER: Multiple Correctable error message received from 0007:00:00.0
+> [    9.359003] pcieport 0007:00:00.0: AER: found no error details for 0007:00:00.0
+> [    9.359004] pcieport 0007:00:00.0: AER: Multiple Correctable error message received from 0007:01:00.0
+> [    9.359008] pcieport 0007:00:00.0: PCIe Bus Error: severity=Correctable, type=Physical Layer, (Transmitter ID)
+> [    9.359009] pcieport 0007:00:00.0:   device [17cb:0111] error status/mask=00001001/0000e000
+> [    9.359010] pcieport 0007:00:00.0:    [ 0] RxErr                 
+> [    9.359011] pcieport 0007:00:00.0:    [12] Timeout  
 
-It's not only about them being active.. some PLLs require e.g. MX to be
-at a certain level, or the system will be unstable
+What branch are you using? Abel reported seeing this with his branch
+which has a few work-in-progress patches that try to enable 4-lane PCIe.
 
-Konrad
+There are no errors with my wip branch based on rc7, and I have the same
+drive as Abel.
+
+Also note that the errors happen also without this patch applied, they
+are just being reported now.
+
+Johan
 
