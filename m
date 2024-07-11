@@ -1,69 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-25998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68ACA92ED56
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 19:00:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E684292ED69
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 19:05:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2456628A375
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 17:00:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 914691F22F46
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 17:05:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E197016DC28;
-	Thu, 11 Jul 2024 16:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DEFD16CD39;
+	Thu, 11 Jul 2024 17:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YutO4poH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VweLSb3c"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B666616D9C5;
-	Thu, 11 Jul 2024 16:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052CD450FA;
+	Thu, 11 Jul 2024 17:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720717164; cv=none; b=I7Aa60+8xpCAGyrhFzQhdVuLTGIK4U6gUD8AZNZCFtlOZvijb9qYI79J0URf40iRUzNQ/l0lU4FPckd0tSfY/yfK035oL3f8VjPx28atHRuwBZftoBPZU+ZsOV0WuCY0snQkenntNjlAQj4MbfjyyOqRhNof429C5SV6vuNOSPM=
+	t=1720717497; cv=none; b=Z4cw74cet8dMyVNYtrBRiVa9q8KYQ0D0f+lLVTJKuvsb6rRx4j1jevS7LSksrAW1Oy8OuYDFuOUe4fC8IP7x7K3hzHbE4ELpieoBwAjRvvoue5IHZ8FSNkwNrfJSx78V1OEm9OHNMmxj7vmL+84kjvOnzVbY+a9ZW4Gamn4vXYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720717164; c=relaxed/simple;
-	bh=Z8VGan5F8QzSJ03qkchy06gXKvp+W67s71nEoYeZ9M4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ut0iWTdifiekBQvBFWIKnYxtW/xGPeUo+v2X0e5bieqSE61tyjXNIq2DJFo+s7wErYAo8qqHn0kd9qc3jd5Ik09nNhpp5/j57WGkq8r6js2rSTDx7FdtuHEQ5CJJITmLYmAgdt66q2pdZ+LAGgzZdRT46Lzxetgt7iNsNyhjVm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YutO4poH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 844D9C116B1;
-	Thu, 11 Jul 2024 16:59:24 +0000 (UTC)
+	s=arc-20240116; t=1720717497; c=relaxed/simple;
+	bh=8bA1Af5JkTKsPfzcax7n6cvmceZSVM+9DQAXTzJTRpc=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=hVkl1p7txz8RPwZbPiaNiOZ0Yf3uFAKQIGGh3y/lEoKZrL9Qkw2P5X0p66L9zZr+uO4V8pGUIjdUCGxTbzJ0VROoXOxTLhSjjzeWRiKRuiHHtvqo/H9jnDble+acZve3gyaRKMNzVGmEcikkowmR4Pr+A75dkYC55gAL4KaHKFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VweLSb3c; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B3EC116B1;
+	Thu, 11 Jul 2024 17:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720717164;
-	bh=Z8VGan5F8QzSJ03qkchy06gXKvp+W67s71nEoYeZ9M4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YutO4poH5OebnHWJZBkw/SUknN7eI1qeO6iPc9Gmw58ywvIIwUTkoWfAmZ0ySW62L
-	 s1eDnKyKkgDZL0X13FwMgvDmocGiPq9lCL3xWZnr+W7GOJv+00kcMVvXrUygfwmB9h
-	 UQpWMm1wb7DDVOH5CEz65KvebDbyiA3Z5hR3EeZdHQ1eiP9aOhoPzhK65NHMCrEdvw
-	 BysbBNZHQjw5i4BUowRrjSuO8shgvatgFPlpb2xeYBMHjpYI3oNdmBgY5dVSOEtvUI
-	 IMdkZwblsgXtn8zrIiBM6WaoFMIz9EsT8YZD3ED28uXH188OnajJQT0TbPI8RXD2Nx
-	 52SWJjj9nszSg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1sRx8c-000000005Xb-1zFe;
-	Thu, 11 Jul 2024 18:59:22 +0200
-Date: Thu, 11 Jul 2024 18:59:22 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: enable GICv3 ITS for PCIe
-Message-ID: <ZpAPaker8mulvKCj@hovoldconsulting.com>
-References: <20240711090250.20827-1-johan+linaro@kernel.org>
- <f7e74a6f-0548-4caa-a8fc-8180c619c9aa@linaro.org>
- <Zo-ssBBDbHRLtAwG@hovoldconsulting.com>
- <Zo_zu-RmbZyKijVQ@hovoldconsulting.com>
- <20240711161947.GA4434@thinkpad>
- <20240711164153.GA4992@thinkpad>
+	s=k20201202; t=1720717496;
+	bh=8bA1Af5JkTKsPfzcax7n6cvmceZSVM+9DQAXTzJTRpc=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=VweLSb3cn8veFY/O7cKAlfEIwL3f2HLsE7eAtPdboROuKAnEbFm8vDuj3NQQ0noao
+	 dN7r3qfljVRi538GReGxRpj/BZP6uhySPravw3Uif9gWH09HvlUsmyMNqhJWCN2tiY
+	 x0gVO7rJZxk8OL2BbRGPUUPmGfyW/FA4bQ35Lco/dQlFGfQ1t+daYbjcQ0dezjNRcQ
+	 Js4nQR/KKCirmE+Yn0JLq6WCIHpsGVNO4Taf0Lk16eAsHo+vvB9oWCGeMwhv1D6zbn
+	 irDjHcQbE+kCucOfJrocRzdzuxEnojQ+F1ZaM4ay4bcSKmAVQUE04h07Ef6Et2QUwQ
+	 VbuDzDmJbTkxQ==
+Date: Thu, 11 Jul 2024 12:04:54 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Corbet <corbet@lwn.net>, Jingoo Han <jingoohan1@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, mhi@lists.linux.dev,
+	quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+	quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+	quic_parass@quicinc.com
+Subject: Re: [PATCH v6 3/5] PCI: qcom-ep: Add wake up host op to
+ dw_pcie_ep_ops
+Message-ID: <20240711170454.GA287440@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,43 +67,79 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240711164153.GA4992@thinkpad>
+In-Reply-To: <20240710-wakeup_host-v6-3-ef00f31ea38d@quicinc.com>
 
-On Thu, Jul 11, 2024 at 10:11:53PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Jul 11, 2024 at 09:49:52PM +0530, Manivannan Sadhasivam wrote:
-> > On Thu, Jul 11, 2024 at 05:01:15PM +0200, Johan Hovold wrote:
+On Wed, Jul 10, 2024 at 04:46:10PM +0530, Krishna chaitanya chundru wrote:
+> Add wakeup host op to dw_pcie_ep_ops to wake up host.
+> If the wakeup type is PME, then trigger inband PME by writing to the PARF
+> PARF_PM_CTRL register, otherwise toggle #WAKE.
 
-> > > > Also note that the errors happen also without this patch applied, they
-> > > > are just being reported now.
+Wrap into single paragraph or add blank line between.
 
-> > > Perhaps something is off because we're running the link at half width?
-> > 
-> > My hunch is the PHY settings. But Abel cross checked the PHY settings with
-> > internal documentation and they seem to match. Also, Qcom submitted a series
-> > that is supposed to fix stability issues with Gen4 [1]. With this series, Gen 4
-> > x4 setup is working on SA8775P-RIDE board as reported by Qcom. But Abel
-> > confirmed that it didn't help him with the link downgrade issue.
-> > 
-> > Perhaps you can give it a try and see if it makes any difference for
-> > this issue?
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c | 25 +++++++++++++++++++++++++
+>  1 file changed, 25 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> index 627a33a1c5ca..d17e8542d07a 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> @@ -97,6 +97,7 @@
+>  /* PARF_PM_CTRL register fields */
+>  #define PARF_PM_CTRL_REQ_EXIT_L1		BIT(1)
+>  #define PARF_PM_CTRL_READY_ENTR_L23		BIT(2)
+> +#define PARF_PM_CTRL_XMT_PME			BIT(4)
+>  #define PARF_PM_CTRL_REQ_NOT_ENTR_L1		BIT(5)
+>  
+>  /* PARF_MHI_CLOCK_RESET_CTRL fields */
+> @@ -817,10 +818,34 @@ static void qcom_pcie_ep_init(struct dw_pcie_ep *ep)
+>  		dw_pcie_ep_reset_bar(pci, bar);
+>  }
+>  
+> +static bool qcom_pcie_ep_wakeup_host(struct dw_pcie_ep *ep, u8 func_no, bool send_pme)
+> +{
+> +	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+> +	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
+> +	struct device *dev = pci->dev;
+> +	u32 val;
+> +
+> +	if (send_pme) {
+> +		dev_dbg(dev, "Waking up the host using PME\n");
+> +		val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
+> +		writel_relaxed(val | PARF_PM_CTRL_XMT_PME, pcie_ep->parf + PARF_PM_CTRL);
+> +		writel_relaxed(val, pcie_ep->parf + PARF_PM_CTRL);
+> +
+> +	} else {
+> +		dev_dbg(dev, "Waking up the host by toggling WAKE#\n");
+> +		gpiod_set_value_cansleep(pcie_ep->wake, 1);
+> +		usleep_range(WAKE_DELAY_US, WAKE_DELAY_US + 500);
 
-If there are known issues with running at Gen4 speed without that
-series, then it seems quite likely that doing so anyway could also cause
-correctable errors.
+PCIe r6.0, sec 5.3.3.2, says
 
-Unfortunately, I get a hypervisor reset when I tried booting with that
-series so there appears to be some implicit dependency on something
-else (e.g. the 4l stuff).
+  When WAKE# is used as a wakeup mechanism, once WAKE# has been
+  asserted, the asserting Function must continue to drive the signal
+  low until main power has been restored to the component as indicated
+  by Fundamental Reset going inactive.
 
-> One thing I confirmed is, we definitely need different PHY sequence for using
-> 2L. The current PHY settings are for 4L, so limiting the lane count from the
-> controller is going to be problematic. And AER errors might be due to that as
-> well.
+That doesn't seem compatible with a simple delay as you have here.
 
-Another good point. But we currently use the
-"qcom,x1e80100-qmp-gen4x2-pcie-phy" settings. Shouldn't those be for x2,
-and then Abel has another series that adds the x4 settings? Or are you
-saying that the currently merged "gen4x2" settings are really for 4l?
-
-Johan
+> +		gpiod_set_value_cansleep(pcie_ep->wake, 0);
+> +	}
+> +
+> +	return true;
+> +}
+> +
+>  static const struct dw_pcie_ep_ops pci_ep_ops = {
+>  	.init = qcom_pcie_ep_init,
+>  	.raise_irq = qcom_pcie_ep_raise_irq,
+>  	.get_features = qcom_pcie_epc_get_features,
+> +	.wakeup_host = qcom_pcie_ep_wakeup_host,
+>  };
+>  
+>  static int qcom_pcie_ep_probe(struct platform_device *pdev)
+> 
+> -- 
+> 2.42.0
+> 
 
