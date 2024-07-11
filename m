@@ -1,70 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-25954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9509492E564
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 13:07:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE49192E567
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 13:07:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C6AC41C21BE2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 11:07:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8A3E4281C43
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 11:07:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19727156237;
-	Thu, 11 Jul 2024 11:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7AE915A4B5;
+	Thu, 11 Jul 2024 11:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jZKWLQib"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gzKPQJOh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53673158DAC
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 11:07:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D421591E2
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 11:07:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720696033; cv=none; b=cg2eTt7RHa6Ls7zvrLqmYKc+OBRhJzEYtmmAieKgBLFpxhgzzGMJsrVsvSuLd8pIZO/obW6MSpQXV9lJUufCuiXxKWAYgD9ltXJ2c/vimsYi7JeegAvWMmOkVGG1nObCRT6vKEDQVnPWvOCIt5tOqZHRYoU5PsNvPXbr2gVXLqg=
+	t=1720696041; cv=none; b=I86Du7n+OoCnmFQmFDSnzMtIlrKhM72lWLycqj8eksuSsdhjzyRPqXiyTsHKqeEalUcIEgBPrY+dIv7A9bLRubHru9VY83GssNmirorrK9baCHD5hXWzTG+IDRxv3JBJHrQCSb/S2JbhrHI9rpi79XLShjCbAc73VJyctsONgNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720696033; c=relaxed/simple;
-	bh=DXiyJvnZaoXMSX7dmB8Mx+Bw81ZcG1UbxSGB35kWLl4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fhxShZlnkNohHL6DTSI05CkH8IBiEbX1Ii8QeI/dnIwlXGM+Bq9UMn+NrsqdK3wogwRJXz2aNaK2se+tA+BDoBB+Ha9wMrq08sSMBVfNLAb89Aeh1a4cejqDRaFZBLB0cG7WPvbDa55Jdg38rYVHBmqQCK2rV4pnOVynn2LElYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jZKWLQib; arc=none smtp.client-ip=209.85.128.49
+	s=arc-20240116; t=1720696041; c=relaxed/simple;
+	bh=wnWDB5nejne8Pd/cb6YS18Vh8Y2+qTrhoxUlqW4sty4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=bCy5p65LI0qVlfj1zmoziCfWeld7LzqWkHoGxoac7HXUPN3Q8CyABt2FT/X4aeHHfWRbKwV4KIQJgahJV6n5bK0doSOiaw5wiFVQIxKzMMB9rim1kdzbMX9mxb1iepDB1So9tl/mHKjnQdwTvNDVbfBT+JP/dksGiyqUNlQKIJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gzKPQJOh; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4265b7514fcso10952495e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 04:07:11 -0700 (PDT)
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-52ea34ffcdaso879345e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jul 2024 04:07:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720696029; x=1721300829; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=YAbKmOiNIkgQtdozoam3aD9572Bcc6PrMc/2R0CeN18=;
-        b=jZKWLQibqPe7CHxoj7mOuKWn7d5GQk2nNreRn8YWzedXuH/JqZGtGpnSTZHnuIU64X
-         5v/dZVJuPihZ34hc0Ca3gGIE5qshBwWt9Roc1w7KGjcZOV0hBCU+YOzJaFdOS30byzOm
-         u0hjdo8TgvUGyC4NjgSRhxM+ADXxWxBMH0MDPIQH7g3r8wEEvT8vpe1XxFBgXpt1BRqZ
-         QKoT28zYrLa9jkmOvgVA8GESoWtzn8JYwiNZbk+ENUXEMutUw5lmIfH5SGZ0DgLZ+8OR
-         Eg04JXZpN3O4TV9bmGVkg5K6AnAhoq44SNyEhQWClDhTLjP26zuGxST6tZSHe+RGk206
-         7yLQ==
+        d=linaro.org; s=google; t=1720696038; x=1721300838; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qYQspj63P8cbNmxsmkFzZLYMMBvuBKUGyS24iSaOQ/0=;
+        b=gzKPQJOhwWyTH5sM5CSMlLQurXralCs/dpAXjrpmJjwvfQFXA1RsVw9STGueczkQhM
+         Z4h57pF7xg1c4h3DM3piKXM/c3+HSJJXQtnb+xe4tbuaCTlGwWma4oOOnD8rHy1oX90N
+         5klG9u33O3veS7m/WaKnWL8vPEaNgv7WoibeIBZ6m08O1qG4L9yYGPTtXiD/WLfGfkxR
+         dUT8RPZfdrHjkGnX5a8POM49sOz+dJpPkl/D+FUXKAw3EBaUxXdWKHRttOJ7xaEUrBT2
+         rnDWwb4aS55Qkzzdzu5ipPXhHr3T5u2gZiIL3dQQNI5lcaZwDFZq5VvSQV3mnJdlVY3A
+         w5dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720696029; x=1721300829;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YAbKmOiNIkgQtdozoam3aD9572Bcc6PrMc/2R0CeN18=;
-        b=pwKJ8NbNi17itKxnn7ZlNC49GT7bd9ICQ7uf5tswg8Mj5v3XDgutBiTrndMh+YUZB+
-         c8Uy5F2TuQrpZASPsn7thRte4gu5EokSkw0SlbRxsh+bLYK6szTzql9MJ62Mm3LpQzXA
-         UZ1anGmz/BYrrmUGoVv77CB6xFXM7+bLNCNsGzVvM0cNfgWYtVxctIjB5/4oNU2NjLS9
-         3sZ2EbCxkp/vm+5Rv6p4qDs8r/4c9uelBa+JaX585fRHBOrB/L9zGViFqBd96dmamfWn
-         u+aImH0G8wBShxdjDmBt8dfi3Bjccgtxgy/fNseOw7oAf7modUc14csGlTLrlaB+1m7P
-         J4Gg==
-X-Gm-Message-State: AOJu0YydDPTqqv9wcdSIUt92HGEZ7nKuMXkQiWxk6ngDdmS/AowFxHqK
-	34yu6De7KUBccBvF867BSdxLtE19ducFpCXGov3AVThcd/cgJE6H++YN+HOg6BmT3Gvbc3kANHt
-	D
-X-Google-Smtp-Source: AGHT+IFojqfVrVy4buGmCYzQG8sYbeFjwl9PTyhMXZHY8rqQdHfhqHTIZrZEeL+UTqbEW2AI511d6g==
-X-Received: by 2002:a05:600c:1c99:b0:426:63bc:f031 with SMTP id 5b1f17b1804b1-427981b4c8fmr20806045e9.1.1720696029395;
-        Thu, 11 Jul 2024 04:07:09 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720696038; x=1721300838;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qYQspj63P8cbNmxsmkFzZLYMMBvuBKUGyS24iSaOQ/0=;
+        b=Z6/IV3BJchgV1YuvfPddO/+q0TfZjCEj/xGclGbFpgejsB05WIcLz3zOzvGqSMmZgf
+         KUHFINxhZMS2EYJJQoG5EZ8q2VDf+czsPkbJ8s2z/eIe8hJe+EpFqbczjGqYi8qdAfp6
+         nMqKU5guW3azt5XAsYBSEXhFpGjEfenrAGh5iQbr2BYC2gNlEyxQyLcg/vJjKxZPn5sD
+         AMEX+Isso7bvxUPfAJg9YaaSk0Tziq7153zpHSBKMTBKYtIW27cEWPX8+yfJQ6DMOevS
+         TgyR/30THqin9W2TGhoJgKLQOOEgIpUo9Yfne5uqO6AnivMgAk7Ixk9zsxc1y7hagtRA
+         6JVw==
+X-Gm-Message-State: AOJu0YwU6eAswQJcq6wwgzJg50DQOGlGH2eGNpckUH5/74ovytcS4but
+	e9r7re9WzLacNrqIEAajt6H9X3VJ5yniXH32oJHXeLBFpA4K51C3+aqvefzsnMWiM7MLnBHqF/W
+	2
+X-Google-Smtp-Source: AGHT+IEmiTexL9y2JU6kpSqK/FycmvWYPZBv93UvuVGYDXAgHhf7NjFAX/K7loJT0/eeCqfQQrujig==
+X-Received: by 2002:a05:6512:5c4:b0:52c:dd0c:4c57 with SMTP id 2adb3069b0e04-52eb99954bdmr4009491e87.27.1720696037889;
+        Thu, 11 Jul 2024 04:07:17 -0700 (PDT)
 Received: from rayyan-pc.broadband ([2a0a:ef40:ee7:2401:197d:e048:a80f:bc44])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4266f6e097bsm115686685e9.6.2024.07.11.04.07.03
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4266f6e097bsm115686685e9.6.2024.07.11.04.07.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jul 2024 04:07:05 -0700 (PDT)
+        Thu, 11 Jul 2024 04:07:15 -0700 (PDT)
 From: Rayyan Ansari <rayyan.ansari@linaro.org>
 To: linux-arm-msm@vger.kernel.org
 Cc: Rayyan Ansari <rayyan.ansari@linaro.org>,
@@ -75,10 +77,12 @@ Cc: Rayyan Ansari <rayyan.ansari@linaro.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	linux-kernel@vger.kernel.org,
 	Rob Herring <robh@kernel.org>
-Subject: [PATCH v2 0/5] ARM: dts: qcom: adhere to pinctrl dt schema
-Date: Thu, 11 Jul 2024 12:01:37 +0100
-Message-ID: <20240711110545.31641-2-rayyan.ansari@linaro.org>
+Subject: [PATCH v2 1/5] ARM: dts: qcom: apq8064-pins: correct error in drive-strength property
+Date: Thu, 11 Jul 2024 12:01:38 +0100
+Message-ID: <20240711110545.31641-3-rayyan.ansari@linaro.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240711110545.31641-2-rayyan.ansari@linaro.org>
+References: <20240711110545.31641-2-rayyan.ansari@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,42 +91,66 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi,
-The following patches make the device trees compliant with the pinctrl
-text to dt schema conversion here:
-https://lore.kernel.org/all/20240709162009.5166-1-rayyan.ansari@linaro.org/
+The "drive-strength" property was incorrectly spelt as "drive-strengh".
+Correct this.
 
-v1: https://lore.kernel.org/all/20240710084250.11342-1-rayyan.ansari@linaro.org/
+Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
+---
+v1 -> v2: split from main apq8064 patch
 
-Thanks,
-Rayyan
+ arch/arm/boot/dts/qcom/qcom-apq8064-pins.dtsi | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-Rayyan Ansari (5):
-  ARM: dts: qcom: apq8064-pins: correct error in drive-strength property
-  ARM: dts: qcom: asus,nexus7-flo: remove duplicate pinctrl handle in
-    i2c nodes
-  ARM: dts: qcom: apq8064: adhere to pinctrl dtschema
-  ARM: dts: qcom: ipq8064: adhere to pinctrl dtschema
-  ARM: dts: qcom: ipq4019: adhere to pinctrl dtschema
-
- .../dts/qcom/qcom-apq8064-asus-nexus7-flo.dts |   4 -
- .../boot/dts/qcom/qcom-apq8064-cm-qs600.dts   |  25 +-
- .../boot/dts/qcom/qcom-apq8064-ifc6410.dts    |  25 +-
- arch/arm/boot/dts/qcom/qcom-apq8064-pins.dtsi | 362 +++++++-----------
- .../qcom-apq8064-sony-xperia-lagan-yuga.dts   |  10 +-
- arch/arm/boot/dts/qcom/qcom-apq8064.dtsi      |  34 +-
- .../boot/dts/qcom/qcom-ipq4018-ap120c-ac.dtsi |  34 +-
- .../boot/dts/qcom/qcom-ipq4018-jalapeno.dts   |  27 +-
- .../boot/dts/qcom/qcom-ipq4019-ap.dk01.1.dtsi |  26 +-
- .../boot/dts/qcom/qcom-ipq4019-ap.dk04.1.dtsi |  14 +-
- .../dts/qcom/qcom-ipq4019-ap.dk07.1-c1.dts    |   8 +-
- .../dts/qcom/qcom-ipq4019-ap.dk07.1-c2.dts    |   2 +-
- .../boot/dts/qcom/qcom-ipq4019-ap.dk07.1.dtsi |   6 +-
- arch/arm/boot/dts/qcom/qcom-ipq8064-ap148.dts |  11 +-
- .../arm/boot/dts/qcom/qcom-ipq8064-rb3011.dts |  76 ++--
- arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi      | 114 +++---
- 16 files changed, 309 insertions(+), 469 deletions(-)
-
+diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064-pins.dtsi b/arch/arm/boot/dts/qcom/qcom-apq8064-pins.dtsi
+index 7c545c50847b..107fc19f1331 100644
+--- a/arch/arm/boot/dts/qcom/qcom-apq8064-pins.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-apq8064-pins.dtsi
+@@ -11,19 +11,19 @@ pios {
+ 	sdcc1_pins: sdcc1-pin-active {
+ 		clk {
+ 			pins = "sdc1_clk";
+-			drive-strengh = <16>;
++			drive-strength = <16>;
+ 			bias-disable;
+ 		};
+ 
+ 		cmd {
+ 			pins = "sdc1_cmd";
+-			drive-strengh = <10>;
++			drive-strength = <10>;
+ 			bias-pull-up;
+ 		};
+ 
+ 		data {
+ 			pins = "sdc1_data";
+-			drive-strengh = <10>;
++			drive-strength = <10>;
+ 			bias-pull-up;
+ 		};
+ 	};
+@@ -31,19 +31,19 @@ data {
+ 	sdcc3_pins: sdcc3-pin-active {
+ 		clk {
+ 			pins = "sdc3_clk";
+-			drive-strengh = <8>;
++			drive-strength = <8>;
+ 			bias-disable;
+ 		};
+ 
+ 		cmd {
+ 			pins = "sdc3_cmd";
+-			drive-strengh = <8>;
++			drive-strength = <8>;
+ 			bias-pull-up;
+ 		};
+ 
+ 		data {
+ 			pins = "sdc3_data";
+-			drive-strengh = <8>;
++			drive-strength = <8>;
+ 			bias-pull-up;
+ 		};
+ 	};
 -- 
 2.45.2
 
