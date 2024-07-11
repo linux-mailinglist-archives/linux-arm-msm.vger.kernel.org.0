@@ -1,70 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-25941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C8EE92E408
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 12:02:54 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC2AA92E411
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 12:03:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5731F2849F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 10:02:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 063A9B22979
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 10:03:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA65C152533;
-	Thu, 11 Jul 2024 10:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9079B158D9F;
+	Thu, 11 Jul 2024 10:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NfXB027K"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VTmTiJ83"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F95157492;
-	Thu, 11 Jul 2024 10:02:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF3B158A3D;
+	Thu, 11 Jul 2024 10:02:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720692151; cv=none; b=r6pDeJR9CV0xCtSQYFYmVFDsoYJKCCu7+ZH1JV4oLQ0VlCkrsI29sxjW1klHQjKNuz9SJ4v1Hl/6Wyz8T1Cd+1zKD/RLLID6zJNLnuB9xTayIWR3F2LRPZhfCcDArFAsH9UiSuS72sSLNBr7VFX+2YDVMZhp9EBAYRGIO9vr3KA=
+	t=1720692167; cv=none; b=BcgWi8onNPH25Y50fpD0yQRhynP4FBTO7oTqEEY0qxxel2+r6AgAUZa3/VDQokFF/vQV9QnJ6Hk6XJ/AVfXWOMdvCJKx0DKClw8ksUVw+tXNhdQOFy2BLwC30FN3sl+hiCmRViaPrT8AOovhTubH2tqRChSQG0y7JaOzhRvz2fU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720692151; c=relaxed/simple;
-	bh=kmgWtyOZTKJM+sAzcAkBvL0QpNbdfAmZ7s3njzEU70M=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=a8tnD9/pqvtn2YQlHPWivUGJn8hp8VKPKBm86Kjz7/k83FvFGI9JqcTmJRMH21YVbblKe8oMUL0EbpNtFA+nkxlVOsY9jdZlDmn5MJSSEoaTXUCe+F8BJBVgab9kLQKE7FFp05sTnvmjDrdQErjxVZnn66SuB05bppat+s9xlxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NfXB027K; arc=none smtp.client-ip=209.85.208.51
+	s=arc-20240116; t=1720692167; c=relaxed/simple;
+	bh=Lbv243OKC/lUjNVX/1IwcADh4+B5XWH0QeAMRJ7NKV8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NWxWSC9dzFHWvSwyZAgroxSK3XGjBbzJNE8GXumrdAV/xwteeEawP0ulRoBWQNoHito6P82jUgnVMKVQBh8O0s1JtTEAHsv+VYe3tzKf6HJUIbVKdzNZqFL/WGezzfbCbetz+z7wXD7dNuteWeT+fIA1igvtkS3k2aIhhlHlWaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VTmTiJ83; arc=none smtp.client-ip=209.85.208.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-58bac81f419so820503a12.0;
-        Thu, 11 Jul 2024 03:02:30 -0700 (PDT)
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-585e774fd3dso951141a12.0;
+        Thu, 11 Jul 2024 03:02:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720692149; x=1721296949; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=W7LlhYWp7nTMZ7K5CSP3BcZJAn5u5YMEvoL0KoMR+4c=;
-        b=NfXB027Kz7BwV7gH5O20EQcayiXelJ8NOdw6gh2RAj10vGp1+0AJxTYf575BhzMZmz
-         IoOUm++IBQHHGrco9ptq2fOnZVbm2zixByQwbToYZvf+JLSIBbbBqiqumXbeH+KGGsIT
-         wskYhw3TZ7LrprmI/qE09zvufwRkMdkVEVfJ87voRc76K6xVoEhnCpNYtal1wdZzQkHB
-         7EKo9gqtMLMh2tOBXy+cCvWfW4tpRdIjVe3r8EyDF4662N1KMgltcB5hhoExatLiWrm1
-         mrVZV0KvfKwimH/Ur0U21AfD/KTvfSKOjHTOusJyw9aKFklkAUxWOAPIxkCPCreKxcjZ
-         82kg==
+        d=gmail.com; s=20230601; t=1720692164; x=1721296964; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H3zOMJNB2462M9JwLFhtX90y2MUg8+oUIQDY6w49lDI=;
+        b=VTmTiJ839MXRw/n8S4gP7LvcEenepUETqT0lczbWd8Mr0impCHqAbEfzPf1+kiP0S2
+         OzuqCpBUwmk7jpnzmjtmFgpqpuPNnEDRpqGVmv3spf+SLHTcFujnUErnfIF2NfPsoaiA
+         WSzXJxO77R0Kr49ttPzGp/V7Fic9WD7fD/qEy5t9htCBX8t+2024HAcu2vmYv57vLLZ2
+         o1OWLguK0O6u7Km62mIHYIFeyskeNJZeJrmFt5eGbxAoZr0i5SCOMhfuTSOux3GdAD6o
+         qvJFhMAuZJRNe8ZH/UJlAGWv3UZrAfkFXy1z3HQUvQjeZzc0knOlnp3hlixvhTgMezx0
+         RDuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720692149; x=1721296949;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=W7LlhYWp7nTMZ7K5CSP3BcZJAn5u5YMEvoL0KoMR+4c=;
-        b=GOBYMbKxcACLCVKZxJ+a2tC1T2z5uDfXYuQJO03qYKCv0lGNN6mquBk3+sixp0oV9M
-         0cvIHeTmZv/E0jV6NEeEIKxOl3L352eYOp8q9xR4+hSWtacvQdX83KNtI/OJ1nnD0Zqi
-         9MyXFfJ5MlavKss0vZWtbq01GZKt7ML26vSGzSPwaPJnbfJP6rDbMDrgKm8wBHQKez+R
-         UlXzPOOgdiEjl3vLS1BEaCoC3A5jdDOu24Sa9yHqZ8gmQsnyBFU0Sh/yVGaarBHfWaCC
-         O3CETVfUC/xC8qftXYlTOtR6+KpE36vQUBEotuTeMvGWt41IYnfTG4lUWey5BRC5bdvN
-         smGg==
-X-Forwarded-Encrypted: i=1; AJvYcCXclwg10vgGxB3qr0QX0JKm7gW8aCjw8OrMGj2R8a3ljYU0Y50i7GrNgIhdGCtTFlCtmEOpc52MgtFPWi+1jf+GBYv9OTaadXjceQIafkEG3EJ8z/BCWrx0yz7N/OZ5Pxxc7CXx8n33cVRGFA==
-X-Gm-Message-State: AOJu0Yyf0IDYPl3pV0ZPeGrJ9sTr9gRSEf92HFXMiBoyBh7ua2386aHf
-	VdGTmQSRfhr7s0W2Rqr68/0DHDOh6Ckv761A5cH2wLUV3q7A8of+
-X-Google-Smtp-Source: AGHT+IGYQg8AZUImmAxC1jDm80glcTQzVnRnDnAM3C088/0+jlZf/fyKMvJlBHWFkzqB9e2hoZAe8Q==
-X-Received: by 2002:a17:906:378b:b0:a77:dd1c:6270 with SMTP id a640c23a62f3a-a780b688911mr513379166b.5.1720692148336;
-        Thu, 11 Jul 2024 03:02:28 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720692164; x=1721296964;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=H3zOMJNB2462M9JwLFhtX90y2MUg8+oUIQDY6w49lDI=;
+        b=DGc7L1gUqMI+gBWtaWvd9FoRne4NBMrEkXsMD512EqB39EPy1vAsKG6cyspjJml60E
+         AH00eK8SnykHQym8Muikpo++mA8IfHgylldBb/AOMxwDJ5spoz6DhLs6OTZm3Gxb50hp
+         G1R79a1WFFL+xs33op6pFs5B4LEnTtsUam1k20vvsapSeyzT51jr7u7BENAcLCpsmM+Y
+         ztitEUkJZzFEnz+DT1GqV8dDhD5GDD7TJRp90DB9p+RyxD8u00WvWqqF7FGWnmeY5Pbu
+         1XPFnSClS+/ToazJ6l7CBy2FzJWU3jG+SbPLFMeLahwMo9u8PFivR6LGtUcV0cTK87y3
+         7qgA==
+X-Forwarded-Encrypted: i=1; AJvYcCWyjEc1XY3KcLtb1GKPYJJNmlXnMQVSKNAme7UWIwPZvkBOfh04LVgTYoq7Ig7rQ3xAYK1eV8T77dEdpYoIyixDiesexJ5EcCIU6gsXbA5ZEywuNqdiuZYbiP59jnmlJHsTvaAnWes4cuyWFw==
+X-Gm-Message-State: AOJu0Yyy2wv8YhNBIh+epaDYKC3sZUa7NKGeZTf6oWAwEeZDSGtbD1hC
+	lhQ4iL/k65ucYtPxEX9TcKNUpVRnV2sopWek9v4uhEwULb8JWJ+C
+X-Google-Smtp-Source: AGHT+IEHdoFbH3D6J1HEJpm2T6NckmbaqK1lGl274VU1X6oXcU5CJOiQYUz/agNN9vGf3rQ+KMjNdw==
+X-Received: by 2002:a17:906:24db:b0:a72:6055:788d with SMTP id a640c23a62f3a-a780b6ffcd2mr586906266b.42.1720692164055;
+        Thu, 11 Jul 2024 03:02:44 -0700 (PDT)
 Received: from localhost.localdomain (public-nat-01.vpngate.v4.open.ad.jp. [219.100.37.233])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a780a6bc876sm239207666b.5.2024.07.11.03.02.17
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a780a6bc876sm239207666b.5.2024.07.11.03.02.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jul 2024 03:02:27 -0700 (PDT)
+        Thu, 11 Jul 2024 03:02:43 -0700 (PDT)
 From: Vladimir Lypak <vladimir.lypak@gmail.com>
 To: Vladimir Lypak <vladimir.lypak@gmail.com>
 Cc: Rob Clark <robdclark@gmail.com>,
@@ -80,10 +82,12 @@ Cc: Rob Clark <robdclark@gmail.com>,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 0/4] fixes for Adreno A5Xx preemption
-Date: Thu, 11 Jul 2024 10:00:17 +0000
-Message-ID: <20240711100038.268803-1-vladimir.lypak@gmail.com>
+Subject: [PATCH 1/4] drm/msm/a5xx: disable preemption in submits by default
+Date: Thu, 11 Jul 2024 10:00:18 +0000
+Message-ID: <20240711100038.268803-2-vladimir.lypak@gmail.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240711100038.268803-1-vladimir.lypak@gmail.com>
+References: <20240711100038.268803-1-vladimir.lypak@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,24 +96,43 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-There are several issues with preemption on Adreno A5XX GPUs which
-render system unusable if more than one priority level is used. Those
-issues include persistent GPU faults and hangs, full UI lockups with
-idling GPU.
+Fine grain preemption (switching from/to points within submits)
+requires extra handling in command stream of those submits, especially
+when rendering with tiling (using GMEM). However this handling is
+missing at this point in mesa (and always was). For this reason we get
+random GPU faults and hangs if more than one priority level is used
+because local preemption is enabled prior to executing command stream
+from submit.
+With that said it was ahead of time to enable local preemption by
+default considering the fact that even on downstream kernel it is only
+enabled if requested via UAPI.
 
+Fixes: a7a4c19c36de ("drm/msm/a5xx: fix setting of the CP_PREEMPT_ENABLE_LOCAL register")
+Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
 ---
-Vladimir Lypak (4):
-  drm/msm/a5xx: disable preemption in submits by default
-  drm/msm/a5xx: properly clear preemption records on resume
-  drm/msm/a5xx: fix races in preemption evaluation stage
-  drm/msm/a5xx: workaround early ring-buffer emptiness check
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c     | 18 ++++++++++----
- drivers/gpu/drm/msm/adreno/a5xx_gpu.h     | 12 ++++++---
- drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 30 ++++++++++++++++++++---
- 3 files changed, 47 insertions(+), 13 deletions(-)
----
-base-commit: 523b23f0bee3014a7a752c9bb9f5c54f0eddae88
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index c0b5373e90d7..6c80d3003966 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -150,9 +150,13 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+ 	OUT_PKT7(ring, CP_SET_PROTECTED_MODE, 1);
+ 	OUT_RING(ring, 1);
+ 
+-	/* Enable local preemption for finegrain preemption */
++	/*
++	 * Disable local preemption by default because it requires
++	 * user-space to be aware of it and provide additional handling
++	 * to restore rendering state or do various flushes on switch.
++	 */
+ 	OUT_PKT7(ring, CP_PREEMPT_ENABLE_LOCAL, 1);
+-	OUT_RING(ring, 0x1);
++	OUT_RING(ring, 0x0);
+ 
+ 	/* Allow CP_CONTEXT_SWITCH_YIELD packets in the IB2 */
+ 	OUT_PKT7(ring, CP_YIELD_ENABLE, 1);
 -- 
 2.45.2
 
