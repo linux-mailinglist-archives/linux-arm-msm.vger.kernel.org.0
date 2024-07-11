@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-25929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25931-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B8FB92E301
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 11:04:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C68192E30A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 11:05:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AB219B26488
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 09:04:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E3FCB285E2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 09:05:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 104C2155308;
-	Thu, 11 Jul 2024 09:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93624157494;
+	Thu, 11 Jul 2024 09:04:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y7kzFF/1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ofjd8Evw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCC714F9E5;
-	Thu, 11 Jul 2024 09:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4EE155325;
+	Thu, 11 Jul 2024 09:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720688612; cv=none; b=uQZFeKW9hFsrJ9E4B9dXpEw9bX2ohqo4n80IY7MdI+wsKPay+wfCBm13dSya8V4mMcfhjwE6DaEXDCLi+gBbeO6wcOLUZv7PoY8c96uZ+CyrVyXaLt+TlvjVHQuKZvSXVhjGfSRSfpFZtUFMLLzLR7VJFSMg7tnVlEVOszXEK8U=
+	t=1720688644; cv=none; b=AJmqiKkurvsQX9Nl8XoMof2cYSGSdivc/VkU9g4NNS27n9wRj9b/RbCiUmGA9e51fy4d1XI/Su3He6yn9CHgEjcYMG8EcE9BXuMwioFZ9UvJHVkGOQn317TKPWYQnw2npOqlhzdFaoH15OmVwCqdSAod4LozYtjdcFQ70N3Eu5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720688612; c=relaxed/simple;
-	bh=LGXu2f+ne3Pa6dQNTyj0b356prG0u1EZevfQ4skWBt0=;
+	s=arc-20240116; t=1720688644; c=relaxed/simple;
+	bh=126h7BgakOY9B1KfYSP3zvNqNuyJvooSnnG3eUr2Jjs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pnt9PO4zl9TuTWhdpVWmCBTDR2NBVq6FFm1CfDqaseF58bZNAOYiyPxmjhS4YJx7tT6fHOKDnwqXpBblIcxg/6Qc/OI4hQehKpANg+bWkYEPv5b/zhEQbLuMBuR423TmGdUJwCksuReBLJHPB8UQExm6GTGDwoQWnPGq8JXhEJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y7kzFF/1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E240C116B1;
-	Thu, 11 Jul 2024 09:03:25 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=MHPNuNqs/r2vumLajurl7YbwtAI8Lnatim2J6mmDiaMzsHx54+idu+S663Au5Yhh6fuQSMDW48fLeVrOcewsWF1/IksWhZVBPdPEKYKQLN9D+w4FeM8XOYdtm5T7qoLODJYw0VDn94lDcNIRbdKjzr5JHEXSkWtCHTuE1mRbbnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ofjd8Evw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10B8C116B1;
+	Thu, 11 Jul 2024 09:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720688610;
-	bh=LGXu2f+ne3Pa6dQNTyj0b356prG0u1EZevfQ4skWBt0=;
+	s=k20201202; t=1720688643;
+	bh=126h7BgakOY9B1KfYSP3zvNqNuyJvooSnnG3eUr2Jjs=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Y7kzFF/1hcd531fRFM18HJf/STpggnHpTEoJpbXPuQw6+ehkq1a/Ct5lowQLmyf7R
-	 NjavW4sgLRtZ/uieXg7iER5o/MVd3iLlcTkDWKtikXmKiQmKyVq8GvCwlG/RG76uwO
-	 OrEQZRXf4FNdKR9u3tLZkHwiUoGIDtba3M9MlRfTKLR8MtcuxoxaLKr7yQLqNJILLs
-	 ndiPWYMj6LTdfIiGF3bW5CUjjgw2xvsvYIpxFMX04oHGOxCnRJpnyoWz2jrBTvSpRZ
-	 GAsNBpQsm6ShECIoRFcp6OtetF3jNYur1vHfPavACNvCdBT9CpO2YNxCLGtfKay/JK
-	 qbna+otpAnPfA==
-Message-ID: <a908a3fb-22f0-4ee5-9550-bc716debd4aa@kernel.org>
-Date: Thu, 11 Jul 2024 11:03:22 +0200
+	b=Ofjd8EvwqYzxM1pRlxJSYcuKkKQYlhlm4EmBFdlvghdth1DEnvs54kch9ATYuIKzw
+	 ztI+O3Yis/ffYva50F7gcq55lI6jj2Os/24X/7CZNodVBZZDltSdBS+6dgm2V3eiCS
+	 jlLLGIUUAP9BeVG7MzzvIggH15pfhufvexsh5HjRjgwUDDVQY7klx4AN2LWy/JhRUG
+	 VCwVxdlL973OP//FnbfsiS6BLUOM+tpRrso3A7tN6XFJoczsyJbu9gBFfCV2qmahBo
+	 4u6xN8vt+jNh4l2GaJYYoNgsF6Ks/ZoIRk2/7uQlCp6uyF9vAZKNp3lIfgn0dtt4Gi
+	 SKMrAxGhGF23A==
+Message-ID: <5142d8af-2b05-4018-a9c5-0a8b99719b0d@kernel.org>
+Date: Thu, 11 Jul 2024 11:03:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -111,25 +111,15 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 11/07/2024 10:47, Varadarajan Narayanan wrote:
-> On Thu, Jul 11, 2024 at 09:47:23AM +0200, Krzysztof Kozlowski wrote:
->> On 11/07/2024 08:56, Varadarajan Narayanan wrote:
->>> IPQ5332 has only three interrupts. Update min items
->>> accordingly for interrupt names to fix the following
->>> dt_binding_check errors.
->>>
->>> 	interrupt-names: ['pwr_event', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
->>>
->>> Fixes: a5c7592366af ("dt-bindings: usb: qcom,dwc3: add SC8280XP binding")
 >>
->> There is no ipq5332 at this commit, so I do not understand which bug are
->> you fixing.
+>> but x1e80100 has 4, right?
 > 
-> a5c7592366af introduced this interrupt and interrupt-names block. Later, 53c6d854be4e9 added ipq5332 to this section. Since a5c7592366af introduced the maxItems and I wanted to include minItems also (to accomodate ipq5332) I used a5c7592366af in the fixes tag. Will 53c6d854be4e9 be a more appropriate choice?
+> Yes. Will have a separate block for ipq5332. Went with min/max based
+> on one of the previous blocks that had min/max as two and three for
+> a group of SoCs.
+> 
 
-At least a5c7592366af cannot be, because there is no bug in
-a5c7592366af. Otherwise please explain what bug is present at time of
-a5c7592366af?
-
+Did you even test it before sending?
 
 Best regards,
 Krzysztof
