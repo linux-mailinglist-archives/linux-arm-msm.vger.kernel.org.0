@@ -1,369 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-25982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0547692E986
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 15:30:34 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 385DD92E991
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 15:32:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 29F621C218EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 13:30:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 89C00B25B36
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 13:32:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AB1C15ECD6;
-	Thu, 11 Jul 2024 13:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B40515F402;
+	Thu, 11 Jul 2024 13:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BW2Gixus"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ItlswVci"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A8E155740;
-	Thu, 11 Jul 2024 13:30:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC0215F3E2;
+	Thu, 11 Jul 2024 13:32:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720704629; cv=none; b=etXaPEzDJLhYVPQWNaEJ/fILJyeiNxob3Qsdqcj+ZGQiP2UdjkwIzBW+XYnRGT6uxV8nOm3DVJDyRjSVndvMoGkqcxj5YsjkrznAe/tws8Oxs/ikjEd0Clz/5sraNwagPjZYubIHMV4c6UUHPejMWLlUoo3n8oS9TF/axF2AEHk=
+	t=1720704736; cv=none; b=LXlaJxE5X5XT4Lf8eJx2ymb88sbfzVMvDbgMO4yCZXIR++aStph0xg9GPizsAsdV90Xc+CeLOPt+jYVvcOOCg5pow8jqt0bupzZg8vYYmzm/nqMet9J31TIT6B2rc/bATkxQ8Wv4k4tPHyaI2IMrrJYvXJH4FaTNTWugAgHgWCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720704629; c=relaxed/simple;
-	bh=zBXnTupX6agqwu5I9JJwoTmnjOAq7HGv/adp9P0UmDU=;
+	s=arc-20240116; t=1720704736; c=relaxed/simple;
+	bh=eFuzLac7foMPW6I4Tocmb609CXQJgKqcokCHcsV6CnE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jKZFyScI3nhsJRsREvlZk5F7kex9PBl1dsvBJtBk44lFqWzyXQZH79b0dUlSuYET9vgdQFAKbdoUeToDvLOvhW4Hl7eusbGSfgRY6S08S7gfmgC2Dhag+PPoeknQ4nLMcYC1qoez7Vk5sbxn46T/HkblWYYJePFMSXOKyTYrL3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BW2Gixus; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=krx7r6Hkd9vJ2hu6g8GvQrKaYBulb6/fDGFnNKymnImXxgqsg/uvDpdHXPhFolalrtoTtWHdQCBbUoZXzRfYuaQkd6coIqCKH2Hclq3NTc9vzysdNu8xMLX9rso+zAb7UW6vCo20JcCMLh7ybnH+GI+ovZtz6aFC7bOVlCbdJuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ItlswVci; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46B4mjOs014557;
-	Thu, 11 Jul 2024 13:30:03 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46BDND3e008799;
+	Thu, 11 Jul 2024 13:32:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Nn0IROJi4/TTuRWprP42UxnXjxXaTcfE4/Beqv+jUxU=; b=BW2Gixuse4A5NyLi
-	L6j9WqnWwLdxnFaJRWT9IRjE+pRQRuLiA1diOYrwOfx4yeziYEZgPb7FHFbPPYhE
-	6FDJpNfkxjdcRNbZGjRw9n3yAc5xnfMInIC2INkXfSSnLyLgD4+37/jIJGtjpuhl
-	mREDPqNUm1L9NQUa2hfdendUqIbDdr6o2HoGedcl/DlxXGEPVTUDmtfd8A9x9fJc
-	S5hFgElbS79tB10Au6+QKWlbXr+ZuXi2rRN4ZNOvcxwLG5VuWoyGU+D3tQF0zWzQ
-	20Qeg8o5mzua2P4VSDmMHTQrts7VnKQziKaDFXv3Y3WmU9tqvsbM+49uRUPrvgnm
-	ZwI1ww==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 409kdtmakw-1
+	WBFA3sbkNAkvOjNHMVUjSv4RnDdP0v5mOQAFzD+Ajc0=; b=ItlswVci58rXIRZl
+	JxqJhWZSPxvyOAhn/rt9Gha2O212qrB5HHy1wz+cBHTkY0HTdncjAhLXWCsgwqRg
+	Otn9m1bovBSPGAHe/wPkMjl+gnQDqbmiLi8yuoOX4QKmRmGy3jpUXuzkecfoJw8n
+	SK5SFulfuAoEze8S13dnzXDcQKaNPowQ+BYxGQcbq035jBTnUAeRMM0N21CP+p7E
+	0qDVU2jAgdbXYdWKK7g8uVgJACo4Q4R6RFZEs19OIaz73phnwj6Xb+UtvdjO93PV
+	ykMNBl4PkmjjyLtqWrU5zYoY4xcoZRVVHxnPZ9PVVqfhwxvHhJatTJPX5PCyzSNu
+	XZ+nww==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 406x51cqgt-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jul 2024 13:30:03 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46BDU16d014095
+	Thu, 11 Jul 2024 13:32:04 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46BDW2i4028575
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jul 2024 13:30:01 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+	Thu, 11 Jul 2024 13:32:02 GMT
+Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 11 Jul
- 2024 06:29:55 -0700
-Message-ID: <b73f1117-580b-46cf-8c56-9e78974b6e45@quicinc.com>
-Date: Thu, 11 Jul 2024 21:29:53 +0800
+ 2024 06:31:57 -0700
+Message-ID: <19a22562-28e2-0f8e-a77a-bf7ed0b577e0@quicinc.com>
+Date: Thu, 11 Jul 2024 19:01:49 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/13] media: qcom: camss: Add support for VFE hardware
- version Titan 780
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
-CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        Yongsheng Li
-	<quic_yon@quicinc.com>
-References: <20240709160656.31146-1-quic_depengs@quicinc.com>
- <20240709160656.31146-11-quic_depengs@quicinc.com>
- <7bc37232-4502-423b-ada6-e11dc518a0cc@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [RFC V3 1/4] dt-bindings: firmware: Document bindings for ARM
+ SCMI QCOM Vendor Protocol
 Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <7bc37232-4502-423b-ada6-e11dc518a0cc@linaro.org>
+To: Cristian Marussi <cristian.marussi@arm.com>
+CC: <sudeep.holla@arm.com>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <quic_rgottimu@quicinc.com>, <quic_kshivnan@quicinc.com>,
+        <conor+dt@kernel.org>
+References: <20240702191440.2161623-1-quic_sibis@quicinc.com>
+ <20240702191440.2161623-2-quic_sibis@quicinc.com> <Zo1lqcjPEDRMXDJm@pluto>
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <Zo1lqcjPEDRMXDJm@pluto>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: btU7Q9rlNMgD8LGhQecmJ1c1ihMeO0XG
-X-Proofpoint-GUID: btU7Q9rlNMgD8LGhQecmJ1c1ihMeO0XG
+X-Proofpoint-GUID: BLR_8oEzMYoycK06S0Xq7JZjYwxZn8cs
+X-Proofpoint-ORIG-GUID: BLR_8oEzMYoycK06S0Xq7JZjYwxZn8cs
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-11_09,2024-07-11_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- impostorscore=0 mlxlogscore=999 lowpriorityscore=0 malwarescore=0
- adultscore=0 suspectscore=0 phishscore=0 bulkscore=0 priorityscore=1501
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407110096
-
-Hi Bryan,
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ suspectscore=0 impostorscore=0 mlxlogscore=999 mlxscore=0 bulkscore=0
+ priorityscore=1501 malwarescore=0 lowpriorityscore=0 phishscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407110097
 
 
-On 7/10/2024 7:47 PM, Bryan O'Donoghue wrote:
-> On 09/07/2024 17:06, Depeng Shao wrote:
->> Add support for VFE found on SM8550 (Titan 780). This implementation is
->> based on the titan 480 implementation. It supports the normal and lite
->> VFE.
+
+On 7/9/24 22:02, Cristian Marussi wrote:
+> On Wed, Jul 03, 2024 at 12:44:37AM +0530, Sibi Sankar wrote:
+>> Document the various memory buses that can be monitored and scaled by the
+>> memory latency governor hosted by the ARM SCMI QCOM Vendor protocol v1.0.
 >>
->> Co-developed-by: Yongsheng Li <quic_yon@quicinc.com>
->> Signed-off-by: Yongsheng Li <quic_yon@quicinc.com>
->> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+
+Hey Christian,
+
+Thanks for taking time to review the series :)
+
 >> ---
->>   drivers/media/platform/qcom/camss/Makefile    |   1 +
->>   .../media/platform/qcom/camss/camss-vfe-780.c | 404 ++++++++++++++++++
->>   2 files changed, 405 insertions(+)
->>   create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-780.c
+> 
+> Hi Sibi,
+> 
+> this series got a bit neglected...my bad...a few comments down below.
+> 
 >>
->> diff --git a/drivers/media/platform/qcom/camss/Makefile 
->> b/drivers/media/platform/qcom/camss/Makefile
->> index c336e4c1a399..a83b7a8dcef7 100644
->> --- a/drivers/media/platform/qcom/camss/Makefile
->> +++ b/drivers/media/platform/qcom/camss/Makefile
->> @@ -17,6 +17,7 @@ qcom-camss-objs += \
->>           camss-vfe-4-8.o \
->>           camss-vfe-17x.o \
->>           camss-vfe-480.o \
->> +        camss-vfe-780.o \
->>           camss-vfe-gen1.o \
->>           camss-vfe.o \
->>           camss-video.o \
->> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-780.c 
->> b/drivers/media/platform/qcom/camss/camss-vfe-780.c
+>> Adding a reg property in scmi-memlat.yaml seems incorrect/superfluous
+>> but without it I see the following errors:
+>>
+>> Err Logs:
+>> protocol@80: 'reg' does not match any of the regexes: '^memory-[0-9]$', 'pinctrl-[0-9]+'
+>> protocol@80: Unevaluated properties are not allowed ('memory-0', 'memory-1', 'memory-2' were unexpected)
+>>
+>> v2:
+>> * Drop container dvfs memlat container node. [Rob]
+>> * Move scmi-memlat.yaml to protocol level given that a lot of vendors might end up
+>>    using the same protocol number. [Rob]
+>> * Replace qcom,cpulist with the standard "cpus" property. [Rob]
+>> * Fix up compute-type/ipm-ceil required. [Rob]
+>>
+> 
+> ...so there has been a lot of work around Vendor protos recently (as you
+> have seen) and especially around the way we define the DT bindings to have
+> multiple vendor protocols coexist with the same overlapping numbers.
+> (the code-level coexistence is already in place as you've seen...)
+> 
+> I think some sort of agreement on HOW to render this in the bindings
+> side was reached around a series from NXP...not sure if I am missing something
+> here but this commit from Peng/NXP (if you have not seen it already):
+> https://lore.kernel.org/linux-arm-kernel/20240621-imx95-bbm-misc-v2-v5-2-b85a6bf778cb@nxp.com/
+> 
+> ...it is a good example of how you can define your vendor specific part in
+> a vendor specific binding files and then just add a single $ref line in
+> the core binding Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+> (and that has been successfully reviewd...)
+> 
+> Moreover, in that same series from Peng/NXP you could have a look at
+> https://lore.kernel.org/linux-arm-kernel/20240621-imx95-bbm-misc-v2-v5-1-b85a6bf778cb@nxp.com/
+> 
+> that adds the Documentation for their Vendor protocols.
+> Beside the final location in the tree for such docs, which is a detail
+> we can settle later on our side too, I think that patch is a good example
+> of the kind of vendor-protos Documentation Sudeep is expecting.
+> 
+> 
+>>   .../bindings/firmware/arm,scmi.yaml           |  15 ++
+>>   .../bindings/soc/qcom/qcom,scmi-memlat.yaml   | 242 ++++++++++++++++++
+>>   include/dt-bindings/soc/qcom,scmi-vendor.h    |  22 ++
+>>   3 files changed, 279 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,scmi-memlat.yaml
+>>   create mode 100644 include/dt-bindings/soc/qcom,scmi-vendor.h
+>>
+>> diff --git a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+>> index 4d823f3b1f0e..a4022682e5ca 100644
+>> --- a/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+>> +++ b/Documentation/devicetree/bindings/firmware/arm,scmi.yaml
+>> @@ -284,6 +284,21 @@ properties:
+>>       required:
+>>         - reg
+>>   
+>> +  protocol@80:
+>> +    type: object
+>> +    allOf:
+>> +      - $ref: '#/$defs/protocol-node'
+>> +      - $ref: /schemas/soc/qcom/qcom,scmi-memlat.yaml#
+>> +
+>> +    unevaluatedProperties: false
+>> +
+>> +    properties:
+>> +      reg:
+>> +        const: 0x80
+>> +
+>> +    required:
+>> +      - reg
+>> +
+> 
+> ..here you should be able to just plant your $ref without redefining the
+> protocol@80
+> 
+>>   additionalProperties: false
+>>   
+>>   $defs:
+>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,scmi-memlat.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,scmi-memlat.yaml
 >> new file mode 100644
->> index 000000000000..abef2d5b9c2e
+>> index 000000000000..915a6bf5697f
 >> --- /dev/null
->> +++ b/drivers/media/platform/qcom/camss/camss-vfe-780.c
->> @@ -0,0 +1,404 @@
->> +// SPDX-License-Identifier: GPL-2.0
->> +/*
->> + * camss-vfe-780.c
+>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,scmi-memlat.yaml
+>> @@ -0,0 +1,242 @@
+>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/soc/qcom/qcom,scmi-memlat.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm SCMI Memory Bus nodes
+>> +
+>> +maintainers:
+>> +  - Sibi Sankar <quic_sibis@quicinc.com>
+>> +
+>> +description:
+>> +  This binding describes the various memory buses that can be monitored and scaled
+>> +  by memory latency governor running on the CPU Control Processor (SCMI controller).
+>> +
+> 
+> ...and instead here you will define your protocols, compliant with the
+> main protocol-node def and any specific vendor sub-properties that you
+> should need....
+> 
+> ...the above example from NXP is probably more clear than any attempt of mine
+> to explain this :P
 
->> +
->> +static u32 vfe_hw_version(struct vfe_device *vfe)
->> +{
->> +    u32 hw_version = readl_relaxed(vfe->base + VFE_HW_VERSION);
->> +
->> +    u32 gen = (hw_version >> 28) & 0xF;
->> +    u32 rev = (hw_version >> 16) & 0xFFF;
->> +    u32 step = hw_version & 0xFFFF;
->> +
->> +    dev_info(vfe->camss->dev, "VFE HW Version = %u.%u.%u\n", gen, 
->> rev, step);
->> +
->> +    return hw_version;
->> +}
-> 
-> This could be functionally decomposed into vfe_hw_version_v2() or 
-> similar and exported by camss-vfe.c
-> 
->> +
+ack, will adhere to the same in the next re-spin.
 
-Yes, same with below comments, I will try to figure out which functions 
-can be moved to common files.
-
-
->> +
->> +/*
->> + * vfe_isr - VFE module interrupt handler
->> + * @irq: Interrupt line
->> + * @dev: VFE device
->> + *
->> + * Return IRQ_HANDLED on success
->> + */
->> +static irqreturn_t vfe_isr(int irq, void *dev)
->> +{
->> +    /* Buf Done has beem moved to CSID in Titan 780.
->> +     * Disable VFE related IRQ.
->> +     * Clear the contents of this function.
->> +     * Return IRQ_HANDLED.
->> +     */
->> +    return IRQ_HANDLED;
->> +}
 > 
-> What's the point of this ISR at all if it never fires and just returns 
-> done ?
+> Thanks,
+> Cristian
 > 
-> Since it takes no action - it can't do anything useful and therefore if 
-> it ever did fire, would fire ad infinitum.
-> 
-> Please drop
-Sure, will drop it.
-
-
->> +
->> +static int vfe_get_output(struct vfe_line *line)
->> +{
->> +    struct vfe_device *vfe = to_vfe(line);
->> +    struct vfe_output *output;
->> +    unsigned long flags;
->> +
->> +    spin_lock_irqsave(&vfe->output_lock, flags);
->> +
->> +    output = &line->output;
->> +    if (output->state > VFE_OUTPUT_RESERVED) {
->> +        dev_err(vfe->camss->dev, "Output is running\n");
->> +        goto error;
->> +    }
->> +
->> +    output->wm_num = 1;
->> +
->> +    /* Correspondence between VFE line number and WM number.
->> +     * line 0 -> RDI 0, line 1 -> RDI1, line 2 -> RDI2, line 3 -> 
->> PIX/RDI3
->> +     * Note this 1:1 mapping will not work for PIX streams.
->> +     */
->> +    output->wm_idx[0] = line->id;
->> +    vfe->wm_output_map[line->id] = line->id;
->> +
->> +    output->drop_update_idx = 0;
->> +
->> +    spin_unlock_irqrestore(&vfe->output_lock, flags);
->> +
->> +    return 0;
->> +
->> +error:
->> +    spin_unlock_irqrestore(&vfe->output_lock, flags);
->> +    output->state = VFE_OUTPUT_OFF;
->> +
->> +    return -EINVAL;
->> +}
-> 
-> This is copy/paste from vfe480 and should be functionally decomposed 
-> into a common function in camss-vfe.
-Sure, the flow of some functions are same with other platform, and don't 
-read/write registers, this can be moved to a common file and reused by 
-all platform.
-I will think about this.
-
->> +
->> +static int vfe_enable_output(struct vfe_line *line)
->> +{
->> +    struct vfe_device *vfe = to_vfe(line);
->> +    struct vfe_output *output = &line->output;
->> +    unsigned long flags;
->> +    unsigned int i;
->> +
->> +    spin_lock_irqsave(&vfe->output_lock, flags);
->> +
->> +    vfe_reg_update_clear(vfe, line->id);
->> +
->> +    if (output->state > VFE_OUTPUT_RESERVED) {
->> +        dev_err(vfe->camss->dev, "Output is not in reserved state %d\n",
->> +            output->state);
->> +        spin_unlock_irqrestore(&vfe->output_lock, flags);
->> +        return -EINVAL;
->> +    }
->> +
->> +    WARN_ON(output->gen2.active_num);
->> +
->> +    output->state = VFE_OUTPUT_ON;
->> +
->> +    output->sequence = 0;
->> +
->> +    vfe_wm_start(vfe, output->wm_idx[0], line);
->> +
->> +    for (i = 0; i < MAX_VFE_ACT_BUF; i++) {
->> +        output->buf[i] = vfe_buf_get_pending(output);
->> +        if (!output->buf[i])
->> +            break;
->> +        output->gen2.active_num++;
->> +        vfe_wm_update(vfe, output->wm_idx[0], 
->> output->buf[i]->addr[0], line);
->> +
->> +        vfe_reg_update(vfe, line->id);
-> 
-> I see this differs from vfe480 in that vfe_reg_update(vfe, line-id); is 
-> done on each iteration of this loop whereas in 480 it is done directly 
-> after the loop, seems to me this would be a valid fix for 480 too 
-> leading to my next comment
-> 
-
-Yes, vfe-480 also need this.
-
->> +    }
->> +
->> +    spin_unlock_irqrestore(&vfe->output_lock, flags);
->> +
->> +    return 0;
->> +}
-> 
-> This function is so similar across different SoCs with very minor 
-> differences that instead of copy/pasting and very slightly tweaking, we 
-> should be functionally decomposing and using a flag of some kind to 
-> differentaite between wait_reg_update logic in 480 and not in 780.
-> 
-> Again I think we should functionally decompose into camss-vfe.c and use 
-> a flag to branch the logic for the very slight logical difference 
-> between the two
-> 
-> vfe-480.c
-> 
->          output->sequence = 0;
->          output->wait_reg_update = 0;
->          reinit_completion(&output->reg_update);
-> 
-> As a result your fix for line->id would be useful across SoCs instead of 
-> isolated to vfe 780.
-> 
-
-Yes, some functions are same code flow, and don't read/write register, 
-this can be moved to a common file and reused by all platform.
-I will think about this.
-
->> +
->> +/*
->> + * vfe_enable - Enable streaming on VFE line
->> + * @line: VFE line
->> + *
->> + * Return 0 on success or a negative error code otherwise
->> + */
->> +static int vfe_enable(struct vfe_line *line)
->> +{
->> +    struct vfe_device *vfe = to_vfe(line);
->> +    int ret;
->> +
->> +    mutex_lock(&vfe->stream_lock);
->> +
->> +    vfe->stream_count++;
->> +
->> +    mutex_unlock(&vfe->stream_lock);
->> +
->> +    ret = vfe_get_output(line);
->> +    if (ret < 0)
->> +        goto error_get_output;
->> +
->> +    ret = vfe_enable_output(line);
->> +    if (ret < 0)
->> +        goto error_enable_output;
->> +
->> +    vfe->was_streaming = 1;
->> +
->> +    return 0;
->> +
->> +error_enable_output:
->> +    vfe_put_output(line);
->> +
->> +error_get_output:
->> +    mutex_lock(&vfe->stream_lock);
->> +
->> +    vfe->stream_count--;
->> +
->> +    mutex_unlock(&vfe->stream_lock);
->> +
->> +    return ret;
->> +}
-> 
-> Same thesis on functional decomposition - this should be moved to 
-> camss-vfe.c and made common - its only a minor difference betwen the 
-> required logic on different SoCs so there's not a compelling reason to 
-> have largely identical functions living in difference .c files in the 
-> same driver.
-> 
-
-Sure, I will check which functions can be moved to camss-vfe.c.
-
-Thanks,
-Depeng
 
