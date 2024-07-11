@@ -1,63 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-25971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-25972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DFAE92E7AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 13:56:27 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4380392E7E7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 14:03:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C1E6E1C217BB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 11:56:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BBAC3B230F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jul 2024 11:58:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE7FC158DC4;
-	Thu, 11 Jul 2024 11:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8267515AAD3;
+	Thu, 11 Jul 2024 11:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lpqnwNHq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FaA63Xir"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74112904;
-	Thu, 11 Jul 2024 11:54:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423B5156F2D;
+	Thu, 11 Jul 2024 11:58:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720698863; cv=none; b=FZvdmfZlvybldai5E0yf70Bcf/+OEU4EQDGwAStngMoMllv+RqdXG1iuKPdmaGR32049iYaU1LSuSvknM6Qqu/QNu9rUPy8Jdfxrm6vAtSwprGmjWLXLMUlJazlXYWnLp5AR2zLIqX910zuW8n704pynPofylxxmT3tOlTxC/pw=
+	t=1720699120; cv=none; b=UxDVwTyhhwTQKJbXh4V5YP1FKWF4rT0spjCBMumvHoDwr09t78R+K7dAOqWvnshq56PuNWMUrhmZ62lQ9zQhSrEdK8LWaoaPpNUK+KnzdDHRXZMLasP8GGIUuPmvhwuwpaDD6ow5Cv0mMyq6E9jRcdlP/II9mS4oqElxxrkmH7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720698863; c=relaxed/simple;
-	bh=+LdsT/NVAQfxwaXzM9GsKWZdeWVmi0gJkWpbBeLpSJE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=gQVKldqIpR85uhHQ0meJArFbCNet8bdDLH4uhnyRIHxEAMGHUnZcw2pB0P3l6ZAnj+TZaKi3f+lRijuvBTTeJ6YFzaaStjX2+TKLYpGXxbgvhQoEQsRyBXhU+2M/YhDE2PvwADG6KtXu8aEgISNaU8R72y4A6fE0mZ73AxXufM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lpqnwNHq; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46B4mmc8011416;
-	Thu, 11 Jul 2024 11:54:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	pOGUEVKUYHY5uK7jZlfwU/0qMkVGbGWTCdGSXrbzl0A=; b=lpqnwNHqPi64Wvx2
-	1HoJ/UhWmlw/IPfRAgN2RE+4pxxAZzZ4dYUxtisr3hiZ899avcIrHPGIEeX1EBJQ
-	9TC5717Xq6CBomvgiruzn1HMmZFxi0l+NTbqwCf4ZcCPN09eyZT3/AKRTH8AcMsv
-	mwtsfKEe8n+9vehEIiAe6DVHU5xCSIBPhuMwIeeXFbAsIdTw/CowTsOieM5Lur1Y
-	YnQcAcISYT09ZCM7dp220d5iXP756vLr8KDqs9CiS5i9bncMj1C+RFbqdjhQXYcX
-	2633bMATx/88B5SBST8YTnAPeCPU/7kZCoDXFSKyoMKKq1mk3jza/PL4pLhom1wh
-	m02jkQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 409vydtgjt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jul 2024 11:54:16 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46BBsFjB022354
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jul 2024 11:54:15 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 11 Jul
- 2024 04:54:09 -0700
-Message-ID: <0e5f029b-ee63-4e44-a75e-877fbae042b3@quicinc.com>
-Date: Thu, 11 Jul 2024 19:54:07 +0800
+	s=arc-20240116; t=1720699120; c=relaxed/simple;
+	bh=HguvgwvBpfqOovw/jwg7IosK9ScAa4vcIicrJd3hq3A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=XgHUw18zmJXdmVSpUAM6MvWfjdCAufarwS/yglkh9Efdv7pPCEUseHE1Qfju04xBoSuBBDkRb2ZXmwO0vsn9S+il9h1RMcQYQ9Nlbkht2pO50rsfLF3dwQvzoz9E+rJDGbYAU/5bXEg+71PFW796zzONhav0EM4F1v1CK6ejqvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FaA63Xir; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220DEC32786;
+	Thu, 11 Jul 2024 11:58:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720699119;
+	bh=HguvgwvBpfqOovw/jwg7IosK9ScAa4vcIicrJd3hq3A=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=FaA63XirlsuMviOf8i7MJTazgVYL2Ch6vFUDsvIOJ2sozDymDwiiVBf8PBGbMSO9N
+	 CokXW15chmFXFbymH71lS85ijqE40UnOYtcHGE3jrs2slFFSFJK90RUXCKC7QHTTaZ
+	 22UGZAhYYwDi/oowJwgDWqUYysNtCOkaylo/pRDN6i3fELtXNwtN++oXwRdVKU4pyk
+	 LkLxvpa2AWxchzkPwqAuCJmOw2Y2HuF0/4l7ZGZjj/hpdTBWGiqxZ1dWb/U5sRjk7n
+	 zlpQlF7xti3TilxjyI57eYWJA0INQSj/xm09mICJP/kTeLY/2BBTtWzANbh94WdZMW
+	 /zoZMT+BWS6OQ==
+Message-ID: <ae98e21f-91ac-4878-8cab-916b24e927e5@kernel.org>
+Date: Thu, 11 Jul 2024 13:58:31 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,194 +50,103 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/13] media: qcom: camss: Add notify interface in camss
- driver
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
-CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <20240709160656.31146-1-quic_depengs@quicinc.com>
- <20240709160656.31146-12-quic_depengs@quicinc.com>
- <236cfe43-8321-4168-8630-fb9528f581bd@linaro.org>
+Subject: Re: [PATCH v2 1/4] dt-bindings: interconnect: Add Qualcomm IPQ5332
+ support
+To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, gregkh@linuxfoundation.org,
+ konrad.dybcio@linaro.org, djakov@kernel.org, quic_wcheng@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-usb@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20240711113239.3063546-1-quic_varada@quicinc.com>
+ <20240711113239.3063546-2-quic_varada@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <236cfe43-8321-4168-8630-fb9528f581bd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: AUq8_1r4R7qnQBZjVaGABh_pLzFpfUGa
-X-Proofpoint-ORIG-GUID: AUq8_1r4R7qnQBZjVaGABh_pLzFpfUGa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-11_08,2024-07-11_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- priorityscore=1501 clxscore=1015 mlxlogscore=999 impostorscore=0
- suspectscore=0 spamscore=0 adultscore=0 malwarescore=0 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407110083
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240711113239.3063546-2-quic_varada@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Bryan,
-
-On 7/10/2024 7:54 PM, Bryan O'Donoghue wrote:
-> On 09/07/2024 17:06, Depeng Shao wrote:
->> The main v4l2 process logic in camss vfe subdev driver, so the vfe driver
->> handles the buf done irq and register update configuration. But the buf
->> done irq and register update configuration have been moved CSID HW in
->> Titan 780 and other new platform, so vfe driver needs to call into CSID
->> driver to configure the register update. And CSID driver also needs to
->> call into vfe driver to notify of the buf done irq.
->>
->> Adding this notify interface in camss structure to do the subdevs cross
-
->>   /*
->>    * csid_isr - CSID module interrupt service routine
->>    * @irq: Interrupt line
->> @@ -341,6 +353,14 @@ static irqreturn_t csid_isr(int irq, void *dev)
->>           if (csid->phy.en_vc & BIT(i)) {
->>               val = readl_relaxed(csid->base + 
->> CSID_CSI2_RDIN_IRQ_STATUS(i));
->>               writel_relaxed(val, csid->base + 
->> CSID_CSI2_RDIN_IRQ_CLEAR(i));
->> +
->> +            if (buf_done_val & BIT(BUF_DONE_IRQ_STATUS_RDI_OFFSET + 
->> i)) {
->> +                /* For Titan 780, Buf Done IRQ&REG has been moved to 
->> CSID from VFE.
->> +                 * Once CSID received Buf Done, need notify this 
->> event to VFE.
->> +                 * Trigger VFE to handle Buf Done process.
->> +                 */
->> +                csid->camss->notify(&csid->subdev, 
->> CAMSS_MSG_BUF_DONE, (void *)&i);
+On 11/07/2024 13:32, Varadarajan Narayanan wrote:
+> Add interconnect-cells to clock provider so that it can be
+> used as icc provider.
 > 
-> Instead of a generic notify function with an enum passed to a switch 
-> lets just have a dedicated function for each functional callback.
+> Add master/slave ids for Qualcomm IPQ5332 Network-On-Chip
+> interfaces. This will be used by the gcc-ipq5332 driver
+> for providing interconnect services using the icc-clk
+> framework.
 > 
-> csid->camss->reg_update_cmd();
-> csid->camss->reg_clear_cmd();
-> 
-> We can get rid of a switch and an additional enum that way, plus 
-> redundant "event not supported" error checking.
-> 
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 
-Sure, will update the code based on suggestion.
+That's another patchset from Qualcomm where tags get ignored. Maybe it's
+the same team? You have very good internal guideline, so read it before
+posting.
 
+Expecting us to do the same review we already did, is a waste of
+community resources.
 
->> +            }
->>           }
->>       val = 1 << IRQ_CMD_CLEAR;
->> @@ -434,6 +454,23 @@ static void csid_subdev_init(struct csid_device 
->> *csid)
->>       csid->testgen.nmodes = CSID_PAYLOAD_MODE_NUM_SUPPORTED_GEN2;
->>   }
->> +static void csid_subdev_process_msg(struct csid_device *csid, 
->> unsigned int msg_type, void *arg)
->> +{
->> +    int msg_data = *(int *)arg;
->> +
->> +    switch (msg_type) {
->> +    case CAMSS_MSG_RUP:
->> +        csid_reg_update(csid, msg_data);
->> +        break;
->> +    case CAMSS_MSG_RUP_CLEAR:
->> +        csid_reg_update_clear(csid, msg_data);
->> +        break;
->> +    default:
->> +        dev_err(csid->camss->dev, "NOT Supported EVT Type\n");
->> +        break;
->> +    }
->> +}
->> +
->>   const struct csid_hw_ops csid_ops_gen3 = {
->>       .configure_stream = csid_configure_stream,
->>       .configure_testgen_pattern = csid_configure_testgen_pattern,
->> @@ -442,4 +479,5 @@ const struct csid_hw_ops csid_ops_gen3 = {
->>       .reset = csid_reset,
->>       .src_pad_code = csid_src_pad_code,
->>       .subdev_init = csid_subdev_init,
->> +    .process_msg = csid_subdev_process_msg,
+<form letter>
+This is a friendly reminder during the review process.
 
+It looks like you received a tag and forgot to add it.
 
->> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h 
->> b/drivers/media/platform/qcom/camss/camss-vfe.h
->> index 10e2cc3c0b83..a8b09ce9941b 100644
->> --- a/drivers/media/platform/qcom/camss/camss-vfe.h
->> +++ b/drivers/media/platform/qcom/camss/camss-vfe.h
->> @@ -115,6 +115,7 @@ struct vfe_hw_ops {
->>       int (*vfe_halt)(struct vfe_device *vfe);
->>       void (*violation_read)(struct vfe_device *vfe);
->>       void (*vfe_wm_stop)(struct vfe_device *vfe, u8 wm);
->> +    void (*process_msg)(struct vfe_device *vfe, unsigned int 
->> msg_type, void *arg);
->>   };
->>   struct vfe_isr_ops {
->> diff --git a/drivers/media/platform/qcom/camss/camss.c 
->> b/drivers/media/platform/qcom/camss/camss.c
->> index 1f1f44f6fbb2..abeb0918e47d 100644
->> --- a/drivers/media/platform/qcom/camss/camss.c
->> +++ b/drivers/media/platform/qcom/camss/camss.c
->> @@ -2202,6 +2202,52 @@ static void camss_genpd_cleanup(struct camss 
->> *camss)
->>       dev_pm_domain_detach(camss->genpd, true);
->>   }
->> +static void camss_notify_msg(struct v4l2_subdev *sd,
->> +            unsigned int msg_type, void *arg)
->> +{
->> +    struct v4l2_device *v4l2_dev = sd->v4l2_dev;
->> +    struct camss *camss = to_camss(v4l2_dev);
->> +    struct vfe_device *vfe;
->> +    struct vfe_line *vfe_line;
->> +    struct csid_device *csid;
->> +    int evt_data = *(int *)arg;
->> +
->> +    switch (msg_type) {
->> +    case CAMSS_MSG_BUF_DONE:
->> +        csid = v4l2_get_subdevdata(sd);
->> +        vfe = &(camss->vfe[csid->id]);
->> +        if (vfe->res->hw_ops->process_msg)
->> +            vfe->res->hw_ops->process_msg(vfe,
->> +                CAMSS_MSG_BUF_DONE, (void *)&evt_data);
->> +        break;
->> +
->> +    case CAMSS_MSG_RUP:
->> +        vfe_line = v4l2_get_subdevdata(sd);
->> +        vfe = to_vfe(vfe_line);
->> +        csid = &(camss->csid[vfe->id]);
->> +
->> +        if (csid->res->hw_ops->process_msg)
->> +            csid->res->hw_ops->process_msg(csid,
->> +                CAMSS_MSG_RUP, (void *)&evt_data);
->> +        break;
->> +
->> +    case CAMSS_MSG_RUP_CLEAR:
->> +        vfe_line = v4l2_get_subdevdata(sd);
->> +        vfe = to_vfe(vfe_line);
->> +        csid = &(camss->csid[vfe->id]);
->> +
->> +        if (csid->res->hw_ops->process_msg)
->> +            csid->res->hw_ops->process_msg(csid,
->> +                CAMSS_MSG_RUP_CLEAR, (void *)&evt_data);
->> +
->> +        break;
->> +
->> +    default:
->> +        dev_err(camss->dev, "Not supported evt type\n");
->> +        break;
->> +    }
->> +}
-> 
-> Instead of having a central swiss army knife notify() callback these 
-> should be CSID or VFE specific callbacks vfe->buf_done() csid->msg_rup() 
-> etc.
-> 
+If you do not know the process, here is a short explanation:
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions, under or above your Signed-off-by tag. Tag is "received", when
+provided in a message replied to you on the mailing list. Tools like b4
+can help here. However, there's no need to repost patches *only* to add
+the tags. The upstream maintainer will do that for tags received on the
+version they apply.
 
-I will try to add the callback in CSID and VFE driver.
+https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
 
-Thanks,
-Depeng
+If a tag was not added on purpose, please state why and what changed.
+</form letter>
+
+Best regards,
+Krzysztof
+
 
