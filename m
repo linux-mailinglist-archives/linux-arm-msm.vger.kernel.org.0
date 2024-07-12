@@ -1,232 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-26066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D96D9301AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 23:39:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2C2293024F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 01:11:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 572931C22511
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 21:39:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 56F721F22B4A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 23:11:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BB9C4CDEC;
-	Fri, 12 Jul 2024 21:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09A933A8C0;
+	Fri, 12 Jul 2024 23:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gTD9e91C"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SIFDKbvY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799BC1BDD5;
-	Fri, 12 Jul 2024 21:39:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4161F1BC3C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 23:11:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720820385; cv=none; b=LvU9RL5jvDANZ8zp+dEK92T7Dz5F+n8Mt0wdGTLnf8aDco5CFZ33VWJeMPVjYXuta5EjNtEoB/8KkO195sR3AZllBnfcFyj5CxKCmuyuh5VCLH8JHWooqPZSotlqo0Dyv1vxF00Bi2YfpEIHJ7FRQ2DFbT5tBOWRQbOxeyOh0u0=
+	t=1720825898; cv=none; b=U7AXfl6S8IlxoxOCouxTB5AThKXnoOVG30Gu+rBCOnu3KgkVCPOBrOpaegKxYinYBHR/sEracdNrnIvtFJsmtwL3AiNRkGbRNjvA/ANuzz6z73Nnmp4I68jYE14aJXhCBHGlEMdlcw08eVVLfP3Bofep3rJ1KiViR2hGiOY1Y88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720820385; c=relaxed/simple;
-	bh=/L3vZ8RqgZrqSJtpT7ggfDiBrjbw1V+ics4kKKROGrg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=IWQDKMySTRuWp8d7MtD8GdIuct+NCq9tzS+l7dCFZyIEU6y/OUWKNmxMj7/w4oKCXOgPWkVG1/Oi9mkR0VdvkyCT38rRzpgh/DDTyTrHzuICaamQ/yRREqDDWaz0w0XslUuh+Azs7rXFDSgCa3zr5+dSIJwHNsjDTOhbXzNxt1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gTD9e91C; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46CBAeTN007447;
-	Fri, 12 Jul 2024 21:39:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	V9GzW2YNtArD1crWGPYwBMr7WJJOPm6wGsuoCZMyPp4=; b=gTD9e91CDEid3vsy
-	ucAJe6sg7PN/YNj50++z+3vJIblGzPoj6/q/BYgzocaMpqpY4r+7umlWuD6c/D4t
-	Scsu+cfM0VbrwJIEEb7ijdcgLNUsmU6BHIJXcqnCuH+AIRIGqHYMdmbc1X0E8D1G
-	vEKOTF7DSoyi7Qavz6Nrpkk7Gcbs0Mlz4oyHT5/oERY+1SunjYlNlVrI7rFMzvDz
-	QLaUNciiqQeoD1fuk3f+YdATlZsM2CzuAD3YPeor6QofApa6NJU+sN87PLcyUX9m
-	IwLYzKMr7jZpQFaZDNUc6pIMqzQ0dVgyjBce4xbCkaNSeVtEyop3SXyLLKpWadML
-	wXdrBg==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40ac0gmmqk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Jul 2024 21:39:18 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46CLdGG0032337
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Jul 2024 21:39:16 GMT
-Received: from [10.71.108.229] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 12 Jul
- 2024 14:39:16 -0700
-Message-ID: <606ddebb-c98c-47da-93d7-a387dbb6df22@quicinc.com>
-Date: Fri, 12 Jul 2024 14:39:15 -0700
+	s=arc-20240116; t=1720825898; c=relaxed/simple;
+	bh=ZpuckyPlNSs/6M4JuYjQziy/tNXojT2YbzXVr60P7+k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HRRUO48xSn9T+zME3ZsE0rBb5B8ZlcFH7AqUBCdPJHaa+yjuwewhG2Zm47FpgKlI1l9lure5/Qhi0WqrtaBbh9iK0RSACgyIg1ZiEOpZEKUqtnJQ/FGMJ9mEzW6UVepd3zMMM9MoeXR4YxjmVYGPboefyu5JQqYA1HR5QpK6ZCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SIFDKbvY; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6512866fa87so27106487b3.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 16:11:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1720825896; x=1721430696; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=6nIWauyc2Pyvv09dQTByut0YHfXkae1P+Bg8WYz5fXo=;
+        b=SIFDKbvYcH0OH1s+bZmLz1jvR9LFxaNCFAaDQF7GfntWiRxmmE/wIHXQTVHhXG3ElE
+         TYRZeUIw0RqdnUWXNIcylgeWMDrFoI9sKlDdYmbwLTWoetD1SARrGn++m0xwBJKXq/wz
+         pbg0ZWJZd3GT6sDx97unYQqyRsOenWJHdAv9FBNdOS8NWqcypkKA3pqWsalB6wJaK5iJ
+         B4OLQdfey0wR+Vf57JPePjaXV18dGDZKVDYQrBqMZOkiXmNMVdgtAG8pgvJlrq349OzN
+         KDCFpYjHkOnKvCnUqPEqQFefY+KcnLWTfkOwdyV9rOEXtRy9gWtgpQdsD7oxVH89BzFy
+         cPQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720825896; x=1721430696;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6nIWauyc2Pyvv09dQTByut0YHfXkae1P+Bg8WYz5fXo=;
+        b=YX0bOkabRQpuyxgtqY8StIxAVdHK3S6QAekr+12smodEpphaXU7iUNkYjDebc9T9D+
+         0n6GMsOFbDnpYK5WRq4wunJJX4PpbQU0iIxgtylerkE/wsXzGwGnfx/TeSmdCA4LFT8p
+         oQmYX3LnU30eoV+zBnNdaLiEWGkTxV/AB94k4NbX61DRpknaT24alas+VWCsoRSCKHXS
+         OqnCvGy3eZd1wKxAXm4PkReeMNV1EoK16172IBZ2Nih8BOXXU4YABCWOR4gXZg6XvdOx
+         Rfi2SEw7mkdMF5AQy5eMrEPcH7K0zZtnK27a+GYTO1VgylaeP4tljrCGFUJ/LXGZhJbA
+         Cqzw==
+X-Forwarded-Encrypted: i=1; AJvYcCU5Gi8S8KttYQT5VvMBixUUfQds1Aw+65ZBjD+VaioQm1qrLZ1gBfWrMVL7G7m1lfR17pP5VBZ+72qD4ohAT5pATUtXRNHj+7LwCqy8Fw==
+X-Gm-Message-State: AOJu0Ywbuh4TSZxf2CzfvUaJtg4zNXdyoE7V639hvKQPuZ8EA4fN9nNN
+	58hmwdBswh/+h+kpovXaqiDotL1cWAuAtKqEXTUeKBydZq8wbujF4hXFbHEu4kHKUkZ8IGyNDto
+	lU9hjRO7mEqCGvlOh1STCutSm9VHqxa27ib9WsQ==
+X-Google-Smtp-Source: AGHT+IE9KewbbtZ33pRFXKbNTTrznOJsyNetwGPb0x8rJ7HSyLluQ2O/SNwbXNQutrGuY8h078Oh1Z1VgqhfFvsdfh0=
+X-Received: by 2002:a0d:f981:0:b0:64a:f40d:5fd2 with SMTP id
+ 00721157ae682-658eed5debcmr137636897b3.12.1720825896057; Fri, 12 Jul 2024
+ 16:11:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/8] drm: mipi: add mipi_dsi_generic_write_multi_type()
-To: Caleb Connolly <caleb@postmarketos.org>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>,
-        David Airlie <airlied@gmail.com>, Daniel Vetter
-	<daniel@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Dmitry Torokhov
-	<dmitry.torokhov@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad
- Dybcio <konrad.dybcio@linaro.org>,
-        Henrik Rydberg <rydberg@bitmath.org>
-CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <dri-devel@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
-        <linux-input@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>
-References: <20240630-oneplus8-v2-0-c4a1f8da74f1@postmarketos.org>
- <20240630-oneplus8-v2-4-c4a1f8da74f1@postmarketos.org>
-Content-Language: en-US
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <20240630-oneplus8-v2-4-c4a1f8da74f1@postmarketos.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 1X-JElFlFLcusa7j0eTaboXSxbuH0v8m
-X-Proofpoint-GUID: 1X-JElFlFLcusa7j0eTaboXSxbuH0v8m
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-12_17,2024-07-11_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 mlxlogscore=999
- mlxscore=0 impostorscore=0 clxscore=1011 suspectscore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407120147
+References: <20240625-dpu-mode-config-width-v5-0-501d984d634f@linaro.org>
+ <20240625-dpu-mode-config-width-v5-2-501d984d634f@linaro.org> <637fbd36-d6cd-4bb7-af83-8849c0fee8f2@quicinc.com>
+In-Reply-To: <637fbd36-d6cd-4bb7-af83-8849c0fee8f2@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sat, 13 Jul 2024 02:11:24 +0300
+Message-ID: <CAA8EJppxyUrEWYQvMGtw14UVobkQdaPZuwHPeMcONRYrgPp2jw@mail.gmail.com>
+Subject: Re: [PATCH v5 02/16] drm/msm/dpu: fix error condition in dpu_encoder_virt_atomic_mode_set
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Abel Vesa <abel.vesa@linaro.org>, 
+	Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+
+On Fri, 12 Jul 2024 at 22:41, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> On 6/24/2024 2:13 PM, Dmitry Baryshkov wrote:
+> > The commit b954fa6baaca ("drm/msm/dpu: Refactor rm iterator") removed
+> > zero-init of the hw_ctl array, but didn't change the error condition,
+> > that checked for hw_ctl[i] being NULL. Use indices check instead.
+> >
+> > Fixes: b954fa6baaca ("drm/msm/dpu: Refactor rm iterator")
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > index 5d205e09cf45..7613005fbfea 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > @@ -1186,7 +1186,7 @@ static void :tag(struct drm_encoder *drm_enc,
+> >                       return;
+> >               }
+> >
+> > -             if (!hw_ctl[i]) {
+> > +             if (i >= num_ctl) {
+>
+> This is not very clear to me.
+>
+> How will we hit this condition? I dont see i going beyond 1 in this loop
+> and neither should num_ctl
+
+Why? the driver doesn't support flushing through a single CTL, so
+num_ctl = num_intf.
+
+>
+> Will it be just easier to bring back the NULL assignment at the top?
+>
+> struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC] = { NULL };
+>
+> I also see the same issue for other blocks such as hw_dsc, hw_lm
+
+Other blocks loop properly up to the num_resource. I'd prefer to drop
+the NULL init from the DSPP init and use num_dspp instead.
+
+>
+> >                       DPU_ERROR_ENC(dpu_enc,
+> >                               "no ctl block assigned at idx: %d\n", i);
+> >                       return;
+> >
 
 
 
-On 6/30/2024 11:36 AM, Caleb Connolly wrote:
-> Some panels like the Samsung AMB655X use long write commands for all
-> non-standard messages and do not work when trying to use the appropriate
-> command type.
-> 
-> Support these panels by introducing a new helper to send commands of a
-> specific type, overriding the normal rules.
-> 
-> Signed-off-by: Caleb Connolly <caleb@postmarketos.org>
-> ---
->   drivers/gpu/drm/drm_mipi_dsi.c | 40 ++++++++++++++++++++++++++++++++++++++++
->   include/drm/drm_mipi_dsi.h     | 16 ++++++++++++++++
->   2 files changed, 56 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
-> index a471c46f5ca6..f2c7f3f23a6e 100644
-> --- a/drivers/gpu/drm/drm_mipi_dsi.c
-> +++ b/drivers/gpu/drm/drm_mipi_dsi.c
-> @@ -819,8 +819,48 @@ void mipi_dsi_generic_write_multi(struct mipi_dsi_multi_context *ctx,
->   	}
->   }
->   EXPORT_SYMBOL(mipi_dsi_generic_write_multi);
->   
-> +/**
-> + * mipi_dsi_generic_write_raw_multi() - transmit data using a generic write packet of
-> + * a specific type
-> + * @ctx: Context for multiple DSI transactions
-> + * @type: data type of the packet
-> + * @payload: buffer containing the payload
-> + * @size: size of payload buffer
-> + *
-> + * This function will automatically choose the right data type depending on
-> + * the payload length.
-
-Hi Caleb,
-
-I'm a bit confused by the wording here. By "automatically", do you mean 
-the chosen by the macro calling this function?
-
-Thanks,
-
-Jessica Zhang
-
-> + *
-> + * Return: The number of bytes transmitted on success or a negative error code
-> + * on failure.
-> + */
-> +ssize_t mipi_dsi_generic_write_raw_multi(struct mipi_dsi_multi_context *ctx,
-> +					  u8 type, const void *payload, size_t size)
-> +{
-> +	struct mipi_dsi_device *dsi = ctx->dsi;
-> +	struct mipi_dsi_msg msg = {
-> +		.channel = dsi->channel,
-> +		.tx_buf = payload,
-> +		.tx_len = size,
-> +		.type = type,
-> +	};
-> +	ssize_t ret;
-> +
-> +	if (ctx->accum_err)
-> +		return 0;
-> +
-> +	ret = mipi_dsi_device_transfer(dsi, &msg);
-> +	if (ret < 0) {
-> +		ctx->accum_err = ret;
-> +		dev_err(&dsi->dev, "sending generic data %*ph failed: %zd\n",
-> +			(int)size, payload, ret);
-> +	}
-> +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL(mipi_dsi_generic_write_raw_multi);
-> +
->   /**
->    * mipi_dsi_generic_read() - receive data using a generic read packet
->    * @dsi: DSI peripheral device
->    * @params: buffer containing the request parameters
-> diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
-> index 71d121aeef24..fb23f4e3b94e 100644
-> --- a/include/drm/drm_mipi_dsi.h
-> +++ b/include/drm/drm_mipi_dsi.h
-> @@ -287,8 +287,10 @@ ssize_t mipi_dsi_generic_write(struct mipi_dsi_device *dsi, const void *payload,
->   int mipi_dsi_generic_write_chatty(struct mipi_dsi_device *dsi,
->   				  const void *payload, size_t size);
->   void mipi_dsi_generic_write_multi(struct mipi_dsi_multi_context *ctx,
->   				  const void *payload, size_t size);
-> +ssize_t mipi_dsi_generic_write_raw_multi(struct mipi_dsi_multi_context *ctx, u8 type,
-> +				    const void *payload, size_t size);
->   ssize_t mipi_dsi_generic_read(struct mipi_dsi_device *dsi, const void *params,
->   			      size_t num_params, void *data, size_t size);
->   
->   #define mipi_dsi_msleep(ctx, delay)	\
-> @@ -432,8 +434,22 @@ void mipi_dsi_dcs_set_tear_on_multi(struct mipi_dsi_multi_context *ctx,
->   		static const u8 d[] = { cmd, seq };                     \
->   		mipi_dsi_dcs_write_buffer_multi(ctx, d, ARRAY_SIZE(d)); \
->   	} while (0)
->   
-> +/**
-> + * mipi_dsi_dcs_write_long_multi - transmit a DCS long command with payload
-> + * @ctx: Context for multiple DSI transactions
-> + * @cmd: Commands
-> + * @seq: buffer containing data to be transmitted
-> + */
-> +#define mipi_dsi_dcs_write_long_multi(ctx, cmd, seq...)                    \
-> +	do {                                                               \
-> +		static const u8 d[] = { cmd, seq };                        \
-> +		mipi_dsi_generic_write_raw_multi(ctx,                      \
-> +						  MIPI_DSI_DCS_LONG_WRITE, \
-> +						  d, ARRAY_SIZE(d));       \
-> +	} while (0)
-> +
->   /**
->    * struct mipi_dsi_driver - DSI driver
->    * @driver: device driver model driver
->    * @probe: callback for device binding
-> 
-> -- 
-> 2.45.0
-> 
+-- 
+With best wishes
+Dmitry
 
