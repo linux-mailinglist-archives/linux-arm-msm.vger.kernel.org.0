@@ -1,68 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-26012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C8B192F5AD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 08:50:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1692A92F603
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 09:13:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1C4901F22E5D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 06:50:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F2E91F22C90
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 07:13:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7078013D538;
-	Fri, 12 Jul 2024 06:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8083E13D8B1;
+	Fri, 12 Jul 2024 07:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jsSiJECI"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NSreOB76"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A12012DDBA;
-	Fri, 12 Jul 2024 06:50:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FAAEAC7;
+	Fri, 12 Jul 2024 07:13:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720767019; cv=none; b=bxDMz6B5u9qzUG8rozK7t8zRmcEC2RSHTQkmovrFFoTYNNrUObG9YIC3ziqdndAeQAAt6GO58knDmUq27HxPnHUH2t9BvKzMQ0EUBdul23NQ0a1U9nkCWNrINS418RJ3zf27Z42AdetGPuutmzSuGC4boJhFTIyDlbsEgDAlDrA=
+	t=1720768403; cv=none; b=VhogKle9z6wa2IWbjPEFzZ7VScAFnIyzf7ioCLzTVFK94N0Lf/UR6/x40eAum+TAAe0fOsvsAMlEPIA/O7spiyXUEuWnraXXzGh/iQP+bbDC2dDE1EPXlurWN7plUIXS3srm2tFUXB/9rIn3bsaThgXGrx48NKIui4qcgdGETS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720767019; c=relaxed/simple;
-	bh=eLi3fYikhmZmAiWojiYM4xhueLbPTdJEVJAlqd18vvM=;
+	s=arc-20240116; t=1720768403; c=relaxed/simple;
+	bh=lguFy7ie7xiFALB8XkV6YA3LPO9i1zDJTC2XMbmzKpc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SKLjEzU6qptcCmb6fbOKkVtsxNCxpuvYZIqI6oasp90wczAVDqMT8bNRmhSuK03R5mpg9t0rADOM4DUhSoEXoMIFYkr6DlbzQiBvxUGzjdOTQkMnfjIIccPguR1RpwNhbtAUHTMtNLGM1Qu+8gkNuUX8dGkzM6oXKfjYz7gffjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jsSiJECI; arc=none smtp.client-ip=192.198.163.13
+	 Content-Type:Content-Disposition:In-Reply-To; b=si8r8HiRLN5OZBHJ9pfhhgMgeNZlL2IVDH5421+mQi3UFmV4L76X+MH0cKFIqw4uL28LHae/io3xjdVFLGN1kQJO+8Gxqk83zIHhTzrvPpdJciK2jFohJ/cZh5sPFiNNge9Iq+gVZg7CYqCDh6O2i6xcLYyyLe/gpcBJN6hHpyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NSreOB76; arc=none smtp.client-ip=198.175.65.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1720767018; x=1752303018;
+  t=1720768401; x=1752304401;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=eLi3fYikhmZmAiWojiYM4xhueLbPTdJEVJAlqd18vvM=;
-  b=jsSiJECIG9G6RiXle6UjcUB28iPH/DD/56hdg8SOgbi2mFJYHSYh4uZA
-   47cDT6NB2aj+FO7MZIvFaLLteabD+tZXIJ2/fEJtXGZ2U7GOd9pTEHe6F
-   85C0Ntf9HXoF0AWU2OtinN53m+BdPc0gJ5waayWUA7YoEAZSr5QppSU4h
-   DHP19IUXiqA+MGPhNu7apxGeUphGVnRuf9gL6XI6ZcxC1bGDK31vx8HZ3
-   3vpRzLzmd9pbrRFYlTv2Vfu1FXh4+pUarguRos+NLGxh0akzlsSK0lz2K
-   CdMR+XDiP+hUK178UHKHbhOhps7vHQZnB+vxi6tIHm4DwB9/U/IXk6n5m
-   Q==;
-X-CSE-ConnectionGUID: J3icUbloQvir6/p1aoVPnQ==
-X-CSE-MsgGUID: e7bEg5rvRFar6pK4Uv2esw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11130"; a="21101407"
+  bh=lguFy7ie7xiFALB8XkV6YA3LPO9i1zDJTC2XMbmzKpc=;
+  b=NSreOB76LhVnw6lkPvuFPzPIpuCXzneQcIwvxc2K47zB0OkQxuCEAKEx
+   vgCqCEepHJ87/CAib+rV8BLR9BDfy09dogkYBGdpRuy3mLCHlKRpcpwQB
+   mOJqc0a3mWvFPGIYpp3Vg2PgYNsAS+Y8k5pygtR+fuCFt4cpuzSNg3VN/
+   b7t3CukMxoC8NMxRQL26jeWvceF+nhEl9H9ES68EaVYe4u+HS62ao5nh8
+   NFZCS+9KCzl15rMuu1TpEjyU4kLjHSZSZDOCfS4tnSXbCUFbZGk7gdGVG
+   +ixen9Tyz0d2KOtcoZ9dHr0EJ9kIkq21n3U/zKR/yb7M9gfyplVKw7/aa
+   w==;
+X-CSE-ConnectionGUID: aW9WT7H3SMG6yKqVdY3flg==
+X-CSE-MsgGUID: 0gwk6g6SQgeShswcUWtOFA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11130"; a="21955160"
 X-IronPort-AV: E=Sophos;i="6.09,202,1716274800"; 
-   d="scan'208";a="21101407"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Jul 2024 23:50:17 -0700
-X-CSE-ConnectionGUID: LvxdULpuRNimbwC0rZ2gzA==
-X-CSE-MsgGUID: b+ApyV3URIKQWbGRuPOesg==
+   d="scan'208";a="21955160"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jul 2024 00:13:20 -0700
+X-CSE-ConnectionGUID: dqx0W5X5QRS0YfbGRC0+RA==
+X-CSE-MsgGUID: k+OJOAsMRZ+/QmrE/5evOQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.09,202,1716274800"; 
-   d="scan'208";a="54009317"
+   d="scan'208";a="49589918"
 Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
-  by orviesa004.jf.intel.com with ESMTP; 11 Jul 2024 23:50:12 -0700
+  by orviesa008.jf.intel.com with ESMTP; 12 Jul 2024 00:13:13 -0700
 Received: from kbuild by 68891e0c336b with local (Exim 4.96)
 	(envelope-from <lkp@intel.com>)
-	id 1sSA6c-000aSv-0i;
-	Fri, 12 Jul 2024 06:50:10 +0000
-Date: Fri, 12 Jul 2024 14:49:54 +0800
+	id 1sSASs-000aTy-2V;
+	Fri, 12 Jul 2024 07:13:10 +0000
+Date: Fri, 12 Jul 2024 15:12:17 +0800
 From: kernel test robot <lkp@intel.com>
 To: Tao Zhang <quic_taozha@quicinc.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
@@ -73,13 +73,13 @@ To: Tao Zhang <quic_taozha@quicinc.com>,
 	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Leo Yan <leo.yan@linux.dev>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Tao Zhang <quic_taozha@quicinc.com>, coresight@lists.linaro.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, Tao Zhang <quic_taozha@quicinc.com>,
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
 Subject: Re: [PATCH v2 2/3] coresight: Add source filtering for multi-port
  output
-Message-ID: <202407121454.IxYqSYDp-lkp@intel.com>
+Message-ID: <202407121435.uBdrJO8u-lkp@intel.com>
 References: <20240711081750.21792-3-quic_taozha@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -105,30 +105,38 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Tao-Zhang/dt-bindings-arm
 base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
 patch link:    https://lore.kernel.org/r/20240711081750.21792-3-quic_taozha%40quicinc.com
 patch subject: [PATCH v2 2/3] coresight: Add source filtering for multi-port output
-config: arm-randconfig-004-20240712 (https://download.01.org/0day-ci/archive/20240712/202407121454.IxYqSYDp-lkp@intel.com/config)
-compiler: clang version 15.0.7 (https://github.com/llvm/llvm-project 8dfdcc7b7bf66834a761bd8de445840ef68e4d1a)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240712/202407121454.IxYqSYDp-lkp@intel.com/reproduce)
+config: arm-allmodconfig (https://download.01.org/0day-ci/archive/20240712/202407121435.uBdrJO8u-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 14.1.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240712/202407121435.uBdrJO8u-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202407121454.IxYqSYDp-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202407121435.uBdrJO8u-lkp@intel.com/
 
 All warnings (new ones prefixed by >>):
 
->> drivers/hwtracing/coresight/coresight-platform.c:261:23: warning: more '%' conversions than data arguments [-Wformat-insufficient-args]
-                                     "Filter source %s is not a source device\n");
-                                                    ~^
-   include/linux/dev_printk.h:156:62: note: expanded from macro 'dev_warn'
-           dev_printk_index_wrap(_dev_warn, KERN_WARNING, dev, dev_fmt(fmt), ##__VA_ARGS__)
-                                                                       ^~~
-   include/linux/dev_printk.h:19:22: note: expanded from macro 'dev_fmt'
-   #define dev_fmt(fmt) fmt
-                        ^~~
-   include/linux/dev_printk.h:110:16: note: expanded from macro 'dev_printk_index_wrap'
-                   _p_func(dev, fmt, ##__VA_ARGS__);                       \
-                                ^~~
-   1 warning generated.
+   In file included from include/linux/device.h:15,
+                    from include/linux/acpi.h:14,
+                    from drivers/hwtracing/coresight/coresight-platform.c:6:
+   drivers/hwtracing/coresight/coresight-platform.c: In function 'of_coresight_parse_endpoint':
+>> drivers/hwtracing/coresight/coresight-platform.c:261:35: warning: format '%s' expects a matching 'char *' argument [-Wformat=]
+     261 |                                   "Filter source %s is not a source device\n");
+         |                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/dev_printk.h:110:30: note: in definition of macro 'dev_printk_index_wrap'
+     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
+         |                              ^~~
+   include/linux/dev_printk.h:156:61: note: in expansion of macro 'dev_fmt'
+     156 |         dev_printk_index_wrap(_dev_warn, KERN_WARNING, dev, dev_fmt(fmt), ##__VA_ARGS__)
+         |                                                             ^~~~~~~
+   drivers/hwtracing/coresight/coresight-platform.c:260:33: note: in expansion of macro 'dev_warn'
+     260 |                                 dev_warn(&conn.filter_src_dev->dev,
+         |                                 ^~~~~~~~
+   drivers/hwtracing/coresight/coresight-platform.c:261:51: note: format string is defined here
+     261 |                                   "Filter source %s is not a source device\n");
+         |                                                  ~^
+         |                                                   |
+         |                                                   char *
 
 
 vim +261 drivers/hwtracing/coresight/coresight-platform.c
