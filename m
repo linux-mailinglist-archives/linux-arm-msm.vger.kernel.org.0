@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-26058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0829392FF95
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 19:17:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9165B92FFA8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 19:20:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E2FECB24EC7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 17:17:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C20161C22E18
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 17:20:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3510A1DFD2;
-	Fri, 12 Jul 2024 17:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3582B1EA90;
+	Fri, 12 Jul 2024 17:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="leyTbyBj"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gxz6ANKU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0806917BA5;
-	Fri, 12 Jul 2024 17:16:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A354017C6B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 17:20:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720804606; cv=none; b=l+kVyP8zI4bFl5IcYfjScidjYDkaa79NR8RjFHxa+AhKSVbDHWjLKWxQ7CoasukbsSBgxYeQyf9XCiBfzLCIyy6LUVaQ46/Xqdrf09aQRwIZ4yHkedpsvDyPRFF7GqpqYUtkEmh0sBuqkgDF8iO5CkMIUijy+uSjnqA2LY2/zlc=
+	t=1720804818; cv=none; b=uvC9lr3XvDiBRrtY7PnmFq+WEfwZxmQLolYrMj9H9Xs7PRaQV+HpNTUYjjygXUEwJNfhXHsIJHn9hv4NNwbt3uAA3lkTh5Me+YUIB0kPw0StTkQIQ8/BH8lqCL986acC1BDiR6OTXVhTWBeX1+k6rF8xIhFaoeN5PftpYKURcmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720804606; c=relaxed/simple;
-	bh=cIeRpwyXudze2L/Qe/4YXLi0B4Xlw+7NiqL/GpThVJA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Y3kInj+WDvWNqu5Eay7waz42xRO8eem9jtCSBpEulFg/ZFFE4P472RuBL+SyeL+zndd1As7OAYG9sB0WA7qKM844sTfBsgTeJKRVMmH2mRxfsjcI6REIsEUNXniFwGBwNiyGU1hbYp4FDnQHGgQx9I+kD6VOeEExp7/5CzxrIQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=leyTbyBj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71278C32782;
-	Fri, 12 Jul 2024 17:16:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720804605;
-	bh=cIeRpwyXudze2L/Qe/4YXLi0B4Xlw+7NiqL/GpThVJA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=leyTbyBj05GddHFo3qbKuMWeF2V6yoJa3QFzJOmvc/flb1K3NRz2Py6XLv3mRWWEh
-	 0BROYS9Yfilk5s5kLSqgWOH6cwTgVEd2aB/0S8IN/hZR2/TlWkxemee9aR5YYdW3xB
-	 gbkGzKvVKzpbQbdDHaCTRsbDsRhMbfsm+pfVFAUGfyxI2X0KyhSxgKRhqryFQ2Ssyq
-	 M2uLLzJqxsi56L3k10ViXTqB2u96/61RPE86PpcyNTDJYwwgn5fi1YtVg+vIMJcAbM
-	 1OnVOxua1H0wJ0jnVPsJGxc4Nymyx+SWDRfFo3ualQ7yFMQped1xC1NOIQGU8uyTpp
-	 sj2dM+MPWGgCg==
-Message-ID: <d3b53c3c-e94a-4c3e-8ba9-5bf6144fa5e0@kernel.org>
-Date: Fri, 12 Jul 2024 19:16:36 +0200
+	s=arc-20240116; t=1720804818; c=relaxed/simple;
+	bh=A5dNgSaYMelhrh4yUuP6Hw0FJkSkuKLYiTd4oatiLHA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=HHYn6SeM+GfNcURvb4CpwLGj1Zx9u2p1QXdyiY02qvv5a+XppzJrQ3ITW5OVZrCQdP0g0EjIBg1ZzU+ex6zdCNbSzK+CC/pFPMtNId1ViqmWRetaXx6qBLaXSfDqDtZqbX0k07lnx+FlN6PSJtQM1p6yJPoE0D/zaHqMKtN4Xd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gxz6ANKU; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46CApDfv027173;
+	Fri, 12 Jul 2024 17:20:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	mj0We3FIkDAV3//rHgKZjs9kgJpwKU1fbyeqjxjXhmk=; b=gxz6ANKUxL/VhwQR
+	47bXiFZF+p7WB4OcbOPHZX8CzwRKXru0DdYrmR6C0NLhms2mPYIMEGpRJG/WyhGK
+	iibWWfy36G6f4l5acpHGI6TzsgiX1iswFqAVrIrELzT3C+5s7GZKF8CdaOpoHlCh
+	UgMd56jC3K/2t793gHOoWuMKYQtsLWdCi1Xp44ZyS3FfLFU5sEt5gz96YO9cIYMg
+	KfmbYwX05BZbeAislqWa2txMevpzADu0Emtqe2dfkbyqzA95T9mx96f0kfvs2YmZ
+	ezqTKPuTTkU0i4UsCYuIDu534o0NiO8G49hUtgwHeq+knxiuRj3jy9lhJMNlYdPS
+	dDUSZA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40ar3fjc5u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Jul 2024 17:20:05 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46CHK3t0007219
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Jul 2024 17:20:03 GMT
+Received: from [10.110.71.234] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 12 Jul
+ 2024 10:20:02 -0700
+Message-ID: <37ca13e0-1fac-4e5c-8e97-8ab5a67ec876@quicinc.com>
+Date: Fri, 12 Jul 2024 10:19:38 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,114 +65,82 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] arm64: dts: qcom: sa8775p: Add UART node
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, andersson@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- conor+dt@kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
-References: <20240710094149.13299-1-quic_vdadhani@quicinc.com>
- <2e309d52-8180-4922-9a5a-022fc8bf8ef5@kernel.org>
- <f5ed3285-82da-4ba8-9b4d-a0cc7323fde4@linaro.org>
- <fa189b4c-d407-4d48-9677-528f07f81efa@quicinc.com>
- <b2c88f85-eefb-411c-bfe0-6a476b449753@kernel.org>
- <045d7a80-378d-4622-b2e1-01665f627818@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v5 01/16] drm/msm/dpu: cleanup FB if
+ dpu_format_populate_layout fails
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>
+CC: Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan+linaro@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20240625-dpu-mode-config-width-v5-0-501d984d634f@linaro.org>
+ <20240625-dpu-mode-config-width-v5-1-501d984d634f@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <045d7a80-378d-4622-b2e1-01665f627818@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240625-dpu-mode-config-width-v5-1-501d984d634f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: CBOea9aFWftTzBdSf0-6FaAeE-X_ArPu
+X-Proofpoint-ORIG-GUID: CBOea9aFWftTzBdSf0-6FaAeE-X_ArPu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-12_13,2024-07-11_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ phishscore=0 clxscore=1011 mlxlogscore=999 priorityscore=1501
+ malwarescore=0 impostorscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407120117
 
-On 12/07/2024 11:32, Viken Dadhaniya wrote:
+
+
+On 6/24/2024 2:13 PM, Dmitry Baryshkov wrote:
+> If the dpu_format_populate_layout() fails, then FB is prepared, but not
+> cleaned up. This ends up leaking the pin_count on the GEM object and
+> causes a splat during DRM file closure:
 > 
+> msm_obj->pin_count
+> WARNING: CPU: 2 PID: 569 at drivers/gpu/drm/msm/msm_gem.c:121 update_lru_locked+0xc4/0xcc
+> [...]
+> Call trace:
+>   update_lru_locked+0xc4/0xcc
+>   put_pages+0xac/0x100
+>   msm_gem_free_object+0x138/0x180
+>   drm_gem_object_free+0x1c/0x30
+>   drm_gem_object_handle_put_unlocked+0x108/0x10c
+>   drm_gem_object_release_handle+0x58/0x70
+>   idr_for_each+0x68/0xec
+>   drm_gem_release+0x28/0x40
+>   drm_file_free+0x174/0x234
+>   drm_release+0xb0/0x160
+>   __fput+0xc0/0x2c8
+>   __fput_sync+0x50/0x5c
+>   __arm64_sys_close+0x38/0x7c
+>   invoke_syscall+0x48/0x118
+>   el0_svc_common.constprop.0+0x40/0xe0
+>   do_el0_svc+0x1c/0x28
+>   el0_svc+0x4c/0x120
+>   el0t_64_sync_handler+0x100/0x12c
+>   el0t_64_sync+0x190/0x194
+> irq event stamp: 129818
+> hardirqs last  enabled at (129817): [<ffffa5f6d953fcc0>] console_unlock+0x118/0x124
+> hardirqs last disabled at (129818): [<ffffa5f6da7dcf04>] el1_dbg+0x24/0x8c
+> softirqs last  enabled at (129808): [<ffffa5f6d94afc18>] handle_softirqs+0x4c8/0x4e8
+> softirqs last disabled at (129785): [<ffffa5f6d94105e4>] __do_softirq+0x14/0x20
 > 
-> On 7/11/2024 11:47 AM, Krzysztof Kozlowski wrote:
->> On 11/07/2024 07:04, Viken Dadhaniya wrote:
->>>>>> +				clock-names = "se";
->>>>>> +				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
->>>>>> +						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
->>>>>> +						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
->>>>>> +						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
->>>>>> +				interconnect-names = "qup-core", "qup-config";
->>>>>> +				power-domains = <&rpmhpd SA8775P_CX>;
->>>>>
->>>>> All the clocks, interconenct and power domains look to me questionable.
->>>>> AFAIK, most of it (if not all) is going to be removed.
->>>>
->>>> Yeah.. I'm lukewarm on accepting any sa8775p changes until that qcs9100(?)
->>>> situation is squared out first
->>>>
->>>> Konrad
->>>
->>> Thanks for clarification. Please help to sign-off or let me know in case
->>> of any concern.
->>
->> I think I was quite explicit, so I feel above suggestion as still
->> pushing your choice even though to reviewers gave you their opinion.
->>
->> In such case:
->>
->> No, NAK, for the reasons stated above.
->>
->> Best regards,
->> Krzysztof
->>
+> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 3 +++
+>   1 file changed, 3 insertions(+)
 > 
-> Sure, taken the notes from both of you.
-> Shall we wait for the shifting of DTSI file from sc8775p to qcs9100 ?
-> OR is there any other way to move ahead ?
-> Please suggest, we shall do whatever guidance from you both.
 
-Do not add code which we already know that it is incorrect or
-incomplete. Instead align with your colleagues about proper upstreaming
-of this platform.
-
-I am not going to sign off such patches.
-
-Best regards,
-Krzysztof
-
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
