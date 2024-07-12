@@ -1,70 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-26015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 107DD92F6CC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 10:20:31 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 861F192F6EB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 10:28:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB96D282FB1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 08:20:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 102C7B22160
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 08:28:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4E1013D609;
-	Fri, 12 Jul 2024 08:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D1AE12DDAF;
+	Fri, 12 Jul 2024 08:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fiT0IAnp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PZPg5w9D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D3D2E3E5;
-	Fri, 12 Jul 2024 08:20:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EB312E4D;
+	Fri, 12 Jul 2024 08:27:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720772426; cv=none; b=pDG1iKG6xYUSeOqAtY0mpBMu3b6YJozXvED9v4ZnsAKpdbdHIBkD+TVgx6R8vEBNLJqbjkDMMV/0ot9as8kzicjGpAzp1Vwc5YT+iQvfIwedknaqHh3rnIwl/laJEf0BavlSTuHJL4CBgfeF12ANDIycHEjAWinyV2Tu3fQJ2W8=
+	t=1720772875; cv=none; b=OfmYvRy2K7G5FmK1SGXpoILMoTRxIKrZWI1h79D8qxzlJyWRxILiGZqX9Mj/fufBVaDyyJp53J3zvywDw6r5ZbNAwoSwvXsO1DBqn/64OlpvRFV91oAuhhyCNMEyIdlLzyf2qrnz2CIJejeGA+hLVIebWeKTUkGtBrSpEMJDtGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720772426; c=relaxed/simple;
-	bh=mksiNGL71vBTfMC2oL1EyJAq8EgwBRCDXPevFY/JTgA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BABB7ztCLCisIUqLd78/5kZ7iU4XNa/9TFE5Q+9RIKbc7LCNMQ7oqC37l7Z33uVcRaJbXxWagN4bXM3/MHDafuHrcqxIctqlw4qr/HXaELJytPPl9UyJfP0KJtipnzg1Axj8PGibYNzSUaHrBWrr/WkTKNRF0u0xBJnCTZ9a7z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fiT0IAnp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22BEC4AF09;
-	Fri, 12 Jul 2024 08:20:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720772426;
-	bh=mksiNGL71vBTfMC2oL1EyJAq8EgwBRCDXPevFY/JTgA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fiT0IAnpHP8Itv7lpRCpYlB6GY6LLvHaYQPStPvr8ZDBM6ZvQeosmPteC3E/jQvmY
-	 M4too9FGwLl75KfLzjcpZZwXCj03Ul3lnFxZz5ux1Gqa5G/LDSCFjL495cf8DbqeHL
-	 x5PnJnRJFUuQi003A9LPcalPOHx+VZ79xIlvcfHkvsiy3pnJV59oKb/hiQyoa0gul1
-	 6r2/oJWvaEl5WcGmExWayh6vN5XHkuKhCPwXeQF78u51KOwX5w38KQtdNF7j47JWHS
-	 wKK+xrozuVmu2KxjomByWBVnWjLzR51ZfSb8nlWY5SWdNI64HNoG5CHkAOlZ1d2AIX
-	 /+Z48TZws10+A==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1sSBVw-000000006Lc-0GDs;
-	Fri, 12 Jul 2024 10:20:24 +0200
-Date: Fri, 12 Jul 2024 10:20:24 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: enable GICv3 ITS for PCIe
-Message-ID: <ZpDnSL8as7km9_0b@hovoldconsulting.com>
-References: <20240711090250.20827-1-johan+linaro@kernel.org>
- <f7e74a6f-0548-4caa-a8fc-8180c619c9aa@linaro.org>
- <Zo-ssBBDbHRLtAwG@hovoldconsulting.com>
- <Zo_zu-RmbZyKijVQ@hovoldconsulting.com>
- <20240711161947.GA4434@thinkpad>
- <20240711164153.GA4992@thinkpad>
- <ZpAPaker8mulvKCj@hovoldconsulting.com>
+	s=arc-20240116; t=1720772875; c=relaxed/simple;
+	bh=le5dYeKeMN72cFGphIh3Zjwmzh+E29gcZbJr9tLoWiU=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=aG+DFdZbNc2QeNJ6CgoNbR45GrH7CFy6nVZFLUTa1wn+JegTgJLMv2zCFJNZrvfZYY4LogN2NMbNAQC6vn97igCttoDWBzeFAcRpQKhgQeLbOqKUNusWdxITxiN+0xWmls9/slxqnmQihsxQGoBNwNNc9ojgRaWHV3OPdt5sVzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PZPg5w9D; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1fb3b7d0d3aso11159035ad.2;
+        Fri, 12 Jul 2024 01:27:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720772873; x=1721377673; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pUH4Ta/QRdnRhyzc2SMs3g2de0B3R+JsmqJYPNB7zhk=;
+        b=PZPg5w9D4BiNi8/fTZKIaatiFtpOY/Dt40q9rrBDCNhbCi25fs+e4WywZwZY6oL4dT
+         jUzx9PEH4/0NT8cuO06yKbU5qbP0dDvtRzpT2JArM5/cAvu1O20uMVDOFZOJzpoRdsnV
+         D+lwdpgOnwgs/qtNrnC+h5x7IZT+fS9NZ35eBFGslZED7LI2Garo61op1qJFKW3cMp4d
+         z4Sa8W1xGC15HUywt4eRO9nNQVLW2cdHm/vBa4w3h7NAZtKgaaIFQtKdk2mAmPBNXlnh
+         zOSQf5UpmW//cXKR8BgB9/i0Vlin51l1xEsOeK7OD712A3AcxSnT+VBjvvOaasuH6gka
+         HT1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720772873; x=1721377673;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pUH4Ta/QRdnRhyzc2SMs3g2de0B3R+JsmqJYPNB7zhk=;
+        b=lBrjy87lkDjRGWu/uVIZhIrgojKai+zwtcOvpVJ98VWG15h4fEv2d953lEpHuW5lSs
+         JD2eYxJxyN2sC5uT4qxqIqceKJazPK0yqlHugYXgtacAqZuTBrA/j2B/C4o3BGe3EboY
+         F3iEu6zK4/4myMr2KL4WulMeGbGbQ2jYaLHjzkolV4MkCoovadp471QBxUO/xRJVMOJT
+         bnvV3G+5xv5y/IFof1eERPwhpX1r/zsnDjdSyvvkQ60IOalCzoCa7DPUoEMvuLxfkMbD
+         drNCCoPHnr08PYaOqZfpLyqhUon8BDtnqsQMmgWkCmMvDutAh3V/DkKousVeL+qxl+RB
+         PXLA==
+X-Forwarded-Encrypted: i=1; AJvYcCVpPun/9jiRc0wxoWd85lB11dne99klkwR+bl7LklSPD2AovbOMBYPgqilFcmQKquADPgETjzT7PNEZlFXhbIK2d5uyEd71iM4hO9fayEXWTjOltxUi2HT70aR7xSmFFPRFdeqGpeTnYkW2yg==
+X-Gm-Message-State: AOJu0Yw65fgqt/q82oHDMDGZm+z1b8kmUeSz5Y3zPCmWNNciYHOGe3WK
+	519XBX26u47fwPt/8Ya0wQNTaFAkp0PY8QSiEu4dLv8zEJtwUyIMEF50pK4s
+X-Google-Smtp-Source: AGHT+IHnj9sXK5oRYwp2GFRckd6tuQls03MuSd64jLQFj1cYdnZLjOfUUmo8IQ2Emib66b1FAEoXTQ==
+X-Received: by 2002:a17:902:e80d:b0:1fb:52b3:68af with SMTP id d9443c01a7336-1fbb6d03e42mr100607195ad.24.1720772873083;
+        Fri, 12 Jul 2024 01:27:53 -0700 (PDT)
+Received: from bnew-VirtualBox ([2405:201:3020:7812:62ae:9a8b:a942:6b7f])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fbb6ac0c82sm62040785ad.185.2024.07.12.01.27.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Jul 2024 01:27:52 -0700 (PDT)
+Date: Fri, 12 Jul 2024 13:57:47 +0530
+From: Ankit Agrawal <agrawal.ag.ankit@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Thomas Gleixner <tglx@linutronix.de>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2] drivers/clocksource/qcom: Add missing iounmap() on errors
+ in msm_dt_timer_init() function.
+Message-ID: <20240712082747.GA182658@bnew-VirtualBox>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,43 +83,48 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZpAPaker8mulvKCj@hovoldconsulting.com>
 
-On Thu, Jul 11, 2024 at 06:59:22PM +0200, Johan Hovold wrote:
-> On Thu, Jul 11, 2024 at 10:11:53PM +0530, Manivannan Sadhasivam wrote:
-> > On Thu, Jul 11, 2024 at 09:49:52PM +0530, Manivannan Sadhasivam wrote:
+Add the missing iounmap() when clock frequency fails to get read by the
+of_property_read_u32() call, or if the call to msm_timer_init() fails.
 
-> > > My hunch is the PHY settings. But Abel cross checked the PHY settings with
-> > > internal documentation and they seem to match. Also, Qcom submitted a series
-> > > that is supposed to fix stability issues with Gen4 [1]. With this series, Gen 4
-> > > x4 setup is working on SA8775P-RIDE board as reported by Qcom. But Abel
-> > > confirmed that it didn't help him with the link downgrade issue.
-> > > 
-> > > Perhaps you can give it a try and see if it makes any difference for
-> > > this issue?
-> 
-> If there are known issues with running at Gen4 speed without that
-> series, then it seems quite likely that doing so anyway could also cause
-> correctable errors.
-> 
-> Unfortunately, I get a hypervisor reset when I tried booting with that
-> series so there appears to be some implicit dependency on something
-> else (e.g. the 4l stuff).
+Signed-off-by: Ankit Agrawal <agrawal.ag.ankit@gmail.com>
+---
+Changes in v2:
+ - Add iounmap() if msm_timer_init() fails
+ - Update patch commit message
 
-The first patch in that series breaks icc handling, which crashes
-machines like the X13s and the x1e80100 CRD on boot. I've just reported
-this here:
+Previous discussion here:
+[1] v1: https://lore.kernel.org/linux-arm-msm/20240710110813.GA15351@bnew-VirtualBox/
+---
+ drivers/clocksource/timer-qcom.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-	https://lore.kernel.org/lkml/ZpDlf5xD035x2DqL@hovoldconsulting.com/
+diff --git a/drivers/clocksource/timer-qcom.c b/drivers/clocksource/timer-qcom.c
+index b4afe3a67..eac4c95c6 100644
+--- a/drivers/clocksource/timer-qcom.c
++++ b/drivers/clocksource/timer-qcom.c
+@@ -233,6 +233,7 @@ static int __init msm_dt_timer_init(struct device_node *np)
+ 	}
+ 
+ 	if (of_property_read_u32(np, "clock-frequency", &freq)) {
++		iounmap(cpu0_base);
+ 		pr_err("Unknown frequency\n");
+ 		return -EINVAL;
+ 	}
+@@ -243,7 +244,11 @@ static int __init msm_dt_timer_init(struct device_node *np)
+ 	freq /= 4;
+ 	writel_relaxed(DGT_CLK_CTL_DIV_4, source_base + DGT_CLK_CTL);
+ 
+-	return msm_timer_init(freq, 32, irq, !!percpu_offset);
++	ret = msm_timer_init(freq, 32, irq, !!percpu_offset);
++	if (ret)
++		iounmap(cpu0_base);
++
++	return ret;
+ }
+ TIMER_OF_DECLARE(kpss_timer, "qcom,kpss-timer", msm_dt_timer_init);
+ TIMER_OF_DECLARE(scss_timer, "qcom,scss-timer", msm_dt_timer_init);
+-- 
+2.25.1
 
-With that fixed, and with the hacky dependency on having max-link-speed
-specified in the DT for the series to have any affect at all, the gen4
-stability series indeed seems to make the AER error go away (Abel just
-confirmed using a branch I'd prepared).
-
-Let's try to get that series in shape and merged in some form as
-everyone will be hitting these Correctable Errors currently with the
-NVMe on x1e80100.
-
-Johan
 
