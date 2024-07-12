@@ -1,71 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-26014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E287F92F6BE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 10:13:05 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 107DD92F6CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 10:20:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9B03F283F64
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 08:13:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB96D282FB1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 08:20:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BEF9142645;
-	Fri, 12 Jul 2024 08:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4E1013D609;
+	Fri, 12 Jul 2024 08:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YDSkba7k"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fiT0IAnp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1174813D8B5;
-	Fri, 12 Jul 2024 08:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D3D2E3E5;
+	Fri, 12 Jul 2024 08:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720771970; cv=none; b=B7RkK0LTA0TEndQV8o0Ky0xCOWOBNnuu2eOACGxdQFd9in++4OaEGIzcb2J0U9KaARs9rW65eIBpfXziccJaf1S2cQNc5EbuyV+emNUSl68Ibi5Wd/EkJ2Ep67VtgB7QxA96vxxd7Ez2rS1Q0421ui4ITjZpfOZYb/bo+ppmT2o=
+	t=1720772426; cv=none; b=pDG1iKG6xYUSeOqAtY0mpBMu3b6YJozXvED9v4ZnsAKpdbdHIBkD+TVgx6R8vEBNLJqbjkDMMV/0ot9as8kzicjGpAzp1Vwc5YT+iQvfIwedknaqHh3rnIwl/laJEf0BavlSTuHJL4CBgfeF12ANDIycHEjAWinyV2Tu3fQJ2W8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720771970; c=relaxed/simple;
-	bh=pl962O07J84GPSr7I9l2kmg+t+2S4NQknB/JG5E9PTQ=;
+	s=arc-20240116; t=1720772426; c=relaxed/simple;
+	bh=mksiNGL71vBTfMC2oL1EyJAq8EgwBRCDXPevFY/JTgA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZrK4FSIOzb3MKE19250FW6n+9iZGATlHVjUNjVH46L/BCklsYd+uNu9tODKXkmByID8KpkJEThihwKu2OU0LM+4uzk4vffdvbed2cOlG9x4uydpW4et5S5AznKkmx42GEASGGu6KyWhkYtKZlxEQUdgO6dsI80e/hEBpp95cdtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YDSkba7k; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ACE1C3277B;
-	Fri, 12 Jul 2024 08:12:49 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=BABB7ztCLCisIUqLd78/5kZ7iU4XNa/9TFE5Q+9RIKbc7LCNMQ7oqC37l7Z33uVcRaJbXxWagN4bXM3/MHDafuHrcqxIctqlw4qr/HXaELJytPPl9UyJfP0KJtipnzg1Axj8PGibYNzSUaHrBWrr/WkTKNRF0u0xBJnCTZ9a7z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fiT0IAnp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22BEC4AF09;
+	Fri, 12 Jul 2024 08:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720771969;
-	bh=pl962O07J84GPSr7I9l2kmg+t+2S4NQknB/JG5E9PTQ=;
+	s=k20201202; t=1720772426;
+	bh=mksiNGL71vBTfMC2oL1EyJAq8EgwBRCDXPevFY/JTgA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YDSkba7ksTL87OOSTOIqxY1FSlQGxS82D0mOLyaiwpO0QLMuzsnNiI9Kovc4xxGNo
-	 wRayH1lMwMLWrXASRBb/O4RrgDDWIS5AylU7HGeDzMVDDKBwNpe6jw9tN+JN64ghC0
-	 HMMeVQvjtWbZ2jj6ihV97TEoLqsYr4SvB3M0dTIm1NyLUBxidMzBHYg3UDUhGFoF10
-	 3bvvfUJdTKsBY4Bruaw/C5tRr2mft2nWqWwkWJvZa98HLezNlL4Nerd5Y3ZKQpr/Ad
-	 U61LKZvqnhl20A3K/bRp5PpJMGrgGn/ZicClGZc0udPTDrIt7u7iHR84135+/nTgYY
-	 z7EDkhZjDCvrQ==
+	b=fiT0IAnpHP8Itv7lpRCpYlB6GY6LLvHaYQPStPvr8ZDBM6ZvQeosmPteC3E/jQvmY
+	 M4too9FGwLl75KfLzjcpZZwXCj03Ul3lnFxZz5ux1Gqa5G/LDSCFjL495cf8DbqeHL
+	 x5PnJnRJFUuQi003A9LPcalPOHx+VZ79xIlvcfHkvsiy3pnJV59oKb/hiQyoa0gul1
+	 6r2/oJWvaEl5WcGmExWayh6vN5XHkuKhCPwXeQF78u51KOwX5w38KQtdNF7j47JWHS
+	 wKK+xrozuVmu2KxjomByWBVnWjLzR51ZfSb8nlWY5SWdNI64HNoG5CHkAOlZ1d2AIX
+	 /+Z48TZws10+A==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1sSBOZ-000000006Eg-1fKg;
-	Fri, 12 Jul 2024 10:12:48 +0200
-Date: Fri, 12 Jul 2024 10:12:47 +0200
+	id 1sSBVw-000000006Lc-0GDs;
+	Fri, 12 Jul 2024 10:20:24 +0200
+Date: Fri, 12 Jul 2024 10:20:24 +0200
 From: Johan Hovold <johan@kernel.org>
-To: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
-Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-	mani@kernel.org, quic_msarkar@quicinc.com,
-	quic_kraravin@quicinc.com,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] PCI: qcom: Refactor common code
-Message-ID: <ZpDlf5xD035x2DqL@hovoldconsulting.com>
-References: <20240320071527.13443-1-quic_schintav@quicinc.com>
- <20240320071527.13443-2-quic_schintav@quicinc.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: enable GICv3 ITS for PCIe
+Message-ID: <ZpDnSL8as7km9_0b@hovoldconsulting.com>
+References: <20240711090250.20827-1-johan+linaro@kernel.org>
+ <f7e74a6f-0548-4caa-a8fc-8180c619c9aa@linaro.org>
+ <Zo-ssBBDbHRLtAwG@hovoldconsulting.com>
+ <Zo_zu-RmbZyKijVQ@hovoldconsulting.com>
+ <20240711161947.GA4434@thinkpad>
+ <20240711164153.GA4992@thinkpad>
+ <ZpAPaker8mulvKCj@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,131 +73,43 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240320071527.13443-2-quic_schintav@quicinc.com>
+In-Reply-To: <ZpAPaker8mulvKCj@hovoldconsulting.com>
 
-On Wed, Mar 20, 2024 at 12:14:45AM -0700, Shashank Babu Chinta Venkata wrote:
-> Refactor common code from RC(Root Complex) and EP(End Point)
+On Thu, Jul 11, 2024 at 06:59:22PM +0200, Johan Hovold wrote:
+> On Thu, Jul 11, 2024 at 10:11:53PM +0530, Manivannan Sadhasivam wrote:
+> > On Thu, Jul 11, 2024 at 09:49:52PM +0530, Manivannan Sadhasivam wrote:
 
-Please add a space before the open parentheses above, these are not
-function calls.
-
-> drivers and move them to a common repository. This acts as placeholder
-> for common source code for both drivers avoiding duplication.
+> > > My hunch is the PHY settings. But Abel cross checked the PHY settings with
+> > > internal documentation and they seem to match. Also, Qcom submitted a series
+> > > that is supposed to fix stability issues with Gen4 [1]. With this series, Gen 4
+> > > x4 setup is working on SA8775P-RIDE board as reported by Qcom. But Abel
+> > > confirmed that it didn't help him with the link downgrade issue.
+> > > 
+> > > Perhaps you can give it a try and see if it makes any difference for
+> > > this issue?
 > 
-> Signed-off-by: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
+> If there are known issues with running at Gen4 speed without that
+> series, then it seems quite likely that doing so anyway could also cause
+> correctable errors.
+> 
+> Unfortunately, I get a hypervisor reset when I tried booting with that
+> series so there appears to be some implicit dependency on something
+> else (e.g. the 4l stuff).
 
-> --- /dev/null
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-cmn.c
-> @@ -0,0 +1,81 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2014-2015, 2020 The Linux Foundation. All rights reserved.
-> + * Copyright 2015, 2021 Linaro Limited.
-> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> + *
-> + */
-> +
-> +#include <linux/debugfs.h>
+The first patch in that series breaks icc handling, which crashes
+machines like the X13s and the x1e80100 CRD on boot. I've just reported
+this here:
 
-Not needed.
+	https://lore.kernel.org/lkml/ZpDlf5xD035x2DqL@hovoldconsulting.com/
 
-> +#include <linux/pci.h>
-> +#include <linux/interconnect.h>
-> +
-> +#include "../../pci.h"
-> +#include "pcie-designware.h"
-> +#include "pcie-qcom-cmn.h"
-> +
-> +#define QCOM_PCIE_LINK_SPEED_TO_BW(speed) \
-> +		Mbps_to_icc(PCIE_SPEED2MBS_ENC(pcie_link_speed[speed]))
-> +
-> +int qcom_pcie_cmn_icc_get_resource(struct dw_pcie *pci, struct icc_path *icc_mem)
-> +{
-> +	if (IS_ERR(pci))
-> +		return PTR_ERR(pci);
+With that fixed, and with the hacky dependency on having max-link-speed
+specified in the DT for the series to have any affect at all, the gen4
+stability series indeed seems to make the AER error go away (Abel just
+confirmed using a branch I'd prepared).
 
-Not needed.
-
-> +
-> +	icc_mem = devm_of_icc_get(pci->dev, "pcie-mem");
-> +	if (IS_ERR(icc_mem))
-> +		return PTR_ERR(icc_mem);
-> +
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_pcie_cmn_icc_get_resource);
-
-So this series was clearly never tested properly as the above function
-will leave the driver's icc_mem path uninitialised. You're passing in a
-NULL pointer by value and then update your local variable, which
-obviously has no effect for the caller.
-
-This means that all later icc operation become no-ops, which crashes
-machine like the Lenovo ThinkPad X13s and the x1e80100 CRD that depends
-on having a non-zero vote before enabling clocks at probe.
-
-How did this go unnoticed? I can only assume you did not test this
-series (in isolation) before posting?
-
-> +int qcom_pcie_cmn_icc_init(struct dw_pcie *pci, struct icc_path *icc_mem)
-> +{
-> +	int ret;
-> +
-> +	if (IS_ERR(pci))
-> +		return PTR_ERR(pci);
-> +
-> +	if (IS_ERR(icc_mem))
-> +		return PTR_ERR(icc_mem);
-
-Neither is needed.
-
-> +
-> +	/*
-> +	 * Some Qualcomm platforms require interconnect bandwidth constraints
-> +	 * to be set before enabling interconnect clocks.
-> +	 *
-> +	 * Set an initial peak bandwidth corresponding to single-lane Gen 1
-> +	 * for the pcie-mem path.
-> +	 */
-
-I'm not sure about hiding this away in a separate compilation unit. The
-above comments makes sense in the driver, where it's easy to see that
-the icc is initialised and the vote added before enabling clocks.
-
-Also these helpers are so small it may not even be worth trying to
-refactor them (all).
-
-> +	ret = icc_set_bw(icc_mem, 0, QCOM_PCIE_LINK_SPEED_TO_BW(1));
-> +	if (ret) {
-> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
-> +			ret);
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_pcie_cmn_icc_init);
-
-> --- /dev/null
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-cmn.h
-> @@ -0,0 +1,14 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Copyright (c) 2014-2015, 2020 The Linux Foundation. All rights reserved.
-> + * Copyright 2015, 2021 Linaro Limited.
-> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/pci.h>
-> +#include "../../pci.h"
-> +#include "pcie-designware.h"
-> +
-
-Compile guards missing.
-
-> +int qcom_pcie_cmn_icc_get_resource(struct dw_pcie *pci, struct icc_path *icc_mem);
-> +int qcom_pcie_cmn_icc_init(struct dw_pcie *pci, struct icc_path *icc_mem);
-> +void qcom_pcie_cmn_icc_update(struct dw_pcie *pci, struct icc_path *icc_mem);
+Let's try to get that series in shape and merged in some form as
+everyone will be hitting these Correctable Errors currently with the
+NVMe on x1e80100.
 
 Johan
 
