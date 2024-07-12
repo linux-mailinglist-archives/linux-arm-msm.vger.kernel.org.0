@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-26057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F3AC92FF50
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 19:15:34 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0829392FF95
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 19:17:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 528991C23521
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 17:15:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E2FECB24EC7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 17:17:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E354717C79;
-	Fri, 12 Jul 2024 17:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3510A1DFD2;
+	Fri, 12 Jul 2024 17:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iv+MkytZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="leyTbyBj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDA9168C4;
-	Fri, 12 Jul 2024 17:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0806917BA5;
+	Fri, 12 Jul 2024 17:16:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720804513; cv=none; b=f/gr7+R1joTLIoPuEEP6MeITC0Zj8la+PQ4FVYfelBzDMLFaJJMXBTxHafw/4JfOcpPNMLFqE0bR9mvQen/Kw7mICH44GdLHiJOprrXMeefWLwt6yjGGvwh4QPy7SznFLDaL+1tUMWBKYnvFuwQ/wuM/aLYvPgCEGCEbUns56Kg=
+	t=1720804606; cv=none; b=l+kVyP8zI4bFl5IcYfjScidjYDkaa79NR8RjFHxa+AhKSVbDHWjLKWxQ7CoasukbsSBgxYeQyf9XCiBfzLCIyy6LUVaQ46/Xqdrf09aQRwIZ4yHkedpsvDyPRFF7GqpqYUtkEmh0sBuqkgDF8iO5CkMIUijy+uSjnqA2LY2/zlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720804513; c=relaxed/simple;
-	bh=nlOtTdSNfFuEXq4tDVAGI+kGFXiRx0tv7HhD2wADSmI=;
+	s=arc-20240116; t=1720804606; c=relaxed/simple;
+	bh=cIeRpwyXudze2L/Qe/4YXLi0B4Xlw+7NiqL/GpThVJA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qOxIo9gNBCo+fEgpUG28mPNE4a0GOvEBKQSXeoU1WxTfBt5kd56csnSJ0uTLquQHrdFUr21cERnfLTRghtKxn+svEWTjSWZNjBQbJuB5k60LIQVPO+ny5aa0pFyECYftp75289/tECsM5EsggrcPQquyUq9dzYFy0A+E6M13sXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iv+MkytZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0820AC4AF09;
-	Fri, 12 Jul 2024 17:15:04 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Y3kInj+WDvWNqu5Eay7waz42xRO8eem9jtCSBpEulFg/ZFFE4P472RuBL+SyeL+zndd1As7OAYG9sB0WA7qKM844sTfBsgTeJKRVMmH2mRxfsjcI6REIsEUNXniFwGBwNiyGU1hbYp4FDnQHGgQx9I+kD6VOeEExp7/5CzxrIQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=leyTbyBj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71278C32782;
+	Fri, 12 Jul 2024 17:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720804513;
-	bh=nlOtTdSNfFuEXq4tDVAGI+kGFXiRx0tv7HhD2wADSmI=;
+	s=k20201202; t=1720804605;
+	bh=cIeRpwyXudze2L/Qe/4YXLi0B4Xlw+7NiqL/GpThVJA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iv+MkytZrELzIqJXKGmQdw2M82DQ9IxdmDtEKHD6WdC5NqSaTG3RfZLg/LjkrfDEv
-	 GEayakUTcUSV2IVSUoXfiuD7tl6RPeg16tNxPXbqdDTwNr8RSgQ8fK1iE2J9lXoE/6
-	 omQkhTNtLy8RjbPkbbpqUrior6p1Tf4V+ET/MLu5qXo9qsCym2tE0QUPzUv6YAy9l1
-	 z7ipAG3aTJq9HEiWZB66UG+X0a6QvMx8fngTC08Pu29JOxV7fzq1HQDOrsXIUUF/42
-	 SG2E9REzmHIxV7xACMsVnq3tKya1JzP7tI2DSu+MMDhJIsgmsDDEEHWQnem5HhkvqA
-	 8prtWqs70HD6A==
-Message-ID: <dbc13259-7737-49b3-83be-90b58ab0e3b4@kernel.org>
-Date: Fri, 12 Jul 2024 19:15:02 +0200
+	b=leyTbyBj05GddHFo3qbKuMWeF2V6yoJa3QFzJOmvc/flb1K3NRz2Py6XLv3mRWWEh
+	 0BROYS9Yfilk5s5kLSqgWOH6cwTgVEd2aB/0S8IN/hZR2/TlWkxemee9aR5YYdW3xB
+	 gbkGzKvVKzpbQbdDHaCTRsbDsRhMbfsm+pfVFAUGfyxI2X0KyhSxgKRhqryFQ2Ssyq
+	 M2uLLzJqxsi56L3k10ViXTqB2u96/61RPE86PpcyNTDJYwwgn5fi1YtVg+vIMJcAbM
+	 1OnVOxua1H0wJ0jnVPsJGxc4Nymyx+SWDRfFo3ualQ7yFMQped1xC1NOIQGU8uyTpp
+	 sj2dM+MPWGgCg==
+Message-ID: <d3b53c3c-e94a-4c3e-8ba9-5bf6144fa5e0@kernel.org>
+Date: Fri, 12 Jul 2024 19:16:36 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,26 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] ARM: dts: qcom: Add support for MBG TM for pm8775 on
- SA8775P
-To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- Jonathan Cameron <jic23@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>, Amit Kucheria <amitk@kernel.org>,
- Thara Gopinath <thara.gopinath@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Kamal Wadhwa <quic_kamalw@quicinc.com>, Taniya Das
- <quic_tdas@quicinc.com>, Jishnu Prakash <quic_jprakash@quicinc.com>,
- linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-pm@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>,
- Jagadeesh Kona <quic_jkona@quicinc.com>
-References: <20240712-mbg-tm-support-v1-0-7d78bec920ca@quicinc.com>
- <20240712-mbg-tm-support-v1-5-7d78bec920ca@quicinc.com>
+Subject: Re: [PATCH v1] arm64: dts: qcom: sa8775p: Add UART node
+To: Viken Dadhaniya <quic_vdadhani@quicinc.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, andersson@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ conor+dt@kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
+References: <20240710094149.13299-1-quic_vdadhani@quicinc.com>
+ <2e309d52-8180-4922-9a5a-022fc8bf8ef5@kernel.org>
+ <f5ed3285-82da-4ba8-9b4d-a0cc7323fde4@linaro.org>
+ <fa189b4c-d407-4d48-9677-528f07f81efa@quicinc.com>
+ <b2c88f85-eefb-411c-bfe0-6a476b449753@kernel.org>
+ <045d7a80-378d-4622-b2e1-01665f627818@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -115,68 +107,55 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240712-mbg-tm-support-v1-5-7d78bec920ca@quicinc.com>
+In-Reply-To: <045d7a80-378d-4622-b2e1-01665f627818@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12/07/2024 14:43, Satya Priya Kakitapalli wrote:
-> Add support for MBG TM peripheral for pm8775 sail pmics on SA8775P.
+On 12/07/2024 11:32, Viken Dadhaniya wrote:
 > 
-> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-
-Please use subject prefixes matching the subsystem. You can get them for
-example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
-your patch is touching. For bindings, the preferred subjects are
-explained here:
-https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
-
-> ---
->  arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi | 120 ++++++++++++++++++++++++++++
->  1 file changed, 120 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-> index bd4f5f51e094..69910306885e 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-> @@ -89,6 +89,62 @@ trip1 {
->  				};
->  			};
->  		};
-> +
-> +		pmm8654au_0_mbg_tm: pmm8654au_0_mbg_tz {
+> On 7/11/2024 11:47 AM, Krzysztof Kozlowski wrote:
+>> On 11/07/2024 07:04, Viken Dadhaniya wrote:
+>>>>>> +				clock-names = "se";
+>>>>>> +				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
+>>>>>> +						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
+>>>>>> +						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+>>>>>> +						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
+>>>>>> +				interconnect-names = "qup-core", "qup-config";
+>>>>>> +				power-domains = <&rpmhpd SA8775P_CX>;
+>>>>>
+>>>>> All the clocks, interconenct and power domains look to me questionable.
+>>>>> AFAIK, most of it (if not all) is going to be removed.
+>>>>
+>>>> Yeah.. I'm lukewarm on accepting any sa8775p changes until that qcs9100(?)
+>>>> situation is squared out first
+>>>>
+>>>> Konrad
+>>>
+>>> Thanks for clarification. Please help to sign-off or let me know in case
+>>> of any concern.
+>>
+>> I think I was quite explicit, so I feel above suggestion as still
+>> pushing your choice even though to reviewers gave you their opinion.
+>>
+>> In such case:
+>>
+>> No, NAK, for the reasons stated above.
+>>
+>> Best regards,
+>> Krzysztof
+>>
+> 
+> Sure, taken the notes from both of you.
+> Shall we wait for the shifting of DTSI file from sc8775p to qcs9100 ?
+> OR is there any other way to move ahead ?
+> Please suggest, we shall do whatever guidance from you both.
 
-This wasn't ever tested and cannot work.
+Do not add code which we already know that it is incorrect or
+incomplete. Instead align with your colleagues about proper upstreaming
+of this platform.
 
-Please read your internal guideline before posting any more work. That
-guideline you have is pretty detailed and offloads community from
-pointing silly issues like - never testing.
-
-> +			polling-delay-passive = <100>;
-> +			polling-delay = <0>;
-> +			thermal-sensors = <&pmm8654au_0_tz>;
-> +
-
-...
-
->  	pmm8654au_3: pmic@6 {
->  		compatible = "qcom,pmm8654au", "qcom,spmi-pmic";
->  		reg = <0x6 SPMI_USID>;
-> @@ -317,4 +421,20 @@ pmm8654au_3_gpios: gpio@8800 {
->  			#interrupt-cells = <2>;
->  		};
->  	};
-> +
-> +	pmm8654au_sail_3: pmic@7 {
-> +		compatible = "qcom,pmm8654au", "qcom,spmi-pmic";
-> +		reg = <0x7 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		pmm8654au_3_tz: qcom,mbg-tm@d700 {
-
-Again: do you see anywhere node called "qcom,foo-bar"?
-
-
+I am not going to sign off such patches.
 
 Best regards,
 Krzysztof
