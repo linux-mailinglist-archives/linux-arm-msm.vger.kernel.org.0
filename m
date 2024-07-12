@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-26053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2031192FE2E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 18:06:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A4D092FE28
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 18:06:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C8EE1286506
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 16:06:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BCDDC1C22C3B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 16:06:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D032179967;
-	Fri, 12 Jul 2024 16:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5B3417920E;
+	Fri, 12 Jul 2024 16:04:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="eiL4ce/C"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="P5gvYvvC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53DE6178CF2;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E40178CF5;
 	Fri, 12 Jul 2024 16:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.87.146.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720800287; cv=none; b=fT3hWq6xF5sUGbR05g4ni5527b9bgEtWPm2afg9wbZsi2u+pU0vzALQ1EwDAK8surAnbCxdOIq4pUSqmnpRQpEA23aZI2AsYQ+C32UuO/TT22rAfW6EFXYcamH/yZ4RsFkcYvud9wkbQWI+Z28EcT5s1K8LMTduBmPcA/Sykzs4=
+	t=1720800286; cv=none; b=o6xDGEZnDCoPG7aZtCG6t8RYiJe9gXhlHDKojyQMN/x3oVuaIvvYdiy1qWooSU3U2tf/oqaFwbmrnOqU2D+JLRX3BRwZ7FeEnQp5uQedx+4HiS7drD+mYQsuWAhBM6t8RUJYBIePlSjVzM69/3mCPCwcCtV2ccTx/UwjDB0NeJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720800287; c=relaxed/simple;
-	bh=Tis3syXIEXk9j/CshkCxWYsHoRXg0cZL3ojx12ypVj8=;
+	s=arc-20240116; t=1720800286; c=relaxed/simple;
+	bh=PiptZgXUtNGlKZY4LerEQvZmOZoOBWQ8JoqI867Zf+A=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=IdYOiLO02sfKWdKIayYcx9DfRCGkW5z8tkqprICkbOdgA3dZrSU9s4Yh1lFfY9HMFFzS0aLKNn0lfzr2OKcvB5TxuxewmVcq2KAV+knQPlOdy0d+Mdl0N1ai85Fbagw1IkKqpF5WQ4TgkXRFZ/q3GMUhkLT5gpzzM9wAtRb7474=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=eiL4ce/C; arc=none smtp.client-ip=194.87.146.52
+	 In-Reply-To:To:Cc; b=ui9MYNvJTQ2XEmnEW7xJ31yidANMtursXHwX8xHp8SToLBgHHOhE8fTFitXYXDGHFy2h99mQO4rhJsCQ0MdLu6zxMdAr4DkO1GC3t+d0GSElIh+1vlLSXGYn47kCwNFN/EW4fvZ6rCEXj9yyKWa9nPlp/vQ3OAuBy2K1VtosNeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=P5gvYvvC; arc=none smtp.client-ip=194.87.146.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
 Received: from authenticated-user (box.trvn.ru [194.87.146.52])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
 	(No client certificate requested)
-	by box.trvn.ru (Postfix) with ESMTPSA id E8BA542829;
-	Fri, 12 Jul 2024 21:04:35 +0500 (+05)
+	by box.trvn.ru (Postfix) with ESMTPSA id A3F524282A;
+	Fri, 12 Jul 2024 21:04:36 +0500 (+05)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-	t=1720800276; bh=Tis3syXIEXk9j/CshkCxWYsHoRXg0cZL3ojx12ypVj8=;
+	t=1720800277; bh=PiptZgXUtNGlKZY4LerEQvZmOZoOBWQ8JoqI867Zf+A=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=eiL4ce/CKLDw8aCiOgwqa/osOrYEIgA7YWmBM0ptLxRAF7JAeq3puK0S4XLNrv3F1
-	 crXYYZFMUZPSqeXBMXEsNCUbMAiBN8norATVwh5SqJopDt3SD5MIw1FZ4BbrBHQLhb
-	 sOzhcToBsZpue0RaTBMtzObRUp2IFxC65/31EFQvE3yoKPOqSj55eLgnpe3Ohu0QTj
-	 qmwFV5f74jLhCcPa9A+WOQn97QKaVntEXMVcQb4C/GP4oKfacNTZA2Vor1+x9bDKwq
-	 Rl++jTFx8oVLpWvV9RF09znI9hrAwHV/5sTmUoPMz+KRtN4Y/4UAZDUfPxr9aB1MSQ
-	 bYMIz/u3QpOEA==
+	b=P5gvYvvCmeTMQ65jNOxnuzXkR6UuZfwFaDMDpqj5t5h/x/XJ8AkYH+/2cpLR6G3YP
+	 oWKZ2hYfjlZWQbo69uMwcu+NHxh4RLj83xy1/+C9FVnwjQbLRvjgEqgIfgQAkkU54D
+	 NP2kpsWajYjEqAh0WgAuJOTo27nhjdeiPfqihYZnYYTYcDTUanuheGjIsmtkc1VzDs
+	 BLKV13PBtiuWF7rzqB9jRTsPZ1gtry6yhxjkcHILi8OEBV27rr1mKBVoWK+i7BM4IE
+	 dVE55BBonqbLdHY/193oACaSne5a6hj4EWpWWJVeIIU2opfX7rL1yU8R2RGVIRClbz
+	 xCjSK3bmA5Y7g==
 From: Nikita Travkin <nikita@trvn.ru>
-Date: Fri, 12 Jul 2024 21:04:07 +0500
-Subject: [PATCH 2/3] arm64: dts: qcom: msm8916-wingtech-wt865x8: Add Lenovo
- A6000/A6010
+Date: Fri, 12 Jul 2024 21:04:08 +0500
+Subject: [PATCH 3/3] arm64: dts: qcom: msm8939-wingtech-wt82918: Add Lenovo
+ Vibe K5 devices
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,8 +56,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240712-msm89xx-wingtech-init-v1-2-64f4aa1870bd@trvn.ru>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240712-msm89xx-wingtech-init-v1-3-64f4aa1870bd@trvn.ru>
 References: <20240712-msm89xx-wingtech-init-v1-0-64f4aa1870bd@trvn.ru>
 In-Reply-To: <20240712-msm89xx-wingtech-init-v1-0-64f4aa1870bd@trvn.ru>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -66,209 +66,194 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- Nikita Travkin <nikita@trvn.ru>, Anton Bambura <jenneron@postmarketos.org>, 
- Stephan Gerhold <stephan@gerhold.net>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=12553; i=nikita@trvn.ru;
- h=from:subject:message-id; bh=tpgmB3QsTPCNftYwbjD5Z43Lj5eSrjWWeQVhUrKuzpY=;
- b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBmkVQQDyoqP4NK8XCyL6EpDzjEtKrjyIG6bzNwf
- 9aYOlIMh/mJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCZpFUEAAKCRBDHOzuKBm/
- dat9EACtR+XCWggov++705z2h6XZQ1sEMVlnBGwkMHpTNUNjnCvIjkhzeTQCfQbf50AGN3gScMi
- 6FS5rShld1mOL7syDFRKS6IKX4OLQEa50+h0ZHSCEI7j6zqCqOg+PSLTlz/m30bw7GTNCGyISWS
- mPuLQQ7ACgQnMaeeYIX70ptDIkouaINqcGpN1w+kPtwS87JpOyeYMejOWhVD4DhuShum01uuJ4v
- yqE4unw8xYJim3SW1WnXjH5zocXy2I+1AbIihmHNGhEarEAESSSd19OLWxsxQJ3sr3gUZi/K1Ac
- xHrrVZVoOLzCPCgFn+sVQhYIzjkBnAykA/pVMfQCkrqSsmSRJrYBEjGoblZ5Q1cfvax/x0Pxpmh
- TrVMH1B1LVK8ieCx67O7Xvj3RCWVwDUrssrtiL8qHMvWIUtgA/2OoZKSwnj/fH64iZeL7YuXGu9
- xk75DnZEVR0XFUOn6xBh2t4I3uLL4Q8Lg27bGN9ttEVcO0RKKsmlCadDRvsKn3pYwS57nNc4vnY
- /dg06YESAj3SAm+wVp7mHn7n5mxIZUr0QvzUDaLRkg0Ux5EEzrd6/S3S/r9ZyHKCUniIYWe/Ed2
- A6Z1HbVZGicJeiGYSGwj3secVYNESbubvS9MWs6g5FZlCSpePgZ93frOQBCrlRdmgEGMsF4N1AF
- Hk3CfEbdPrGsR2w==
+ Nikita Travkin <nikita@trvn.ru>, 
+ =?utf-8?q?Adam_S=C5=82abo=C5=84?= <asaillen@protonmail.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9801; i=nikita@trvn.ru;
+ h=from:subject:message-id; bh=SFPsZwb3MeVbqZSx7MbeH3tOUhr8mT9jh+mOOE4nO8s=;
+ b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBmkVQQsTZmAeo6u8m0uhm+fQJv53rvo0k16EPlS
+ fjyXdQiWsWJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCZpFUEAAKCRBDHOzuKBm/
+ dbAkEACWotoGUBQwFDfB0Q1oM0N58CQGqZgNIDsH7I7Hs7+dFaw3eqMeDvZyK5vM44v3tEGpFTl
+ aye7EVo/e2EJ1tJZurwKJRztC4HX93HsoZqPKvhr9m87GFcjrT5GEgu/lIiLLTfihvozNZUC5hk
+ yKtT/y32Qyzu7HTBN2vtb80D+qcX7z6ILR9r1UYrG4fDJpr7FX/0Ipr2WdbHBayX2e9fPFso/Qy
+ e04ynYBeCv94XHXRBcWkiIGbqzGDeEtWJhQwAF5esuOMQHHawrfw4f82va7zHuIUwUaICP92yyl
+ Aq9Yd5Ge+lj+YsOyqUIJR1sDNcNv1ODAlfDCarbkCyoG7rUcaWdqloti14a+0r3ZiqKLM/oBq07
+ hnEeEvdJBL/sTcM1v8TOSbQ+HFvHpBRQJ0SgeqCMa/yJpsv8LhPRYk1uzzGwS0bScGy69VtgJfU
+ wCvApdri00fpe01DmvzHfe1XkaF7QakJuK2f6OXRrUd+I8xIIWQlbG5kOt/48uKPNsAyz4Hy5UB
+ QUCh4AyD3C9jhANqH/yG9f/MdjKzWfvty0BO1JjqO5uHZoeLLRNvJAr7VDsU5lOgLVUaZiNnavB
+ mMud43WsDSrigLoMyxuBymQf8CwK73QC3DZ1477HLaXpQEa5G9iLX/PSIhAH61axYgMKRnDmT59
+ 04xPbBBxEu/h3Dg==
 X-Developer-Key: i=nikita@trvn.ru; a=openpgp;
  fpr=C084AF54523FAA837E2EC547431CECEE2819BF75
 
-From: Anton Bambura <jenneron@postmarketos.org>
+From: Adam Słaboń <asaillen@protonmail.com>
 
-Add initial device-tree for Lenovo A6000 (wt86518) and Lenovo A6010
-(wt86528), which are MSM8916-based devices. These devices are quite
-similar, so some configuration is shared in msm8916-wingtech-wt865x8.dtsi.
+This commit introduces multiple hardware variants of Lenovo Vibe K5.
 
-Lenovo A6000 (wt86518):
- - storage (eMMC and uSD card);
- - usb in peripheral mode;
- - touchscreen;
- - sensors;
- - WiFi/BT;
- - keys;
- - battery and charger.
+- A6020a40 (msm8929-wingtech-wt82918hd)
+- A6020a46/A6020l36 (msm8939-wingtech-wt82918)
+- A6020a40 S616 H39 (msm8939-wingtech-wt82918hd)
 
-Lenovo A6010 (wt86528):
- - storage (eMMC and uSD card);
- - usb with extcon;
- - touchscreen;
- - sensors;
- - WiFi/BT;
- - keys;
- - leds;
- - battery;
+These devices are added with support for many features, notably:
 
-Signed-off-by: Anton Bambura <jenneron@postmarketos.org>
-Co-developed-by: Stephan Gerhold <stephan@gerhold.net>
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-[Nikita: minor cleanup]
+- Basic features like USB, mmc/sd storage, wifi, buttons, leds;
+- Accelerometer;
+- Touchscreen;
+- Sound and modem.
+
+Note that "HD" variant of K5 is based on msm8929 which is a lower bin
+of msm8939 SoC. A simple dtsi is added for this soc along with the new
+devices.
+
+Unfortunately, despite the heavy similarities, the combination of minor
+differences between variants make them incompatible between each other.
+
+Signed-off-by: Adam Słaboń <asaillen@protonmail.com>
+[Nikita: Minor cleanup, commit message]
 Signed-off-by: Nikita Travkin <nikita@trvn.ru>
 ---
- arch/arm64/boot/dts/qcom/Makefile                  |   2 +
- .../boot/dts/qcom/msm8916-wingtech-wt86518.dts     |  89 +++++++++
- .../boot/dts/qcom/msm8916-wingtech-wt86528.dts     | 160 +++++++++++++++
- .../boot/dts/qcom/msm8916-wingtech-wt865x8.dtsi    | 216 +++++++++++++++++++++
- 4 files changed, 467 insertions(+)
+ arch/arm64/boot/dts/qcom/Makefile                  |   3 +
+ .../boot/dts/qcom/msm8929-wingtech-wt82918hd.dts   |  17 ++
+ arch/arm64/boot/dts/qcom/msm8929.dtsi              |   5 +
+ .../boot/dts/qcom/msm8939-wingtech-wt82918.dts     |  16 ++
+ .../boot/dts/qcom/msm8939-wingtech-wt82918.dtsi    | 254 +++++++++++++++++++++
+ .../boot/dts/qcom/msm8939-wingtech-wt82918hd.dts   |  16 ++
+ 6 files changed, 311 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 0e5c810304fb..fd4c7c41ddc4 100644
+index fd4c7c41ddc4..48ec781fa1d8 100644
 --- a/arch/arm64/boot/dts/qcom/Makefile
 +++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -54,6 +54,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-rossa.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-serranove.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-uf896.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-ufi001c.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86518.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86528.dtb
+@@ -58,10 +58,13 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86518.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86528.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-yiming-uz801v3.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= msm8929-wingtech-wt82918hd.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-huawei-kiwi.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86518.dts b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86518.dts
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-longcheer-l9100.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-samsung-a7.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-sony-xperia-kanuti-tulip.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-wingtech-wt82918.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-wingtech-wt82918hd.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-mido.dtb
+diff --git a/arch/arm64/boot/dts/qcom/msm8929-wingtech-wt82918hd.dts b/arch/arm64/boot/dts/qcom/msm8929-wingtech-wt82918hd.dts
 new file mode 100644
-index 000000000000..4848432d3fdd
+index 000000000000..f9a358e852f8
 --- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86518.dts
-@@ -0,0 +1,89 @@
++++ b/arch/arm64/boot/dts/qcom/msm8929-wingtech-wt82918hd.dts
+@@ -0,0 +1,17 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +
 +/dts-v1/;
 +
-+#include "msm8916-wingtech-wt865x8.dtsi"
++#include "msm8939-wingtech-wt82918.dtsi"
++#include "msm8929.dtsi"
 +
 +/ {
-+	model = "Lenovo A6000 (Wingtech WT86518)";
-+	compatible = "wingtech,wt86518", "qcom,msm8916";
++	model = "Lenovo Vibe K5 (HD) (Wingtech WT82918)";
++	compatible = "wingtech,wt82918hd", "qcom,msm8929";
 +	chassis-type = "handset";
-+
-+	speaker_amp: audio-amplifier {
-+		compatible = "awinic,aw8738";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&spk_ext_pa_default>;
-+
-+		mode-gpios = <&tlmm 119 GPIO_ACTIVE_HIGH>;
-+		sound-name-prefix = "Speaker Amp";
-+		awinic,mode = <1>;
-+	};
 +};
 +
-+&blsp_i2c2 {
-+	accelerometer@e {
-+		compatible = "kionix,kxcj91008";
-+		reg = <0xe>;
-+
-+		vdd-supply = <&pm8916_l6>;
-+		vddio-supply = <&pm8916_l6>;
-+
-+		mount-matrix = "0", "-1", "0",
-+			       "-1", "0", "0",
-+			       "0",  "0", "1";
-+	};
++&touchscreen {
++	touchscreen-size-x = <720>;
++	touchscreen-size-y = <1280>;
 +};
-+
-+&headphones_switch {
-+	VCC-supply = <&pm8916_l17>;
-+};
-+
-+&pm8916_bms {
-+	power-supplies = <&pm8916_charger>;
-+};
-+
-+&pm8916_charger {
-+	qcom,fast-charge-safe-current = <900000>;
-+	qcom,fast-charge-safe-voltage = <4300000>;
-+
-+	monitored-battery = <&battery>;
-+
-+	status = "okay";
-+};
-+
-+&sound {
-+	model = "wt88047";
-+	widgets =
-+		"Speaker", "Speaker",
-+		"Headphone", "Headphones";
-+	pin-switches = "Speaker", "Headphones";
-+	audio-routing =
-+		"Speaker", "Speaker Amp OUT",
-+		"Speaker Amp IN", "HPH_R",
-+		"Headphones", "Headphones Switch OUTL",
-+		"Headphones", "Headphones Switch OUTR",
-+		"Headphones Switch INL", "HPH_L",
-+		"Headphones Switch INR", "HPH_R",
-+		"AMIC1", "MIC BIAS Internal1",
-+		"AMIC2", "MIC BIAS Internal2";
-+	aux-devs = <&speaker_amp>, <&headphones_switch>;
-+};
-+
-+&usb {
-+	dr_mode = "peripheral";
-+	extcon = <&pm8916_charger>;
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&pm8916_charger>;
-+};
-+
-+&tlmm {
-+	spk_ext_pa_default: spk-ext-pa-default-state {
-+		pins = "gpio119";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86528.dts b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86528.dts
+diff --git a/arch/arm64/boot/dts/qcom/msm8929.dtsi b/arch/arm64/boot/dts/qcom/msm8929.dtsi
 new file mode 100644
-index 000000000000..3ab2eb6be107
+index 000000000000..c3d1d1ace2f6
 --- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86528.dts
-@@ -0,0 +1,160 @@
++++ b/arch/arm64/boot/dts/qcom/msm8929.dtsi
+@@ -0,0 +1,5 @@
++// SPDX-License-Identifier: GPL-2.0-only
++
++&opp_table {
++	/delete-node/ opp-550000000;
++};
+diff --git a/arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918.dts b/arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918.dts
+new file mode 100644
+index 000000000000..ebc624db880e
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918.dts
+@@ -0,0 +1,16 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +
 +/dts-v1/;
 +
-+#include "msm8916-wingtech-wt865x8.dtsi"
++#include "msm8939-wingtech-wt82918.dtsi"
 +
 +/ {
-+	model = "Lenovo A6010 (Wingtech WT86528)";
-+	compatible = "wingtech,wt86528", "qcom,msm8916";
++	model = "Lenovo Vibe K5 (Wingtech WT82918)";
++	compatible = "wingtech,wt82918", "qcom,msm8939";
 +	chassis-type = "handset";
++};
 +
-+	/* left AW8736 */
-+	speaker_amp_left: audio-amplifier-left {
-+		compatible = "awinic,aw8738";
++&touchscreen {
++	touchscreen-size-x = <1080>;
++	touchscreen-size-y = <1920>;
++};
+diff --git a/arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918.dtsi b/arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918.dtsi
+new file mode 100644
+index 000000000000..ff45ba8e02b1
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918.dtsi
+@@ -0,0 +1,254 @@
++// SPDX-License-Identifier: GPL-2.0-only
 +
-+		pinctrl-0 = <&spk_ext_pa_left_default>;
-+		pinctrl-names = "default";
++#include "msm8939-pm8916.dtsi"
++#include "msm8916-modem-qdsp6.dtsi"
 +
-+		mode-gpios = <&tlmm 119 GPIO_ACTIVE_HIGH>;
-+		sound-name-prefix = "Speaker Amp L";
-+		awinic,mode = <3>;
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/leds/common.h>
++#include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
++
++/ {
++	aliases {
++		mmc0 = &sdhc_1; /* eMMC */
++		mmc1 = &sdhc_2; /* SD card */
++		serial0 = &blsp_uart2;
 +	};
 +
-+	/* right AW8736 */
-+	speaker_amp_right: audio-amplifier-right {
-+		compatible = "awinic,aw8738";
++	chosen {
++		stdout-path = "serial0";
++	};
 +
-+		pinctrl-0 = <&spk_ext_pa_right_default>;
++	backlight: backlight {
++		compatible = "pwm-backlight";
++		pwms = <&pm8916_pwm 0 100000>;
++		brightness-levels = <0 255>;
++		num-interpolated-steps = <255>;
++		default-brightness-level = <128>;
++	};
++
++	flash-led-controller {
++		compatible = "sgmicro,sgm3140";
++		enable-gpios = <&tlmm 31 GPIO_ACTIVE_HIGH>;
++		flash-gpios = <&tlmm 32 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-0 = <&camera_front_flash_default>;
 +		pinctrl-names = "default";
 +
-+		mode-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>;
-+		sound-name-prefix = "Speaker Amp R";
-+		awinic,mode = <3>;
++		flash_led: led {
++			function = LED_FUNCTION_FLASH;
++			color = <LED_COLOR_ID_WHITE>;
++		};
++	};
++
++	gpio-keys {
++		compatible = "gpio-keys";
++
++		pinctrl-0 = <&gpio_keys_default>;
++		pinctrl-names = "default";
++
++		label = "GPIO Buttons";
++
++		button-volume-up {
++			label = "Volume Up";
++			gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
++			linux,code = <KEY_VOLUMEUP>;
++		};
 +	};
 +
 +	gpio-leds {
@@ -278,15 +263,17 @@ index 000000000000..3ab2eb6be107
 +		pinctrl-names = "default";
 +
 +		led-0 {
-+			gpios = <&tlmm 16 GPIO_ACTIVE_LOW>;
-+			label = "red";
++			gpios = <&tlmm 69 GPIO_ACTIVE_LOW>;
++			function = LED_FUNCTION_CHARGING;
++			color = <LED_COLOR_ID_RED>;
 +			default-state = "off";
 +			retain-state-suspended;
 +		};
 +
 +		led-1 {
-+			gpios = <&tlmm 17 GPIO_ACTIVE_HIGH>;
-+			label = "green";
++			gpios = <&tlmm 36 GPIO_ACTIVE_HIGH>;
++			function = LED_FUNCTION_STATUS;
++			color = <LED_COLOR_ID_GREEN>;
 +			default-state = "off";
 +			retain-state-suspended;
 +		};
@@ -301,199 +288,43 @@ index 000000000000..3ab2eb6be107
 +};
 +
 +&blsp_i2c2 {
-+	magnetometer@c {
-+		compatible = "asahi-kasei,ak09911";
-+		reg = <0x0c>;
++	status = "okay";
 +
-+		vdd-supply = <&pm8916_l17>;
-+		vid-supply = <&pm8916_l6>;
-+	};
-+
-+	imu@68 {
-+		compatible = "invensense,mpu6880";
++	accelerometer@68 {
++		compatible = "invensense,icm20608";
 +		reg = <0x68>;
 +
-+		interrupts-extended = <&tlmm 115 IRQ_TYPE_EDGE_RISING>;
++		pinctrl-0 = <&accelerometer_default>;
++		pinctrl-names = "default";
++
++		interrupts-extended = <&tlmm 115 IRQ_TYPE_EDGE_FALLING>;
 +
 +		vdd-supply = <&pm8916_l17>;
 +		vddio-supply = <&pm8916_l6>;
 +
-+		pinctrl-0 = <&imu_default>;
-+		pinctrl-names = "default";
-+
-+		mount-matrix = "1",  "0", "0",
-+			       "0", "-1", "0",
-+			       "0",  "0", "1";
-+	};
-+};
-+
-+&pm8916_codec {
-+	qcom,micbias1-ext-cap;
-+};
-+
-+&sound {
-+	model = "wt86528";
-+	widgets =
-+		"Speaker", "Speaker",
-+		"Headphone", "Headphones";
-+	pin-switches = "Speaker", "Headphones";
-+	audio-routing =
-+		"Speaker", "Speaker Amp L OUT",
-+		"Speaker", "Speaker Amp R OUT",
-+		"Speaker Amp L IN", "HPH_L",
-+		"Speaker Amp R IN", "HPH_R",
-+		"Headphones", "Headphones Switch OUTL",
-+		"Headphones", "Headphones Switch OUTR",
-+		"Headphones Switch INL", "HPH_L",
-+		"Headphones Switch INR", "HPH_R",
-+		"AMIC1", "MIC BIAS External1",
-+		"AMIC2", "MIC BIAS Internal2",
-+		"AMIC3", "MIC BIAS External1";
-+	aux-devs = <&speaker_amp_left>, <&speaker_amp_right>, <&headphones_switch>;
-+};
-+
-+&usb {
-+	extcon = <&usb_id>, <&usb_id>;
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&usb_id>;
-+};
-+
-+&tlmm {
-+	gpio_leds_default: gpio-leds-default-state {
-+		pins = "gpio16", "gpio17";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	imu_default: imu-default-state {
-+		pins = "gpio115";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	spk_ext_pa_left_default: spk-ext-pa-left-default-state {
-+		pins = "gpio119";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	spk_ext_pa_right_default: spk-ext-pa-right-default-state {
-+		pins = "gpio121";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	usb_id_default: usb-id-default-state {
-+		pins = "gpio110";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt865x8.dtsi b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt865x8.dtsi
-new file mode 100644
-index 000000000000..797fcb23a637
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt865x8.dtsi
-@@ -0,0 +1,216 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+#include "msm8916-pm8916.dtsi"
-+#include "msm8916-modem-qdsp6.dtsi"
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
-+
-+/ {
-+	aliases {
-+		mmc0 = &sdhc_1; /* eMMC */
-+		mmc1 = &sdhc_2; /* SD card */
-+		serial0 = &blsp_uart2;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+
-+	headphones_switch: audio-switch {
-+		compatible = "simple-audio-amplifier";
-+
-+		pinctrl-0 = <&headphones_switch_default>;
-+		pinctrl-names = "default";
-+
-+		enable-gpios = <&tlmm 120 GPIO_ACTIVE_HIGH>;
-+		sound-name-prefix = "Headphones Switch";
-+	};
-+
-+	backlight: backlight {
-+		compatible = "pwm-backlight";
-+		pwms = <&pm8916_pwm 0 100000>;
-+
-+		brightness-levels = <0 255>;
-+		num-interpolated-steps = <255>;
-+		default-brightness-level = <255>;
-+	};
-+
-+	battery: battery {
-+		compatible = "simple-battery";
-+		voltage-min-design-microvolt = <3400000>;
-+		voltage-max-design-microvolt = <4350000>;
-+		energy-full-design-microwatt-hours = <8740000>;
-+		charge-full-design-microamp-hours = <2300000>;
-+
-+		ocv-capacity-celsius = <25>;
-+		ocv-capacity-table-0 = <4328000 100>, <4266000 95>, <4208000 90>,
-+			<4154000 85>, <4102000 80>, <4062000 75>, <3992000 70>,
-+			<3960000 65>, <3914000 60>, <3870000 55>, <3840000 50>,
-+			<3818000 45>, <3800000 40>, <3784000 35>, <3770000 30>,
-+			<3756000 25>, <3736000 20>, <3714000 16>, <3696000 13>,
-+			<3690000 11>, <3689000 10>, <3688000 9>, <3686000 8>,
-+			<3682000 7>, <3670000 6>, <3639000 5>, <3592000 4>,
-+			<3530000 3>, <3448000 2>, <3320000 1>, <3000000 0>;
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&gpio_keys_default>;
-+		pinctrl-names = "default";
-+
-+		label = "GPIO Buttons";
-+
-+		volume-up-button {
-+			label = "Volume Up";
-+			gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+		};
++		mount-matrix = "-1", "0", "0",
++				"0", "1", "0",
++				"0", "0", "1";
 +	};
 +};
 +
 +&blsp_i2c5 {
 +	status = "okay";
 +
-+	touchscreen@38 {
++	touchscreen: touchscreen@38 {
 +		/* actually FT5336 */
 +		compatible = "edt,edt-ft5306";
 +		reg = <0x38>;
 +
-+		interrupts-extended = <&tlmm 13 IRQ_TYPE_EDGE_FALLING>;
++		pinctrl-0 = <&touchscreen_default>;
++		pinctrl-names = "default";
++
++		interrupts-extended = <&tlmm 13 IRQ_TYPE_LEVEL_LOW>;
 +
 +		vcc-supply = <&pm8916_l17>;
 +		iovcc-supply = <&pm8916_l6>;
 +
 +		reset-gpios = <&tlmm 12 GPIO_ACTIVE_LOW>;
-+
-+		touchscreen-size-x = <720>;
-+		touchscreen-size-y = <1280>;
-+
-+		pinctrl-0 = <&touchscreen_default>;
-+		pinctrl-names = "default";
 +	};
 +};
 +
@@ -503,18 +334,6 @@ index 000000000000..797fcb23a637
 +
 +&mpss_mem {
 +	reg = <0x0 0x86800000 0x0 0x5500000>;
-+};
-+
-+&pm8916_bms {
-+	monitored-battery = <&battery>;
-+	status = "okay";
-+};
-+
-+&pm8916_codec {
-+	qcom,micbias-lvl = <2800>;
-+	qcom,mbhc-vthreshold-low = <75 150 237 450 500>;
-+	qcom,mbhc-vthreshold-high = <75 150 237 450 500>;
-+	qcom,hphl-jack-type-normally-open;
 +};
 +
 +&pm8916_pwm {
@@ -547,22 +366,17 @@ index 000000000000..797fcb23a637
 +	pinctrl-0 = <&sdc2_default>;
 +	pinctrl-1 = <&sdc2_sleep>;
 +	pinctrl-names = "default", "sleep";
-+
 +	non-removable;
-+
 +	status = "okay";
 +};
 +
 +&usb {
++	extcon = <&usb_id>, <&usb_id>;
 +	status = "okay";
 +};
 +
-+&venus {
-+	status = "okay";
-+};
-+
-+&venus_mem {
-+	status = "okay";
++&usb_hs_phy {
++	extcon = <&usb_id>;
 +};
 +
 +&wcnss {
@@ -578,6 +392,20 @@ index 000000000000..797fcb23a637
 +};
 +
 +&tlmm {
++	accelerometer_default: accelerometer-default-state {
++		pins = "gpio115";
++		function = "gpio";
++		drive-strength = <6>;
++		bias-pull-up;
++	};
++
++	camera_front_flash_default: camera-front-flash-default-state {
++		pins = "gpio31", "gpio32";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
 +	gpio_keys_default: gpio-keys-default-state {
 +		pins = "gpio107";
 +		function = "gpio";
@@ -585,27 +413,34 @@ index 000000000000..797fcb23a637
 +		bias-pull-up;
 +	};
 +
-+	headphones_switch_default: headphones-switch-default-state {
-+		pins = "gpio120";
++	gpio_leds_default: gpio-leds-default-state {
++		pins = "gpio36", "gpio69";
 +		function = "gpio";
 +		drive-strength = <2>;
 +		bias-disable;
 +	};
 +
 +	touchscreen_default: touchscreen-default-state {
-+		touchscreen-pins {
-+			pins = "gpio13";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
 +		reset-pins {
 +			pins = "gpio12";
 +			function = "gpio";
 +			drive-strength = <2>;
 +			bias-disable;
 +		};
++
++		touchscreen-pins {
++			pins = "gpio13";
++			function = "gpio";
++			drive-strength = <2>;
++			bias-pull-up;
++		};
++	};
++
++	usb_id_default: usb-id-default-state {
++		pins = "gpio110";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-pull-up;
 +	};
 +};
 +
@@ -617,6 +452,28 @@ index 000000000000..797fcb23a637
 +		output-low;
 +		qcom,dtest = <1>;
 +	};
++};
+diff --git a/arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918hd.dts b/arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918hd.dts
+new file mode 100644
+index 000000000000..87016b5c44fd
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918hd.dts
+@@ -0,0 +1,16 @@
++// SPDX-License-Identifier: GPL-2.0-only
++
++/dts-v1/;
++
++#include "msm8939-wingtech-wt82918.dtsi"
++
++/ {
++	model = "Lenovo Vibe K5 (HD) (Wingtech WT82918)";
++	compatible = "wingtech,wt82918hdhw39", "qcom,msm8939";
++	chassis-type = "handset";
++};
++
++&touchscreen {
++	touchscreen-size-x = <720>;
++	touchscreen-size-y = <1280>;
 +};
 
 -- 
