@@ -1,63 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-26028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26029-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D613192F944
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 13:05:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F01F92F952
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 13:07:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5AAB5B212A8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 11:05:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BC0F8B22CA7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 11:07:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 905D815B0FE;
-	Fri, 12 Jul 2024 11:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9BDD15B0FE;
+	Fri, 12 Jul 2024 11:07:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p+LmOE0v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tnwFS+fn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F579155C81;
-	Fri, 12 Jul 2024 11:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA9F1422C3;
+	Fri, 12 Jul 2024 11:07:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720782321; cv=none; b=nn+LZ32AI4/wNyq8Qf6ruQV2X7ylA7Sd5FP/SK17J1P6OPZieuPWG+1F0uiB8NcfoNINYoInSOCEWNJxup8Vg7ldPrq+qQEtcM5o8murQxzCjHLwK82H1rJu3cMXy9/4bvT4GZqc8HfYAv6dkQmLpkB6kNkzwVFuK/qpeSBOolo=
+	t=1720782448; cv=none; b=gB8qR9nh0k6vFL6aH8CdvOq2ttomJ5lvFrWM7zc9yhsq6XBeHSxJe+8FYFjkLCH4PExxirTZw95BAYYD/UO2yvowy8PM5oQ/5hoo6i7fydmf1WNn4xFxZLOqNezRUKnuZuleuySBA2/NU/pOur+yEI5i4jSYARXidssfpTcaGig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720782321; c=relaxed/simple;
-	bh=unUnZrzQDbLTHX8IxU2OqJG/Uuo0p7Wp3yVGpGZ1y3I=;
+	s=arc-20240116; t=1720782448; c=relaxed/simple;
+	bh=J5B4V+GxjTUk/uTZIdgig3t7RPhLCkFHCun4ASHiAlk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UTuOAiqo5rdfDNOKCx/YWBXZxVTjoEuHoZZvzaUCHRIk2IMbpNo1xUb4/131CK/60Q5oqhEoiz+pgoP5590fMrLWnK5voyvrGZQMCbFwqB5JBZyUhSe+tOHM6F/ErAHJj4lad8jyIPX4lumtY8mj2iDv+7skm+XltaLS+kXZ6s0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p+LmOE0v; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7314C32782;
-	Fri, 12 Jul 2024 11:05:19 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=blk+Iv6qRIhxGSELub5efZ2ynGyVJHf6+dXXVVI+7RjRb66BmOCKXx/Fn7sA0f9pJtp3eQjJG4DHrDFctjroHea+sm9LZH737GVqiFDXTXCFFZ/lM86UgjIJaTRDy6Z69k+xKmlXrLILWgTK1GhQDCZpbrEGqtE8jEFotlAHrlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tnwFS+fn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C2BC32782;
+	Fri, 12 Jul 2024 11:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720782319;
-	bh=unUnZrzQDbLTHX8IxU2OqJG/Uuo0p7Wp3yVGpGZ1y3I=;
+	s=k20201202; t=1720782448;
+	bh=J5B4V+GxjTUk/uTZIdgig3t7RPhLCkFHCun4ASHiAlk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=p+LmOE0voQNkdTM24c6YelqbF+WKuW+aj+ega3wVdAb5wfTi+2DRDmng8t7oTE1vN
-	 vGBL1sDF8MctKfKtvB9fSb0HdIJgcAxcJ5nqRekWMbvoLDqhE1enQI8dPk5dPlyXUy
-	 hHhpdhXlEo0bRzo4hqoou+hL+3dfgUYttFBJrik84TRJD1MyD43gejG12tyPymfMQu
-	 OCPpTCFATrFNVVl1pduJEpQ976NHLew4bJxTPdDJ+YI9stXRT+cjOLCjtOfqJsGlca
-	 S07hQfLBdp8L90Aw8tEOofXxDYx8vUHRZyKHcKbLZ+Zc+cXrmN5msLWh/L0Q7prnbb
-	 vEeIu/T4Y3dhQ==
+	b=tnwFS+fnNraQw6n/j+xWTvycP5JpS8ghclHM/iG/fZx4sNZ05NqQo6pFCk0t8KGjj
+	 FnEqxNlq18vGbdPl2UpxLhTU+M6Qza5B3MWMlGGM5/UNlCqIwtNj4tDSBn/XyRUzo8
+	 XKqfboBT0h1xCkl6Z/auKnNT5pz8WEA0fu8KTwD9NijCYwcQepAb2836nPUjOi0P2i
+	 DlXGwVmSwCZuoUb0kV7IeA7IOMKUFanGXipOU/A4ElTTSfmM9RNKkMfjjV8ycwitPV
+	 wg1xtSZ4KifdFQdISyMhxdW/IPBRkIyyKtte6Q+IYjmTBH2AeLInOXUtrF5v4fuWfv
+	 fHYrM1rhgIWaA==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1sSE5W-000000001YH-2ZN0;
-	Fri, 12 Jul 2024 13:05:18 +0200
-Date: Fri, 12 Jul 2024 13:05:18 +0200
+	id 1sSE7b-000000001aF-1Odx;
+	Fri, 12 Jul 2024 13:07:27 +0200
+Date: Fri, 12 Jul 2024 13:07:27 +0200
 From: Johan Hovold <johan@kernel.org>
 To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Abel Vesa <abel.vesa@linaro.org>
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-crd: Add LID switch
-Message-ID: <ZpEN7u0u4LSFY01p@hovoldconsulting.com>
-References: <20240710-x1e80100-crd-lid-v1-1-0156e8a62af6@linaro.org>
+Cc: Sebastian Reichel <sre@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH] power: supply: qcom_battmgr: Ignore extra __le32 in info
+ payload
+Message-ID: <ZpEOb-fOc04bknxy@hovoldconsulting.com>
+References: <20240712-x1e80100-battmgr-v1-1-a253d767f493@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,18 +65,21 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240710-x1e80100-crd-lid-v1-1-0156e8a62af6@linaro.org>
+In-Reply-To: <20240712-x1e80100-battmgr-v1-1-a253d767f493@linaro.org>
 
-On Wed, Jul 10, 2024 at 10:18:20AM +0200, Stephan Gerhold wrote:
-> Add gpio-keys for exposing the LID switch state, similar to
-> sc8280xp-lenovo-thinkpad-x13s.dts. Only the GPIO number is different.
+On Fri, Jul 12, 2024 at 12:00:03PM +0200, Stephan Gerhold wrote:
+> Some newer ADSP firmware versions on X1E80100 report an extra __le32 at the
+> end of the battery information request payload, causing qcom_battmgr to
+> fail to initialize. Adjust the check to ignore the extra field in the info
+> payload so we can support both old and newer firmware versions.
 > 
+> Tested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-Looks good, even if I can't test it currently with the debug board
-connected directly to the CRD:
+Can confirm that the old fw still works (didn't really look at the
+patch):
 
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
 
 Johan
 
