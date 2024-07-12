@@ -1,75 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-26061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3E8B92FFDD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 19:37:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BCEAB930109
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 21:42:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C709C1C21449
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 17:37:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7242B2816A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 19:42:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0625A176AD4;
-	Fri, 12 Jul 2024 17:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABFAB2E639;
+	Fri, 12 Jul 2024 19:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oWyz6iGL"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cyzf2Lfl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EFA174EF9
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 17:37:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CD21B95B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 19:41:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720805833; cv=none; b=sw/K9uZpSAf1EwYjtZ9rQdg3wTpDwygU0x6bb1AYzBoLNIG0Z4UqvMyzLCwUZmuA7TqKm7/LhAV/FVIfmrvGmRuDuPvVuvPM6ngARf+kozWHYaq1wGkD4ozSBQh+sPjUXokAJnyKUWZDpnbsOsxXTFatT+BDGsNgf6gIgsBz0BE=
+	t=1720813318; cv=none; b=OE0ygZsgw3QgHOK0iXrraqHniC5lSLQ2OCNGZRgn6+U+KM8QnnaaCzpWQ2GKYNDNSSRn6weSuGemf6ts1Hap5wevX5sYDXvt6Uo3LjtqtlhVT2Ye4eArFkEMhbhA+gcp8KKDlURjVCMP9wqxcNPPTVvauj2sqoZugnAyxGBe1dY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720805833; c=relaxed/simple;
-	bh=cMVBcb3+PuJ6p9sLI9kDQNdmjy4RrnCDMwKNx1ooWJQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=od03bv3BpEeD15qc3Kud042xelHAMAISQZNRn3SYkYoRPXo2Me9mBdqcSh3tuAAvXeuTFjsFuLcSXFoFEyFANu6LFdR2IsoCaj1Iug2CwSW63LsyDZY3CV6yjjONrjVhfRuxukFZwP7ift9Ah37dv/s4aBpT7fr+YugaUCAp6Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oWyz6iGL; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a77abe5c709so292584266b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 10:37:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720805831; x=1721410631; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=cMVBcb3+PuJ6p9sLI9kDQNdmjy4RrnCDMwKNx1ooWJQ=;
-        b=oWyz6iGLDTuB6ZTPcLXE+jrWKZxtoODtFNJyCcF6JC0097YWEr8LRrW2i7z9KWI1ej
-         W4dXPP0PsDeSuCC8n1h+3VPBYjU05JnYwQUy+JmqGLPnSahsCNfRyMeza7yt+Dvs+3z/
-         5ZRSkT3We2CaBWutSr7TPGasq/s8XL7Rah0MUBlQtXdeVDE9mmTvVPSK5m/N2YSWxrFP
-         Y1t7WuuvrZwXJQXOLtA1RmSqRqzHEB/ZyaFt4HUvDNPT96+ZNr3ZjoLj2xfgOMxvwhTO
-         5YDbD2E4cMLHL5BF2ExdGpDg3nDLzb3pKiAI9WiH+jirr9Ezgm/6WWaAZ9PCz9uQLtEB
-         oNrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720805831; x=1721410631;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cMVBcb3+PuJ6p9sLI9kDQNdmjy4RrnCDMwKNx1ooWJQ=;
-        b=UzhRgcjPPiZ5kCF2uBCbhG/rk5Er45tH9wu5seXbtkYSf06dV6CEYvYKPQnYWC4qdc
-         182HZ1PTDq3wNIN+X4HOpcwxrRjEtSOcZsojDfjAQ/UcEAmsxYZXlonWyDt4g6IcpTm9
-         L0t1DdnMYJAU6vtp2ZYFw3WajetddsN10FJpT32C8DLDp8cTAUuMnl322uodXgfkoCOC
-         eEMxbHUAMpdXQ1E/1HB8VHeEEC4o79NOVXag/PdVZX1Q4NyzpJ54xcLZYoh9EKmw7ZdY
-         vpdqvwHMk9/VgaafK4p75F0/oQWd0Ww5RUz4wzvCVYewuXDRgIufZ3z+Ts62jAsSh7R8
-         x0qA==
-X-Forwarded-Encrypted: i=1; AJvYcCW9s/pPMhHSTPIdKTIFCWM9S+JLIwYXpQbt3Y1jXzNv9Jrnig2gC2hisxav1XhG6KdVqUe5IFfXR06asf+7l1ZzJ+rfRwtVhTuPiV4PWQ==
-X-Gm-Message-State: AOJu0Yzd/bT2HmFX6lJ0LfFaiHFgsZM6ykstplvU23jtzr5EEmHUZ83r
-	dX0xfRtkgqJ8rFLXPlamn+wYQAP/GFhAMxuyIMECWmd689Gz5E/DfRtFmG2xzZ8=
-X-Google-Smtp-Source: AGHT+IEfeXDIhCuqN36CSi8OOwJ0E5Pxn3p4/TIJGAsYWwdtbecnDEpO9dxJ8D+oP/FHGwlUP0W8xg==
-X-Received: by 2002:a17:906:97c3:b0:a77:c2ac:947e with SMTP id a640c23a62f3a-a780b881d20mr848111866b.55.1720805830411;
-        Fri, 12 Jul 2024 10:37:10 -0700 (PDT)
-Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a780a6e37ffsm361340566b.76.2024.07.12.10.37.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jul 2024 10:37:09 -0700 (PDT)
-Message-ID: <13bd853c-ab27-4454-8ca3-1d27ad520e3b@linaro.org>
-Date: Fri, 12 Jul 2024 19:37:05 +0200
+	s=arc-20240116; t=1720813318; c=relaxed/simple;
+	bh=xR6Yu+ORhT5HVKtcyevwTwo7Z4xVis6f8my/og9gdXI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=G/8QD+AgLodQjX53zcFC6Ql7qK8Q702dd4M/tKBuJqw6dLlek6fZxajAqqSdHYVWUz+v+R4pRHETS8R7NUaBXrNaPdfcpqYoJ8G5Kz/NQxM9hpCim6ILoYTmEZNMPAPyBOUlNF9HUYQ+GoA5o+ujerIN7Q3Vt7kqmcTjqLGo6eQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cyzf2Lfl; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46CElDrr011328;
+	Fri, 12 Jul 2024 19:41:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	baE8i7pARAxYcamzN94NHPlZGHG1Zp9rynjE3EHptVA=; b=cyzf2LflxjvxB0sk
+	rbI2W/2XcqJWjEBa263OyQH8Dy121cTBj5GVsTtGFP3V3z5/14BuHfV/jpbeGZce
+	2rA0PwVFHef9qvicNqYlxg8LhuuE5lr5AGu2XEvptdefEorBbC8LpASEx1B2FKB9
+	sdU+ZnHv5/ksyoils0aYvYD7YBIyq+mxzO2l22/ciCzJbi00DSS1mVVW7xa6MZ9x
+	GFE39EkUtVgjj1ZBjNctruyCaqu30+G0HJJ6NPyQZ7WXEn9H6N2rXk2IVtYqiT82
+	ecPLJVSGHS+nzl+wQkcIRrpDMR96Ausn1lrUbZ6wpGad6IgzakDxfuDIwYuoY7os
+	NLN8zg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 409vydxfu2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Jul 2024 19:41:41 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46CJfexY019384
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 12 Jul 2024 19:41:40 GMT
+Received: from [10.110.71.234] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 12 Jul
+ 2024 12:41:39 -0700
+Message-ID: <637fbd36-d6cd-4bb7-af83-8849c0fee8f2@quicinc.com>
+Date: Fri, 12 Jul 2024 12:41:38 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,79 +65,77 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] dt-bindings: thermal: qcom: Add MBG thermal monitor
- bindings
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- Jonathan Cameron <jic23@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>, Amit Kucheria <amitk@kernel.org>,
- Thara Gopinath <thara.gopinath@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Kamal Wadhwa <quic_kamalw@quicinc.com>, Taniya Das
- <quic_tdas@quicinc.com>, Jishnu Prakash <quic_jprakash@quicinc.com>,
- linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-pm@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>,
- Jagadeesh Kona <quic_jkona@quicinc.com>
-References: <20240712-mbg-tm-support-v1-0-7d78bec920ca@quicinc.com>
- <20240712-mbg-tm-support-v1-2-7d78bec920ca@quicinc.com>
- <7a834db9-4b46-4737-a6c4-52bd38610fca@kernel.org>
+Subject: Re: [PATCH v5 02/16] drm/msm/dpu: fix error condition in
+ dpu_encoder_virt_atomic_mode_set
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>
+CC: Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan+linaro@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20240625-dpu-mode-config-width-v5-0-501d984d634f@linaro.org>
+ <20240625-dpu-mode-config-width-v5-2-501d984d634f@linaro.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <7a834db9-4b46-4737-a6c4-52bd38610fca@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240625-dpu-mode-config-width-v5-2-501d984d634f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: s__-81isLV6_NsbLVjyc0cFuWkXftT9H
+X-Proofpoint-ORIG-GUID: s__-81isLV6_NsbLVjyc0cFuWkXftT9H
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-12_15,2024-07-11_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ priorityscore=1501 clxscore=1015 mlxlogscore=999 impostorscore=0
+ suspectscore=0 spamscore=0 adultscore=0 malwarescore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407120133
 
-On 12.07.2024 7:25 PM, Krzysztof Kozlowski wrote:
-> On 12/07/2024 14:43, Satya Priya Kakitapalli wrote:
->> Add bindings support for the MBG Temp alarm peripheral found on
->> pm8775 pmics.
->>
->> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
->> ---
 
-Please also describe what MBG stands for and how it differs from the
-currently supported temp alarm that's been in use for the past 10 years
-on various PMICs
 
-Konrad
+On 6/24/2024 2:13 PM, Dmitry Baryshkov wrote:
+> The commit b954fa6baaca ("drm/msm/dpu: Refactor rm iterator") removed
+> zero-init of the hw_ctl array, but didn't change the error condition,
+> that checked for hw_ctl[i] being NULL. Use indices check instead.
+> 
+> Fixes: b954fa6baaca ("drm/msm/dpu: Refactor rm iterator")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 5d205e09cf45..7613005fbfea 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -1186,7 +1186,7 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
+>   			return;
+>   		}
+>   
+> -		if (!hw_ctl[i]) {
+> +		if (i >= num_ctl) {
+
+This is not very clear to me.
+
+How will we hit this condition? I dont see i going beyond 1 in this loop 
+and neither should num_ctl
+
+Will it be just easier to bring back the NULL assignment at the top?
+
+struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC] = { NULL };
+
+I also see the same issue for other blocks such as hw_dsc, hw_lm
+
+>   			DPU_ERROR_ENC(dpu_enc,
+>   				"no ctl block assigned at idx: %d\n", i);
+>   			return;
+> 
 
