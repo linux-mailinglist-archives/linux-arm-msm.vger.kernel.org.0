@@ -1,283 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-26044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B483592FA92
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 14:46:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 765BD92FB55
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 15:27:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6879D2832D5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 12:46:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2320128218E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 13:27:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75CEC16F8FF;
-	Fri, 12 Jul 2024 12:45:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCFCE16EBF7;
+	Fri, 12 Jul 2024 13:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IJTjXy04"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G6E3CZhJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA0B16F85B;
-	Fri, 12 Jul 2024 12:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A9715CD75;
+	Fri, 12 Jul 2024 13:27:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720788315; cv=none; b=gf+Defsj8HUgKLbdauZ+XsNSyj4DWrdArBg/F6FAPerqyVLMKWe032eePvI+8diCrqt3tqIyrmJdRFPxaFXUmMfjAuofVkGBX75y1zYmeJu/2y9dLZTcB4DTZgQi7kCqW7iElVN/qQyt9MZRvvP25B0R5GCLXAGErMh11lxwSB8=
+	t=1720790848; cv=none; b=PC//39+2lKCMg0ib6L/Zyi2LKSUSYvh2Jrm91nDwgNN5/dotLZ7l5wPBI6pkuNe1eQzPzk5xL8jlb+pfK8HuezB17yNqyQz6hCzhd8nJlMrRU/8k+3IGcn+ASMhWEMqxgn5HI2HMU/bTw1lxfs1ZglpBWY8emwjjfZ6AcL/L/JM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720788315; c=relaxed/simple;
-	bh=xT3vdgzfitnNc45nl9KNHLr746ozbECZ34w19TY+CLQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=a6odkT09twu/3EYxTUuzpyQLQotILpnVLZvIVXJ9IPzz+tmp3z7e5J5dH2RBXhzmXGonqLP28ux8KRdJcX24bRky+0Z6rLo19iUnAwcyv2Z9sHBgXrtn8QqLBfTqTGUF/ubUi7/AGvfLQkHQnV7GgLB/bjQ1+XDzgzi3xvwel+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IJTjXy04; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1720790848; c=relaxed/simple;
+	bh=kovs8atHdA3qYjfsMg3238UX/Gd9NWs+o4VgdmMSwVU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=pYG7Kn8GfURYzG7zSh8TwpBdBzupRJ7XkoGn2RExCjiV0iINiAtNneSPDZiDRQa3jwBFwj6Qe8wyizVVwLa+lst388/UGSkDetM6KroRMzscwlgFCSkP5Uz1g9qcKPpSwil0TQYnv1PVPLammY7SdXuyZxSPyQXwKVhpx3CZyiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G6E3CZhJ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46CBAer6007447;
-	Fri, 12 Jul 2024 12:44:55 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46C5eSRq017618;
+	Fri, 12 Jul 2024 13:27:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	LRIVKzH1hSjxSuvugXYotptQy+3/BurYv3ZsB9X2wks=; b=IJTjXy04IXXlH8yO
-	yBJA8SrsIw4Gk9ZpePLi5+nOS+qRNnoUZyUSw17xA6Sdk+roi0qF9krwIBdmKEnD
-	dRGyCYXeOHAx55URoqRtFL9A+8MeC41nFariZgHFxkSi7Xn6TRXnU4RfhX/cRL4F
-	uoMU+fvP1rs+CGo3EGZGWs5Awf4gAFB8attTs/DiNfhMsZCeVGuBzpcb5EDvX6O9
-	F5y28ulHmXYCzTqYqKe4OchZLg/lGuZ4mKJH2kyyhVOPhmGZihWZjYkPMByvJ1NS
-	YZHc7hEhCYe9Yerji4YQ9Ao9v9auqOVS3ndHdD3tkNZdFtyCRhln+X0E00gF3hKP
-	RyI4Og==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40ac0gkh2f-1
+	OIG5Y5G2hILIN1sgx3ToMhbIOTJJ6fHkgs7xaMlvlbg=; b=G6E3CZhJgLsMHI4b
+	S0FsZgdVSRqgnLW2NWKXLVHzGg2JhaiSn81u6POfAmsMnd+fRmYaapzT5Jse5K5n
+	0aaNzheoEwLP69Xxj+dvNHpOxNH57LJJhf3Mtu28ERb3KeKGopkeyvoc5is4CvQG
+	U4qbRT7IcVAo9XrH8x4JYLCZT/qaeEygHR1pMxGoCXfWRwq3hFp/PRNzKdE2Drhm
+	GEbwjpicTCaxoybsLUaT1tQL4UvT6jxbQDy5IadFWs3UZVEyqCZpOdK6wu2fXgXE
+	NStG1lTCD5r12490POiT2VnSElJUI8xVZdUHCrRT5v8rTWfWn+l3MDu2uKeFGudC
+	ReBEjQ==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40a8uhv5q0-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Jul 2024 12:44:55 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46CCirf0028069
+	Fri, 12 Jul 2024 13:27:21 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46CDRJXa001184
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Jul 2024 12:44:53 GMT
-Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 12 Jul 2024 05:44:46 -0700
-From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Date: Fri, 12 Jul 2024 18:13:32 +0530
-Subject: [PATCH 5/5] ARM: dts: qcom: Add support for MBG TM for pm8775 on
- SA8775P
+	Fri, 12 Jul 2024 13:27:20 GMT
+Received: from [10.216.15.10] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 12 Jul
+ 2024 06:27:16 -0700
+Message-ID: <6e1affa3-9570-6a61-2290-be4097a2330e@quicinc.com>
+Date: Fri, 12 Jul 2024 18:57:13 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 1/2] media: venus: hfi_cmds: struct
+ hfi_session_release_buffer_pkt: Replace 1-element array with flexible array
+Content-Language: en-US
+To: Kees Cook <kees@kernel.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>
+CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-hardening@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240710230728.work.977-kees@kernel.org>
+ <20240710230914.3156277-1-kees@kernel.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <20240710230914.3156277-1-kees@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240712-mbg-tm-support-v1-5-7d78bec920ca@quicinc.com>
-References: <20240712-mbg-tm-support-v1-0-7d78bec920ca@quicinc.com>
-In-Reply-To: <20240712-mbg-tm-support-v1-0-7d78bec920ca@quicinc.com>
-To: Jonathan Cameron <jic23@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        "Thara
- Gopinath" <thara.gopinath@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC: Kamal Wadhwa <quic_kamalw@quicinc.com>,
-        Taniya Das
-	<quic_tdas@quicinc.com>,
-        Jishnu Prakash <quic_jprakash@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <linux-iio@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>,
-        Satya Priya Kakitapalli
-	<quic_skakitap@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        "Imran
- Shaik" <quic_imrashai@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>
-X-Mailer: b4 0.13.0
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: nYXH9ngSNr5YB03qH1V5mF878LG88bvj
-X-Proofpoint-GUID: nYXH9ngSNr5YB03qH1V5mF878LG88bvj
+X-Proofpoint-GUID: s4DycOXY3sV0Ts1H_0ZKYnZQNnwpMTYm
+X-Proofpoint-ORIG-GUID: s4DycOXY3sV0Ts1H_0ZKYnZQNnwpMTYm
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-12_09,2024-07-11_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 mlxlogscore=823
- mlxscore=0 impostorscore=0 clxscore=1015 suspectscore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407120086
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 bulkscore=0 clxscore=1011 mlxscore=0 malwarescore=0
+ mlxlogscore=999 lowpriorityscore=0 suspectscore=0 spamscore=0 phishscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407120091
 
-Add support for MBG TM peripheral for pm8775 sail pmics on SA8775P.
 
-Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi | 120 ++++++++++++++++++++++++++++
- 1 file changed, 120 insertions(+)
+On 7/11/2024 4:39 AM, Kees Cook wrote:
+> Replace the deprecated[1] use of a 1-element array in
+> struct hfi_session_release_buffer_pkt with a modern flexible array.
+> 
+> No binary differences are present after this conversion.
+> 
+> Link: https://github.com/KSPP/linux/issues/79 [1]
+> Signed-off-by: Kees Cook <kees@kernel.org>
+> ---
+> Cc: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+> Cc: Vikash Garodia <quic_vgarodia@quicinc.com>
+> Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+> Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
+> Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+> Cc: linux-media@vger.kernel.org
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-hardening@vger.kernel.org
+> ---
+>  drivers/media/platform/qcom/venus/hfi_cmds.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.h b/drivers/media/platform/qcom/venus/hfi_cmds.h
+> index 20acd412ee7b..42825f07939d 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_cmds.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.h
+> @@ -227,7 +227,7 @@ struct hfi_session_release_buffer_pkt {
+>  	u32 extradata_size;
+>  	u32 response_req;
+>  	u32 num_buffers;
+> -	u32 buffer_info[1];
+> +	u32 buffer_info[];
+>  };
+>  
+>  struct hfi_session_release_resources_pkt {
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-index bd4f5f51e094..69910306885e 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-@@ -89,6 +89,62 @@ trip1 {
- 				};
- 			};
- 		};
-+
-+		pmm8654au_0_mbg_tm: pmm8654au_0_mbg_tz {
-+			polling-delay-passive = <100>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pmm8654au_0_tz>;
-+
-+			trips {
-+				trip0 {
-+					temperature = <115000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		pmm8654au_1_mbg_tm: pmm8654au_1_mbg_tz {
-+			polling-delay-passive = <100>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pmm8654au_1_tz>;
-+
-+			trips {
-+				trip0 {
-+					temperature = <115000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		pmm8654au_2_mbg_tm: pmm8654au_2_mbg_tz {
-+			polling-delay-passive = <100>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pmm8654au_2_tz>;
-+
-+			trips {
-+				trip0 {
-+					temperature = <115000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		pmm8654au_3_mbg_tm: pmm8654au_3_mbg_tz {
-+			polling-delay-passive = <100>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pmm8654au_3_tz>;
-+
-+			trips {
-+				trip0 {
-+					temperature = <115000>;
-+					hysteresis = <5000>;
-+					type = "passive";
-+				};
-+			};
-+		};
- 	};
- 
- 	reboot-mode {
-@@ -180,6 +236,22 @@ reboot_reason: reboot-reason@48 {
- 		};
- 	};
- 
-+	pmm8654au_sail_0: pmic@1 {
-+		compatible = "qcom,pmm8654au", "qcom,spmi-pmic";
-+		reg = <0x1 SPMI_USID>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		pmm8654au_0_tz: qcom,mbg-tm@d700 {
-+			compatible = "qcom,spmi-mgb-tm";
-+			reg = <0xd700>;
-+			io-channels = <&pmm8654au_0_adc PM8775_ADC5_GEN3_DIE_TEMP(0)>;
-+			io-channel-names = "thermal";
-+			interrupts-extended = <&spmi_bus 0x1 0xd7 0x0 IRQ_TYPE_EDGE_RISING>;
-+			#thermal-sensor-cells = <0>;
-+		};
-+	};
-+
- 	pmm8654au_1: pmic@2 {
- 		compatible = "qcom,pmm8654au", "qcom,spmi-pmic";
- 		reg = <0x2 SPMI_USID>;
-@@ -226,6 +298,22 @@ pmm8654au_1_gpios: gpio@8800 {
- 		};
- 	};
- 
-+	pmm8654au_sail_1: pmic@3 {
-+		compatible = "qcom,pmm8654au", "qcom,spmi-pmic";
-+		reg = <0x3 SPMI_USID>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		pmm8654au_1_tz: qcom,mbg-tm@d700 {
-+			compatible = "qcom,spmi-mgb-tm";
-+			reg = <0xd700>;
-+			io-channels = <&pmm8654au_1_adc PM8775_ADC5_GEN3_DIE_TEMP(2)>;
-+			io-channel-names = "thermal";
-+			interrupts-extended = <&spmi_bus 0x3 0xd7 0x0 IRQ_TYPE_EDGE_RISING>;
-+			#thermal-sensor-cells = <0>;
-+		};
-+	};
-+
- 	pmm8654au_2: pmic@4 {
- 		compatible = "qcom,pmm8654au", "qcom,spmi-pmic";
- 		reg = <0x4 SPMI_USID>;
-@@ -272,6 +360,22 @@ pmm8654au_2_gpios: gpio@8800 {
- 		};
- 	};
- 
-+	pmm8654au_sail_2: pmic@5 {
-+		compatible = "qcom,pmm8654au", "qcom,spmi-pmic";
-+		reg = <0x5 SPMI_USID>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		pmm8654au_2_tz: qcom,mbg-tm@d700 {
-+			compatible = "qcom,spmi-mgb-tm";
-+			reg = <0xd700>;
-+			io-channels = <&pmm8654au_2_adc PM8775_ADC5_GEN3_DIE_TEMP(4)>;
-+			io-channel-names = "thermal";
-+			interrupts-extended = <&spmi_bus 0x5 0xd7 0x0 IRQ_TYPE_EDGE_RISING>;
-+			#thermal-sensor-cells = <0>;
-+		};
-+	};
-+
- 	pmm8654au_3: pmic@6 {
- 		compatible = "qcom,pmm8654au", "qcom,spmi-pmic";
- 		reg = <0x6 SPMI_USID>;
-@@ -317,4 +421,20 @@ pmm8654au_3_gpios: gpio@8800 {
- 			#interrupt-cells = <2>;
- 		};
- 	};
-+
-+	pmm8654au_sail_3: pmic@7 {
-+		compatible = "qcom,pmm8654au", "qcom,spmi-pmic";
-+		reg = <0x7 SPMI_USID>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		pmm8654au_3_tz: qcom,mbg-tm@d700 {
-+			compatible = "qcom,spmi-mgb-tm";
-+			reg = <0xd700>;
-+			io-channels = <&pmm8654au_3_adc PM8775_ADC5_GEN3_DIE_TEMP(6)>;
-+			io-channel-names = "thermal";
-+			interrupts-extended = <&spmi_bus 0x7 0xd7 0x0 IRQ_TYPE_EDGE_RISING>;
-+			#thermal-sensor-cells = <0>;
-+		};
-+	};
- };
+Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 
--- 
-2.25.1
-
+Regards,
+Vikash
 
