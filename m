@@ -1,63 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-26059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9165B92FFA8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 19:20:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B858992FFBD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 19:25:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C20161C22E18
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 17:20:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 992991C20B54
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 17:25:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3582B1EA90;
-	Fri, 12 Jul 2024 17:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16515171644;
+	Fri, 12 Jul 2024 17:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gxz6ANKU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S3BjoMcD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A354017C6B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 17:20:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41C81EB56;
+	Fri, 12 Jul 2024 17:25:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720804818; cv=none; b=uvC9lr3XvDiBRrtY7PnmFq+WEfwZxmQLolYrMj9H9Xs7PRaQV+HpNTUYjjygXUEwJNfhXHsIJHn9hv4NNwbt3uAA3lkTh5Me+YUIB0kPw0StTkQIQ8/BH8lqCL986acC1BDiR6OTXVhTWBeX1+k6rF8xIhFaoeN5PftpYKURcmg=
+	t=1720805140; cv=none; b=YK1Rs6fzqqteycR2uq09+W3/ung0WzbkT8k8gWZlh7BP3iIbIYewYtxiyYb6BTzVgmEVfmWy8haorjQHSc0IE/mVjAQ9mStXriEzGklFa6PB4VKgYFdP32Oshrn+A0YQYIowjP87h0Dd6Xoolmyem7QDsVW+WgdPlbn8AS+PZjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720804818; c=relaxed/simple;
-	bh=A5dNgSaYMelhrh4yUuP6Hw0FJkSkuKLYiTd4oatiLHA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=HHYn6SeM+GfNcURvb4CpwLGj1Zx9u2p1QXdyiY02qvv5a+XppzJrQ3ITW5OVZrCQdP0g0EjIBg1ZzU+ex6zdCNbSzK+CC/pFPMtNId1ViqmWRetaXx6qBLaXSfDqDtZqbX0k07lnx+FlN6PSJtQM1p6yJPoE0D/zaHqMKtN4Xd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gxz6ANKU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46CApDfv027173;
-	Fri, 12 Jul 2024 17:20:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mj0We3FIkDAV3//rHgKZjs9kgJpwKU1fbyeqjxjXhmk=; b=gxz6ANKUxL/VhwQR
-	47bXiFZF+p7WB4OcbOPHZX8CzwRKXru0DdYrmR6C0NLhms2mPYIMEGpRJG/WyhGK
-	iibWWfy36G6f4l5acpHGI6TzsgiX1iswFqAVrIrELzT3C+5s7GZKF8CdaOpoHlCh
-	UgMd56jC3K/2t793gHOoWuMKYQtsLWdCi1Xp44ZyS3FfLFU5sEt5gz96YO9cIYMg
-	KfmbYwX05BZbeAislqWa2txMevpzADu0Emtqe2dfkbyqzA95T9mx96f0kfvs2YmZ
-	ezqTKPuTTkU0i4UsCYuIDu534o0NiO8G49hUtgwHeq+knxiuRj3jy9lhJMNlYdPS
-	dDUSZA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40ar3fjc5u-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Jul 2024 17:20:05 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46CHK3t0007219
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 12 Jul 2024 17:20:03 GMT
-Received: from [10.110.71.234] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 12 Jul
- 2024 10:20:02 -0700
-Message-ID: <37ca13e0-1fac-4e5c-8e97-8ab5a67ec876@quicinc.com>
-Date: Fri, 12 Jul 2024 10:19:38 -0700
+	s=arc-20240116; t=1720805140; c=relaxed/simple;
+	bh=7CzMpoUeZOc5SI536qiedtA15huojNT7kTfuk9VqqN8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=a11M34tMXmUzdtkya9eMx6GRvs/wF9Ru3S1I5DBuA00fgPO1A8M78lS+LEgoNGCmPy1qF+i/Zd9EZEDilU0VHqbE7nxWrr9TK6uEGK8GLVnjoLoP+oMl89GC4N8JIeOH+B9fJIDE/UaW5eXlqhgkC+qTI8k6UfAuHvr8fKihrrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S3BjoMcD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC27C32782;
+	Fri, 12 Jul 2024 17:25:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720805139;
+	bh=7CzMpoUeZOc5SI536qiedtA15huojNT7kTfuk9VqqN8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=S3BjoMcD/paYYvBZIs1/YIS+89ctvOqhKgKjgPaOkFhCi5nABu6wXwDtPoPvFvKn2
+	 47qWRajZz2Jx+Svxbn7JB+3MBim9Im3bXzX1GjncE5JbhFex5cRPtfwpJOzFN1jOuD
+	 9eb8x6NdwH9PwqkioPTctI8JGuqx+X9lTJOzVztLoRFtV6D0EaD6krxa0PqNO86G4H
+	 9UaUFkAwMuoOa5Mc0Buh4W6IW8O22HH7wovDpb6WtXwsSLhQ/GCDCgeFjsXCETCvUU
+	 U5OWrrv3oeC7rVU26GES+cXraE1QLtelSxefMSzImobNTeQ5V5Y4g8HUgwwcTV5+oQ
+	 D1OnH7uRA65vw==
+Message-ID: <7a834db9-4b46-4737-a6c4-52bd38610fca@kernel.org>
+Date: Fri, 12 Jul 2024 19:25:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,82 +50,193 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 01/16] drm/msm/dpu: cleanup FB if
- dpu_format_populate_layout fails
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>
-CC: Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan+linaro@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20240625-dpu-mode-config-width-v5-0-501d984d634f@linaro.org>
- <20240625-dpu-mode-config-width-v5-1-501d984d634f@linaro.org>
+Subject: Re: [PATCH 2/5] dt-bindings: thermal: qcom: Add MBG thermal monitor
+ bindings
+To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ Jonathan Cameron <jic23@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
+ Lukasz Luba <lukasz.luba@arm.com>, Amit Kucheria <amitk@kernel.org>,
+ Thara Gopinath <thara.gopinath@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Kamal Wadhwa <quic_kamalw@quicinc.com>, Taniya Das
+ <quic_tdas@quicinc.com>, Jishnu Prakash <quic_jprakash@quicinc.com>,
+ linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>
+References: <20240712-mbg-tm-support-v1-0-7d78bec920ca@quicinc.com>
+ <20240712-mbg-tm-support-v1-2-7d78bec920ca@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240625-dpu-mode-config-width-v5-1-501d984d634f@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240712-mbg-tm-support-v1-2-7d78bec920ca@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CBOea9aFWftTzBdSf0-6FaAeE-X_ArPu
-X-Proofpoint-ORIG-GUID: CBOea9aFWftTzBdSf0-6FaAeE-X_ArPu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-12_13,2024-07-11_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- phishscore=0 clxscore=1011 mlxlogscore=999 priorityscore=1501
- malwarescore=0 impostorscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407120117
 
-
-
-On 6/24/2024 2:13 PM, Dmitry Baryshkov wrote:
-> If the dpu_format_populate_layout() fails, then FB is prepared, but not
-> cleaned up. This ends up leaking the pin_count on the GEM object and
-> causes a splat during DRM file closure:
+On 12/07/2024 14:43, Satya Priya Kakitapalli wrote:
+> Add bindings support for the MBG Temp alarm peripheral found on
+> pm8775 pmics.
 > 
-> msm_obj->pin_count
-> WARNING: CPU: 2 PID: 569 at drivers/gpu/drm/msm/msm_gem.c:121 update_lru_locked+0xc4/0xcc
-> [...]
-> Call trace:
->   update_lru_locked+0xc4/0xcc
->   put_pages+0xac/0x100
->   msm_gem_free_object+0x138/0x180
->   drm_gem_object_free+0x1c/0x30
->   drm_gem_object_handle_put_unlocked+0x108/0x10c
->   drm_gem_object_release_handle+0x58/0x70
->   idr_for_each+0x68/0xec
->   drm_gem_release+0x28/0x40
->   drm_file_free+0x174/0x234
->   drm_release+0xb0/0x160
->   __fput+0xc0/0x2c8
->   __fput_sync+0x50/0x5c
->   __arm64_sys_close+0x38/0x7c
->   invoke_syscall+0x48/0x118
->   el0_svc_common.constprop.0+0x40/0xe0
->   do_el0_svc+0x1c/0x28
->   el0_svc+0x4c/0x120
->   el0t_64_sync_handler+0x100/0x12c
->   el0t_64_sync+0x190/0x194
-> irq event stamp: 129818
-> hardirqs last  enabled at (129817): [<ffffa5f6d953fcc0>] console_unlock+0x118/0x124
-> hardirqs last disabled at (129818): [<ffffa5f6da7dcf04>] el1_dbg+0x24/0x8c
-> softirqs last  enabled at (129808): [<ffffa5f6d94afc18>] handle_softirqs+0x4c8/0x4e8
-> softirqs last disabled at (129785): [<ffffa5f6d94105e4>] __do_softirq+0x14/0x20
-> 
-> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
+>  .../bindings/thermal/qcom-spmi-mbg-tm.yaml         | 63 ++++++++++++++++++++++
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+A nit, subject: drop second/last, redundant "bindings". The
+"dt-bindings" prefix is already stating that these are bindings.
+See also:
+https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
+
+>  1 file changed, 63 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-spmi-mbg-tm.yaml b/Documentation/devicetree/bindings/thermal/qcom-spmi-mbg-tm.yaml
+> new file mode 100644
+> index 000000000000..9b6d1bc34a11
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-spmi-mbg-tm.yaml
+> @@ -0,0 +1,63 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/thermal/qcom-spmi-mbg-tm.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. SPMI PMIC MBG Thermal Monitoring
+> +
+> +maintainers:
+> +  - Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+> +
+> +description: |
+
+Do not need '|' unless you need to preserve formatting.
+
+> +  Qualcomm's thermal driver for the MBG thermal monitoring device.
+
+Driver as Linux driver? Instead please describe the hardware.
+
+Missing $ref to thermal-sensor.
+
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,spmi-mbg-tm
+
+Instead use SoC specific compatible.
+
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  io-channels:
+
+Missing constraints. Use items with description.
+> +    description:
+> +      IIO channel specifier for the ADC channel, which reports
+
+And drop redundant part - "IIO channel specifier for". This cannot be
+anything else.
+
+> +      chip die temperature.
+> +
+> +  io-channel-names:
+> +    const: thermal
+> +
+> +  "#thermal-sensor-cells":
+> +    const: 0
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - io-channels
+> +  - io-channel-names
+> +  - "#thermal-sensor-cells"
+
+And this won't be needed.
+
+> +
+> +additionalProperties: false
+
+unevaluatedProperties instead
+
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    #include <dt-bindings/iio/adc/qcom,spmi-adc5-gen3-pm8775.h>
+> +    spmi_bus {
+
+Eh... No. Is this really directly on SPMI bus? Anyway, use correct node
+names.
+
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +
+> +      pm8775_sail_1_tz: qcom,mbg-tm@d700 {
+
+Oh no, please don't bring downstream crap.
+
+Do you see any node called like this?
+
+Also, drop unused label.
+
+> +        compatible = "qcom,spmi-mbg-tm";
+> +        reg = <0xd700>;
+> +        interrupts = <0x1 0xd7 0x0 IRQ_TYPE_EDGE_RISING>;
+
+This suggests it is not on SPMI bus but part of PMIC. Why doing
+something entirely different then entire Linux kernel? Do not use
+downstream as template, that's a no go.
+
+Best regards,
+Krzysztof
+
 
