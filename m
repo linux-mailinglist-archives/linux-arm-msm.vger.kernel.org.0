@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-26063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37B9093010C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 21:43:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4606993011E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 21:53:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E6C18281914
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 19:43:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 76BE11C22730
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 19:53:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CA91381D9;
-	Fri, 12 Jul 2024 19:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FE0F3A1BA;
+	Fri, 12 Jul 2024 19:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bLENL5rZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LVtLZ6G4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C893381BA
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 19:43:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE36D381A4
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 19:53:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720813422; cv=none; b=HtVpUvu6N6VisTBAkcete3o9XTQJInEM0sp1qhPsDzQDf+BTYFs79cTj2y52yw5PPoRRx7ltezI+IbH7V8Q2pBadpm2KwRhHzT400zmM25ed5HOSb4ocvPj7JpyPu8bwsMaMik6lTjdkHjCQNJHegWdrVaEUokccW/2pCs0DfTQ=
+	t=1720814012; cv=none; b=DTlfnrlNtqKf+bMPNRgCrhnu4sbSYcmrT4fqk0kElNEehXrazzbiSDjfNHx6sATkWtQMyXOE+qg2I7zHpDMyZHEy+ddaKMu2McdzBPk6P840OPBELx328OzyfH+64GZ+KuntEmsujknSTy8OdFYiIwcqv7Dv4SvzMepQ4uEILJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720813422; c=relaxed/simple;
-	bh=1lEUspWAaO5u1XSmEkkpRCZaASP5SBuIUGMnwoj8aY4=;
+	s=arc-20240116; t=1720814012; c=relaxed/simple;
+	bh=StUJdV7TFg7NGKUMdDCwe2aGMaXQXh1UOAGwUqGnrkc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=taRdSomXeGu4I/csq0+Ocz46dIn3LFyDx/axwrqj79xZM5SbCmXZz29TYEsYvN9VyiPjr0zykCNs3mHucrSd5hVAku51BwN9Z3hkwRZNVhYcLKTxFCIw7uN0vE/w72y2XshC8JkaJKugYSzHCAyX3I5AUX9eAwBlPTgqnZv1Dxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bLENL5rZ; arc=none smtp.client-ip=209.85.218.41
+	 In-Reply-To:Content-Type; b=I16vh9HKDLOfP8W8QiokfwSvFvzYjrTmCijXtsvho+eJJxgzsyFrSjZOYQRjyPdy1eJaXtQkqoazvb3rM6VEescekdATF2IzChnplmakl+/GeRJoNLp3SQ6WQZTwVWSThkWrqjFRD9Vp4DkT5dbyMze70X3Zyzzt5jOSJkB9NvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LVtLZ6G4; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a77e7420697so348318566b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 12:43:40 -0700 (PDT)
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-595856e2332so3058892a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 12:53:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720813419; x=1721418219; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1720814009; x=1721418809; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=jdmhCOprl+my3R8CgZP6ngYaYIZyq201uioObhwKcnA=;
-        b=bLENL5rZ5aNqqbfRvgVtWWvJ6+r7lOnAq5pOe/wGhANz3o35o7V1kqAeSX7X6lNUQ8
-         dJRC+V11e+L3bPKcdzbYsDnUAId/bV02/tXxnX0MKGAiPgrx9bCaCRqSq1l0l+85Xdjz
-         pp0kRELmW8p+TmUDoYvHSP0ysTZaYXfwn/GE8E7KuT/fl7xtuSCu3MZNkJ2ok7WpFLh2
-         ROm7zAb3hZsKr/yPA9QTHokBzhhr1Foh/9924+8T8DxoFmLhVVk0ovfjsPv0B0epqOpb
-         IOUS57ssmMo4oxJcH4R3FV9fqDE4q/JuLXc3j4AtCzjtf5tzs/5O7TDeBkAHf8vQLvhd
-         RlMA==
+        bh=CD9Gf2WFD/32n/g3oQVjierG/CJPtNZszx3tKsXb1rc=;
+        b=LVtLZ6G4KOHaaC2LmGk0n4LQn3QtScvHgY4BZzTL6DAMkIuldcqg+90wAJ7z20/YhS
+         nbo9bWT5LAKZMCgUo+yGgfvujb0xUgYwXjOaC5T6aN92PjXV2XfG7v4gUenRDTsDJSQa
+         KPSSMaZVRT31Y8rz/nEHH8W6SJ0e4iBzqcD3MvQOYmsapM8fRunpQeTW6BgBclLDv60T
+         pRjlDvLkSVJJ/oDLhBDCQKYNqRjJ1JzOBD5tzbjmTQEdnU6Xhq77ZSSz4AnDCLYJ6s67
+         c4WaQZwr4/+mVmAzrQQxnaEHhH7iRYT1cvNivH2ASTz7ruEEfqSYmwfRoyNMXjgkoYpt
+         27aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720813419; x=1721418219;
+        d=1e100.net; s=20230601; t=1720814009; x=1721418809;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jdmhCOprl+my3R8CgZP6ngYaYIZyq201uioObhwKcnA=;
-        b=hpC598JGdeMrw85wkAms/6orTStjsUptZJy05OMpGQ0BwtMgfqLBcFPgmJTdwR+wRO
-         sr0BGd5+v6/50PqlX9Pt9EydT5gch8CqicFjY3Ihc5yomlJolkBsuBSHRRw9klpT5zPT
-         ljLDkGbBPGiUuHtiORRAfNqAcJGYodqnveBhqVy5z9snvfteEZhpm0CtrPMBwxiJmgs9
-         9jKI3n3bGVXRuvCmy0A1HsR+zqUMBcx1MVQt+1+8jrFx1rtVeky+PWXZ6UZttxzp/Nsd
-         nssVWIFm7uwJ10EH/gAgA5Sk1juASc1KsaIjm2FIqFjU0I8gnX6I9TGKoKCDX7ZTQOWZ
-         D3KQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWLAZx0oQT/GXC9e4xXrXlLto++SOOOMSF4qqhH8mO8exJCNg8SK9HXhXT2+6SqiB9VZv460V3chIZCPSSBTD9yAB7aiIqnY3lftGsZuA==
-X-Gm-Message-State: AOJu0YyWCgxdoCI47WwRaqiemWuHLkWUNoqKJz+tbGluIgoOQnwa++ZS
-	2/LwSAmEEthjK3G74cwSittveBJEQKrESkJUv8fZP6CokqpFfeZjiQIHFaMqpfg=
-X-Google-Smtp-Source: AGHT+IENsgMX+uB30BzFuKiY0VK7jTYuAcwlOSncj3lPj2Y1ijF/x3cXaWJqdaGwyXkblGalqYwh7Q==
-X-Received: by 2002:a17:907:38f:b0:a77:e48d:bad with SMTP id a640c23a62f3a-a780b6b1f20mr818567666b.32.1720813418498;
-        Fri, 12 Jul 2024 12:43:38 -0700 (PDT)
+        bh=CD9Gf2WFD/32n/g3oQVjierG/CJPtNZszx3tKsXb1rc=;
+        b=XPfEnGWHuKsHnCoZSiD4o9AzhKP61qA5LrcZeTOBAYqQP/Qm/ZGOZxSbMXmHs3nEnw
+         jlfT0uiyX7LhgjbX+/fSgLSsXt4UAsOiGLNV7vivPqEjBIBDvbptGUBkcbSb8UQT1ZzT
+         YGAEEpo2QKApEETiorZB3NtTPu0bodt7T6o40Ga0qmBjGV/H14hQsdHM4rqA75Kisynt
+         wLbwPDY6rLW2Ezjsf09R5P+mwn+OOdHRsO5CDz8uQi4nYYO5lC+HbNphmCltCR5BzbrE
+         aHU7/a4hmB97YJelqC8yHSYqPuV7aDWYO0SS+TpvRitx3Gls5TpFNyflZFCKuzu2gj0V
+         jQeQ==
+X-Gm-Message-State: AOJu0YyDFSr2Nga9hJIz1pPxKWboFNxllCtWC8xAxoiGJt+/9dWyZ6r4
+	KRmmzyIGJeVvQ+W8kHzgMuqzJaylIKttzADFoYo+KR1g8Fi1Xf8on0uovMP6mjM=
+X-Google-Smtp-Source: AGHT+IGzHghaUPM+/bov9+aj6s70/HQdZmAWPCba2bpobclhNx22aZiNLnZzv0YAXaDzEBtl4s4OAA==
+X-Received: by 2002:a17:906:2650:b0:a6f:5698:ab5b with SMTP id a640c23a62f3a-a780b6882camr908158566b.8.1720814008716;
+        Fri, 12 Jul 2024 12:53:28 -0700 (PDT)
 Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a780a6bc8a2sm377290966b.15.2024.07.12.12.43.35
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a780a854592sm375063466b.146.2024.07.12.12.53.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jul 2024 12:43:37 -0700 (PDT)
-Message-ID: <ec59e5a0-81c1-4a2a-be9d-b28fa63ee473@linaro.org>
-Date: Fri, 12 Jul 2024 21:43:34 +0200
+        Fri, 12 Jul 2024 12:53:28 -0700 (PDT)
+Message-ID: <2146ca56-6c2c-48a3-8e77-75aa04cb2b4c@linaro.org>
+Date: Fri, 12 Jul 2024 21:53:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,25 +76,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] ARM: dts: qcom: Add support for MBG TM for pm8775 on
- SA8775P
-To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- Jonathan Cameron <jic23@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>,
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: msm8939-wingtech-wt82918: Add
+ Lenovo Vibe K5 devices
+To: Nikita Travkin <nikita@trvn.ru>, Bjorn Andersson <andersson@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>, Amit Kucheria <amitk@kernel.org>,
- Thara Gopinath <thara.gopinath@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Kamal Wadhwa <quic_kamalw@quicinc.com>, Taniya Das
- <quic_tdas@quicinc.com>, Jishnu Prakash <quic_jprakash@quicinc.com>,
- linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-pm@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>,
- Jagadeesh Kona <quic_jkona@quicinc.com>
-References: <20240712-mbg-tm-support-v1-0-7d78bec920ca@quicinc.com>
- <20240712-mbg-tm-support-v1-5-7d78bec920ca@quicinc.com>
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ =?UTF-8?B?QWRhbSBTxYJhYm/FhA==?= <asaillen@protonmail.com>
+References: <20240712-msm89xx-wingtech-init-v1-0-64f4aa1870bd@trvn.ru>
+ <20240712-msm89xx-wingtech-init-v1-3-64f4aa1870bd@trvn.ru>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -133,32 +123,143 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240712-mbg-tm-support-v1-5-7d78bec920ca@quicinc.com>
+In-Reply-To: <20240712-msm89xx-wingtech-init-v1-3-64f4aa1870bd@trvn.ru>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 12.07.2024 2:43 PM, Satya Priya Kakitapalli wrote:
-> Add support for MBG TM peripheral for pm8775 sail pmics on SA8775P.
+On 12.07.2024 6:04 PM, Nikita Travkin wrote:
+> From: Adam Słaboń <asaillen@protonmail.com>
 > 
-> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+> This commit introduces multiple hardware variants of Lenovo Vibe K5.
+> 
+> - A6020a40 (msm8929-wingtech-wt82918hd)
+> - A6020a46/A6020l36 (msm8939-wingtech-wt82918)
+> - A6020a40 S616 H39 (msm8939-wingtech-wt82918hd)
+> 
+> These devices are added with support for many features, notably:
+> 
+> - Basic features like USB, mmc/sd storage, wifi, buttons, leds;
+> - Accelerometer;
+> - Touchscreen;
+> - Sound and modem.
+> 
+> Note that "HD" variant of K5 is based on msm8929 which is a lower bin
+> of msm8939 SoC. A simple dtsi is added for this soc along with the new
+> devices.
+> 
+> Unfortunately, despite the heavy similarities, the combination of minor
+> differences between variants make them incompatible between each other.
+> 
+> Signed-off-by: Adam Słaboń <asaillen@protonmail.com>
+> [Nikita: Minor cleanup, commit message]
+> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
 > ---
->  arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi | 120 ++++++++++++++++++++++++++++
->  1 file changed, 120 insertions(+)
+>  arch/arm64/boot/dts/qcom/Makefile                  |   3 +
+>  .../boot/dts/qcom/msm8929-wingtech-wt82918hd.dts   |  17 ++
+>  arch/arm64/boot/dts/qcom/msm8929.dtsi              |   5 +
+>  .../boot/dts/qcom/msm8939-wingtech-wt82918.dts     |  16 ++
+>  .../boot/dts/qcom/msm8939-wingtech-wt82918.dtsi    | 254 +++++++++++++++++++++
+>  .../boot/dts/qcom/msm8939-wingtech-wt82918hd.dts   |  16 ++
+>  6 files changed, 311 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-> index bd4f5f51e094..69910306885e 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-> @@ -89,6 +89,62 @@ trip1 {
->  				};
->  			};
->  		};
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index fd4c7c41ddc4..48ec781fa1d8 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -58,10 +58,13 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86518.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86528.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-yiming-uz801v3.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8929-wingtech-wt82918hd.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-huawei-kiwi.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-longcheer-l9100.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-samsung-a7.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-sony-xperia-kanuti-tulip.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-wingtech-wt82918.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-wingtech-wt82918hd.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-motorola-potter.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-daisy.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8953-xiaomi-mido.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/msm8929-wingtech-wt82918hd.dts b/arch/arm64/boot/dts/qcom/msm8929-wingtech-wt82918hd.dts
+> new file mode 100644
+> index 000000000000..f9a358e852f8
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8929-wingtech-wt82918hd.dts
+> @@ -0,0 +1,17 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
 > +
-> +		pmm8654au_0_mbg_tm: pmm8654au_0_mbg_tz {
-> +			polling-delay-passive = <100>;
-> +			polling-delay = <0>;
+> +/dts-v1/;
+> +
+> +#include "msm8939-wingtech-wt82918.dtsi"
+> +#include "msm8929.dtsi"
+> +
+> +/ {
+> +	model = "Lenovo Vibe K5 (HD) (Wingtech WT82918)";
+> +	compatible = "wingtech,wt82918hd", "qcom,msm8929";
+> +	chassis-type = "handset";
+> +};
+> +
+> +&touchscreen {
+> +	touchscreen-size-x = <720>;
+> +	touchscreen-size-y = <1280>;
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/msm8929.dtsi b/arch/arm64/boot/dts/qcom/msm8929.dtsi
+> new file mode 100644
+> index 000000000000..c3d1d1ace2f6
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/msm8929.dtsi
+> @@ -0,0 +1,5 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +
+> +&opp_table {
 
-0 is the default polling delay, you can drop this
+No way somebody called the gpu opp table "opp table"..
+
+> +	/delete-node/ opp-550000000;
+
+Looking at downstream, seems like there isn't a speedbin fuse for
+this :(
+
+[...]
+
+> +
+> +&blsp_i2c2 {
+> +	status = "okay";
+> +
+> +	accelerometer@68 {
+> +		compatible = "invensense,icm20608";
+> +		reg = <0x68>;
+> +
+> +		pinctrl-0 = <&accelerometer_default>;
+> +		pinctrl-names = "default";
+
+interesting choice to stick pintrl before interrupts
+
+> +
+> +		interrupts-extended = <&tlmm 115 IRQ_TYPE_EDGE_FALLING>;
+> +
+> +		vdd-supply = <&pm8916_l17>;
+> +		vddio-supply = <&pm8916_l6>;
+> +
+> +		mount-matrix = "-1", "0", "0",
+> +				"0", "1", "0",
+> +				"0", "0", "1";
+> +	};
+> +};
+
+[...]
+
+> +&pm8916_mpps {
+> +	pwm_out: mpp4-state {
+> +		pins = "mpp4";
+> +		function = "digital";
+> +		power-source = <PM8916_MPP_VPH>;
+> +		output-low;
+> +		qcom,dtest = <1>;
+
+I think you meant qcom,dtest-output
+
+looks good otherwise
 
 Konrad
 
