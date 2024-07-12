@@ -1,76 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-26032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C162D92FA12
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 14:20:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B91292FA18
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 14:22:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4ACEF1F21FD7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 12:20:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 074EF1F22798
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 12:22:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D7F815A4B3;
-	Fri, 12 Jul 2024 12:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DD4916DC39;
+	Fri, 12 Jul 2024 12:22:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W6PJ6REs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JHcOaI9u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA79A1640B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 12:20:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E14A16DC1A
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 12:22:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720786807; cv=none; b=QofIMr43QkXhRgksT+D9iMRkbGis517GLd0tVRIO8R6DloJ+5Vaxfd7Pz7iclqeRpOvq0E2aP/U2Sqbl8tL4+/71+VW4MIKk1TcztBxbBIbWgk4hmBLijFO1ygMOihM5wJQ6UlhznlpRRZrDo2F/AM1aPXUVt+vdQ9FTecsnvvk=
+	t=1720786954; cv=none; b=RGWhRPMef1WHiBMZ5r8eUAmDVdGlKfdkXqnc8inHr/3Wjfk20LAg1rvkaV5eWclXivRb5JIicTSjYFHO4X8mmKxSKshK6lzerdEsrICTwQCPqAeK9Q7tUcwSjXCPE0WCVPPoTHx51KidXxONxEIYMAAs7Grdz9EFUXhJYwb1rqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720786807; c=relaxed/simple;
-	bh=9EPphHnDUG4NA9uzVthgoM502jdfAE9pgOG0c6JM1iM=;
+	s=arc-20240116; t=1720786954; c=relaxed/simple;
+	bh=ndh8+cmiTmrlJG6pBn2MdCEewaZhfKn+jDdb2M86r7o=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cD24/BqdbDfcFp7yJL0LMDYI+/JtnfiwxvdJzkjPnT22S6+LE1xtKwrWx4W6ruIYVDDxEb3UHYTaOdCAqGlBId6XWF1siqJEnrrdwqXNEuHcYOtLMzUZuFJb+2U8c792MI3wc4X7HE02ZuRhoDlFVhpEDnbnSCSgBNEt5A/v/0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W6PJ6REs; arc=none smtp.client-ip=209.85.208.171
+	 In-Reply-To:Content-Type; b=tXYFgHiRDACKnmDoeRSn7aYdQkMVQ011H1P8UQR1EYxPc2nBJATQzPWI17xfSe00vaRcuBnQ+FSXyEHqDC0m1gkzK8aC/VxPjvphQRul2YK3xOEEvshp+NqKn+wbObpOj/x7jZqmdQa6kPs4YYNv5vB0cZa4BSOpLJd1N8z7rHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JHcOaI9u; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2eaae2a6dc1so29811861fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 05:20:05 -0700 (PDT)
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-58b0dddab8cso3325463a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 05:22:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720786804; x=1721391604; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1720786951; x=1721391751; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=yAvitaA5/W52S3uPDulQ2iO0iWsi1ypQySbrbzTULVw=;
-        b=W6PJ6REsvEKZzNB3g36OcxZPU5O4+g39M97yA4uzncVYq9RVKB3bWey7bIX+CojWK0
-         +hkR5eHAs0JJkwrD74go1A9n3gveFFEpswqDfVDFa4NV3lNXM0GLKSIhzqZKCCvIj9ic
-         2QM8ueXubRfw/WygX3g0aMNHTHs1vPtLT15aZm5O62T9xMFB9iJgkrtA7pnPlWEHBP+b
-         +TSeu/a8Dpijon9N+3AYcBvkCcKkEhD0v67cqEJH6ZN15U215tiSaNDmw7bI4EpzVDk+
-         EJx1vdEjP1cyhyNwKUm+kjrmUiq0hRAA50Etrcbv21JvJz/MaUqbnZVSM8KzlUTF6ckz
-         wJzw==
+        bh=PsV8xHFAWYzRcbpc0Ef1sOYCY8HDad4uEnIegVbVHc8=;
+        b=JHcOaI9uk6WqyvUslKrGuXkXC/iNH2/ETsks2fKiWCPRRoW73juyKnjQ+xD1maC8Y+
+         fvLTW9NrOlXhn9c7maLDyw9DG8VmGiHOqjW9U4LnUC+kRRAcQpNmqRxGNDk5R8HGBX2g
+         KltlJvtSUA3lRaTOaOVK0TA6ILuIloNmYtcZ0l8OyELVnMujpoPjXUq31XRg8XAlEoGU
+         o4S+7TKpqVGx1PnumI/QAAVjeM2QRGkWyfdcmclgwDtuE4GiG/8rZYth2ur3hzHXMRtc
+         ziHnMJ3mUB4ZTu7xyUgMhrMeklasUgbvqcgFCln1JMuMiwwHNcpcsGKWZBIySfir8zgs
+         NcKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720786804; x=1721391604;
+        d=1e100.net; s=20230601; t=1720786951; x=1721391751;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yAvitaA5/W52S3uPDulQ2iO0iWsi1ypQySbrbzTULVw=;
-        b=LqI8E3o6rGrkP+fBDKoYAvBMl1V4RY2eOHdJJQnjQr7JUqvh9Ix9SBuf0lKAkypWyX
-         6hL8mHn0xYPm1z5F15uJ16KpRLPOcl6sdStb/BhnmJUrmDmh2jCKTQGECPHJFQWNHoOx
-         s4iwqLkyV4y/LwSR3x7ugOcLlaQbRV5rx32lZipADShsFHdECVww4IBjF6iX7yywTn6D
-         twudvn/WG//q6L/Mr5bzo4hhOJPSqk2S/dcekXhMy8DHcXNOPkWrhkim5b5AD8aaZI4L
-         WhoL/1no3LGhB7q4FtNcRtq6gm6CpmWNwtGeThs/SBmAxm0z9JiY/4Ry47Dx52CYdPJW
-         FXDw==
-X-Forwarded-Encrypted: i=1; AJvYcCVupBsKFZBCbT9qr8HPd9lFYyNjz7CNJUok08TCyHhf5g5AfdvB7/gvFIOvGL+sd/AjGcPuG6SlZH1CSLOUS3Rz/gVPzYzjTvcJSpU6kg==
-X-Gm-Message-State: AOJu0YwvrPVMgXLbfGPN+VreBzp4fR92Dkx53c6BUPXd86GqI4Of9ieU
-	DfmCz/QjKjzI7Sgz6Ht1z+XqQGSkRnf1A3GWJ1cfT02T5nhTGVxT4H2rdEJJ1yU3hpTigrb+71k
-	W
-X-Google-Smtp-Source: AGHT+IFas4iCmt9N2Qz4LAG1IBm/XWmInsiV/vp1l/Qxp+N/YOxIJ/vzXeahtzs/C2xTzNQoANZgRA==
-X-Received: by 2002:a05:6512:2245:b0:52c:c9e4:3291 with SMTP id 2adb3069b0e04-52eb99d653amr10339784e87.60.1720786803441;
-        Fri, 12 Jul 2024 05:20:03 -0700 (PDT)
+        bh=PsV8xHFAWYzRcbpc0Ef1sOYCY8HDad4uEnIegVbVHc8=;
+        b=celjb2KdAmYo/2NfckgEJ8HP/PMg0QUN0Kf6ojyJKx8U/wf3X2Gl2CYWBI6pJB8VVS
+         BYoBUWm+L+VJHEFH2GaJHb9dx7S5l3xxzl/31yC7gwLdopxLkhGpSsEeo3cWIRUVN5Dl
+         5KqnrsnEq8k2Pm3WcJP3rbTzmg0S7hdUvLYmMmYKpuY+J3HKgVgNkBFB/pH7QOBkIbd+
+         9Bv23HVx7DhjMhpCCVL1SOr8xarsR7AyI4rBLmZ87/ORhsSe8DFmVC0uJR3UEt+lj3RZ
+         7buxA5PGqwm+4NLCxHT6kgxjbOVL+/PPqjvF6sBZSkz8fP3TjxSw61ONnD8sUuUBysKI
+         AwSA==
+X-Gm-Message-State: AOJu0YxR7aj4mt0wnOZ372nfD8Vi1PdiT2AoCdcLuNISTwaAqDjdWM+O
+	WKIoF0mnz2A7HIANTvWPYtoJQ0cdTPjjejc4ygmo1x6a8wu1pHzuKofqE1dp48Q=
+X-Google-Smtp-Source: AGHT+IFEW92C6jkuYK4GmK7kAHGgYMU+sl8qqPgOsPMuKMLNFoXSimzJQApUK+Hemh/ZiAiRy8Ft/A==
+X-Received: by 2002:a17:906:f592:b0:a79:7dd2:5b99 with SMTP id a640c23a62f3a-a797dd25c52mr633458466b.28.1720786950649;
+        Fri, 12 Jul 2024 05:22:30 -0700 (PDT)
 Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a780a6bcc47sm342739266b.11.2024.07.12.05.20.01
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a780a855e24sm346648466b.177.2024.07.12.05.22.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jul 2024 05:20:02 -0700 (PDT)
-Message-ID: <767cfb35-ed52-4d51-b1bb-c69ac5b593b4@linaro.org>
-Date: Fri, 12 Jul 2024 14:20:00 +0200
+        Fri, 12 Jul 2024 05:22:30 -0700 (PDT)
+Message-ID: <8f7cdb31-c50d-4690-b878-518bad545612@linaro.org>
+Date: Fri, 12 Jul 2024 14:22:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,21 +76,26 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 4/7] soc: qcom: Utilize qcom scmi vendor protocol for bus
- dvfs
-To: Sibi Sankar <quic_sibis@quicinc.com>, sudeep.holla@arm.com,
- cristian.marussi@arm.com, andersson@kernel.org, jassisinghbrar@gmail.com,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, quic_rgottimu@quicinc.com,
- quic_kshivnan@quicinc.com, conor+dt@kernel.org,
- Amir Vajid <avajid@quicinc.com>
-References: <20240117173458.2312669-1-quic_sibis@quicinc.com>
- <20240117173458.2312669-5-quic_sibis@quicinc.com>
- <7e48e51e-e16a-41b9-800d-960c627b8da6@linaro.org>
- <d24a3372-8ee5-528d-09ac-86c64f0896e5@quicinc.com>
- <027b9ba8-20b7-4d20-8128-156398f21902@linaro.org>
- <854f324d-c9dc-affc-6f6f-0219bcbc1e1b@quicinc.com>
+Subject: Re: [PATCH V4 8/8] arm64: dts: qcom: sm4450: add camera, display and
+ gpu clock controller
+To: Ajit Pandey <quic_ajipan@quicinc.com>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Vinod Koul <vkoul@kernel.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Taniya Das <quic_tdas@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>,
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+References: <20240611133752.2192401-1-quic_ajipan@quicinc.com>
+ <20240611133752.2192401-9-quic_ajipan@quicinc.com>
+ <76f5e3c7-a90b-42d2-8169-e5e2211a14a1@linaro.org>
+ <ba7d12d3-c582-45ec-beed-e81182fe3252@quicinc.com>
+ <95a835e2-9fd9-467b-bd0a-8eeb80ddf678@linaro.org>
+ <9c3de930-47b7-45a9-bf7e-6e506ea2accc@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -130,76 +133,47 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <854f324d-c9dc-affc-6f6f-0219bcbc1e1b@quicinc.com>
+In-Reply-To: <9c3de930-47b7-45a9-bf7e-6e506ea2accc@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 1.07.2024 10:44 AM, Sibi Sankar wrote:
+On 12.07.2024 11:53 AM, Ajit Pandey wrote:
 > 
 > 
-> On 6/19/24 01:07, Konrad Dybcio wrote:
->>
->>
->> On 2/12/24 11:33, Sibi Sankar wrote:
->>
->> [...]
->>
->>
->>>>
->>>>> +            monitor->mon_type = (of_property_read_bool(monitor_np, "qcom,compute-mon")) ? 1 : 0;
-
-BTW: the ternary operator here is unnecessary, but to make it readable,
-please make an enum / #define describing the two, as magic values are
-discouraged
-
->>>>> +            monitor->ipm_ceil = (of_property_read_bool(monitor_np, "qcom,compute-mon")) ? 0 : 20000000;
-
-Given that you check the same condition here, an if-else block may be
-more readable, perhaps some comment like:
-
-ipm_ceil = 0; /* Always keep a vote, no matter the bus traffic */
-
->>>>
->>>> What does it even mean for a monitor to be a compute mon?
->>>>
+> On 7/11/2024 3:25 PM, Konrad Dybcio wrote:
+>> On 3.07.2024 11:16 AM, Ajit Pandey wrote:
 >>>
->>> When a monitor is marked compute-mon it means that the table is
->>> followed religiously irrespective whether the instruction per miss
->>> count threshold (ipm) is exceeded or not. Equivalent to having
->>> a cpufreq map -> l3/DDR bw mapping upstream.
-
-I.. don't really like that this exists as something that requires OS
-intervention, but since it does, I suppose it takes a couple lines of
-code less than adding OPP entries for each and every PSTATE and NUM_SKUs..
-
+>>>
+>>> On 6/13/2024 1:11 PM, Konrad Dybcio wrote:
+>>>>
+>>>>
+>>>> On 6/11/24 15:37, Ajit Pandey wrote:
+>>>>> Add device node for camera, display and graphics clock controller on
+>>>>> Qualcomm SM4450 platform.
+>>>>>
+>>>>> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
+>>>>> ---
+>>>>
+>>>> None of these nodes reference a power domain (which would usually be
+>>>> CX/MX/MMCX). This way, the RPMhPDs will never be scaled.
+>>>>
+>>>> The current upstream implementation only allows one power domain to be
+>>>> scaled, but that's better than none (see other DTs for recent SoCs).
+>>>>
+>>>> Konrad
+>>>
+>>> SM4450 doesn't support MMCX and CX/MX domains will remain active so
+>>> power-domains property is actually not required for SM4450 clock nodes.
 >>
->> I'm sorta puzzled why the OS would even be required to program this, since
->> L3/DDR/CPU frequencies are known by various stages of boot and secure firmware
->> too.
+>> It's not only about them being active.. some PLLs require e.g. MX to be
+>> at a certain level, or the system will be unstable
 >>
->> What happens if we omit this? Is the default configuration identical to this?
->> Or does it need explicit enabling?
+>> Konrad
 > 
-> CPUCP isn't expected to know the various ranges supported by the memory
-> buses it can vote on and from a sandboxing perspective one would want to
-> control what CPUCP has access to as well. It also can't arrive at the
-> exact values just from the OPP tables we pass on as well. So it doesn't
-> have any default values to start off with. For all these reasons, they
-> need explicit setting up and without it, the algorithm wouldn't function
-> as expected.
+> With active I mean CX/MX rails will be default running at minimum level required for clock controllers. Adding power-domains property for CX/MX rails is like a redundant code as that will also scale such rails at default specified minimum level only. Also we hadn't added such property for other targets DT nodes to scale up CX/MX at minimum level.
 
-Ok, I was thinking more of a scenario where XBL/GH would take care of this..
-
-Throwing in my 5 cents, this could perhaps be moved there in future FW
-designs (the earlier in the chain the better, especially to keep kicking
-out gunyah a viable option), as I don't think Linux is the greatest place
-for storing one-shot configuration data, especially for blocks that already
-run their own firmware..
-
-I would imagine this could speed up booting as well, if DRAM was appropriately
-scaled during the boot splash stage (unless it already is either scaled or
-pinned to FMAX)
+What I mean here is that, the minimum level may not be enough. In such case
+you would also add a required-opps = <&handle_to_rpmhpd_opp_level>
 
 Konrad
-
 
