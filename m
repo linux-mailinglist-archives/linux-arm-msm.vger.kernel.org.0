@@ -1,75 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-26031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1096F92F967
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 13:13:21 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C162D92FA12
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 14:20:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6F90A284685
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 11:13:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4ACEF1F21FD7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 12:20:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5AB315FA78;
-	Fri, 12 Jul 2024 11:12:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D7F815A4B3;
+	Fri, 12 Jul 2024 12:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XzP5KBbD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W6PJ6REs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6688715EFCA
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 11:12:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA79A1640B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 12:20:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720782760; cv=none; b=jYiOrLPbBcbDsZy8TSpB4hBXoHJ2mNG0AQht8fUL7DStB/7BGwnaO07gHcw5gYcz5EsTpH3qM6ZEb7RrwcgKurPw9nyK1h2GR4J9BzIpeKZME5GDORLuu0QFZ18vtFYKYU9hVCbCF4RFFUh8orMkwxJ3iYlJT9v0qU/DWvPWTOY=
+	t=1720786807; cv=none; b=QofIMr43QkXhRgksT+D9iMRkbGis517GLd0tVRIO8R6DloJ+5Vaxfd7Pz7iclqeRpOvq0E2aP/U2Sqbl8tL4+/71+VW4MIKk1TcztBxbBIbWgk4hmBLijFO1ygMOihM5wJQ6UlhznlpRRZrDo2F/AM1aPXUVt+vdQ9FTecsnvvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720782760; c=relaxed/simple;
-	bh=uBxeb8SCIGuI1qktrQ1/KLFpOrZUdiTh8w3D+1DKC5I=;
+	s=arc-20240116; t=1720786807; c=relaxed/simple;
+	bh=9EPphHnDUG4NA9uzVthgoM502jdfAE9pgOG0c6JM1iM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ux/At55jgqaX00wpulRNrIZjrM6drc7gEgQORplowIUXVYBULdgpr1BiQ+ypJatqwtceh/HYIPNYMFDBtSupyrq3Jaaz6OvbpedPLFztQMcYU0PXCpXT/bR+gC3QlTDf5dvIqwrYWrbyxUqDlDDPD4cqQFm7h0T79BIQBT4MEvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XzP5KBbD; arc=none smtp.client-ip=209.85.218.49
+	 In-Reply-To:Content-Type; b=cD24/BqdbDfcFp7yJL0LMDYI+/JtnfiwxvdJzkjPnT22S6+LE1xtKwrWx4W6ruIYVDDxEb3UHYTaOdCAqGlBId6XWF1siqJEnrrdwqXNEuHcYOtLMzUZuFJb+2U8c792MI3wc4X7HE02ZuRhoDlFVhpEDnbnSCSgBNEt5A/v/0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W6PJ6REs; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a728f74c23dso272331066b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 04:12:38 -0700 (PDT)
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2eaae2a6dc1so29811861fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 05:20:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720782757; x=1721387557; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1720786804; x=1721391604; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=62e7V7mt0Ze7Fntnla5Y8XTQhLTURPWG6Rtj6yZgDao=;
-        b=XzP5KBbDgz2fCHSiBV2Q9Q//h56TW76gSrHSdMJKTkwbvCLHWu5b2DbPClnDEMUL0W
-         Heg19lp/X5wZNW/x0nSt/mGn6fz19NYWNkBQTelQr6/juZZ9+SIsWKNPs7mCr6hFhQBR
-         HOXMLRn38HGmzwmI8zrhuKzv/nHvong8dfn/MmOnD+SufVlHRvaYn88aGRYyeak0vJAk
-         g4Ey9irmSABwyNWs674GViCx0LFI/D+qyAdDvS29tgxE+UGUWJg9u2pPDA0nlxBY18rT
-         NAPnCLE1FYMqZldU7DH90NWyJGIVYwlQJYCoGVbOaux2yX4AMhJEbzWq7KW9DhduQVu4
-         hYig==
+        bh=yAvitaA5/W52S3uPDulQ2iO0iWsi1ypQySbrbzTULVw=;
+        b=W6PJ6REsvEKZzNB3g36OcxZPU5O4+g39M97yA4uzncVYq9RVKB3bWey7bIX+CojWK0
+         +hkR5eHAs0JJkwrD74go1A9n3gveFFEpswqDfVDFa4NV3lNXM0GLKSIhzqZKCCvIj9ic
+         2QM8ueXubRfw/WygX3g0aMNHTHs1vPtLT15aZm5O62T9xMFB9iJgkrtA7pnPlWEHBP+b
+         +TSeu/a8Dpijon9N+3AYcBvkCcKkEhD0v67cqEJH6ZN15U215tiSaNDmw7bI4EpzVDk+
+         EJx1vdEjP1cyhyNwKUm+kjrmUiq0hRAA50Etrcbv21JvJz/MaUqbnZVSM8KzlUTF6ckz
+         wJzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720782757; x=1721387557;
+        d=1e100.net; s=20230601; t=1720786804; x=1721391604;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=62e7V7mt0Ze7Fntnla5Y8XTQhLTURPWG6Rtj6yZgDao=;
-        b=JFkWtiycSvsrSgJd/5VrCWZKgf7KcvGjrO+FsYVZa9OqlbR5GiVl+EOxnmh6Lfcp5t
-         mwPCIoqzheLHecxKjZw8x7CjLoR+FQpvqFNCjkQoMKt1ZEwQlSZKHiFnWXHiReo2fkJH
-         vvOVumW8AAaeu9xYgREOXprBumlkmgDMTrcapsxvra2dmnCKoM9+mipYzRF+uoyL/9v6
-         JhuAI5RA4/xQ9x0aEIdlMQZAceQE/H+AZbB5ig51GbsoK9pe26F5bFF+sCAdYRIlQS8L
-         GLR4lo21a2xcqySBk1RRrO3EN5+cTomfguLBckJSkFjmHkXaHd0aToVICWaaYk53l3hV
-         n14g==
-X-Forwarded-Encrypted: i=1; AJvYcCWEhtDKplXRWsA5tJjPwqAUsxP7VvA8/uTfJpe9CHt25m9xAx1tzI1giBeij6Ojd71n5pJ82mSHpUXf++B+GLy64RNP7ELrTfsIBw8yVg==
-X-Gm-Message-State: AOJu0Yw3sq8QtzXgEu0FalTZtBU0F/WQ2KjrhG4RDKYPOAxfn9S/JFzF
-	RKrIq+s5O996O/qciHhDq+silSVG6vY4wfb1p5ZP3431v72BEJWmJjN8mk9avXM=
-X-Google-Smtp-Source: AGHT+IEtXsMAQxcf7FBG5pxwf5Mz18V3ooCYcIJOA2Bl5FQ9WLo2BG/3Eh4+wSsLh4yPZdaHyphrgA==
-X-Received: by 2002:a17:906:3497:b0:a72:7b86:5bfc with SMTP id a640c23a62f3a-a780b89c98amr685240966b.64.1720782756485;
-        Fri, 12 Jul 2024 04:12:36 -0700 (PDT)
+        bh=yAvitaA5/W52S3uPDulQ2iO0iWsi1ypQySbrbzTULVw=;
+        b=LqI8E3o6rGrkP+fBDKoYAvBMl1V4RY2eOHdJJQnjQr7JUqvh9Ix9SBuf0lKAkypWyX
+         6hL8mHn0xYPm1z5F15uJ16KpRLPOcl6sdStb/BhnmJUrmDmh2jCKTQGECPHJFQWNHoOx
+         s4iwqLkyV4y/LwSR3x7ugOcLlaQbRV5rx32lZipADShsFHdECVww4IBjF6iX7yywTn6D
+         twudvn/WG//q6L/Mr5bzo4hhOJPSqk2S/dcekXhMy8DHcXNOPkWrhkim5b5AD8aaZI4L
+         WhoL/1no3LGhB7q4FtNcRtq6gm6CpmWNwtGeThs/SBmAxm0z9JiY/4Ry47Dx52CYdPJW
+         FXDw==
+X-Forwarded-Encrypted: i=1; AJvYcCVupBsKFZBCbT9qr8HPd9lFYyNjz7CNJUok08TCyHhf5g5AfdvB7/gvFIOvGL+sd/AjGcPuG6SlZH1CSLOUS3Rz/gVPzYzjTvcJSpU6kg==
+X-Gm-Message-State: AOJu0YwvrPVMgXLbfGPN+VreBzp4fR92Dkx53c6BUPXd86GqI4Of9ieU
+	DfmCz/QjKjzI7Sgz6Ht1z+XqQGSkRnf1A3GWJ1cfT02T5nhTGVxT4H2rdEJJ1yU3hpTigrb+71k
+	W
+X-Google-Smtp-Source: AGHT+IFas4iCmt9N2Qz4LAG1IBm/XWmInsiV/vp1l/Qxp+N/YOxIJ/vzXeahtzs/C2xTzNQoANZgRA==
+X-Received: by 2002:a05:6512:2245:b0:52c:c9e4:3291 with SMTP id 2adb3069b0e04-52eb99d653amr10339784e87.60.1720786803441;
+        Fri, 12 Jul 2024 05:20:03 -0700 (PDT)
 Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a780a6dfb19sm337720166b.66.2024.07.12.04.12.35
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a780a6bcc47sm342739266b.11.2024.07.12.05.20.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jul 2024 04:12:36 -0700 (PDT)
-Message-ID: <832b2f41-4a53-4825-9877-fd80d80ee079@linaro.org>
-Date: Fri, 12 Jul 2024 13:12:34 +0200
+        Fri, 12 Jul 2024 05:20:02 -0700 (PDT)
+Message-ID: <767cfb35-ed52-4d51-b1bb-c69ac5b593b4@linaro.org>
+Date: Fri, 12 Jul 2024 14:20:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,16 +78,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-crd: Add LID switch
-To: Johan Hovold <johan@kernel.org>,
- Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Abel Vesa <abel.vesa@linaro.org>
-References: <20240710-x1e80100-crd-lid-v1-1-0156e8a62af6@linaro.org>
- <ZpEN7u0u4LSFY01p@hovoldconsulting.com>
+Subject: Re: [RFC 4/7] soc: qcom: Utilize qcom scmi vendor protocol for bus
+ dvfs
+To: Sibi Sankar <quic_sibis@quicinc.com>, sudeep.holla@arm.com,
+ cristian.marussi@arm.com, andersson@kernel.org, jassisinghbrar@gmail.com,
+ robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, quic_rgottimu@quicinc.com,
+ quic_kshivnan@quicinc.com, conor+dt@kernel.org,
+ Amir Vajid <avajid@quicinc.com>
+References: <20240117173458.2312669-1-quic_sibis@quicinc.com>
+ <20240117173458.2312669-5-quic_sibis@quicinc.com>
+ <7e48e51e-e16a-41b9-800d-960c627b8da6@linaro.org>
+ <d24a3372-8ee5-528d-09ac-86c64f0896e5@quicinc.com>
+ <027b9ba8-20b7-4d20-8128-156398f21902@linaro.org>
+ <854f324d-c9dc-affc-6f6f-0219bcbc1e1b@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -124,21 +130,76 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <ZpEN7u0u4LSFY01p@hovoldconsulting.com>
+In-Reply-To: <854f324d-c9dc-affc-6f6f-0219bcbc1e1b@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 12.07.2024 1:05 PM, Johan Hovold wrote:
-> On Wed, Jul 10, 2024 at 10:18:20AM +0200, Stephan Gerhold wrote:
->> Add gpio-keys for exposing the LID switch state, similar to
->> sc8280xp-lenovo-thinkpad-x13s.dts. Only the GPIO number is different.
->>
->> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+On 1.07.2024 10:44 AM, Sibi Sankar wrote:
 > 
-> Looks good, even if I can't test it currently with the debug board
-> connected directly to the CRD:
+> 
+> On 6/19/24 01:07, Konrad Dybcio wrote:
+>>
+>>
+>> On 2/12/24 11:33, Sibi Sankar wrote:
+>>
+>> [...]
+>>
+>>
+>>>>
+>>>>> +            monitor->mon_type = (of_property_read_bool(monitor_np, "qcom,compute-mon")) ? 1 : 0;
 
-You can use a large fridge magnet
+BTW: the ternary operator here is unnecessary, but to make it readable,
+please make an enum / #define describing the two, as magic values are
+discouraged
+
+>>>>> +            monitor->ipm_ceil = (of_property_read_bool(monitor_np, "qcom,compute-mon")) ? 0 : 20000000;
+
+Given that you check the same condition here, an if-else block may be
+more readable, perhaps some comment like:
+
+ipm_ceil = 0; /* Always keep a vote, no matter the bus traffic */
+
+>>>>
+>>>> What does it even mean for a monitor to be a compute mon?
+>>>>
+>>>
+>>> When a monitor is marked compute-mon it means that the table is
+>>> followed religiously irrespective whether the instruction per miss
+>>> count threshold (ipm) is exceeded or not. Equivalent to having
+>>> a cpufreq map -> l3/DDR bw mapping upstream.
+
+I.. don't really like that this exists as something that requires OS
+intervention, but since it does, I suppose it takes a couple lines of
+code less than adding OPP entries for each and every PSTATE and NUM_SKUs..
+
+>>
+>> I'm sorta puzzled why the OS would even be required to program this, since
+>> L3/DDR/CPU frequencies are known by various stages of boot and secure firmware
+>> too.
+>>
+>> What happens if we omit this? Is the default configuration identical to this?
+>> Or does it need explicit enabling?
+> 
+> CPUCP isn't expected to know the various ranges supported by the memory
+> buses it can vote on and from a sandboxing perspective one would want to
+> control what CPUCP has access to as well. It also can't arrive at the
+> exact values just from the OPP tables we pass on as well. So it doesn't
+> have any default values to start off with. For all these reasons, they
+> need explicit setting up and without it, the algorithm wouldn't function
+> as expected.
+
+Ok, I was thinking more of a scenario where XBL/GH would take care of this..
+
+Throwing in my 5 cents, this could perhaps be moved there in future FW
+designs (the earlier in the chain the better, especially to keep kicking
+out gunyah a viable option), as I don't think Linux is the greatest place
+for storing one-shot configuration data, especially for blocks that already
+run their own firmware..
+
+I would imagine this could speed up booting as well, if DRAM was appropriately
+scaled during the boot splash stage (unless it already is either scaled or
+pinned to FMAX)
 
 Konrad
+
 
