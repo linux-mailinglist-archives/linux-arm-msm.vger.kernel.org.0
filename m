@@ -1,183 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-26068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79BBA93025C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 01:29:47 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C3EC99302B5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 02:26:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B0A01F21677
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jul 2024 23:29:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E25C8B22273
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 00:25:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A6ED1304BD;
-	Fri, 12 Jul 2024 23:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B2AA4C7D;
+	Sat, 13 Jul 2024 00:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IPfM0js4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I/+vL7S7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5AB012FF84
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 23:29:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534D91849
+	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jul 2024 00:25:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720826981; cv=none; b=ba5sRLBl8ZyahNzVKreWHbuLDiprxi+wmZS9HVeG+CAb6cUQgQwC9+KLBRkGSZRDlw7MSp6qC3MMnB258Yczgxe1oLSzuOv9Vxoh37rDu6wBcDGh5v4VDFBpV8seM7PAxPWo6FphPu+iuwyb53c1v9UY6dllNfSPdfKMpkVQ1RI=
+	t=1720830355; cv=none; b=Mv8tiKGp7XykQKo/cS/Q9aLxZaFS/n2fjgtqXzZEUW5eRGzf0U9UDfl3EcmgCDhXnB16rwnAjOgn6Uektxb2bD3RzFk5O1ZIORhyIVg3rvjiU0MEVIHzF2XSDhg3dCx3JhuanNzPY4dAV1D3UGW4KH7kWErh/GzH6N+iCEd3aYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720826981; c=relaxed/simple;
-	bh=HKSa+I+v6n4xxFPIipr5CjiQVuzATXIb8SNaZMvPPFw=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=qXe0my0L1a+hwv2ZaIVZ+N82c98C4r+XgRQJtRT0ERYAzs+Q9k++Jz5VAI4AYEs+UIToa/yTWlf6AsxyvzgQm9ksIv8so8n+f2N0FzJ1bxfeD3hQIYJlXl4qD4ARZMMpB1JTKu+n9of+YnC7ZtAVmvxa5ZWlGXKrR9gfKWbqUBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=IPfM0js4; arc=none smtp.client-ip=209.85.214.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-1fb1c206242so19581695ad.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jul 2024 16:29:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1720826979; x=1721431779; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3ZzMQzTcLNpWOotcGFmeiz3+1hsAd4h/kpmJZcUSiZY=;
-        b=IPfM0js4s7fPTGbccQn11d5v9vxOECC6K+AtHve/uWYw25RlCGdCfsAK2ksc2uAD/c
-         G/6RkUAYXNlJruSSgXGxJQs/bIPzhEkHqzuZtTxLGTv4v86dHOCdaLwCpB2vTIzaQyl2
-         SauMlRXU0FLmVgFt/IEmzVmTEKVUs0hjTF8NBrBdsWDFLrWcRof1RCJYhZc9D0TVEYk+
-         Xp+gv1CyR+8k7Eq8n4vWjoNp/T7K4HgWw1C7sOaTJTC+BMCKXNArS1bVTFUpKhJVbB+A
-         bbVS07YuEPiaSW0Rk/eFpDDE9YYOvYYinxhbYZl4izNcgHacHt/mnuf9PcJLkMRgMhyb
-         6ORw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720826979; x=1721431779;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=3ZzMQzTcLNpWOotcGFmeiz3+1hsAd4h/kpmJZcUSiZY=;
-        b=ZFwSh/mpS9lZ69/wnD7xrRP3lHfT0TOHGi8xc8f0gK1sUN6YAhEoiYGR5p/BPjCJ0Q
-         urnBpRo6EA79NxMdr4BKxQiAx5EqqK9adm3SZoplUgNCxshuf2lO7g1I21HiX3w2aROe
-         JdFT86Mn+k/XHynSSpk5dTdIZILQCZJHvyUaGDp4fjLLKQ2TK1GJrYcesFR7V8o9ziva
-         3NoDhOfly9XOxkn8zSafeGpUymQ9uBQcMVZ2wLoBsPdcaNOTOZfPiq+J/fOk610YMSIh
-         3gUqEne7hDSXgpjU+qzFi0gSxV2WqcAWLdidDehFM1HIC6p8r0N7fjLU45VwCEsYvMSi
-         pzRw==
-X-Forwarded-Encrypted: i=1; AJvYcCWy4TUq3bSjkUxGT41QLSTtMHubCqw0Akoc0PeuPxD2IG1N7bdDKTT9/y0ZN9vs19+i5TCKrNU2ZeaD54TNxh/9v48VxridooLrKTxJCg==
-X-Gm-Message-State: AOJu0YziYnXOg7wqS4DLMAIGV8keqQeFrpWQFbKqJPmgcWpfx5zTcyuA
-	QyYfu7MORgIDNtxVAedSgff9FxNerlXlgyrTX8uwu3l4IRB71t1kfcL1ai1KOI351O4vIAAz+Lw
-	O7xmlBf1rjfuktwfsFdFHxw==
-X-Google-Smtp-Source: AGHT+IFQY3bFW+Ec1W/jbxkBChGtxIDhrDnXJSKahhJ1TSz9fMywWTZ933D5uxR+un98Rl9u18eV+KxVPn9D87FWqw==
-X-Received: from ackerleytng-ctop.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:13f8])
- (user=ackerleytng job=sendgmr) by 2002:a17:902:c405:b0:1f7:3763:5ff0 with
- SMTP id d9443c01a7336-1fbb6cd4279mr6343705ad.1.1720826979113; Fri, 12 Jul
- 2024 16:29:39 -0700 (PDT)
-Date: Fri, 12 Jul 2024 23:29:37 +0000
-In-Reply-To: <20240618-exclusive-gup-v1-0-30472a19c5d1@quicinc.com>
+	s=arc-20240116; t=1720830355; c=relaxed/simple;
+	bh=/ujR3Wk5oRdUhU8EJ4qBnUSDsF7jhOCm3tj0NYYlJ6E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=hL22ziFJ/X4v2yD43xRDdlWfjmoJnVfE60yH8JZlrj3WAdIpp4UZF2DBO2xg2GFEoqNq03Ht4nwQkXpjacS22/zQWhaGOhwgTkvcUivB8+GbKuIU4xK85Puz0WaURy26Q7lBxWGfGbBLZ7r01fZ9Ek6Ji5ucjfNaIhTyTA7h26s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I/+vL7S7; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46CJMqjc028268;
+	Sat, 13 Jul 2024 00:25:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	1t5j/dlhCkjiAn8mo7AmoGlFE14c8lHfeb9LaX7JHOQ=; b=I/+vL7S7HOkxhSch
+	l1bdXBUheOVv6k7AoLL4qKy0OAkH4UZIgEobxT5R/5/kpw3TbmIjWR0NpV1Zby3H
+	FRlIoYJIdA4WudEGUZCenYnYlTcMIUNpUFi6EH28pxvz9nPeFyvQFwkIUQxYU23x
+	8ERVvCey1f8kmfgFTnvqHUaxYTRkO4P0V40v69q+vNpOxy0nifJqh3jbSysuc9j4
+	d6vXK7Kc+B8KZBEW+wDKIscaVE39fIxgveUJ4qlw9styQbufRXzE5CKBw2BaPOJV
+	0sFGfR+sVHs3xNkKfyO6i2nPBCc/PvqvlsUknUrwx9CEclfy0xAn/+jP0aCzyEoP
+	5iFbdg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40bakggbw1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 13 Jul 2024 00:25:37 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46D0PbIY012221
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 13 Jul 2024 00:25:37 GMT
+Received: from [10.110.71.234] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 12 Jul
+ 2024 17:25:36 -0700
+Message-ID: <cf1ed8b1-1c70-47f8-8c34-ef62129d44a8@quicinc.com>
+Date: Fri, 12 Jul 2024 17:25:35 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20240618-exclusive-gup-v1-0-30472a19c5d1@quicinc.com>
-X-Mailer: git-send-email 2.45.2.993.g49e7a77208-goog
-Message-ID: <20240712232937.2861788-1-ackerleytng@google.com>
-Subject: Re: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
-From: Ackerley Tng <ackerleytng@google.com>
-To: quic_eberman@quicinc.com
-Cc: akpm@linux-foundation.org, david@redhat.com, kvm@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-kselftest@vger.kernel.org, linux-mm@kvack.org, maz@kernel.org, 
-	pbonzini@redhat.com, shuah@kernel.org, tabba@google.com, willy@infradead.org, 
-	vannapurve@google.com, hch@infradead.org, jgg@nvidia.com, rientjes@google.com, 
-	seanjc@google.com, jhubbard@nvidia.com, qperret@google.com, 
-	smostafa@google.com, fvdl@google.com, hughd@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 02/16] drm/msm/dpu: fix error condition in
+ dpu_encoder_virt_atomic_mode_set
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Johan
+ Hovold <johan+linaro@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20240625-dpu-mode-config-width-v5-0-501d984d634f@linaro.org>
+ <20240625-dpu-mode-config-width-v5-2-501d984d634f@linaro.org>
+ <637fbd36-d6cd-4bb7-af83-8849c0fee8f2@quicinc.com>
+ <CAA8EJppxyUrEWYQvMGtw14UVobkQdaPZuwHPeMcONRYrgPp2jw@mail.gmail.com>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJppxyUrEWYQvMGtw14UVobkQdaPZuwHPeMcONRYrgPp2jw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: KrdlgLl30xv7qctTFvoVIT7cW80ppDdE
+X-Proofpoint-GUID: KrdlgLl30xv7qctTFvoVIT7cW80ppDdE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-12_19,2024-07-11_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=999
+ phishscore=0 bulkscore=0 mlxscore=0 malwarescore=0 clxscore=1015
+ adultscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407130001
 
-Here=E2=80=99s an update from the Linux MM Alignment Session on July 10 202=
-4, 9-10am
-PDT:
 
-The current direction is:
 
-+ Allow mmap() of ranges that cover both shared and private memory, but dis=
-allow
-  faulting in of private pages
-  + On access to private pages, userspace will get some error, perhaps SIGB=
-US
-  + On shared to private conversions, unmap the page and decrease refcounts
+On 7/12/2024 4:11 PM, Dmitry Baryshkov wrote:
+> On Fri, 12 Jul 2024 at 22:41, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>> On 6/24/2024 2:13 PM, Dmitry Baryshkov wrote:
+>>> The commit b954fa6baaca ("drm/msm/dpu: Refactor rm iterator") removed
+>>> zero-init of the hw_ctl array, but didn't change the error condition,
+>>> that checked for hw_ctl[i] being NULL. Use indices check instead.
+>>>
+>>> Fixes: b954fa6baaca ("drm/msm/dpu: Refactor rm iterator")
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 +-
+>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> index 5d205e09cf45..7613005fbfea 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> @@ -1186,7 +1186,7 @@ static void :tag(struct drm_encoder *drm_enc,
+>>>                        return;
+>>>                }
+>>>
+>>> -             if (!hw_ctl[i]) {
+>>> +             if (i >= num_ctl) {
+>>
+>> This is not very clear to me.
+>>
+>> How will we hit this condition? I dont see i going beyond 1 in this loop
+>> and neither should num_ctl
+> 
+> Why? the driver doesn't support flushing through a single CTL, so
+> num_ctl = num_intf.
+> 
 
-+ To support huge pages, guest_memfd will take ownership of the hugepages, =
-and
-  provide interested parties (userspace, KVM, iommu) with pages to be used.
-  + guest_memfd will track usage of (sub)pages, for both private and shared
-    memory
-  + Pages will be broken into smaller (probably 4K) chunks at creation time=
- to
-    simplify implementation (as opposed to splitting at runtime when privat=
-e to
-    shared conversion is requested by the guest)
-    + Core MM infrastructure will still be used to track page table mapping=
-s in
-      mapcounts and other references (refcounts) per subpage
-    + HugeTLB vmemmap Optimization (HVO) is lost when pages are broken up -=
- to
-      be optimized later. Suggestions:
-      + Use a tracking data structure other than struct page
-      + Remove the memory for struct pages backing private memory from the
-        vmemmap, and re-populate the vmemmap on conversion from private to
-        shared
-  + Implementation pointers for huge page support
-    + Consensus was that getting core MM to do tracking seems wrong
-    + Maintaining special page refcounts for guest_memfd pages is difficult=
- to
-      get working and requires weird special casing in many places. This wa=
-s
-      tried for FS DAX pages and did not work out: [1]
+num_ctl will be = num_intf, but what I was trying to understand here is 
+that , previously this condition was making sure that we have a ctl 
+assigned for each physical encoder which is actually a requirement for 
+the display pipeline. If we assigned a hw_ctl for one phys encoder and 
+not the other, its an error.
 
-+ Implementation suggestion: use infrastructure similar to what ZONE_DEVICE
-  uses, to provide the huge page to interested parties
-  + TBD: how to actually get huge pages into guest_memfd
-  + TBD: how to provide/convert the huge pages to ZONE_DEVICE
-    + Perhaps reserve them at boot time like in HugeTLB
+But on closer look, I think even your check will catch that.
 
-+ Line of sight to compaction/migration:
-  + Compaction here means making memory contiguous
-  + Compaction/migration scope:
-    + In scope for 4K pages
-    + Out of scope for 1G pages and anything managed through ZONE_DEVICE
-    + Out of scope for an initial implementation
-  + Ideas for future implementations
-    + Reuse the non-LRU page migration framework as used by memory ballonin=
-g
-    + Have userspace drive compaction/migration via ioctls
-      + Having line of sight to optimizing lost HVO means avoiding being lo=
-cked
-        in to any implementation requiring struct pages
-        + Without struct pages, it is hard to reuse core MM=E2=80=99s
-          compaction/migration infrastructure
 
-+ Discuss more details at LPC in Sep 2024, such as how to use huge pages,
-  shared/private conversion, huge page splitting
+>>
+>> Will it be just easier to bring back the NULL assignment at the top?
+>>
+>> struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC] = { NULL };
+>>
+>> I also see the same issue for other blocks such as hw_dsc, hw_lm
+> 
+> Other blocks loop properly up to the num_resource. I'd prefer to drop
+> the NULL init from the DSPP init and use num_dspp instead.
+> 
 
-This addresses the prerequisites set out by Fuad and Elliott at the beginni=
-ng of
-the session, which were:
+Overall, I think the purpose of NULL init was to make sure that before 
+we call to_dpu_hw_***() macros, we have a valid hw_*.
 
-1. Non-destructive shared/private conversion
-  + Through having guest_memfd manage and track both shared/private memory
-2. Huge page support with the option of converting individual subpages
-  + Splitting of pages will be managed by guest_memfd
-3. Line of sight to compaction/migration of private memory
-  + Possibly driven by userspace using guest_memfd ioctls
-4. Loading binaries into guest (private) memory before VM starts
-  + This was identified as a special case of (1.) above
-5. Non-protected guests in pKVM
-  + Not discussed during session, but this is a goal of guest_memfd, for al=
-l VM
-    types [2]
+We could use either num_* or the hw_* as both are returned by RM.
 
-David Hildenbrand summarized this during the meeting at t=3D47m25s [3].
+One side-note here is with a proper NULL hw_ctl is that the consumers of 
+hw_ctl should also be able to check for NULL correctly.
 
-[1]: https://lore.kernel.org/linux-mm/cover.66009f59a7fe77320d413011386c3ae=
-5c2ee82eb.1719386613.git-series.apopple@nvidia.com/
-[2]: https://lore.kernel.org/lkml/ZnRMn1ObU8TFrms3@google.com/
-[3]: https://drive.google.com/file/d/17lruFrde2XWs6B1jaTrAy9gjv08FnJ45/view=
-?t=3D47m25s&resourcekey=3D0-LiteoxLd5f4fKoPRMjMTOw
+So for example dpu_encoder_phys layers use if (!phys->hw_ctl) checks but 
+today we do not set phys->hw_ctl to NULL correctly.
+
+Do you think that instead of the return statements, we should do 
+something like
+
+dpu_enc->hw_ctl = i < num_ctl ? 	
+	to_dpu_hw_ctl(hw_ctl[i]) : NULL;
+
+
+But this will need the NULL init back.
+
+>>
+>>>                        DPU_ERROR_ENC(dpu_enc,
+>>>                                "no ctl block assigned at idx: %d\n", i);
+>>>                        return;
+>>>
+> 
+> 
+> 
 
