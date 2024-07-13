@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-26077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB4CA930533
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 12:37:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D3A9930536
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 12:41:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 99BD8283BC0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 10:37:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8430D1F22000
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 10:41:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57CED53389;
-	Sat, 13 Jul 2024 10:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4FAB61FC7;
+	Sat, 13 Jul 2024 10:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="HxCYvSrH"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="dUm4CXng"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351A63BBE1;
-	Sat, 13 Jul 2024 10:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A0C17591;
+	Sat, 13 Jul 2024 10:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.87.146.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720867053; cv=none; b=dQV3IXL1dgK24L6PsRC05dnwtg9zILc9yEez/jtlOjF5/p12DKyHpyepyc4S7uX5R4kTC9tAuPvWTowtyxIQfDN+PwzlaNwkNQ9VctmgiLuL5zXrM2mLOR8zH1nT/RhEZT3PLHDeRTVXcha2KXXmAelWsm0czc/sfug+MOxztWc=
+	t=1720867270; cv=none; b=FP50Lhs6bKFmOs7xRqxfEhUt6+DYyqlbLnvwBwZ7c8Cd7XA+bzvRoMFyb6dcp2uw4UjAhnpQsodiRMLs+P+J9UpT0AHtBe54sjtRsYOwnWA3EogTBpF3Y3kMttptphor2PmmFpS0msk7U0sICRi6OCluQfF12mqlqEeSKWoZT7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720867053; c=relaxed/simple;
-	bh=GB3Q4DFxXfoq3sxgSt03EynidlVtGmPYh1l9OdtIImU=;
+	s=arc-20240116; t=1720867270; c=relaxed/simple;
+	bh=snYcwqgjNbZYhMsfZCZ7IRMjR4RoGD/5afathPXm9aE=;
 	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=sNVNkCaEcT9gmETbBl78hEOwMf7Gt3xWVF0dV9NxpzZqlYgvAqrxurAy5bLOJHPBzkbnppUp0JIcZhgZ963+K6muqJ2Zr9eQ6bC/ESUfpVv8FQZBnsUDPsB5kc3eDn0dNkc5GWQ5ekS+idj0SVUPU4PkL3N/QI1yF8vKlLpOLcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=HxCYvSrH; arc=none smtp.client-ip=194.87.146.52
+	 Message-ID:Content-Type; b=ip5nC3JK9gbAtIaxWA+DAJu+bzb8Kc+rzfoOGJC04iExAXI+YJlwTw7tzPeXnNK9LMfzyDvnwBdv8IHnYYVhVYaNBYHzc8ePMn7m5LCIGKdbj7ouyGct4YFaP/vV86OF5pkKwi4eV006E0ukMYOg8WtSjg8xHuUSe+v3DlnC4z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=dUm4CXng; arc=none smtp.client-ip=194.87.146.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
 Received: from authenticated-user (box.trvn.ru [194.87.146.52])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
 	(No client certificate requested)
-	by box.trvn.ru (Postfix) with ESMTPSA id 62EAC426B9;
-	Sat, 13 Jul 2024 15:37:26 +0500 (+05)
+	by box.trvn.ru (Postfix) with ESMTPSA id 21F1542804;
+	Sat, 13 Jul 2024 15:41:04 +0500 (+05)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-	t=1720867047; bh=GB3Q4DFxXfoq3sxgSt03EynidlVtGmPYh1l9OdtIImU=;
+	t=1720867265; bh=snYcwqgjNbZYhMsfZCZ7IRMjR4RoGD/5afathPXm9aE=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=HxCYvSrHZ2k5zXzt/VKysDCL3Oqv/vZgRekTtGO3BGy4EUU1bYt2DEra1EjkKM9mS
-	 /0b1nGMwNOSxpxrGGFboOkITLue1katrnFRdpIye4d0/WRxKBVToCiNtMJ/DvVhA47
-	 MZgNGA83WqT1gzjXZ/wUagG503DaXm3N5pBAirS5u/hSacBKqk7Anvv2rAK9PbbhFa
-	 nkQUaKGNN1X0f/DxRLTHyvWlxe+/fGCmETbUYdqqE22LNdajIVlKS9xwPeAoxeDo9E
-	 HiXhau1hu/HPrla+c8bk1EB/WF0iVQ93kT3NCL1AMM3XZnD8BPwdLYFfzti/OpK2AR
-	 DSIBXjSV5y/nQ==
+	b=dUm4CXngF8p2X1wcypdGMBu7gIYGN6P1s7bhxgQbSYQfmrjoNz8OXl3xaoUVd8lBA
+	 I0/3bVsw/ENtRLM4OOtXKbZsahezBxNSoA6Iwjjo5sSO7NN3GHB6bLaTb6heqwrCDf
+	 Di8RS+13CzPKHTIFYyE9iGgTR4Gst32lBEsCcHQMcXMuYfu1/8LncXni2blKgTBs3I
+	 8do069GaTfKrMX10lAci1f3hC88hERbXHDFwCXStB7Z0c8XWVZpGGvfRwbdG/CNz1P
+	 29fnYKUwWmZI25kWAQwCbiK94KlB5rcLb4jvkvw428WD4PYWcectdm3LFynikXXpXe
+	 cBOCIF9DTqbqA==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 13 Jul 2024 15:37:25 +0500
+Date: Sat, 13 Jul 2024 15:41:02 +0500
 From: Nikita Travkin <nikita@trvn.ru>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
- <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- =?UTF-8?Q?Adam_S=C5=82abo=C5=84?= <asaillen@protonmail.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht, =?UTF-8?Q?Adam_S=C5=82abo=C5=84?=
+ <asaillen@protonmail.com>
 Subject: Re: [PATCH 3/3] arm64: dts: qcom: msm8939-wingtech-wt82918: Add
  Lenovo Vibe K5 devices
-In-Reply-To: <f377a55c-4a74-4555-926d-afb7dd813e00@kernel.org>
+In-Reply-To: <2146ca56-6c2c-48a3-8e77-75aa04cb2b4c@linaro.org>
 References: <20240712-msm89xx-wingtech-init-v1-0-64f4aa1870bd@trvn.ru>
  <20240712-msm89xx-wingtech-init-v1-3-64f4aa1870bd@trvn.ru>
- <f377a55c-4a74-4555-926d-afb7dd813e00@kernel.org>
-Message-ID: <28e2dc758c8867693a183d758a9dad6a@trvn.ru>
+ <2146ca56-6c2c-48a3-8e77-75aa04cb2b4c@linaro.org>
+Message-ID: <630834c52e6b958f92c52d61f9196081@trvn.ru>
 X-Sender: nikita@trvn.ru
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Krzysztof Kozlowski писал(а) 13.07.2024 15:02:
-> On 12/07/2024 18:04, Nikita Travkin wrote:
+Konrad Dybcio писал(а) 13.07.2024 00:53:
+> On 12.07.2024 6:04 PM, Nikita Travkin wrote:
 >> From: Adam Słaboń <asaillen@protonmail.com>
 >>
 >> This commit introduces multiple hardware variants of Lenovo Vibe K5.
@@ -157,29 +157,60 @@ Krzysztof Kozlowski писал(а) 13.07.2024 15:02:
 >> +// SPDX-License-Identifier: GPL-2.0-only
 >> +
 >> +&opp_table {
+> 
+> No way somebody called the gpu opp table "opp table"..
+> 
 >> +	/delete-node/ opp-550000000;
->> +};
 > 
-> That's a very odd SoC DTSI.
+> Looking at downstream, seems like there isn't a speedbin fuse for
+> this :(
 > 
-> SoCs DTSIs are not meant to be included as complementary, but rather as
-> full DTSI.
+> [...]
 > 
-> IOW, this is very confusing code and will confuse everyone reading it.
+>> +
+>> +&blsp_i2c2 {
+>> +	status = "okay";
+>> +
+>> +	accelerometer@68 {
+>> +		compatible = "invensense,icm20608";
+>> +		reg = <0x68>;
+>> +
+>> +		pinctrl-0 = <&accelerometer_default>;
+>> +		pinctrl-names = "default";
+> 
+> interesting choice to stick pintrl before interrupts
 > 
 
-I think Adam wanted to keep the common device dtsi based on msm8939.dtsi to
-simplify things a bit. I was also a bit unsure if I should change how it's
-done but decided to keep it as it was. I will rework the v2 so:
+Hm, yeah... I will move it a bit down in v2.
 
-- msm8929.dtsi includes msm8939.dtsi
-- devices .dts include needed soc.dtsi, then include the common.dtsi
-- common.dtsi doesn't include any soc.dtsi
-
-Thanks for the review!
+Thanks!
 Nikita
 
+>> +
+>> +		interrupts-extended = <&tlmm 115 IRQ_TYPE_EDGE_FALLING>;
+>> +
+>> +		vdd-supply = <&pm8916_l17>;
+>> +		vddio-supply = <&pm8916_l6>;
+>> +
+>> +		mount-matrix = "-1", "0", "0",
+>> +				"0", "1", "0",
+>> +				"0", "0", "1";
+>> +	};
+>> +};
 > 
-> Best regards,
-> Krzysztof
+> [...]
+> 
+>> +&pm8916_mpps {
+>> +	pwm_out: mpp4-state {
+>> +		pins = "mpp4";
+>> +		function = "digital";
+>> +		power-source = <PM8916_MPP_VPH>;
+>> +		output-low;
+>> +		qcom,dtest = <1>;
+> 
+> I think you meant qcom,dtest-output
+> 
+> looks good otherwise
+> 
+> Konrad
 
