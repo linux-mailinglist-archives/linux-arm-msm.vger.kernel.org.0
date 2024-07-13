@@ -1,275 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-26071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5730093038F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 05:17:12 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3A029304C5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 11:49:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CA18A1F221EC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 03:17:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63C7B282A64
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 09:49:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C8B7175B1;
-	Sat, 13 Jul 2024 03:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B74EE1C280;
+	Sat, 13 Jul 2024 09:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gIOvkEy2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PvG37iDY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1451C171AA;
-	Sat, 13 Jul 2024 03:17:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D7C14A8B
+	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jul 2024 09:49:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720840628; cv=none; b=ow2Hk4f0GCZKpxljVfCPlTvnoHa8R1mKwaBDyoUc0dJRvMfTdlGTwmeYUp6JBtf0XMXV6GPpoAQXeTXIDNsQQiW3WZo/4PgXc3iXYixwAqqc0u3InrPBRq4S5laV1hSv7WJeTc/Ds0OV5frzGhSGgzJyb6UB+vvdegKuH0Y0bYA=
+	t=1720864164; cv=none; b=pCru9RJkmknKgKKTip98ubRCOyu2YOTnxjLWP/GzIYgRnGKxxv0DHdY6BjVoZldiHTtx7kzfLDsGK0PXfvH0PVAZuVCCQImAF5t1yA/TLRvM1L0wbUiHbh085uM2Q8vqH2vGDB9iNNpq3dUEwDAjCP0ZQ0TR//bRf5SONIAOyRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720840628; c=relaxed/simple;
-	bh=cqXtSMLX0z2oaB34cPC8+RoGJShzn/idNzy5wtgQHMU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BoT2cBlID0tR4QbuajndqdM5/urUJDSaR9ySUYVuRRnQnMuOcFAHUYXKDIQpUb7il0IDhOc27XCNnhQWNjfNelwVkflBcUHBOf3DTSBCIpJL1S4/nkuTenczw9Zut9yLprtYp43zBSg9OjRjiWjwcace1rL17mRaOqGG1ePj8R0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gIOvkEy2; arc=none smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1720840625; x=1752376625;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=cqXtSMLX0z2oaB34cPC8+RoGJShzn/idNzy5wtgQHMU=;
-  b=gIOvkEy2WQh8kI1piXDrzv+D0D9cHWE0R6Z+6i/FZbatUABE2lZkx54s
-   GYjMstaxfGJfqwvpj71WIH5Pdbm2ti0gjh2R3IhthCDhmlIMENMeNaL4m
-   iPdOYnNqpkaZTaSYMsqotsQOtrZPSYFggXnsOCr49GeSlCtn+terlxMZf
-   +P7We4834T5J4LplxUjP/8vSkAF9WhAen+C5RW7s+YsVgCH3K49fdMJ7L
-   qQKQRWyl6TKZwaGrTqEiy+AS1qOMjdE0qzdVTvztW6+MF1AAmC31NE+2O
-   5q+0LD75hfpS7DHBB51p4M0xCixD25cWp+OyBsgHClgf3vN2vS97cOWGx
-   w==;
-X-CSE-ConnectionGUID: 62RgK7Q1Q6isrAVyXfP/yA==
-X-CSE-MsgGUID: sVkdN1nxSNWHIgZCLCj+9A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11131"; a="29688423"
-X-IronPort-AV: E=Sophos;i="6.09,204,1716274800"; 
-   d="scan'208";a="29688423"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jul 2024 20:17:05 -0700
-X-CSE-ConnectionGUID: SH/MYtNRQEeFLxhQLqofRA==
-X-CSE-MsgGUID: PG09s4KXQjidP0SrBlDbsA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,204,1716274800"; 
-   d="scan'208";a="53459510"
-Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
-  by fmviesa005.fm.intel.com with ESMTP; 12 Jul 2024 20:17:00 -0700
-Received: from kbuild by 68891e0c336b with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1sSTFp-000bbs-2U;
-	Sat, 13 Jul 2024 03:16:57 +0000
-Date: Sat, 13 Jul 2024 11:16:01 +0800
-From: kernel test robot <lkp@intel.com>
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-media@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/2] media: venus: use device managed APIs for power
- domains
-Message-ID: <202407131046.zNlz3AxD-lkp@intel.com>
-References: <1720763312-13018-3-git-send-email-quic_dikshita@quicinc.com>
+	s=arc-20240116; t=1720864164; c=relaxed/simple;
+	bh=Gc5YtBBqtpRAeexWtTHZa3LxGwwdFAEDU8zMshB9n6U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=d7ChnAJrxJ6dVzhpcedfRRHVUm2kiaqtcTZ1IbCB2vedQdV1tYeVyxbLukBYwGI4MhNoVSs0aShswLpdVuUDeaOm725+nlEao8jOOoy9kOiOVGhT1H4G9ki6553szvmjKFqxPygLEwVQgv2fJYE9md1l2fcnz6lUt9qg0nTmn7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PvG37iDY; arc=none smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-65f880c56b1so4031617b3.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jul 2024 02:49:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1720864162; x=1721468962; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=gUfwJ/Q8PMM5kCwlle/T/cSvHYKyhxEdVJ2Fqw5c4Rc=;
+        b=PvG37iDYRdIem+f4LargiZwDe81rM1RzjVFuWLeUiBNgx4qLsx8X12XHt93QYg7+ol
+         DdSqgNekjTQgGK6rPZa5IcycBe+tgqwD+AxMazEA0Ai833cbzGOkvJSyJ5RGA/2hxoi+
+         iXjBIQ0YYK72Rm0Vdqpkkn8xisXdWtukCNDkgQ0LjZzCrMP6hjj6VJz943f8yayy6FRo
+         nAgJuh/NmozAE+Ey+bkpMnplQTbkc2oOV7XjiQMab9KEiMcVMLLhNL0zaijMszBX/IrB
+         CvgzKt7pb66LNdco8BMmpNCpf2tpYr94uH4slm690Kh+mCEXXenLUvcH7Qox7YNPzpRi
+         qnnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720864162; x=1721468962;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gUfwJ/Q8PMM5kCwlle/T/cSvHYKyhxEdVJ2Fqw5c4Rc=;
+        b=s4cluJ79flWX6eO2PsTWHwFFjROphMhyBUtfXFyB1asta8AWJt6ZgWcP3oEHFKTxDB
+         OkITf9v6C1V4GgpXhLe0SSSuMx/uEnG7FjEFDJg66rnt3UUdj2jSqo5wJ2cpSMXFwuSQ
+         8TcSf3Bh7MhJghhx/OfWRLizDt3jBBBX26MRUwpcTVkVyXPvMoOYJqy9O0c89cabEF7a
+         pIw+9i/ZTbCxod0osq1hvAJYwNCCtbxGy7z0E2Om5KLtEo8BShAUZrWxEUktanv8AL1k
+         /aI/Sp0bkpiIMDBdUx8M6gWXFZ2EyRZitHxpBv4Y70Qe2XQN0oMfbsx6cHZ+U+tohA1F
+         gJrw==
+X-Forwarded-Encrypted: i=1; AJvYcCWhGetKpwdQTlTGokC3wwVO4XZL7FTNvx+Vv+jOWtbE+kPYddD+7YB91Q5847uZphIX/0wte6UxeMbcnJrKt2xyjwWOodsu9Mqh9oRi0w==
+X-Gm-Message-State: AOJu0YzgukgtaHP92r9KsjOIxRV6zn9LHeTBthHoBXdSRa5jcd77ho1O
+	ZsLcesUpUy9CavAOTkqdcewaQbEwLYRcZRezbNcD2q/YkENlxfLGvUr5advHCx2a1oaxbd8dQBU
+	hl/xy73NKpmy8zuA8qeA0Az6IW6qHiSADUYBVPw==
+X-Google-Smtp-Source: AGHT+IFFhjze0e2IlmLKCdcI5HTMCQ7/JyyIk0Q8Vs81z2ulfIgAdlZFZUZim+vMQAkmh4r7JJ8EzxInoDKgQXWAZoU=
+X-Received: by 2002:a05:690c:6308:b0:64b:a57:8441 with SMTP id
+ 00721157ae682-6593e4791femr152355357b3.19.1720864161684; Sat, 13 Jul 2024
+ 02:49:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1720763312-13018-3-git-send-email-quic_dikshita@quicinc.com>
+References: <20240625-dpu-mode-config-width-v5-0-501d984d634f@linaro.org>
+ <20240625-dpu-mode-config-width-v5-2-501d984d634f@linaro.org>
+ <637fbd36-d6cd-4bb7-af83-8849c0fee8f2@quicinc.com> <CAA8EJppxyUrEWYQvMGtw14UVobkQdaPZuwHPeMcONRYrgPp2jw@mail.gmail.com>
+ <cf1ed8b1-1c70-47f8-8c34-ef62129d44a8@quicinc.com>
+In-Reply-To: <cf1ed8b1-1c70-47f8-8c34-ef62129d44a8@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sat, 13 Jul 2024 12:49:10 +0300
+Message-ID: <CAA8EJpqXv2cfN2CC1+FMgwXnwMh3BeocY5ae1sOZazdy0_FCNw@mail.gmail.com>
+Subject: Re: [PATCH v5 02/16] drm/msm/dpu: fix error condition in dpu_encoder_virt_atomic_mode_set
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Abel Vesa <abel.vesa@linaro.org>, 
+	Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Dikshita,
+On Sat, 13 Jul 2024 at 03:25, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 7/12/2024 4:11 PM, Dmitry Baryshkov wrote:
+> > On Fri, 12 Jul 2024 at 22:41, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> >> On 6/24/2024 2:13 PM, Dmitry Baryshkov wrote:
+> >>> The commit b954fa6baaca ("drm/msm/dpu: Refactor rm iterator") removed
+> >>> zero-init of the hw_ctl array, but didn't change the error condition,
+> >>> that checked for hw_ctl[i] being NULL. Use indices check instead.
+> >>>
+> >>> Fixes: b954fa6baaca ("drm/msm/dpu: Refactor rm iterator")
+> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>> ---
+> >>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 +-
+> >>>    1 file changed, 1 insertion(+), 1 deletion(-)
+> >>>
+> >>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >>> index 5d205e09cf45..7613005fbfea 100644
+> >>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >>> @@ -1186,7 +1186,7 @@ static void :tag(struct drm_encoder *drm_enc,
+> >>>                        return;
+> >>>                }
+> >>>
+> >>> -             if (!hw_ctl[i]) {
+> >>> +             if (i >= num_ctl) {
+> >>
+> >> This is not very clear to me.
+> >>
+> >> How will we hit this condition? I dont see i going beyond 1 in this loop
+> >> and neither should num_ctl
+> >
+> > Why? the driver doesn't support flushing through a single CTL, so
+> > num_ctl = num_intf.
+> >
+>
+> num_ctl will be = num_intf, but what I was trying to understand here is
+> that , previously this condition was making sure that we have a ctl
+> assigned for each physical encoder which is actually a requirement for
+> the display pipeline. If we assigned a hw_ctl for one phys encoder and
+> not the other, its an error.
+>
+> But on closer look, I think even your check will catch that.
+>
+>
+> >>
+> >> Will it be just easier to bring back the NULL assignment at the top?
+> >>
+> >> struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC] = { NULL };
+> >>
+> >> I also see the same issue for other blocks such as hw_dsc, hw_lm
+> >
+> > Other blocks loop properly up to the num_resource. I'd prefer to drop
+> > the NULL init from the DSPP init and use num_dspp instead.
+> >
+>
+> Overall, I think the purpose of NULL init was to make sure that before
+> we call to_dpu_hw_***() macros, we have a valid hw_*.
+>
+> We could use either num_* or the hw_* as both are returned by RM.
+>
+> One side-note here is with a proper NULL hw_ctl is that the consumers of
+> hw_ctl should also be able to check for NULL correctly.
 
-kernel test robot noticed the following build errors:
+The problem of the NULL checks is that it's too tempting to perform a
+NULL check after to_dpu_hw_ctl conversion. However it's not safe to
+pass NULL pointer to such functions: there is no guarantee that
+conversion will return NULL if it gets passed the NULL pointer.
 
-[auto build test ERROR on rafael-pm/linux-next]
-[also build test ERROR on rafael-pm/bleeding-edge media-tree/master linus/master v6.10-rc7 next-20240712]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> So for example dpu_encoder_phys layers use if (!phys->hw_ctl) checks but
+> today we do not set phys->hw_ctl to NULL correctly.
+>
+> Do you think that instead of the return statements, we should do
+> something like
+>
+> dpu_enc->hw_ctl = i < num_ctl ?
+>         to_dpu_hw_ctl(hw_ctl[i]) : NULL;
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Dikshita-Agarwal/PM-domains-add-device-managed-version-of-dev_pm_domain_attach-detach_list/20240712-135151
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git linux-next
-patch link:    https://lore.kernel.org/r/1720763312-13018-3-git-send-email-quic_dikshita%40quicinc.com
-patch subject: [PATCH 2/2] media: venus: use device managed APIs for power domains
-config: s390-allmodconfig (https://download.01.org/0day-ci/archive/20240713/202407131046.zNlz3AxD-lkp@intel.com/config)
-compiler: clang version 19.0.0git (https://github.com/llvm/llvm-project a0c6b8aef853eedaa0980f07c0a502a5a8a9740e)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240713/202407131046.zNlz3AxD-lkp@intel.com/reproduce)
+Yeah, why not.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202407131046.zNlz3AxD-lkp@intel.com/
+Generally, I think we should stop storing the state-related data in
+the non-state structures. Hopefully I'll have time for that at some
+point later on.
 
-All errors (new ones prefixed by >>):
+>
+>
+> But this will need the NULL init back.
 
-   In file included from drivers/media/platform/qcom/venus/pm_helpers.c:9:
-   In file included from include/linux/iopoll.h:14:
-   In file included from include/linux/io.h:14:
-   In file included from arch/s390/include/asm/io.h:93:
-   include/asm-generic/io.h:548:31: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     548 |         val = __raw_readb(PCI_IOBASE + addr);
-         |                           ~~~~~~~~~~ ^
-   include/asm-generic/io.h:561:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     561 |         val = __le16_to_cpu((__le16 __force)__raw_readw(PCI_IOBASE + addr));
-         |                                                         ~~~~~~~~~~ ^
-   include/uapi/linux/byteorder/big_endian.h:37:59: note: expanded from macro '__le16_to_cpu'
-      37 | #define __le16_to_cpu(x) __swab16((__force __u16)(__le16)(x))
-         |                                                           ^
-   include/uapi/linux/swab.h:102:54: note: expanded from macro '__swab16'
-     102 | #define __swab16(x) (__u16)__builtin_bswap16((__u16)(x))
-         |                                                      ^
-   In file included from drivers/media/platform/qcom/venus/pm_helpers.c:9:
-   In file included from include/linux/iopoll.h:14:
-   In file included from include/linux/io.h:14:
-   In file included from arch/s390/include/asm/io.h:93:
-   include/asm-generic/io.h:574:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     574 |         val = __le32_to_cpu((__le32 __force)__raw_readl(PCI_IOBASE + addr));
-         |                                                         ~~~~~~~~~~ ^
-   include/uapi/linux/byteorder/big_endian.h:35:59: note: expanded from macro '__le32_to_cpu'
-      35 | #define __le32_to_cpu(x) __swab32((__force __u32)(__le32)(x))
-         |                                                           ^
-   include/uapi/linux/swab.h:115:54: note: expanded from macro '__swab32'
-     115 | #define __swab32(x) (__u32)__builtin_bswap32((__u32)(x))
-         |                                                      ^
-   In file included from drivers/media/platform/qcom/venus/pm_helpers.c:9:
-   In file included from include/linux/iopoll.h:14:
-   In file included from include/linux/io.h:14:
-   In file included from arch/s390/include/asm/io.h:93:
-   include/asm-generic/io.h:585:33: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     585 |         __raw_writeb(value, PCI_IOBASE + addr);
-         |                             ~~~~~~~~~~ ^
-   include/asm-generic/io.h:595:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     595 |         __raw_writew((u16 __force)cpu_to_le16(value), PCI_IOBASE + addr);
-         |                                                       ~~~~~~~~~~ ^
-   include/asm-generic/io.h:605:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     605 |         __raw_writel((u32 __force)cpu_to_le32(value), PCI_IOBASE + addr);
-         |                                                       ~~~~~~~~~~ ^
-   include/asm-generic/io.h:693:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     693 |         readsb(PCI_IOBASE + addr, buffer, count);
-         |                ~~~~~~~~~~ ^
-   include/asm-generic/io.h:701:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     701 |         readsw(PCI_IOBASE + addr, buffer, count);
-         |                ~~~~~~~~~~ ^
-   include/asm-generic/io.h:709:20: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     709 |         readsl(PCI_IOBASE + addr, buffer, count);
-         |                ~~~~~~~~~~ ^
-   include/asm-generic/io.h:718:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     718 |         writesb(PCI_IOBASE + addr, buffer, count);
-         |                 ~~~~~~~~~~ ^
-   include/asm-generic/io.h:727:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     727 |         writesw(PCI_IOBASE + addr, buffer, count);
-         |                 ~~~~~~~~~~ ^
-   include/asm-generic/io.h:736:21: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
-     736 |         writesl(PCI_IOBASE + addr, buffer, count);
-         |                 ~~~~~~~~~~ ^
-   In file included from drivers/media/platform/qcom/venus/pm_helpers.c:11:
-   In file included from include/linux/pm_domain.h:11:
-   In file included from include/linux/device.h:32:
-   In file included from include/linux/device/driver.h:21:
-   In file included from include/linux/module.h:19:
-   In file included from include/linux/elf.h:6:
-   In file included from arch/s390/include/asm/elf.h:173:
-   In file included from arch/s390/include/asm/mmu_context.h:11:
-   In file included from arch/s390/include/asm/pgalloc.h:18:
-   In file included from include/linux/mm.h:2258:
-   include/linux/vmstat.h:500:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
-     500 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
-         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
-     501 |                            item];
-         |                            ~~~~
-   include/linux/vmstat.h:507:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
-     507 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
-         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
-     508 |                            NR_VM_NUMA_EVENT_ITEMS +
-         |                            ~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/vmstat.h:514:36: warning: arithmetic between different enumeration types ('enum node_stat_item' and 'enum lru_list') [-Wenum-enum-conversion]
-     514 |         return node_stat_name(NR_LRU_BASE + lru) + 3; // skip "nr_"
-         |                               ~~~~~~~~~~~ ^ ~~~
-   include/linux/vmstat.h:519:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
-     519 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
-         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
-     520 |                            NR_VM_NUMA_EVENT_ITEMS +
-         |                            ~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/vmstat.h:528:43: warning: arithmetic between different enumeration types ('enum zone_stat_item' and 'enum numa_stat_item') [-Wenum-enum-conversion]
-     528 |         return vmstat_text[NR_VM_ZONE_STAT_ITEMS +
-         |                            ~~~~~~~~~~~~~~~~~~~~~ ^
-     529 |                            NR_VM_NUMA_EVENT_ITEMS +
-         |                            ~~~~~~~~~~~~~~~~~~~~~~
->> drivers/media/platform/qcom/venus/pm_helpers.c:872:8: error: call to undeclared function 'devm_pm_domain_attach_list'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     872 |         ret = devm_pm_domain_attach_list(dev, &vcodec_data, &core->pmdomains);
-         |               ^
-   drivers/media/platform/qcom/venus/pm_helpers.c:872:8: note: did you mean 'dev_pm_domain_attach_list'?
-   include/linux/pm_domain.h:483:19: note: 'dev_pm_domain_attach_list' declared here
-     483 | static inline int dev_pm_domain_attach_list(struct device *dev,
-         |                   ^
-   17 warnings and 1 error generated.
+It doesn't, as you have the comparison.
+
+>
+> >>
+> >>>                        DPU_ERROR_ENC(dpu_enc,
+> >>>                                "no ctl block assigned at idx: %d\n", i);
+> >>>                        return;
+> >>>
+> >
+> >
+> >
 
 
-vim +/devm_pm_domain_attach_list +872 drivers/media/platform/qcom/venus/pm_helpers.c
-
-   856	
-   857	static int vcodec_domains_get(struct venus_core *core)
-   858	{
-   859		int ret;
-   860		struct device **opp_virt_dev;
-   861		struct device *dev = core->dev;
-   862		const struct venus_resources *res = core->res;
-   863		struct dev_pm_domain_attach_data vcodec_data = {
-   864			.pd_names = res->vcodec_pmdomains,
-   865			.num_pd_names = res->vcodec_pmdomains_num,
-   866			.pd_flags = PD_FLAG_NO_DEV_LINK,
-   867		};
-   868	
-   869		if (!res->vcodec_pmdomains_num)
-   870			goto skip_pmdomains;
-   871	
- > 872		ret = devm_pm_domain_attach_list(dev, &vcodec_data, &core->pmdomains);
-   873		if (ret < 0)
-   874			return ret;
-   875	
-   876	skip_pmdomains:
-   877		if (!core->res->opp_pmdomain)
-   878			return 0;
-   879	
-   880		/* Attach the power domain for setting performance state */
-   881		ret = devm_pm_opp_attach_genpd(dev, res->opp_pmdomain, &opp_virt_dev);
-   882		if (ret)
-   883			goto opp_attach_err;
-   884	
-   885		core->opp_pmdomain = *opp_virt_dev;
-   886		core->opp_dl_venus = device_link_add(dev, core->opp_pmdomain,
-   887						     DL_FLAG_RPM_ACTIVE |
-   888						     DL_FLAG_PM_RUNTIME |
-   889						     DL_FLAG_STATELESS);
-   890		if (!core->opp_dl_venus) {
-   891			ret = -ENODEV;
-   892			goto opp_attach_err;
-   893		}
-   894	
-   895		return 0;
-   896	
-   897	opp_attach_err:
-   898		return ret;
-   899	}
-   900	
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+With best wishes
+Dmitry
 
