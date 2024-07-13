@@ -1,187 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-26069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3EC99302B5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 02:26:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 29B7193035E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 04:43:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E25C8B22273
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 00:25:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9783DB22509
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 02:43:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B2AA4C7D;
-	Sat, 13 Jul 2024 00:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56CFC1755B;
+	Sat, 13 Jul 2024 02:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I/+vL7S7"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GMA9YB6w"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534D91849
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jul 2024 00:25:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A61F14012;
+	Sat, 13 Jul 2024 02:43:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720830355; cv=none; b=Mv8tiKGp7XykQKo/cS/Q9aLxZaFS/n2fjgtqXzZEUW5eRGzf0U9UDfl3EcmgCDhXnB16rwnAjOgn6Uektxb2bD3RzFk5O1ZIORhyIVg3rvjiU0MEVIHzF2XSDhg3dCx3JhuanNzPY4dAV1D3UGW4KH7kWErh/GzH6N+iCEd3aYU=
+	t=1720838586; cv=none; b=Iqljc9vxBVTr/8ES/6xJCSlPktjFVvRB7mkiZdu8gm136H+/KA3CJ7222OyQxe5TWe9aICGYukXdchOlXqVvMbjtpFT+gXlplF3+/QV+zQDT+wrZb1lljPYohcWbUIYU6f0YvZcigHHiSmIouxfK99oBtUYKdO/FjRfckBuu7Uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720830355; c=relaxed/simple;
-	bh=/ujR3Wk5oRdUhU8EJ4qBnUSDsF7jhOCm3tj0NYYlJ6E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=hL22ziFJ/X4v2yD43xRDdlWfjmoJnVfE60yH8JZlrj3WAdIpp4UZF2DBO2xg2GFEoqNq03Ht4nwQkXpjacS22/zQWhaGOhwgTkvcUivB8+GbKuIU4xK85Puz0WaURy26Q7lBxWGfGbBLZ7r01fZ9Ek6Ji5ucjfNaIhTyTA7h26s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I/+vL7S7; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46CJMqjc028268;
-	Sat, 13 Jul 2024 00:25:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1t5j/dlhCkjiAn8mo7AmoGlFE14c8lHfeb9LaX7JHOQ=; b=I/+vL7S7HOkxhSch
-	l1bdXBUheOVv6k7AoLL4qKy0OAkH4UZIgEobxT5R/5/kpw3TbmIjWR0NpV1Zby3H
-	FRlIoYJIdA4WudEGUZCenYnYlTcMIUNpUFi6EH28pxvz9nPeFyvQFwkIUQxYU23x
-	8ERVvCey1f8kmfgFTnvqHUaxYTRkO4P0V40v69q+vNpOxy0nifJqh3jbSysuc9j4
-	d6vXK7Kc+B8KZBEW+wDKIscaVE39fIxgveUJ4qlw9styQbufRXzE5CKBw2BaPOJV
-	0sFGfR+sVHs3xNkKfyO6i2nPBCc/PvqvlsUknUrwx9CEclfy0xAn/+jP0aCzyEoP
-	5iFbdg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40bakggbw1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 13 Jul 2024 00:25:37 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46D0PbIY012221
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 13 Jul 2024 00:25:37 GMT
-Received: from [10.110.71.234] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 12 Jul
- 2024 17:25:36 -0700
-Message-ID: <cf1ed8b1-1c70-47f8-8c34-ef62129d44a8@quicinc.com>
-Date: Fri, 12 Jul 2024 17:25:35 -0700
+	s=arc-20240116; t=1720838586; c=relaxed/simple;
+	bh=c0cx8eCSqK5HZVrMPn+doc9P2P0lifDncReHUUcAH3k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FF4sVGMIbDuT5RihtXZc0QuK9S6/DESWmpi9kkfo65TqJ9W6tpAW5Yd4LaiC883c/eO5rPB8XA1ixu6fsbb27TQrYzZy3OqqY+DgA1OBx5H3MF59oUYEnVVuC9aVk+z4bi4ATHKbeAVklxZP/v3x5acjn/3V0GbYF15eIqwq56o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GMA9YB6w; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1720838584; x=1752374584;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=c0cx8eCSqK5HZVrMPn+doc9P2P0lifDncReHUUcAH3k=;
+  b=GMA9YB6wVHdJfVeBxcTr9cc3ROHk1beXrHl/XLfsv7PEJaRjRfwryICb
+   cYUoSnGH1M95qHkGqLh37U2MjVlOTatn1Xz6yl7QI6f9S2gjI20Y4P9at
+   YFXB+1+wgOLsMya+v47xcnis4nJJMRjD1z0ErmcdLa+EE8IjbKPHpU3EH
+   kHW9qxqSWNI3ypkFQEniXDQ6G9W+5hA1NbIkYVl7+Trps6pMb5aiaygiz
+   YwbHxmGprlm0wzxlrAy0L8KW2P1a7pIn3jWMq3s+8JN5guI/BkbNeEJYs
+   ia4mMF3oLgkLWOQY/FSYw+xh3YkYt07fQQU3/LJmoOFQBkVljpEnZA5FK
+   g==;
+X-CSE-ConnectionGUID: e+rVr8cMSEiMRpiPB5IXtA==
+X-CSE-MsgGUID: Sn28/8b8STagTDKTErIknA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11131"; a="22165437"
+X-IronPort-AV: E=Sophos;i="6.09,204,1716274800"; 
+   d="scan'208";a="22165437"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jul 2024 19:43:03 -0700
+X-CSE-ConnectionGUID: oLHqdyb5T2yapw+C1VEJmQ==
+X-CSE-MsgGUID: tWfou8M1SO2MrgcJfikAOg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,204,1716274800"; 
+   d="scan'208";a="72300665"
+Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
+  by fmviesa002.fm.intel.com with ESMTP; 12 Jul 2024 19:43:00 -0700
+Received: from kbuild by 68891e0c336b with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1sSSiu-000bZy-2Q;
+	Sat, 13 Jul 2024 02:42:56 +0000
+Date: Sat, 13 Jul 2024 10:42:02 +0800
+From: kernel test robot <lkp@intel.com>
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	linux-media@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] PM: domains: add device managed version of
+ dev_pm_domain_attach|detach_list()
+Message-ID: <202407131034.zV21FEsV-lkp@intel.com>
+References: <1720763312-13018-2-git-send-email-quic_dikshita@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 02/16] drm/msm/dpu: fix error condition in
- dpu_encoder_virt_atomic_mode_set
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn
- Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Johan
- Hovold <johan+linaro@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20240625-dpu-mode-config-width-v5-0-501d984d634f@linaro.org>
- <20240625-dpu-mode-config-width-v5-2-501d984d634f@linaro.org>
- <637fbd36-d6cd-4bb7-af83-8849c0fee8f2@quicinc.com>
- <CAA8EJppxyUrEWYQvMGtw14UVobkQdaPZuwHPeMcONRYrgPp2jw@mail.gmail.com>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJppxyUrEWYQvMGtw14UVobkQdaPZuwHPeMcONRYrgPp2jw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: KrdlgLl30xv7qctTFvoVIT7cW80ppDdE
-X-Proofpoint-GUID: KrdlgLl30xv7qctTFvoVIT7cW80ppDdE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-12_19,2024-07-11_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=999
- phishscore=0 bulkscore=0 mlxscore=0 malwarescore=0 clxscore=1015
- adultscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407130001
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1720763312-13018-2-git-send-email-quic_dikshita@quicinc.com>
+
+Hi Dikshita,
+
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on rafael-pm/linux-next]
+[also build test WARNING on rafael-pm/bleeding-edge linus/master v6.10-rc7 next-20240712]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Dikshita-Agarwal/PM-domains-add-device-managed-version-of-dev_pm_domain_attach-detach_list/20240712-135151
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm.git linux-next
+patch link:    https://lore.kernel.org/r/1720763312-13018-2-git-send-email-quic_dikshita%40quicinc.com
+patch subject: [PATCH 1/2] PM: domains: add device managed version of dev_pm_domain_attach|detach_list()
+config: x86_64-buildonly-randconfig-001-20240713 (https://download.01.org/0day-ci/archive/20240713/202407131034.zV21FEsV-lkp@intel.com/config)
+compiler: clang version 18.1.5 (https://github.com/llvm/llvm-project 617a15a9eac96088ae5e9134248d8236e34b91b1)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240713/202407131034.zV21FEsV-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202407131034.zV21FEsV-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/base/power/common.c:288: warning: Function parameter or struct member '_list' not described in 'devm_pm_domain_detach_list'
+>> drivers/base/power/common.c:288: warning: expecting prototype for dev_pm_domain_detach_list(). Prototype was for devm_pm_domain_detach_list() instead
+>> drivers/base/power/common.c:307: warning: Function parameter or struct member 'dev' not described in 'devm_pm_domain_attach_list'
+>> drivers/base/power/common.c:307: warning: Function parameter or struct member 'data' not described in 'devm_pm_domain_attach_list'
+>> drivers/base/power/common.c:307: warning: Function parameter or struct member 'list' not described in 'devm_pm_domain_attach_list'
 
 
+vim +288 drivers/base/power/common.c
 
-On 7/12/2024 4:11 PM, Dmitry Baryshkov wrote:
-> On Fri, 12 Jul 2024 at 22:41, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->> On 6/24/2024 2:13 PM, Dmitry Baryshkov wrote:
->>> The commit b954fa6baaca ("drm/msm/dpu: Refactor rm iterator") removed
->>> zero-init of the hw_ctl array, but didn't change the error condition,
->>> that checked for hw_ctl[i] being NULL. Use indices check instead.
->>>
->>> Fixes: b954fa6baaca ("drm/msm/dpu: Refactor rm iterator")
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 +-
->>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> index 5d205e09cf45..7613005fbfea 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> @@ -1186,7 +1186,7 @@ static void :tag(struct drm_encoder *drm_enc,
->>>                        return;
->>>                }
->>>
->>> -             if (!hw_ctl[i]) {
->>> +             if (i >= num_ctl) {
->>
->> This is not very clear to me.
->>
->> How will we hit this condition? I dont see i going beyond 1 in this loop
->> and neither should num_ctl
-> 
-> Why? the driver doesn't support flushing through a single CTL, so
-> num_ctl = num_intf.
-> 
+   278	
+   279	/**
+   280	 * dev_pm_domain_detach_list - devres-enabled version of dev_pm_domain_detach_list.
+   281	 * @list: The list of PM domains to detach.
+   282	 *
+   283	 * This function reverse the actions from devm_pm_domain_attach_list().
+   284	 * it will be invoked during the remove phase from drivers implicitly if driver
+   285	 * uses devm_pm_domain_attach_list() to attach the PM domains.
+   286	 */
+   287	void devm_pm_domain_detach_list(void *_list)
+ > 288	{
+   289		struct dev_pm_domain_list *list = _list;
+   290	
+   291		dev_pm_domain_detach_list(list);
+   292	}
+   293	EXPORT_SYMBOL_GPL(devm_pm_domain_detach_list);
+   294	
+   295	/**
+   296	 * devm_pm_domain_attach_list - devres-enabled version of dev_pm_domain_attach_list
+   297	 *
+   298	 * NOTE: this will also handle calling devm_pm_domain_detach_list() for
+   299	 * you during remove phase.
+   300	 *
+   301	 * Returns the number of attached PM domains or a negative error code in case of
+   302	 * a failure.
+   303	 */
+   304	int devm_pm_domain_attach_list(struct device *dev,
+   305				       const struct dev_pm_domain_attach_data *data,
+   306				       struct dev_pm_domain_list **list)
+ > 307	{
+   308		int ret, num_pds = 0;
+   309	
+   310		num_pds = dev_pm_domain_attach_list(dev, data, list);
+   311	
+   312		ret = devm_add_action_or_reset(dev, devm_pm_domain_detach_list, (void *)list);
+   313		if (ret)
+   314			return ret;
+   315	
+   316		return num_pds;
+   317	}
+   318	EXPORT_SYMBOL_GPL(devm_pm_domain_attach_list);
+   319	
 
-num_ctl will be = num_intf, but what I was trying to understand here is 
-that , previously this condition was making sure that we have a ctl 
-assigned for each physical encoder which is actually a requirement for 
-the display pipeline. If we assigned a hw_ctl for one phys encoder and 
-not the other, its an error.
-
-But on closer look, I think even your check will catch that.
-
-
->>
->> Will it be just easier to bring back the NULL assignment at the top?
->>
->> struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC] = { NULL };
->>
->> I also see the same issue for other blocks such as hw_dsc, hw_lm
-> 
-> Other blocks loop properly up to the num_resource. I'd prefer to drop
-> the NULL init from the DSPP init and use num_dspp instead.
-> 
-
-Overall, I think the purpose of NULL init was to make sure that before 
-we call to_dpu_hw_***() macros, we have a valid hw_*.
-
-We could use either num_* or the hw_* as both are returned by RM.
-
-One side-note here is with a proper NULL hw_ctl is that the consumers of 
-hw_ctl should also be able to check for NULL correctly.
-
-So for example dpu_encoder_phys layers use if (!phys->hw_ctl) checks but 
-today we do not set phys->hw_ctl to NULL correctly.
-
-Do you think that instead of the return statements, we should do 
-something like
-
-dpu_enc->hw_ctl = i < num_ctl ? 	
-	to_dpu_hw_ctl(hw_ctl[i]) : NULL;
-
-
-But this will need the NULL init back.
-
->>
->>>                        DPU_ERROR_ENC(dpu_enc,
->>>                                "no ctl block assigned at idx: %d\n", i);
->>>                        return;
->>>
-> 
-> 
-> 
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
