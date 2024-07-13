@@ -1,140 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-26081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03EC593057D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 14:00:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47AC0930617
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 17:10:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9AC571C20923
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 12:00:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F1CC8282ABA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 15:10:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58D8412FF8B;
-	Sat, 13 Jul 2024 12:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D814813B58E;
+	Sat, 13 Jul 2024 15:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yu8rXhC8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z4Vy4BAH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2299317591;
-	Sat, 13 Jul 2024 12:00:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4976137745
+	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jul 2024 15:09:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720872040; cv=none; b=JS59GNeCbpIDZrWZ5K4o9+fL3EooMhm9iK3HtFsDLIZVqP2xS/Vm46W5gCbEOPznXkO2OlC2WQY6n5TMgN0cA4CBMezMdNGDs+JUrGKiXiHao+hMYjsBtMsOhyVaSosDAJ5TfvhZcBQvBkM9sUG57aHy6r/ZqlTUFa3gtI5tBRs=
+	t=1720883394; cv=none; b=mwSwNPm2gq2Jww7aRVpTM4bMj6EBIY9xXiQp2vST4GjGGlie0f9x9I+WQDuJERnbkv5MOEgfQzZMCBvtGImg1AYDP1MD/hrqLFQf+G6I/lZ4pVRzBbvsfCobi79txwTjnx/3sPDk7gqYGcE34Pqrzm7nuzmx2BOnQ1TLsJnecWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720872040; c=relaxed/simple;
-	bh=iEq4hTsrFfGTbieTameYcuSA/DAZG32Kq1bRZTpIBFU=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ntUKDp8gD5ltyVzEIZ+GVSVbpRiuVaJ7c+q/Xm0nI7v/kOZf9iMNIKQAMPRXxuF6WDUnGll6kooZrRDWnpMzZkkHyiLu/qVJJ0nTp5euo32aiPxfd6GVros+7OdAGOGMj4pAkZ89JKWNgEhRBPgO6CZXassCyWRq9H25NFDMBMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yu8rXhC8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A321C32781;
-	Sat, 13 Jul 2024 12:00:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720872039;
-	bh=iEq4hTsrFfGTbieTameYcuSA/DAZG32Kq1bRZTpIBFU=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=Yu8rXhC8OJeD1ormOIiwXYd+oF+Esx1LkSFAR1JKhPenOyG+1zci8FyOQKcDvB2Bs
-	 hMRLZk6thpQWIJy5MKc8W0dkW2/HXw9aReE2M2TztN/5BnE2FUknzvCljctb9VZ4Sr
-	 xYd3miqCbC3JSYcmxtoGCpPFfjmNjT8naCGSJNiGXACrCQCW/R2hoaUrmp4ByIDqU/
-	 hu1gKSSnxY6yRHdhCRFm+nEo+Ylstc+OaJWQPpMRKSrxhVdL0zAbvrYJcDq08+Ovga
-	 bQhXJKUdXULEVbBITPOd5qGtSDIy+Tsn4xnzy04obfOqyI37iIn9dov40QxPWDNuWQ
-	 IkKSjOCnFjcVw==
-Date: Sat, 13 Jul 2024 13:00:24 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Cc: Lars-Peter Clausen <lars@metafoo.de>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, Daniel
- Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>, Amit Kucheria <amitk@kernel.org>, "Thara
- Gopinath" <thara.gopinath@gmail.com>, Bjorn Andersson
- <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Kamal
- Wadhwa <quic_kamalw@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
- Jishnu Prakash <quic_jprakash@quicinc.com>, <linux-kernel@vger.kernel.org>,
- <linux-iio@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>, Ajit Pandey
- <quic_ajipan@quicinc.com>, "Imran Shaik" <quic_imrashai@quicinc.com>,
- Jagadeesh Kona <quic_jkona@quicinc.com>
-Subject: Re: [PATCH 1/5] dt-bindings: iio: adc: Add ADC5 GEN3 Channel info
- for pm8775 PMIC
-Message-ID: <20240713130024.27b9d8e5@jic23-huawei>
-In-Reply-To: <20240712-mbg-tm-support-v1-1-7d78bec920ca@quicinc.com>
-References: <20240712-mbg-tm-support-v1-0-7d78bec920ca@quicinc.com>
-	<20240712-mbg-tm-support-v1-1-7d78bec920ca@quicinc.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1720883394; c=relaxed/simple;
+	bh=qVBV1SGYCV3VpJhga8WAVhCZSl/Hloy7KmZf/y1uAnM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nAvCaQELTSyjigJBJiLECDOvD9EC1JCsU2ndL7XA61oT0pXXckyq63wDiqYeLeS1PoFA25+gjvTDUI6s2cxTRLoAlxr6/g+EOBdX4M0jPMpe9V1rLNhVjsWYb3bCXfSjJXUTEAN7Ce1rDZNUyRg3iBkV74XY1dineFvX4fJ73Ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Z4Vy4BAH; arc=none smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2eee083c044so7575931fa.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jul 2024 08:09:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1720883390; x=1721488190; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=DnPbtTAkZ7djqLH8dVYwhAmRisUoaziL3oeQP7ZMuXM=;
+        b=Z4Vy4BAHSAuXIoLmnjnMJUkJumTBnlch4czOyNg7fCcPq8V5waSjIVJ73R2JLGLx0e
+         W7K/SZR3wBT5uuggGqzd2gRmqO4nBn+R23qcKD6TmMD2ImmuYJ8R4MK2dYN9k8jJaJhx
+         hv07P0JtGajaYLVqmejFhP7gRUQgHaytoTFlYecewWMzd2AKKxuvEAYhTFfcGkKTDNmH
+         jwrge2BlirPF0j3WNmCZ4OLRtYuFJBCZ/UcQkmTmA9/qvFyAIHaJImKFSlg+CbYIB+ok
+         i59lbkodJ/CX/big4F8XHPEa7j+ujAGh9iTx5TqIpdfrwojuqLQUZQyPaJg2HTGcovQL
+         lxFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720883390; x=1721488190;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DnPbtTAkZ7djqLH8dVYwhAmRisUoaziL3oeQP7ZMuXM=;
+        b=BXJUyY3Z0hmL+HX5hBZpSgnzzeGMa0K7EA9RDg+HeKN+Zx+wyZAixLNYz7MuVd09gf
+         jZW1Dj3XIQhRlye9qGrfXmn1/puwkJD7Jl//4BHPZTZAWvWQd4RI7QXo+k+9LpWd24jK
+         QZ93Q55uhlIemee0k6+GAFyabqXF9JhpiZDrOAtk3U1yFeoL7NCsVRVqDJjisbWG9AMn
+         dhDJrVc9iURS+ot7PUFbg0GnZliIT1DvGbu8j0Oan2Shx6iXJkf4TMvDi20sbTMMwYNm
+         Mq8Nl+87Esq+Il1UVlKbfV8ZgzK//um7H1ll+0ljGB8/4Lwbvm038BbtZHgQ0vAgbY8N
+         TROQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUDcaarPxozRzdm/dPEQ+udbIRaJT0pdWyf/LIbmHUUWnh0g4u6drpEo0G11ewO07HLC9M++kGspP5frnnSfO8JOWxDyrblZ17ZNtvnNw==
+X-Gm-Message-State: AOJu0YxCvm/0gOUeEFwnFBAcxV1o4jUZtSafTu+Xei49F9N5zIpMiN6o
+	6+FpGpq7T4Ej1dez7wG2BSbJRL9gpOXEoNLwa09BCbKiG1TMhSQFFqq7UKEu3VR5IswHFpuVoFE
+	I
+X-Google-Smtp-Source: AGHT+IG8f/S6xS3NpK6n/5A6ZgtrNG6rhyc83wV5h+9vg7eHn7uf4I18w28czjlqvaEye2vJRAjSNQ==
+X-Received: by 2002:a05:6512:3d02:b0:52e:767a:ada3 with SMTP id 2adb3069b0e04-52eb99cb00dmr10568585e87.47.1720883389805;
+        Sat, 13 Jul 2024 08:09:49 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ed25391d4sm216199e87.274.2024.07.13.08.09.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 13 Jul 2024 08:09:49 -0700 (PDT)
+Date: Sat, 13 Jul 2024 18:09:47 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Slark Xiao <slark_xiao@163.com>
+Cc: manivannan.sadhasivam@linaro.org, mhi@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: host: Add firehose support for Foxconn
+ SDX24/SDX55/SDX65
+Message-ID: <dduv77mdqe633m7amyljhqas7nomrtjrrimvmyqidymy3qjvfa@biepierrz5p3>
+References: <20240709015818.110384-1-slark_xiao@163.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240709015818.110384-1-slark_xiao@163.com>
 
-On Fri, 12 Jul 2024 18:13:28 +0530
-Satya Priya Kakitapalli <quic_skakitap@quicinc.com> wrote:
+On Tue, Jul 09, 2024 at 09:58:18AM GMT, Slark Xiao wrote:
+> Since we implement the FIREHOSE channel support in foxconn mhi
+> channels, that means each product which use this channel config
+> would support FIREHOSE. But according to the trigger_edl feature,
+> we need to enable it by adding '.edl_trigger = true' in device
+> info struct.
+> Also, we update all edl image path from 'qcom' to 'fox' in case of
+> conflicting with other vendors.
 
-> Add definitions for ADC5 GEN3 virtual channels(combination of ADC channel
-> number and PMIC SID number) used by PM8775.
+Separate patches please. Also don't use "we", just an imerative style:
+do this and that.
+
 > 
-> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-as I presume this will go with the rest via the thermal tree.
-
+> Signed-off-by: Slark Xiao <slark_xiao@163.com>
 > ---
->  .../iio/adc/qcom,spmi-adc5-gen3-pm8775.h           | 42 ++++++++++++++++++++++
->  1 file changed, 42 insertions(+)
+>  drivers/bus/mhi/host/pci_generic.c | 20 ++++++++++++++------
+>  1 file changed, 14 insertions(+), 6 deletions(-)
 > 
-> diff --git a/include/dt-bindings/iio/adc/qcom,spmi-adc5-gen3-pm8775.h b/include/dt-bindings/iio/adc/qcom,spmi-adc5-gen3-pm8775.h
-> new file mode 100644
-> index 000000000000..84ab07ed73cc
-> --- /dev/null
-> +++ b/include/dt-bindings/iio/adc/qcom,spmi-adc5-gen3-pm8775.h
-> @@ -0,0 +1,42 @@
-> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-> +/*
-> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _DT_BINDINGS_QCOM_SPMI_VADC_PM8775_H
-> +#define _DT_BINDINGS_QCOM_SPMI_VADC_PM8775_H
-> +
-> +#include <dt-bindings/iio/adc/qcom,spmi-vadc.h>
-> +
-> +/* ADC channels for PM8775_ADC for PMIC5 Gen3 */
-> +#define PM8775_ADC5_GEN3_REF_GND(sid)			((sid) << 8 | ADC5_GEN3_REF_GND)
-> +#define PM8775_ADC5_GEN3_1P25VREF(sid)			((sid) << 8 | ADC5_GEN3_1P25VREF)
-> +#define PM8775_ADC5_GEN3_VREF_VADC(sid)			((sid) << 8 | ADC5_GEN3_VREF_VADC)
-> +#define PM8775_ADC5_GEN3_DIE_TEMP(sid)			((sid) << 8 | ADC5_GEN3_DIE_TEMP)
-> +
-> +#define PM8775_ADC5_GEN3_AMUX1_THM(sid)			((sid) << 8 | ADC5_GEN3_AMUX1_THM)
-> +#define PM8775_ADC5_GEN3_AMUX2_THM(sid)			((sid) << 8 | ADC5_GEN3_AMUX2_THM)
-> +#define PM8775_ADC5_GEN3_AMUX3_THM(sid)			((sid) << 8 | ADC5_GEN3_AMUX3_THM)
-> +#define PM8775_ADC5_GEN3_AMUX4_THM(sid)			((sid) << 8 | ADC5_GEN3_AMUX4_THM)
-> +#define PM8775_ADC5_GEN3_AMUX5_THM(sid)			((sid) << 8 | ADC5_GEN3_AMUX5_THM)
-> +#define PM8775_ADC5_GEN3_AMUX6_THM(sid)			((sid) << 8 | ADC5_GEN3_AMUX6_THM)
-> +#define PM8775_ADC5_GEN3_AMUX1_GPIO9(sid)		((sid) << 8 | ADC5_GEN3_AMUX1_GPIO)
-> +#define PM8775_ADC5_GEN3_AMUX2_GPIO10(sid)		((sid) << 8 | ADC5_GEN3_AMUX2_GPIO)
-> +#define PM8775_ADC5_GEN3_AMUX3_GPIO11(sid)		((sid) << 8 | ADC5_GEN3_AMUX3_GPIO)
-> +#define PM8775_ADC5_GEN3_AMUX4_GPIO12(sid)		((sid) << 8 | ADC5_GEN3_AMUX4_GPIO)
-> +
-> +/* 100k pull-up2 */
-> +#define PM8775_ADC5_GEN3_AMUX1_THM_100K_PU(sid)		((sid) << 8 | ADC5_GEN3_AMUX1_THM_100K_PU)
-> +#define PM8775_ADC5_GEN3_AMUX2_THM_100K_PU(sid)		((sid) << 8 | ADC5_GEN3_AMUX2_THM_100K_PU)
-> +#define PM8775_ADC5_GEN3_AMUX3_THM_100K_PU(sid)		((sid) << 8 | ADC5_GEN3_AMUX3_THM_100K_PU)
-> +#define PM8775_ADC5_GEN3_AMUX4_THM_100K_PU(sid)		((sid) << 8 | ADC5_GEN3_AMUX4_THM_100K_PU)
-> +#define PM8775_ADC5_GEN3_AMUX5_THM_100K_PU(sid)		((sid) << 8 | ADC5_GEN3_AMUX5_THM_100K_PU)
-> +#define PM8775_ADC5_GEN3_AMUX6_THM_100K_PU(sid)		((sid) << 8 | ADC5_GEN3_AMUX6_THM_100K_PU)
-> +#define PM8775_ADC5_GEN3_AMUX1_GPIO9_100K_PU(sid)	((sid) << 8 | ADC5_GEN3_AMUX1_GPIO_100K_PU)
-> +#define PM8775_ADC5_GEN3_AMUX2_GPIO10_100K_PU(sid)	((sid) << 8 | ADC5_GEN3_AMUX2_GPIO_100K_PU)
-> +#define PM8775_ADC5_GEN3_AMUX3_GPIO11_100K_PU(sid)	((sid) << 8 | ADC5_GEN3_AMUX3_GPIO_100K_PU)
-> +#define PM8775_ADC5_GEN3_AMUX4_GPIO12_100K_PU(sid)	((sid) << 8 | ADC5_GEN3_AMUX4_GPIO_100K_PU)
-> +
-> +#define PM8775_ADC5_GEN3_VPH_PWR(sid)			((sid) << 8 | ADC5_GEN3_VPH_PWR)
-> +
-> +#endif /* _DT_BINDINGS_QCOM_SPMI_VADC_PM8775_H */
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 14a11880bcea..440609b81e57 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -433,8 +433,8 @@ static const struct mhi_controller_config modem_foxconn_sdx72_config = {
+>  
+>  static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+>  	.name = "foxconn-sdx55",
+> -	.fw = "qcom/sdx55m/sbl1.mbn",
+> -	.edl = "qcom/sdx55m/edl.mbn",
+> +	.edl = "fox/sdx55m/prog_firehose_sdx55.mbn",
+
+qcom/sdx55m/foxconn/prog_firehose_sdx55.mbn
+
+> +	.edl_trigger = true,
+>  	.config = &modem_foxconn_sdx55_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> @@ -444,8 +444,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+>  
+>  static const struct mhi_pci_dev_info mhi_foxconn_t99w175_info = {
+>  	.name = "foxconn-t99w175",
+> -	.fw = "qcom/sdx55m/sbl1.mbn",
+> -	.edl = "qcom/sdx55m/edl.mbn",
+> +	.edl = "fox/sdx55m/prog_firehose_sdx55.mbn",
+
+Is it the same file as the one mentioned in the previous chunk or is it
+different?
+
+If they are different, then, please,
+
+qcom/sdx55m/foxconn/t99w175/prog_firehose_sdx55.mbn
+
+
+> +	.edl_trigger = true,
+>  	.config = &modem_foxconn_sdx55_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> @@ -455,8 +455,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w175_info = {
+>  
+>  static const struct mhi_pci_dev_info mhi_foxconn_dw5930e_info = {
+>  	.name = "foxconn-dw5930e",
+> -	.fw = "qcom/sdx55m/sbl1.mbn",
+> -	.edl = "qcom/sdx55m/edl.mbn",
+> +	.edl = "fox/sdx55m/prog_firehose_sdx55.mbn",
+> +	.edl_trigger = true,
+>  	.config = &modem_foxconn_sdx55_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> @@ -466,6 +466,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_dw5930e_info = {
+>  
+>  static const struct mhi_pci_dev_info mhi_foxconn_t99w368_info = {
+>  	.name = "foxconn-t99w368",
+> +	.edl = "fox/sdx65m/prog_firehose_lite.elf",
+> +	.edl_trigger = true,
+>  	.config = &modem_foxconn_sdx55_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> @@ -475,6 +477,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w368_info = {
+>  
+>  static const struct mhi_pci_dev_info mhi_foxconn_t99w373_info = {
+>  	.name = "foxconn-t99w373",
+> +	.edl = "fox/sdx65m/prog_firehose_lite.elf",
+> +	.edl_trigger = true,
+>  	.config = &modem_foxconn_sdx55_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> @@ -484,6 +488,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w373_info = {
+>  
+>  static const struct mhi_pci_dev_info mhi_foxconn_t99w510_info = {
+>  	.name = "foxconn-t99w510",
+> +	.edl = "fox/sdx24m/prog_firehose_sdx24.mbn",
+> +	.edl_trigger = true,
+>  	.config = &modem_foxconn_sdx55_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> @@ -493,6 +499,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w510_info = {
+>  
+>  static const struct mhi_pci_dev_info mhi_foxconn_dw5932e_info = {
+>  	.name = "foxconn-dw5932e",
+> +	.edl = "fox/sdx65m/prog_firehose_lite.elf",
+> +	.edl_trigger = true,
+>  	.config = &modem_foxconn_sdx55_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> -- 
+> 2.25.1
 > 
 
+-- 
+With best wishes
+Dmitry
 
