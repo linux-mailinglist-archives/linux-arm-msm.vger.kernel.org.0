@@ -1,167 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-26085-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26086-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F188F930631
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 17:38:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6033493064A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 18:12:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 93837282615
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 15:38:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CE6F71F21AF0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jul 2024 16:12:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF30C139D1E;
-	Sat, 13 Jul 2024 15:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3D3D13B280;
+	Sat, 13 Jul 2024 16:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qdxwksn3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VGY73Ynz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4BA1304B7
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jul 2024 15:38:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54051386D2
+	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jul 2024 16:12:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720885108; cv=none; b=dm76RwlDRrE30b1KiFOPgbwOdUB419DueUewLokfBY0bdB8kUuLrhyOREszqlWmPCxWbRx8DxfHJAORMmFMINBMAHGqkRQHDmnmae+PAHFSJnT1iOjZFlwcShbgndOSF2ivoJGnb22NqlbkQS2bZyuOstxEL6oFNtqpCrzXNwfc=
+	t=1720887151; cv=none; b=fgxdb++nMxnKvtGvAe/G9dgrUDKtJ/gxvNW9aWo/GDmYodU7L8ngQjBde65gAAzMDgrcr/VTWPPlII44yMmGk18D2ZNmsdFKic62pGhyvacpvtxITec1ZZ9ziUwQIn3LUFM1B9UIxixUecBbyuP122HUGiaE2cMu9NBvLbvGfHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720885108; c=relaxed/simple;
-	bh=bZjVENWzdO/dM9O6jLuW2OjfM6Jn9UeSxTtq5vBQWFw=;
+	s=arc-20240116; t=1720887151; c=relaxed/simple;
+	bh=n4f0kbBWtSQQdrFUEOgyXErNn2QGVgtgKUa+M3mREDU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r+I+1UXK2vhZGbLPRAkPAX/GCk1+YeQqqCDa2GHoGE+YLwoRFAWhz9An/miyItW61t9CeTZBf3uPcVRv2tpQqSdMnMQegfk0KDXxv4Lf8eLsM06/oqvwchYDHiCWjm0LFaUWJaIkS1F9DA4s6TUqjWEAb4Dc9UTpQycRJAzBoco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qdxwksn3; arc=none smtp.client-ip=209.85.167.53
+	 Content-Type:Content-Disposition:In-Reply-To; b=E35yAxCwNuHqSM1Wcbi+Hl7788Jpk552AzGjrSxOv3PKFsPRnk6DGt4guJOQO2oKAavUg+roZ3wVfgxtvaI/PrVCQS/8lQv/cNQpYzA2v7cwwrij/3II8A/1QIfzQe6/J15J4m4e2N6nZ+EhU3L2V62BXo0z/K58DwtbCdZHjps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VGY73Ynz; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-52ea2f58448so4076340e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jul 2024 08:38:26 -0700 (PDT)
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2ec61eeed8eso38710431fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jul 2024 09:12:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1720885105; x=1721489905; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rrw656yPZ58/He6Z0SljV1MTH9DNc6XhfX4EqtbUZcw=;
-        b=qdxwksn3gP/yJP2uhFkMb7k9Z4Nu/LLAm+TCJ3dDNGzfZGo/FH0ULo+4R/rCRpntN3
-         hzZiXIt1HeULmdKTPprhSZv6JvYZ25fMp7hCGlfUntv1MuzE5FBT6K7fQupu4DrTBZl4
-         KS8s3XMBMHWEOKOKl6IKyedxE5ntD+7c4VsQw3h4r5r00sCsF5TTimkX/EXTczwnFYik
-         p1krCQtCHNYor8HdSZM2SkUHypu2RmXaRfzbgWksoi1vbjhHchJOd1dfALXCAbPTOjaF
-         go92qDqZP0KOv0L1iqt4Yd7YMFP+zS+9RVkygSCFtpEQEMMwTHDWeMVg8TCYgUiek5x6
-         Mrhg==
+        d=linaro.org; s=google; t=1720887148; x=1721491948; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=mPU4EUA/HyzvYcLhA94gZrzAZTZ9p1xhBdpXeQosR5c=;
+        b=VGY73YnziONf5wl/onKA1cdAHKleP7GQjBY8jEOYiqPweWeZWRMZWinlKkUTChNFkl
+         4odgVwvuk+5cfhifV5/kKDOqJ5nMiDk9/r7xlKdLAt/rrBz8X94A9VFdvLfwsq4hlUH2
+         J2Db7M4//yjW/kHX3Kijpv0T2Ot2HW8SqPxGrbbVHqr1xS8pjlGC+B4JbLOTsuCQHblW
+         /MZil2eSBbHpb55JSt1PPXVhD2D2nz+QRaiJWbY2Q1YfWnTBZ+NvJWf5iuOKpqtO3c18
+         xvqMipsswjDjvK8dFG27ukQKewpOXR4sXE8Vi7txosd7gjcbEK/8qNSAXgNTyM+IPjZG
+         tcmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720885105; x=1721489905;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rrw656yPZ58/He6Z0SljV1MTH9DNc6XhfX4EqtbUZcw=;
-        b=XZKgwrhPcfIjWZswWV34aAw1sItNP9dEyge/jvXOe9gJ0NZvUWna2jzhfxNqBXtMsT
-         W5nP3Y2zIvZWpHrrA7KyBruCOSb9wGUjUAxRn1umlISRTM47NeQLZpzZ9NiKauxv6flU
-         hdLOJdzJRZQxlqejLizKRi/q88Tu13emW0wVctKUdHdQ46L+QOX8/4Z5dZZ1nKvkxNYe
-         jQo4ZvZZD2uY7B52S5fJFhjK0hRnRf3u8N3SK0Av6z8FABLG4EgGsPjOIjz2N9UJ7Ql7
-         2XFnt/QLsm7Tg/8z/3YLiRoFI56Gn2CHcROwrSPP0sEovS62kXjDsXW9hwceYuBXj2RM
-         faww==
-X-Forwarded-Encrypted: i=1; AJvYcCUUKhj5lB42bPVqUbV5GDQKOepMuMy0l6/bnuZX4Didg7Pm2vmILAFQqz0hPsI7ersh1b008evj1JcmuNAlnZeosaJixVdaQPTZ98ZQfg==
-X-Gm-Message-State: AOJu0YzHf+TiI2OPd2ncN/6hvuvEmlahb2RBZfhKBXOLBOxS6HNTpYE1
-	JOp7r14uDNqSrNhxUbuN01Vr7uFYvHlUY7GXpEakJk8WDwDLOsOxRo11ciiFEec=
-X-Google-Smtp-Source: AGHT+IHd1JycgmrKTAmXhfqJQqu17IdmqopYEnNGA4fjNnAG4okwte5I2bl+t6SJIVoBWEeIA7EZqQ==
-X-Received: by 2002:a05:6512:3e19:b0:52e:93d1:57a6 with SMTP id 2adb3069b0e04-52eb998e483mr10940314e87.6.1720885105051;
-        Sat, 13 Jul 2024 08:38:25 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1720887148; x=1721491948;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mPU4EUA/HyzvYcLhA94gZrzAZTZ9p1xhBdpXeQosR5c=;
+        b=ltOQxu2THSbz4yEwYWIDkgvFegO4fIvLOcJ1P372aNmlmzLlpXgPSDe8klPbyP92Em
+         IVTy44wF91lco9rAQr6EGL75QYKGgaoHlRURegwuONq84X4muerrB+QuEW6JH3D9iH9g
+         QdXxHcwWIR7p06jrCQET2vSvQ1GOh3g8vCBUHfh655iNItEvQRXi/V3RfY0ECLJFeYrE
+         01q1hXBdxISt4X5eE9wyyl31G7JFkq3EHAQV2cpHunpJVOPjNsC5mxZ/01SLo0yY+ZAZ
+         /RTn+4/VTXBhCVvntplO963di5ybaB67npthl2+vQjcZefMioMfETpTQTrYQQwhoZ5jD
+         S4eg==
+X-Forwarded-Encrypted: i=1; AJvYcCVKej4rZvM3GuV/MRQcXPJF3t8XjWrn7UcnjD7MLuVjICSBvSKq5TqcBAxSUBnr3WhND0YC9x8kcrxtO9AcUJEF2wc1rAljh2H3czmYsw==
+X-Gm-Message-State: AOJu0YzsfzmaedlIYaZV4ik6xBcDj5+ujWhjZ9dcD9vJmOlJqPM+NOu7
+	0JwhH7ugXUF5JtXUvaCSX8DBaep2G+PkmNZaqGtFk4VErMuOCf6/mcrtLhH4BKU=
+X-Google-Smtp-Source: AGHT+IGpP3S10ZQuIO+TfFvNUUUAtqlPAilkg3Nl/n3bjRukjuOByZVXJ876HFixWSY4WOoxy5VMwQ==
+X-Received: by 2002:a05:6512:1189:b0:52c:d8e9:5d8b with SMTP id 2adb3069b0e04-52eb999446emr9980958e87.25.1720887147957;
+        Sat, 13 Jul 2024 09:12:27 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ed252d538sm224218e87.141.2024.07.13.08.38.24
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ed24e17a4sm236217e87.19.2024.07.13.09.12.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Jul 2024 08:38:24 -0700 (PDT)
-Date: Sat, 13 Jul 2024 18:38:23 +0300
+        Sat, 13 Jul 2024 09:12:27 -0700 (PDT)
+Date: Sat, 13 Jul 2024 19:12:26 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Jordan Crouse <jordan@cosmicpenguin.net>, 
-	Chandan Uddaraju <chandanu@codeaurora.org>, Rajesh Yadav <ryadav@codeaurora.org>, 
-	Sravanthi Kollukuduru <skolluku@codeaurora.org>, Archit Taneja <architt@codeaurora.org>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, Jeykumar Sankaran <jsanka@codeaurora.org>
-Subject: Re: [PATCH 2/2] drm/msm/dpu: don't play tricks with debug macros
-Message-ID: <cvizlwetyzmwxwtesd54kgghb4ttnj3kgdnca2ujq6orzntymw@tei6xtsoh3og>
-References: <20240709-dpu-fix-wb-v1-0-448348bfd4cb@linaro.org>
- <20240709-dpu-fix-wb-v1-2-448348bfd4cb@linaro.org>
- <46487222-6818-b0bf-e5cc-2310d62b5fe6@quicinc.com>
- <CAA8EJpq7Lp-3V_AsLxO9ZOt8ZW1ZZ=FjhXV6R9jvH=sQ8XQE9w@mail.gmail.com>
- <fb285034-ed4c-4f20-ab80-cf91d36fc67c@quicinc.com>
+To: Nikita Travkin <nikita@trvn.ru>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
+	Adam =?utf-8?B?U8WCYWJvxYQ=?= <asaillen@protonmail.com>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: msm8939-wingtech-wt82918: Add
+ Lenovo Vibe K5 devices
+Message-ID: <znzgr6hqbokis7zrouh2zbzvigdl4gnm5ewqoiph5eqdk4qcg6@zlw2b2bzbmgs>
+References: <20240712-msm89xx-wingtech-init-v1-0-64f4aa1870bd@trvn.ru>
+ <20240712-msm89xx-wingtech-init-v1-3-64f4aa1870bd@trvn.ru>
+ <f377a55c-4a74-4555-926d-afb7dd813e00@kernel.org>
+ <28e2dc758c8867693a183d758a9dad6a@trvn.ru>
+ <932efd4bd08a2877ee1e7c7409ff1512@trvn.ru>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <fb285034-ed4c-4f20-ab80-cf91d36fc67c@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <932efd4bd08a2877ee1e7c7409ff1512@trvn.ru>
 
-On Thu, Jul 11, 2024 at 11:03:15AM GMT, Abhinav Kumar wrote:
-> 
-> 
-> On 7/10/2024 12:40 AM, Dmitry Baryshkov wrote:
-> > On Tue, 9 Jul 2024 at 22:39, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
-> > > 
-> > > 
-> > > 
-> > > On 7/9/2024 6:48 AM, Dmitry Baryshkov wrote:
-> > > > DPU debugging macros need to be converted to a proper drm_debug_*
-> > > > macros, however this is a going an intrusive patch, not suitable for a
-> > > > fix. Wire DPU_DEBUG and DPU_DEBUG_DRIVER to always use DRM_DEBUG_DRIVER
-> > > > to make sure that DPU debugging messages always end up in the drm debug
-> > > > messages and are controlled via the usual drm.debug mask.
-> > > > 
-> > > 
-> > > These macros have been deprecated, is this waht you meant by the
-> > > conversion to proper drm_debug_*?
-> > 
-> > Yes. Drop the driver-specific wrappers where they don't make sense.
-> > Use sensible format strings in the cases where it actually does (like
-> > VIDENC or _PLANE)
-> > 
-> 
-> Ack but we need to not just drop the wrappers but drop the usage of these
-> macros as well because it is documented that they are deprecated.
-> 
-> So I assume you want to get this in and do that as a follow up change?
+On Sat, Jul 13, 2024 at 04:07:13PM GMT, Nikita Travkin wrote:
+> Nikita Travkin писал(а) 13.07.2024 15:37:
+> > Krzysztof Kozlowski писал(а) 13.07.2024 15:02:
+> >> On 12/07/2024 18:04, Nikita Travkin wrote:
+> >>> From: Adam Słaboń <asaillen@protonmail.com>
+> >>>
+> >>> This commit introduces multiple hardware variants of Lenovo Vibe K5.
+> >>>
+> >>> - A6020a40 (msm8929-wingtech-wt82918hd)
+> >>> - A6020a46/A6020l36 (msm8939-wingtech-wt82918)
+> >>> - A6020a40 S616 H39 (msm8939-wingtech-wt82918hd)
+> >>>
+> >>> These devices are added with support for many features, notably:
+> >>>
+> >>> - Basic features like USB, mmc/sd storage, wifi, buttons, leds;
+> >>> - Accelerometer;
+> >>> - Touchscreen;
+> >>> - Sound and modem.
+> >>>
 
-Yes, somewhere in the long list of cleanups. I have a similar item
-against DP driver, which uses correct macros, 
-
-> > > /* NOTE: this is deprecated in favor of drm_dbg(NULL, ...). */
-> > > #define DRM_DEBUG_DRIVER(fmt, ...)                                      \
-> > >           __drm_dbg(DRM_UT_DRIVER, fmt, ##__VA_ARGS__)
-> > > 
-> > > I think all that this macro was doing was to have appropriate DRM_UT_*
-> > > macros enabled before calling the corresponding DRM_DEBUG_* macros. But
-> > > I think what was incorrect here is for DPU_DEBUG, we could have used
-> > > DRM_UT_CORE instead of DRM_UT_KMS.
+> >>> diff --git a/arch/arm64/boot/dts/qcom/msm8929.dtsi b/arch/arm64/boot/dts/qcom/msm8929.dtsi
+> >>> new file mode 100644
+> >>> index 000000000000..c3d1d1ace2f6
+> >>> --- /dev/null
+> >>> +++ b/arch/arm64/boot/dts/qcom/msm8929.dtsi
+> >>> @@ -0,0 +1,5 @@
+> >>> +// SPDX-License-Identifier: GPL-2.0-only
+> >>> +
+> >>> +&opp_table {
+> >>> +	/delete-node/ opp-550000000;
+> >>> +};
+> >>
+> >> That's a very odd SoC DTSI.
+> >>
+> >> SoCs DTSIs are not meant to be included as complementary, but rather as
+> >> full DTSI.
+> >>
+> >> IOW, this is very confusing code and will confuse everyone reading it.
+> >>
 > > 
-> > It pretty much tries to overplay the existing drm debugging mechanism
-> > by either sending the messages to the DRM channel or just using
-> > pr_debug. With DYNAMIC_DEBUG being disabled pr_debug is just an empty
-> > macro, so all the messages can end up in /dev/null. We should not be
-> > trying to be too smart, using standard DRM_DEBUG_DRIVER should be
-> > enough. This way all driver-related messages are controlled by
-> > drm.debug including or excluding the 0x02 bit.
+> > I think Adam wanted to keep the common device dtsi based on msm8939.dtsi to
+> > simplify things a bit. I was also a bit unsure if I should change how it's
+> > done but decided to keep it as it was. I will rework the v2 so:
 > > 
-> > 
-> > > 
-> > > And DRM_DEBUG_DRIVER should have been used instead of DRM_ERROR.
-> > > 
-> > > Was this causing the issue of the prints not getting enabled?
-> > 
-> > I pretty much think so.
+> > - msm8929.dtsi includes msm8939.dtsi
+> > - devices .dts include needed soc.dtsi, then include the common.dtsi
+> > - common.dtsi doesn't include any soc.dtsi
 > > 
 > 
-> Alright, I am okay with the approach, just one minor suggestion, to keep the
-> behavior intact, previously the code wanted DPU_DEBUG to be controlled by
-> DRM_UT_KMS and DPU_DEBUG_DRIVER controlled by DRM_UT_DRIVER.
+> (...) except gah this makes things quite a bit more complicated since the
+> device makes use of the "generic design" msm8939-pm8916.dtsi and duplicating
+> that would be quite silly IMO...
 > 
-> Keeping that intact, we need to use DRM_DEBUG_KMS for DPU_DEBUG?
+> I wonder if we can clarify things without making everything too complicated 
+> by calling that dtsi "msm8929-opp.dtsi" and keeping it as extension for now,
+> then if we find that msm8929 has more differences - we can unfold and refactor
+> everything.
+> 
+> What do you think?
 
-I might make that more explicit: I don't think that it is a good idea
-for a generic DPU_DEBUG macro to be tied to DRM_UT_KMS. We are reporting
-a debug message from driver, so by default it should go to the
-DRM_UT_DRIVER channel. While refactoring things we might end up with
-messages going to ATOMIC or KMS, but DRIVER should be the default.
+What about adding msm8929-pm8916.dtsi, which includes just the right
+things? This might result in duplication with the existing files, but in
+the end msm8939-pm8916 and msm8919-pm8916 are also very similar.
 
 -- 
 With best wishes
