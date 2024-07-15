@@ -1,127 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-26136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D25189310C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 11:00:39 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF5669310FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 11:15:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8679F283238
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 09:00:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1D9DE1C2193D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 09:15:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B04E3187559;
-	Mon, 15 Jul 2024 08:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67266184101;
+	Mon, 15 Jul 2024 09:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZYOh8/v/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XTrmNhqt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FEBC187546;
-	Mon, 15 Jul 2024 08:59:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F0823B1
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 09:15:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721033965; cv=none; b=pDZH9xpoF6LLlm5xeBAqbbPhca2xM9XjI3M65YwHrhAIluH9v8Sb5M4Jir9PiNopqy8hqIKeFY21BSuavMaWFFKsED2xhB7zD5tvszAlvfSupyvL7H6ApZKCmsx8pon/yROIHca7fGL7omCjm9/iipcP2zQ+SILc1QNQUEx3II4=
+	t=1721034927; cv=none; b=RJhuzTTj/2sZzHkyCACzu2Jx85VSsXWWJHFcvTQwxHACicl7BMSjSM4CCJpfIXZvv3V9ShGjEyhrDHGhvkmjklHjvwDgJTCFBt9ESRhgkbCXhPsFpOXwaqlhMlqxCj9r3Ra3r6c0H6TQWiTITpaGKQaUvYYlzdRE9L5b9226x4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721033965; c=relaxed/simple;
-	bh=y+kTudWLmMVZqjkmKb1Iq2iwCRwyu/ABbyO06TY0Lqk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HzwpKKoI2K9JbeHkavP9DKA9AWU4GOjvKcVZj2keVqJHxDH9p3oui8ViUGcjcfnyrbtpEpWDxSEJvpdvHCBTwAG7MtiYLiHlVI38kYcvWw5MeiawSOn0ffw6xesShZ0b1uNkXa1lai4I4GhaPHGQ1BIquVdz8PImYDv4DAk/qXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZYOh8/v/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FD7C4AF0A;
-	Mon, 15 Jul 2024 08:59:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721033964;
-	bh=y+kTudWLmMVZqjkmKb1Iq2iwCRwyu/ABbyO06TY0Lqk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ZYOh8/v/YWIs+Ao47qs+d+9EKaxbK0cC0b7Y31tEdLfGSuNpwBYwfPBiD5mHQROPr
-	 W6hwnrWtfpBx+bih/+p3WbvYkxTzgWWTnlDsZckTHHeHk6zqUihvYYYnSm9u89gy5j
-	 G3L/Go11ltDmadciyl16m7/6O89VuMa9T8+ZvB5zRnQOlkrvnoixwA2XJvu1I6Dj9q
-	 3VorcuEWf4aRsIa+zivmdmQA8UzXX9bz0UGOzu8LP9+ijRVKDtAW8ITfp+sIP0u7wa
-	 Who+rhecgtLlW7Zmuwe2qsNygRazAzgQIQKOMX+pYAHpdSvAEWxNrfJW0YOAsnfGAn
-	 WU6Y+sp+TWCtg==
-Message-ID: <a9eed7f2-86d6-471e-883e-acbd89755fec@kernel.org>
-Date: Mon, 15 Jul 2024 10:59:17 +0200
+	s=arc-20240116; t=1721034927; c=relaxed/simple;
+	bh=54CaZIk+oyVZNemcEVgJd0qRF1wknBrK+U8TDQZbLdY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pI93hF3MtBci81P/vpn/7Rsi44TcsLXaTqEUcRFfXRH0rHqATXmZR9jWSBkc9Wsfb8NNRSCyTtP6kZTdQp6C3PezkVsT2KzSjLum4BK4dVRIfDxIT++Nwpdu6ZC/828SlbiP3Ux3oTAhlxpVXK99YRrJI1dIqZRvULPmrO1niV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XTrmNhqt; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-52ea0f18500so4160963e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 02:15:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721034924; x=1721639724; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2m3lT+8e+fZ61YPDTuybNJRn/xGhJoX2Iin5K3yz8Os=;
+        b=XTrmNhqtv8JbycqN4GFEqc5HDkLW4Abn0d/MjDlDfY1IFNLniVMKsDMvvbX1jNKIx5
+         0+BboSI+7d5G3VFzIEdiEFR+WB9+Ck5IXuldI1wP7o5rqrk5/w2RHvq95ng9pOmas+Bf
+         gKjdpxXyfR5c7JNytGlKFsjC+pPOW3s+5fVbDOikohUF0OEnXccFTuEXvs/npKzedswQ
+         xMcThA76ekTLcnZzl1sIKSlQ9DRatWBm7xVoxCB67Tr/h1OLOF1RTa2zR4VnVCIVUYKl
+         zhw4EL72HxZwXa26yoHAA8BuBXFyfZVSUZGSHTDEEPYyKjK2uhw+xNEKRE4tjssFXmEf
+         hvyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721034924; x=1721639724;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2m3lT+8e+fZ61YPDTuybNJRn/xGhJoX2Iin5K3yz8Os=;
+        b=TQod+tHSxxZZl9agivElA45PabAQEdRq4acGDm97j26LYzCZUXhAcvorluM0dOq4Qm
+         46iKgoYu8fOdhe96J8SnHJSV687syzDEqchtdYN/y72U7m6qrmap9RLiufvF8ZBR8/3x
+         Ei5rD3PZ9P+ZyCKUJTSG2Bdt6ZOXKs6lGR8QjpATXcblLY8S+7j1gbQ/WMvc9YGnuJLs
+         aTHd1R7cIFKmgXGwoE2Vc3ZKVxhI65bhNItQ2syJpzORiYrFlFhb5+j9FJ53pxpe1ty6
+         xEHHHX+GDpAjdOU1d8dEBQj35zOdUeEE2kUUNh8ucn5nKp43WPDjMHFVoA/6YP7elvIo
+         GE9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVAg0ehVXs2DNucALlk1i67a1ysef7Yech7iZEg+X8j9LXiI281ovI8GG4ALo5Erz6af68HteGdejWxW3fxeTNHVELAMQkRAnX7voKnnw==
+X-Gm-Message-State: AOJu0YzSMajE5uaiWY/mclUAkIgklytSnQrJY9axQzY0vBjqynm01hmn
+	53cKy+JgYr9sl2/FVnx2AYsJ1jQVgHu2H0subPwYeMCtc22BrpPDC9mTn3Hi8KM=
+X-Google-Smtp-Source: AGHT+IG2OrcKLpQ2/wzPtelwlPnXXPL9jsLWPAZnUb7Shn707tdEIIbppLam6Qk3sPRqZImLVUVo6Q==
+X-Received: by 2002:a05:6512:158f:b0:52e:6d6e:5770 with SMTP id 2adb3069b0e04-52eb998fc71mr10153863e87.14.1721034921945;
+        Mon, 15 Jul 2024 02:15:21 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff1f:b280:82fb:4328:f644:289a])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427a63449fcsm76838685e9.29.2024.07.15.02.15.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Jul 2024 02:15:21 -0700 (PDT)
+Date: Mon, 15 Jul 2024 11:15:16 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Sebastian Reichel <sre@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH] power: supply: qcom_battmgr: Ignore extra __le32 in info
+ payload
+Message-ID: <ZpTopJi7GJSLaF99@linaro.org>
+References: <20240712-x1e80100-battmgr-v1-1-a253d767f493@linaro.org>
+ <mz6h625ecs4ozmjxoozjdnunfmr3vsdw5yyo6il5vyzknyzqsz@pun3t27zhiv4>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: iio: kionix,kxcjk1013: Document
- KX022-1020
-To: Rayyan Ansari <rayyan@ansari.sh>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-iio@vger.kernel.org
-Cc: Andy Shevchenko <andy.shevchenko@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Hans de Goede <hdegoede@redhat.com>, Jonathan Cameron <jic23@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Lars-Peter Clausen <lars@metafoo.de>, linux-kernel@vger.kernel.org,
- "Rafael J. Wysocki" <rafael@kernel.org>, Robert Yang <decatf@gmail.com>,
- Rob Herring <robh@kernel.org>, Sean Rhodes <sean@starlabs.systems>
-References: <20240714173431.54332-1-rayyan@ansari.sh>
- <20240714173431.54332-2-rayyan@ansari.sh>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240714173431.54332-2-rayyan@ansari.sh>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <mz6h625ecs4ozmjxoozjdnunfmr3vsdw5yyo6il5vyzknyzqsz@pun3t27zhiv4>
 
-On 14/07/2024 19:33, Rayyan Ansari wrote:
-> Document the KX022-1020 accelerometer, which has the same register
-> layout as the KX023-1025 and so can use the same driver.
+On Sat, Jul 13, 2024 at 07:17:51PM +0300, Dmitry Baryshkov wrote:
+> On Fri, Jul 12, 2024 at 12:00:03PM GMT, Stephan Gerhold wrote:
+> > Some newer ADSP firmware versions on X1E80100 report an extra __le32 at the
+> > end of the battery information request payload, causing qcom_battmgr to
+> > fail to initialize. Adjust the check to ignore the extra field in the info
+> > payload so we can support both old and newer firmware versions.
+> > 
+> > Tested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> > ---
+> >  drivers/power/supply/qcom_battmgr.c | 4 +++-
+> >  1 file changed, 3 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+> > index 46f36dcb185c..a5b5f1251af1 100644
+> > --- a/drivers/power/supply/qcom_battmgr.c
+> > +++ b/drivers/power/supply/qcom_battmgr.c
+> > @@ -1007,7 +1007,9 @@ static void qcom_battmgr_sc8280xp_callback(struct qcom_battmgr *battmgr,
+> >  		battmgr->error = 0;
+> >  		break;
+> >  	case BATTMGR_BAT_INFO:
+> > -		if (payload_len != sizeof(resp->info)) {
+> > +		/* some firmware versions report an extra __le32 at the end of the payload */
 > 
-> Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
+> Any useful information in that extra?
+> 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+No, I don't think so. I think we can just ignore it.
 
-Best regards,
-Krzysztof
-
+Thanks,
+Stephan
 
