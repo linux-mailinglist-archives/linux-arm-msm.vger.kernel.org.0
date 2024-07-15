@@ -1,144 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-26211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A2DB93189F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 18:40:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D033C9318A5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 18:41:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 401EC28201C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 16:40:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 868151F227CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 16:41:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEEAF1C6A0;
-	Mon, 15 Jul 2024 16:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AF9E4643B;
+	Mon, 15 Jul 2024 16:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eKsSoO+r"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sHqCNBNa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114AC4655F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 16:40:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C52481CE
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 16:40:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721061619; cv=none; b=PHLuEBAooSFRhsvONkuSFqTMAO0HUtzTbKeZVAg7lzyEvm0vr07lu2IyZxJdUuK6fDHxVlIzFztcXsJEyFTEz2TJgnl9vy0FLdA6hyq7sjOVR4wQMAC2xQbQZ+KbBNG5KE0wZTyDNd5tWgEOpd6D8FERXm2cHvcbC8EG4zD0qkQ=
+	t=1721061636; cv=none; b=N2/bTi9C+WZBenEIcUPunL0HWlckXJgM1VXFS0XTBkpmgVq75/NFzYGv7pep/aCnxcokBV9obszhwr7sEklN2wnT8MLL7Gt0KkrFQhnXm5ZKbCN/4wj9bC27aQktkOqND4jGNqPcbQDwR5SXVPyWmaddJC7UIBAJcmJz2tA8SKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721061619; c=relaxed/simple;
-	bh=CXk2rSofaLy3wFWeH6LS2pGzkCI/2qG+hB0DdE/YtPw=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=FAu89nBatLojo1ZGDGhCidTa3oeRJfeCTk9WTWEs8b7+WpcsY7cLMR4v2cIU0hDr5F2oIGSTWS6JyOMjmFm+8/itTIKkSkN9ooFms1s9Certc8FjG8BMRROyimRNM97zF8fEHJv4WsKPZFgc6fEyY7YDjxWc4qjZm0JNFqbhdkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eKsSoO+r; arc=none smtp.client-ip=209.85.208.182
+	s=arc-20240116; t=1721061636; c=relaxed/simple;
+	bh=9f8Qe6ie90wo/DDF464tuizO4E1SnfvAfFUf1QUmyUw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BGoRURyI4pAeIJe1AKKmvS7o8BS3UmHQaWFppwso2VBFq28gfJq5ZI68WgCxutndCwMry8MPszMy9faDGx3QUW7TU4nvmsRsW1OBA3Um0sEV0t5lIYcU1/rqnAiIp/1fhGXIJXRIebzVf8Jd+pPPot6/O5f9g6tl+kr3rKqhKdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sHqCNBNa; arc=none smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2eeec60a324so12293151fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 09:40:17 -0700 (PDT)
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-654cf0a069eso37847677b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 09:40:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721061616; x=1721666416; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=CkSiDi539inz2HbUEC736T7JdYcmpz5s2RCdx8qYb+U=;
-        b=eKsSoO+rWZhQFN3P8kIGWdBD1b2w51j0BieqDoQVTYaLN6/YHknwnFhZZKAYGgsz0X
-         9js2bnTMa36WElVi/MyGY3hwtKd7VqhDtNBPDMm8DX8ymNn896k9zzCughJXWCCx/Xkn
-         u/nMEa/Wlg5fSBxjKYwyetUXnVReOIncC3LNGz1szF4U+v4ECTXmAqsh9fTJZFuNZTA+
-         1bMVz23fGci84+CyH0QBf94OiThxoBFUR7V9zdtW9w+ClphY8Uc4cnknIDC/2MRtdf7h
-         6ZlHhSp6Y/7LHiRox4VbtgpNhHtXOc7l8qfeOo883LUg37p0LNID9XKdmjklYgJu9ROp
-         G6cg==
+        d=linaro.org; s=google; t=1721061634; x=1721666434; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=en6+puohAfynQkBKEllMr8eQHTxPNgc5bkI+PFZYQQg=;
+        b=sHqCNBNa8O1RqbaNGyAVX4Q28wVhrwLbZRT8aSaCHz7aQuXll2sN5miMFWCC8kCW73
+         GIIUBweicQpbB8OX+2h2I8ZRzGHumUs+Bre0aQg7PKil+PjsdowX0vG7zHy6yw/JlRKJ
+         BZDm3UPvY6TIKfBP58ksnaHI3S78qSUQMRGGQ3yn5EqkZN2YM50UhzDtMB1NeWBSGf7t
+         CwhCKfta5dWORwXgwGR/3UkX86fm+Gbu3kMuN+l6vpzzKW9UZTyLeP2CyJ5i12xxg5Jd
+         JVOHHf6DYlvfpw7U8obdQri4H46LGPKPKWQ0rgUwaUAUbdgnh52se+rgykvTZIsxPCpP
+         hArw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721061616; x=1721666416;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1721061634; x=1721666434;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=CkSiDi539inz2HbUEC736T7JdYcmpz5s2RCdx8qYb+U=;
-        b=Z1qs+7Uoovmwwh9nSIB4k5F5SdEmi3CrHLi5lIYOHiaq6/5drZsHFtpaWGKUK5M7WZ
-         oHyefph+cpADVhXFm2OLyOPxGLgfiykZ5DhxfGV+Y0aIa9wJjPPAeRixxV2cEiDLyfGE
-         iJe14+NqS7cWBaZQzCUXm1xF3Urm1gPoQflu/WCr97JyskdZ5W83ygsgTK7lrZ+HMUaU
-         /In7wKy1saWLKC3jXPUHiDLnxDOGLDnT4ytFyUJAs9CPRf0Sr7UAGlUONkktQf2mJNtf
-         L3y6IkIHhTY3iS7E68afm5it8B+TQGuQZLdN+usnM+xKqRqIoUT1B8bdmjbDK5v5F+SK
-         4S+w==
-X-Gm-Message-State: AOJu0YwixOWCrwIZNFRMcskrdP0FVGYeo6je3tF4nxuM7iuioVDB5j58
-	C0hiFCTF+aUanqCU3zffjbiIrTeP+TKTYOEwFi1L6WHDF57FEj0JN7YSZyWFG0U=
-X-Google-Smtp-Source: AGHT+IFrfUlV8/N6JTGpeVlDFFeY2ag5zEWsmfP7uRfT/JYORuY0cg71/ZroBmaQ2YcZGJ33DCJvbw==
-X-Received: by 2002:a2e:8612:0:b0:2ee:974c:598b with SMTP id 38308e7fff4ca-2eef2d7b38cmr4347151fa.23.1721061616035;
-        Mon, 15 Jul 2024 09:40:16 -0700 (PDT)
-Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a79bc7f1d45sm224011166b.133.2024.07.15.09.40.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jul 2024 09:40:15 -0700 (PDT)
-Message-ID: <9e6b58cf-46a6-4f6f-81e3-3eba6ff4787e@linaro.org>
-Date: Mon, 15 Jul 2024 18:40:14 +0200
+        bh=en6+puohAfynQkBKEllMr8eQHTxPNgc5bkI+PFZYQQg=;
+        b=uE7Jr9qcbgvAyyYnEZ66z4mT4Dr3Z0ka0FkYzCJ5BkMxd4OK9k4PfS5nKPRck4o733
+         /OaD4Gl488/rwgEw7MX9mMU6D4mJ2f6NN+iuGSVmirn/47Y0N7BlkAZhGrHPsxTgH0yL
+         pn8t2YwLtqfqgL2Ev35B85xBNZ8PgJ2OLmCW5a5Kt9kCnFVfZ2jrSKZs3i5ZK8yBXzb+
+         QC8iJPh/G6adJnrexoHQnKAOcJDz0zINiZbND9VzLDMmXgAAR1tDZJ7uJGH6/LazNMpL
+         OdpEaSo9JRv51V0rMirfYX18E2x+7HMjhNgdv3BCrmtoN7M1hTux+feQTLwk2R2UEdE9
+         /QBw==
+X-Forwarded-Encrypted: i=1; AJvYcCWNawaEafkM3Bdt2stm+NG8Zy811HUESzsjfp5HM4V0tUp2wLNljJKUk26XbAMaoFHD79G9+fSS2548zNBdsNmAUkMib8VHRs7E98lSTQ==
+X-Gm-Message-State: AOJu0Yyf1WLUeGZHFBTJ0uAUsIuAJDw3Zz8bZQy7yjpJzYMGMkj18LaK
+	GE1WuiA0OFxAM2pEiwTbY69tgN11P4JkvdicfbM2Tps1/NY3B4mpVDAnpQdlxaIYYpn7wAG3eRC
+	7U0ELIA4Uy0SCmgkj6/hEEsMtky7LaZGpdsYIYdIY4F7+iFe2O+gcEA==
+X-Google-Smtp-Source: AGHT+IFv3aNlqZTAbfEk3+SJkAU1VQZMZYGpG/ZTnboW7SE4kuCdio6mZh3pytXItsiGKqcKgm2mh9g14iNQpuvfWas=
+X-Received: by 2002:a05:690c:97:b0:63b:f919:2e89 with SMTP id
+ 00721157ae682-66353dcf097mr646877b3.2.1721061633716; Mon, 15 Jul 2024
+ 09:40:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: Mark APPS and PCIE SMMUs as
- DMA coherent
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-To: Qingqing Zhou <quic_qqzhou@quicinc.com>, andersson@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240715071649.25738-1-quic_qqzhou@quicinc.com>
- <0b7fa651-3355-4548-90a9-cb6d87fa6494@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <0b7fa651-3355-4548-90a9-cb6d87fa6494@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240715-x1e8-zap-name-v1-1-b66df09d0b65@linaro.org> <ZpU1vxsYUdVg9VGv@hovoldconsulting.com>
+In-Reply-To: <ZpU1vxsYUdVg9VGv@hovoldconsulting.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 15 Jul 2024 19:40:22 +0300
+Message-ID: <CAA8EJprKTm-FzDjUFwi9jKaHJ121W2m655-GN3DjzB9rSOpJ=Q@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: disable GPU on x1e80100 by default
+To: Johan Hovold <johan@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Akhil P Oommen <quic_akhilpo@quicinc.com>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 15.07.2024 6:39 PM, Konrad Dybcio wrote:
-> On 15.07.2024 9:16 AM, Qingqing Zhou wrote:
->> The SMMUs on sa8775p are cache-coherent. GPU SMMU is marked as such,
->> mark the APPS and PCIE ones as well.
-> 
-> Please double-check what you copy-paste, there's no PCIe SMMU in this
-> patch
-> 
-> Looks good otherwise
+On Mon, 15 Jul 2024 at 17:44, Johan Hovold <johan@kernel.org> wrote:
+>
+> On Mon, Jul 15, 2024 at 05:23:58PM +0300, Dmitry Baryshkov wrote:
+> > The GPU on X1E80100 requires ZAP 'shader' file to be useful. Since the
+> > file is signed by the OEM keys and might be not available by default,
+> > disable the GPU node and drop the firmware name from the x1e80100.dtsi
+> > file. Devices not being fused to use OEM keys can specify generic
+> > location at `qcom/x1e80100/gen70500_zap.mbn` while enabling the GPU.
+>
+> Please enable the GPU for the CRD as part of this patch (e.g. move the
+> fw name property there).
 
-Konrad, please double check what you say to people on lkml.. sorry bout that..
+I can not just move the property, as it is going to have a different
+value. I think GPU enablement for CRD should come as a separate patch.
 
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
+-- 
+With best wishes
+Dmitry
 
