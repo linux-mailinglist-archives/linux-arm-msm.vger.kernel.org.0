@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-26244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CD4D931B71
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 22:04:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BDE9931B7E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 22:07:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CE93E2829F9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 20:04:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8B81F1C21C2B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 20:07:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F8C4548E0;
-	Mon, 15 Jul 2024 20:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4B1813A40F;
+	Mon, 15 Jul 2024 20:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ELyGvhMg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cYSBhLaV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3BE6E611
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 20:04:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08CA2139CF7
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 20:07:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721073868; cv=none; b=CoG2O7CrXtU3mmLfg8YB1CtSZrnD3kZfJ2ZpFibGKs/UXGxFKNPAcXmsDH9+EYC3lSyASLnYUsr3eMxxs4vidxSmb7iQC42cdbh7eYsqyDDWsGJj8HOB7PaFylbwCWatjJ0Lxe1wk7MP1SCwQhc8uRhIS9FvvqB8BelOmg63X50=
+	t=1721074023; cv=none; b=FhqsHxt7K41QQY5a6OkErnsUelCW7zNPp6O+wvoXoaJdVXkOejEBvUOWKQkKZXNelXZkWv+BgwqH19udfxJGOvztqFmMQHcVMmPFu0hF+PQDonxuzZjZ2NIf8U2Nn+NTQjV7Q7JGMjNOEmX3vq12wNTJPhFX4XRKN7L5BeCaWpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721073868; c=relaxed/simple;
-	bh=pR2h5ks+m9XFkbEaDwnLfWbyyvcGGaaPkfltYqZhu+4=;
+	s=arc-20240116; t=1721074023; c=relaxed/simple;
+	bh=mH7ml5XGw2UfHBEbiu0tHBp3fgyAwGNogLpfYZhJvPI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oiZ26uATbgk9pUHp+dk+iKuNW0bCb1vApWgKE209NzawxZKEh/I7G4ikiMk5T4iaq3ZGaS0dPh5Of29W6a5hRtf4vCQ4HvHZ+qx7sTqsq/mpVGaalvzCSJheyxuiGxAm5lj99/XqZfpz080vBWireLuMG/9goTpxvBaKvc1EbLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ELyGvhMg; arc=none smtp.client-ip=209.85.167.48
+	 In-Reply-To:Content-Type; b=pb5U02NG4mMYv5EJWXG2CmTt3JN/JgNVB88aYkJ9GyjPAJojdV/xTugfMiUVKAVxdoekQ+gQQIbiiuzDIpVvFOlKQnXr6wT8lSZH07BjrljbdgzJiH/2JGmTvcRX6+oA3MYF1xBnaTRcD9dhZLG0HhIo4iyF891J34d34noG+XU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cYSBhLaV; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-52ea1a69624so4893000e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 13:04:26 -0700 (PDT)
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a77af4cd570so285978966b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 13:07:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721073865; x=1721678665; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1721074020; x=1721678820; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=F4KzL+k7bEj7U3hH6w860LGovRnkChOt26LTuiV0jsY=;
-        b=ELyGvhMgTc8PbDkcUvupH9L+7c/a5y2/5mC/jI8BszbGfodq6PkUvCen8zH9G8vsbF
-         iFTIGEYYEotyaMwcKqaU73wG3NAFs+ZHriTTTdiop9VImVcYZhJ8p5TRf5XSbpXL3Z7R
-         g1fHCmspUZVqWY6CRi2fri5ATcDln3mpze+nenxRFOUv/j1WsTxXmpTGGWFhYo7+sBFU
-         y/iBPShM7ycHOI8S0uUuXhDaP1dSsJVlf0uqvw3Kz0HTbcW7uvrRLcEnx0kCpfbLrHaX
-         1lanGe5NvJGJ2cu7w2R15D4q4FYfJmzNZ3cj9Vasa6Jk34sFmGNI0kIHT7Imn5VUcRMS
-         z4Zg==
+        bh=e9soHTPXjOtOjNo3NVk4k5D9hNCH3BU8X8ODig3zB3M=;
+        b=cYSBhLaVIt07hepflzqgN1S856+IluhRFdbOudoI7XtRBaUw74zpovtEUYgNY+3I4G
+         hPVHcsfR5+7NfTIIKUCuc5HbRkFH5OgFxKnXkbQKC8wAgMog14GXCXe0nA8ZezGTH67i
+         wooCoYFOPJCOjOiWRYKfTO0RtWsAT9Q0CCnBfXfnhJ4colJfgCLiKRyIfrB5wVfO2OsF
+         qG+ONbn0gjrnddonKTXO6yWc/EmEzxezaIuFcunz5EQdjMjaOHiF7ZwKEj12Ytw5QBc9
+         Xm/opjauHK60hi471uBZJrqCipdGQGP+ASlXQj66HEL73iTzD2oyrM5xkTetnCMwogWy
+         vgmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721073865; x=1721678665;
+        d=1e100.net; s=20230601; t=1721074020; x=1721678820;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=F4KzL+k7bEj7U3hH6w860LGovRnkChOt26LTuiV0jsY=;
-        b=o4Ejtk6Fnin0OLF2OJrRMHoJjYkgAkZKkTrMvCBhbOA7+A5IQPJoPMgUov6bhYicjE
-         HFHZw3tAH+m+gMNN8snoFomMYtZumiu8g47kjrXER7Nc+R5R+GNMDSy5F9/SrBl44RQy
-         xF4I59a8RCBze3u+c+hP7WGFo0i1GXg78+cappZ3hA+CAOc08a4l6BB2LDNbG67RLYB8
-         KheqBt7QixROrQD7Y1PPM2X2OI94qT2Wu6CfY2CY92FHeVYdsW0h6QAnfKULb6YkH/ay
-         TPj9iRVxDvJOydu7v6a7zzmfIaRiSuE0hb4NPRuiLwqgAm6z2ul/XtPj7vkGOwtjYUXX
-         haPA==
-X-Forwarded-Encrypted: i=1; AJvYcCWKWz1RaLSooC+LMOPF1N+1eUAf6FppkiHhoZBaEcKgeWXFb8qkHGdl2e/TQUUyAO8OMUoOlGk5uS4DAn785bSmfJxfvAoolwQ7rbNctw==
-X-Gm-Message-State: AOJu0YyCPiB2V8eqH1tPVzi6QEYTpOY4rUixVvv1o5Ei+H4ICVhmt0St
-	9BuwrEWsjvYlhVj8akljgX+5KIWgueDZmEd0P5UtDo52FRh8ruRiPHDFy8LMLCA=
-X-Google-Smtp-Source: AGHT+IGV8TZiXnHu7cIS/w+lUy537cIY3jdT77DwfUsNlvtMXnwPP647lyoYwLzjXHXvb4ZoHIWz2w==
-X-Received: by 2002:a05:6512:ba8:b0:52e:d0f4:7930 with SMTP id 2adb3069b0e04-52ede1cd2e6mr327905e87.53.1721073864394;
-        Mon, 15 Jul 2024 13:04:24 -0700 (PDT)
+        bh=e9soHTPXjOtOjNo3NVk4k5D9hNCH3BU8X8ODig3zB3M=;
+        b=wEEqvOboASfeabnrbTyJL17HM+JJQG7D2XB9pzj5sQGhxjgzj2rMuvxTCDl0MOzJ/6
+         F/V2gwK4QPnfrQlSbHI1xdoAUv53w2HbrvcHqxk09PUnh+wjFClmQzvTJB7kdBTUaWms
+         /kwQUwCGRgXQL3qbNvJYI/k9GBfuINRvHdMP8ZN1SN6nwIInwGC10f41vjCUWFmxaw5W
+         TEiLYEmosXg8kFfOxMHMtMpRDwJdZYakzSPEBm4H0upk3mIu5ImPmmwxDG5t3/SOZYVZ
+         Rn5VpPgbpmB0ebCYvOu5ldEBfWuK3hszF6vCO9tIa0rLnSOcvn6RddyMHKWo+AhTtdrr
+         F3Ig==
+X-Forwarded-Encrypted: i=1; AJvYcCUMNjuecxJ99LuN9A6CS0ocVQ/eCu3JzmhEOz5JEA8b1QQe1b06cSlxm9chcjG7+W37tYdycQwcFnHIvpfm0xV8RIdFiGWjy6SNmoUIbg==
+X-Gm-Message-State: AOJu0Yx6wRHN9Fg/iDAJSyzBwq0qOuGU1PvJyoM0CxYKeCuXaZUQTCpb
+	xsA0vxpp3mye70Z/dKermqKeHx8LSWDlTlr6C7OSR3mm6lny8LBPrifgHASQ76w=
+X-Google-Smtp-Source: AGHT+IEqbGCM4EjhL+6laJrvI85EF55lREcmibdMwft25Oug0lVasuFnlZetaOmh32YGl4sHrMz5Xw==
+X-Received: by 2002:a50:cd93:0:b0:57c:5d4a:4122 with SMTP id 4fb4d7f45d1cf-59e97ddb9afmr812759a12.9.1721074020215;
+        Mon, 15 Jul 2024 13:07:00 -0700 (PDT)
 Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a79bc821809sm232964166b.208.2024.07.15.13.04.23
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-59b268a293csm3754495a12.67.2024.07.15.13.06.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jul 2024 13:04:24 -0700 (PDT)
-Message-ID: <48b7fc9a-a10f-4242-bb53-7791ccf9c1bf@linaro.org>
-Date: Mon, 15 Jul 2024 22:04:22 +0200
+        Mon, 15 Jul 2024 13:06:59 -0700 (PDT)
+Message-ID: <f1f6501c-8562-4f1a-a598-4ab58c7f44e2@linaro.org>
+Date: Mon, 15 Jul 2024 22:06:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,8 +77,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/14] arm64: dts: qcom: sa8775p: Add 'linux,pci-domain'
- to PCIe EP controller nodes
+Subject: Re: [PATCH 13/14] PCI: qcom: Simulate PCIe hotplug using 'global'
+ interrupt
 To: manivannan.sadhasivam@linaro.org,
  Lorenzo Pieralisi <lpieralisi@kernel.org>,
  =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
@@ -89,7 +89,7 @@ To: manivannan.sadhasivam@linaro.org,
 Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 References: <20240715-pci-qcom-hotplug-v1-0-5f3765cc873a@linaro.org>
- <20240715-pci-qcom-hotplug-v1-10-5f3765cc873a@linaro.org>
+ <20240715-pci-qcom-hotplug-v1-13-5f3765cc873a@linaro.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -127,19 +127,33 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240715-pci-qcom-hotplug-v1-10-5f3765cc873a@linaro.org>
+In-Reply-To: <20240715-pci-qcom-hotplug-v1-13-5f3765cc873a@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 15.07.2024 7:33 PM, Manivannan Sadhasivam via B4 Relay wrote:
 > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > 
-> 'linux,pci-domain' property provides the PCI domain number for the PCI
-> endpoint controllers in a SoC. If this property is not present, then an
-> unstable (across boots) unique number will be assigned.
+> Historically, Qcom PCIe RC controllers lack standard hotplug support. So
+> when an endpoint is attached to the SoC, users have to rescan the bus
+> manually to enumerate the device. But this can be avoided by simulating the
+> PCIe hotplug using Qcom specific way.
 > 
-> Use this property to specify the domain number based on the actual hardware
-> instance of the PCI endpoint controllers in SA8775P SoC.
+> Qcom PCIe RC controllers are capable of generating the 'global' SPI
+> interrupt to the host CPUs. The device driver can use this event to
+> identify events such as PCIe link specific events, safety events etc...
+> 
+> One such event is the PCIe Link up event generated when an endpoint is
+> detected on the bus and the Link is 'up'. This event can be used to
+> simulate the PCIe hotplug in the Qcom SoCs.
+> 
+> So add support for capturing the PCIe Link up event using the 'global'
+> interrupt in the driver. Once the Link up event is received, the bus
+> underneath the host bridge is scanned to enumerate PCIe endpoint devices,
+> thus simulating hotplug.
+> 
+> All of the Qcom SoCs have only one rootport per controller instance. So
+> only a single 'Link up' event is generated for the PCIe controller.
 > 
 > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
