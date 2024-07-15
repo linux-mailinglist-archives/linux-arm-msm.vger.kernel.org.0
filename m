@@ -1,147 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-26160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65E03931419
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 14:22:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE0B7931425
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 14:25:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 10EB81F220BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 12:22:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 539BE28160E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 12:25:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 582F618A958;
-	Mon, 15 Jul 2024 12:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C372718A958;
+	Mon, 15 Jul 2024 12:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=envs.net header.i=@envs.net header.b="DvchD5Pi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RBM/TuzS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.envs.net (mail.envs.net [5.199.136.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97ACB1850AF;
-	Mon, 15 Jul 2024 12:22:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.199.136.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009C118787F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 12:25:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721046141; cv=none; b=X5bB3OJNwWQNMfPdvZnfLBDt/kviPLg6EsDM7YZ0D2XparKQ9Yvzw/gMxzqQURDevqF+j1+g1gQCaXrS1EbZhUkP2YLEOITjhNqNfUGuvl73rtiSVbxnNtzmidM4P35Rn1vNt9OTPGgRsfUaxOv/Lg3lO+fe1mRGQPFLR0Khg9E=
+	t=1721046304; cv=none; b=J5Zd984729WChOqUS6JyL+sZAi9GeQBLTgicm9SZSKT843lBq1wThCEV0mFOkv4OrAwsO2AJveXT3Dy3VWOVID/gHZtU2I4hY7IWc3Rpf2sf3V8cTvcAttiMu8u21LtRUYli5iW8OGBWU5c9A/GnBPa2JWiV7hhyMGDt33B21UY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721046141; c=relaxed/simple;
-	bh=rhj6YU+4sh2fmtzVDWQcXgy8QAUuN6NeLcd416vREKA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qi56PtBDpDA7eGjE+pINQXgH5/ohnQAsWvMYwknlU6+PP/K1twBUprSithJKRlh4LQba/3JDONx1v47sVNCUhMb8wUguA5z49FSDJU+MKKRsiHjZOpYEjD96kcM5XsKGt2W/UTlYwSkcCrmGU7CcRQMZ4fkrowg9U8ZfShYzpQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=envs.net; spf=pass smtp.mailfrom=envs.net; dkim=pass (4096-bit key) header.d=envs.net header.i=@envs.net header.b=DvchD5Pi; arc=none smtp.client-ip=5.199.136.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=envs.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=envs.net
-Received: from localhost (mail.envs.net [127.0.0.1])
-	by mail.envs.net (Postfix) with ESMTP id BBC7038A399E;
-	Mon, 15 Jul 2024 12:22:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=envs.net; s=modoboa;
-	t=1721046133; bh=y1+SQ3apUbmcQoHUoMHVMaKDypGWPo698XSl7yEvF8g=;
-	h=From:To:Cc:Subject:Date:From;
-	b=DvchD5PiHrE0Qk+MU8ryF0zg2YejEeb/LQjCc9RCFh+VFoF19NPbTmF0T3175T9Sr
-	 m14+XOTgvb3JNTR0d1kPmJt10uH+DKvxNjhAqlpsYoKzwYROHAvJYAY6ESnv5Kxl6L
-	 GJzhcakm+E90dvOBUbLCVwZk7hC0tgxbOOYRZk3msuFV+hufSZ+gZohl83X93fVMmd
-	 XUij27MqnVLZRXuntWNDvt3/V9gSGiL5e2eWUa7AQMFGB4dXLlHLehiSGCN4RqwSTu
-	 EQjtrGGNlKX4t5/JnxGft0pG1hEii8lIFV4H4pa/s4aKWyjzYPP/KZS8akkcsih2a8
-	 3OauShvmLQXkzygOWvGXJE3+7j6xBDJFE0JTvvAq2TBYnxyQHtwqY2QyednBSh7NI4
-	 kf+DhTA1l2KKyEVQ4HuRv4jp18TncWDHuO/POqmsHGLVNqoM8H8rkTUOWX0jM2BLDn
-	 JSy5jPf8gofuqa/9YtBnaKAuEo52PgZMPZxRpN4iQE/Sdm+gqKgPjGChNfbjeiSBQx
-	 JIP8VdMcIhKBdBX/nG7YWenpc1w/I3QzOigYpyIzE+eW59P/8vMcg9+TMEquIrQ0xC
-	 gsqhpzoWCYmDeDDXIfmEJ3AMePi7eZ/HxAunsOQZ7/xQpYfDCNzocIFDfDx9ldwwLH
-	 kraLcXPL5ZstaG5z/TdRODK8=
-X-Virus-Scanned: Debian amavisd-new at mail.envs.net
-Received: from mail.envs.net ([127.0.0.1])
-	by localhost (mail.envs.net [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id y8VJbKC15Tc8; Mon, 15 Jul 2024 12:22:07 +0000 (UTC)
-Received: from xtexx.eu.org (unknown [120.230.214.120])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.envs.net (Postfix) with ESMTPSA;
-	Mon, 15 Jul 2024 12:22:07 +0000 (UTC)
-From: Bingwu Zhang <xtex@envs.net>
-To: Tony Luck <tony.luck@intel.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	s=arc-20240116; t=1721046304; c=relaxed/simple;
+	bh=0DePQic4KVJIvL9GJlnPshTiXW3fYxdpcyhcmFGMheU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bgK2RKR0XdHe016m3bQG7BhQgozvoXqGSwbyqrEDpWnkaBcc/YPEG1sJ2+L57YMFCvbsRfmVyDHNpRx4Lp8RVg1KupblbWKct+BgQJfNimC3DJLv0b3zklVbQAe+/HMpdORHTRMJnHhLmZ2APc38wRgiJc6ItI42OxSiGUuAGi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RBM/TuzS; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2eeec60a324so7968861fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 05:25:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721046301; x=1721651101; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FCPqymuE1696F1HXcUi+tB+c7mFe5Hm0KK5Kdb2Bj6o=;
+        b=RBM/TuzSFheYzuHutH+ujOBleoY/3ZpC3h0xpGbZEb2VlW8bbdNStu9yKTCuBP9m0z
+         LmJ/Deby2x3dwrAGOX2KNvnBab6rHldrTIBXJfpw/Mmhpo9uJlFbztw8Qe/Gaq94h7fy
+         ScEMLaMXX7cG6rQfyW+EETqcs8xiE5+HkCyDVA2gD06NXrriGIZSzDpSzwHMRIgRWBJU
+         jVvKhAm2uHuzi5GjIG1yHdzSz7VuDZBHXua9TGezEacu9vArgbDQKxNH+NBDFxaXvmdX
+         Dzy57stb+bRBFE3kUk+ki+pgu00EyhRjblt4p4NcqLP5/wOvn1TP+ihMySA+GMliLHcI
+         Az/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721046301; x=1721651101;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FCPqymuE1696F1HXcUi+tB+c7mFe5Hm0KK5Kdb2Bj6o=;
+        b=N9BkNtTrck9/JztYW3tYeh5ShXyCMHm8CMYWqWwl/uFrBiNfanCKvUn9xOoeCSTu3S
+         b4BCq+BXfuQk9rgXFwDr3qG1Lq0aez3EoS6BH+jj7gHkbTb+fnhivQABJ10nP4DEsBm/
+         m2sK9xIIiaZ1Fu/T5lUKGuNpehJaef8JK3Rn56ViJ5a83jtsPSzUSvuG14x7gTpG6QST
+         kIcu5kohwD/msmyHJpd2F61FPbiFMyTbiUzbFjmLZUA/wK1njl6svch8xv3ctp4MQc5P
+         hmC0LmQE4TL3orKNq+HNpsAqEByQkf6NwKl+zBbuKn3qsq8/7+Jt5uU7FJmr3sgpOK9C
+         mNog==
+X-Forwarded-Encrypted: i=1; AJvYcCWNL5YMrlcXRsdQZLD0UeeHjw485yoLDy2GVd32P+FJC7bT5If/YV7o49nBE5zBzenzaUtqCG8fZrSL+euq/qFkx01QxnW3ywPzapyxzQ==
+X-Gm-Message-State: AOJu0Yy+wiserEiMyHpxu8f3MJ7z3Vwbm2rynMhbN8FqyLGMyoZVpRKN
+	txazgvxCVoaMU3DRI6v4WXJUVWhpeSCHMrEqFTNVWmalOdFf38+SniIzD4GKK1I=
+X-Google-Smtp-Source: AGHT+IFuaB5hWdlEUlx+L2Fk0YWQZUNUsQXsLuGZDH7wxw0vxm8nrCvNGmOzNWXYTI7eL6PnKlFkyg==
+X-Received: by 2002:a2e:8ed3:0:b0:2ee:4d37:91df with SMTP id 38308e7fff4ca-2eeb30fef50mr147387991fa.27.1721046301088;
+        Mon, 15 Jul 2024 05:25:01 -0700 (PDT)
+Received: from eriador.lan (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2eee1939b56sm8287711fa.115.2024.07.15.05.25.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Jul 2024 05:25:00 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: linux-firmware@kernel.org
+Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>,
 	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: Bingwu Zhang <xtexchooser@duck.com>,
-	Rong Zhang <i@rong.moe>,
-	Daniele Debernardi <drebrez@gmail.com>,
-	Luca Weiss <luca@z3ntu.xyz>,
-	linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-hardening@vger.kernel.org
-Subject: [PATCH v2] ARM: dts: qcom: msm8974pro-samsung-klte: Add pstore node
-Date: Mon, 15 Jul 2024 20:22:01 +0800
-Message-ID: <20240715122201.345426-2-xtex@envs.net>
-X-Mailer: git-send-email 2.45.2
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH] qcom: move signed x1e80100 signed firmware to the SoC subdir
+Date: Mon, 15 Jul 2024 15:25:00 +0300
+Message-ID: <20240715122500.3115456-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1617; i=xtexchooser@duck.com; h=from:subject; bh=g0144RZDvUfKue3w7fs4s3tdYQywVwxNoaGNF6PBxak=; b=owGbwMvMwCW2U4Ij7wZL9ETG02pJDGlTRTL9+ISVhHwk9TMW2kx//TIidt5h4ZfWH89eqMkJq b9a8OJyRykLgxgXg6yYIkuRYYM3q046v+iyclmYOaxMIEMYuDgFYCLhlxn+inmsWPVJLOa5x/QZ C0/vsvvYvHUGj7fWgtk/AuqnBV2Y7czIcLVj/awXX2538x7L3+HS+Et1Tv5iMWY5vc7mRoYD9Ze FGAA=
-X-Developer-Key: i=xtexchooser@duck.com; a=openpgp; fpr=7231804B052C670F15A6771DB918086ED8045B91
 Content-Transfer-Encoding: 8bit
 
-From: Bingwu Zhang <xtexchooser@duck.com>
+The ZAP shader is signed and is specific for the particular SoC. As such
+it should be put the corresponding subdir rather than the topdir.
 
-Add pstore node to allow for retrieving crash logs.
+Move it to the subdir (like all other zap.mbn files).
 
-Signed-off-by: Bingwu Zhang <xtexchooser@duck.com>
-
+Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-Changes in v2:
-  Add a label to reserved-memory and extend it to avoid duplicating nodes.
+ WHENCE                               |   2 +-
+ qcom/{ => x1e80100}/gen70500_zap.mbn | Bin
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ rename qcom/{ => x1e80100}/gen70500_zap.mbn (100%)
 
----
- arch/arm/boot/dts/qcom/qcom-msm8974.dtsi            |  2 +-
- .../qcom/qcom-msm8974pro-samsung-klte-common.dtsi   | 13 +++++++++++++
- 2 files changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-index 15568579459a..19c12686831b 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-@@ -149,7 +149,7 @@ rpmcc: clock-controller {
- 		};
- 	};
+diff --git a/WHENCE b/WHENCE
+index e4e06b966e89..b6451372a6ef 100644
+--- a/WHENCE
++++ b/WHENCE
+@@ -5992,7 +5992,7 @@ File: qcom/leia_pm4_470.fw
+ File: qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn
+ File: qcom/gen70500_gmu.bin
+ File: qcom/gen70500_sqe.fw
+-File: qcom/gen70500_zap.mbn
++File: qcom/x1e80100/gen70500_zap.mbn
  
--	reserved-memory {
-+	reserved_memory: reserved-memory {
- 		#address-cells = <1>;
- 		#size-cells = <1>;
- 		ranges;
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-klte-common.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-klte-common.dtsi
-index b5443fd5b425..d3959741d2ea 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-klte-common.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-klte-common.dtsi
-@@ -438,6 +438,19 @@ fuelgauge_pin: fuelgauge-int-state {
- 	};
- };
+ Licence: Redistributable. See LICENSE.qcom and qcom/NOTICE.txt for details
  
-+&reserved_memory {
-+	ramoops@3e8e0000 {
-+		compatible = "ramoops";
-+		reg = <0x3e8e0000 0x200000>;
-+
-+		console-size = <0x100000>;
-+		record-size = <0x10000>;
-+		ftrace-size = <0x10000>;
-+		pmsg-size = <0x80000>;
-+		ecc-size = <8>;
-+	};
-+};
-+
- &remoteproc_adsp {
- 	status = "okay";
- 	cx-supply = <&pma8084_s2>;
-
-base-commit: 6fd4da15c334831a865d4700ceb3ff5a917163e3
+diff --git a/qcom/gen70500_zap.mbn b/qcom/x1e80100/gen70500_zap.mbn
+similarity index 100%
+rename from qcom/gen70500_zap.mbn
+rename to qcom/x1e80100/gen70500_zap.mbn
 -- 
-2.45.2
+2.43.0
 
 
