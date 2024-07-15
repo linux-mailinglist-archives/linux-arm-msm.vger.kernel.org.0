@@ -1,163 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-26206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2729931846
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 18:14:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38292931887
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 18:34:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A9E461F2233E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 16:14:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 69C051C215F1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 16:34:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1E8B4D8D1;
-	Mon, 15 Jul 2024 16:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F21661C6A3;
+	Mon, 15 Jul 2024 16:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I4gr0mOd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="g8im6Ais"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922A217753;
-	Mon, 15 Jul 2024 16:12:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C771C6A0
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 16:34:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721059956; cv=none; b=GMNjQ9tooo6IkQ08g25Li5ePcH7MRldI/vIORrR4wMKE7UtaLcDXPE10KVV+8unmNvG2I03ZW5S9zDedIWRMk3WmH2csgILvNFCjOq7rqKSuxzbSstW7rtc0odYGNSYEuIgLtaP1m+MnFPpWdyR67l/+9g79ywRTCyx1IyyrczM=
+	t=1721061253; cv=none; b=aBnbgsxXWquQAUX0+gvLCdQTaAGzSQPPctdfenUKnvCQbtDRSwmPnROmLPxKjrOXI2zp5RtMaF7yuEsu4O4rMueaVZ8dwr24WuDXa7h1SjT/wQXgbICN7fwpTjFo4unrIOs0HT4TyB05RMqefHN3Noq5ljnj4Y+sMjbW1/l4Rv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721059956; c=relaxed/simple;
-	bh=wAfjnWEEmCh2B/ZHrv1VgTzWA3cAe3VidYlKsp5DMxU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bq0VV+GYhLpI2WAFXiCCcJAqQL7Jj41ZCfQdYejrBklpxXEHstStUqeQhJ4lzdCxy4wX/mX2URv4Do/hE2gt9YVNg//8F6NxNt51hRW0fQUDghcf3cmspiu1X1S+3p57Lq65sdHIgGroSQfFWlgCAvmsmFI537leA7ILT8B4tco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I4gr0mOd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E49BBC32782;
-	Mon, 15 Jul 2024 16:12:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721059956;
-	bh=wAfjnWEEmCh2B/ZHrv1VgTzWA3cAe3VidYlKsp5DMxU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=I4gr0mOdRYDg+eCHiPcFR0fOgQ7VpmYuHbda7gEimyuGVFGqeoYOEkMWXK5ZlTa+Z
-	 sqv1R4TzhWrneEIRODX7BI01lqcR+fWewyPe7rG55thcqKDUJOekjgzKk++YOJ05XY
-	 U0Ze66wlFIympcm32HZboIqxc3DBQlnG5eiDRi4pG9mFEZHYS+Tk1U9S1TIasn3Oxl
-	 wdXNLFlU07LvJ5rDTLSYHcdq212p6f3Z8y3bZrYQDAQsIV7kf9zPeCUNHpNijHICSS
-	 k6tjTxGEBz5hiZU/4tItDE6wkItObTUnTI72MsDsk6m3t4kAowNF3RuCgR3iWQKvsA
-	 fb5wYzsT4w5ug==
-Date: Mon, 15 Jul 2024 17:12:31 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Rayyan Ansari <rayyan.ansari@linaro.org>
-Cc: devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: clock: qcom,turingcc: convert to dtschema
-Message-ID: <20240715-colony-hacksaw-6729fca296c6@spud>
-References: <20240715084313.14098-1-rayyan.ansari@linaro.org>
- <20240715-spoiled-corroding-4e288446829d@spud>
+	s=arc-20240116; t=1721061253; c=relaxed/simple;
+	bh=qhp73Tad+JqfaHNwjT4CNCWI7OKK/O7Fpy6EtYhnQF0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JRFuir7ZX5XTw9iAjrghHQJPQbtxrP3OrxhIG+Q/S0+efXd8QRkmQilri5Nk0cdYyCvgTO/BYkXW7it/PYMLMhzKC+4XmgY53E9yKmTvwOMvklqDPr554hwL1E2mWjl1y2m2a6I5VhyW7fBGahZq08bNOse0Fq4AlexB2b5Ol7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=g8im6Ais; arc=none smtp.client-ip=209.85.219.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-dff17fd97b3so4555707276.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 09:34:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721061251; x=1721666051; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=O37L9qZJLQGQMz18TDRSIA7wom9SyLF5AajKEOhKC40=;
+        b=g8im6AisqrWhbvrNu3ugzU2s38ss3BubN5PHvv7iqXQF3NaOW/J3yXslF+GDdcHdKm
+         vUHY9F560R4Op5iKYh5TuPu8yjt3zs+ajV/vyeHN3x3dNQ9u4QkSCX5Fsvn4b51bLkL8
+         YiXnX6uMnRkkVZU/s25KX1uJTR8yfnK98JKqqX2rbMEEfpENa6dt4cZwAw7fwSO5tQcu
+         63Yzxl32hBTrNF8JUa5xj3X/u4X/0INW1cgfezijQRJFVoHErJgyyhfDQtfF1TnGKdY5
+         a0t/05n3JaeVtL7oCKp95YfpoQnglsvbi4u9ljSljsaGEMwXa924Je4STOUbKy6xlrgQ
+         PuVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721061251; x=1721666051;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=O37L9qZJLQGQMz18TDRSIA7wom9SyLF5AajKEOhKC40=;
+        b=Mf+NtHPUxaQWzxl9mM/Knq5xI9VQoshZ6/1XsyGxXcJ4Mwib8eIbRJjlUV9xUvV7jZ
+         1kG7nyuB+WTQeAwgeIjzRCq3AivvZvMjTJINCQrAR6pG2DnVa5k4GYAhhqZ/Ze10Qw8T
+         JrHtPGiVf6C98uImqW/m5vAAn6HJVQCmR0YwSvBFiS7YutL2ZRF4Cix6mZQuk398UGsN
+         0DNndrIq3tiILJmYiNtMV3Z3eIza6EEM00N4ITYnGSTrr+qFevE7Z17hH2blJh+JGU9/
+         u975ZVFVpJcGjJetLxyybtkIGOmyQo2YAsS16JVvxbyd/rsZScNyrcJWlvDMUQLe+iP4
+         pPXw==
+X-Forwarded-Encrypted: i=1; AJvYcCXMWAJI5xicL1nEfJ4vsryQqXHOx0QqbHDpZAW51u2O90/LOWzWm/mUXYyCuQ0vERVlvj5tWXCLDBp0wFuAJrIVi6ZUKeDCBjnpZL6Iog==
+X-Gm-Message-State: AOJu0YygGFGxYOwzak3vtJw2Xg3WLt9CHkO3Q/qNIVHUvi99BokdEihs
+	XTAv5C82+0daUnJDEjx2R4KqybtzeIYIlvVTzizQB+MZeCnhR5f/3RqNv3Zj7XsfL32cyIYcvTH
+	TFsDG50lJ1U7IYdF7wwjlOyadh1/E9p2EEzv+fw==
+X-Google-Smtp-Source: AGHT+IHbhMbVEZKppzrWbxx+94NB44o9QwSREBMBZsGgAxNmoI/3j+IILkQ8RwefrybDTMBJhqnTa4iV4f6MMeBnuLs=
+X-Received: by 2002:a5b:b02:0:b0:e05:acec:fefd with SMTP id
+ 3f1490d57ef6-e05d3bbdc7dmr99465276.48.1721061250693; Mon, 15 Jul 2024
+ 09:34:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="CpDw71ypzQz04pYh"
-Content-Disposition: inline
-In-Reply-To: <20240715-spoiled-corroding-4e288446829d@spud>
+References: <20240715-hdmi-tx-v6-0-d27f029627ad@freebox.fr>
+ <20240715-hdmi-tx-v6-3-d27f029627ad@freebox.fr> <20240715-trickery-spongy-c9d8e246b4cc@spud>
+ <20240715-stable-popsicle-7c6e2fa76644@spud>
+In-Reply-To: <20240715-stable-popsicle-7c6e2fa76644@spud>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 15 Jul 2024 19:33:59 +0300
+Message-ID: <CAA8EJppYJuKpsUBhy3qwa684dWdZbp3qZtd6OdCz4YBU1DjYMA@mail.gmail.com>
+Subject: Re: [PATCH v6 3/6] drm/msm/hdmi: add "qcom,hdmi-tx-8998" compatible
+To: Conor Dooley <conor@kernel.org>
+Cc: Marc Gonzalez <mgonzalez@freebox.fr>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	Arnaud Vrac <avrac@freebox.fr>, Pierre-Hugues Husson <phhusson@freebox.fr>, 
+	Jeffrey Hugo <quic_jhugo@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+
+On Mon, 15 Jul 2024 at 18:28, Conor Dooley <conor@kernel.org> wrote:
+>
+> On Mon, Jul 15, 2024 at 04:26:12PM +0100, Conor Dooley wrote:
+> > On Mon, Jul 15, 2024 at 02:21:16PM +0200, Marc Gonzalez wrote:
+> > > Current driver already supports the msm8998 HDMI TX.
+> > > We just need to add the compatible string.
+> >
+> > Why is this required when the driver change suggests that this device is
+> > compatible with the existing 8974?
+>
+> (I know I reviewed the binding already, just noticing this which
+> suggests a fallback would be appropriate, despite the differing clocks
+> etc)
+
+Yes and no. All supported MMS HDMI controllers are backwards
+compatible at least back to msm8960. However as we were not using
+fallbacks before, does it really make sense to introduce them now?
+It's highly likely that there will be no new HDMI controllers
+(Qualcomm has stopped using them with MSM8998 at 2018).
+
+>
+> >
+> > >
+> > > Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+> > > ---
+> > >  drivers/gpu/drm/msm/hdmi/hdmi.c | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> > > index 24abcb7254cc4..0bfee41c2e71a 100644
+> > > --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
+> > > +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> > > @@ -549,6 +549,7 @@ static void msm_hdmi_dev_remove(struct platform_device *pdev)
+> > >  }
+> > >
+> > >  static const struct of_device_id msm_hdmi_dt_match[] = {
+> > > +   { .compatible = "qcom,hdmi-tx-8998", .data = &hdmi_tx_8974_config },
+> > >     { .compatible = "qcom,hdmi-tx-8996", .data = &hdmi_tx_8974_config },
+> > >     { .compatible = "qcom,hdmi-tx-8994", .data = &hdmi_tx_8974_config },
+> > >     { .compatible = "qcom,hdmi-tx-8084", .data = &hdmi_tx_8974_config },
+> > >
+> > > --
+> > > 2.34.1
+> > >
+>
+>
 
 
---CpDw71ypzQz04pYh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Jul 15, 2024 at 05:11:49PM +0100, Conor Dooley wrote:
-> On Mon, Jul 15, 2024 at 09:43:10AM +0100, Rayyan Ansari wrote:
-> > diff --git a/Documentation/devicetree/bindings/clock/qcom,turingcc.yaml=
- b/Documentation/devicetree/bindings/clock/qcom,turingcc.yaml
-> > new file mode 100644
-> > index 000000000000..0a57e42fb4d9
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/clock/qcom,turingcc.yaml
->=20
-> filename should match the compatible in the binding.
->=20
-> > @@ -0,0 +1,47 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/clock/qcom,turingcc.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm Turing Clock & Reset Controller
-> > +
-> > +maintainers:
-> > +  - Bjorn Andersson <andersson@kernel.org>
-> > +
-> > +properties:
-> > +  compatible:
-> > +    const: qcom,qcs404-turingcc
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  clocks:
-> > +    maxItems: 1
-> > +
-> > +  '#clock-cells':
-> > +    const: 1
-> > +
-> > +  '#reset-cells':
-> > +    const: 1
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - clocks
-> > +  - '#clock-cells'
-> > +  - '#reset-cells'
-> > +
-> > +additionalProperties: false
-> > +
-> > +examples:
-> > +  - |
-> > +    #include <dt-bindings/clock/qcom,gcc-qcs404.h>
-> > +    turingcc: clock-controller@800000 {
->=20
-> nit: drop the label
->=20
-> Acked-by: Conor Dooley <conor.dooley@microchip.com>
-
-gah, I forgot to say that ack was conditional on the filename being
-changed.
-
->=20
-> Cheers,
-> Conor.
->=20
-> > +        compatible =3D "qcom,qcs404-turingcc";
-> > +        reg =3D <0x00800000 0x30000>;
-> > +        clocks =3D <&gcc GCC_CDSP_CFG_AHB_CLK>;
-> > +
-> > +        #clock-cells =3D <1>;
-> > +        #reset-cells =3D <1>;
-> > +    };
-> > --=20
-> > 2.45.2
-> >=20
-
-
-
---CpDw71ypzQz04pYh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZpVKbwAKCRB4tDGHoIJi
-0oYqAQCq5QbMDxbFh98PlEamJoy1CtzqagK7h6bREOwldxnPqgD9FEElV1dyyDNe
-31pyQVtw8iQHP6r0N0v/LZ1ACQVUsgE=
-=RLns
------END PGP SIGNATURE-----
-
---CpDw71ypzQz04pYh--
+-- 
+With best wishes
+Dmitry
 
