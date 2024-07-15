@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-26164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDB0A931438
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 14:30:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E94B931456
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 14:34:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6D2081F21C2A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 12:30:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DF5AC1F2239F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 12:34:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AE0B13BAC2;
-	Mon, 15 Jul 2024 12:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33F1718C190;
+	Mon, 15 Jul 2024 12:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ErlC8vBA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GQO/vgss"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA06323BF;
-	Mon, 15 Jul 2024 12:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0727D18C18D;
+	Mon, 15 Jul 2024 12:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721046651; cv=none; b=CnIrKtAp2HbAJ57xwcGIAvz5FCzjs487XOIEoKPvk6Q/BSQq652HRIAnIiMYRFDNvu9pNFrC9aURBRHuT/c93P68c+BAzaZRwV7x3TE/5CJ0ZOuLOuo03ycKguMgJQOW0XQ2THhH6CU/SzQrBzTEd8mtjhfgmMgoN6K5n+k24kA=
+	t=1721046841; cv=none; b=qVJZyY5LNVPV4YTGKd/oMzONCEGezlLtlbhw15cnnc5zrXoQgZmRtlhN/gVFZ12bqwVFdnw3tx30L6N18xOdh6zi98PLppftDWtPd05GFpSoo9nIp40Ar0KFutAFUJ6oeb2iqQ5bfA65H3pidFY0v3qju4H1XgiPoniOQ+SyyRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721046651; c=relaxed/simple;
-	bh=g0Nc90YvDz6QNsUQ8nKoL2I1s30tobIMCfl0uzfoaz8=;
+	s=arc-20240116; t=1721046841; c=relaxed/simple;
+	bh=kyfiwzoOkf5rEaYCmxUuypkvZ9dgsE17Q+IbBZDwcG4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IS0OeTuvqHXi3e47+L3zmTztLLWA87YLzqjNsHxDF9rSfvNewGqp3lVEWOXO8OTttHJeoOcq/IP3kpiir9ytpI/1XjwBqZ6Nkftd5F+D8rK+1SdVzs8llZwg1KksNo7JSuci2146Go3gW9mGc+dmpVQKb8v4PQe7ZlvOFxfXXBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ErlC8vBA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D071C32782;
-	Mon, 15 Jul 2024 12:30:50 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=h4NTVg71ydV/GcY+vJ90gKW0v8Cpj4ucJIvsCNgdQCDQnfC3Gr4l2Uwcw09iHsvw3/yhEK4Y8pgNXs+I28ntsdYtGdW8D2VamZw0r7GctJ3YKfSZttrSjHAGHh06b3EWTN8qLwgXsXeHwt/HF+RX7f74AOnKEvYFBWQDDnYOTRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GQO/vgss; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 754F1C32782;
+	Mon, 15 Jul 2024 12:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721046650;
-	bh=g0Nc90YvDz6QNsUQ8nKoL2I1s30tobIMCfl0uzfoaz8=;
+	s=k20201202; t=1721046840;
+	bh=kyfiwzoOkf5rEaYCmxUuypkvZ9dgsE17Q+IbBZDwcG4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ErlC8vBA2Kx33XMxd/d+6pZD+y+Slok4/ZH4KYJYJGgKDdo9iwox68J34MdlGFdO7
-	 ZkpPZRnh0PB2C2Hps1Owh5S3LTA+CHIZ9SdoG1Tinc7zP1Yra8decpvlZMOeVAFCHJ
-	 zCMNitXxJ5IA2YNCqUvOxnNmZ4cBTs4n5otK+gurBgZMDlIkz/bmYECb97nGiax/6u
-	 pSAxYOp/8HEeRLGAzStGTDeh7XrfnUkSITuolY6CwRTSqr0WUMaDKYE6e74mDAmQCY
-	 wYQct/hwPoRs7kbdevcEuOyZir/aFR/R8OJvUgfJtGwhALcz0xWAwBkRSeAIcCb6Lp
-	 /TsAcorzg3a6g==
+	b=GQO/vgsseRuBpH9eZBnORw/lW+hVW0n5669ElLZfyhsu5uiNWZ2+cB/0+vbnw61A+
+	 wcPzqSSuPJ68fWKdLcfbpxa58laQ4P6zeTyyzNFBE7QeB0RhCQqfIdgf5py9VgRtzo
+	 zPHkZ5/vz4DiGnhqzMR6VHfQy/Ku+ym3tx8tMEV12PgDz1/0vPBMS3lfZ9Cb5Ksims
+	 qz1jMCmpbgLsJOXthBtjPjTKDzO5xzRhjkY65YyQuwvhkJRsIO2z6W60lBUIRiD4TU
+	 G8CR5/B7zdfFmbdVsbpnpNP0GJUuCJjOBeIHTvx55axOyRlSsVqlNBgtbpUDoSWoh3
+	 GhGfkI0kTFb4A==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1sTKqu-000000000MK-0avD;
-	Mon, 15 Jul 2024 14:30:48 +0200
-Date: Mon, 15 Jul 2024 14:30:48 +0200
+	id 1sTKty-000000000OY-2J5a;
+	Mon, 15 Jul 2024 14:33:58 +0200
+Date: Mon, 15 Jul 2024 14:33:58 +0200
 From: Johan Hovold <johan@kernel.org>
 To: Stephan Gerhold <stephan.gerhold@linaro.org>
 Cc: Neil Armstrong <neil.armstrong@linaro.org>,
@@ -59,10 +59,10 @@ Cc: Neil Armstrong <neil.armstrong@linaro.org>,
 	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
 	Abel Vesa <abel.vesa@linaro.org>
-Subject: Re: [PATCH v2 2/4] Revert "drm/panel-edp: Add SDC ATNA45AF01"
-Message-ID: <ZpUWeFYjrkvhUaB7@hovoldconsulting.com>
+Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: x1e80100-crd: Fix backlight
+Message-ID: <ZpUXNmrs2nfViUeP@hovoldconsulting.com>
 References: <20240715-x1e80100-crd-backlight-v2-0-31b7f2f658a3@linaro.org>
- <20240715-x1e80100-crd-backlight-v2-2-31b7f2f658a3@linaro.org>
+ <20240715-x1e80100-crd-backlight-v2-3-31b7f2f658a3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,24 +71,33 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240715-x1e80100-crd-backlight-v2-2-31b7f2f658a3@linaro.org>
+In-Reply-To: <20240715-x1e80100-crd-backlight-v2-3-31b7f2f658a3@linaro.org>
 
-On Mon, Jul 15, 2024 at 02:15:38PM +0200, Stephan Gerhold wrote:
-> This reverts commit 8ebb1fc2e69ab8b89a425e402c7bd85e053b7b01.
+On Mon, Jul 15, 2024 at 02:15:39PM +0200, Stephan Gerhold wrote:
+> The backlight does not work correctly with the current display panel
+> configuration: It works after boot, but once the display gets disabled it
+> is not possible to get it back on. It turns out that the ATNA45AF01 panel
+> needs exactly the same non-standard power sequence as implemented by the
+> panel-samsung-atna33xc20 driver for sc7180-trogdor-homestar.
 > 
-> The panel should be handled through the samsung-atna33xc20 driver for
-> correct power up timings. Otherwise the backlight does not work correctly.
+> Switch the panel in the DT to the new compatible and make two more changes
+> to make it work correctly:
 > 
-> We have existing users of this panel through the generic "edp-panel"
-> compatible (e.g. the Qualcomm X1E80100 CRD), but the screen works only
-> partially in that configuration: It works after boot but once the screen
-> gets disabled it does not turn on again until after reboot. It behaves the
-> same way with the default "conservative" timings, so we might as well drop
-> the configuration from the panel-edp driver. That way, users with old DTBs
-> will get a warning and can move to the new driver.
+>  1. Add the missing GPIO for the panel EL_ON3 line (EDP_BL_EN on CRD and
+>     enable-gpios in the DT).
+>  2. Drop the regulator-always-on for the panel regulator. The panel does
+>     not seem to power off properly if the regulator stays on.
 > 
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> Fixes: d7e03cce0400 ("arm64: dts: qcom: x1e80100-crd: Enable more support")
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> ---
+> This can be applied as fix for 6.11 since the driver works as-is with the
+> fallback compatible. If so, the defconfig patch should ideally also go
+> there to ensure people actually have the driver enabled.
+
+Verified that I can change the brightness setting and that the backlight
+comes on again after being turned off (e.g. at suspend):
 
 Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 Tested-by: Johan Hovold <johan+linaro@kernel.org>
