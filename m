@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-26135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 829EE9310B0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 10:58:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D25189310C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 11:00:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1DB64B21E49
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 08:58:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8679F283238
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 09:00:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4E02185619;
-	Mon, 15 Jul 2024 08:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B04E3187559;
+	Mon, 15 Jul 2024 08:59:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IMnV0GLz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZYOh8/v/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7476F18508B;
-	Mon, 15 Jul 2024 08:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FEBC187546;
+	Mon, 15 Jul 2024 08:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721033883; cv=none; b=SpNxbeO6FnWBqEXilIh5Kwg4Yrl1aiiGxo/bAaaQ29AgnT/+DDgXdhk1GhI6deCvHu4snxNSr0ocsDYKCtHl4mJ2/QGSXFJTDOZHrZ+9jNajYcMVvMk7fFzCoAUGdbBaKMGz4OFyCy9EAxZ2tfkkUOM284gufjm7pxik/qZKixk=
+	t=1721033965; cv=none; b=pDZH9xpoF6LLlm5xeBAqbbPhca2xM9XjI3M65YwHrhAIluH9v8Sb5M4Jir9PiNopqy8hqIKeFY21BSuavMaWFFKsED2xhB7zD5tvszAlvfSupyvL7H6ApZKCmsx8pon/yROIHca7fGL7omCjm9/iipcP2zQ+SILc1QNQUEx3II4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721033883; c=relaxed/simple;
-	bh=6RI5uJ35+4Yew3i8Ir8hfGxp4NmxoOPt9ONJWo3gFmw=;
+	s=arc-20240116; t=1721033965; c=relaxed/simple;
+	bh=y+kTudWLmMVZqjkmKb1Iq2iwCRwyu/ABbyO06TY0Lqk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BqeeX3xMjLkUhNk1wGSGRRIGEDavqBjCOCAKHEdYMY5JUaA3tZKn/Xao8nGuiWWZnWgMn62Ra2SOAvAQ0PiIDgH8ztAIEzAAgj1nPu01uO/hMKfS5hdlri7rxKJBYggJY5/U8Osgylj1pOHyO69g3n2A+W4heBR2LkrFlb79Nig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IMnV0GLz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B4AC4AF0B;
-	Mon, 15 Jul 2024 08:57:57 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=HzwpKKoI2K9JbeHkavP9DKA9AWU4GOjvKcVZj2keVqJHxDH9p3oui8ViUGcjcfnyrbtpEpWDxSEJvpdvHCBTwAG7MtiYLiHlVI38kYcvWw5MeiawSOn0ffw6xesShZ0b1uNkXa1lai4I4GhaPHGQ1BIquVdz8PImYDv4DAk/qXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZYOh8/v/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FD7C4AF0A;
+	Mon, 15 Jul 2024 08:59:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721033883;
-	bh=6RI5uJ35+4Yew3i8Ir8hfGxp4NmxoOPt9ONJWo3gFmw=;
+	s=k20201202; t=1721033964;
+	bh=y+kTudWLmMVZqjkmKb1Iq2iwCRwyu/ABbyO06TY0Lqk=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=IMnV0GLz/s34FlJI8kxhM6t4jiFyI+bzDnoi6iYRb7Tem7IoBPVQJlZ9isMV7ZAja
-	 Yz7QAMgkq1iqTiei1tS/rxDXW6Rpzy+nqbY/vejIdNbXFJ5JMOh6lMt4+Y+0EU9OfV
-	 aYr7utvg0CQGt7QHgRGothHrI3FUou5/zu+nWLADxUON25Qn752oOmAOwrd2n1ChQP
-	 djMJIMM8kIcAEaZy3QFelpDiElTnPxBC0F8ewqlFGdSVRWgc+sIGr3Oj5oTSZ2Eis+
-	 7STvqarry/c9nmBxzbjChLmhcdCS71Wjb8TRnT7KD1XyRti4uGtuPD7NH/Vk7N7jGH
-	 XskbztLElHwMA==
-Message-ID: <552dac56-8915-4b26-8c90-769d09924861@kernel.org>
-Date: Mon, 15 Jul 2024 10:57:54 +0200
+	b=ZYOh8/v/YWIs+Ao47qs+d+9EKaxbK0cC0b7Y31tEdLfGSuNpwBYwfPBiD5mHQROPr
+	 W6hwnrWtfpBx+bih/+p3WbvYkxTzgWWTnlDsZckTHHeHk6zqUihvYYYnSm9u89gy5j
+	 G3L/Go11ltDmadciyl16m7/6O89VuMa9T8+ZvB5zRnQOlkrvnoixwA2XJvu1I6Dj9q
+	 3VorcuEWf4aRsIa+zivmdmQA8UzXX9bz0UGOzu8LP9+ijRVKDtAW8ITfp+sIP0u7wa
+	 Who+rhecgtLlW7Zmuwe2qsNygRazAzgQIQKOMX+pYAHpdSvAEWxNrfJW0YOAsnfGAn
+	 WU6Y+sp+TWCtg==
+Message-ID: <a9eed7f2-86d6-471e-883e-acbd89755fec@kernel.org>
+Date: Mon, 15 Jul 2024 10:59:17 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ARM: dts: qcom: msm8974pro-samsung-klte: Add pstore node
-To: Bingwu Zhang <xtex@envs.net>, Tony Luck <tony.luck@intel.com>,
- "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: Bingwu Zhang <xtexchooser@duck.com>, Rong Zhang <i@rong.moe>,
- Daniele Debernardi <drebrez@gmail.com>, Luca Weiss <luca@z3ntu.xyz>,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-hardening@vger.kernel.org, ~xtex/staging@lists.sr.ht
-References: <20240715083245.80169-2-xtex@envs.net>
+Subject: Re: [PATCH 1/3] dt-bindings: iio: kionix,kxcjk1013: Document
+ KX022-1020
+To: Rayyan Ansari <rayyan@ansari.sh>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-iio@vger.kernel.org
+Cc: Andy Shevchenko <andy.shevchenko@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ Hans de Goede <hdegoede@redhat.com>, Jonathan Cameron <jic23@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Lars-Peter Clausen <lars@metafoo.de>, linux-kernel@vger.kernel.org,
+ "Rafael J. Wysocki" <rafael@kernel.org>, Robert Yang <decatf@gmail.com>,
+ Rob Herring <robh@kernel.org>, Sean Rhodes <sean@starlabs.systems>
+References: <20240714173431.54332-1-rayyan@ansari.sh>
+ <20240714173431.54332-2-rayyan@ansari.sh>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,46 +109,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240715083245.80169-2-xtex@envs.net>
+In-Reply-To: <20240714173431.54332-2-rayyan@ansari.sh>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/07/2024 10:32, Bingwu Zhang wrote:
-> From: Bingwu Zhang <xtexchooser@duck.com>
+On 14/07/2024 19:33, Rayyan Ansari wrote:
+> Document the KX022-1020 accelerometer, which has the same register
+> layout as the KX023-1025 and so can use the same driver.
 > 
-> Add pstore node to allow for retrieving crash logs.
-> 
-> Tested-by: Bingwu Zhang <xtexchooser@duck.com> # on SM-G9008W (samsung-kltechn)
+> Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
 
-Tested-by tags are provided by others, not by yourself. It's expected
-that you test youro own patches. Drop the tag.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> Signed-off-by: Bingwu Zhang <xtexchooser@duck.com>
-> ---
->  .../qcom-msm8974pro-samsung-klte-common.dtsi    | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-klte-common.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-klte-common.dtsi
-> index b5443fd5b425..ff98b9362b0d 100644
-> --- a/arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-klte-common.dtsi
-> +++ b/arch/arm/boot/dts/qcom/qcom-msm8974pro-samsung-klte-common.dtsi
-> @@ -126,6 +126,23 @@ led@3 {
->  		};
->  	};
->  
-> +	reserved-memory {
-> +		#address-cells = <1>;
-> +		#size-cells = <1>;
-> +		ranges;
-
-Don't duplicate the nodes, but rather extend via phandle/label. Or at
-least drop duplicated properties.
-
-> +
-> +		ramoops@3e8e0000 {
-> +			compatible = "ramoops";
-> +			reg = <0x3e8e0000 0x200000>;
-> +
 Best regards,
 Krzysztof
 
