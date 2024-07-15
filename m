@@ -1,76 +1,43 @@
-Return-Path: <linux-arm-msm+bounces-26159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B79E79313E9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 14:16:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E435931445
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 14:32:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 75BEE282A79
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 12:16:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3F9641C2144A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 12:32:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD28718D4A8;
-	Mon, 15 Jul 2024 12:16:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wfoDu2s4"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FB7018C332;
+	Mon, 15 Jul 2024 12:32:01 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ns.iliad.fr (ns.iliad.fr [212.27.33.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2301862AC
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 12:16:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C694186E30;
+	Mon, 15 Jul 2024 12:31:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.33.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721045771; cv=none; b=UsqE1NIDS9Sx1GMoKBbf/bJasqnK2ljIokTul3F03SK6fivX+VwthP16P8fD2C1FygDnUrjsWYaJwx503zqgyVYU3HaAXuJRyxDSsxbqdlDMLdn0iT1Q/3BctyPgjniN2z1N+zSLlRgM7T7Vb30AWklzDpZ5sSwSVXg8PgVHHx4=
+	t=1721046721; cv=none; b=MEKzXhQe49vLcDDfsHQqOjTz9nLGPLaL08GPehlS6UeEn/hch3J4awVcQnoKrNg4yhNp5meTZbUMIz0yf8lBRx0pDm/RQ7AVyoSJdeKAD9KBmxv4QS0ClVcxaD5GX7tp0vyxeNcg3rmkzHNAvwDxNKtnYtPeetnZFZMvsSbRGbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721045771; c=relaxed/simple;
-	bh=ensaB3Sd9xExyqosO4x4Zulfh8zxqrHJ2g7V01Sv1AA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Zsmm2I7fbW21y001GUo8GMpWjbk4GrBWKxDSGsOQPOiYVzH0pmhxixk62jYYm0PxCT50SpiaSKPZkjX/P1vn/FawAUE+4wFvpPS57Cht9aWaD441T7xJRweRUCIU4IcPN6CJkv9mkoI+5EQaOHYF/11VdRJqJT9P43hjEYKvj3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wfoDu2s4; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-367b6e5ffbfso2354106f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 05:16:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721045768; x=1721650568; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kTq2r+cTBBf6PJ97371cfxGvOYB5A8cmvVmwB9VmmPg=;
-        b=wfoDu2s4Hi+kMtiB4X5oD6fBKi62FoHAU6/B/6ZSXxoXvgtA2IQstHH0VYFU26VMh5
-         /T6RdWHd4Il0t3FTX4ItgatvMogsni+hF0+QGaDUWuCUkNgSFSQvBH3msxJEFrK/GlyN
-         MiReNX6uSFsE4erBLEajrdZLW+XhqLfggLwOg1H/2BmZzd9QUexzpEr2BKXIn2VZqIWd
-         pNSgI6lpP5rItElsrttHCzFEiyWFAiJYLcOkEnLBSPm8B5PAl8banRh4NVjB9+o6hUWe
-         us3pUAKRUXoo2BVPySQtwIhV3+ea295DLFp81C82SHvfjBYCFgon9cqdgy+HdIHygkLN
-         ufmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721045768; x=1721650568;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kTq2r+cTBBf6PJ97371cfxGvOYB5A8cmvVmwB9VmmPg=;
-        b=Sm4R28OF3oi/5VbuDwVx8++yJ2KCQ2CaedbyWTxVDi/Nb2klq6YYIJBtIgFik511ma
-         UN+hpW5zoEug0LuaoZCG9I5TIs/YBnR9ubZzd+IprVE/8vaDUTWh0Oh46bvRE+CjFwCT
-         0VSb7YyOC1P4v+HmAoJD4CJaC5Sq/25ZzZ1a2NEdQ1vCF7aN/j4oO7qWWS8m1/hNMo1C
-         Tb/Sbun5qgRECFKKglfMIOHOqe7n4G8vEOFDaZwCBOcQ0dMhXZWPka6d0pz7YjoX8ruX
-         q7B358A/heDQoTM0tymzlQOTCn+qoHuzC5iP0/PeVDJPNl4ZHPnwceTfu59fiY/xa5/+
-         qIaA==
-X-Forwarded-Encrypted: i=1; AJvYcCWsGRGjk5Ii/gWeePPagXVdbf21oBtBSaScu3cMPCPSnG0WSe+7nRsmey7zvSxsSL0kIV1zg6Wvw4h/DXdL5emoGC+Ygc/xOqBpacGiQw==
-X-Gm-Message-State: AOJu0YzJa51R4KYvBqgwKaOEB7Z0NAJVcOH6P2766N2RKOSSQ2BaoOYU
-	4rT75XBOc8/qQpcx/1bpl7ZTp/X0hOpCMr7U9ZmpgzTfWdr7sElaGN8k8jWFihk=
-X-Google-Smtp-Source: AGHT+IFs1erFYCijcBGp0SVQyMBvfH9pHBYbLhKOfck+AMcQPdS3cmXHK20l4yRwr/hKh+tKqHhBsQ==
-X-Received: by 2002:a5d:480c:0:b0:364:6c08:b9b2 with SMTP id ffacd0b85a97d-367cead1d1amr10964785f8f.45.1721045767976;
-        Mon, 15 Jul 2024 05:16:07 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:2454:ff1f:b240:886b:1a3a:7569:3d95])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3680d9771aasm6369201f8f.0.2024.07.15.05.16.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jul 2024 05:16:07 -0700 (PDT)
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Mon, 15 Jul 2024 14:15:40 +0200
-Subject: [PATCH v2 4/4] arm64: defconfig: Add
- CONFIG_DRM_PANEL_SAMSUNG_ATNA33XC20
+	s=arc-20240116; t=1721046721; c=relaxed/simple;
+	bh=uExxKmaksB2mFMJAkbUpvSbkLK+5TndD1H/wyDnC+28=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=NKD2+Db6Bk14oKEEltuaB0CcQ1kxvcXsCeNe3LJPI8R7IULtnBj2mj0d0++8uqUNGPrM0UTHNvH+Ruq+75LYCekVTOR+jYGApENnr7H/Jfn4WFTwIFJ1QUS8peAcfFQ7mlwE2iHuGESPIAUaRTWbPWtuID0ZNYTDzKctHYt4maI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=srs.iliad.fr; arc=none smtp.client-ip=212.27.33.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=srs.iliad.fr
+Received: from ns.iliad.fr (localhost [127.0.0.1])
+	by ns.iliad.fr (Postfix) with ESMTP id F0BDF20B8A;
+	Mon, 15 Jul 2024 14:22:13 +0200 (CEST)
+Received: from [127.0.1.1] (freebox.vlq16.iliad.fr [213.36.7.13])
+	by ns.iliad.fr (Postfix) with ESMTP id E804B2021F;
+	Mon, 15 Jul 2024 14:22:13 +0200 (CEST)
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+Subject: [PATCH v6 0/6] HDMI TX support in msm8998
+Date: Mon, 15 Jul 2024 14:21:13 +0200
+Message-Id: <20240715-hdmi-tx-v6-0-d27f029627ad@freebox.fr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,43 +46,92 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240715-x1e80100-crd-backlight-v2-4-31b7f2f658a3@linaro.org>
-References: <20240715-x1e80100-crd-backlight-v2-0-31b7f2f658a3@linaro.org>
-In-Reply-To: <20240715-x1e80100-crd-backlight-v2-0-31b7f2f658a3@linaro.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>, 
+X-B4-Tracking: v=1; b=H4sIADkUlWYC/2XOu47CMBCF4VdBrpmVr2NMxXusKHwZExcQ5ERRV
+ ijvjpOGrCiPNN+vebGBaqGBnQ8vVmkqQ+kfbeDxwGLnHzeCktpmkkvNkSN06V5gnIFzohPZlIK
+ PrF0/K+Uyb6Xfa9u59ncYu0p+817GIKTj4IgL0EIhOOMkRNLKBcEdBrzkShT6+SfXtdiVYezr3
+ /bapNbu9xeTgpZMNlPApFDbfWN9Y9I7KNQH6ga1z8KSxhM69wXNDkr7gaZBZUwyUeQQVfwHl2V
+ 5A9LV6LpTAQAA
+To: Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
  Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Jessica Zhang <quic_jesszhan@quicinc.com>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Douglas Anderson <dianders@chromium.org>, dri-devel@lists.freedesktop.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
- Johan Hovold <johan@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, Arnaud Vrac <avrac@freebox.fr>, 
+ Pierre-Hugues Husson <phhusson@freebox.fr>, 
+ Jeffrey Hugo <quic_jhugo@quicinc.com>, Marc Gonzalez <mgonzalez@freebox.fr>, 
+ Conor Dooley <conor.dooley@microchip.com>
 X-Mailer: b4 0.13.0
 
-This is needed for the display panel to work on the Qualcomm
-sc7180-trogdor-homestar and x1e80100-crd.
+DT bits required for HDMI TX support in qcom APQ8098 (MSM8998 cousin)
 
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 ---
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+Changes in v6:
+- Fold HDMI PHY driver submission into this series
+  => [PATCH v2] drm/msm: add msm8998 hdmi phy/pll support
+  => Link to v2: https://lore.kernel.org/all/20240704-hdmi-phy-v2-1-a7f5af202cb5@freebox.fr/
+     - Rebase onto v6.10
+     - Move drivers/gpu/drm/msm/hdmi/hdmi.xml.h to drivers/gpu/drm/msm/registers/display/hdmi.xml
+     - Add copyright attribution
+     - Remove all dead/debug/temporary code
+  => Link to v1: https://lore.kernel.org/all/63337d63-67ef-4499-8a24-5f6e9285c36b@freebox.fr/
+- split HDMI PHY driver patch in 2 parts (PHY & TX)
+- Use same regulator names as msm8996 (Dmitry)
+- Remove printk statements
+- Add Vinod's Ack on patch 1
+- Expand commit message on patch 4 = HDMI PHY driver
+- Link to v5: https://lore.kernel.org/r/20240627-hdmi-tx-v5-0-355d5c1fbc3c@freebox.fr
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 7d32fca64996..362df9390263 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -887,6 +887,7 @@ CONFIG_DRM_PANEL_KHADAS_TS050=m
- CONFIG_DRM_PANEL_MANTIX_MLAF057WE51=m
- CONFIG_DRM_PANEL_NOVATEK_NT36672E=m
- CONFIG_DRM_PANEL_RAYDIUM_RM67191=m
-+CONFIG_DRM_PANEL_SAMSUNG_ATNA33XC20=m
- CONFIG_DRM_PANEL_SITRONIX_ST7703=m
- CONFIG_DRM_PANEL_TRULY_NT35597_WQXGA=m
- CONFIG_DRM_PANEL_VISIONOX_VTDR6130=m
+Changes in v5:
+- Fix property & property-names for TX pinctrl in DTSI (Konrad)
+- NOT CHANGED: clock trees for TX & PHY based on Dmitry & Jeffrey's remarks
+- Link to v4: https://lore.kernel.org/r/20240613-hdmi-tx-v4-0-4af17e468699@freebox.fr
 
+Changes in v4:
+- Collect tags since v3
+- Reword patch 1 subject (Vinod)
+- Link to v3: https://lore.kernel.org/r/20240606-hdmi-tx-v3-0-9d7feb6d3647@freebox.fr
+
+Changes in v3
+- Address Rob's comments on patch 2:
+  - 'maxItems: 5' for clocks in the 8996 if/then schema
+  - match the order of 8996 for the clock-names in common
+
+---
+Arnaud Vrac (2):
+      drm/msm: add msm8998 hdmi phy/pll support
+      arm64: dts: qcom: add HDMI nodes for msm8998
+
+Marc Gonzalez (4):
+      dt-bindings: phy: add qcom,hdmi-phy-8998
+      dt-bindings: display/msm: hdmi: add qcom,hdmi-tx-8998
+      drm/msm/hdmi: add "qcom,hdmi-tx-8998" compatible
+      arm64: dts: qcom: msm8998: add HDMI GPIOs
+
+ .../devicetree/bindings/display/msm/hdmi.yaml      |  28 +-
+ .../devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml |   1 +
+ arch/arm64/boot/dts/qcom/msm8998.dtsi              | 128 +++-
+ drivers/gpu/drm/msm/Makefile                       |   1 +
+ drivers/gpu/drm/msm/hdmi/hdmi.c                    |   1 +
+ drivers/gpu/drm/msm/hdmi/hdmi.h                    |   8 +
+ drivers/gpu/drm/msm/hdmi/hdmi_phy.c                |   5 +
+ drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c           | 779 +++++++++++++++++++++
+ drivers/gpu/drm/msm/registers/display/hdmi.xml     |  89 +++
+ 9 files changed, 1037 insertions(+), 3 deletions(-)
+---
+base-commit: f832eca10adfb75be6b23d32e0baaf28da034f78
+change-id: 20240606-hdmi-tx-00ee8e7ddbac
+
+Best regards,
 -- 
-2.44.1
+Marc Gonzalez <mgonzalez@freebox.fr>
 
 
