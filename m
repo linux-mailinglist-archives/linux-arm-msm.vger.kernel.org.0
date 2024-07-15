@@ -1,149 +1,251 @@
-Return-Path: <linux-arm-msm+bounces-26145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8503F931271
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 12:39:25 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69D4D93127D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 12:43:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DA04BB229E8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 10:39:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E94981F22CDA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 10:43:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC810188CBB;
-	Mon, 15 Jul 2024 10:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DFB9188CB8;
+	Mon, 15 Jul 2024 10:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PCV/9iMS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gLXeLnOL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC83F188CBC
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 10:39:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F7A187345
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 10:43:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721039947; cv=none; b=WGNVVeLg+0AS95VyhPwDiG45exCoiiM8RsBRsjqcfokcqbpHQZiMF/4XAn7dIp0OsgXcJv+oKATKcckRQ1sSYe2/bt69MeRqXyuj49j75nmVAujek7ey7MAx/lm2dHXL1LnvS+5PpHCHRe+7bIEZaiwoiz12ETwiGUeMxcN9NZQ=
+	t=1721040201; cv=none; b=EMS6OuB0b2eHtoCSkfKxUOkZzY3SiWvx/Y7vxJkqViMI9D5oXvnMwW2tAzGf0uaJVAc8OP3uJkI8YnzJffWCHQ6NVh/+X8cIBIrgjpGJXqPHr9LD4iMf7fEOvMR2I7XCUf/Jt65i5mgq14SymrcOOFyrujBzYPJxy+pEna2eJiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721039947; c=relaxed/simple;
-	bh=JyeGYP/ZqmeeeWwzcT3g655wsRPG9J7YFW5ADKHPBXw=;
+	s=arc-20240116; t=1721040201; c=relaxed/simple;
+	bh=0K4pca2vEBWU5NYBgV2Z87t7JJCI7Bs/YEhYZaDDJv8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Bha5aSoRwOJfmIS+HvTGlRGFlB2NJkCDUPoqkQsgvJFO53uXk5dff3oJKkh8GcdncqiVt+zfTt9ZrGOCoIrfvLZvcoAn22LTivQXeJYLWANcGm7XL2iGwZDcRayeRCMCDSNYZyUAntgX6PWvrAldSpJ/gE6/hJbZymuzOgqdh3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PCV/9iMS; arc=none smtp.client-ip=209.85.128.172
+	 To:Cc:Content-Type; b=TijoAEvCauqqz6x/9q7WYhf25787H+r5vhB91MEUVefYXCfYcmNZ9XwRxy73vJRqhUyFJEPI/nJUyJD9EdtVudCs4804cYtmFMiJWG+gcLLu7mWRVZUIMuAHsCPTcle6aF63Cwk5gbMptOoz9WwHCu/B5vocx3yCENkd345Mf0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gLXeLnOL; arc=none smtp.client-ip=209.85.219.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-65fcf21002dso14904257b3.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 03:39:05 -0700 (PDT)
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e057c4885b3so3751188276.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 03:43:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721039945; x=1721644745; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1721040198; x=1721644998; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=INSejsyLjcpJev/T6jffsbe2dFNdxfyo5iJxSvSQsa8=;
-        b=PCV/9iMS5T7MYDiCb0gW7J+jvq57dWn67M+QP6D6qW+pDsn6y4qO2LLDQUZvZIXCq3
-         +r0N7Ix9IGo/oCvQmXZhDY19fI7qoTzj/kwEivhZHysKZQO+KhF+SBXQuyJOlwX9ktmi
-         8S5cN4oPxUDcUNZyt1u89iE694XlaTwjDZRxIG3atSFByk/ETHyCMA4Tb04oDau9m4XA
-         uFtBGoOPxb2a8igYPchVRW59bfXzexO+DVNbu0zSYJms9SAJdmAMyCWyipeSDYgLXH8w
-         JAJEyqxQf2T1EB0ByozBA1qdwz+CG7/LS0R1JXCmqmYehgovCx3H3IAT8a2APDcfmHbh
-         +Luw==
+        bh=aMIZ4x5GWNB/IuXvoPEkpFndIdHvoqjyuE6tlVNLnc8=;
+        b=gLXeLnOLaOXFsWY9avX6P9S9zZrzdKkfrUb0nWUN8rqy5drcoVus6kXglfyAmI77qU
+         AynI1cv2g3XDUcStuiYu1M1auSk9t5OpxnYfFdgJUfQXt6JalrZxY7lbvYiaEowStaLT
+         w4RPuF9Pq47ToLVZ96ptiBmvZKS5JmAcbC5bSL1DTvZk0OKMUCZ9XJeP336a0zWbnBWO
+         8WF0RrBdw8xZgeXj7wzg4s1Kt2hj3L0wC5eR2zim1OGROVsbf5hzW84wJdGHZg/Orqsp
+         XjsOcooDvdrki/o5ZXxnUu7Kd1b+kuHgkwUjWWkaJmFmZiFxoGVzGbDg8y2mbL+XB632
+         chjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721039945; x=1721644745;
+        d=1e100.net; s=20230601; t=1721040198; x=1721644998;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=INSejsyLjcpJev/T6jffsbe2dFNdxfyo5iJxSvSQsa8=;
-        b=bHYo1//ic1XycnYH9Y56cBsmXBqyvKDJHzuTK9Qn9EbCILZzgYtncnlL3g/aGt8LA3
-         TudfsakXwpreRcD8Gr1elQzNxB191VzdSSEXv5RMQGirznNWJtbUIbJtcxY4KS3XrTFH
-         WG9kFTaxEGiyhvA2QEiMRuLy7liERX4a0a8t9dJxyFrC2hQXlYvu98hPu6XSvLra5o8K
-         F9q/PnBJg/UV4RX0sHsih0NGdVZNwdvzd1PE45sBJXKH+ewUQJ/O3P+ihuiGexI+TL3n
-         40bSSAKsLOAb0rVpUd8fwfWYyJ+888rRwIkTfQoc6xLkCAlgnGn9s8l5lm0eVcHIJ/WW
-         vfaw==
-X-Forwarded-Encrypted: i=1; AJvYcCWrvyiMd2ACAr2K1L6oAz8GmdkdAmIoEvXhaAMTpdtKwUvD0J0mSEO+VwBvzdgflyFGs7ML7kmQ/pcfylawLsyIhngzRU4Ks+1B4i9m2A==
-X-Gm-Message-State: AOJu0YwACoGNk5v4ZDmVX2UD6szZNAYvesgw35yYLiwW3TMH5K8wqGto
-	PVznKkkAZMfwi8jCv33JEETsoWLvsN+jWCpLIg3UoyYqkOrLwrhUIreY/UhVSDNmz9xjzdEjC3o
-	G00JTFYfdr/ZM7n12KIVg9ZUg3VqiOqXY/erQyg==
-X-Google-Smtp-Source: AGHT+IGOwT+AJq8LsaDGCWG5Q4MU9/IwYMNPN0Zgh+Q4OFSYBHhvH+Ltseygw8r5Q9tSpvN0xXJHRjC6YpdwCplZ/aM=
-X-Received: by 2002:a05:690c:7442:b0:64b:9f5f:67b2 with SMTP id
- 00721157ae682-658ef24c009mr224085457b3.31.1721039944774; Mon, 15 Jul 2024
- 03:39:04 -0700 (PDT)
+        bh=aMIZ4x5GWNB/IuXvoPEkpFndIdHvoqjyuE6tlVNLnc8=;
+        b=Lu6ubbjFq9SzVSpAL8pWs5zxKs+1AAC3CEsfMd4sv4G6a6IFOXk34ZGmCAkG+ik2P8
+         +OAE7BEG1DAmlj/m9NK+w54CSenp+azCTEc7/exU4FDDC2Ucd2LiFR1Nu+V4f6Qkyh6n
+         A2r3ZZazs1ViAj5SOvlELMbjztKUf55mwTvRr0fFzpWE2wsQmYa5wsZ03AlyHsSzY1mg
+         CLIlDQc02NcVfBnoY9V9WwhbA0O5ArDbP8ZajH+oA5OzihRd2C+LUoExMzVBNBZTjEJ/
+         NhGr874nMWKiIjJxDUxdhZ4Fe3kbqIosg56prA+1+quh3wGR7A8yU5dGU+Ch8QORA1BL
+         95gw==
+X-Forwarded-Encrypted: i=1; AJvYcCUAwHUpqNtJYDbPGO8z9Fc0c8L5sjQQk3S+7q9cz6lohAgWPpZ41WZLk/EOsrvqkWe8iSlS7uMUw95Te6LHDU/DgMNcA32nN5QpHjTDUw==
+X-Gm-Message-State: AOJu0Yx3Lli9V3Y8t/n5x9meJcjNQTOO3f+wYlIIExb/wdE1uqlRZXMN
+	YYh7B/LoxnF0wTjVjpp+mSR50YV+UQwW5uv9iFiEJhCqdw+T+jeHApDsGqFnRqJwX+VUdGZdgH8
+	tngcXNEO204CyT3sjljHBkN/6wkZcumLCCONbTw==
+X-Google-Smtp-Source: AGHT+IEdJmxITor4+DP0cXXm+G3r7fPKDye0hwA/RbHrnncDjlEqNpYlw08Ebcg/221VFbFOphKo44hUUhrhArDY/qc=
+X-Received: by 2002:a25:84c7:0:b0:dff:1b37:8215 with SMTP id
+ 3f1490d57ef6-e041b07a0dbmr20274956276.36.1721040198288; Mon, 15 Jul 2024
+ 03:43:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240702-camcc-support-sm8150-v2-0-4baf54ec7333@quicinc.com>
- <20240702-camcc-support-sm8150-v2-5-4baf54ec7333@quicinc.com>
- <xbe7kmaxhfwy26qzxrmwgiijaaiap4kdkruaxjs6ymihaw5taf@hvj57wyncfea>
- <cc1957af-17bc-cd71-e6da-013e3a740014@quicinc.com> <CAA8EJpqmJZJfd2famarx-FKFb1_+-nZM3N+FwK_hiOurG8n9=A@mail.gmail.com>
- <e235f19f-26b5-2cf7-ebb7-36e4dabe9b9b@quicinc.com>
-In-Reply-To: <e235f19f-26b5-2cf7-ebb7-36e4dabe9b9b@quicinc.com>
+References: <20240709015818.110384-1-slark_xiao@163.com> <dduv77mdqe633m7amyljhqas7nomrtjrrimvmyqidymy3qjvfa@biepierrz5p3>
+ <17f0f426.4faf.190b4edaadd.Coremail.slark_xiao@163.com> <CAA8EJpoiOLYMhxyJbdrgnMVfVggL9cOWtX8L__YKd=RPQWOcSg@mail.gmail.com>
+ <7036d57d.5904.190b512d00b.Coremail.slark_xiao@163.com>
+In-Reply-To: <7036d57d.5904.190b512d00b.Coremail.slark_xiao@163.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 15 Jul 2024 13:38:53 +0300
-Message-ID: <CAA8EJpob5Qov78JfNN5BE+c1WyvnuBcQLYENHL0c1GTS+PPfSQ@mail.gmail.com>
-Subject: Re: [PATCH v2 5/6] clk: qcom: Add camera clock controller driver for SM8150
-To: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Abhishek Sahu <absahu@codeaurora.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Stephen Boyd <sboyd@codeaurora.org>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>, 
-	Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
-	Jagadeesh Kona <quic_jkona@quicinc.com>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Date: Mon, 15 Jul 2024 13:43:07 +0300
+Message-ID: <CAA8EJprd8pqnw_jVd2u_Sdf1L=SPY3tYojHtN_de672F0vN7UQ@mail.gmail.com>
+Subject: Re: Re: Re: [PATCH] bus: mhi: host: Add firehose support for Foxconn SDX24/SDX55/SDX65
+To: Slark Xiao <slark_xiao@163.com>
+Cc: manivannan.sadhasivam@linaro.org, mhi@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 15 Jul 2024 at 13:23, Satya Priya Kakitapalli (Temp)
-<quic_skakitap@quicinc.com> wrote:
+On Mon, 15 Jul 2024 at 09:27, Slark Xiao <slark_xiao@163.com> wrote:
 >
 >
-> On 7/11/2024 3:40 AM, Dmitry Baryshkov wrote:
-> > On Tue, 9 Jul 2024 at 13:53, Satya Priya Kakitapalli (Temp)
-> > <quic_skakitap@quicinc.com>  wrote:
-> >> On 7/3/2024 3:50 PM, Dmitry Baryshkov wrote:
-> >>> On Tue, Jul 02, 2024 at 09:20:43PM GMT, Satya Priya Kakitapalli wrote:
-> >>>> Add support for the camera clock controller for camera clients
-> >>>> to be able to request for camcc clocks on SM8150 platform.
-> >>>>
-> >>>> Reviewed-by: Bryan O'Donoghue<bryan.odonoghue@linaro.org>
-> >>>> Signed-off-by: Satya Priya Kakitapalli<quic_skakitap@quicinc.com>
-> >>>> ---
-> >>>>    drivers/clk/qcom/Kconfig        |    9 +
-> >>>>    drivers/clk/qcom/Makefile       |    1 +
-> >>>>    drivers/clk/qcom/camcc-sm8150.c | 2159 +++++++++++++++++++++++++++++++++++++++
-> >>>>    3 files changed, 2169 insertions(+)
-> >>> The patch mostly LGTM, several quesitons:
-> >>>
-> >>> - There are no cam_cc_sleep_clk and no cam_cc_xo_clk_src. Why?
-> >> These are not required for camcc sm8150 hence not modelled.
+> At 2024-07-15 14:16:57, "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org> wrote:
+> >On Mon, 15 Jul 2024 at 08:46, Slark Xiao <slark_xiao@163.com> wrote:
 > >>
 > >>
-> >>> - Why is cam_cc_gdsc_clk not modelled in the clock framework?
-> >> This clock is kept enabled from probe, hence not required to be modelled
-> >> explicitly.
-> > Yes, I'm asking why it's kept up enabled from probe rather than via
-> > clock framework?
+> >> At 2024-07-13 23:09:47, "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org> wrote:
+> >> >On Tue, Jul 09, 2024 at 09:58:18AM GMT, Slark Xiao wrote:
+> >> >> Since we implement the FIREHOSE channel support in foxconn mhi
+> >> >> channels, that means each product which use this channel config
+> >> >> would support FIREHOSE. But according to the trigger_edl feature,
+> >> >> we need to enable it by adding '.edl_trigger = true' in device
+> >> >> info struct.
+> >> >> Also, we update all edl image path from 'qcom' to 'fox' in case of
+> >> >> conflicting with other vendors.
+> >> >
+> >> >Separate patches please. Also don't use "we", just an imerative style:
+> >> >do this and that.
+> >> >
+> >>
+> >> Do you mean use 2 patches (1 for enabling trigger edl and 1 for
+> >> modifying path)? Though these changes are aimed to make
+> >> firehose download successfully.
+> >
+> >Yes. "Do this. Also do that" is usually a sign that the patch should be split.
 >
+> Will do a update in next version.
 >
-> >>> - I see that most if not all RCG clocks use rcg2_shared ops instead of
-> >>>     using simple rcg2 ops, could you please clarify that?
-> >> As per the HW design recommendation, RCG needs to be parked at a safe
-> >> clock source(XO) in the disable path, shared_ops is used to achieve the
-> >> same.
-> > Does it apply to SM8150? For example, on SM8250 RCG2s are not parked.
->
->
-> Yes, it applies to SM8150.
+> >
+> >>
+> >> >>
+> >> >> Signed-off-by: Slark Xiao <slark_xiao@163.com>
+> >> >> ---
+> >> >>  drivers/bus/mhi/host/pci_generic.c | 20 ++++++++++++++------
+> >> >>  1 file changed, 14 insertions(+), 6 deletions(-)
+> >> >>
+> >> >> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> >> >> index 14a11880bcea..440609b81e57 100644
+> >> >> --- a/drivers/bus/mhi/host/pci_generic.c
+> >> >> +++ b/drivers/bus/mhi/host/pci_generic.c
+> >> >> @@ -433,8 +433,8 @@ static const struct mhi_controller_config modem_foxconn_sdx72_config = {
+> >> >>
+> >> >>  static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+> >> >>      .name = "foxconn-sdx55",
+> >> >> -    .fw = "qcom/sdx55m/sbl1.mbn",
+> >> >> -    .edl = "qcom/sdx55m/edl.mbn",
+> >> >> +    .edl = "fox/sdx55m/prog_firehose_sdx55.mbn",
+> >> >
+> >> >qcom/sdx55m/foxconn/prog_firehose_sdx55.mbn
+> >>
+> >> what's your opinion?Mani
+> >>
+> >> >
+> >> >> +    .edl_trigger = true,
+> >> >>      .config = &modem_foxconn_sdx55_config,
+> >> >>      .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> >> >>      .dma_data_width = 32,
+> >> >> @@ -444,8 +444,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+> >> >>
+> >> >>  static const struct mhi_pci_dev_info mhi_foxconn_t99w175_info = {
+> >> >>      .name = "foxconn-t99w175",
+> >> >> -    .fw = "qcom/sdx55m/sbl1.mbn",
+> >> >> -    .edl = "qcom/sdx55m/edl.mbn",
+> >> >> +    .edl = "fox/sdx55m/prog_firehose_sdx55.mbn",
+> >> >
+> >> >Is it the same file as the one mentioned in the previous chunk or is it
+> >> >different?
+> >> >
+> >>
+> >> They are same for same chip, though we have some variants.
+> >
+> >Please excuse me, I can't fully understand. So are the files the same or not?
+> >
+> >There is a simple mental experiment regarding the file names: you
+> >should be able to have a single host rootfs, which supports working
+> >with all of your modems at the same time, without modifications.
+> >So if modem A and modem B might use file foo.bar and the file is the
+> >same for all SDX55 modems, it's fine to have it in qcom/sdx55m/ or in
+> >qcom/sdx55m/foxconn. If it is different depending on the end-device,
+> >it should go to the qcom/sdx55m/foxconn/devname/ .
+> >
+> For all Foxconn devices designed based on same chip, they can use same
+> edl file. This EDL file is a common image of whole FIREHOSE image package
+> of difference variants. The difference of Foxconn SDX55 modem A and
+> Foxconn SDX55 modem B is APPS image and Modem image. The EDL
+> image is a file for putting device into EDL mode.
+> So I prefer to use "qcom/sdx55m/foxconn" since Foxconn's device are
+> different with other vendors which provide sdx55 devices as well.
 
-Should the same logic be applied to other chipsets supported upstream?
-If this is the case, which chipsets?
+If it's common, sounds good to me.
 
-> >>> - RETAIN_FF_ENABLE has been used for GDSCs for sc7280, sc8280xp, sm8550,
-> >>>     sm8650 and x1e8 platforms. Should it really be set for sm8150? If so,
-> >>>     should it also be added to other camcc drivers (if so, for which
-> >>>     platforms)?
-> >> I have rechecked this in downstream and seems it is not really needed
-> >> for sm8150, I'll drop in next post.
+>
 > >>
+> >> >If they are different, then, please,
+> >> >
+> >> >qcom/sdx55m/foxconn/t99w175/prog_firehose_sdx55.mbn
+> >> >
+> >> >
+> >> >> +    .edl_trigger = true,
+> >> >>      .config = &modem_foxconn_sdx55_config,
+> >> >>      .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> >> >>      .dma_data_width = 32,
+> >> >> @@ -455,8 +455,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w175_info = {
+> >> >>
+> >> >>  static const struct mhi_pci_dev_info mhi_foxconn_dw5930e_info = {
+> >> >>      .name = "foxconn-dw5930e",
+> >> >> -    .fw = "qcom/sdx55m/sbl1.mbn",
+> >> >> -    .edl = "qcom/sdx55m/edl.mbn",
+> >> >> +    .edl = "fox/sdx55m/prog_firehose_sdx55.mbn",
+> >> >> +    .edl_trigger = true,
+> >> >>      .config = &modem_foxconn_sdx55_config,
+> >> >>      .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> >> >>      .dma_data_width = 32,
+> >> >> @@ -466,6 +466,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_dw5930e_info = {
+> >> >>
+> >> >>  static const struct mhi_pci_dev_info mhi_foxconn_t99w368_info = {
+> >> >>      .name = "foxconn-t99w368",
+> >> >> +    .edl = "fox/sdx65m/prog_firehose_lite.elf",
+> >> >> +    .edl_trigger = true,
+> >> >>      .config = &modem_foxconn_sdx55_config,
+> >> >>      .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> >> >>      .dma_data_width = 32,
+> >> >> @@ -475,6 +477,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w368_info = {
+> >> >>
+> >> >>  static const struct mhi_pci_dev_info mhi_foxconn_t99w373_info = {
+> >> >>      .name = "foxconn-t99w373",
+> >> >> +    .edl = "fox/sdx65m/prog_firehose_lite.elf",
+> >> >> +    .edl_trigger = true,
+> >> >>      .config = &modem_foxconn_sdx55_config,
+> >> >>      .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> >> >>      .dma_data_width = 32,
+> >> >> @@ -484,6 +488,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w373_info = {
+> >> >>
+> >> >>  static const struct mhi_pci_dev_info mhi_foxconn_t99w510_info = {
+> >> >>      .name = "foxconn-t99w510",
+> >> >> +    .edl = "fox/sdx24m/prog_firehose_sdx24.mbn",
+> >> >> +    .edl_trigger = true,
+> >> >>      .config = &modem_foxconn_sdx55_config,
+> >> >>      .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> >> >>      .dma_data_width = 32,
+> >> >> @@ -493,6 +499,8 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w510_info = {
+> >> >>
+> >> >>  static const struct mhi_pci_dev_info mhi_foxconn_dw5932e_info = {
+> >> >>      .name = "foxconn-dw5932e",
+> >> >> +    .edl = "fox/sdx65m/prog_firehose_lite.elf",
+> >> >> +    .edl_trigger = true,
+> >> >>      .config = &modem_foxconn_sdx55_config,
+> >> >>      .bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> >> >>      .dma_data_width = 32,
+> >> >> --
+> >> >> 2.25.1
+> >> >>
+> >> >
+> >> >--
+> >> >With best wishes
+> >> >Dmitry
+> >
+> >
+> >
+> >--
+> >With best wishes
+> >Dmitry
 
 
 
