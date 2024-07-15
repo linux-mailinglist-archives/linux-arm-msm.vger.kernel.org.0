@@ -1,101 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-26118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CC29930F05
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 09:46:21 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B29B8930F7E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 10:23:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 37F851F20FCF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 07:46:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A51D1F219D9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 08:23:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5352317167A;
-	Mon, 15 Jul 2024 07:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76C9C174EDB;
+	Mon, 15 Jul 2024 08:23:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A6HQwlIQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HSlpAX4I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276D46AB8;
-	Mon, 15 Jul 2024 07:46:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B115824B5B;
+	Mon, 15 Jul 2024 08:23:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721029577; cv=none; b=d3sSSihWVUcnC9XhcI7jVwJSjvMzonEKWme9hORRBlkrcFHgnBobr1UhzNkhkhMroLFdn5WfduDpx80qclztT4zhsQD+CTfxmxV8mNT0EYraAqYj0OlcMTPhSOLlw3mRHpgMEnLicaVapTMDFyX8kQJ7X0GPCh8OjhwKjts7qkM=
+	t=1721031818; cv=none; b=W/fK5h68jRnDGQnL3wkQjr/49cPGOt5T8bDmvWrP5huLl/CCQ7svlGmhH6aWQAm6OCkuLOOLBHomGKmA0p9CcTtd57+Acgoj76d/IZqXB28lF4QT+sAk1oYM9gYcdP+GG/gK1PbNQ2y1JqIkXRY2bKr/Oeua9HALoqPQG3+WBMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721029577; c=relaxed/simple;
-	bh=WpjJRtS73XPx4qErFEnKNQ2LIobUuQY0zJN+fVegBA8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MUBszfkXZWh/OV8p2Ff2aoWeZo8ruKA/qaoyziPj7dOepMW01TuvoElJ1FxP4raMmsi94A+xihehjX/pmkNLd/F+OvsM9hIPOy9EqlCOp6pipZt6dG6M8rDpP65MFV9WAr90ALpgWpDutXcUNC70qv+TQmP7Jps3E7niXK5Q+Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A6HQwlIQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D38EC4AF11;
-	Mon, 15 Jul 2024 07:46:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721029576;
-	bh=WpjJRtS73XPx4qErFEnKNQ2LIobUuQY0zJN+fVegBA8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=A6HQwlIQy1t6OE0ghLN1MJNM/jO7ymf+vCAVv3pL7qF2oPfE1mOvrMCGtASAmHWKy
-	 5W0BOiLtqK8QFEt5wiH70cTY4s+v9T9hm1227e/aKbHJjGAj3ADlXr0qLF4/vMUyta
-	 cFIdik7SBIy1W5gonUZMrB031s12HOlhAPJLAdMoHbgI4l5UK2kk2BySPUP7b/8unj
-	 4+7ecPZBDd/w8U7K7EJ4sAowuBLPCM8uO/Lrn8lphPSEPd7pNGIVnY4M0yRm0Tu51T
-	 rHEtAf+JL/sZx3/cfsEk6oomtEMBeLM3papl4/sZMJ/24cUwQ4c76+Jb9PdClEPtC0
-	 GjlF9ow2wTDGw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1sTGPW-000000001TJ-0gQl;
-	Mon, 15 Jul 2024 09:46:14 +0200
-Date: Mon, 15 Jul 2024 09:46:14 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Hans Verkuil <hansverk@cisco.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Milen Mitkov <quic_mmitkov@quicinc.com>,
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH 2/2] media: qcom: camss: Fix ordering of pm_runtime_enable
-Message-ID: <ZpTTxk_7hBbFLTTp@hovoldconsulting.com>
-References: <20240714-linux-next-24-07-13-camss-fixes-v1-0-8f8954bc8c85@linaro.org>
- <20240714-linux-next-24-07-13-camss-fixes-v1-2-8f8954bc8c85@linaro.org>
+	s=arc-20240116; t=1721031818; c=relaxed/simple;
+	bh=hlJ+5oqJCxwikNsWZHSJo1gIJmTcG8j5tNnNqq218EM=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=CIoAsknFu8njteQK0a+v4kT0K9pya0rd1eV3IzZzGTD4K8A2dNVhph6gV0R+gsjMoGW/Tk/xfrfXUj2ZQO7m18Y3y0v4HKRjzZEwtiTV2U5fWffkZFg5ilQUywQ78hrS71sa9TWhPLDC/XIaBez7JF0/bZlwjn9LsLHyTiaPhbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HSlpAX4I; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46F2dEAh001859;
+	Mon, 15 Jul 2024 08:23:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=pDiXEl9bmaoZqbeEvBwani
+	dIAFfKFdjGFFzepEPHpHo=; b=HSlpAX4IzxHSCC4XvQnLBrP+qIT3wU77gzNcjj
+	3wDD68Y6UkJJ40ZGI06FKPytp56FQJRU+t0Srt+GeKH6VvxkXQsQE3T6hO12Fl7u
+	a0eECnFHezDYsOvTt1oAeexAw2BGtCABqdAQ1wTCBZyuykT0AZbZyZ+9lHUTD/gL
+	dMv3YkEWw/R0W1wozsBuY5HmuwDdEQWEl/doD3JM16q5ad/jpOPR7cO2PY52nn0f
+	3min8PU76HdpUggImpvTpgAJjRd779f3FcVa6a/qj2HKnGX32U5JtAZTaXdbbC75
+	KizQHrj9pVnbcsRnacX6NNuImKHCpH7Jsypb1TxjWHvz8A9Q==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40bf9ebcxw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 15 Jul 2024 08:23:31 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46F8NVi0013003
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 15 Jul 2024 08:23:31 GMT
+Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 15 Jul 2024 01:23:26 -0700
+From: Taniya Das <quic_tdas@quicinc.com>
+Subject: [PATCH v3 0/8] Add support for SA8775P Multimedia clock
+ controllers
+Date: Mon, 15 Jul 2024 13:53:15 +0530
+Message-ID: <20240715-sa8775p-mm-v3-v1-0-badaf35ed670@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240714-linux-next-24-07-13-camss-fixes-v1-2-8f8954bc8c85@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHPclGYC/x2MQQqAIBAAvxJ7bsEsWekr0UFqqz1ooSCB+Peky
+ 8AcZgokjsIJ5q5A5CxJ7tBk6DvYLhdORtmbg1Z6UjQYTM4SmQe9xzyiJkdOG7aN0Jon8iHv/1s
+ gj7DW+gHbKnW6YwAAAA==
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Bartosz
+ Golaszewski" <bartosz.golaszewski@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_imrashai@quicinc.com>, <quic_jkona@quicinc.com>,
+        <quic_tdas@quicinc.com>
+X-Mailer: b4 0.14-dev-f7c49
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: aDqSBwBoOHYKcaZRFrBqgmBek5srBady
+X-Proofpoint-GUID: aDqSBwBoOHYKcaZRFrBqgmBek5srBady
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-15_03,2024-07-11_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
+ priorityscore=1501 bulkscore=0 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 spamscore=0 phishscore=0 mlxlogscore=999 mlxscore=0
+ adultscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2406140001 definitions=main-2407150065
 
-On Sun, Jul 14, 2024 at 11:53:59PM +0100, Bryan O'Donoghue wrote:
-> pm_runtime_enable() should happen prior to vfe_get() since vfe_get() calls
-> pm_runtime_resume_and_get().
+Add support for videocc, camcc, dispcc0 and dispcc1 on Qualcomm SA8775P
+platform.
 
-Again, please describe how this manifest itself to users. I see
-occasional:
+Changes in [v3] compared to [v2]:
+  Update the qcom_cc_really_probe() to use &pdev->dev, for the CAMCC, DISPCC & VIDEOCC drivers.
 
-	qcom-camss ac5a000.camss: Failed to power up pipeline: -13
+[v2]
+https://lore.kernel.org/all/20240612-sa8775p-mm-clock-controllers-v1-0-db295a846ee7@quicinc.com/
+Changes in [v2] compared to [v1]:
+  [PATCH 1/8]: Updated bindings to reference qcom,gcc.yaml
+  [PATCH 3/8]: Updated bindings to reference qcom,gcc.yaml
+  [PATCH 5/8]: Updated bindings to reference qcom,gcc.yaml
+  [PATCH 7/8]: Split updating sleep_clk frequency to separate patch
+  [PATCH 8/8]: Newly added to update sleep_clk frequency to 32000
+  These multimedia clock controller and device tree patches are split from the below [v1] series.
 
-on boot.
+[v1]
+https://lore.kernel.org/all/20240531090249.10293-1-quic_tdas@quicinc.com/
 
-> This is a basic race condition that doesn't show up for most users so is
-> not widely reported. If you blacklist qcom-camss in modules.d and then
-> subsequently modprobe the module post-boot it is possible to reliably show
-> this error up.
-> 
-> Fixes: 02afa816dbbf ("media: camss: Add basic runtime PM support")
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+---
+Taniya Das (8):
+      dt-bindings: clock: qcom: Add SA8775P video clock controller
+      clk: qcom: Add support for Video clock controller on SA8775P
+      dt-bindings: clock: qcom: Add SA8775P camera clock controller
+      clk: qcom: Add support for Camera Clock Controller on SA8775P
+      dt-bindings: clock: qcom: Add SA8775P display clock controllers
+      clk: qcom: Add support for Display clock Controllers on SA8775P
+      arm64: dts: qcom: Add support for multimedia clock controllers
+      arm64: dts: qcom: Update sleep_clk frequency to 32000 on SA8775P
 
-Missing CC-stable here too.
+ .../bindings/clock/qcom,sa8775p-camcc.yaml         |   62 +
+ .../bindings/clock/qcom,sa8775p-dispcc.yaml        |   79 +
+ .../bindings/clock/qcom,sa8775p-videocc.yaml       |   62 +
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi         |    2 +-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              |   56 +
+ drivers/clk/qcom/Kconfig                           |   31 +
+ drivers/clk/qcom/Makefile                          |    3 +
+ drivers/clk/qcom/camcc-sa8775p.c                   | 1849 ++++++++++++++++++++
+ drivers/clk/qcom/dispcc0-sa8775p.c                 | 1481 ++++++++++++++++
+ drivers/clk/qcom/dispcc1-sa8775p.c                 | 1481 ++++++++++++++++
+ drivers/clk/qcom/videocc-sa8775p.c                 |  576 ++++++
+ include/dt-bindings/clock/qcom,sa8775p-camcc.h     |  107 ++
+ include/dt-bindings/clock/qcom,sa8775p-dispcc.h    |   87 +
+ include/dt-bindings/clock/qcom,sa8775p-videocc.h   |   47 +
+ 14 files changed, 5922 insertions(+), 1 deletion(-)
+---
+base-commit: 3fe121b622825ff8cc995a1e6b026181c48188db
+change-id: 20240715-sa8775p-mm-v3-27a7a25e87a2
 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Best regards,
+-- 
+Taniya Das <quic_tdas@quicinc.com>
 
-Reported-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/lkml/ZoVNHOTI0PKMNt4_@hovoldconsulting.com/
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-
-Johan
 
