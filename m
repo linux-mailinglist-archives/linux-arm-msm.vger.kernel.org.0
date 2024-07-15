@@ -1,153 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-26228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13CBF931999
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 19:34:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 338CA931A10
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 20:14:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 944561F236FE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 17:34:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 446EB1C21F78
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jul 2024 18:14:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFAD413A41E;
-	Mon, 15 Jul 2024 17:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A02F61FFC;
+	Mon, 15 Jul 2024 18:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qdkYlrCw"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="V0oLfcub"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDB38528F;
-	Mon, 15 Jul 2024 17:33:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6D054670
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 18:14:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721064830; cv=none; b=pu6rVq6xU/rXTkhdz5FO5uwpYZ5ddfdhESXPzhfJd/rpAE77CZUnk0Z7uz0B9TxHKVIb75KMLQ2tyyRiOKzn0f9s8d3KI8wz1kfWU1YzPfvc9wPNRnCp17TgmowXPm3yB6BkDrY5oTzmYmgWXiOmzQgWQ7qcE/B0KP88pWf+B4I=
+	t=1721067280; cv=none; b=GisuNuaPq/U1TzVWRu8Kkd51fjICXPR4JxhvdKLicu4QQWY5tZdYP2tT7BbwzDW1NRUCahDRYJONQGDT0aSj5Va309Q96OOrm2Vacf9X3jB/PeGs90cGK5d1KTTLwHtr/1x+4n0f5UHve5WQjxUGLrMKj6GnKSHkrPe8K4mD8Hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721064830; c=relaxed/simple;
-	bh=2kFP+bCixJC5hqYNUKgrr+OyZBFt6Z2SRVepHHGhk7w=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=V+dXQWts5LVl48LtSCWu4lMpqpRC2eHyqq5H8EQ0GH0zyEtvrVlWyKBKcNvDW09q0iXjs6zKW2DMVydWXlufTEoC6fQez7qpbcec42lc2VvtKwBX3BZoW1A9TF0rY0/cDx0wvKJiczVR7q+3Qj++iwimm+DM4Oz4D1kykF5RVy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qdkYlrCw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 55BA7C4DE0D;
-	Mon, 15 Jul 2024 17:33:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721064830;
-	bh=2kFP+bCixJC5hqYNUKgrr+OyZBFt6Z2SRVepHHGhk7w=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=qdkYlrCwtSFUJC9ZJszIIbObJkcdGSkfQwpJ7/80dapQsO6O+uD3nYiDn0VHOLl1q
-	 Q5Vix4ZfHiNboEpxWkDFLz/qPTt+YckjPj1HMVlSEeEmk15creJo5d+7wg7ba3INbd
-	 33UvqaD6Fxhb1DIQYKWTN2Izv/AUxZRk2IR8d2YWt+73fVluo/BwKCVinhfAZeU63c
-	 LYch3u7NAJmRMm+0d7/ZbS3/7f0P7bQivcyYbQTH2xN6/ZjRuuH9raIMPWalcLABtv
-	 q+AafLHVo4kNTd+GZMrFQ4AJcOKdxTDEaOG59KVkKF6H5KFf8WGSrlU1FAfexPfPgO
-	 hlambGgdUYdlQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48D0FC3DA59;
-	Mon, 15 Jul 2024 17:33:50 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
-Date: Mon, 15 Jul 2024 23:03:56 +0530
-Subject: [PATCH 14/14] arm64: dts: qcom: sm8450: Add 'global' interrupt to
- the PCIe RC node
+	s=arc-20240116; t=1721067280; c=relaxed/simple;
+	bh=kOPIQAFY0C9jKf9GWSFbVnvhzxm8W7Mj1wAmn5+Ju2k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Oet8UA/nAVKUH/Zx2aj59z2yijr+EeLriWq4wg0brh0z3SAe86Hkt8c2r88w3P2w1lzXSlEHpd+O29W4MajcNkXj4aR6qxb41DqLhV98s09lOhJKV/THJw9Cj2KLVVMOnmZaOPPbf1EZhf+VZepT/gsGie2YM5jzc8x1J8v3rzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=V0oLfcub; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1721067277;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=h65hcyq2faj4hpcGQ58xMuNAhidSbVZfT6CrANnVJxc=;
+	b=V0oLfcubL8+zXpCUJzWzXlL6mnOLYB/JQPhIagl4KFSHAe8idQVDGQrxaqk+Rcmoyzr7yu
+	gppBMrWoUNn3LX1Ns1Pyvs/PFDW2MAHUtepgN1gCEgdEc37K1lzZ85OI4up45z9LdZZMA1
+	RpjSPwM5VdrPQhfU0XrTz8iJNfS/xH8=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-378-jdKukvQYPAufmezA21jEEQ-1; Mon, 15 Jul 2024 14:14:36 -0400
+X-MC-Unique: jdKukvQYPAufmezA21jEEQ-1
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7a16375187aso290804285a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 11:14:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721067275; x=1721672075;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=h65hcyq2faj4hpcGQ58xMuNAhidSbVZfT6CrANnVJxc=;
+        b=sL9xlUm6eNF4SP3BmDVz7PMqK5/mL1Hy/12RvsMrXypw37q4zehD97jcY89yeUPBhR
+         XBGt5iwqFhCWYbDg350Wf7cykhBk3HQzYUafyi0g7NHqPNO5aeQbTABHLnTJzrMphAqG
+         LLVTzPO/3ewe00X6kxQtbqmH/TnuzNr5lYNfdDt9pk+iPBTgAP4hRe0YGB+djPr/LqLn
+         OBZT1jJ+kDMeEOvSTvZcc0YG4Sf5zyOFDVZkk46UZYiG7587TiHCuyvgWgC+N6zEskSb
+         O+RdrLl4RmXiWwWZm7MQoa+fp3eS7hqk6kl+0fBJ8OT7R3+NQxtCAYpDAQ1FgY6QFyJs
+         5zgw==
+X-Forwarded-Encrypted: i=1; AJvYcCUt0ecUeHp9ipkCFQmC4XLcRHK11fe4BFzvmROW55ysT4/aXomZ+ICn8Kx+8RHL19vdxgjcBOVVuaWIDaynpa5gzKOlS5Lw0kjhXBjzGw==
+X-Gm-Message-State: AOJu0Yy9Gj7Nek6gBS2AqEOJdlJpx0DTwb0sL7XXrwmncQ4vYSR6TQ7z
+	Ati5oQtlvNK+d2BPz7uuLzVbcMrRuff8rWhoZ4iZFf8Ji3Ptd1lILTlmHBvtZuMCOFKNUYIt1U3
+	/EWd32ELnuTE8jikl12dvFe17JSCmvtZc+kfXf229+R2knkunb7dPML76Vqpo+cg=
+X-Received: by 2002:a05:620a:4724:b0:7a1:456b:fd43 with SMTP id af79cd13be357-7a179f424b7mr61727285a.37.1721067275557;
+        Mon, 15 Jul 2024 11:14:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEsG+WJZFOfNJsOhrGBT5TVXdo70BHb+PnBtQCyI63G5MKuUpxlC51GnL/HJ/4WDSEQ3Myk0w==
+X-Received: by 2002:a05:620a:4724:b0:7a1:456b:fd43 with SMTP id af79cd13be357-7a179f424b7mr61724885a.37.1721067275255;
+        Mon, 15 Jul 2024 11:14:35 -0700 (PDT)
+Received: from x1gen2nano ([2600:1700:1ff0:d0e0::40])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a160bbe7f9sm222498485a.43.2024.07.15.11.14.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Jul 2024 11:14:34 -0700 (PDT)
+Date: Mon, 15 Jul 2024 13:14:32 -0500
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Qingqing Zhou <quic_qqzhou@quicinc.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: Mark APPS and PCIE SMMUs as
+ DMA coherent
+Message-ID: <nulprwjd52j2iq7cpx5nq733cbi6ccdpemq6a7ocglv4ep5jmh@jvs6zof5u535>
+References: <20240715071649.25738-1-quic_qqzhou@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240715-pci-qcom-hotplug-v1-14-5f3765cc873a@linaro.org>
-References: <20240715-pci-qcom-hotplug-v1-0-5f3765cc873a@linaro.org>
-In-Reply-To: <20240715-pci-qcom-hotplug-v1-0-5f3765cc873a@linaro.org>
-To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2237;
- i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=gNxsaYyTdguve7w+Y8w7ph9rzM45Fb14SQIqKjXqzUk=;
- b=owGbwMvMwMUYOl/w2b+J574ynlZLYkibGlsd3Gj04rNd09RrIryyaw6cU5eY9bfz5ialA+ovz
- lRdvH2LvZPRmIWBkYtBVkyRJX2ps1ajx+kbSyLUp8MMYmUCmcLAxSkAFznC/r+ePWP2j8B7p3wk
- PzIz1LC/Xi9r7d5W8cTtt2fkowOvbjN+ff98NePf7fbPls/k+8bYGCtsMOXYshu6sl+L0wrCvKz
- CVG0/KYVFhkgdLWXf5iERxvt2mYXe3INmfCVFwlNiL4otsYuvNvVdWZb47/JGB0d+4dJt7QtiTv
- qq2yjdWWrsFOZvGSJ3+nHM9nQL78+dJwp0+7vLL093z/e3mKJ645ri0qnny4JLJtp8dZgwkVudf
- b7MvNrPl6oPVFyctifC3e9agEpIQVPeYzHfyLCyGt8vt39X8rqfVT92ZKczy5KyF6fT6+eZnllz
- fdd8y5sPYtz0Szx/9d8tOLLKtJY1P8er33DezpkeHbPbAQ==
-X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@linaro.org/default with auth_id=185
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reply-To: manivannan.sadhasivam@linaro.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240715071649.25738-1-quic_qqzhou@quicinc.com>
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+On Mon, Jul 15, 2024 at 12:46:49PM GMT, Qingqing Zhou wrote:
+> The SMMUs on sa8775p are cache-coherent. GPU SMMU is marked as such,
+> mark the APPS and PCIE ones as well.
+> 
+> Signed-off-by: Qingqing Zhou <quic_qqzhou@quicinc.com>
 
-Qcom PCIe RC controllers are capable of generating 'global' SPI interrupt
-to the host CPUs. This interrupt can be used by the device driver to
-identify events such as PCIe link specific events, safety events, etc...
+I think this deserves a Fixes tag as well, not treating it as
+dma-coherent is a bug and can lead to difficult to debug errors based on
+a quick search through lkml.
 
-Hence, add it to the PCIe RC node along with the existing MSI interrupts.
-
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 9bafb3b350ff..90d16cb83669 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -1780,7 +1780,8 @@ pcie0: pcie@1c00000 {
- 			msi-map = <0x0 &gic_its 0x5980 0x1>,
- 				  <0x100 &gic_its 0x5981 0x1>;
- 			msi-map-mask = <0xff00>;
--			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1788,7 +1789,8 @@ pcie0: pcie@1c00000 {
- 				     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "msi0",
-+			interrupt-names = "global",
-+					  "msi0",
- 					  "msi1",
- 					  "msi2",
- 					  "msi3",
-@@ -1942,7 +1944,8 @@ pcie1: pcie@1c08000 {
- 			msi-map = <0x0 &gic_its 0x5a00 0x1>,
- 				  <0x100 &gic_its 0x5a01 0x1>;
- 			msi-map-mask = <0xff00>;
--			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
-@@ -1950,7 +1953,8 @@ pcie1: pcie@1c08000 {
- 				     <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "msi0",
-+			interrupt-names = "global",
-+					  "msi0",
- 					  "msi1",
- 					  "msi2",
- 					  "msi3",
-
--- 
-2.25.1
-
+Thanks,
+Andrew
 
 
