@@ -1,119 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-26384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0675933381
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 23:24:43 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F57093338A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 23:26:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5672D1F236E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 21:24:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 327351C220BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 21:26:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03CB078289;
-	Tue, 16 Jul 2024 21:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1694A770F5;
+	Tue, 16 Jul 2024 21:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="biO6W0uk"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Jw3Bpk4r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5034562A02
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 21:24:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C762AE6A;
+	Tue, 16 Jul 2024 21:26:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721165078; cv=none; b=g8bpPyHxiN4Y/WTtewRBnGDcO5WmH+VrUiaOr9fdZr48e0Jho707ihOGbQAh290BDoz7WEWfik3/QezFT/a/dgcfmamjHLnAMiblJ4yncZpq5J0jtx3ugeleVCLJwOTXpj8axU9YzpGyWQG3oj1ZKK534nhzE+VqY+7o2RDybdE=
+	t=1721165168; cv=none; b=Cmbfr4cii794I+x60KSmiiIwA7Bt9nEpPBKWxQTSyZuR09mxjCNYYTZuCUuitDsOXxdnCGbvHJnXmqlJczLfm13+Vi4C5CrZGOuFlESYD9tz0eipNmE0yhim3tG2UR0Q+DM4dset5OrzqVWWDw2njYouPd+fFMotIrs1CYBsPXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721165078; c=relaxed/simple;
-	bh=sPs4PNFGR4OdzkX2auFHc60O2CFGJjvXeNJujwKmTZ0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JiVs+LQt6sjAQ3aRFK8hugeWO9hAnFbcKSmSboMIrFEw4KmCWcMDQlgmP2XV04at63VanVamXcHTsnSeLc4GNx4lbYc5ePrLZ82ku0FR0QSAQEvD426pNAt3/wIc6U1QI2mp59K/BTEWk9iknQMHnBwSN/JNfhTf3WwUDvJb1VI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=biO6W0uk; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-65f771485f2so35313127b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 14:24:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721165076; x=1721769876; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=gQRdC/2kvXyGkK2vcAJKjjyUUocgpd8dsZecLG2PFfY=;
-        b=biO6W0ukakZ4Qgh1P91F+E7cFAQgats/qTN1TuaQL58imdfpvCHvnXJlnUfRJFWAMO
-         l9zFQp+K4sEzQ4q3p3oUGbuDyS3H9QdsURJGdyHSYFOEH3I1ct1ucfEWLK9ZEAHK1vEo
-         1ZU4YfavXA86AdSB8n2el19KWPAZbecQAZpoDhopvIo6Xix8U0HB7Lbi0/RRP9gkJCvV
-         ZPSDThYlczU3HB7GMdTksmI415fLMY23fDmsqi97Wd/iRhGidmwzqDyMuVYFZ3S+W6eE
-         e3eCxsNeC+J/D324GvoSlc2m5A3x+V4YhfHR5O6ITedU/n+t/h5xoZ/DgZuh4R5zcmIJ
-         fwRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721165076; x=1721769876;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gQRdC/2kvXyGkK2vcAJKjjyUUocgpd8dsZecLG2PFfY=;
-        b=heMElLJpMBEaKKk2Fw5JyNkhV+t+S/GRDWNFokrOtSmFJEEhOKAhpraDzBI7WYL7wQ
-         eq/q6OK+pAZrxS7I8TeWQ2N9R1ZBSDacrlU8KquHWLx1pD633K/mdZAXDijwrfx4RtxO
-         SPSKlEXKv9na7/5Zcs2r/XltrvK4tmRwebBgtXodq1VDzTdubSbhReAK+kWDloZ6gOhZ
-         w972R8XhsJ0K+9G1Kz/oKQ9wVp9QCCmdK7TZ+PvICOMDunPtPCnipqwdVJItSEH98Ymm
-         9wa3ilW/0tM0l87cnY9UKdsYpupp9NtPpYbB9XP8ewRBJEbV/O2qfGCwzxZ9zlhw1NiR
-         1p3g==
-X-Gm-Message-State: AOJu0YwESgXozxmk/lHFlnePA/tTJMNa4psP3B2K+0V8PGD9u0XNRPgK
-	vgBXXjCETzvisAEBesahOZq8ayn7be4mAW6WNy2tJZmislX6kkFT/szo3IBWDYsPlJbEx4I0x7f
-	myn33XgYqBQucb4/ToVg4tWAEeEwUF/gavjr5Jg==
-X-Google-Smtp-Source: AGHT+IHukAbIJAtIf+1bmFomAwMWZ4a7Sq2fAk/2Uja4FHdmLbwtMbr5cxth2mf7+/2iD5lynbk/3IwoC4vEU9YiHhk=
-X-Received: by 2002:a81:9e52:0:b0:65f:8209:3ede with SMTP id
- 00721157ae682-663811feeabmr36266767b3.44.1721165076195; Tue, 16 Jul 2024
- 14:24:36 -0700 (PDT)
+	s=arc-20240116; t=1721165168; c=relaxed/simple;
+	bh=qSXKDj/E6KXWYc7coY4nH6LtAza9l3lpYuhCB3RxndU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=H35yFDDfTXEJ/UWcbI2NptiluviGBF7FSyhkuv4qDwKDuWakEx5mMulmTEnPDG0B/EQHNMKX85Je8sr1naL/egve9zkHm540WRdpcFkTL5dJkUcKOAFfNpzwrAIzxovr5shRWv/LOX/2N5ZI4lvafZ37dY1vllsnRWxvgGha+uA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Jw3Bpk4r; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46GHeu7Q025081;
+	Tue, 16 Jul 2024 21:25:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	leQBczBp6BDwomra/9IMX++GEiqamSE1x+UX2ngRveg=; b=Jw3Bpk4rpbkKA3Mr
+	HVeeHu/hIn18qPGSj9ckUUfr8+SJIzl4Vu/dgLKqPMzuR2WFOBPm6h0+3wGFjxL9
+	ilxlPy+BbiD0HlKYm5PLb9xsuZyfFmT8eIdygbJ/DA/tqnD7Y9NN/fnzScTfa/Tm
+	w9oC846WH35mqJE7B7I1cuMRr0Ucned1FkEv23+Asz+nJPRDPoHLcsddJAmY6x7h
+	5Nww9UYJvan48gWGpQ55OyLv2EVnSsDgzC3X6JX/3FIu+25jU0RTk72vUECjOkm9
+	mcjkqI+yGUhNZvJ0h0F0w0q6VQaPumTVoPCzjmcykioClntEXOjlTj5kN8L7we6x
+	5RgG9w==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40dwfpge1t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Jul 2024 21:25:56 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46GLPtWB016846
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Jul 2024 21:25:55 GMT
+Received: from [10.71.110.34] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 16 Jul
+ 2024 14:25:54 -0700
+Message-ID: <96d26519-5879-4ae7-a8f3-ebdc4f3ade3e@quicinc.com>
+Date: Tue, 16 Jul 2024 14:25:54 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240717-dispcc-sm8550-fixes-v1-0-efb4d927dc9a@linaro.org> <20240717-dispcc-sm8550-fixes-v1-7-efb4d927dc9a@linaro.org>
-In-Reply-To: <20240717-dispcc-sm8550-fixes-v1-7-efb4d927dc9a@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 17 Jul 2024 00:24:24 +0300
-Message-ID: <CAA8EJpq69nuvQc9FkoBCZ-o1avH4kU2_msNNRZaTD+YASDkErg@mail.gmail.com>
-Subject: Re: [PATCH 7/7] dt-bindings: clock: qcom,sm8650-dispcc: replace with symlink
-To: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] drm/msm/dpu: rate limit snapshot capture for mmu
+ faults
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        "Sean
+ Paul" <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        <dri-devel@lists.freedesktop.org>, <quic_jesszhan@quicinc.com>,
+        <swboyd@chromium.org>, <dianders@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240628214848.4075651-1-quic_abhinavk@quicinc.com>
+ <20240628214848.4075651-6-quic_abhinavk@quicinc.com>
+ <5isw7c5kkef4kql4qcous3gmwhvgwc53ntgjm4staymqr67ktm@iw3cr2gr2iko>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <5isw7c5kkef4kql4qcous3gmwhvgwc53ntgjm4staymqr67ktm@iw3cr2gr2iko>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 4-fjC3Wps4it5BJvRwkdzkbAJkrkM6IJ
+X-Proofpoint-GUID: 4-fjC3Wps4it5BJvRwkdzkbAJkrkM6IJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-16_01,2024-07-16_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ phishscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0
+ suspectscore=0 mlxlogscore=999 priorityscore=1501 bulkscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407160157
 
-On Wed, 17 Jul 2024 at 00:13, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> The display clock controller indices for SM8650 and SM8550 are
-> completely equal. Replace the header file for qcom,sm8650-dispcc with
-> the symlink to the qcom,sm8550-dispcc header file.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/clk/qcom/dispcc-sm8550.c               |   2 +-
->  include/dt-bindings/clock/qcom,sm8650-dispcc.h | 103 +------------------------
->  2 files changed, 2 insertions(+), 103 deletions(-)
->
-> diff --git a/drivers/clk/qcom/dispcc-sm8550.c b/drivers/clk/qcom/dispcc-sm8550.c
-> index 78e11eade2ea..9ffcd9eb9283 100644
-> --- a/drivers/clk/qcom/dispcc-sm8550.c
-> +++ b/drivers/clk/qcom/dispcc-sm8550.c
-> @@ -1776,7 +1776,7 @@ static int disp_cc_sm8550_probe(struct platform_device *pdev)
->         }
->
->         if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8650-dispcc")) {
-> -               lucid_ole_vco.max_freq = 2100000000;
-> +               lucid_ole_vco[0].max_freq = 2100000000;
->                 disp_cc_mdss_mdp_clk_src.freq_tbl = ftbl_disp_cc_mdss_mdp_clk_src_sm8650;
->         }
->
 
-Of course this chunk should have been a part of the previous patch.
-I'll fix it for v2.
 
--- 
-With best wishes
-Dmitry
+On 7/1/2024 12:43 PM, Dmitry Baryshkov wrote:
+> On Fri, Jun 28, 2024 at 02:48:47PM GMT, Abhinav Kumar wrote:
+>> There is no recovery mechanism in place yet to recover from mmu
+>> faults for DPU. We can only prevent the faults by making sure there
+>> is no misconfiguration.
+>>
+>> Rate-limit the snapshot capture for mmu faults to once per
+>> msm_kms_init_aspace() as that should be sufficient to capture
+>> the snapshot for debugging otherwise there will be a lot of
+>> dpu snapshots getting captured for the same fault which is
+>> redundant and also might affect capturing even one snapshot
+>> accurately.
+> 
+> Please squash this into the first patch. There is no need to add code
+> with a known defficiency.
+> 
+
+Sure, will squash it.
+
+> Also, is there a reason why you haven't used <linux/ratelimit.h> ?
+> 
+
+There is really no interval I can conclude on which is safe here. In 
+fact rate-limit is probably not the right terminology here.
+
+I should probably just rename this to once per init_aspace() which is 
+essentially once per bootup.
+
+I couldnt come up with a better limiter because ideally if we had a 
+recovery we should reset the counter there.
+
+Similar to other DPU errors like underrun and ping-pong timeouts (which 
+capture the snapshot once per suspend/resume) , I just kept it to once 
+per init_aspace().
+
+smmu faults happen at a pretty rapid rate and capturing the full DPU 
+snapshot each time was redundant. So I thought atleast once should be 
+enough.
+
+>>
+>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/msm_kms.c | 6 +++++-
+>>   drivers/gpu/drm/msm/msm_kms.h | 3 +++
+>>   2 files changed, 8 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/msm_kms.c b/drivers/gpu/drm/msm/msm_kms.c
+>> index d5d3117259cf..90a333920c01 100644
+>> --- a/drivers/gpu/drm/msm/msm_kms.c
+>> +++ b/drivers/gpu/drm/msm/msm_kms.c
+>> @@ -168,7 +168,10 @@ static int msm_kms_fault_handler(void *arg, unsigned long iova, int flags, void
+>>   {
+>>   	struct msm_kms *kms = arg;
+>>   
+>> -	msm_disp_snapshot_state(kms->dev);
+>> +	if (!kms->fault_snapshot_capture) {
+>> +		msm_disp_snapshot_state(kms->dev);
+>> +		kms->fault_snapshot_capture++;
+> 
+> When is it decremented?
+> 
+
+It is not because it will only increment once in a bootup, I can switch 
+this to a bool since it will happen only once unless we conclude on a 
+better way.
+
+>> +	}
+>>   
+>>   	return -ENOSYS;
+>>   }
+>> @@ -208,6 +211,7 @@ struct msm_gem_address_space *msm_kms_init_aspace(struct drm_device *dev)
+>>   		mmu->funcs->destroy(mmu);
+>>   	}
+>>   
+>> +	kms->fault_snapshot_capture = 0;
+>>   	msm_mmu_set_fault_handler(aspace->mmu, kms, msm_kms_fault_handler);
+>>   
+>>   	return aspace;
+>> diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
+>> index 1e0c54de3716..240b39e60828 100644
+>> --- a/drivers/gpu/drm/msm/msm_kms.h
+>> +++ b/drivers/gpu/drm/msm/msm_kms.h
+>> @@ -134,6 +134,9 @@ struct msm_kms {
+>>   	int irq;
+>>   	bool irq_requested;
+>>   
+>> +	/* rate limit the snapshot capture to once per attach */
+>> +	int fault_snapshot_capture;
+>> +
+>>   	/* mapper-id used to request GEM buffer mapped for scanout: */
+>>   	struct msm_gem_address_space *aspace;
+>>   
+>> -- 
+>> 2.44.0
+>>
+> 
 
