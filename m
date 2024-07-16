@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-26372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF6F4933263
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 21:46:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5762F933267
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 21:47:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E1E181C22AB6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 19:46:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8994B1C231F5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 19:47:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AB982557A;
-	Tue, 16 Jul 2024 19:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44CE028DBC;
+	Tue, 16 Jul 2024 19:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JuLFkbm0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BVYOUTu/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E079C4687;
-	Tue, 16 Jul 2024 19:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E2F208DA;
+	Tue, 16 Jul 2024 19:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721159200; cv=none; b=OZthExdzwwTWPI/WvmVRj66OaSo02m4iioBD6Jt6pMfDjKBkY0ly7tU3iqG46ptsq6ynCSGeVV08Xt3iTLvwjTObDczcHGYZbziIP0BjrghDih7Hs93KFQQmTgbVbdHqabLee9rQinozbZa2C7MVR/p1tDQje9rkzKFeHbis6t8=
+	t=1721159219; cv=none; b=A4/fvWV7zWL21nFw7+P+vd2LofYCYntMXzwhFwLcBFWM84ZiI4JClBxqd1Y2Q5DUSn4M/+u2HerXJLXd64M7bsz5IV3o6WHtpVDtbZFg5rtOJQLznDU4VC2KUxu4ZNtBC3YY5Zn2YEql8HO68FXkYSSB3NRvDbSqqyHq0CB+4zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721159200; c=relaxed/simple;
-	bh=+QzOgsrxtQCBGg7h5Qpl0PleJ/JoElCpfu1zRH75tLA=;
+	s=arc-20240116; t=1721159219; c=relaxed/simple;
+	bh=o3+fGDdm/tRITJBbGKOhv4Wk+Bl/RcdmgirMbDLXKfE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Z6wCeeCCaFtaqJlrxE+1oUlgIvOuqoFifDBWWNSavdDJ7YWBWnZS0vTF6gN4ahIK6GA9O4gZSX8jo7YuLNM+5dlWVxV5sVKiUrwfoTbqeuhv1vUL2N9WRzAdkrQAkV7UOg8DJbcKi5poQP7jzgA1cw2lEvpKp40FzLcgwTKONlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JuLFkbm0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4402C116B1;
-	Tue, 16 Jul 2024 19:46:34 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ebNsy0olHE35niQlS6Q9BMT/fbHjALMvd+igcD8a/uC++i8uUaCxgL7oOOKHsa63oD+L4vvq29jiVy7YhmymrgnBXyUZRKtq+D8N342j7sVDFgohKp9T+1GhgDQpgM+04lEEBxf705g4WcIa1OmWqo2V/pBlYcKRMed/Sm2Duk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BVYOUTu/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A96C116B1;
+	Tue, 16 Jul 2024 19:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721159199;
-	bh=+QzOgsrxtQCBGg7h5Qpl0PleJ/JoElCpfu1zRH75tLA=;
+	s=k20201202; t=1721159218;
+	bh=o3+fGDdm/tRITJBbGKOhv4Wk+Bl/RcdmgirMbDLXKfE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=JuLFkbm0DVDQt9D22pdG+xXhYKWSH+5qJQsswbH8sJORytH98zGqECLAtTbmFs4OZ
-	 ZNaCNH9b83ETekimE3/DUJI1CfumSV1m3Q5Q8jTlxcM1k7FBQ0joub4EmTHsj9qCM9
-	 r25a/980zP+1VNRQGVRJCGVVPccLJS01TUfo3eiWCrl/hS4l5s3cy4jJvUVXH8gQsr
-	 X+wGJ2JAyTd7YWGJaffACZBGQU+KiJLSrSDf7XnzINuL2Ct/Rvp8PIlOvKYZPoidAu
-	 WOb2HFrAxJn8sFE86yu0VUVe7UJPRyVyQ/Fh/E8H5rJ7WMuHNKp18jLOZdvZ5bgqUp
-	 vlHvJgcihlSrw==
-Message-ID: <94572710-f90e-4ac6-a0f8-02d93404fb92@kernel.org>
-Date: Tue, 16 Jul 2024 21:46:32 +0200
+	b=BVYOUTu/sRImNY+HM1v+ecbQzC2hB5prHdghTeDLUpNevst9He4uaoWxZJ+kPNnOO
+	 TjrgSgE1dtq2g/6KWDzj3QixMKVaQKybNYmJVc+QGgLXnHQt1K/yd7TK1QpDnSxTGA
+	 Ufk2M7hnlG0JcpIBMyvXnDd7AFnVt/7/LUq0WwFSb6XKEXBvbly02kwmmNvbA7oubH
+	 e0eRvIwKlJet77F/peruFL8GCxn90Y+TksEqqA6ZDzzCOxd88fRsgIx6dcn8mBDuxH
+	 2TBv0iNNWAq5ZuiqCm14nwM0jX/Qg/piK91/sCtPgbzQoC6YRBEr6vhGGItPIkMc1i
+	 AbkzbaUNQycbA==
+Message-ID: <7ebdb656-e62c-42ab-a670-66430a20b169@kernel.org>
+Date: Tue, 16 Jul 2024 21:46:52 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] dt-bindings: ata: qcom,ipq806x-ahci: use dtschema
+Subject: Re: [PATCH 3/3] dt-bindings: ata: qcom,apq8064-ahci: add to dtschema
 To: Rayyan Ansari <rayyan.ansari@linaro.org>, devicetree@vger.kernel.org,
  linux-arm-msm@vger.kernel.org
 Cc: Bjorn Andersson <andersson@kernel.org>, Conor Dooley
@@ -61,7 +61,7 @@ Cc: Bjorn Andersson <andersson@kernel.org>, Conor Dooley
  linux-kernel@vger.kernel.org, Niklas Cassel <cassel@kernel.org>,
  Rob Herring <robh@kernel.org>
 References: <20240716105245.49549-1-rayyan.ansari@linaro.org>
- <20240716105245.49549-3-rayyan.ansari@linaro.org>
+ <20240716105245.49549-4-rayyan.ansari@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,57 +107,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240716105245.49549-3-rayyan.ansari@linaro.org>
+In-Reply-To: <20240716105245.49549-4-rayyan.ansari@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 16/07/2024 12:46, Rayyan Ansari wrote:
-> Remove old text bindings and add ipq806x AHCI compatible to
-> ahci-common.yaml, as well as its required properties.
+> The APQ8064 SATA AHCI controller is used in apq8064.dtsi, although it
+> was not documented in the old text bindings.
+> Add its compatible to ahci-platform.yaml.
 > 
+> Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
 
->  
->  allOf:
->    - $ref: ahci-common.yaml#
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,ipq806x-ahci
-> +    then:
-> +      properties:
-> +        clocks:
-> +          minItems: 5
-> +        clock-names:
-> +          items:
-> +            - const: slave_iface
-> +            - const: iface
-> +            - const: core
-> +            - const: rxoob
-> +            - const: pmalive
-> +        assigned-clocks:
-> +          minItems: 2
-> +          maxItems: 2
-> +        assigned-clock-rates:
-
-
-assigned* should not be needed in the binding. You can drop these.
-
-> +          items:
-> +            - const: 100000000
-> +            - const: 100000000
-> +      required:
-> +        - phys
-> +        - phy-names
-> +        - clocks
-> +        - clock-names
-> +        - assigned-clocks
-> +        - assigned-clock-rates
-
-Also from here.
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
