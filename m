@@ -1,185 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-26353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F395932B2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 17:42:39 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0759F932C3F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 17:53:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 171E428184C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 15:42:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1A70E1C2295D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 15:53:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF62119F477;
-	Tue, 16 Jul 2024 15:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08A5A19DF75;
+	Tue, 16 Jul 2024 15:53:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YnSaJsGD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ttzGL1Q3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EECB5F9E8;
-	Tue, 16 Jul 2024 15:42:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8ACE17A93F;
+	Tue, 16 Jul 2024 15:53:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721144529; cv=none; b=cO/YZLXQZShHtd+9DM6RrayQOpQVqhuRN17Uyir5hSApScKQ58zmzJgjjwJXEDGHxjkDeXdJ61bLIFaohHb835tDNDglvtuJWrxvhaA8C4AKa2MqLULDHbLxfzSuOs7MCGC4Xa4YzQX4LlT0gwrxsCa5E1Wh0ln66M4ebJKgwbI=
+	t=1721145203; cv=none; b=mx1RVOclJzJip3HlfrjdBnIPEeNDt+tP916uzpuauwrcg7xcMLxYu8n9sUQQMuURMLishzdBUg12lPaRsoPMXIq6djy7catHBd6xKgfRzWDXgvd6hu8avSk1FmW/OT0BfoW+tMfSsNw95UWqS8n70wqSXeBjWUm5+jG0DjIgax8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721144529; c=relaxed/simple;
-	bh=3K3HETqJm/ZpKc+V9IVxrUF1fl+PRjx9X/4MZOmKgiI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xqghypbe1VZteRfUsOX1wjJfc4ZBnTKqucZG7yRzEVBSA5qa3syWofBQEYW8gssEMZQlqD9bs+kIE2awLqMyGR4k6JSvU3/6+sXYlzFp5secNU0+WxvJb7oR+xCVnHqbXGrjVRRBqStT2rIuL4lBJXJunZ+yyD21kEhJOOC+MhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YnSaJsGD; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1721144528; x=1752680528;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=3K3HETqJm/ZpKc+V9IVxrUF1fl+PRjx9X/4MZOmKgiI=;
-  b=YnSaJsGDct8n9k5I33VKgPskUIx89iftfDhcZPu141UhNcofXMYq5PJv
-   8FSBPDRrxMzLNFgJc7GUC3ZFf1wPRkixe30boTvLZM92oXJQakG+Wozzc
-   gcbcZcpByRv/X2zqjKOEokBatc9ltuWuBdY0rtjArL4w9pAsLPNPxi8QX
-   SWFHsCYU7Z4dhB/PK2cWLj63HtwYtwkJPeTRHOtmuhXIid9Z6zXkwlAVi
-   RCRZRShE7u6KLMshUobwzN9C4h0enNLnawrBEa/dQYxsI1RR5cwvCtm0k
-   Y9S6KqytgLsaBiHwvC23GsJeiqxekOAUV3aMBE7iuZxoSwi31mouTF/eK
-   Q==;
-X-CSE-ConnectionGUID: MuFkh7rLQcmJ2QxGZz2APg==
-X-CSE-MsgGUID: jpalR6obQwC1MgNyPCcOjg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11135"; a="29200476"
-X-IronPort-AV: E=Sophos;i="6.09,211,1716274800"; 
-   d="scan'208";a="29200476"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jul 2024 08:42:07 -0700
-X-CSE-ConnectionGUID: RIs+OzhpQTufLz9ioQbl6A==
-X-CSE-MsgGUID: 6ifkXvsmSRiAbDvZ718bpA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,211,1716274800"; 
-   d="scan'208";a="50136221"
-Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
-  by fmviesa010.fm.intel.com with ESMTP; 16 Jul 2024 08:42:04 -0700
-Received: from kbuild by 68891e0c336b with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1sTkJV-000fOs-1x;
-	Tue, 16 Jul 2024 15:42:01 +0000
-Date: Tue, 16 Jul 2024 23:41:08 +0800
-From: kernel test robot <lkp@intel.com>
-To: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH 06/14] PCI: endpoint: Assign PCI domain number for
- endpoint controllers
-Message-ID: <202407162357.A9pxRKuo-lkp@intel.com>
-References: <20240715-pci-qcom-hotplug-v1-6-5f3765cc873a@linaro.org>
+	s=arc-20240116; t=1721145203; c=relaxed/simple;
+	bh=8w6E/xlfm4hYonewmM13++RYPa2PQitOaad2WauLU2o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Jx2agnY9Wq80nPmwzIXjilahHJekZvvYhlGToJKjWGgfyvgCJlNwYPueKprDdRrl7vJY9fzJt16zM37pD9LU9lgD/1cDfesHYvdv4jbaXQVWrc62ENedqhJZq5XejukPDR1HEeJGh8iKeP7hxIJVEIt7FYEklR/swtK0MOPWkdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ttzGL1Q3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63437C4AF0B;
+	Tue, 16 Jul 2024 15:53:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1721145203;
+	bh=8w6E/xlfm4hYonewmM13++RYPa2PQitOaad2WauLU2o=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ttzGL1Q3B4oKHp2jPA3ZY9ZrRqHUEwpCmsiCfK31DSnMMtXWdu4ZdZagJZZMdVZV4
+	 hPnr8NMDjRBT5ViBaDFnHCNLD25C40Sxak7Si8Jcpmeb2VCl8rMMmcuqXZ5k25MyyW
+	 FxC8zXx3G2Rr2u5/4w8yjZfAiiguRtml4cxcQFluRaAl3gVeYk2W28mgrV9G2JiuW3
+	 yet/rF7VV13GRTRBBd8c+wp503EmAFRl1YtHHF4AVlzkS7qzWFaQ0FVELJTcYRZlKk
+	 n+suYA1Iud6vS6SuhL9Vu124ilWFEo17KFk2HctzbxYf+NXSpThvQGAZPTOFOSrilI
+	 FNTtvjpE1TaWQ==
+Message-ID: <ac4f40a7-7ada-42e5-9fce-9107f2fcf4cc@kernel.org>
+Date: Tue, 16 Jul 2024 17:53:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240715-pci-qcom-hotplug-v1-6-5f3765cc873a@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v15 01/10] MAINTAINERS: Include new Qualcomm CPR drivers
+ in the file list
+To: Ulf Hansson <ulf.hansson@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+ Stephen Boyd <sboyd@kernel.org>, Niklas Cassel <nks@flawful.org>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Robert Marko
+ <robimarko@gmail.com>, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-pm@vger.kernel.org, Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Varadarajan Narayanan <quic_varada@quicinc.com>
+References: <20240708-topic-cpr3h-v15-0-5bc8b8936489@linaro.org>
+ <20240708-topic-cpr3h-v15-1-5bc8b8936489@linaro.org>
+ <cd1c3450-1905-4d71-bcdd-5f880d743820@kernel.org>
+ <94b2842b-6093-4c4d-a099-3e0a3198b753@linaro.org>
+ <d35f5c94-7a86-4eea-bb0a-3f2785a25465@kernel.org>
+ <CAPDyKFqhmNqbZ9Xkg0tWHE5LavoNaGMyE3dKmAFtHdS5=x33NA@mail.gmail.com>
+ <d1d7b58c-b605-4adc-b329-f74ea4567982@linaro.org>
+ <CAPDyKFoViw3H8hCwLX0W=d8GM=5rai2xL5tnGGpctyqinkNpNw@mail.gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <CAPDyKFoViw3H8hCwLX0W=d8GM=5rai2xL5tnGGpctyqinkNpNw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Manivannan,
+On 16/07/2024 16:47, Ulf Hansson wrote:
+>>>>
+>>>> Rather cpr3 should be moved to avs or some other power directory. "soc"
+>>>> is fallback, junkyard for things without clear domain.
+>>>
+>>> In my opinion, I would suggest dropping the
+>>> "Documentation/devicetree/bindings/power/avs/" directory. We already
+>>> have similar bindings sprinkled across various directories, see below.
+>>> One less seems better to me.
+>>>
+>>> Documentation/devicetree/bindings/arm/*
+>>> Documentation/devicetree/bindings/firmware/*
+>>> Documentation/devicetree/bindings/power/*
+>>> Documentation/devicetree/bindings/soc/*
+>>
+>> So, should it go to bindings/power? Or should we get a new
+>> bindings/pmdomain dir?
+> 
+> No strong opinions from my side. Unless Krzysztof has better
+> suggestions, using bindings/power/* works for me.
 
-kernel test robot noticed the following build errors:
+Ack
 
-[auto build test ERROR on 91e3b24eb7d297d9d99030800ed96944b8652eaf]
+Best regards,
+Krzysztof
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam-via-B4-Relay/PCI-qcom-ep-Drop-the-redundant-masking-of-global-IRQ-events/20240716-014703
-base:   91e3b24eb7d297d9d99030800ed96944b8652eaf
-patch link:    https://lore.kernel.org/r/20240715-pci-qcom-hotplug-v1-6-5f3765cc873a%40linaro.org
-patch subject: [PATCH 06/14] PCI: endpoint: Assign PCI domain number for endpoint controllers
-config: i386-randconfig-001-20240716 (https://download.01.org/0day-ci/archive/20240716/202407162357.A9pxRKuo-lkp@intel.com/config)
-compiler: clang version 18.1.5 (https://github.com/llvm/llvm-project 617a15a9eac96088ae5e9134248d8236e34b91b1)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240716/202407162357.A9pxRKuo-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202407162357.A9pxRKuo-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
->> drivers/pci/endpoint/pci-epc-core.c:902:19: error: call to undeclared function 'pci_bus_find_domain_nr'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     902 |         epc->domain_nr = pci_bus_find_domain_nr(NULL, dev);
-         |                          ^
-   1 error generated.
-
-
-vim +/pci_bus_find_domain_nr +902 drivers/pci/endpoint/pci-epc-core.c
-
-   866	
-   867	/**
-   868	 * __pci_epc_create() - create a new endpoint controller (EPC) device
-   869	 * @dev: device that is creating the new EPC
-   870	 * @ops: function pointers for performing EPC operations
-   871	 * @owner: the owner of the module that creates the EPC device
-   872	 *
-   873	 * Invoke to create a new EPC device and add it to pci_epc class.
-   874	 */
-   875	struct pci_epc *
-   876	__pci_epc_create(struct device *dev, const struct pci_epc_ops *ops,
-   877			 struct module *owner)
-   878	{
-   879		int ret;
-   880		struct pci_epc *epc;
-   881	
-   882		if (WARN_ON(!dev)) {
-   883			ret = -EINVAL;
-   884			goto err_ret;
-   885		}
-   886	
-   887		epc = kzalloc(sizeof(*epc), GFP_KERNEL);
-   888		if (!epc) {
-   889			ret = -ENOMEM;
-   890			goto err_ret;
-   891		}
-   892	
-   893		mutex_init(&epc->lock);
-   894		mutex_init(&epc->list_lock);
-   895		INIT_LIST_HEAD(&epc->pci_epf);
-   896	
-   897		device_initialize(&epc->dev);
-   898		epc->dev.class = &pci_epc_class;
-   899		epc->dev.parent = dev;
-   900		epc->dev.release = pci_epc_release;
-   901		epc->ops = ops;
- > 902		epc->domain_nr = pci_bus_find_domain_nr(NULL, dev);
-   903	
-   904		ret = dev_set_name(&epc->dev, "%s", dev_name(dev));
-   905		if (ret)
-   906			goto put_dev;
-   907	
-   908		ret = device_add(&epc->dev);
-   909		if (ret)
-   910			goto put_dev;
-   911	
-   912		epc->group = pci_ep_cfs_add_epc_group(dev_name(dev));
-   913	
-   914		return epc;
-   915	
-   916	put_dev:
-   917		put_device(&epc->dev);
-   918	
-   919	err_ret:
-   920		return ERR_PTR(ret);
-   921	}
-   922	EXPORT_SYMBOL_GPL(__pci_epc_create);
-   923	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
 
