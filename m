@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-26371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4C58933257
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 21:42:17 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF6F4933263
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 21:46:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5BC5AB21095
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 19:42:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E1E181C22AB6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 19:46:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB16B1A01BA;
-	Tue, 16 Jul 2024 19:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AB982557A;
+	Tue, 16 Jul 2024 19:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CAHy4RtG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JuLFkbm0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABF1195B27;
-	Tue, 16 Jul 2024 19:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E079C4687;
+	Tue, 16 Jul 2024 19:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721158929; cv=none; b=Kn7nKYjeV0QnzZcskpfCobzIrd1kWXS84tY1babhfrKoA9TauvgWuAUTVQfWI2OMH/xGntz5aSGGcbQRhJkSid60mBxu6VsBYB2U21/3JNYKNbRIgZ4snh4AdajZCyATPklpi12ME7gbLMfIZ/XIpDF7DI1CVjatw1TNadcMDcU=
+	t=1721159200; cv=none; b=OZthExdzwwTWPI/WvmVRj66OaSo02m4iioBD6Jt6pMfDjKBkY0ly7tU3iqG46ptsq6ynCSGeVV08Xt3iTLvwjTObDczcHGYZbziIP0BjrghDih7Hs93KFQQmTgbVbdHqabLee9rQinozbZa2C7MVR/p1tDQje9rkzKFeHbis6t8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721158929; c=relaxed/simple;
-	bh=6DvLx3sKolVTpOiafMSeKq1oULOoas8XiUb/mMWIEbY=;
+	s=arc-20240116; t=1721159200; c=relaxed/simple;
+	bh=+QzOgsrxtQCBGg7h5Qpl0PleJ/JoElCpfu1zRH75tLA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=J9nH5BoHHcZzYahtH8ROT4DNRwOnu61lcDeCYuVUGrIoGQsPtmwRdmUhSNZYJ7CLE3rkss3rM88qsGZI53CAzQ6/9cg+WLXL82d+g0IHOH1AAO4VC0j1DMrFiKjtQYZisi3qUfFLmYd/iS7cVIkvmdWe+0EW5VEaGCUU0lRQErw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CAHy4RtG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61064C116B1;
-	Tue, 16 Jul 2024 19:42:04 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Z6wCeeCCaFtaqJlrxE+1oUlgIvOuqoFifDBWWNSavdDJ7YWBWnZS0vTF6gN4ahIK6GA9O4gZSX8jo7YuLNM+5dlWVxV5sVKiUrwfoTbqeuhv1vUL2N9WRzAdkrQAkV7UOg8DJbcKi5poQP7jzgA1cw2lEvpKp40FzLcgwTKONlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JuLFkbm0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4402C116B1;
+	Tue, 16 Jul 2024 19:46:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721158929;
-	bh=6DvLx3sKolVTpOiafMSeKq1oULOoas8XiUb/mMWIEbY=;
+	s=k20201202; t=1721159199;
+	bh=+QzOgsrxtQCBGg7h5Qpl0PleJ/JoElCpfu1zRH75tLA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CAHy4RtGF80Hu9aODyMUCooU8tqaZoGRo6kb6XRWkaGuYAMzJqoCzthEATl4QjSAL
-	 7TElFupQl6IkGWfM3mEQ+szvvSmHi3W/9ul54rAa8RcxByDLQR15D+HAqsnQw7JxIy
-	 H504OTvG3j4MfcGqAssPtrjqIhkWm0gowykOHzbu07lquvz7tkfbbKqHR7xMqCf6x2
-	 m8+Yq//4M6qV9ycqiWjftgD7h2K71SOtL+6Os8fd+imUqiQVwRvtVfwAi+BYBihz09
-	 hAJ4El+nhDbKYnmA1d9uocsbx18fXCgFWH9nTd8M4NhFtykm9vbOv7G9d51EQ72fPZ
-	 T4xEfLOlSD7ow==
-Message-ID: <c696fac6-1f26-437d-84fc-b14eb15ccce4@kernel.org>
-Date: Tue, 16 Jul 2024 21:42:01 +0200
+	b=JuLFkbm0DVDQt9D22pdG+xXhYKWSH+5qJQsswbH8sJORytH98zGqECLAtTbmFs4OZ
+	 ZNaCNH9b83ETekimE3/DUJI1CfumSV1m3Q5Q8jTlxcM1k7FBQ0joub4EmTHsj9qCM9
+	 r25a/980zP+1VNRQGVRJCGVVPccLJS01TUfo3eiWCrl/hS4l5s3cy4jJvUVXH8gQsr
+	 X+wGJ2JAyTd7YWGJaffACZBGQU+KiJLSrSDf7XnzINuL2Ct/Rvp8PIlOvKYZPoidAu
+	 WOb2HFrAxJn8sFE86yu0VUVe7UJPRyVyQ/Fh/E8H5rJ7WMuHNKp18jLOZdvZ5bgqUp
+	 vlHvJgcihlSrw==
+Message-ID: <94572710-f90e-4ac6-a0f8-02d93404fb92@kernel.org>
+Date: Tue, 16 Jul 2024 21:46:32 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V6 1/4] dt-bindings: PCI: qcom: Document the IPQ9574 PCIe
- controller.
-To: Sricharan R <quic_srichara@quicinc.com>, bhelgaas@google.com,
- lpieralisi@kernel.org, kw@linux.com, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
- manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Cc: devi priya <quic_devipriy@quicinc.com>
-References: <20240716092347.2177153-1-quic_srichara@quicinc.com>
- <20240716092347.2177153-2-quic_srichara@quicinc.com>
+Subject: Re: [PATCH 2/3] dt-bindings: ata: qcom,ipq806x-ahci: use dtschema
+To: Rayyan Ansari <rayyan.ansari@linaro.org>, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Damien Le Moal <dlemoal@kernel.org>,
+ de Goede <hdegoede@redhat.com>, Jens Axboe <axboe@kernel.dk>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-ide@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Niklas Cassel <cassel@kernel.org>,
+ Rob Herring <robh@kernel.org>
+References: <20240716105245.49549-1-rayyan.ansari@linaro.org>
+ <20240716105245.49549-3-rayyan.ansari@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,20 +107,57 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240716092347.2177153-2-quic_srichara@quicinc.com>
+In-Reply-To: <20240716105245.49549-3-rayyan.ansari@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 16/07/2024 11:23, Sricharan R wrote:
-> From: devi priya <quic_devipriy@quicinc.com>
+On 16/07/2024 12:46, Rayyan Ansari wrote:
+> Remove old text bindings and add ipq806x AHCI compatible to
+> ahci-common.yaml, as well as its required properties.
 > 
-> Document the PCIe controller on IPQ9574 platform.
 
-Subjects are without full stop.
+>  
+>  allOf:
+>    - $ref: ahci-common.yaml#
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,ipq806x-ahci
+> +    then:
+> +      properties:
+> +        clocks:
+> +          minItems: 5
+> +        clock-names:
+> +          items:
+> +            - const: slave_iface
+> +            - const: iface
+> +            - const: core
+> +            - const: rxoob
+> +            - const: pmalive
+> +        assigned-clocks:
+> +          minItems: 2
+> +          maxItems: 2
+> +        assigned-clock-rates:
 
-With that fixed:
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+assigned* should not be needed in the binding. You can drop these.
+
+> +          items:
+> +            - const: 100000000
+> +            - const: 100000000
+> +      required:
+> +        - phys
+> +        - phy-names
+> +        - clocks
+> +        - clock-names
+> +        - assigned-clocks
+> +        - assigned-clock-rates
+
+Also from here.
+
 
 Best regards,
 Krzysztof
