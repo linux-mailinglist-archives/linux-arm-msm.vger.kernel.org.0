@@ -1,87 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-26359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 885E3932E8B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 18:46:40 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D57E5932E96
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 18:48:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 09FCEB22CD9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 16:46:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 141EDB2183B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 16:48:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32F6B19EEB3;
-	Tue, 16 Jul 2024 16:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 353A019B3F3;
+	Tue, 16 Jul 2024 16:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="saqgYE8M"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HsWxI3rX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3520119AA66
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 16:46:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C12C1E528;
+	Tue, 16 Jul 2024 16:48:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721148395; cv=none; b=iJwtoQ4SYOYp20f1zgGocvAS4PV0mXVbAP2BBjH/L+h+Y0I/KOAqqAp95MBMpr7WYyrPleiBmnHiwfT3bKg4TflkeqJ9UJ7sc7k4b3uG5qXm07+6S50cH0Z7CEQZSZmOQjiBnU3xv1VCxA7lX0VVgz1DFF4AQX6WCPIWe8kLRM8=
+	t=1721148495; cv=none; b=HiWEaVLmQz5K0sddodXNNGJG1NNts1L+URnufdUPcE0DwefzZ4N1CtUwxUAwpQF0FCIcc7b+x1w9hW/je/82FWOVMu4wsD8+eFdua+rOvQ+YoQHRFZtOpKuL5PVEu7Z+/5RDuFyr2kLd7L2TJbok1B89fmZBsRAFTNs82MG1rtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721148395; c=relaxed/simple;
-	bh=/uO28JIzVjT3o+pteNKJcM0A5ixMT0fdtKUaIBjY+XA=;
+	s=arc-20240116; t=1721148495; c=relaxed/simple;
+	bh=ZejX7sQYy7OqqD/lZfJcjG1n/50PzY0tqu1osR9XdOI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wzk7dHFOoKa8uu9m0jTFzPs4pe/JJgrbC6OaiTWNmw04YdSh9CX7xZiVIMkE4qWMEBi8S3RBq5lYu2J1ApAPi88tncGqXR/idI3cLdnzLZNlgV+mPv/HHQ+mAE1rZLM8fbmX8RKVd6LznVJ9EPoCSfry753wsSE0LF1Ke9L+byM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=saqgYE8M; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-52ea3e499b1so6555040e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 09:46:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721148390; x=1721753190; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UdlcGvPV4rMkeD613/ZfNJun3YfIW1JB7Y540EAzI4A=;
-        b=saqgYE8M0ftR2nbP5DxHECYBBnLZaf4K3mgxJwXRQWPIohsd5GZ7gFu2w+AbdivJBI
-         T6PxtFRY0zshmzfSobXiOV/IHV2ILKu2g0awIbxv4VekTuE+4F9cWNTDCYSEsdutbCo0
-         9M67xcWKOZShoEPxq/wd1gCEE/LStzL1V01c3uT/CJFOA9watrRtMPEHZBpVxPQGvm02
-         vPVYLDHfVDsJAqsRq6x8dYZlbpzNbeW/Re6AzfS2Qqc+cXPw2lU7fiQxxiVDe29bzzfJ
-         9EdYBkccpH9JT/xrscrs8JRjgA3o+zCH4t37ldGA+3U2PYd9AQ9oF2Z9S//dSGIqTh3I
-         B3FA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721148390; x=1721753190;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UdlcGvPV4rMkeD613/ZfNJun3YfIW1JB7Y540EAzI4A=;
-        b=DFtGEwDniJ/Ga3/3pVtG09Laa5bB375QZRAjX0OJk7FLY3p+ByovXXRkQQ2o9FX8LR
-         E8+D3UeRH7dVFya+ckjb54ua/K75OeC1MKA9QWSC/0knvY1aeqdUliYixh8IUi0Ry1ok
-         tZ66Ql9dkOqUxJXCxPQl0GJoF+XNZEA6A6Bn1FhGc3HtxC4ueY7rqcqMaiwH8gv8nJH4
-         UKc1IAz+Sj5WQpkczan7Vk0O4zIzPLevddZzOYNlWXdtbM7wdqBwrpVlFF9W6mIDwYV0
-         /U1csA6f2Uw75qoFbHuPjPh0HZ7ZVudd9fkCb+30cFkWZAHo/V3GmHVJhW0cuA9h70V/
-         b2yw==
-X-Forwarded-Encrypted: i=1; AJvYcCWXIV3eEWCwcHRLfJQvZFTY20S/SIq6JG++iHELcLZrMRmNKvmaJg8Wsxqkw5gUvoOiDswrqyVN1+XIJQjjEOvGKUjvZqWTroPSMpiXrw==
-X-Gm-Message-State: AOJu0YyJaHCU7GyhFuRR3YUYwvvBg4phW5vkTZfWettPy6Y6HqX8nnBT
-	bqHs6mQf9WTmGDgSAX8lO9w5FMSbFyX7+48CvtCNVaFk5A262fWzk+ModcNioQg=
-X-Google-Smtp-Source: AGHT+IH1Umt4AGKUi97EA/xp39tZETdjijAkzPUgbnJvzG0aE8B3zUOXJakTJA6Nzb4q5X83AOT3QQ==
-X-Received: by 2002:a05:6512:3f29:b0:52e:9d6c:4462 with SMTP id 2adb3069b0e04-52edf01c462mr1777240e87.23.1721148390000;
-        Tue, 16 Jul 2024 09:46:30 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ed24e2b66sm1202263e87.59.2024.07.16.09.46.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jul 2024 09:46:29 -0700 (PDT)
-Date: Tue, 16 Jul 2024 19:46:28 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: neil.armstrong@linaro.org
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Taniya Das <quic_tdas@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] clk: qcom: dispcc-sm8650: add missing
- CLK_SET_RATE_PARENT flag
-Message-ID: <kxrhhb3vdojbnqfbwks2qmob55fwm3onleood73qfk6esl7g2c@q66kw5am4emc>
-References: <20240716-topic-sm8650-upstream-fix-dispcc-v3-0-5bfd56c899da@linaro.org>
- <20240716-topic-sm8650-upstream-fix-dispcc-v3-2-5bfd56c899da@linaro.org>
- <dccttz5b44bl3lwmcaqz6wjx3n4sv3eq4yh6276vzwrtkcvqcw@qxhbo7bylnsg>
- <9ad10d92-d755-4fae-b206-6e8648be6d48@linaro.org>
- <CAA8EJpr9L+AKDhuHfQa=Nco7fvG9vLH3a+gxVhENrhz12b3n=Q@mail.gmail.com>
- <278354ec-532b-48de-8ee1-5477ddb4a285@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=X1szyRAAVkU99EJ43L0acr8+bfNFKBWb2gLyW+dapHkZ59xO+O83ueETataDXB7WPUPo6PglUshORIOMMb/H2GMaCycLPtgrwmwF/TVpCiNBodV4+S/GclMkbHTwH6nfiz5XugpkBAFX2BLV84WatpLyZW0Gm6dwXJHq61nz2Vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HsWxI3rX; arc=none smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1721148492; x=1752684492;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=ZejX7sQYy7OqqD/lZfJcjG1n/50PzY0tqu1osR9XdOI=;
+  b=HsWxI3rXBxtvvTDiSglORt4lo6gy9jsQLvmYjKU+rlKD8qPNvEcNk4gK
+   wH6vNqP3ZHaSuHtv2rqQW4TFT8g10z5ss0NY3wIcTcCz12gogDlMtq5LV
+   DOflPek9tWWUfxBjTqIE/01vqLtXm4WRl2GgzvxqUNENSAUblTLz69+im
+   HD3EPrRTrXh3CGevSUPoX99HyYFoZUg2m2V8yfHgzxzsEDX+8anshiN9O
+   Jw2GfuMLYY/3dO/8Cax4QufvqL6Zg7UnNQY9o9DYu6QIOgqEsw+uIi3LJ
+   qXjJd9ZmZmR77IRG3J6bJBihwC9Y9J9fhU8UsniktITnqo4GVw6lvZ3yk
+   g==;
+X-CSE-ConnectionGUID: rxAUC8Q9Q1+tdKPZkvC96Q==
+X-CSE-MsgGUID: D6dkMJesTwu43nhVcAqlCQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11135"; a="30017576"
+X-IronPort-AV: E=Sophos;i="6.09,212,1716274800"; 
+   d="scan'208";a="30017576"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jul 2024 09:48:11 -0700
+X-CSE-ConnectionGUID: y8Ea+zk+QLKYSTNmND2bUQ==
+X-CSE-MsgGUID: lFusUqOWS0SdtKdYPWrdOw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,212,1716274800"; 
+   d="scan'208";a="49812047"
+Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
+  by fmviesa006.fm.intel.com with ESMTP; 16 Jul 2024 09:48:08 -0700
+Received: from kbuild by 68891e0c336b with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1sTlLR-000fSm-31;
+	Tue, 16 Jul 2024 16:48:05 +0000
+Date: Wed, 17 Jul 2024 00:47:59 +0800
+From: kernel test robot <lkp@intel.com>
+To: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: oe-kbuild-all@lists.linux.dev, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH 06/14] PCI: endpoint: Assign PCI domain number for
+ endpoint controllers
+Message-ID: <202407170032.WTPexEVV-lkp@intel.com>
+References: <20240715-pci-qcom-hotplug-v1-6-5f3765cc873a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,47 +89,99 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <278354ec-532b-48de-8ee1-5477ddb4a285@linaro.org>
+In-Reply-To: <20240715-pci-qcom-hotplug-v1-6-5f3765cc873a@linaro.org>
 
-On Tue, Jul 16, 2024 at 03:46:24PM GMT, neil.armstrong@linaro.org wrote:
-> On 16/07/2024 15:44, Dmitry Baryshkov wrote:
-> > On Tue, 16 Jul 2024 at 15:32, Neil Armstrong <neil.armstrong@linaro.org> wrote:
-> > > 
-> > > On 16/07/2024 13:20, Dmitry Baryshkov wrote:
-> > > > On Tue, Jul 16, 2024 at 11:05:22AM GMT, Neil Armstrong wrote:
-> > > > > Add the missing CLK_SET_RATE_PARENT for the byte0_div_clk_src
-> > > > > and byte1_div_clk_src, the clock rate should propagate to
-> > > > > the corresponding _clk_src.
-> > > > > 
-> > > > > Fixes: 9e939f008338 ("clk: qcom: add the SM8650 Display Clock Controller driver")
-> > > > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > > > > ---
-> > > > >    drivers/clk/qcom/dispcc-sm8650.c | 2 ++
-> > > > >    1 file changed, 2 insertions(+)
-> > > > 
-> > > > This doesn't seem correct, the byte1_div_clk_src is a divisor, so the
-> > > > rate should not be propagated. Other platforms don't set this flag.
-> > > > 
-> > > 
-> > > Why not ? the disp_cc_mdss_byte1_clk_src has CLK_SET_RATE_PARENT and a div_table,
-> > > and we only pass DISP_CC_MDSS_BYTE1_CLK to the dsi controller.
-> > 
-> > Yes, the driver sets byte_clk with the proper rate, then it sets
-> > byte_intf_clk, which results in a proper divisor.
-> > If we have CLK_SET_RATE_PARENT for byte1_div_clk_src, then setting
-> > byte_intf_clk rate will also result in a rate change for the byte_clk
-> > rate.
-> > 
-> > Note, all other platforms don't set that flag for this reason (I think
-> > I had to remove it during sm8450 development for this reason).
-> > 
-> 
-> Ack, I think this deserves a comment explaining this, I'll add it.
+Hi Manivannan,
 
-But where to place it? This applies to _all_ dispcc controllers.
+kernel test robot noticed the following build errors:
+
+[auto build test ERROR on 91e3b24eb7d297d9d99030800ed96944b8652eaf]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam-via-B4-Relay/PCI-qcom-ep-Drop-the-redundant-masking-of-global-IRQ-events/20240716-014703
+base:   91e3b24eb7d297d9d99030800ed96944b8652eaf
+patch link:    https://lore.kernel.org/r/20240715-pci-qcom-hotplug-v1-6-5f3765cc873a%40linaro.org
+patch subject: [PATCH 06/14] PCI: endpoint: Assign PCI domain number for endpoint controllers
+config: i386-randconfig-011-20240716 (https://download.01.org/0day-ci/archive/20240717/202407170032.WTPexEVV-lkp@intel.com/config)
+compiler: gcc-8 (Ubuntu 8.4.0-3ubuntu2) 8.4.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240717/202407170032.WTPexEVV-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202407170032.WTPexEVV-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   drivers/pci/endpoint/pci-epc-core.c: In function '__pci_epc_create':
+>> drivers/pci/endpoint/pci-epc-core.c:902:19: error: implicit declaration of function 'pci_bus_find_domain_nr'; did you mean 'pci_bus_find_capability'? [-Werror=implicit-function-declaration]
+     epc->domain_nr = pci_bus_find_domain_nr(NULL, dev);
+                      ^~~~~~~~~~~~~~~~~~~~~~
+                      pci_bus_find_capability
+   cc1: some warnings being treated as errors
+
+
+vim +902 drivers/pci/endpoint/pci-epc-core.c
+
+   866	
+   867	/**
+   868	 * __pci_epc_create() - create a new endpoint controller (EPC) device
+   869	 * @dev: device that is creating the new EPC
+   870	 * @ops: function pointers for performing EPC operations
+   871	 * @owner: the owner of the module that creates the EPC device
+   872	 *
+   873	 * Invoke to create a new EPC device and add it to pci_epc class.
+   874	 */
+   875	struct pci_epc *
+   876	__pci_epc_create(struct device *dev, const struct pci_epc_ops *ops,
+   877			 struct module *owner)
+   878	{
+   879		int ret;
+   880		struct pci_epc *epc;
+   881	
+   882		if (WARN_ON(!dev)) {
+   883			ret = -EINVAL;
+   884			goto err_ret;
+   885		}
+   886	
+   887		epc = kzalloc(sizeof(*epc), GFP_KERNEL);
+   888		if (!epc) {
+   889			ret = -ENOMEM;
+   890			goto err_ret;
+   891		}
+   892	
+   893		mutex_init(&epc->lock);
+   894		mutex_init(&epc->list_lock);
+   895		INIT_LIST_HEAD(&epc->pci_epf);
+   896	
+   897		device_initialize(&epc->dev);
+   898		epc->dev.class = &pci_epc_class;
+   899		epc->dev.parent = dev;
+   900		epc->dev.release = pci_epc_release;
+   901		epc->ops = ops;
+ > 902		epc->domain_nr = pci_bus_find_domain_nr(NULL, dev);
+   903	
+   904		ret = dev_set_name(&epc->dev, "%s", dev_name(dev));
+   905		if (ret)
+   906			goto put_dev;
+   907	
+   908		ret = device_add(&epc->dev);
+   909		if (ret)
+   910			goto put_dev;
+   911	
+   912		epc->group = pci_ep_cfs_add_epc_group(dev_name(dev));
+   913	
+   914		return epc;
+   915	
+   916	put_dev:
+   917		put_device(&epc->dev);
+   918	
+   919	err_ret:
+   920		return ERR_PTR(ret);
+   921	}
+   922	EXPORT_SYMBOL_GPL(__pci_epc_create);
+   923	
 
 -- 
-With best wishes
-Dmitry
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
