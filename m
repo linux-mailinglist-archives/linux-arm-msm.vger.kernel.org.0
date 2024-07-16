@@ -1,206 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-26374-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0EDD9332AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 22:11:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6262F933342
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 23:10:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1FF031C218DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 20:11:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 949071C221E8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 21:10:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E4061A2549;
-	Tue, 16 Jul 2024 20:11:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 584AD5C8FC;
+	Tue, 16 Jul 2024 21:10:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Q11zwxu0"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eL33vpUy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on2066.outbound.protection.outlook.com [40.107.96.66])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4051E1A0AE7;
-	Tue, 16 Jul 2024 20:11:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.96.66
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721160670; cv=fail; b=Yv/lCmxVEh3/u5BDNpQu/jP+fMKDVsxEqldSrCrEpHQ638PLil9AUMDLib1LAUtkQ4uGzyMXN66QAKxoiymT8BKHfLyCnX5oHzBtEAGtpRRtJX7xnDwdkQkMRYMbvuaDHnsgDUpHOfXxIV7xvwyvWBe26TskchlGk/JR+9LzB64=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721160670; c=relaxed/simple;
-	bh=U1bYchqiDPfUO/U6aCHYfLPKOqBtyDAGdEwpWZ2IbNU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=U71CYCfC8ZrZzWtBQYna9nqFdaS1vJ8XQZ3CyXjpFBr6OF7GS+RsT7vGk2uhSQU0xItCmGxE9aBVi1nLCx2GUunIa/Et1EFmf1doaP/dCJx9OE/CYc261VYK+AVMRRkYfK+OGCf1oWPvgsIxRXe+U2I+eONFr1X8NNgl9HznlZ8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Q11zwxu0; arc=fail smtp.client-ip=40.107.96.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XJnXQe7XpYrED4ckrF7ITT6tw4EFA8D9O1jknR8yqcevFUzjtltbDqfxFi0Dg9VpiQsjjPclVAIQrm4dHYuSEKT3EzS9YRROWLHukqpwwAGkp8B6DkYF7lo0XifCnOHw/hEPHE9+vPfEBWg6SLOd2HTrrNMmWLgDKGuvJI0K7C9QEdOTDBZqxs9D0LFu/g5WL2UqODZ3dXuHJ+QiMeCZcrnnLoPmNVG+rBiNEWCuANU1tEH0+5LJ9hEURsFDhMcbnGDWjXpPC8oKx352qvYaynMITpyzS5hx4lJdNY3y88xV5f60eljl0q7Zvkq1bIAmCDOgytmoMg2Cnx5YUOju+A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CW4nCUErxqf9EFOY5BhVz7urnYTKyG/WtrEjkwh83Io=;
- b=Z2JRW37Zn7VPLHEkDwTdta9P9teXFRoPZq3gwVO682qWCNLu1Nv/pylPignvgIuLcZeNlhlSz6n2wtXSrKxyIdd59X2m6dCjHbTdnWl9TOAT59r2JT7B66V9+3DnyGN3XUO6V+o/KSMy1wiYwxiTUPlVBvr/nq4j3vp01Wx/DSRUJQMcABTPqmdb0xJ7RtROpZHMUulTXKch2g95l67ljkFr8A08hLpIjvqCquPTPP+zFwGfVgqPCqbUK2oJjBzWJ6OgbnE2X+bElz737l7GQc7X8xC3/5eCZqsAfriuOYLsIEYseO1aacKp5vBIBTZzdSk0Cj9R9uyeIgcwsRGrww==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CW4nCUErxqf9EFOY5BhVz7urnYTKyG/WtrEjkwh83Io=;
- b=Q11zwxu0hn9voYtc3tpnJcdWIyJjeWDhSM5a1Mg1Q2yyNpL6fnqmllv54Iy8/HfgE16mi5qY4ESe22btbtptNlCEoS4/eydNly94M9YuO3fjiPGc8YL7pZcLkabJVDnUQjrL96qMw63MSkmXI988RfVnKeUGSB7Ge+eRZonWKfqdacuKuYZDbDOHquGU2F71QHmGhahcEWD18bMckbuYOhNiujd/JkXeo/9S5Miy6RwO2eDQacQPShFzkXlQiZ/mcwQ8FTYpV6LKytoZiB3B4pvcNi3HaKchOUsp1/SxWtf0vvk/qK1c72L2qPAKhhcWeg51tKzegv+v6fZbs/Dj/A==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
- by CY8PR12MB8411.namprd12.prod.outlook.com (2603:10b6:930:6e::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.15; Tue, 16 Jul
- 2024 20:11:04 +0000
-Received: from DM6PR12MB3849.namprd12.prod.outlook.com
- ([fe80::c296:774b:a5fc:965e]) by DM6PR12MB3849.namprd12.prod.outlook.com
- ([fe80::c296:774b:a5fc:965e%4]) with mapi id 15.20.7762.027; Tue, 16 Jul 2024
- 20:11:04 +0000
-Date: Tue, 16 Jul 2024 17:11:03 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Sean Christopherson <seanjc@google.com>
-Cc: Ackerley Tng <ackerleytng@google.com>, quic_eberman@quicinc.com,
-	akpm@linux-foundation.org, david@redhat.com, kvm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org, linux-mm@kvack.org, maz@kernel.org,
-	pbonzini@redhat.com, shuah@kernel.org, tabba@google.com,
-	willy@infradead.org, vannapurve@google.com, hch@infradead.org,
-	rientjes@google.com, jhubbard@nvidia.com, qperret@google.com,
-	smostafa@google.com, fvdl@google.com, hughd@google.com
-Subject: Re: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
-Message-ID: <20240716201103.GE1482543@nvidia.com>
-References: <20240618-exclusive-gup-v1-0-30472a19c5d1@quicinc.com>
- <20240712232937.2861788-1-ackerleytng@google.com>
- <ZpaZtPKrXolEduZH@google.com>
- <20240716160842.GD1482543@nvidia.com>
- <ZpavP3K_xAMiu4kE@google.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZpavP3K_xAMiu4kE@google.com>
-X-ClientProxiedBy: BL1PR13CA0253.namprd13.prod.outlook.com
- (2603:10b6:208:2ba::18) To DM6PR12MB3849.namprd12.prod.outlook.com
- (2603:10b6:5:1c7::26)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9E455894;
+	Tue, 16 Jul 2024 21:10:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1721164210; cv=none; b=WgnqkQXRWj+ZIl5E1b55q1WLM22nvc1MfEauLVmPJXpZz+BGJLzmUBZJYFeGf+rvprFLhzRd6mxfo2apAzykKnYewMIY+KXYc9H7ZjYXKgmuiQBb9+cyhDAzLPIXm6KXU+b+XKb1dxqioO974QxlhCVuIbnzQFMnaRhxPdtr7+M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1721164210; c=relaxed/simple;
+	bh=E5Rhmq4w2aJRUdzOViHh0PMnhhGECVJsX0hiriu14jM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=iNDgzZQcfSecR5XLo/SqN2uzup+nDceFsX6qFQ+J2TVis/1UDr+qhpWqwcMNufgSUtgqpxIg5ApChq/2d48s8pX0toKQr4pXHXdyjOyPg7GcgBx3h1gETzeELtxMJasb7I+H3xLPIM9ijyIW/Q20GlCJrmW1oH1hdPzDxwMFpyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eL33vpUy; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46GHfd6I007015;
+	Tue, 16 Jul 2024 21:09:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	8EFgWzQ4bEsVEGlDIPChjTC7s40nDC03SbozmjUVxv8=; b=eL33vpUy8bWKasqY
+	zcVwbxWwmgo2HNFQJMPr00nuQZGh07iqDaBVoXSseF3/SG/1cPoHcY4tV/vqazQG
+	SEtB3S18c8IayLVhWzzIwISu7X2FCf8/nRdlVILNM9g3PzqepAX4Y2sONT++HxLn
+	CGRGnzJvf2nGpMeIMcRX3jtwS2eUFrwicFJ71WXfSR0vkVFIUnagpLwq+e5Pj2Zw
+	scYmJskdQ9niJIOkR98pXq8qtutrHbAQ3RZBDs3ttJ7PE0C0OWLBXobodQeU3nHu
+	cLsdN1l928E7612542wVpE2/6pWlxKk1EROYF74jzZ0+u/G/nHOooGkyQmToGXN0
+	n3L7VQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40dwfx8cps-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Jul 2024 21:09:56 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46GL9tpm005192
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Jul 2024 21:09:55 GMT
+Received: from [10.71.110.34] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 16 Jul
+ 2024 14:09:54 -0700
+Message-ID: <5f80ca29-994c-4a74-a929-0480b0f2c157@quicinc.com>
+Date: Tue, 16 Jul 2024 14:09:53 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|CY8PR12MB8411:EE_
-X-MS-Office365-Filtering-Correlation-Id: 64d38fbe-60b4-4983-9f1c-08dca5d36baf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?cLrHY2RnP9AxVmzwXjF6e/NP3cRB5GceXEMnNGiNeq3yzs2K+3/jMqN7+gfd?=
- =?us-ascii?Q?lx4x8psndBlq7vBhfpt9vJ3zlPE/f0R0A3I5aC++XFvliBi3BAZQ0mGrVi8u?=
- =?us-ascii?Q?7PsD9be3HypEasq/dIXhzfMQINnMvlTunfIAO6fQcVQ6A4kKWYsuXt04ov3S?=
- =?us-ascii?Q?DFpv3I6YmJJg9tVzn40KdE08Q4F2PevBc4nfTfYQJTqUgHHAU1osoGXBkvmd?=
- =?us-ascii?Q?4yWlVGz0MSRtKTv5Lod4/yc15D5/2k0moHESzmTu4VQtDnO2HIPbCNXOmOYt?=
- =?us-ascii?Q?706lwm+Jqmlptoh5aPORdDcj9Y76F634gpS9/6pYL2L+WX200k2Adm6gEjEH?=
- =?us-ascii?Q?Jqh5ov0LpKaCLr6vDs5g9YGDrZ8frEJG+60EVHM76hE61i1lpvxGr6zjkxDR?=
- =?us-ascii?Q?l5BRN8G+7MPeqI0UuCRY/FqlHzsG85Isa0zxFe375BKegJsb49c2VIBmLvX2?=
- =?us-ascii?Q?SDn0YIS5eKQzYOkW7OFiAWK5K88RVhfkoisoTnoEflqIbxB82hz8btSxK3fR?=
- =?us-ascii?Q?ZKWpDG+F1i3PedFYuI/39uzd8goeqLNoW3khQbRi2HseO95kAi95ervL5PtX?=
- =?us-ascii?Q?WEu9CIKnEpGczkxk+daccuwG21EEBXv3GMse3vKv/pnFT7oKbqE7PNv/CsVZ?=
- =?us-ascii?Q?58KJqdw3v7mDErYdxMUSYobZQ2ZsDZ9Jh0znA1hYGrJv2vN9ekzEGrkDI60J?=
- =?us-ascii?Q?G2uFN5Xs+i1XF9ckwrk11unYeVXI05WYxp8kP9hYo6p+WOW1mJZ+glY7ihAL?=
- =?us-ascii?Q?V8j8T0DBntk6CuObbTFBM8IPsOOq7rmPm/G/IIbdppCzWJdnxZxt1SfRyzRT?=
- =?us-ascii?Q?updckRJcdDADBGhkGO6I8oCXdo3zJtGX64NvHOov8N/qsbBRQLDicDtT1/Z3?=
- =?us-ascii?Q?fkmDI73Hag1+bLAsse2LE+joa8WmETxFcWr3kjVOen34KEwWzMQ+3qY1S6Sq?=
- =?us-ascii?Q?4er76ZMO/Ya8e2EC4xKDXYX1L3M3RrG7xGyHZO/iRp7My1S/HxVXo3/Wkq4k?=
- =?us-ascii?Q?AojN9ByNQ6oCJnFsDdW9RY0271DSiLg7xkfMjuQZ9xdX/FEiYq1lLRSl0dFr?=
- =?us-ascii?Q?UUPc/gtTRzoWP1lCVJrb2RREnAa2aNslRzA/deOJpm30aypR+CbKdEjOKjbe?=
- =?us-ascii?Q?LamaD32RFdtkDQq61+H3RcABO+hZGUF46iRbetHhxuOP5lln9tkXLnZGava+?=
- =?us-ascii?Q?BzPQl8GMpODM5RkdjoBrLHDlNIGVaN1WggikPvzRJdQrKbK3DCKQ0rPAjPMM?=
- =?us-ascii?Q?aFUtRZ8K6e/yTKKoSE1QZL055kdRg49sp9++WpzJC6Xp5rY2VsPYisLvQ+Zt?=
- =?us-ascii?Q?XFiYsM0r+XKJKdLJd5hlOFRMw5yR5ywol2k4tOwDQMhu2A=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?7j0Eo6RKuWjS5t66Z4WncAEMvP1kAUEahmQ6GQ2EntLMXhcEsJTIP39YPxjB?=
- =?us-ascii?Q?2iotzQfdK7UA8sdp6P/JdQUqQ7nR2wt4amQX6S+xjs8wmkBQqgqUxhxquYzT?=
- =?us-ascii?Q?4aeMgLM9+9kyexUX+R9yBiT8LTLfCyZ/u9atXLuWIQxulKwGZULB0IGQS9Z2?=
- =?us-ascii?Q?AD/Vy4wyBSBySefystzZwQ6EK15jHgcVSDsF6ubQRY8nFCgjNV4Myt1mNu7k?=
- =?us-ascii?Q?WhMxnzDHWcN+BRTIPl1RZuBUdbYk3tVYMpza2BEQP2Tqk8KQ6h8vythp8fUB?=
- =?us-ascii?Q?cLvu1vduVDPgFhgw0+7btc7t2U9u4Wrr9PNspZM+Q1lj+LQja5/8hpzw85yC?=
- =?us-ascii?Q?fWzXoik2FKd0tp2Nn6zRLH8E/0UnNlJ9HJl+YNkooRc2IiLvwbMdrvzH5jp3?=
- =?us-ascii?Q?abgdBQaiSbQJiaOqeADPLAvOHZffQNv3B3hk2vdUlklaX6ilRjdb0J2gyCkn?=
- =?us-ascii?Q?J9f5aU026w4PNlkyFOc54KWc7VVJzILW97uw4QWdQEKiW1FAdPKd+rvyv2kl?=
- =?us-ascii?Q?UAjk3f2Ua1J/CPQG6LCxKuu4quQB/bVbhBPavYV6eMHgFozGMv9sFzLimcJO?=
- =?us-ascii?Q?0MXVcZXNvxCb4q3dU/Z4OWAvPCEYkgnCvhGWeMoGHmGTftqdNDAsnYIOFR8O?=
- =?us-ascii?Q?hAsdrMI94YKi4S0HfeH8eQojpuHvOM9SL/vY3f1w0P8+HLUNyoTfT+POKgTv?=
- =?us-ascii?Q?45aya+EuaJQvM7P4pyFOkvGxKpSVKG7u1hVdW7F+d/JhOHdSWtUcXRYlaPjp?=
- =?us-ascii?Q?1f2WoITnX3q1mBF+VxdcxpgqLAd6ZBJZwZJyuvAe3nY/Dq098e05OzICavFM?=
- =?us-ascii?Q?wVZXDJMw1w/mCMDpmfsup2LPCBc9GOybBtzSQc91BxOA9vAp/GGl3tChw2sZ?=
- =?us-ascii?Q?s7TreEWW1Zb6JUIHYpzs6HDGiZJwQ+GklNTEIPRybjk9GFz/5w83d91p+L7+?=
- =?us-ascii?Q?ZSVaUNc4eFfJ839fFytOiEPQMOVs1dwWtp63nxgCwfazURIXfBx2D1yQar1z?=
- =?us-ascii?Q?ZEPa/epG55djFLMcWYymFhorBdaG83uPSmifFvwPypxbWDbBgpM8eaWCCGvS?=
- =?us-ascii?Q?0cIWxa8Ka3jsgjx4HuIwygv1yvtxztWpb9nuCrz+/GpqPzTWeYFiqbt0UUmd?=
- =?us-ascii?Q?pz6xmXwaM3pPwxN3u5fgXlBzaAFxxmZNW+5Ui78M6ql92+WGjDHZ7pWFuDdF?=
- =?us-ascii?Q?0PbGzRaRoK9EXTrdSipJQ4zf5xNHdGKqHY+oGMnp+0om0myWBoRqaeTCJIiZ?=
- =?us-ascii?Q?iTw3zTKQdfvsCj2ANZArTkIWC2nUxDe6+DuPLIYmJUiWXdrEXssp7opPiK7p?=
- =?us-ascii?Q?DFnxKPJ9ZjFkrYDUlLFkRnLcdBjtdbNY0HNv+vaDowAl0/ymVreUBG7ES7vf?=
- =?us-ascii?Q?wkQX3fAaA+yPLRXstBhI5nQ5JoHRERwHsaBAOGWP3RjjN+M7IAI6p3OiAJJm?=
- =?us-ascii?Q?6yuLdn9N3bvIcq22cBCz53LpLxIvTa4kriWdtB1pP3nbQLg9yA5o/RajSO9p?=
- =?us-ascii?Q?s6OzaX3tVjoNC8/WCGEygrbZBWvMO0FZQmLgSpx8vJlyXh6glQYMKhG0don3?=
- =?us-ascii?Q?/138IALEupA8j1UTkq6gOADFmhE+bOmZvkAVKX/l?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 64d38fbe-60b4-4983-9f1c-08dca5d36baf
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2024 20:11:04.4922
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Xt7UWUsvNp3RgCMnoJnIb6zJx8gBq9JB1+biay32aBvGGUmsKLetgej24sGLOyla
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB8411
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/5] drm/msm/iommu: introduce msm_iommu_disp_new() for
+ msm_kms
+To: Rob Clark <robdclark@gmail.com>
+CC: <freedreno@lists.freedesktop.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Daniel
+ Vetter" <daniel@ffwll.ch>,
+        <dri-devel@lists.freedesktop.org>, <quic_jesszhan@quicinc.com>,
+        <swboyd@chromium.org>, <dianders@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240628214848.4075651-1-quic_abhinavk@quicinc.com>
+ <20240628214848.4075651-4-quic_abhinavk@quicinc.com>
+ <CAF6AEGt2zX5anreTLnMFEiPToGFJdgYZHHpqJfUtaOkdr+Wbbw@mail.gmail.com>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAF6AEGt2zX5anreTLnMFEiPToGFJdgYZHHpqJfUtaOkdr+Wbbw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: g7nO_hvTfjwzfwMJbO9efbhcjepe4UA3
+X-Proofpoint-GUID: g7nO_hvTfjwzfwMJbO9efbhcjepe4UA3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-15_19,2024-07-16_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 suspectscore=0 mlxlogscore=965 bulkscore=0 adultscore=0
+ spamscore=0 clxscore=1015 mlxscore=0 phishscore=0 priorityscore=1501
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407160154
 
-On Tue, Jul 16, 2024 at 10:34:55AM -0700, Sean Christopherson wrote:
-> On Tue, Jul 16, 2024, Jason Gunthorpe wrote:
-> > On Tue, Jul 16, 2024 at 09:03:00AM -0700, Sean Christopherson wrote:
-> > 
-> > > > + To support huge pages, guest_memfd will take ownership of the hugepages, and
-> > > >   provide interested parties (userspace, KVM, iommu) with pages to be used.
-> > > >   + guest_memfd will track usage of (sub)pages, for both private and shared
-> > > >     memory
-> > > >   + Pages will be broken into smaller (probably 4K) chunks at creation time to
-> > > >     simplify implementation (as opposed to splitting at runtime when private to
-> > > >     shared conversion is requested by the guest)
-> > > 
-> > > FWIW, I doubt we'll ever release a version with mmap()+guest_memfd support that
-> > > shatters pages at creation.  I can see it being an intermediate step, e.g. to
-> > > prove correctness and provide a bisection point, but shattering hugepages at
-> > > creation would effectively make hugepage support useless.
-> > 
-> > Why? If the private memory retains its contiguity seperately but the
-> > struct pages are removed from the vmemmap, what is the downside?
+
+
+On 7/1/2024 1:41 PM, Rob Clark wrote:
+> On Fri, Jun 28, 2024 at 2:49 PM Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>> Introduce a new API msm_iommu_disp_new() for display use-cases.
+>>
+>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/msm_iommu.c | 26 ++++++++++++++++++++++++++
+>>   drivers/gpu/drm/msm/msm_mmu.h   |  1 +
+>>   2 files changed, 27 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
+>> index a79cd18bc4c9..0420bdc4a224 100644
+>> --- a/drivers/gpu/drm/msm/msm_iommu.c
+>> +++ b/drivers/gpu/drm/msm/msm_iommu.c
+>> @@ -343,6 +343,17 @@ static int msm_gpu_fault_handler(struct iommu_domain *domain, struct device *dev
+>>          return 0;
+>>   }
+>>
+>> +static int msm_disp_fault_handler(struct iommu_domain *domain, struct device *dev,
+>> +                                 unsigned long iova, int flags, void *arg)
+>> +{
+>> +       struct msm_iommu *iommu = arg;
+>> +
+>> +       if (iommu->base.handler)
+>> +               return iommu->base.handler(iommu->base.arg, iova, flags, NULL);
+>> +
+>> +       return -ENOSYS;
+>> +}
+>> +
+>>   static void msm_iommu_resume_translation(struct msm_mmu *mmu)
+>>   {
+>>          struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(mmu->dev);
+>> @@ -434,6 +445,21 @@ struct msm_mmu *msm_iommu_new(struct device *dev, unsigned long quirks)
+>>          return &iommu->base;
+>>   }
+>>
+>> +struct msm_mmu *msm_iommu_disp_new(struct device *dev, unsigned long quirks)
+>> +{
+>> +       struct msm_iommu *iommu;
+>> +       struct msm_mmu *mmu;
+>> +
+>> +       mmu = msm_iommu_new(dev, quirks);
+>> +       if (IS_ERR_OR_NULL(mmu))
+>> +               return mmu;
+>> +
+>> +       iommu = to_msm_iommu(mmu);
+>> +       iommu_set_fault_handler(iommu->domain, msm_disp_fault_handler, iommu);
+>> +
+>> +       return mmu;
+>> +}
 > 
-> Oooh, you're talking about shattering only the host userspace mappings.  Now I
-> understand why there was a bit of a disconnect, I was thinking you (hand-wavy
-> everyone) were saying that KVM would immediately shatter its own mappings too.
+> Hmm, are we using dev drvdata for the display pdev?  If
+> dev_get_drvdata() returns NULL for display pdev, we could get away
+> without having a different fault handler.
+> 
+> BR,
+> -R
 
-Right, I'm imagining that guestmemfd keep track of the physical ranges
-in something else, like a maple tree, xarray or heck a SW radix page
-table perhaps. It does not use struct pages. Then it has, say, a
-bitmap indicating what 4k granuals are shared.
+It is being set to struct msm_drm_private* currently. So it shouldnt 
+return NULL.
 
-When kvm or the private world needs the physical addresses it reads
-them out of that structure and it always sees perfectly physically
-contiguous data regardless of any shared/private stuff.
+I also thought of re-using the same API as GPU but the drvdata along 
+with its own fault handler and having below code in the gpu handler all 
+made me conclude that its cleaner to let display have its own handler.
 
-It is not so much "broken at creation time", but more that guest memfd
-does not use struct pages at all for private mappings and thus we can
-setup the unused struct pages however we like, including removing them
-from the vmemmap or preconfiguring them for order 0 granuals.
+         if (adreno_smmu->set_stall)
+                 adreno_smmu->set_stall(adreno_smmu->cookie, true);
 
-There is definitely some detailed datastructure work here to allow
-guestmemfd to manage all of this efficiently and be effective for 4k
-and 1G cases.
-
-Jason
+> 
+>> +
+>>   struct msm_mmu *msm_iommu_gpu_new(struct device *dev, struct msm_gpu *gpu, unsigned long quirks)
+>>   {
+>>          struct adreno_smmu_priv *adreno_smmu = dev_get_drvdata(dev);
+>> diff --git a/drivers/gpu/drm/msm/msm_mmu.h b/drivers/gpu/drm/msm/msm_mmu.h
+>> index 88af4f490881..730458d08d6b 100644
+>> --- a/drivers/gpu/drm/msm/msm_mmu.h
+>> +++ b/drivers/gpu/drm/msm/msm_mmu.h
+>> @@ -42,6 +42,7 @@ static inline void msm_mmu_init(struct msm_mmu *mmu, struct device *dev,
+>>
+>>   struct msm_mmu *msm_iommu_new(struct device *dev, unsigned long quirks);
+>>   struct msm_mmu *msm_iommu_gpu_new(struct device *dev, struct msm_gpu *gpu, unsigned long quirks);
+>> +struct msm_mmu *msm_iommu_disp_new(struct device *dev, unsigned long quirks);
+>>
+>>   static inline void msm_mmu_set_fault_handler(struct msm_mmu *mmu, void *arg,
+>>                  int (*handler)(void *arg, unsigned long iova, int flags, void *data))
+>> --
+>> 2.44.0
+>>
 
