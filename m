@@ -1,77 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-26368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26369-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3472C932FF4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 20:29:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21E29933222
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 21:37:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AD934B21A5A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 18:29:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 53F701C22B16
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 19:37:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC07919EEC4;
-	Tue, 16 Jul 2024 18:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6868B1A072C;
+	Tue, 16 Jul 2024 19:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U28ZRMXn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oXIyHUNn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6541F171;
-	Tue, 16 Jul 2024 18:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375B02B9B3;
+	Tue, 16 Jul 2024 19:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721154544; cv=none; b=ZzLKA2m97bX9W37zbxBmqG1SmswuLeZXsYUf+4M1I8ny4Dc2VIb0pAhuyE99oPMmPGkx0cup2M7qP0gJHRFnTEf03p4Pltn2SO4/R0YSaC/6IGe2obA5y7tNsagZRtyslI9oSc+ODbvYhHKeeJDL6YnWjnTrbZTRuFsZ6mZ7KnM=
+	t=1721158525; cv=none; b=FhmvrCM+xUTwzXsrOfI4Gbba97+u9S1LCWwCB7rXM8/Nhk0T4Uu30QjJw3e78ZBwiubg6HGuYl7wQdGjiVQDo9zd34qQvJTn9zXeoG7r5QFD8FIXja/bs2gUAPsruvPx3slXhV4SM9rwuJhk9N82CYSXR6xf4bWMd92NpMpIUrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721154544; c=relaxed/simple;
-	bh=ea9W9VGPCZWN90TONuRkt29w4SPqAA50lpiN2tcpQuY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DgygSK5aJOVEVBNNJqFsKXVdDMlBTibGGixrFnBLrF4e+y+4bQLPfXofGJoF9eJdJE8eHqePjapIAlhVB+qD2rBS2siRtLIm/6e7Xl798fg8U9SO03r4fHAYgxjyGhMoOa76DCD3jpGEv7F2vuGysmHATEUSrejJBHIn89frBnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U28ZRMXn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F58EC116B1;
-	Tue, 16 Jul 2024 18:29:02 +0000 (UTC)
+	s=arc-20240116; t=1721158525; c=relaxed/simple;
+	bh=Jj9Z4uSeu2WcwER6qQ74OBjx3l8I+OIYRcL/UaxP95A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fYjozR8JZec05zYF1kwuWI/KvfNmN2sM7Za13txihgN8xSbK3p0vTmp/nSueTQhOmjwe4+M++kfdM4aka8QQ1/t5Cs7KqMa/zWMtDzzygMFhMAANsBN7PhIOjk3n/la2Pb1wVf9ZhoZByR0meVQct4oC97yPmm47Mb2ALGSRaEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oXIyHUNn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0904AC4AF0B;
+	Tue, 16 Jul 2024 19:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721154544;
-	bh=ea9W9VGPCZWN90TONuRkt29w4SPqAA50lpiN2tcpQuY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=U28ZRMXnNSq3XXi2Boi5AEpM/9HQ6KQKmxltfogBgbHymMt2it9AJxQ9oMPpeB2K8
-	 mKWifW/nf18m/LTSG4bB4PRvSKH3MkoTu+DbetHO95zC37GbW+itcnXm0tfxwMnVA5
-	 n+9egst2WKfddsc5ef7y66PylMRlsHGWfI3qZ53pOnpOngQf4KgvENauJpKYsAEFz1
-	 C/KIJKhn3Sycy/1zDXVWdT9ck+UMoUAsNYfDkMmIxCgqO0mGepxci2njqJQ+XVjSH9
-	 mJnWYHGGw7TuVnEXpN+X6cQ9wlwk1+PH2AGhkCqZWEycw5NaVicZKFQBxVt7zG/SCb
-	 4Kz81ryN0S4Cw==
-Date: Tue, 16 Jul 2024 20:28:59 +0200
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Jagadeesh Kona <quic_jkona@quicinc.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Loic Poulain <loic.poulain@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-i2c@vger.kernel.org
-Subject: Re: [PATCH v2 0/4] arm64: dts: qcom: add description of CCI
- controllers for sm8550 and sm8650
-Message-ID: <bddhmnsxkkgivevbbk2tjt6ide6grnuquw4ial4enq33ovdkrk@k4svchjivvuh>
-References: <20240612215835.1149199-1-vladimir.zapolskiy@linaro.org>
+	s=k20201202; t=1721158524;
+	bh=Jj9Z4uSeu2WcwER6qQ74OBjx3l8I+OIYRcL/UaxP95A=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=oXIyHUNnd1dloiZo5BvaDXVAIYgVDxFfV8wb0AyizrXNdFWoJDRin5Ws016AEo3dH
+	 +Dmg8vWOGiatNPl+Jl3/9hNrXpef1BbqPIMN28JLXfUHLdfPq7STe68WYDnhkG8FCj
+	 q0kkwd/Y36EPyjRb9gUKMTGcNRdZC4e9E2UZIWbxp6I0jSS6iIiOgbhSJ6yqruJkd3
+	 Yu7RExlAxuvJa6d68UM7qMnT77mSAK3eQM5ICQyBQhYfoNSFjb8qcDb6PuTkbmGqYB
+	 36fapwoaWmwu8zYvLxH9tXHRLXAfB7oPNqNoYKSSJ7P8u5yyAIRejVo3jq2IREC3Xd
+	 Usui6g4sBXeFg==
+Message-ID: <26aa15cd-bc47-4409-81dd-b21b8cf9ae9b@kernel.org>
+Date: Tue, 16 Jul 2024 21:35:18 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240612215835.1149199-1-vladimir.zapolskiy@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dt-bindings: interconnect: qcom,rpmh: correct sm8150
+ camnoc
+To: Rayyan Ansari <rayyan.ansari@linaro.org>, devicetree@vger.kernel.org
+Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Odelu Kukatla <quic_okukatla@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240716144738.109823-1-rayyan.ansari@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240716144738.109823-1-rayyan.ansari@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Vladimir,
+On 16/07/2024 16:47, Rayyan Ansari wrote:
+> The sm8150 camnoc interconnect was mistakenly documented as
+> "qcom,sm8150-camnoc-noc", for which there is no reference to in
+> drivers or device tree.
+> 
+> Correct this to "qcom,sm8150-camnoc-virt".
+> 
+> Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
 
-> Vladimir Zapolskiy (4):
->   dt-bindings: i2c: qcom-cci: Document sm8550 compatible
->   dt-bindings: i2c: qcom-cci: Document sm8650 compatible
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-the two above pushed to i2c/i2c-host.
+Best regards,
+Krzysztof
 
-Thanks,
-Andi
 
