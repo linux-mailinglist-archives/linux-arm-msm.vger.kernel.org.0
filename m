@@ -1,129 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-26278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BA0793216E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 09:46:08 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEFC4932184
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 09:54:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4ACC1281577
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 07:46:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2BA671C2035A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 07:54:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96C223BB32;
-	Tue, 16 Jul 2024 07:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E52B23BBC2;
+	Tue, 16 Jul 2024 07:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HNhwsygh"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="jZ9zq28U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670C033CC2;
-	Tue, 16 Jul 2024 07:46:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86A64C74
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 07:54:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721115960; cv=none; b=Y4fcPxjQ4b5zMTDMLT9Nebk3TLfBr3Tf2hSCuOVfead5vjeJ3v0zbF6KtBvNhKbEj6Uj6F5LWH7jRLna77I65gz01X74n8vPd7oYaipv8LCRGgRyrY+a7C5nfsojXOPoL5bYw+NKWiV99C/7wD6BbbLmuOEGUn5Amkdg31+RVHc=
+	t=1721116475; cv=none; b=L6zs+h/eH6IAH8Co3ptyql0fPWaRVvdAhPbnhLXJCZki5tINPSdSsY6afvooQKrJ1WytWhqzLC74mp3ohI6prDZ31Q853Ua5Vjgysz7fUKhrBKcnZ+stsI+VOxCFkPkWoonulT8pNdNk4TBK4RrsjFNFrzG32Z9q9ZidovJjhhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721115960; c=relaxed/simple;
-	bh=/OR9CLXPGgVQlwRMU9z0KRnQvomjGInPoZPYS4L4aN4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZnIHvQPWrTYKYr8vY67nDVtDZ4zV9JM4oocd3e3c8hQT6c+mkC17iaW+DhIdXF3JhgP2eC2hzQknvjlpEotxuf2MwtVKpMI6redtASzFwx4s3XzmqRKa1p/l1B7ccjI5Cj+JPeSlzxuasyXZKG46T0CbfTAze9tk4ZQayByiOMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HNhwsygh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2F4C4AF09;
-	Tue, 16 Jul 2024 07:45:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721115959;
-	bh=/OR9CLXPGgVQlwRMU9z0KRnQvomjGInPoZPYS4L4aN4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HNhwsyghehenLIOupJ0mO+eaAspss3ghUiZ8qiQ7cWVVbftjF50zZpokUI95gExxK
-	 tAmY2CgfEj55fFcraA4tZu7TRgbUTPg9GzGXZOy9CKBE6hhmZ21L29s5bfYFXtOeXC
-	 UszwcZGLD2Lqkkru38T8pPh/eDlUgzcJqqVwOttDJa5F3ledbSbMt9RgsZJBYOMiNA
-	 1t0aaQBVjfFSXIAipkX8FWjQSbAShKCLhL+ujiwmagKUy94rkBYjviuYKoxJl2/ooA
-	 QSMLyHDOPv9/FnGt+8W1Vfd0kIV4B1pp/17NMLhoKyp8g1zhPeLPWS12zFwYDSUCTA
-	 T/NKTzQ1p76ug==
-Message-ID: <16cd561d-d8d5-4acb-8536-cadc3f073201@kernel.org>
-Date: Tue, 16 Jul 2024 09:45:52 +0200
+	s=arc-20240116; t=1721116475; c=relaxed/simple;
+	bh=MNn8gxXYqvsNcb1Yh/X9L/MXxeX3VNL1a9Hrw0q3y2c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=th5rLi17J0ht2fNpFhtNVDHFSiJXNezrmQntnkCKlU8u8h5szz9yjRQnXG774KjyfYMNQGTp3xsjEE1eJTeLR5HPFZ0mib8A/n5PY1NT2FFuhX0Xy4VOjRxeeV+hngtMWpti5/KxHw1rjjgTyvdM5f95ILNx/o36eJAmN6EgHfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=jZ9zq28U; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-52e99060b0dso5430797e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 00:54:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1721116472; x=1721721272; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tsyjNs+epxjHFckk0dd03DwfQ8j6M5Wrc4itesRp3IU=;
+        b=jZ9zq28U/QegcdkYucUMhsZ0jz/UEk+ep9TqOdqrh04TvsoAMdaQccxfm5eZnYTuFt
+         OEXGX5DwXlut5H0URAzWjrVCZ53d8ox0dDlapjfXDm36piDq7bEC2WLj5RVWAME9VmDv
+         qUEKl4GAtcMU7cBdkLXa5GS26a4jn1cWeFkbGcrMYouv3BWp07uk7U7YJFUSUXtChr7U
+         RK4xW5UXY/Wx1GYJboIKM6H8rGt3QXS5afpnYfs8njrKr5FvzkQML36/Kg20qT1AGyXx
+         +1S2AszH7lhZTUxrqNpCwFsh+JCnJEK+BVvGyWgCmd+TsLxxrSER/mWSLszPtJUAG0P4
+         JkPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721116472; x=1721721272;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tsyjNs+epxjHFckk0dd03DwfQ8j6M5Wrc4itesRp3IU=;
+        b=cnmECxxLwQdpm9tvzFuBk1CdMj9yzQeiGz2d3CbxLsfwCV85FAJ6rr3UfxxSEBvHTt
+         bIAjtjhXx252t5m8AF9eZEX5LGi8Q3/LNJMeuG9o90azyaSojyA6QIbXr+zWi4Vdmnbt
+         /iY3k4SnxLF5FSuWqfDNHimqS5KS0ZZjTD5gM1Ez+ZTCPnMNfZneh6fp3weHi8vD36o8
+         hbB1+AAWGOfq7x/mqmcI9Anf3j1mvywWaW+dZzoToJ16L7WA4tmZEsdOiQ+DEsEipk2i
+         l+Kd5yeY/sjwVOarqmQhfDByzsZ3NKApL8zZavZduTKjaS8BmD5YUW4bYaFVQSs4sakb
+         OHRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUrYL7duH8pc9KP4Hnr8ww2oRNSsjcbrMbG8oqR5NcB4NrpU/SCwk92EC4MSyk8tEREZnaG1s6vhjdo9x1Fv1NKOtbfeWFOeVFavxeEPw==
+X-Gm-Message-State: AOJu0YwoeDXNx+E7H/zXvmDmL0JJQKDuKIeddx2TtVYGY5AGkG/H+Xcm
+	/46+Ss+HsCtm5iXYD2eLlMypgAX/TV5gg71i9o49AvTEwguWDPpvs0wWKM1j7t3pEecrFB/7pQ8
+	U5S9X9YVDZE9tToki5m6RtOX2PjSoIBSx4UPWXg==
+X-Google-Smtp-Source: AGHT+IHxiGnjKEzJz5PukU3GQJwtAAOXLOqzHFNcG1Fx6SzxLyf+ALXiDO+KrLhwXbWwUy5jSuyneyfndt37ndL/n+8=
+X-Received: by 2002:a05:6512:690:b0:52e:9ab6:cb53 with SMTP id
+ 2adb3069b0e04-52edf032e94mr698476e87.64.1721116472011; Tue, 16 Jul 2024
+ 00:54:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 8/8] arm64: dts: qcom: Update sleep_clk frequency to
- 32000 on SA8775P
-To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
- <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_imrashai@quicinc.com, quic_jkona@quicinc.com
-References: <20240715-sa8775p-mm-v3-v1-0-badaf35ed670@quicinc.com>
- <20240715-sa8775p-mm-v3-v1-8-badaf35ed670@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240715-sa8775p-mm-v3-v1-8-badaf35ed670@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240712091008.14815-1-brgl@bgdev.pl> <CAHk-=wjWc5dzcj2O1tEgNHY1rnQW63JwtuZi_vAZPqy6wqpoUQ@mail.gmail.com>
+In-Reply-To: <CAHk-=wjWc5dzcj2O1tEgNHY1rnQW63JwtuZi_vAZPqy6wqpoUQ@mail.gmail.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Tue, 16 Jul 2024 09:54:20 +0200
+Message-ID: <CAMRc=MfdREubJBjxy-WDZotYWY-uU_6C1N7L8STisoJwtpAgjg@mail.gmail.com>
+Subject: Re: [GIT PULL] power sequencing updates for v6.11-rc1
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Arnd Bergmann <arnd@arndb.de>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 15/07/2024 10:23, Taniya Das wrote:
-> The HW supported sleep_clk frequency on SA8775P is 32000, hence
-> update the sleep_clk frequency with the correct value on SA8775P.
-> 
-> Fixes: 603f96d4c9d0 ("arm64: dts: qcom: add initial support for qcom sa8775p-ride")
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> ---
+On Tue, Jul 16, 2024 at 4:17=E2=80=AFAM Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+>
+> On Fri, 12 Jul 2024 at 02:13, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+> >
+> > This PR contains the core power sequencing framework, the first driver,=
+ PCI
+> > changes using the pwrseq library (blessed by Bjorn Helgaas) and some fi=
+xes
+> > that came later.
+>
+> Hmm. Let's see how this all works out, but I already found an annoyance.
+>
+> It first asks me about the new PCI power sequencing driver.
+>
+> And then it asks me separately if I want the power sequencing support.
+>
+> Now, either this should
+>
+>  (a) not ask about the generic power sequencing support at all, and
+> just select if if a driver that is enabled needs it
+>
+> OR
+>
+>  (b) it should ask about power sequencing support and then if you say
+> "N", it should not ask about the drivers.
+>
+> But asking *twice* is definitely not kosher.
+>
+>             Linus
 
-Avoid combining fixes with features, but if you do, then fixes are never
-the last patch, but first.
+I didn't notice it because I almost always use menuconfig. I'll look into i=
+t.
 
-Best regards,
-Krzysztof
-
+Bartosz
 
