@@ -1,124 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-26343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5058693273F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 15:15:27 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B25229327A1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 15:39:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 001141F2298A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 13:15:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1329AB21602
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 13:39:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DF5C19AA6E;
-	Tue, 16 Jul 2024 13:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A280C19AD93;
+	Tue, 16 Jul 2024 13:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PMXN53hx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PZQU9Rc1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9036D15CD63
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 13:15:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7F514386C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 13:39:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721135720; cv=none; b=awW6YbaczJICYORJknkqrHMl0oe8mQLh/fI6irGYAtkkTa224bD1QCEkI7NCRCBfim+vbjSsIffFwmB5Hg5iE+Kz9eHFhn4sO4Y4J1CAyaeydGriZ170frQbCwOmuexVpb1AGhDWdZU2L7Z+KGrSTRN70hnz3GC1M7T1gwsU+Os=
+	t=1721137147; cv=none; b=L+Wt0MZAKC6wxHgTyWkZgBYHi0y9SD75eMijanWBWls7oRYV8oz/JxML5pZ9kmXmdacvyp7fygUOUBE1ua/HI53phiB600im7MzzEFYYFy+aBm5UWGdyCUbaVtBAnDDBRj6t9VONzMeXeYqZNKYvh2Ilvx0Frkh65N/dNz4LgDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721135720; c=relaxed/simple;
-	bh=d6tVEyM4+zfsQ3f/Lp21lCQNFXCnL5duwmm+qOIsJ4Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Pn1zf3ELArHrhS9c/LgP4NBGzkqm0S98NcOGonsYU6XCuUa2UV7OxaprwVHsO+qaHifnL60PfiWnzrCsvikJroBZeN2A/4/0n+lHYckDa++dMI8jLetEHyJaS6oIermSZBqrlOTrh3pXaLJleM2htDtorFl1W8szLmTbYZi9vcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PMXN53hx; arc=none smtp.client-ip=209.85.219.173
+	s=arc-20240116; t=1721137147; c=relaxed/simple;
+	bh=X7bklE2GsqthkplIQvZDv5rg3XCkY1GEHEuOa1Ws1NY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Yn0hgJ3eyC9RBM6jnPRRitJLvufpd82Y7mariKq5LUsyXMH2u2+3xFw1QKp3QeCXMnVtYSS9eX3bz55JIv9ZFEDKQ/CFsGHJ6TKyQtkLsrjhCi1aOS45N+h+NtITNMFbgRQarB/GPFjxuGxDyJY/RccbKwTRHjaRQ2zG9oruCb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PZQU9Rc1; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-dfe43dca3bfso5582647276.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 06:15:17 -0700 (PDT)
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-427aeebaecdso14587795e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 06:39:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721135716; x=1721740516; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nsbTKT2fsyn57FNCsAGBNDGfhW5cbmqj9qjWElmr/2o=;
-        b=PMXN53hx9J8Cw2qI6JKeCaYmjC7ohmVmzHbF5QHVGPGrpSg0vOi+qLBZ/LsKnSRVlf
-         SwYhn3ODIUC0CNMZd6/tPf+h9TsXYSpr/ZTD6sOd1szdU4l64dV0LCb31CC/qnSoCCaR
-         JNV8O+4HMC+PituhtGeybvQd6+evGPlLl/FL8NcRNZtjtiD1fvjxyrDXVNXO6p6bQtaj
-         v5Rj5Se4bwvuZ//xoMwijwNSQ9wBHFK2fkueskiTHPda8/0nqXyulYskXk4xwkLgcumO
-         DJfK7g2nB7VwXiPYq8BkekLmsyINFkfQEOLOrCJQXCLWSx9WmSTWKlqxQvhf/puNBBtm
-         tF4g==
+        d=linaro.org; s=google; t=1721137144; x=1721741944; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hoRw9TcQOEMBdmZxq6Nd1FUggtL3OxOdKdUjU7Ar674=;
+        b=PZQU9Rc1uamUErcSkYo19qR9o9/Qg+Fl+7O1SBqoh+4cT234bFkHAWfW9/3P9NCfG6
+         CyKIFlw6jJ8JgtrXoNeYdgNzUeu0wclCpvkTi4BpyFy2nk6zJ7pQClwJmah1juz8g2Xf
+         vCVYNQr1tuhi4/5Q+eBwJUAMUoQ3p780kMURErG7+VciGybWg2hfmhi3f02TlbNtL9d2
+         zBUr0hqiWHnNfOpZ6jaoioBy2KBvm8vuCz3bVOk/gx4Mui7mnb6ykjAFK5cvR8+FiusK
+         rUli2JRfz+CfagRELvymZ1cP6MiSRrT5zrTFLNuI32eSduncjaPYK20c1UvKh8C8NACm
+         fJqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721135716; x=1721740516;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1721137144; x=1721741944;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=nsbTKT2fsyn57FNCsAGBNDGfhW5cbmqj9qjWElmr/2o=;
-        b=FCL06P4qJWzPJRbnzFeRS9iKSi162BVjuxBIjGAiVvHbfEn1Vd8m9ww0zkhgZAjKjs
-         I6LXCYYC0afRyBShoG9l65KFzCNd48Js7gnvYKu065PovOHdTgTihQA0lcWLeeexcEkI
-         0Z3LI4u7ZYItQwzvXW1knryH5k44g46CpruEHhxs9ov6ojD7yIO/AVYSeJEip/ctQgga
-         KIP18q5dbEwk713KTgKRZY5MGxJLgdp9PqnlI7LxBYeyET5llBxtRa3SlFPumkUCJPS3
-         dFDBUUkhahGo35A0vnse/huIhTcqkFIW6wQJ2k5ck4rPKiZfIoQY8MpanRgRBVrPTCiM
-         sXyg==
-X-Forwarded-Encrypted: i=1; AJvYcCXGZj/ykx+rdoLKKutB4ZFyqtnrkz6c0M1Cz/rTXBnK5MI6wRaBk53im0dK3zdSw18HHEiFAwUmRX+Dg90B+/4kEFBNAZdnUd3i04+89w==
-X-Gm-Message-State: AOJu0YyuwH8wrwnQ2zaiJXjXco8ghYfKPq9WXvISx4t/2JBZOuT+O7H6
-	R3RKmQPM85+oqcf/QakYxzJ/wSmik4SAisPFtqpKju1vd8i+AYVktxXR37MElPJsdIdzAOUrQe8
-	FuINUwMb/gl/sD2DUxVWRpxneQjdKTSRGi+Lgqw==
-X-Google-Smtp-Source: AGHT+IEwvdUN5GYHZf+oYL2BhSIhMj4XizKcfWTfNboHzaZQRsgNKDXEA+WWZyOEhNMgMjD9xNvIqRmYe8MWm5x6WVI=
-X-Received: by 2002:a05:6902:2211:b0:dfb:d50:a761 with SMTP id
- 3f1490d57ef6-e05d5d8b07emr2822669276.14.1721135716388; Tue, 16 Jul 2024
- 06:15:16 -0700 (PDT)
+        bh=hoRw9TcQOEMBdmZxq6Nd1FUggtL3OxOdKdUjU7Ar674=;
+        b=KDwWFBdP3JLL4FoxcL1F25qxHfhZvWmohrh5fHam+zpgQPWndq84OVY1eiivafEleI
+         o/v8CO3WDbrF01ns2AiwkJvDl2Hi4IrAtjU7gt43U/9cpiVi7mrAI1FLYatysafzQbjy
+         HSZYFHjLCAURwz492uUoTNa2s2BoSs4z0S1e7fKE0QMIS1rLgnAVTL08BxAp9panyoRZ
+         39ho8WSfaABJAaOnNANKqb1JWRNGV2mN/EtLH7SnCE7n2xXLyCIvg/SvBPsh/3R8hUyn
+         chCUBNTeG5gvi/wNjLhLAL4sL+dpPu75i0ELw8VC3j+NhIisFVXKNnMIqEVS6Va2XJsf
+         y3IA==
+X-Forwarded-Encrypted: i=1; AJvYcCV4BaXEYdr4k+pCkjN0C0GJ5kuft9S4W/CO5tz+xS2XiciC0tjG72wMHDDtLlbO+3SCBBo0vw0CuGxk6IfyZy5ZgJgMUeTSsG/9h06GzA==
+X-Gm-Message-State: AOJu0YybY509gwWbKzrGOeCi55wgVHa/GKSscFGGiwa4urpS6/5tJIaU
+	sUW2NSCoFvZ5hPYc0P1PMq9/J0Hs9jkKuV7NPiw/1WeWUTRiUpPkYBgBna5YE2o=
+X-Google-Smtp-Source: AGHT+IGXs0HjAx3DBf4LWEbRloC7TAHjz/hinusld4TqeGA/WwEle1cNhCho1exyWsBz602KmeEFJA==
+X-Received: by 2002:a5d:6143:0:b0:367:9877:750e with SMTP id ffacd0b85a97d-3682609b526mr1426499f8f.25.1721137144212;
+        Tue, 16 Jul 2024 06:39:04 -0700 (PDT)
+Received: from rayyan-pc.broadband ([2a0a:ef40:ee7:2401:197d:e048:a80f:bc44])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3680dabf0e4sm9106564f8f.33.2024.07.16.06.39.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Jul 2024 06:39:03 -0700 (PDT)
+From: Rayyan Ansari <rayyan.ansari@linaro.org>
+To: devicetree@vger.kernel.org
+Cc: Rayyan Ansari <rayyan.ansari@linaro.org>,
+	Amit Kucheria <amitk@kernel.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: thermal: qcom-tsens: Document ipq6018 temperature sensor
+Date: Tue, 16 Jul 2024 14:38:02 +0100
+Message-ID: <20240716133803.82907-1-rayyan.ansari@linaro.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <74947f7f132a811cc951749907b01bd25dcf23e6.1721135509.git.geert+renesas@glider.be>
-In-Reply-To: <74947f7f132a811cc951749907b01bd25dcf23e6.1721135509.git.geert+renesas@glider.be>
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Date: Tue, 16 Jul 2024 15:15:05 +0200
-Message-ID: <CACMJSevi+U81ASqG-DCSxcuW4C4hPRt-_nYgmnpaMXF_7Ozw-g@mail.gmail.com>
-Subject: Re: [PATCH] firmware: qcom: QCOM_TZMEM_* should depend on QCOM_TZMEM
-To: Geert Uytterhoeven <geert+renesas@glider.be>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Andrew Halaney <ahalaney@redhat.com>, Elliot Berman <quic_eberman@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Tue, 16 Jul 2024 at 15:12, Geert Uytterhoeven
-<geert+renesas@glider.be> wrote:
->
-> The Qualcomm TrustZone interface memory allocator is specific to
-> Qualcomm firmware.  Hence add a dependency on QCOM_TZMEM, to prevent
-> asking the user about these options when configuring a kernel without
-> Qualcomm firmware support.  Various Qualcomm drivers already select the
-> main QCOM_SCM gatekeeper symbol, which in turn selects QCOM_TZMEM, so it
-> is auto-enabled when needed.
->
-> While at it, add "Qualcomm" to the one-line summary for the choice
-> option, to make it clear this is not related to generic TrustZone
-> support.
->
-> Fixes: 84f5a7b67b61bfeb ("firmware: qcom: add a dedicated TrustZone buffer allocator")
-> Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> ---
->  drivers/firmware/qcom/Kconfig | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/firmware/qcom/Kconfig b/drivers/firmware/qcom/Kconfig
-> index 7f6eb41747346a4f..c607574397e9a7e7 100644
-> --- a/drivers/firmware/qcom/Kconfig
-> +++ b/drivers/firmware/qcom/Kconfig
-> @@ -15,7 +15,8 @@ config QCOM_TZMEM
->         select GENERIC_ALLOCATOR
->
->  choice
-> -       prompt "TrustZone interface memory allocator mode"
-> +       prompt "Qualcomm TrustZone interface memory allocator mode"
-> +       depends on QCOM_TZMEM
->         default QCOM_TZMEM_MODE_GENERIC
->         help
->           Selects the mode of the memory allocator providing memory buffers of
-> --
-> 2.34.1
->
+Document the ipq6018 temperature sensor, which is used in ipq6018.dtsi
+and is compatible with the ipq8074 temperature sensor.
 
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
+---
+ Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+index 99d9c526c0b6..d6f333a7bcd1 100644
+--- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
++++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+@@ -76,6 +76,7 @@ properties:
+       - description: v2 of TSENS with combined interrupt
+         items:
+           - enum:
++              - qcom,ipq6018-tsens
+               - qcom,ipq9574-tsens
+           - const: qcom,ipq8074-tsens
+ 
+-- 
+2.45.2
+
 
