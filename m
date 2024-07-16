@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-26277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3E39932169
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 09:45:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BA0793216E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 09:46:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6C4F0281B5E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 07:45:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4ACC1281577
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 07:46:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4DF63BB59;
-	Tue, 16 Jul 2024 07:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96C223BB32;
+	Tue, 16 Jul 2024 07:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JMKwcrct"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HNhwsygh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D55364A4;
-	Tue, 16 Jul 2024 07:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670C033CC2;
+	Tue, 16 Jul 2024 07:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721115913; cv=none; b=BpJY4c2vgvW1aaiL5gRenfXn8JTx1kHraY2k58ilVenMOK0VVHXLlQ1f6sfCSsXwrCdNIX2S2PGY1IKVPc7Wu7LmD8TITF9cc0hOXjWONpd3ABy8Jf1sS38tDIVmEqSeLVWpEPI62Is4+tb9ocz93+zLGkOIkAEJhZAIi0N4RMk=
+	t=1721115960; cv=none; b=Y4fcPxjQ4b5zMTDMLT9Nebk3TLfBr3Tf2hSCuOVfead5vjeJ3v0zbF6KtBvNhKbEj6Uj6F5LWH7jRLna77I65gz01X74n8vPd7oYaipv8LCRGgRyrY+a7C5nfsojXOPoL5bYw+NKWiV99C/7wD6BbbLmuOEGUn5Amkdg31+RVHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721115913; c=relaxed/simple;
-	bh=Z9OLOyK8r/W7BwAhKBQti4KYof/TzJVWRH3Fc4mgnGo=;
+	s=arc-20240116; t=1721115960; c=relaxed/simple;
+	bh=/OR9CLXPGgVQlwRMU9z0KRnQvomjGInPoZPYS4L4aN4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KuAa1hNwCXtpUROXkV6s/jWGRm6QP0xMQ1KsfUE7g1dJ8Ly5/yUqPU6e0znJDg3iE5H6aOJNnKOP+Gc0eRJj+Ni3367XBbLzk4S8vRSiDn8y1geAymoUpTXsqcei27Uc2YcdENBF7XPYSfAgrQ5DWnFNTbOqytJp+gEDiEQjtLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JMKwcrct; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88476C116B1;
-	Tue, 16 Jul 2024 07:45:08 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ZnIHvQPWrTYKYr8vY67nDVtDZ4zV9JM4oocd3e3c8hQT6c+mkC17iaW+DhIdXF3JhgP2eC2hzQknvjlpEotxuf2MwtVKpMI6redtASzFwx4s3XzmqRKa1p/l1B7ccjI5Cj+JPeSlzxuasyXZKG46T0CbfTAze9tk4ZQayByiOMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HNhwsygh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2F4C4AF09;
+	Tue, 16 Jul 2024 07:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721115913;
-	bh=Z9OLOyK8r/W7BwAhKBQti4KYof/TzJVWRH3Fc4mgnGo=;
+	s=k20201202; t=1721115959;
+	bh=/OR9CLXPGgVQlwRMU9z0KRnQvomjGInPoZPYS4L4aN4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=JMKwcrctJiMnCU4b33u3zVD0FLk+00AbOOSKU2+F55qbClojnJtOtEOqwFfPmaJhF
-	 Ig1+WEYo5XzVfGv+VSTZXmuxdXAi1YH/GJrD4/bLkDrqQBlWZ+VPLJDTC4vsprjO9t
-	 x1z25r1AUF6yzr/Ar5m7oJnnZPIvleWpuPyqG/E8FxzjTP88GTqw1opxyn6hsrhn+9
-	 Jku6JEWnlaYFIbha9JhLSe1SkMbXrsUjvHVohUD2Cs4xafDEgwTUAbG27oxHOOKJe5
-	 25377GNN2lZAgCgMOagEQnybau81SackSsjskjtS7Ix8JaaCgpv6/u/cz3hRdCGkNS
-	 W0zn7uJCjrgkw==
-Message-ID: <d40d540c-a3b9-449d-8f34-cb2972ddc2ef@kernel.org>
-Date: Tue, 16 Jul 2024 09:45:05 +0200
+	b=HNhwsyghehenLIOupJ0mO+eaAspss3ghUiZ8qiQ7cWVVbftjF50zZpokUI95gExxK
+	 tAmY2CgfEj55fFcraA4tZu7TRgbUTPg9GzGXZOy9CKBE6hhmZ21L29s5bfYFXtOeXC
+	 UszwcZGLD2Lqkkru38T8pPh/eDlUgzcJqqVwOttDJa5F3ledbSbMt9RgsZJBYOMiNA
+	 1t0aaQBVjfFSXIAipkX8FWjQSbAShKCLhL+ujiwmagKUy94rkBYjviuYKoxJl2/ooA
+	 QSMLyHDOPv9/FnGt+8W1Vfd0kIV4B1pp/17NMLhoKyp8g1zhPeLPWS12zFwYDSUCTA
+	 T/NKTzQ1p76ug==
+Message-ID: <16cd561d-d8d5-4acb-8536-cadc3f073201@kernel.org>
+Date: Tue, 16 Jul 2024 09:45:52 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 7/8] arm64: dts: qcom: Add support for multimedia clock
- controllers
+Subject: Re: [PATCH v3 8/8] arm64: dts: qcom: Update sleep_clk frequency to
+ 32000 on SA8775P
 To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
  <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
  Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -62,7 +62,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  quic_imrashai@quicinc.com, quic_jkona@quicinc.com
 References: <20240715-sa8775p-mm-v3-v1-0-badaf35ed670@quicinc.com>
- <20240715-sa8775p-mm-v3-v1-7-badaf35ed670@quicinc.com>
+ <20240715-sa8775p-mm-v3-v1-8-badaf35ed670@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,38 +108,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240715-sa8775p-mm-v3-v1-7-badaf35ed670@quicinc.com>
+In-Reply-To: <20240715-sa8775p-mm-v3-v1-8-badaf35ed670@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 15/07/2024 10:23, Taniya Das wrote:
-> Add support for video, camera, display0 and display1 clock
-> controllers on SA8775P platform.
+> The HW supported sleep_clk frequency on SA8775P is 32000, hence
+> update the sleep_clk frequency with the correct value on SA8775P.
 > 
+> Fixes: 603f96d4c9d0 ("arm64: dts: qcom: add initial support for qcom sa8775p-ride")
 > Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 56 +++++++++++++++++++++++++++++++++++
->  1 file changed, 56 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index 23f1b2e5e624..8fd68a8aa916 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -2911,6 +2911,47 @@ llcc: system-cache-controller@9200000 {
->  			interrupts = <GIC_SPI 580 IRQ_TYPE_LEVEL_HIGH>;
->  		};
->  
-> +		videocc: clock-controller@abf0000 {
-> +			compatible = "qcom,sa8775p-videocc";
-> +			reg = <0x0 0x0abf0000 0x0 0x10000>;
-> +			clocks = <&gcc GCC_VIDEO_AHB_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK_A>,
-> +				 <&sleep_clk>;
-> +			power-domains = <&rpmhpd SA8775P_MMCX>;
 
-Not sure if these are correct. I had impression the clocks are going
-away from sa8775p?
+Avoid combining fixes with features, but if you do, then fixes are never
+the last patch, but first.
 
 Best regards,
 Krzysztof
