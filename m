@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-26276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A3E0932161
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 09:44:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3E39932169
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 09:45:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 29E7F1F21B0E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 07:44:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6C4F0281B5E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 07:45:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77276364A4;
-	Tue, 16 Jul 2024 07:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4DF63BB59;
+	Tue, 16 Jul 2024 07:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bnymz5oF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JMKwcrct"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3535C4D8B0;
-	Tue, 16 Jul 2024 07:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D55364A4;
+	Tue, 16 Jul 2024 07:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721115879; cv=none; b=dNEuWxhKnFzs+Et+sa3DiJ0wUoHhwgYYEgVU0uJJ6XzWreltmoUjYeKqvXufmgWaJFDv7A4OKGZZOvyJ7kwyD7n7a7kVVg3Gxx3EnNIk+i1bcRZySa/79c0rcpbQEvRjpmBCMh+LlTc3eGvKJNXcbUH/Uk1iIaQyTKO7Zig85rU=
+	t=1721115913; cv=none; b=BpJY4c2vgvW1aaiL5gRenfXn8JTx1kHraY2k58ilVenMOK0VVHXLlQ1f6sfCSsXwrCdNIX2S2PGY1IKVPc7Wu7LmD8TITF9cc0hOXjWONpd3ABy8Jf1sS38tDIVmEqSeLVWpEPI62Is4+tb9ocz93+zLGkOIkAEJhZAIi0N4RMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721115879; c=relaxed/simple;
-	bh=vrL/1VRskB8sKM6OA1bB/gSuqAGDsJIpQJbxICgDIg0=;
+	s=arc-20240116; t=1721115913; c=relaxed/simple;
+	bh=Z9OLOyK8r/W7BwAhKBQti4KYof/TzJVWRH3Fc4mgnGo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CpebMn2yG9+3t7+KYItbkz1aFZomEH22tUhNI8ejUHoI1K1gSwrNzm5xErag3JZ+0b5fvwjnhq2yid/n13GasZSB0obdhhFdg1Iy3epoz+o5hDw/FfERN54qsXTmr9SfQfcKyBdJreqLHuzotMUBXntGkwp7YHTiZvzatsjbEF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bnymz5oF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FCA6C116B1;
-	Tue, 16 Jul 2024 07:44:33 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=KuAa1hNwCXtpUROXkV6s/jWGRm6QP0xMQ1KsfUE7g1dJ8Ly5/yUqPU6e0znJDg3iE5H6aOJNnKOP+Gc0eRJj+Ni3367XBbLzk4S8vRSiDn8y1geAymoUpTXsqcei27Uc2YcdENBF7XPYSfAgrQ5DWnFNTbOqytJp+gEDiEQjtLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JMKwcrct; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88476C116B1;
+	Tue, 16 Jul 2024 07:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721115878;
-	bh=vrL/1VRskB8sKM6OA1bB/gSuqAGDsJIpQJbxICgDIg0=;
+	s=k20201202; t=1721115913;
+	bh=Z9OLOyK8r/W7BwAhKBQti4KYof/TzJVWRH3Fc4mgnGo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=bnymz5oFxvKJ952m6QCt7BJumHC4o5CUIPvYqqcp2L4OYOozoOJwV/r+zJs/1o7ME
-	 avixkfuy6ECvu8nw6S+6MxiL2GFJqMs9CPv8kJoSOwDoVi0He8pmGElzITpyfz6CH8
-	 h13OVKj42NeY7L4fx0hRDSGmA4XeAKPQqoCWyMbzzNlx6gXnVVJmdCmBdXukzy4XBb
-	 MawWggsA/cbpEyVPZNRR8DDlNRcp9WZu3HyVsVYRMi6UoF79wybWrSevRPLrjfPs6Q
-	 Ig041iuJFs5TNNrdmIMx9xMp3Gj4cttPHEkUDLPFeHnVsSzMVzfoZEgMyotqS2a+P2
-	 Ekp3oOgJlM5jQ==
-Message-ID: <01f041b5-8ae9-4f04-b5cd-22ad39f12da3@kernel.org>
-Date: Tue, 16 Jul 2024 09:44:31 +0200
+	b=JMKwcrctJiMnCU4b33u3zVD0FLk+00AbOOSKU2+F55qbClojnJtOtEOqwFfPmaJhF
+	 Ig1+WEYo5XzVfGv+VSTZXmuxdXAi1YH/GJrD4/bLkDrqQBlWZ+VPLJDTC4vsprjO9t
+	 x1z25r1AUF6yzr/Ar5m7oJnnZPIvleWpuPyqG/E8FxzjTP88GTqw1opxyn6hsrhn+9
+	 Jku6JEWnlaYFIbha9JhLSe1SkMbXrsUjvHVohUD2Cs4xafDEgwTUAbG27oxHOOKJe5
+	 25377GNN2lZAgCgMOagEQnybau81SackSsjskjtS7Ix8JaaCgpv6/u/cz3hRdCGkNS
+	 W0zn7uJCjrgkw==
+Message-ID: <d40d540c-a3b9-449d-8f34-cb2972ddc2ef@kernel.org>
+Date: Tue, 16 Jul 2024 09:45:05 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/8] dt-bindings: clock: qcom: Add SA8775P video clock
- controller
+Subject: Re: [PATCH v3 7/8] arm64: dts: qcom: Add support for multimedia clock
+ controllers
 To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
  <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
  Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -62,7 +62,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  quic_imrashai@quicinc.com, quic_jkona@quicinc.com
 References: <20240715-sa8775p-mm-v3-v1-0-badaf35ed670@quicinc.com>
- <20240715-sa8775p-mm-v3-v1-1-badaf35ed670@quicinc.com>
+ <20240715-sa8775p-mm-v3-v1-7-badaf35ed670@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,30 +108,38 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240715-sa8775p-mm-v3-v1-1-badaf35ed670@quicinc.com>
+In-Reply-To: <20240715-sa8775p-mm-v3-v1-7-badaf35ed670@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 15/07/2024 10:23, Taniya Das wrote:
-> Add device tree bindings for the video clock controller on Qualcomm
-> SA8775P platform.
+> Add support for video, camera, display0 and display1 clock
+> controllers on SA8775P platform.
 > 
 > Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > ---
->  .../bindings/clock/qcom,sa8775p-videocc.yaml       | 62 ++++++++++++++++++++++
->  include/dt-bindings/clock/qcom,sa8775p-videocc.h   | 47 ++++++++++++++++
->  2 files changed, 109 insertions(+)
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 56 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 56 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index 23f1b2e5e624..8fd68a8aa916 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -2911,6 +2911,47 @@ llcc: system-cache-controller@9200000 {
+>  			interrupts = <GIC_SPI 580 IRQ_TYPE_LEVEL_HIGH>;
+>  		};
+>  
+> +		videocc: clock-controller@abf0000 {
+> +			compatible = "qcom,sa8775p-videocc";
+> +			reg = <0x0 0x0abf0000 0x0 0x10000>;
+> +			clocks = <&gcc GCC_VIDEO_AHB_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK_A>,
+> +				 <&sleep_clk>;
+> +			power-domains = <&rpmhpd SA8775P_MMCX>;
 
-
-AFAIK, the sa8775p is being dropped and later re-introduced as quite
-different device.
-
-What will be the use of these bindings after we remove sa8775p? Or
-rename it? Or after whatever Qualcomm is planning?
-
-I am sorry, but at this moment I am reluctant to ack anything related to
-sa8775p.
-
+Not sure if these are correct. I had impression the clocks are going
+away from sa8775p?
 
 Best regards,
 Krzysztof
