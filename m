@@ -1,126 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-26279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EEFC4932184
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 09:54:38 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0389F932200
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 10:39:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2BA671C2035A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 07:54:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 47C27B21CA9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 08:39:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E52B23BBC2;
-	Tue, 16 Jul 2024 07:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFF4417B4E9;
+	Tue, 16 Jul 2024 08:39:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="jZ9zq28U"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I8vBcSIy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86A64C74
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 07:54:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B6913CF8E;
+	Tue, 16 Jul 2024 08:39:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721116475; cv=none; b=L6zs+h/eH6IAH8Co3ptyql0fPWaRVvdAhPbnhLXJCZki5tINPSdSsY6afvooQKrJ1WytWhqzLC74mp3ohI6prDZ31Q853Ua5Vjgysz7fUKhrBKcnZ+stsI+VOxCFkPkWoonulT8pNdNk4TBK4RrsjFNFrzG32Z9q9ZidovJjhhY=
+	t=1721119166; cv=none; b=n8FeUaSZS74tu11kYtf9TXWq++Seb75ymNXSG6UtqdcnDHW9laLL6qeelf/U3j8mBk5Z7BCjebyL3HEIgvpJKSTlQKq1M9IGq7wzx1LORR+B7ns85ZT53UIMZFUzv+xcbG948Ub51b4COLPksm49oQY8k3qjdq6IQ00UwDsSQjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721116475; c=relaxed/simple;
-	bh=MNn8gxXYqvsNcb1Yh/X9L/MXxeX3VNL1a9Hrw0q3y2c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=th5rLi17J0ht2fNpFhtNVDHFSiJXNezrmQntnkCKlU8u8h5szz9yjRQnXG774KjyfYMNQGTp3xsjEE1eJTeLR5HPFZ0mib8A/n5PY1NT2FFuhX0Xy4VOjRxeeV+hngtMWpti5/KxHw1rjjgTyvdM5f95ILNx/o36eJAmN6EgHfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=jZ9zq28U; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-52e99060b0dso5430797e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 00:54:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1721116472; x=1721721272; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tsyjNs+epxjHFckk0dd03DwfQ8j6M5Wrc4itesRp3IU=;
-        b=jZ9zq28U/QegcdkYucUMhsZ0jz/UEk+ep9TqOdqrh04TvsoAMdaQccxfm5eZnYTuFt
-         OEXGX5DwXlut5H0URAzWjrVCZ53d8ox0dDlapjfXDm36piDq7bEC2WLj5RVWAME9VmDv
-         qUEKl4GAtcMU7cBdkLXa5GS26a4jn1cWeFkbGcrMYouv3BWp07uk7U7YJFUSUXtChr7U
-         RK4xW5UXY/Wx1GYJboIKM6H8rGt3QXS5afpnYfs8njrKr5FvzkQML36/Kg20qT1AGyXx
-         +1S2AszH7lhZTUxrqNpCwFsh+JCnJEK+BVvGyWgCmd+TsLxxrSER/mWSLszPtJUAG0P4
-         JkPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721116472; x=1721721272;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tsyjNs+epxjHFckk0dd03DwfQ8j6M5Wrc4itesRp3IU=;
-        b=cnmECxxLwQdpm9tvzFuBk1CdMj9yzQeiGz2d3CbxLsfwCV85FAJ6rr3UfxxSEBvHTt
-         bIAjtjhXx252t5m8AF9eZEX5LGi8Q3/LNJMeuG9o90azyaSojyA6QIbXr+zWi4Vdmnbt
-         /iY3k4SnxLF5FSuWqfDNHimqS5KS0ZZjTD5gM1Ez+ZTCPnMNfZneh6fp3weHi8vD36o8
-         hbB1+AAWGOfq7x/mqmcI9Anf3j1mvywWaW+dZzoToJ16L7WA4tmZEsdOiQ+DEsEipk2i
-         l+Kd5yeY/sjwVOarqmQhfDByzsZ3NKApL8zZavZduTKjaS8BmD5YUW4bYaFVQSs4sakb
-         OHRQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUrYL7duH8pc9KP4Hnr8ww2oRNSsjcbrMbG8oqR5NcB4NrpU/SCwk92EC4MSyk8tEREZnaG1s6vhjdo9x1Fv1NKOtbfeWFOeVFavxeEPw==
-X-Gm-Message-State: AOJu0YwoeDXNx+E7H/zXvmDmL0JJQKDuKIeddx2TtVYGY5AGkG/H+Xcm
-	/46+Ss+HsCtm5iXYD2eLlMypgAX/TV5gg71i9o49AvTEwguWDPpvs0wWKM1j7t3pEecrFB/7pQ8
-	U5S9X9YVDZE9tToki5m6RtOX2PjSoIBSx4UPWXg==
-X-Google-Smtp-Source: AGHT+IHxiGnjKEzJz5PukU3GQJwtAAOXLOqzHFNcG1Fx6SzxLyf+ALXiDO+KrLhwXbWwUy5jSuyneyfndt37ndL/n+8=
-X-Received: by 2002:a05:6512:690:b0:52e:9ab6:cb53 with SMTP id
- 2adb3069b0e04-52edf032e94mr698476e87.64.1721116472011; Tue, 16 Jul 2024
- 00:54:32 -0700 (PDT)
+	s=arc-20240116; t=1721119166; c=relaxed/simple;
+	bh=pnBIBVWhf5BT7kXBetHfhRVjUopJwG8oDLrBX4fP/vU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=S4RqWo9beYfTAv5Z0z3m60S2RTU/eZCsof+Dlp009pC06yHwvS/U/nouKcVtBAtCNQu05rVuoaR9w4m6WvEiGROj9H49NZ8msmSnudffqOyu119k3lMzmQQ/iXhwnHZOpa0277ieTkmTs2gk7LQhoSdXdfdvJyNX/PK1LAt7wso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I8vBcSIy; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46G4XQPm031357;
+	Tue, 16 Jul 2024 08:39:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	EeHaRWYXiK3/lLN0S5rke1NcA+FU45aTCk2uQSql5dI=; b=I8vBcSIy1sFRlY4L
+	Us32aFsxGOXp6B68Wafh7n7lb7D+ySERR0ngeiSZO04vrmV5TAsGy99ZCwLCCATq
+	K15IMbFNUo9HrUZc7z+Cf3pb1xOEgnLCxyRiZmnmCo0KNDGtm71Dh3Hptw1CAahP
+	t0uSv+NtI0+LOiyKC2fSt5Ff3O6euqT5Sr4F0CxqU5JqHgI8HcSz2A9vWVAXR8p8
+	2CPm3lSEbCm/MQ0sRw/98j34VC0gG6YpUpf8RBONqauZS+iiMv5rOpxhKKS2FWJX
+	ao8UkmBy2kiRdDY9UvgWy8g5OKillyqZ7WVapjAuL3wqyLam0xx8GVM32F8zGzWF
+	5i/tbg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40bgwg6few-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Jul 2024 08:39:20 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46G8dIk1022098
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Jul 2024 08:39:18 GMT
+Received: from [10.217.216.152] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 16 Jul
+ 2024 01:39:13 -0700
+Message-ID: <dd8ad439-f74c-4bb6-9066-73394bb9befe@quicinc.com>
+Date: Tue, 16 Jul 2024 14:09:10 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240712091008.14815-1-brgl@bgdev.pl> <CAHk-=wjWc5dzcj2O1tEgNHY1rnQW63JwtuZi_vAZPqy6wqpoUQ@mail.gmail.com>
-In-Reply-To: <CAHk-=wjWc5dzcj2O1tEgNHY1rnQW63JwtuZi_vAZPqy6wqpoUQ@mail.gmail.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 16 Jul 2024 09:54:20 +0200
-Message-ID: <CAMRc=MfdREubJBjxy-WDZotYWY-uU_6C1N7L8STisoJwtpAgjg@mail.gmail.com>
-Subject: Re: [GIT PULL] power sequencing updates for v6.11-rc1
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Arnd Bergmann <arnd@arndb.de>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V4 8/8] arm64: dts: qcom: sm4450: add camera, display and
+ gpu clock controller
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ajit Pandey
+	<quic_ajipan@quicinc.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>, Vinod Koul
+	<vkoul@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Jagadeesh Kona
+	<quic_jkona@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        "Satya
+ Priya Kakitapalli" <quic_skakitap@quicinc.com>
+References: <20240611133752.2192401-1-quic_ajipan@quicinc.com>
+ <20240611133752.2192401-9-quic_ajipan@quicinc.com>
+ <76f5e3c7-a90b-42d2-8169-e5e2211a14a1@linaro.org>
+ <ba7d12d3-c582-45ec-beed-e81182fe3252@quicinc.com>
+ <95a835e2-9fd9-467b-bd0a-8eeb80ddf678@linaro.org>
+ <9c3de930-47b7-45a9-bf7e-6e506ea2accc@quicinc.com>
+ <8f7cdb31-c50d-4690-b878-518bad545612@linaro.org>
+ <46e6f1f0-d244-4e53-99ce-9fee339dc4de@quicinc.com>
+ <f9a23663-7a1d-44dc-8e0b-8463c3c88a29@linaro.org>
+Content-Language: en-US
+From: Taniya Das <quic_tdas@quicinc.com>
+In-Reply-To: <f9a23663-7a1d-44dc-8e0b-8463c3c88a29@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: WkTPEf-BUhFJZI68eqwGh_Cp_RhYmNsp
+X-Proofpoint-ORIG-GUID: WkTPEf-BUhFJZI68eqwGh_Cp_RhYmNsp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-15_19,2024-07-16_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ adultscore=0 spamscore=0 priorityscore=1501 mlxscore=0 suspectscore=0
+ mlxlogscore=999 lowpriorityscore=0 clxscore=1011 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407160063
 
-On Tue, Jul 16, 2024 at 4:17=E2=80=AFAM Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
->
-> On Fri, 12 Jul 2024 at 02:13, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
-> >
-> > This PR contains the core power sequencing framework, the first driver,=
- PCI
-> > changes using the pwrseq library (blessed by Bjorn Helgaas) and some fi=
-xes
-> > that came later.
->
-> Hmm. Let's see how this all works out, but I already found an annoyance.
->
-> It first asks me about the new PCI power sequencing driver.
->
-> And then it asks me separately if I want the power sequencing support.
->
-> Now, either this should
->
->  (a) not ask about the generic power sequencing support at all, and
-> just select if if a driver that is enabled needs it
->
-> OR
->
->  (b) it should ask about power sequencing support and then if you say
-> "N", it should not ask about the drivers.
->
-> But asking *twice* is definitely not kosher.
->
->             Linus
 
-I didn't notice it because I almost always use menuconfig. I'll look into i=
-t.
 
-Bartosz
+On 7/12/2024 6:10 PM, Konrad Dybcio wrote:
+> On 12.07.2024 2:31 PM, Ajit Pandey wrote:
+>>
+>>
+>> On 7/12/2024 5:52 PM, Konrad Dybcio wrote:
+>>> On 12.07.2024 11:53 AM, Ajit Pandey wrote:
+>>>>
+>>>>
+>>>> On 7/11/2024 3:25 PM, Konrad Dybcio wrote:
+>>>>> On 3.07.2024 11:16 AM, Ajit Pandey wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 6/13/2024 1:11 PM, Konrad Dybcio wrote:
+>>>>>>>
+>>>>>>>
+>>>>>>> On 6/11/24 15:37, Ajit Pandey wrote:
+>>>>>>>> Add device node for camera, display and graphics clock controller on
+>>>>>>>> Qualcomm SM4450 platform.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Ajit Pandey <quic_ajipan@quicinc.com>
+>>>>>>>> ---
+>>>>>>>
+>>>>>>> None of these nodes reference a power domain (which would usually be
+>>>>>>> CX/MX/MMCX). This way, the RPMhPDs will never be scaled.
+>>>>>>>
+>>>>>>> The current upstream implementation only allows one power domain to be
+>>>>>>> scaled, but that's better than none (see other DTs for recent SoCs).
+>>>>>>>
+>>>>>>> Konrad
+>>>>>>
+>>>>>> SM4450 doesn't support MMCX and CX/MX domains will remain active so
+>>>>>> power-domains property is actually not required for SM4450 clock nodes.
+>>>>>
+>>>>> It's not only about them being active.. some PLLs require e.g. MX to be
+>>>>> at a certain level, or the system will be unstable
+>>>>>
+>>>>> Konrad
+>>>>
+>>>> With active I mean CX/MX rails will be default running at minimum level required for clock controllers. Adding power-domains property for CX/MX rails is like a redundant code as that will also scale such rails at default specified minimum level only. Also we hadn't added such property for other targets DT nodes to scale up CX/MX at minimum level.
+>>>
+>>> What I mean here is that, the minimum level may not be enough. In such case
+>>> you would also add a required-opps = <&handle_to_rpmhpd_opp_level>
+>>>
+>>> Konrad
+>>>
+>>
+>> Apologies, but could you please elaborate the use-case where minimum level isn't enough ? I guess for clock controllers configuration min level of CX/MX would be suffice, client will anyhow scale such rails to higher levels depending on their use-case.
+> 
+> The main issue here is with PLLs within the clock controllers. Nobody
+> votes for them. It's an unsolved problem and we currently work around
+> cases where it's necessary by requiring that (with runtime pm, so when
+> there's active consumers of the clock controller) the attached power
+> domain is at >= SOME_LEVEL
+> 
+> Konrad
+
+Konrad, this target (SM4450) have all the PLLs connected to CX/MX(again 
+this is not collapsible). At boot the RPMHPD driver would keep the rails 
+at minimum level and which is good to operate for the clock controller. 
+I do not see currently this requirement you pose here specifically for 
+SM4450.
+
+As part of the PLL requirement within clock controller, this is 
+definitely a requirement which we plan to RFC soon. There are 
+discussions already in progress on how to handle this requirement.
+
+-- 
+Thanks & Regards,
+Taniya Das.
 
