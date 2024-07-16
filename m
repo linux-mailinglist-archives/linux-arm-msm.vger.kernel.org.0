@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-26275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCB99932153
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 09:38:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A3E0932161
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 09:44:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 732041F2266A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 07:38:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 29E7F1F21B0E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 07:44:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2CF02C19E;
-	Tue, 16 Jul 2024 07:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77276364A4;
+	Tue, 16 Jul 2024 07:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pV+d5ZcK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bnymz5oF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F5E49650;
-	Tue, 16 Jul 2024 07:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3535C4D8B0;
+	Tue, 16 Jul 2024 07:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721115457; cv=none; b=I0WoQ4Yk6RybxJQaWsy74wnIEnhWJaCmF/8hh3NH3NHXLCISalWwvd30PcXBG1afmO8MERUvRPwTHAGw8u3uk+GuL0HId7W8M/ETJCn1xtCKuGyG5SJv/KeRk53xkiUllfixE1usf8+qGYocGjOlc/kZvF7UMkXNGyBo3YTRiGw=
+	t=1721115879; cv=none; b=dNEuWxhKnFzs+Et+sa3DiJ0wUoHhwgYYEgVU0uJJ6XzWreltmoUjYeKqvXufmgWaJFDv7A4OKGZZOvyJ7kwyD7n7a7kVVg3Gxx3EnNIk+i1bcRZySa/79c0rcpbQEvRjpmBCMh+LlTc3eGvKJNXcbUH/Uk1iIaQyTKO7Zig85rU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721115457; c=relaxed/simple;
-	bh=/LZXoecVP+7Ytj+xSbVQvw1CXT1zeS1uXTOOAzfzaKM=;
+	s=arc-20240116; t=1721115879; c=relaxed/simple;
+	bh=vrL/1VRskB8sKM6OA1bB/gSuqAGDsJIpQJbxICgDIg0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H1C09nX4WNHPT3DI64z2S8dd2vUz+Y+PZNphjVWoO1Re+iqFWaGuqW5AX0ucr2wttMgJx8KYEwxKs/6BWZY9DWizeZo2ZcnrJFLmLpdCQPVpajvg+NMLvdrJK3YNgUINPc/SI7LAKtpBPfoch0UbZnq7ZeDP38A5icIAskhBx+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pV+d5ZcK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8B1C4AF0B;
-	Tue, 16 Jul 2024 07:37:32 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=CpebMn2yG9+3t7+KYItbkz1aFZomEH22tUhNI8ejUHoI1K1gSwrNzm5xErag3JZ+0b5fvwjnhq2yid/n13GasZSB0obdhhFdg1Iy3epoz+o5hDw/FfERN54qsXTmr9SfQfcKyBdJreqLHuzotMUBXntGkwp7YHTiZvzatsjbEF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bnymz5oF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FCA6C116B1;
+	Tue, 16 Jul 2024 07:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721115457;
-	bh=/LZXoecVP+7Ytj+xSbVQvw1CXT1zeS1uXTOOAzfzaKM=;
+	s=k20201202; t=1721115878;
+	bh=vrL/1VRskB8sKM6OA1bB/gSuqAGDsJIpQJbxICgDIg0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=pV+d5ZcK08ao27t+gHQW13ALawiP5uQfROyGuRmj/jM1i1Y4lfJxyfYsQ8F+mRdcH
-	 +7W42Nd1kY1oCwapfAk61KUd7tOc8WGkTIRhW4uxJgbcEhxVMM1dOvJeVPeMf0xtA1
-	 RcY+lubv2oQhKj14HuliSvtJ8cwtuvQBg4ziZZ7AA+veQ2yGeeQPFVArdeQa9bhYmM
-	 be3I3b6sVm69eqGEg8KtlnYrhVz8ISa0vxYoV4vg/ZkxjBntzAh25TVDOoDYIWokHB
-	 AwyZqBzRGxyTx2vAxbpSideTA4RskmH5jeThXifvqED+8AcvxhS4vyKLED7IZv2sQq
-	 XsXGmUGnBz8hQ==
-Message-ID: <b160684d-bd70-4eac-a303-b9e799bc0f92@kernel.org>
-Date: Tue, 16 Jul 2024 09:37:30 +0200
+	b=bnymz5oFxvKJ952m6QCt7BJumHC4o5CUIPvYqqcp2L4OYOozoOJwV/r+zJs/1o7ME
+	 avixkfuy6ECvu8nw6S+6MxiL2GFJqMs9CPv8kJoSOwDoVi0He8pmGElzITpyfz6CH8
+	 h13OVKj42NeY7L4fx0hRDSGmA4XeAKPQqoCWyMbzzNlx6gXnVVJmdCmBdXukzy4XBb
+	 MawWggsA/cbpEyVPZNRR8DDlNRcp9WZu3HyVsVYRMi6UoF79wybWrSevRPLrjfPs6Q
+	 Ig041iuJFs5TNNrdmIMx9xMp3Gj4cttPHEkUDLPFeHnVsSzMVzfoZEgMyotqS2a+P2
+	 Ekp3oOgJlM5jQ==
+Message-ID: <01f041b5-8ae9-4f04-b5cd-22ad39f12da3@kernel.org>
+Date: Tue, 16 Jul 2024 09:44:31 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,sata-phy: convert to dtschema
-To: Rayyan Ansari <rayyan.ansari@linaro.org>, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-Cc: Bjorn Andersson <andersson@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org, Rob Herring <robh@kernel.org>,
- Vinod Koul <vkoul@kernel.org>
-References: <20240715130854.53501-1-rayyan.ansari@linaro.org>
- <20240715130854.53501-2-rayyan.ansari@linaro.org>
+Subject: Re: [PATCH v3 1/8] dt-bindings: clock: qcom: Add SA8775P video clock
+ controller
+To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
+ <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_imrashai@quicinc.com, quic_jkona@quicinc.com
+References: <20240715-sa8775p-mm-v3-v1-0-badaf35ed670@quicinc.com>
+ <20240715-sa8775p-mm-v3-v1-1-badaf35ed670@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,17 +108,30 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240715130854.53501-2-rayyan.ansari@linaro.org>
+In-Reply-To: <20240715-sa8775p-mm-v3-v1-1-badaf35ed670@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/07/2024 15:01, Rayyan Ansari wrote:
-> Convert the bindings for the SATA PHY on both apq8064 and ipq806x from
-> the old text format to yaml.
+On 15/07/2024 10:23, Taniya Das wrote:
+> Add device tree bindings for the video clock controller on Qualcomm
+> SA8775P platform.
 > 
-> Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> ---
+>  .../bindings/clock/qcom,sa8775p-videocc.yaml       | 62 ++++++++++++++++++++++
+>  include/dt-bindings/clock/qcom,sa8775p-videocc.h   | 47 ++++++++++++++++
+>  2 files changed, 109 insertions(+)
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+AFAIK, the sa8775p is being dropped and later re-introduced as quite
+different device.
+
+What will be the use of these bindings after we remove sa8775p? Or
+rename it? Or after whatever Qualcomm is planning?
+
+I am sorry, but at this moment I am reluctant to ack anything related to
+sa8775p.
+
 
 Best regards,
 Krzysztof
