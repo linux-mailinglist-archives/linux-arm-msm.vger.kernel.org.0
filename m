@@ -1,79 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-26257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F263E931E23
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 02:52:15 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05C86931EBA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 04:17:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A93291F22B6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 00:52:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 371321C20F11
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 02:17:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B58D2599;
-	Tue, 16 Jul 2024 00:51:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E1017482;
+	Tue, 16 Jul 2024 02:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MAwdGo3b"
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="YVnqDJCD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D3212B72;
-	Tue, 16 Jul 2024 00:51:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCD01078B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 02:17:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721091113; cv=none; b=rp+0MELjQlKlTs/vHeEoR+tu3k6QvmMBcyXe418o3i/1M72EA1rpziv487/MgVj7xId4JK/ZLZcMn6gP+pB8E59wi7MC6PmCF6Nqu7GuDtlbZv1C5yg+rJw8zsLZeWvCXRizJ05MIzDQmiD7I1pki9gz/Y7Dadbi73a2TpoJvEM=
+	t=1721096253; cv=none; b=QQuq0zJpEKv37nXK7bNNryh7CtlyKbnSnEP/q7O2kpWiVURvVrMxGIfnjRs9VOeUpYWu26oWzb+nvfR3Ui9I9y7b4rwuA/l07wdf1sBezIHyhzJQ9pVwTT1S3l/y66XT5i9oRepJyDr9Zcj8N2bARaCUsgNydn4gpFN2vhHbU00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721091113; c=relaxed/simple;
-	bh=rd+HEVAFjkN/SsY5zUJ5lQMMMCG1/WJIapcEJ194g64=;
-	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=DH8jMV8IP7umQI9ouSwNy84eqSp13Rv1PoBnha5k2Xwn4lIC9vOQOVNv9t1++TdQjcKMA5+y+ikVcYIw74/z2/5g78cqp9yjCEd7rz1600++amnVv9jGnwU3YPWf1jFnHuKr9836BIUELR8AJY1MdogDOlYCapbgK9vzg/x1ON0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MAwdGo3b; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 22F7EC32782;
-	Tue, 16 Jul 2024 00:51:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721091113;
-	bh=rd+HEVAFjkN/SsY5zUJ5lQMMMCG1/WJIapcEJ194g64=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=MAwdGo3bmklvlylXtAPwAIV+NsBa51iBVJvA05qzlDNeOONs4lFD7wy5SLzKZfSZb
-	 qgjs+djQlELkCZUDgTEtexBEJPWYZoPHJG7EqTBV3uE+ST2hb9JVfxKePalSvmMPV8
-	 dfThX7GgnxzyZnZsEH5xYuK992zFLL3sIAB/yXDKBFrDiWKhN5uQvrYoq+D759nlb4
-	 ynnIvDCDo1adMSdG4nYUm11amp1lRoDZL7u0UiLBjRxe4rqkIcOtwK3QpTT3X+8ggO
-	 rqmJd5dzAQxVaP/gHYLVQ5O2gEJU97yRvJuspf2K0Owy/Z027Lk7Jf2uyfuGUMnKYL
-	 qZ/vyw/I4bw5g==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 180BEC43443;
-	Tue, 16 Jul 2024 00:51:53 +0000 (UTC)
-Subject: Re: [GIT PULL] power sequencing updates for v6.11-rc1
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <20240712091008.14815-1-brgl@bgdev.pl>
-References: <20240712091008.14815-1-brgl@bgdev.pl>
-X-PR-Tracked-List-Id: <linux-arm-msm.vger.kernel.org>
-X-PR-Tracked-Message-Id: <20240712091008.14815-1-brgl@bgdev.pl>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/brgl/linux.git tags/pwrseq-updates-for-v6.11-rc1
-X-PR-Tracked-Commit-Id: 50b040ef373293b4ae2ecdc5873daa4656724868
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: e763c9ec71dd462337d0b671ec5014b737c5342e
-Message-Id: <172109111309.26590.5027468631355280964.pr-tracker-bot@kernel.org>
-Date: Tue, 16 Jul 2024 00:51:53 +0000
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Krzysztof Kozlowski <krzk@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, Arnd Bergmann <arnd@arndb.de>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+	s=arc-20240116; t=1721096253; c=relaxed/simple;
+	bh=BBaTfLOz45gv5TSiEZbKjsh54MGUgFRkzmECknTKYSY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=npiWjNqoTTBzRXcofxbiDrCtny78lbfw0hNhC7Le+ZhsEZXuzN7gDNonmmb49Kbobi8uPe7dUVsTdKEzMErxbRv9UmJg1lOHkaF91sg6rqO6GXVH/nE6R8BmC5KspCbv3hT8xkMkjgrm5cpjTYSBHRL5gPq1wad/SnqmU6NjS6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=YVnqDJCD; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-52ed741fe46so1748881e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 19:17:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google; t=1721096250; x=1721701050; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=OxmhwjjpGd8zVAlRCw8Rz5PC00uRnZ4KkvDhpfV+dDA=;
+        b=YVnqDJCD44kOXZXBTBGc9EuBsfn8Qw7UHx15ihLUr41gkBovehWIeUtE+vp/ht7/FR
+         8f2vNAys/tI71b5Zn0nyHaRaCn/VEJTXB0CHVaL91jFNAc5ggQOI6nWv7mhQj305cnMS
+         HjAUtTfYPeMJWrzCTeRyQwaJOG1hFbzGd0VE0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721096250; x=1721701050;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OxmhwjjpGd8zVAlRCw8Rz5PC00uRnZ4KkvDhpfV+dDA=;
+        b=t0yefH0dA7E8kZP3mSv5JqYXbi8gb4Latxb5H9sxjGtfSTR7Y2nt8Uhs6XyCm4+GOI
+         7T/1n7mSAblKDSWWtINdkyvfYrDhQuCl+Pw7aeBNlwAAYbdiMOq3gpoAulcUmQE6ZFDD
+         c9aWeGy3Sjcq1gVb6BLrVwEOyn0xUFyXIWxjfrGlD6KneQ7ST9S2RDkGQDZX9u4fC5Yf
+         5UmBf3tCOojljTFU2AqucmPFBr8MA4eIzHAbxE7c7aZ8nN2ajPX2sPCLehXFFQZcGjcS
+         uVTZszo0OkiP5DlEiAbp/1SMmBUeq+rm1xDfFDvfMlNxxPy3RibuHAxb3BQ9qzMdSWEN
+         VJnA==
+X-Forwarded-Encrypted: i=1; AJvYcCW+wm5/nM2NMbe1LdUJQSdgTbnv7s+n/Xsv/Xl/DUiV+OeGNF6No6i7vM3fVYoEWqbfDyedVqPBW8H3xsQol4kuc9hpJx+5JTAFfVFZpg==
+X-Gm-Message-State: AOJu0YyHPMBbwHr/fFhqVNWf+pf5J3E2EG8sOX11uZgRsAJwe8UM4+1+
+	hIld5UBVtdJ8xcku4xA9OiLkVXqhciqUTl0HWMEj51O7tQTPm+qriSo0WAWaJWwMK2eAFu+Hxr8
+	sd0EBKg==
+X-Google-Smtp-Source: AGHT+IHsCPRJ2Hl2FNc7uIh5IM/Cmd/fIFAn3ttzBJBep/UgUiXu1Hvy1yhigXraxjU7Qe+F9cjXbA==
+X-Received: by 2002:a05:6512:68e:b0:52c:df51:20bc with SMTP id 2adb3069b0e04-52edef21748mr308069e87.16.1721096250099;
+        Mon, 15 Jul 2024 19:17:30 -0700 (PDT)
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com. [209.85.208.176])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ed2532772sm1014668e87.222.2024.07.15.19.17.28
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Jul 2024 19:17:28 -0700 (PDT)
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2ebe40673d8so65496731fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 19:17:28 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVdzPgyVkgY/ZxpnhPRN/vcD4bvFwMHEampGeCh7lmWTtvlPC8YEgvMH52xlcqoCF2n1NMWMCketNSd0ih2PjLZbK9XqK7Q22SdItxZZQ==
+X-Received: by 2002:a2e:9d86:0:b0:2ee:699b:466 with SMTP id
+ 38308e7fff4ca-2eef41dab4amr4022321fa.36.1721096248037; Mon, 15 Jul 2024
+ 19:17:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+References: <20240712091008.14815-1-brgl@bgdev.pl>
+In-Reply-To: <20240712091008.14815-1-brgl@bgdev.pl>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Mon, 15 Jul 2024 19:17:11 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wjWc5dzcj2O1tEgNHY1rnQW63JwtuZi_vAZPqy6wqpoUQ@mail.gmail.com>
+Message-ID: <CAHk-=wjWc5dzcj2O1tEgNHY1rnQW63JwtuZi_vAZPqy6wqpoUQ@mail.gmail.com>
+Subject: Re: [GIT PULL] power sequencing updates for v6.11-rc1
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Arnd Bergmann <arnd@arndb.de>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-The pull request you sent on Fri, 12 Jul 2024 11:10:08 +0200:
+On Fri, 12 Jul 2024 at 02:13, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+>
+> This PR contains the core power sequencing framework, the first driver, PCI
+> changes using the pwrseq library (blessed by Bjorn Helgaas) and some fixes
+> that came later.
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/brgl/linux.git tags/pwrseq-updates-for-v6.11-rc1
+Hmm. Let's see how this all works out, but I already found an annoyance.
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/e763c9ec71dd462337d0b671ec5014b737c5342e
+It first asks me about the new PCI power sequencing driver.
 
-Thank you!
+And then it asks me separately if I want the power sequencing support.
 
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+Now, either this should
+
+ (a) not ask about the generic power sequencing support at all, and
+just select if if a driver that is enabled needs it
+
+OR
+
+ (b) it should ask about power sequencing support and then if you say
+"N", it should not ask about the drivers.
+
+But asking *twice* is definitely not kosher.
+
+            Linus
 
