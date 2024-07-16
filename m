@@ -1,113 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-26347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A7B89327DC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 15:57:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2751793284C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 16:25:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3B61D1C227B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 13:57:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D0BA91F231A7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 14:25:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A4D519B3D8;
-	Tue, 16 Jul 2024 13:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84D3F19D8B5;
+	Tue, 16 Jul 2024 14:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kKrRriEF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CIXjYa+B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DBC19AD89
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 13:57:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5756319D8AD;
+	Tue, 16 Jul 2024 14:25:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721138233; cv=none; b=KVJDytOtz59Mi7Kn256wecwT7m8bP6oAY4H7h6X7pgz8E/Yky+VWWEEGa/q+cSZ2ko2lXeQwTQpk+NYw7jP0ZVWfc18EnNACOMIQaHcImu1rNkD6PZXSlO0MojYUYoXabrvmm4IazOBd7+RlViFTNN2iv675ViISR8ClHf3fQN8=
+	t=1721139923; cv=none; b=ss0C/4yl6RDyRtWyTLhhIoWDdV8zZo0JmePrW4K6+n0aD14pTg41yp9XlUrZrFKWwPni6jKtuSBEy1poZo3xRw4p7nvsIdW+J3sECBZmqmBQUBrpXpHxNJFlfPtJYo2M4bDYQ9iMxD4Zye3v7ss/WDsyGey7I2x2sdKScxPmeR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721138233; c=relaxed/simple;
-	bh=6ielWizRopPkxt9Xz5NhoZmUGUPDJRFuNHGi/CU8TFs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=j/C4jyzwEl9C9vKjW9KZZLOn5VcylyUImehUDanZOq6KBP8Bo9ED7Id3zfS0//UwE//u1EDXT47cHBqPWSl5pYyuEyn+kayFoxkDEoTZMBOuRCTpNsO8/whhh/Ybw37xphE4lIvGVyWVsz4YbjgaH+rCr/mYHuHon3NuExH3D+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kKrRriEF; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4257d5fc9b7so43889215e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 06:57:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721138229; x=1721743029; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=AD5pyTTXIBOHwrPdHnxMSU03OrIeYJeJpP0/KwZpIGo=;
-        b=kKrRriEFOCiDCMHH+GikMXjV3iMpeVUMjJzt8VvVCfnU9EAj+Lwxjx0hjBurjQ50t2
-         +5Z6wvK58cAMc9So5WEvRwbYUcOyfEQJ1TsTvlmX9FbXOIA5N9Dzjk+3K3sSpa7LnCwE
-         tEwWI5DWMuCdrBDBglUOSZkF0hFVBLk/Qn+8oRv07ZnDTgT7d5eIiQS0Iy05CQ9FOuNU
-         EEutZgibVBPbAWsFE8WCsqv8rQL7wOMdWM9KWdbNGqCgaLj4hHA939okGkzwY2sHqsnx
-         7NF24ltNiAR4pUzsR40vOPkWjEjXMR/6BabC/hc7ucv5d7n7vnl2ZL6i/KlYONuY6qDz
-         gE6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721138229; x=1721743029;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AD5pyTTXIBOHwrPdHnxMSU03OrIeYJeJpP0/KwZpIGo=;
-        b=NnKLTADwmhaPrU1JCZNDCPvUDPF4LKIfyJ6+QwEJcHKEpAMEsJFdfifbSAv4qNMGfv
-         7VeG/F3nPjBl8qaUJEiv+hr9q0tZfGLqkcTeAXWFxTLGo9JHV+p8cylbGuZfGX3Lz5+E
-         uC3gFbAQA/Jpkn+SDhZk1Q8a4cEuKXw4UDZgO6ulA/F9q+XAYknc0QZgUqdssOunQ2zp
-         voQpKlIk0DJPmeEK7deL9eCYVZYILH+g5YaUakXV8le6n9YWWbidVAPAaeHZQ2vRKKJ8
-         odcjpDkjyUu1OAXEvlb2CWHBxJbcBAUomFlNhrLVMPawUt767L47QdPF0kCfQCb/kB8X
-         6plw==
-X-Gm-Message-State: AOJu0YyKvyKlednfVvlIXhTfcPrz3wy46ZIQimb77y/qa5CvglD6TM1E
-	uEL38ddabza+iWmbodbGS5bx01MVPsVKxlGy6GrMGST/QX2koin4UzkoDCjkqwMuzqcVnXmgROV
-	Z
-X-Google-Smtp-Source: AGHT+IHfXvfzcFPFhmELdhCG/Exp1aFv5Ieq9lSZsPGvNiqjb3fzPq3o6IHorLqxOsRM8yer9Q8BXg==
-X-Received: by 2002:a05:600c:1908:b0:426:5e1c:1ac2 with SMTP id 5b1f17b1804b1-427ba650391mr21090175e9.8.1721138229388;
-        Tue, 16 Jul 2024 06:57:09 -0700 (PDT)
-Received: from rayyan-pc.broadband ([2a0a:ef40:ee7:2401:197d:e048:a80f:bc44])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427bb99a23dsm19118905e9.1.2024.07.16.06.57.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jul 2024 06:57:09 -0700 (PDT)
-From: Rayyan Ansari <rayyan.ansari@linaro.org>
-To: linux-arm-msm@vger.kernel.org
-Cc: Rayyan Ansari <rayyan.ansari@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	s=arc-20240116; t=1721139923; c=relaxed/simple;
+	bh=upDeAl9zvyu6Mv94XULirvgTdusvzyKbmhk2dQLRPVc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pY8Sg6F3FSx23OflphOxfRzhIJTgWxNVTp0xrnWWXHbHQPID//VT7oXy3tw5wXUj2ENWgq6X1a//bX8EMtucf0ejUKpOZfVUfr/ZDA7MCzKnIS4LKuOGHGt68/Z7Jx6JWJxN1JsCRiUFWOuPSRUKn9aeFzOU34QxdPOwrRbe0Xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CIXjYa+B; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2875FC4AF09;
+	Tue, 16 Jul 2024 14:25:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1721139923;
+	bh=upDeAl9zvyu6Mv94XULirvgTdusvzyKbmhk2dQLRPVc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=CIXjYa+Bhhw96oB6RbLhWcGSDKn4zbGTFifIPcWJD83RZHWPwINPP0Rz0ik9Ura7H
+	 vNagwlOtw4OEs7CI9P6BAXMC+37rsgE1mGm0RRYQdEb6cMevILeUvMdc57UMTt+pFw
+	 ZoNZFc+mQ7BFFs/r2Y2cgAXk+afcFIlQBJ/ldGE4Y6OFU+S0M9cdFpCTNbUrhO3ITY
+	 989SiSrdN/65Fn8aTvSy27vGK49Gz07ujvGo/MWC03ynXLaaNBSiruwG03BxqFjynA
+	 zaadSzKA2gWoiC242b+2B65HhAZv61y47y6HbyasUWaCiFombBfokwQJ3jiNQqtFyK
+	 0a3YyhH/HJZOg==
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Cc: Gabor Juhos <j4g8y7@gmail.com>,
+	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: msm8939-samsung-a7: rename pwm node to conform to dtschema
-Date: Tue, 16 Jul 2024 14:53:38 +0100
-Message-ID: <20240716135339.87192-1-rayyan.ansari@linaro.org>
-X-Mailer: git-send-email 2.45.2
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	mturquette@baylibre.com,
+	sboyd@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.9 01/22] clk: qcom: apss-ipq-pll: remove 'config_ctl_hi_val' from Stromer pll configs
+Date: Tue, 16 Jul 2024 10:24:08 -0400
+Message-ID: <20240716142519.2712487-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.9.9
 Content-Transfer-Encoding: 8bit
 
-Rename the pwm node from "pwm-vibrator" to "pwm" to conform to the dt schema.
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
+[ Upstream commit 2ba8425678af422da37b6c9b50e9ce66f0f55cae ]
+
+Since the CONFIG_CTL register is only 32 bits wide in the Stromer
+and Stromer Plus PLLs , the 'config_ctl_hi_val' values from the
+IPQ5018 and IPQ5332 configurations are not used so remove those.
+
+No functional changes.
+
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Reviewed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240509-stromer-config-ctl-v1-1-6034e17b28d5@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/apss-ipq-pll.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts b/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts
-index 91acdb160227..ceba6e73b211 100644
---- a/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts
-@@ -198,7 +198,7 @@ touchkey@20 {
- 		};
- 	};
- 
--	pwm_vibrator: pwm-vibrator {
-+	pwm_vibrator: pwm {
- 		compatible = "clk-pwm";
- 		#pwm-cells = <2>;
- 
+diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
+index d7ab5bd5d4b41..e12bb9abf6b6a 100644
+--- a/drivers/clk/qcom/apss-ipq-pll.c
++++ b/drivers/clk/qcom/apss-ipq-pll.c
+@@ -100,7 +100,6 @@ static struct clk_alpha_pll ipq_pll_stromer_plus = {
+ static const struct alpha_pll_config ipq5018_pll_config = {
+ 	.l = 0x2a,
+ 	.config_ctl_val = 0x4001075b,
+-	.config_ctl_hi_val = 0x304,
+ 	.main_output_mask = BIT(0),
+ 	.aux_output_mask = BIT(1),
+ 	.early_output_mask = BIT(3),
+@@ -114,7 +113,6 @@ static const struct alpha_pll_config ipq5018_pll_config = {
+ static const struct alpha_pll_config ipq5332_pll_config = {
+ 	.l = 0x2d,
+ 	.config_ctl_val = 0x4001075b,
+-	.config_ctl_hi_val = 0x304,
+ 	.main_output_mask = BIT(0),
+ 	.aux_output_mask = BIT(1),
+ 	.early_output_mask = BIT(3),
 -- 
-2.45.2
+2.43.0
 
 
