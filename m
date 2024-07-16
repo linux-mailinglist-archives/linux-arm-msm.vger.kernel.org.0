@@ -1,124 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-26299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 901EB93232F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 11:44:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 958B993233C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 11:45:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C1C7A1C224BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 09:44:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 51DAC28443C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 09:45:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB5FE197A77;
-	Tue, 16 Jul 2024 09:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B31E5197A92;
+	Tue, 16 Jul 2024 09:45:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FqcYY9TU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Jhxome/a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EF446450;
-	Tue, 16 Jul 2024 09:43:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEBE198840
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 09:45:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721123027; cv=none; b=JNLFbUioEw17ZcvEf+fi85LfipGi90IVyApA9uXYfbgoxjmxmAgmDTrQK6vF2AADCb/9OjArf9SFT4x5Stz+Jo+w+Xwrp45njKdpLd2Ov4om2gPS8Th9rmCBOiB9zqRYi4x+2kfQENr9w/eceC7rQ0QXUp+Ju1FNOeJtalLTsuc=
+	t=1721123119; cv=none; b=TfZc70R0Bl7sjiR0AsM44XrjtrkY0BlgMo4fizsjTBRJV0ZA0ma9tS+5OesfLgVpK3wa96n5j71iietEW012kuoI/raTCqy2egXmntEY4PiHb1ZEHErxFjfJTs82eB3lUJfJzQmWbmf71MSrByQ7CAnY2tyBU2oPJbLxunBLSj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721123027; c=relaxed/simple;
-	bh=cb2kMyUZz+09TPxC7XSnOt+aHqAq3RB1JfOHowI1lTM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mRRQ9UtYtxf+pahcVp/byYFBCIZYk2qoDgxebyEZ8D9wPqEngQxBEO2voHRU+LyX6szMdyyxpRhmbgQ8NMRPOCle7ntn4qO2HE5que8RNfN/gpj2MzLqn2FO1apKIwEnoeF9jiAjwByL2Fxe5UzZZFyDt6ql+jzbxjr6hbvp/lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FqcYY9TU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C0DC116B1;
-	Tue, 16 Jul 2024 09:43:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721123027;
-	bh=cb2kMyUZz+09TPxC7XSnOt+aHqAq3RB1JfOHowI1lTM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FqcYY9TUYD+gO1X/TCX0AUvnR4331B3UHqHC1W0kpktTNHpNsjf3Dp4YhLrqN9TkH
-	 PnBMqFqjM2H5F6O8v93th0cgBhzqMFZNFBaF5MbxY2qlckU6RkhM9Je0AqwhEO/lpb
-	 p2AhLDbcTzNI+wGb39KK8K573p/4ttCA92iEqW7F1Si7UanKBNm4uyCS+9w5vKkYl5
-	 9nTZi2UQhaDPrj3pnDIHA2AZLRLMdGunPZSIfJgKGE2KIYq7D6tQKaOdcFimxp0nLp
-	 As1I1B8WZsCguk8p+p3nnPMM7Uh1tBqwSjIArMzLbPk6uRAtouQYKRFi2nQRMG+pj4
-	 esxa//Keq3dSQ==
-Date: Tue, 16 Jul 2024 11:43:44 +0200
-From: Maxime Ripard <mripard@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
-	Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>, Lucas Stach <l.stach@pengutronix.de>, 
-	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
-	Paul Cercueil <paul@crapouillou.net>, Anitha Chrisanthus <anitha.chrisanthus@intel.com>, 
-	Edmund Dea <edmund.j.dea@intel.com>, Chun-Kuang Hu <chunkuang.hu@kernel.org>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Kevin Hilman <khilman@baylibre.com>, 
-	Jerome Brunet <jbrunet@baylibre.com>, Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>, 
-	Biju Das <biju.das.jz@bp.renesas.com>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Sandy Huang <hjc@rock-chips.com>, Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, 
-	Andy Yan <andy.yan@rock-chips.com>, Thierry Reding <thierry.reding@gmail.com>, 
-	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Jyri Sarha <jyri.sarha@iki.fi>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, dri-devel@lists.freedesktop.org, igt-dev@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, imx@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH v4 3/5] drm/connector: automatically set immutable flag
- for max_bpc property
-Message-ID: <20240716-majestic-vermilion-hornet-fd1cfb@houat>
-References: <20240715-drm-bridge-connector-fix-hdmi-reset-v4-0-61e6417cfd99@linaro.org>
- <20240715-drm-bridge-connector-fix-hdmi-reset-v4-3-61e6417cfd99@linaro.org>
+	s=arc-20240116; t=1721123119; c=relaxed/simple;
+	bh=IbF+oVlsASrCxDCtgSMiLlRtmsmtWhBwoHzzIyNr2Z4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=W35r+y7Fg74XtyEZ7BKLNeFR1ZGPaeaHV0ltNUiCrSttEdpjA8G+XPAHdCxHzZhBQrso1QpfayoG8Wf++UZ/Ixl+EBsNN7UWcbYOoVL4JFES163QuFKJM+sAZ/tw6yhSZyMPSTRPOhy/AdcuQ5UOKl1KLs5v3uktYE9aU8ErHdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Jhxome/a; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4265b7514fcso36236775e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 02:45:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721123116; x=1721727916; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2k6a4tmpt4FwSS1Q5VjwCKqeHMpr9HeTZeCfn6YizvU=;
+        b=Jhxome/aIUm6MdFuRGAXGvJMD4DQeYIbOL42ldLKfb0Ei8j2pbLDo7sIojHUzaZEuP
+         rrJJafOfA6cONlq0QVfgXBEY0pN2Kxyl83oaepRzi30wHeF614AVik8GVPpFyY2eIpDq
+         1ecO6RaU1xro46Uuf6RfzQC5t4ufk+ohasmIZZOj9W/qjQ8WQFyH8NokhhdCUcL1vXZi
+         E5wBoR9vyrOoCfY5W/eOT5KLMSDgT9rY/G0fumvNrbwxM4LuhS/1PlI31AHb8BSx4fHM
+         +MFE9/PM/ECuXUYT5Hjtd9HNh8J12Dx+Gn4zVdZivbbyPReNnk8/vPvPkt7IYq8/MjCr
+         JODg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721123116; x=1721727916;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2k6a4tmpt4FwSS1Q5VjwCKqeHMpr9HeTZeCfn6YizvU=;
+        b=TTjElR1tDdEj/SiD3LDnVNjFRlxOJX5saMxiO8lVUvHc0V+edxbeaw220UkIpglOQf
+         m0UcWIQQdGB8DHOT7Q7AopbZDWklIab1dYaWQ3mslaDM/OXKcZ0qj/iASYuwHbV5B2h+
+         D3Uv7DLGKOj6eU1pfBmd+gnZA6SWztaIVIRDM3rUm8l4NFV5bnb8lIWeqbFyo/8aMCi/
+         Mr+k652VMwtR9ssHqwa2ArmSmHmu92i9thugDw+KHgNxTEuKXIf/LZMrpVy5rUpEpUh+
+         C+rRbg61ELyvtbKxHDr6y/oOeVHHPU/r4D2SFFnxA4F2n8OJUAPlQ1r8fF+kRwRlb0ur
+         byLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWXOS2vt291PuNFJnqhuYbfcOuhDLRvHvFfw5ypsh4F2M4ydj9al5BCfb0/IUCtkhyNr8hYvLUhrqA2Sat5rRjdRpWKS9lk7w9ntZe/qw==
+X-Gm-Message-State: AOJu0Yw7a/hha32YBURfqBB+Cjy+C75Z0z3TbSgd4Hug3Fe/yWHfKiGe
+	O4nNj8utUC/2DfEXgugIf0qd5+RBOvbPk3sBTprua0SJcTo8xe+Wj54rYB7MTVg=
+X-Google-Smtp-Source: AGHT+IGH09+J5MKzEaIfOp2Cw3apVixdIIGoHnc0cSbNzkcbgCAs8q/Irdj+//xDLZB+oxI5c+HA7A==
+X-Received: by 2002:a05:600c:4f06:b0:426:63bc:f031 with SMTP id 5b1f17b1804b1-427bb686d69mr11855835e9.1.1721123116010;
+        Tue, 16 Jul 2024 02:45:16 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4279f2cc2efsm154408185e9.36.2024.07.16.02.45.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Jul 2024 02:45:15 -0700 (PDT)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 0/2] arm64: dts: qcom: sm8[56]50: use the PMU to power up
+ bluetooth
+Date: Tue, 16 Jul 2024 11:45:09 +0200
+Message-Id: <20240716-topic-sm8x50-upstream-use-pmu-to-power-up-bt-v1-0-67b3755edf6a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="fdsfmxhl5wgvjiuk"
-Content-Disposition: inline
-In-Reply-To: <20240715-drm-bridge-connector-fix-hdmi-reset-v4-3-61e6417cfd99@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACVBlmYC/x2NQQrCMBAAv1L27EISq1a/Ujw07Ub3kCbsJloo/
+ bvB4zAws4OSMCk8uh2EPqyc1gb21MH8ntYXIS+NwRnXm5u9YkmZZ9Q4bBeDNWsRmiJWJcyxNos
+ 5fUmaQV/Qh94vwzn4u3XQklko8Pbfjc/j+AFh+qcwfgAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=846;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=IbF+oVlsASrCxDCtgSMiLlRtmsmtWhBwoHzzIyNr2Z4=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBmlkEq/tSs1Nb2dFF7Fs0FQyUXnTXibdgXCkrTWlTq
+ P79n+naJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZpZBKgAKCRB33NvayMhJ0YprD/
+ 43QxVIqj//7SEKCPKDUKP2mtFXeEPOQv8/QyTTbDJrOw5cBHaDhBlV3K/L3aeiZQk00fkRjhSewOEv
+ qIJ10TY9PBUO8OKJ+RMK02yBsIEZ0bCoGzJo7mp+siy596cF3Gd1xsq4uM/2z64TRoe/hdAYMQkmRn
+ dp+opcNHMqQyygpfbr//qovDn5Sk14gclNXIQOK6GH+YpsgxamSoYQ3UjcskLnCmNonb2eR/P05ZTe
+ EmVehFvF7sQUj/WbTcmj7dbJ+9fgxaSz09sIsYEeBnnGoSs48ufjNGQ8vHDKvO2Cim5vM8npMux0gE
+ vO1a94qETQLiZ6hzSJ5plt2NW3WK9XEjXED0PnpzlelpaD8x5rtPbnrTpDxrBoacYZE6c1hhfQNZGr
+ e5IIyJibtRAJMmZhA/REJi4a9IhA8cwkSsMH0JlWlgnLRsYBa06JJrDemsB+CTIHH29xVJQ3mv3qJy
+ 52/4hdYcVlbJAGH3DFwIpF17y9FDkQ2QvvcObd8GOFvWBabk8Hz2FBApINSTIWRv31a9O/uczlfNZz
+ YnInrAas0AxaIrm5NkUEXod5Qb4IrtcnIYVW/HSskQyvDKuivNAa4GJrRZ9UWYLDvpK+rx7smxlRIL
+ DWGB9r/PMsNB14K/D9keWXw9Elhjxbr2m77T0aHeyiSVXuOPRm56bu1XlrdA==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
+Update DT of SM8550-QRD and SM865-HDK to use the PMU to power up bluetooth.
 
---fdsfmxhl5wgvjiuk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Based on the SM8650-QRD change at [1]
 
-On Mon, Jul 15, 2024 at 09:33:03AM GMT, Dmitry Baryshkov wrote:
-> With the introduction of the HDMI Connector framework the driver might
-> end up creating the max_bpc property with min =3D max =3D 8. IGT insists
-> that such properties carry the 'immutable' flag. Automatically set the
-> flag if the driver asks for the max_bpc property with min =3D=3D max.
->=20
-> Fixes: aadb3e16b8f3 ("drm/connector: hdmi: Add output BPC to the connecto=
-r state")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+[1] https://lore.kernel.org/all/20240709-hci_qca_refactor-v3-6-5f48ca001fed@linaro.org/
 
-Assuming that someone on the uapi sides agrees to patch 3:
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Neil Armstrong (2):
+      arm64: dts: qcom: sm8650-hdk: use the PMU to power up bluetooth
+      arm64: dts: qcom: sm8550-qrd: use the PMU to power up bluetooth
 
-Acked-by: Maxime Ripard <mripard@kernel.org>
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 26 +++++++++-----------------
+ arch/arm64/boot/dts/qcom/sm8650-hdk.dts | 26 +++++++++-----------------
+ 2 files changed, 18 insertions(+), 34 deletions(-)
+---
+base-commit: 4f40be61af99a67d5580c1448acd9b74c0376389
+change-id: 20240716-topic-sm8x50-upstream-use-pmu-to-power-up-bt-bf4bd83fb912
 
-Maxime
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
---fdsfmxhl5wgvjiuk
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZpZA0AAKCRAnX84Zoj2+
-dtNdAX9Ax2E/pR1JgBzBrUF/uMPOl1sAEeevA2aoMOeQhKfGs2BZhGJ77abapFvP
-xuT5sK8Bfjqe28CP8kHlRvXG2ER2YP8NG+nrxaw4u1WdmauMPDTJzHoGi2MW4dkH
-Czrtx7ncfw==
-=AL/r
------END PGP SIGNATURE-----
-
---fdsfmxhl5wgvjiuk--
 
