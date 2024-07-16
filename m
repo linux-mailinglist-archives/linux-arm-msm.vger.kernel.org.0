@@ -1,91 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-26268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B1A6932004
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 07:22:13 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B464932037
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 07:54:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9829EB217C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 05:22:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5988B1C212A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 05:54:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C5D715EA6;
-	Tue, 16 Jul 2024 05:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FFEF18046;
+	Tue, 16 Jul 2024 05:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h50l1E50"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Bin38Phh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC8EE556
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 05:22:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B732A18028
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 05:54:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721107325; cv=none; b=sw+8h51/rnGvNNhu+j0zg0dOhyAaaPTlh3ql9FDp/MvlnWqh3eayAX2LgR0L/+PJpn9oNuRlJSeMhkg2u184X0SR84ENIV7mtsaQzGdSz84mW2CDw9EThVlpifwbIPGqXbz7BYHNddpwpjCgtFC+a3NZNWiu84VnILWxHjzJkjk=
+	t=1721109269; cv=none; b=oM+ppUPPkhHAoBSGRwqMoVQR3lYyvH9lf639+TqMWNiXCaYZdB/wvwxIKKD1YYTduMYdEJFfgjoEkEutDnmXsoFgEk7H+ERwX86wFHqv5iJifS5wdPQtsyvCjja6zHIyBNG3vKlnoKsGfyqigQRTCPo2KvHp0aDTqYn/NXRGMH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721107325; c=relaxed/simple;
-	bh=q7htRbTViAynUe1KUvBKJdXCuUBYVcPiUmif37E0la0=;
+	s=arc-20240116; t=1721109269; c=relaxed/simple;
+	bh=8SWh3YsFQcByki1FvXThWtAwdidMLruKFc3hekCFPe0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JpIG8IzYuECG3CPxTiNH5AzZW0llLJjgfgjiqRVfqafpCd2gEVXCpb8a0WnWCCl7jZda1wkg9u83UUvdKTMSRbBu5EBld1hn8Apr8zmGCK9GRJQIIm+l3Gm0kPUR9d6GlkCrfcRN2fjWWFjV386EwDkRsTvyJgEhHNJJVTHQjBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h50l1E50; arc=none smtp.client-ip=209.85.215.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y9CJ0wTnv5DHtsbgZKW+SENQFsOIF2Sde4Ws2TX/d9E25KLrulGx9qRECm7JXcGtOraNWpcrp2AyWcF5g/ycE/+3sE3J+YaN7yrYS641gYpt3kLovv8yoKM5fsnQhrs7n7MTzOn1cbWvHrrm706mQV87x/wqrfC1RmyYsNla4MQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Bin38Phh; arc=none smtp.client-ip=209.85.210.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-6c5bcb8e8edso4135187a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 22:22:03 -0700 (PDT)
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-70af2b1a35aso3418640b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 22:54:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721107323; x=1721712123; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1721109267; x=1721714067; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=nCJcSlsxzmcGU/ol+ZphLepYn+zSneU2YnwQbi1SKTk=;
-        b=h50l1E50aH2wPsA498Dn3f+S9K8XVSyRRjwESJmjOh1ln4jWfVali9dkzwA2Osw8VT
-         870G142gaLS3875inWTT6ndzzuTjGP9Iees/7+mJdIhc6C/88VAInksPHXbP/mmi0EPK
-         ocQH84VU65P1GASktLJxnKGU17/ohS/EDrSd+xdVAaCNy11fHXBYfi83WQ+F5+7PQyRL
-         lWddqynGJMbsKVX1bJggf2g78ICH84Gm6/7I+xPSw23XA6o4UZtPn5aL9dEWmq+xKi/s
-         VCkpJwpv51pCFxV98uv5AqIhVxHUXnVK+ebBLkye3n5HMTA9VMT8U5rd2BLLFcSYDZ3z
-         e0sQ==
+        bh=j5Rz5pUnmzAdXYXomrqcCRUBtbJFIpPghAcemVOy+KE=;
+        b=Bin38Phh/YO4wP/ycVDtJnLhtZUmQc5HRpqIjFTQCetmN9R9Gz561cslSDnHxn+avn
+         8WASst5DssPGJRPrFIgqJY98vofVSg1G5jOyvxTHClqC1JvbatJeysYmq2ib/jstT5uU
+         p1FkAfKs6BQejf5/iT2pR/3E4rq4NH8vQJzrAwU1zxCksA95oJG0wnn+kswPFoi5RnTo
+         t4SNQ5v8X8DI4RSX1P9SHGz84siD7ugr9PYZrvr765THrCoBgB3iCiLFqzIKD6YMZjER
+         6w9mk23TC4y/eY6PgPG3SKmw6jcrgtabUcbnoiaRQSCSVZpl8D2ZA3RHCajU/TtUWnjO
+         EAXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721107323; x=1721712123;
+        d=1e100.net; s=20230601; t=1721109267; x=1721714067;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nCJcSlsxzmcGU/ol+ZphLepYn+zSneU2YnwQbi1SKTk=;
-        b=H2v8chphVLkataAdDwLPO88ihhZctIiFoWI/KYJpC7d18NlozdUGS+PfEkLK84Pk1F
-         Vyd2uK2Z0AFLSIUmk6xkRAWrc+o2t17lezObuaoaGslFF/jnwcj/fQKcyMTKEbFJgIMK
-         94fZ2DHi9i+aNlPLtxcxfuD+HPegKpw2Uq/XwASHInmBADenHXjT4XVgjEq+3UlNikE4
-         SIEe+UEAQ+VPgjbivdmbkAPkN6rFUTpI/CPf8kdgd1wsO3ZC5LT7zkYntbWMHjb3PLbU
-         FnHySDHV+ioArmSm8C0WAgL5EesVuIxeNWt1/Cm5ZdE98gkuBtdR+zI7FSUrAoe6U7CB
-         EfyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUcq2m71llE9q4sq/OlGxmOJJn96qF8NxIDjiBJY5cUsorF2P8ShzaivPJ/SUpFIvLnx4jMeOzMLCTXs7eSRaZP4MG5b0bo93fQcECeAA==
-X-Gm-Message-State: AOJu0YxQHsWeqNiZ7MANWXD6hdUgd2dLYeBOmurlTLNWsKKE3rusrZzW
-	Tkqi/lMrvGFp0c83J7bK/lJy9CBIeKLZBccwQzDUmQtiHPnIzrXetqOuJV6wKQ==
-X-Google-Smtp-Source: AGHT+IHYY+XYEW0QviFVSL2Wxv+cytzps03AGaTXPes1VQeCqPvZwa/jm9JROaB1vSRLz5c8LKdaTw==
-X-Received: by 2002:a05:6a21:458a:b0:1be:c1c0:b8de with SMTP id adf61e73a8af0-1c3f12978ecmr1126946637.42.1721107322938;
-        Mon, 15 Jul 2024 22:22:02 -0700 (PDT)
+        bh=j5Rz5pUnmzAdXYXomrqcCRUBtbJFIpPghAcemVOy+KE=;
+        b=puvf12m4qtN5XS7yQeMetsC4+z3GJHpmsdvjbqHrCQaVCEcfIoeOfDzVNNMkuGFWo3
+         8Tc51nk9+7x/Iq6BhAxg7vmellWing8oH+o7y2pM2DLwaU/EgHV8BdBWKj/o1wmTXxib
+         naxkb9s14SWxzfsZcaw9/HdoNNy6tRPYrVoHlet4n8RzQGiW+q58wZ/BavjRkTj/0OQ4
+         5plLI7Fm4DxiYKohEia2p2cJhUVKknqFiBfndLncQOxwKljV0ixf0jKzXfLTiQBjMDud
+         c1aSPnb5LS9LbHOTXnJWLXPIjSJiUb/pqheKZJaugsDDk5hC3QOvNy485jNBhznB37eZ
+         8p1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVbOk5kdtZpy0Kr3G0Hex3FkPbpfGky+GJqAdBJwehEsaKBG4KhEa2pC3ScTyNAAYh47UKu77w/3kruLpcnIzMUmQsROjjNN7Tf+AbbiQ==
+X-Gm-Message-State: AOJu0YzN+9q/hNITCeG64quGV+msqhLv/rM1tc6c/hjdKPEJCmk7V9GF
+	KRh0DS/jQN+CyCjJ6QyoShrYDLuQoDBwfVyN1KHBaV2HF/GnkUIr12zeEc3xuQ==
+X-Google-Smtp-Source: AGHT+IHuG+uTfs6HPzYAk3BUQ13tmoIgfCaKYHZ7kdFOSweAVIAvws9TwolgArzopQbySBvmZoFtVg==
+X-Received: by 2002:a05:6a20:7348:b0:1c2:a3c7:47dd with SMTP id adf61e73a8af0-1c3f1271246mr1372239637.42.1721109266955;
+        Mon, 15 Jul 2024 22:54:26 -0700 (PDT)
 Received: from thinkpad ([220.158.156.207])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2cacd41aa2bsm7358175a91.31.2024.07.15.22.21.58
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2caedcacf88sm5380644a91.55.2024.07.15.22.54.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jul 2024 22:22:02 -0700 (PDT)
-Date: Tue, 16 Jul 2024 10:51:55 +0530
+        Mon, 15 Jul 2024 22:54:26 -0700 (PDT)
+Date: Tue, 16 Jul 2024 11:24:21 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>, Arnd Bergmann <arnd@arndb.de>,
-	Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [GIT PULL] power sequencing updates for v6.11-rc1
-Message-ID: <20240716052155.GE3446@thinkpad>
-References: <20240712091008.14815-1-brgl@bgdev.pl>
- <CAHk-=wjWc5dzcj2O1tEgNHY1rnQW63JwtuZi_vAZPqy6wqpoUQ@mail.gmail.com>
- <CAHk-=wjcO_9dkNf-bNda6bzykb5ZXWtAYA97p7oDsXPHmMRi6g@mail.gmail.com>
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH 13/14] PCI: qcom: Simulate PCIe hotplug using 'global'
+ interrupt
+Message-ID: <20240716055421.GF3446@thinkpad>
+References: <20240715-pci-qcom-hotplug-v1-0-5f3765cc873a@linaro.org>
+ <20240715-pci-qcom-hotplug-v1-13-5f3765cc873a@linaro.org>
+ <dca49572-dc77-58df-1bd1-b0e897191c87@quicinc.com>
+ <20240716041827.GD3446@thinkpad>
+ <5f8218cb-a8d6-789a-8723-0af07353e432@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,55 +97,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHk-=wjcO_9dkNf-bNda6bzykb5ZXWtAYA97p7oDsXPHmMRi6g@mail.gmail.com>
+In-Reply-To: <5f8218cb-a8d6-789a-8723-0af07353e432@quicinc.com>
 
-On Mon, Jul 15, 2024 at 09:29:34PM -0700, Linus Torvalds wrote:
-> On Mon, 15 Jul 2024 at 19:17, Linus Torvalds
-> <torvalds@linux-foundation.org> wrote:
-> >
-> > Hmm. Let's see how this all works out, but I already found an annoyance.
+On Tue, Jul 16, 2024 at 09:54:54AM +0530, Krishna Chaitanya Chundru wrote:
 > 
-> .. and another one.
 > 
-> On my Altra box, commit 8fb18619d910 ("PCI/pwrctl: Create platform
-> devices for child OF nodes of the port node") causes annoying messages
-> at bootup:
-> 
->   pci 000c:00:01.0: failed to populate child OF nodes (-22)
->   pci 000c:00:02.0: failed to populate child OF nodes (-22)
->   .. repeat for every PCI bridge ..
-> 
-> for no obvious reason.
-> 
-> FWIW, -22 is -EINVAL.
-> 
+> On 7/16/2024 9:48 AM, Manivannan Sadhasivam wrote:
+> > On Tue, Jul 16, 2024 at 09:34:13AM +0530, Krishna Chaitanya Chundru wrote:
+> > > 
+> > > 
+> > > On 7/15/2024 11:03 PM, Manivannan Sadhasivam via B4 Relay wrote:
+> > > > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > 
+> > > > Historically, Qcom PCIe RC controllers lack standard hotplug support. So
+> > > > when an endpoint is attached to the SoC, users have to rescan the bus
+> > > > manually to enumerate the device. But this can be avoided by simulating the
+> > > > PCIe hotplug using Qcom specific way.
+> > > > 
+> > > > Qcom PCIe RC controllers are capable of generating the 'global' SPI
+> > > > interrupt to the host CPUs. The device driver can use this event to
+> > > > identify events such as PCIe link specific events, safety events etc...
+> > > > 
+> > > > One such event is the PCIe Link up event generated when an endpoint is
+> > > > detected on the bus and the Link is 'up'. This event can be used to
+> > > > simulate the PCIe hotplug in the Qcom SoCs.
+> > > > 
+> > > > So add support for capturing the PCIe Link up event using the 'global'
+> > > > interrupt in the driver. Once the Link up event is received, the bus
+> > > > underneath the host bridge is scanned to enumerate PCIe endpoint devices,
+> > > > thus simulating hotplug.
+> > > > 
+> > > > All of the Qcom SoCs have only one rootport per controller instance. So
+> > > > only a single 'Link up' event is generated for the PCIe controller.
+> > > > 
+> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > ---
+> > > >    drivers/pci/controller/dwc/pcie-qcom.c | 55 ++++++++++++++++++++++++++++++++++
+> > > >    1 file changed, 55 insertions(+)
+> > > > 
+> > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > index 0180edf3310e..38ed411d2052 100644
+> > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > @@ -50,6 +50,9 @@
+> > > >    #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
+> > > >    #define PARF_Q2A_FLUSH				0x1ac
+> > > >    #define PARF_LTSSM				0x1b0
+> > > > +#define PARF_INT_ALL_STATUS			0x224
+> > > > +#define PARF_INT_ALL_CLEAR			0x228
+> > > > +#define PARF_INT_ALL_MASK			0x22c
+> > > >    #define PARF_SID_OFFSET				0x234
+> > > >    #define PARF_BDF_TRANSLATE_CFG			0x24c
+> > > >    #define PARF_SLV_ADDR_SPACE_SIZE		0x358
+> > > > @@ -121,6 +124,9 @@
+> > > >    /* PARF_LTSSM register fields */
+> > > >    #define LTSSM_EN				BIT(8)
+> > > > +/* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
+> > > > +#define PARF_INT_ALL_LINK_UP			BIT(13)
+> > > > +
+> > > >    /* PARF_NO_SNOOP_OVERIDE register fields */
+> > > >    #define WR_NO_SNOOP_OVERIDE_EN			BIT(1)
+> > > >    #define RD_NO_SNOOP_OVERIDE_EN			BIT(3)
+> > > > @@ -260,6 +266,7 @@ struct qcom_pcie {
+> > > >    	struct icc_path *icc_cpu;
+> > > >    	const struct qcom_pcie_cfg *cfg;
+> > > >    	struct dentry *debugfs;
+> > > > +	int global_irq;
+> > > >    	bool suspended;
+> > > >    };
+> > > > @@ -1488,6 +1495,29 @@ static void qcom_pcie_init_debugfs(struct qcom_pcie *pcie)
+> > > >    				    qcom_pcie_link_transition_count);
+> > > >    }
+> > > > +static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
+> > > > +{
+> > > > +	struct qcom_pcie *pcie = data;
+> > > > +	struct dw_pcie_rp *pp = &pcie->pci->pp; > +	struct device *dev = pcie->pci->dev;
+> > > > +	u32 status = readl_relaxed(pcie->parf + PARF_INT_ALL_STATUS);
+> > > > +
+> > > > +	writel_relaxed(status, pcie->parf + PARF_INT_ALL_CLEAR);
+> > > > +
+> > > > +	if (FIELD_GET(PARF_INT_ALL_LINK_UP, status)) {
+> > > > +		dev_dbg(dev, "Received Link up event. Starting enumeration!\n");
+> > > > +		/* Rescan the bus to enumerate endpoint devices */
+> > > > +		pci_lock_rescan_remove();
+> > > > +		pci_rescan_bus(pp->bridge->bus);
+> > > There can be chances of getting link up interrupt before PCIe framework
+> > > starts enumeration and at that time bridge-> bus is not created and
+> > > cause NULL point access.
+> > > Please have a check for this.
+> > > 
+> > 
+> > Host bridge is enumerated during dw_pcie_host_init() and the IRQ handler is
+> > registered afterwards. So there is no way the 'pp->bridge' can be NULL.
+> > 
+> > - Mani
+> I leaved a gap between bridge-> & bus by mistake, I want to highlight
+> bridge->bus in above comment. The bus can be NULL and it can create NULL
+> point access.
 
-So we did see these error messages on non-CONFIG_OF platforms, and a fix was
-merged as well with commit, 50b040ef3732 ("PCI/pwrctl: only call
-of_platform_populate() if CONFIG_OF is enabled")
-
-But apparently, the fix assumed that all CONFIG_OF platforms (selected in
-defconfig) have 'dev.of_node' populated. And your platforms being an ARM64 one,
-has CONFIG_OF selected ARM64 defconfig, but uses ACPI instead of devicetree. So
-you don't have 'dev.of_node', which is a valid configuration btw (we failed to
-spot it). And in other places of these of_ APIs, we do have checks for
-'dev.of_node'. So for this issue, below diff should be sufficient:
-
-diff --git a/drivers/pci/bus.c b/drivers/pci/bus.c
-index 3bab78cc68f7..abe826bb5840 100644
---- a/drivers/pci/bus.c
-+++ b/drivers/pci/bus.c
-@@ -350,7 +350,7 @@ void pci_bus_add_device(struct pci_dev *dev)
- 
-        pci_dev_assign_added(dev, true);
- 
--       if (IS_ENABLED(CONFIG_OF) && pci_is_bridge(dev)) {
-+       if (IS_ENABLED(CONFIG_OF) && dev->dev.of_node && pci_is_bridge(dev)) {
-                retval = of_platform_populate(dev->dev.of_node, NULL, NULL,
-                                              &dev->dev);
-                if (retval)
-
-Let me know if it works, I can spin a patch.
+How can the bridge->bus be NULL? Only if the bridge itself is not enumerated, it
+will be NULL. And that cannot happen unless something wrong with the controller
+itself. In that case, how can Link up event be generated?
 
 - Mani
 
