@@ -1,118 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-26344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B25229327A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 15:39:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 46ACE9327BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 15:44:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1329AB21602
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 13:39:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CBC4BB20A17
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 13:44:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A280C19AD93;
-	Tue, 16 Jul 2024 13:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC52D19ADBA;
+	Tue, 16 Jul 2024 13:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PZQU9Rc1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PeNXiryn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7F514386C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 13:39:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36EF0199EA8
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 13:44:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721137147; cv=none; b=L+Wt0MZAKC6wxHgTyWkZgBYHi0y9SD75eMijanWBWls7oRYV8oz/JxML5pZ9kmXmdacvyp7fygUOUBE1ua/HI53phiB600im7MzzEFYYFy+aBm5UWGdyCUbaVtBAnDDBRj6t9VONzMeXeYqZNKYvh2Ilvx0Frkh65N/dNz4LgDU=
+	t=1721137488; cv=none; b=ug4K72nn8dj/bjCrowfZA1h4s6IK66TDosfnXQiDKXviCGMOUK4ZrT9tkBd1XsfY7jaFgZLY8ck3rEMP0O8NSN7P9QMsj8LR/MgEH5qAoNGfRlbYN+KNkqoTRg5ANZX58Ce5ElqZXCHCzHHS2bPxHk0P4Be05lmfdhpkn5pzz2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721137147; c=relaxed/simple;
-	bh=X7bklE2GsqthkplIQvZDv5rg3XCkY1GEHEuOa1Ws1NY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Yn0hgJ3eyC9RBM6jnPRRitJLvufpd82Y7mariKq5LUsyXMH2u2+3xFw1QKp3QeCXMnVtYSS9eX3bz55JIv9ZFEDKQ/CFsGHJ6TKyQtkLsrjhCi1aOS45N+h+NtITNMFbgRQarB/GPFjxuGxDyJY/RccbKwTRHjaRQ2zG9oruCb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PZQU9Rc1; arc=none smtp.client-ip=209.85.128.47
+	s=arc-20240116; t=1721137488; c=relaxed/simple;
+	bh=qF2z35+sMltHxOc1VgxTfEf8aDED8ki06NXvVuf7QCE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JY75/qQPez/S8rwQPIoO18v24EhL30ffI5qKV1h30q0XxluvD99xjiv4EzH4WObw1QJ8tgHCL5X9iSNmzZ8wPCElz8sOfBqO23I6DLLhwnq/l2F9AZ4UJ+VzbO6yJcZXdFYtcQNHh1NJwfFGooBZrLQnudV094coN8LeiyfG2Ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PeNXiryn; arc=none smtp.client-ip=209.85.128.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-427aeebaecdso14587795e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 06:39:05 -0700 (PDT)
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6634f0afe05so10712077b3.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 06:44:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721137144; x=1721741944; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=hoRw9TcQOEMBdmZxq6Nd1FUggtL3OxOdKdUjU7Ar674=;
-        b=PZQU9Rc1uamUErcSkYo19qR9o9/Qg+Fl+7O1SBqoh+4cT234bFkHAWfW9/3P9NCfG6
-         CyKIFlw6jJ8JgtrXoNeYdgNzUeu0wclCpvkTi4BpyFy2nk6zJ7pQClwJmah1juz8g2Xf
-         vCVYNQr1tuhi4/5Q+eBwJUAMUoQ3p780kMURErG7+VciGybWg2hfmhi3f02TlbNtL9d2
-         zBUr0hqiWHnNfOpZ6jaoioBy2KBvm8vuCz3bVOk/gx4Mui7mnb6ykjAFK5cvR8+FiusK
-         rUli2JRfz+CfagRELvymZ1cP6MiSRrT5zrTFLNuI32eSduncjaPYK20c1UvKh8C8NACm
-         fJqQ==
+        d=linaro.org; s=google; t=1721137486; x=1721742286; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=hMSSp6veBmjTrsSFSHpHaaBnQdaSZwPgrQ/EgS/wyFs=;
+        b=PeNXiryn8BdqicRO8oh2b9XMIACUhk9asPxHm7+2NqB1FlmdS2iYbpMAAieFMaLDSD
+         XE3XQE8uh5NjhYI04P+A0YODI1BkU3jepL0eHz71VGwDCPjYtUfx3veCZktS//XXkziT
+         u4sK9Fnj4PpjDFdYiaMSwdqV29OD660WSOJsZpF6MIA7H/pz9WSHBDWgtAX88qCqoTe5
+         bMCor/54WsCDESeEGDUuxrSU7B6M1GZ0BPu84un9Mz4bZjijCK6NJO/+Hss3dWmgcelN
+         uL7VH4cKwNRpcToV9aRXp5j1xD+RHV35Gb4in6eUs+CEiBRk61O32lc2aWMwh1BtPJNg
+         1L2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721137144; x=1721741944;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1721137486; x=1721742286;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=hoRw9TcQOEMBdmZxq6Nd1FUggtL3OxOdKdUjU7Ar674=;
-        b=KDwWFBdP3JLL4FoxcL1F25qxHfhZvWmohrh5fHam+zpgQPWndq84OVY1eiivafEleI
-         o/v8CO3WDbrF01ns2AiwkJvDl2Hi4IrAtjU7gt43U/9cpiVi7mrAI1FLYatysafzQbjy
-         HSZYFHjLCAURwz492uUoTNa2s2BoSs4z0S1e7fKE0QMIS1rLgnAVTL08BxAp9panyoRZ
-         39ho8WSfaABJAaOnNANKqb1JWRNGV2mN/EtLH7SnCE7n2xXLyCIvg/SvBPsh/3R8hUyn
-         chCUBNTeG5gvi/wNjLhLAL4sL+dpPu75i0ELw8VC3j+NhIisFVXKNnMIqEVS6Va2XJsf
-         y3IA==
-X-Forwarded-Encrypted: i=1; AJvYcCV4BaXEYdr4k+pCkjN0C0GJ5kuft9S4W/CO5tz+xS2XiciC0tjG72wMHDDtLlbO+3SCBBo0vw0CuGxk6IfyZy5ZgJgMUeTSsG/9h06GzA==
-X-Gm-Message-State: AOJu0YybY509gwWbKzrGOeCi55wgVHa/GKSscFGGiwa4urpS6/5tJIaU
-	sUW2NSCoFvZ5hPYc0P1PMq9/J0Hs9jkKuV7NPiw/1WeWUTRiUpPkYBgBna5YE2o=
-X-Google-Smtp-Source: AGHT+IGXs0HjAx3DBf4LWEbRloC7TAHjz/hinusld4TqeGA/WwEle1cNhCho1exyWsBz602KmeEFJA==
-X-Received: by 2002:a5d:6143:0:b0:367:9877:750e with SMTP id ffacd0b85a97d-3682609b526mr1426499f8f.25.1721137144212;
-        Tue, 16 Jul 2024 06:39:04 -0700 (PDT)
-Received: from rayyan-pc.broadband ([2a0a:ef40:ee7:2401:197d:e048:a80f:bc44])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3680dabf0e4sm9106564f8f.33.2024.07.16.06.39.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jul 2024 06:39:03 -0700 (PDT)
-From: Rayyan Ansari <rayyan.ansari@linaro.org>
-To: devicetree@vger.kernel.org
-Cc: Rayyan Ansari <rayyan.ansari@linaro.org>,
-	Amit Kucheria <amitk@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-bindings: thermal: qcom-tsens: Document ipq6018 temperature sensor
-Date: Tue, 16 Jul 2024 14:38:02 +0100
-Message-ID: <20240716133803.82907-1-rayyan.ansari@linaro.org>
-X-Mailer: git-send-email 2.45.2
+        bh=hMSSp6veBmjTrsSFSHpHaaBnQdaSZwPgrQ/EgS/wyFs=;
+        b=Km0/9DEFv4+O5prf5qAxgo51KzEw/s8rN4CoquNM8qLDZR8j2xNEn4Fc49qckEvoAa
+         Ch89UwD5pMaKkV3wv1/QQaJkCqgIcxBEsGDJYYmRO14o57wYOxgXkcWPiJSqp9DJQtlN
+         TuehlRiayeSvbG2objXmBKtf9pXrsgxuFaJ9OZ67aDpuODR37yy7hOMFxjgJyUILHH5z
+         Ngx2/NwF5YS4BtVSZaLqcqibXk8zegqpaQ6U/vTgzX2vgo+BZ/q51xVE0Ls6SYE48gxS
+         jaKvoRxKGX2HlOrwxdZK5e0RClXYI8oFSgemRsayO5v/oKMT02iWv6FqOWfv3WTPEx6L
+         RqQg==
+X-Forwarded-Encrypted: i=1; AJvYcCXkgM76mawu8f9kAkhlLK3g41mTkp7DvrjKCOTrGSpL31yUioiPglBFf6RwTZSfAVtl8Wv1N1Fz9+Z9FSG5aWqCdKWsmQdCv6jemxLFbQ==
+X-Gm-Message-State: AOJu0Yy6J0GiScyvohQkbKxdKiuvAKVUm8VS8cRJmAZDJrJYihzhr4TI
+	0mdYle3/RYzkypn518+HM1AfVaiTlgjYMYFI32lZ2/4KS3xZ3elv08NEEK9/IwMXYrnFkJz3TSB
+	2hPwA2AklKqSTek7fe2HzgeY2vrO0Yfa3Any+TA==
+X-Google-Smtp-Source: AGHT+IG/rzM+ieKCxdAt0e72AO2CIHO0AW2zvcYWqKkpa7h2Gpwy3XK13dCbfyR1XJ2KNkhxFbb/u/RN2U+IHqQ03c0=
+X-Received: by 2002:a05:6902:c01:b0:dc2:5553:ca12 with SMTP id
+ 3f1490d57ef6-e05d56cd8bdmr3129594276.14.1721137486142; Tue, 16 Jul 2024
+ 06:44:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240716-topic-sm8650-upstream-fix-dispcc-v3-0-5bfd56c899da@linaro.org>
+ <20240716-topic-sm8650-upstream-fix-dispcc-v3-2-5bfd56c899da@linaro.org>
+ <dccttz5b44bl3lwmcaqz6wjx3n4sv3eq4yh6276vzwrtkcvqcw@qxhbo7bylnsg> <9ad10d92-d755-4fae-b206-6e8648be6d48@linaro.org>
+In-Reply-To: <9ad10d92-d755-4fae-b206-6e8648be6d48@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 16 Jul 2024 16:44:34 +0300
+Message-ID: <CAA8EJpr9L+AKDhuHfQa=Nco7fvG9vLH3a+gxVhENrhz12b3n=Q@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] clk: qcom: dispcc-sm8650: add missing
+ CLK_SET_RATE_PARENT flag
+To: neil.armstrong@linaro.org
+Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Taniya Das <quic_tdas@quicinc.com>, linux-arm-msm@vger.kernel.org, 
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Document the ipq6018 temperature sensor, which is used in ipq6018.dtsi
-and is compatible with the ipq8074 temperature sensor.
+On Tue, 16 Jul 2024 at 15:32, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>
+> On 16/07/2024 13:20, Dmitry Baryshkov wrote:
+> > On Tue, Jul 16, 2024 at 11:05:22AM GMT, Neil Armstrong wrote:
+> >> Add the missing CLK_SET_RATE_PARENT for the byte0_div_clk_src
+> >> and byte1_div_clk_src, the clock rate should propagate to
+> >> the corresponding _clk_src.
+> >>
+> >> Fixes: 9e939f008338 ("clk: qcom: add the SM8650 Display Clock Controller driver")
+> >> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> >> ---
+> >>   drivers/clk/qcom/dispcc-sm8650.c | 2 ++
+> >>   1 file changed, 2 insertions(+)
+> >
+> > This doesn't seem correct, the byte1_div_clk_src is a divisor, so the
+> > rate should not be propagated. Other platforms don't set this flag.
+> >
+>
+> Why not ? the disp_cc_mdss_byte1_clk_src has CLK_SET_RATE_PARENT and a div_table,
+> and we only pass DISP_CC_MDSS_BYTE1_CLK to the dsi controller.
 
-Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
----
- Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
- 1 file changed, 1 insertion(+)
+Yes, the driver sets byte_clk with the proper rate, then it sets
+byte_intf_clk, which results in a proper divisor.
+If we have CLK_SET_RATE_PARENT for byte1_div_clk_src, then setting
+byte_intf_clk rate will also result in a rate change for the byte_clk
+rate.
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-index 99d9c526c0b6..d6f333a7bcd1 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-@@ -76,6 +76,7 @@ properties:
-       - description: v2 of TSENS with combined interrupt
-         items:
-           - enum:
-+              - qcom,ipq6018-tsens
-               - qcom,ipq9574-tsens
-           - const: qcom,ipq8074-tsens
- 
+Note, all other platforms don't set that flag for this reason (I think
+I had to remove it during sm8450 development for this reason).
+
 -- 
-2.45.2
-
+With best wishes
+Dmitry
 
