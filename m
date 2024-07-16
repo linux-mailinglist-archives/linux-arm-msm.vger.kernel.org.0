@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-26336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F29E932654
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 14:14:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E8B393265D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 14:15:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ED47D1F22065
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 12:14:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A08CC1C22A0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 12:15:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00A2517623C;
-	Tue, 16 Jul 2024 12:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 876A4199225;
+	Tue, 16 Jul 2024 12:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PCKrXFZM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OcNOrxf3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E618146A8A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 12:14:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BE441A87
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 12:15:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721132058; cv=none; b=hyKC47xmy0vEycnFw7suQeHuVR9QtwcX3T0SzZfZvGrkY5RKVCzXV7EUXXlipc0TSqFKd/+GYn9tbcW7fyEz0m+4pv+GY0z+dNBA0lGQwbU42twXPBlVWlHJNsJZAMpzJONq+q5HuvEqi2nI6lZX/pLQlxJnrTkl9E9wzIqnEwA=
+	t=1721132120; cv=none; b=FD/kktPQVn3KPr3VEAMY10T1CQKFM6fIdeixbphKeosqcv9C6GXUQNMpeLcvdLuaU/iD0rFWFNX79cUAzWhoX/TRRON0ptCASYD1P5BPuP3JtDSWvC27iPIPUKNaXbaMsD7fWFvYwHL1ZdMRmvtnta1+utxRWHpcWhLhCXPD8Qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721132058; c=relaxed/simple;
-	bh=V7rbI5/Qc8hNO2pBsS2IWIuxSgAUw55HVygVA+XMVCw=;
+	s=arc-20240116; t=1721132120; c=relaxed/simple;
+	bh=/mJSEHVWWL/+/TzG4vXCLTvtSyApfM55zicTRypWeIw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AHKgsR8MJTmYLiqy8cdikTkA1fCiPY4KSwX+zoc5izvYheukgFIXHt3h5Jrw/RGUaxD7txgf8+dcTXFZyQeh2oZ0cWFDoYb8cqmbi5wIUgN/DBD9/QcUT9/UeBadcijwPmZyH1MhVz2hypBVguWmFaetFbO39R4iJYInuxgGPSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PCKrXFZM; arc=none smtp.client-ip=209.85.208.48
+	 In-Reply-To:Content-Type; b=qeTJCWIzKlWobd543Vv+AigZU+BEXf76DjC90x+cM3ZN2Her7Ej3DpcXGp1N9gbpTVxBW+JT1aGrCnitVoO2KG4wB6JzjHRhZ4Hq0LhnKgsbVt8IleX1NA4YhgrQUXE56LVhjR7I3nVkDBhlzEy7TGmv8qwSQajq6O8DlxnIkqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OcNOrxf3; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-595850e7e11so6734009a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 05:14:16 -0700 (PDT)
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-595856e2332so7076469a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 05:15:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721132055; x=1721736855; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1721132116; x=1721736916; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=vyxnnE0zepFaZUKd9AE+84DlPyZhFF7Z4N8eydCCjbU=;
-        b=PCKrXFZMEnyWy91oUY9y/B9emuxJnr8f2SQU7N3Ll5JtTE0FIJT6wlV8wp7hHXT6OO
-         nfMBiPko+iRXisqGDqa4xUTNnVyW22mpM7DiNFWm3CBbkK5xXWrEyhcfpu2vpBMlVJn/
-         saJrqBFcOFNpYpI6poAwnTUNIE07vRY9a9dYog+R7GpJv+LJmcsuqN0aWXMDFPjqOP8l
-         v6cFjtLTehdVD+ullhyaTaTdN5dKHdUzY6wbcjgpFlX4W3FlnJfqF/bukK6szxA0cbe9
-         oEfjAHJm72T0461b5LIgmZjNfbzn+KOj/NoIQieiJXCMryPLZkdTr88KGk22rgSPizqj
-         Rv0A==
+        bh=iQwj37Z64kkWkq1QNNNRBOD95NNDPJjcOzXptOwbtXo=;
+        b=OcNOrxf3FUK8MfZDS0v5z5fks207JeddgsHbPSNuDyPWiH2bxC1aHMnj44pkhQ4dli
+         CzE6dicMDQ6q+TrkT1t5f9tdbGxAPp/WZrIm0zAZiEmt3b+vfcKdVDSl/9XB0/SVsf5Q
+         WcbAwmQnlGEm3jgDPT97829aYEIo4KeAUJjeAtLrQscdk3pH61ezuBvyy24WkUbjoueX
+         GHEpAw/cu3ip6ZZabTv2L3FQm7WjkF6zhoIVj8P96zLaA3ij5jrk5g9huRMYS954JCkh
+         nAzCjSMjw0/rJYnm9ZX975JIqjd0LwAqvxvO96mNNmOd/uIUBa5Z/dkAoTLZFJPGLpEX
+         HDTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721132055; x=1721736855;
+        d=1e100.net; s=20230601; t=1721132116; x=1721736916;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vyxnnE0zepFaZUKd9AE+84DlPyZhFF7Z4N8eydCCjbU=;
-        b=H0MpogMO6OfX/aSZf8KVRYERPdVK+tE8IR3Ixuy3SOg0X2ThlyNbezDf1H2CtBAYtS
-         QQjXlljn8ottQIuMfwJYG2AsgufkY1FQYB16qiz7KwuhFxmgUoF/M3nXHPhKvXZveRFk
-         6ce94uVdr0dbfiHWdgJTQNavN41VgliAGUm65IX7BpivCpPCMFOsmd6gME7IfCxgbFHv
-         qPzOrXbUKlv8N5pfyJQGNy1P+5HcUhSezufiFlmxUDL5ZQ5/wlsZPmRJ7kiFu9zUOztC
-         T/QZFM8gjwSnogMcHnzs9ytShCLOd9huiINpQE6O6kdWygGGiVZTwQp/8BDJTXQUvke/
-         /8fA==
-X-Forwarded-Encrypted: i=1; AJvYcCW+H7TJEo6Y+8Z5Tq7lPmsOCZElFBKuw6W38ta0/9dJ6KN/poT3I5CIemiv+iP4bZO2oam2mZAC329aavB/SUp/pKgV1UOXW+5fUlhzjg==
-X-Gm-Message-State: AOJu0YyN9uZG3Y9c3DnYUoqP7Z6PpfYxXbHlbTn7/vEopt9fLyfAxzeV
-	8BDu4XozNG8KXoTkPG8/yAc6oz5HvmLAtr1qzmxSNmOXtg4ARTwXzrH6CTQ12m3wmrzS1fVhDNs
-	g
-X-Google-Smtp-Source: AGHT+IH0R+a9GVWEl6OcxuSggOE7JIjknEw6ljqIh13dNXnwXp9AsE5YkhDQQ1zeR2LFCNPLR6Gw0A==
-X-Received: by 2002:a17:906:2a44:b0:a6e:f997:7d91 with SMTP id a640c23a62f3a-a79ea491f74mr131815266b.38.1721132055204;
-        Tue, 16 Jul 2024 05:14:15 -0700 (PDT)
+        bh=iQwj37Z64kkWkq1QNNNRBOD95NNDPJjcOzXptOwbtXo=;
+        b=PAnrUkYtOBpUEXYw5LFo5iTTWTaJd7VdEUlikq20H/dyhxHH6l/anz9f5KDHhKYUP/
+         62JfbpzHzHgvwWYBYkSs8WpyerRtNoZ9CB1LRDJvZUBtTycHcaWg9kBqp7CVd6viHlLW
+         ZxhuaNJxcmPMbKuGX3y5YZ7adJPkuq/LRQItiFB3nQpKkVvht8JZvRFkK2sbJ81d/XP9
+         D15QLvO/pLr2M/qYz13cT3bseERHAoUJ9rn0aYFKQhSh/IubYDCIX2mgCwHUYRTjOSyC
+         sZSmalk8uBmyiua6XKSTE737r2wmSBcqn/zdYMgZMCRMgqHpZEjfb17HdQkh6LME7Tng
+         ehOw==
+X-Forwarded-Encrypted: i=1; AJvYcCUKMc0UJNgvEwdvj7owqRpkOnpcH3RGRuX52tl8eas4sjNel3H1tZG37vdAwL9qLEgODa9kohoLem7CnQYnhO/hg5gFHQAz8vWFKhK8QQ==
+X-Gm-Message-State: AOJu0YwO+qMxSfBRZ5oVTgkB/tpBpAag9D3WASY3FLl7iUYcs3LU5fwk
+	UBJpXAvpCVzvtdNw2Jwhd/J/x65+OIum02VOBoXBGO4UMQNdTSjCoVvEsu214V8=
+X-Google-Smtp-Source: AGHT+IHfEm9rSiHqbH+SusBNneyOosPqVrpvY7RwUkyFYFz6O61G1Ifzfw53sglOfpelrIaM3lCSvg==
+X-Received: by 2002:a05:6402:3486:b0:58e:4088:ed2 with SMTP id 4fb4d7f45d1cf-59eeee44bc9mr1445338a12.16.1721132115994;
+        Tue, 16 Jul 2024 05:15:15 -0700 (PDT)
 Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a79bc5a39dasm305565766b.43.2024.07.16.05.14.11
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-59e663e4a6esm1594433a12.80.2024.07.16.05.15.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Jul 2024 05:14:13 -0700 (PDT)
-Message-ID: <61e04616-32f8-4574-9721-ea032d227bf2@linaro.org>
-Date: Tue, 16 Jul 2024 14:14:11 +0200
+        Tue, 16 Jul 2024 05:15:15 -0700 (PDT)
+Message-ID: <d454e01f-3d6b-4a02-87cf-3d289bc6957c@linaro.org>
+Date: Tue, 16 Jul 2024 14:15:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,29 +77,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 6/6] iommu/arm-smmu: add support for PRR bit setup
-To: Rob Clark <robdclark@gmail.com>,
- Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, jgg@ziepe.ca,
- jsnitsel@redhat.com, robh@kernel.org, krzysztof.kozlowski@linaro.org,
- quic_c_gdjako@quicinc.com, dmitry.baryshkov@linaro.org,
- iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- Rob Clark <robdclark@chromium.org>
-References: <20240628140435.1652374-1-quic_bibekkum@quicinc.com>
- <20240628140435.1652374-7-quic_bibekkum@quicinc.com>
- <CAF6AEGvroi8rJimFv95tkWmRFa5_aTpBJ7GFcRAuZpLGdSyEYQ@mail.gmail.com>
- <0650ba0a-4453-4e2d-8a76-0f396ac1999c@quicinc.com>
- <CAF6AEGv_9e-TDW1r0N4-db6pY_aV_EZFqrpNbATVS5Vy6+fs1g@mail.gmail.com>
- <4a5f54c7-120e-427d-8a0a-9fb83e13a72e@quicinc.com>
- <CAF6AEGtrtFNxDWtuADA4oOHhZJ=dJZcGaJ1XLFJt4fe4Xp=pTA@mail.gmail.com>
- <3b7c05b1-8f36-4c81-a55c-dbb467314099@quicinc.com>
- <CAF6AEGuRKU+DkL0-b3xdR1R45_MiiKQYRRXEXYz-xohu8rUaEQ@mail.gmail.com>
- <CAF6AEGtbw06-gOSvX9gAbi=SA801gmD3_8c5xkOU-G9g2qKptQ@mail.gmail.com>
- <9509f256-04a4-4907-98fc-148c5087d74d@quicinc.com>
- <CAF6AEGuLwZ0yFGWMKX-O1VjQB2M57K+CsyJ=7PCKXE=b=VsSNg@mail.gmail.com>
- <3382aaca-4ca1-46e5-a445-dcb115ff206f@quicinc.com>
- <CAF6AEGu0uH7GuNb3SJVk0cPDUwkYZ6NTG1ze+wmc1OjsaownwA@mail.gmail.com>
+Subject: Re: [PATCH v6 5/9] pmdomain: qcom: rpmpd: Add IPQ9574 power domains
+To: Varadarajan Narayanan <quic_varada@quicinc.com>, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, ilia.lin@kernel.org,
+ rafael@kernel.org, viresh.kumar@linaro.org, ulf.hansson@linaro.org,
+ quic_sibis@quicinc.com, quic_rjendra@quicinc.com, danila@jiaxyga.com,
+ neil.armstrong@linaro.org, otto.pflueger@abscue.de, abel.vesa@linaro.org,
+ luca@z3ntu.xyz, geert+renesas@glider.be, stephan.gerhold@kernkonzept.com,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-clk@vger.kernel.org
+Cc: Praveenkumar I <quic_ipkumar@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20240710061102.1323550-1-quic_varada@quicinc.com>
+ <20240710061102.1323550-6-quic_varada@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -138,46 +129,23 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <CAF6AEGu0uH7GuNb3SJVk0cPDUwkYZ6NTG1ze+wmc1OjsaownwA@mail.gmail.com>
+In-Reply-To: <20240710061102.1323550-6-quic_varada@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 15.07.2024 10:07 PM, Rob Clark wrote:
-> On Mon, Jul 15, 2024 at 4:00 AM Bibek Kumar Patro
-> <quic_bibekkum@quicinc.com> wrote:
-
-[...]
-
->>>> As I checked gpu_prr_mem reserved mem section is not used for mobile
->>>> targets hence not present for other DT only compute targets like
->>>> x1e80100.dtsi has the same. PRR looks to be smmu version specific
->>>> property.
->>>
->>> I only see it in gpu_prr_mem in x1e80100.dtsi, but not documented
->>> anywhere.  I'm only assuming based on the name that it is intended to
->>> be for PRR (but not sure why it is larger than 0x1000).  Are the
->>> PRR_CFG_*ADDR regs programmed by the fw (and access blocked in EL1) on
->>> this device?
->>>
->>
->> As I checked, if the drm/gfx driver allocates the page for drm, then
->> this reserved-memory region is not required.
->>
->> PRR_CFG_*ADDR regs have read and write access in EL1 only for this
->> device, behavior is same as other devices as well. These are not
->> programmed by fw.
+On 10.07.2024 8:10 AM, Varadarajan Narayanan wrote:
+> From: Praveenkumar I <quic_ipkumar@quicinc.com>
 > 
-> If there is any device which _doesn't_ have EL1 access to these regs,
-> I think going the reserved memory route seems more future proof?
-> Otherwise we later on have to deal with two different ways to do
-> things.  But I'm not sure if there is any such device or risk.
+> Add the APC power domain definitions used in IPQ9574.
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
 
-We can have our cake and eat it too, if we keep the check for a
-reserved memory node handle, but make it a dynamic allocation (see
-[1] for example), this way there's a way to opt into using this from
-the DT and there's no need for adding more properties
+Could you please confirm [1]?
 
 Konrad
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/msm8916.dtsi?h=v6.10#n109
+[1] https://lore.kernel.org/linux-arm-msm/57dadb35-5dde-4127-87aa-962613730336@linaro.org/
 
