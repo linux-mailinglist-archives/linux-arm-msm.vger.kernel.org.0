@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-26258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05C86931EBA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 04:17:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DEF96931EBD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 04:18:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 371321C20F11
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 02:17:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 99C79281A0C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 02:18:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E1017482;
-	Tue, 16 Jul 2024 02:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CDF81078B;
+	Tue, 16 Jul 2024 02:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="YVnqDJCD"
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="WZTrapg3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCD01078B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 02:17:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AED101CA
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 02:18:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721096253; cv=none; b=QQuq0zJpEKv37nXK7bNNryh7CtlyKbnSnEP/q7O2kpWiVURvVrMxGIfnjRs9VOeUpYWu26oWzb+nvfR3Ui9I9y7b4rwuA/l07wdf1sBezIHyhzJQ9pVwTT1S3l/y66XT5i9oRepJyDr9Zcj8N2bARaCUsgNydn4gpFN2vhHbU00=
+	t=1721096335; cv=none; b=JjwW6Mr2z40wJIYzbBZb9QHRprTqiYrky5swY0+slNuP9kr5mFtzocd6xVGPPD0nsmdKz3qALy7CpgdAm5kEx4LftlpGwCP3eBxYY76F0ANBiSvxOV3EKezpvhbG180Gdf1c8iGBixfmJIXGBjvJe++OYZKrHYCAhFN2uvEPp/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721096253; c=relaxed/simple;
-	bh=BBaTfLOz45gv5TSiEZbKjsh54MGUgFRkzmECknTKYSY=;
+	s=arc-20240116; t=1721096335; c=relaxed/simple;
+	bh=pyKsuwqVIboN9EwThCz5EI7HZB3JIVS86qz5vkpAtLc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=npiWjNqoTTBzRXcofxbiDrCtny78lbfw0hNhC7Le+ZhsEZXuzN7gDNonmmb49Kbobi8uPe7dUVsTdKEzMErxbRv9UmJg1lOHkaF91sg6rqO6GXVH/nE6R8BmC5KspCbv3hT8xkMkjgrm5cpjTYSBHRL5gPq1wad/SnqmU6NjS6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=YVnqDJCD; arc=none smtp.client-ip=209.85.167.46
+	 To:Cc:Content-Type; b=K038sa4vEARrnNnqc3cBIRleGie/QBf1IvQ3GqMbGBxnxDhq2k92A5k30d+byjyvCabathSL0cZd9+4fyaHOeKG77XKjFLLHMPD1PNkndvfe9PnQxgz31fjvDpO4sp3Jn1sjyLN77vfvkWNpwXp3THoJWDbHbyuBoEXa879elc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=WZTrapg3; arc=none smtp.client-ip=209.85.167.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-52ed741fe46so1748881e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 19:17:31 -0700 (PDT)
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-52ea2f58448so6630074e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 19:18:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1721096250; x=1721701050; darn=vger.kernel.org;
+        d=linux-foundation.org; s=google; t=1721096332; x=1721701132; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=OxmhwjjpGd8zVAlRCw8Rz5PC00uRnZ4KkvDhpfV+dDA=;
-        b=YVnqDJCD44kOXZXBTBGc9EuBsfn8Qw7UHx15ihLUr41gkBovehWIeUtE+vp/ht7/FR
-         8f2vNAys/tI71b5Zn0nyHaRaCn/VEJTXB0CHVaL91jFNAc5ggQOI6nWv7mhQj305cnMS
-         HjAUtTfYPeMJWrzCTeRyQwaJOG1hFbzGd0VE0=
+        bh=c+l4WKIaaq5577Hbze0C2fWBRy2R2qvbUGhdaCCzWQY=;
+        b=WZTrapg34Dbp03FU43bq4kj6Hx51l/zqXX0MqKNRp+56sBM8tI86sPnvKraGXehBLQ
+         D+XqCv6PKvqYPzff/SEPWzrXFlwm4OXso3TlSF4NbFYATJN5hgPOFfCSYFJ0go8U76Nj
+         ZWlnu+JvimAQywFcBRc5ijuGaPNKgpQ+vPRcM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721096250; x=1721701050;
+        d=1e100.net; s=20230601; t=1721096332; x=1721701132;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OxmhwjjpGd8zVAlRCw8Rz5PC00uRnZ4KkvDhpfV+dDA=;
-        b=t0yefH0dA7E8kZP3mSv5JqYXbi8gb4Latxb5H9sxjGtfSTR7Y2nt8Uhs6XyCm4+GOI
-         7T/1n7mSAblKDSWWtINdkyvfYrDhQuCl+Pw7aeBNlwAAYbdiMOq3gpoAulcUmQE6ZFDD
-         c9aWeGy3Sjcq1gVb6BLrVwEOyn0xUFyXIWxjfrGlD6KneQ7ST9S2RDkGQDZX9u4fC5Yf
-         5UmBf3tCOojljTFU2AqucmPFBr8MA4eIzHAbxE7c7aZ8nN2ajPX2sPCLehXFFQZcGjcS
-         uVTZszo0OkiP5DlEiAbp/1SMmBUeq+rm1xDfFDvfMlNxxPy3RibuHAxb3BQ9qzMdSWEN
-         VJnA==
-X-Forwarded-Encrypted: i=1; AJvYcCW+wm5/nM2NMbe1LdUJQSdgTbnv7s+n/Xsv/Xl/DUiV+OeGNF6No6i7vM3fVYoEWqbfDyedVqPBW8H3xsQol4kuc9hpJx+5JTAFfVFZpg==
-X-Gm-Message-State: AOJu0YyHPMBbwHr/fFhqVNWf+pf5J3E2EG8sOX11uZgRsAJwe8UM4+1+
-	hIld5UBVtdJ8xcku4xA9OiLkVXqhciqUTl0HWMEj51O7tQTPm+qriSo0WAWaJWwMK2eAFu+Hxr8
-	sd0EBKg==
-X-Google-Smtp-Source: AGHT+IHsCPRJ2Hl2FNc7uIh5IM/Cmd/fIFAn3ttzBJBep/UgUiXu1Hvy1yhigXraxjU7Qe+F9cjXbA==
-X-Received: by 2002:a05:6512:68e:b0:52c:df51:20bc with SMTP id 2adb3069b0e04-52edef21748mr308069e87.16.1721096250099;
-        Mon, 15 Jul 2024 19:17:30 -0700 (PDT)
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com. [209.85.208.176])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ed2532772sm1014668e87.222.2024.07.15.19.17.28
+        bh=c+l4WKIaaq5577Hbze0C2fWBRy2R2qvbUGhdaCCzWQY=;
+        b=O31Gh6Ugqkdu0icqerAQPz0HHLDn0x0J5vooK04GubhJbphiQJmsdRBZY9/OdQXbtK
+         igzm5HYU7Go3GcdZAw0z3Nj7yNWSC5VXUp0xYtVHB9JHR9l/4xHl3A/ET/LTx8dGmGnG
+         ILUNoZU8Vp0daQAwLqXKzGVn5xNm0bc8LNhj5ZSWZaqTistkSH/QfEPsftsIJjTTt1as
+         z5FUKAS/KBuh5JOoti6KlaOHT1hswC84Qz7OBGbhmcV7fGvuzSQwLIDIsg63JAat1vuJ
+         rEU7kGQzMbj6mwYO1p+xpWXRNEmu6/C7EUdCnjfr0ZaKENJaTNO6MYXryaRg240Ybz1z
+         aUyg==
+X-Forwarded-Encrypted: i=1; AJvYcCUiWwhk+rqNyK+LTItMhpwzhtHu56a/wesQKYui2UFURGMOxkdL9FfkF7xY0d/7iKI0QP5t6oR+YJcHicVZiowdK2AA6P0+uAW5BWxEWw==
+X-Gm-Message-State: AOJu0Yy/3TOVmJlQkvVhzzMbxwhJH7zGjmc5MAc2mULAcAX/XskO+G6/
+	YtRl5hqMsE+EDf/yogcNtWtMH5Iz9d/rRFrYnySYm9HQfuhsHxKkzru7+wta6Ou/OLCNRWAheUA
+	rM+g=
+X-Google-Smtp-Source: AGHT+IFkkbuvvNmleS6i9F9sqIJftJe3ku2RebznxJ8l+RoJru0xpkPqm6UzK4t5G/aXsmnCzNWQKQ==
+X-Received: by 2002:a05:6512:3b83:b0:52c:836c:9ce8 with SMTP id 2adb3069b0e04-52edef0eb2cmr423283e87.4.1721096331643;
+        Mon, 15 Jul 2024 19:18:51 -0700 (PDT)
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com. [209.85.167.41])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ed2532732sm1015493e87.220.2024.07.15.19.18.51
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jul 2024 19:17:28 -0700 (PDT)
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2ebe40673d8so65496731fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 19:17:28 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVdzPgyVkgY/ZxpnhPRN/vcD4bvFwMHEampGeCh7lmWTtvlPC8YEgvMH52xlcqoCF2n1NMWMCketNSd0ih2PjLZbK9XqK7Q22SdItxZZQ==
-X-Received: by 2002:a2e:9d86:0:b0:2ee:699b:466 with SMTP id
- 38308e7fff4ca-2eef41dab4amr4022321fa.36.1721096248037; Mon, 15 Jul 2024
- 19:17:28 -0700 (PDT)
+        Mon, 15 Jul 2024 19:18:51 -0700 (PDT)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52ea2f58448so6630052e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 19:18:51 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUTMHGY2md3WwXOedgX1byRC02idtWZnAgtrZcBluMZjKO/lxz/yh60h86c/4PnWhPFWhn9Kl/2XaSQ6NUzW35s9pAKTtyGbca45wUQkw==
+X-Received: by 2002:a05:6512:280d:b0:52e:9905:eb98 with SMTP id
+ 2adb3069b0e04-52edf018688mr350932e87.35.1721096330887; Mon, 15 Jul 2024
+ 19:18:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240712091008.14815-1-brgl@bgdev.pl>
-In-Reply-To: <20240712091008.14815-1-brgl@bgdev.pl>
+References: <20240712091008.14815-1-brgl@bgdev.pl> <CAHk-=wjWc5dzcj2O1tEgNHY1rnQW63JwtuZi_vAZPqy6wqpoUQ@mail.gmail.com>
+In-Reply-To: <CAHk-=wjWc5dzcj2O1tEgNHY1rnQW63JwtuZi_vAZPqy6wqpoUQ@mail.gmail.com>
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Mon, 15 Jul 2024 19:17:11 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wjWc5dzcj2O1tEgNHY1rnQW63JwtuZi_vAZPqy6wqpoUQ@mail.gmail.com>
-Message-ID: <CAHk-=wjWc5dzcj2O1tEgNHY1rnQW63JwtuZi_vAZPqy6wqpoUQ@mail.gmail.com>
+Date: Mon, 15 Jul 2024 19:18:34 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wgiVHdEX5i5kuNLewy9OUvYaWX_DYiRmOS1Fcj1pJ+QPQ@mail.gmail.com>
+Message-ID: <CAHk-=wgiVHdEX5i5kuNLewy9OUvYaWX_DYiRmOS1Fcj1pJ+QPQ@mail.gmail.com>
 Subject: Re: [GIT PULL] power sequencing updates for v6.11-rc1
 To: Bartosz Golaszewski <brgl@bgdev.pl>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
@@ -94,29 +94,14 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Krzysztof Kozlowski <krzk@k
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 12 Jul 2024 at 02:13, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+On Mon, 15 Jul 2024 at 19:17, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 >
-> This PR contains the core power sequencing framework, the first driver, PCI
-> changes using the pwrseq library (blessed by Bjorn Helgaas) and some fixes
-> that came later.
+> But asking *twice* is definitely not kosher.
 
-Hmm. Let's see how this all works out, but I already found an annoyance.
+.. and obviously it's only "twice" right now.
 
-It first asks me about the new PCI power sequencing driver.
+If every driver continues this pattern, we'll have "n+1" questions.
 
-And then it asks me separately if I want the power sequencing support.
-
-Now, either this should
-
- (a) not ask about the generic power sequencing support at all, and
-just select if if a driver that is enabled needs it
-
-OR
-
- (b) it should ask about power sequencing support and then if you say
-"N", it should not ask about the drivers.
-
-But asking *twice* is definitely not kosher.
-
-            Linus
+        Linus
 
