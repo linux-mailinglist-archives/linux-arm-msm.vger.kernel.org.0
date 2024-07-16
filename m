@@ -1,164 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-26320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D49E893248F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 13:03:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F35A69324AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 13:13:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F04301C2159B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 11:03:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AEE15282AE3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 11:13:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C233B196C7B;
-	Tue, 16 Jul 2024 11:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D75A1991BA;
+	Tue, 16 Jul 2024 11:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h0HwTnN5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UFqYks1F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0AA1CFBE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 11:03:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE1D197A92
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 11:13:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721127819; cv=none; b=S7MVRjsbNp81LRfIsuM7MhVb5QKNlWJSBfaZKD8s+Y73BnSD2FgfPI6rt/Cx08WeKZSqmnymXe0BAtO9i0ZjNBQj89GEIEZw3qfv/4D4UWXYFnnOqiNqeh0kflWQXtS9DnKkTqAhpEXb4YvXpGG2SoZvELGvK2WezezoXO/Z+MQ=
+	t=1721128383; cv=none; b=HjqeAvL8X1yynWDdICNghTvINfCLFu54ios3NSTsa7Rb8JTR7bg4cvMlaI/a0wcN/Dl26j+tHlAuSiqvHeMCo6kJbVCZ2ZBmCVFQ5Idc6KZ75mJECwq0QwdxEaEtk5j4i902U0koJJNYyRhhyN4lutkRflp4H4afG5umhydAyEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721127819; c=relaxed/simple;
-	bh=0IiKw3P7n9ea+EHSibuWiGAbol231bzGQi1ipj/vWqE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LVPGwE/+3H2g8nLgouYF+aEknf/JaIksf/qB4ESMAZIYgWCohcmwxz3BWu18FO+XgEjOP5wvDWUW7EZiM/pcjXglU0m5+tVjyInoBZT/LI+bMN6Tmg7TceK9qvvy2dohXpMYIpUp5a21cmlnTOAKEYmLlUZuA5a/CiacABzJKjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h0HwTnN5; arc=none smtp.client-ip=209.85.219.174
+	s=arc-20240116; t=1721128383; c=relaxed/simple;
+	bh=Npyk8yTFFIp3zu60cJGVp6aA2D+oqrywC7FU3CijOAg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V4JWHF8tTBOpfdkLYWmlDfnrmMxOrVi7JEm/VHGmMGXyuL+J/0BhWoNj7Mb/uS0mgw/+TzjerM9zepFExPABEyF6+1xIDc8CNByl4TovWQejcTJSzf/yS9ShjzM6sxBnXRzCyxXv6qFUB8ukrT1CM/gX8cY0a14X5+hWFHvXP9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UFqYks1F; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e05992214f9so3592960276.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 04:03:37 -0700 (PDT)
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-52e9944764fso6200028e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 04:13:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721127817; x=1721732617; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ESXugLMn1ZeeSJRsgklvu9ye6fD2GXrcaAUx8jiFFn4=;
-        b=h0HwTnN5BE1+ktOLBXpNYpzpJrhFyrNcNs5LD8sU6ZMPksJnvkvd8nakv+7L98ZBxO
-         jGRhWI4y3tpaC/3ihK/cbmAULRVR8+ZL0+xt3Z5AHK7jhJFScV7IHBs/cu5UWwOAuQau
-         ATu03z6BCjs7ujpIM6PpoMuG03Z4u2e83gwjAJufZlGW9Hj9NieG079WA/+Cs1FqS7If
-         DZE64tYLjLH4PeU+ZmDcJN1VMpH+JxaAv54KTYfQ5Md5BaPTqQSszJ6BkSpW1pm+Yaxf
-         mustCgoJOwvFz5SpjctJsQkAV335WVy+wWMTuhQRbJHb4eh7Ys9ovyPeY58W8HRJW5Zb
-         lrRQ==
+        d=linaro.org; s=google; t=1721128378; x=1721733178; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=lkRwuDFICXCFOrI/2I8SRM97q+8MIDN5II0awTzIkIA=;
+        b=UFqYks1FUQj1fkWtSQONxgEwcl+o5btCtEqDcCrVT9OxqiHB9vYmhNm1+w7/X4+VFH
+         Q9qiZiDhyUvnxE1bLmtmcUACwFMWspkXahEVywXfGHMy/FedYBFK8NjjV91fUU/z/RHF
+         lgFmDrUqZjYRIFeA8JJ57TaCkFrXfNr711ynsBu0aawhbENZ9a9TIHt31O5yVfCEeTED
+         /RJrjLCLs1VPO855WiAi7XY0fkMIzmbI/J9gJyGAXtiz5kW+3t5oS+rpy0YHW7f7vskh
+         SYLrCG9cYkuSNo1Xj38ZvkiOJDfEFcxq1XENPmmuBtgwWgxSpH+kn2UKY3YPeaLLVMR1
+         PfyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721127817; x=1721732617;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ESXugLMn1ZeeSJRsgklvu9ye6fD2GXrcaAUx8jiFFn4=;
-        b=JS8xdN2ltUkTUnaCJqi8Wn1bqHzSaK/3I7nUDtMPzJN54S+kKXAt/G6gd7MWBmCGbG
-         lDgHAvopr4xslKvBmxPzNZwTeKDxXNSYSArN0cMm88bUuDLUOJ12/WK+0yrJjiMiY7lL
-         RR350TnafjEiMd0Mx5T14xhf0Xl0ayB9fxNgB92LCaQ0kyTE7k2QRvrdmcfPAKC7zM7z
-         c0+KwiA5MbJ3IGrROANUJRHrknPMk9UztoUhJlWQL0kLDaE7LtwyLWXl4igVqZhVpiG0
-         VtGHZDDv0RNLdM6zU+fRnBjGCHefxC1U5RAXYkzSAmXNhGq6qvIOlTdKHiGl11wx5sAb
-         SPEg==
-X-Forwarded-Encrypted: i=1; AJvYcCUB76dtRr4VQcYvpiI/07RG7AA1Siq2uaSciZRuW9YCiE7+TO8HXciUvlNdet6Aao879z0TY5Dsrdfk0J+VJKFOlf02xJF5WhCiTsCoVw==
-X-Gm-Message-State: AOJu0Yzxbcv3U7Gr2/SN1dgCSFrkaZVW6TPn0PHqEzK11iqfAsPdXZeK
-	f4t72Z0BeByDqBaukXkxNNqBRlU58Bk1UA3esJF9QkdRAuKmcaE7JdaJuiHqzBRD8FRQk3m7Jc/
-	O96fPpA3ARX+pT0AbX0RDCCk4eFSMRpOTCYnEaA==
-X-Google-Smtp-Source: AGHT+IEVxHn6Ap4SPTlWx+byHu29obsflmFGXwp7s1cPBRfp7TXM/kkjJMmx/DKgGYYY2Vlx2JDNjhK3pJBe/M9xXJ8=
-X-Received: by 2002:a0d:cd41:0:b0:62f:aa7b:7075 with SMTP id
- 00721157ae682-6637f6a4369mr17721667b3.25.1721127816951; Tue, 16 Jul 2024
- 04:03:36 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1721128378; x=1721733178;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lkRwuDFICXCFOrI/2I8SRM97q+8MIDN5II0awTzIkIA=;
+        b=XhgejPuFSZPKrnauUC6F+Pw0GRRWSXPBbys9qVUCyLxRhLQ5GMV6uKkMxKAQSaIWfZ
+         mZNDPNgQ1tawmMhPiDMbJu2pfwfZ8Zsh0fQujZNRSmhv0tEUEFOZwI4m4ND1M6HPfTE3
+         2FUrNsXuL9VlPZmT8aw6tnsY/yNH7qB4i9v8D+09+QPFtjAKcOgEcznEZfTzQ08RQJcS
+         h1xxHHu+LGErY6sNJEhEZoXxVfGp80Ojo41IzhGESjrykJpDBscirirnMlsxx+5Ek/NM
+         naQcMuFVTC9PtgfbOVF7+IaaoiAURcbBWn0/+9zUvKYdc0WgOVqEmzUsGzQbdqs7oZrN
+         mcAA==
+X-Forwarded-Encrypted: i=1; AJvYcCX90MhiX4OTBHX1DWkljI2rNfqEe0JraKq6U8fSDa2bbQFDdelR2k5V0g9/AmQXOMi7P8w2Oth35pKDxswX8k6K0xqlYSTYsPxY6HIfGQ==
+X-Gm-Message-State: AOJu0YymOMZWKAeCz3bojWjEex4aejzkWO/BXFKZqPn/QLlQ8bqulrm1
+	RgjgIrcoudsBkZERmVKuISsxvBeUELQmS39xuJ9RBP6rryFDO9uk5A/Ahc/5goE=
+X-Google-Smtp-Source: AGHT+IG35l+B1/YBwglx16llaqYjEWDCga2Oe9hUaLufPC7j7EzfiIml0NpEIJWCt7t15bPWQxNWIg==
+X-Received: by 2002:a05:6512:138a:b0:52e:7a8c:35a0 with SMTP id 2adb3069b0e04-52edef0e8edmr1040257e87.7.1721128378321;
+        Tue, 16 Jul 2024 04:12:58 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ed25398basm1111790e87.285.2024.07.16.04.12.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Jul 2024 04:12:57 -0700 (PDT)
+Date: Tue, 16 Jul 2024 14:12:56 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Patrick Wildt <patrick@blueri.se>
+Cc: Kalle Valo <kvalo@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Steev Klimaszewski <steev@kali.org>, linux-wireless@vger.kernel.org, netdev@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100-yoga: add wifi
+ calibration variant
+Message-ID: <56zweixkjz2oqvmmxxgd3zoc2jf4us4mmhutjtjvejsurtycwh@fv24arxg2eqr>
+References: <ZpV6o8JUJWg9lZFE@windev.fritz.box>
+ <ZpV7OeGNIGGpqNC0@windev.fritz.box>
+ <cisap4ctuolfrs6hjqxz45fqtckcy6uhjzma2shcxkso73jvoh@jj7l4bgftoir>
+ <ZpWbUjHna1cE5zHW@mone.local>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240715-x1e8-zap-name-v2-1-a82488e7f7c1@linaro.org> <20240715190108.vjctytyntxlottgt@hu-akhilpo-hyd.qualcomm.com>
-In-Reply-To: <20240715190108.vjctytyntxlottgt@hu-akhilpo-hyd.qualcomm.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 16 Jul 2024 14:03:26 +0300
-Message-ID: <CAA8EJpqzhEotdVsW3EudR9cqSOm-djjKSgRaqKRbEtJ6wTBZKQ@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: disable GPU on x1e80100 by default
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZpWbUjHna1cE5zHW@mone.local>
 
-On Mon, 15 Jul 2024 at 22:01, Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
->
-> On Mon, Jul 15, 2024 at 09:18:49PM +0300, Dmitry Baryshkov wrote:
-> > The GPU on X1E80100 requires ZAP 'shader' file to be useful. Since the
-> > file is signed by the OEM keys and might be not available by default,
-> > disable the GPU node and drop the firmware name from the x1e80100.dtsi
-> > file. Devices not being fused to use OEM keys can specify generic
-> > location at `qcom/x1e80100/gen70500_zap.mbn` while enabling the GPU.
-> >
-> > The CRD was lucky enough to work with the default settings, so reenable
-> > the GPU on that platform and provide correct firmware-name (including
-> > the SoC subdir).
-> >
-> > Fixes: 721e38301b79 ("arm64: dts: qcom: x1e80100: Add gpu support")
-> > Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> > Changes in v2:
-> > - Keep GPU enabled for X1E80100-CRD (Johan)
-> > - Link to v1: https://lore.kernel.org/r/20240715-x1e8-zap-name-v1-1-b66df09d0b65@linaro.org
-> > ---
-> >  arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 8 ++++++++
-> >  arch/arm64/boot/dts/qcom/x1e80100.dtsi    | 3 ++-
-> >  2 files changed, 10 insertions(+), 1 deletion(-)
-> >
+On Tue, Jul 16, 2024 at 12:01:28AM GMT, Patrick Wildt wrote:
+> Am Tue, Jul 16, 2024 at 12:51:53AM +0300 schrieb Dmitry Baryshkov:
+> > On Mon, Jul 15, 2024 at 09:40:41PM GMT, Patrick Wildt wrote:
+> > > Describe the bus topology for PCIe domain 4 and add the ath12k
+> > > calibration variant so that the board file (calibration data) can be
+> > > loaded.
+> > > 
+> > > Signed-off-by: Patrick Wildt <patrick@blueri.se>
+> > > ---
+> > >  .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts      |  9 +++++++++
+> > >  arch/arm64/boot/dts/qcom/x1e80100.dtsi                 | 10 ++++++++++
+> > >  2 files changed, 19 insertions(+)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+> > > index fbff558f5b07..f569f0fbd1fc 100644
+> > > --- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+> > > @@ -635,6 +635,15 @@ &pcie4_phy {
+> > >  	status = "okay";
+> > >  };
+> > >  
+> > > +&pcie4_port0 {
+> > > +	wifi@0 {
+> > > +		compatible = "pci17cb,1107";
+> > > +		reg = <0x10000 0x0 0x0 0x0 0x0>;
+> > > +
+> > > +		qcom,ath12k-calibration-variant = "LES790";
+> > 
+> > It doesn't look like it follows the rest of the calibration variants.
+> > 
+> > Something like "Lenovo_Y7x" or "Lenovo_Yoga7x" sounds more logical.
+> 
+> This is what's both in the DSDT
+> 
+>   Device (WLN)
+>   {
+>     [...]
+>     Name (BDFE, "BDF_LES790")
+> 
+> and kvalo's board-2.bin for this machine:
+> 
+>   $ strings board-2.bin | grep LES
+>   bus=pci,vendor=17cb,device=1107,subsystem-vendor=17aa,subsystem-device=e0e9,qmi-chip-id=2,qmi-board-id=255,variant=LES790
+> 
+> I don't think we can hand-pick these strings, they come from whoever
+> decided upon them and fed them into ACPI tables and QC's binaries.
 
-[..]
-
-> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > index 7bca5fcd7d52..8df90d01eba8 100644
-> > --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > @@ -3155,9 +3155,10 @@ gpu: gpu@3d00000 {
-> >                       interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
-> >                       interconnect-names = "gfx-mem";
-> >
-> > +                     status = "disabled";
-> > +
-> >                       zap-shader {
-> >                               memory-region = <&gpu_microcode_mem>;
-> > -                             firmware-name = "qcom/gen70500_zap.mbn";
->
-> In general, why not keep a default zap firmware listed here? Anyway we
-> are disabling gpu node here in case of platforms which doesn't upstream
-> secure firmwares.
-
-Excuse me, I missed the question before sending v3, however the answer
-is still going to be the same:
-
-First of all, we don't do it for other platforms
-Second, we don't do it for other firmware. Each DT declares its own
-set of files.
-Last, but not least, it's better to get an error message regarding
-firmware-name not being present rather than a possibly cryptic message
-regarding firmware failing authentication.
-
->
-> -Akhil
->
-> >                       };
-> >
-> >                       gpu_opp_table: opp-table {
-> >
-> > ---
-> > base-commit: 3fe121b622825ff8cc995a1e6b026181c48188db
-> > change-id: 20240715-x1e8-zap-name-7b3c79234401
-> >
-> > Best regards,
-> > --
-> > Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >
+Ack, if Kalle has already selected this string, we can't argue.
 
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
---
+
+-- 
 With best wishes
 Dmitry
 
