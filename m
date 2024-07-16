@@ -1,171 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-26301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4F01932342
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 11:46:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13D24932372
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 11:56:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7660D2825F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 09:46:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8535C1F239D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 09:56:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDAE51991A3;
-	Tue, 16 Jul 2024 09:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7F9F197A72;
+	Tue, 16 Jul 2024 09:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dcnioQCF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Tjwpr15a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81894198E9A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 09:45:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284322E832
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 09:55:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721123122; cv=none; b=kgOevI+1adMfuUU23aRf05l3eUYlO8i7fUaSEXYt2Aa+rsQzDDcAXYwbV+61RAML/UzZqKU4sKdnZbpdYG7bjuq6A0neqCAhn1FLSpoIluNaghfqhRE7a7JDdk0AbzUcvoMCvXPs0Df+YH8AljbnpuWCTkz3lr4qJdU8NeyWcP4=
+	t=1721123758; cv=none; b=sF5f7a+cNNM5O0rLErjWlCLZI8PvpyX9+yyzH+Yy23K+/ZLmh8yfTI+BWRdRyqls3FFo9Dpw+2yEbELXP6fNIEQBnkZcZmcZmfvHO5tW0fQlnZ38x22J0IL38rinLLoWNC4is8sIE4dLO/V7hPYcPFYbO9vstl2d+yB2oqbY7mI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721123122; c=relaxed/simple;
-	bh=vq9kQDucZZaaXMppqui404uEJ0q8knUSeXPUQx+QAE4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qT5lpfKcdQ01Zlh0LKz/4B85SGP0NRIQfgrN9uYrbZWTlF4HhmN3IhLWVof7cStu/fLpkpxuNGYhhn/S/2B3Ev3sTQ0CzMFihPQk2/nb0astFQRIV0g5eFVFrRs08DfiyCF4DIkoC5gCGJ/V/sSL4mBdCuw9Mqehik74xsnmzlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dcnioQCF; arc=none smtp.client-ip=209.85.208.180
+	s=arc-20240116; t=1721123758; c=relaxed/simple;
+	bh=IKDf3UkdBuH38DCvAMMD13kRXL5GatuQLI8hucyLu1E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=r0IEY1oJqodUxaE4NPzCETMwOjuYRF44a8K3PkTiiH4q91LzhftGu9Aoblt8j8roCZ5QnWS93QykpuuJTDwkV6QUUW8MJXhs08BfuqXTfYei7ivtLcvIxv4oUDGB/OiXX32jdg6ybLItAgRZfXlGI3xBuOrdbg6Ckyn6+Z+ElPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Tjwpr15a; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2ebe40673e8so70306751fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 02:45:20 -0700 (PDT)
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-367ab50a07aso3337413f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 02:55:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721123118; x=1721727918; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5NuFIyWh2EPTvca8mT4rSO45uIeLlFHL1Wx11wqOMQc=;
-        b=dcnioQCF6R/tAAF/Ar8+n4h5AoesVMfEXnKRrtDnD3QKSulHbHVjTHm6yPFYU2YyvO
-         n18nNz1kqGc63qW/+IUASpA4ZzFroLFZKLNQdHShgMbJh+bSfeICRa13NkR2vD11Imqb
-         Wd/5IP+tckBbLOm5NSUtUzR5muaHXGIadnlplFyqgjDO5Ua56J3dqDl+89uKxah5tXk7
-         E9gfRQHfJxRlB4PETbgLXnogtQraqLEdCA309k7gkppuasBvUmmaNKpNz9s85MR93Hfh
-         Ef0HPH1N/w9HAzF2qY7w1lZ02yk9I/LmWu33IawCvVIzzuBRLqk2jlM+lu3yjoSInBPz
-         kNLg==
+        d=linaro.org; s=google; t=1721123755; x=1721728555; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=G/olg4pPYowonDS6iIauF1CvyhTPcwwFOxr3z5IbHdQ=;
+        b=Tjwpr15aqA/BPW5EsRRH1WyLWFVW3t1BaebucYxjqNgKHS9oan1m53JtjgbE9u65I8
+         D8VESrgKYfxATFEngmUH3xyPCOKHm9DgmyK4yi5z7kCE2dKlXSlhC/u/yJNfFSyWSelv
+         72kLaODb4+yhNoDIQLqDSNgfpZSqgrwlBu+5ED2weyapFkSG2/w3vJN7UjYyQ7Xks1Fj
+         nRcCG9igAIYWOzGY04OpPF4R0gY4Gly72rH4z1IwGjJFX8wedK5xuA6NRoXkWKfllIbO
+         MRZJMZkXfzQ/aT+M5ptbyUiwk76Eb5MtaC3L0TYUqmYwOTy/1v7ZNEvi+BFcrP/Ysqqi
+         LSLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721123118; x=1721727918;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5NuFIyWh2EPTvca8mT4rSO45uIeLlFHL1Wx11wqOMQc=;
-        b=huwP/2UKqfCfahlm+UwqS15j1RHiHrPv2LjIZNJZ7/DzruZhHLAfeBmnATdHp/AKix
-         HKoIj5oXJTN/y6G5qRBbbVvH6ikWHtunBLMw6LKg9mndoZXBuIBkFZ3GFPqShFxTqJn3
-         /72Ma+95FGLPFkek1igBdpExuO4QJHgGRxBUAORp8xWnY37OyVtXBUo4j4fba0yX82T5
-         lStM5ER71Zy3Fv4LMG6DKHILpUgL0EvI3RwKZMvr7Rq+qs1pqo8tVOxmafA9vUNKTRbo
-         nA+mEkX+e+hYUml2AaspFLOY7iEoDMuyASUqWy/Vb0B3UNcEjVnzW9/8VdVMflwZMR9o
-         yseQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV5U3cMnPiDl+vygqct5/PHipl9O30p57FEk9XIp883mwZWBz72Tix/rtK7kVSRnbWjPc93Nxv4AR1fJ5B0j4OvHHo4wW886yoysuoPDw==
-X-Gm-Message-State: AOJu0YwTjQwxq89V6w3kTo60wLhkdkzxJXdY8OBurCRcDEqA3X68CZhi
-	rAIDlq2D7DvTd7kUWPUEYP3EZ81xbRIfzYe3i2aiAfCe0opgYz/Gw9ssEgfDFYo=
-X-Google-Smtp-Source: AGHT+IG7g7z6HLYJ14CcKV617EB+IkO1Ar44iuZCqLPAlbLMxByW1bM90ZwiiGB8c5P7bBsY3CJHfQ==
-X-Received: by 2002:a2e:b04a:0:b0:2ee:4f22:33f9 with SMTP id 38308e7fff4ca-2eef41b0e5bmr10639741fa.24.1721123118097;
-        Tue, 16 Jul 2024 02:45:18 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4279f2cc2efsm154408185e9.36.2024.07.16.02.45.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jul 2024 02:45:17 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Tue, 16 Jul 2024 11:45:11 +0200
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8550-qrd: use the PMU to power up
- bluetooth
+        d=1e100.net; s=20230601; t=1721123755; x=1721728555;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=G/olg4pPYowonDS6iIauF1CvyhTPcwwFOxr3z5IbHdQ=;
+        b=iyefY9cYighnJxe1/QPTIY+dXALuri82PoGzxDO7vb2jWIWRALsBQvPtuPqaH5cCGN
+         76oZYybkSYd1UBPAediYN4hHs2p0cW0dSCoW6lPJtua90wG2eHpvXLw1zhoJY5D2jdqK
+         xeGoP4Kr2p9+I8g+tyAyeMk3ioqWHc5/HaWMuIym8piwPRl47N3TTMjfvrXlIslzx3jq
+         eHGSknNvcNdrxVkMj8EcaCokYvEcsFj8JLBgfn7DXg0PuWqu+Gc2+WWyJIatk9IE1Wqc
+         l8GWywnbewKvpizTbhCyyURp6HlsPwEwDwaLeRKw4TQZC6VLJ/uQ1u761fIuFiVG1ycq
+         AviA==
+X-Forwarded-Encrypted: i=1; AJvYcCX1q+UIvy+yB+50QZH0TZCrp1bdt+nJSjn+ScLqBuVlhK1ndAjzwtKq344VQg91cKoGSYBQBOSU/ysdeqkglblv+2qx662tNnnCda2wwg==
+X-Gm-Message-State: AOJu0Ywq0fu0JxJaSxaD9Rgp7u6c7ZvASEryqtwnyIt87ngU1zOj5FYF
+	VzyZwojDod1yYOsv51DJYGgQMzQmT8K6y53US9KRVzOY3QLYiQF0rHB6t6rmjns=
+X-Google-Smtp-Source: AGHT+IECqv+IwV2EF4YBefvX50x3d6wJMth6y3D794pvAsND2gF8a9+T8Ehd1tNE3M+gP+6dLAKEDg==
+X-Received: by 2002:a5d:5f4d:0:b0:367:991d:8b76 with SMTP id ffacd0b85a97d-3682609e9a7mr1188873f8f.15.1721123755574;
+        Tue, 16 Jul 2024 02:55:55 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.137])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3680dafbf29sm8570878f8f.70.2024.07.16.02.55.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Jul 2024 02:55:55 -0700 (PDT)
+Message-ID: <60b0de98-e3c9-467b-98fb-ba7da7208be8@linaro.org>
+Date: Tue, 16 Jul 2024 11:55:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: net: wireless: add ath12k pcie bindings
+To: Patrick Wildt <patrick@blueri.se>, Kalle Valo <kvalo@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Steev Klimaszewski <steev@kali.org>, linux-wireless@vger.kernel.org,
+ netdev@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Johan Hovold <johan+linaro@kernel.org>
+References: <ZpV6o8JUJWg9lZFE@windev.fritz.box>
+ <ZpV7B9uGVpeTSCzp@windev.fritz.box>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <ZpV7B9uGVpeTSCzp@windev.fritz.box>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240716-topic-sm8x50-upstream-use-pmu-to-power-up-bt-v1-2-67b3755edf6a@linaro.org>
-References: <20240716-topic-sm8x50-upstream-use-pmu-to-power-up-bt-v1-0-67b3755edf6a@linaro.org>
-In-Reply-To: <20240716-topic-sm8x50-upstream-use-pmu-to-power-up-bt-v1-0-67b3755edf6a@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1970;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=vq9kQDucZZaaXMppqui404uEJ0q8knUSeXPUQx+QAE4=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBmlkEqeiPZqFxcVJf435dyTwarvH40M/d2lT188A6R
- ERVSAGCJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZpZBKgAKCRB33NvayMhJ0aQ8EA
- Cae9yseauSuv+Sc2sElmVdyGcH5OZLch0jEx6ZE5vTH7ub8TTUJ1YKK8N+WT0xacYyx/4oDp0REcBc
- o86Vn+LUidpvhFNw7XGPex+l711WD/xbSnwMg48TotUz04iuqqb5m/kb9YpjRLGXiQwg9AzcJI9pZO
- H8Rslfbni+wE3cg2f77JjzvGIzJLu4P64+GlG3TdVenFPq90g04tXP0fCp9EQ1y0fIZA/j7oBvkZJr
- Lx7aFY0bFkscjvA8eem/ahlJJhfFX76Qns5I8jZN1dZAhrPidPAbh6VQr8dWtfplfpQoFjcfU20zHp
- teMSNFP7Xa4T0JnDdWj3Yhvh1niidm9o8wX56Yjpi/fb3Cv/cS1+3p70NF5P1W5HfPW7ScwrpXMMCB
- vlMlQHH7jjZHOv/cGG2EFXWQRjwt/w7ODcEXn1XNUX+Rjv8RPvLkXi+VQ94tPe/oXf5Kgxk2/ZUG/p
- mEwNrl7j3g3F6lGzQIxof1QVrV+E/S9CyrWDR0niMCZuoeA6N6xsP69AYy0VRfgTqXpw/W4o43MvAL
- ekr1R24J5NLQ6pKRjZ3Ikmlxrf3Lda+BY9OSnx5QSyWsiu6Mj+HPKH+V7U26+haVxOKZ19X5wTsuSO
- ATfCKtj7vUVg8DdSvzjTKVdIUSqpTM4kYC8OSbgVByz6jhgKtyRY68VWv8Dg==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-Change the HW model in sm8550-qrd.dts to a one closer to reality - where
-the WLAN and Bluetooth modules of the WCN7850 are powered by the PMU
-inside the package.
+On 15/07/2024 21:39, Patrick Wildt wrote:
+> Add devicetree bindings for Qualcomm ath12k PCIe devices such as WCN7850
+> for which the calibration data variant may need to be described.
+> 
+> Signed-off-by: Patrick Wildt <patrick@blueri.se>
+> ---
+>  .../net/wireless/qcom,ath12k-pci.yaml         | 59 +++++++++++++++++++
+>  1 file changed, 59 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/net/wireless/qcom,ath12k-pci.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/net/wireless/qcom,ath12k-pci.yaml b/Documentation/devicetree/bindings/net/wireless/qcom,ath12k-pci.yaml
+> new file mode 100644
+> index 000000000000..8f18868ee726
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/wireless/qcom,ath12k-pci.yaml
+> @@ -0,0 +1,59 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +# Copyright (c) 2024 Linaro Limited
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/net/wireless/qcom,ath12k-pci.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies ath12k wireless devices (PCIe)
+> +
+> +maintainers:
+> +  - Kalle Valo <kvalo@kernel.org>
+> +  - Jeff Johnson <jjohnson@kernel.org>
+> +
+> +description: |
+> +  Qualcomm Technologies IEEE 802.11ax PCIe devices
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - pci17cb,1107  # WCN7850
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 26 +++++++++-----------------
- 1 file changed, 9 insertions(+), 17 deletions(-)
+That's a duplicate of:
+https://lore.kernel.org/all/20240605122106.23818-1-brgl@bgdev.pl/
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-index 774bdfcffec3..6052dd922ec5 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-@@ -219,13 +219,10 @@ wcn7850-pmu {
- 		compatible = "qcom,wcn7850-pmu";
- 
- 		pinctrl-names = "default";
--		pinctrl-0 = <&wlan_en>, <&pmk8550_sleep_clk>;
-+		pinctrl-0 = <&wlan_en>, <&bt_default>, <&pmk8550_sleep_clk>;
- 
- 		wlan-enable-gpios = <&tlmm 80 GPIO_ACTIVE_HIGH>;
--		/*
--		 * TODO Add bt-enable-gpios once the Bluetooth driver is
--		 * converted to using the power sequencer.
--		 */
-+		bt-enable-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
- 
- 		vdd-supply = <&vreg_s5g_0p85>;
- 		vddio-supply = <&vreg_l15b_1p8>;
-@@ -1175,20 +1172,15 @@ &uart14 {
- 	bluetooth {
- 		compatible = "qcom,wcn7850-bt";
- 
--		vddio-supply = <&vreg_l15b_1p8>;
--		vddaon-supply = <&vreg_s4e_0p95>;
--		vdddig-supply = <&vreg_s4e_0p95>;
--		vddrfa0p8-supply = <&vreg_s4e_0p95>;
--		vddrfa1p2-supply = <&vreg_s4g_1p25>;
--		vddrfa1p9-supply = <&vreg_s6g_1p86>;
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
- 
- 		max-speed = <3200000>;
--
--		enable-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
--		swctrl-gpios = <&tlmm 82 GPIO_ACTIVE_HIGH>;
--
--		pinctrl-0 = <&bt_default>;
--		pinctrl-names = "default";
- 	};
- };
- 
+AFAIK, this was already merged. I don't get why after ~1 month it is not
+in the linux-next.
 
--- 
-2.34.1
+Best regards,
+Krzysztof
 
 
