@@ -1,86 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-26360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id D57E5932E96
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 18:48:22 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 672DB932E9D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 18:49:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 141EDB2183B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 16:48:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 98A501C220EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 16:49:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 353A019B3F3;
-	Tue, 16 Jul 2024 16:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DB0119F487;
+	Tue, 16 Jul 2024 16:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HsWxI3rX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VjQ9Ou7h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C12C1E528;
-	Tue, 16 Jul 2024 16:48:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA6E19B3F3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 16:49:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721148495; cv=none; b=HiWEaVLmQz5K0sddodXNNGJG1NNts1L+URnufdUPcE0DwefzZ4N1CtUwxUAwpQF0FCIcc7b+x1w9hW/je/82FWOVMu4wsD8+eFdua+rOvQ+YoQHRFZtOpKuL5PVEu7Z+/5RDuFyr2kLd7L2TJbok1B89fmZBsRAFTNs82MG1rtI=
+	t=1721148550; cv=none; b=sKeLLLp8oqfxSD35mlwBRtAqZgAxyS2mdTtQhPcyOL4Su9Cx7tgCU3PW9/cL00UDrJ9lMpUgpP7O3I9r/Ks67weAyEo/tuZJL6fHB3ETMf8xlmPhH4s7cpGlzW8ZbJWMav97Yg48fO670+3sxNafp5mAfZziNX9wLAm/QFzW4p4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721148495; c=relaxed/simple;
-	bh=ZejX7sQYy7OqqD/lZfJcjG1n/50PzY0tqu1osR9XdOI=;
+	s=arc-20240116; t=1721148550; c=relaxed/simple;
+	bh=1SvrFrUwY0ssB2UFXaVjKnT3739nqui0AqyelNUF8f4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X1szyRAAVkU99EJ43L0acr8+bfNFKBWb2gLyW+dapHkZ59xO+O83ueETataDXB7WPUPo6PglUshORIOMMb/H2GMaCycLPtgrwmwF/TVpCiNBodV4+S/GclMkbHTwH6nfiz5XugpkBAFX2BLV84WatpLyZW0Gm6dwXJHq61nz2Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HsWxI3rX; arc=none smtp.client-ip=192.198.163.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1721148492; x=1752684492;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=ZejX7sQYy7OqqD/lZfJcjG1n/50PzY0tqu1osR9XdOI=;
-  b=HsWxI3rXBxtvvTDiSglORt4lo6gy9jsQLvmYjKU+rlKD8qPNvEcNk4gK
-   wH6vNqP3ZHaSuHtv2rqQW4TFT8g10z5ss0NY3wIcTcCz12gogDlMtq5LV
-   DOflPek9tWWUfxBjTqIE/01vqLtXm4WRl2GgzvxqUNENSAUblTLz69+im
-   HD3EPrRTrXh3CGevSUPoX99HyYFoZUg2m2V8yfHgzxzsEDX+8anshiN9O
-   Jw2GfuMLYY/3dO/8Cax4QufvqL6Zg7UnNQY9o9DYu6QIOgqEsw+uIi3LJ
-   qXjJd9ZmZmR77IRG3J6bJBihwC9Y9J9fhU8UsniktITnqo4GVw6lvZ3yk
-   g==;
-X-CSE-ConnectionGUID: rxAUC8Q9Q1+tdKPZkvC96Q==
-X-CSE-MsgGUID: D6dkMJesTwu43nhVcAqlCQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11135"; a="30017576"
-X-IronPort-AV: E=Sophos;i="6.09,212,1716274800"; 
-   d="scan'208";a="30017576"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jul 2024 09:48:11 -0700
-X-CSE-ConnectionGUID: y8Ea+zk+QLKYSTNmND2bUQ==
-X-CSE-MsgGUID: lFusUqOWS0SdtKdYPWrdOw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,212,1716274800"; 
-   d="scan'208";a="49812047"
-Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
-  by fmviesa006.fm.intel.com with ESMTP; 16 Jul 2024 09:48:08 -0700
-Received: from kbuild by 68891e0c336b with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1sTlLR-000fSm-31;
-	Tue, 16 Jul 2024 16:48:05 +0000
-Date: Wed, 17 Jul 2024 00:47:59 +0800
-From: kernel test robot <lkp@intel.com>
-To: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: oe-kbuild-all@lists.linux.dev, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH 06/14] PCI: endpoint: Assign PCI domain number for
- endpoint controllers
-Message-ID: <202407170032.WTPexEVV-lkp@intel.com>
-References: <20240715-pci-qcom-hotplug-v1-6-5f3765cc873a@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=E1H2ukOnH+K02Pbs6yYB9VOrLoli8cLkePh86PVfxac8UdRAP5hy++VGAJa7uOEqCW2hxPCcGS560lLBjtLmUk1pV7ick602befdN7q/gXym7o4wnaxng2TdbgwlG5qL23E+va/Vh10G11MYwXnZtQ5PEsm2EPpwtgvytfazDC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VjQ9Ou7h; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-52e9f863c46so6359377e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 09:49:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721148546; x=1721753346; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=1S+7gwS1UwbWxt9zx0GhM0+f0sa2DWHmC5X67Dgdt8E=;
+        b=VjQ9Ou7hERCrAzWoRPcRtrlBzM/qkKp91XviMfjTZGbSxrzB4sPqIj3zfcosLBYag/
+         l9CZp+dZ3bsDmZnBju31s9RWd4jyPWuYoGqgRSTs8rRCmSQPDAuex/LmDvy4mZ2Joy/C
+         zXMOEAFfkIkc1EuybntVFYijQDKHm5sJK6CufAh5nj7aXeqWtP12JRaECxom79z3VKVv
+         epkxQ+Qv76KBYYBD5SzjoCyZDTkWlYBH14QVMc/gwFI8zChDcbKrIVnv2OYZEgNB9Qgs
+         uTcERdC+0r4h4xnGxAoao3+/xXpsqHK2zqlH5NbpsVaBehI76u5+f7I0jAHwCmAmYBEa
+         me1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721148546; x=1721753346;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1S+7gwS1UwbWxt9zx0GhM0+f0sa2DWHmC5X67Dgdt8E=;
+        b=RZiFIALaly0htfOH9XYCpZMZJ+CrYfkFPkZDx5k/qos8UmOjZ1k5PWhKGkyPdmNqdI
+         SBoEhrO6NteF4Q1Jy/n3reqTenB/7aD2Srb+2f6AG9ggTfOaxSmOEVddC7oq+YVrfh2z
+         azLeMNBVS6en0kxCaWFg+RkLGoLT/RhYqGUZaNHW7THDNmebCJeKIdZ0bNj/a9hauzNK
+         54WaAAxv+GbqGkdsY2Ds4bWoN5NwBDw+LSDp+SfpHCXssz29nr08r6C7mJHzAQ/4ce7k
+         LFAVDCtspVCWFuguyZDlvmCyHeg30fxrc9NkdC1urq8WYjxLHCj2WJ0JfrdN46YNbPHX
+         dJoA==
+X-Forwarded-Encrypted: i=1; AJvYcCVahndlEgNuuP6NWz1f9O+4G2nZj3l0ZWU7xQE5QBtkYuPMqkydV1dxGutnu1WToNyDuKbzCCcb0IxsE7NpW8RH+CUREPetmcu5ohuEEg==
+X-Gm-Message-State: AOJu0YzjWYZre8lUnSl53pCfk75RpaaFQdk2QSRg++hhKBkVw77potBd
+	s5/jIwVY/yUYr99mdQ5FRTmjZqdH6hBSGjLfCpFU3E8VeAXaDvZ0wOjwrHoJVNE=
+X-Google-Smtp-Source: AGHT+IFfYwT3eFsB3BfCBMShxUS4iHT2qR8EKCoDrDdhlZUTVH1+b0uGU9S8rbJSVSVD0ci8YFztBg==
+X-Received: by 2002:a05:6512:3d91:b0:52e:be0d:56dd with SMTP id 2adb3069b0e04-52edf03017fmr2122314e87.40.1721148545801;
+        Tue, 16 Jul 2024 09:49:05 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ed24e1f7csm1216331e87.48.2024.07.16.09.49.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Jul 2024 09:49:05 -0700 (PDT)
+Date: Tue, 16 Jul 2024 19:49:03 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Rayyan Ansari <rayyan.ansari@linaro.org>
+Cc: devicetree@vger.kernel.org, Georgi Djakov <djakov@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Odelu Kukatla <quic_okukatla@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: interconnect: qcom,rpmh: correct sm8150
+ camnoc
+Message-ID: <uvvczamt4vcl2tt4hjcmrc66rwrnd5fy5254lzshoeart6ytmm@3sqsbmqlojq5>
+References: <20240716144738.109823-1-rayyan.ansari@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,99 +85,45 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240715-pci-qcom-hotplug-v1-6-5f3765cc873a@linaro.org>
+In-Reply-To: <20240716144738.109823-1-rayyan.ansari@linaro.org>
 
-Hi Manivannan,
+On Tue, Jul 16, 2024 at 03:47:38PM GMT, Rayyan Ansari wrote:
+> The sm8150 camnoc interconnect was mistakenly documented as
+> "qcom,sm8150-camnoc-noc", for which there is no reference to in
+> drivers or device tree.
+> 
+> Correct this to "qcom,sm8150-camnoc-virt".
 
-kernel test robot noticed the following build errors:
+Sadly enough, it's not a -virt, but a real -noc, but it's too late to
+fix that.
 
-[auto build test ERROR on 91e3b24eb7d297d9d99030800ed96944b8652eaf]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam-via-B4-Relay/PCI-qcom-ep-Drop-the-redundant-masking-of-global-IRQ-events/20240716-014703
-base:   91e3b24eb7d297d9d99030800ed96944b8652eaf
-patch link:    https://lore.kernel.org/r/20240715-pci-qcom-hotplug-v1-6-5f3765cc873a%40linaro.org
-patch subject: [PATCH 06/14] PCI: endpoint: Assign PCI domain number for endpoint controllers
-config: i386-randconfig-011-20240716 (https://download.01.org/0day-ci/archive/20240717/202407170032.WTPexEVV-lkp@intel.com/config)
-compiler: gcc-8 (Ubuntu 8.4.0-3ubuntu2) 8.4.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240717/202407170032.WTPexEVV-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202407170032.WTPexEVV-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   drivers/pci/endpoint/pci-epc-core.c: In function '__pci_epc_create':
->> drivers/pci/endpoint/pci-epc-core.c:902:19: error: implicit declaration of function 'pci_bus_find_domain_nr'; did you mean 'pci_bus_find_capability'? [-Werror=implicit-function-declaration]
-     epc->domain_nr = pci_bus_find_domain_nr(NULL, dev);
-                      ^~~~~~~~~~~~~~~~~~~~~~
-                      pci_bus_find_capability
-   cc1: some warnings being treated as errors
+Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
-vim +902 drivers/pci/endpoint/pci-epc-core.c
-
-   866	
-   867	/**
-   868	 * __pci_epc_create() - create a new endpoint controller (EPC) device
-   869	 * @dev: device that is creating the new EPC
-   870	 * @ops: function pointers for performing EPC operations
-   871	 * @owner: the owner of the module that creates the EPC device
-   872	 *
-   873	 * Invoke to create a new EPC device and add it to pci_epc class.
-   874	 */
-   875	struct pci_epc *
-   876	__pci_epc_create(struct device *dev, const struct pci_epc_ops *ops,
-   877			 struct module *owner)
-   878	{
-   879		int ret;
-   880		struct pci_epc *epc;
-   881	
-   882		if (WARN_ON(!dev)) {
-   883			ret = -EINVAL;
-   884			goto err_ret;
-   885		}
-   886	
-   887		epc = kzalloc(sizeof(*epc), GFP_KERNEL);
-   888		if (!epc) {
-   889			ret = -ENOMEM;
-   890			goto err_ret;
-   891		}
-   892	
-   893		mutex_init(&epc->lock);
-   894		mutex_init(&epc->list_lock);
-   895		INIT_LIST_HEAD(&epc->pci_epf);
-   896	
-   897		device_initialize(&epc->dev);
-   898		epc->dev.class = &pci_epc_class;
-   899		epc->dev.parent = dev;
-   900		epc->dev.release = pci_epc_release;
-   901		epc->ops = ops;
- > 902		epc->domain_nr = pci_bus_find_domain_nr(NULL, dev);
-   903	
-   904		ret = dev_set_name(&epc->dev, "%s", dev_name(dev));
-   905		if (ret)
-   906			goto put_dev;
-   907	
-   908		ret = device_add(&epc->dev);
-   909		if (ret)
-   910			goto put_dev;
-   911	
-   912		epc->group = pci_ep_cfs_add_epc_group(dev_name(dev));
-   913	
-   914		return epc;
-   915	
-   916	put_dev:
-   917		put_device(&epc->dev);
-   918	
-   919	err_ret:
-   920		return ERR_PTR(ret);
-   921	}
-   922	EXPORT_SYMBOL_GPL(__pci_epc_create);
-   923	
+> 
+> Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
+> index 9318b845ec35..0cb4f7154844 100644
+> --- a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
+> @@ -71,7 +71,7 @@ properties:
+>        - qcom,sdx65-system-noc
+>        - qcom,sm8150-aggre1-noc
+>        - qcom,sm8150-aggre2-noc
+> -      - qcom,sm8150-camnoc-noc
+> +      - qcom,sm8150-camnoc-virt
+>        - qcom,sm8150-compute-noc
+>        - qcom,sm8150-config-noc
+>        - qcom,sm8150-dc-noc
+> -- 
+> 2.45.2
+> 
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+With best wishes
+Dmitry
 
