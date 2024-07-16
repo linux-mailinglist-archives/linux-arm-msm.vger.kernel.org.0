@@ -1,187 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-26357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84BE7932DC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 18:08:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BCF9C932E79
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 18:38:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3C7692815B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 16:08:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 05306285926
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 16:38:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56EEF19DFB9;
-	Tue, 16 Jul 2024 16:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79F7D19F479;
+	Tue, 16 Jul 2024 16:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="bgkiTmL/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u0S0B9jr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2050.outbound.protection.outlook.com [40.107.236.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8829C1DDCE;
-	Tue, 16 Jul 2024 16:08:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721146131; cv=fail; b=TNPm4Q7fc8hC/utwGrSOhKPtym3MES4Rnm+IyNJUZgTIeNx9PLDTPsqTsLZvC/qSwyhuO3O/WiFJgyW4WLdhCI26uNpZBBbCSzTwDKjiu+Dx69yKTQC8d+Kh3HYzFT0sFM5YB43va6wFgi6+qG2IbXZD8WPs3SNWS4jXvnA/YcM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721146131; c=relaxed/simple;
-	bh=ehtM24vnX5HUGlSkEVnpUQxZVqS9bibu6pdUNz1r+74=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=do8wK8nroNBVlqjBW1BhmIDh8yN2JS2cyZveU9SQWUyf1vfjbFBstRb0MxqoWWfMkTc0hwXP+Q/seKTTJiOjKDtuqpWPdXtrhh4Hob7qJPw8GXiY4EjuuexOP2y/sBjNvDUrXcEso6mh1S8qyAuro2LI/yY+kOaYdoEBpkYeyzI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=bgkiTmL/; arc=fail smtp.client-ip=40.107.236.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TrPm/dStiPKBJun/EHCLVmpBVv9QDrb+BO92yYPywro/53hgDxb3H2gbdlpAndaI9aA2GIVUN/MWuEQacBs79HR+WZFip0NVfXUyR6qWfK+v2fxzyi4VvMwfYpjlHIGEXn8v50yvXkIG/9Ii0AKZZCD1HF8iomn+QUg7Ytw3Be0syM/DRs1HcqLJbUvUO2ClTDvCxzbEr1lW4HVJy20Bg+LBNrZMBTENZUWQB3XBKdhLEdtkgHf5oTavdh+IBaDsM4YnlbkryLABsniq63FKYfekfCN55K7FmYoAkLwhbDEeGJ9o+/nvA2bkhx1PQC1gsz1ROYIGOd8Rpsqy5OJ2MQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SL8aK2DcD27A96vmhuZI0qzMSQONWHchgTrHcD4nveI=;
- b=VLgmEYgUowSAxzZ5/emHfkXFxf2uf8xgMwkJKoD/oa+jpvf3Rib1EkOMZsA39esGUPNz0dcbYLtGc1WsP0uECyKudqsMIQB4M9SEy+NDqoQBVEPUcqQ4zPyS/bvt/GCWQ4fH6ZmnvlNLt804g0ytbCR9IjQabZefeNyNLycBYoHXh6ixr0wEzPnJyT8NWgaKi2D0zSVWHfU597MP7ZDS5RM8yqL1+rozBto4+zSFH/IjBfK6Ne/4hQl2FTeyKFOdG8MnHJPhuTwHw/fvO0D5M6N0DG7CIOYjc97OMFRhM4dNtNRMeQlBMEzuu3ucw9tPOd15tYYMsGwFhwJ2eQRHHA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SL8aK2DcD27A96vmhuZI0qzMSQONWHchgTrHcD4nveI=;
- b=bgkiTmL/hJ4QD4m+o6ZuAj/xlGyXTAjz6fVwfJfi6dSk7/iGZVb4EDRq4CdXG8Q8bOuXSXGM4yCbzbO8weRlSHkgHQySOnFXg+4ztJp74gYjVeNnI0l+fEd/7+d1D9CdGZsA2EYZnGARIN6OzUMYr/pTbxpmjQ+vn6xtDM/Iz6OStiKh28oa7EkMcpAFxmh2mHf9soaMGG2ZbtLFO3WVq1grDIUVgU31Iww/mHfvhC+el/gtnWV5Jb2x10T+Kot88ICseDI9nHOFiXGAPpQXWq8kT8Xf1/+HmUgtxY7Nh5Zx8T2i9fJIEn8apO4ZG247qopj/sQw5vU7gDN5gObktQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
- by SA1PR12MB8968.namprd12.prod.outlook.com (2603:10b6:806:388::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7762.29; Tue, 16 Jul
- 2024 16:08:44 +0000
-Received: from DM6PR12MB3849.namprd12.prod.outlook.com
- ([fe80::c296:774b:a5fc:965e]) by DM6PR12MB3849.namprd12.prod.outlook.com
- ([fe80::c296:774b:a5fc:965e%4]) with mapi id 15.20.7762.027; Tue, 16 Jul 2024
- 16:08:43 +0000
-Date: Tue, 16 Jul 2024 13:08:42 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Sean Christopherson <seanjc@google.com>
-Cc: Ackerley Tng <ackerleytng@google.com>, quic_eberman@quicinc.com,
-	akpm@linux-foundation.org, david@redhat.com, kvm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-kselftest@vger.kernel.org, linux-mm@kvack.org, maz@kernel.org,
-	pbonzini@redhat.com, shuah@kernel.org, tabba@google.com,
-	willy@infradead.org, vannapurve@google.com, hch@infradead.org,
-	rientjes@google.com, jhubbard@nvidia.com, qperret@google.com,
-	smostafa@google.com, fvdl@google.com, hughd@google.com
-Subject: Re: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
-Message-ID: <20240716160842.GD1482543@nvidia.com>
-References: <20240618-exclusive-gup-v1-0-30472a19c5d1@quicinc.com>
- <20240712232937.2861788-1-ackerleytng@google.com>
- <ZpaZtPKrXolEduZH@google.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZpaZtPKrXolEduZH@google.com>
-X-ClientProxiedBy: MN2PR04CA0021.namprd04.prod.outlook.com
- (2603:10b6:208:d4::34) To DM6PR12MB3849.namprd12.prod.outlook.com
- (2603:10b6:5:1c7::26)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA38819EEA4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 16:37:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1721147881; cv=none; b=JP0svT3zonDqzQQqWhU8Yr7RSuvunYlSSpP5ukeDNzAoGlU0WVKGhl07iinD1ahuCFQX8k2jUl45fP2zz6Zz+Z0yVJdOmPQpceKbXnBKLT5EOUYD3sIvzHtIZSYSNuyLy/mINYCLoPIgaDzG/+jQ4QTPv8anEA/UNVGo2w/q7lc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1721147881; c=relaxed/simple;
+	bh=q2lkvHitVcy2x8W1nfxNf4cBm3/h+MECP/thPi24Yjg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=B7nlDwa4jVjMml0C5mDggoAc/TIRTTujwXU2voVCMrlw43W1ThbuOdxlPFzwEirIHHgPrffvPcVFeNWEElexh7clFocJxox2jMlqBlbagaJTEzrINrAQr/7HIxk4EI3lTQHC/K1oTs5nNNwl9xUN+9bq4fBj/oRMb/NIpCUTKf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u0S0B9jr; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-64b05fab14eso54888937b3.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 09:37:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721147879; x=1721752679; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Inq9wHo9haYW+I9Tylrr0gohQZyxyP5BU7osayMiXTI=;
+        b=u0S0B9jrpAD5E5NdlMZg0Jg109tfH/drWfIk3jSx8UXk1O1Qk2CwHrtnPEnc1dDsmN
+         e1jiTPquzkpZjjHvrRh5weuSp9Yyh0PS3WX9TX9eE1nX6P5iLgM2dCSOlPAoObMcFwui
+         Z+byRenEMUMbHITxUH3AY61RXg2GoooPqnnzYS4LzvqQGqjxJQlp/NpfkhJME3pq8mHa
+         dVLr8+P70hnlGLufm/0fZW0s2T5AgQc+sSBauTbBD37Ea6bIhA8FyjCdM0vIra/DbVvx
+         iJB4ewF0nKnIAO2d1qhj2/1OYH+biqtD3Wz/B1DLBTZ0hMd+zY3+3Xo7nYfFZkBP09vy
+         IUVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721147879; x=1721752679;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Inq9wHo9haYW+I9Tylrr0gohQZyxyP5BU7osayMiXTI=;
+        b=SzjznzfLAp2M55MtNX3LbPRli6ghFNVh8RcBjAJ48X/rR3P1+BYtilLZxRsrrjr41D
+         +LJKKSlt+aXglMZqZs4JOaF6cTrD86C/+nfwAFaY4vCb6nbfIktMa0SJS9VI7GjtuoN5
+         tUAAsx51et0hTu37pzeGex0Rqg1CSUaGb+ssoAiqNrkSUotNsWSvjR2PN4W+oH0QnswR
+         uLfjGIW8dJOOW5PnhLy8QMEu4zzO5GE5BNcT+B67SINz0DtALJCyyf9/btuIzCvxcb32
+         xybj8Fi1HFagS9ko+eWLtlwO8y6VgodXsG3i/SpXuo+f/og6pMyLV4ePoDQdx4aWtMXA
+         wkKw==
+X-Forwarded-Encrypted: i=1; AJvYcCU8CYGE7p0rYlDcG/DG00pC2+NmW9+Z7w398F5Tja69/YuYJFuSTsJFqJCbA92Vi37cMCTROdhK5sSwhGAEHIZFAnJrn5BaR4jd2jkfDg==
+X-Gm-Message-State: AOJu0YzjLnVnfZQ2AZoBUELQl+8kBmFCEW3Se/8+ScSHQf6vRk06fsIp
+	TAi7YC7mgcQeyKYghNoaG7ttfNArlgfMJBoE98hMjWohWesANeGNHbhOpfJfJv9IhbAURTQG8jk
+	DRxoIKGLDlapvU/ZSBE14h8ygZ6ZQ9bFXOofK4A==
+X-Google-Smtp-Source: AGHT+IE+6hxj9x884OAMB4VNRlYKsy/S+Y0o45dUnN/039E9rINPR7H3k9hGW0oD/pMtgKJEzaq/W5A/siUNC58eij4=
+X-Received: by 2002:a81:b402:0:b0:61b:1f0e:10 with SMTP id 00721157ae682-66380f1304amr31569737b3.4.1721147878623;
+ Tue, 16 Jul 2024 09:37:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|SA1PR12MB8968:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3883fb2d-dd7b-4dd2-321c-08dca5b190c9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7416014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?d+jRlk9L3mOL9ATuCMWCbLJEjFvBEAn9a7j7kODPezVqpYgHLzZJ3GNaPSMC?=
- =?us-ascii?Q?+70mXMnfFQjyhv0cZTQl5QiK3XoXvf1scHs8mbXNWN3dV8TSks9bqw88e3IK?=
- =?us-ascii?Q?qD/cXDTAVVD1esuyu2gtUJr7urDfP9NrpOJk81cJdD3SwPHpj1FzYPR3mlz/?=
- =?us-ascii?Q?RoaGMc/OT5ECU/ROoEq36pqaCKWzkgRVm6uzKu5O0+fPScUMI8CXTnw2n8bN?=
- =?us-ascii?Q?Xn1LKPr/lK3c0TVpB/CWtfzsy2XoWrfk5ieq/zje+vAa4NTUD+ooVRo0AXVR?=
- =?us-ascii?Q?VyZJtA+YKJfSxMoebgTHoYr9XPC+7/BUC8SgppTg3eM0p5hgakCOtZ+4j3QW?=
- =?us-ascii?Q?YOqrIjf6WyqxgWi/FzFb0Y9OqaYs6mdRZ8ao3FL5WoSo7KARiNonUaVakp+R?=
- =?us-ascii?Q?SkDBMnkU6ZxV3z8rw4zg82ITPqgVPC20tFxW7DiNNDOPi/Ml2rAygR00CccC?=
- =?us-ascii?Q?iHL9c3NGKJDhI26ZdR2R2fPLyYGe4iAXW3eakKc4imjcJ39wlBufxMM/DYZA?=
- =?us-ascii?Q?SxRwsOh0w5ryOe2rOzoAiqi2lZDj7VoiHtup6Oo94v6FNvsJEHL73gn4CgUP?=
- =?us-ascii?Q?EyFFa/YRAHUN2HVSrk3Bbku4l8T3LPdzmW422Ka64WjXAuAdCj0QrPuhKGVC?=
- =?us-ascii?Q?pYPX7U91hsjbcx54SdArgoXTVSxAl1TnZh6N7Xy6GXsZoEemVIWKaFgd5G1y?=
- =?us-ascii?Q?zmqtU9tgX0hhOPciKQdYTgaITUN0Ud5ZkSwC7TSnkWKn++078FmL2yTOiaLz?=
- =?us-ascii?Q?SFg78/Ebx19ypHLz/O6dRsib/ywnSk3sEyXZe7weT84uCj5o4WQ592GIo1sv?=
- =?us-ascii?Q?wgcQEDWLdnMqOQRFlIdMekCBDGUf3RbASEB47+Ajm1+P430HCns3Tx6ydd+z?=
- =?us-ascii?Q?+kh1Bemii9H0gjyJ52YP1Zahp3fmwnqAoE9zmGAumbjsMUljBPuZCjT3Ypl6?=
- =?us-ascii?Q?fMRvWr7IMLIGzIuchzdqTOlIovQVHE9L+u0SrauenUVzUYUNkMD513EU3ZWv?=
- =?us-ascii?Q?dEnzFRf2Rk6elIb5SVLoO58j7y44DCqCEekSsf3h+RXqHUyPWgxzC5RH0lV8?=
- =?us-ascii?Q?OyAQ/YjaKMBf+zL2NWNzlARGaAhBcyEEEzpMjPkhBEyuXgMP5CT4T7kNX/Xy?=
- =?us-ascii?Q?lUZwXmQVNwjy+uZk/2KZ23O16w+BJQch7sfYvA7MjEmOdyNqXDegH1gI+zPJ?=
- =?us-ascii?Q?grpV3jefYkUzNzPQ1LYlNjjlDxFkyD6vmGSD6tEBS0Z9b+rpl9dibLOtHv8k?=
- =?us-ascii?Q?r8ew4XHqIZ0oOPXtL5l4MQefWqzaR4wd2kOxK2Mw2HkoYTzMbPD6sghrBKj8?=
- =?us-ascii?Q?6xwJlSXXxnKvGE8kh2kGs9KHNpqJJuu7+sD1ESeLhOmdNg=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?6uSDr3QUwuaPXNUTq1H1Jy8BnH3NIxpDaEiT8DhLlQkoIA3/OI/n+lzUQPRK?=
- =?us-ascii?Q?WjUFN+SE8lEtK7zWwtt25wfyrmb+5aydcebsLYJAjwFYZxubcgQwP7eG4WYa?=
- =?us-ascii?Q?iOc5dD826U4p3heIlcIRImf+tfIbpNua+hDlPQYXpjSCEg5JkE4LHKeazubo?=
- =?us-ascii?Q?BFTB6JFbWZvUf9fj3j5AFhhw9rGdfbdmy2ZcBuE7/zz8ViPO26uhKqhapqfd?=
- =?us-ascii?Q?C+xhipwKkMGBuiSy/vTgMJROPPdhgN96QpWlyxij+HQge9X6M99k6DlvycfY?=
- =?us-ascii?Q?lFUHXVcgUaLKe19z2Piidx+AHgmEZB1o4xjN/AqCumXRygl40/gzxxE93SjJ?=
- =?us-ascii?Q?NC3KM0r7I6jqxC6JX02gM3EGKyEInSHrhFqdZTM+xChgyxnOFZH1pafbMkNI?=
- =?us-ascii?Q?kX80JKdh53Qu3wcCFuk9moA7/JgG2lekHbavcWZxRjA+gW0Mf6PXlyVNrQX4?=
- =?us-ascii?Q?5zFHAeTZxHFbBVdIO/NzyVIoW4PlKikw9YLmZxemZ1FuSBkDr0fbmU66q5Bo?=
- =?us-ascii?Q?L+8JV5YtW493bZkLsXvH8l/I/PXFGAA/FEUcK1pHdqNrKYo3jCnod3/hm1R/?=
- =?us-ascii?Q?rhtiTYoFOBM82YS22gtdSaqxckbumLandW6NHum2+NOr+rt81Ido4zxt7Vx4?=
- =?us-ascii?Q?1hMhDC8ckJyLcIPH5IJ+UlytYmH7M4OJ0Dv70FMrzGu2p8GUHfB+ASNXWVpn?=
- =?us-ascii?Q?P66S5GxCp1nUA0mGFGtsGhULmUrYxRQ2uBpUp5ssg6Hjzn4thzDSazbI2vc3?=
- =?us-ascii?Q?ofP4E9gVX5OHffz2KKvccp5faIOuKzGkx0SCcHNUA04mzPGbB3GGIvWkR3Y9?=
- =?us-ascii?Q?8NFkUcaTtC5iGTSwUOOVFQuXej9bJ1IxZHu0S+YheRKm4ykKch0hl4EH92aB?=
- =?us-ascii?Q?qgZvYJ+RI3jqhzwZ3MvHytCHr43IT9Ko1JGeznR9L4+S5IQjCJIYXLs2a13L?=
- =?us-ascii?Q?IxN5lGR7vjjx2nfGaNIiOxVQLdCw5t1113Bz6zKuObf/wX6oTLJn0mbvnU7G?=
- =?us-ascii?Q?qv5uVOYcGBQFn93Y2FnWzf92XOX2Y8MH7p8sWDxkwqYj+BPXL4ryQqFx5R8N?=
- =?us-ascii?Q?6AZD8M0ncx1wW+LBxqfR+cx7BbjPoFsZUFhyUf3noRPKMvAaLnBmmZP71W0X?=
- =?us-ascii?Q?/JcZNyP/2+1QWfCRvN3k+8Up1fmaeCG15FLDAPLHJWcMJPVtKh7qYfQTE1fE?=
- =?us-ascii?Q?e36pFsP51cbgjxJmzaCAUZeLsGh+b3wWW5ATiDZyBcdKmDxJZ+P5WL/LTo25?=
- =?us-ascii?Q?ufHrpCs2B0PDC3DPNcWNiaV4uka1ZRBh80TZAgdbTChCVBUklQykLXPFylem?=
- =?us-ascii?Q?IS6G4DUp/vAfVc2bpj2XZTKUgmPTJinzs5yHIVS1ZIbpvS+XOHCZVh2FCxbk?=
- =?us-ascii?Q?7uRhjfcLA9NZSl55lJCWnslGXh8L2RsrcdPU2ufj3OuQfIUONLMXEAQG3kwc?=
- =?us-ascii?Q?jR4uF91Ue5PtCDv1w4qX9xjU4NaClLj9NE0aOUkGqUNeFFpGeaVFY8+Mydzr?=
- =?us-ascii?Q?Fcw4HZ33ZeDmohC1AIA4qq5VnGjJBSX8BEIKxeI08JA9Br5xHbkynDS3WwuU?=
- =?us-ascii?Q?ooz1Y4ZKZcIpZvGlWOSB5w5bWbxvtAx3t6ir8D/1?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3883fb2d-dd7b-4dd2-321c-08dca5b190c9
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jul 2024 16:08:43.7926
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ux6IFTh1L3AiaW+VvMWFow65imyMyiRAQL1eiPT/KjpqFlt08RVQsYOGfTbgaRoT
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB8968
+References: <20240627-hdmi-tx-v5-0-355d5c1fbc3c@freebox.fr>
+ <20240627-hdmi-tx-v5-4-355d5c1fbc3c@freebox.fr> <d9898342-2439-4d3d-8e3d-5bf0a7a40245@linaro.org>
+ <b6f6c845-6094-44ce-8ad0-ed4f6d353cec@freebox.fr>
+In-Reply-To: <b6f6c845-6094-44ce-8ad0-ed4f6d353cec@freebox.fr>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 16 Jul 2024 19:37:47 +0300
+Message-ID: <CAA8EJpqrAFKCr63JHEpZ3b3zdRfoNXoJP6SqKDOO4sqc=c6YdQ@mail.gmail.com>
+Subject: Re: [PATCH v5 4/4] arm64: dts: qcom: add HDMI nodes for msm8998
+To: Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Bjorn Andersson <andersson@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, Arnaud Vrac <avrac@freebox.fr>, 
+	Pierre-Hugues Husson <phhusson@freebox.fr>, Jeffrey Hugo <quic_jhugo@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Jul 16, 2024 at 09:03:00AM -0700, Sean Christopherson wrote:
+On Tue, 16 Jul 2024 at 17:34, Marc Gonzalez <mgonzalez@freebox.fr> wrote:
+>
+> On 16/07/2024 15:11, Konrad Dybcio wrote:
+>
+> > On 27.06.2024 5:54 PM, Marc Gonzalez wrote:
+> >
+> >>  arch/arm64/boot/dts/qcom/msm8998.dtsi | 100 +++++++++++++++++++++++++++++++++-
+> >>  1 file changed, 99 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> >> index ba5e873f0f35f..417c12534823f 100644
+> >> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> >> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+> >> @@ -2785,7 +2785,7 @@ mmcc: clock-controller@c8c0000 {
+> >>                               <&mdss_dsi0_phy 0>,
+> >>                               <&mdss_dsi1_phy 1>,
+> >>                               <&mdss_dsi1_phy 0>,
+> >> -                             <0>,
+> >> +                             <&hdmi_phy 0>,
+> >>                               <0>,
+> >>                               <0>,
+> >>                               <&gcc GCC_MMSS_GPLL0_DIV_CLK>;
+> >> @@ -2890,6 +2890,14 @@ dpu_intf2_out: endpoint {
+> >>                                                      remote-endpoint = <&mdss_dsi1_in>;
+> >>                                              };
+> >>                                      };
+> >> +
+> >> +                                    port@2 {
+> >> +                                            reg = <2>;
+> >> +
+> >> +                                            dpu_intf3_out: endpoint {
+> >> +                                                    remote-endpoint = <&hdmi_in>;
+> >> +                                            };
+> >> +                                    };
+> >>                              };
+> >>                      };
+> >>
+> >> @@ -3045,6 +3053,96 @@ mdss_dsi1_phy: phy@c996400 {
+> >>
+> >>                              status = "disabled";
+> >>                      };
+> >> +
+> >> +                    hdmi: hdmi-tx@c9a0000 {
+> >
+> > Please prefix the labels (hdmi: and hdmi_phy:) with mdss_
+> >
+> > Otherwise, this looks good
+> >
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >
+> >
+> > One thing I noticed (testing on the 8998 MTP), enabling MDSS (not necessarily
+> > HDMI, mdss and mdp is enough) results in SMMU lockups about 30% of the time..
+> >
+> > [    4.911422] arm-smmu cd00000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x0
+> > [    4.913412] platform c901000.display-controller: Fixed dependency cycle(s) with /soc@0/display-subsystem@c900000/hdmi-tx@c9a0000
+> > [    4.923353] arm-smmu cd00000.iommu: FSYNR0 = 00000021 [S1CBNDX=0 PNU PLVL=1]
+> > [    4.927893] arm-smmu cd00000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x0
+> > [    4.930647] platform c9a0000.hdmi-tx: Fixed dependency cycle(s) with /soc@0/display-subsystem@c900000/display-controller@c901000
+> > [    4.941928] arm-smmu cd00000.iommu: FSYNR0 = 00000021 [S1CBNDX=0 PNU PLVL=1]
+> > [    4.944438] arm-smmu cd00000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x0
+> > [    4.952338] msm_hdmi_phy c9a0600.hdmi-phy: supply vddio not found, using dummy regulator
+> > [    4.956013] arm-smmu cd00000.iommu: FSYNR0 = 00000021 [S1CBNDX=0 PNU PLVL=1]
+> > [    4.961055] arm-smmu cd00000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x0
+> > [    4.967917] msm_hdmi_phy c9a0600.hdmi-phy: supply vcca not found, using dummy regulator
+> > [    4.974565] arm-smmu cd00000.iommu: FSYNR0 = 00000021 [S1CBNDX=0 PNU PLVL=1]
+> > [    4.977628] arm-smmu cd00000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x0
+> > [    4.984122] Bluetooth: hci0: setting up wcn399x
+> > [    4.989670] arm-smmu cd00000.iommu: FSYNR0 = 00000021 [S1CBNDX=0 PNU PLVL=1]
+>
+> Interesting. I don't think I've noticed any lock-ups
+> across multiple reboots.
+>
+> FWIW, I get similar warnings about "Fixed dependency cycle(s)" on my custom DT.
+>
+> [    0.055349] platform 1da4000.ufshc: Fixed dependency cycle(s) with /soc@0/phy@1da7000
+> [    0.055525] platform 1da4000.ufshc: Fixed dependency cycle(s) with /soc@0/phy@1da7000
+> [    0.055584] platform 1da7000.phy: Fixed dependency cycle(s) with /soc@0/ufshc@1da4000
+> [    0.060279] platform c8c0000.clock-controller: Fixed dependency cycle(s) with /soc@0/display-subsystem@c900000/hdmi-phy@c9a0600
+> [    0.060494] platform c900000.display-subsystem: Fixed dependency cycle(s) with /soc@0/clock-controller@c8c0000
+> [    0.062432] platform hdmi-out: Fixed dependency cycle(s) with /soc@0/i2c@c1b5000/tdp158@5e
+> ...
+> [   18.534346] adreno 5000000.gpu: Adding to iommu group 2
+> [   18.540215] msm-mdss c900000.display-subsystem: Adding to iommu group 3
+> [   18.544695] platform c901000.display-controller: Fixed dependency cycle(s) with /soc@0/display-subsystem@c900000/hdmi-tx@c9a0000
+> [   18.551239] platform c901000.display-controller: Fixed dependency cycle(s) with /soc@0/display-subsystem@c900000/hdmi-tx@c9a0000
+> [   18.562685] platform c9a0000.hdmi-tx: Fixed dependency cycle(s) with /soc@0/i2c@c1b5000/tdp158@5e
+> [   18.574122] platform c9a0000.hdmi-tx: Fixed dependency cycle(s) with /soc@0/display-subsystem@c900000/display-controller@c901000
+> [   18.617640] platform c9a0000.hdmi-tx: Fixed dependency cycle(s) with /soc@0/i2c@c1b5000/tdp158@5e
+> [   18.618885] i2c 2-005e: Fixed dependency cycle(s) with /soc@0/display-subsystem@c900000/hdmi-tx@c9a0000
+> [   18.627768] tdp158-bridge 2-005e: supply vcc not found, using dummy regulator
+> [   18.636853] tdp158-bridge 2-005e: supply vdd not found, using dummy regulator
+>
+> It looks like some of these warnings were pre-existing,
+> but some might have been added by my patches?
+>
+> Do they need looking into?
+> I'm slightly confused.
 
-> > + To support huge pages, guest_memfd will take ownership of the hugepages, and
-> >   provide interested parties (userspace, KVM, iommu) with pages to be used.
-> >   + guest_memfd will track usage of (sub)pages, for both private and shared
-> >     memory
-> >   + Pages will be broken into smaller (probably 4K) chunks at creation time to
-> >     simplify implementation (as opposed to splitting at runtime when private to
-> >     shared conversion is requested by the guest)
-> 
-> FWIW, I doubt we'll ever release a version with mmap()+guest_memfd support that
-> shatters pages at creation.  I can see it being an intermediate step, e.g. to
-> prove correctness and provide a bisection point, but shattering hugepages at
-> creation would effectively make hugepage support useless.
+No, that's fine. It is the SMMU issue that Konrad has been asking you
+to take a look at.
 
-Why? If the private memory retains its contiguity seperately but the
-struct pages are removed from the vmemmap, what is the downside?
 
-As I understand it the point is to give a large contiguous range to
-the private world and use only 4k pages to give the hypervisor world
-access to limited amounts of the memory.
-
-Is there a reason that not having the shared memory elevated to higher
-contiguity a deal breaker?
-
-Jason
+-- 
+With best wishes
+Dmitry
 
