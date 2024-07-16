@@ -1,104 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-26363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02C74932EA5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 18:50:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A5A06932F26
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 19:35:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 30EC91C21C6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 16:50:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D0ED91C213B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 17:35:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCA6B19EEB3;
-	Tue, 16 Jul 2024 16:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C44D619FA89;
+	Tue, 16 Jul 2024 17:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aJ7Bu25y"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Eb/zTCU5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E59A1E528
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 16:50:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E8C19E832
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 17:34:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721148619; cv=none; b=t3Epb5oQmK/so98Hbxth2aUyzrpGY5ChI1DOSEEBbct/eK7s1kzGgGDDrP1uKyAPU6tBtOIe7nBG1llFWNFYkQ9jCb5NIHvCtsFhNCWIwRiynNtUt/z2TC89/WN7OHle2chBs1RgvLZZ6EBpVNTXN4tDuNBhrKdFXnTQgj1KIh4=
+	t=1721151299; cv=none; b=gOCn31blMUf7K/x0qJWTt5DSdIMA6vAXnNg1oTKjQVwjyGX54LBDCGGUqiVeeolSBISB4q+NcvVZIS4AcZ3gTFKYmlgwTGbyivs6FFmG2/IZenqc6zLtaHh25+xpT2WuwZPu/CCm8ZhyMhILy2eJS9a7NoBDrXxTt+qPw+L+RJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721148619; c=relaxed/simple;
-	bh=n0cRdUVeuF+TPdkHtAJ4MrKQwsxnoyftuba7ho6uPoI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SREOxc7zAwXJvkD5hyH7S54DRI8FzIUi4AY5nAxcnbVzBvUtjrNPej21A1F05crXytN3J0upT7YeG6Bhyh9JyV/4EbYmxGKNc7Rh9kjwbYUcReDHCxrp7kl/8bEZ4X6fZPPL4cDyvRXx5BTYT9wqgJ8kxQtEYSBMomdBbeE418c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aJ7Bu25y; arc=none smtp.client-ip=209.85.208.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2eeb2d60efbso71352701fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 09:50:18 -0700 (PDT)
+	s=arc-20240116; t=1721151299; c=relaxed/simple;
+	bh=3M0QByp5nIuBwkxRifE56E0QWbZdgARiPYYVK/zs0M4=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=qHVCgpKI7tLjxEQ+SWG9vml2RxLFdJHm+eLhcaGiTDT3TshPqwXOsDURrGbM6cIgrEFd5v1j6aozSrpA/bfMv+uegaI/YNFXyNUkVsNnBmo052VVibjqzo6Ccs+BGcghu8nGTURAxn92FksCwTAfjOQ/4Yc4HD/V2CVFjkAOibs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Eb/zTCU5; arc=none smtp.client-ip=209.85.216.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-2c95c80c6f7so5094027a91.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 10:34:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721148616; x=1721753416; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CutzVZbBuYdC//uAM2GMb6dlE9xUeemCkZXQmoieiZ4=;
-        b=aJ7Bu25ydYMLDDnQ6mlFbjYFtDkUxHaHq75sn0yfh84JMMYOE6MKwOHDSMPa1lhPjL
-         sU40m8vHvUEIwHgDwbGJpRVhDHv/yxiIOpdQ09rzoR+1sAJnrS/5oGrpBCPgoqm0Pd9l
-         TE82ISbfmCZH1p4wbJvQTYD1qmqJqcKzw2Kw+6f+GQg4oV1Kez7MtcKJTmfWrvC6EF3k
-         85BIyB127AMa1UCuM/kvMnF/e3HHf4L2SplJZKWsqWqttvAsylcaWIJsIitbgXJMPA4H
-         xTW2CN80Xb8AeD5mDjnExyEG/uTv2jEP+YyPa8VVCHtnHMdb3bMi7V+uMiNOM6c3rfCG
-         7vqA==
+        d=google.com; s=20230601; t=1721151297; x=1721756097; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Bzncl9L3e27llWjrAt0uSGnBBcBzotmsp09OvMIhHpc=;
+        b=Eb/zTCU5kPhzS0/bk11Payd+5kyJ5P2aPcU0yqX7V8Y4LtmgT0sDl/yHktUTM0Mb7e
+         z5CaMMry8WZjMr5ZtlxQ87ORckr2HKdH4DQNITPpw9aS71YoA9TgD07EukwUOenFSQpo
+         7sE/rSzawBqGFpZSZo33IEuluLPX35cCdKe/yMWDsQypYBEBvgsBkxJB62ksxnOWSts9
+         9mv2eGtomZymF8HSMD+UFj7wZifkS1l1Fc0HLYVkEQlqKTJsMosmVePzRZhL8EqitXyK
+         tTYiarBJJM/8pKKq28QrQMz57hDBMA2kBG28/SP+ikuUyjJw6ZV/0skeTvjYY9C/Unpv
+         u+ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721148616; x=1721753416;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CutzVZbBuYdC//uAM2GMb6dlE9xUeemCkZXQmoieiZ4=;
-        b=Fr97sf6pJPD8/gwNYlPZCiDA1qoynyLSNXpaviCfwuEz+TqlDHbRaWhzILaY+ECY/s
-         F+0Y/dAXQLZjRqJ8XSqYz2J+uWbI/o9RtfZAVWEKv2Bz1ZOALlZU63Mudz7lYES3s9YR
-         V44mM9VHBfu8Ev8lFQdExyBjUol1oXKC5+ot3i6YNJyOCFSsTFLeCXSZWQoiU2XN9nPd
-         uGq+XW2trtnovR1q54Xcuf3Z87aU3DXQGv+pIkPkzpispfn7o1Gy5fsGsxlLAR+qLPnk
-         sYbPvioCbofru9ZcjXBPnBY8mkkMODiSFAJ2LYPKmfFS8Rv1347HcD/2+z2Up9e/RI2A
-         OADw==
-X-Gm-Message-State: AOJu0YxyiZKyrmRQwNTRTH9UJiBhkWBLUod3Bxr/6DFex3akaFp5dpo5
-	7mNYB8CzAfa/f5flDpNlTKti5VSbepP7SQgAZBf5BpygWYaN+17S17KrN0lKkl8=
-X-Google-Smtp-Source: AGHT+IFNzQ6RluIrtq+29sTh2FoWPSICVDmNlgUVgLB+IhIvuT8dnx/WROGPT1B/1b2kj+htKCGLUg==
-X-Received: by 2002:a2e:b911:0:b0:2ee:8d04:7689 with SMTP id 38308e7fff4ca-2eef416e131mr19983111fa.20.1721148616368;
-        Tue, 16 Jul 2024 09:50:16 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2eee1914abesm12155871fa.84.2024.07.16.09.50.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jul 2024 09:50:15 -0700 (PDT)
-Date: Tue, 16 Jul 2024 19:50:14 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Rayyan Ansari <rayyan.ansari@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: msm8939-samsung-a7: rename pwm node to
- conform to dtschema
-Message-ID: <vcqlsi5d4eeejlh6ihfodkvsw46vxg3av65lhczqacwqljlj2g@4folnrsvxrg6>
-References: <20240716135339.87192-1-rayyan.ansari@linaro.org>
+        d=1e100.net; s=20230601; t=1721151297; x=1721756097;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Bzncl9L3e27llWjrAt0uSGnBBcBzotmsp09OvMIhHpc=;
+        b=hm8ypRzSfOqAtfSEWRZvTzoLV4Xmv5a+dKXxNZemoR5QeNef7/VdtQqjOPLGMMDqtp
+         sJUQtLqo9PBLk6TLzb/tl+2yC1zbLRP8LAnC2sTLpj/55h2s6svZI+oMBs03ut9evyk4
+         AtoC7MrGGp9hb5aRFKQT8t6K2FM3UaT5xet/axCk+EbCdPcM4U28O8AUbhS1Rrfe7F8i
+         J30K+cM8uFSi9UxeHOSr34rGcKChSDemWIcdTzm5IW9q5wR1EnfGHQfACZ4onCm2NC2t
+         FimlpvVY2ElmHHbXIL98nrz8zAvwaL6dBdzy/n/+gRWmrdfC9EdVmrGcJw4+FGP5c8eS
+         THBQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXjNy5cOoKOmbJtwYbiA89IGItqdSS1yazPeWKjqq4fLOjTRpnPK96olEVDWySg5/8Oq7WA10vK7hVY3o/NRObOO5mRNB8EYH4jPUTeFQ==
+X-Gm-Message-State: AOJu0Ywxp1xJkYRkJ4MI82W1r55OsIJsBq23OsJf1rRe7hhR4Ep7q0Ig
+	tG1Jmal0HTZ0oynoJC3TzYQR8DUyBICh27VPjcS4wY623VyM/O/NmnctEYCqFBsyIXDraFx7PDw
+	Skw==
+X-Google-Smtp-Source: AGHT+IG32VHtdxdaUsDDPJunrvckiTWNO91gPhz+tHm9yc4gkYSQ85JHqlVjFo5Nvdj8OgpwD3v6pjKH7w4=
+X-Received: from zagreus.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
+ (user=seanjc job=sendgmr) by 2002:a17:90a:b96:b0:2c9:ba2b:42ac with SMTP id
+ 98e67ed59e1d1-2cb36d483c4mr6722a91.4.1721151297229; Tue, 16 Jul 2024 10:34:57
+ -0700 (PDT)
+Date: Tue, 16 Jul 2024 10:34:55 -0700
+In-Reply-To: <20240716160842.GD1482543@nvidia.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240716135339.87192-1-rayyan.ansari@linaro.org>
+Mime-Version: 1.0
+References: <20240618-exclusive-gup-v1-0-30472a19c5d1@quicinc.com>
+ <20240712232937.2861788-1-ackerleytng@google.com> <ZpaZtPKrXolEduZH@google.com>
+ <20240716160842.GD1482543@nvidia.com>
+Message-ID: <ZpavP3K_xAMiu4kE@google.com>
+Subject: Re: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
+From: Sean Christopherson <seanjc@google.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Ackerley Tng <ackerleytng@google.com>, quic_eberman@quicinc.com, 
+	akpm@linux-foundation.org, david@redhat.com, kvm@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-kselftest@vger.kernel.org, linux-mm@kvack.org, maz@kernel.org, 
+	pbonzini@redhat.com, shuah@kernel.org, tabba@google.com, willy@infradead.org, 
+	vannapurve@google.com, hch@infradead.org, rientjes@google.com, 
+	jhubbard@nvidia.com, qperret@google.com, smostafa@google.com, fvdl@google.com, 
+	hughd@google.com
+Content-Type: text/plain; charset="us-ascii"
 
-On Tue, Jul 16, 2024 at 02:53:38PM GMT, Rayyan Ansari wrote:
-> Rename the pwm node from "pwm-vibrator" to "pwm" to conform to the dt schema.
+On Tue, Jul 16, 2024, Jason Gunthorpe wrote:
+> On Tue, Jul 16, 2024 at 09:03:00AM -0700, Sean Christopherson wrote:
 > 
-> Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/msm8939-samsung-a7.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> > > + To support huge pages, guest_memfd will take ownership of the hugepages, and
+> > >   provide interested parties (userspace, KVM, iommu) with pages to be used.
+> > >   + guest_memfd will track usage of (sub)pages, for both private and shared
+> > >     memory
+> > >   + Pages will be broken into smaller (probably 4K) chunks at creation time to
+> > >     simplify implementation (as opposed to splitting at runtime when private to
+> > >     shared conversion is requested by the guest)
+> > 
+> > FWIW, I doubt we'll ever release a version with mmap()+guest_memfd support that
+> > shatters pages at creation.  I can see it being an intermediate step, e.g. to
+> > prove correctness and provide a bisection point, but shattering hugepages at
+> > creation would effectively make hugepage support useless.
 > 
+> Why? If the private memory retains its contiguity seperately but the
+> struct pages are removed from the vmemmap, what is the downside?
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Oooh, you're talking about shattering only the host userspace mappings.  Now I
+understand why there was a bit of a disconnect, I was thinking you (hand-wavy
+everyone) were saying that KVM would immediately shatter its own mappings too.
 
+> As I understand it the point is to give a large contiguous range to
+> the private world and use only 4k pages to give the hypervisor world
+> access to limited amounts of the memory.
+> 
+> Is there a reason that not having the shared memory elevated to higher
+> contiguity a deal breaker?
 
--- 
-With best wishes
-Dmitry
+Nope.  I'm sure someone will ask for it sooner than later, but definitely not a
+must have.
 
