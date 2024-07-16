@@ -1,206 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-26266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3FCA2931FAE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 06:25:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BA12931FB7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 06:30:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 941EB1F21EA7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 04:25:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 43C841F22061
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 04:30:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CEC210A1A;
-	Tue, 16 Jul 2024 04:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6189714A82;
+	Tue, 16 Jul 2024 04:29:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gNeveWDU"
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="DQv1XXnl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE8A23B0;
-	Tue, 16 Jul 2024 04:25:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B8810A11
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 04:29:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721103917; cv=none; b=gqNgZBRJzXHsdNePplHeAgB9vYtcJc8cccBpfW16w7MbOGBUgbwea2Q+2NI90jj/1jZtQbg95QzL2QdvQ4SGONAQv4CFMUlO2ggRujU7yZqhD0Fr4KhYoD8ok9jk4iaEPSGEp3ZGf3L8R4F6Pcnrh4ZKrPULpflV36rI65EXy9A=
+	t=1721104197; cv=none; b=RVkeWcikiWoRyVGRXdXpqruSn5n2PCcBR3Uxny68RIJbuSlvscvMgK8kX549N/wMERjF1fi6iCIfD83jtFmD4oJ4/B66a+S0+Wk61+5BqfKjA+3+/O27+kFecnbiODmdWdO9mPABijPg67CVpmO0HPZ6A4K7Yj6nrMkreRUw+yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721103917; c=relaxed/simple;
-	bh=6MX+NE8Jxzwb8avED/COfEGkUNieFwkqSY0z/WSeoLE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=OUg2/48oveAxlMhY3lO93wBgRRTqFOYhTUyHiCWUtbSu5Tlmrsc39tVSJU258yME0SyzDRbPWPF/2kuF/u6BJ0gsO3QyatOITwb+SmnZ2PphG17qZ9B0P9zr6OZ0RnItNBZDJhAwG0ORoi1w9Q8sTgnu16U2ozvDBWiCl55zL+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gNeveWDU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46FH95LT022751;
-	Tue, 16 Jul 2024 04:25:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4Qz4N6UHAH0nIVVa+R9Y9Jl2Jpt/5B6jrSJZ83NGUqU=; b=gNeveWDUDvCq4FyJ
-	bKvdEGCAZ8KATXdBOBObYBb2GrAYaknNDO681WVGbG1aRko9cnMV0iUmLGGuQFLQ
-	92fEPfGpT17unAsj+JtpJmSWM57oUIf9Skz5ybKBDgeewO1Pt0Rk3gSK7cV+4Kq8
-	yphMhWOLtxa0SKpkMAcqJFvtFF9nqU6qljJjNhrVtczVES/HEiMN9e0fCUeTYrm1
-	9K82fIGnU827f/DUUQiBaezkBCNsibCrkLBRh0aa5R5hApl3cB5krgeEfunkra1e
-	K+jaqQPcWI6XRzREtg6HXO2OFejKudMwnEtPBy2M+DgaiNo3luHXFcTxcjm9CBI9
-	b+scmA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40bjv8nwtw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 16 Jul 2024 04:25:04 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46G4P2TS026239
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 16 Jul 2024 04:25:02 GMT
-Received: from [10.216.59.252] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 15 Jul
- 2024 21:24:57 -0700
-Message-ID: <5f8218cb-a8d6-789a-8723-0af07353e432@quicinc.com>
-Date: Tue, 16 Jul 2024 09:54:54 +0530
+	s=arc-20240116; t=1721104197; c=relaxed/simple;
+	bh=Fxaw7Ng7X6+7vJdzrKhj430hol4ifALArDkQpc2cjpU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=M/ism2NTYhT/9sfqtWZ0ZkoqeGn6M9brOGJp4nB+/SOZcMCFcgYfXY5ALgKatrm/v4p6C9nZ/lgdyCTc9oWsaXY2GsSgC8qwr8DWvKDuF574pReDDw8RZWbC1UG5mYPbwXUk3+ebTZ2VuPEu/P+T06+KJuw473hiPxjFa9DRYiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=DQv1XXnl; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52ea0f18500so5199862e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 21:29:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google; t=1721104193; x=1721708993; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=iubjZBekOpPoOdvguIEUCzz0zvPcWVts706zRXNeNzw=;
+        b=DQv1XXnlfp5iHcf83CSoCPTgHbQa5eomip02DQCGgXMn15FoHbDAUnkU0c+8zRuCba
+         ZMPlYvR5ka2rXpWD8cWz1GYxI5C8/7UwKM6TcIfvNYHpC5g2HOdg5V66Moy4c6bzZMaa
+         gTsNenYA+pBqf/nCdHO3cjnnD/7+jB6BWXVfY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721104193; x=1721708993;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iubjZBekOpPoOdvguIEUCzz0zvPcWVts706zRXNeNzw=;
+        b=NGA3tKaWxiCXadFa6sVfHI4kijMQWSUUcCrmsC2nbvTQDReda/NLe2AJR1YGCD2gGS
+         WasDsNP1SKKnWz6+lXjY82dRggdXqrd724aUlL0h+ypE1b3EQUjslf12ZGIVQIq/hWcV
+         Gd1ulNRIFXeVWJOTMo2C6ySGhM+MDL7OOeIH3coj7hMxQRiS6nDDAeyzeXFjJo1L7t8z
+         HhKxZGzzmCIet0vWJ4k29eplnjFOHd+GoTsv1d+MZHQiJiZ89MD9b3KDUJ1lS7hQ4EMR
+         ipJ5If8lQIIqQSPA2j0vIk9GNIyeFvoV0+U1VZJ4OsrPMSGnBxuEoVnRf/pzZNQtLFKc
+         OkGw==
+X-Forwarded-Encrypted: i=1; AJvYcCXlf7VfpGCFxNd+WIN4hwt3kgoUFVk4z1SZu8UcbmI+asieAh6pgwexuWemdBFsc07zyqLGII9daS3ZbUtN3zepF7wbCvWeWXchoeiYig==
+X-Gm-Message-State: AOJu0YyYUkC904qbx4Xo1AjZUFeqUZAetNUM/bE5sAXAuEHT1cOrBKw8
+	Mg5HQbBpokWkEi/2a9hICeC/5TLhy5hTs4D1u1OhiOo4m5HbPquyYBwou7Z4UUoAAX+h4MhKwIJ
+	a8i4PNg==
+X-Google-Smtp-Source: AGHT+IEBCOMVqmPV5hVdVE6ndl9/PBoj47d1uFSLcv4m15IUKeB7dw5xcc5KdM7sZzng1rKSp9Vmzg==
+X-Received: by 2002:a05:6512:138e:b0:52e:6d6e:5770 with SMTP id 2adb3069b0e04-52edef21713mr500982e87.14.1721104193501;
+        Mon, 15 Jul 2024 21:29:53 -0700 (PDT)
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com. [209.85.208.47])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a79bc5b7ebfsm260251066b.67.2024.07.15.21.29.52
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Jul 2024 21:29:52 -0700 (PDT)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-58ba3e38028so6529090a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jul 2024 21:29:52 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCW1VB+FsKpentrKc5oMZTu+i4dASbQTZMigNvJGpTwF7vs2oAMuwmQ5jReXvkJ+zUT49bMCAWktTGM18cLByJBqhyHlmOsre6gLJWolmQ==
+X-Received: by 2002:a05:6402:234d:b0:57a:1e0a:379f with SMTP id
+ 4fb4d7f45d1cf-59eee832048mr631175a12.16.1721104191819; Mon, 15 Jul 2024
+ 21:29:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 13/14] PCI: qcom: Simulate PCIe hotplug using 'global'
- interrupt
-Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Rob Herring
-	<robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kishon Vijay
- Abraham I <kishon@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad
- Dybcio <konrad.dybcio@linaro.org>, <linux-pci@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20240715-pci-qcom-hotplug-v1-0-5f3765cc873a@linaro.org>
- <20240715-pci-qcom-hotplug-v1-13-5f3765cc873a@linaro.org>
- <dca49572-dc77-58df-1bd1-b0e897191c87@quicinc.com>
- <20240716041827.GD3446@thinkpad>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20240716041827.GD3446@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: bdr6bUfVGoiuQg_qxT9MyY6-EKJsTvXm
-X-Proofpoint-GUID: bdr6bUfVGoiuQg_qxT9MyY6-EKJsTvXm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-15_19,2024-07-11_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 spamscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
- phishscore=0 lowpriorityscore=0 mlxscore=0 adultscore=0 bulkscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2407160031
+References: <20240712091008.14815-1-brgl@bgdev.pl> <CAHk-=wjWc5dzcj2O1tEgNHY1rnQW63JwtuZi_vAZPqy6wqpoUQ@mail.gmail.com>
+In-Reply-To: <CAHk-=wjWc5dzcj2O1tEgNHY1rnQW63JwtuZi_vAZPqy6wqpoUQ@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Mon, 15 Jul 2024 21:29:34 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wjcO_9dkNf-bNda6bzykb5ZXWtAYA97p7oDsXPHmMRi6g@mail.gmail.com>
+Message-ID: <CAHk-=wjcO_9dkNf-bNda6bzykb5ZXWtAYA97p7oDsXPHmMRi6g@mail.gmail.com>
+Subject: Re: [GIT PULL] power sequencing updates for v6.11-rc1
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Arnd Bergmann <arnd@arndb.de>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
+On Mon, 15 Jul 2024 at 19:17, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+>
+> Hmm. Let's see how this all works out, but I already found an annoyance.
 
+.. and another one.
 
-On 7/16/2024 9:48 AM, Manivannan Sadhasivam wrote:
-> On Tue, Jul 16, 2024 at 09:34:13AM +0530, Krishna Chaitanya Chundru wrote:
->>
->>
->> On 7/15/2024 11:03 PM, Manivannan Sadhasivam via B4 Relay wrote:
->>> From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>>
->>> Historically, Qcom PCIe RC controllers lack standard hotplug support. So
->>> when an endpoint is attached to the SoC, users have to rescan the bus
->>> manually to enumerate the device. But this can be avoided by simulating the
->>> PCIe hotplug using Qcom specific way.
->>>
->>> Qcom PCIe RC controllers are capable of generating the 'global' SPI
->>> interrupt to the host CPUs. The device driver can use this event to
->>> identify events such as PCIe link specific events, safety events etc...
->>>
->>> One such event is the PCIe Link up event generated when an endpoint is
->>> detected on the bus and the Link is 'up'. This event can be used to
->>> simulate the PCIe hotplug in the Qcom SoCs.
->>>
->>> So add support for capturing the PCIe Link up event using the 'global'
->>> interrupt in the driver. Once the Link up event is received, the bus
->>> underneath the host bridge is scanned to enumerate PCIe endpoint devices,
->>> thus simulating hotplug.
->>>
->>> All of the Qcom SoCs have only one rootport per controller instance. So
->>> only a single 'Link up' event is generated for the PCIe controller.
->>>
->>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>> ---
->>>    drivers/pci/controller/dwc/pcie-qcom.c | 55 ++++++++++++++++++++++++++++++++++
->>>    1 file changed, 55 insertions(+)
->>>
->>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
->>> index 0180edf3310e..38ed411d2052 100644
->>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->>> @@ -50,6 +50,9 @@
->>>    #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
->>>    #define PARF_Q2A_FLUSH				0x1ac
->>>    #define PARF_LTSSM				0x1b0
->>> +#define PARF_INT_ALL_STATUS			0x224
->>> +#define PARF_INT_ALL_CLEAR			0x228
->>> +#define PARF_INT_ALL_MASK			0x22c
->>>    #define PARF_SID_OFFSET				0x234
->>>    #define PARF_BDF_TRANSLATE_CFG			0x24c
->>>    #define PARF_SLV_ADDR_SPACE_SIZE		0x358
->>> @@ -121,6 +124,9 @@
->>>    /* PARF_LTSSM register fields */
->>>    #define LTSSM_EN				BIT(8)
->>> +/* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
->>> +#define PARF_INT_ALL_LINK_UP			BIT(13)
->>> +
->>>    /* PARF_NO_SNOOP_OVERIDE register fields */
->>>    #define WR_NO_SNOOP_OVERIDE_EN			BIT(1)
->>>    #define RD_NO_SNOOP_OVERIDE_EN			BIT(3)
->>> @@ -260,6 +266,7 @@ struct qcom_pcie {
->>>    	struct icc_path *icc_cpu;
->>>    	const struct qcom_pcie_cfg *cfg;
->>>    	struct dentry *debugfs;
->>> +	int global_irq;
->>>    	bool suspended;
->>>    };
->>> @@ -1488,6 +1495,29 @@ static void qcom_pcie_init_debugfs(struct qcom_pcie *pcie)
->>>    				    qcom_pcie_link_transition_count);
->>>    }
->>> +static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
->>> +{
->>> +	struct qcom_pcie *pcie = data;
->>> +	struct dw_pcie_rp *pp = &pcie->pci->pp; > +	struct device *dev = pcie->pci->dev;
->>> +	u32 status = readl_relaxed(pcie->parf + PARF_INT_ALL_STATUS);
->>> +
->>> +	writel_relaxed(status, pcie->parf + PARF_INT_ALL_CLEAR);
->>> +
->>> +	if (FIELD_GET(PARF_INT_ALL_LINK_UP, status)) {
->>> +		dev_dbg(dev, "Received Link up event. Starting enumeration!\n");
->>> +		/* Rescan the bus to enumerate endpoint devices */
->>> +		pci_lock_rescan_remove();
->>> +		pci_rescan_bus(pp->bridge->bus);
->> There can be chances of getting link up interrupt before PCIe framework
->> starts enumeration and at that time bridge-> bus is not created and
->> cause NULL point access.
->> Please have a check for this.
->>
-> 
-> Host bridge is enumerated during dw_pcie_host_init() and the IRQ handler is
-> registered afterwards. So there is no way the 'pp->bridge' can be NULL.
-> 
-> - Mani
-I leaved a gap between bridge-> & bus by mistake, I want to highlight 
-bridge->bus in above comment. The bus can be NULL and it can create NULL
-point access.
-- Krishna Chaitanya.
-> 
+On my Altra box, commit 8fb18619d910 ("PCI/pwrctl: Create platform
+devices for child OF nodes of the port node") causes annoying messages
+at bootup:
+
+  pci 000c:00:01.0: failed to populate child OF nodes (-22)
+  pci 000c:00:02.0: failed to populate child OF nodes (-22)
+  .. repeat for every PCI bridge ..
+
+for no obvious reason.
+
+FWIW, -22 is -EINVAL.
+
+            Linus
 
