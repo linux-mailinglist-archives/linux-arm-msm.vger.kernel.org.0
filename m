@@ -1,77 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-26308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 717CF93242F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 12:35:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F43D932432
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 12:35:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1C3331F21DEE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 10:35:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 70C131C22E60
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jul 2024 10:35:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B51841991A4;
-	Tue, 16 Jul 2024 10:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EC6119922A;
+	Tue, 16 Jul 2024 10:35:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wE+uL62m"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XzpAVsza"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CFA198E9F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 10:35:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1031990D9
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 10:35:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721126112; cv=none; b=oXpHk2a9xB4C6eooDD5IAIvrwJ5/RI4cZmVt8BXrO5E8QT0QJ8PH2IQ0B3LXQmn04wCL1C0Euz2qonDjiKoQE9/aDDNqr/TXOrpDmzjSt9u4GgVeDlcStFTiH9xl8Dp9aWzFiSfPU27DYkXb2O9KjNUgrBtsC4gbv2mjz5NkL/U=
+	t=1721126114; cv=none; b=UdhvLutg7ZCe80yfdbF+wdcmc1zQZXFlrEY+Fo4MkaY2ldyyTrOpH0wqPlX8agTbgRnuJm+zguHWnGg3S/IE5+j8IZNWXlC8Kk8wlx06XfoLqV2q4vYKWHcEijJZpGG7vi5S3Hqg6YO67pVI/HArBtcnHnHZcaoHEL/uiQPEQ2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721126112; c=relaxed/simple;
-	bh=7vQTQQyuhmt2Fsu/yP4JUKcaZHU+0sTpZG4M5OjD6oo=;
+	s=arc-20240116; t=1721126114; c=relaxed/simple;
+	bh=bfCH8and0eCwiNx1UPmuC/ofW1D0oXAEWmEsWNK2XYU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=s7QfEe6Gh+FCXbwzYaLxrILZOYU1eeWk9LNNXjfzzahWR45HIftAIn2VCvcORAKT2iMcyWighKhYaHahIpK1Ot6gpT2w7HzKMm8POIz9V+NiDrm755lPnYoF5+D3kdzgWvruEvoCfHI7h5XKsq4e3RB/C19rF3el/hx1s4Ac6QM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wE+uL62m; arc=none smtp.client-ip=209.85.208.170
+	 In-Reply-To:To:Cc; b=P4Fyp6SfzOACrBsGlUCnjA+MoHXjNGEbABlBbibIFie1s2t5qpNCr9wh1og+MoYWUPsQU6CserWp3gjSOPWkR7qEqnV1HUsKFoatEDKx9O00hQzgwfeFCnW/LKvKHHaklu7WZDd2WaLmwwSC+/9rNvuL1SQ1tE1J4O9XNFBuWcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XzpAVsza; arc=none smtp.client-ip=209.85.167.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2eeef45d865so20572221fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 03:35:10 -0700 (PDT)
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-52ea79e689eso7688794e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jul 2024 03:35:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721126109; x=1721730909; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1721126110; x=1721730910; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=UgsflY1C9wxQUVHsZuow/H3LY52gGTetIqxZfdh+XAg=;
-        b=wE+uL62mUE6OarJ7PP+2ZPiVBVEKwBNYDaDeY289s15JKo8jJl7/ROd0xkicvAJFIJ
-         07RDHRx+rM7kzzbNZkjRSyzNHMPIPR5PGovwXYSRuDA7BRCx0YckftC4VRi1XUL9SQEz
-         Gu5gRC1KUX3ip2R8nbkPcNB7EzMe/mrUZgRT7XflDalp3tWr89RM+3/sVTvXocBlOHOd
-         IsR+doZ1t4OdXJIX+aQvolV0SJychU4OarGhHNWBIddUgMNNXTsoHil1zEK1oN4lvY/4
-         LBj3kGNzzjGijVKfw8/Sv1zF99HtwrRuVfpBEmLgGMURnwLl8VF1zPpXgK7cnyvLlj+d
-         dsig==
+        bh=glaL1NwucAvvOF+fsdv/caKhQoNYoSfHGDOwMp1a1Rs=;
+        b=XzpAVszapSb4H1kUr7mUK3fSUYlzp3cixW1Lw3V2rZv0Hx44o4Xa9ei1isppVGVluR
+         PxwsrG5vr1g7Z4IzA8SAIQGfZ7jGez1vYuUg4ZPTVXDhG8G1AgxS3lU6alRKvQ0DRuep
+         ngUGxrlvbEhMMNJIu8W19vHUaTG6rxK63QSxpz4fp3iYC46i24cggWdvnka1uo1IprIa
+         ovY2uscJoS8d6rIinu2niJJ3A3AgFLvSRtyK0F89cxXQ6WEocIMX2ZJOoDHiB8ZUnfAH
+         WTSaCVRrH/2tMtjgcWANRFW1nKnTrzJUQrclsN7A2FjFpXfGhl8z+XgrKCY0W8Ma/RAU
+         TrgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721126109; x=1721730909;
+        d=1e100.net; s=20230601; t=1721126110; x=1721730910;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UgsflY1C9wxQUVHsZuow/H3LY52gGTetIqxZfdh+XAg=;
-        b=Q3L94iMCjy+1+AYTVsDrg52pxk5Zs/XUwlXmcWn6Lr2p+DEddmUW6Bi2HPsC2IDZ90
-         zOXJ1Jf0+zFeFOqlxZqgmOfGIkaMVTQ+nQsJO3H8rFJl0Sxq0ArVa1lZS5V3EHudcyna
-         jupL0BMr9ibci8s6WMo/T3Ws0eE7rFz594sLBuTeHH4bPRQP2pzk5xuk+mcxuUJUyxBa
-         5K6iu9J972wnI1wspf3pub4ofbwimSfeSbddYvnVMCeikTzA88pejqomli8pIHQjB/QK
-         glK9X3yya7PEd3j4d8n59naIJ4WqxQPyt2XqlQ0EXus9oDsMQIm3IBpPQHtTfGY6tuKe
-         VlSg==
-X-Forwarded-Encrypted: i=1; AJvYcCVKyPert4InC0XEgk1qdxQ/UZidNPbADD4L7eUTB2nYHMc+g5azYtBoTSu9sfcRHY2rm51w+mif/qAmgZoJr6xOS+N1MS2v5vHXlmosjw==
-X-Gm-Message-State: AOJu0YxzTv5yj9q+qeBcUbPorlZik0gOGED2m86ylNdvmO9sfEvFwgUU
-	rB9EdMvooKxtnxTLD36qJ9sQWPabuLF00HntTl4J8J5NQARhK3S1PbFJT1jffUn5Oi9Y4/FJXHK
-	D
-X-Google-Smtp-Source: AGHT+IFb+DSR8Ihb6G6BTOMgTWpx5HQyDkYY6kNBsMWa/Jp2/+iSpUU9UaoLtBQhwOAJobfMjm5xxA==
-X-Received: by 2002:a2e:9dd0:0:b0:2ee:9446:9f58 with SMTP id 38308e7fff4ca-2eef4156dd2mr14132801fa.10.1721126108567;
-        Tue, 16 Jul 2024 03:35:08 -0700 (PDT)
+        bh=glaL1NwucAvvOF+fsdv/caKhQoNYoSfHGDOwMp1a1Rs=;
+        b=lGyPn1YLN3pQu/wAf7D72v+mtW+7wLIDr5WuHVwAPGk6reqm+KCf0S3m+1lSGsm21D
+         cW214oxXdk+ejpfjyxQJRP4rhOgdjdrrvee+qjpw/witVG1e76GowN2SuoXkB4H5V7Ct
+         J2aJ7L58fjp3w/cv99ZwWTFzJ3Fnnbq53himbGkMJrftrCFchuwHkVRVTBVgHsDKdhFi
+         ADLy1LHiwfYSIFGMjMGFgk3tjqmA+cpYjLpoKvnhyqLR/vbeY5g/GsrnTK1asseL1QwW
+         bTyaawVHEk8r9sPKidZG5J4qEmETqAM5N+E6RAxQKEKskNJxku9T+Rv9xs+MF+aG86jd
+         9GsA==
+X-Forwarded-Encrypted: i=1; AJvYcCXuQXL9l8CIW+iKlfjb9fKl08N/I5sYND0LYLAa85SFYbaC+duxB3JkyLkWDiaRN9cosOfyp3kYnJrxpZgMcb6yjsHM6fFAfWSDIUTWuw==
+X-Gm-Message-State: AOJu0YyB2wZfFmx0aCPgZS0ceRLjK/KrmuF+3MMBYCHmhFfFJlymDA0e
+	/fAnOsRMnxHgmKUg5be71vbISU+SMlply1aV4ABqMYl1yzafjzxCKJhm3Vxg3j9Cpbq8qiS1jSx
+	Q
+X-Google-Smtp-Source: AGHT+IF/FYTXOKFpO/Y/dd8V/daSVJZBtL/wBmD7Ccmrac1MynmYXdqAUgFGPZ4mHCUKx38XS2OJbw==
+X-Received: by 2002:a05:6512:3e0d:b0:52e:936e:a237 with SMTP id 2adb3069b0e04-52edef1e994mr1301018e87.16.1721126110428;
+        Tue, 16 Jul 2024 03:35:10 -0700 (PDT)
 Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a79bc5b7eb4sm294039766b.60.2024.07.16.03.35.06
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a79bc5b7eb4sm294039766b.60.2024.07.16.03.35.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jul 2024 03:35:08 -0700 (PDT)
+        Tue, 16 Jul 2024 03:35:10 -0700 (PDT)
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Tue, 16 Jul 2024 12:35:03 +0200
-Subject: [PATCH 1/2] arm64: dts: qcom: x1e80100: Fix Adreno SMMU global
- interrupt
+Date: Tue, 16 Jul 2024 12:35:04 +0200
+Subject: [PATCH 2/2] arm64: dts: qcom: x1e80100: Update C4/C5
+ residency/exit numbers
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,7 +80,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240716-topic-h_bits-v1-1-f6c5d3ff982c@linaro.org>
+Message-Id: <20240716-topic-h_bits-v1-2-f6c5d3ff982c@linaro.org>
 References: <20240716-topic-h_bits-v1-0-f6c5d3ff982c@linaro.org>
 In-Reply-To: <20240716-topic-h_bits-v1-0-f6c5d3ff982c@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -93,35 +93,46 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1721126104; l=899;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1721126104; l=1137;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=7vQTQQyuhmt2Fsu/yP4JUKcaZHU+0sTpZG4M5OjD6oo=;
- b=xsFusYWRiBUxGBk2/itp+19srhpG5PVgylg/VcbU4n4ejR+EMHAmFa1W0fG/tzuuKki9TMzKg
- +WfU/yCIeh2D6LD9ow7z9KV/rQlE7NuD0bvfOt/l2frmuPZkLKfiQN6
+ bh=bfCH8and0eCwiNx1UPmuC/ofW1D0oXAEWmEsWNK2XYU=;
+ b=seaZkneu+YvqlDp0QXFYgUyISOmkiDpU6GX4/CSMyUiwyVBHJ9wxhy5YPcWiNJApmdUUSrpuW
+ uYpgXySxt7LAzZXrkIdcLQOBNOdDCa+5uIkJwpJ2rnVEUu4gUlldZ6E
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-Fix the unfortunate off-by-one.
+Update the numbers based on the information found in the DSDT.
 
-Fixes: 721e38301b79 ("arm64: dts: qcom: x1e80100: Add gpu support")
+Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index 7bca5fcd7d52..47bb26a66b2e 100644
+index 47bb26a66b2e..120bc418c444 100644
 --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
 +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -3288,7 +3288,7 @@ adreno_smmu: iommu@3da0000 {
- 			reg = <0x0 0x03da0000 0x0 0x40000>;
- 			#iommu-cells = <2>;
- 			#global-interrupts = <1>;
--			interrupts = <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts = <GIC_SPI 674 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
+@@ -278,8 +278,8 @@ CLUSTER_C4: cpu-sleep-0 {
+ 				idle-state-name = "ret";
+ 				arm,psci-suspend-param = <0x00000004>;
+ 				entry-latency-us = <180>;
+-				exit-latency-us = <320>;
+-				min-residency-us = <1000>;
++				exit-latency-us = <500>;
++				min-residency-us = <600>;
+ 			};
+ 		};
+ 
+@@ -298,7 +298,7 @@ CLUSTER_CL5: cluster-sleep-1 {
+ 				idle-state-name = "ret-pll-off";
+ 				arm,psci-suspend-param = <0x01000054>;
+ 				entry-latency-us = <2200>;
+-				exit-latency-us = <2500>;
++				exit-latency-us = <4000>;
+ 				min-residency-us = <7000>;
+ 			};
+ 		};
 
 -- 
 2.45.2
