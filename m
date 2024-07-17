@@ -1,146 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-26423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C3D7933A2D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 11:40:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CC6B933A3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 11:47:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A087B1F213BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 09:40:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B29151F2261C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 09:47:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58AB714A61B;
-	Wed, 17 Jul 2024 09:40:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5255517DA0D;
+	Wed, 17 Jul 2024 09:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JAlEyaxA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TzMf839E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46826EB56;
-	Wed, 17 Jul 2024 09:40:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7648417D8BC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 09:47:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721209240; cv=none; b=SjTUNeXhZuZA9QLh5goFj7plaNhyMeZje9QusSw+/XlRftd8yxFA+xMZ2GKV1dom3poruJUhLJgdFe2eLY3/M8n473YD3H7P4HaEFLBXgG+FGSfXvpuauQnZGttmNPQLIvu/PBdoq2PI5mCLxNg3/UMylc5f3NTyBfVx5dqGbhw=
+	t=1721209631; cv=none; b=Hafw5CGCtjXw4zFnfRS1lxoJTiQKfdYF33RKgFy7hK0hUSE4XSOXIZwXFP0v4XTc6wqxF3kkaaNn3JILup7TuB5tQoUsKxMZ4sApacyrH/qiabW8Gzi96CNfqJbWHQ7mCUt6HhUpIMixIoV9SorW2656JWfxJNGAG60ok55dras=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721209240; c=relaxed/simple;
-	bh=+GKvkx6yO2guQrr2FUpZGbJobMrKjd+iiCrm3hzFdRQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hV025Kc6snjZaqrtM6Kn1aLISNv35b7Gr9OWDSC7CFyucNZ6Zaur21/VAleaiHM0d8Jj7z41AmKoUss6nYfQIHkO0EbwOMTmsxBibvk9h26LvhhRM4mQfXyTJdKgGhdivAiDtWhHsUACf6nXWgmJhvewFKYYnbHc8VVeOL7WDHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JAlEyaxA; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1fb3e9e32ffso35300765ad.0;
-        Wed, 17 Jul 2024 02:40:38 -0700 (PDT)
+	s=arc-20240116; t=1721209631; c=relaxed/simple;
+	bh=//Iz1yeTeHxItLfcrpLR6gqmO5Yfh5NJNYqkEOc2ucE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IWlpgh8TOPn9yC0OMeDw0sX7I+TlwEpULTvGdU0EuSBEE6VonuW5N4+NJK4ALsbQYdYasvL6JDIAc7XT77mfCyBue5uCrXMMbaN5eV+q0N6DOUOIG4AJYWewAF1FB0cIhkp4X29TjkkiZra7avuRQ/qE5h/+93+mFFlBqV5WQxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TzMf839E; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a77bf336171so111071466b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 02:47:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721209238; x=1721814038; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UZT2Up7rkixj135YDsGbBv1AEK5yIre5c4SXPmq/8CE=;
-        b=JAlEyaxAiWUk2gqkoVs6VTJ+kIEAYaqMtO2Xp2EPizcFxVmrvR2M0Z16dF9i63Vuhh
-         +VYlVjhb9qPYvQklxI/Os/xNe22be9wrIDLKRglW+LqL8lo7wr4WWzoFAL6EREX0qHw8
-         kwScDPUmJsN62Y25w1qUwoWHc7Y1OCe3o65BH9s8lVsbdxGLpfRGGckBRWumUy6BlV4S
-         R2tMGcz0q+4SO4NotGDHPax+NHAHDkxQBiG8NmrEQAlwXL7k2hQ9rhVjw3L0ahSVVHUN
-         sdiWfjpAuKwjlNdS4GdAg5qoZRclHVWQRLcBRgwdP9/GR0K7lIbRjUzDw3wO9DDY644x
-         kXtw==
+        d=linaro.org; s=google; t=1721209628; x=1721814428; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=XOBkvszif5fgt7EeZSYSbNzTTBVJPTV6vNRINOgprJ4=;
+        b=TzMf839E2E5/XW7Vt4vnQyzemtHRMDit6xp0M2j2QLZLMTBHHsWvr1stdXB4oYSpWI
+         IeL+uKQ3WyOIMzjIZlikEQftfP/98GAA6uhIToFbPPfEniniPr3wTJNETVZva1Mrydlf
+         Umh+eR24a3XKnCTB7ij8Djr65+2nQQkDdi/ra46s1VNEB0S2HSJIsCcXXOs9oXCJcCQL
+         KjyBRzPtTK9MFs03jCAKp9uB3Has4bNpSVJeWzrUwsauc2j+p8+odlhgyDchPKjuAR0n
+         xPZJIJJjRmnWG14LRbRKdCSyKwEaqPAbqVfy57wz7GQAAWVUIOHwKKFS49thld1qkewI
+         /Iuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721209238; x=1721814038;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UZT2Up7rkixj135YDsGbBv1AEK5yIre5c4SXPmq/8CE=;
-        b=BZIwk4cfmPU0Is9ky0aaWvXRknVXKOeP2hBQRLIAZIeyNpBIQyT19HIFbgz7/4NjQ5
-         s0X+XSpozOBx6LhZCJAxp4tMCdDAm8pPwLx60Xsy8lbQTaY9o+gV+s/mAqhZGqGMLZN9
-         bHodZhC1/5jaWkU80BauPjmKq6bLE15Tq6nQ6ZesFk80u8aAyU+/cLXZfwrZ6s4FGIVR
-         EE4PbswaawNxpY5fgPrn+KZuGMRL54LqP7nDQ/X6Yse3COvusxqvUjTRF6yYOUB8wviD
-         KH0ZYjjgJCfoh1ay8Lupn+g4mrsqMuEKfwMq3vQ1XSkvcm214s+2CdI+9H86XkEcCW5T
-         Qvpw==
-X-Forwarded-Encrypted: i=1; AJvYcCX+NYJ9WAxToz6Ua0tqW1feIgiEr37Er4Y206fYQUPeVRwknXwiPQ++LK8JaSK2VNVR5LVFQ0+EYQpos3V8YRwN6RIq231W7PX4lgeYOR/jaTG3bM+ZDgr9I2wQfS2Gaq/KLmnrc9YE9N5BNw==
-X-Gm-Message-State: AOJu0YymVEu/4KEJcwWEo9hx0XGxJGqFvnfru8ncw+DzJkL8XSgUUdJS
-	wNYwnTdxwg4OdWLtqJPqYWSQ+FHWUkFgOjFeH24gf0H6VGeNJV3vrJ9Grx8BAxx99A39bwuNFtT
-	bhUpSXFdCrWb4xFOupjUzk4t2gr3VTHGl
-X-Google-Smtp-Source: AGHT+IHS92ooffGhwo6QwDnJzDTyj0c6jnCY662I7sKXoxhFBlLCKT0n4+VIMY+tB98bU2E3VvfgvXG02LZhehf59pw=
-X-Received: by 2002:a17:90b:148f:b0:2cb:4c5b:2d8a with SMTP id
- 98e67ed59e1d1-2cb526928c0mr749820a91.12.1721209237984; Wed, 17 Jul 2024
- 02:40:37 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1721209628; x=1721814428;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XOBkvszif5fgt7EeZSYSbNzTTBVJPTV6vNRINOgprJ4=;
+        b=hNvf2hlCYRqGG4FcIfz+rlxwNXoqS2a71kjtNKtFlo8loOUQqCL3cT0dL3y4fqsnkV
+         xTWlHwcnUKzv8NTQiCjfDr23vk0iBga+x32Xtgo3RruoxqbLhxyTvgVLhZ31NFTPlWfK
+         4K+naBmIMWFj1kCQpSTSt2cmbdP2UJbI9BEPqKcW2N99dnEPvlXHI5lgyXmgYmL47iDs
+         PCQcLIaT0TF5BqVzncGKgUdCrjbi4ar2qbUH8LWmdIb78pCoKKDRcP1puXRKfjdLvLLQ
+         CzOWOLHAUJXv4NNe6uHpa3aQK0FHoa/mgQSWR5/lhYBxhfUWFhd1ATeSdpvWkmoC0Tvv
+         Oclg==
+X-Forwarded-Encrypted: i=1; AJvYcCWYoTVQEJK2XMWTXHthfo4iGhlARMxP+1AIpKCFmXoG7QDr58rUs4bvORnSd2bUTE7KLaOsryRXWSfs7Iqt5weqYQp312rP53KNY4ve2w==
+X-Gm-Message-State: AOJu0YzQqwqR2eJys3NJITSZxIU9efHtBDsUBNHozXCs5jErxA6TApYs
+	uVLEZ5YVIUuAZ6GY9ujpQ6ZDqbPStJ7INIGVDKE9EO4akHfyYF8oLjMRJpT9shDxoohOQLLY28l
+	l
+X-Google-Smtp-Source: AGHT+IEi2Xc1whKIJtWgOaID7wyzeU+S7ZIxdi5zPQ7Xi6Td3NI7g04SETpjdn9nZeKOm662PuztbA==
+X-Received: by 2002:a17:906:f0d4:b0:a72:62e0:6636 with SMTP id a640c23a62f3a-a7a008d0741mr113017366b.24.1721209627396;
+        Wed, 17 Jul 2024 02:47:07 -0700 (PDT)
+Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a79bc5ea443sm428024766b.91.2024.07.17.02.47.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Jul 2024 02:47:07 -0700 (PDT)
+Message-ID: <94e48e19-781e-4de3-a4e6-da8e923a1294@linaro.org>
+Date: Wed, 17 Jul 2024 11:47:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240711100038.268803-1-vladimir.lypak@gmail.com>
-In-Reply-To: <20240711100038.268803-1-vladimir.lypak@gmail.com>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Wed, 17 Jul 2024 10:40:26 +0100
-Message-ID: <CACu1E7HROtx1Zgyy0EJuHj_HWE8Nd6OtFnxTcrDrHP+2HA5o6A@mail.gmail.com>
-Subject: Re: [PATCH 0/4] fixes for Adreno A5Xx preemption
-To: Vladimir Lypak <vladimir.lypak@gmail.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Jordan Crouse <jordan@cosmicpenguin.net>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] clk: qcom: dispcc-sm8650: add missing
+ CLK_SET_RATE_PARENT flag
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, neil.armstrong@linaro.org
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240716-topic-sm8650-upstream-fix-dispcc-v3-0-5bfd56c899da@linaro.org>
+ <20240716-topic-sm8650-upstream-fix-dispcc-v3-2-5bfd56c899da@linaro.org>
+ <dccttz5b44bl3lwmcaqz6wjx3n4sv3eq4yh6276vzwrtkcvqcw@qxhbo7bylnsg>
+ <9ad10d92-d755-4fae-b206-6e8648be6d48@linaro.org>
+ <CAA8EJpr9L+AKDhuHfQa=Nco7fvG9vLH3a+gxVhENrhz12b3n=Q@mail.gmail.com>
+ <278354ec-532b-48de-8ee1-5477ddb4a285@linaro.org>
+ <kxrhhb3vdojbnqfbwks2qmob55fwm3onleood73qfk6esl7g2c@q66kw5am4emc>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <kxrhhb3vdojbnqfbwks2qmob55fwm3onleood73qfk6esl7g2c@q66kw5am4emc>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jul 11, 2024 at 11:10=E2=80=AFAM Vladimir Lypak
-<vladimir.lypak@gmail.com> wrote:
->
-> There are several issues with preemption on Adreno A5XX GPUs which
-> render system unusable if more than one priority level is used. Those
-> issues include persistent GPU faults and hangs, full UI lockups with
-> idling GPU.
->
-> ---
-> Vladimir Lypak (4):
->   drm/msm/a5xx: disable preemption in submits by default
->   drm/msm/a5xx: properly clear preemption records on resume
->   drm/msm/a5xx: fix races in preemption evaluation stage
->   drm/msm/a5xx: workaround early ring-buffer emptiness check
->
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.c     | 18 ++++++++++----
->  drivers/gpu/drm/msm/adreno/a5xx_gpu.h     | 12 ++++++---
->  drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 30 ++++++++++++++++++++---
->  3 files changed, 47 insertions(+), 13 deletions(-)
-> ---
-> base-commit: 523b23f0bee3014a7a752c9bb9f5c54f0eddae88
-> --
-> 2.45.2
->
+On 16.07.2024 6:46 PM, Dmitry Baryshkov wrote:
+> On Tue, Jul 16, 2024 at 03:46:24PM GMT, neil.armstrong@linaro.org wrote:
+>> On 16/07/2024 15:44, Dmitry Baryshkov wrote:
+>>> On Tue, 16 Jul 2024 at 15:32, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>>>>
+>>>> On 16/07/2024 13:20, Dmitry Baryshkov wrote:
+>>>>> On Tue, Jul 16, 2024 at 11:05:22AM GMT, Neil Armstrong wrote:
+>>>>>> Add the missing CLK_SET_RATE_PARENT for the byte0_div_clk_src
+>>>>>> and byte1_div_clk_src, the clock rate should propagate to
+>>>>>> the corresponding _clk_src.
+>>>>>>
+>>>>>> Fixes: 9e939f008338 ("clk: qcom: add the SM8650 Display Clock Controller driver")
+>>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>>>>> ---
+>>>>>>    drivers/clk/qcom/dispcc-sm8650.c | 2 ++
+>>>>>>    1 file changed, 2 insertions(+)
+>>>>>
+>>>>> This doesn't seem correct, the byte1_div_clk_src is a divisor, so the
+>>>>> rate should not be propagated. Other platforms don't set this flag.
+>>>>>
+>>>>
+>>>> Why not ? the disp_cc_mdss_byte1_clk_src has CLK_SET_RATE_PARENT and a div_table,
+>>>> and we only pass DISP_CC_MDSS_BYTE1_CLK to the dsi controller.
+>>>
+>>> Yes, the driver sets byte_clk with the proper rate, then it sets
+>>> byte_intf_clk, which results in a proper divisor.
+>>> If we have CLK_SET_RATE_PARENT for byte1_div_clk_src, then setting
+>>> byte_intf_clk rate will also result in a rate change for the byte_clk
+>>> rate.
+>>>
+>>> Note, all other platforms don't set that flag for this reason (I think
+>>> I had to remove it during sm8450 development for this reason).
+>>>
+>>
+>> Ack, I think this deserves a comment explaining this, I'll add it.
+> 
+> But where to place it? This applies to _all_ dispcc controllers.
 
-Hi Vladimir,
+Commit message
 
-While looking at preemption on a7xx, where the overall logic is pretty
-much the same, and I've been seeing the same "soft lockups". However
-even after porting patch 3, it turns out that's not enough because
-there's a different race. The sequence of events is something like
-this:
-
-1. Medium-prio app A submits to ring 2.
-2. Ring 0 retires its last job and we start a preemption to ring 2.
-3. High-prio app B submits to ring 0. It sees the preemption from step
-2 ongoing and doesn't write the WTPR register or try to preempt.
-4. The preemption finishes and we update WPTR.
-5. App A's submit retires. We try to preempt, but the submit and
-ring->cur write from step 3 happened on a different CPU and the write
-hasn't landed yet so we skip it.
-
-It's a bit tricky because write reordering is involved, but this seems
-to be what's happening - everything except my speculation about the
-delayed write to ring->cur being the problem comes straight from a
-trace of this happening.
-
-Rob suggested on IRC that we make retire handling happen on the same
-workqueue as submissions, so that preempt_trigger is always
-serialized, which IIUC would also make patch 3 unnecessary. What do
-you think?
-
-Best regards,
-
-Connor
+Konrad
 
