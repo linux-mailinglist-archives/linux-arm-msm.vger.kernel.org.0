@@ -1,433 +1,396 @@
-Return-Path: <linux-arm-msm+bounces-26475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17D56933EE0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 16:53:25 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95CFB933EE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 17:00:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C8ACD283861
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 14:53:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4BB2D284618
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 15:00:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A10918132F;
-	Wed, 17 Jul 2024 14:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20145181315;
+	Wed, 17 Jul 2024 15:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kHgMmR9R"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QVmBFgQN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7547018131D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 14:53:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188383A27B;
+	Wed, 17 Jul 2024 15:00:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721227991; cv=none; b=Uw/ZDLqbdUEGzOd68iD+iVkXPHF4L5NhTpCm5UFG1zbVMFy5MBvlyRYuNpfUCR07BR74GtUP5CuhmtpvHSKYRgwVMGSsss5BT0fdKL1/bsbcgbJRU/TGMQJzuj7K2om3bIw6wYgvfcvhxJjjfeJcqBOOwohAu/OsO49/QMpXfvg=
+	t=1721228421; cv=none; b=jDhVedT0KNS1/2TRXgn0OAcYT3jhVYwm6ZtT9b8x/duhek78bcfvPe6b065h0QKMiuRF5OwYdc+6ozrr7t4iRAiiQSVzDGgYPDJozj9d0RsW2SZ9oRe0A39oSLeQ4af3UP1PO16mYvjndHTWX2LuQxyxRjrnm2fZMIva5BPG35E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721227991; c=relaxed/simple;
-	bh=JziZDjsG6LOb/nh+pRC1wlWrRoiHH7m+IBmRCYO+IjI=;
+	s=arc-20240116; t=1721228421; c=relaxed/simple;
+	bh=lqIyfqw4xBO5VIyduTwMAy/4VgEvhIsyknlVkTWk+RY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OYDF1I1vKndiQBU0uh+jAk1YvyxG4Maa36ph6VM62U/fHyFZbxg3Oyceahc1MrgTcdvonru+V4OWD4NjUTNF8qs8IUIkEPgNUabbaFdpF4iO+JuBzoL74jPCHxv+7Gp1cXDVcgnrVFBvnyMifDXxUlrk3GDOfPr42am8oZjVQmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kHgMmR9R; arc=none smtp.client-ip=209.85.161.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-5ccfdc3157dso413952eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 07:53:09 -0700 (PDT)
+	 To:Cc:Content-Type; b=LAIr9hTf1V2NjlY776JCBQiEZ40jj2FW+SZyISYQ6rLWdzK0W5vJeNQlSCaxzyoCRK7UPxsoH1TCNuBV/GJ5g7yjhCBnxe32LMxni/IJInVbZ+7RyHb7AQXFcYWhYsJKMpowWjDnCbWtxIrLFRDTIcd5igcyfSiFRfkn5HUn0zY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QVmBFgQN; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-59589a9be92so9270580a12.2;
+        Wed, 17 Jul 2024 08:00:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721227988; x=1721832788; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1721228417; x=1721833217; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NLSg56uLBgIG1pUx/npQNlUjYeDmmkZxvAYtL+3WPWU=;
-        b=kHgMmR9RoQBJRbtMb7qR+X1j09ECyKhZXmteg6Y2ZOoyaqmhlm8d5IfRJ43ebmWoZh
-         m6XKoV8N0j1chmKjZC6F19FPyLUH7AHlJ5WqR2Pi4YbgQNqVNrSpk6Vs/r3Iloxe45+0
-         3NQ0/79rUzyptUMVgZbhaUB7u+Rxsbz4O8rxppGscOL/UDfRgwLdAdzRGLGwZiA/pmla
-         UtQrSle2erS5KNFcTZQWK2TNK0tVeVyuUf3ARQn4roBq7Sh6IxpP9GHWQMioRS6lxcH7
-         Qz3iqHgfRtrSPn0w6kXK/dJwxzuk5pwAt58nLqptphMVZbFM1Esg7HiBeEn1h8omJYWp
-         x9qg==
+        bh=mss+nVxYgx1jSStoI9Hi/dvlLPYI5euXEU3xjwvzr1U=;
+        b=QVmBFgQN+CAdJFoRtdk2zUwhm26p6Wv4uZeA5HYKh/T+iD45hVQ4pnZAXpi3k+srf1
+         zeU+a/4ty4VXFzh9r8gLxHpOm9GcErQ601e0UTb2xlmxXBh3LrgKxyYC168ZjMeLmWXu
+         d9LdFTHLQfmw3aZtbXBzax+g1omNTWT6hgrK2tWhgHglLKehb0NLaWIBBu8sqqHb3WEL
+         Dp/eWppiVqj/sK7PjLP8eezSbZRwW8xyrfpwSPZc+3KBj4MAww4JqcTJ/n0Yy4+WSCEw
+         q1NO39Bz/i5IkCEvhnykLIee/b82lbo/FMglcX5dwMQhEi2JE+ekN+8MCJe7Z3434Bki
+         kRRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721227988; x=1721832788;
+        d=1e100.net; s=20230601; t=1721228417; x=1721833217;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NLSg56uLBgIG1pUx/npQNlUjYeDmmkZxvAYtL+3WPWU=;
-        b=himHCMLCD/Pn7Y4/QAeibTYlnXwXthjgv8DW+gaqEiIdTAthtc/m69ufiSR6ECdk66
-         i+hG4G0QIlRMcN91rp7TfWNiUoYx/oBj5GC6UZ4Taqrn4v4nSvTGi3KIzgkhwhbNd6fV
-         qPBJwIf782Le3ncGSXHnFRx3HePfPQs1GPkxWOPRSR7fh8qgXENLThUmUPoM/9tWdzM6
-         PGxhdWBN1Hhnqc+g0UG3omwk2NYx65SiInARaKCTH4kBIWXp7okeJEOyOnrWXhtOgRlC
-         xMsdQ6+NyQrPgSHN0ZCoz05N8QhN1uyJJvv1wpr2EU9rlkay1SkwdB/8F1CdqYY8FF+D
-         BhvQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWnLBUK2NLGh68+ATi+YKhYGypnxjhKZ0UDoJ1riJg7BUBmQBkLgYDId+aHebD6jHSJ3ZRkVfKeINU7TsvWFi8AxST37Jg2FB9YAPf4+A==
-X-Gm-Message-State: AOJu0Ywvznuq2UUDJizs5t0/p4W9nkKzJV/a+jrLthdH912bM5Q8zTk5
-	DMHX3HXlRRp05AlXCxX/k5JSZ7vss+95emcKCNghYexIdN38gn8PP54EWqthlY44ege9GnqoRvq
-	1xFnGP8RSV4+sjN12VOjDtS7ZZlaJe+9iOSkwlA==
-X-Google-Smtp-Source: AGHT+IHSW/ERmdKlRdS/3UJ5tV2+Zcr4D6m8ewWBnNCa8m8z0SAB5njGSxIiBhM2pYbqbhheegFlpc9TPw5jhgo6S5E=
-X-Received: by 2002:a05:6820:d04:b0:5ce:5d7d:f46d with SMTP id
- 006d021491bc7-5d3cbce1058mr1375171eaf.1.1721227988301; Wed, 17 Jul 2024
- 07:53:08 -0700 (PDT)
+        bh=mss+nVxYgx1jSStoI9Hi/dvlLPYI5euXEU3xjwvzr1U=;
+        b=gjJ9WlvfxttcklgPbH5GVXad3s4gabxKLxw7329NHTXLQy3j2ot2EwGgiYlzjDF3Um
+         7X2xo7blrzr2ik/SSP1Luez1HPXZ250A03YOk2UXZU3nRrNXaSSdg/T0W3ygq0zhY3Ov
+         dmm64iz1lv2rj2nhZ7FxQyYqbU/tWOd9CHnLA4j0yTEuQSMiqEGvg114eHjvGCDOfnou
+         /vp0dv9WcA3dtaZmVHm4dSxIy1um0hBSceW7BCvTW/v0xAck2gfZGFr6GiEeLK/a7nzc
+         5aLmL6l6xhbwjq2G2p24iGs7fCh7/xvpeeVCG5OnLWunhP68WFo3mORS8iBSpu2rQcQi
+         ml/A==
+X-Forwarded-Encrypted: i=1; AJvYcCW7fmsMcT0IV3sua6Cx5x5zFiq/IetT/aDhTqUeDc4fGsZcHgGCvVYVLpn0SClp5wx8LuwNsXbujvs997Z8alO9j78KAo6ceYXC8Uy57i+C8MapnBX8+xWoR7Pcnb+xbseGMoiVoztY4AkOUw==
+X-Gm-Message-State: AOJu0YyiGuSFD5sl2MnCt55KTpjr5T5R+jUOsTUxfn0iJqJhdZ+bHkEV
+	IV8HIXs/TDdE0u1ZjvDz/mfxJZaTyIUTjgGb4paXX1jIhhZyYkPPAsDmWHSCWT4qS+qhNT6LXSg
+	24ZwdKVaPbcQwnsuuOaRwTt5UjOk=
+X-Google-Smtp-Source: AGHT+IELsdNMmUuDCOy+jytecmM8zAka2gXkqGC+KbItP3hCFmMGv+m1ZdDxiEnxqQN31iPIOHb1dUc/WLm1aLRQgis=
+X-Received: by 2002:a50:a693:0:b0:5a1:c43:82ca with SMTP id
+ 4fb4d7f45d1cf-5a10c4386fcmr552349a12.26.1721228417074; Wed, 17 Jul 2024
+ 08:00:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240702-qcom-tee-object-and-ioctls-v1-0-633c3ddf57ee@quicinc.com>
- <umwai5fxohuz6apprv6ouhdrnomal4a7cmyhmzpf6dnamnvti2@un4hxx52hkge> <bdf39b00-b889-42d2-ba07-4e2881fe9105@quicinc.com>
-In-Reply-To: <bdf39b00-b889-42d2-ba07-4e2881fe9105@quicinc.com>
-From: Jens Wiklander <jens.wiklander@linaro.org>
-Date: Wed, 17 Jul 2024 16:52:55 +0200
-Message-ID: <CAHUa44FXT6VREMUkNsY943EfhFoMSEsWKb5vyx9SwOERXitDbw@mail.gmail.com>
-Subject: Re: [PATCH RFC 0/3] Implement Qualcomm TEE IPC and ioctl calls
-To: Amirreza Zarrabi <quic_azarrabi@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Sumit Semwal <sumit.semwal@linaro.org>, 
-	=?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
-	srinivas.kandagatla@linaro.org, bartosz.golaszewski@linaro.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org, 
-	OP-TEE TrustedFirmware <op-tee@lists.trustedfirmware.org>, Sumit Garg <sumit.garg@linaro.org>
+References: <20240628140435.1652374-1-quic_bibekkum@quicinc.com>
+ <20240628140435.1652374-7-quic_bibekkum@quicinc.com> <CAF6AEGvroi8rJimFv95tkWmRFa5_aTpBJ7GFcRAuZpLGdSyEYQ@mail.gmail.com>
+ <0650ba0a-4453-4e2d-8a76-0f396ac1999c@quicinc.com> <CAF6AEGv_9e-TDW1r0N4-db6pY_aV_EZFqrpNbATVS5Vy6+fs1g@mail.gmail.com>
+ <4a5f54c7-120e-427d-8a0a-9fb83e13a72e@quicinc.com> <CAF6AEGtrtFNxDWtuADA4oOHhZJ=dJZcGaJ1XLFJt4fe4Xp=pTA@mail.gmail.com>
+ <3b7c05b1-8f36-4c81-a55c-dbb467314099@quicinc.com> <CAF6AEGuRKU+DkL0-b3xdR1R45_MiiKQYRRXEXYz-xohu8rUaEQ@mail.gmail.com>
+ <CAF6AEGtbw06-gOSvX9gAbi=SA801gmD3_8c5xkOU-G9g2qKptQ@mail.gmail.com>
+ <9509f256-04a4-4907-98fc-148c5087d74d@quicinc.com> <CAF6AEGuLwZ0yFGWMKX-O1VjQB2M57K+CsyJ=7PCKXE=b=VsSNg@mail.gmail.com>
+ <3382aaca-4ca1-46e5-a445-dcb115ff206f@quicinc.com> <CAF6AEGu0uH7GuNb3SJVk0cPDUwkYZ6NTG1ze+wmc1OjsaownwA@mail.gmail.com>
+ <3c3456bc-0f79-4a17-9614-f3b32b6ed30a@quicinc.com>
+In-Reply-To: <3c3456bc-0f79-4a17-9614-f3b32b6ed30a@quicinc.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Wed, 17 Jul 2024 08:00:04 -0700
+Message-ID: <CAF6AEGvZWdN+CC9O3tq7kjYPq424U6__KgAnFNCV0bCqE8wPuQ@mail.gmail.com>
+Subject: Re: [PATCH v13 6/6] iommu/arm-smmu: add support for PRR bit setup
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, jgg@ziepe.ca, 
+	jsnitsel@redhat.com, robh@kernel.org, krzysztof.kozlowski@linaro.org, 
+	quic_c_gdjako@quicinc.com, dmitry.baryshkov@linaro.org, 
+	konrad.dybcio@linaro.org, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
-
-On Wed, Jul 10, 2024 at 1:17=E2=80=AFAM Amirreza Zarrabi
-<quic_azarrabi@quicinc.com> wrote:
+On Wed, Jul 17, 2024 at 3:27=E2=80=AFAM Bibek Kumar Patro
+<quic_bibekkum@quicinc.com> wrote:
 >
 >
 >
-> On 7/3/2024 9:36 PM, Dmitry Baryshkov wrote:
-> > On Tue, Jul 02, 2024 at 10:57:35PM GMT, Amirreza Zarrabi wrote:
-> >> Qualcomm TEE hosts Trusted Applications (TAs) and services that run in
-> >> the secure world. Access to these resources is provided using MinkIPC.
-> >> MinkIPC is a capability-based synchronous message passing facility. It
-> >> allows code executing in one domain to invoke objects running in other
-> >> domains. When a process holds a reference to an object that lives in
-> >> another domain, that object reference is a capability. Capabilities
-> >> allow us to separate implementation of policies from implementation of
-> >> the transport.
+> On 7/16/2024 1:37 AM, Rob Clark wrote:
+> > On Mon, Jul 15, 2024 at 4:00=E2=80=AFAM Bibek Kumar Patro
+> > <quic_bibekkum@quicinc.com> wrote:
 > >>
-> >> As part of the upstreaming of the object invoke driver (called SMC-Inv=
-oke
-> >> driver), we need to provide a reasonable kernel API and UAPI. The clea=
+> >>
+> >>
+> >> On 7/10/2024 10:31 PM, Rob Clark wrote:
+> >>> On Tue, Jul 9, 2024 at 12:43=E2=80=AFPM Bibek Kumar Patro
+> >>> <quic_bibekkum@quicinc.com> wrote:
+> >>>>
+> >>>>
+> >>>>
+> >>>> On 7/4/2024 9:28 PM, Rob Clark wrote:
+> >>>>> On Thu, Jul 4, 2024 at 7:46=E2=80=AFAM Rob Clark <robdclark@gmail.c=
+om> wrote:
+> >>>>>>
+> >>>>>> On Wed, Jul 3, 2024 at 4:38=E2=80=AFAM Bibek Kumar Patro
+> >>>>>> <quic_bibekkum@quicinc.com> wrote:
+> >>>>>>>
+> >>>>>>>
+> >>>>>>>
+> >>>>>>> On 7/2/2024 2:01 AM, Rob Clark wrote:
+> >>>>>>>> On Mon, Jul 1, 2024 at 4:01=E2=80=AFAM Bibek Kumar Patro
+> >>>>>>>> <quic_bibekkum@quicinc.com> wrote:
+> >>>>>>>>>
+> >>>>>>>>>
+> >>>>>>>>>
+> >>>>>>>>> On 6/28/2024 9:14 PM, Rob Clark wrote:
+> >>>>>>>>>> On Fri, Jun 28, 2024 at 8:10=E2=80=AFAM Bibek Kumar Patro
+> >>>>>>>>>> <quic_bibekkum@quicinc.com> wrote:
+> >>>>>>>>>>>
+> >>>>>>>>>>>
+> >>>>>>>>>>>
+> >>>>>>>>>>> On 6/28/2024 7:47 PM, Rob Clark wrote:
+> >>>>>>>>>>>> On Fri, Jun 28, 2024 at 7:05=E2=80=AFAM Bibek Kumar Patro
+> >>>>>>>>>>>> <quic_bibekkum@quicinc.com> wrote:
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> Add an adreno-smmu-priv interface for drm/msm to call
+> >>>>>>>>>>>>> into arm-smmu-qcom and initiate the PRR bit setup or reset
+> >>>>>>>>>>>>> sequence as per request.
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> This will be used by GPU to setup the PRR bit and related
+> >>>>>>>>>>>>> configuration registers through adreno-smmu private
+> >>>>>>>>>>>>> interface instead of directly poking the smmu hardware.
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> Suggested-by: Rob Clark <robdclark@gmail.com>
+> >>>>>>>>>>>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com=
+>
+> >>>>>>>>>>>>> ---
+> >>>>>>>>>>>>>        drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 23 ++++=
+++++++++++++++++++
+> >>>>>>>>>>>>>        drivers/iommu/arm/arm-smmu/arm-smmu.h      |  2 ++
+> >>>>>>>>>>>>>        include/linux/adreno-smmu-priv.h           |  6 ++++=
++-
+> >>>>>>>>>>>>>        3 files changed, 30 insertions(+), 1 deletion(-)
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/d=
+rivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >>>>>>>>>>>>> index bd101a161d04..64571a1c47b8 100644
+> >>>>>>>>>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >>>>>>>>>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >>>>>>>>>>>>> @@ -28,6 +28,7 @@
+> >>>>>>>>>>>>>        #define PREFETCH_SHALLOW       (1 << PREFETCH_SHIFT)
+> >>>>>>>>>>>>>        #define PREFETCH_MODERATE      (2 << PREFETCH_SHIFT)
+> >>>>>>>>>>>>>        #define PREFETCH_DEEP          (3 << PREFETCH_SHIFT)
+> >>>>>>>>>>>>> +#define GFX_ACTLR_PRR          (1 << 5)
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>>        static const struct actlr_config sc7280_apps_actlr_c=
+fg[] =3D {
+> >>>>>>>>>>>>>               { 0x0800, 0x04e0, PREFETCH_DEFAULT | CMTLB },
+> >>>>>>>>>>>>> @@ -235,6 +236,27 @@ static void qcom_adreno_smmu_resume_tr=
+anslation(const void *cookie, bool termina
+> >>>>>>>>>>>>>               arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_=
+CB_RESUME, reg);
+> >>>>>>>>>>>>>        }
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> +static void qcom_adreno_smmu_set_prr(const void *cookie, p=
+hys_addr_t page_addr, bool set)
+> >>>>>>>>>>>>> +{
+> >>>>>>>>>>>>> +       struct arm_smmu_domain *smmu_domain =3D (void *)coo=
+kie;
+> >>>>>>>>>>>>> +       struct arm_smmu_cfg *cfg =3D &smmu_domain->cfg;
+> >>>>>>>>>>>>> +       struct arm_smmu_device *smmu =3D smmu_domain->smmu;
+> >>>>>>>>>>>>> +       u32 reg =3D 0;
+> >>>>>>>>>>>>> +
+> >>>>>>>>>>>>> +       writel_relaxed(lower_32_bits(page_addr),
+> >>>>>>>>>>>>> +                               smmu->base + ARM_SMMU_GFX_P=
+RR_CFG_LADDR);
+> >>>>>>>>>>>>> +
+> >>>>>>>>>>>>> +       writel_relaxed(upper_32_bits(page_addr),
+> >>>>>>>>>>>>> +                               smmu->base + ARM_SMMU_GFX_P=
+RR_CFG_UADDR);
+> >>>>>>>>>>>>> +
+> >>>>>>>>>>>>> +       reg =3D  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMM=
+U_CB_ACTLR);
+> >>>>>>>>>>>>> +       reg &=3D ~GFX_ACTLR_PRR;
+> >>>>>>>>>>>>> +       if (set)
+> >>>>>>>>>>>>> +               reg |=3D FIELD_PREP(GFX_ACTLR_PRR, 1);
+> >>>>>>>>>>>>> +       arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACT=
+LR, reg);
+> >>>>>>>>>>>>> +
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> nit, extra line
+> >>>>>>>>>>>>
+> >>>>>>>>>>>
+> >>>>>>>>>>> Ack, will remove this. Thanks for pointing out.
+> >>>>>>>>>>>
+> >>>>>>>>>>>> Also, if you passed a `struct page *` instead, then you coul=
+d drop the
+> >>>>>>>>>>>> bool param, ie. passing NULL for the page would disable PRR.=
+  But I
+> >>>>>>>>>>>> can go either way if others have a strong preference for phy=
+s_addr_t.
+> >>>>>>>>>>>>
+> >>>>>>>>>>>
+> >>>>>>>>>>> Oh okay, this looks simple to reset the prr bit.
+> >>>>>>>>>>> But since this page is allocated and is used inside gfx drive=
 r
-> >> option is to use TEE subsystem and write a back-end driver, however th=
-e
-> >> TEE subsystem doesn't fit with the design of Qualcomm TEE.
+> >>>>>>>>>>> before being utilized for prr bit operation, would it be safe=
+ for
+> >>>>>>>>>>> drm/gfx driver to keep a reference to this page in smmu drive=
+r?
+> >>>>>>>>>>>
+> >>>>>>>>>>> Since we only need the page address for configuring the
+> >>>>>>>>>>> CFG_UADDR/CFG_LADDR registers so passed the phys_addr_t.
+> >>>>>>>>>>
+> >>>>>>>>>> I don't think the smmu driver needs to keep a reference to the=
+ page..
+> >>>>>>>>>> we can just say it is the responsibility of the drm driver to =
+call
+> >>>>>>>>>> set_prr(NULL) before freeing the page
+> >>>>>>>>>>
+> >>>>>>>>>
+> >>>>>>>>> That makes sense. If we go by this NULL page method to disable =
+the PRR,
+> >>>>>>>>> we would have to set the address registers to reset value as we=
+ll.
+> >>>>>>>>>
+> >>>>>>>>> The sequence would be like the following as per my understaning=
+:
+> >>>>>>>>> - Check if it's NULL page
+> >>>>>>>>> - Set the PRR_CFG_UADDR/PRR_CFG_LADDR to reset values i.e - 0x0=
+ for
+> >>>>>>>>>        these registers
+> >>>>>>>>> - Reset the PRR bit in actlr register
+> >>>>>>>>>
+> >>>>>>>>> Similar to this snippet:
+> >>>>>>>>>
+> >>>>>>>>> #PRR_RESET_ADDR 0x0
+> >>>>>>>>>
+> >>>>>>>>> --------------
+> >>>>>>>>> reg =3D  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR);
+> >>>>>>>>> reg &=3D ~GFX_ACTLR_PRR;
+> >>>>>>>>> arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
+> >>>>>>>>>
+> >>>>>>>>> if (!prr_page) {
+> >>>>>>>>>             writel_relaxed(PRR_RESET_ADDR,
+> >>>>>>>>>                             smmu->base + ARM_SMMU_GFX_PRR_CFG_L=
+ADDR);
+> >>>>>>>>>             writel_relaxed(PRR_RESET_ADDR),
+> >>>>>>>>>                              smmu->base + ARM_SMMU_GFX_PRR_CFG_=
+UADDR);
+> >>>>>>>>>             return;
+> >>>>>>>>> }
+> >>>>>>>>>
+> >>>>>>>>>
+> >>>>>>>>> writel_relaxed(lower_32_bits(page_to_phys(prr_page)),
+> >>>>>>>>>                     smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
+> >>>>>>>>>
+> >>>>>>>>> writel_relaxed(upper_32_bits(page_to_phys(prr_page)),
+> >>>>>>>>>                     smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
+> >>>>>>>>>
+> >>>>>>>>> reg |=3D FIELD_PREP(GFX_ACTLR_PRR, 1);
+> >>>>>>>>> arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
+> >>>>>>>>> -----------------
+> >>>>>>>>>
+> >>>>>>>>> If looks good, will implement the same in next version.
+> >>>>>>>>
+> >>>>>>>> yeah, that looks like it could work..
+> >>>>>>>>
+> >>>>>>>> you probably don't need to zero out the PRR_CFG_*ADDR when disab=
+ling,
+> >>>>>>>> and probably could avoid double writing ACTLR, but that is getti=
+ng
+> >>>>>>>> into bikeshedding
+> >>>>>>>>
+> >>>>>>>
+> >>>>>>> Actually Rob, since you rightly pointed this out.
+> >>>>>>> I crosschecked again on these registers.
+> >>>>>>> PRR_CFG_*ADDR is a global register in SMMU space but
+> >>>>>>> ACTLR register including PRR bit is a per-domain register.
+> >>>>>>> There might also be a situation where PRR feature need to be
+> >>>>>>> disabled or enabled separately for each domain.
+> >>>>>>> So I think it would be cleaner to have two apis, set_prr_addr(),
+> >>>>>>> set_prr_bit().
+> >>>>>>> set_prr_addr() will be used only to set this PRR_CFG_*ADDR
+> >>>>>>> register by passing a 'struct page *'
+> >>>>>>> set_prr_bit() will be used as a switch for PRR feature,
+> >>>>>>> where required smmu_domain will be passed along with
+> >>>>>>> the bool value to set/reset the PRR bit depending on which this
+> >>>>>>> feature will be enabled/disabled for the selected domain.
+> >>>>>>
+> >>>>>> on a related note, adreno has been using arm-smmu for a number of
+> >>>>>> generations, I guess not all support PRR?  The drm driver will nee=
+d to
+> >>>>>> know whether PRR is supported (and expose that to userspace to let=
+ the
+> >>>>>> UMD know whether to expose certain extensions).  How should this w=
+ork?
+> >>>>>
+> >>>>> So, I noticed in the x1e80100.dtsi that there is a gpu_prr_mem
+> >>>>> reserved section..  maybe we should be connecting this to the smmu
+> >>>>> driver in dt, and using that to detect presence of PRR?  Ie. the sm=
+mu
+> >>>>> driver would configure PRR_CFG_*ADDR based on the reserved mem, and
+> >>>>> the interface to drm would just be to enable/disable PRR, returning=
+ an
+> >>>>> error code if the reserved mem section isn't there.
+> >>>>>
+> >>>>> This simplifies the interface, and handles the question of how to
+> >>>>> detect if PRR is supported.
+> >>>>>
+> >>>>> BR,
+> >>>>> -R
+> >>>>>
+> >>>>
+> >>>> As I checked gpu_prr_mem reserved mem section is not used for mobile
+> >>>> targets hence not present for other DT only compute targets like
+> >>>> x1e80100.dtsi has the same. PRR looks to be smmu version specific
+> >>>> property.
+> >>>
+> >>> I only see it in gpu_prr_mem in x1e80100.dtsi, but not documented
+> >>> anywhere.  I'm only assuming based on the name that it is intended to
+> >>> be for PRR (but not sure why it is larger than 0x1000).  Are the
+> >>> PRR_CFG_*ADDR regs programmed by the fw (and access blocked in EL1) o=
+n
+> >>> this device?
+> >>>
 > >>
->
-> To answer your "general comment", maybe a bit of background :).
->
-> Traditionally, policy enforcement is based on access-control models,
-> either (1) access-control list or (2) capability [0]. A capability is an
-> opaque ("non-forge-able") object reference that grants the holder the
-> right to perform certain operations on the object (e.g. Read, Write,
-> Execute, or Grant). Capabilities are preferred mechanism for representing
-> a policy, due to their fine-grained representation of access right, inlin=
-e
-> with
->   (P1) the principle of least privilege [1], and
->   (P2) the ability to avoid the confused deputy problem [2].
->
-> [0] Jack B. Dennis and Earl C. Van Horn. 1966. Programming Semantics for
-> Multiprogrammed Computations. Commun. ACM 9 (1966), 143=E2=80=93155.
->
-> [1] Jerome H. Saltzer and Michael D. Schroeder. 1975. The Protection of
-> Information in Computer Systems. Proc. IEEE 63 (1975), 1278=E2=80=931308.
->
-> [2] Norm Hardy. 1988. The Confused Deputy (or Why Capabilities Might Have
-> Been Invented). ACM Operating Systems Review 22, 4 (1988), 36=E2=80=9338.
->
-> For MinkIPC, an object represents a TEE or TA service. The reference to
-> the object is the "handle" that is returned from TEE (let's call it
-> TEE-Handle). The supported operations are "service invocation" (similar
-> to Execute), and "sharing access to a service" (similar to Grant).
-> Anyone with access to the TEE-Handle can invoke the service or pass the
-> TEE-Handle to someone else to access the same service.
->
-> The responsibility of the MinkIPC framework is to hide the TEE-Handle,
-> so that the client can not forge it, and allow the owner of the handle
-> to transfer it to other clients as it wishes. Using a file descriptor
-> table we can achieve that. We wrap the TEE-Handle as a FD and let the
-> client invoke FD (e.g. using IOCTL), or transfer the FD (e.g. using
-> UNIX socket).
->
-> As a side note, for the sake of completeness, capabilities are fundamenta=
-lly
-> a "discretionary mechanism", as the holder of the object reference has th=
-e
-> ability to share it with others. A secure system requires "mandatory
-> enforcement" (i.e. ability to revoke authority and ability to control
-> the authority propagation). This is out of scope for the MinkIPC.
-> MinkIPC is only interested in P1 and P2 (mention above).
-
-This is still quite abstract. We have tried to avoid inventing yet
-another IPC mechanism in the TEE subsystem. But that's not written in
-stone if it turns out there's a use case that needs it.
-
->
->
-> >> Does TEE subsystem fit requirements of a capability based system?
-> >> -----------------------------------------------------------------
-> >> In TEE subsystem, to invoke a function:
-> >>    - client should open a device file "/dev/teeX",
-> >>    - create a session with a TA, and
-> >>    - invoke the functions in that session.
+> >> As I checked, if the drm/gfx driver allocates the page for drm, then
+> >> this reserved-memory region is not required.
 > >>
-> >> 1. The privilege to invoke a function is determined by a session. If a
-> >>    client has a session, it cannot share it with other clients. Even i=
-f
-> >> it does, it is not fine-grained enough, i.e. either all accessible
-> >> functions/resources in a session or none. Assume a scenario when a cli=
-ent
-> >> wants to grant a permission to invoke just a function that it has the =
-rights,
-> >> to another client.
-> >>
-> >> The "all or nothing" for sharing sessions is not in line with our
-> >> capability system: "if you own a capability, you should be able to gra=
-nt
-> >> or share it".
+> >> PRR_CFG_*ADDR regs have read and write access in EL1 only for this
+> >> device, behavior is same as other devices as well. These are not
+> >> programmed by fw.
 > >
-> > Can you please be more specific here? What kind of sharing is expected
-> > on the user side of it?
->
-> In MinkIPC, after authenticating a client credential, a TA (or TEE) may
-> return multiple TEE-Handles, each representing a service that the client
-> has privilege to access. The client should be able to "individually"
-> reference each TEE-Handle, e.g. to invoke and share it (as per capability=
--
-> based system requirements).
->
-> If we use TEE subsystem, which has a session based design, all TEE-Handle=
-s
-> are meaningful with respect to the session in which they are allocated,
-> hence the use of "__u32 session" in "struct tee_ioctl_invoke_arg".
->
-> Here, we have a contradiction with MinkIPC. We may ignore the session
-> and say "even though a TEE-Handle is allocated in a session but it is als=
-o
-> valid outside a session", i.e. the session-id in TEE uapi becomes redunda=
-nt
-> (a case of divergence from definition).
-
-Only the backend drivers put a meaning to a session, the TEE subsystem
-doesn't enforce anything. All fields but num_params and params in
-struct tee_ioctl_invoke_arg are only interpreted by the backend driver
-if I recall correctly. Using the fields for something completely
-different would be confusing so if struct tee_ioctl_invoke_arg isn't
-matching well enough we might need a new IOCTL for whatever you have
-in mind.
-
->
-> >
-> >> 2. In TEE subsystem, resources are managed in a context. Every time a
-> >>    client opens "/dev/teeX", a new context is created to keep track of
-> >> the allocated resources, including opened sessions and remote objects.=
- Any
-> >> effort for sharing resources between two independent clients requires
-> >> involvement of context manager, i.e. the back-end driver. This require=
-s
-> >> implementing some form of policy in the back-end driver.
-> >
-> > What kind of resource sharing?
->
-> TEE subsystem "rightfully" allocates a context each time a client opens
-> a device file. This context pass around to the backend driver to identify
-> independent clients that opened the device file.
->
-> The context is used by backend driver to keep track of the resources. Typ=
-e
-> of resources are TEE driver dependent. As an example of resource in TEE
-> subsystem, you can look into 'shm' register and unregister (specially,
-> see comment in function 'shm_alloc_helper').
->
-> For MinkIPC, all clients are treated the same and the TEE-Handles are
-> representative of the resources, accessible "globally" if a client has th=
-e
-> capability for them. In kernel, clients access an object if they have
-> access to "qcom_tee_object", in userspace, clients access an object if
-> they have the FD wrapper for the TEE-Handle.
-
-So if a client has a file descriptor representing a TEE-Handle, then
-it has the capability to access a TEE-object? Is the kernel
-controlling anything more about these capabilities?
-
->
-> If we use context, instead of the file descriptor table, any form of obje=
-ct
-> transfer requires involvement of the backend driver. If we use the file
-> descriptor table, contexts are becoming useless for MinkIPC (i.e.
-> 'ctx->data' will "always" be null).
-
-You still need to open a device to be able to create TEE-handles.
-
->
-> >
-> >> 3. The TEE subsystem supports two type of memory sharing:
-> >>    - per-device memory pools, and
-> >>    - user defined memory references.
-> >> User defined memory references are private to the application and cann=
-ot
-> >> be shared. Memory allocated from per-device "shared" pools are accessi=
-ble
-> >> using a file descriptor. It can be mapped by any process if it has
-> >> access to it. This means, we cannot provide the resource isolation
-> >> between two clients. Assume a scenario when a client wants to allocate=
- a
-> >> memory (which is shared with TEE) from an "isolated" pool and share it
-> >> with another client, without the right to access the contents of memor=
-y.
-> >
-> > This doesn't explain, why would it want to share such memory with
-> > another client.
->
-> Ok, I believe there is a misunderstanding here. I did not try to justify
-> specific usecase. We want to separate the memory allocation from the
-> framework. This way, how the memory is obtained, e.g. it is allocated
-> (1) from an isolated pool, (2) a shared pool, (3) a secure heap,
-> (4) a system dma-heap, (5) process address space, or (6) other memory
-> with "different constraints", becomes independent.
-
-Especially points 3 and 4 are of great interest for the TEE Subsystem.
-
->
-> We introduced "memory object" type. User implements a kernel service
-> using "qcom_tee_object" to represent the memory object. We have an
-> implementation of memory objects based on dma-buf.
-
-Do you have an idea of what it would take to extend to TEE subsystem
-to cover this?
-
->
-> >
-> >> 4. The kernel API provided by TEE subsystem does not support a kernel
-> >>    supplicant. Adding support requires an execution context (e.g. a
-> >> kernel thread) due to the TEE subsystem design. tee_driver_ops support=
-s
-> >> only "send" and "receive" callbacks and to deliver a request, someone
-> >> should wait on "receive".
-
-So far we haven't needed a kernel thread, but if you need one feel
-free to propose something.
-
-> >
-> > There is nothing wrong here, but maybe I'm misunderstanding something.
->
-> I agree. But, I am trying to re-emphasize how useful TEE subsystem is
-> for MinkIPC. For kernel services, we solely rely on the backend driver.
-> For instance, to expose RPMB service we will use "qcom_tee_object".
-> So there is nothing provided by the framework to simplify the service
-> development.
-
-The same is true for all backend drivers.
-
->
-> >
-> >> We need a callback to "dispatch" or "handle" a request in the context =
-of
-> >> the client thread. It should redirect a request to a kernel service or
-> >> a user supplicant. In TEE subsystem such requirement should be impleme=
-nted
-> >> in TEE back-end driver, independent from the TEE subsystem.
-> >>
-> >> 5. The UAPI provided by TEE subsystem is similar to the GPTEE Client
-> >>    interface. This interface is not suitable for a capability system.
-> >> For instance, there is no session in a capability system which means
-> >> either its should not be used, or we should overload its definition.
-
-Not using the session field doesn't seem like such a big obstacle.
-Overloading it for something different might be messy. We can add a
-new IOCTL if needed as I mentioned above.
-
-> >
-> > General comment: maybe adding more detailed explanation of how the
-> > capabilities are aquired and how they can be used might make sense.
-> >
-> > BTW. It might be my imperfect English, but each time I see the word
-> > 'capability' I'm thinking that some is capable of doing something. I
-> > find it hard to use 'capability' for the reference to another object.
+> > If there is any device which _doesn't_ have EL1 access to these regs,
+> > I think going the reserved memory route seems more future proof > Other=
+wise we later on have to deal with two different ways to do
+> > things.  But I'm not sure if there is any such device or risk.
 > >
 >
-> Explained at the top :).
->
-> >>
-> >> Can we use TEE subsystem?
-> >> -------------------------
-> >> There are workarounds for some of the issues above. The question is if=
- we
-> >> should define our own UAPI or try to use a hack-y way of fitting into
-> >> the TEE subsystem. I am using word hack-y, as most of the workaround
-> >> involves:
+> PRR is a bit in ACTLR register which is in SMMU space,
+> so is the PRR_CFG_*ADDR registers - with EL1 having access
+> to both the registers in all targets released till now with MMU-500.
+> It's unlikely that this design would change in future
+> for MMU-500 based targets, so I feel this risk is somewhat negligible.
 
-Instead of hack-y workarounds, we should consider extending the TEE
-subsystem as needed.
+I wasn't worried about the ACTLR register, but the PRR_CFG_*ADDR regs ;-)
 
-> >>
-> >> - "diverging from the definition". For instance, ignoring the session
-> >>   open and close ioctl calls or use file descriptors for all remote
-> >> resources (as, fd is the closet to capability) which undermines the
-> >> isolation provided by the contexts,
-> >>
-> >> - "overloading the variables". For instance, passing object ID as file
-> >>   descriptors in a place of session ID, or
+IIRC those were in the SMMU global space, why hyp tends to like to own.
 
-struct qcom_tee_object_invoke_arg and struct tee_ioctl_invoke_arg are
-quite similar, there are only a few more fields in the latter and we
-are missing a TEE_IOCTL_PARAM_ATTR_TYPE_OBJECT. Does it make sense to
-have a direction on objects?
+> Also would the reserved memory route look a bit hackish?
+> Because, since this reserved-memory node is not used when page is
+> allocated through drm - so it might turn out to be redundant.
+> If we are aiming for a device-tree handle/node for reference then I
+> think a better way would be to create a bool parameter inside smmu-node
+> indicating presence of PRR ?
 
-> >>
-> >> - "bypass TEE subsystem". For instance, extensively rely on meta
-> >>   parameters or push everything (e.g. kernel services) to the back-end
-> >> driver, which means leaving almost all TEE subsystem unused.
+tbh, I don't think there is anything better or worse about having the
+reserved-memory node vs dynamically allocating it.  (If we dynamically
+allocate, we should remove the reserved memory node from
+x1e80100.dtsi)
 
-The TEE subsystem is largely "bypassed" by all backend drivers, with
-the exception of some SHM handling.
+The thing I was more concerned about was whether there was any chance
+that some existing or future SoC+fw combo _relied_ on a reserved
+memory node and the fw programming PRR_CFG_*ADDR.  If there was any
+chance of that, and we went the dynamic allocation route, then we'd
+have some devices with a reserved memory node, and some without.  That
+seems a bit ugly to me.
 
-I'm sure the TEE subsystem can be extended to handle the "common" part
-of SHM handling needed by QTEE.
+If there is no chance of this, then we can go either route.
 
-> >>
-> >> We cannot take the full benefits of TEE subsystem and may need to
-> >> implement most of the requirements in the back-end driver. Also, as
-> >> discussed above, the UAPI is not suitable for capability-based use cas=
-es.
-> >> We proposed a new set of ioctl calls for SMC-Invoke driver.
-> >>
-> >> In this series we posted three patches. We implemented a transport
-> >> driver that provides qcom_tee_object. Any object on secure side is
-> >> represented with an instance of qcom_tee_object and any struct exposed
-> >> to TEE should embed an instance of qcom_tee_object. Any, support for n=
-ew
-> >> services, e.g. memory object, RPMB, userspace clients or supplicants a=
-re
-> >> implemented independently from the driver.
-> >>
-> >> We have a simple memory object and a user driver that uses
-> >> qcom_tee_object.
-> >
-> > Could you please point out any user for the uAPI? I'd like to understan=
-d
-> > how does it from from the userspace point of view.
->
-> Sure :), I'll write up a test patch and send it in next series.
->
-> Summary.
->
-> TEE framework provides some nice facilities, including:
->   - uapi and ioctl interface,
->   - marshaling parameters and context management,
->   - memory mapping and sharing, and
->   - TEE bus and TA drivers.
->
-> For, MinkIPC, we will not use any of them. The only usable piece, is uapi
-> interface which is not suitable for MinkIPC, as discussed above.
+> Personally,I feel since the PRR enablement mechanism is same for all
+> MMU-500 targets - compat string would be a robust approach.
 
-I hope that we can change that.  :-)
-For instance, extending the TEE subsystem with the memory-sharing QTEE
-needs could be useful for other TEE drivers.
+I guess if it is all mmu-500, then we can just pick based on compat
+string.  If it turns out some subset of smmu-v2 have PRR, we can just
+have a list of compat strings in arm-smmu-qcom.c.. there would only be
+a finite # of them ;-)
 
-Cheers,
-Jens
+BR,
+-R
 
