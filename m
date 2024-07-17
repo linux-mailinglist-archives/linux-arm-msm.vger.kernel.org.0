@@ -1,124 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-26426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E2C5933A46
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 11:49:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88802933A44
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 11:49:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 340AE1F21C0B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 09:49:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B9A4F1C21232
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 09:49:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0329A17DE33;
-	Wed, 17 Jul 2024 09:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3610E17E8EE;
+	Wed, 17 Jul 2024 09:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KIPKWRBD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VSPdeGXt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71EC617C200;
-	Wed, 17 Jul 2024 09:49:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFADC17DA39
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 09:49:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721209762; cv=none; b=tifSIg27KeK3Cl14gBFyXNF8MlFtvE/XcVVkTJt7R3zMMEobEZ4dGv2kG5tkZFjU1r55LSMOrmhf0u0P25uW4pOXR5fq1bYGAH5hR1PRcJjKrBw6RpTR76ycll4z1enIskIexi0HvSdmqgIRtwh2mp/438dXSY+k/nxk42y0rcM=
+	t=1721209755; cv=none; b=ILwQO2PKmYKAQHIIr9A2zYaMT39yQcx4tv4I3RP6DcFwl8JBl0n0XNK5KO/LitrWkdaUehPXaO9w+XcKIgEFkJijAgFDNsZZqVSak5R4jJVkDSJaRMXz1L7iw/whBstR82112F0Zes7iIcu9ql+y1J9FJwUe2gm5pmpxMyNOMp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721209762; c=relaxed/simple;
-	bh=iWScX31Wls7UK6w8qpu7+dWpq24MD0HgoldyPR/xgsg=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KD9pXilMc6l/ZA9p9Bbunn2PZmLum8fdsZGFxvLGg8hnM48hkF9fDglN3OBc2sTUgxgjmLVxXL7eDgjB7+lh4hh8m/QePmvwzJP/QKvibNEV0CWFaAGXoLuhUdqz4sH8H4U0wHkZKFkr9rQOjVS6XbV8rAmDpz0aUp2QWnB/hGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KIPKWRBD; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46H7AFMr012799;
-	Wed, 17 Jul 2024 09:49:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5kcW79TZgs1dfe247UhERDH3osXIHcDrA3UeYl5r2CY=; b=KIPKWRBDeWQjMiLg
-	J4cIp923ofv6DcJwCqacHDbXiu/wLtVW+wY61ztj7Y6DVAvb+7LFVxxDIEi5E/X5
-	LdAQ4jSBPu2rkQtyI2/qLmFK/kghNZmBcmYZZq1UbFzYLQzBm6UdTyus5MrWhC8o
-	nELMhtaKL/9l0XTNR6/eLid5MiR43zlx+A40NtV2/S0yEF+4ZIhxgkm7HsNunkDJ
-	BuWdRXL5rDo9quc5HZqAXWYtxqTpLioKNNw+/ekjYN1FWVkEoVjPyw8+iREikDw3
-	nP+jUdGqCvFs9hbUarfqo3zU8KhkLY6Z5KS67mBc4KfnL5mDV0jrXEm0NSl8ZdTJ
-	RQOPwA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40dwfw9vkb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Jul 2024 09:49:15 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46H9nEpg010137
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Jul 2024 09:49:14 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 17 Jul 2024 02:49:10 -0700
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: <gregkh@linuxfoundation.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <quic_wcheng@quicinc.com>,
-        <quic_kriskura@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC: Varadarajan Narayanan <quic_varada@quicinc.com>
-Subject: [PATCH v2 2/2] arm64: dts: qcom: ipq5332: Fix interrupt trigger type for usb
-Date: Wed, 17 Jul 2024 15:18:48 +0530
-Message-ID: <20240717094848.3536239-2-quic_varada@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240717094848.3536239-1-quic_varada@quicinc.com>
-References: <20240717094848.3536239-1-quic_varada@quicinc.com>
+	s=arc-20240116; t=1721209755; c=relaxed/simple;
+	bh=drdFYOrEjEZZrQPn6blYFIY9QhufSQCcwyTzafmSIHc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lyz4xNPLiR2MGvsFr6JzaaBh0/lGoz7kNZG3CVnN7fFwX7GfX/sfkAdDRnS0NUozZ5hXM79+tlicAb+YTZszJAdUSHY1uYc4NzKb+WGuZqitfuCWrdOXW3V4VDezI5rZhxmEP5qAzcr73dKVIMktkraIC46Y78jSCbFrnZ7ncMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VSPdeGXt; arc=none smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-65fc94099a6so38858377b3.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 02:49:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721209752; x=1721814552; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=LL2uY9ouT8695FraeZM3uIpWSuZKwhAInrpmi+yLgbM=;
+        b=VSPdeGXtUq3LDXlfUm7MAyQINhPS8/mPB4tkgq9Sv4NRPo6Q1p/K5Q4+KrkMMvlHgL
+         B9+JKZtAphoCYnkYbn4WC+46OOJG8Ud15V42lf5/XIoGPgcrV8tVICgKjp2V9nvgRLQK
+         uB2xVYELCSqie4GgOKH9h+GlTkRsvhvNjv+TPmskCIcu2x4GzGzQ6PZMqWGVBxtYYW7E
+         vt6zD9Rn9S8rubzWVxKLE4rEMCL1f1zL2hiTXDadGrpyAanpb/oxtVahwLcxruVEN9/s
+         hlqNs0RUro5gYOO0u7m1NiXDuAeOJihYT4C/xUQPNMZxWdRrwtTDGZZ2h8PoPClSarzq
+         7udQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721209752; x=1721814552;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LL2uY9ouT8695FraeZM3uIpWSuZKwhAInrpmi+yLgbM=;
+        b=sM+gT/smT/BFU5QSOjH4K+ZO7Nwk6m8n0cqVbLPr2CAqzdFrxXJtREB04do4Fk+RG1
+         FIdn+M3/oLH0xBJ0cfeQyvDfTs5knDORhaOsddr4WDl0DeUKp+8iobJlodSDw7w3NVfx
+         UF1R9PNlnHROm4nf+LE/qbi8hgeGdGq51WUez8zBbe3KV52ZerQ9zSiiWvgzd/kUJaJl
+         Ff3dV6o3ppXOyeiHZIZuX5CJJOJWsOie+v+3Ydp8wQ62HLTUfT/CTGrES3ev2qOOD4Ra
+         K+bewVlf6X/uZn6CUnOMnOxdUMtlY9LPbi7POLBqxxQ+zxq9TTtlIvpZn8woYTCpnJiD
+         /WLA==
+X-Forwarded-Encrypted: i=1; AJvYcCUhlLRHbIuB5bjaNqs8Winq0izy0M+7C4+3sqH3HYr2KdAX+s+99iNUoGUrBZ2eJ9/H5FwgyrxN3TDh/shIqJ6f54TQMnuhLQ3VFYU0Kg==
+X-Gm-Message-State: AOJu0Yz9sAamwv7U6iSFjrGfMkVHqnIqRqfMUYN0jDf7Vk2Cgu4fQdMX
+	hPTR1AjQ6oKNReq/J0f5XS4Umy5gnYpOudwDmqE7VEAJrdsHXfUCd13N+inZ20/CZqx7z+lIK6o
+	kMeujwlrU7gngRmrOklnHrzhcXgiypF2vsAeczw==
+X-Google-Smtp-Source: AGHT+IHjmMFD6c3evR25tinvxOr2rkpD+ML4O2P6BsHhDsyGohpJopMXy1cyYtbnmZhlLNx7godvFt8mE4znoTGHtng=
+X-Received: by 2002:a81:77d5:0:b0:664:4b9c:3ec with SMTP id
+ 00721157ae682-664fd78f3bamr16513537b3.10.1721209751656; Wed, 17 Jul 2024
+ 02:49:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ucybO2nkGTVGl8r20cr3C7wRDFND0yDF
-X-Proofpoint-ORIG-GUID: ucybO2nkGTVGl8r20cr3C7wRDFND0yDF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-17_06,2024-07-16_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- mlxscore=0 mlxlogscore=499 impostorscore=0 priorityscore=1501 bulkscore=0
- spamscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2407170075
+References: <20240717-dispcc-sm8550-fixes-v1-0-efb4d927dc9a@linaro.org>
+ <20240717-dispcc-sm8550-fixes-v1-1-efb4d927dc9a@linaro.org> <d60cd97b-a1da-4dbd-910d-92cd62762afd@linaro.org>
+In-Reply-To: <d60cd97b-a1da-4dbd-910d-92cd62762afd@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 17 Jul 2024 12:49:00 +0300
+Message-ID: <CAA8EJprvS-bM47BTmgtA=9NunW1Lpy-9dLdYmSy9RuL6JyQENw@mail.gmail.com>
+Subject: Re: [PATCH 1/7] clk: qcom: dispcc-sm8550: fix several supposed typos
+To: neil.armstrong@linaro.org
+Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Trigger type is incorrectly specified as IRQ_TYPE_EDGE_BOTH
-instead of IRQ_TYPE_LEVEL_HIGH. This trigger type is not
-supported for SPIs and results in probe failure with -EINVAL.
+On Wed, 17 Jul 2024 at 11:08, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>
+> Hi,
+>
+> On 16/07/2024 23:13, Dmitry Baryshkov wrote:
+> > Fix seveal odd-looking places in SM8550's dispcc driver:
+> >
+> > - duplicate entries in disp_cc_parent_map_4 and disp_cc_parent_map_5
+> > - using &disp_cc_mdss_dptx0_link_div_clk_src as a source for
+> >    disp_cc_mdss_dptx1_usb_router_link_intf_clk
+> >
+> > The SM8650 driver has been used as a reference.
+> >
+> > Fixes: 90114ca11476 ("clk: qcom: add SM8550 DISPCC driver")
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   drivers/clk/qcom/dispcc-sm8550.c | 6 +++---
+> >   1 file changed, 3 insertions(+), 3 deletions(-)
+> >
 
-Fixes: 927173bf8a0e ("arm64: dts: qcom: Add missing interrupts for qcs404/ipq5332")
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq5332.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-index f58fd70be826..56304f996dbf 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-@@ -322,8 +322,8 @@ usb: usb@8af8800 {
- 			reg = <0x08af8800 0x400>;
- 
- 			interrupts = <GIC_SPI 62 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 53 IRQ_TYPE_EDGE_BOTH>,
--				     <GIC_SPI 52 IRQ_TYPE_EDGE_BOTH>;
-+				     <GIC_SPI 53 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "pwr_event",
- 					  "dp_hs_phy_irq",
- 					  "dm_hs_phy_irq";
+> > @@ -1146,7 +1146,7 @@ static struct clk_branch disp_cc_mdss_dptx1_usb_router_link_intf_clk = {
+> >               .hw.init = &(struct clk_init_data) {
+> >                       .name = "disp_cc_mdss_dptx1_usb_router_link_intf_clk",
+> >                       .parent_hws = (const struct clk_hw*[]) {
+> > -                             &disp_cc_mdss_dptx0_link_div_clk_src.clkr.hw,
+> > +                             &disp_cc_mdss_dptx1_link_div_clk_src.clkr.hw,
+> >                       },
+> >                       .num_parents = 1,
+> >                       .flags = CLK_SET_RATE_PARENT,
+> >
+>
+> This one is NAK, I checked and on SM8550 the parent of disp_cc_mdss_dptx1_usb_router_link_intf_clk is really disp_cc_mdss_dptx0_link_div_clk_src
+>
+> I checked on the SM8650 side, and disp_cc_mdss_dptx1_link_div_clk_src is the parent of disp_cc_mdss_dptx1_usb_router_link_intf_clk,
+> so it's different on both platforms.
+
+Interesting. On sm8450 disp_cc_mdss_dptx1_usb_router_link_intf_clk is
+also sourced from disp_cc_mdss_dptx0_link_div_clk_src (at least
+judging from the driver file). I'll drop this chunk and update the
+clock from the sm8650 branch.
+
 -- 
-2.34.1
-
+With best wishes
+Dmitry
 
