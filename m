@@ -1,115 +1,332 @@
-Return-Path: <linux-arm-msm+bounces-26420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B57E93399C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 11:06:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 42B379339B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 11:16:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EA3A61F22FF0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 09:06:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BBD4E1F234B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 09:16:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C10038FB9;
-	Wed, 17 Jul 2024 09:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D91094437C;
+	Wed, 17 Jul 2024 09:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RzmRRmDF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sfCjYCuR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD5619A;
-	Wed, 17 Jul 2024 09:06:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE9B4C8D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 09:16:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721207193; cv=none; b=MyEd/BWUWX+iksAU2GnPbN3D0jNTOWb+815J9VYWZevIpkZV4APW3TyAA75vqzgiPwv/YbnpDKVOtj4PXyOvIOSmmZYMkgllgUnTdSuB274jTg6wdXPsyYpLs3U+2nO4HvR0xOIQUR6fxjlR0Yhx/U6O2PsTb+K8ISyIJ/1ZHS0=
+	t=1721207770; cv=none; b=Mv/MZ2ll5lLbEzoJvKTCbWlX1Dn7VcPgBIZQ/09BWyNnEpLXiq8oiBggfAUvEuWEIMOejVlD3ASWH3cNCIQ2dFHHZd9S8rzQFLzIcfYaCjeW6O66zSFmX8lZsaRKwwStNPltPdIO0/ulzCMQ0fQu2TngWoo9LDisHncMNqcSyVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721207193; c=relaxed/simple;
-	bh=aCkP98tzaPJDTU2f5HtwXZIffoFmGDNc1z4G6HVmcms=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nS59uYZdz+u05UO975vY/A0ELkPbfV39+ukM9vKZbOMANnCwEgPRSIUgkq6I59GTfUP4xeCEETGw1wWmCuxraNsy+14H3yU8/fw8+asZcxq0A6+w+QPWlzXMPi3AvJ72KdW+dlH9UNIQqKrVaPwE/L0DyTdYcDHMzDRShHe3AYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RzmRRmDF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646E1C32782;
-	Wed, 17 Jul 2024 09:06:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721207192;
-	bh=aCkP98tzaPJDTU2f5HtwXZIffoFmGDNc1z4G6HVmcms=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RzmRRmDF4YQynkfQKi07+23BcK6iXtRGBnYGYhAAYB+5hphiTdVHwdmGegHHcBjVb
-	 1hOlmRIOY3oQTR99bWCXwYr3McfsbbhgMHHl36+Ih1eTZrZLzTB0DBpoKJr4IdUxPz
-	 yfG5oNcVDnwbjsDZkchCWq37Q1I6uVzaWwBq4nZRzprfb2Yl8dAsPOR7vyHJmdc5TP
-	 FB0L/S+t1aXo7sTeO7NvvWvrG8FzUtkms5N/rGkIjWISZjITyo0b1DM+9/5dHJBjvn
-	 dq8B1pn+7EJEdt+BH4yEaYKdG0xDpL0ab9iWI/pbtzjGXkgoJSHbIn7d0SqANbTFOV
-	 l9iYnDrRR/AmA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1sU0cL-000000002zQ-2EQz;
-	Wed, 17 Jul 2024 11:06:34 +0200
-Date: Wed, 17 Jul 2024 11:06:33 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Hans Verkuil <hansverk@cisco.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Milen Mitkov <quic_mmitkov@quicinc.com>,
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>, stable@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] media: qcom: camss: Remove use_count guard in
- stop_streaming
-Message-ID: <ZpeJmWTfZGUXsc7K@hovoldconsulting.com>
-References: <20240716-linux-next-24-07-13-camss-fixes-v2-0-e60c9f6742f2@linaro.org>
- <20240716-linux-next-24-07-13-camss-fixes-v2-1-e60c9f6742f2@linaro.org>
+	s=arc-20240116; t=1721207770; c=relaxed/simple;
+	bh=rEDmvGP/7HEHFsXeyIpKWdXY9i1W5sc+/b6JOs+P7eU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hAlmEqKIBLceuNmKpJ8V/xFpDl5sXBqrcv7rAEQXE7i5CxL1n6QrACqE6QLVo6wrY7Q6zBRJKSeO6eYJxAfGkipHOgVmKkuOLEPXxqPCutLYZLcf4czJ+S467NEzB/mlK4iAN7f4hiAiaiiJLnVG+fKEmJsGTMllNgaNrbN5IVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sfCjYCuR; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-52ea79e6979so7520196e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 02:16:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721207766; x=1721812566; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iAGwBZ5/2/abZOIQ/WbKa/E9jM19SDyxUXs27zwt33I=;
+        b=sfCjYCuRIYgGdRXlFt+tkYky+qWK3RVw8phiip/M72GLvhVbeBjrSk2o1GJQOia9qv
+         x7nEdgAYzU0STwQTAAoZGfePGD0DF22V2Ola1dVOIfP5vZ3It63dIzvVpP+y0OtJxcQn
+         8zmN+2mtBMwQheYGRDVNLgAq2rOeJE0wYSaWraNFVbu+af9WcsRXomF6KSSCttF5ZIrp
+         bz+PjTRrvx5FMONWYa+y8CQWwTpzLHHRrv6BqbcAZNewEAfQzyazw7KzyC7lIVawEFXo
+         9CZuC++a6RX35YXXTxJjZV1hkRdQ3Gg7VvA7maCw7hYfg1y3ADPuoVUII8iBBZGgM+mw
+         5Jvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721207766; x=1721812566;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iAGwBZ5/2/abZOIQ/WbKa/E9jM19SDyxUXs27zwt33I=;
+        b=JMFk8eWh3HVzHMd2YeDSRRonkVXJwe0tvB/cfdORazas890YopvnJKL7NVC/hbvUM9
+         p6cisxT4m2Ze2ZPRxvQgHIKNDlTYGK5B/TSpCBVUM39zzgqIK+Y6F/MIpYeJ+QIj0Snq
+         yCMj+177Nio/DZDGLf7cL6fKnwtXEEubKOjQb6IeUbBQOtOl/rBKHYRgou/8TOhtbtuv
+         WjqaUkCQLD+4rmNqgULllqWVSepZpjf6HQH8zvIDuv9kQNAftjlin4zWjDlcpMzX95Wi
+         lWHjn0idnPBeIq5Do/crVeX5q2kDX9OOyCojYW869i5FwW6M99YOt1VH2fYmLzsgNEbm
+         r+Pg==
+X-Forwarded-Encrypted: i=1; AJvYcCUYtrCr7wX8SoLrGCLBaJcuo0VRPwvU1BqWkmUCnFGOV/dmfp8x5gjLKoi/OrpUW2ZtEJcFGy4meJ84UVZJmvopW1OqwmngWYCj9A3VlQ==
+X-Gm-Message-State: AOJu0Yx8HY3AV06WWjNDti6dswBOax0OOtzY83Zr7WW52LwJx5G0JcyT
+	w+QZY1m3QL58bLbBR9Sw65fMh3CfxVH2ZRfOtDPhhBZr5pUC8samDrQYDgRW/54=
+X-Google-Smtp-Source: AGHT+IFHQSFYViOBOK8vHKeLMIdPnvlreP9K9gfs/GNi0dmjCSk5ciB2W8fe8e9J9+2ku1SnZm1oAg==
+X-Received: by 2002:a05:6512:33ce:b0:52c:d5b3:1a6a with SMTP id 2adb3069b0e04-52ee53d34e2mr817777e87.28.1721207765677;
+        Wed, 17 Jul 2024 02:16:05 -0700 (PDT)
+Received: from rayyan-pc.broadband ([2a0a:ef40:ee7:2401:197d:e048:a80f:bc44])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4279f23cc5bsm195433585e9.2.2024.07.17.02.16.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Jul 2024 02:16:05 -0700 (PDT)
+From: Rayyan Ansari <rayyan.ansari@linaro.org>
+To: devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Cc: Rayyan Ansari <rayyan.ansari@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Timur Tabi <timur@kernel.org>,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: net: qcom,emac: convert to dtschema
+Date: Wed, 17 Jul 2024 10:09:27 +0100
+Message-ID: <20240717090931.13563-1-rayyan.ansari@linaro.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240716-linux-next-24-07-13-camss-fixes-v2-1-e60c9f6742f2@linaro.org>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jul 16, 2024 at 11:13:24PM +0100, Bryan O'Donoghue wrote:
-> The use_count check was introduced so that multiple concurrent Raw Data
-> Interfaces RDIs could be driven by different virtual channels VCs on the
-> CSIPHY input driving the video pipeline.
-> 
-> This is an invalid use of use_count though as use_count pertains to the
-> number of times a video entity has been opened by user-space not the number
-> of active streams.
-> 
-> If use_count and stream-on count don't agree then stop_streaming() will
-> break as is currently the case and has become apparent when using CAMSS
-> with libcamera's released softisp 0.3.
-> 
-> The use of use_count like this is a bit hacky and right now breaks regular
-> usage of CAMSS for a single stream case. As an example the "qcam"
-> application in libcamera will fail with an -EBUSY result on stream stop and
-> cannot then subsequently be restarted.
+Convert the bindings for the Qualcomm EMAC Ethernet Controller from the
+old text format to yaml.
 
-No, stopping qcam results in the splat below, and then it cannot be
-started again and any attempts to do so fails with -EBUSY.
+Also move the phy node of the controller to be within an mdio block so
+we can use mdio.yaml.
 
-> The kernel log for this fault looks like this:
-> 
-> [ 1265.509831] WARNING: CPU: 5 PID: 919 at drivers/media/common/videobuf2/videobuf2-core.c:2183 __vb2_queue_cancel+0x230/0x2c8 [videobuf2_common]
-> ...
-> [ 1265.510630] Call trace:
-> [ 1265.510636]  __vb2_queue_cancel+0x230/0x2c8 [videobuf2_common]
-> [ 1265.510648]  vb2_core_streamoff+0x24/0xcc [videobuf2_common]
-> [ 1265.510660]  vb2_ioctl_streamoff+0x5c/0xa8 [videobuf2_v4l2]
-> [ 1265.510673]  v4l_streamoff+0x24/0x30 [videodev]
-> [ 1265.510707]  __video_do_ioctl+0x190/0x3f4 [videodev]
-> [ 1265.510732]  video_usercopy+0x304/0x8c4 [videodev]
-> [ 1265.510757]  video_ioctl2+0x18/0x34 [videodev]
-> [ 1265.510782]  v4l2_ioctl+0x40/0x60 [videodev]
-> ...
-> [ 1265.510944] videobuf2_common: driver bug: stop_streaming operation is leaving buffer 0 in active state
-> [ 1265.511175] videobuf2_common: driver bug: stop_streaming operation is leaving buffer 1 in active state
-> [ 1265.511398] videobuf2_common: driver bug: stop_streaming operation is leaving buffer 2 in active st
+Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
+---
+ .../devicetree/bindings/net/qcom,emac.yaml    |  98 ++++++++++++++++
+ .../devicetree/bindings/net/qcom-emac.txt     | 111 ------------------
+ 2 files changed, 98 insertions(+), 111 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/net/qcom,emac.yaml
+ delete mode 100644 Documentation/devicetree/bindings/net/qcom-emac.txt
 
-Johan
+diff --git a/Documentation/devicetree/bindings/net/qcom,emac.yaml b/Documentation/devicetree/bindings/net/qcom,emac.yaml
+new file mode 100644
+index 000000000000..cef65130578f
+--- /dev/null
++++ b/Documentation/devicetree/bindings/net/qcom,emac.yaml
+@@ -0,0 +1,98 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++---
++$id: http://devicetree.org/schemas/net/qcom,emac.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm EMAC Gigabit Ethernet Controller
++
++maintainers:
++  - Timur Tabi <timur@kernel.org>
++
++properties:
++  compatible:
++    oneOf:
++      - const: qcom,fsm9900-emac
++      - enum:
++          - qcom,fsm9900-emac-sgmii
++          - qcom,qdf2432-emac-sgmii
++  reg:
++    minItems: 1
++    maxItems: 2
++
++  interrupts:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - interrupts
++
++if:
++  properties:
++    compatible:
++      const: qcom,fsm9900-emac
++then:
++  allOf:
++    - $ref: ethernet-controller.yaml#
++  properties:
++    clocks:
++      minItems: 7
++      maxItems: 7
++
++    clock-names:
++      items:
++        - const: axi_clk
++        - const: cfg_ahb_clk
++        - const: high_speed_clk
++        - const: mdio_clk
++        - const: tx_clk
++        - const: rx_clk
++        - const: sys_clk
++
++    internal-phy:
++      maxItems: 1
++
++    mdio:
++      $ref: mdio.yaml#
++      unevaluatedProperties: false
++
++  required:
++    - clocks
++    - clock-names
++    - internal-phy
++    - phy-handle
++    - mdio
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    emac0: ethernet@feb20000 {
++        compatible = "qcom,fsm9900-emac";
++        reg = <0xfeb20000 0x10000>,
++              <0xfeb36000 0x1000>;
++        interrupts = <76>;
++
++        clocks = <&gcc 0>, <&gcc 1>, <&gcc 3>, <&gcc 4>, <&gcc 5>,
++                 <&gcc 6>, <&gcc 7>;
++        clock-names = "axi_clk", "cfg_ahb_clk", "high_speed_clk",
++                      "mdio_clk", "tx_clk", "rx_clk", "sys_clk";
++
++        internal-phy = <&emac_sgmii>;
++        phy-handle = <&phy0>;
++
++        mdio {
++            #address-cells = <1>;
++            #size-cells = <0>;
++
++            phy0: ethernet-phy@0 {
++                reg = <0>;
++            };
++        };
++    };
++
++    emac_sgmii: ethernet@feb38000 {
++        compatible = "qcom,fsm9900-emac-sgmii";
++        reg = <0xfeb38000 0x1000>;
++        interrupts = <80>;
++    };
+diff --git a/Documentation/devicetree/bindings/net/qcom-emac.txt b/Documentation/devicetree/bindings/net/qcom-emac.txt
+deleted file mode 100644
+index 7ae8aa148634..000000000000
+--- a/Documentation/devicetree/bindings/net/qcom-emac.txt
++++ /dev/null
+@@ -1,111 +0,0 @@
+-Qualcomm Technologies EMAC Gigabit Ethernet Controller
+-
+-This network controller consists of two devices: a MAC and an SGMII
+-internal PHY.  Each device is represented by a device tree node.  A phandle
+-connects the MAC node to its corresponding internal phy node.  Another
+-phandle points to the external PHY node.
+-
+-Required properties:
+-
+-MAC node:
+-- compatible : Should be "qcom,fsm9900-emac".
+-- reg : Offset and length of the register regions for the device
+-- interrupts : Interrupt number used by this controller
+-- mac-address : The 6-byte MAC address. If present, it is the default
+-	MAC address.
+-- internal-phy : phandle to the internal PHY node
+-- phy-handle : phandle to the external PHY node
+-
+-Internal PHY node:
+-- compatible : Should be "qcom,fsm9900-emac-sgmii" or "qcom,qdf2432-emac-sgmii".
+-- reg : Offset and length of the register region(s) for the device
+-- interrupts : Interrupt number used by this controller
+-
+-The external phy child node:
+-- reg : The phy address
+-
+-Example:
+-
+-FSM9900:
+-
+-soc {
+-	#address-cells = <1>;
+-	#size-cells = <1>;
+-
+-	emac0: ethernet@feb20000 {
+-		compatible = "qcom,fsm9900-emac";
+-		reg = <0xfeb20000 0x10000>,
+-		      <0xfeb36000 0x1000>;
+-		interrupts = <76>;
+-
+-		clocks = <&gcc 0>, <&gcc 1>, <&gcc 3>, <&gcc 4>, <&gcc 5>,
+-			<&gcc 6>, <&gcc 7>;
+-		clock-names = "axi_clk", "cfg_ahb_clk", "high_speed_clk",
+-			"mdio_clk", "tx_clk", "rx_clk", "sys_clk";
+-
+-		internal-phy = <&emac_sgmii>;
+-
+-		phy-handle = <&phy0>;
+-
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-		phy0: ethernet-phy@0 {
+-			reg = <0>;
+-		};
+-
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&mdio_pins_a>;
+-	};
+-
+-	emac_sgmii: ethernet@feb38000 {
+-		compatible = "qcom,fsm9900-emac-sgmii";
+-		reg = <0xfeb38000 0x1000>;
+-		interrupts = <80>;
+-	};
+-
+-	tlmm: pinctrl@fd510000 {
+-		compatible = "qcom,fsm9900-pinctrl";
+-
+-		mdio_pins_a: mdio {
+-			state {
+-				pins = "gpio123", "gpio124";
+-				function = "mdio";
+-			};
+-		};
+-	};
+-
+-
+-QDF2432:
+-
+-soc {
+-	#address-cells = <2>;
+-	#size-cells = <2>;
+-
+-	emac0: ethernet@38800000 {
+-		compatible = "qcom,fsm9900-emac";
+-		reg = <0x0 0x38800000 0x0 0x10000>,
+-		      <0x0 0x38816000 0x0 0x1000>;
+-		interrupts = <0 256 4>;
+-
+-		clocks = <&gcc 0>, <&gcc 1>, <&gcc 3>, <&gcc 4>, <&gcc 5>,
+-			 <&gcc 6>, <&gcc 7>;
+-		clock-names = "axi_clk", "cfg_ahb_clk", "high_speed_clk",
+-			"mdio_clk", "tx_clk", "rx_clk", "sys_clk";
+-
+-		internal-phy = <&emac_sgmii>;
+-
+-		phy-handle = <&phy0>;
+-
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-		phy0: ethernet-phy@4 {
+-			reg = <4>;
+-		};
+-	};
+-
+-	emac_sgmii: ethernet@410400 {
+-		compatible = "qcom,qdf2432-emac-sgmii";
+-		reg = <0x0 0x00410400 0x0 0xc00>, /* Base address */
+-		      <0x0 0x00410000 0x0 0x400>; /* Per-lane digital */
+-		interrupts = <0 254 1>;
+-	};
+-- 
+2.45.2
+
 
