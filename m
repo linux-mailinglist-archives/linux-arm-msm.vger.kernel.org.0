@@ -1,178 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-26416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3AEA93393E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 10:40:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E5CF933956
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 10:45:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9C26B1F22466
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 08:40:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CE294282CFD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 08:45:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3F7C38F97;
-	Wed, 17 Jul 2024 08:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48B263987B;
+	Wed, 17 Jul 2024 08:45:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ci+gn/eb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kzMi1FmG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8841138396;
-	Wed, 17 Jul 2024 08:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC6F20DC3;
+	Wed, 17 Jul 2024 08:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721205611; cv=none; b=h0+DseTGEln3YFwCaLj27jVl90XgE1hd4QQiSW1yW+M7+cUGY6BWAIVKCXkk0NwQBeB5NQgda16IZSrxYpihT2iVskRE8r0cXWyBp9KHfObmEeg195ocijn2qOkY8VehAnVu3Z74TtiNLUKIl/R0JcbAEP7+jkYQ6ftY03wVMGk=
+	t=1721205938; cv=none; b=IqQHVAhZCxP1/sZrMQsEchy+6+i+dQp+RDESjotvugC/KCAgXJxS0SYE9nvTJnJJGciF34xlUW2/HIPDxo1njfiSuZJBw1PsZHkClv/64LahS7ABzocnDb59S923tZerQy0Spd1wI72hhciUeTjd3yZhf2v90SnaRYbQC6KmqVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721205611; c=relaxed/simple;
-	bh=8xefbxae26ImZXEFu8mWeuTLfw1+nQRCp2j3fD277D4=;
+	s=arc-20240116; t=1721205938; c=relaxed/simple;
+	bh=y4wPa9h3p40/pMFjH/crjKU/1U1FOm38vMfi1U8m0Sk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NyCDyrVz1cLJaq/ijPfgZuoGnrgfoBBSpMr/0VPWw+w0Lq9iTaOKmBXTssgmAjTy0ngOW36inGxgOCAh1IBzh6wuPj253Ww6vTiQdhW3sjzrYB4NW0pM3EgRJeYo2EIJVYQszFErvJdrYQ/cNR9kNmzzTJWlmLM/UxuTCwhiJZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ci+gn/eb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02103C32782;
-	Wed, 17 Jul 2024 08:40:06 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=nDyKNpCetP7CiXROSKmIBlD8+4WpJ0K5DKD9yDRFKyY0gBhxXSAWGVKq0aJDpv7Ob6prh5c12Otn945evgsT6Td3Y1hS+VvBlP42c4wToSTT1x2vj5F1+VOOzF1FvjYAHuO7fgSKxqHe65A07adKaBsvP1GSvWcVGzo9GPvvjsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kzMi1FmG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA30C32782;
+	Wed, 17 Jul 2024 08:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721205611;
-	bh=8xefbxae26ImZXEFu8mWeuTLfw1+nQRCp2j3fD277D4=;
+	s=k20201202; t=1721205937;
+	bh=y4wPa9h3p40/pMFjH/crjKU/1U1FOm38vMfi1U8m0Sk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ci+gn/ebvzbBXsdHGmIliOqvlXvt3Gsa4m+7NDuIlTvbeR5XCkPryS77LKm9EG1tX
-	 qBF4rAYV+x6aNaoYph7R/AzrOpYPlC0mx2GiDfuKh7OSwDujv+uGsbP3FwKezQoxcM
-	 8vjnvyptb8L6ridPVSfNesI1iKn9ki9jGcz4HqoXLUPXIjoOpmruYr83XLJarDnQKJ
-	 29higQw9BPUlvec8fB6Wp49ojrZerrhJGsnbb4JfhJCDn5+ZYeEhXE1/q1mKQpTwrg
-	 yYeFlP33pwbKFRR+l7Q2ELeZ5G082zrvW8oegq1HTnYIT17WK6xrLl9lMcTVD/YImu
-	 rdQPniiEGIMOg==
-Date: Wed, 17 Jul 2024 14:10:03 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Sricharan R <quic_srichara@quicinc.com>
-Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	andersson@kernel.org, konrad.dybcio@linaro.org,
-	manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	devi priya <quic_devipriy@quicinc.com>
-Subject: Re: [PATCH V6 1/4] dt-bindings: PCI: qcom: Document the IPQ9574 PCIe
- controller.
-Message-ID: <20240717084003.GE2574@thinkpad>
-References: <20240716092347.2177153-1-quic_srichara@quicinc.com>
- <20240716092347.2177153-2-quic_srichara@quicinc.com>
+	b=kzMi1FmG4J2pugn6p6+nGY3KxrBJU/1iiGh2Q50d4M3GwXxMWfEuomRSwBnRwlf/A
+	 8vFzH/JP3xTFiqULx+hTVihxqDnJJQwwN7tDmuCy0fgRjjBsG2qh89QBxcrjgLhwjc
+	 TJo70dLyAUApJjS8uzhAuzn55bfICOT/SX+0lzVcsM3D2PveHfKOfQJPsYFUP1hTwT
+	 SOOGRnRIOIv+K6seAdMnyHonnSILrO4afMTirLGOhg+L4FJT4gV6+HBGFYwkTLXpC7
+	 Wr/2k80ISqvLFzGvqy/LAIBt/aVJ6SldzdGJ8bbOQbLqeunRmNYqGX678uueE99ga8
+	 yUeMwsf6M2WEw==
+Date: Wed, 17 Jul 2024 10:45:31 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Rayyan Ansari <rayyan.ansari@linaro.org>
+Cc: devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>, de Goede <hdegoede@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-ide@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH 1/3] ARM: dts: qcom: {a,i}pq8064: correct clock-names in
+ sata node
+Message-ID: <ZpeEq_QmV-aerpCW@ryzen.lan>
+References: <20240716105245.49549-1-rayyan.ansari@linaro.org>
+ <20240716105245.49549-2-rayyan.ansari@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240716092347.2177153-2-quic_srichara@quicinc.com>
+In-Reply-To: <20240716105245.49549-2-rayyan.ansari@linaro.org>
 
-On Tue, Jul 16, 2024 at 02:53:44PM +0530, Sricharan R wrote:
-> From: devi priya <quic_devipriy@quicinc.com>
+On Tue, Jul 16, 2024 at 11:45:59AM +0100, Rayyan Ansari wrote:
+> Correct the clock-names in the AHCI SATA controller node to adhere to
+> the bindings.
 > 
-> Document the PCIe controller on IPQ9574 platform.
-> 
-> Signed-off-by: devi priya <quic_devipriy@quicinc.com>
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Hello Rayyan,
 
-- Mani
+This patch is 1/3, so first in the series.
+A patch that is first in the series usually has no other dependencies.
+(Unless referencing another series in the cover-letter.)
+
+So is this a fix that can be sent out separately and picked up the
+QCOM maintainers / ARM DT maintainers directly, or does this patch
+actually depend on patches 2-3 ?
+
+If the former, I suggest that you send out patch 1/3 as a standalone
+fix, since it does not need to be blocked by unrelated DT binding
+conversion.
+
+If the latter, perhaps reorder the patches and improve the commit log
+for this patch.
+
+
+Kind regards,
+Niklas
+
 
 > ---
->  [V6] Fixed the clocks order and dropped unnessecary names as per
->       Krzysztof's comments.
->       Changed the interrupt numbers/msi to '8'.
+>  arch/arm/boot/dts/qcom/qcom-apq8064.dtsi | 4 ++--
+>  arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi | 2 +-
+>  2 files changed, 3 insertions(+), 3 deletions(-)
 > 
->  .../devicetree/bindings/pci/qcom,pcie.yaml    | 50 +++++++++++++++++++
->  1 file changed, 50 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> index f867746b1ae5..2d61fb9f206d 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> @@ -26,6 +26,7 @@ properties:
->            - qcom,pcie-ipq8064-v2
->            - qcom,pcie-ipq8074
->            - qcom,pcie-ipq8074-gen3
-> +          - qcom,pcie-ipq9574
->            - qcom,pcie-msm8996
->            - qcom,pcie-qcs404
->            - qcom,pcie-sdm845
-> @@ -161,6 +162,7 @@ allOf:
->              enum:
->                - qcom,pcie-ipq6018
->                - qcom,pcie-ipq8074-gen3
-> +              - qcom,pcie-ipq9574
->      then:
->        properties:
->          reg:
-> @@ -397,6 +399,53 @@ allOf:
->              - const: axi_m_sticky # AXI Master Sticky reset
->              - const: axi_s_sticky # AXI Slave Sticky reset
+> diff --git a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
+> index 81cf387e1817..277bde958d0e 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
+> +++ b/arch/arm/boot/dts/qcom/qcom-apq8064.dtsi
+> @@ -889,9 +889,9 @@ sata0: sata@29000000 {
+>  				 <&gcc SATA_PMALIVE_CLK>;
+>  			clock-names = "slave_iface",
+>  				      "iface",
+> -				      "bus",
+> +				      "core",
+>  				      "rxoob",
+> -				      "core_pmalive";
+> +				      "pmalive";
 >  
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,pcie-ipq9574
-> +    then:
-> +      properties:
-> +        clocks:
-> +          minItems: 6
-> +          maxItems: 6
-> +        clock-names:
-> +          items:
-> +            - const: axi_m # AXI Master clock
-> +            - const: axi_s # AXI Slave clock
-> +            - const: axi_bridge
-> +            - const: rchng
-> +            - const: ahb
-> +            - const: aux
-> +
-> +        resets:
-> +          minItems: 8
-> +          maxItems: 8
-> +        reset-names:
-> +          items:
-> +            - const: pipe # PIPE reset
-> +            - const: sticky # Core Sticky reset
-> +            - const: axi_s_sticky # AXI Slave Sticky reset
-> +            - const: axi_s # AXI Slave reset
-> +            - const: axi_m_sticky # AXI Master Sticky reset
-> +            - const: axi_m # AXI Master reset
-> +            - const: aux # AUX Reset
-> +            - const: ahb # AHB Reset
-> +
-> +        interrupts:
-> +          minItems: 8
-> +        interrupt-names:
-> +          items:
-> +            - const: msi0
-> +            - const: msi1
-> +            - const: msi2
-> +            - const: msi3
-> +            - const: msi4
-> +            - const: msi5
-> +            - const: msi6
-> +            - const: msi7
-> +
->    - if:
->        properties:
->          compatible:
-> @@ -507,6 +556,7 @@ allOf:
->                  - qcom,pcie-ipq8064v2
->                  - qcom,pcie-ipq8074
->                  - qcom,pcie-ipq8074-gen3
-> +                - qcom,pcie-ipq9574
->                  - qcom,pcie-qcs404
->      then:
->        required:
+>  			assigned-clocks = <&gcc SATA_RXOOB_CLK>,
+>  					  <&gcc SATA_PMALIVE_CLK>;
+> diff --git a/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi
+> index da0fd75f4711..dd974eb4065f 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi
+> +++ b/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi
+> @@ -1292,7 +1292,7 @@ sata: sata@29000000 {
+>  				 <&gcc SATA_A_CLK>,
+>  				 <&gcc SATA_RXOOB_CLK>,
+>  				 <&gcc SATA_PMALIVE_CLK>;
+> -			clock-names = "slave_face", "iface", "core",
+> +			clock-names = "slave_iface", "iface", "core",
+>  					"rxoob", "pmalive";
+>  
+>  			assigned-clocks = <&gcc SATA_RXOOB_CLK>, <&gcc SATA_PMALIVE_CLK>;
 > -- 
-> 2.34.1
+> 2.45.2
 > 
-
--- 
-மணிவண்ணன் சதாசிவம்
 
