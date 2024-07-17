@@ -1,332 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-26422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42B379339B6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 11:16:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2284B9339AD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 11:14:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BBD4E1F234B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 09:16:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CC1B51F22AD2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 09:14:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D91094437C;
-	Wed, 17 Jul 2024 09:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCDCB3B791;
+	Wed, 17 Jul 2024 09:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sfCjYCuR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ON01uFzo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE9B4C8D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 09:16:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202F9210EC;
+	Wed, 17 Jul 2024 09:14:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721207770; cv=none; b=Mv/MZ2ll5lLbEzoJvKTCbWlX1Dn7VcPgBIZQ/09BWyNnEpLXiq8oiBggfAUvEuWEIMOejVlD3ASWH3cNCIQ2dFHHZd9S8rzQFLzIcfYaCjeW6O66zSFmX8lZsaRKwwStNPltPdIO0/ulzCMQ0fQu2TngWoo9LDisHncMNqcSyVk=
+	t=1721207677; cv=none; b=a85HW5k6VHy/BHRaUAiE53ARyN3uCMKJP9UJNRDJXMgjVhzHrJZkW31lilWN7xZcnRFbEB9y7kS25SrsjdI++q+JwAOln/DJS+LO6MttBkRzYFM4qLj6RdAzBJSiKNdJKUH1jJimvED97hp9z56qXLDFl3EjXR3m3XH+wJjXwqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721207770; c=relaxed/simple;
-	bh=rEDmvGP/7HEHFsXeyIpKWdXY9i1W5sc+/b6JOs+P7eU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hAlmEqKIBLceuNmKpJ8V/xFpDl5sXBqrcv7rAEQXE7i5CxL1n6QrACqE6QLVo6wrY7Q6zBRJKSeO6eYJxAfGkipHOgVmKkuOLEPXxqPCutLYZLcf4czJ+S467NEzB/mlK4iAN7f4hiAiaiiJLnVG+fKEmJsGTMllNgaNrbN5IVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sfCjYCuR; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-52ea79e6979so7520196e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 02:16:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721207766; x=1721812566; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=iAGwBZ5/2/abZOIQ/WbKa/E9jM19SDyxUXs27zwt33I=;
-        b=sfCjYCuRIYgGdRXlFt+tkYky+qWK3RVw8phiip/M72GLvhVbeBjrSk2o1GJQOia9qv
-         x7nEdgAYzU0STwQTAAoZGfePGD0DF22V2Ola1dVOIfP5vZ3It63dIzvVpP+y0OtJxcQn
-         8zmN+2mtBMwQheYGRDVNLgAq2rOeJE0wYSaWraNFVbu+af9WcsRXomF6KSSCttF5ZIrp
-         bz+PjTRrvx5FMONWYa+y8CQWwTpzLHHRrv6BqbcAZNewEAfQzyazw7KzyC7lIVawEFXo
-         9CZuC++a6RX35YXXTxJjZV1hkRdQ3Gg7VvA7maCw7hYfg1y3ADPuoVUII8iBBZGgM+mw
-         5Jvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721207766; x=1721812566;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iAGwBZ5/2/abZOIQ/WbKa/E9jM19SDyxUXs27zwt33I=;
-        b=JMFk8eWh3HVzHMd2YeDSRRonkVXJwe0tvB/cfdORazas890YopvnJKL7NVC/hbvUM9
-         p6cisxT4m2Ze2ZPRxvQgHIKNDlTYGK5B/TSpCBVUM39zzgqIK+Y6F/MIpYeJ+QIj0Snq
-         yCMj+177Nio/DZDGLf7cL6fKnwtXEEubKOjQb6IeUbBQOtOl/rBKHYRgou/8TOhtbtuv
-         WjqaUkCQLD+4rmNqgULllqWVSepZpjf6HQH8zvIDuv9kQNAftjlin4zWjDlcpMzX95Wi
-         lWHjn0idnPBeIq5Do/crVeX5q2kDX9OOyCojYW869i5FwW6M99YOt1VH2fYmLzsgNEbm
-         r+Pg==
-X-Forwarded-Encrypted: i=1; AJvYcCUYtrCr7wX8SoLrGCLBaJcuo0VRPwvU1BqWkmUCnFGOV/dmfp8x5gjLKoi/OrpUW2ZtEJcFGy4meJ84UVZJmvopW1OqwmngWYCj9A3VlQ==
-X-Gm-Message-State: AOJu0Yx8HY3AV06WWjNDti6dswBOax0OOtzY83Zr7WW52LwJx5G0JcyT
-	w+QZY1m3QL58bLbBR9Sw65fMh3CfxVH2ZRfOtDPhhBZr5pUC8samDrQYDgRW/54=
-X-Google-Smtp-Source: AGHT+IFHQSFYViOBOK8vHKeLMIdPnvlreP9K9gfs/GNi0dmjCSk5ciB2W8fe8e9J9+2ku1SnZm1oAg==
-X-Received: by 2002:a05:6512:33ce:b0:52c:d5b3:1a6a with SMTP id 2adb3069b0e04-52ee53d34e2mr817777e87.28.1721207765677;
-        Wed, 17 Jul 2024 02:16:05 -0700 (PDT)
-Received: from rayyan-pc.broadband ([2a0a:ef40:ee7:2401:197d:e048:a80f:bc44])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4279f23cc5bsm195433585e9.2.2024.07.17.02.16.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jul 2024 02:16:05 -0700 (PDT)
-From: Rayyan Ansari <rayyan.ansari@linaro.org>
-To: devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Cc: Rayyan Ansari <rayyan.ansari@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Timur Tabi <timur@kernel.org>,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-bindings: net: qcom,emac: convert to dtschema
-Date: Wed, 17 Jul 2024 10:09:27 +0100
-Message-ID: <20240717090931.13563-1-rayyan.ansari@linaro.org>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1721207677; c=relaxed/simple;
+	bh=TGtt0bW+t5XJtO6KzmFODkBvqD4p0IDOOckyrWKen7g=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=o0iJPoycK0Az4uEPCu0B2tgNrqcNhbpOD7gPM12CpLabUDDU0Ch16DFIlN0CZbPLStMOyt/wl94TpVCJysyryjkfpEx8wUL6H4nJb4J0Gu5ISZWdWgV2E3JprperjSXSkjOPfUBO8vz3ennEViHg4LXYu5JVJSzrHLMadHfANWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ON01uFzo; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46H6X66X023125;
+	Wed, 17 Jul 2024 09:14:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=TGtt0bW+t5XJtO6KzmFODkBv
+	qD4p0IDOOckyrWKen7g=; b=ON01uFzo5H0exnnJTG/2A140pxllPBpxzfJI/2DD
+	kdwj4Y7OYStZwTAPtWtLKeidFLFA4Fa93DizcwrDHviLV+BWQnPpc/IKYRJMrJRd
+	yzYio63r8HMfhcArjo6nYzSrv0ChhkaTSJglzncJT0pGwFLMziY4Q88gO5BqqSJH
+	jpnyADUTO25wJBsotdmB6nq/WP/MD6159bX0NaEJdTf5kyTXQNRgwbtINpFCPY9s
+	LQrbSax1aI8GBjPOIvdcAQt9Zb4Ul8vThpAnv303iJEM1o0WwIaUY0cywSDCFv3m
+	FqOXleV1LqaMt/yy3wE3KgdN195urPMOEdJIaw0IYvj+og==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40dwfnht8m-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Jul 2024 09:14:21 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46H9EJjr019519
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Jul 2024 09:14:19 GMT
+Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 17 Jul 2024 02:14:11 -0700
+Date: Wed, 17 Jul 2024 14:44:08 +0530
+From: Varadarajan Narayanan <quic_varada@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+CC: <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <ilia.lin@kernel.org>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
+        <ulf.hansson@linaro.org>, <quic_sibis@quicinc.com>,
+        <quic_rjendra@quicinc.com>, <danila@jiaxyga.com>,
+        <neil.armstrong@linaro.org>, <otto.pflueger@abscue.de>,
+        <abel.vesa@linaro.org>, <luca@z3ntu.xyz>, <geert+renesas@glider.be>,
+        <stephan.gerhold@kernkonzept.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        Praveenkumar I
+	<quic_ipkumar@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v6 5/9] pmdomain: qcom: rpmpd: Add IPQ9574 power domains
+Message-ID: <ZpeLYG6vegJYZ5Rs@hu-varada-blr.qualcomm.com>
+References: <20240710061102.1323550-1-quic_varada@quicinc.com>
+ <20240710061102.1323550-6-quic_varada@quicinc.com>
+ <d454e01f-3d6b-4a02-87cf-3d289bc6957c@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <d454e01f-3d6b-4a02-87cf-3d289bc6957c@linaro.org>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ctY3uiSTACLzGBq0eIG6LP4jbRP4fj8x
+X-Proofpoint-ORIG-GUID: ctY3uiSTACLzGBq0eIG6LP4jbRP4fj8x
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-17_05,2024-07-16_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 suspectscore=0
+ priorityscore=1501 clxscore=1015 spamscore=0 mlxscore=0 phishscore=0
+ mlxlogscore=386 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2407170070
 
-Convert the bindings for the Qualcomm EMAC Ethernet Controller from the
-old text format to yaml.
+On Tue, Jul 16, 2024 at 02:15:12PM +0200, Konrad Dybcio wrote:
+> On 10.07.2024 8:10 AM, Varadarajan Narayanan wrote:
+> > From: Praveenkumar I <quic_ipkumar@quicinc.com>
+> >
+> > Add the APC power domain definitions used in IPQ9574.
+> >
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > ---
+>
+> Could you please confirm [1]?
+>
+> Konrad
+>
+> [1] https://lore.kernel.org/linux-arm-msm/57dadb35-5dde-4127-87aa-962613730336@linaro.org/
 
-Also move the phy node of the controller to be within an mdio block so
-we can use mdio.yaml.
+The author is off for a few days. Will get back to you once he is in.
 
-Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
----
- .../devicetree/bindings/net/qcom,emac.yaml    |  98 ++++++++++++++++
- .../devicetree/bindings/net/qcom-emac.txt     | 111 ------------------
- 2 files changed, 98 insertions(+), 111 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/net/qcom,emac.yaml
- delete mode 100644 Documentation/devicetree/bindings/net/qcom-emac.txt
-
-diff --git a/Documentation/devicetree/bindings/net/qcom,emac.yaml b/Documentation/devicetree/bindings/net/qcom,emac.yaml
-new file mode 100644
-index 000000000000..cef65130578f
---- /dev/null
-+++ b/Documentation/devicetree/bindings/net/qcom,emac.yaml
-@@ -0,0 +1,98 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+---
-+$id: http://devicetree.org/schemas/net/qcom,emac.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm EMAC Gigabit Ethernet Controller
-+
-+maintainers:
-+  - Timur Tabi <timur@kernel.org>
-+
-+properties:
-+  compatible:
-+    oneOf:
-+      - const: qcom,fsm9900-emac
-+      - enum:
-+          - qcom,fsm9900-emac-sgmii
-+          - qcom,qdf2432-emac-sgmii
-+  reg:
-+    minItems: 1
-+    maxItems: 2
-+
-+  interrupts:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+
-+if:
-+  properties:
-+    compatible:
-+      const: qcom,fsm9900-emac
-+then:
-+  allOf:
-+    - $ref: ethernet-controller.yaml#
-+  properties:
-+    clocks:
-+      minItems: 7
-+      maxItems: 7
-+
-+    clock-names:
-+      items:
-+        - const: axi_clk
-+        - const: cfg_ahb_clk
-+        - const: high_speed_clk
-+        - const: mdio_clk
-+        - const: tx_clk
-+        - const: rx_clk
-+        - const: sys_clk
-+
-+    internal-phy:
-+      maxItems: 1
-+
-+    mdio:
-+      $ref: mdio.yaml#
-+      unevaluatedProperties: false
-+
-+  required:
-+    - clocks
-+    - clock-names
-+    - internal-phy
-+    - phy-handle
-+    - mdio
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    emac0: ethernet@feb20000 {
-+        compatible = "qcom,fsm9900-emac";
-+        reg = <0xfeb20000 0x10000>,
-+              <0xfeb36000 0x1000>;
-+        interrupts = <76>;
-+
-+        clocks = <&gcc 0>, <&gcc 1>, <&gcc 3>, <&gcc 4>, <&gcc 5>,
-+                 <&gcc 6>, <&gcc 7>;
-+        clock-names = "axi_clk", "cfg_ahb_clk", "high_speed_clk",
-+                      "mdio_clk", "tx_clk", "rx_clk", "sys_clk";
-+
-+        internal-phy = <&emac_sgmii>;
-+        phy-handle = <&phy0>;
-+
-+        mdio {
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+
-+            phy0: ethernet-phy@0 {
-+                reg = <0>;
-+            };
-+        };
-+    };
-+
-+    emac_sgmii: ethernet@feb38000 {
-+        compatible = "qcom,fsm9900-emac-sgmii";
-+        reg = <0xfeb38000 0x1000>;
-+        interrupts = <80>;
-+    };
-diff --git a/Documentation/devicetree/bindings/net/qcom-emac.txt b/Documentation/devicetree/bindings/net/qcom-emac.txt
-deleted file mode 100644
-index 7ae8aa148634..000000000000
---- a/Documentation/devicetree/bindings/net/qcom-emac.txt
-+++ /dev/null
-@@ -1,111 +0,0 @@
--Qualcomm Technologies EMAC Gigabit Ethernet Controller
--
--This network controller consists of two devices: a MAC and an SGMII
--internal PHY.  Each device is represented by a device tree node.  A phandle
--connects the MAC node to its corresponding internal phy node.  Another
--phandle points to the external PHY node.
--
--Required properties:
--
--MAC node:
--- compatible : Should be "qcom,fsm9900-emac".
--- reg : Offset and length of the register regions for the device
--- interrupts : Interrupt number used by this controller
--- mac-address : The 6-byte MAC address. If present, it is the default
--	MAC address.
--- internal-phy : phandle to the internal PHY node
--- phy-handle : phandle to the external PHY node
--
--Internal PHY node:
--- compatible : Should be "qcom,fsm9900-emac-sgmii" or "qcom,qdf2432-emac-sgmii".
--- reg : Offset and length of the register region(s) for the device
--- interrupts : Interrupt number used by this controller
--
--The external phy child node:
--- reg : The phy address
--
--Example:
--
--FSM9900:
--
--soc {
--	#address-cells = <1>;
--	#size-cells = <1>;
--
--	emac0: ethernet@feb20000 {
--		compatible = "qcom,fsm9900-emac";
--		reg = <0xfeb20000 0x10000>,
--		      <0xfeb36000 0x1000>;
--		interrupts = <76>;
--
--		clocks = <&gcc 0>, <&gcc 1>, <&gcc 3>, <&gcc 4>, <&gcc 5>,
--			<&gcc 6>, <&gcc 7>;
--		clock-names = "axi_clk", "cfg_ahb_clk", "high_speed_clk",
--			"mdio_clk", "tx_clk", "rx_clk", "sys_clk";
--
--		internal-phy = <&emac_sgmii>;
--
--		phy-handle = <&phy0>;
--
--		#address-cells = <1>;
--		#size-cells = <0>;
--		phy0: ethernet-phy@0 {
--			reg = <0>;
--		};
--
--		pinctrl-names = "default";
--		pinctrl-0 = <&mdio_pins_a>;
--	};
--
--	emac_sgmii: ethernet@feb38000 {
--		compatible = "qcom,fsm9900-emac-sgmii";
--		reg = <0xfeb38000 0x1000>;
--		interrupts = <80>;
--	};
--
--	tlmm: pinctrl@fd510000 {
--		compatible = "qcom,fsm9900-pinctrl";
--
--		mdio_pins_a: mdio {
--			state {
--				pins = "gpio123", "gpio124";
--				function = "mdio";
--			};
--		};
--	};
--
--
--QDF2432:
--
--soc {
--	#address-cells = <2>;
--	#size-cells = <2>;
--
--	emac0: ethernet@38800000 {
--		compatible = "qcom,fsm9900-emac";
--		reg = <0x0 0x38800000 0x0 0x10000>,
--		      <0x0 0x38816000 0x0 0x1000>;
--		interrupts = <0 256 4>;
--
--		clocks = <&gcc 0>, <&gcc 1>, <&gcc 3>, <&gcc 4>, <&gcc 5>,
--			 <&gcc 6>, <&gcc 7>;
--		clock-names = "axi_clk", "cfg_ahb_clk", "high_speed_clk",
--			"mdio_clk", "tx_clk", "rx_clk", "sys_clk";
--
--		internal-phy = <&emac_sgmii>;
--
--		phy-handle = <&phy0>;
--
--		#address-cells = <1>;
--		#size-cells = <0>;
--		phy0: ethernet-phy@4 {
--			reg = <4>;
--		};
--	};
--
--	emac_sgmii: ethernet@410400 {
--		compatible = "qcom,qdf2432-emac-sgmii";
--		reg = <0x0 0x00410400 0x0 0xc00>, /* Base address */
--		      <0x0 0x00410000 0x0 0x400>; /* Per-lane digital */
--		interrupts = <0 254 1>;
--	};
--- 
-2.45.2
-
+Thanks
+Varada
 
