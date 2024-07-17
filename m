@@ -1,122 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-26505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B074E93444E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 23:58:56 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56499934495
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 00:09:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EB2371C20D11
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 21:58:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 973B3B21986
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 22:09:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D071E17F4F6;
-	Wed, 17 Jul 2024 21:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11A0B3BBDE;
+	Wed, 17 Jul 2024 22:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eBrpdpn3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="voP7Qvvw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790EA4688;
-	Wed, 17 Jul 2024 21:58:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4DB2574B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 22:09:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721253532; cv=none; b=SDRXC3amahD7GkUsAmn/ESVrQNA6l4r0fjmQpPWHvBaJTPQlAQGhhXOl6mgZy/DwvqxsOwGn5jL+sRCnfVUuod1lT58/60x07lUwm5cuhdSpFXGAmEFbCzQE+fY5z3npbh6DbPSljABt1XoaY53FzOjd80S5PCEFM2aUSBKgTY0=
+	t=1721254160; cv=none; b=dA+ifmRyDLuS4XR5Jv29KvkH9BZ4UFN/Wn1sKr9QeqYsZUwlCJHD3w469UWRc1U7PuHFmoXcIx3cqdHP71QAHjJc6PVuiFpCHRo0exFgDOZpbFUlFPVughBA8MwMdwhLKzvT3/MSiFvr0dMepnBfnEEf6KjEguUu/oeSt5P6Cnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721253532; c=relaxed/simple;
-	bh=KBqnzoKB50TP2AY7U/X1UxbeIKca/treoIITrsl7seY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ftLJcWJcl5ha40dZ3teo4WV3FjDHsydqwOMG91rz3M7OlAIR0TY1P2VYvJ7IcQzrwKQDxysEd2KVlGYhJD4lvakFNrzaLis90E2BXOlRc2fkMRNoDiB7lsROqpuCJCWJj5s1Q7h1bLJVIlOXtExJs/Z7Lo/VaT5Jjozq1yeY37E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eBrpdpn3; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-1fb457b53c8so1902285ad.0;
-        Wed, 17 Jul 2024 14:58:51 -0700 (PDT)
+	s=arc-20240116; t=1721254160; c=relaxed/simple;
+	bh=6gstO4ngk3iydAJkm6Rk7mmCuW1pWKgKKA93NTQ7e3w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gsRDg7D0gz8xbiPSInN6K4uL3E8JpSQdasyUWNI26Aqk+px3+c9EJcM2Bp/tDN3GAUFVgQYAgs5qoJw+NAFIUg4PReUCUsx4Dh2Kz0rScCTxs5jXZX0ca44oJYAyg7qnhb6APgCyaW34P8w1D+B4lFqQglRsnnsE2YZ9245bdRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=voP7Qvvw; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-66498fd4f91so1077507b3.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 15:09:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721253531; x=1721858331; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FiSxCmxpPDKVe52INJHPWGzjKnAAp4bqiCfzE7BK3HE=;
-        b=eBrpdpn3rVLS+f2GlTzbcOCd4gSohuknRQ8MozEdZD9NUfcYjFIdb8V2B26tjLL7yN
-         D8cMeaJVh9u3oplpbUF9VywuAa3EWzhOXE2ZxPXK5j7Bm2/vEkp8lKNzT5fKsLRbkk4o
-         qyQdwMwRTA7Tuca40F09icQ0+zEnPrQ9LY1qnRjc9ALdiQ60t4UYKxGocNOzhHBwWux6
-         X467adIs6aD2gxP2ifrcGEM9MDv0/PyiognQLIcxz5Pg46luYdgrjfA5QuqWxFDPqCka
-         4DnBBr0G1FEIJ6XyGcBeX1W0uMt397iPiBT9ukzK0cBfKPLrCwJji0YmIwU7pT22CsKG
-         tU3w==
+        d=linaro.org; s=google; t=1721254156; x=1721858956; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=bsVDKWypgLDT5YDLNjnV8mTYT3kKNXub5wdl2QEBMpM=;
+        b=voP7QvvwzirjV0Ich+3vU+/WbMr+y6QTZcJcEDHEyBngjN5epYBDYpAnvCnqq45XRd
+         EzqkDyh2tOlC10AM7BPwcyqBTCjL4xluomAmhVtl82EawL7+OYjLZ/fUUVAhiXA+5sKS
+         8Bun+Oe3AXzBI9bNNFdIIYIHRczwu8MgMwbxHEqYncgxJKKKlL//WTu/JJYOyFuyK+dZ
+         O+Aje9X/usVzPX2TKH2edwvpRZKuyg60o1ASThOuj1gP1WDOrd8LsZSvksfJuClml11L
+         9l6OiAMwJ1KcgcF9j5lgilm3LK0z3569SE9MrPh+5/f/J+z4Qr3Y8Dj4qCYVSsZzHRZi
+         OQCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721253531; x=1721858331;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1721254156; x=1721858956;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=FiSxCmxpPDKVe52INJHPWGzjKnAAp4bqiCfzE7BK3HE=;
-        b=Den3NUUCtXmWqZwsNAMWeV9YS2URSK+iOQl8Hm2TuEFRnoGWhjG3gIksglzCoH0CKK
-         T8LZWmPV2SGBQi04PaEd960qCWPK8OsDXSsaPJ7LwtAX7Yx3oCGcx3lpq/1fW8QOAfnL
-         pKmh8qILBD9z6GGr1EWmDbt2FcUD7XZJd5iCEMF4nxR8HDFaZ2t0/Vxv+y8vQ5ZAFLIX
-         qmUba6Fs9tCBtY5Yiqh+rgmRidL8BLoQi7KhTGxZDRcIK/kmV5g8IT3X6tYzFjsL5YnW
-         ItwQVOXIW9LmIsRajjadei23ZgA+QUeykM0Yw5YiEGR3D6RNoZ7YCwQUktJ5a3dgEPx3
-         ilOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWY4OdiO0BxiqLOMtPIjYGeCqhuvPcN2V6WgEmJiLVJ1NWjp4eUdkzs/PylUMt5skml4g2md9ktAA4A5bayblDzFILzpaYyvUpCbkM1
-X-Gm-Message-State: AOJu0YydITs3XPGL8T9uFZIDspTiFjJ+QUxOsZR4Nt18CjgUFfRFxKJh
-	Zuw2YwCcg0jvg22OyhMdcYxx/N45AhXqM0EVtvPiq7QGPcW8V7LW
-X-Google-Smtp-Source: AGHT+IFXDAvBMkEMStSH4nurfzh3TYRGe+QjxqF6ssIkAMTxdRiDG9y2G34vCgMvRl51AInSKSBemA==
-X-Received: by 2002:a17:902:db07:b0:1f7:2293:1886 with SMTP id d9443c01a7336-1fc4e165dffmr28196225ad.12.1721253530525;
-        Wed, 17 Jul 2024 14:58:50 -0700 (PDT)
-Received: from localhost ([2a00:79e1:2e00:1301:3279:d3cd:5dde:c799])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fc0bc5aa6esm79662475ad.299.2024.07.17.14.58.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jul 2024 14:58:49 -0700 (PDT)
-From: Rob Clark <robdclark@gmail.com>
-To: dri-devel@lists.freedesktop.org
-Cc: linux-arm-msm@vger.kernel.org,
-	Rob Clark <robdclark@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [RFC] drm/panel/simple-edp: Add Samsung ATNA45DC02
-Date: Wed, 17 Jul 2024 14:58:46 -0700
-Message-ID: <20240717215847.5310-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.45.2
+        bh=bsVDKWypgLDT5YDLNjnV8mTYT3kKNXub5wdl2QEBMpM=;
+        b=iWFrC4/RtI8Vlx7WOLoyB+dP5zXccH/PWC+UQtCaeV/jZdfflVqjPRJHQi/MotIOLf
+         cOyyFvlVI673V31VNWbSmcwrIqh6BGBO+EFL/y8C8WM9QzyNxAziAk3DPKBB6n8fq26X
+         pH4VfDqXqqxrFnpv2AC8mWaXKieEpNaVZkUCVBHJmb5dsLdNF8T7LGW5hltptBakWBoG
+         Q/QwToWvFmNFUqPQ8iuKt0o13iWIWYlfJu7wqZtdjGJM57ud2FcPf0kPgyGlfZYm1Hn4
+         rR8mTxOBiYBvUzYExSWumg1rt18Px4pUpUtlfmBgc9hdumZC2u6RjfeJ/zRDLDew+cSG
+         s4eA==
+X-Forwarded-Encrypted: i=1; AJvYcCXsWMcxWiafR72logINf55spwLBZKptYKuQQVlwPLK6DyCwhz8tnlHoewCms7dsJGlXDjMwhBAM+OxMT3YR6uIaZxUEY/rFR4cT0I4YSA==
+X-Gm-Message-State: AOJu0Yw27JvHfSJYatve4++WmPXRsC7hYX5Qc/JZjGTDvA/4tm0THe+g
+	UdtTc3LSOTYw9U7AIblaPP/iKPnnkte/X+7n9xTovmaGuRGVQemCDl2oCDRHeOElJAJmPY2hHuo
+	J2ictNEJuLAdFsltihuQQk0bLrgqxVvs/2Tbp/VDdUCm+LKam+nY=
+X-Google-Smtp-Source: AGHT+IGp53w5JFJXinLfxngAAOC4Se8zd8clOSSE5HSo6ISXAyhqoYmBo0Hc7/CZzmDiE/S24AngXbmiTkF8yavGN3A=
+X-Received: by 2002:a05:690c:4d48:b0:65f:7cee:43b with SMTP id
+ 00721157ae682-664fe071e10mr34429437b3.19.1721254155923; Wed, 17 Jul 2024
+ 15:09:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240625-dpu-mode-config-width-v5-0-501d984d634f@linaro.org>
+ <20240625-dpu-mode-config-width-v5-8-501d984d634f@linaro.org> <4e19faf3-0fc6-4ef2-abf5-4f9a0579982b@quicinc.com>
+In-Reply-To: <4e19faf3-0fc6-4ef2-abf5-4f9a0579982b@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 18 Jul 2024 01:09:04 +0300
+Message-ID: <CAA8EJppGC_u-79YyXqXEeQAc9oBUOm-+ZuUDu_3b8MWnVVAOxg@mail.gmail.com>
+Subject: Re: [PATCH v5 08/16] drm/msm/dpu: drop msm_format from struct dpu_hw_fmt_layout
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Abel Vesa <abel.vesa@linaro.org>, 
+	Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Rob Clark <robdclark@chromium.org>
+On Wed, 17 Jul 2024 at 23:15, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 6/24/2024 2:13 PM, Dmitry Baryshkov wrote:
+> > The struct dpu_hw_fmt_layout defines hardware data layout (addresses,
+> > sizes and pitches. Drop format field from this structure as it's not a
+> Missing closing brace ")" here?
+>
+> > part of the data layout.
+> >
+>
+> Its a bit subjective IMO whether you consider format as part of hardware
+> data layout or not. Registers do have format bitfields too so I am
+> somewhat unsure if this change is really needed.
 
-Just a guess on the panel timings, but they appear to work.
+It's not a part of the data buffer layout (num_planes, sizes, pitches
+and offsets) - the items that are defined by struct dpu_hw_fmt_layout.
+As such there is no need to store it in the structure. When necessary
+we can always get it from the framebuffer itself.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
-This adds the panel I have on my lenovo yoga slim 7x laptop.  I couldn't
-find any datasheet so timings is just a guess.  But AFAICT everything
-works fine.
+>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    | 31 +++++++---------------
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c        | 23 ++++++++--------
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |  2 --
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c          |  4 +--
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h          |  3 ++-
+> >   5 files changed, 25 insertions(+), 38 deletions(-)
+> >
+>
+> <Snip>
+>
+> > @@ -318,15 +318,10 @@ static void dpu_encoder_phys_wb_setup(
+> >   {
+> >       struct dpu_hw_wb *hw_wb = phys_enc->hw_wb;
+> >       struct drm_display_mode mode = phys_enc->cached_mode;
+> > -     struct drm_framebuffer *fb = NULL;
+> >       struct dpu_encoder_phys_wb *wb_enc = to_dpu_encoder_phys_wb(phys_enc);
+> > -     struct drm_writeback_job *wb_job;
+> >       const struct msm_format *format;
+> > -     const struct msm_format *dpu_fmt;
+> >
+> > -     wb_job = wb_enc->wb_job;
+> >       format = msm_framebuffer_format(wb_enc->wb_job->fb);
+> > -     dpu_fmt = mdp_get_format(&phys_enc->dpu_kms->base, format->pixel_format, wb_job->fb->modifier);
+> >
+>
+> This is interesting. I wonder why I just didnt use format directly that
+> time itself :)
+>
+> Maybe I was thinking that mdp_get_format() will also match the modifiers
+> and return the corresponding msm_format.
+>
+> >       DPU_DEBUG("[mode_set:%d, \"%s\",%d,%d]\n",
+> >                       hw_wb->idx - WB_0, mode.name,
+> > @@ -338,9 +333,9 @@ static void dpu_encoder_phys_wb_setup(
+> >
+> >       dpu_encoder_phys_wb_set_qos(phys_enc);
+> >
+> > -     dpu_encoder_phys_wb_setup_fb(phys_enc, fb);
+> > +     dpu_encoder_phys_wb_setup_fb(phys_enc, format);
+> >
+> > -     dpu_encoder_helper_phys_setup_cdm(phys_enc, dpu_fmt, CDM_CDWN_OUTPUT_WB);
+> > +     dpu_encoder_helper_phys_setup_cdm(phys_enc, format, CDM_CDWN_OUTPUT_WB);
+> >
+> >       dpu_encoder_phys_wb_setup_ctl(phys_enc);
+> >   }
+> > @@ -584,14 +579,6 @@ static void dpu_encoder_phys_wb_prepare_wb_job(struct dpu_encoder_phys *phys_enc
+> >
+> >       format = msm_framebuffer_format(job->fb);
+> >
+> > -     wb_cfg->dest.format = mdp_get_format(&phys_enc->dpu_kms->base,
+> > -                                          format->pixel_format, job->fb->modifier);
+> > -     if (!wb_cfg->dest.format) {
+> > -             /* this error should be detected during atomic_check */
+> > -             DPU_ERROR("failed to get format %p4cc\n", &format->pixel_format);
+> > -             return;
+> > -     }
+> > -
+> >       ret = dpu_format_populate_layout(aspace, job->fb, &wb_cfg->dest);
+> >       if (ret) {
+> >               DPU_DEBUG("failed to populate layout %d\n", ret);
 
- drivers/gpu/drm/panel/panel-edp.c | 2 ++
- 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
-index 38e5178f55ac..411b7218af55 100644
---- a/drivers/gpu/drm/panel/panel-edp.c
-+++ b/drivers/gpu/drm/panel/panel-edp.c
-@@ -1966,6 +1966,8 @@ static const struct edp_panel_entry edp_panels[] = {
- 	EDP_PANEL_ENTRY('S', 'H', 'P', 0x153a, &delay_200_500_e50, "LQ140T1JH01"),
- 	EDP_PANEL_ENTRY('S', 'H', 'P', 0x154c, &delay_200_500_p2e100, "LQ116M1JW10"),
- 
-+	EDP_PANEL_ENTRY('S', 'D', 'C', 0x4189, &delay_100_500_e200, "ATNA45DC02-0"),
-+
- 	EDP_PANEL_ENTRY('S', 'T', 'A', 0x0100, &delay_100_500_e200, "2081116HHD028001-51D"),
- 
- 	{ /* sentinal */ }
+
 -- 
-2.45.2
-
+With best wishes
+Dmitry
 
