@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-26434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 088C0933A73
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 11:56:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D14E9933A77
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 11:56:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A9255280D87
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 09:56:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5DFAC1F21EE2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 09:56:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E538217E911;
-	Wed, 17 Jul 2024 09:55:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 642BC17E8EE;
+	Wed, 17 Jul 2024 09:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W19yectT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bdtiPJ4h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD85E17DE29
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 09:55:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D775438DEE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 09:56:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721210151; cv=none; b=GSqd8V+bahDHyvi9RXV7zGRq7QeCnF9vfsfeqzvVTNvf4GuKzKMhwsVTRw0zljbZpQQPROeswZn3O9knyM1AEZw4IdgnplhOkPOOqd2Fzhg+gv1zOTxnd+jKFGQh/kxggLGF42zRJMmQpBN4aBPXed9+ETsZZDQ7HBf/4SM9C/o=
+	t=1721210170; cv=none; b=LPajv2i4Kv6QWEyw5NxIFlzaPskjdRkDaRPH7yDbe2+3EzR4MoDr+JjwDD+N6YqC2JWy7anhfX05Zxksk0wrbzh15h68kDlxk9A+h3GrBxqVoyuwEyuVXXPrFyJurxUiDkinJ/DIwXHWrxKz7HZpEMX1Or+BPUCpbAARBP84IaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721210151; c=relaxed/simple;
-	bh=MsE5USsEUzrVEC0H28mgkaWE9mtLXPXc3XM4BWbEujc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=U7PV6+8Jr0O9m8Io2N9bce3glwgpMg+mfKvN0ryTHx/vmrsH1wOtsIwV4cKlKncDboywukAcDbju21LAQJOuP03eurzDwXI9Mc1x4wMB3sDjLbr1jarcVMZEpX14xSrKuq4wAaKJPc1ltk3EYhzqAfOh0lX6cBKH4bYrQkj04og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W19yectT; arc=none smtp.client-ip=209.85.218.46
+	s=arc-20240116; t=1721210170; c=relaxed/simple;
+	bh=jp3e99QVDqnQQxHvvBlwbSm4q4rUzFLrF13oCAQ6nAM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Pcm/rgzhEQ+rVOnGFl7Ys2EO/oa7WUZN/rb8/DVjJQAmupz9WKr/L+SOnP0U0J/0KtYN7+pSxkEKcbYlECLipbI+OrF5Fpa2Gpoyg5u1CdjStu+2qnRls16qI9srXWe00e8OeCiVsPeLupMUtv2eCg2/zMfSqNOzCKlr/LGo880=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bdtiPJ4h; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a77bf336171so112408866b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 02:55:48 -0700 (PDT)
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a77e6dd7f72so763763366b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 02:56:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721210147; x=1721814947; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1721210167; x=1721814967; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ugeVC4a5UpUteA18Qd2GhF4A2udsE2n5lW2mAeTI93U=;
-        b=W19yectTav0qhVuHMmaweyEhxO++6QreiwNLmZUj9d+63A4e4VjQ0/+QEThWRilMlH
-         EJGPiDDKPHxrodRNeIWui+aV8Zr+H5+vtQW94z+ev5EnNZm9uaIZJ7hah0lTVoLN//2t
-         xWL1iPRaQKBcYYGRevhAgUQ+Vu04H3/yBXn/Q869Z8kycN1Rw9omKj8dPa5xv3YGoFeb
-         q8ZYIesc0wZr99WduFCWpGANNGIjKjmPC+cpLxcrVrHD55y0wr7rP2r1bfnCTae5kzri
-         zsQ5nXJ96BFS1i3ghYGCv4Y2c9auVEoxQE5qQbFWLXSfKCBmwx8FUuM0Unt654iPfcLM
-         UuOA==
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=3Ybf9RTTlEByDRMU6BLctZ8O27rbBGmtGuZm+WoUIQk=;
+        b=bdtiPJ4hyx6yXqHQrfpC+xuDOAY6ccVsjfSd5M58lw3KTG8chjx2MljsMlVUmX70GY
+         KGVBHgArwK2Y3vdlA1W31Pz/3XmlLlTo34S75Pq133BiWhYdF7tTayQ/4E0Dk/isjIXg
+         EPvCLPXPDKFlrpNS8GWLVLzYxjQxzyUet+f1/5zBmdOZsQgEPWfj0SPYkzInFyJ9P1mR
+         Y1TIrM4FZERQoCF08AWIOTx9UaVQNMHSmnERJbBU73OfBheGDbScAh9roBDjyqTdMxHY
+         yWN1JCCvodO/MSiC5kIeBjazrukXlThCieNVn7J/AhzUFzI72Z1mhxLaaMEG6VT6U/pI
+         SnRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721210147; x=1721814947;
+        d=1e100.net; s=20230601; t=1721210167; x=1721814967;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ugeVC4a5UpUteA18Qd2GhF4A2udsE2n5lW2mAeTI93U=;
-        b=wlFmRZahXlCB1aCeieLSk5pycLqiD22I5zIcLFLypg4t0piXW52BDBzZRCRMDVdtzx
-         bSVob8jPnIOT/rPaHzZ4QSVMKQv4JB0zKbroFTLRy8gxW8XyhnOnHxyEOAO36R6inizI
-         OAKtvgooEv/zluM3yVpuyJoWx/1uGdWQkQpjmb+tt5plAcNzdWA7utD6G0xji4Nt95S0
-         ssLGGJteU1rdiFaqQK26c7nBK26oswsXJjM9P2BRpljPQrLrzZrsaFYo/FCmmXIypmBG
-         jDnf+gvdiO+VNY6Jn3kMd2lTZMUeebQY8Knp+aceS2eCw/TyDVXcJFMYie+UOdXuKkVb
-         GbUw==
-X-Forwarded-Encrypted: i=1; AJvYcCXh3GN1xTEy6a8dfwr68Nnc4+2//PdRv27rle/tWrCM0LqPfRwyMtjey4yOPnTD/EmLT7qdlO6cHMPaSROGUtQsYZ1Lui2pEC3vVz02FQ==
-X-Gm-Message-State: AOJu0Yx2cMc13GkfZVrjY5qdJADkdbT/AymVRktENQLM/uz0F0IKHWzN
-	TPjlmBQemSnWZySrh8HmgqVlKPnp39MWO1sBsUG6CINNReJsGRqgvmpEahAzB9Q=
-X-Google-Smtp-Source: AGHT+IEmEelbTOo4Jz+vKhus8YOAOT7QdgPB21SgONssyHq/Fcqc3mI3R8AuiHgwgUboB5JdMssx7Q==
-X-Received: by 2002:a17:906:bc93:b0:a6f:996f:23ea with SMTP id a640c23a62f3a-a7a0062bd7amr123237766b.15.1721210147030;
-        Wed, 17 Jul 2024 02:55:47 -0700 (PDT)
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3Ybf9RTTlEByDRMU6BLctZ8O27rbBGmtGuZm+WoUIQk=;
+        b=murLSgCLGPlw70N4icgOzf/h9OEN+UvNRWBN3pB5MouNGT7KVTh1z13yB1GwVSsre2
+         804de5iNctnPKiai4y1GJB0JHhSt4E4wFOr7CpcDFI+TKctkHSpHRvOm8UYeLdZhCQoD
+         BcWjYsCVcFAaQz3Se7Ay/9EqBG8gUlpuXmjWWYo6QFqUSRMGWRvG7fniLHJJ/d1LGwZw
+         GEIwcXt2SwuhJjxrtp4gH6HxbxBCzm2L6BoXTPU1wrgu75oFkivagZl905dkFV/UwqVA
+         QC0OIES4GCfXZLt5o7/lBAhgzQJu3wVnxKUkDFG3/nonN/EOYQD8Q8XbLPmA1JWSdYCP
+         CyPQ==
+X-Gm-Message-State: AOJu0YxbB/9tykC69H9otz01E+HX222rzVjgByDsbSShsLO6lxzT907e
+	1rTTRCOAnNrqiI+qmx9iv3VHHilPsG9kPBWp0xoKXgFnQSLbJ8RthAjjdpaIj8g=
+X-Google-Smtp-Source: AGHT+IFfxjPFtfLZ6aQ4LxGM3vXifyjU51J9L4vdzvC5yaAyJS1vSqnsXD4BgjxSeFKYCkCEmgwzfA==
+X-Received: by 2002:a17:906:694f:b0:a6f:e47d:a965 with SMTP id a640c23a62f3a-a7a011d2a95mr77670066b.41.1721210167050;
+        Wed, 17 Jul 2024 02:56:07 -0700 (PDT)
 Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a79bc5d2040sm427014066b.84.2024.07.17.02.55.45
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a79bc7f1d11sm426622266b.139.2024.07.17.02.56.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Jul 2024 02:55:46 -0700 (PDT)
-Message-ID: <442956f4-ca5b-4ff8-bc02-bcad4dce50e9@linaro.org>
-Date: Wed, 17 Jul 2024 11:55:44 +0200
+        Wed, 17 Jul 2024 02:56:06 -0700 (PDT)
+Message-ID: <6162202e-78b2-44f9-8508-2f0b01112fe5@linaro.org>
+Date: Wed, 17 Jul 2024 11:56:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,16 +76,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: ipq5332: Fix interrupt trigger
- type for usb
-To: Varadarajan Narayanan <quic_varada@quicinc.com>,
- gregkh@linuxfoundation.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, andersson@kernel.org, quic_wcheng@quicinc.com,
- quic_kriskura@quicinc.com, linux-arm-msm@vger.kernel.org,
- linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+Subject: Re: [PATCH] dmaengine: qcom: bam_dma: Handle the return value of
+ bam_dma_resume
+To: Chen Ni <nichen@iscas.ac.cn>, vkoul@kernel.org, gustavoars@kernel.org,
+ u.kleine-koenig@pengutronix.de, kees@kernel.org, caleb.connolly@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <20240717094848.3536239-1-quic_varada@quicinc.com>
- <20240717094848.3536239-2-quic_varada@quicinc.com>
+References: <20240717073553.1821677-1-nichen@iscas.ac.cn>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -124,37 +120,19 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240717094848.3536239-2-quic_varada@quicinc.com>
+In-Reply-To: <20240717073553.1821677-1-nichen@iscas.ac.cn>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 17.07.2024 11:48 AM, Varadarajan Narayanan wrote:
-> Trigger type is incorrectly specified as IRQ_TYPE_EDGE_BOTH
-> instead of IRQ_TYPE_LEVEL_HIGH. This trigger type is not
-> supported for SPIs and results in probe failure with -EINVAL.
+On 17.07.2024 9:35 AM, Chen Ni wrote:
+> As pm_runtime_force_resume() can return error numbers, it should be
+> better to check the return value and deal with the exception.
 > 
-> Fixes: 927173bf8a0e ("arm64: dts: qcom: Add missing interrupts for qcs404/ipq5332")
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Fixes: 0ac9c3dd0d6f ("dmaengine: qcom: bam_dma: fix runtime PM underflow")
+> Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
 > ---
->  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> index f58fd70be826..56304f996dbf 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> @@ -322,8 +322,8 @@ usb: usb@8af8800 {
->  			reg = <0x08af8800 0x400>;
->  
->  			interrupts = <GIC_SPI 62 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 53 IRQ_TYPE_EDGE_BOTH>,
-> -				     <GIC_SPI 52 IRQ_TYPE_EDGE_BOTH>;
-> +				     <GIC_SPI 53 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Probably worth asking, is there a MPM/PDC on this platform?
-
-Konrad	
+Konrad
 
