@@ -1,156 +1,296 @@
-Return-Path: <linux-arm-msm+bounces-26413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26414-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C0039338A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 10:11:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36FC99338B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 10:13:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8EC66B20FED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 08:11:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B667F1F22A5A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 08:13:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 613953611E;
-	Wed, 17 Jul 2024 08:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4295219F3;
+	Wed, 17 Jul 2024 08:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RLM90/xr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GD/zR25A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E8B2E644
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 08:10:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD60224FA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 08:13:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721203858; cv=none; b=fBBF6fUJX4Rl1EVm7pO7U8kUcHhggNnLIy3Zay6/a4bYxBrFkfdfulHsbcc5FXDBsbnH88fp/mWbFgCEDsRIvrNDvRvkYsMvAqNqYYhd/q1MndR6XDNM3SWphI6sC5ajUvEi2/14lBIb8arzIm/9ULkBWcq4dExw85DA+NlGycY=
+	t=1721203992; cv=none; b=VHBUlP9G/QJFTv3MrxQ+DbdmAxBU3sYzpgnZtXDsEoXOOyK4Dz1Z+TwEa+fa8B8P5ObbLaJuegcfxUUjFm9bT1EyqAR9yMtJtDN8wc3KVMYLBS2J9MgreFlEQ3ymmRrEbs8y1toXRH4PHnE/shQolXy9mMMjGRZ/L0I31jsdFU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721203858; c=relaxed/simple;
-	bh=SX+1wO4uwtKux6jDltAbEwmrSgRJx74uXmfo2113O5M=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=CGdsow82pwny8Fcn1p7T1ZYncfKPdqJyNy4k/wccMz1bI9d2C4UFneyrBs2Gf/PCU5MVRLh6eIbmueQJ77g0+wWOOnmtcnIslb58hOm+hSGRlqPuAPx1k1BUrNtdXMa+OLUQ+utQxiEOluVIaFpvv6ySvZFOeRXT2uYLFvk3LKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RLM90/xr; arc=none smtp.client-ip=209.85.221.47
+	s=arc-20240116; t=1721203992; c=relaxed/simple;
+	bh=pRdDJ7PXZYswkhdkmWCe/QL2GMo4Ndprhummi2OxoTM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bL0tGqnYYl7L2cJoUTlcmV2sLreE5k2vBe03h8/X01NZm56rabzPzX2JUJ7G0VVMjH6Ws4tcUXuXV245aLoSyYIZ1n9GpggeJiSCkgvN0zXh7PE02fqEd+by4fDDIgGMujsA2OwU45IzFiAPwwql/xJvbMaY8wwC3ssNJ84kCD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GD/zR25A; arc=none smtp.client-ip=209.85.167.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-36799a67d9cso5073799f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 01:10:56 -0700 (PDT)
+Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-3c9cc681e4fso1887b6e.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 01:13:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721203855; x=1721808655; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZrZm7mgAkxgMlXIUcXyyiDtmWKTfKigpiCQAcc6QqiU=;
-        b=RLM90/xrj/vQlQ+VgqbVZzSGvb+fa7XJcxKSO1ZX14ff1qxfTbAMTO3hRa+8UBaJ/p
-         sJOqxLh78v4pLxqwuSIfltu5wGhfOTyC6SNi3zYuAK20R66CbEdpuab37d8Pr9WEbK7g
-         7zR2lnBf+VXd3T1WR7SDNRmT+DpfA/2aupkTRO0wY9oV0QV+sAKezO6IUeSUDyqqwvz6
-         OZPTnt1TOAHFKz5OhYBXzViqydcKEozKVh3kS6HLWpFMX1XbZ9RutP8WHHuxJbOtU01D
-         kcteIcPkJOLbKdSO9BOWLLpUXUVMAOjJTrw6BM2r5mVwx/pUGbb7XOOe0CFhfsWogWLa
-         zUBA==
+        d=linaro.org; s=google; t=1721203990; x=1721808790; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=vhx0BX0tfg4JtIj+DkkcP0J9kebOkzECCemo5fKt7Oc=;
+        b=GD/zR25A1RB/JtunzgqlXswLKN43blpYkyDubuP1H4Jyxw3TxvjdXunFPSlUk6kbol
+         z31eT0Gkj8KpXRhAqnpx9tQJ8ix4ir4g98U1xXCN/8XUsspOHGrf2umS8IztBH4uAS2c
+         IyiYIyrVL5GFIdZpU/TzWPnoQk7anFtUXJkLnaj+MT1tSVDR4ycgSUjbxUESs1zo64K9
+         XymIqCFLg/jaIgYRgvjMRLimi8R+cbAYe/f5CwKUKNAw4Ru7Z5B+Va0x2zufnFgozNkh
+         bp6Skex/JkWJ/H+85D8WobHDfAsdlGKONK5lG2INOsBY5Qah5GrCrHpzIzHQ4OMh+2up
+         jkwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721203855; x=1721808655;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ZrZm7mgAkxgMlXIUcXyyiDtmWKTfKigpiCQAcc6QqiU=;
-        b=KooxsZSvA8flT75VphW06pv2ro5yrEx5dGIBOkOmw8Z5nmUNR8WyFoSB4gDuuvkIkg
-         RI+cYELe9dqq9AHjacNlJpfQdIsf2Gi88fO/vFW9whnN4epfm9S6BfmR++3jrmL1towV
-         nGq9M7ozhQKYrjOZ0kDu9UrP2emxy3PrgIaewlN/LuMv2Icb3iItb4UtecCWQIiZKSA8
-         0hdTFPvJOb+XlPk/oXJfXss2/u+w/q1WCh2PJxB3cjqb4WOZUv63gBen1v0errk5fRLO
-         047g5vBUPHkmaqYePZ1Szuk5NClgfMHbnVDsWYJMQxoF3oaFTZhH1v80wGxVt02a/ojM
-         a9xw==
-X-Gm-Message-State: AOJu0Yxz2RkS2wIgy7laTxRD1EI8+GzCO6Ij5rsBvZlz8iU0vfq1YgoT
-	TI2tzj9JajZFuuDfBvaHhq2onf7klf2nnrSvc5PK4pesuVwLsFXL/rGZRboHbZw=
-X-Google-Smtp-Source: AGHT+IEfkRpCOq6RcmmhKaBK5YofHoy/Le/qOqf0AVlFS0SvAN02ujCY0ajuw9+qm4q+fJlwyGdgrQ==
-X-Received: by 2002:a5d:6d47:0:b0:367:9d4e:8861 with SMTP id ffacd0b85a97d-3683176a911mr681207f8f.57.1721203854851;
-        Wed, 17 Jul 2024 01:10:54 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:c5b9:9b90:b1c4:1a1d? ([2a01:e0a:982:cbb0:c5b9:9b90:b1c4:1a1d])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427a5e8144dsm162153365e9.11.2024.07.17.01.10.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Jul 2024 01:10:54 -0700 (PDT)
-Message-ID: <c7b3db09-ab0d-4e90-8afc-1c0a08fb19b9@linaro.org>
-Date: Wed, 17 Jul 2024 10:10:53 +0200
+        d=1e100.net; s=20230601; t=1721203990; x=1721808790;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vhx0BX0tfg4JtIj+DkkcP0J9kebOkzECCemo5fKt7Oc=;
+        b=HYGmdxE5XSDA+12sb0uVWv1EGB5dJ/yGQjRxgrYctZoTwaY1gN5fh19Ca07z1NBcnY
+         OjLQrvgyoowsBzFa+1pPire4A2Vfl7MSmTvJ8iDzGoY4SmyyvIX1MKv9sYTNf+VbM7K2
+         90FwUf4lP2ifkZEFnGvuiBtMTcre5wcgjgJED4sRn2C1NlzbwFMbWK+tYTQkjLMnM40+
+         kgZIh09sfxr+rfa0xcuwxQMkfOjgkAxxvirfV7dpHM2m1YX/K1dZeTnQfnIFjebicRLO
+         qIfu9xMlnYG7KgdScddmniggMGJxcWCHLDiuubbSBMGFrjBtOV0ujNOTG+hY+yFRnesv
+         QxyA==
+X-Forwarded-Encrypted: i=1; AJvYcCVdwEWmbz9eoA1CvvI13Q2L6vJqs/hsbFw1mwlq5Jjh8USzSNn1LHZbjHt7L0omqOWIGXywdAjviI/OL/uXFiqtNCYhDOg73GGrIXNsBw==
+X-Gm-Message-State: AOJu0Yzzd82d8FEifaRTHJ4Edsu+wKF4q0HlVIMlWpp3gfrGWVrCWbZm
+	zwk9jpnong3VA/6B4MPBWUupEKxTj0/Qnh+Ugy2AYCAMfTb/H4W8syx9Ncl6Eg==
+X-Google-Smtp-Source: AGHT+IHrylN07RNP4mwpeHSRVpV+GIlSCRY5wUAgEhJOzY2F72d4yL63pBqiLxefREZzW+YrMwKWFQ==
+X-Received: by 2002:a05:6808:bc4:b0:3da:a0a5:a249 with SMTP id 5614622812f47-3dad1f47e3amr1070223b6e.23.1721203989990;
+        Wed, 17 Jul 2024 01:13:09 -0700 (PDT)
+Received: from thinkpad ([220.158.156.207])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70b7ec7e4bcsm7550365b3a.117.2024.07.17.01.13.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Jul 2024 01:13:09 -0700 (PDT)
+Date: Wed, 17 Jul 2024 13:43:03 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
+Cc: lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com,
+	robh@kernel.org, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_mrana@quicinc.com, quic_devipriy@quicinc.com
+Subject: Re: [PATCH v1] PCI: qcom: Avoid DBI and ATU register space mirror to
+ BAR/MMIO region
+Message-ID: <20240717081303.GA2574@thinkpad>
+References: <20240620213405.3120611-1-quic_pyarlaga@quicinc.com>
+ <20240622035444.GA2922@thinkpad>
+ <a01404d2-2f4d-4fb8-af9d-3db66d39acf7@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 4/7] clk: qcom: dispcc-sm8650: Update the GDSC flags
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20240717-dispcc-sm8550-fixes-v1-0-efb4d927dc9a@linaro.org>
- <20240717-dispcc-sm8550-fixes-v1-4-efb4d927dc9a@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20240717-dispcc-sm8550-fixes-v1-4-efb4d927dc9a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a01404d2-2f4d-4fb8-af9d-3db66d39acf7@quicinc.com>
 
-On 16/07/2024 23:13, Dmitry Baryshkov wrote:
-> Add missing POLL_CFG_GDSCR to the MDSS GDSC flags.
+On Fri, Jun 28, 2024 at 07:02:04PM -0700, Prudhvi Yarlagadda wrote:
+> Hi Manivannan,
 > 
-> Fixes: 90114ca11476 ("clk: qcom: add SM8550 DISPCC driver")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/clk/qcom/dispcc-sm8550.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> Thanks for the review comments.
 > 
-> diff --git a/drivers/clk/qcom/dispcc-sm8550.c b/drivers/clk/qcom/dispcc-sm8550.c
-> index 6bda15bf09ce..49dff9b81fa1 100644
-> --- a/drivers/clk/qcom/dispcc-sm8550.c
-> +++ b/drivers/clk/qcom/dispcc-sm8550.c
-> @@ -1611,7 +1611,7 @@ static struct gdsc mdss_gdsc = {
->   		.name = "mdss_gdsc",
->   	},
->   	.pwrsts = PWRSTS_OFF_ON,
-> -	.flags = HW_CTRL | RETAIN_FF_ENABLE,
-> +	.flags = POLL_CFG_GDSCR | HW_CTRL | RETAIN_FF_ENABLE,
->   };
->   
->   static struct gdsc mdss_int2_gdsc = {
-> @@ -1620,7 +1620,7 @@ static struct gdsc mdss_int2_gdsc = {
->   		.name = "mdss_int2_gdsc",
->   	},
->   	.pwrsts = PWRSTS_OFF_ON,
-> -	.flags = HW_CTRL | RETAIN_FF_ENABLE,
-> +	.flags = POLL_CFG_GDSCR | HW_CTRL | RETAIN_FF_ENABLE,
->   };
->   
->   static struct clk_regmap *disp_cc_sm8550_clocks[] = {
+> On 6/21/2024 8:54 PM, Manivannan Sadhasivam wrote:
+> > On Thu, Jun 20, 2024 at 02:34:05PM -0700, Prudhvi Yarlagadda wrote:
+> >> PARF hardware block which is a wrapper on top of DWC PCIe controller
+> >> mirrors the DBI and ATU register space. It uses PARF_SLV_ADDR_SPACE_SIZE
+> >> register to get the size of the memory block to be mirrored and uses
+> >> PARF_DBI_BASE_ADDR, PARF_ATU_BASE_ADDR registers to determine the base
+> >> address of DBI and ATU space inside the memory block that is being
+> >> mirrored.
+> >>
+> > 
+> > This PARF_SLV_ADDR_SPACE register is a mystery to me. I tried getting to the
+> > bottom of it, but nobody could explain it to me clearly. Looks like you know
+> > more about it...
+> > 
+> > From your description, it seems like this register specifies the size of the
+> > mirroring region (ATU + DBI), but the response from your colleague indicates
+> > something different [1].
+> > 
+> > [1] https://lore.kernel.org/linux-pci/f42559f5-9d4c-4667-bf0e-7abfd9983c36@quicinc.com/
+> > 
 > 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> PARF_SLV_ADDR_SPACE_SIZE is used for mirroring the region containing ATU + DBI.
+> But the issue being observed in the patch pointed above and the issue I am
+> observing are a bit different even though the same fix could be used for both issues.
+> 
+> The issue I am observing is that the DBI and ATU region is getting mirrored into the
+> BAR/MMIO region and thereby the DBI and ATU registers contents are getting modified
+> while accessing the BAR region content.
+> 
+> As per my discussions internally with Devi Priya (author of the patch pointed above),
+> the issue being seen there is that the DBI register contents are not available
+> at the expected address by software and this is causing enumeration failures.
+> 
+> Below is the memory map of the IPQ9574 platform being mentioned in the above patch
+> along with the memory locations of the DBI of respective PCIe Root Complexes.
+> 
+>                       |--------------------|
+>                       |                    |
+>                       |                    |
+>                       |                    |
+>                       |                    |
+>                       |--------------------|
+>                       |                    |
+>                       |       PCIe2        |
+>                       |                    |
+>                       |--------------------|---->0x2000_0000 ->DBI
+>                       |                    |
+>                       |       PCIe3        |
+>                       |                    |
+>                       |--------------------|---->0x1800_0000 ->DBI
+>                       |                    |
+>                       |       PCIe1        |
+>                       |                    |
+>                       |--------------------|---->0x1000_0000 ->DBI
+>                       |                    |
+>                       |                    |
+>                       |                    |
+>                       |--------------------|
+> 
+> Previously PARF_SLV_ADDR_SPACE_SIZE is configured as 256MB (0x1000_0000) and
+> PARF_DBI_BASE_ADDR is configured as 0x0 for each of the PCIe Root complex. With
+> this configuration, in the case of PCIe1 DBI contents get accessible at 0x0,
+> 0x1000_0000 and 0x2000_0000 and so on due to mirroring. Although NOC allows access
+> only to region 0x1000_0000 to 0x1800_0000 for PCIe1. So in the case of PCIe1 DBI
+> is accessible at the expected location 0x1000_0000.
+> 
+> Similarly in the case of PCIe3 its DBI contents are accessible at 0x0, 0x1000_0000
+> and 0x2000_0000 but the expectation is to have DBI at 0x1800_0000 (as 0x1800_0000 is
+> the physical address of DBI per devicetree). This is causing enumeration failures as
+> DBI is not at the expected location (same issue w.r.t ATU).
+> 
+> When PARF_SLV_ADDR_SPACE_SIZE is modified to 128MB (0x800_0000) and PARF_DBI_BASE_ADDR
+> is kept 0x0, for PCIe3 the DBI gets accessible at 0x0, 0x800_0000, 0x1000_0000,
+> 0x1800_0000, 0x2000_0000 and so on. So, now the DBI becomes accessible at the
+> expected location of 0x1800_0000 and its fixing the issue in the above patch.
+> 
+
+Thanks for the explanation. This really clarifies.
+
+> Alternate way to fix the above issue is if we use the current patch to disable
+> mirroring and configure the PARF_DBI_BASE_ADDR then the DBI gets accessible only at
+> the location given in PARF_DBI_BASE_ADDR register which will be the same location
+> mentioned in devicetree.
+> 
+
+Agree.
+
+> >> When a memory region which is located above the SLV_ADDR_SPACE_SIZE
+> >> boundary is used for BAR region then there could be an overlap of DBI and
+> >> ATU address space that is getting mirrored and the BAR region. This
+> >> results in DBI and ATU address space contents getting updated when a PCIe
+> >> function driver tries updating the BAR/MMIO memory region. Reference
+> >> memory map of the PCIe memory region with DBI and ATU address space
+> >> overlapping BAR region is as below.
+> >>
+> >> 			|---------------|
+> >> 			|		|
+> >> 			|		|
+> >> 	-------	--------|---------------|
+> >> 	   |	   |	|---------------|
+> >> 	   |	   |	|	DBI	|
+> >> 	   |	   |	|---------------|---->DBI_BASE_ADDR
+> >> 	   |	   |	|		|
+> >> 	   |	   |	|		|
+> >> 	   |	PCIe	|		|---->2*SLV_ADDR_SPACE_SIZE
+> >> 	   |	BAR/MMIO|---------------|
+> >> 	   |	Region	|	ATU	|
+> >> 	   |	   |	|---------------|---->ATU_BASE_ADDR
+> >> 	   |	   |	|		|
+> >> 	PCIe	   |	|---------------|
+> >> 	Memory	   |	|	DBI	|
+> >> 	Region	   |	|---------------|---->DBI_BASE_ADDR
+> >> 	   |	   |	|		|
+> >> 	   |	--------|		|
+> >> 	   |		|		|---->SLV_ADDR_SPACE_SIZE
+> >> 	   |		|---------------|
+> >> 	   |		|	ATU	|
+> >> 	   |		|---------------|---->ATU_BASE_ADDR
+> >> 	   |		|		|
+> >> 	   |		|---------------|
+> >> 	   |		|	DBI	|
+> >> 	   |		|---------------|---->DBI_BASE_ADDR
+> >> 	   |		|		|
+> >> 	   |		|		|
+> >> 	----------------|---------------|
+> >> 			|		|
+> >> 			|		|
+> >> 			|		|
+> >> 			|---------------|
+> >>
+> >> Currently memory region beyond the SLV_ADDR_SPACE_SIZE boundary is not
+> >> used for BAR region which is why the above mentioned issue is not
+> >> encountered. This issue is discovered as part of internal testing when we
+> >> tried moving the BAR region beyond the SLV_ADDR_SPACE_SIZE boundary. Hence
+> >> we are trying to fix this.
+> >>
+> > 
+> > I don't quite understand this. PoR value of SLV_ADDR_SPACE_SIZE is 16MB and most
+> > of the platforms have the size of whole PCIe region defined in DT as 512MB
+> > (registers + I/O + MEM). So the range is already crossing the
+> > SLV_ADDR_SPACE_SIZE boundary.
+> > 
+> > Ironically, the patch I pointed out above changes the value of this register as
+> > 128MB, and the PCIe region size of that platform is also 128MB. The author of
+> > that patch pointed out that if the SLV_ADDR_SPACE_SIZE is set to 256MB, then
+> > they are seeing enumeration failures. If we go by your description of that
+> > register, the SLV_ADDR_SPACE_SIZE of 256MB should be > PCIe region size of
+> > 128MB. So they should not see any issues, right?
+> > 
+> 
+> As mentioned above, configuring PARF_SLV_ADDR_SPACE_SIZE as 256MB is causing
+> issue with the PCIe instances in which DBI is not aligned with the multiples of
+> 256MB and due to PARF_DBI_BASE_ADDR being configured as 0x0 instead of the
+> actual DBI address given in devicetree.
+> 
+> >> As PARF hardware block mirrors DBI and ATU register space after every
+> >> PARF_SLV_ADDR_SPACE_SIZE (default 0x1000000) boundary multiple, write
+> >> U64_MAX to PARF_SLV_ADDR_SPACE_SIZE register to avoid mirroring DBI and
+> >> ATU to BAR/MMIO region.
+> > 
+> > Looks like you are trying to avoid this mirroring on a whole. First of all, what
+> > is the reasoning behind this mirroring?
+> > 
+> 
+> The reason is to have more control over where to have the DBI and ATU register
+> contents in the system memory using the PARF_DBI_BASE_ADDR, PARF_ATU_BASE_ADDR.
+> For the PARF_SLV_ADDR_SPACE_SIZE register we don't have an existing use case
+> to utilize mirroring functionality.
+> 
+
+Okay. Then I guess you could disable mirroring globally for all SoCs. Some SoCs
+doesn't have both DBU and ATU regions, so the helper could conditionally write
+the base address if available in DT.
+
+> >> Write the physical base address of DBI and ATU
+> >> register blocks to PARF_DBI_BASE_ADDR (default 0x0) and PARF_ATU_BASE_ADDR
+> >> (default 0x1000) respectively to make sure DBI and ATU blocks are at
+> >> expected memory locations.
+> >>
+> > 
+> > Why is this needed? Some configs in this driver writes 0 to PARF_DBI_BASE_ADDR.
+> > Does the hardware doesn't know where the registers are located?
+> > 
+> 
+> Yes, hardware doesn't know where the DBI, ATU registers are located in the
+> PARF_SLV_ADDR_SPACE_SIZE memory block or system memory. Hardware gets the location
+> of DBI and ATU registers from the PARF_DBI_BASE_ADDR, PARF_ATU_BASE_ADDR
+> registers. So these registers must be programmed to have the DBI and ATU at
+> expected memory locations.
+> 
+
+Sounds good.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
