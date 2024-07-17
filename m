@@ -1,48 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-26453-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F599933B22
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 12:30:36 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D5C3933B4F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 12:43:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6E2F11C21223
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 10:30:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A855A1C2195C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jul 2024 10:43:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB30F14036F;
-	Wed, 17 Jul 2024 10:30:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9E7D17E90F;
+	Wed, 17 Jul 2024 10:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ubbvLOPG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="T16oisUv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA43D51A;
-	Wed, 17 Jul 2024 10:30:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1358714AD19
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 10:43:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721212231; cv=none; b=ffnP0VvFlGDlAB62RqEEi59r+K2jsO0SGyi3Z0jloaAXaZ34nF7lMpLzm7iRxFk1rQBHd2M+fddLzQRVuWIxYDI6SvAMqh1YIiklHuA5tCxaeUt0KZEdd60XmLFZuH5u19aaZ2d5NqhOhFJqyTukdmU107qDpgciGa/P6pSyC5I=
+	t=1721212987; cv=none; b=Q0gI5B/qaZQcZ9R4rM67um0r/O/JiVro4NHRc/9wYjxzOfRu55HA4hwfBuL/rwwdbptKUnBR9RIm81VNqxNIdzPTSEQIOP34ObPTlJu7XZ54nNZthmF3ebfihGP47woMxhjrbCOyQceJIOypWQ/dmA2PUzInET76rX2/ugyNSHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721212231; c=relaxed/simple;
-	bh=LFVlWkkfDNXzDvPISyDHa6fOoP3tP7Jg8jrWmbYgR24=;
+	s=arc-20240116; t=1721212987; c=relaxed/simple;
+	bh=jDYIVpkI2wrskYjogiULwXKO7ktZv1aJ7DZ3Nb1BvBc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eO9AdgbVwqSlDroSzqIqDTktkrFnS06WLZukGzVEvHXq6GidoX14VMYOeJPRZmUHfRE/wOcj6G6cqHwajP2oUG/lSostG6IlJJ+KBz/OZ9dz99Bim5t27aXUgLqcTfto9MkSDvT8wczqAxRO04JjL63XQI9pzp2q2/8PdccWH1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ubbvLOPG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B219C32782;
-	Wed, 17 Jul 2024 10:30:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721212230;
-	bh=LFVlWkkfDNXzDvPISyDHa6fOoP3tP7Jg8jrWmbYgR24=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ubbvLOPGjgRq5nlUtz63HXnB3fbrNPOq27v9Qx5tYeVrjIZ8EIquVh14ChLtbFP8o
-	 NzhgkVp/KIIl8p8mpL5HL/NCOKVHGDQSWdwdlsxF8S/U5A92bG+C8dDmDjPTDnldro
-	 xLuSsFA2aVvgbvTf8ZrXqmgf1vYBFQzr1QGAmJfr9me5adL8gCpF/MPXF9mq/lebEl
-	 ZOoDDVpfPbufZ4qEKgXhyEAo8nrlDZH9Wjuc+DlujArpfWgSbLT9EYSsR0g6c3lMNp
-	 jxSZt2c5Bt76b1OCjJ7/m+XB1Tzj+qGw391Dt1C0nEVndCYC6k9jRp8a3gB1jz7r/A
-	 GnmcGkGOolSrA==
-Message-ID: <e66edd37-183f-4873-8167-8cb7c2f77c10@kernel.org>
-Date: Wed, 17 Jul 2024 12:30:24 +0200
+	 In-Reply-To:Content-Type; b=s6JHWrdkH5iBEQne2Oe5WllXIkHafwOyJ3OqeYq2tmFVWcEjCAepKxmJLEPvaLB8V/0Ju57iLEtY4v4LHDm/mxBSVViwIIOiskv+GNZKoDRFYIOoL88Q2cZB2LNJ0FL4vz7GCvBAyjEU0iSsUAQBi9PyjT1p3glUI1IIRuxFPGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=T16oisUv; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-58ba3e38028so8208327a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jul 2024 03:43:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721212984; x=1721817784; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jDYIVpkI2wrskYjogiULwXKO7ktZv1aJ7DZ3Nb1BvBc=;
+        b=T16oisUvxmtCSzkNI7xBOX0/YgRwBRxzjro5YbOIduudpSw7joiQQK5ve4r9rm+H+k
+         rNCFDnhBwBnS9YRhh4Hlnc0uvvzlHh+mJwSNohs1hnooYWoTk7+5oGgDqLCYI1zZVAVU
+         FzNR7UT6FCU1b9ArL2gIaj1vuYhL5P+cniBnpJ7FlXzu36h/O7A98a2spIpUR7D6CrGW
+         hb4AC7l7WaiEa5ZKesmmoagqBVXNMe6TznlOhPIqowiH93uKfzK4IVH4uNYaYQMNrVbi
+         JXJk3sfvZRrBPJeJvEtHDZ75MtB0+mf4InRhtXZKY+JR855ZByzbgknqhS2CjqW//gJv
+         meqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721212984; x=1721817784;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jDYIVpkI2wrskYjogiULwXKO7ktZv1aJ7DZ3Nb1BvBc=;
+        b=vYL14If9wXxa19cpH1Ygdc68fUu9JnMoHpyoLAS43jlq5Z5rNcVn/fTyoFVdbiEUpj
+         cEq1GfIbIOlsumPINYEF52wVYg/VZ3PK5IJOCDlBHOLtAvDLrcLjtpaiaAUlPgAHmCqX
+         oC8nYJcgC/p5LJWhu+C4l3pzDyLUSE9AtHbOqzMh/x4eFFqlUIO0Zeva2B9pyGczCCLZ
+         nYX7d9uDEdroqOuJ0TkGz+zYIRuIyKy5VqilQgMBtVHXivxwr48D+qFckzM6Dl//1cLO
+         VIjarzV0VruEjKwd3iaTa1JpOz2vvMgnG5rL/bPfMn3rpfWjSF/pRJs8OWC3o0duhH21
+         MWLA==
+X-Forwarded-Encrypted: i=1; AJvYcCXifA+czlowHrg7GYlWWZ37Sjtnjtlu9IN/v0jN0A3moFQTqVu4iZDOU63JiS/FmND2M4ltjTu6shPqYaUUgUvLnybZ/TINaxRGWO9ogA==
+X-Gm-Message-State: AOJu0Yye8EU1XYFy/nt1cSogcDljSFQJHNckaz33GgJQPmp/wDNi5//Z
+	Ps1iLJSKcIaNI7QOV1Wt3ZRsrwSI9R0rnQQeQy0a/5XqcrUTJ6JtVdUh9vy+wko=
+X-Google-Smtp-Source: AGHT+IFACSw0wcYk59/gj6GZBVlzplPmhNUj87R9Hfdq8QZPBr1o+WVmHKWfiYT/gpdP86UdBlCbXQ==
+X-Received: by 2002:a17:906:2b4a:b0:a75:25ff:550d with SMTP id a640c23a62f3a-a7a011557b2mr86405166b.26.1721212984397;
+        Wed, 17 Jul 2024 03:43:04 -0700 (PDT)
+Received: from [192.168.0.3] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a79bc7f27cesm429797366b.124.2024.07.17.03.43.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Jul 2024 03:43:03 -0700 (PDT)
+Message-ID: <2d8ac288-da60-490a-a6ac-ebe524e3fc21@linaro.org>
+Date: Wed, 17 Jul 2024 11:43:02 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,74 +76,37 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] ARM: dts: qcom: {a,i}pq8064: correct clock-names in
- sata node
-To: Rayyan Ansari <rayyan.ansari@linaro.org>, linux-arm-msm@vger.kernel.org
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240717094914.17931-2-rayyan.ansari@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2 1/2] media: qcom: camss: Remove use_count guard in
+ stop_streaming
+To: Johan Hovold <johan@kernel.org>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Hans Verkuil
+ <hansverk@cisco.com>, Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+ Milen Mitkov <quic_mmitkov@quicinc.com>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+ Johan Hovold <johan+linaro@kernel.org>, stable@vger.kernel.org
+References: <20240716-linux-next-24-07-13-camss-fixes-v2-0-e60c9f6742f2@linaro.org>
+ <20240716-linux-next-24-07-13-camss-fixes-v2-1-e60c9f6742f2@linaro.org>
+ <ZpeJmWTfZGUXsc7K@hovoldconsulting.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240717094914.17931-2-rayyan.ansari@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <ZpeJmWTfZGUXsc7K@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 17/07/2024 11:49, Rayyan Ansari wrote:
-> Correct the clock-names in the AHCI SATA controller node to adhere to
-> the bindings.
-> 
-> Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
+On 17/07/2024 10:06, Johan Hovold wrote:
+>> The use of use_count like this is a bit hacky and right now breaks regular
+>> usage of CAMSS for a single stream case. As an example the "qcam"
+>> application in libcamera will fail with an -EBUSY result on stream stop and
+>> cannot then subsequently be restarted.
+> No, stopping qcam results in the splat below, and then it cannot be
+> started again and any attempts to do so fails with -EBUSY.
 
+I thought that's what I said.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Let me reword the commit log with your sentence included directly :)
 
-Best regards,
-Krzysztof
-
+---
+bod
 
