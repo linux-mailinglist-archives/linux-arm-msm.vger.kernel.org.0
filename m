@@ -1,315 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-26520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B62B934777
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 07:17:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32CBE9347CC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 08:04:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6D675B20A46
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 05:17:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3DC3C1C20E35
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 06:04:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B91AC3BB50;
-	Thu, 18 Jul 2024 05:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 548DD26ACF;
+	Thu, 18 Jul 2024 06:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iItnTtp2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Qxf7Osif"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0189F4AEE6;
-	Thu, 18 Jul 2024 05:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897C14AED1;
+	Thu, 18 Jul 2024 06:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721279844; cv=none; b=H9E1lx7sdElZcHn05ut5clJF/hvSQre0BZy9sFe+Tdbj9Tu6kgQZImCiannctw38N/h6Lot+paTr2/2k4HctmmxP+Xxf0kVgY9Nz2wZbeRGdh4ujwfAv+jkK2kXzB9nQDu7aQ6WkiHbp6eNHpkEL18OgVqSuZg8qLqJi6b6d8cE=
+	t=1721282640; cv=none; b=tz00NCSYGALt190gI+ND3J+bFJwxNraygnj82YxGLCTqk9oUuNn7dpS+Gqa7poU4DKKD2YTZCziErK7Q+6xV++oFL9Tts/kM7Mb+sMdcDsG5tr21OuRxxwaXbzq+N8obPlfaEYFjR6oxdV+HzshEBbU+aU0CsZUvPMaaHyi9jRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721279844; c=relaxed/simple;
-	bh=oYCQOhzW5lrg1j5fh4CoNyAocZaJm6UppHekj7otYKY=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S0kiaDDMOdOf1LdwTeb0WR5L/GHR5aYiaN9q0OxgI8eCaMD2vlkx8m/YLBHiQLukkfLZwYDK6cDcgH1jrMg0TkoQ8yEwu3N7fN83YvJsu7p9PFNkxwFHvhDrafnew9mvoXgNJL+ViY+axY+Uq8m+SdclsiwNqX7AU8RRvCcUg04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iItnTtp2; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1721282640; c=relaxed/simple;
+	bh=NZ3ng2iZcjXEfmc3D40nbbx/ZyOe2D+kdxHgxKcXUbw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=qv3KFrCh/n0q71/XbJeEk1QX1IEGatOGkxoCoYYNbbbJfneJ7/U/Yocj5LS4QVf+V0B75H4siLY5ud0A3p32Wr3dfn7IqiybxG77gIl9/q+TsfEUpRzbVUzVfEj0pjJ3bCAggkrPAGx6FaZomxCTZevAOYDeEeFFa+OwmKILwlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Qxf7Osif; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46I4GVxH025075;
-	Thu, 18 Jul 2024 05:14:10 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46I5f4Ns008355;
+	Thu, 18 Jul 2024 06:03:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	96ItovL8caGcz9Vnh4q68hd9rf2sIPQWf77PDCssXcY=; b=iItnTtp2iGWPsIni
-	CezQTYZLomOoJvPgy4CGRGqJWKij06GwkHXPqrdES6YT5hFMZBdBzC1kSmXRUcv4
-	ATo6gH/B01/RGi4OB3LogJsrfAhDjG70DWQPgxiQKVY8XpzaGncYNRYJUOc2Dq9Z
-	IwLQalimiwcUWfQePkJpB/F+hXlR8Q8gHvCwGJ977xv0BETsFy1lhVKwTWXpKVbS
-	pa9bH3jrqIWiDHRtu0+OFxOea03JCoAxBnyErqivd/T4+UQ3OuELCsxtZw9T+vXn
-	5dOhYEr5GyR8F2bCdGn03hrivYplSwH3rKu4ZkOlIiSDGUSotNLYbuSXGAAaqnBP
-	9wiq7Q==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40dwfpmdr2-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=vlQY4FXkD/U9iUSMXAzp43
+	NvlX/hl5sdIfBON9ao3sc=; b=Qxf7OsifQWPHyzJfFo/spQn+E5oXdykDpQNstk
+	kVS4uLgfuaKg2XAS6Ak+GZLUoi83VL3rAlB+IPshtGntI4q+iUGByqoNgoCpJuHE
+	K57jWh0w0c9bnqVDYz2y17sSg6WZAOfq203zLjEj2GgUaH6spi7gJsWkerjgmO+M
+	R72JFxoWK8ma9b7XSXjhLLKFfNKLGMfbFcilXUMtHJNOmJx2LvN9xkoW/Xaxhqif
+	qeD6ODW+eTvU7RGE1kA7k9Tnq1v9+Xo1F/3Rw6R2IgCBEwDik/3gvXDO8yfOwDde
+	19UcjE6BA/VvIvz25dSCEe3XNOex8SXjc8DanrnoGpXbbhBA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40dwfu4f8v-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Jul 2024 05:14:10 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46I5E8aO002719
+	Thu, 18 Jul 2024 06:03:43 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46I63gkP000418
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Jul 2024 05:14:09 GMT
-Received: from hu-pyarlaga-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+	Thu, 18 Jul 2024 06:03:42 GMT
+Received: from hu-mkshah-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 17 Jul 2024 22:14:08 -0700
-From: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
-To: <jingoohan1@gmail.com>, <manivannan.sadhasivam@linaro.org>,
-        <lpieralisi@kernel.org>, <kw@linux.com>, <robh@kernel.org>,
-        <bhelgaas@google.com>
-CC: <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_mrana@quicinc.com>,
-        <quic_pyarlaga@quicinc.com>
-Subject: [PATCH v2 2/2] PCI: qcom: Avoid DBI and ATU register space mirror to BAR/MMIO region
-Date: Wed, 17 Jul 2024 22:12:58 -0700
-Message-ID: <20240718051258.1115271-3-quic_pyarlaga@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240718051258.1115271-1-quic_pyarlaga@quicinc.com>
-References: <20240718051258.1115271-1-quic_pyarlaga@quicinc.com>
+ 15.2.1544.9; Wed, 17 Jul 2024 23:03:37 -0700
+From: Maulik Shah <quic_mkshah@quicinc.com>
+Date: Thu, 18 Jul 2024 11:33:23 +0530
+Subject: [PATCH v2] soc: qcom: cmd-db: Map shared memory as WC, not WB
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240718-cmd_db_uncached-v2-1-f6cf53164c90@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIACqwmGYC/0XMTQ6CMBBA4auYWVtShp+CK+9hDCnTwTZaSooQC
+ eHuNm5cfov3dpg5Op7hctoh8upmF8YEPJ+ArB4fLJxJBpRYSpU3grzpTN8tI2mybAQ3bW10RRW
+ 2NaRqijy4z+94uycPMXjxtpH1/1OgQinbXGVYqVoWpcjFGl7BbH6LXa97ssvzypP2GQUPx/EFw
+ 1Q65qcAAAA=
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>
+CC: <caleb.connolly@linaro.org>, <stephan@gerhold.net>, <swboyd@chromium.org>,
+        <dianders@chromium.org>, <robdclark@gmail.com>, <nikita@trvn.ru>,
+        <quic_eberman@quicinc.com>, <quic_pkondeti@quicinc.com>,
+        <quic_lsrao@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Volodymyr Babchuk
+	<Volodymyr_Babchuk@epam.com>,
+        <stable@vger.kernel.org>,
+        Volodymyr Babchuk
+	<volodymyr_babchuk@epam.com>,
+        Maulik Shah <quic_mkshah@quicinc.com>
+X-Mailer: b4 0.12.5-dev-2aabd
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1721282617; l=2071;
+ i=quic_mkshah@quicinc.com; s=20240109; h=from:subject:message-id;
+ bh=lKAIUb1skUkA8cL4EPiYWVNEAhYmNSsLm3hrt7vTGws=;
+ b=6hCYuosMLrGlEhy14UfQUk3w8yLUpMDXqzOv48AtomrT5PHSzKYN11QC6DBRnBx54hITFszSz
+ irz48zwvpGMBgzDW25DGEFwOod49uUiIxF+HvQid2ULK9iTlxtCWgIA
+X-Developer-Key: i=quic_mkshah@quicinc.com; a=ed25519;
+ pk=bd9h5FIIliUddIk8p3BlQWBlzKEQ/YW5V+fe759hTWQ=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Anxp24JbzfT8tXhvzINdCnQBdNN3hML5
-X-Proofpoint-GUID: Anxp24JbzfT8tXhvzINdCnQBdNN3hML5
+X-Proofpoint-ORIG-GUID: H62BE5nWWiN7h4iV7B0cjeGlWH15OCnp
+X-Proofpoint-GUID: H62BE5nWWiN7h4iV7B0cjeGlWH15OCnp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-18_02,2024-07-17_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- phishscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0
- suspectscore=0 mlxlogscore=999 priorityscore=1501 bulkscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407180034
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ phishscore=0 spamscore=0 lowpriorityscore=0 priorityscore=1501
+ clxscore=1011 bulkscore=0 impostorscore=0 mlxscore=0 mlxlogscore=999
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407180039
 
-PARF hardware block which is a wrapper on top of DWC PCIe controller
-mirrors the DBI and ATU register space. It uses PARF_SLV_ADDR_SPACE_SIZE
-register to get the size of the memory block to be mirrored and uses
-PARF_DBI_BASE_ADDR, PARF_ATU_BASE_ADDR registers to determine the base
-address of DBI and ATU space inside the memory block that is being
-mirrored.
+From: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
 
-When a memory region which is located above the SLV_ADDR_SPACE_SIZE
-boundary is used for BAR region then there could be an overlap of DBI and
-ATU address space that is getting mirrored and the BAR region. This
-results in DBI and ATU address space contents getting updated when a PCIe
-function driver tries updating the BAR/MMIO memory region. Reference
-memory map of the PCIe memory region with DBI and ATU address space
-overlapping BAR region is as below.
+Linux does not write into cmd-db region. This region of memory is write
+protected by XPU. XPU may sometime falsely detect clean cache eviction
+as "write" into the write protected region leading to secure interrupt
+which causes an endless loop somewhere in Trust Zone.
 
-                        |---------------|
-                        |               |
-                        |               |
-        ------- --------|---------------|
-           |       |    |---------------|
-           |       |    |       DBI     |
-           |       |    |---------------|---->DBI_BASE_ADDR
-           |       |    |               |
-           |       |    |               |
-           |    PCIe    |               |---->2*SLV_ADDR_SPACE_SIZE
-           |    BAR/MMIO|---------------|
-           |    Region  |       ATU     |
-           |       |    |---------------|---->ATU_BASE_ADDR
-           |       |    |               |
-        PCIe       |    |---------------|
-        Memory     |    |       DBI     |
-        Region     |    |---------------|---->DBI_BASE_ADDR
-           |       |    |               |
-           |    --------|               |
-           |            |               |---->SLV_ADDR_SPACE_SIZE
-           |            |---------------|
-           |            |       ATU     |
-           |            |---------------|---->ATU_BASE_ADDR
-           |            |               |
-           |            |---------------|
-           |            |       DBI     |
-           |            |---------------|---->DBI_BASE_ADDR
-           |            |               |
-           |            |               |
-        ----------------|---------------|
-                        |               |
-                        |               |
-                        |               |
-                        |---------------|
+The only reason it is working right now is because Qualcomm Hypervisor
+maps the same region as Non-Cacheable memory in Stage 2 translation
+tables. The issue manifests if we want to use another hypervisor (like
+Xen or KVM), which does not know anything about those specific mappings.
 
-Currently memory region beyond the SLV_ADDR_SPACE_SIZE boundary is not
-used for BAR region which is why the above mentioned issue is not
-encountered. This issue is discovered as part of internal testing when we
-tried moving the BAR region beyond the SLV_ADDR_SPACE_SIZE boundary. Hence
-we are trying to fix this.
+Changing the mapping of cmd-db memory from MEMREMAP_WB to MEMREMAP_WT/WC
+removes dependency on correct mappings in Stage 2 tables. This patch
+fixes the issue by updating the mapping to MEMREMAP_WC.
 
-As PARF hardware block mirrors DBI and ATU register space after every
-PARF_SLV_ADDR_SPACE_SIZE (default 0x1000000) boundary multiple, write
-U32_MAX (all 0xFF's) to PARF_SLV_ADDR_SPACE_SIZE register to avoid
-mirroring DBI and ATU to BAR/MMIO region. Write the physical base address
-of DBI and ATU register blocks to PARF_DBI_BASE_ADDR (default 0x0) and
-PARF_ATU_BASE_ADDR (default 0x1000) respectively to make sure DBI and ATU
-blocks are at expected memory locations.
+I tested this on SA8155P with Xen.
 
-The register offsets PARF_DBI_BASE_ADDR_V2, PARF_SLV_ADDR_SPACE_SIZE_V2
-and PARF_ATU_BASE_ADDR are applicable for platforms that use PARF
-Qcom IP rev 1.9.0, 2.7.0 and 2.9.0. PARF_DBI_BASE_ADDR_V2 and
-PARF_SLV_ADDR_SPACE_SIZE_V2 are applicable for PARF Qcom IP rev 2.3.3.
-PARF_DBI_BASE_ADDR and PARF_SLV_ADDR_SPACE_SIZE are applicable for PARF
-Qcom IP rev 1.0.0, 2.3.2 and 2.4.0. Updating the init()/post_init()
-functions of the respective PARF versions to program applicable
-PARF_DBI_BASE_ADDR, PARF_SLV_ADDR_SPACE_SIZE and PARF_ATU_BASE_ADDR
-register offsets. And remove the unused SLV_ADDR_SPACE_SZ macro.
-
-Signed-off-by: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
+Fixes: 312416d9171a ("drivers: qcom: add command DB driver")
+Cc: stable@vger.kernel.org # 5.4+
+Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
+Tested-by: Nikita Travkin <nikita@trvn.ru> # sc7180 WoA in EL2
+Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 62 +++++++++++++++++++-------
- 1 file changed, 45 insertions(+), 17 deletions(-)
+Changes in v2:
+ - Use MEMREMAP_WC instead of MEMREMAP_WT
+ - Update commit message from comments in v1
+ - Add Fixes tag and Cc to stable
+ - Link to v1: https://lore.kernel.org/lkml/20240327200917.2576034-1-volodymyr_babchuk@epam.com
+---
+ drivers/soc/qcom/cmd-db.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 0180edf3310e..845c7641431f 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -45,6 +45,7 @@
- #define PARF_PHY_REFCLK				0x4c
- #define PARF_CONFIG_BITS			0x50
- #define PARF_DBI_BASE_ADDR			0x168
-+#define PARF_SLV_ADDR_SPACE_SIZE		0x16C
- #define PARF_MHI_CLOCK_RESET_CTRL		0x174
- #define PARF_AXI_MSTR_WR_ADDR_HALT		0x178
- #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
-@@ -52,8 +53,13 @@
- #define PARF_LTSSM				0x1b0
- #define PARF_SID_OFFSET				0x234
- #define PARF_BDF_TRANSLATE_CFG			0x24c
--#define PARF_SLV_ADDR_SPACE_SIZE		0x358
-+#define PARF_DBI_BASE_ADDR_V2			0x350
-+#define PARF_DBI_BASE_ADDR_V2_HI		0x354
-+#define PARF_SLV_ADDR_SPACE_SIZE_V2		0x358
-+#define PARF_SLV_ADDR_SPACE_SIZE_V2_HI		0x35C
- #define PARF_NO_SNOOP_OVERIDE			0x3d4
-+#define PARF_ATU_BASE_ADDR			0x634
-+#define PARF_ATU_BASE_ADDR_HI			0x638
- #define PARF_DEVICE_TYPE			0x1000
- #define PARF_BDF_TO_SID_TABLE_N			0x2000
- #define PARF_BDF_TO_SID_CFG			0x2c00
-@@ -107,9 +113,6 @@
- /* PARF_CONFIG_BITS register fields */
- #define PHY_RX0_EQ(x)				FIELD_PREP(GENMASK(26, 24), x)
+diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
+index d84572662017..ae66c2623d25 100644
+--- a/drivers/soc/qcom/cmd-db.c
++++ b/drivers/soc/qcom/cmd-db.c
+@@ -349,7 +349,7 @@ static int cmd_db_dev_probe(struct platform_device *pdev)
+ 		return -EINVAL;
+ 	}
  
--/* PARF_SLV_ADDR_SPACE_SIZE register value */
--#define SLV_ADDR_SPACE_SZ			0x10000000
--
- /* PARF_MHI_CLOCK_RESET_CTRL register fields */
- #define AHB_CLK_EN				BIT(0)
- #define MSTR_AXI_CLK_EN				BIT(1)
-@@ -324,6 +327,39 @@ static void qcom_pcie_clear_hpc(struct dw_pcie *pci)
- 	dw_pcie_dbi_ro_wr_dis(pci);
- }
- 
-+static void qcom_pcie_configure_dbi_base(struct qcom_pcie *pcie)
-+{
-+	struct dw_pcie *pci = pcie->pci;
-+
-+	if (pci->dbi_phys_addr)
-+		writel(lower_32_bits(pci->dbi_phys_addr), pcie->parf +
-+							PARF_DBI_BASE_ADDR);
-+
-+	writel(U32_MAX, pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
-+}
-+
-+static void qcom_pcie_configure_dbi_atu_base(struct qcom_pcie *pcie)
-+{
-+	struct dw_pcie *pci = pcie->pci;
-+
-+	if (pci->dbi_phys_addr) {
-+		writel(lower_32_bits(pci->dbi_phys_addr), pcie->parf +
-+							PARF_DBI_BASE_ADDR_V2);
-+		writel(upper_32_bits(pci->dbi_phys_addr), pcie->parf +
-+						PARF_DBI_BASE_ADDR_V2_HI);
-+	}
-+
-+	if (pci->atu_phys_addr) {
-+		writel(lower_32_bits(pci->atu_phys_addr), pcie->parf +
-+							PARF_ATU_BASE_ADDR);
-+		writel(upper_32_bits(pci->atu_phys_addr), pcie->parf +
-+							PARF_ATU_BASE_ADDR_HI);
-+	}
-+
-+	writel(U32_MAX, pcie->parf + PARF_SLV_ADDR_SPACE_SIZE_V2);
-+	writel(U32_MAX, pcie->parf + PARF_SLV_ADDR_SPACE_SIZE_V2_HI);
-+}
-+
- static void qcom_pcie_2_1_0_ltssm_enable(struct qcom_pcie *pcie)
- {
- 	u32 val;
-@@ -540,8 +576,7 @@ static int qcom_pcie_init_1_0_0(struct qcom_pcie *pcie)
- 
- static int qcom_pcie_post_init_1_0_0(struct qcom_pcie *pcie)
- {
--	/* change DBI base address */
--	writel(0, pcie->parf + PARF_DBI_BASE_ADDR);
-+	qcom_pcie_configure_dbi_base(pcie);
- 
- 	if (IS_ENABLED(CONFIG_PCI_MSI)) {
- 		u32 val = readl(pcie->parf + PARF_AXI_MSTR_WR_ADDR_HALT);
-@@ -628,8 +663,7 @@ static int qcom_pcie_post_init_2_3_2(struct qcom_pcie *pcie)
- 	val &= ~PHY_TEST_PWR_DOWN;
- 	writel(val, pcie->parf + PARF_PHY_CTRL);
- 
--	/* change DBI base address */
--	writel(0, pcie->parf + PARF_DBI_BASE_ADDR);
-+	qcom_pcie_configure_dbi_base(pcie);
- 
- 	/* MAC PHY_POWERDOWN MUX DISABLE  */
- 	val = readl(pcie->parf + PARF_SYS_CTRL);
-@@ -811,13 +845,11 @@ static int qcom_pcie_post_init_2_3_3(struct qcom_pcie *pcie)
- 	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
- 	u32 val;
- 
--	writel(SLV_ADDR_SPACE_SZ, pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
--
- 	val = readl(pcie->parf + PARF_PHY_CTRL);
- 	val &= ~PHY_TEST_PWR_DOWN;
- 	writel(val, pcie->parf + PARF_PHY_CTRL);
- 
--	writel(0, pcie->parf + PARF_DBI_BASE_ADDR);
-+	qcom_pcie_configure_dbi_atu_base(pcie);
- 
- 	writel(MST_WAKEUP_EN | SLV_WAKEUP_EN | MSTR_ACLK_CGC_DIS
- 		| SLV_ACLK_CGC_DIS | CORE_CLK_CGC_DIS |
-@@ -913,8 +945,7 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
- 	val &= ~PHY_TEST_PWR_DOWN;
- 	writel(val, pcie->parf + PARF_PHY_CTRL);
- 
--	/* change DBI base address */
--	writel(0, pcie->parf + PARF_DBI_BASE_ADDR);
-+	qcom_pcie_configure_dbi_atu_base(pcie);
- 
- 	/* MAC PHY_POWERDOWN MUX DISABLE  */
- 	val = readl(pcie->parf + PARF_SYS_CTRL);
-@@ -1123,14 +1154,11 @@ static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
- 	u32 val;
- 	int i;
- 
--	writel(SLV_ADDR_SPACE_SZ,
--		pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
--
- 	val = readl(pcie->parf + PARF_PHY_CTRL);
- 	val &= ~PHY_TEST_PWR_DOWN;
- 	writel(val, pcie->parf + PARF_PHY_CTRL);
- 
--	writel(0, pcie->parf + PARF_DBI_BASE_ADDR);
-+	qcom_pcie_configure_dbi_atu_base(pcie);
- 
- 	writel(DEVICE_TYPE_RC, pcie->parf + PARF_DEVICE_TYPE);
- 	writel(BYPASS | MSTR_AXI_CLK_EN | AHB_CLK_EN,
+-	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WB);
++	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WC);
+ 	if (!cmd_db_header) {
+ 		ret = -ENOMEM;
+ 		cmd_db_header = NULL;
+
+---
+base-commit: 797012914d2d031430268fe512af0ccd7d8e46ef
+change-id: 20240718-cmd_db_uncached-e896da5c5296
+
+Best regards,
 -- 
-2.25.1
+Maulik Shah <quic_mkshah@quicinc.com>
 
 
