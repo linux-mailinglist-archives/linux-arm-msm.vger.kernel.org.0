@@ -1,151 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-26572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAC78934F9C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 17:04:53 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25497934FD0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 17:21:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A6546285505
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 15:04:52 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6B641B2199D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 15:21:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD56F1428F3;
-	Thu, 18 Jul 2024 15:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C94C21442E8;
+	Thu, 18 Jul 2024 15:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CMoLatHZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="f9oADOq3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B6357CB1;
-	Thu, 18 Jul 2024 15:04:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092CC13E04B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 15:21:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721315090; cv=none; b=TyfyGMGe4dWZsNdnSYGIc5z0Wau8XEpVxC7S9Shzgq73cD0vBptzipkNOx88VmOSFfLdE47iNSpzUW3ML+4M6RZGa5Z59ckUmY8UamcJ073+VDtarEexT+jj6UJTkygAI08IvJbMn/gW5TYsswGitjN66w6nderC4tSJ0trRR/w=
+	t=1721316087; cv=none; b=h97zbWOlhw29SAZViW+HI0nT0sn5QcfAFnqZ3rKj/3BSKE4Jvoi00/8RQdrBzapFT14JIIeot9MMDo0svrB3Ipon03AXlnPXHbqESw/91puvBe4lbmpBrYfyU5u2sUSK0fRxoqa/pjvJvMR8popuFuT4CIh2d0ne2AlX/NhqyT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721315090; c=relaxed/simple;
-	bh=dZW7lRE+sZuNldQlR9VQEdsqcwmACooMJqyeIowXW6A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Kxqc4+ddnj1LCmUAI6vzqAbtoafOH+ygWG/q4XnWupNRPpXnaVbwowGO+7TdvGCj29Q6HU0Lq6YIqJ/1BdoAxs+aj2qUR2b7Bj1+f3h8DC2dC9AtkMhqY5P3xKzc4LlKaVqSBihNp6htKVv/fVS910HPQar60NITeAj6lbEOEB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CMoLatHZ; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1721315088; x=1752851088;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=dZW7lRE+sZuNldQlR9VQEdsqcwmACooMJqyeIowXW6A=;
-  b=CMoLatHZ4OYbhfib1NCv6yJyIuzXLaO6NNDklXQwJTXdffaXLP0FL1Xy
-   pq18v53A0NAXj7e33nyI5SBoOBj24+4WQY/LbZ0/6ftIbjwPMKb4gTIgD
-   FIp2K1ujKqU3lMCF8KXCJCxDfHZh/s4WeoQnUHkBStCtCNv4J9AUsAytX
-   e4iLBkqaZ7qHaI2iw3zAGuvA4b6WWVlBNlFIIjAfhBsCtnjkVBphwph8y
-   g0ozdKpBba60r5w1qX5gwr212NLesBYIOShlimrcPQmF0GjAkoBFvpwUw
-   tacG5t4WNJLCa1pBUjwaeiS/5RBfLQEKWwjUdbTAGyqOf3tXSIxPI6ukl
-   A==;
-X-CSE-ConnectionGUID: PK7cUQyTQ2ua6uq7z+Jr+A==
-X-CSE-MsgGUID: 2zZ9YgDITSmBclC5EvOkGQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11137"; a="29495224"
-X-IronPort-AV: E=Sophos;i="6.09,218,1716274800"; 
-   d="scan'208";a="29495224"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jul 2024 08:04:47 -0700
-X-CSE-ConnectionGUID: SNYB1mlkQduYB3nKxp1i3A==
-X-CSE-MsgGUID: IRYcbZhjSx23VxMOPGTUQA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,218,1716274800"; 
-   d="scan'208";a="81814698"
-Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
-  by fmviesa001.fm.intel.com with ESMTP; 18 Jul 2024 08:04:44 -0700
-Received: from kbuild by 68891e0c336b with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1sUSgS-000hMK-1a;
-	Thu, 18 Jul 2024 15:04:40 +0000
-Date: Thu, 18 Jul 2024 23:04:04 +0800
-From: kernel test robot <lkp@intel.com>
-To: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v2 05/13] PCI: endpoint: Assign PCI domain number for
- endpoint controllers
-Message-ID: <202407182239.m0d1pKRB-lkp@intel.com>
-References: <20240717-pci-qcom-hotplug-v2-5-71d304b817f8@linaro.org>
+	s=arc-20240116; t=1721316087; c=relaxed/simple;
+	bh=70PitR19WRCz/nbwyJYX2RKRkC4CGZpC/tvMtuCqIzk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=qaLQO3wwLCofVIvcpQ1LjRKlae9GWC8VjBkNaOCNXJ5aJXuhGyEAVleLWziV/bfF6dFuDKSmOGkzhglTvgpgUjFkC5y9GUgoqNboTiZ+H55vP+LyU/b8e896cG4kcwwDncpnaQG5SYuoTxTByWehy8I2+8ZnUjbZhVdR2niw4as=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=f9oADOq3; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-427b9dcbb09so3895545e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 08:21:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721316084; x=1721920884; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=01aq1cVkSRPphmHwFGsfz4hmgt9ZxG3q0w3++dbLI70=;
+        b=f9oADOq3DWuDNiQfFu8hLWR0nWb1Rxin6qf4Qxxdcyr/UydiyESwDzvNH/VtFhdy5N
+         nypv2rYIZQp3gwtoo30QiPaQB8nKBxV+ZnblUv7G5q9hKJI4aWVRzId2/6ZcnVkoAjkX
+         QAAC3L67aTknHzWQzMMD3E2iJi/bgOuEye9WujKvxc6FQUnrVpBnBXJ2M9R+ADKNmjdZ
+         pAclu3fw0MRj1WNRlLZXLeF3lveFakn3UVCzKkXCp4uo+11dYMmLSOLiQ4DC4mw87jQy
+         aCeQByMXyxBfpx/WuCwrTmHJgFvVDFFidlnaMd1BEhxHDjTiaCfHuZ+nS2h+VGiMCoIf
+         mYHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721316084; x=1721920884;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=01aq1cVkSRPphmHwFGsfz4hmgt9ZxG3q0w3++dbLI70=;
+        b=q14Vw9Zf4A5wy3HIlkc2IRuLT9Z0KuIkXALaOC84ErNjv+utGM8A/a0tyFXeDqx8Ao
+         Hf43unt8lLsg6hsX1Tae9fibBu/X6ky26tMtxhQLuMBirl0NQlh7V2/j3CZGklQzb5mG
+         rpyH9C01ollhVZgM+0YwpxNx7wgsJR+WtYUcF91eeyqVvvhNGa18hlFaUZdcaR+dNppI
+         jIAQKDe0od1jgQ18v/Tz8SlaAXqNxxwA0unwRjnhiWHWblt5s+ikmslgnA0nGBEDBk/y
+         etUvTDyHwMbCuD7jQnfevmylLgbShlmwS8SW36PFUrJMizkJ04o3Cqi7iuEalaYEY8vu
+         Ll8A==
+X-Gm-Message-State: AOJu0YwQO5nKbT3xj8x3ckrsztBQDxro9qB4JLA+KAQBWv9u0wRWVHiQ
+	BaCeijywQva2FHedbG+L4vCHciP2yZRr96D1O9TY5t3HF78yIEeJH0kRuPZ9Fu4=
+X-Google-Smtp-Source: AGHT+IGa7sOW1sm+Dva2TPPH9kAI3IA9GC3kahpHdg8EtXVApPet31ey/eHi5MaQBFwuaylh5qWEdw==
+X-Received: by 2002:a05:600c:3b10:b0:426:6f38:8974 with SMTP id 5b1f17b1804b1-427c2cb5646mr38264235e9.6.1721316084286;
+        Thu, 18 Jul 2024 08:21:24 -0700 (PDT)
+Received: from [192.168.1.191] ([2a0a:ef40:ee7:2401:197d:e048:a80f:bc44])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3685b326692sm1590366f8f.80.2024.07.18.08.21.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Jul 2024 08:21:23 -0700 (PDT)
+From: Rayyan Ansari <rayyan.ansari@linaro.org>
+Date: Thu, 18 Jul 2024 16:20:34 +0100
+Subject: [PATCH] dt-bindings: PCI: qcom,pcie-sc7280: specify eight
+ interrupts
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240717-pci-qcom-hotplug-v2-5-71d304b817f8@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240718-sc7280-pcie-interrupts-v1-1-2047afa3b5b7@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAMEymWYC/x2MSQqAMAwAvyI5W6h19yviQduoudSSVBHEv1s8D
+ sPMA4JMKDBkDzBeJHT4BEWegd1nv6EilxiMNpVui06JbU2nVbCUlI/IfIYoqnFl1dTa9ctiIMW
+ BcaX7H4/T+36IWQqbaAAAAA==
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Rayyan Ansari <rayyan.ansari@linaro.org>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2545;
+ i=rayyan.ansari@linaro.org; h=from:subject:message-id;
+ bh=70PitR19WRCz/nbwyJYX2RKRkC4CGZpC/tvMtuCqIzk=;
+ b=kA0DAAoWRqjRjlvEnYQByyZiAGaZMvOilltO35hsk32BjSn/bQSBoOL3hklYHPTkqSH6OZOU0
+ Yh1BAAWCgAdFiEEw4L0rOu3QhLUt3rKRqjRjlvEnYQFAmaZMvMACgkQRqjRjlvEnYTQowEAkHG5
+ GQLMNa0dS5EBYhjR6nwpefGqYsUe6v1UG2h6n/kBAI0GQ9b/NjWHm9AJwN8IcVxJBNcHrZumTEy
+ tsLE6Ds0F
+X-Developer-Key: i=rayyan.ansari@linaro.org; a=openpgp;
+ fpr=C382F4ACEBB74212D4B77ACA46A8D18E5BC49D84
 
-Hi Manivannan,
+In the previous commit to this binding,
 
-kernel test robot noticed the following build errors:
+commit 756485bfbb85 ("dt-bindings: PCI: qcom,pcie-sc7280: Move SC7280 to dedicated schema")
 
-[auto build test ERROR on 91e3b24eb7d297d9d99030800ed96944b8652eaf]
+the binding was changed to specify one interrupt, as the device tree at
+that moment in time did not describe the hardware fully.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam-via-B4-Relay/PCI-qcom-ep-Drop-the-redundant-masking-of-global-IRQ-events/20240718-010848
-base:   91e3b24eb7d297d9d99030800ed96944b8652eaf
-patch link:    https://lore.kernel.org/r/20240717-pci-qcom-hotplug-v2-5-71d304b817f8%40linaro.org
-patch subject: [PATCH v2 05/13] PCI: endpoint: Assign PCI domain number for endpoint controllers
-config: i386-buildonly-randconfig-004-20240718 (https://download.01.org/0day-ci/archive/20240718/202407182239.m0d1pKRB-lkp@intel.com/config)
-compiler: clang version 18.1.5 (https://github.com/llvm/llvm-project 617a15a9eac96088ae5e9134248d8236e34b91b1)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240718/202407182239.m0d1pKRB-lkp@intel.com/reproduce)
+The device tree for sc7280 now specifies eight interrupts, due to
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202407182239.m0d1pKRB-lkp@intel.com/
+commit b8ba66b40da3 ("arm64: dts: qcom: sc7280: Add additional MSI interrupts")
 
-All errors (new ones prefixed by >>):
+As a result, change the bindings to reflect this.
 
->> drivers/pci/endpoint/pci-epc-core.c:843:3: error: call to undeclared function 'pci_bus_release_domain_nr'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     843 |                 pci_bus_release_domain_nr(NULL, &epc->dev);
-         |                 ^
-   drivers/pci/endpoint/pci-epc-core.c:843:3: note: did you mean 'pci_bus_release_busn_res'?
-   include/linux/pci.h:1142:6: note: 'pci_bus_release_busn_res' declared here
-    1142 | void pci_bus_release_busn_res(struct pci_bus *b);
-         |      ^
-   drivers/pci/endpoint/pci-epc-core.c:911:20: error: call to undeclared function 'pci_bus_find_domain_nr'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     911 |                 epc->domain_nr = pci_bus_find_domain_nr(NULL, dev);
-         |                                  ^
-   2 errors generated.
+Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
+---
+ .../devicetree/bindings/pci/qcom,pcie-sc7280.yaml  | 24 ++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
+index 634da24ec3ed..5cf1f9165301 100644
+--- a/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
++++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
+@@ -53,11 +53,19 @@ properties:
+       - const: aggre1 # Aggre NoC PCIe1 AXI clock
+ 
+   interrupts:
+-    maxItems: 1
++    minItems: 8
++    maxItems: 8
+ 
+   interrupt-names:
+     items:
+-      - const: msi
++      - const: msi0
++      - const: msi1
++      - const: msi2
++      - const: msi3
++      - const: msi4
++      - const: msi5
++      - const: msi6
++      - const: msi7
+ 
+   resets:
+     maxItems: 1
+@@ -137,8 +145,16 @@ examples:
+ 
+             dma-coherent;
+ 
+-            interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
+-            interrupt-names = "msi";
++            interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>;
++            interrupt-names = "msi0", "msi1", "msi2", "msi3",
++                              "msi4", "msi5", "msi6", "msi7";
+             #interrupt-cells = <1>;
+             interrupt-map-mask = <0 0 0 0x7>;
+             interrupt-map = <0 0 0 1 &intc 0 0 0 434 IRQ_TYPE_LEVEL_HIGH>,
 
-vim +/pci_bus_release_domain_nr +843 drivers/pci/endpoint/pci-epc-core.c
+---
+base-commit: 73399b58e5e5a1b28a04baf42e321cfcfc663c2f
+change-id: 20240718-sc7280-pcie-interrupts-6d34650d9bb2
 
-   830	
-   831	/**
-   832	 * pci_epc_destroy() - destroy the EPC device
-   833	 * @epc: the EPC device that has to be destroyed
-   834	 *
-   835	 * Invoke to destroy the PCI EPC device
-   836	 */
-   837	void pci_epc_destroy(struct pci_epc *epc)
-   838	{
-   839		pci_ep_cfs_remove_epc_group(epc->group);
-   840		device_unregister(&epc->dev);
-   841	
-   842		if (IS_ENABLED(CONFIG_PCI_DOMAINS_GENERIC))
- > 843			pci_bus_release_domain_nr(NULL, &epc->dev);
-   844	}
-   845	EXPORT_SYMBOL_GPL(pci_epc_destroy);
-   846	
-
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Rayyan Ansari <rayyan.ansari@linaro.org>
+
 
