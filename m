@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-26557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20736934CFD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 14:12:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 468F8934D35
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 14:27:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 992BF1F22EC6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 12:12:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C628D1F215CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 12:27:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FD0813C3CA;
-	Thu, 18 Jul 2024 12:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AE7E13BC1B;
+	Thu, 18 Jul 2024 12:27:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tCH/BBnM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rKZrvoiX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB97813B78F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 12:12:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8071713B7AF
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 12:27:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721304766; cv=none; b=s7RwkxIObwU68smNRnITDeKvQIaTK8zA4ldMoQNCvmR7I0L82dahtio0pbayByocovAUYSm9N6JaP1UaxelkSy+PcLhiSm1ORQl18BSeM2IIXow9PNJmg/9VP4IgbyJVXcSCJ97kE9Jt91TrC8oBE/NNaN0on1+LQNDDbqITlWQ=
+	t=1721305628; cv=none; b=tXOqZ5H2wCys9feA/Nwd5IoqPbGRO9N4kraOV+ctaZ7z+GeSf+WeBDLJNXwZ82/V0Ml8jeuPz7g5eYV2Ti0gXtZcc0RNK+Cub0xcoEPFFTo0RvqN+AkUUFkLXVCdiGz7Gg7yGtXGIZa0Qe1P/tUtAircIrXWysscAK81FiEJxqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721304766; c=relaxed/simple;
-	bh=lDk/OFM9GdPyF5mO3TlS15U51RwuYwspDnGe9beFFBg=;
+	s=arc-20240116; t=1721305628; c=relaxed/simple;
+	bh=5ch03PbNO0KcpUZDwUEQITWA/MHyvkqxecTlQA6KFMM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tAKxkeTY0kVnCfUEWKv9uIUspiyyltUWgmvy4OCtVdOG7NQyx2umht7zuCJLlbR2Bg5mVDJmSpd6hwSgynD7EnIEkDRSAz3mjZUefAQ/FKLAsfE7qQ0CcF/X75vv53pw4Ql3Q8g1QOnHNAOv7UpkGk6FZAcIouN2GPo/9rYzjnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tCH/BBnM; arc=none smtp.client-ip=209.85.208.46
+	 In-Reply-To:Content-Type; b=Fr7zcu3pFsac0xv1sVMEhj1mJv2iQ1TuwuvrocRlpCBjPO3f6Fwg/paHUY/86EX1kwm1aJtY/Fo9rmKQ1LU6wrP+bprVNQNFTJjA6Fm8Q0i7IVu6+PPuqyIAhwcmdLoB2ikbE/Dg8uiJKtQLPWDMRQCqdDFP8zll1nC3efaexWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rKZrvoiX; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5a20de39cfbso451844a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 05:12:44 -0700 (PDT)
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52ea1a69624so309625e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 05:27:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721304763; x=1721909563; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1721305624; x=1721910424; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=zU1bn+cQnLCjdK9wTnZiKvOPZWaExGinaKV5vKvZYpY=;
-        b=tCH/BBnMTu8CG3Gxs5kcYA3zXyCbKxQYHAxqy1GvR4ONT8pi/L+aitwJqnF520xrak
-         HRtSiCC0nGNkSrqw9+yx8Zm6kA9qlEschgYKC/UZWNYcNKHaO8JifGJhKdvjNNfsx8e3
-         X52tcsczT4+V5KYr3UZcFBiSxiTxQJxHGUxolhBpE/3wZmnY5G6JSn7BH8AGOUSvlgns
-         c/16o7S/Tg0HjwlTPDDfsL74WSNBTr0fj5rQpuAaN5a47zr3qxLIkwWzN52rIQQhmWml
-         jK4pM1VymsWYrlh7pA/7No2kc2osE+Ag8IUB8pElBWcOj5k9dm8NTheFFDNlcqlpIaiv
-         BakA==
+        bh=q2XFn5QQgFe1WnayUef7JKEEQ6sdt3Zxd24uxnNsJOo=;
+        b=rKZrvoiXwwI4G5AilXAyl8e3OrFVX5bCNq9s4ziZ2fDio39dFi5ZZ+WAGD2qA5l9vF
+         axRI3g7h+Xldfuanui4lDqEq5pOvy1YV9mKJDonnmGu0NQI+60SLO1/2PT8iViGRREoJ
+         8wzcIfASDMlQBej8h6owdB6v1kow+gPHoB0g4gjaB6q95rQKgyB6yjr2LklNo6u63FLT
+         GyyMgD7CRyWgH8JEk+snAeGMvJkZr4Db/sBpaa8n/erKhOJVjcD8ZZ4pvDSWm4ZAZ6TH
+         6rSvMTiCcH3oPJ+UoDUzRfWE76u6yuofr8e2YNAhAJIAwh7nqS6op3fGZ1/tI9gVPwi4
+         TDDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721304763; x=1721909563;
+        d=1e100.net; s=20230601; t=1721305624; x=1721910424;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zU1bn+cQnLCjdK9wTnZiKvOPZWaExGinaKV5vKvZYpY=;
-        b=fnPl5X6cKSpegm0f0BPQFZaynJxp0uxw5MutLmehnZhSAOmLRn6dP9bU5+KTdUOHs3
-         gEmD36l0xzJanyBvKcJRd2yw7FWZNjCOJVLGVuI1EaWk79yFT6lAhi6qNqqFcutEUjAB
-         ibRFs17tRpSu+CAuZP6lkbH8p3PKvDRD8G2pxn2JbEVCxpNwQM8L0FuROrAYulmaFRY7
-         WHPHrRVhzDEPqNA7zJT8umqNxVbNNqsIwpMVquNaQQSfet6hiTVfakV2vDCjxVt/G1i8
-         RaDh5LW0iP5B71Zi64UXHEppxHcWj+ZM7ErrFEfOgV20/R8gHXDeRl6IJizAl1X9gHS3
-         0YEQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUUWLpZ0SQFOmWiy1NNZmpqEJjoCsUTQe9d/OJiHERSi8w87qlqWO/jPR5v/maZyh74LLHVEnGJWtuapq5xhmq/k/vv/A2NLoaE44/L2A==
-X-Gm-Message-State: AOJu0YzrrephmB11EQmkXPcfF+/E6k6dbZX5OB0Qd5FJ7AzWEkRN9on9
-	HYZ9Hn4PRw/r+YCUZDwFfdzoJPH1VYleAWuHlAvJAj7JUAT1mbc4eCZpOnbAw3Q=
-X-Google-Smtp-Source: AGHT+IHpzAvuicnAr0t0F/QpWfgztRHIDCadRZ2CkWua+qXiqi9HeASkOwId5phE5trHQaIlvHyHqg==
-X-Received: by 2002:a05:6402:510f:b0:57c:c166:ba6 with SMTP id 4fb4d7f45d1cf-5a05bfab3c0mr3393413a12.19.1721304762690;
-        Thu, 18 Jul 2024 05:12:42 -0700 (PDT)
+        bh=q2XFn5QQgFe1WnayUef7JKEEQ6sdt3Zxd24uxnNsJOo=;
+        b=OyneO643oN9jAL5VC9+wUwNfCPth3gvYjzXGhToxStnmitW45iHpp/tsX6PIlCKKuu
+         Mg7jKbckv2aYPFU64VPiX0s8G741vHqtRkoE5k8vqFvjz/Fa0hVa2yLoSM+PIRvxyVBR
+         QvFdNTwsodOQvn46YxmpEABnribqRcUgVNfbr1Az/nU+OAPPAl6a+k4N2hySIJWKLfI2
+         0+eVMr5HbGvusgCA0UxahT5rBJaOaKGWcn0BywAgbbr320ZBwMY9ALF7yWsvvvt4tKRU
+         AXFHphLPy05yCYW5x6COyHAIhPei+wX0ijLOmjBluLRq/XH43DxprnJd+/5OXrT+60C7
+         WWRg==
+X-Gm-Message-State: AOJu0YyeH6emDMTADjP8Sn2yQfBa0gAYfUU6pcJ/mx2HeJK2l/MmK8vQ
+	p+NNsJdR67tOHts/skEaz9Epw1yb/Tksqrv8Dcm2yqsQGtlHnP146Ac4V0XbA7k=
+X-Google-Smtp-Source: AGHT+IFpho18lmDKc7X0msF9sfCuM30i0lyf/vediCfHZae4eLSGRU9CVd8hHv7u8hXrqS7690aQVw==
+X-Received: by 2002:a05:6512:130a:b0:52c:e17c:3741 with SMTP id 2adb3069b0e04-52ee53acb53mr3121740e87.5.1721305624269;
+        Thu, 18 Jul 2024 05:27:04 -0700 (PDT)
 Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5a1d9a49e32sm654035a12.29.2024.07.18.05.12.40
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a79bc5a38c2sm551628566b.44.2024.07.18.05.27.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jul 2024 05:12:42 -0700 (PDT)
-Message-ID: <f171ded0-e9db-4bf0-8e1a-e00065becd4e@linaro.org>
-Date: Thu, 18 Jul 2024 14:12:39 +0200
+        Thu, 18 Jul 2024 05:27:03 -0700 (PDT)
+Message-ID: <fd74e1e5-a652-4fd9-a4fa-d44e1482a9b6@linaro.org>
+Date: Thu, 18 Jul 2024 14:27:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,19 +76,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/13] PCI: qcom-ep: Modify 'global_irq' and
- 'perst_irq' IRQ device names
-To: manivannan.sadhasivam@linaro.org,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20240717-pci-qcom-hotplug-v2-0-71d304b817f8@linaro.org>
- <20240717-pci-qcom-hotplug-v2-6-71d304b817f8@linaro.org>
+Subject: Re: [PATCH v6 2/2] drm/msm: Extend gpu devcore dumps with pgtbl info
+To: Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+ iommu@lists.linux.dev, Will Deacon <will@kernel.org>,
+ Rob Clark <robdclark@chromium.org>, Sean Paul <sean@poorly.run>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ open list <linux-kernel@vger.kernel.org>
+References: <20240717163627.43423-1-robdclark@gmail.com>
+ <20240717163627.43423-3-robdclark@gmail.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -127,30 +125,54 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240717-pci-qcom-hotplug-v2-6-71d304b817f8@linaro.org>
+In-Reply-To: <20240717163627.43423-3-robdclark@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 17.07.2024 7:03 PM, Manivannan Sadhasivam via B4 Relay wrote:
-> From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+On 17.07.2024 6:36 PM, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> Currently, the IRQ device name for both of these IRQs doesn't have Qcom
-> specific prefix and PCIe domain number. This causes 2 issues:
+> In the case of iova fault triggered devcore dumps, include additional
+> debug information based on what we think is the current page tables,
+> including the TTBR0 value (which should match what we have in
+> adreno_smmu_fault_info unless things have gone horribly wrong), and
+> the pagetable entries traversed in the process of resolving the
+> faulting iova.
 > 
-> 1. Pollutes the global IRQ namespace since 'global' is a common name.
-> 2. When more than one EP controller instance is present in the SoC, naming
-> conflict will occur.
-> 
-> Hence, add 'qcom_pcie_ep_' prefix and PCIe domain number suffix to the IRQ
-> names to uniquely identify the IRQs and also to fix the above mentioned
-> issues.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 10 ++++++++++
+>  drivers/gpu/drm/msm/msm_gpu.c           |  9 +++++++++
+>  drivers/gpu/drm/msm/msm_gpu.h           |  8 ++++++++
+>  drivers/gpu/drm/msm/msm_iommu.c         | 22 ++++++++++++++++++++++
+>  drivers/gpu/drm/msm/msm_mmu.h           |  3 ++-
+>  5 files changed, 51 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> index 99661af8d941..422dae873b6b 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+> @@ -861,6 +861,16 @@ void adreno_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
+>  		drm_printf(p, "  - dir=%s\n", info->flags & IOMMU_FAULT_WRITE ? "WRITE" : "READ");
+>  		drm_printf(p, "  - type=%s\n", info->type);
+>  		drm_printf(p, "  - source=%s\n", info->block);
+> +
+> +		/* Information extracted from what we think are the current
 
-lgtm
+I'll keep poking you for not using
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+/*
+ * foobar
+
+instead :P
+
+> +		 * pgtables.  Hopefully the TTBR0 matches what we've extracted
+> +		 * from the SMMU registers in smmu_info!
+> +		 */
+> +		drm_puts(p, "pgtable-fault-info:\n");
+> +		drm_printf(p, "  - ttbr0: %.16llx\n", (u64)info->pgtbl_ttbr0);> +		drm_printf(p, "  - asid: %d\n", info->asid);
+
+0x%08x?
 
 Konrad
 
