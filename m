@@ -1,276 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-26517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C02F934670
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 04:36:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 009A693476B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 07:14:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 908A1B21610
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 02:36:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A81181F21EAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 05:14:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E96E425634;
-	Thu, 18 Jul 2024 02:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A7E141746;
+	Thu, 18 Jul 2024 05:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QkIiwdjR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oVepOezg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548EB1C36;
-	Thu, 18 Jul 2024 02:36:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9C440861;
+	Thu, 18 Jul 2024 05:14:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721270173; cv=none; b=nHnLgqnzHqYtNOIinymTtVT4gAGQwtX9wGBuyvOSw+v6vfA/E7MCCCylVtFtFdnd854GnffDvWzBXAFCew8pG47zyWTzWQeTriIP/KXIQ1Ln/uIrNVv3P8SuerH3BGpGvKcNrk5OcVME6LQjgN+g1iBSIxdbPd5ADGjBLrcYQZM=
+	t=1721279660; cv=none; b=dUA7DXZoRRCq01LNPYJS+WiBeeyYukRUIKOiRClaZaIwMAh//Zk5txQtERsp/t/xVClbTl3f/hFggPu9PctRfLtTMmZF6tK3jnpozOVV9kJFz3LLawezQK8BQya5Zu2brKoHkar5sBvWxw+1ABTW5qjz2PfgQeKesZmak6xhDV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721270173; c=relaxed/simple;
-	bh=jYfile6BLXuxxZvJl2IOKY8q/TSvEzeBYd92ETBg8aY=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mqzLswN7ELmzPN8vFZnsq1w1ER0cR9p3o/tLuYYOtMX5qJdCzwb1DADcVZZafLQMB63ARto87TRA/RYXF0IrC1Nv1h4kbBAaAot1dCDDI+dtSZwC/I+nt1qsPiSiW3YTU/NVvbMoB7mqvl2fGa8UscvGJ+mD/XMOAVLuBsWiYco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QkIiwdjR; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1721279660; c=relaxed/simple;
+	bh=IgIV3ieduuDHqSOU0RL5eHnuwzQ64R0B+w5H5eq1Bl8=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=DFoocy6CPZaC211cbJKdKeOdazejAmlVlOKx6QgblJSaUx8KyuJF7n/mYjyL7HXRRzxiOFQCl/GJSeRxvlomtOplkZQgIV6dyOb7vgPpeDKYBKkb6ccVYGcvF4YdJFY8aPjyuoXI1ppIPzUYnC8eW6NSuTy02N1pOG9SVL5ur54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oVepOezg; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46HFvS9M000402;
-	Thu, 18 Jul 2024 02:36:00 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46I3xqCZ028332;
+	Thu, 18 Jul 2024 05:14:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	QrP0Gik79TXsMbZN+JGEdn/d8A0wV6R3kEAmU0q/c50=; b=QkIiwdjR7hw+IzhJ
-	+TLwW6kVRBUTWPk5l/MaIsYeT7+AXmx7WKRTkwOZVQK+9uZ/EuZS2qyRqMAnMjlQ
-	tlwRUyRCayrck5giE+peir0cm6nb59qRyDEFsnlr6LlMcGv3/QJlphRHA5hqaX85
-	EV+a8Khi55L/hFBzZfz7MNh/5nKHYfhWeGOK0k0ad4R7ctfcrU9a8oJi7ricycd5
-	tHbZIVQ3ALf4Ut8fmrd1jYYShArPeDZYrk1XT9PMiD/4tN5beNHr/JrwB8ZjTggD
-	ELDDCmvBmuFigdBDH0+llkqqi25VbxDyXfCEGyaCfxUaTWKn7BRD3nRq8cVBMST1
-	StywLQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40dwfs44j3-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=V4URHr1Ej5I++V7lawRyU0
+	KS1UvL8E8ZW0zAGO1LUng=; b=oVepOezgGYx4THP7MrW96pXMX6BPvE7slm6ZT7
+	d6AqZQc7D6UsOdX3DDL7MwlgBmz/nqK6TbmVjimorLKnuZ0ff1C90Ws0S9D+VtFQ
+	njdihQwR4SnBgWs9GvnctH/3N1lvOalCBohpgGPbb0DPYt1pRnOj5mMWZjoI1SN4
+	Z+NPzdPDkkCfr0DHYZSFIXRbKa/JN57t7Z+El1f3N8m7xFOJy+wXaGBSEpzh4OCB
+	l4JidKV4xoKvmJMeyr8E2ECvyn74K3y2c1HrJ8ftWylAD4F0ljhOpmuB6rE4JLow
+	+alhnJrf6Wte1tmIL41+W/0JLsgGeMyZiPaEcdqfO7+1tvGw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40dwfpmdsv-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Jul 2024 02:35:59 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46I2ZwZ1011125
+	Thu, 18 Jul 2024 05:14:09 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46I5E8Td026472
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Jul 2024 02:35:58 GMT
-Received: from jiegan-gv.ap.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+	Thu, 18 Jul 2024 05:14:08 GMT
+Received: from hu-pyarlaga-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 17 Jul 2024 19:35:52 -0700
-Date: Thu, 18 Jul 2024 10:35:48 +0800
-From: JieGan <quic_jiegan@quicinc.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-CC: Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose
-	<suzuki.poulose@arm.com>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        Mike Leach <mike.leach@linaro.org>, "Rob Herring" <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        James Clark <james.clark@arm.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
-        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang
-	<quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        "Tao
- Zhang" <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        "Song
- Chai" <quic_songchai@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v2 2/4] dt-bindings: arm: Add binding document for
- Coresight Control Unit device.
-Message-ID: <Zph/hEnRtIVZpzb5@jiegan-gv.ap.qualcomm.com>
-References: <20240705090049.1656986-1-quic_jiegan@quicinc.com>
- <20240705090049.1656986-3-quic_jiegan@quicinc.com>
- <5f7cf9e4-cf1c-41d1-8985-3bcf1d943f08@linaro.org>
+ 15.2.1544.9; Wed, 17 Jul 2024 22:14:07 -0700
+From: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
+To: <jingoohan1@gmail.com>, <manivannan.sadhasivam@linaro.org>,
+        <lpieralisi@kernel.org>, <kw@linux.com>, <robh@kernel.org>,
+        <bhelgaas@google.com>
+CC: <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_mrana@quicinc.com>,
+        <quic_pyarlaga@quicinc.com>
+Subject: [PATCH v2 0/2] PCI: qcom: Avoid DBI ant ATU register space mirroring
+Date: Wed, 17 Jul 2024 22:12:56 -0700
+Message-ID: <20240718051258.1115271-1-quic_pyarlaga@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <5f7cf9e4-cf1c-41d1-8985-3bcf1d943f08@linaro.org>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 0fWlt211FNuZbRp-wiurgVmgibZIZkaL
-X-Proofpoint-GUID: 0fWlt211FNuZbRp-wiurgVmgibZIZkaL
+X-Proofpoint-ORIG-GUID: GN1j8Z-8JlVicN2gjcN6K2u9FQ6tq0Ve
+X-Proofpoint-GUID: GN1j8Z-8JlVicN2gjcN6K2u9FQ6tq0Ve
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-17_19,2024-07-17_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- priorityscore=1501 malwarescore=0 impostorscore=0 bulkscore=0 adultscore=0
- suspectscore=0 phishscore=0 spamscore=0 mlxlogscore=999 mlxscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407180016
+ definitions=2024-07-18_02,2024-07-17_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 suspectscore=0 clxscore=1011 bulkscore=0 mlxscore=0
+ adultscore=0 phishscore=0 spamscore=0 malwarescore=0 mlxlogscore=745
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407180034
 
-On Fri, Jul 05, 2024 at 11:07:22AM +0200, Krzysztof Kozlowski wrote:
-> On 05/07/2024 11:00, Jie Gan wrote:
-> > Add binding document for Coresight Control Unit device.
-> 
-> <form letter>
-> Please use scripts/get_maintainers.pl to get a list of necessary people
-> and lists to CC (and consider --no-git-fallback argument). It might
-> happen, that command when run on an older kernel, gives you outdated
-> entries. Therefore please be sure you base your patches on recent Linux
-> kernel.
-> 
-> Tools like b4 or scripts/get_maintainer.pl provide you proper list of
-> people, so fix your workflow. Tools might also fail if you work on some
-> ancient tree (don't, instead use mainline) or work on fork of kernel
-> (don't, instead use mainline). Just use b4 and everything should be
-> fine, although remember about `b4 prep --auto-to-cc` if you added new
-> patches to the patchset.
-> </form letter>
-> 
-> Or stop developing on some old tree. It's some sort of weird pattern in
-> entire Qualcomm Coresight - everything developed on old kernels.
-> 
-> You must work on latest mainline or maintainer or linux-next tree, not
-> some old Qualcomm tree. Your v5.15, v5.19, v6.4 or v6.8 or whatever you
-> have there: BIG NOPE.
-> 
-> > 
-> > Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
-> > ---
-> 
-> Subject: it never ends with full stop.
-> 
-> A nit, subject: drop second/last, redundant "bindings". The
-> "dt-bindings" prefix is already stating that these are bindings.
-> See also:
-> https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
-> 
-> >  .../bindings/arm/qcom,coresight-ccu.yaml      | 87 +++++++++++++++++++
-> >  1 file changed, 87 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-ccu.yaml
-> > 
-> > diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-ccu.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-ccu.yaml
-> > new file mode 100644
-> > index 000000000000..9bb8ced393a7
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-ccu.yaml
-> > @@ -0,0 +1,87 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/arm/qcom,coresight-ccu.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: CoreSight Control Unit
-> > +
-> > +maintainers:
-> > +  - Yuanfang Zhang <quic_yuanfang@quicinc.com>
-> > +  - Mao Jinlong <quic_jinlmao@quicinc.com>
-> > +  - Jie Gan <quic_jiegan@quicinc.com>
-> > +
-> > +description:
-> > +  The Coresight Control unit controls various Coresight behaviors.
-> > +  Used to enable/disable ETR’s data filter function based on trace ID.
-> > +
-> > +properties:
-> > +  compatible:
-> > +    const: qcom,coresight-ccu
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  clocks:
-> > +    maxItems: 1
-> > +
-> > +  clock-names:
-> > +    items:
-> > +      - const: apb_pclk
-> 
-> Drop _pclk
-Hi, Suzuki,
-As Krzysztof proposed, we have to change the clock name from apb_pclk to apb.
-According to the new clock name, I updated the inline function coresight_get_enable_apb_pclk
-to vote the clock with the new name.
+Qualcomm PCIe controller has a wrapper called PARF which supports the
+relocation of DBI and ATU address space within the system memory. PARF
+gets the location of DBI and ATU from PARF_DBI_BASE_ADDR and
+PARF_ATU_BASE_ADDR registers. PARF also mirrors the memory block
+containing DBI and ATU registers within the system memory. And the size
+of this memory block is programmed in PARF_SLV_ADDR_SPACE_SIZE register.
 
-Is that ok with the change? Or any other suggestions?
+Power on reset of values of the above mentioned registers are good enough
+on platforms which require smaller size (less than 16MB) BAR memory. For
+platforms that need bigger BAR memory size, this mirroring of DBI and ATU
+address space by PARF conflicts with BAR memory.
 
-static inline struct clk *coresight_get_enable_apb_pclk(struct device *dev)
-{
-        struct clk *pclk;
-        int ret;
+So to allow usage of bigger size of BAR, it is required to program
+PARF registers to prevent mirroring of DBI and ATU blocks and provide
+the physical addresses of DBI and ATU to PARF.
 
-        pclk = clk_get(dev, "apb_pclk");
-        if (IS_ERR(pclk)) {
-                pclk = clk_get(dev, "apb");    //added line
-                if (IS_ERR(pclk))
-                        return NULL;
-        }
+This patch series stores physical addresses of DBI and ATU address space
+in 'struct dw_pcie' and programs the required PARF registers in the
+pcie_qcom.c driver.
 
-        ret = clk_prepare_enable(pclk);
-        if (ret) {
-                clk_put(pclk);
-                return ERR_PTR(ret);
-        }
-        return pclk;
-}
+Changes in v2:
+- Updated commit message as suggested by Bjorn Helgaas.
+- Updated function name from qcom_pcie_avoid_dbi_atu_mirroring()
+  to qcom_pcie_configure_dbi_atu_base() as suggested by Bjorn Helgaas.
+- Removed check for pdev in qcom_pcie_configure_dbi_atu_base() as
+  suggested by Bjorn Helgaas.
+- Moved the qcom_pcie_configure_dbi_atu_base() call in the
+  qcom_pcie_init_2_7_0() to the same place where PARF_DBI_BASE_ADDR
+  register is being programmed as suggested by Bjorn Helgaas.
+- Added 'dbi_phys_addr', 'atu_phys_addr' in the 'struct dw_pcie' to store
+  the physical addresses of dbi, atu base registers in
+  dw_pcie_get_resources() as suggested by Manivannan Sadhasivam.
+- Added separate functions qcom_pcie_configure_dbi_atu_base() and
+  qcom_pcie_configure_dbi_base() to program PARF register of different
+  PARF versions. This is to disable DBI mirroring in all Qualcomm PCIe
+  controllers as suggested by Manivannan Sadhasivam.
+- Link to v1: https://lore.kernel.org/linux-pci/a01404d2-2f4d-4fb8-af9d-3db66d39acf7@quicinc.com/T/
 
-> 
-> > +
-> > +  reg-names:
-> 
-> Please follow DTS coding style about order of properties.
-> 
-> > +    items:
-> > +      - const: ccu-base
-> > +
-> > +  in-ports:
-> > +    $ref: /schemas/graph.yaml#/properties/ports
-> > +
-> > +    unevaluatedProperties:
-> 
-> This was never tested and it cannot reliably work.
-> 
-> Sorry, this is waste of our time.
-> 
-> 
-> > +      patternProperties:
-> > +        '^port(@[0-7])?$':
-> > +          description: Input connections from CoreSight Trace bus
-> > +          $ref: /schemas/graph.yaml#/properties/port
-> > +
-> > +          properties:
-> > +            qcom,ccu-atid-offset:
-> > +              description:
-> > +                Offset to the Coresight Control Unit component's ATID register
-> > +                that is used by specific TMC ETR. The ATID register can be programed based
-> > +                on the trace id to filter out specific trace data which gets into ETR buffer.
-> > +              $ref: /schemas/types.yaml#/definitions/uint32
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - in-ports
-> > +
-> > +additionalProperties: false
-> > +
-> > +examples:
-> > +  - |
-> > +    syscon@1001000 {
-> 
-> That's not a syscon.
-> 
-> > +        compatible = "qcom,coresight-ccu";
-> > +        reg = <0x1001000 0x1000>;
-> > +        reg-names = "ccu-base";
-> > +
-> 
-> Best regards,
-> Krzysztof
-> 
+Tested:
+- Validated NVME functionality with PCIe6a on x1e80100 platform.
+- Validated WiFi functionality with PCIe4 on x1e80100 platform.
 
-Thanks,
-Jie
+Prudhvi Yarlagadda (2):
+  PCI: dwc: Add dbi_phys_addr and atu_phys_addr to struct dw_pcie
+  PCI: qcom: Avoid DBI and ATU register space mirror to BAR/MMIO region
+
+ drivers/pci/controller/dwc/pcie-designware.c |  2 +
+ drivers/pci/controller/dwc/pcie-designware.h |  2 +
+ drivers/pci/controller/dwc/pcie-qcom.c       | 62 ++++++++++++++------
+ 3 files changed, 49 insertions(+), 17 deletions(-)
+
+-- 
+2.25.1
+
 
