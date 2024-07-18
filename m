@@ -1,143 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-26597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE2DA9351EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 20:46:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CF2B93528F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 22:57:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB66828330C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 18:46:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 14BC91C2114E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 20:57:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E6F6146A85;
-	Thu, 18 Jul 2024 18:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8F03145B18;
+	Thu, 18 Jul 2024 20:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HiUnQttj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y4XVzMaf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B57146A6B;
-	Thu, 18 Jul 2024 18:44:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FAB13DDAD
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 20:57:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721328293; cv=none; b=WHer1vyH2b6hQHSobj3sH/7D20bIbplC2RvUlONcL9ugjBKn5UaitNHAJIfrY+iEtvsuAYufKCqmYR4eHIWS7X/5jh08IeFWsL0wq46Jlqv+CgyZyGkzGu6WxMd+uPQ2ZfIRfbLr61C1uz7kVI282YrpDttynNskSMaz2cfeUHM=
+	t=1721336261; cv=none; b=AnXghLITB4PG9ARFaN71zVZXxI9dt1U7bWFF9Ucn3lXqiRUBVlgiuzn6syqZRNI2i2hGCB8XvKrMdpVKhRZ6tjyX/05nX+ThR5+LLNDs6vFFpD7CYZq08NUxzmQVd8PX9YqiOriZR+htx3wQ/IEYjCvisSSjpgNboWs0NdEjne0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721328293; c=relaxed/simple;
-	bh=9sBK5K4+cHOrE4uvr23RYpMqbNqYy4vqgDPWNqgM0f0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j5MqI3rBcmx25hJSqCKfOcxvknrBfmxWp2o50B/U0ZlfjNUGqKYNBhBjd2o/CfXodYqb7NJXFLaJ1I2AXFC49sX/N7dZwS4AfDfzDp2Ud6HwBsmAaByeIjLU4Rn9yRMyi383uwOp1TVhAEDLLwYhqENSA2zyf6XphQrPNnjjcUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HiUnQttj; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-70b42250526so102241b3a.1;
-        Thu, 18 Jul 2024 11:44:51 -0700 (PDT)
+	s=arc-20240116; t=1721336261; c=relaxed/simple;
+	bh=tAbWfIQ4v/HuPHVEJge1CzK9VejlF4IPKDtclv3TUFA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eZLMUyvmYkGGrv/XX4qVKxTgM7O1a/xJ92kWKyVLkklBSduARBEfJ/8Qqnx8z1euhgyXwf3tld/arBGHtyKK+McbDJEx/eg7WUFgxeYtHlE4HPBwa9SehlDYJ+sbspb/1M+aIZEdETHrl9unETwHG0JiQVpnTEaYlIy8wLWX+54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y4XVzMaf; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-52ea5dc3c66so1537426e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 13:57:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721328291; x=1721933091; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zvDl0DF23aI2GecrtsR94Ksljs15WLtxcCwOavCMIx8=;
-        b=HiUnQttjzG486SL8UACnXHGWuur0GBWhromoquGz9LdD/OikE23rd38NlZ0s0TDkTD
-         0bN02sb9bxgW5wsz/Tw/k06uFOisjc8tejZnBAeN8Xbayd9/nYd3utL5OVTEwkgMikle
-         01z+vUdaVBS6p8qV3prQyd1x7UiCmk1GoXzIa6KB1xOyYvnPwBS4tYu9SuolLw1H9gWJ
-         AyjXquDDIGxAvsw61bsfXWZyF4vYGOY9fiZFHfJ0BqBJGjIUG6HQ0wRonOr5keoGmGxF
-         YILhRpyZvEcSZwt97dg/8ZdZHijy+ARVP9B4jaNL+iu43QAxm9kpVxSxfhuWcIGLoVFk
-         4uTg==
+        d=linaro.org; s=google; t=1721336257; x=1721941057; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jt4qMEVwM35lFX7t2weYvu2/XW9ujOBzqearuBlFYJA=;
+        b=y4XVzMaftnfDmsaFWC/eRYFOQlpYCVih7cFAF/CzvCNJ3v36njPSVyMvo9FvF1T8ar
+         cMKEhO483mkwIjssRRHobgutyOHboFlE3jNIqk4XE9U/qzmYZbAG0iqrLeQBtXPNEhyd
+         lbsfnx8ZsETqA1lZvAqsBxS6+G+vRXyfPxx3PI7D+cXnCd4MsADerlM0nw8C9Azipv1L
+         /WnnQe+OBHtzypMYileVh8ciAGebHhW4Ypo9oLMKox7ABLYexmsgLHVCggXI/J3mcsLf
+         8uR2qfgYGeNG9IMFpjm8a+44zQhBKs4ebZWM+XUqNLvlibA1YDVGij1sG84OECnDuToh
+         nuPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721328291; x=1721933091;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zvDl0DF23aI2GecrtsR94Ksljs15WLtxcCwOavCMIx8=;
-        b=Mx5mvXsF5bMVyo/d0h87kOAekNuwsHLLtWrUxowvb6zJ8ItfzL+I7eM676U1WN6vx3
-         mIsYr6gISrC2sweX1Av0UgVOFbo7yJ19b3zD9/mQzCVGjO+41yMwlZtDGDK5DK8YL55S
-         FU/+5vIJe9m6gXdrAFZQb4G6AZJL4POC87haoKaHIUaKTHbSV2LbLcXBIZ6bAdY2c+Xt
-         BipYqhH4IqXkQUdi/Q09MY5iNLyITqO7gvEYsiftPrHU63ykKoGFOl5NV0s4DvIySrHB
-         zdwinnYfYAi28FKLUJ0p3QRLaRZ7mWB88YBXdpU05RRBel/ew00W8BqSYNNCdLkXw4kc
-         5BWw==
-X-Forwarded-Encrypted: i=1; AJvYcCWxpq7w/6IR6g8i8GtCFWBcEkrVfiktf+I5+1YxOwe/lQv0EevIyxeTkClVgSWQAD34QhC2dXDz42obfqqGGZh/JLMEO3rMBf037aVzjpIJc2Pl4oojkuplE+NnoRBc1BDT0Y7USkUFqg==
-X-Gm-Message-State: AOJu0Ywu/eZnY9bAqnv/EIEbuWjQ2iqjjFdECl2agVtuRPLsJQvOQA1N
-	RLt61HMagHYC2weiU7d6DQkd52NDssQAkCIex3rnxtpHms+K9NgjZ0m99A==
-X-Google-Smtp-Source: AGHT+IGVCt3HDoliN6B65VoDbWa2i+0NWVOj7HIVlmx/hURkPU4govXcszxyEECDWMTBN6bK357ibg==
-X-Received: by 2002:a05:6a00:c92:b0:70a:f38c:74ba with SMTP id d2e1a72fcca58-70ce5069e69mr7990334b3a.22.1721328290542;
-        Thu, 18 Jul 2024 11:44:50 -0700 (PDT)
-Received: from localhost ([2a00:79e1:2e00:1301:3279:d3cd:5dde:c799])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70cfc72fbadsm150800b3a.90.2024.07.18.11.44.49
+        d=1e100.net; s=20230601; t=1721336257; x=1721941057;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Jt4qMEVwM35lFX7t2weYvu2/XW9ujOBzqearuBlFYJA=;
+        b=n0G1JFkDGK2qyXo9TG9p/XKUg6ccyn9x8FbLAnjf24uxUwEPsCCLOFtClkq8a4lxOa
+         ifa3PpZfQ5Upd648LxB8hnSqGzRYAsnQw063zNRPMLUttCfsdee7/cSn1bJbvvsUJIyf
+         3jdaUGKGOuPQQXjYuo3lBW/0SZI5zBxO8JtYJdeIyAkdBp1uR1Z/d2eANLVcN7p5XpLN
+         /r3AYSalhR8hfY6ZgfSLR3DC8NdHuDNmoOnPF67Y903g5ASgJo36DDYLqSzHy+N+kkHj
+         T2f8wNso0TxEUXe6l/Q4cE5RAebgCc47ltoWV8u4ywOCgBUE23yu9XDxUC0B/lda42TD
+         Eh3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXOSX/98MPDmAErk12ZUN7I02TGbWHgR+wNYIHHw5qZL6g0e+6tfbtYIxsAGkji7v8ynkkj9tT2O9amlDHnCXAC3PtuCTSueGBJ/ucWdg==
+X-Gm-Message-State: AOJu0YxYUf82PVDk2t8xlZ7Q10KAwR5DfHTivdLpzfp8pn4x88BKG8My
+	rILrOLLw09tm+nvvgklLhu4WEKyNDPTSyp5hJQoTjqhmvLsbOMYChpYrYJMhsyk=
+X-Google-Smtp-Source: AGHT+IFOEhmrc8/7gP/gyY2lxQaJjz0l0DPkZEGt1Jaui5UPWhGGxU9XXD2bP5LA9cGX048zWkpoOA==
+X-Received: by 2002:a05:6512:10c2:b0:52c:8342:6699 with SMTP id 2adb3069b0e04-52ee5453fd4mr6044046e87.55.1721336257180;
+        Thu, 18 Jul 2024 13:57:37 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52ef07a044dsm196680e87.285.2024.07.18.13.57.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jul 2024 11:44:49 -0700 (PDT)
-From: Rob Clark <robdclark@gmail.com>
-To: linux-arm-msm@vger.kernel.org
-Cc: Doug Anderson <dianders@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Rob Clark <robdclark@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS),
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 3/3] arm64: dts: qcom: x1e80100-yoga: Update panel bindings
-Date: Thu, 18 Jul 2024 11:44:34 -0700
-Message-ID: <20240718184434.6307-3-robdclark@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240718184434.6307-1-robdclark@gmail.com>
-References: <20240718184434.6307-1-robdclark@gmail.com>
+        Thu, 18 Jul 2024 13:57:36 -0700 (PDT)
+Date: Thu, 18 Jul 2024 23:57:34 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jeff Johnson <quic_jjohnson@quicinc.com>
+Cc: Patrick Wildt <patrick@blueri.se>, Kalle Valo <kvalo@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Andy Gross <agross@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Steev Klimaszewski <steev@kali.org>, 
+	linux-wireless@vger.kernel.org, netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Johan Hovold <johan+linaro@kernel.org>, "ath12k@lists.infradead.org" <ath12k@lists.infradead.org>
+Subject: Re: [PATCH 0/2] arm64: dts: qcom: x1e80100-yoga: add wifi
+ calibration variant
+Message-ID: <gb5ykva2z2kkn4w4xnpbpkfthglifkygsbwplmqmd53hlxpqlg@gv7qknl3uuob>
+References: <ZpV6o8JUJWg9lZFE@windev.fritz.box>
+ <d44fdc0b-b4a7-4f36-9961-c5c042ed43df@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d44fdc0b-b4a7-4f36-9961-c5c042ed43df@quicinc.com>
 
-From: Rob Clark <robdclark@chromium.org>
+On Thu, Jul 18, 2024 at 07:40:13AM GMT, Jeff Johnson wrote:
+> On 7/15/2024 12:38 PM, Patrick Wildt wrote:
+> > This series adds the missing calibration variant devicetree property
+> > which is needed to load the calibration data and use the ath12k wifi
+> > on the Lenovo Yoga Slim 7x.
+> > 
+> > Patrick Wildt (2):
+> >   dt-bindings: net: wireless: add ath12k pcie bindings
+> >   arm64: dts: qcom: x1e80100-yoga: add wifi calibration variant
+> > 
+> >  .../net/wireless/qcom,ath12k-pci.yaml         | 59 +++++++++++++++++++
+> >  .../dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  |  9 +++
+> >  arch/arm64/boot/dts/qcom/x1e80100.dtsi        | 10 ++++
+> >  3 files changed, 78 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/net/wireless/qcom,ath12k-pci.yaml
+> > 
+> 
+> +ath12k mailing list.
+> 
+> Qualcomm expects, on x86 and Qualcomm-based ARM devices, that this information
+> come from ACPI.
 
-Use the correct panel compatible, and wire up enable-gpio.  It is wired
-up in the same way as the x1e80100-crd.
+Unfortunately we can not use ACPI on Qualcomm-based ARM devices. They
+all are manually converted to DT. 
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts   | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+> 
+> That support is currently under review:
+> https://lore.kernel.org/all/20240717111023.78798-1-quic_lingbok@quicinc.com/
+> 
+> /jeff
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-index f569f0fbd1fc..37ef05f8c7e0 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-@@ -592,9 +592,13 @@ &mdss_dp3 {
- 
- 	aux-bus {
- 		panel {
--			compatible = "edp-panel";
-+			compatible = "samsung,atna45dc02";
-+			enable-gpios = <&pmc8380_3_gpios 4 GPIO_ACTIVE_HIGH>;
- 			power-supply = <&vreg_edp_3p3>;
- 
-+			pinctrl-0 = <&edp_bl_en>;
-+			pinctrl-names = "default";
-+
- 			port {
- 				edp_panel_in: endpoint {
- 					remote-endpoint = <&mdss_dp3_out>;
-@@ -663,6 +667,13 @@ &pcie6a_phy {
- 	status = "okay";
- };
- 
-+&pmc8380_3_gpios {
-+	edp_bl_en: edp-bl-en-state {
-+		pins = "gpio4";
-+		function = "normal";
-+	};
-+};
-+
- &qupv3_0 {
- 	status = "okay";
- };
 -- 
-2.45.2
-
+With best wishes
+Dmitry
 
