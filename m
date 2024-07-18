@@ -1,141 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-26580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D6E693504B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 17:58:18 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2ADA935050
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 17:58:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 53FE91F22E95
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 15:58:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 50A07B2153C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 15:58:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 151A9144D25;
-	Thu, 18 Jul 2024 15:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 399AC1448F6;
+	Thu, 18 Jul 2024 15:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w6MkYYW6"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="LBnt4bVA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91994144D20
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 15:57:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDA1144D11
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 15:58:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721318276; cv=none; b=liZHuYHDmz0Z3DTaIYG9LsRo/4SVqzRp8oKS8GtMzugW0eMMkW1HEY2CqAi5+jwK1Pm9bQ+0mCO2yuKJbtlVCJk8KqsEzVcFlfX9s2tp8byb7i8yaB42DYeehhkKPNxLnJtHSt//hQyUdgTSwI2vWKgep4SMEcHPqE01AAgEx/o=
+	t=1721318291; cv=none; b=UcTIw3GmqoEmZGkmV/dl2hWiKlK0gz0VFf51v4gw8ie22qBVNw0XXEkYWSt9/JC9TTE6s7Cezq1iLdT+avkx3NYktTe3bBBw7BoRH6+B5L8nwazo49/plA5iPVssoux8zNJZrMqmCz5aQGcdWFr9n2XU6LM3aei9crFq5AnjQ0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721318276; c=relaxed/simple;
-	bh=pEoCcyP8SmbTARKtqj+yZyS8c0B/jW2B05S8wHRAb/0=;
+	s=arc-20240116; t=1721318291; c=relaxed/simple;
+	bh=9in/nxqI6rP0aldY+QBnsVwMEb3YdRvMqSwnuwcXguo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=II/TdHSAULE6l94pCfP0xlYQSG4MFJmW0POz7lhUmN2WGQ0LarfqfEXZBdMTGMEVcojpRrCJ83g9WWcwxJ32hz8KTeLzugEosEMtv7x9SroirQV+BV7q1kT2rkTITxNcCwlJxNOoC0jDnTpjExLVWWvGkyIl9xcFxwIXr0u5o5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w6MkYYW6; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-70b0ebd1ef9so657338b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 08:57:54 -0700 (PDT)
+	 To:Cc:Content-Type; b=kBA1pw/1ndcv5iQ/1XHjjtqlKlsvfsCRbGEJb59jFGbFqmOinciwGe6/JvumEMYmW9kzCVGRaDaokTMs2zdrgL4Kal7+APEGWgVHGzChW19dBgirzEetzsvABHKalV+e5i8YnmJNdHQcvc+vY2xxB/iznHpJqZmH858k4T/2lt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=LBnt4bVA; arc=none smtp.client-ip=209.85.222.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-79f323f084eso30151985a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 08:58:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721318274; x=1721923074; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=aMIVUi1+XtyWiv2jSx6v0C/sfNX/sBiBYCcujxRlArQ=;
-        b=w6MkYYW6Pj5AJaHc7GRDubgJkaYhQIbJLJEb662r1mPe5WPmspO6ItGRMKylIeATA7
-         MAEfl1JSxgOs9ZVqP+bJuYLQj05Il7CU6P6jDJOUdEqqe70+MEHXroz/oDBAvv+WlJIK
-         inphK7/VA8/D6DY1HpBlFrE3ZcTH1vSS9TEVB14DoQiTGl352a4fPxyu0LszHoOq5X5g
-         gj1JhtCbjT6x6zI5LSVlm8L337duQ+1NzbjdqGAhE1xCBVk6Tp1FhS1W5azo4kf4A0dZ
-         3y8yLDwbG6A95gb70wx6P9yF2W7EtLx52YB03GXvcOuCFA/iYhJsGDri5VQtGrDpNB9F
-         Xe4A==
+        d=chromium.org; s=google; t=1721318287; x=1721923087; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KI6+OUVJCzVw8+deYC/JOskjFnoamUOWD+xEmu+wUIw=;
+        b=LBnt4bVAqBd7xyNVZhtnhsC15RqAm3gZF5uZOuvT2fOgCYDcjOZFb7RbOny3ecmbNb
+         sOskZsI6SNN7tQ7ZAmjhPvG1EW86G/7Xeu8xRu0xTR2v+KX2fJmprJvLr06d+2Jk0/kG
+         Ry3JTdC+e+9hMPPcSaJqJKrmsOpxoTzWkDOUA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721318274; x=1721923074;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aMIVUi1+XtyWiv2jSx6v0C/sfNX/sBiBYCcujxRlArQ=;
-        b=AZXRJq4KN6yAQCYNSf90faosgkDh3OZZvtVZTw/TLtTOQeXV+c264FsPZt+Y9r0stQ
-         cumOoA3rtYphCfxHHs1hNg99u3YyjBfP6thdPeh7CDO0hOrR99KatRG1hCJhyV+osA4B
-         mBcnK+HL2pJgrBOXmqJFpcKEZJECu+hQycs1JVSq7PN0GbujITFhCfaPxdhMVUgmIG4a
-         pD4Uva6l7IOJFGSeMympq140HX7OYxcjiEF2H+iuQ0ix0kgy6ZDVF8VapJYzIQSmPdFg
-         aEH36dhyUiPZ4GQjRB1nwzOhSVvwBmPWh1/aEJ+VW077oCGDvqS3e+P7NDiH3IZKAChF
-         554g==
-X-Forwarded-Encrypted: i=1; AJvYcCWRUNnKRi2RLP/yySrT8JLF5KEzHwZJ83fD/aYj2ZsV/fuBktyXZpZjxHUIEJk9PLEy+FFsTMFrBJCAomG5gt7W0bvGExQuA/7MuncmDQ==
-X-Gm-Message-State: AOJu0Yxk05kNmgVBSAHJSf7b+Gu7mTcWlFFO1rpKwdO9tiuTFqY5Tgvf
-	Ihqabg4hU/TnVqbdYb7CGLoO+okbQla6bEbt3rj+X9vTqHYepPE1fO/XmwBzqTMmtj7D3OJBrNZ
-	9m0O6W28kx8CZXXBiflHEe3Y2LuywCfGwQPYXLg==
-X-Google-Smtp-Source: AGHT+IEpHrWCkUrpjxLliS2sFNiblUo99rdj9g5ppHtWWSZUzyR/mtO39VJ9j9yZKVcVcLEtg/ErSmtMwZdr3DV6WDM=
-X-Received: by 2002:a05:6a00:3e10:b0:70a:ffa5:41dc with SMTP id
- d2e1a72fcca58-70ce507b90bmr6287948b3a.24.1721318273873; Thu, 18 Jul 2024
- 08:57:53 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1721318287; x=1721923087;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KI6+OUVJCzVw8+deYC/JOskjFnoamUOWD+xEmu+wUIw=;
+        b=M3RWynVRQoGRhARhYkqiDw2M0trRvTzJpVjnOoxUYA80uLLCyLE6i66GH49U+1Cy8i
+         d6e1cnidnQZ6/4XoYrCwd0IocFZgHLHr4x8YVykrWiadLODn3Qn0u8jrbySl+NRMy/gb
+         227b9RVa0a8jcTSbE2aJJCWoj288Ahcn4i0+Wr/7zlhb6yb2yoq4rbTm3YgY87Al3PMA
+         Z5fAXEAGYWUY1HgrjQlz1ICwaQD/k+kJsCcixDHm0Atx/NECm+NIPeJ25fxgnbTUoLj1
+         D3dh+m5y6fVXZC6kQwHG3yDmz7MyR6ChZ349jEXHQgfygpdx5NQoFBHTYlt6fs12N57X
+         DxOw==
+X-Forwarded-Encrypted: i=1; AJvYcCUKDDOsgFjO1wDEDNXgq3Tf8Arzad/7jrB/0ooWGDBAVuLS+ayQLeNY8Bap+Yt9b2dq7NDlWd8Y0nUJmhlsr5n9yq1gCLr+wGDAyeQPTg==
+X-Gm-Message-State: AOJu0YwB5foNcHxePDl5LggbstAMBpd95jQeIhDD7M8n847RYsuikE9y
+	8W5phOxAEYkeP+ueKL1Jno6q+S7JMnCQUkaP9IQL/4XbXIDzf884XmyiuIDrbB2CP8tSxcx2p/w
+	=
+X-Google-Smtp-Source: AGHT+IGLx0at1RJUsYH2HtQme1Cvb2syq5XvE1yNMXkP1l+UUqb+Evs242/G9rU4rTODUjVoPe2lbA==
+X-Received: by 2002:a05:620a:28c9:b0:79d:61da:ba3e with SMTP id af79cd13be357-7a1938e9202mr136181285a.21.1721318286805;
+        Thu, 18 Jul 2024 08:58:06 -0700 (PDT)
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com. [209.85.160.182])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a1938b3f3asm38152785a.21.2024.07.18.08.58.05
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Jul 2024 08:58:06 -0700 (PDT)
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-44a8b140a1bso132041cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 08:58:05 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVfpshyovxdj8Itgf0vdGxygptax5Bb31bPV/LEnDq/e4SMg8wTUF4KLUgUfTT8bFI9DKX175eeHgabcMGntwW0X87NOffLlhDzAjA1oQ==
+X-Received: by 2002:a05:622a:4116:b0:447:e01a:de95 with SMTP id
+ d75a77b69052e-44f9681efaemr1462911cf.0.1721318285517; Thu, 18 Jul 2024
+ 08:58:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240626060724.28862-1-quic_jinlmao@quicinc.com> <20240626060724.28862-2-quic_jinlmao@quicinc.com>
-In-Reply-To: <20240626060724.28862-2-quic_jinlmao@quicinc.com>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Thu, 18 Jul 2024 16:57:43 +0100
-Message-ID: <CAJ9a7ViUyr5YiGT_KfM0LjaifJ9RysfkLZER64z36CPy_fEPJA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] dt-bindings: arm: Add arm,trace-id for coresight
- dummy source
-To: Mao Jinlong <quic_jinlmao@quicinc.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@arm.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, coresight@lists.linaro.org, 
-	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Tingwei Zhang <quic_tingweiz@quicinc.com>, Yuanfang Zhang <quic_yuanfang@quicinc.com>, 
-	Tao Zhang <quic_taozha@quicinc.com>, songchai <quic_songchai@quicinc.com>
+References: <20240717215847.5310-1-robdclark@gmail.com> <CAD=FV=XCOKJHJ-yzENpvm_MD34tMR5LRy2m2jYdcWzZXP4pfXQ@mail.gmail.com>
+ <CAF6AEGuBZqV4zg1asUNbMLvq0-i-iyFwfi37uKS3kWNuRSOU+g@mail.gmail.com>
+In-Reply-To: <CAF6AEGuBZqV4zg1asUNbMLvq0-i-iyFwfi37uKS3kWNuRSOU+g@mail.gmail.com>
+From: Doug Anderson <dianders@chromium.org>
+Date: Thu, 18 Jul 2024 08:57:50 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UMiDTLBBEMk3fpg+TfE_K23fyL+JDZj77Fe9fCY8DyjA@mail.gmail.com>
+Message-ID: <CAD=FV=UMiDTLBBEMk3fpg+TfE_K23fyL+JDZj77Fe9fCY8DyjA@mail.gmail.com>
+Subject: Re: [RFC] drm/panel/simple-edp: Add Samsung ATNA45DC02
+To: Rob Clark <robdclark@gmail.com>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	Rob Clark <robdclark@chromium.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-On Wed, 26 Jun 2024 at 07:07, Mao Jinlong <quic_jinlmao@quicinc.com> wrote:
+On Wed, Jul 17, 2024 at 6:09=E2=80=AFPM Rob Clark <robdclark@gmail.com> wro=
+te:
 >
-> Some dummy source HW has static trace id which cannot be changed via
-> software programming. Add arm,trace-id for static id support to
-> coresight dummy source.
+> On Wed, Jul 17, 2024 at 5:19=E2=80=AFPM Doug Anderson <dianders@chromium.=
+org> wrote:
+> >
+> > Hi,
+> >
+> > On Wed, Jul 17, 2024 at 2:58=E2=80=AFPM Rob Clark <robdclark@gmail.com>=
+ wrote:
+> > >
+> > > From: Rob Clark <robdclark@chromium.org>
+> > >
+> > > Just a guess on the panel timings, but they appear to work.
+> > >
+> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > ---
+> > > This adds the panel I have on my lenovo yoga slim 7x laptop.  I could=
+n't
+> > > find any datasheet so timings is just a guess.  But AFAICT everything
+> > > works fine.
+> > >
+> > >  drivers/gpu/drm/panel/panel-edp.c | 2 ++
+> > >  1 file changed, 2 insertions(+)
+> >
+> > Given that this is a Samsung ATNA<mumble>, is there any chance it's an
+> > OLED panel? Should it be supported with the Samsung OLED panel driver
+> > like this:
+> >
+> > https://lore.kernel.org/r/20240715-x1e80100-crd-backlight-v2-0-31b7f2f6=
+58a3@linaro.org
 >
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->  .../devicetree/bindings/arm/arm,coresight-dummy-source.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
-> index 6745b4cc8f1c..b18cfd8e137e 100644
-> --- a/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
-> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
-> @@ -38,6 +38,12 @@ properties:
->      enum:
->        - arm,coresight-dummy-source
->
-> +  arm,trace-id:
+> it is an OLED panel, and I did see that patchset and thought that
+> samsung panel driver would work.  But changing the compat string on
+> the yoga dts only gave me a black screen (and I didn't see any of the
+> other mentioned problems with bl control or dpms with panel-edp).  So
+> :shrug:?  It could be I overlooked something else, but it _seems_ like
+> panel-edp is fine for this panel. Plus, it would avoid awkwardness if
+> it turned out there were other non-samsung 2nd sources, but so far
+> with a sample size of two 100% of these laptops have the same panel
 
-Could we name this:-
+Hmm, OK. One question for you: are you using the "enable" GPIO in
+panel-edp? IMO the code handling that GPIO in panel-edp is somewhat
+dodgy, but it predates my deeper involvement with panels. I've never
+seen an eDP panel that could use panel-edp where it was actually
+required--every instance where someone thought it was required was
+better modeled by using that GPIO as the backlight enable. On the
+other hand, the "enable" GPIO in the Samsung OLED panel driver came
+straight from the panel datasheet and it makes sense for it to be in
+the panel driver since the backlight is handled straight by the
+panel...
 
-  arm,static-trace-id
-
-This is then consistent with the terminology used in the comments.
-
-Thanks
-
-Mike
+In any case, I guess if things are working it doesn't really hurt to
+take it in panel-edp for now...
 
 
-> +    description: If dummy source needs static id support, use this to set trace id.
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    minimum: 1
-> +    maximum: 111
-> +
->    out-ports:
->      $ref: /schemas/graph.yaml#/properties/ports
->
-> --
-> 2.41.0
->
+> But that was the reason for posting this as an RFC.  I was hoping
+> someone had some hint about where to find datasheets (my google'ing
+> was not successful), etc.
 
+I don't personally have any hints.
 
---
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+-Doug
 
