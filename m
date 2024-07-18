@@ -1,96 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-26604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36A44937100
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 01:10:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id DECC0937103
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 01:12:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 93886281B02
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 23:10:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7B8B4B21213
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 23:12:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 268DC14532A;
-	Thu, 18 Jul 2024 23:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C640E14532A;
+	Thu, 18 Jul 2024 23:12:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="TUN7n3kF"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Po0/GAeF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4A977F2C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 23:10:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E9277F2C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 23:12:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721344231; cv=none; b=PX5qWAPzJm0o5d5SSX6kO0SzrZS7bv1gJ+bJ9Un7qw6YfwePIkPrEGTrMj6cIuUbYbS0A3+bJZg9MVaJgHNSQSp6tDrMbZflYdP34acFCGO5SCca1sZy4MpZbaOd7OcyumE4qefwaE5HZo5NHZNMIJNWigxdikNYyXa5AArO4eA=
+	t=1721344325; cv=none; b=csuBjhVQs1Z6di7Fn3eMUW8DOooRCyJ5BpngxVxCJlyDHqm9VmK0vo5nZPvkGMLmGDNBKLYC86wMXj+IxLr5CsWRdyoCkH/vJL9zwLcK8ol89FyaO6f2N38bbAlT8QieNLBHQYou0BFPc8akdpWJeHlEz/gqSciRs3VrBbwUN+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721344231; c=relaxed/simple;
-	bh=5RsoVd5sliGC6jDsRNW/LxfNCShIK7sBspxYM3SJnoI=;
+	s=arc-20240116; t=1721344325; c=relaxed/simple;
+	bh=7xPyN/a++eW85lgR9HwYmEav3SElM8LKOPms+Vep1Zo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MixlCm3SlgXiItYnsGKru9L3M00C8y9UReuk2f8in2kP/3yIu7VZIt61+hFPkXLVC62J/lsFYMETk7XV9U628v54nSphRiH6dugZIuemN0vPPNPtBHxw34c1yHyfYz0x/////ryo0bLe02U3KuTNQi38Yqg17wsEIzMpvMC8Ook=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=TUN7n3kF; arc=none smtp.client-ip=209.85.222.181
+	 To:Cc:Content-Type; b=iyt7MhJF8CkYTwIq99JC8xyRC6EP+RjPfHe/+UqFBLwrfrcpHzB/BVZxEUhnqA1LGgtUAtJILNp0qnpvyMRDPiXKtOq+oHvBNuR3NDJ2Nv5i+PS+AaLQPe1nwd+DyVnTCZZ03aR2bJlMjjd9vE8VKZXCjucav3kQGKwFWgmIAQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Po0/GAeF; arc=none smtp.client-ip=209.85.219.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-79f16cad2a7so52057385a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 16:10:29 -0700 (PDT)
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6b78c3670d0so8105266d6.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 16:12:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1721344228; x=1721949028; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1721344321; x=1721949121; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Y8/jfrbQkF4NocC2ktC4TuqIHUerHtNF+x1nkqsRqBY=;
-        b=TUN7n3kF0uiVRVuR/Jr9HNKb4EN9WCn3mySUMPX3brqtbq3jWa48lREn4499xLp2iI
-         6JX7eXbKOGUSyWpmICFgMWvNFTRFq6AEHP7XNeqVN9hyB/qwScF54mNPM3nCdV5yujw8
-         BGSqtW5I0qNvQyBKK+n9dpRJUDbvXGqc5yT3c=
+        bh=l9khtoctNp6Gh3eP9HY6HLZ7GyEjG4eZ3UQ7stBpEWc=;
+        b=Po0/GAeF+4CpcKiuBKrfubZcLYgBVpDCRSUBY4HeBOJ+jX7eEG9oJMNgyiLkG39EKU
+         5M5fhaDmw4x5Tfu+l49CzKiNv9X9kY0EA60PEk2uS7TlOo8Z4brOuOB/CeO7WSiWI3cy
+         Px00XIFUj9FmDZz2jyT0bic5gi7IiH+UUObZs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721344228; x=1721949028;
+        d=1e100.net; s=20230601; t=1721344321; x=1721949121;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Y8/jfrbQkF4NocC2ktC4TuqIHUerHtNF+x1nkqsRqBY=;
-        b=NtRQ7HvQ46VpM/U66QimM49yJsjm0DFnXaFA6boJuH3b1B07/PZITndtfmbqxMZYsT
-         2NJpiNyKbARjQ8MDtqL8pn3zUh8RJRa01WbyT5kPMtNBNMcmq1ItsW9Q0CMGa3DBu2kr
-         klE0ysbQKz4sbcTff/cp57kXlgEbOHlyDtceHvGBcNWGSn10tcyIfFaAhOqYhseh2I02
-         6ZoZ6lWabnIz04pm+0lqHQNHBK+EWYCHeY7aXVgpbedKecSkh+KOgILOuXK/Ihm9UsYl
-         3xJICvT6AJOEqogT8Z5c+4jObCETGnzQjyK5GDFkyGzsTScCFUofM39vX3gaIqrDEJok
-         Us0Q==
-X-Gm-Message-State: AOJu0YzqUO5yGODimF53Y8Pp3AYxSEUsQOiDgLQviJHs9TMR6CkYCS0d
-	fdiSNEjHJGLf3U1b3URM3UCu2hDhvnT6oNGlMs9laJIhxobDJk/Nh96bum076qGM2VvDV13TuwQ
+        bh=l9khtoctNp6Gh3eP9HY6HLZ7GyEjG4eZ3UQ7stBpEWc=;
+        b=P6zRLVeibDAHemYJsZL55p7+jp1+EQBdBDr85fE5AulRkJ40sC3iEfBKqxkC58c63+
+         /oVNc336SGpA/4d4u1RrwrIJhjHYVc+qEkOes/gHTs9r44YYj7BymHA7zObQtE79YWD6
+         RmyDEzFlvSXSUMWQE/Ll3Qxb6czmSQ3Il3vDvya05BeehSdg2+kJU+a2dv7/NzSixbZA
+         vmusIfjO+2cbK/qKf8qteY5A512cwzR4mxG6ux3dC5tECtz7BK63fb60sxdNxO8jDvGj
+         AMWRJu76GhVFuDDNzgA4D2+NSxKkgKABLL3uqn3tLLqBBWG+b22U9oYKkm+TTOvECqYe
+         32eA==
+X-Gm-Message-State: AOJu0Yz6s09duuopddSHpSXfJaD7Z8SqneIvBTXneVwnltvs0GcefL62
+	jfGaVVJOnrVEg6IolrvqxbWKwHU0+cocuAeSQ7bqAfhWh3VzetMsvOqeFcpp/3QTPmLprmkCMco
 	=
-X-Google-Smtp-Source: AGHT+IFgQq0IhCviw6+xUbYhrtxiwundXmVuFjpFIF71LIYEAyhWLRr/3xCNS3sdBLQUTkPqKxY0xw==
-X-Received: by 2002:a05:620a:4614:b0:79f:11d7:8175 with SMTP id af79cd13be357-7a19392329amr255810785a.32.1721344228072;
-        Thu, 18 Jul 2024 16:10:28 -0700 (PDT)
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com. [209.85.160.170])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a198fbfb73sm11064185a.46.2024.07.18.16.10.27
+X-Google-Smtp-Source: AGHT+IG2Qz2zKQrnqJwtH1czrNW4GL8HNTE/92RWq2+k9StW4PD6i21CltxCUh0fbWOHuDvSrDPPGA==
+X-Received: by 2002:a05:6214:1c0f:b0:6b0:7413:e0e9 with SMTP id 6a1803df08f44-6b7ac7b5bf7mr4028676d6.5.1721344320994;
+        Thu, 18 Jul 2024 16:12:00 -0700 (PDT)
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com. [209.85.160.169])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6b7ac9c3b2fsm771616d6.99.2024.07.18.16.12.00
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jul 2024 16:10:27 -0700 (PDT)
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-447f8aa87bfso141361cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 16:10:27 -0700 (PDT)
-X-Received: by 2002:ac8:4cc6:0:b0:447:e0a6:9163 with SMTP id
- d75a77b69052e-44f9ac92860mr946841cf.14.1721344226869; Thu, 18 Jul 2024
- 16:10:26 -0700 (PDT)
+        Thu, 18 Jul 2024 16:12:00 -0700 (PDT)
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-44f9d7cb5c5so5771cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 16:12:00 -0700 (PDT)
+X-Received: by 2002:a05:622a:4187:b0:44b:74aa:1838 with SMTP id
+ d75a77b69052e-44f9c6519cdmr636121cf.5.1721344319670; Thu, 18 Jul 2024
+ 16:11:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240718184434.6307-1-robdclark@gmail.com> <20240718184434.6307-2-robdclark@gmail.com>
-In-Reply-To: <20240718184434.6307-2-robdclark@gmail.com>
+References: <20240718184434.6307-1-robdclark@gmail.com> <20240718184434.6307-3-robdclark@gmail.com>
+In-Reply-To: <20240718184434.6307-3-robdclark@gmail.com>
 From: Doug Anderson <dianders@chromium.org>
-Date: Thu, 18 Jul 2024 16:10:15 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VmM=Qgm8e-uTF4OMk5-qnpdgb=6fFDFt3v=WCAujUU3w@mail.gmail.com>
-Message-ID: <CAD=FV=VmM=Qgm8e-uTF4OMk5-qnpdgb=6fFDFt3v=WCAujUU3w@mail.gmail.com>
-Subject: Re: [PATCH 2/3] drm/panel: samsung,atna33xc20: Add compatible for ATNA45DC02
+Date: Thu, 18 Jul 2024 16:11:48 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UDopTSfpfzjUDPFQKyhUTNOk9z_Q5qnH4Up24M0xZoPQ@mail.gmail.com>
+Message-ID: <CAD=FV=UDopTSfpfzjUDPFQKyhUTNOk9z_Q5qnH4Up24M0xZoPQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: x1e80100-yoga: Update panel bindings
 To: Rob Clark <robdclark@gmail.com>
 Cc: linux-arm-msm@vger.kernel.org, 
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Abel Vesa <abel.vesa@linaro.org>, 
-	Rob Clark <robdclark@chromium.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	"open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>, open list <linux-kernel@vger.kernel.org>
+	Rob Clark <robdclark@chromium.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -101,17 +100,35 @@ ote:
 >
 > From: Rob Clark <robdclark@chromium.org>
 >
-> The Samsung ATNA45DC02 panel needs the same power sequencing as the
-> ATNA45AF01 and ATNA33XC20.
+> Use the correct panel compatible, and wire up enable-gpio.  It is wired
+> up in the same way as the x1e80100-crd.
 >
 > Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
->  drivers/gpu/drm/panel/panel-samsung-atna33xc20.c | 1 +
->  1 file changed, 1 insertion(+)
+>  .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts   | 13 ++++++++++++-
+>  1 file changed, 12 insertions(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/a=
+rch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+> index f569f0fbd1fc..37ef05f8c7e0 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+> @@ -592,9 +592,13 @@ &mdss_dp3 {
+>
+>         aux-bus {
+>                 panel {
+> -                       compatible =3D "edp-panel";
+> +                       compatible =3D "samsung,atna45dc02";
 
-I believe this patch should be dropped and, until there is special
-logic needed for "samsung,atna45dc02" we can just rely on the fallback
-compatible ("samsung,atna33xc20") matching.
+Instead of the above, I believe you should use:
+
+compatible =3D "samsung,atna45dc02", "samsung,atna33xc20";
+
+...which makes the dts work without any code changes. This is what we
+decided upon for Stephen's panel [0]
+
+[0] https://lore.kernel.org/r/20240715-x1e80100-crd-backlight-v2-0-31b7f2f6=
+58a3@linaro.org/
 
 -Doug
 
