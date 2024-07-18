@@ -1,134 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-26567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BACE4934F33
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 16:40:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A775E934F51
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 16:46:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 738512842F8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 14:40:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63F49281A11
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 14:46:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19EE51422AD;
-	Thu, 18 Jul 2024 14:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 000E57828B;
+	Thu, 18 Jul 2024 14:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZrXMuw0u"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="iW1RlZB6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9B812C7FB;
-	Thu, 18 Jul 2024 14:40:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544B713AD32
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 14:46:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721313634; cv=none; b=NYww/wM/lPzChXAXmaQEwPl67ODheuC4bzFw7rRj5kVwMhZminyU/PmzD8IFIKep8Pkeh05VtuknyUmNpxGdQzdNNUcOJp1e74ZQFhlR4Ty2tDkZz3sbGNXCcDjlBQAj9DL5JHvsQ+qhSe2dxkoA0iHo7XhWPVR0ZG7pT/jmelk=
+	t=1721313979; cv=none; b=o80z+aztHC2GYXHDEcs8NTbOmi7kBKmcdMhMpmBVQ7K+liCChEJbPhin8Eq67341tmbGvURwLqeUL2zBBp659d5143DZK2JP6wVYdO+WoUVJjS7gof3TUO2MOGsUBniAadVFMqnXJRH4TDaTxYmc6gF3wc+tQQkP6coy+vBvshM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721313634; c=relaxed/simple;
-	bh=YwZzyUITuCl4ZqII9n1ohNvr2Pwme3YCK721bGwwxXU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NBf7yuv2C+FsFEnbpgN7rlphf07Ri6HLWSvPj0AHAwwEviZvlYsDzhlL2QAbB7A572dmZGEefAf5TlvxxgDMWZZSOekNYtAHDaig8I7Gf2Cu+1zXQCEYD5ybD1103mWpIhdL7Q6r4JyvC7LyjsMG9UR/VmpK2w8HV8/983Xv/9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZrXMuw0u; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46I89Hgm029089;
-	Thu, 18 Jul 2024 14:40:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SNT71tPy05ChRz7sis8j+D9KLmuFbuIxE/qs7WYt1fU=; b=ZrXMuw0uLCNZ88mw
-	/LdvEFHXGvzh6gHQC3WRx+5f7BoPSa0Lmh75o/4Kmf8jdsyNAY9ZvLay/KJgYJRQ
-	u4wTxNWqoYZvGMCNTjjdn3BgDC6cRZTvCNDOKTOd7r8IsGcprJPu3q12gKqmUZnp
-	TagXGuNmw1VvXfE2L5VE9h8BX6F1blpudIo9UJepRelPhbCFbH6HhMckHXASeokg
-	Kyk+obcfWcUXJSIp+9kSu8hyXty4UrenZjAEvRXwsXS8o9NomtuFy69c+s79grFG
-	JcfHMZrYRC1jwYMYI/WFeXMJp2VF+ozi+aD9Ha4mSMz7zO6Qy/prMG+Jt7s6Ugb/
-	2h32aQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40dwfs5sdd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Jul 2024 14:40:20 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46IEeJIm029753
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Jul 2024 14:40:19 GMT
-Received: from [10.48.247.102] (10.49.16.6) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 18 Jul
- 2024 07:40:18 -0700
-Message-ID: <d44fdc0b-b4a7-4f36-9961-c5c042ed43df@quicinc.com>
-Date: Thu, 18 Jul 2024 07:40:13 -0700
+	s=arc-20240116; t=1721313979; c=relaxed/simple;
+	bh=ItEYfyU78HUDQ4/9fhXGu8NLyqmW1vdphw7TfYOCTU0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lCvN5Sfh/thWf0JLpb/UjWYVAKOzr2q86waSgBSQ0db8V5jbyRd+lk1QgyO1frjyEZ2fhFyX65Bx/B448vp7p45wV7MwthK4vs3oQj10WDxEc/G4jRdycIXHNvxg0g2UE6iQjIUByCNSbany5X6T+CLSKO+CU/eV9m2n92/hBEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=iW1RlZB6; arc=none smtp.client-ip=209.85.160.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-44acdd30c3fso1905541cf.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 07:46:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1721313975; x=1721918775; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ItEYfyU78HUDQ4/9fhXGu8NLyqmW1vdphw7TfYOCTU0=;
+        b=iW1RlZB6E4R8CHisAXCGIyocGXZTD5+1CGoYmrPO3VK7m/rBBrys3L/BXKKR1k4Biy
+         rj35ewsWUUKoAKCwEVE8nA+/7XkbU+wVuqNXbsXTjoiWXAN/GJrMbiI6CAXb9WboUub/
+         Oh2bzwObOA4xRcwMA9Nr0zGdihUGAAJFfZzfQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721313975; x=1721918775;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ItEYfyU78HUDQ4/9fhXGu8NLyqmW1vdphw7TfYOCTU0=;
+        b=FXhTnEGnl1V7FoAvvUvt7a4aE6xeJEnq3eRuGefHwmgg1lr8zKSjnEsbzTqsopdZts
+         jtrgRcEOtS6Ek6qvlymoLzI/xB6fD2rUZsMre9gxJux9K/nbRU2MgRgMvEFFR1qdYXnO
+         CNCqYjawsA1IyR5DEZ2xyaH6IISDg/rqDP0o1qXv2Jjt05pMoKZcjz8N3kIr+FiD1OTa
+         Ccw5qY8evcVylANwQ9mXBiVEQI2uoFYtGxJ92Ocl4bArkQtcVcSunuUFsRwCCNsGWUWA
+         JruwV1rTT9sUKrOFDdtOFDLQIuodXOVYnR7Eva3QaEVzcmkRMFrvG6dxRZUBwHKbV9ey
+         sEZQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX39PdoPOJDXq0kftIgr+i30vIoTb/0g+52DfAlCAt7wt8D1CCCOCe6PD4RIT708SYgy35/gin5ZOPDN/lfr9ggNnIzrtAqe2h7zYtqaA==
+X-Gm-Message-State: AOJu0YyXhwdR8hdMBvLN37ZWgedUnYwJEKnc5kbUuMliW5WVgXGsWFzQ
+	BGpXhqCxi7A8xK5jmkoKmEqYeDmUMTHDHlpxS7/EASK0kjKtT92xBeOXKCeAEwgwUsWjiUEJrTA
+	=
+X-Google-Smtp-Source: AGHT+IGrGyC/YJE1fG0JJAdbK0JvzSrZOjSdN7OtUoWSw2uB03bGPe/IG3R4VS1btpyxRAp2+anwmg==
+X-Received: by 2002:a05:622a:292:b0:447:f105:e6dc with SMTP id d75a77b69052e-44f9696ad9cmr14072541cf.4.1721313975331;
+        Thu, 18 Jul 2024 07:46:15 -0700 (PDT)
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com. [209.85.160.175])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44f96a29b94sm3030571cf.57.2024.07.18.07.46.14
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Jul 2024 07:46:14 -0700 (PDT)
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-447f8aa87bfso156641cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 07:46:14 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWamnKQzoegizRqLCgn1ADRVPAvaVH04j8r3ipwQyneCUTUq0uu2eCdjTTHCqUJMHDcoIeim3g1gxdr0sjRq1zhPxYNx1TNSROjFi4v7Q==
+X-Received: by 2002:ac8:6d08:0:b0:447:e792:c797 with SMTP id
+ d75a77b69052e-44f96af537emr962911cf.29.1721313973898; Thu, 18 Jul 2024
+ 07:46:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] arm64: dts: qcom: x1e80100-yoga: add wifi calibration
- variant
-Content-Language: en-US
-To: Patrick Wildt <patrick@blueri.se>, Kalle Valo <kvalo@kernel.org>,
-        Bjorn
- Andersson <andersson@kernel.org>
-CC: "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet
-	<edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni
-	<pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad
- Dybcio <konrad.dybcio@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>, <linux-wireless@vger.kernel.org>,
-        <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        "ath12k@lists.infradead.org" <ath12k@lists.infradead.org>
-References: <ZpV6o8JUJWg9lZFE@windev.fritz.box>
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-In-Reply-To: <ZpV6o8JUJWg9lZFE@windev.fritz.box>
+References: <20240715-x1e80100-crd-backlight-v2-0-31b7f2f658a3@linaro.org>
+ <20240715-x1e80100-crd-backlight-v2-1-31b7f2f658a3@linaro.org>
+ <20240715-scorn-canning-a7f23b9e2039@spud> <CAD=FV=U-nOMu-JDQ3T=ZRJ-rZ0BTtyzFVfnzbtCJdbRzAq3YMg@mail.gmail.com>
+ <e017259b-bc62-4b57-9276-b834237225e1@kernel.org>
+In-Reply-To: <e017259b-bc62-4b57-9276-b834237225e1@kernel.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Thu, 18 Jul 2024 07:45:57 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VY5Ug3TfUo1RctiVQrHUjuod15HA8BxAyWdd_0bK8_Dw@mail.gmail.com>
+Message-ID: <CAD=FV=VY5Ug3TfUo1RctiVQrHUjuod15HA8BxAyWdd_0bK8_Dw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] dt-bindings: display: panel: samsung,atna33xc20:
+ Document ATNA45AF01
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Conor Dooley <conor@kernel.org>, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: B5AeWhvGDVXLAGUShuXalfOdCrnjVIRi
-X-Proofpoint-GUID: B5AeWhvGDVXLAGUShuXalfOdCrnjVIRi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-18_10,2024-07-18_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=731
- impostorscore=0 mlxscore=0 phishscore=0 suspectscore=0 clxscore=1011
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407180095
+Content-Transfer-Encoding: quoted-printable
 
-On 7/15/2024 12:38 PM, Patrick Wildt wrote:
-> This series adds the missing calibration variant devicetree property
-> which is needed to load the calibration data and use the ath12k wifi
-> on the Lenovo Yoga Slim 7x.
-> 
-> Patrick Wildt (2):
->   dt-bindings: net: wireless: add ath12k pcie bindings
->   arm64: dts: qcom: x1e80100-yoga: add wifi calibration variant
-> 
->  .../net/wireless/qcom,ath12k-pci.yaml         | 59 +++++++++++++++++++
->  .../dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  |  9 +++
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi        | 10 ++++
->  3 files changed, 78 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/wireless/qcom,ath12k-pci.yaml
-> 
+Hi,
 
-+ath12k mailing list.
+On Wed, Jul 17, 2024 at 11:19=E2=80=AFPM Krzysztof Kozlowski <krzk@kernel.o=
+rg> wrote:
+>
+> On 18/07/2024 02:21, Doug Anderson wrote:
+> > Conor (and/or) Krzysztof and Rob,
+> >
+> > On Mon, Jul 15, 2024 at 8:31=E2=80=AFAM Conor Dooley <conor@kernel.org>=
+ wrote:
+> >>
+> >> On Mon, Jul 15, 2024 at 02:15:37PM +0200, Stephan Gerhold wrote:
+> >>> The Samsung ATNA45AF01 panel is an AMOLED eDP panel that has backligh=
+t
+> >>> control over the DP AUX channel. While it works almost correctly with=
+ the
+> >>> generic "edp-panel" compatible, the backlight needs special handling =
+to
+> >>> work correctly. It is similar to the existing ATNA33XC20 panel, just =
+with
+> >>> a larger resolution and size.
+> >>>
+> >>> Add a new "samsung,atna45af01" compatible to describe this panel in t=
+he DT.
+> >>> Use the existing "samsung,atna33xc20" as fallback compatible since ex=
+isting
+> >>> drivers should work as-is, given that resolution and size are discove=
+rable
+> >>> through the eDP link.
+> >>>
+> >>> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> >>
+> >> Acked-by: Conor Dooley <conor.dooley@microchip.com>
+> >
+> > Can you comment on whether you would consider this bindings a "Fix"
+> > since it's a dependency for later patches in this series (which are
+> > "Fix"es) to pass dtbs_check? See:
+> >
+> > https://lore.kernel.org/r/4bca316a-2334-425b-87a6-e1bb241d26b5@linaro.o=
+rg
+>
+> The patch itself is not a fix, for sure, but it might be a dependency of
+> a fix (which you wrote above), thus could be pulled to stable as a
+> dependency.
+>
+> I do not care about dtbs_check warnings in stable kernels, mostly
+> because dtbs_check warnings depend heavily on dtschema and dtschema
+> follows mainline kernel. Basically if you had warnings-free v6.8 but try
+> to run dtbs_check now with latest dtschema, your results will differ.
+>
+> At some point in the future, I could imagine "no new dtbs_check warnings
+> in stable kernels" requirement or at least preference, but so far I
+> don't think there is any benefit.
 
-Qualcomm expects, on x86 and Qualcomm-based ARM devices, that this information
-come from ACPI.
+In this case it's not about whether it makes it to the stable kernel
+but about which main kernel it goes through.
 
-That support is currently under review:
-https://lore.kernel.org/all/20240717111023.78798-1-quic_lingbok@quicinc.com/
+If we land the bindings in drm-misc-next right now then it'll be a
+long time before it makes it into Linus's tree because of the way that
+drm-misc-next merges. It will make it to Linus's tree at 6.12. You can
+see the drm-misc merging strategy at:
 
-/jeff
+https://drm.pages.freedesktop.org/maintainer-tools/drm-misc.html
+
+If we land the dts change (a fix) through the Qualcomm tree as a fix
+then it should target 6.11.
+
+This means that the 6.11 tree will have a dtbs_check error because it
+has the dts change (a fix) but not the bindings change (not a fix).
+
+One way to resolve this would be to treat this bindings as a "fix" and
+land it through "drm-misc-fixes". That would make the bindings and
+device tree change meet up in Linux 6.11.
+
+Did I get that all correct?
+
+-Doug
 
