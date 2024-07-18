@@ -1,81 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-26579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DE5C935049
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 17:58:08 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D6E693504B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 17:58:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 57882281ABA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 15:58:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 53FE91F22E95
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 15:58:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51583145332;
-	Thu, 18 Jul 2024 15:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 151A9144D25;
+	Thu, 18 Jul 2024 15:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PvRVKrVW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w6MkYYW6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B21145320
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 15:57:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91994144D20
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 15:57:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721318268; cv=none; b=Ru+rZVjc4GIP2FN0stEor4saQlx++C4meZOCxi1fnYrSjF9GvnbbLeMnuChaQL1v/1ucJaofxsWlvwuWeiORIm/PkRLAY//riKOZLX1duqPErjIANGCFXdbQy4nkFmqzew0W5Ov5SEr4PiPhukvBdRZ5nI3/sgCMNpLFY8+6Xpo=
+	t=1721318276; cv=none; b=liZHuYHDmz0Z3DTaIYG9LsRo/4SVqzRp8oKS8GtMzugW0eMMkW1HEY2CqAi5+jwK1Pm9bQ+0mCO2yuKJbtlVCJk8KqsEzVcFlfX9s2tp8byb7i8yaB42DYeehhkKPNxLnJtHSt//hQyUdgTSwI2vWKgep4SMEcHPqE01AAgEx/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721318268; c=relaxed/simple;
-	bh=16fmhBnx+VjuzqSJhVynh6fThoOJBLLG3JzTtLr+Wzc=;
+	s=arc-20240116; t=1721318276; c=relaxed/simple;
+	bh=pEoCcyP8SmbTARKtqj+yZyS8c0B/jW2B05S8wHRAb/0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ArU7yTgTtA4Nrr7ovp7cdOwqcHnpq6lJwKd+i/xG+48In4zdBLx1S4ff7ZnydNXB12j9jUDdz18HPly7Tn/cg6/IMp+cglhf0+lBz7tbS3v76d7v+u5OMFsAMz/Pmu6FUsU/YCVNPdK96Afw8xbD3Dy0riyrNU+dO2b5oem7L3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PvRVKrVW; arc=none smtp.client-ip=209.85.210.178
+	 To:Cc:Content-Type; b=II/TdHSAULE6l94pCfP0xlYQSG4MFJmW0POz7lhUmN2WGQ0LarfqfEXZBdMTGMEVcojpRrCJ83g9WWcwxJ32hz8KTeLzugEosEMtv7x9SroirQV+BV7q1kT2rkTITxNcCwlJxNOoC0jDnTpjExLVWWvGkyIl9xcFxwIXr0u5o5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=w6MkYYW6; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-70b04cb28acso2689b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 08:57:45 -0700 (PDT)
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-70b0ebd1ef9so657338b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 08:57:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721318265; x=1721923065; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1721318274; x=1721923074; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=aUOazNtZgahbZNIe1ko3EtaFbZsZJypf6FKKEyap+CA=;
-        b=PvRVKrVWef7qb/oKCUuQtfMRj5EYg9TCJpp8axfvLMEkS7MZjMtYql5kSAxjU8wmZE
-         Jm03uJJItS2p5WZ8W7Rio9l8U5yQLtllumfuG9xG/65NpEuKfvD2y0PRhahONm2wgId6
-         FeL6NvxwRNAmg8kaUwO+/LAK3jU/Mk+oOzYmyy/yZ9PJIrhWEMBBWcjBSRAtm/1J3nvc
-         h2O0UMm7uoU6YQ3jY3z8VmyxS1nFXkVH3QzNDYcMwtSDPFZvH1P5yD1BrNAnjgOOKprb
-         gT3F0mkJ1V+uuRW7YfXASKXTrsGh5YpynzZDQ9TvoAGU2HR3wVYh9r1ktF6RyuL1MG/1
-         5pzg==
+        bh=aMIVUi1+XtyWiv2jSx6v0C/sfNX/sBiBYCcujxRlArQ=;
+        b=w6MkYYW6Pj5AJaHc7GRDubgJkaYhQIbJLJEb662r1mPe5WPmspO6ItGRMKylIeATA7
+         MAEfl1JSxgOs9ZVqP+bJuYLQj05Il7CU6P6jDJOUdEqqe70+MEHXroz/oDBAvv+WlJIK
+         inphK7/VA8/D6DY1HpBlFrE3ZcTH1vSS9TEVB14DoQiTGl352a4fPxyu0LszHoOq5X5g
+         gj1JhtCbjT6x6zI5LSVlm8L337duQ+1NzbjdqGAhE1xCBVk6Tp1FhS1W5azo4kf4A0dZ
+         3y8yLDwbG6A95gb70wx6P9yF2W7EtLx52YB03GXvcOuCFA/iYhJsGDri5VQtGrDpNB9F
+         Xe4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721318265; x=1721923065;
+        d=1e100.net; s=20230601; t=1721318274; x=1721923074;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=aUOazNtZgahbZNIe1ko3EtaFbZsZJypf6FKKEyap+CA=;
-        b=V6Vo9RWHzBm9QXYzNP4+FU6MVA8hIxM0JfNh8DBn7S6pyVE6uD+Nb/CPXrRiJsFLzc
-         4WP1pKJT48VGQzx/Z02MbX+fYmJNCRUoeROrIMlTg9SiX8XcvL8WPMmiTRY29XPLJw1F
-         yzpvBevSBEF3qbeCsEFqD9OxRI3Ay60SrpzDtLn2dDFFQ+tJuolm5n5HMuNR32jmQ4zI
-         8sbQ78ZvkQNtHbubu9SbbpDrDT/0A8YQpflL+p7Z7qbgBaTECrsfMxE+dfcvMKxXw5j9
-         ScI91t/6LbUJ9lU+S9QKArElk8bDw479azBnP4eKXHgyBCYR31Bj0LnS0TvlqoS139cb
-         /fkA==
-X-Forwarded-Encrypted: i=1; AJvYcCVQLVCYEKQes8aBrzOqXSKLVXLE6cKw1cLw1lsaIVcJbSrLlS982G9jcxnuZea9QXFoRsTbcAoINNFYqacaeTMgbaBQoIS0qxC9dZitmA==
-X-Gm-Message-State: AOJu0YyP+k4PNK1d8TnumdBN2xl/n/fetyFOwIz/NyC2XH/AWNGcZt0b
-	xjX/gXVAAdHEPc8m6VXVpHakyr4rsoaZk/BZfqze90p84CfNbGUaaKn5H2w88PQbtvbiinoCASf
-	JDIvSutw3ZXv7MLGEt1n4FzI10V2KLK+qOXIWyw==
-X-Google-Smtp-Source: AGHT+IG8BxlqkGWqEeb+721jjFcIFxtCMvBNkuRDQHPWXpgXL4Mo9erFwADNMWLFeNyYDIxwkO/2RlwZIh37VMSzv5I=
-X-Received: by 2002:a05:6a00:cd0:b0:70b:5368:a212 with SMTP id
- d2e1a72fcca58-70ceebb6d6dmr4399389b3a.15.1721318264694; Thu, 18 Jul 2024
- 08:57:44 -0700 (PDT)
+        bh=aMIVUi1+XtyWiv2jSx6v0C/sfNX/sBiBYCcujxRlArQ=;
+        b=AZXRJq4KN6yAQCYNSf90faosgkDh3OZZvtVZTw/TLtTOQeXV+c264FsPZt+Y9r0stQ
+         cumOoA3rtYphCfxHHs1hNg99u3YyjBfP6thdPeh7CDO0hOrR99KatRG1hCJhyV+osA4B
+         mBcnK+HL2pJgrBOXmqJFpcKEZJECu+hQycs1JVSq7PN0GbujITFhCfaPxdhMVUgmIG4a
+         pD4Uva6l7IOJFGSeMympq140HX7OYxcjiEF2H+iuQ0ix0kgy6ZDVF8VapJYzIQSmPdFg
+         aEH36dhyUiPZ4GQjRB1nwzOhSVvwBmPWh1/aEJ+VW077oCGDvqS3e+P7NDiH3IZKAChF
+         554g==
+X-Forwarded-Encrypted: i=1; AJvYcCWRUNnKRi2RLP/yySrT8JLF5KEzHwZJ83fD/aYj2ZsV/fuBktyXZpZjxHUIEJk9PLEy+FFsTMFrBJCAomG5gt7W0bvGExQuA/7MuncmDQ==
+X-Gm-Message-State: AOJu0Yxk05kNmgVBSAHJSf7b+Gu7mTcWlFFO1rpKwdO9tiuTFqY5Tgvf
+	Ihqabg4hU/TnVqbdYb7CGLoO+okbQla6bEbt3rj+X9vTqHYepPE1fO/XmwBzqTMmtj7D3OJBrNZ
+	9m0O6W28kx8CZXXBiflHEe3Y2LuywCfGwQPYXLg==
+X-Google-Smtp-Source: AGHT+IEpHrWCkUrpjxLliS2sFNiblUo99rdj9g5ppHtWWSZUzyR/mtO39VJ9j9yZKVcVcLEtg/ErSmtMwZdr3DV6WDM=
+X-Received: by 2002:a05:6a00:3e10:b0:70a:ffa5:41dc with SMTP id
+ d2e1a72fcca58-70ce507b90bmr6287948b3a.24.1721318273873; Thu, 18 Jul 2024
+ 08:57:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240626060724.28862-1-quic_jinlmao@quicinc.com>
-In-Reply-To: <20240626060724.28862-1-quic_jinlmao@quicinc.com>
+References: <20240626060724.28862-1-quic_jinlmao@quicinc.com> <20240626060724.28862-2-quic_jinlmao@quicinc.com>
+In-Reply-To: <20240626060724.28862-2-quic_jinlmao@quicinc.com>
 From: Mike Leach <mike.leach@linaro.org>
-Date: Thu, 18 Jul 2024 16:57:33 +0100
-Message-ID: <CAJ9a7VhG4qNLnT87J7OiXpygbtMRZ8uAvNhZhcRCBxovMEPDEg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] coresight: Add preferred trace id support
+Date: Thu, 18 Jul 2024 16:57:43 +0100
+Message-ID: <CAJ9a7ViUyr5YiGT_KfM0LjaifJ9RysfkLZER64z36CPy_fEPJA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] dt-bindings: arm: Add arm,trace-id for coresight
+ dummy source
 To: Mao Jinlong <quic_jinlmao@quicinc.com>
 Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@arm.com>, 
 	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
@@ -88,53 +89,45 @@ Content-Type: text/plain; charset="UTF-8"
 
 Hi,
 
-I have detailed comments in the following patches but in summary we should:
-1) consistently use the term "static trace id" for these devices where
-the hardware sets a non-programmable trace ID
-2) Simplify the patch set by introducing a new API function
-int coresight_trace_id_get_system_static_id(int trace_id)
-This would avoid having to change drivers which use the existing
-function where no static ID is required.
+On Wed, 26 Jun 2024 at 07:07, Mao Jinlong <quic_jinlmao@quicinc.com> wrote:
+>
+> Some dummy source HW has static trace id which cannot be changed via
+> software programming. Add arm,trace-id for static id support to
+> coresight dummy source.
+>
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> ---
+>  .../devicetree/bindings/arm/arm,coresight-dummy-source.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
+> index 6745b4cc8f1c..b18cfd8e137e 100644
+> --- a/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
+> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
+> @@ -38,6 +38,12 @@ properties:
+>      enum:
+>        - arm,coresight-dummy-source
+>
+> +  arm,trace-id:
 
-Regards
+Could we name this:-
+
+  arm,static-trace-id
+
+This is then consistent with the terminology used in the comments.
+
+Thanks
 
 Mike
 
 
-On Wed, 26 Jun 2024 at 07:07, Mao Jinlong <quic_jinlmao@quicinc.com> wrote:
->
-> Some HW has static trace id which cannot be changed via
-> software programming. For this case, configure the trace id
-> in device tree with "arm,trace-id = <xxx>", and
-> call coresight_trace_id_get_system_id with the trace id value
-> in device probe function. The id will be reserved for the HW
-> all the time if the device is probed.
->
-> Changes since V2:
-> 1. Change "trace-id" to "arm,trace-id".
-> 2. Add trace id flag for getting preferred id or ODD id.
->
-> Changes since V1:
-> 1. Add argument to coresight_trace_id_get_system_id for preferred id
-> instead of adding new function coresight_trace_id_reserve_system_id.
-> 2. Add constraint to trace-id in dt-binding file.
->
-> Mao Jinlong (3):
->   dt-bindings: arm: Add arm,trace-id for coresight dummy source
->   coresight: Add support to get preferred id for system trace sources
->   coresight: dummy: Add reserve atid support for dummy source
->
->  .../sysfs-bus-coresight-devices-dummy-source  | 15 +++++
->  .../arm/arm,coresight-dummy-source.yaml       |  6 ++
->  drivers/hwtracing/coresight/coresight-dummy.c | 59 +++++++++++++++++--
->  .../hwtracing/coresight/coresight-platform.c  | 25 ++++++++
->  drivers/hwtracing/coresight/coresight-stm.c   |  2 +-
->  drivers/hwtracing/coresight/coresight-tpda.c  |  2 +-
->  .../hwtracing/coresight/coresight-trace-id.c  | 35 +++++++----
->  .../hwtracing/coresight/coresight-trace-id.h  | 11 +++-
->  include/linux/coresight.h                     |  1 +
->  9 files changed, 137 insertions(+), 19 deletions(-)
->  create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
+> +    description: If dummy source needs static id support, use this to set trace id.
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 1
+> +    maximum: 111
+> +
+>    out-ports:
+>      $ref: /schemas/graph.yaml#/properties/ports
 >
 > --
 > 2.41.0
