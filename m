@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-26529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E9EF9347F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 08:19:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CACD934808
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 08:23:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 84EE6B221B9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 06:19:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 723FEB224D0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 06:23:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75BC147F4A;
-	Thu, 18 Jul 2024 06:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B530D6F305;
+	Thu, 18 Jul 2024 06:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lNPryReU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="moQFoqeI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9276D1B4;
-	Thu, 18 Jul 2024 06:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7076F2E2;
+	Thu, 18 Jul 2024 06:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721283550; cv=none; b=QwydJd0gcs1xOPE/qo2SIRWxEx5CTYwOstfYGYUp9TOM4Fuvbui4bBvLbbPKNMbJVJ80zgDXYznNTpZ5ZmbKE6isLFiofnonstgE1jSOT6yyjfPxOdYLrQGycf+hEoECu0wL6ddWG7kn6IkdA1Jx51e0JvlXhJKfyV+Kc14w2yo=
+	t=1721283815; cv=none; b=C3yCOCxnBC19ee184+6uVt6FmBPBo8Yl4RxPcj0hgQYi4ueVr2F+E+gRPi9lYnA5uhaiEW6Uek/cYuZg90yzqW6FHmWuHp/JwV30067DszmMcpPNnaFmj9sT9iT1NTNVH1yCepVXfwf0yu0DCzirZT8mqgxq7dRRTEhXhfjVDP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721283550; c=relaxed/simple;
-	bh=TTHXDISLWM4G5/ABRq+uF9kx4rxKG5ZyaIr3GrXMmOI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EbZg8ZFurWdz358FqoAoyIRSribho3oM1WoXmZDSxbpPyMYiI5XnLhqCCThgYbrLCSJcTL1fTftVhv0mjh7CRX1toKYxzxeFqB3foQFQH7m2MmedSINIn3qfLfCZYCKh07L/J7VJkBr2oyOfHy1+7SCK0gUyVf5ioqp7zeqi8PE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lNPryReU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F62C116B1;
-	Thu, 18 Jul 2024 06:19:03 +0000 (UTC)
+	s=arc-20240116; t=1721283815; c=relaxed/simple;
+	bh=SvVf4UyACVq2ID5CqwMvBFY+DkB1EhPM0jXf/gJ76X4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Cx6+2gMDk9B0FG728OIvCnTzSjDduUT0aa7GY4o4fRyPHxSmGBvbIr2J8IcAsz6HQTjUXcesyXsvHuknishso9ODlZKs/5MVnIH4hdZMIPN0bfidRtbhSkSSvk7FvlBJpvS1OV3H9WXOiZVD0Bt1jptWbURxfwsNKJLpwa3lWgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=moQFoqeI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC46C4AF19;
+	Thu, 18 Jul 2024 06:23:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721283549;
-	bh=TTHXDISLWM4G5/ABRq+uF9kx4rxKG5ZyaIr3GrXMmOI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=lNPryReUhYV/UiPX3jQcG2E2w3CeY0tDaH+aIvuJGO9w8x05FslO8B6Ln4PX2r+1/
-	 5SnycoRn/HFg6w43rxSIPjsn/LHkCVvGkNF+GUJjgDLFYGB70ZpUwHt3hiH6WEsL3T
-	 m4sTl3bI64+bkqxS3JPYPxQQvEwkJvgr8+ASLmEq8qxlEYyXp2BobWZeoENTDEusCJ
-	 pfdJIaBiptu2Bbv8Kq38UERmQ9J/iDwMBxdfzmWe55szEcpcRnHEZeZ6UjbUHZk42I
-	 hYgXQVuouAe0g7dloGUiOkEfHgp/IXsCt9hRrOWmjqsAZFxqTYUCyerq0pA+B/mWY8
-	 EOYOtBEXoWA0A==
-Message-ID: <e017259b-bc62-4b57-9276-b834237225e1@kernel.org>
-Date: Thu, 18 Jul 2024 08:19:00 +0200
+	s=k20201202; t=1721283815;
+	bh=SvVf4UyACVq2ID5CqwMvBFY+DkB1EhPM0jXf/gJ76X4=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=moQFoqeIpkzwRvXFhfuhUYtbt5B2waEKoqrHRMbU9x9z9u5ZBX5RRJ2YJFuJ+H7WL
+	 gR1EiTqTKG5ZwolO3Zk6g2ZlnbUB3gaVusYg0jyqzbyP8ZxekB1nWg1WuonZmc7I4G
+	 vIkUH5uW1hwRSuRq790gweTM2Ec3PNBgoe2ODurUb7K+YYEVyizA08fv7FK2qj+R1t
+	 MVGXooiSCBOjAe5Y6HQyXFhOOjW3AMUFqGn5SfAgqDxpLgJWjfoHLyHygDlmW0PSC6
+	 5W1HuXbR7Fa8XNM5cYxsVszMNeqHHYTjcmK+2takYkfTGuF7wAPyP1lIldwqBLT1+M
+	 dOJ83pBxCmNpA==
+Message-ID: <fe83d463-b52a-44bc-b122-ed4fa4c20bf7@kernel.org>
+Date: Thu, 18 Jul 2024 08:23:28 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,23 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] dt-bindings: display: panel: samsung,atna33xc20:
- Document ATNA45AF01
-To: Doug Anderson <dianders@chromium.org>, Conor Dooley <conor@kernel.org>
-Cc: Stephan Gerhold <stephan.gerhold@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Jessica Zhang <quic_jesszhan@quicinc.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, dri-devel@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
- Johan Hovold <johan@kernel.org>
-References: <20240715-x1e80100-crd-backlight-v2-0-31b7f2f658a3@linaro.org>
- <20240715-x1e80100-crd-backlight-v2-1-31b7f2f658a3@linaro.org>
- <20240715-scorn-canning-a7f23b9e2039@spud>
- <CAD=FV=U-nOMu-JDQ3T=ZRJ-rZ0BTtyzFVfnzbtCJdbRzAq3YMg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: usb: qcom,dwc3: Update ipq5332
+ interrupt info
+To: Varadarajan Narayanan <quic_varada@quicinc.com>,
+ gregkh@linuxfoundation.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+ quic_wcheng@quicinc.com, quic_kriskura@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240717094848.3536239-1-quic_varada@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,49 +104,61 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <CAD=FV=U-nOMu-JDQ3T=ZRJ-rZ0BTtyzFVfnzbtCJdbRzAq3YMg@mail.gmail.com>
+In-Reply-To: <20240717094848.3536239-1-quic_varada@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 18/07/2024 02:21, Doug Anderson wrote:
-> Conor (and/or) Krzysztof and Rob,
+On 17/07/2024 11:48, Varadarajan Narayanan wrote:
+> IPQ5332 has only three interrupts. Update the constraints
+> to fix the following dt_binding_check errors.
 > 
-> On Mon, Jul 15, 2024 at 8:31 AM Conor Dooley <conor@kernel.org> wrote:
->>
->> On Mon, Jul 15, 2024 at 02:15:37PM +0200, Stephan Gerhold wrote:
->>> The Samsung ATNA45AF01 panel is an AMOLED eDP panel that has backlight
->>> control over the DP AUX channel. While it works almost correctly with the
->>> generic "edp-panel" compatible, the backlight needs special handling to
->>> work correctly. It is similar to the existing ATNA33XC20 panel, just with
->>> a larger resolution and size.
->>>
->>> Add a new "samsung,atna45af01" compatible to describe this panel in the DT.
->>> Use the existing "samsung,atna33xc20" as fallback compatible since existing
->>> drivers should work as-is, given that resolution and size are discoverable
->>> through the eDP link.
->>>
->>> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
->>
->> Acked-by: Conor Dooley <conor.dooley@microchip.com>
+> 	interrupt-names: ['pwr_event', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
 > 
-> Can you comment on whether you would consider this bindings a "Fix"
-> since it's a dependency for later patches in this series (which are
-> "Fix"es) to pass dtbs_check? See:
+> Fixes: 53c6d854be4e ("dt-bindings: usb: dwc3: Clean up hs_phy_irq in binding")
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+> v2: Fix patch version numbering. Incorrectly marked the first version as v0
+>     Add interrupts and interrupt-names for ipq5332 instead of clubbing it with
+>     qcom,x1e80100-dwc3
+> ---
+>  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
 > 
-> https://lore.kernel.org/r/4bca316a-2334-425b-87a6-e1bb241d26b5@linaro.org
+> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> index 6c5f962bbcf9..5e5cc2175526 100644
+> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> @@ -235,6 +235,13 @@ allOf:
+>              - const: core
+>              - const: sleep
+>              - const: mock_utmi
+> +        interrupts:
+> +          maxItems: 3
+> +        interrupt-names:
+> +          items:
+> +            - const: pwr_event
+> +            - const: dp_hs_phy_irq
+> +            - const: dm_hs_phy_irq
 
-The patch itself is not a fix, for sure, but it might be a dependency of
-a fix (which you wrote above), thus could be pulled to stable as a
-dependency.
+Why are you duplicating interrupts for this variant? This is
+qcom,ipq6018-dwc3, not 5332. Read carefully how the file is currently
+organized - there is no entry which has clocks and interrupts at one
+place. You are bringing inconsistency, why?
 
-I do not care about dtbs_check warnings in stable kernels, mostly
-because dtbs_check warnings depend heavily on dtschema and dtschema
-follows mainline kernel. Basically if you had warnings-free v6.8 but try
-to run dtbs_check now with latest dtschema, your results will differ.
+>  
+>    - if:
+>        properties:
+> @@ -442,7 +449,6 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> -              - qcom,ipq5332-dwc3
+>                - qcom,x1e80100-dwc3
 
-At some point in the future, I could imagine "no new dtbs_check warnings
-in stable kernels" requirement or at least preference, but so far I
-don't think there is any benefit.
+So now 5332 does not have any constraints.
+
+>      then:
+>        properties:
 
 Best regards,
 Krzysztof
