@@ -1,165 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-26521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32CBE9347CC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 08:04:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18A949347E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 08:14:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3DC3C1C20E35
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 06:04:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B6E401F22F34
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Jul 2024 06:14:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 548DD26ACF;
-	Thu, 18 Jul 2024 06:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BBE95579F;
+	Thu, 18 Jul 2024 06:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Qxf7Osif"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AQI8odIA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897C14AED1;
-	Thu, 18 Jul 2024 06:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0324440856
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Jul 2024 06:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721282640; cv=none; b=tz00NCSYGALt190gI+ND3J+bFJwxNraygnj82YxGLCTqk9oUuNn7dpS+Gqa7poU4DKKD2YTZCziErK7Q+6xV++oFL9Tts/kM7Mb+sMdcDsG5tr21OuRxxwaXbzq+N8obPlfaEYFjR6oxdV+HzshEBbU+aU0CsZUvPMaaHyi9jRY=
+	t=1721283249; cv=none; b=mNthd0IBv9MUES8c1Up/1WeakEzU3cKquczKQGic/2/IFSrxUFpxrt1LeLok5KbnKdledcXUdaeerL9KLSq0zOOOXbs41MORfXO6YM5lmCa89lasCYGilh/ccPkYIgHQl7zxn65jXokKh0T8eI8xvEzORlqpXQ9blCm0mMvpo58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721282640; c=relaxed/simple;
-	bh=NZ3ng2iZcjXEfmc3D40nbbx/ZyOe2D+kdxHgxKcXUbw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=qv3KFrCh/n0q71/XbJeEk1QX1IEGatOGkxoCoYYNbbbJfneJ7/U/Yocj5LS4QVf+V0B75H4siLY5ud0A3p32Wr3dfn7IqiybxG77gIl9/q+TsfEUpRzbVUzVfEj0pjJ3bCAggkrPAGx6FaZomxCTZevAOYDeEeFFa+OwmKILwlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Qxf7Osif; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1721283249; c=relaxed/simple;
+	bh=Ceyd6pmyDNG9gS9FdaUqyPB1332+25P5MI9MtTRqPfY=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=dQpse0AP0EeQE8/DfjuySjyYnWkYvSyooIDavJ2s17U8wRMCsPvp1nQCpV08EwpCZ4B7Ukp2YBuUytyH4USnBbB1LgfenZ6AL4dyCn9RMuhj7dpo2CjgTybPRFfuvzFj6qk6RWk/PNfHOProYyJkhtv0T8pLSaa92EUf2WVUV+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AQI8odIA; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46I5f4Ns008355;
-	Thu, 18 Jul 2024 06:03:43 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46I2fF1m023029;
+	Thu, 18 Jul 2024 06:14:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=vlQY4FXkD/U9iUSMXAzp43
-	NvlX/hl5sdIfBON9ao3sc=; b=Qxf7OsifQWPHyzJfFo/spQn+E5oXdykDpQNstk
-	kVS4uLgfuaKg2XAS6Ak+GZLUoi83VL3rAlB+IPshtGntI4q+iUGByqoNgoCpJuHE
-	K57jWh0w0c9bnqVDYz2y17sSg6WZAOfq203zLjEj2GgUaH6spi7gJsWkerjgmO+M
-	R72JFxoWK8ma9b7XSXjhLLKFfNKLGMfbFcilXUMtHJNOmJx2LvN9xkoW/Xaxhqif
-	qeD6ODW+eTvU7RGE1kA7k9Tnq1v9+Xo1F/3Rw6R2IgCBEwDik/3gvXDO8yfOwDde
-	19UcjE6BA/VvIvz25dSCEe3XNOex8SXjc8DanrnoGpXbbhBA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40dwfu4f8v-1
+	:mime-version:subject:to; s=qcppdkim1; bh=8+W7iM7gFUzxf7sZZQBexh
+	+F78DRCQAifhrrnR/WZ+I=; b=AQI8odIAjWyCdvqrsZoAEGdJCxVtiGHjPLgnC7
+	tO0SescRoXK0CEuVIpWM4p86L/kTEvSx4PqHn8RlNjOlCC3qqSD2gn8/KUS/gNXp
+	2uj8VRtmSzP6wQPjay1FHTNLupTt+i/whaLOGBAyEEStzEBHrEoE+d6xBC1bOHuL
+	qb/mQVJ3ZWXDPuD3DEP/qDBqrywWmnxsiXC3K5h9ptBRvLYH+o00r68UUwGTd7Z1
+	SuJvCBhEQefC45NHAB5Ha4k26e+Fguw1qzu4G9q4gs7LLOvrtILIclSI3V74XzDI
+	JeaVUAZjkx9xPhBOeTZbvo0+Q8kkHpUN8fppF7Vi+0QOT9zw==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40dwfnmkk7-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Jul 2024 06:03:43 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46I63gkP000418
+	Thu, 18 Jul 2024 06:14:04 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46I6E3Vn024470
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Jul 2024 06:03:42 GMT
-Received: from hu-mkshah-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+	Thu, 18 Jul 2024 06:14:03 GMT
+Received: from hu-gokulsri-blr.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 17 Jul 2024 23:03:37 -0700
-From: Maulik Shah <quic_mkshah@quicinc.com>
-Date: Thu, 18 Jul 2024 11:33:23 +0530
-Subject: [PATCH v2] soc: qcom: cmd-db: Map shared memory as WC, not WB
+ 15.2.1544.9; Wed, 17 Jul 2024 23:14:00 -0700
+From: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+To: <manivannan.sadhasivam@linaro.org>, <mhi@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>
+CC: <quic_srichara@quicinc.com>, <quic_viswanat@quicinc.com>,
+        <quic_gokulsri@quiconc.com>
+Subject: [PATCH 0/6] add improvements to mhi driver
+Date: Thu, 18 Jul 2024 11:43:38 +0530
+Message-ID: <20240718061344.575653-1-quic_gokulsri@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240718-cmd_db_uncached-v2-1-f6cf53164c90@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIACqwmGYC/0XMTQ6CMBBA4auYWVtShp+CK+9hDCnTwTZaSooQC
- eHuNm5cfov3dpg5Op7hctoh8upmF8YEPJ+ArB4fLJxJBpRYSpU3grzpTN8tI2mybAQ3bW10RRW
- 2NaRqijy4z+94uycPMXjxtpH1/1OgQinbXGVYqVoWpcjFGl7BbH6LXa97ssvzypP2GQUPx/EFw
- 1Q65qcAAAA=
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>
-CC: <caleb.connolly@linaro.org>, <stephan@gerhold.net>, <swboyd@chromium.org>,
-        <dianders@chromium.org>, <robdclark@gmail.com>, <nikita@trvn.ru>,
-        <quic_eberman@quicinc.com>, <quic_pkondeti@quicinc.com>,
-        <quic_lsrao@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Volodymyr Babchuk
-	<Volodymyr_Babchuk@epam.com>,
-        <stable@vger.kernel.org>,
-        Volodymyr Babchuk
-	<volodymyr_babchuk@epam.com>,
-        Maulik Shah <quic_mkshah@quicinc.com>
-X-Mailer: b4 0.12.5-dev-2aabd
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1721282617; l=2071;
- i=quic_mkshah@quicinc.com; s=20240109; h=from:subject:message-id;
- bh=lKAIUb1skUkA8cL4EPiYWVNEAhYmNSsLm3hrt7vTGws=;
- b=6hCYuosMLrGlEhy14UfQUk3w8yLUpMDXqzOv48AtomrT5PHSzKYN11QC6DBRnBx54hITFszSz
- irz48zwvpGMBgzDW25DGEFwOod49uUiIxF+HvQid2ULK9iTlxtCWgIA
-X-Developer-Key: i=quic_mkshah@quicinc.com; a=ed25519;
- pk=bd9h5FIIliUddIk8p3BlQWBlzKEQ/YW5V+fe759hTWQ=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: H62BE5nWWiN7h4iV7B0cjeGlWH15OCnp
-X-Proofpoint-GUID: H62BE5nWWiN7h4iV7B0cjeGlWH15OCnp
+X-Proofpoint-GUID: L-_ERA9c7CrLXaLhmXilOu7DzaIWsWLS
+X-Proofpoint-ORIG-GUID: L-_ERA9c7CrLXaLhmXilOu7DzaIWsWLS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-18_02,2024-07-17_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
- phishscore=0 spamscore=0 lowpriorityscore=0 priorityscore=1501
- clxscore=1011 bulkscore=0 impostorscore=0 mlxscore=0 mlxlogscore=999
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407180039
+ definitions=2024-07-18_03,2024-07-17_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 suspectscore=0
+ priorityscore=1501 clxscore=1011 spamscore=0 mlxscore=0 phishscore=0
+ mlxlogscore=859 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2407180040
 
-From: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
+The below patches address
+- memory fragmentation issues: when several iterations of mhi controller
+  register/unregister happens. In our case, we have a PCIe WiFi device for
+  which fw is loaded everytime when 'wifi load' happens. For this, we need
+  to allocate 9MiB of coherent memory with 512K segment size. After several
+  iterations, when the memory gets fragmented and 512K segment becomes
+  unavailable causing alloc failure.
+  
+- debug requirements by printing critical mhi debug registers
+- bug fixes to mhi_irq_handler
+- RDDM timeout issue
+- memory carveout for RDDM segments.
 
-Linux does not write into cmd-db region. This region of memory is write
-protected by XPU. XPU may sometime falsely detect clean cache eviction
-as "write" into the write protected region leading to secure interrupt
-which causes an endless loop somewhere in Trust Zone.
+Gokul Sriram Palanisamy (2):
+  drivers: bus: mhi: Added shared-dma-pool support for mhi_dev
+  bus: mhi: dump debug registers in critical sections
 
-The only reason it is working right now is because Qualcomm Hypervisor
-maps the same region as Non-Cacheable memory in Stage 2 translation
-tables. The issue manifests if we want to use another hypervisor (like
-Xen or KVM), which does not know anything about those specific mappings.
+Karthick Shanmugham (1):
+  bus: mhi: change IRQ_HANDLED to IRQ_NONE in mhi_irq_handler
 
-Changing the mapping of cmd-db memory from MEMREMAP_WB to MEMREMAP_WT/WC
-removes dependency on correct mappings in Stage 2 tables. This patch
-fixes the issue by updating the mapping to MEMREMAP_WC.
+Praveenkumar I (1):
+  bus: mhi: increase RDDM timeout
 
-I tested this on SA8155P with Xen.
+Rajkumar Ayyasamy (1):
+  bus: mhi: check for RDDM cookie set by device to indicate readiness
 
-Fixes: 312416d9171a ("drivers: qcom: add command DB driver")
-Cc: stable@vger.kernel.org # 5.4+
-Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
-Tested-by: Nikita Travkin <nikita@trvn.ru> # sc7180 WoA in EL2
-Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
----
-Changes in v2:
- - Use MEMREMAP_WC instead of MEMREMAP_WT
- - Update commit message from comments in v1
- - Add Fixes tag and Cc to stable
- - Link to v1: https://lore.kernel.org/lkml/20240327200917.2576034-1-volodymyr_babchuk@epam.com
----
- drivers/soc/qcom/cmd-db.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Ram Kumar D (1):
+  bus: mhi: add support to allocate rddm memory during crash time
 
-diff --git a/drivers/soc/qcom/cmd-db.c b/drivers/soc/qcom/cmd-db.c
-index d84572662017..ae66c2623d25 100644
---- a/drivers/soc/qcom/cmd-db.c
-+++ b/drivers/soc/qcom/cmd-db.c
-@@ -349,7 +349,7 @@ static int cmd_db_dev_probe(struct platform_device *pdev)
- 		return -EINVAL;
- 	}
- 
--	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WB);
-+	cmd_db_header = memremap(rmem->base, rmem->size, MEMREMAP_WC);
- 	if (!cmd_db_header) {
- 		ret = -ENOMEM;
- 		cmd_db_header = NULL;
+ drivers/bus/mhi/host/boot.c     | 209 ++++++++++++++++++++++++--------
+ drivers/bus/mhi/host/init.c     |  70 ++++++++++-
+ drivers/bus/mhi/host/internal.h |  37 +++++-
+ drivers/bus/mhi/host/main.c     | 115 +++++++++++++++++-
+ drivers/bus/mhi/host/pm.c       |   6 +-
+ include/linux/mhi.h             |  20 +++
+ 6 files changed, 397 insertions(+), 60 deletions(-)
 
----
-base-commit: 797012914d2d031430268fe512af0ccd7d8e46ef
-change-id: 20240718-cmd_db_uncached-e896da5c5296
-
-Best regards,
 -- 
-Maulik Shah <quic_mkshah@quicinc.com>
+2.34.1
 
 
