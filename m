@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-26638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id F083F93786E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 15:25:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBDFC937870
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 15:26:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7D5B1B209CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 13:25:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8B4352828D8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 13:26:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67D88142915;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEFDA144307;
 	Fri, 19 Jul 2024 13:25:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bXvA9NIl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pS0ffJaP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307E013DDC0;
-	Fri, 19 Jul 2024 13:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E14143751;
+	Fri, 19 Jul 2024 13:25:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721395539; cv=none; b=FzJKJWnyguAO45mCgKlqiaZaJzfF+9cmVzUejby4a/cIDjQTKwfiEPCqTwihC7z15jzp+p2Fnj9MBpkK3z1cKc9c8WHzWXJVPjZO0qcL0l8UxPi96XYlmR+nR/KXFeNvortur9djomUz8Ir+xY/5JZK6ZCY5X3aBdiPX3/XMAxI=
+	t=1721395539; cv=none; b=KJ1mkPRC9fsjZT55svNbldsdbOI/7fnFV8aZTTlOgz7i6YkDSL1BCvoMr+GiltILFzQc2lzXSq2S2nC/Fj62sfu3H11OqNah25NouMLNKPf9Jza5TY+1+tSNTaKt7Iy6KDHH/bBWUQODjmM79HurwdJcGPYy1dMPSbECeT9QlaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1721395539; c=relaxed/simple;
-	bh=DIE5NkW7qO81i3m/Ghl/+SL61kt8Bqn/USbyce9dJws=;
+	bh=4cAkDIcI+gdctKi3KRbi2FbnJnqrEPOi9gLMxHSHIM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dGs6YrgCrQoCUnznubtQCci06sHC/aiB8o7OKw3pS2Xf7Dg2tpsSerbjGyGRqRitfVCfReYKjtE5R9NMR3RucVshqf6hM+nLTTIUz1dMvyWpinPwgcsfE0omyL2KSpMJUmoyOHypTQ/B6AFiHQAJzcjrpO+c+abdVmyMnQDIqgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bXvA9NIl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9689C4AF18;
-	Fri, 19 Jul 2024 13:25:38 +0000 (UTC)
+	 MIME-Version; b=KRSd+T+BVT6CYabHJDPXBIegGhebQ9AM2GUO/AST4niUvsUZDMqjXYvqfYBaNBHfSz/0T/7lnxciO/ypDRdl7Oya7/m90NhVtAW2CPJIAav+UGuF8IWRUHSSTEEtPwr0dOyqIUZQeQtCTxC9DsK8e1QrxYCTGB/O8BEQr+rk66Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pS0ffJaP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED6FC4AF0F;
+	Fri, 19 Jul 2024 13:25:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721395538;
-	bh=DIE5NkW7qO81i3m/Ghl/+SL61kt8Bqn/USbyce9dJws=;
+	s=k20201202; t=1721395539;
+	bh=4cAkDIcI+gdctKi3KRbi2FbnJnqrEPOi9gLMxHSHIM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bXvA9NIlX59KUP7pRyz1mZM4h1kPNKDrtNep8/q7mFazW2C9E3j1iwFeTy2RYi0CC
-	 clYjy64j0mLnljLfGlwvxyjmma00+3G1IhhryZSLBA7XgOcq4rxS1fgEEF0zG+XBh+
-	 nDOlcf72Wt9mxqwTEZe6JwpSH/g/97GKQG9NWPDZgdTGdXaD7K3yq4/ddYLM9GODpx
-	 1pqToYjzC5qDA52Nabh90ggbpl2h+dR0TG5jgyzi63qYulxNl5C/yDupMtcsfNZgEx
-	 BXYtPLDS4Ie5fO6jVGzAgbrMLLEor0JGSnCwlbyMpN8Yb9+Nvp0o1r/MR5aM4mmx0g
-	 S11nY/AX4QGTA==
+	b=pS0ffJaPrZLIUCXyh5fulmgMy9ZX7wGlHzAy74C/h73ZCmD6c0MCUeeqKZUyd68iY
+	 N+Ectyw+FOffGUXMaMzUBHDd1tlLZdiy+mnaglI+oCLkOzpWgSojwainQpXsbWyf/+
+	 xb+0WuBvS8e4w8fzFJVORPfDX0JkXq0e3NVazUYb6e9dENDh8JYRN0gJqJ0sLx+8EJ
+	 zgnHROcQp13P/MCrNwqcwVz/I6fmR3X/WJK5pjp+EgzmC9x65zy41etwvAGW366cvw
+	 J54U0wWdcz/AaP9mARaNYhwbyUaCSS0Bj70om85CtRMK8Wd3IfwAira/EG6tlHsc+l
+	 2pGZM9PAEpt6w==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan+linaro@kernel.org>)
-	id 1sUncJ-000000002P4-02gi;
+	id 1sUncJ-000000002P7-0SiN;
 	Fri, 19 Jul 2024 15:25:47 +0200
 From: Johan Hovold <johan+linaro@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -55,9 +55,9 @@ Cc: Rob Herring <robh@kernel.org>,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 3/4] arm64: dts: qcom: sc8280xp-x13s: disable PCIe perst pull downs
-Date: Fri, 19 Jul 2024 15:25:21 +0200
-Message-ID: <20240719132522.9176-4-johan+linaro@kernel.org>
+Subject: [PATCH 4/4] arm64: dts: qcom: sc8280xp-x13s: clean up PCIe2a pinctrl node
+Date: Fri, 19 Jul 2024 15:25:22 +0200
+Message-ID: <20240719132522.9176-5-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.44.2
 In-Reply-To: <20240719132522.9176-1-johan+linaro@kernel.org>
 References: <20240719132522.9176-1-johan+linaro@kernel.org>
@@ -69,44 +69,34 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Disable the PCIe perst pull-down resistors to save some power.
+Clean up the PCIe2a pinctrl node indentation which should use tabs only.
 
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .../boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index a1baf30b023c..5e5fdb085b88 100644
+index 5e5fdb085b88..888f42ca230f 100644
 --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
 +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -1617,7 +1617,7 @@ perst-n-pins {
- 			pins = "gpio143";
- 			function = "gpio";
- 			drive-strength = <2>;
--			bias-pull-down;
-+			bias-disable;
+@@ -1621,11 +1621,11 @@ perst-n-pins {
  		};
  
  		wake-n-pins {
-@@ -1640,7 +1640,7 @@ perst-n-pins {
- 			pins = "gpio151";
- 			function = "gpio";
- 			drive-strength = <2>;
--			bias-pull-down;
-+			bias-disable;
- 		};
+-		       pins = "gpio145";
+-		       function = "gpio";
+-		       drive-strength = <2>;
+-		       bias-pull-up;
+-	       };
++			pins = "gpio145";
++			function = "gpio";
++			drive-strength = <2>;
++			bias-pull-up;
++		};
+ 	};
  
- 		wake-n-pins {
-@@ -1663,7 +1663,7 @@ perst-n-pins {
- 			pins = "gpio141";
- 			function = "gpio";
- 			drive-strength = <2>;
--			bias-pull-down;
-+			bias-disable;
- 		};
- 
- 		wake-n-pins {
+ 	pcie3a_default: pcie3a-default-state {
 -- 
 2.44.2
 
