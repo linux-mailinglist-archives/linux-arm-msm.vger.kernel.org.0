@@ -1,224 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-26655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26656-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47DBD937CF1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 21:26:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95735937D30
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 22:16:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 677111C2085D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 19:26:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 529DE281FAD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 20:16:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67C3C14831C;
-	Fri, 19 Jul 2024 19:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B08AE1487DF;
+	Fri, 19 Jul 2024 20:16:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fdjp/qpa"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BOnoWbJX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F1C148316;
-	Fri, 19 Jul 2024 19:26:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005AF12B169
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jul 2024 20:16:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721417210; cv=none; b=sg9klwW9EnxsOe16uMHDjMMYxGA/1po/o1qs6NPsusy5fVFnhtyzHctJwgz+EwaeV1xChRh4feB7+dZeZXb3Yi5klvUPFWt9AI2Z0brNtAJewlJPXtNW6+dkbB5yZBTj2KmgJvLoCfEaBAykZ7h3o2QaXe1EWov4zPx2bY6WV3g=
+	t=1721420211; cv=none; b=HHckl5zguTXmu4ZGBNgTxH23wUIDSu/Rhd/ERif18xn5jSe0YTw6cSGXWBmNF50chfFUFSGy56ehi9NFiIZv4fROVSdYuoF8As3yST4n4Qlec6usJB0eeZYVYA759sKMwrJpK1kK3Q8Y4Pt2YnEp0PbJy+k7Nd1w7/kqOgBlV58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721417210; c=relaxed/simple;
-	bh=GXID7sUUJz5rZS31UruWZvQ5m2atDnWZSGvi6Hj6dI0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Etx6LrqxVxoJozXpWOOuehaU/Zih3+X2ZyFVVgYY2XskCewg/gBl2kYLZHOfP3jNo6lnHZha/onV5qsezjXqaNRm0nsP1K+RkDuXcGOF3Jf2Ez5+iUlcEWeRkMhsLgg7WDuc8khOcjjf7d+u/SlDNmgdy+o6XLIqXHrsMHAs3lY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fdjp/qpa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63A42C32782;
-	Fri, 19 Jul 2024 19:26:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721417209;
-	bh=GXID7sUUJz5rZS31UruWZvQ5m2atDnWZSGvi6Hj6dI0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fdjp/qpa9dofertM7AsvUjrc701tNHXdXsMFDwE9mNOsxbAN13Q12T+LxFVeTFZTV
-	 Qbq6P4Zs41ZrIFVwVSnzws0QCaqF5VFjKQ4DJcfIJIq3WC7RtDiDlDg2MN4v6YpeD4
-	 +GlbeKlvthIPV+WNorij4ShEN/mH5ijRt1T2arwLVKa16TyojThOOX8x2xZlhMXecd
-	 dX03BLBPut1V9QVmzEdvto3Uyvbye03VJkRHihzuKTNmaHXA7aWkPqr90PtDvthWTX
-	 23qWlxa9l+5PtxZbGJ7CFXcd6eIIKKqwJQfM/WEj2ksvuUdycJuaBrfvD8Xoehzl0d
-	 GUjnYP0Pf6rSw==
-Date: Fri, 19 Jul 2024 20:26:44 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Doug Anderson <dianders@chromium.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, dri-devel@lists.freedesktop.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: Re: [PATCH v2 1/4] dt-bindings: display: panel: samsung,atna33xc20:
- Document ATNA45AF01
-Message-ID: <20240719-abnormal-repulsive-fdefb72bdbe3@spud>
-References: <20240715-x1e80100-crd-backlight-v2-0-31b7f2f658a3@linaro.org>
- <20240715-x1e80100-crd-backlight-v2-1-31b7f2f658a3@linaro.org>
- <20240715-scorn-canning-a7f23b9e2039@spud>
- <CAD=FV=U-nOMu-JDQ3T=ZRJ-rZ0BTtyzFVfnzbtCJdbRzAq3YMg@mail.gmail.com>
- <e017259b-bc62-4b57-9276-b834237225e1@kernel.org>
- <CAD=FV=VY5Ug3TfUo1RctiVQrHUjuod15HA8BxAyWdd_0bK8_Dw@mail.gmail.com>
- <20240718-frightful-naturist-a049ea7c0548@spud>
- <CAD=FV=VaGXMf6Srix6v=Me35BUN4B6ZHwebycka4Dbavqa5Vbw@mail.gmail.com>
- <CAD=FV=WyDF8LkPeHXTgsyDA74n+AjuHPQ1896ECDE17aYB9rtg@mail.gmail.com>
+	s=arc-20240116; t=1721420211; c=relaxed/simple;
+	bh=6Ep5Eh95oEtiJ9dGPzkROTBHO/Fj2MksWUgLjyCTjj8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=eL1g5YCj+gthndwvMeT8t4Ljm86dk1yMnqEWuqK/cugJadoC49ONKPqsECbCO4F2LaJEK591JB8qrvH/n+Uqzla/DuOCYxIaJsogzmwVnf6sx4rH8+LN3nMWhRlB5WyIjryDhf63fCrxoHP//ov9pJ3KfiOCgr+zvGx1qioIdso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BOnoWbJX; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2eecd2c6432so35906781fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jul 2024 13:16:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721420208; x=1722025008; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tj3pbaM3Bp6ECZfeKLVwMuqmXQLFLWkJ9K5YKhSksnY=;
+        b=BOnoWbJXeOds/MXCf8jKgmVREEoPHKEcfyh43vPuAvn+pqwUtYp2dzf+ozncXumhQi
+         hVfCMO/EMpiolBQy8lbBiqhGGQux441gFTT3LKImdmOon9zQyF2QDYnKiqHSU0Lu7pJI
+         RfEttmhF++FOl7VWvUOKV6JvRBw0BPIXyYz0QtiRmn9W/46VPCkhBVEH3qmfCEhbVI4M
+         ZVfyQKmHkgXhsWikmH8taSjsD299FMdmiRGZ5WE/6nHA6RTW5G/VEL7JuORlspm81HKp
+         Khj+FkW/YPrpp8pX542ILmpfC/yejhFso6iulG6HQpUr6WF05D+3E0cNvsKqRJUrlCL7
+         spXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721420208; x=1722025008;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tj3pbaM3Bp6ECZfeKLVwMuqmXQLFLWkJ9K5YKhSksnY=;
+        b=OO3gnRSB9+WYEzq0+tcMexvbF+IwpEnY+onszCdaxcf1CLCroUS3Po0cqm80bT2/eZ
+         RLvQo9AXsVyBnHEm+vusa/8YD9TYmM5F2vIRs1u4pwMe4RLnZoCgrc6A+eu7WW/LeSmY
+         tercMAewckSTRMUdM5OfxU6ProDtn3/1o+QGjZ3jayQKeMyySRNMlWnHxTx3mm3tbSiz
+         hBl8vUnDZPitDG8+CVP5EnaLiXAKQeMtKrcBctwfng9rQ8CkBvXF4trebLyIKyHuFy4Q
+         yGy7TDnmfMVhXfvf8DMUEdYh2ZKS0gar41uA3NectKFDhMM5gF9k5HrLqE9pCNFurWGW
+         K7/g==
+X-Forwarded-Encrypted: i=1; AJvYcCU3Nmz6GLASryURglApoE5O9Aoib0l7dCwbMbIRbb1/Iu8uj/31o9sTaAACwFS21R+CbZn63Hda0u6fH8hsBWHchdcXlk1mkR55zOqzWg==
+X-Gm-Message-State: AOJu0Yy+hQIyB59I/pInuuEb7ht/VcVp+uZBGdxhJr4fgHE7Ir9UofZa
+	jBuSHiR3CEfTcy/vy4pvk58BIksHOnOFjkEoORYTlt/HWuObWz1Fk2bd+Y6HqX8=
+X-Google-Smtp-Source: AGHT+IGmhDEAuzeZy9PshTtTNQy3yNIfPVgPaNvhnDFetXscXSUQX0rZLnVBkPkviRu0nYgP6BGPpQ==
+X-Received: by 2002:a2e:bea4:0:b0:2ef:1c0f:a0f3 with SMTP id 38308e7fff4ca-2ef1c0fa26dmr210531fa.6.1721420207834;
+        Fri, 19 Jul 2024 13:16:47 -0700 (PDT)
+Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7a3c922b6asm72332266b.172.2024.07.19.13.16.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Jul 2024 13:16:47 -0700 (PDT)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/3] ThinkPad T14s Gen 6 support
+Date: Fri, 19 Jul 2024 22:16:35 +0200
+Message-Id: <20240719-topic-t14s_upstream-v1-0-d7d97fdebb28@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="etBnI+HPKfHkVQk5"
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=WyDF8LkPeHXTgsyDA74n+AjuHPQ1896ECDE17aYB9rtg@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKTJmmYC/x3MQQqAIBBA0avErBPUiqirRISMU82iEsciiO6et
+ HyL/x8QikwCffFApIuFjz3DlAXg6vaFFPtssNrWujWdSkdgVMnUMp1BUiS3KWqqGb1G9NZBLkO
+ kme//Oozv+wHTftFwZQAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
+ Johan Hovold <johan@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1721420206; l=933;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=6Ep5Eh95oEtiJ9dGPzkROTBHO/Fj2MksWUgLjyCTjj8=;
+ b=1x8U23Ffz66m6qfocXm6DoW5a5GcIeTeeFAgddxqY4GMTuItUThqLYvP68apl43+iQ3MluIi3
+ wZvQ5XM5HM9AMrD1KWsAcblUFEKu0YBnrSCU1soteXFdCxnNfWn5MDG
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
+As good as the other X1 laptops
 
---etBnI+HPKfHkVQk5
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+See this page for more hw info:
 
-On Fri, Jul 19, 2024 at 10:07:29AM -0700, Doug Anderson wrote:
-> Hi,
->=20
-> On Thu, Jul 18, 2024 at 7:59=E2=80=AFAM Doug Anderson <dianders@chromium.=
-org> wrote:
-> >
-> > Hi,
-> >
-> > On Thu, Jul 18, 2024 at 7:56=E2=80=AFAM Conor Dooley <conor@kernel.org>=
- wrote:
-> > >
-> > > On Thu, Jul 18, 2024 at 07:45:57AM -0700, Doug Anderson wrote:
-> > > > Hi,
-> > > >
-> > > > On Wed, Jul 17, 2024 at 11:19=E2=80=AFPM Krzysztof Kozlowski <krzk@=
-kernel.org> wrote:
-> > > > >
-> > > > > On 18/07/2024 02:21, Doug Anderson wrote:
-> > > > > > Conor (and/or) Krzysztof and Rob,
-> > > > > >
-> > > > > > On Mon, Jul 15, 2024 at 8:31=E2=80=AFAM Conor Dooley <conor@ker=
-nel.org> wrote:
-> > > > > >>
-> > > > > >> On Mon, Jul 15, 2024 at 02:15:37PM +0200, Stephan Gerhold wrot=
-e:
-> > > > > >>> The Samsung ATNA45AF01 panel is an AMOLED eDP panel that has =
-backlight
-> > > > > >>> control over the DP AUX channel. While it works almost correc=
-tly with the
-> > > > > >>> generic "edp-panel" compatible, the backlight needs special h=
-andling to
-> > > > > >>> work correctly. It is similar to the existing ATNA33XC20 pane=
-l, just with
-> > > > > >>> a larger resolution and size.
-> > > > > >>>
-> > > > > >>> Add a new "samsung,atna45af01" compatible to describe this pa=
-nel in the DT.
-> > > > > >>> Use the existing "samsung,atna33xc20" as fallback compatible =
-since existing
-> > > > > >>> drivers should work as-is, given that resolution and size are=
- discoverable
-> > > > > >>> through the eDP link.
-> > > > > >>>
-> > > > > >>> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> > > > > >>
-> > > > > >> Acked-by: Conor Dooley <conor.dooley@microchip.com>
-> > > > > >
-> > > > > > Can you comment on whether you would consider this bindings a "=
-Fix"
-> > > > > > since it's a dependency for later patches in this series (which=
- are
-> > > > > > "Fix"es) to pass dtbs_check? See:
-> > > > > >
-> > > > > > https://lore.kernel.org/r/4bca316a-2334-425b-87a6-e1bb241d26b5@=
-linaro.org
-> > > > >
-> > > > > The patch itself is not a fix, for sure, but it might be a depend=
-ency of
-> > > > > a fix (which you wrote above), thus could be pulled to stable as a
-> > > > > dependency.
-> > > > >
-> > > > > I do not care about dtbs_check warnings in stable kernels, mostly
-> > > > > because dtbs_check warnings depend heavily on dtschema and dtsche=
-ma
-> > > > > follows mainline kernel. Basically if you had warnings-free v6.8 =
-but try
-> > > > > to run dtbs_check now with latest dtschema, your results will dif=
-fer.
-> > > > >
-> > > > > At some point in the future, I could imagine "no new dtbs_check w=
-arnings
-> > > > > in stable kernels" requirement or at least preference, but so far=
- I
-> > > > > don't think there is any benefit.
-> > > >
-> > > > In this case it's not about whether it makes it to the stable kernel
-> > > > but about which main kernel it goes through.
-> > > >
-> > > > If we land the bindings in drm-misc-next right now then it'll be a
-> > > > long time before it makes it into Linus's tree because of the way t=
-hat
-> > > > drm-misc-next merges. It will make it to Linus's tree at 6.12. You =
-can
-> > > > see the drm-misc merging strategy at:
-> > > >
-> > > > https://drm.pages.freedesktop.org/maintainer-tools/drm-misc.html
-> > > >
-> > > > If we land the dts change (a fix) through the Qualcomm tree as a fix
-> > > > then it should target 6.11.
-> > > >
-> > > > This means that the 6.11 tree will have a dtbs_check error because =
-it
-> > > > has the dts change (a fix) but not the bindings change (not a fix).
-> > > >
-> > > > One way to resolve this would be to treat this bindings as a "fix" =
-and
-> > > > land it through "drm-misc-fixes". That would make the bindings and
-> > > > device tree change meet up in Linux 6.11.
-> > > >
-> > > > Did I get that all correct?
-> > >
-> > > Is not not fairly established that a dependency for a fix can go onto=
- a
-> > > fixes branch even if it is not a fix in and of itself?
-> >
-> > That would certainly be my take on it, but DT folks confirmation was
-> > requested by Neil in:
-> >
-> > https://lore.kernel.org/all/4bca316a-2334-425b-87a6-e1bb241d26b5@linaro=
-=2Eorg/
->=20
-> FWIW, I'd rather not let this stagnate too long.
+https://www.lenovo.com/us/en/p/laptops/thinkpad/thinkpadt/lenovo-thinkpad-t14s-gen-6-(14-inch-snapdragon)/len101t0099
 
-I dunno if you were waiting for me (or Krzk/Rob) to reply, but I didn't
-cos I figured I'd already pretty much said there was nothing wrong with
-the prereq being on -fixes too.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (3):
+      dt-bindings: arm: qcom: Add Lenovo ThinkPad T14s Gen 6
+      firmware: qcom: scm: Allow QSEECOM on ThinkPad T14s
+      arm64: dts: qcom: Add X1E78100 ThinkPad T14s Gen 6
 
-> I'm fairly confident
-> in my assertion that this should go into drm-misc-fixes. I'll give it
-> until Monday and then I'm just going to land this bindings change in
-> drm-misc-fixes. Shout soon if you feel strongly that I shouldn't do
-> this. If someone wants to flame me after the fact then so be it.
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   6 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+ .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts     | 792 +++++++++++++++++++++
+ drivers/firmware/qcom/qcom_scm.c                   |   1 +
+ 4 files changed, 800 insertions(+)
+---
+base-commit: 523b23f0bee3014a7a752c9bb9f5c54f0eddae88
+change-id: 20240719-topic-t14s_upstream-e53fcd0ccd2a
 
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
---etBnI+HPKfHkVQk5
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZpq99AAKCRB4tDGHoIJi
-0l0OAQDgDeKH7xkylyak8cTIADfNinnQbAx11DwQn+bi/deCCQEA0wO9wfmFIs+C
-NcBqzAwjH7/KD1GefPSzjhaFBOMX9w4=
-=DvMW
------END PGP SIGNATURE-----
-
---etBnI+HPKfHkVQk5--
 
