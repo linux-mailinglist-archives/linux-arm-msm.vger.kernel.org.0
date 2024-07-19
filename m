@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-26630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2ECD937842
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 15:17:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBAD193783E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 15:17:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3063D1C20FCF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 13:17:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 091AB1C21AF2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 13:17:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C30F143751;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 541C2140E29;
 	Fri, 19 Jul 2024 13:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KaY026k+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WoXiZRCz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0D685283;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1B713C681;
 	Fri, 19 Jul 2024 13:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721395049; cv=none; b=FDRfI8VmKWgYX9oatA11qSNquA1D3RQI0nu8/I3fF/vlgb9oTwYxUrQIPitTwXgaZPOQ4DzlOBnrjMnS6iCZcS5zD8gvothxO3n9u8ddgEunxHXP8L7BEdftCQ3oht3ROtQDUOBm91OvILdpBBHnRr690KtfOmMbyZI6qRERPJM=
+	t=1721395049; cv=none; b=T79gNkyl7LOO+2lPA7X6lI9BNlocp4iiwdij5vpUcGYPzIzBGpvF30UBWOkok7vukZ1sdPiKE2kYJ29yA+OWXOBX2mM2ElVMOC2aRI+VUO8fPdU2puEszlwW/WkRCF3OENUiijv5DP2+kq4IqmD2Of9skFXVQ8FbYOpO0zrqb8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1721395049; c=relaxed/simple;
-	bh=duXa92ouaTdUeRj9iAXjigOdHkj9jO/WZ01Q6V+4258=;
+	bh=TrDClakR9x7IBNsa1UNQebotcE2wpGouhqU8Jgr42yo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kyj6ZQbh0peRwQxRDpp5VXCZZnbXGmeQ156k6g0g8YJjqL+cYqtt95ETLd8eImCTM9BViZQQScwVsAu5JM3BqMShJ1VzEIZKroCvOyIGdduRc3e14Gj0sKz/cK8yO3EVSMzJdNTrP3b2VK14VDfjfHOj2co+rBtkdSshcK6ri8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KaY026k+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EA7C4AF09;
+	 MIME-Version; b=c6bT0FY2aA84NpPquHT8yd63EM5ZxoriYHXsH3gMSxQmoMvVwJtvl8h9qndqdOj1fv/Sg9Nv6LYB1NEsvg+X2YuIZZgti8f1dQ6ry4g4XE6Hv9EDghktN9vGith8T1bcoBh9yYvHJezfgICrkQz/rQNVXSsUdsO04vjDvFdXBnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WoXiZRCz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C450AC4AF0B;
 	Fri, 19 Jul 2024 13:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1721395048;
-	bh=duXa92ouaTdUeRj9iAXjigOdHkj9jO/WZ01Q6V+4258=;
+	bh=TrDClakR9x7IBNsa1UNQebotcE2wpGouhqU8Jgr42yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KaY026k+3NPH0NRHitAK3IeCKDZVMoaJeewtgaVtVCj9fejgo+XQIfTd6o926Kkpo
-	 XkyWQClC/xCp5YYgKsv4F2NSyAfgQpu6LU8V/FkDp/NK0IGiwOjfMC4O+WCaNff7mE
-	 pfCzUTvrphCOySR5GXQscxX/9yfW5MQklLHqalhAXC0nz+8KVGaPBleXqiIuPJihTV
-	 5XAjakYv533qpfBD2ZNtn9/f6ltrVzbp6irHjLt62gdRGkoeWbXIXw4uHt3LdUrF+W
-	 2BUXqH/Iq/Cm9GP+/BWrMvMNe6p38BP4LunkoVj0RfVSBhViJqFCDGNwYcquMNeR1Y
-	 zlVg6hXZO1dYQ==
+	b=WoXiZRCznFJTCOIzwaYcwQ+t84UarJ3DO1r6iHpyTwjDd+aVgYYiFEtWMDkPMlsCJ
+	 L/GmxpplF1MduaUaLunYOQ2fcp4CTxUx6VjnE9VV/gYCN/71iPn9RGySgrGaXpHfV2
+	 DzCvqqPGr9C+9q5ZTEFE45/R7ZIAkYfbwBcfMWt5GavrE5G0Roy/ame03tg2pGWGsW
+	 Y4XWtRvS6jTMbpjUhxg2PvhzpEykg9v4LsgA3rKee31QzlQoUz8y3vOq3nHXXDPIC4
+	 LmKl8n81gcIlBIOc8PRqTZy8vBrZ+v9p3DiP7oCzrcg9ZyJr0TL92OxqZnzFidHH/v
+	 9CbhAAoDToCuw==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan+linaro@kernel.org>)
-	id 1sUnUO-000000002BK-39rI;
+	id 1sUnUO-000000002BM-3UJA;
 	Fri, 19 Jul 2024 15:17:36 +0200
 From: Johan Hovold <johan+linaro@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -57,11 +57,10 @@ Cc: Rob Herring <robh@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>,
-	stable@vger.kernel.org
-Subject: [PATCH 5/7] arm64: dts: qcom: x1e80100-crd: fix missing PCIe4 gpios
-Date: Fri, 19 Jul 2024 15:17:20 +0200
-Message-ID: <20240719131722.8343-6-johan+linaro@kernel.org>
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 6/7] arm64: dts: qcom: x1e80100: add PCIe5 nodes
+Date: Fri, 19 Jul 2024 15:17:21 +0200
+Message-ID: <20240719131722.8343-7-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.44.2
 In-Reply-To: <20240719131722.8343-1-johan+linaro@kernel.org>
 References: <20240719131722.8343-1-johan+linaro@kernel.org>
@@ -73,62 +72,155 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add the missing PCIe4 perst, wake and clkreq GPIOs.
+Describe the fifth PCIe controller and its PHY.
 
-Fixes: d7e03cce0400 ("arm64: dts: qcom: x1e80100-crd: Enable more support")
-Cc: stable@vger.kernel.org	# 6.9
+Note that using the GIC ITS with PCIe5 does not work currently so the
+ITS mapping is left unspecified for now.
+
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 29 +++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 121 ++++++++++++++++++++++++-
+ 1 file changed, 120 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-index 7406f1ad9c55..72d9feec907b 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-@@ -784,6 +784,12 @@ &mdss_dp3_phy {
- };
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index 07e00f1d1768..e8acb1180857 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -760,7 +760,7 @@ gcc: clock-controller@100000 {
+ 				 <&sleep_clk>,
+ 				 <0>,
+ 				 <&pcie4_phy>,
+-				 <0>,
++				 <&pcie5_phy>,
+ 				 <&pcie6a_phy>,
+ 				 <0>,
+ 				 <&usb_1_ss0_qmpphy QMP_USB43DP_USB3_PIPE_CLK>,
+@@ -3014,6 +3014,125 @@ pcie6a_phy: phy@1bfc000 {
+ 			status = "disabled";
+ 		};
  
- &pcie4 {
-+	perst-gpios = <&tlmm 146 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 148 GPIO_ACTIVE_LOW>;
++		pcie5: pci@1c00000 {
++			device_type = "pci";
++			compatible = "qcom,pcie-x1e80100";
++			reg = <0 0x01c00000 0 0x3000>,
++			      <0 0x7e000000 0 0xf1d>,
++			      <0 0x7e000f40 0 0xa8>,
++			      <0 0x7e001000 0 0x1000>,
++			      <0 0x7e100000 0 0x100000>,
++			      <0 0x01c03000 0 0x1000>;
++			reg-names = "parf",
++				    "dbi",
++				    "elbi",
++				    "atu",
++				    "config",
++				    "mhi";
++			#address-cells = <3>;
++			#size-cells = <2>;
++			ranges = <0x01000000 0x0 0x00000000 0x0 0x7e200000 0x0 0x100000>,
++				 <0x02000000 0x0 0x7e300000 0x0 0x7e300000 0x0 0x1d00000>;
++			bus-range = <0x00 0xff>;
 +
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie4_default>;
++			dma-coherent;
 +
- 	status = "okay";
- };
- 
-@@ -975,6 +981,29 @@ nvme_reg_en: nvme-reg-en-state {
- 		bias-disable;
- 	};
- 
-+	pcie4_default: pcie4-default-state {
-+		clkreq-n-pins {
-+			pins = "gpio147";
-+			function = "pcie4_clk";
-+			drive-strength = <2>;
-+			bias-pull-up;
++			linux,pci-domain = <5>;
++			num-lanes = <2>;
++
++			interrupts = <GIC_SPI 94 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 86 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 82 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 77 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 78 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "msi0",
++					  "msi1",
++					  "msi2",
++					  "msi3",
++					  "msi4",
++					  "msi5",
++					  "msi6",
++					  "msi7";
++
++			#interrupt-cells = <1>;
++			interrupt-map-mask = <0 0 0 0x7>;
++			interrupt-map = <0 0 0 1 &intc 0 0 0 70 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 2 &intc 0 0 0 71 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 3 &intc 0 0 0 72 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 4 &intc 0 0 0 73 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_PCIE_5_AUX_CLK>,
++				 <&gcc GCC_PCIE_5_CFG_AHB_CLK>,
++				 <&gcc GCC_PCIE_5_MSTR_AXI_CLK>,
++				 <&gcc GCC_PCIE_5_SLV_AXI_CLK>,
++				 <&gcc GCC_PCIE_5_SLV_Q2A_AXI_CLK>,
++				 <&gcc GCC_CFG_NOC_PCIE_ANOC_NORTH_AHB_CLK>,
++				 <&gcc GCC_CNOC_PCIE_NORTH_SF_AXI_CLK>;
++			clock-names = "aux",
++				      "cfg",
++				      "bus_master",
++				      "bus_slave",
++				      "slave_q2a",
++				      "noc_aggr",
++				      "cnoc_sf_axi";
++
++			assigned-clocks = <&gcc GCC_PCIE_5_AUX_CLK>;
++			assigned-clock-rates = <19200000>;
++
++			interconnects = <&pcie_south_anoc MASTER_PCIE_5 QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
++					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++					 &cnoc_main SLAVE_PCIE_5 QCOM_ICC_TAG_ALWAYS>;
++			interconnect-names = "pcie-mem",
++					     "cpu-pcie";
++
++			resets = <&gcc GCC_PCIE_5_BCR>,
++				 <&gcc GCC_PCIE_5_LINK_DOWN_BCR>;
++			reset-names = "pci",
++				      "link_down";
++
++			power-domains = <&gcc GCC_PCIE_5_GDSC>;
++
++			phys = <&pcie5_phy>;
++			phy-names = "pciephy";
++
++			status = "disabled";
 +		};
 +
-+		perst-n-pins {
-+			pins = "gpio146";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
++		pcie5_phy: phy@1c06000 {
++			compatible = "qcom,x1e80100-qmp-gen3x2-pcie-phy";
++			reg = <0 0x01c06000 0 0x2000>;
++
++			clocks = <&gcc GCC_PCIE_5_AUX_CLK>,
++				 <&gcc GCC_PCIE_5_CFG_AHB_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>,
++				 <&gcc GCC_PCIE_5_PHY_RCHNG_CLK>,
++				 <&gcc GCC_PCIE_5_PIPE_CLK>;
++			clock-names = "aux",
++				      "cfg_ahb",
++				      "ref",
++				      "rchng",
++				      "pipe";
++
++			resets = <&gcc GCC_PCIE_5_PHY_BCR>;
++			reset-names = "phy";
++
++			assigned-clocks = <&gcc GCC_PCIE_5_PHY_RCHNG_CLK>;
++			assigned-clock-rates = <100000000>;
++
++			power-domains = <&gcc GCC_PCIE_5_PHY_GDSC>;
++
++			#clock-cells = <0>;
++			clock-output-names = "pcie5_pipe_clk";
++
++			#phy-cells = <0>;
++
++			status = "disabled";
 +		};
 +
-+		wake-n-pins {
-+			pins = "gpio148";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+
- 	pcie6a_default: pcie6a-default-state {
- 		clkreq-n-pins {
- 			pins = "gpio153";
+ 		pcie4: pci@1c08000 {
+ 			device_type = "pci";
+ 			compatible = "qcom,pcie-x1e80100";
 -- 
 2.44.2
 
