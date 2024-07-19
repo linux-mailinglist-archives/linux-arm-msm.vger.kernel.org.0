@@ -1,414 +1,457 @@
-Return-Path: <linux-arm-msm+bounces-26624-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 792539377D2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 14:38:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 490A6937804
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 14:55:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D3A561F213C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 12:38:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6C2971C21350
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 12:55:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31E48136E30;
-	Fri, 19 Jul 2024 12:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9935913AD26;
+	Fri, 19 Jul 2024 12:55:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="F5cBH+Cb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PAWxhZSn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB06384D3E;
-	Fri, 19 Jul 2024 12:38:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8991812CDAE;
+	Fri, 19 Jul 2024 12:55:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721392730; cv=none; b=i/erks3Yh8uHsKt0t8yFfE1cytBbfvh18PNlTwN1fUTbrKFVs08FvoGPUQFdjh2AbCXa5QF6yRl2ptlCdoVRXPVdJ6ayV7Eik5Aj1kKMsUPIRetV6AxeLYbGMW0wb1dlxf3gHH6tmvYbOU4D2vup0l/Fkie+kiusv/loCO5fQEI=
+	t=1721393731; cv=none; b=DIm/57niGqBqwhFTBz5pUj64lAt7mU2dprzhhSvsONwhG7/hHzZgdf/XnptH8bQU4Og1UXxvnN8vo6ORjsG/d6Ee2/s8XGYuUr/uwBDmOHUH4eWdCMO5J+55H0vmD3ia5pnhlSmzRYnWbbnE5atoCH0LCoz+LcLvLejhJL0rE7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721392730; c=relaxed/simple;
-	bh=dkl0nmiSSuuHXGUZAQSFRkEXXt4SyFK6o4BT5Uam6v8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=T1R3qVF6C9LiL6ZX/rV20SDEyt2/XhELqDWs1KHP1fy1do/UdpDA6J8H2TIXvXBa87kptj7ghe1QPwlaq47NpkI6RRvQUvNFemVXvgzbAMmkinIvSr00HRzbvM5s3ZImlYhRowdMxriwHCvbq1WxLDk0jemaQajONYSMpZLzsAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=F5cBH+Cb; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46JCQuMo026232;
-	Fri, 19 Jul 2024 12:38:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Hf8mLurASjSW5HTS6sTQcRFKjx2FXMOgDWpuHPgX0VI=; b=F5cBH+CbtCLrMSPL
-	3V7vu10lHTMpnhx6xSuns7tNSGYCBg0OdOsV3eaFP5ccKexwTdoGUi2a74hSOXAn
-	Bio4Ej8+qZhIG+qtQreWumrqXRC3gSYv6OpHQURZT4MN8/EV5vxgSveNSbJ2B7bC
-	3b30fYwCKWd58EvxN1XkdlZq2M08lOPnTKE8rkpNzwOgVjR7GJQltAvzxRqrpZGm
-	360ni+L7f8lQjAYDVTWBMOEHX3iIc2JX3zojcqQj/+MFImvwyQy3hfhHOKF8xPmj
-	g56dsW6fT0QA2bGgaRlhaXOUADBsfoKqOIkGJaQ4pXZM/WXrtIBBeT1DRxydJfOS
-	pOD6LA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40fe1m9bf5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 19 Jul 2024 12:38:27 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46JCcPnd011094
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 19 Jul 2024 12:38:25 GMT
-Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 19 Jul
- 2024 05:38:18 -0700
-Message-ID: <5790afa3-f9c0-4720-9804-8a7ff3d91854@quicinc.com>
-Date: Fri, 19 Jul 2024 18:08:09 +0530
+	s=arc-20240116; t=1721393731; c=relaxed/simple;
+	bh=mpyTkbgGCFRMs46XWouCS/Cxqt92qMtpq+6g9okpfGA=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=r1r+T2r/71KW61DNpVHZwAvIcooMVIxyoTmANUeIl9pn7BOZOCwJMQcpKqpSrMWDoSHQ2q01G42YJOsehZdZWUy7r6wjp48gLcCNACVz7ivAWV5QpCXZOzvnDJO0Xot45ZRMK5RsokJMidmgOLtkJ7kED1Tq2UeI5IvJ+zVFsro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PAWxhZSn; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2eeb1ba0468so26360321fa.0;
+        Fri, 19 Jul 2024 05:55:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721393728; x=1721998528; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jB0LDwWchQ1Y0yxYjXnm3lm5EUl7Kp4Z7xElCeC0Jdg=;
+        b=PAWxhZSniSV929pkvPWRXessRU4eU6mSC8LsP/7rXjxog7Jwgqow+5WfcQ39k8XGb9
+         N8WS3C1GrC0FWzh5oE2LCmp6J+zmWbrOJWWGb0HV+AKsDOZsOnvKlz7eSdsGR3eX+D91
+         g1r8Spr+teFqkxXsAgStp0a+tK8FKcoA2fDvNrtD3lCe/8iwzyEHl+KeU/EP3uy4y1R6
+         g9K2aO/eNTo1LC3N+5GxZL2Fq0rCntqY/jKy7d+0vd0xjHE4Lp9MSwJkhroxqLXYHsZp
+         CqbW6UDxVJOhBSeLqwRMbm8twK7NjQSJ48+RAZMtumOnP80AENQ5EkIsqy/JgBihCXeE
+         16dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721393728; x=1721998528;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jB0LDwWchQ1Y0yxYjXnm3lm5EUl7Kp4Z7xElCeC0Jdg=;
+        b=TxetUu5xO4nUvnMDHCCtlsdeqoZGZgWwJ+yEQiyrCKzU8h5dUJ//BcX7b6IordSH6R
+         SiSb8YwINCSifmeVY1i6Zfje/VrFYDHh2uT1TX2/ySzzwptrL3LyqNroVQpplNe550Jp
+         XCgmujWDCVG9QGpxbuvGdM+zsnvqlWc3nWMdu7rvi6rBgSy33X8PPi0ZuQqa+jVtv1oc
+         pNoVjPMti3Wyb4BEChSWDp2tisrUcT6UV7YQI0ld9UWoqStFIg1OKKFvY6cdsAXyWSGN
+         4DHAUnTH9nVGr5gtOkq0z8KU5fTUI7sZCBBr5ghI9leEetKVhqbDiwhLiLFY5Tlnd6Ie
+         FbvQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUIYnkYAIy7YcdCCtaqphSxOjyrwTQrTLaBIRUYRreiQreXVYmKQ311ffbnClqdHUU0A+jYglLi4EhmJR8okkQE6M6iew0t10DKsOSFZr3D0Bdj9rXjHG9a8pHNAWGJ2q2bn36W0ROUSsvcJLLzR3BenStv6evEK0+h+9jxgS0o0go7Xe5roLXA1eMvP5slOSL3vAA5g7r0jpOy/Km88W1zO/gzl+ZtcPBF73Su38DglAA/PY91KgbI2k2UryevMYRHs/jM6XK1HhdHcjUG614eh8KWQ+TdOCrc1juR0BmXo6Uh/GuMbfHE7iedipmBrhsyHhsh8Y3tPihU8K7UOgvbMOaB9Hy/gCC3oUO5VjhXAdOhC2geQDSh0WQvUhub0AJ6GWn62OC1L6MMWkXBWVV/1VTO
+X-Gm-Message-State: AOJu0YxK/raklaVQTXzTSgDzvWW9l4YbmSFzqHZY6dw64VwcqgFF+BDv
+	499GdzY/s7Tdp0+79qK0eSh4+fxC1pu2H9Mrvy1TaqCKE4jxE/yw
+X-Google-Smtp-Source: AGHT+IENeGFObXn002bsJy2Dx3tz0dd31Uv3EzT5Ns+vSMFzFDzaKz3p4bXCxbraMenhS2L/IJQOgg==
+X-Received: by 2002:a05:651c:2105:b0:2ee:8777:f868 with SMTP id 38308e7fff4ca-2ef05d28994mr44112771fa.35.1721393721865;
+        Fri, 19 Jul 2024 05:55:21 -0700 (PDT)
+Received: from debian.localdomain ([178.122.223.182])
+        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-5a30af84673sm1174448a12.50.2024.07.19.05.55.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Jul 2024 05:55:21 -0700 (PDT)
+From: Dzmitry Sankouski <dsankouski@gmail.com>
+To: dmitry.baryshkov@linaro.org,
+	Sebastian Reichel <sre@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	=?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Chanwoo Choi <cw00.choi@samsung.com>
+Cc: Dzmitry Sankouski <dsankouski@gmail.com>,
+	linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	devicetree@vger.kernel.org,
+	linux-input@vger.kernel.org,
+	linux-leds@vger.kernel.org,
+	linux-pwm@vger.kernel.org,
+	linux-samsung-soc@vger.kernel.org
+Subject: [PATCH v4 27/28] gcc-sdm845: Add general purpose clock ops
+Date: Fri, 19 Jul 2024 15:55:04 +0300
+Message-Id: <20240719-starqltechn_integration_upstream-v4-27-a7f644821941@gmail.com>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240719-starqltechn_integration_upstream-v4-0-a7f644821941@gmail.com>
+References: <20240719-starqltechn_integration_upstream-v4-0-a7f644821941@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 6/6] iommu/arm-smmu: add support for PRR bit setup
-To: Rob Clark <robdclark@gmail.com>
-CC: <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
-        <jgg@ziepe.ca>, <jsnitsel@redhat.com>, <robh@kernel.org>,
-        <krzysztof.kozlowski@linaro.org>, <quic_c_gdjako@quicinc.com>,
-        <dmitry.baryshkov@linaro.org>, <konrad.dybcio@linaro.org>,
-        <iommu@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        "Rob
- Clark" <robdclark@chromium.org>
-References: <20240628140435.1652374-1-quic_bibekkum@quicinc.com>
- <20240628140435.1652374-7-quic_bibekkum@quicinc.com>
- <CAF6AEGvroi8rJimFv95tkWmRFa5_aTpBJ7GFcRAuZpLGdSyEYQ@mail.gmail.com>
- <0650ba0a-4453-4e2d-8a76-0f396ac1999c@quicinc.com>
- <CAF6AEGv_9e-TDW1r0N4-db6pY_aV_EZFqrpNbATVS5Vy6+fs1g@mail.gmail.com>
- <4a5f54c7-120e-427d-8a0a-9fb83e13a72e@quicinc.com>
- <CAF6AEGtrtFNxDWtuADA4oOHhZJ=dJZcGaJ1XLFJt4fe4Xp=pTA@mail.gmail.com>
- <3b7c05b1-8f36-4c81-a55c-dbb467314099@quicinc.com>
- <CAF6AEGuRKU+DkL0-b3xdR1R45_MiiKQYRRXEXYz-xohu8rUaEQ@mail.gmail.com>
- <CAF6AEGtbw06-gOSvX9gAbi=SA801gmD3_8c5xkOU-G9g2qKptQ@mail.gmail.com>
- <9509f256-04a4-4907-98fc-148c5087d74d@quicinc.com>
- <CAF6AEGuLwZ0yFGWMKX-O1VjQB2M57K+CsyJ=7PCKXE=b=VsSNg@mail.gmail.com>
- <3382aaca-4ca1-46e5-a445-dcb115ff206f@quicinc.com>
- <CAF6AEGu0uH7GuNb3SJVk0cPDUwkYZ6NTG1ze+wmc1OjsaownwA@mail.gmail.com>
- <3c3456bc-0f79-4a17-9614-f3b32b6ed30a@quicinc.com>
- <CAF6AEGvZWdN+CC9O3tq7kjYPq424U6__KgAnFNCV0bCqE8wPuQ@mail.gmail.com>
-Content-Language: en-US
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-In-Reply-To: <CAF6AEGvZWdN+CC9O3tq7kjYPq424U6__KgAnFNCV0bCqE8wPuQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1721388867; l=9651; i=dsankouski@gmail.com; s=20240618; h=from:subject:message-id; bh=mpyTkbgGCFRMs46XWouCS/Cxqt92qMtpq+6g9okpfGA=; b=AUG0ZxeqIT+xenEivXpKb8DAzFAFAvNm9ssCvEHOBoffWOMSekeO8SyrRcrUWvlc6Gu96BgcB SWGbYrnziyfD2noh2tRrPzG4uXq7JgM2ftfjabjFU4v4acNIQp0I6gv
+X-Developer-Key: i=dsankouski@gmail.com; a=ed25519; pk=6pMMVVDDReSiRgPCbMOUauN5nS3ty4Sf5b7a2gi4x0M=
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6w-E2XXAm71EPi3EcTHLU8B--8wlApNU
-X-Proofpoint-ORIG-GUID: 6w-E2XXAm71EPi3EcTHLU8B--8wlApNU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-19_06,2024-07-18_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 lowpriorityscore=0 mlxscore=0 mlxlogscore=999
- clxscore=1015 bulkscore=0 phishscore=0 malwarescore=0 priorityscore=1501
- spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407190096
 
+SDM845 has "General Purpose" clocks that can be muxed to
+SoC pins to clock various external devices.
+Those clocks may be used as e.g. PWM sources for external peripherals.
 
+GPCLK can in theory have arbitrary value depending on the use case, so
+the concept of frequency tables, used in rcg2 clock driver, is not
+efficient, because it allows only defined frequencies.
 
-On 7/17/2024 8:30 PM, Rob Clark wrote:
-> On Wed, Jul 17, 2024 at 3:27 AM Bibek Kumar Patro
-> <quic_bibekkum@quicinc.com> wrote:
->>
->>
->>
->> On 7/16/2024 1:37 AM, Rob Clark wrote:
->>> On Mon, Jul 15, 2024 at 4:00 AM Bibek Kumar Patro
->>> <quic_bibekkum@quicinc.com> wrote:
->>>>
->>>>
->>>>
->>>> On 7/10/2024 10:31 PM, Rob Clark wrote:
->>>>> On Tue, Jul 9, 2024 at 12:43 PM Bibek Kumar Patro
->>>>> <quic_bibekkum@quicinc.com> wrote:
->>>>>>
->>>>>>
->>>>>>
->>>>>> On 7/4/2024 9:28 PM, Rob Clark wrote:
->>>>>>> On Thu, Jul 4, 2024 at 7:46 AM Rob Clark <robdclark@gmail.com> wrote:
->>>>>>>>
->>>>>>>> On Wed, Jul 3, 2024 at 4:38 AM Bibek Kumar Patro
->>>>>>>> <quic_bibekkum@quicinc.com> wrote:
->>>>>>>>>
->>>>>>>>>
->>>>>>>>>
->>>>>>>>> On 7/2/2024 2:01 AM, Rob Clark wrote:
->>>>>>>>>> On Mon, Jul 1, 2024 at 4:01 AM Bibek Kumar Patro
->>>>>>>>>> <quic_bibekkum@quicinc.com> wrote:
->>>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>> On 6/28/2024 9:14 PM, Rob Clark wrote:
->>>>>>>>>>>> On Fri, Jun 28, 2024 at 8:10 AM Bibek Kumar Patro
->>>>>>>>>>>> <quic_bibekkum@quicinc.com> wrote:
->>>>>>>>>>>>>
->>>>>>>>>>>>>
->>>>>>>>>>>>>
->>>>>>>>>>>>> On 6/28/2024 7:47 PM, Rob Clark wrote:
->>>>>>>>>>>>>> On Fri, Jun 28, 2024 at 7:05 AM Bibek Kumar Patro
->>>>>>>>>>>>>> <quic_bibekkum@quicinc.com> wrote:
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>> Add an adreno-smmu-priv interface for drm/msm to call
->>>>>>>>>>>>>>> into arm-smmu-qcom and initiate the PRR bit setup or reset
->>>>>>>>>>>>>>> sequence as per request.
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>> This will be used by GPU to setup the PRR bit and related
->>>>>>>>>>>>>>> configuration registers through adreno-smmu private
->>>>>>>>>>>>>>> interface instead of directly poking the smmu hardware.
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>> Suggested-by: Rob Clark <robdclark@gmail.com>
->>>>>>>>>>>>>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
->>>>>>>>>>>>>>> ---
->>>>>>>>>>>>>>>         drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 23 ++++++++++++++++++++++
->>>>>>>>>>>>>>>         drivers/iommu/arm/arm-smmu/arm-smmu.h      |  2 ++
->>>>>>>>>>>>>>>         include/linux/adreno-smmu-priv.h           |  6 +++++-
->>>>>>>>>>>>>>>         3 files changed, 30 insertions(+), 1 deletion(-)
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>>>>>>>>>>>> index bd101a161d04..64571a1c47b8 100644
->>>>>>>>>>>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>>>>>>>>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>>>>>>>>>>>> @@ -28,6 +28,7 @@
->>>>>>>>>>>>>>>         #define PREFETCH_SHALLOW       (1 << PREFETCH_SHIFT)
->>>>>>>>>>>>>>>         #define PREFETCH_MODERATE      (2 << PREFETCH_SHIFT)
->>>>>>>>>>>>>>>         #define PREFETCH_DEEP          (3 << PREFETCH_SHIFT)
->>>>>>>>>>>>>>> +#define GFX_ACTLR_PRR          (1 << 5)
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>>         static const struct actlr_config sc7280_apps_actlr_cfg[] = {
->>>>>>>>>>>>>>>                { 0x0800, 0x04e0, PREFETCH_DEFAULT | CMTLB },
->>>>>>>>>>>>>>> @@ -235,6 +236,27 @@ static void qcom_adreno_smmu_resume_translation(const void *cookie, bool termina
->>>>>>>>>>>>>>>                arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
->>>>>>>>>>>>>>>         }
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>> +static void qcom_adreno_smmu_set_prr(const void *cookie, phys_addr_t page_addr, bool set)
->>>>>>>>>>>>>>> +{
->>>>>>>>>>>>>>> +       struct arm_smmu_domain *smmu_domain = (void *)cookie;
->>>>>>>>>>>>>>> +       struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
->>>>>>>>>>>>>>> +       struct arm_smmu_device *smmu = smmu_domain->smmu;
->>>>>>>>>>>>>>> +       u32 reg = 0;
->>>>>>>>>>>>>>> +
->>>>>>>>>>>>>>> +       writel_relaxed(lower_32_bits(page_addr),
->>>>>>>>>>>>>>> +                               smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
->>>>>>>>>>>>>>> +
->>>>>>>>>>>>>>> +       writel_relaxed(upper_32_bits(page_addr),
->>>>>>>>>>>>>>> +                               smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
->>>>>>>>>>>>>>> +
->>>>>>>>>>>>>>> +       reg =  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR);
->>>>>>>>>>>>>>> +       reg &= ~GFX_ACTLR_PRR;
->>>>>>>>>>>>>>> +       if (set)
->>>>>>>>>>>>>>> +               reg |= FIELD_PREP(GFX_ACTLR_PRR, 1);
->>>>>>>>>>>>>>> +       arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
->>>>>>>>>>>>>>> +
->>>>>>>>>>>>>>
->>>>>>>>>>>>>> nit, extra line
->>>>>>>>>>>>>>
->>>>>>>>>>>>>
->>>>>>>>>>>>> Ack, will remove this. Thanks for pointing out.
->>>>>>>>>>>>>
->>>>>>>>>>>>>> Also, if you passed a `struct page *` instead, then you could drop the
->>>>>>>>>>>>>> bool param, ie. passing NULL for the page would disable PRR.  But I
->>>>>>>>>>>>>> can go either way if others have a strong preference for phys_addr_t.
->>>>>>>>>>>>>>
->>>>>>>>>>>>>
->>>>>>>>>>>>> Oh okay, this looks simple to reset the prr bit.
->>>>>>>>>>>>> But since this page is allocated and is used inside gfx driver
->>>>>>>>>>>>> before being utilized for prr bit operation, would it be safe for
->>>>>>>>>>>>> drm/gfx driver to keep a reference to this page in smmu driver?
->>>>>>>>>>>>>
->>>>>>>>>>>>> Since we only need the page address for configuring the
->>>>>>>>>>>>> CFG_UADDR/CFG_LADDR registers so passed the phys_addr_t.
->>>>>>>>>>>>
->>>>>>>>>>>> I don't think the smmu driver needs to keep a reference to the page..
->>>>>>>>>>>> we can just say it is the responsibility of the drm driver to call
->>>>>>>>>>>> set_prr(NULL) before freeing the page
->>>>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>> That makes sense. If we go by this NULL page method to disable the PRR,
->>>>>>>>>>> we would have to set the address registers to reset value as well.
->>>>>>>>>>>
->>>>>>>>>>> The sequence would be like the following as per my understaning:
->>>>>>>>>>> - Check if it's NULL page
->>>>>>>>>>> - Set the PRR_CFG_UADDR/PRR_CFG_LADDR to reset values i.e - 0x0 for
->>>>>>>>>>>         these registers
->>>>>>>>>>> - Reset the PRR bit in actlr register
->>>>>>>>>>>
->>>>>>>>>>> Similar to this snippet:
->>>>>>>>>>>
->>>>>>>>>>> #PRR_RESET_ADDR 0x0
->>>>>>>>>>>
->>>>>>>>>>> --------------
->>>>>>>>>>> reg =  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR);
->>>>>>>>>>> reg &= ~GFX_ACTLR_PRR;
->>>>>>>>>>> arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
->>>>>>>>>>>
->>>>>>>>>>> if (!prr_page) {
->>>>>>>>>>>              writel_relaxed(PRR_RESET_ADDR,
->>>>>>>>>>>                              smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
->>>>>>>>>>>              writel_relaxed(PRR_RESET_ADDR),
->>>>>>>>>>>                               smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
->>>>>>>>>>>              return;
->>>>>>>>>>> }
->>>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>> writel_relaxed(lower_32_bits(page_to_phys(prr_page)),
->>>>>>>>>>>                      smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
->>>>>>>>>>>
->>>>>>>>>>> writel_relaxed(upper_32_bits(page_to_phys(prr_page)),
->>>>>>>>>>>                      smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
->>>>>>>>>>>
->>>>>>>>>>> reg |= FIELD_PREP(GFX_ACTLR_PRR, 1);
->>>>>>>>>>> arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
->>>>>>>>>>> -----------------
->>>>>>>>>>>
->>>>>>>>>>> If looks good, will implement the same in next version.
->>>>>>>>>>
->>>>>>>>>> yeah, that looks like it could work..
->>>>>>>>>>
->>>>>>>>>> you probably don't need to zero out the PRR_CFG_*ADDR when disabling,
->>>>>>>>>> and probably could avoid double writing ACTLR, but that is getting
->>>>>>>>>> into bikeshedding
->>>>>>>>>>
->>>>>>>>>
->>>>>>>>> Actually Rob, since you rightly pointed this out.
->>>>>>>>> I crosschecked again on these registers.
->>>>>>>>> PRR_CFG_*ADDR is a global register in SMMU space but
->>>>>>>>> ACTLR register including PRR bit is a per-domain register.
->>>>>>>>> There might also be a situation where PRR feature need to be
->>>>>>>>> disabled or enabled separately for each domain.
->>>>>>>>> So I think it would be cleaner to have two apis, set_prr_addr(),
->>>>>>>>> set_prr_bit().
->>>>>>>>> set_prr_addr() will be used only to set this PRR_CFG_*ADDR
->>>>>>>>> register by passing a 'struct page *'
->>>>>>>>> set_prr_bit() will be used as a switch for PRR feature,
->>>>>>>>> where required smmu_domain will be passed along with
->>>>>>>>> the bool value to set/reset the PRR bit depending on which this
->>>>>>>>> feature will be enabled/disabled for the selected domain.
->>>>>>>>
->>>>>>>> on a related note, adreno has been using arm-smmu for a number of
->>>>>>>> generations, I guess not all support PRR?  The drm driver will need to
->>>>>>>> know whether PRR is supported (and expose that to userspace to let the
->>>>>>>> UMD know whether to expose certain extensions).  How should this work?
->>>>>>>
->>>>>>> So, I noticed in the x1e80100.dtsi that there is a gpu_prr_mem
->>>>>>> reserved section..  maybe we should be connecting this to the smmu
->>>>>>> driver in dt, and using that to detect presence of PRR?  Ie. the smmu
->>>>>>> driver would configure PRR_CFG_*ADDR based on the reserved mem, and
->>>>>>> the interface to drm would just be to enable/disable PRR, returning an
->>>>>>> error code if the reserved mem section isn't there.
->>>>>>>
->>>>>>> This simplifies the interface, and handles the question of how to
->>>>>>> detect if PRR is supported.
->>>>>>>
->>>>>>> BR,
->>>>>>> -R
->>>>>>>
->>>>>>
->>>>>> As I checked gpu_prr_mem reserved mem section is not used for mobile
->>>>>> targets hence not present for other DT only compute targets like
->>>>>> x1e80100.dtsi has the same. PRR looks to be smmu version specific
->>>>>> property.
->>>>>
->>>>> I only see it in gpu_prr_mem in x1e80100.dtsi, but not documented
->>>>> anywhere.  I'm only assuming based on the name that it is intended to
->>>>> be for PRR (but not sure why it is larger than 0x1000).  Are the
->>>>> PRR_CFG_*ADDR regs programmed by the fw (and access blocked in EL1) on
->>>>> this device?
->>>>>
->>>>
->>>> As I checked, if the drm/gfx driver allocates the page for drm, then
->>>> this reserved-memory region is not required.
->>>>
->>>> PRR_CFG_*ADDR regs have read and write access in EL1 only for this
->>>> device, behavior is same as other devices as well. These are not
->>>> programmed by fw.
->>>
->>> If there is any device which _doesn't_ have EL1 access to these regs,
->>> I think going the reserved memory route seems more future proof > Otherwise we later on have to deal with two different ways to do
->>> things.  But I'm not sure if there is any such device or risk.
->>>
->>
->> PRR is a bit in ACTLR register which is in SMMU space,
->> so is the PRR_CFG_*ADDR registers - with EL1 having access
->> to both the registers in all targets released till now with MMU-500.
->> It's unlikely that this design would change in future
->> for MMU-500 based targets, so I feel this risk is somewhat negligible.
-> 
-> I wasn't worried about the ACTLR register, but the PRR_CFG_*ADDR regs ;-)
-> 
-> IIRC those were in the SMMU global space, why hyp tends to like to own.
-> 
+Introduce clk_rcg2_gp_ops, which automatically calculate clock
+mnd values for arbitrary clock rate.
 
-Yes correct, those are in SMMU global space which hyp likes to own, and
-read/write access are avaialble by design for EL1.
+Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+---
+ drivers/clk/qcom/clk-rcg.h    |   1 +
+ drivers/clk/qcom/clk-rcg2.c   | 162 ++++++++++++++++++++++++++++++++++++++++--
+ drivers/clk/qcom/gcc-sdm845.c |  19 ++---
+ drivers/pwm/pwm-clk.c         |   5 ++
+ 4 files changed, 167 insertions(+), 20 deletions(-)
 
->> Also would the reserved memory route look a bit hackish?
->> Because, since this reserved-memory node is not used when page is
->> allocated through drm - so it might turn out to be redundant.
->> If we are aiming for a device-tree handle/node for reference then I
->> think a better way would be to create a bool parameter inside smmu-node
->> indicating presence of PRR ?
-> 
-> tbh, I don't think there is anything better or worse about having the
-> reserved-memory node vs dynamically allocating it.  (If we dynamically
-> allocate, we should remove the reserved memory node from
-> x1e80100.dtsi)
-> 
+diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
+index d7414361e432..5bd86bce0c4d 100644
+--- a/drivers/clk/qcom/clk-rcg.h
++++ b/drivers/clk/qcom/clk-rcg.h
+@@ -189,6 +189,7 @@ struct clk_rcg2_gfx3d {
+ 	container_of(to_clk_rcg2(_hw), struct clk_rcg2_gfx3d, rcg)
+ 
+ extern const struct clk_ops clk_rcg2_ops;
++extern const struct clk_ops clk_rcg2_gp_ops;
+ extern const struct clk_ops clk_rcg2_floor_ops;
+ extern const struct clk_ops clk_rcg2_fm_ops;
+ extern const struct clk_ops clk_rcg2_mux_closest_ops;
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index 9b3aaa7f20ac..addfa7f59be8 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -32,6 +32,7 @@
+ 
+ #define CFG_REG			0x4
+ #define CFG_SRC_DIV_SHIFT	0
++#define CFG_SRC_DIV_LENGTH	8
+ #define CFG_SRC_SEL_SHIFT	8
+ #define CFG_SRC_SEL_MASK	(0x7 << CFG_SRC_SEL_SHIFT)
+ #define CFG_MODE_SHIFT		12
+@@ -393,16 +394,103 @@ static int clk_rcg2_fm_determine_rate(struct clk_hw *hw,
+ 	return _freq_tbl_fm_determine_rate(hw, rcg->freq_multi_tbl, req);
+ }
+ 
+-static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f,
+-				u32 *_cfg)
++static inline u64 find_hcf(u64 a, u64 b)
++{
++	while (a != 0 && b != 0) {
++		if (a > b)
++			a %= b;
++		else
++			b %= a;
++	}
++	return a + b;
++}
++
++static int clk_calc_mnd(u64 parent_rate, u64 rate, struct freq_tbl *f)
++{
++	u64 hcf;
++	u64 hid_div = 1, n = 1;
++	int i = 2, count = 0;
++
++	hcf = find_hcf(parent_rate, rate);
++	u64 scaled_rate = rate / hcf;
++	u64 scaled_parent_rate = parent_rate / hcf;
++
++	while (scaled_parent_rate > 1) {
++		while (scaled_parent_rate % i == 0) {
++			scaled_parent_rate /= i;
++			if (count % 2 == 0)
++				hid_div *= i;
++			else
++				n *= i;
++		}
++		i++;
++		count++;
++	}
++
++	f->m = scaled_rate;
++	f->n = n;
++	f->pre_div = hid_div;
++
++	return 0;
++}
++
++static int clk_rcg2_determine_gp_rate(struct clk_hw *hw,
++				   struct clk_rate_request *req)
++{
++	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
++	struct freq_tbl *f;
++	int src = clk_rcg2_get_parent(hw);
++	int mnd_max = BIT(rcg->mnd_width) - 1;
++	int hid_max = BIT(rcg->hid_width) - 1;
++	u64 parent_rate;
++	int ret;
++
++	parent_rate = rcg->freq_tbl[src].freq;
++	f = kcalloc(MAX_PERF_LEVEL + 1, sizeof(f), GFP_KERNEL);
++
++	if (!f)
++		return 0;
++
++	ret = clk_calc_mnd(parent_rate, req->rate, f);
++	if (ret)
++		return 0;
++
++
++	while (f->n - f->m >= mnd_max) {
++		f->m = f->m >> 1;
++		f->n = f->n >> 1;
++	}
++	while (f->pre_div >= hid_max) {
++		f->pre_div = f->pre_div >> 1;
++		f->m = f->m >> 1;
++	}
++
++	req->rate = calc_rate(parent_rate, f->m, f->n, f->n, f->pre_div);
++
++	return 0;
++}
++
++static int __clk_rcg2_configure_parent(struct clk_rcg2 *rcg, int src, u32 *_cfg)
+ {
+-	u32 cfg, mask, d_val, not2d_val, n_minus_m;
+ 	struct clk_hw *hw = &rcg->clkr.hw;
+-	int ret, index = qcom_find_src_index(hw, rcg->parent_map, f->src);
++	u32 mask = CFG_SRC_SEL_MASK;
++	int index = qcom_find_src_index(hw, rcg->parent_map, src);
+ 
+ 	if (index < 0)
+ 		return index;
+ 
++	*_cfg &= ~mask;
++	*_cfg |= rcg->parent_map[index].cfg << CFG_SRC_SEL_SHIFT;
++
++	return 0;
++}
++
++static int __clk_rcg2_configure_mnd(struct clk_rcg2 *rcg, const struct freq_tbl *f,
++				u32 *_cfg)
++{
++	u32 cfg, mask, d_val, not2d_val, n_minus_m;
++	int ret;
++
+ 	if (rcg->mnd_width && f->n) {
+ 		mask = BIT(rcg->mnd_width) - 1;
+ 		ret = regmap_update_bits(rcg->clkr.regmap,
+@@ -431,9 +519,8 @@ static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f,
+ 	}
+ 
+ 	mask = BIT(rcg->hid_width) - 1;
+-	mask |= CFG_SRC_SEL_MASK | CFG_MODE_MASK | CFG_HW_CLK_CTRL_MASK;
++	mask |= CFG_MODE_MASK | CFG_HW_CLK_CTRL_MASK;
+ 	cfg = f->pre_div << CFG_SRC_DIV_SHIFT;
+-	cfg |= rcg->parent_map[index].cfg << CFG_SRC_SEL_SHIFT;
+ 	if (rcg->mnd_width && f->n && (f->m != f->n))
+ 		cfg |= CFG_MODE_DUAL_EDGE;
+ 	if (rcg->hw_clk_ctrl)
+@@ -445,6 +532,22 @@ static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f,
+ 	return 0;
+ }
+ 
++static int __clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f,
++				u32 *_cfg)
++{
++	int ret;
++
++	ret = __clk_rcg2_configure_parent(rcg, f->src, _cfg);
++	if (ret)
++		return ret;
++
++	ret = __clk_rcg2_configure_mnd(rcg, f, _cfg);
++	if (ret)
++		return ret;
++
++	return 0;
++}
++
+ static int clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
+ {
+ 	u32 cfg;
+@@ -465,6 +568,26 @@ static int clk_rcg2_configure(struct clk_rcg2 *rcg, const struct freq_tbl *f)
+ 	return update_config(rcg);
+ }
+ 
++static int clk_rcg2_configure_gp(struct clk_rcg2 *rcg, const struct freq_tbl *f)
++{
++	u32 cfg;
++	int ret;
++
++	ret = regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &cfg);
++	if (ret)
++		return ret;
++
++	ret = __clk_rcg2_configure_mnd(rcg, f, &cfg);
++	if (ret)
++		return ret;
++
++	ret = regmap_write(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), cfg);
++	if (ret)
++		return ret;
++
++	return update_config(rcg);
++}
++
+ static int __clk_rcg2_set_rate(struct clk_hw *hw, unsigned long rate,
+ 			       enum freq_policy policy)
+ {
+@@ -518,6 +641,22 @@ static int clk_rcg2_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	return __clk_rcg2_set_rate(hw, rate, CEIL);
+ }
+ 
++static int clk_rcg2_set_gp_rate(struct clk_hw *hw, unsigned long rate,
++			    unsigned long parent_rate)
++{
++	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
++	struct freq_tbl *f;
++
++	f = kcalloc(MAX_PERF_LEVEL + 1, sizeof(*f), GFP_KERNEL);
++
++	if (!f)
++		return -ENOMEM;
++
++	clk_calc_mnd(parent_rate, rate, f);
++
++	return clk_rcg2_configure_gp(rcg, f);
++}
++
+ static int clk_rcg2_set_floor_rate(struct clk_hw *hw, unsigned long rate,
+ 				   unsigned long parent_rate)
+ {
+@@ -645,6 +784,17 @@ const struct clk_ops clk_rcg2_ops = {
+ };
+ EXPORT_SYMBOL_GPL(clk_rcg2_ops);
+ 
++const struct clk_ops clk_rcg2_gp_ops = {
++	.is_enabled = clk_rcg2_is_enabled,
++	.get_parent = clk_rcg2_get_parent,
++	.set_parent = clk_rcg2_set_parent,
++	.determine_rate = clk_rcg2_determine_gp_rate,
++	.set_rate = clk_rcg2_set_gp_rate,
++	.get_duty_cycle = clk_rcg2_get_duty_cycle,
++	.set_duty_cycle = clk_rcg2_set_duty_cycle,
++};
++EXPORT_SYMBOL_GPL(clk_rcg2_gp_ops);
++
+ const struct clk_ops clk_rcg2_floor_ops = {
+ 	.is_enabled = clk_rcg2_is_enabled,
+ 	.get_parent = clk_rcg2_get_parent,
+diff --git a/drivers/clk/qcom/gcc-sdm845.c b/drivers/clk/qcom/gcc-sdm845.c
+index 8d61d5a31542..1fb617b0ee47 100644
+--- a/drivers/clk/qcom/gcc-sdm845.c
++++ b/drivers/clk/qcom/gcc-sdm845.c
+@@ -291,18 +291,9 @@ static struct clk_rcg2 gcc_sdm670_cpuss_rbcpr_clk_src = {
+  * See comment in gcc-mam8916.c at ftbl_gcc_gp1_3_clk.
+  */
+ static const struct freq_tbl ftbl_gcc_gp1_clk_src[] = {
+-	F(10000,   P_BI_TCXO,    16,  1, 120),
+-	F(20000,   P_BI_TCXO,    16,  1, 60),
+-	F(100000,  P_BI_TCXO,    16,  1,  12),
+-	F(500000,  P_GPLL0_OUT_EVEN, 12, 1, 100),
+-	F(1000000, P_GPLL0_OUT_EVEN, 12, 1, 50),
+-	F(2500000, P_GPLL0_OUT_EVEN, 12, 1, 10),
+-	F(5000000, P_GPLL0_OUT_EVEN, 12, 1, 5),
+ 	F(19200000, P_BI_TCXO, 1, 0, 0),
+-	F(25000000, P_GPLL0_OUT_EVEN, 12, 0, 0),
+-	F(50000000, P_GPLL0_OUT_EVEN, 6, 0, 0),
+-	F(100000000, P_GPLL0_OUT_MAIN, 6, 0, 0),
+-	F(200000000, P_GPLL0_OUT_MAIN, 3, 0, 0),
++	F(300000000, P_GPLL0_OUT_EVEN, 1, 0, 0),
++	F(600000000, P_GPLL0_OUT_MAIN, 1, 0, 0),
+ 	{ }
+ };
+ 
+@@ -316,7 +307,7 @@ static struct clk_rcg2 gcc_gp1_clk_src = {
+ 		.name = "gcc_gp1_clk_src",
+ 		.parent_data = gcc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_gp_ops,
+ 	},
+ };
+ 
+@@ -330,7 +321,7 @@ static struct clk_rcg2 gcc_gp2_clk_src = {
+ 		.name = "gcc_gp2_clk_src",
+ 		.parent_data = gcc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_gp_ops,
+ 	},
+ };
+ 
+@@ -344,7 +335,7 @@ static struct clk_rcg2 gcc_gp3_clk_src = {
+ 		.name = "gcc_gp3_clk_src",
+ 		.parent_data = gcc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_gp_ops,
+ 	},
+ };
+ 
+diff --git a/drivers/pwm/pwm-clk.c b/drivers/pwm/pwm-clk.c
+index c19a482d7e28..1bfc7870e3aa 100644
+--- a/drivers/pwm/pwm-clk.c
++++ b/drivers/pwm/pwm-clk.c
+@@ -25,6 +25,7 @@
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+ #include <linux/clk.h>
++#include <linux/clk/clk-conf.h>
+ #include <linux/pwm.h>
+ 
+ struct pwm_clk_chip {
+@@ -87,6 +88,10 @@ static int pwm_clk_probe(struct platform_device *pdev)
+ 	struct pwm_clk_chip *pcchip;
+ 	int ret;
+ 
++	ret = of_clk_set_defaults(pdev->dev.of_node, false);
++	if (ret < 0)
++		return -EINVAL;
++
+ 	chip = devm_pwmchip_alloc(&pdev->dev, 1, sizeof(*pcchip));
+ 	if (IS_ERR(chip))
+ 		return PTR_ERR(chip);
 
-Right, if the page is dynamically allocated then this reserved memory 
-node should be removed as it will stay as an unused region in DDR acting 
-as a deadweight. I checked the history on this region for x1e80100 and 
-it went as a part of platform upstreaming - we can remove the same.
+-- 
+2.39.2
 
-> The thing I was more concerned about was whether there was any chance
-> that some existing or future SoC+fw combo _relied_ on a reserved
-> memory node and the fw programming PRR_CFG_*ADDR. If there was any > chance of that, and we went the dynamic allocation route, then we'd
-> have some devices with a reserved memory node, and some without.  That
-> seems a bit ugly to me.
-
-Agree on the concern, that would surely look a bit ugly - with different 
-targets having these allocation differently and having this 
-reserved-memory node
-
-But as far as I checked the targets present with MMU-500, none of them 
-is relying on reserved-memory node yet.
-And the chances are negligible in future targets as well.
-Since FW is not setting up these registers - so this reserved region
-should not be considered as per me.
-Also since in our api we are only taking the address of the prr page to 
-setup these registers, so even if client chooses any page allocation 
-method <not surely from firmware as per design> then the same api 
-smmu-driver is exposing would still work indentical.
-
-
-> If there is no chance of this, then we can go either route.
-> 
->> Personally,I feel since the PRR enablement mechanism is same for all
->> MMU-500 targets - compat string would be a robust approach.
-> 
-> I guess if it is all mmu-500, then we can just pick based on compat
-> string.  If it turns out some subset of smmu-v2 have PRR, we can just
-> have a list of compat strings in arm-smmu-qcom.c.. there would only be
-> a finite # of them ;-)
-> 
-
-Yes right, atleast one thing which we can conclude is - in
-MMU-500 version the PRR enablement steps are same from SMMU block and
-driver perspective <i.e configure the PRR_CFG_*ADDR regs and set PRR bit
-in ACTLR>. So all targets on MMU-500 - we would do the same steps.
-Hence under MMU-500 compat string we can keep this.
-Agree on the smmu-v2 part as well.
-
-
-Thanks & regards,
-Bibek
-
-> BR,
-> -R
 
