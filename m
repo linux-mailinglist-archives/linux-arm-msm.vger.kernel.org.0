@@ -1,48 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-26634-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BBB493784D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 15:18:08 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB92093784A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 15:18:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7DC451C216E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 13:18:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DC8961C216E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 13:18:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D162F14535F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDCDF14535A;
 	Fri, 19 Jul 2024 13:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dK/4pf1h"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mH86T5at"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F011143C43;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E54213F458;
 	Fri, 19 Jul 2024 13:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721395049; cv=none; b=HsygvEAtc2waSwqKZEDKlUm4Y7fOEzSIipVnn0vxt60B/eiTnypo78UUTz63G626nFoDSPndzwYgrjR6fcP3mIos8H2PbhfREno5HWoXmGVzlL5RZaQBWEAiBDxg8YCy+ohrI4ZhY1U30nw5QwF4SriPHfO8Ub2g6r09a/OlG64=
+	t=1721395049; cv=none; b=IfpUPphheSKmvOFZFNZLIwymlKbPzfJQ6WDuNPfx2cbBn1AoFsdY/oqTdivv27qCy5SfLJIW+tF9ysptq5PPT6R60A5lxC2nIqNxJeUroolpuwholiyWlJn5ggtby6DK5jZIkOPkCYvshgVMf/r4trGjWflBcgTwyjzchfc0t9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1721395049; c=relaxed/simple;
-	bh=GP+A9yKbskhnBiPHxYqK+ArihuCz/xHef1rX97PfIpU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CLSok3Pz6tVuS5Tc5CVj2mfW6+U+aC/fs9kvZFjO+WMCEy1jXgKf0HMbWUaXA5NTRNcMYWfe5KF9RTstkO0I0WaeKvEyXT5yAP8+UtF0SwWs0QfYXk+zaO8D4Cz9sY9ob4evz5UHvDSqPFTpvultnI0XZIQgNJmAtwS2+hK/9zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dK/4pf1h; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFE2DC4AF0E;
+	bh=0uzVyxrhof8AS7od0ldhgHmxH15tqtHgH1PplGp3Hn4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=X4TGP7HAs4v3dIyt0Hh60jGM6KZ5yIosuBrvE5fpRXGNBFDF6QvdX3MNUsK+JxySgbJKDMYHydd5Jto+A7XFvmcnViiMHtuPwhp9Q+G8FAtzjooNv1A8vRMGO/ozrcbp2N0FpRQRDVqzWVsF+TpnmypN9hA752QxyLz+rCj6upQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mH86T5at; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63FCC4AF0F;
 	Fri, 19 Jul 2024 13:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1721395048;
-	bh=GP+A9yKbskhnBiPHxYqK+ArihuCz/xHef1rX97PfIpU=;
-	h=From:To:Cc:Subject:Date:From;
-	b=dK/4pf1haPKmlpB5uTlTx8s2hKYIHU21a30kNd4YeioychegX2J+5r9KnePSUtdp8
-	 Mp4hZrKeb/nXKQgJJvYlvUPpPYu1JQ2AjhIxt0ocaJzNco++IKJtFaoIPuV23uwKWj
-	 Zb+5qiFxDhbepZ3Z3Ic/bMMh7Da+9oMKVem+PUrIwFd/5lJ6zM55OKQgulatHNaeMm
-	 hQCYa+XJtEO/BYs+rLUExBYBNDe2VoXWMckWtEKKY/BNDrX0xqA246z0X8jU8qnfp+
-	 HsylTTBzthz2IlIJZYvvVjXEHezQndfwc2Iez55L40Q2ypDWQP/LfhfyaiY/enIvW5
-	 dcOw9fewcq6IA==
+	bh=0uzVyxrhof8AS7od0ldhgHmxH15tqtHgH1PplGp3Hn4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=mH86T5atwjuUVwYxkQSC/ljKH+cKpml7YUP0dtLcYaEJfDaIm8EubyYClx7ns0rAV
+	 gurf48Lz6wSmCsKab2K8JePeFVSlegdEootBUEFSsQSuGHz6gGjSI+4NwnpfW11D7h
+	 tDb31Ol7RWk3GZVQc61LlNlCHoN/OUC4qnUXDD4KfcxYHn1HpFUWsc5sX+xEE5RYIJ
+	 bUwQUEdlW8T1Be4u1S8Rp0MDNFMKvguckDjXBx4ZfKq+ahyPi91XbBkm/++FyFU4e8
+	 600x4EQ28vn0K6v99qtJ65ZBXaSOuOS8RtFJwTaGO1+zzsIYSZOwK8nYXdK44tO7Yx
+	 /Utu24VZeNbbg==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan+linaro@kernel.org>)
-	id 1sUnUN-000000002BA-2dsF;
+	id 1sUnUO-000000002BC-1qGj;
 	Fri, 19 Jul 2024 15:17:36 +0200
 From: Johan Hovold <johan+linaro@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -56,11 +57,14 @@ Cc: Rob Herring <robh@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 0/7] arm64: dts: qcom: x1e80100: PCIe fixes and CRD modem support
-Date: Fri, 19 Jul 2024 15:17:15 +0200
-Message-ID: <20240719131722.8343-1-johan+linaro@kernel.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	stable@vger.kernel.org
+Subject: [PATCH 1/7] arm64: dts: qcom: x1e80100-crd: fix PCIe4 PHY supply
+Date: Fri, 19 Jul 2024 15:17:16 +0200
+Message-ID: <20240719131722.8343-2-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.44.2
+In-Reply-To: <20240719131722.8343-1-johan+linaro@kernel.org>
+References: <20240719131722.8343-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,28 +73,28 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series fixes some issues with the current x1e80100 PCIe support,
-adds the PCIe5 nodes and enables the modem on the CRD.
+The PCIe4 PHY is powered by vreg_l3i (not vreg_l3j).
 
-The fixes should go into 6.11, but the modem support depends on them so
-I decided to send everything in one series.
+Fixes: d7e03cce0400 ("arm64: dts: qcom: x1e80100-crd: Enable more support")
+Cc: stable@vger.kernel.org	# 6.9
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Johan
-
-
-Johan Hovold (7):
-  arm64: dts: qcom: x1e80100-crd: fix PCIe4 PHY supply
-  arm64: dts: qcom: x1e80100: fix PCIe domain numbers
-  arm64: dts: qcom: x1e80100-crd: fix up PCIe6a pinctrl node
-  arm64: dts: qcom: x1e80100-crd: disable PCIe6A perst pull down
-  arm64: dts: qcom: x1e80100-crd: fix missing PCIe4 gpios
-  arm64: dts: qcom: x1e80100: add PCIe5 nodes
-  arm64: dts: qcom: x1e80100-crd: enable SDX65 modem
-
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 110 +++++++++++++++++--
- arch/arm64/boot/dts/qcom/x1e80100.dtsi    | 125 +++++++++++++++++++++-
- 2 files changed, 224 insertions(+), 11 deletions(-)
-
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+index f97c80b4077c..6aa2ec1e7919 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+@@ -788,7 +788,7 @@ &pcie4 {
+ };
+ 
+ &pcie4_phy {
+-	vdda-phy-supply = <&vreg_l3j_0p8>;
++	vdda-phy-supply = <&vreg_l3i_0p8>;
+ 	vdda-pll-supply = <&vreg_l3e_1p2>;
+ 
+ 	status = "okay";
 -- 
 2.44.2
 
