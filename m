@@ -1,184 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-26608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26609-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38ACB93741B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 08:46:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89F7C93742B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 09:02:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 49124B21E2A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 06:46:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17F341F22935
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 07:02:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E921D3D984;
-	Fri, 19 Jul 2024 06:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBA104EB51;
+	Fri, 19 Jul 2024 07:01:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oFvs6V1q"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qFYWZSma"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227D32C859
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jul 2024 06:46:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8A243156
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jul 2024 07:01:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721371588; cv=none; b=Tl4orJM4Z/IGDp/zCcUFeNx6jZHB1VN1e6nIeR0BaetYXdet8EbFuLgx25h3+h/aMS6CrQ2spDa4eltPtzxPBUWoy+4lXnpSQYdd48eKnfk2RAqjCOmqeNKwmTaGZZ7GdU5dJRoUcpqQcrhbNtwDpGBaX1gBf5Bb5eYOFyNMLUA=
+	t=1721372514; cv=none; b=NqYOtIB+u8kLgr8Anvq9CRYOH0ee7XlxSFzObEWa06nXhjGnw7tPIEOaUmHnnFO2g5AQJBCagW9Om+nAF3Zmt3cmQbCGrQjjmjIbxR+9rYbSJD0I/XYVB0DJF798o0WSHLndsOBO0TyO5SUyDeMWt5IoqwuZ81swXCRsW//F1QI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721371588; c=relaxed/simple;
-	bh=PX1jYGcLZDU5k/aOp74fIw8FH2Ls7IDEisT5+VT5qOE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=RPrcfMLi+B01xrbWHc/uMEEzuvZv53cm8LODrpAwe7nz15CECFmEg6UAlnf7WVq8iaWAnfXVuafoM/v/MRsaQixQ5AL42qdkr+l4dQq9pdtOErsk1gHKxnJTbhSQIlQ1yw6dy60U/eG35keR8tQpDr/eZWcGCWH1H9qOJqUGus8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oFvs6V1q; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46J0x0oS016790;
-	Fri, 19 Jul 2024 06:46:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6IQE0m9LfwWTLq9viEKntjk4F/HPaP114MZV0wVXjug=; b=oFvs6V1q8uZUreyR
-	O3hB6/L0vJlCLakaWVKSlVYmmXO2uNtkr/5y17N3fUHEfrlv9DqMsFn0lW2jpIVe
-	RvN5wiTZULr+i3saofxZ9n4G+TbfMuU7wMjCA5GdzLCwtnGaYLAmzTHPKfE6UM3S
-	0IBti7N+K+XRhl9UhNUDNpVg5ZmDtWhLa5A41c3c2R/g3SEuUNG3eUy4pAIZ1hVP
-	y07+YtT6IRC7inAXU0kes4T7Ehdlqv79tw4u4ZnANv7pW5DOzxDMfGf3EsLpnr4S
-	NI9CyLeCt06aBYnQdSwtWf8X1Txf1zRn4UBRxMUEq9GJGHkXhJ7mmYSUP6E3Hjx0
-	33pyZw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40fe33gjhu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 19 Jul 2024 06:46:16 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46J6kFU1008627
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 19 Jul 2024 06:46:15 GMT
-Received: from [10.216.6.122] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 18 Jul
- 2024 23:46:13 -0700
-Message-ID: <b99c3806-b3f0-d73c-2338-2e98de52132c@quicinc.com>
-Date: Fri, 19 Jul 2024 12:16:10 +0530
+	s=arc-20240116; t=1721372514; c=relaxed/simple;
+	bh=7cefyBQNG0cgw4OpfJkL/lbSpDq46bnSvjHNsSe+3Lc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=G/qNk9jmGY/kuUc4qrx0Yd02BCRlInyeh2oteGNa2J9+SMA5z7mVCbojdrCrnBrzZonI7r5M5OcqOOF1RL/7A2HFMDgPCO2fcpDU+8eaIcy1U0rxmfqSRVSUM7gzBJAivyQ8kpTT5PNewFjlwEGNjgHnS38AKjmwLwZmlxPm6G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qFYWZSma; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-70af8062039so452775b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jul 2024 00:01:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721372511; x=1721977311; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=fariBq/69Nk7cAbON0jqbcifAGonbb1z1O3eQL8eKBc=;
+        b=qFYWZSmamq4TfVr2tRTPi7r0IdDFMbPtT6px3D2e72eMlP2KI4URDKU6ZTQRuTW7xz
+         lgeimpBAn42/YrAba7qxaeBVsoruA+MF6Dm5E5U8+M08RGnLYHF7BIWkSDj2Lmh3ASUv
+         jOv0IqGeeKGHPbsXqUD5F6TAjQCtXLUAWMPekyQ8GSZy5j7hcWps+sR/ogk/PrgW+ave
+         8yMKXn8UORd+bRcGxQas8kE4S6YaB75Xby6ghyKEyq8XZ1TnmW29ls3BLcov6FtY21i1
+         msir1vWoGdjahI1R7iJwyS8zr0+H2ZCfnnzNXplBDjrfNunhFknk1NIePB/ScF6VH9r6
+         oFww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721372511; x=1721977311;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fariBq/69Nk7cAbON0jqbcifAGonbb1z1O3eQL8eKBc=;
+        b=Kl2w0tZizUPBWzcRLckVFjZvavzD1eDOuYW6z2UGyhj2cStYxzGVjdWHeeUt4d/t5m
+         Kwz8posXlDrWvMQ7JGDLx1UiPtRFjyrvzrW9I3a3vMKHxLFmVhQ5+hOdOiSkRSsCe+9H
+         9uKGChqiqMsmKj/g5zL041PBL18WNPrRkkctuU4ajBG5//aEU87t+E375v0sf/Z+gGKp
+         MpgNuPcBn8Jk3wAWjBAOg3QvMeS6x0g0BB4uYp82FneyO63uCJ+rtRgQouENku4Y7OMP
+         DGqKWz3zQhSdoP0Fr6e759BAYoob4cADgYpGa4vWXZvYXm7nYCp8/OxlXMflgk/aJQX2
+         mSqg==
+X-Forwarded-Encrypted: i=1; AJvYcCXiroHwrpu7UT4ziTAmCtZQWQNqVOKjolnQmavc7MZ8H3aYaQ4rZj7my3QT2Te0J/ln6dxiRYtbokwCjklvOFaWAkKuJgDx2SEfPRK5rQ==
+X-Gm-Message-State: AOJu0YzxxOl73LfcRsrh640mX2BuJE0lG75dy/FCVybYZRBmMz2uPKdJ
+	zTYQFT2L+azroVC/C6uogakzLRV5Tr6pO1Nnq5lLIF0H5e/yyea/tXkXhxmANA==
+X-Google-Smtp-Source: AGHT+IEIST7TtOc5AVPxTk2KIx0XN4DalL2EhlIPzC7kXwFVS4vPT7BN83DHIYVpGWEFNADRomXzFA==
+X-Received: by 2002:a05:6a00:2315:b0:706:726b:ae60 with SMTP id d2e1a72fcca58-70cfc90d328mr2138923b3a.17.1721372511260;
+        Fri, 19 Jul 2024 00:01:51 -0700 (PDT)
+Received: from thinkpad ([120.60.142.236])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70cff490e04sm609630b3a.10.2024.07.19.00.01.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Jul 2024 00:01:50 -0700 (PDT)
+Date: Fri, 19 Jul 2024 12:31:39 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Rayyan Ansari <rayyan.ansari@linaro.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: PCI: qcom,pcie-sc7280: specify eight
+ interrupts
+Message-ID: <20240719070139.GA83855@thinkpad>
+References: <20240718-sc7280-pcie-interrupts-v1-1-2047afa3b5b7@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] qcom: update path for video firmware for vpu-3.0
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Dikshita Agarwal
-	<quic_dikshita@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-CC: <linux-firmware@kernel.org>
-References: <1721300902-24242-1-git-send-email-quic_dikshita@quicinc.com>
- <CAA8EJpo4OijebJ9n3TONnB+huT3+VkZEE9LCHETV8iWAYZXsdQ@mail.gmail.com>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <CAA8EJpo4OijebJ9n3TONnB+huT3+VkZEE9LCHETV8iWAYZXsdQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Yapkz2IZyx1eSjUrYoxlCYN9bmLfeY_j
-X-Proofpoint-GUID: Yapkz2IZyx1eSjUrYoxlCYN9bmLfeY_j
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-19_03,2024-07-18_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 clxscore=1011 mlxscore=0 bulkscore=0 priorityscore=1501
- impostorscore=0 spamscore=0 suspectscore=0 mlxlogscore=999 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2407190051
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240718-sc7280-pcie-interrupts-v1-1-2047afa3b5b7@linaro.org>
 
+On Thu, Jul 18, 2024 at 04:20:34PM +0100, Rayyan Ansari wrote:
+> In the previous commit to this binding,
+> 
+> commit 756485bfbb85 ("dt-bindings: PCI: qcom,pcie-sc7280: Move SC7280 to dedicated schema")
+> 
+> the binding was changed to specify one interrupt, as the device tree at
+> that moment in time did not describe the hardware fully.
+> 
+> The device tree for sc7280 now specifies eight interrupts, due to
+> 
+> commit b8ba66b40da3 ("arm64: dts: qcom: sc7280: Add additional MSI interrupts")
+> 
+> As a result, change the bindings to reflect this.
+> 
+> Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
 
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-On 7/18/2024 5:07 PM, Dmitry Baryshkov wrote:
-> On Thu, 18 Jul 2024 at 14:10, Dikshita Agarwal
-> <quic_dikshita@quicinc.com> wrote:
->>
->> - Rename qcom/vpu-3.0/ to qcom/vpu/ to have common sub-folder for
->>   new firmware files.
->> - Create symlinks for firmware files for vpu-1.0 and vpu-2.0 in
->>   the same sub-folder.
->>
->> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->> ---
->>  WHENCE                    |   2 +-
->>  qcom/vpu-3.0/vpu30_4v.mbn | Bin 2306664 -> 0 bytes
->>  qcom/vpu/vpu10_4v.mbn     |   1 +
->>  qcom/vpu/vpu20_4v.mbn     |   1 +
->>  qcom/vpu/vpu30_4v.mbn     | Bin 0 -> 2306664 bytes
-> 
-> Ok. You know that a single instance of the file had troubles getting
-> through. Now you are sending it twice when it's not required at all.
-> 
-> Please fix your setup so that git diff / git format-patch shows
-> renames are renames, not as an remove-and-add pair. Git does that
-> _by_default_, so it's something in your setup that changed this.
-> Please revert to the default behaviour.
-> 
-> This is how it looks by default:
-> 
-> diff --git a/qcom/vpu-3.0/vpu30_4v.mbn b/qcom/vpu/vpu30_4v.mbn
-> similarity index 100%
-> rename from qcom/vpu-3.0/vpu30_4v.mbn
-> rename to qcom/vpu/vpu30_4v.mbn
-> 
-> Also please consider using GitLab MRs or pull requests instead of
-> sending huge emails with multi-megabyte binary patches. It's all
-> described in README.md. And I think it should have been added to
-> Qualcomm internal documentation on upstraming.
-I agree MR/PR is the right way to do it for larger binaries, in that case,
-should the README.md be updated to keep the approach limited to MR/PR ? I see
-the approach to send the bins as email is also mentioned as one of the approach.
+- Mani
 
-Regards,
-Vikash
+> ---
+>  .../devicetree/bindings/pci/qcom,pcie-sc7280.yaml  | 24 ++++++++++++++++++----
+>  1 file changed, 20 insertions(+), 4 deletions(-)
 > 
->>  5 files changed, 3 insertions(+), 1 deletion(-)
->>  delete mode 100644 qcom/vpu-3.0/vpu30_4v.mbn
->>  create mode 120000 qcom/vpu/vpu10_4v.mbn
->>  create mode 120000 qcom/vpu/vpu20_4v.mbn
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
+> index 634da24ec3ed..5cf1f9165301 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
+> @@ -53,11 +53,19 @@ properties:
+>        - const: aggre1 # Aggre NoC PCIe1 AXI clock
+>  
+>    interrupts:
+> -    maxItems: 1
+> +    minItems: 8
+> +    maxItems: 8
+>  
+>    interrupt-names:
+>      items:
+> -      - const: msi
+> +      - const: msi0
+> +      - const: msi1
+> +      - const: msi2
+> +      - const: msi3
+> +      - const: msi4
+> +      - const: msi5
+> +      - const: msi6
+> +      - const: msi7
+>  
+>    resets:
+>      maxItems: 1
+> @@ -137,8 +145,16 @@ examples:
+>  
+>              dma-coherent;
+>  
+> -            interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
+> -            interrupt-names = "msi";
+> +            interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>;
+> +            interrupt-names = "msi0", "msi1", "msi2", "msi3",
+> +                              "msi4", "msi5", "msi6", "msi7";
+>              #interrupt-cells = <1>;
+>              interrupt-map-mask = <0 0 0 0x7>;
+>              interrupt-map = <0 0 0 1 &intc 0 0 0 434 IRQ_TYPE_LEVEL_HIGH>,
 > 
-> Please move files to the new location and provide backwards-compatible
-> links rather than doing that backwards and providing
-> forward-compatible links instead.
-> Also please use Link: tag in WHENCE instead of creating symlinks manually.
+> ---
+> base-commit: 73399b58e5e5a1b28a04baf42e321cfcfc663c2f
+> change-id: 20240718-sc7280-pcie-interrupts-6d34650d9bb2
 > 
->>  create mode 100644 qcom/vpu/vpu30_4v.mbn
->>
->> diff --git a/WHENCE b/WHENCE
->> index 5e91462..876f562 100644
->> --- a/WHENCE
->> +++ b/WHENCE
->> @@ -5942,7 +5942,7 @@ https://developer.qualcomm.com/hardware/dragonboard-410c/tools
->>
->>  Driver: iris - Qualcomm Iris video codec accelerator
->>
->> -File: qcom/vpu-3.0/vpu30_4v.mbn
->> +File: qcom/vpu/vpu30_4v.mbn
->>
->>  Version: VIDEO.VPU.3.1-0076
->>
+> Best regards,
+> -- 
+> Rayyan Ansari <rayyan.ansari@linaro.org>
 > 
-> [skipped two instances of vpu30_4v.mbn]
-> 
->> diff --git a/qcom/vpu/vpu20_4v.mbn b/qcom/vpu/vpu20_4v.mbn
->> new file mode 120000
->> index 0000000..56cdfe6
->> --- /dev/null
->> +++ b/qcom/vpu/vpu20_4v.mbn
->> @@ -0,0 +1 @@
->> +../vpu-2.0/venus.mbn
->> \ No newline at end of file
-> 
-> 
-> 
-> --
-> With best wishes
-> Dmitry
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
