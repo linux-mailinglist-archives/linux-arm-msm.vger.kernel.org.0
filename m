@@ -1,216 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-26641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 679CC937B6D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 19:07:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D159937C7F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 20:34:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D54E71F21653
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 17:07:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 317EC1C20E3F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Jul 2024 18:34:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F338145FEA;
-	Fri, 19 Jul 2024 17:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E56031474CE;
+	Fri, 19 Jul 2024 18:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="IuMfD/oS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hObPZZq6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557442C697
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jul 2024 17:07:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0151474B3
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jul 2024 18:34:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721408869; cv=none; b=SDeV0jOzw0R8lgz0cM8OYAPGp3cko1Un73u3QbM9EvvwWAf10XeCJXT/M+1aiJrYYzXqFzRweV0Z/9qoJVTVZtbGr4EOhRkaz5GBZ5XYGNM8oo/P4PZ3VXASDOehCJN7ax3gtfV7jOwZi3pqcPMRQ1m5oEy5fIIvfeb2Narpovs=
+	t=1721414073; cv=none; b=bnSoS2eXCecV9A+2H4VeETse+tDOpotYl0Bt0wQe7Wy77mRvNNTDWpvAM+qOq8HHC+rnVG5+2gns1i507vxqKxW/6dpiz5WSZu0N1arBx9+y2962d2PB+j5cr2wThsziGzRpBgjyUDbErDzgPvppAqfVQ0010EzM0CI7T/NkGWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721408869; c=relaxed/simple;
-	bh=aWJBW7qSepD09tUcrnlrHVc592+V670R8bG1ncdQIrM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=glOE47BVLWKxNScSHdYEl14wftBLsCn4s9iPdaOIbfpS5u0EbJxEglrXtplYZ8L4VajbfYyb8BsHyhcmGwNBT2fmu3KtzmRYR3r/n2kJou7TiA7Z4aZoWHJuhoWLvNboJVqQXz8TJdznXbejJgFb9TMiESPi3yzZrbEdz24UiNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=IuMfD/oS; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e05ebd3d607so2168905276.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jul 2024 10:07:47 -0700 (PDT)
+	s=arc-20240116; t=1721414073; c=relaxed/simple;
+	bh=Eoh6Aq1gvb9UVPn3lR/rBomqqw573VWDNiA8yB3phcY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Y7cp34Ma4JG6DYTb6/un3rk+DLNWqVMhY1HN4RIDllYj22Zbj4uRkiH0MuPrwWSFzCBgJm3M275pC0LoNiypfaW/D6VLkSAOynn5SJFTa6IyUm15Kr8B2R+vr2P5+dXOTobHLVL/1kSjRFKFf+8tBPm81tFJDTglZ7fBHp9CoRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hObPZZq6; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a797c62565aso207519166b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jul 2024 11:34:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1721408864; x=1722013664; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aWJBW7qSepD09tUcrnlrHVc592+V670R8bG1ncdQIrM=;
-        b=IuMfD/oSX+ZZTNrShSJvhHrtFKQSOa8lTtiMU/71YMnAlmVq0bXtmAN70k4BJSaRhQ
-         5lT81Od350D98U1kpxinFsPhRJYmvtHvr3zEC0hEBSLTZmORyFfQPiurDTN9zktsWtH2
-         gWmsMY4RwAxDJtbrud6UfZvfZs4qElM4bVi3c=
+        d=linaro.org; s=google; t=1721414070; x=1722018870; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=hs0XOIz2by5Qi8Z6C39BHeWCTQEj8qFbH9F6RrOljtk=;
+        b=hObPZZq6BgEHMlg6nweNtkMrWOKyaXb+7M7J1JR8vMItMdomecCzazqoeMsdQi5SX9
+         Tji4nwqjL1AIphZzpxtPaPW4JIhTXm3F446HU0DBo5ah6yGFz8bJub8tQ33BSwlI+Ksp
+         2oY36w9l1DXxZzIoeId74j+UlE+r6XCKJlFTAZunDzGZrswiOZmgmi8awv3uvQDrRchT
+         UcXfehjPwWODWlg58wcIF43WA5zAVukYAVnxQwleuJy8SQKYIGK8ubbJ7pZoJ3nzPZ31
+         zww4yk2k/cOCDj3JCSJ+CuFdRQAhcoBSs+qux7Tr8olxU6edC5FbXImRjA4ZojvPVO1P
+         suYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721408864; x=1722013664;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aWJBW7qSepD09tUcrnlrHVc592+V670R8bG1ncdQIrM=;
-        b=T+jIO7p4YxKtzPBfgmmEI+6DkJ/g8W2jVQojyfXL+EtNt1IDxkdW/+Z86esq/4DC0x
-         doNTgWf0KJmBndMa66U3Erxwj13L9oZvpp82WHDigL/cgT7hfj1dlda9+6msm+p1ar+I
-         5PDVLi1oViwXaftfY4kIKCgkiF5OuDqOourhExpO9/xIeR48O9YamEwhmUhGzMpB7nwa
-         v+k1t9/gnj3aOXp8QUkRaCGh09AbFukrgiVhTNKsmxmdDNcsf1riQZFH5eGZ4A58iO/H
-         1FWAbFdrfJoerp5naP+VI/u+EDEJONfDfN0atz80Xlk02kQy8W0/b4IpYbXUGh5gXWYE
-         SjJQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXAJNka0M8G/78hywM3fIc1Wajh9RNkhgxX0D8m12aRVBcoo4e3lSbaFBcltmKC8hrKwbCBY6tdfBjysmoneCaSxWHFckr2poDDAUI45A==
-X-Gm-Message-State: AOJu0YxqObOOVyfWTacNasico1063pEFnYmao+BmkLA/DAyz0bn562z2
-	WjBeN/4miRTUQQ2RBlCj4c5wXuUTnTrg2p/s7kH59FojFL84zck6YbnAFePUjN/KnJsgBzQnMYo
-	=
-X-Google-Smtp-Source: AGHT+IHl1UeAacmv90widP1N047BHv5BX7XCMze529lj7pRZYOAztvoztmUtCo/5kqMQHgJtAJKCRQ==
-X-Received: by 2002:a05:6902:1107:b0:e05:ebed:2a84 with SMTP id 3f1490d57ef6-e087045a417mr247786276.45.1721408863985;
-        Fri, 19 Jul 2024 10:07:43 -0700 (PDT)
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com. [209.85.160.176])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6b7ac9c3462sm9843626d6.76.2024.07.19.10.07.42
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20230601; t=1721414070; x=1722018870;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hs0XOIz2by5Qi8Z6C39BHeWCTQEj8qFbH9F6RrOljtk=;
+        b=kPG8ebrgrMbZrI+b+uMqRChQhW0387Ujv6smt0AtDzM+kOx3hoXiU/CvuJPENV51I5
+         0VJV2KnLJj0O8HWC+GpZWRUOC6e1Vvm2pfZ69F79HOVg6hxemT4lu0PfibhEcWNh7ody
+         HI0KIXtPjCet1RRNTEVUbfOfuVXE/f+jjSp4ychxdNojbGNNc5YuraaP0/rJH3t357ei
+         kVL/n51S9VcZLzutikxlf4kZa6c8AF8CowggRpINRhXrZdY3URyH1UKAZqryrP7dNnCP
+         v0hZu42hB87Q29GyRBixOz/ljXm/bQWGrZKHK4VHBftQqfwQWrIT3OJ/r4Oilkd+S0jO
+         zzLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU1TCYbwxKHecUt6SO9xohvWZoTGEk/uwU/1k+GrNKPSbcqRVAfTi7SyEoHfNR7XyDSBrjn0/iIEYGv4pkm88Sy9AI/UmySeS5QKvynfQ==
+X-Gm-Message-State: AOJu0YxaCaOr8scQOxc+J56yEO9xhcZ3rvUSkQ8AKo9v0gE/Bh1+rFmL
+	rsC8/qa1+mYzmtP5RHPhNTWMDvShD/0RGgL8J19dlTlBhFRXQRNJxvzCn5LHkRU=
+X-Google-Smtp-Source: AGHT+IGL/8xmEg4f78v9lpdI6TbTW3HfZ4KukHLxpgWri/nzzX48d6LEwWn2aA/S1gsK0/kdwB6+VA==
+X-Received: by 2002:a17:906:4550:b0:a72:6375:5fc4 with SMTP id a640c23a62f3a-a7a011177b7mr522091066b.11.1721414070194;
+        Fri, 19 Jul 2024 11:34:30 -0700 (PDT)
+Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7a3c7bde59sm63194166b.74.2024.07.19.11.34.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 Jul 2024 10:07:42 -0700 (PDT)
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-447df43324fso310401cf.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Jul 2024 10:07:42 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVg7ms9oMPmMAL2aL0tgmS32Gx1bg4UuWrQ18sJZjVRIboN31Ky5Gy96MOjJuVqVgZUu7qbgUuspQ2Er3wuOTVpgkwBQzNdHi+qb1ST5g==
-X-Received: by 2002:a05:622a:191d:b0:447:e0e1:2a7b with SMTP id
- d75a77b69052e-44f9c83d5d8mr2695131cf.23.1721408861491; Fri, 19 Jul 2024
- 10:07:41 -0700 (PDT)
+        Fri, 19 Jul 2024 11:34:29 -0700 (PDT)
+Message-ID: <aa099580-c0d6-401e-9956-be4a6b595dcf@linaro.org>
+Date: Fri, 19 Jul 2024 20:34:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240715-x1e80100-crd-backlight-v2-0-31b7f2f658a3@linaro.org>
- <20240715-x1e80100-crd-backlight-v2-1-31b7f2f658a3@linaro.org>
- <20240715-scorn-canning-a7f23b9e2039@spud> <CAD=FV=U-nOMu-JDQ3T=ZRJ-rZ0BTtyzFVfnzbtCJdbRzAq3YMg@mail.gmail.com>
- <e017259b-bc62-4b57-9276-b834237225e1@kernel.org> <CAD=FV=VY5Ug3TfUo1RctiVQrHUjuod15HA8BxAyWdd_0bK8_Dw@mail.gmail.com>
- <20240718-frightful-naturist-a049ea7c0548@spud> <CAD=FV=VaGXMf6Srix6v=Me35BUN4B6ZHwebycka4Dbavqa5Vbw@mail.gmail.com>
-In-Reply-To: <CAD=FV=VaGXMf6Srix6v=Me35BUN4B6ZHwebycka4Dbavqa5Vbw@mail.gmail.com>
-From: Doug Anderson <dianders@chromium.org>
-Date: Fri, 19 Jul 2024 10:07:29 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WyDF8LkPeHXTgsyDA74n+AjuHPQ1896ECDE17aYB9rtg@mail.gmail.com>
-Message-ID: <CAD=FV=WyDF8LkPeHXTgsyDA74n+AjuHPQ1896ECDE17aYB9rtg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] dt-bindings: display: panel: samsung,atna33xc20:
- Document ATNA45AF01
-To: Conor Dooley <conor@kernel.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, Stephan Gerhold <stephan.gerhold@linaro.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/7] arm64: dts: qcom: x1e80100-crd: fix PCIe4 PHY supply
+To: Johan Hovold <johan+linaro@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
+ Abel Vesa <abel.vesa@linaro.org>, Rajendra Nayak <quic_rjendra@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20240719131722.8343-1-johan+linaro@kernel.org>
+ <20240719131722.8343-2-johan+linaro@kernel.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240719131722.8343-2-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi,
+On 19.07.2024 3:17 PM, Johan Hovold wrote:
+> The PCIe4 PHY is powered by vreg_l3i (not vreg_l3j).
+> 
+> Fixes: d7e03cce0400 ("arm64: dts: qcom: x1e80100-crd: Enable more support")
+> Cc: stable@vger.kernel.org	# 6.9
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
 
-On Thu, Jul 18, 2024 at 7:59=E2=80=AFAM Doug Anderson <dianders@chromium.or=
-g> wrote:
->
-> Hi,
->
-> On Thu, Jul 18, 2024 at 7:56=E2=80=AFAM Conor Dooley <conor@kernel.org> w=
-rote:
-> >
-> > On Thu, Jul 18, 2024 at 07:45:57AM -0700, Doug Anderson wrote:
-> > > Hi,
-> > >
-> > > On Wed, Jul 17, 2024 at 11:19=E2=80=AFPM Krzysztof Kozlowski <krzk@ke=
-rnel.org> wrote:
-> > > >
-> > > > On 18/07/2024 02:21, Doug Anderson wrote:
-> > > > > Conor (and/or) Krzysztof and Rob,
-> > > > >
-> > > > > On Mon, Jul 15, 2024 at 8:31=E2=80=AFAM Conor Dooley <conor@kerne=
-l.org> wrote:
-> > > > >>
-> > > > >> On Mon, Jul 15, 2024 at 02:15:37PM +0200, Stephan Gerhold wrote:
-> > > > >>> The Samsung ATNA45AF01 panel is an AMOLED eDP panel that has ba=
-cklight
-> > > > >>> control over the DP AUX channel. While it works almost correctl=
-y with the
-> > > > >>> generic "edp-panel" compatible, the backlight needs special han=
-dling to
-> > > > >>> work correctly. It is similar to the existing ATNA33XC20 panel,=
- just with
-> > > > >>> a larger resolution and size.
-> > > > >>>
-> > > > >>> Add a new "samsung,atna45af01" compatible to describe this pane=
-l in the DT.
-> > > > >>> Use the existing "samsung,atna33xc20" as fallback compatible si=
-nce existing
-> > > > >>> drivers should work as-is, given that resolution and size are d=
-iscoverable
-> > > > >>> through the eDP link.
-> > > > >>>
-> > > > >>> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> > > > >>
-> > > > >> Acked-by: Conor Dooley <conor.dooley@microchip.com>
-> > > > >
-> > > > > Can you comment on whether you would consider this bindings a "Fi=
-x"
-> > > > > since it's a dependency for later patches in this series (which a=
-re
-> > > > > "Fix"es) to pass dtbs_check? See:
-> > > > >
-> > > > > https://lore.kernel.org/r/4bca316a-2334-425b-87a6-e1bb241d26b5@li=
-naro.org
-> > > >
-> > > > The patch itself is not a fix, for sure, but it might be a dependen=
-cy of
-> > > > a fix (which you wrote above), thus could be pulled to stable as a
-> > > > dependency.
-> > > >
-> > > > I do not care about dtbs_check warnings in stable kernels, mostly
-> > > > because dtbs_check warnings depend heavily on dtschema and dtschema
-> > > > follows mainline kernel. Basically if you had warnings-free v6.8 bu=
-t try
-> > > > to run dtbs_check now with latest dtschema, your results will diffe=
-r.
-> > > >
-> > > > At some point in the future, I could imagine "no new dtbs_check war=
-nings
-> > > > in stable kernels" requirement or at least preference, but so far I
-> > > > don't think there is any benefit.
-> > >
-> > > In this case it's not about whether it makes it to the stable kernel
-> > > but about which main kernel it goes through.
-> > >
-> > > If we land the bindings in drm-misc-next right now then it'll be a
-> > > long time before it makes it into Linus's tree because of the way tha=
-t
-> > > drm-misc-next merges. It will make it to Linus's tree at 6.12. You ca=
-n
-> > > see the drm-misc merging strategy at:
-> > >
-> > > https://drm.pages.freedesktop.org/maintainer-tools/drm-misc.html
-> > >
-> > > If we land the dts change (a fix) through the Qualcomm tree as a fix
-> > > then it should target 6.11.
-> > >
-> > > This means that the 6.11 tree will have a dtbs_check error because it
-> > > has the dts change (a fix) but not the bindings change (not a fix).
-> > >
-> > > One way to resolve this would be to treat this bindings as a "fix" an=
-d
-> > > land it through "drm-misc-fixes". That would make the bindings and
-> > > device tree change meet up in Linux 6.11.
-> > >
-> > > Did I get that all correct?
-> >
-> > Is not not fairly established that a dependency for a fix can go onto a
-> > fixes branch even if it is not a fix in and of itself?
->
-> That would certainly be my take on it, but DT folks confirmation was
-> requested by Neil in:
->
-> https://lore.kernel.org/all/4bca316a-2334-425b-87a6-e1bb241d26b5@linaro.o=
-rg/
+Mind fixing that up on all laptops?
 
-FWIW, I'd rather not let this stagnate too long. I'm fairly confident
-in my assertion that this should go into drm-misc-fixes. I'll give it
-until Monday and then I'm just going to land this bindings change in
-drm-misc-fixes. Shout soon if you feel strongly that I shouldn't do
-this. If someone wants to flame me after the fact then so be it.
+Most of them are 80-85% CRD copypaste designs and regulators for
+precise things like PHYs are generally predefined for a set of PMICs
 
--Doug
+Konrad
 
