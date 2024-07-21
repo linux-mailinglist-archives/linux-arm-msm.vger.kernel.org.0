@@ -1,146 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-26676-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5C0C9384EF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2024 15:59:36 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F010893857B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2024 18:27:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E09D281172
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2024 13:59:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2D82E1C209A1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2024 16:27:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 341DE1649BF;
-	Sun, 21 Jul 2024 13:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 050671684BB;
+	Sun, 21 Jul 2024 16:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jFz+sr2T"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Vl9eFEDL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023664414;
-	Sun, 21 Jul 2024 13:59:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C8F166317
+	for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jul 2024 16:27:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721570372; cv=none; b=OgAj+mZhz5tDDODit2mEIS3PLVw8sxzUUqCLwebub8SAP9cYpvd031dSuuQkAGKxw5zgqf+i9YKZLVWdX/VjDiEB/NYD0I+T+4VmzBZtS01bC0HdmOx+eBda4M5RiouLyDLp5sjb3Knkwxp/iUcPwiMykha426FFBs4qa22Cvnk=
+	t=1721579255; cv=none; b=lh6UkLVbTjt0x0hA0o+xFriVb/xpvBtzf7ftjBnGFB89XMwzFZf13UJU9VZLhy05gKc80VUMtYpMPhyg65ekMoir6yM+LseZcaJjvauawaoEOcs/lAinRtmPWhWMhuKI1X9lwN3pYbD5o5x0EGcXRtAcXi8KfLhhEjkTAUhvYvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721570372; c=relaxed/simple;
-	bh=UQ0v9ZSKONzHOxIvLUO/uk4moMxQKeQFUJK15INxH/8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZNM0Zcck0YYQ6K/sjbbfFeyMXZ+hbjm4uYG+lJEWOyiYh3L3RGfKD42t0U7pXwxU7NOSdW5lqy+9jRto02E9htpRSYfw87dZo63DcB3zSMCu9pRkJrez4X54J47qSYMMRes2n7r6xSQ53LkPAQjtYNfBUKsvUWwr4bEDy+U0bW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jFz+sr2T; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28077C116B1;
-	Sun, 21 Jul 2024 13:59:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721570371;
-	bh=UQ0v9ZSKONzHOxIvLUO/uk4moMxQKeQFUJK15INxH/8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=jFz+sr2TdxbzdxASEG8eSxZ1iXEieTlB6BJKRa6ofnRmt6RZwpLCyjNDSckAMvkZv
-	 0RjevpiJ7hHXFPGf27zMzkCgoSR/5ANls/l1cgrtC6H2PPtFByvdJjJYnhQ+kPS15H
-	 d3nrNkyx+sUfJjoBZctPyV3a7eV730cwz6/hQXQPrv7ol8teHy6wh8eT17Z0g1ZkTH
-	 tiUqcaEnREbEL0WVcYsUYpgQ/op1WTCCj5MzbUhtCF16tFLHNSve9ZwBNpHhw9tmso
-	 VZc/UQISLZtE8QWNM+fSuzaqvaAZxKAIvcAxxWZbBV1MBUK2ejTPSEgTb7d/ApjuPR
-	 1Y3h81mUzH8fg==
-Message-ID: <d6ece026-d6c0-4ebf-93b4-563bd8d92255@kernel.org>
-Date: Sun, 21 Jul 2024 15:59:25 +0200
+	s=arc-20240116; t=1721579255; c=relaxed/simple;
+	bh=P+7CjZPdLR4mLuLE5UB9w3uVyAalwaQ2HLGx/4gOxG8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ucKCpDFMMfflTMn8w7QlSQGf5vj+q/ryr30X8ZVfgtEo04wOdXj9jr0m7pXfjsdIUmHRp45e+EOr9MUqqqwgPhoZS8WT0NpA+GzpkSUdAuv6uF5T4lg3MoeT31wJXNMgMoyx7BmYN0M29xkdC8e31zF7h566LVl3I7HsJdO8nUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Vl9eFEDL; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4266ea6a412so24695845e9.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jul 2024 09:27:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721579252; x=1722184052; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=nKcJ4KYW4wXVfoSKqiMkmDlwhFJlq1lDLVQoBAvTYmU=;
+        b=Vl9eFEDLQM6DCnebD6+IdT0JkjKrj6VITtaO5xKs80YyPujhDixHFw465ptTt1lMKp
+         /hg/PldfuprrnAnDgH1yHeBxbNwXY0en3z5xxRSmUH9afydFaGzu7ab+VUoe1oRcrG0C
+         nQumsp1WDeXhJw9NN7284IO7KjPrSmIIINRx2dxMwR+Vvmol77LmbhAAbEL35LYhhkq5
+         xHOLF7ocGpmmWV406R+fxJ8vt+REWha8Wmy++M9M2zkFQPJYWs5QizZYcL7Iiq7AkEfP
+         JXBJ5kL7qIu2BQO1+1Sf+jiBQoB9RYHJoejNgJma4hdsOblaPdK5J00gpiAKaFLnw++1
+         mblg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721579252; x=1722184052;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nKcJ4KYW4wXVfoSKqiMkmDlwhFJlq1lDLVQoBAvTYmU=;
+        b=wjIwWmMEKDrdM1cGILwEZAejFC0ZM2CLqwV/CQqNyLVIO8NR6xZuENLulI98wQD6HO
+         vphdDz8jx4imdDA2qWp4bWikHRh9QxZdSHuAiNQNrrGB27b4iKa09J0iDYF7qL5jOldY
+         uWFNTbH28nn0UovZ75QGBwwnXh46Z6MqOaj3PuJsS05Kx8lQaOvM3nNf2UHXajUmjldy
+         01i0q/CBhYF3Q6ZpDG69VNF0vfrX2G4nFLmM8lqV7zZuM5YxI+J7WYEzqcbYZexH9CSk
+         M1FS1eT6yzd+gZbbtOraJxbCwYdwrIwRXAAwc2X4b+Akvy/NHnEp+LJ8Wr2MJMNoVc9X
+         mXNA==
+X-Gm-Message-State: AOJu0YwmUY9NB/qLRkNJDw7ccSlxgrUv6sf1RvD6VZerhR1RometIAMC
+	nRlfqXs6EJDWbUrPgbyViwhrMeBFSxmNF5Iuw99F2WaZfEnqorhOHiR7JE+LX2I=
+X-Google-Smtp-Source: AGHT+IEsO3Y1qTWskCsQShqN7vS04iBPOTsEwG41iTFXyoCITuBrAzLI1WAFLsk20IDrTB9bTKDdYQ==
+X-Received: by 2002:adf:fa03:0:b0:368:5d2:179 with SMTP id ffacd0b85a97d-36831755ea0mr8056826f8f.56.1721579251517;
+        Sun, 21 Jul 2024 09:27:31 -0700 (PDT)
+Received: from linaro.org ([82.79.124.209])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427d2a947fasm123149335e9.43.2024.07.21.09.27.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 21 Jul 2024 09:27:31 -0700 (PDT)
+Date: Sun, 21 Jul 2024 19:27:29 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Rob Clark <robdclark@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, Doug Anderson <dianders@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: x1e80100-yoga: Update panel
+ bindings
+Message-ID: <Zp028V1KzO/bWFdd@linaro.org>
+References: <20240719185250.4877-1-robdclark@gmail.com>
+ <20240719185250.4877-2-robdclark@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: bus: qcom,ebi2: convert to dtschema
-To: Rayyan Ansari <rayyan.ansari@linaro.org>, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-kernel@vger.kernel.org
-References: <20240717131030.51419-1-rayyan.ansari@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240717131030.51419-1-rayyan.ansari@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240719185250.4877-2-robdclark@gmail.com>
 
-On 17/07/2024 15:10, Rayyan Ansari wrote:
-> Convert the bindings for the External Bus Interface on apq8060 and
-> msm8660 from the old text format to yaml.
+On 24-07-19 11:52:50, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
+> Use the correct panel compatible, and wire up enable-gpio.  It is wired
+> up in the same way as the x1e80100-crd.
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 
-....
-
-> +patternProperties:
-> +  "^.*@[0-5],[0-9a-f]+$":
-> +    type: object
-> +    additionalProperties: true
-> +    properties:
-> +      reg:
-> +        maxItems: 1
+> ---
+>  .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts   | 13 ++++++++++++-
+>  1 file changed, 12 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+> index f569f0fbd1fc..28a6ea5a24fd 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+> @@ -592,9 +592,13 @@ &mdss_dp3 {
+>  
+>  	aux-bus {
+>  		panel {
+> -			compatible = "edp-panel";
+> +			compatible = "samsung,atna45dc02", "samsung,atna33xc20";
+> +			enable-gpios = <&pmc8380_3_gpios 4 GPIO_ACTIVE_HIGH>;
+>  			power-supply = <&vreg_edp_3p3>;
+>  
+> +			pinctrl-0 = <&edp_bl_en>;
+> +			pinctrl-names = "default";
 > +
-
-
-Ideally, once we should change smsc,lan9115 bindings to properly end
-with "unevaluatedProperties: false" (thus referencing
-mc-peripheral-props.yaml). That would be however a bit bigger change
-affecting exynos-srom and socionext,uniphier-system-bus.
-
-Considering this are all old platforms, not really used nowadays, I
-think it is fine now.
-
-Thanks for the conversion.
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Rob, will you take this?
-
-Best regards,
-Krzysztof
-
+>  			port {
+>  				edp_panel_in: endpoint {
+>  					remote-endpoint = <&mdss_dp3_out>;
+> @@ -663,6 +667,13 @@ &pcie6a_phy {
+>  	status = "okay";
+>  };
+>  
+> +&pmc8380_3_gpios {
+> +	edp_bl_en: edp-bl-en-state {
+> +		pins = "gpio4";
+> +		function = "normal";
+> +	};
+> +};
+> +
+>  &qupv3_0 {
+>  	status = "okay";
+>  };
+> -- 
+> 2.45.2
+> 
 
