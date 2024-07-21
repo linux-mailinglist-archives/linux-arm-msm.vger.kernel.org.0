@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-26672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C71FA938452
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2024 12:22:41 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C230938457
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2024 12:24:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8335B2812A5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2024 10:22:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D73E01C20A5E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2024 10:24:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C42BC15FA6D;
-	Sun, 21 Jul 2024 10:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 342DD15FA8A;
+	Sun, 21 Jul 2024 10:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="smbFETaz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ET8rGtTF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CD7158214;
-	Sun, 21 Jul 2024 10:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D613A27E;
+	Sun, 21 Jul 2024 10:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721557356; cv=none; b=tRPAgQtrKx4noQMc0DJ4K0M9P9+YC3RzkaRPrHOuuI/MAi2t9e6LG4AbVBdWfM0WPs3HCBi4YHOV6MvlR3o4kZBNRrXLLK41xlxqAnXprw3Nzxu7DwlBDmjtdDo/Ni24PIdRix85LnNXTQdn7pyZSA1W5yNrm2XXhwgkL+9hV+w=
+	t=1721557461; cv=none; b=NDF8c/VqXWarZRYTIRyoVaHA1ADdAaBCfbTseueDZV3XZ84YoUnsfTPXu1bjDaTzZ5suel6ltNGipaSwCgHs4VkgUx1HT+9TbFFngTxanEyHJXZLYkqVdQKjm43GypdUsB8zPSXcxzau4N4rNlysdmxOtwjzF664C0y66t9C8KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721557356; c=relaxed/simple;
-	bh=x+PMCdonV63eI27ubbFi1OpvYoHk1muqaKseq1eqnC0=;
+	s=arc-20240116; t=1721557461; c=relaxed/simple;
+	bh=Qp4ZnoNJAsjmwage0fRNYKZ3x96815KqDkSFBz48iek=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rJ4MClt6pLglyYR6c9S5Kk7Hge9c11lPyvvW9DX0IxpZAXvMPvzi39OqLBtWMNsv5fnP6X4Y9QXsaM1naRxmtu1xMwHtGYGyOFo4kc2Fs2rnEs+VfmnuLK2pmWJiFBrB8UoWtOyc8/unLFLW9XP9UHLXmaWt8PVZTzJtxysqk/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=smbFETaz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48211C4AF0E;
-	Sun, 21 Jul 2024 10:22:31 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=d/0f0g4bfqZHRyDe/5sZMQ3/9Nbdz8FHIH16HQvZWcV4xndaCD6bd9EC6i8eJd6EZ4bq4LQ+60v6eB4U1rA78XP1LH8QZaK7G4Omu681WkHF9tjhCh8bvRZ+I036Z0e8jvwu9pCiqne/fuBtg8vp9mg6YDdFa+L6y7F2gcc5hzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ET8rGtTF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267F0C116B1;
+	Sun, 21 Jul 2024 10:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721557356;
-	bh=x+PMCdonV63eI27ubbFi1OpvYoHk1muqaKseq1eqnC0=;
+	s=k20201202; t=1721557460;
+	bh=Qp4ZnoNJAsjmwage0fRNYKZ3x96815KqDkSFBz48iek=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=smbFETazcrcZi1lNCUxjZvPnv6eyRJXCJ4o2vZKHq/bPO/jS7ZuFAuFaeZRXERF7a
-	 XvhiuQThKdCS9bV2OJRemEKdaqTZBuhj6KU1nWDy9/aqja+DuJo31AozHK7koaOIV2
-	 hZujU3hyCeEhr5xsoyEFalxormDO4aEMnbSZFz3NW8jJxenLFkMrFYt2xisj5HMkjE
-	 zj5gwGdANgoRH4iXfO6BqO0mcx8TW9Mq8Ts2QMhTeR9UETbQfgvTfFhl/+rxFJTKS7
-	 UxvKtujoPdFqNRnGNjJQ2DogNJfJAG2JBxqYqEhRiuig4YTtuS+5Ru/KQj5HUphSR0
-	 4Xxkbeeg8SXPQ==
-Message-ID: <45a8f8b2-e1c0-4fc2-9c94-023b733bf47e@kernel.org>
-Date: Sun, 21 Jul 2024 12:22:29 +0200
+	b=ET8rGtTFOhT8pYPLYBYarZ8OywFaRScLYW6mRgRqevMgoNHnXrP4Z4AWbilo7R85A
+	 JGMcy756Faj2L5G0wvLVdT7OhBZwI9vLs6kwGJzyjQhsBTBDmi4VblbQA23gNKyq/t
+	 /iNnv38rildfBgQnkILltA8UdnnaUb82tqMUm8TtdfgQeSalxuxahRUR5mclBT20J+
+	 qoo3kmdvT6BlMznTrgXtdZzp3xNFXVltTIxPRbpeGBK3QAr8PzVsXG6B2i/kznZaYH
+	 1PJMOlHm6qIZrp1FZtWEnTmMApoQTUHrY19QfOxc8DuL283cwemaoHoJ6Ev4WHL2ww
+	 s2Ges3mg1h6nA==
+Message-ID: <dcb202bd-f36a-4be1-b817-8e572e847f7a@kernel.org>
+Date: Sun, 21 Jul 2024 12:24:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: Add Lenovo ThinkPad T14s Gen
- 6
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
- Johan Hovold <johan@kernel.org>
-References: <20240719-topic-t14s_upstream-v1-0-d7d97fdebb28@linaro.org>
- <20240719-topic-t14s_upstream-v1-1-d7d97fdebb28@linaro.org>
+Subject: Re: [PATCH] dt-bindings: PCI: qcom,pcie-sc7280: specify eight
+ interrupts
+To: Rayyan Ansari <rayyan.ansari@linaro.org>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240718-sc7280-pcie-interrupts-v1-1-2047afa3b5b7@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,17 +107,38 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240719-topic-t14s_upstream-v1-1-d7d97fdebb28@linaro.org>
+In-Reply-To: <20240718-sc7280-pcie-interrupts-v1-1-2047afa3b5b7@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 19/07/2024 22:16, Konrad Dybcio wrote:
-> Document the X1E78100-based ThinkPad.
+On 18/07/2024 17:20, Rayyan Ansari wrote:
+> In the previous commit to this binding,
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> commit 756485bfbb85 ("dt-bindings: PCI: qcom,pcie-sc7280: Move SC7280 to dedicated schema")
+
+"commit foo ("bar")" is always part of the sentence, so drop surrounding
+blank lines.
+
+> 
+> the binding was changed to specify one interrupt, as the device tree at
+> that moment in time did not describe the hardware fully.
+> 
+> The device tree for sc7280 now specifies eight interrupts, due to
+> 
+> commit b8ba66b40da3 ("arm64: dts: qcom: sc7280: Add additional MSI interrupts")
+
+Same here.
+
+> 
+> As a result, change the bindings to reflect this.
+> 
+> Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  .../devicetree/bindings/pci/qcom,pcie-sc7280.yaml  | 24 ++++++++++++++++++----
+>  1 file changed, 20 insertions(+), 4 deletions(-)
+> 
+
+With above:
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
