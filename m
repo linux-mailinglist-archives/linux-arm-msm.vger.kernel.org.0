@@ -1,161 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-26671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DCDDF938411
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2024 10:52:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C71FA938452
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2024 12:22:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5350E1F213E9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2024 08:52:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8335B2812A5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2024 10:22:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7412EC2C6;
-	Sun, 21 Jul 2024 08:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C42BC15FA6D;
+	Sun, 21 Jul 2024 10:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ObkI0JcH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="smbFETaz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1C69479
-	for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jul 2024 08:52:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CD7158214;
+	Sun, 21 Jul 2024 10:22:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721551933; cv=none; b=gCFgyFGjv6TGRLP8DRNoKIpsM0/yL11/rTstfCHSNmzl386k/8AmzQBp5cTdT+2WyXp1M9reGYAIa5/xvPjzX2rEzYtCU8sFGst/M5ol6oessn6tviU2OaEBvBRNmD1n1a14U1jnIgG+E9u//zMZ8iS5sbSciFW3DwcNxGsn0Os=
+	t=1721557356; cv=none; b=tRPAgQtrKx4noQMc0DJ4K0M9P9+YC3RzkaRPrHOuuI/MAi2t9e6LG4AbVBdWfM0WPs3HCBi4YHOV6MvlR3o4kZBNRrXLLK41xlxqAnXprw3Nzxu7DwlBDmjtdDo/Ni24PIdRix85LnNXTQdn7pyZSA1W5yNrm2XXhwgkL+9hV+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721551933; c=relaxed/simple;
-	bh=iCQdZOj68/akTNvWefpiYEBVhYawxW0/QS2Pv7LOC/o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m+c44cTwPGU3vtqH9veLmBHtjxZpTYGM3VUwggoU8djG/3ellDyVrgwYJbTXEPzqc3TTmJIuDfoYmJlYrvUGU6tfCUBtajGHVas8kQHlX07NATC1dHp73MEW4SOQ9xiEnsPtoUyVZtIk1kCi63EcohDyvdH+EEGXd+SpDvGleyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ObkI0JcH; arc=none smtp.client-ip=209.85.160.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-26109c97728so1326180fac.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 Jul 2024 01:52:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721551930; x=1722156730; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=X7ZS2uPOUje55mIE52CAqCCri08pD10wNTzXXCn3ihY=;
-        b=ObkI0JcHS09zeI6Rl/r0Yi2B5ERCcSZMGN6lIFnN7BdP/rdLqeHRarBwiwNm+gw4lG
-         30PgHdbxyLbey1iyGsT9JfGY4U+6WwcT/1ODCJ8e7P1hTG4ytd+8Z9p2j2Sv5oLjTvmI
-         RZK0xN+WUv9lHKawRC21zM6rohnmsqGl0tOrKGo6dsKtK3ECYhnOr0CiUfeMywUpA5lT
-         paP04jfG3RbzGnGeo506MyiKweja+vrkjLQ9L7JUGd12AFpa9i7X5cxIzFxmy5GAOgMk
-         vtIQ9ZlugokyziJFteum2SMi9Sbxx+MlivJBTia9n8vewFUnC+sDKy6BYMlIcq2rIWMA
-         v3Rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721551930; x=1722156730;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=X7ZS2uPOUje55mIE52CAqCCri08pD10wNTzXXCn3ihY=;
-        b=FzqZpO6CgaO3B2byNcHOtCwow5W2UWtn66P+mW/x8wATtmPLuD4OpnqcSgOgga3S9R
-         GfXQmohxE7JcnZalNzoTIqqDgscf+ZfE0HMxYLaXIaTaqFcR5UP9gtGbzqu8l9q5ChWY
-         wA+0AUpFwnyaLnCpGDS5cB2kcTngtvxzQYHl416hTxOk2L3N36pEOKrcwbQTs2yFGhHS
-         ZY6g90FpvV9Wz+Mvy6joX+V4TXP5Ai5o4r5fpNEnAN629BNbgOWywBggYGGgKPc9PnSO
-         PCddQIBkX7kzZzTxvqjfeUNAIdnr9LUeYzZA0QPdZ3MD+74r1bt5BBy6HHCYJ5UKmN8y
-         6suw==
-X-Forwarded-Encrypted: i=1; AJvYcCVSCkneVeNanCe5sedwlgFNT/C6lnbjdYVrxEmtKX/5q3BAejxnlk2eDKiXcrn6K2EcPNlugyVmQErQByasMeoMvYjJB6Ikscgt8CM/BA==
-X-Gm-Message-State: AOJu0YxH3SV+LpAv7J2bP2OIgbQ8xyBDMGxJ5cdIlav2+mz0KjQAYc/O
-	+PEZaH7gQLP18sZcl0BWZplAHnGvDtmMuhFdm3ZPq5/vCNj1mGgKbp6dgohHCg==
-X-Google-Smtp-Source: AGHT+IEc7fqKlPNWS9Lge1u0WJuAaJVMRY75Y8sIwcx5LAC81F2MWI3JcVI2FJjY9FR1mPBL0NCVBg==
-X-Received: by 2002:a05:6870:171e:b0:260:eb3a:1b2 with SMTP id 586e51a60fabf-26121303088mr4811129fac.7.1721551930158;
-        Sun, 21 Jul 2024 01:52:10 -0700 (PDT)
-Received: from thinkpad ([120.56.206.118])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70d24065a1esm415083b3a.120.2024.07.21.01.52.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Jul 2024 01:52:09 -0700 (PDT)
-Date: Sun, 21 Jul 2024 14:22:05 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Tengfei Fan <quic_tengfan@quicinc.com>
-Cc: Jassi Brar <jassisinghbrar@gmail.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, kernel@quicinc.com,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v2] dt-bindings: mailbox: qcom-ipcc: Document the QCS9100
- IPCC
-Message-ID: <20240721085205.GM1908@thinkpad>
-References: <20240709-document_qcs9100_ipcc_compatible-v2-1-0fd67000e6b1@quicinc.com>
+	s=arc-20240116; t=1721557356; c=relaxed/simple;
+	bh=x+PMCdonV63eI27ubbFi1OpvYoHk1muqaKseq1eqnC0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rJ4MClt6pLglyYR6c9S5Kk7Hge9c11lPyvvW9DX0IxpZAXvMPvzi39OqLBtWMNsv5fnP6X4Y9QXsaM1naRxmtu1xMwHtGYGyOFo4kc2Fs2rnEs+VfmnuLK2pmWJiFBrB8UoWtOyc8/unLFLW9XP9UHLXmaWt8PVZTzJtxysqk/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=smbFETaz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48211C4AF0E;
+	Sun, 21 Jul 2024 10:22:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1721557356;
+	bh=x+PMCdonV63eI27ubbFi1OpvYoHk1muqaKseq1eqnC0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=smbFETazcrcZi1lNCUxjZvPnv6eyRJXCJ4o2vZKHq/bPO/jS7ZuFAuFaeZRXERF7a
+	 XvhiuQThKdCS9bV2OJRemEKdaqTZBuhj6KU1nWDy9/aqja+DuJo31AozHK7koaOIV2
+	 hZujU3hyCeEhr5xsoyEFalxormDO4aEMnbSZFz3NW8jJxenLFkMrFYt2xisj5HMkjE
+	 zj5gwGdANgoRH4iXfO6BqO0mcx8TW9Mq8Ts2QMhTeR9UETbQfgvTfFhl/+rxFJTKS7
+	 UxvKtujoPdFqNRnGNjJQ2DogNJfJAG2JBxqYqEhRiuig4YTtuS+5Ru/KQj5HUphSR0
+	 4Xxkbeeg8SXPQ==
+Message-ID: <45a8f8b2-e1c0-4fc2-9c94-023b733bf47e@kernel.org>
+Date: Sun, 21 Jul 2024 12:22:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240709-document_qcs9100_ipcc_compatible-v2-1-0fd67000e6b1@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: Add Lenovo ThinkPad T14s Gen
+ 6
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
+ Johan Hovold <johan@kernel.org>
+References: <20240719-topic-t14s_upstream-v1-0-d7d97fdebb28@linaro.org>
+ <20240719-topic-t14s_upstream-v1-1-d7d97fdebb28@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240719-topic-t14s_upstream-v1-1-d7d97fdebb28@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jul 09, 2024 at 10:01:47PM +0800, Tengfei Fan wrote:
-> Document the Inter-Processor Communication Controller on the QCS9100
-> Platform.
-> QCS9100 is drived from SA8775p. Currently, both the QCS9100 and SA8775p
-> platform use non-SCMI resource. In the future, the SA8775p platform will
-> move to use SCMI resources and it will have new sa8775p-related device
-> tree. Consequently, introduce "qcom,qcs9100-ipcc" to describe non-SCMI
-> based IPCC.
+On 19/07/2024 22:16, Konrad Dybcio wrote:
+> Document the X1E78100-based ThinkPad.
 > 
-> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-- Mani
-
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-> Introduce support for the QCS9100 SoC device tree (DTSI) and the
-> QCS9100 RIDE board DTS. The QCS9100 is a variant of the SA8775p.
-> While the QCS9100 platform is still in the early design stage, the
-> QCS9100 RIDE board is identical to the SA8775p RIDE board, except it
-> mounts the QCS9100 SoC instead of the SA8775p SoC.
-> 
-> The QCS9100 SoC DTSI is directly renamed from the SA8775p SoC DTSI, and
-> all the compatible strings will be updated from "SA8775p" to "QCS9100".
-> The QCS9100 device tree patches will be pushed after all the device tree
-> bindings and device driver patches are reviewed.
-> 
-> The final dtsi will like:
-> https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-3-quic_tengfan@quicinc.com/
-> 
-> The detailed cover letter reference:
-> https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
-> ---
-> Changes in v2:
->   - Split huge patch series into different patch series according to
->     subsytems
->   - Update patch commit message
-> 
-> prevous disscussion here:
-> [1] v1: https://lore.kernel.org/linux-arm-msm/20240703025850.2172008-1-quic_tengfan@quicinc.com/
-> ---
->  Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-> index 05e4e1d51713..916c47fbc238 100644
-> --- a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-> +++ b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
-> @@ -24,6 +24,7 @@ properties:
->    compatible:
->      items:
->        - enum:
-> +          - qcom,qcs9100-ipcc
->            - qcom,qdu1000-ipcc
->            - qcom,sa8775p-ipcc
->            - qcom,sc7280-ipcc
-> 
-> ---
-> base-commit: 0b58e108042b0ed28a71cd7edf5175999955b233
-> change-id: 20240709-document_qcs9100_ipcc_compatible-f5f933d24098
-> 
-> Best regards,
-> -- 
-> Tengfei Fan <quic_tengfan@quicinc.com>
-> 
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
 
--- 
-மணிவண்ணன் சதாசிவம்
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
 
