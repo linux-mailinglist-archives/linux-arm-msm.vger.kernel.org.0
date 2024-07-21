@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-26675-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26676-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C8C89384BA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2024 15:35:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A5C0C9384EF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2024 15:59:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E1802810D2
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2024 13:35:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E09D281172
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Jul 2024 13:59:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1361161322;
-	Sun, 21 Jul 2024 13:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 341DE1649BF;
+	Sun, 21 Jul 2024 13:59:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fHGLnZLE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jFz+sr2T"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7726FD3;
-	Sun, 21 Jul 2024 13:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023664414;
+	Sun, 21 Jul 2024 13:59:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721568915; cv=none; b=KjQafYHz6rHfSQeaGos9MP1m918zPbwpcNlgopZZcY6HtnwOZ9FxE0inGkYEnRvz2SS45slyndEAIrxev+DepLWjM+HrwkvDEiQqg3vPyEOcheD9k+sIkMUKMQ4Ul/osmnNKGPw8qPfhIxgh6DjS57x/kK+hUhA+W3jaYXv/U+o=
+	t=1721570372; cv=none; b=OgAj+mZhz5tDDODit2mEIS3PLVw8sxzUUqCLwebub8SAP9cYpvd031dSuuQkAGKxw5zgqf+i9YKZLVWdX/VjDiEB/NYD0I+T+4VmzBZtS01bC0HdmOx+eBda4M5RiouLyDLp5sjb3Knkwxp/iUcPwiMykha426FFBs4qa22Cvnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721568915; c=relaxed/simple;
-	bh=FfWFnIRv7bJwtBjGmEB+THW3kcX4n2OAzEOePh0liJA=;
+	s=arc-20240116; t=1721570372; c=relaxed/simple;
+	bh=UQ0v9ZSKONzHOxIvLUO/uk4moMxQKeQFUJK15INxH/8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l+nOHd+NxaCLlktt7tG9etemXdMaFJOlKQN1N0wCX0pnPhV4YbqiXUYd5zaC7DfqrWzartFyyxC7+jCY6ZGWArmcFeiXz+mXFjXcZXGz8rFBkcqUNTYxIp6CP5UD3Bfwn4e1+keWrFt3oov5nrLpm6IXMq2FYVcbxqOnpXmN0Go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fHGLnZLE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4DBC116B1;
-	Sun, 21 Jul 2024 13:35:10 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ZNM0Zcck0YYQ6K/sjbbfFeyMXZ+hbjm4uYG+lJEWOyiYh3L3RGfKD42t0U7pXwxU7NOSdW5lqy+9jRto02E9htpRSYfw87dZo63DcB3zSMCu9pRkJrez4X54J47qSYMMRes2n7r6xSQ53LkPAQjtYNfBUKsvUWwr4bEDy+U0bW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jFz+sr2T; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28077C116B1;
+	Sun, 21 Jul 2024 13:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721568915;
-	bh=FfWFnIRv7bJwtBjGmEB+THW3kcX4n2OAzEOePh0liJA=;
+	s=k20201202; t=1721570371;
+	bh=UQ0v9ZSKONzHOxIvLUO/uk4moMxQKeQFUJK15INxH/8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=fHGLnZLEfxK75C9AYsbA+yx2QQNBO0TpAmcYSP6L12MQRSHrc/3sNVceKoSAKL6kH
-	 a/n4xVAg/HeV6dJ3I5BCEyNdzDYNkpFdAaTZKzAOMuju/7z3z2j4svcdOFY/WSd//M
-	 lKuOHQrZjaXRm/cLJ2Pu7H1lcHLKYvufVkiZDJag3AR6RBbxaDxqouqv76CQ7rg0SL
-	 1uMwYsAf1IBG47nqdRCAVvjNbLvCVPbyTxn32au97aNzqW1AKQ7eKjWFbHEPUthMZV
-	 RXJauJsK33gVtuqPqZ+MlUTGnOwhHn2mEiDMAZ+HdFfaRFPtyJZROQFdJZnuIeJNB2
-	 R6uXaM2BGcWIg==
-Message-ID: <c5766369-7f22-4dfe-b242-8aebae6abdfb@kernel.org>
-Date: Sun, 21 Jul 2024 15:35:08 +0200
+	b=jFz+sr2TdxbzdxASEG8eSxZ1iXEieTlB6BJKRa6ofnRmt6RZwpLCyjNDSckAMvkZv
+	 0RjevpiJ7hHXFPGf27zMzkCgoSR/5ANls/l1cgrtC6H2PPtFByvdJjJYnhQ+kPS15H
+	 d3nrNkyx+sUfJjoBZctPyV3a7eV730cwz6/hQXQPrv7ol8teHy6wh8eT17Z0g1ZkTH
+	 tiUqcaEnREbEL0WVcYsUYpgQ/op1WTCCj5MzbUhtCF16tFLHNSve9ZwBNpHhw9tmso
+	 VZc/UQISLZtE8QWNM+fSuzaqvaAZxKAIvcAxxWZbBV1MBUK2ejTPSEgTb7d/ApjuPR
+	 1Y3h81mUzH8fg==
+Message-ID: <d6ece026-d6c0-4ebf-93b4-563bd8d92255@kernel.org>
+Date: Sun, 21 Jul 2024 15:59:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,23 +50,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: display: panel: samsung,atna45dc02:
- Document ATNA45DC02
-To: Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org
-Cc: Doug Anderson <dianders@chromium.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Abel Vesa <abel.vesa@linaro.org>, Rob Clark <robdclark@chromium.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <quic_jesszhan@quicinc.com>, David Airlie <airlied@gmail.com>,
- Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
- "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
-References: <20240719185250.4877-1-robdclark@gmail.com>
+Subject: Re: [PATCH] dt-bindings: bus: qcom,ebi2: convert to dtschema
+To: Rayyan Ansari <rayyan.ansari@linaro.org>, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-kernel@vger.kernel.org
+References: <20240717131030.51419-1-rayyan.ansari@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,35 +103,42 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240719185250.4877-1-robdclark@gmail.com>
+In-Reply-To: <20240717131030.51419-1-rayyan.ansari@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 19/07/2024 20:52, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On 17/07/2024 15:10, Rayyan Ansari wrote:
+> Convert the bindings for the External Bus Interface on apq8060 and
+> msm8660 from the old text format to yaml.
 > 
-> The Samsung ATNA45DC02 panel is an AMOLED eDP panel, similar to the
-> existing ATNA45AF01 and ATNA33XC20 panel but with a higher resolution.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  .../devicetree/bindings/display/panel/samsung,atna33xc20.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/panel/samsung,atna33xc20.yaml b/Documentation/devicetree/bindings/display/panel/samsung,atna33xc20.yaml
-> index 5192c93fbd67..3ec9b8c79b5f 100644
-> --- a/Documentation/devicetree/bindings/display/panel/samsung,atna33xc20.yaml
-> +++ b/Documentation/devicetree/bindings/display/panel/samsung,atna33xc20.yaml
-> @@ -21,6 +21,10 @@ properties:
->        - items:
->            - const: samsung,atna45af01
->            - const: samsung,atna33xc20
-> +      # Samsung 14.5" 3K (2944x1840 pixels) eDP AMOLED panel
-> +      - items:
-> +          - const: samsung,atna45dc02
+> Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
 
-This should be just enum of above entry (the first compatible).
 
+....
+
+> +patternProperties:
+> +  "^.*@[0-5],[0-9a-f]+$":
+> +    type: object
+> +    additionalProperties: true
+> +    properties:
+> +      reg:
+> +        maxItems: 1
+> +
+
+
+Ideally, once we should change smsc,lan9115 bindings to properly end
+with "unevaluatedProperties: false" (thus referencing
+mc-peripheral-props.yaml). That would be however a bit bigger change
+affecting exynos-srom and socionext,uniphier-system-bus.
+
+Considering this are all old platforms, not really used nowadays, I
+think it is fine now.
+
+Thanks for the conversion.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Rob, will you take this?
 
 Best regards,
 Krzysztof
