@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-26758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95D70938CBB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 11:59:11 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7132938CC8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 11:59:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4C0A41F24320
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 09:59:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 224DF1C23D09
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 09:59:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C947916D4E6;
-	Mon, 22 Jul 2024 09:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57C7E16F26C;
+	Mon, 22 Jul 2024 09:55:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rM83Hcf0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QLHk5xnT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC3E16C84A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D883616EBEA;
 	Mon, 22 Jul 2024 09:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721642120; cv=none; b=rwHblV2NBjkby+od/aOHZvUJrsXZi8jER6PWE/td+AZ56lnOQLqiwAWXmhFUMK0Bg1OxfXiRcvzGDEY1xhFWGWfgkmgShBx5hkiyhdD+jE7Df6xQxoiaT+9GMCp1ODruSPk02dHgFInfuP3CqKNf7+Jb56xRb/K0ovaiu56tbgw=
+	t=1721642120; cv=none; b=MqVpv3lBEE94H/NOcpx6TEgIUMXhH1fmmX0qxyXA0dI5b8dQCmtAZReKLt4nuZnsH9hFgmuDPDyLLT86DIZB6BuxYSIFECHDxFptUZ6Rm3/RCKT0B+b936GXQOc+7jR+/rInB55ouUu48VNg2DAVlZvhCB51VDdIwmXQ9rlgw+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1721642120; c=relaxed/simple;
-	bh=jWLnYM2jfTmwijyJy6MijsD/KmzgNL2miAnBtjS1YHA=;
+	bh=LHD2wmUiMEnvEGP802hKWAFX2vkyza4ijkwiT7L5ajU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DnrO0Mhay8i/GG56qNfHVKhMoKS8Rhj0QwkrQ1r2v8EjzIy5CFguehmFbfZARIWxRVHXYNc9OlYHFNdNIrEuCCrlB6d6zbE/zVyqovQ4FeEnQupgh9aIKr0S74XNHc6TtSGEX3cmQ8KP5YVmRhLolvk4XeZirx8R+8yBtZvSrQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rM83Hcf0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452F5C4AF10;
+	 MIME-Version; b=EQakQCB7ppe8Gt5JXWX13oiOgqmTnqHHH+g36HhQrNdabdudTysTdx5/lqM17Bk5tN0xf/P48wf54WLi+ZTYbL6NIuAk2zGbXgRV6dym0ehL8lz0h7yGoLNxSy1lBLwXvw1dRpyhZtMq9lUXwo8F+PYfHGmxYi7b1BdKYT7mmIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QLHk5xnT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40337C4AF0D;
 	Mon, 22 Jul 2024 09:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1721642120;
-	bh=jWLnYM2jfTmwijyJy6MijsD/KmzgNL2miAnBtjS1YHA=;
+	bh=LHD2wmUiMEnvEGP802hKWAFX2vkyza4ijkwiT7L5ajU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rM83Hcf02/77W+aO0gumPYF/SfntKNUpt/3bOH0+R+JmuCgnN0i5JWhYOzgnqy384
-	 Sx0bp+wVxg+enpx9pqGFHb0abJT7NuyDk2fYs6wnnEWEOzqiUTMfwaksnJ3v7zYQE7
-	 PT3rGn02Pyvks2K0TeYTzMiHY6X8v4nnLxYB7vetekm/5Egx557sb+at7CJXadOW0y
-	 VZ4SOs0lrrM6/IURQJjf0bAxMUO0huWJd0j1HjheqAI9A69vL7EJkV49uC6vSXeC47
-	 R1UV6ISAtzFgZcsWWFE2iiOP7FmsMEzMUtybTWxKKPOZdK5eRG+sUxo3nYp5WiqpOX
-	 9YtrARNLz2Y1A==
+	b=QLHk5xnT2AYjEHR5IzT7QXE0LxzHiM725TKCarge6CppxMxX4cDI4mdsCDsMwmHWf
+	 Hq6VQbOtEZjB9sNefmvp4pSJ3BU2wD/SQa56GkqtUZOXLY7/NraVFg7O5SshG/WcKU
+	 lbWw+ZfSl7qZWqR8Ycx1hXemthT9giNEy0Nb9FlfwmR7ujiKXjX1fa723cHgHLZ3SJ
+	 Zrt8niL9mzC61H11kWwWJfNQnPUQDG0DzurftIG1C/Ex+g1DvixPwH4mfn3MnoDk4X
+	 R28irgSrplB9Pl898VvetVFF2xlLL3KAEbugm4KMjkxNV6jjG3CM+mY6dvrU1EzoXj
+	 oaT3iYLoCNosQ==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan+linaro@kernel.org>)
-	id 1sVplH-0000000079M-0ewj;
+	id 1sVplH-0000000079O-157e;
 	Mon, 22 Jul 2024 11:55:19 +0200
 From: Johan Hovold <johan+linaro@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -60,9 +60,9 @@ Cc: Rob Herring <robh@kernel.org>,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 02/12] arm64: dts: qcom: x1e80100-qcp: fix up PCIe6a pinctrl node
-Date: Mon, 22 Jul 2024 11:54:49 +0200
-Message-ID: <20240722095459.27437-3-johan+linaro@kernel.org>
+Subject: [PATCH 03/12] arm64: dts: qcom: x1e80100-qcp: disable PCIe6a perst pull down
+Date: Mon, 22 Jul 2024 11:54:50 +0200
+Message-ID: <20240722095459.27437-4-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.44.2
 In-Reply-To: <20240722095459.27437-1-johan+linaro@kernel.org>
 References: <20240722095459.27437-1-johan+linaro@kernel.org>
@@ -74,47 +74,26 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The PCIe6a pinctrl node appears to have been copied from the sc8280xp
-CRD dts, which has the NVMe on pcie2a and uses some funny indentation.
-
-Fix up the node name to match the x1e80100 use and label and use only
-tabs for indentation.
+Disable the PCIe6a perst pull-down resistor to save some power.
 
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-index 212ed20b3369..86735f07fbb5 100644
+index 86735f07fbb5..998e5ea2f52e 100644
 --- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
 +++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-@@ -665,7 +665,7 @@ nvme_reg_en: nvme-reg-en-state {
- 		bias-disable;
- 	};
- 
--	pcie6a_default: pcie2a-default-state {
-+	pcie6a_default: pcie6a-default-state {
- 		clkreq-n-pins {
- 			pins = "gpio153";
- 			function = "pcie6a_clk";
-@@ -681,11 +681,11 @@ perst-n-pins {
+@@ -677,7 +677,7 @@ perst-n-pins {
+ 			pins = "gpio152";
+ 			function = "gpio";
+ 			drive-strength = <2>;
+-			bias-pull-down;
++			bias-disable;
  		};
  
  		wake-n-pins {
--		       pins = "gpio154";
--		       function = "gpio";
--		       drive-strength = <2>;
--		       bias-pull-up;
--	       };
-+			pins = "gpio154";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
- 	};
- };
- 
 -- 
 2.44.2
 
