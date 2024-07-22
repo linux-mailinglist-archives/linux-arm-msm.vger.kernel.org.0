@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-26695-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26696-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F25B9388C3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 08:08:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B84339388C9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 08:13:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C63632815B0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 06:08:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D47891C20CDD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 06:13:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE91F17996;
-	Mon, 22 Jul 2024 06:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0259617736;
+	Mon, 22 Jul 2024 06:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a/X9o5ek"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gK7rLvMl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B133D7FD;
-	Mon, 22 Jul 2024 06:08:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF70175BF;
+	Mon, 22 Jul 2024 06:13:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721628482; cv=none; b=qkQxUyifeUAVglz5zytJYDGAm5ccOdBLmbnDHYAiGTqijf7YQBPjBI64aqabLg8QzUItwQNPlEXBA8R2M5x4UmH/byXMy+YJDkPa80dOaoc40EjPzvpAIM/7JMrxyyDvOB4ffNv/p4AsnJyk19wvjzVCyFeLWmBE9+b6Hus1UCQ=
+	t=1721628787; cv=none; b=G3hnrhNRU9HkdR9fm4XmF01QGp1fYvSteru9+FRj5h1ITtFk8yORWiWJtIgiArD5jzX8y/p/pA56GrBghRzydb0aU15EBsdcA0SmJhqzzrcTICi4pyaXYWTHVajYVMVlpCAA4857fskF5dAHQDcDOluKuFQ2zZhm+3Qi2Yh7vWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721628482; c=relaxed/simple;
-	bh=cBm1fn8CXUfypkaiHyAeslF7pre1gl+VwUV3RHx/0yM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Ng+MOL/gwG+BPqpd/Kpo/38QMWKofzpd4wH5sowCWac70UsmesRS6ZxbFD9nwsRY1jGZ3+6cMxFB5SQJPpVuhofnJbsWYhT3wNWXIjEvG4TzI+SdCJrQDwUm9nM+fKOXKJgU8+Env6Vh4rySRRmCxz0bZ1xrg/o410r2lCkzqmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a/X9o5ek; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62BCC116B1;
-	Mon, 22 Jul 2024 06:07:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721628482;
-	bh=cBm1fn8CXUfypkaiHyAeslF7pre1gl+VwUV3RHx/0yM=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=a/X9o5ekUejuRJARkEhOFlOPtthrE3BZVMxwgLILbUFhuQEPuZcUdg55J8lI7LlBh
-	 vu93SrejhClI+18stRDT3O9TAkDAXeLJ8sWZOaL/1KF5+u/F7q+UiqSZtwLD+/DTYC
-	 Z0bdAWddVtUKU+ukjVKtILQW00Ili05yFquFAZpANkB3m124UUS1NMFOvxhIuhJS88
-	 am4fc/xune3eA3u/JRgUCwbApfPAJz7Jmtf1LcFeqGGDDdh54Xb5Dnyk7FonAOoxEa
-	 ULA7znlniTMl+/MxFdN6IJKSX7/IaoAgS5Yg6ihlGL+bk/yPhawqdvkBpxAejZhkFi
-	 g8HAj8Nzp+/RA==
-Message-ID: <bc5a617f-3b83-47ff-ba27-5ba7b4f0b4b0@kernel.org>
-Date: Mon, 22 Jul 2024 08:07:54 +0200
+	s=arc-20240116; t=1721628787; c=relaxed/simple;
+	bh=7JtgglTKEAtn4yfbCf2V2klco71MxBGIsDxCjCeltsE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Ar2BI8Furzrf16g6nL1sR3YsMRWXm4YESqvPfx0TeB50BT0Yg1Vrwy6wKDNVN6y1UXN4G9K/A0ND7vM/PlLAkesxYrPNZLT1XFwrBNR+q3wHCPD292DqkVpQofJ8NiIs6Jl8I74zUyKAS14iDTMjH1luO3Z0MPNEHJ10aTlThRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gK7rLvMl; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46LNeOpb022587;
+	Mon, 22 Jul 2024 06:12:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	aGogO1Jxb0LDYElt/HcVnCtW7pF4zZaS4RBUROUZ1wY=; b=gK7rLvMlhKB/bMZV
+	evIrc9dJzQ+/6ZgDid2jH93zTQpzXExzTkl4N/VIMY8c1ZT/QuI/XUdnaNHPO391
+	YU5PXXePZ8/h7HhtZWbQ5Q/d73mv5RNzj0VhRFcWge5nBAF0lXlC7Px4Do8NeHfr
+	hLkh6cYjt1LoRzWb+XB5LffiAXfgTRO4HEOL2hLweQAJre4+4o4IV4p7UpfHOEZT
+	xkI/DnnUfG1/6UcOqnIcimbhTxxwL8QRTQsADBAm5wIeRlBc4WjkazkIurlwODhI
+	vTCHxMupj4S3eWm0+q7Ql2JbZoscYrkVKyOOGUHD5JL6oYAobhNJ0Q/2XRxXBCE+
+	WWEQgw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g6h8tnhv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Jul 2024 06:12:59 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46M6Cwp1028560
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Jul 2024 06:12:58 GMT
+Received: from [10.204.65.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 21 Jul
+ 2024 23:12:55 -0700
+Message-ID: <607362f2-8ae5-46bd-a3a4-2d78da98b12a@quicinc.com>
+Date: Mon, 22 Jul 2024 11:42:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,102 +65,92 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] dt-bindings: interconnect: Add Qualcomm IPQ5332
- support
-To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
- mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, gregkh@linuxfoundation.org,
- konrad.dybcio@linaro.org, djakov@kernel.org, quic_wcheng@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20240722055539.2594434-1-quic_varada@quicinc.com>
- <20240722055539.2594434-2-quic_varada@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v5 1/2] misc: fastrpc: Define a new initmem size for user
+ PD
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240722055539.2594434-2-quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To: Greg KH <gregkh@linuxfoundation.org>
+CC: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_bkumar@quicinc.com>, <linux-kernel@vger.kernel.org>,
+        <quic_chennak@quicinc.com>, <dri-devel@lists.freedesktop.org>,
+        <arnd@arndb.de>, stable <stable@kernel.org>
+References: <20240722055437.3467900-1-quic_ekangupt@quicinc.com>
+ <20240722055437.3467900-2-quic_ekangupt@quicinc.com>
+ <2024072234-slug-payer-2dec@gregkh>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+In-Reply-To: <2024072234-slug-payer-2dec@gregkh>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: -4qDP_L_7BjtmN3sxXoQ4XOcMiIH0ioL
+X-Proofpoint-GUID: -4qDP_L_7BjtmN3sxXoQ4XOcMiIH0ioL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-22_02,2024-07-18_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 mlxscore=0 malwarescore=0 phishscore=0 bulkscore=0
+ mlxlogscore=999 suspectscore=0 lowpriorityscore=0 clxscore=1015
+ impostorscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2407220047
 
-On 22/07/2024 07:55, Varadarajan Narayanan wrote:
-> Add interconnect-cells to clock provider so that it can be
-> used as icc provider.
-> 
-> Add master/slave ids for Qualcomm IPQ5332 Network-On-Chip
-> interfaces. This will be used by the gcc-ipq5332 driver
-> for providing interconnect services using the icc-clk
-> framework.
-> 
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
-> v3: Not taking Reviewed-By: Krzysztof, fixed copy paste error
->     INTERCONNECT_QCOM_IPQ9574_H -> INTERCONNECT_QCOM_IPQ5332_H
 
-Really? You expect re-doing review because of guard typo? The guard name
-does not matter. Read submitting patches before posting.
 
-<form letter>
-This is a friendly reminder during the review process.
+On 7/22/2024 11:28 AM, Greg KH wrote:
+> On Mon, Jul 22, 2024 at 11:24:36AM +0530, Ekansh Gupta wrote:
+>> For user PD initialization, initmem is allocated and sent to DSP for
+>> initial memory requirements like shell loading. The size of this memory
+>> is decided based on the shell size that is passed by the user space.
+>> With the current implementation, a minimum of 2MB is always allocated
+>> for initmem even if the size passed by user is less than that. For this
+>> a MACRO is being used which is intended for shell size bound check.
+>> This minimum size of 2MB is not recommended as the PD will have very
+>> less memory for heap and will have to request HLOS again for memory.
+>> Define a new macro for initmem minimum length of 3MB.
+>>
+>> Fixes: d73f71c7c6ee ("misc: fastrpc: Add support for create remote init process")
+>> Cc: stable <stable@kernel.org>
+>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+>> ---
+>>  drivers/misc/fastrpc.c | 3 ++-
+>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index a7a2bcedb37e..a3a5b745936e 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -39,6 +39,7 @@
+>>  #define FASTRPC_DSP_UTILITIES_HANDLE	2
+>>  #define FASTRPC_CTXID_MASK (0xFF0)
+>>  #define INIT_FILELEN_MAX (2 * 1024 * 1024)
+>> +#define FASTRPC_INITLEN_MIN (3 * 1024 * 1024)
+> Meta-comment, for a future change, why not tabs to line things up?
+Sure, I'll add a comment.
+Should I line up all the MACRO definitions? If yes, should I send it as a separate patch?
+>
+>>  #define INIT_FILE_NAMELEN_MAX (128)
+>>  #define FASTRPC_DEVICE_NAME	"fastrpc"
+>>  
+>> @@ -1410,7 +1411,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
+>>  			goto err;
+>>  	}
+>>  
+>> -	memlen = ALIGN(max(INIT_FILELEN_MAX, (int)init.filelen * 4),
+>> +	memlen = ALIGN(max(FASTRPC_INITLEN_MIN, (int)init.filelen * 4),
+> You are aligning it this way, but still checking the file size for
+> INIT_FILELEN_MAX, so that's not really going to change anything here.
+File size is for the fastrpc shell that is to be loaded. This is the size of buffer allocated by user and passed
+to the driver. The driver will map this buffer to SMMU before passing it to DSP. Therefore the bound
+check on this size is necessary. As for initmem size for remote process on DSP, this size is also inclusive of
+initial requirements of DSP size user process(user PD), hence separating it from file size macro.
+> How was this tested?
+This is tested with fastrpc use cases available in hexagon SDK:
+https://developer.qualcomm.com/software/hexagon-dsp-sdk/sample-apps
 
-It looks like you received a tag and forgot to add it.
-
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-If a tag was not added on purpose, please state why and what changed.
-</form letter>
-
-Best regards,
-Krzysztof
+--Ekansh
+> thanks,
+>
+> greg k-h
 
 
