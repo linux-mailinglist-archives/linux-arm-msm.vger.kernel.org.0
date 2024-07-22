@@ -1,98 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-26754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26755-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6A6E938CAF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 11:58:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70AB6938CB5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 11:59:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9D818287079
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 09:58:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 939401C21D4E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 09:59:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1409816EB4C;
-	Mon, 22 Jul 2024 09:52:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5E7916D4D4;
+	Mon, 22 Jul 2024 09:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jUEYtoQp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oQ5XsWhd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C20116E884;
-	Mon, 22 Jul 2024 09:52:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB5716C69C;
+	Mon, 22 Jul 2024 09:55:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721641949; cv=none; b=B5jccEd3PwL/cQ+XWQwZBSWfu9LlCFYwGClwuRbEA59W5Ac6T4q8WIQTrEjMjr0uee11yGhBXcw/KGZtmE+GgqicPh83bbkd/mu1iOKmhEgbJiwiOQM6qSlMVwo55VMuLJSt2gFA3v7tVprcCs0bt60BTe+wLuUFp+zHJdv7UfQ=
+	t=1721642120; cv=none; b=Ntp+Bj2p5KPbRzsy+C2FiR7jNLhvZ0ZVJ3fgOKPghI0hJZlqIA8kj/FfyywFASvce5BtVBht3BuJ4Atq4/7CrrLV6dR/e46/vjfY8sT5qVESwanWE3lKMWqHfQnNAjniI6aJnYh6lee32SAU+iYDg+7OXY2k9CTTb417ZqHd9rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721641949; c=relaxed/simple;
-	bh=L/ApIpFJ9BfLOmjZ356/A8+sGcAzB4WiLcEPhi10XKI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plbUG3AAdQgv/FeALM1JqFxA7fgYMNRSxxNmuZiGPtHJRrmU6FwOhc1Lx7E5t1UwmDWPU0Bgj38UrXcYp3Cq8ARbtHs1YZROlsqZGOVH8dIFy9m7FnsTuM6xUayEYfjHMCXfECJ3ea/SuxovExJRkdmA3pC2ubOwTnx59eEe2rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jUEYtoQp; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-52efdf02d13so1790152e87.2;
-        Mon, 22 Jul 2024 02:52:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721641945; x=1722246745; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Dl6ci1X9H1bocspAYVTPwqDYk40+i0zlUVaPzwxman8=;
-        b=jUEYtoQpoRGKzaJvIq5X2V3U5vsgXwvFpb0f1ZZSaNXbJb6iDjyszVFelV5WUWdzDN
-         gwAe7Kb92iheLmgtMIKNaIZcRH1815StUQlRJL8DqC0C9rYMpk5uMtAqztiVCgI9b9Jl
-         55/RUSBAxwZ7kklglLMdbTcOmXa9NnTCrdjXXuenwuMlnua5vc3dbYI1Gqs2kylITix+
-         QCPWSlwgE8sHdQPmqJALa3T61EdVmDIn81Q94+n3XTaXAc7Pzu+EH46GnIdKtC41VhrU
-         KD7D/9Poy/LrztzXCOE1TYlVfIXKNdnfhd7Vjjjyq/95ldNFfnwG+9fjuRqgYEBP1pzK
-         Hl+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721641945; x=1722246745;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Dl6ci1X9H1bocspAYVTPwqDYk40+i0zlUVaPzwxman8=;
-        b=jFZCu6GtouPd2196EQtMC818X/GPOLU2HL4f9xmniL1kwVGr6BDMXP9vRCMBEADsDE
-         GjPH8xZj0zeF6NEticj68Tcpu04JHBrVJTOAtnWr/pTTFhuWpcwixSn8O8agulU2RlPh
-         zRoSgnduKv+F1XGO7beh1Zncr1gU5g2OFr2i0HVcBYdAMTVNzFq2OdMKu194bSY1DTTH
-         H6UWvKN4DRCqHHacWwoEgirODYPW6MgdM64NrSrqnhlWG32kTzTU4bJ/aMDVb8Ys+dTR
-         yclig57kYkO/WEBlzK+GAFwlS3W+4jtNq56j0Bu88qqArFN0Cb/vRgAQrXUlUMrFC3xS
-         mcdA==
-X-Forwarded-Encrypted: i=1; AJvYcCW0Ouf7UcS7Kl/Z2+w5bmnOAs/RJgyOp2LZ6iNjB0gxlWJSXMTkXhQtx/OSvz427YKAXPGML/2/QqnNDmFBUlFlnCtDllM6FQyxEn0749GUVBq+fp3fPpehe1wdyPw+eT410CcYfbk7VKovq5OuVgSKj+tfNB3WO2ei6WT1MfiutkZqTRcwYxgOZhv4IIynRNzAPYe2zY4pL84t0vLGqO75Osv9Yg==
-X-Gm-Message-State: AOJu0YzRXAQRFq/CLE30un1DNDmCWGMPPHoKPHbAW6LukLxGQdSHsnrY
-	V5DxqNztis1UJqVlK0AMd3zFE+KYztqJvOPrQ86WfAO/+uJIDQuZONM/zUya
-X-Google-Smtp-Source: AGHT+IHiwNvnwn1Ldydw+/A3gbnMJ79+Ia18db3RGXJpSUtCeRrxw/7o90BQd8QswtyBBxDk+Uh7pg==
-X-Received: by 2002:a05:6512:1250:b0:52c:db76:2a7a with SMTP id 2adb3069b0e04-52efb74c166mr4664718e87.34.1721641944859;
-        Mon, 22 Jul 2024 02:52:24 -0700 (PDT)
-Received: from localhost.localdomain (byy214.neoplus.adsl.tpnet.pl. [83.30.44.214])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52fc226cdccsm91552e87.164.2024.07.22.02.52.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jul 2024 02:52:24 -0700 (PDT)
-From: Adam Skladowski <a39.skl@gmail.com>
-To: 
-Cc: phone-devel@vger.kernel.org,
-	~postmarketos/upstreaming@lists.sr.ht,
-	Adam Skladowski <a39.skl@gmail.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Banajit Goswami <bgoswami@quicinc.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Rob Herring <robh@kernel.org>,
+	s=arc-20240116; t=1721642120; c=relaxed/simple;
+	bh=cLbprmf6R7GxoeY00WPtIhXSjYQfSDnonGHL7DPydr4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UMNWK4xVP95PwLyXoZBvXHIw4ISpS/XE+9KQ+NlTHv0KpcQhBkW0AW8t8qSBIUyex+JYqu+mtykjfYk+K/6oHrwu2Wsn+0s4vImGbOtZpVoWnScFm/I+BoGNTl9Q9Q1nct1fG+/BYZECLo81F8DeI4VnDKI59v/fhIXz0X8AXKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oQ5XsWhd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB8AC4AF0B;
+	Mon, 22 Jul 2024 09:55:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1721642120;
+	bh=cLbprmf6R7GxoeY00WPtIhXSjYQfSDnonGHL7DPydr4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=oQ5XsWhdtp1CRVbYBH6FxpLcIbnSZYsHkPP1R6cND1bM4eRb6jU+WFAR1sXxbVtoe
+	 CISm9Jf2Vy8jNFdANDaDl37BezamFWllN6rohdO9ot9mAFH2FXoCDfgmhC4Y+LQ3KD
+	 +85QrPgEFLkPKA2HUCfJVIcKSfyrhsmD/If1lgCDULZc4/GFXQGHcqQwxCqpZ0uhx8
+	 qtdnm0Ol0io8vwmkonK5yB/AWODdTjYX7Ga/MI5RK20N/RoCO1EFk5SIpOt4ZQ0Zm1
+	 AufYyjskljnHxYNtuFaABREwHlYMRDDO178y5MT9dIXmI70qQN5riCG05j+nKfBtYH
+	 XxLaB8oNaXlQQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan+linaro@kernel.org>)
+	id 1sVplG-0000000079I-13WI;
+	Mon, 22 Jul 2024 11:55:18 +0200
+From: Johan Hovold <johan+linaro@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Xilin Wu <wuxilin123@gmail.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	linux-arm-msm@vger.kernel.org,
-	alsa-devel@alsa-project.org,
-	linux-sound@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Vladimir Lypak <vladimir.lypak@gmail.com>
-Subject: [PATCH 4/4] ASoC: qcom: apq8016_sbc: Add support for msm8953/msm8976 SoC
-Date: Mon, 22 Jul 2024 11:51:08 +0200
-Message-ID: <20240722095147.3372-5-a39.skl@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240722095147.3372-1-a39.skl@gmail.com>
-References: <20240722095147.3372-1-a39.skl@gmail.com>
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 00/12] arm64: dts: qcom: x1e80100: QCP/Vivobook/Yoga PCIe fixes
+Date: Mon, 22 Jul 2024 11:54:47 +0200
+Message-ID: <20240722095459.27437-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.44.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -101,144 +71,42 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Lypak <vladimir.lypak@gmail.com>
+Here's a follow-up series addressing some issues in the QCP, Vivobook
+and Yoga devicetrees that had been carried over from the x1e80100 CRD
+dts.
 
-Introduce support for audio card on MSM8953/MSM8976 platform.
-Main difference between those two is Q6AFE CLK API supported by firmware
-which influence way we enable digital codec clock.
-Either inside machine driver or outside via q6afe-clocks driver.
+Note that I don't have access to the schematics for these machine so
+this is based on the qualified assumption that the PHY supplies are the
+same as on the reference design (and similarly for the PCIe4 pins).
 
-Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-[Adam: Add MSM8976, rename functions, add mclk setting,add msg]
-Co-developed-by: Adam Skladowski <a39.skl@gmail.com>
-Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
----
- sound/soc/qcom/apq8016_sbc.c | 66 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 64 insertions(+), 2 deletions(-)
+This is fixed for the x1e80100 CRD here:
 
-diff --git a/sound/soc/qcom/apq8016_sbc.c b/sound/soc/qcom/apq8016_sbc.c
-index 8971f4f5d339..51efefefe0a1 100644
---- a/sound/soc/qcom/apq8016_sbc.c
-+++ b/sound/soc/qcom/apq8016_sbc.c
-@@ -22,6 +22,11 @@
- 
- #define MI2S_COUNT  (MI2S_QUINARY + 1)
- 
-+enum afe_clk_api {
-+	Q6AFE_CLK_V1,
-+	Q6AFE_CLK_V2
-+};
-+
- struct apq8016_sbc_data {
- 	struct snd_soc_card card;
- 	void __iomem *mic_iomux;
-@@ -29,6 +34,8 @@ struct apq8016_sbc_data {
- 	void __iomem *quin_iomux;
- 	struct snd_soc_jack jack;
- 	bool jack_setup;
-+	enum afe_clk_api q6afe_clk_ver;
-+	bool dig_cdc_mclk_en;
- 	int mi2s_clk_count[MI2S_COUNT];
- };
- 
-@@ -192,6 +199,28 @@ static int qdsp6_dai_get_lpass_id(struct snd_soc_dai *cpu_dai)
- 	}
- }
- 
-+static int qdsp6_get_clk_id(struct apq8016_sbc_data *data, int mi2s_id)
-+{
-+	if (data->q6afe_clk_ver == Q6AFE_CLK_V2) {
-+		switch (mi2s_id) {
-+		case MI2S_PRIMARY:
-+			return Q6AFE_LPASS_CLK_ID_PRI_MI2S_IBIT;
-+		case MI2S_SECONDARY:
-+			return Q6AFE_LPASS_CLK_ID_SEC_MI2S_IBIT;
-+		case MI2S_TERTIARY:
-+			return Q6AFE_LPASS_CLK_ID_TER_MI2S_IBIT;
-+		case MI2S_QUATERNARY:
-+			return Q6AFE_LPASS_CLK_ID_QUAD_MI2S_IBIT;
-+		case MI2S_QUINARY:
-+			return Q6AFE_LPASS_CLK_ID_QUI_MI2S_IBIT;
-+		default:
-+			break;
-+		}
-+	}
-+	/* If AFE CLK isn't V2 return V1 */
-+	return LPAIF_BIT_CLK;
-+}
-+
- static int msm8916_qdsp6_dai_init(struct snd_soc_pcm_runtime *rtd)
- {
- 	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
-@@ -214,8 +243,16 @@ static int msm8916_qdsp6_startup(struct snd_pcm_substream *substream)
- 
- 	if (++data->mi2s_clk_count[mi2s] > 1)
- 		return 0;
-+	/*
-+	 * On newer legacy SoC (MSM8976) lpass codec clocks are not available in gcc region
-+	 * so we have to request clock from machine driver using V1 API)
-+	 */
-+	if (data->q6afe_clk_ver == Q6AFE_CLK_V1 && data->dig_cdc_mclk_en == true)
-+		ret = snd_soc_dai_set_sysclk(cpu_dai,  LPAIF_DIG_CLK, DEFAULT_MCLK_RATE, 0);
-+	if (ret)
-+		dev_err(card->dev, "Failed to enable LPAIF dig clk: %d\n", ret);
- 
--	ret = snd_soc_dai_set_sysclk(cpu_dai, LPAIF_BIT_CLK, MI2S_BCLK_RATE, 0);
-+	ret = snd_soc_dai_set_sysclk(cpu_dai, qdsp6_get_clk_id(data, mi2s), MI2S_BCLK_RATE, 0);
- 	if (ret)
- 		dev_err(card->dev, "Failed to enable LPAIF bit clk: %d\n", ret);
- 	return ret;
-@@ -236,9 +273,15 @@ static void msm8916_qdsp6_shutdown(struct snd_pcm_substream *substream)
- 	if (--data->mi2s_clk_count[mi2s] > 0)
- 		return;
- 
--	ret = snd_soc_dai_set_sysclk(cpu_dai, LPAIF_BIT_CLK, 0, 0);
-+	ret = snd_soc_dai_set_sysclk(cpu_dai, qdsp6_get_clk_id(data, mi2s), 0, 0);
- 	if (ret)
- 		dev_err(card->dev, "Failed to disable LPAIF bit clk: %d\n", ret);
-+
-+	if (data->q6afe_clk_ver == Q6AFE_CLK_V1 && data->dig_cdc_mclk_en == true)
-+		ret = snd_soc_dai_set_sysclk(cpu_dai,  LPAIF_DIG_CLK, 0, 0);
-+	if (ret)
-+		dev_err(card->dev, "Failed to disable LPAIF dig clk: %d\n", ret);
-+
- }
- 
- static const struct snd_soc_ops msm8916_qdsp6_be_ops = {
-@@ -279,6 +322,23 @@ static void msm8916_qdsp6_add_ops(struct snd_soc_card *card)
- 	}
- }
- 
-+static void msm8953_qdsp6_add_ops(struct snd_soc_card *card)
-+{
-+	struct apq8016_sbc_data *pdata = snd_soc_card_get_drvdata(card);
-+
-+	pdata->q6afe_clk_ver = Q6AFE_CLK_V2;
-+	msm8916_qdsp6_add_ops(card);
-+}
-+
-+static void msm8976_qdsp6_add_ops(struct snd_soc_card *card)
-+{
-+	struct apq8016_sbc_data *pdata = snd_soc_card_get_drvdata(card);
-+
-+	pdata->q6afe_clk_ver = Q6AFE_CLK_V1;
-+	pdata->dig_cdc_mclk_en = true;
-+	msm8916_qdsp6_add_ops(card);
-+}
-+
- static const struct snd_kcontrol_new apq8016_sbc_snd_controls[] = {
- 	SOC_DAPM_PIN_SWITCH("Headphone Jack"),
- 	SOC_DAPM_PIN_SWITCH("Mic Jack"),
-@@ -343,6 +403,8 @@ static int apq8016_sbc_platform_probe(struct platform_device *pdev)
- static const struct of_device_id apq8016_sbc_device_id[] __maybe_unused = {
- 	{ .compatible = "qcom,apq8016-sbc-sndcard", .data = apq8016_sbc_add_ops },
- 	{ .compatible = "qcom,msm8916-qdsp6-sndcard", .data = msm8916_qdsp6_add_ops },
-+	{ .compatible = "qcom,msm8953-qdsp6-sndcard", .data = msm8953_qdsp6_add_ops },
-+	{ .compatible = "qcom,msm8976-qdsp6-sndcard", .data = msm8976_qdsp6_add_ops },
- 	{},
- };
- MODULE_DEVICE_TABLE(of, apq8016_sbc_device_id);
+	https://lore.kernel.org/lkml/20240722094249.26471-1-johan+linaro@kernel.org/
+
+Johan
+
+
+Johan Hovold (12):
+  arm64: dts: qcom: x1e80100-qcp: fix PCIe4 PHY supply
+  arm64: dts: qcom: x1e80100-qcp: fix up PCIe6a pinctrl node
+  arm64: dts: qcom: x1e80100-qcp: disable PCIe6a perst pull down
+  arm64: dts: qcom: x1e80100-qcp: fix missing PCIe4 gpios
+  arm64: dts: qcom: x1e80100-vivobook-s15: fix PCIe4 PHY supply
+  arm64: dts: qcom: x1e80100-vivobook-s15: fix up PCIe6a pinctrl node
+  arm64: dts: qcom: x1e80100-vivobook-s15: disable PCIe6a perst pull
+    down
+  arm64: dts: qcom: x1e80100-vivobook-s15: fix missing PCIe4 gpios
+  arm64: dts: qcom: x1e80100-yoga-slim7x: fix PCIe4 PHY supply
+  arm64: dts: qcom: x1e80100-yoga-slim7x: fix up PCIe6a pinctrl node
+  arm64: dts: qcom: x1e80100-yoga-slim7x: disable PCIe6a perst pull down
+  arm64: dts: qcom: x1e80100-yoga-slim7x: fix missing PCIe4 gpios
+
+ .../dts/qcom/x1e80100-asus-vivobook-s15.dts   | 42 +++++++++++++++--
+ .../dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 45 +++++++++++++++----
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts     | 45 +++++++++++++++----
+ 3 files changed, 113 insertions(+), 19 deletions(-)
+
 -- 
-2.45.2
+2.44.2
 
 
