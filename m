@@ -1,69 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-26747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2F2D938C4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 11:46:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5895938CA0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 11:57:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8E4992824F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 09:46:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2CCDC2837A0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 09:57:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90AD516DC14;
-	Mon, 22 Jul 2024 09:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D01AC16C86E;
+	Mon, 22 Jul 2024 09:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EGO5LSEm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TbzHNfLF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441EE16D9C1;
-	Mon, 22 Jul 2024 09:43:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237A116C437;
+	Mon, 22 Jul 2024 09:52:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721641426; cv=none; b=dFUXONTYoS+LGFrvOEPCiyIuMBFdytKFyc2mlXORx3myYdzrkQ+fr8+YJ6dc3RNkzpesD2b3vPtB6qZ6kffhYN+B+knvkAdTCWLq5IpO5L1QZ8AGbEwk71YPxNlFvMN1PiwCkR//km7zJzz4ve4YHDkn0Fk9B7E4VREsxqokiF0=
+	t=1721641936; cv=none; b=eishTYswVoroD/93HbAsoPab37cUt7EgQBnQdBxLlSOPB+uSfiFD0wvjXR3dw4ZbJKMzXEEsb1Cmw8RPuj8RSDqYiXmSgmxJlnHu77TXlhLyE1mnHsSU9Xz/ZIPE/n/WmTWknpXuDI6PGnce8yBqgvqbxAdBSKvKxzHaThiIVdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721641426; c=relaxed/simple;
-	bh=fIjlu9xUUfZ1E4uHJtjwBsMhk2muIRSxZWPDwYXP9JQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YplXvT7DUF62ZlDS3xYhyBeoe5xsP/OJkvBmwp8G9PITLFWukAG1eDIcZN44yf6kHpm1+NCLTzxQd5BstO8boqbKL6rIUcR4Y+tHkxDeDq1aan8DrwUA6JNj/1mSwkSz1Zxbe1XWWP2KOEGJILD3ZbtLPOoEFSiGJXChPl4Nkyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EGO5LSEm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DCBC4AF61;
-	Mon, 22 Jul 2024 09:43:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721641425;
-	bh=fIjlu9xUUfZ1E4uHJtjwBsMhk2muIRSxZWPDwYXP9JQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EGO5LSEmo9iIfiz/TT9aZh2F0p9G2NCWfGpOoN8hBD8nAkE+ZiyGvzBxextS83H5W
-	 cK2TP7ZwYT7/YvPZtz1iYHMl3/o4Ioco+g46KVVfItXD3rVYMH0pyLw6uW4a5uyKG8
-	 eUd0FJXvhELmPYoFKw/AMpEoaAnLWXmZacb7psahBOfm7wydjD+aBLuq7yTX6RCpAg
-	 BB2pkV2bdyKgHPx94iBNADxJHqT5gi4HuK1lbEaGT3lDyXhwYSVwVJv12bYVs4WW96
-	 zBqqNExopwv+bkPiUlMkO34LjH2aSqXq6cnAOI2N78SayHZJA9em0fgIbzWL2qCtya
-	 5DEzYNAxhCDxw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1sVpa4-000000006uV-40fQ;
-	Mon, 22 Jul 2024 11:43:44 +0200
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Rob Herring <robh@kernel.org>,
+	s=arc-20240116; t=1721641936; c=relaxed/simple;
+	bh=0LjKiXktDHZSweMPPr1G1Ui1nNR6eQAesBAToZ8LpPw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Nbr1PLCiYZH4EgSblMrPTdZaRl34wdMCK1Om1CtHqTc9Fwm/1EAiNOlONQAMdi6IYw+KtJ5z3rTyXJle4XGTXMOk9BjZKG1w9iAseDtucEa/u5djL14/OYXcjO+eVVLCs9C2+1j1X9jBAPO/WeCjJt3H1M+GG2qKXfMMnpEbbR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TbzHNfLF; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52f025ab3a7so1361634e87.2;
+        Mon, 22 Jul 2024 02:52:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721641933; x=1722246733; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=M9E2WTC0jfBaQQGfChBxNUT7+lSWee29QeSeHVUI7bU=;
+        b=TbzHNfLFhpMVKWrJUMr1TkZyd2XluCdoDEj8ZZM+D+Y9MZlSEaIkzhTIXvEXWZCBWj
+         wHh/izlQWQa2XoWYrskT/vcB9cdl44wcDmbofuJVfUs9iFjO9TsnYCZjjIUlhNS/n2Y/
+         NpCLsVErqHxiUJmzYK58RgwT7ET4+fed9VeHLaArt8PWLOlQpYa/eVwq+mzQuFXV+ZP8
+         THcwVPH1Hcg51MOG3R8VCs6VNmPWUTRFN17DXOL0UwGT77P6HYA3Nus8EwQLoqSQ26/5
+         1tfoK6kzdBIaLFw4PhzqEM0RST0pTbX6XomIxVp7JgI0W8aJH/Mdg5/8rW/ms0KGbRUH
+         DohA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721641933; x=1722246733;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=M9E2WTC0jfBaQQGfChBxNUT7+lSWee29QeSeHVUI7bU=;
+        b=HbFp2XP7tH2XKf9jLdcCdNb83G+6iTLGom9pJf+GOCzRFVq9ga6Y5mARxF+WsRNZYR
+         Av8te949VH9m4dcMqutdy+uHA18CoFvxv0nDpiVzY5EU0/FMcdwpShFatd00RfxiCkbd
+         TAhrYqoIHg+SBoPEilvFOhpyUUqJcemT120IM7aAmrvjZfR0EUjWt42xjXmXdyvYqOLK
+         c3jPIdiZlfVWvXrdoPvtU0WUJephWQ2QwBuHb4NL78ASMFwXULQ7wNJdFw9Eg4Ab7rkq
+         L2ImNYTtcFsPKU8V4c7yGm4uh/rfmKvFMN5KKmexiya4SVuTdfPnatvhgKACcJ7xAdT+
+         Nttw==
+X-Forwarded-Encrypted: i=1; AJvYcCXELQbYfAYDsMxOqCo5QXnx1pKvi5x5hOgGd3oALjcZyH+zYzH7HxEZswXtjOR+9JE7HKRdhPwFHqj+nBJ7TXyz/Jllm1EpHPPnRXPQuKHFhBhsKFmBBv5cLCNiX8Z8TjUfmInOm7s6ja6wUOiGj9Mv4PEcMN3eXTHIwHsourVlaOFdnWfUmocfu7skAgUTrSFo6Z1lOq/RpkEAFze8YsKaazLhnA==
+X-Gm-Message-State: AOJu0YydCQJiwe3XF9BcVG5AmtV3VDiZ/7c2sABy6G19DFKElvo83UWp
+	x7a8fvo7HAPlLjhQ2czJ+1EKu0a4zpfnXVrKvSdmwboiws3IkB/l13/RRA==
+X-Google-Smtp-Source: AGHT+IHUrVK9nAGRcepdpcmmyoaKs3owYskKR6lrL0H9J1qjEWYRZA/UQF9/9MY/4zXr/4CmzISjbA==
+X-Received: by 2002:ac2:4e15:0:b0:52c:a016:5405 with SMTP id 2adb3069b0e04-52ef8d859f8mr4808575e87.8.1721641932543;
+        Mon, 22 Jul 2024 02:52:12 -0700 (PDT)
+Received: from localhost.localdomain (byy214.neoplus.adsl.tpnet.pl. [83.30.44.214])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52fc226cdccsm91552e87.164.2024.07.22.02.52.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Jul 2024 02:52:11 -0700 (PDT)
+From: Adam Skladowski <a39.skl@gmail.com>
+To: 
+Cc: phone-devel@vger.kernel.org,
+	~postmarketos/upstreaming@lists.sr.ht,
+	Adam Skladowski <a39.skl@gmail.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Banajit Goswami <bgoswami@quicinc.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
 	linux-arm-msm@vger.kernel.org,
+	alsa-devel@alsa-project.org,
+	linux-sound@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v2 8/8] arm64: dts: qcom: x1e80100-crd: enable SDX65 modem
-Date: Mon, 22 Jul 2024 11:42:49 +0200
-Message-ID: <20240722094249.26471-9-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.44.2
-In-Reply-To: <20240722094249.26471-1-johan+linaro@kernel.org>
-References: <20240722094249.26471-1-johan+linaro@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/4] MSM8953/MSM8976 ASoC support
+Date: Mon, 22 Jul 2024 11:51:04 +0200
+Message-ID: <20240722095147.3372-1-a39.skl@gmail.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,114 +96,26 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Enable PCIe5 and the SDX65 modem.
+Introduce support for basic sound card setup on MSM8953/MSM8976
+platforms, document new compatibles and introduce support for more dais.
+Most of code is sourced from msm8953-mainline fork over github
+with some changes implemented by me,some basic changes are 
+mentioned in each patch.
 
-Note that the modem may need to be flashed with firmware before use.
+Adam Skladowski (1):
+  ASoC: dt-bindings: qcom,sm8250: Add msm8953/msm8976-qdsp6-sndcard
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 65 +++++++++++++++++++++++
- 1 file changed, 65 insertions(+)
+Vladimir Lypak (3):
+  ASoC: qcom: apq8016_sbc.c: Add Quinary support
+  ASoC: msm8916-wcd-analog: add cajon and cajon v2 support
+  ASoC: qcom: apq8016_sbc: Add support for msm8953/msm8976 SoC
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-index caae0c3d8c7a..767118831551 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-@@ -301,6 +301,22 @@ vreg_nvme: regulator-nvme {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&nvme_reg_en>;
- 	};
-+
-+	vreg_wwan: regulator-wwan {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "SDX_VPH_PWR";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 221 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&wwan_sw_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
- };
- 
- &apps_rsc {
-@@ -800,6 +816,25 @@ &pcie4_phy {
- 	status = "okay";
- };
- 
-+&pcie5 {
-+	perst-gpios = <&tlmm 149 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 151 GPIO_ACTIVE_LOW>;
-+
-+	vddpe-3v3-supply = <&vreg_wwan>;
-+
-+	pinctrl-0 = <&pcie5_default>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&pcie5_phy {
-+	vdda-phy-supply = <&vreg_l3i_0p8>;
-+	vdda-pll-supply = <&vreg_l3e_1p2>;
-+
-+	status = "okay";
-+};
-+
- &pcie6a {
- 	perst-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>;
- 	wake-gpios = <&tlmm 154 GPIO_ACTIVE_LOW>;
-@@ -1004,6 +1039,29 @@ wake-n-pins {
- 		};
- 	};
- 
-+	pcie5_default: pcie5-default-state {
-+		clkreq-n-pins {
-+			pins = "gpio150";
-+			function = "pcie5_clk";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		perst-n-pins {
-+			pins = "gpio149";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+
-+		wake-n-pins {
-+			pins = "gpio151";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+
- 	pcie6a_default: pcie6a-default-state {
- 		clkreq-n-pins {
- 			pins = "gpio153";
-@@ -1055,6 +1113,13 @@ wcd_default: wcd-reset-n-active-state {
- 		bias-disable;
- 		output-low;
- 	};
-+
-+	wwan_sw_en: wwan-sw-en-state {
-+		pins = "gpio221";
-+		function = "gpio";
-+		drive-strength = <4>;
-+		bias-disable;
-+	};
- };
- 
- &uart21 {
+ .../bindings/sound/qcom,sm8250.yaml           | 28 ++++++-
+ sound/soc/codecs/msm8916-wcd-analog.c         | 63 +++++++++++++-
+ sound/soc/qcom/apq8016_sbc.c                  | 82 ++++++++++++++++++-
+ 3 files changed, 164 insertions(+), 9 deletions(-)
+
 -- 
-2.44.2
+2.45.2
 
 
