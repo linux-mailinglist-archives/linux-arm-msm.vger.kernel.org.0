@@ -1,146 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-26711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FDAE9389E3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 09:15:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 966DB938A07
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 09:30:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C278F1C20EB8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 07:15:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CC2991C20D8B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 07:30:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDAE11B7E4;
-	Mon, 22 Jul 2024 07:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72D6F1B810;
+	Mon, 22 Jul 2024 07:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Hc4IYgAs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Km/8mLVn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD751803D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2024 07:15:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CB2208B6;
+	Mon, 22 Jul 2024 07:30:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721632529; cv=none; b=I072lAOmFfHTkPEjURDdP3cZ8j9aRR/JL852CbHGcHjVg4WosfiQobuNeuWgBhYPZ3EjR2Rnf3YHDdu90cSiD1a0+d4Nw4Yk9mPiLVgbWeSSO4P8XrRNd9ohhJVrp1csIvTaVAVCdPlQykb7hK7Q1pomD5TUUT014QVAijMHZ90=
+	t=1721633452; cv=none; b=dPYxZ4dI84I8Uf50zrHMK65N1CI9uV6tjPLQeSnZuSzvUW1UCN+pEHJr8Wk514IszrZfIqZkhw2FrfUIURaZFVOJNQ8YBJXif5w3qOH37llCatkHenPWWS2+unZCIjRq/0wbINvi3nPj/lG9h3Fcd09qmo36p096zPh2P54rr4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721632529; c=relaxed/simple;
-	bh=JunXkzrzfc4l5XOzx3vNO/SZqFOdGk51V4HbEy6B8Hs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=duHikJDNZcviA4eHKNrFIdzE29JjnG/c89O7BMHddCXnwKxfz9wn/jqkXIiQ5lfNRSClfNoobdwwpXXnZMi/MWmM2tB/Bad19EhVUk6l7fmLlsnPquzCCIN5YSd4Y/R61wGl8dBXZr8mE7czqmZJm9VBAloJFc1miWE8BwMkk/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Hc4IYgAs; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2ef2cce8c08so9989321fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2024 00:15:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721632526; x=1722237326; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6DeasHBm5l7r94AIOITFewYly2vv/ZgayXIERa9+VDo=;
-        b=Hc4IYgAsW9bEsG7RJ/N1u06r6NYLAg0TQYD0ua4xZkak2dd+U/h8mwLVCabecRhJG5
-         W5HWiccsWTZT/3GnGbc7xBi/G1v3iOguze7JFh5wZ50n2St/qnjTqozVYiF8F595dzKm
-         OzTBRZ5XpLivy+LuBNjlCGDcX2E9IRn14awKKMVNB13xylEVXf3xASVzCygzBpib/0Uu
-         G8sehE80A7OZMKYew5rROrVtPw0hD6snw1DFdo1DmSt/shudVvZHaErE+H4ZLcyYq7ci
-         Whjye7idlbM8TcAxhgSRcxR0V74LwKH39RmFVfMqNMoXZNeicQwtMDe5d4yq21/rRoJC
-         5WjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721632526; x=1722237326;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6DeasHBm5l7r94AIOITFewYly2vv/ZgayXIERa9+VDo=;
-        b=jNit+F5g4/07ogMLiG1a/dd/F44liv55Crezt/vOimwq7JH59g0isYGB+UrTGSLch0
-         WbuGD/6XFq9xs9EK1hgE78rbYPX1248QjHbMHDo/p/IZt4sdbc8NfuaAJYmkhvfrmDiH
-         j7FhH0qJQohcD8JZfaNLcSMRUpXgu5YjFXp6kibJDKm7qVPSip2lWDtT5oNSVKO1yBXm
-         U7ASWx1Vr0L7OGerU1d5a6dDXTvRRG3kOqRg0mi19JpJviHMaiqQbXmyJwUlU0ayuQDj
-         lZKeMKthl7jIYBVCfD48LXPbRxfp30chUWzwdSoreUWu4gnwt8zPYgMCZLtGAlLUh2oa
-         BPjw==
-X-Gm-Message-State: AOJu0YwdimofOa2/fHhIN9GudjRnFPItFRuThi31b2vmwU96EgLsgGL0
-	33eaPULvEJPMUod2EPNEyCVB/Ct+LZo8yZ8pZFL8BUeRxVO3m/USCNrHSJ8CCuE=
-X-Google-Smtp-Source: AGHT+IEIgyoC5LrmEEQGwXIALUB1F/rCy3akHI/QLl6buZz04VT6lhQn1evWrQ18wpihikm/W+7ieQ==
-X-Received: by 2002:a05:651c:1a0c:b0:2ef:2dbe:7454 with SMTP id 38308e7fff4ca-2ef2dbe7664mr23641521fa.43.1721632525909;
-        Mon, 22 Jul 2024 00:15:25 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff1f:b280:702:9410:ae6e:5c88])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5a30af839a3sm5736923a12.46.2024.07.22.00.15.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jul 2024 00:15:25 -0700 (PDT)
-Date: Mon, 22 Jul 2024 09:15:20 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Rob Clark <robdclark@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, Doug Anderson <dianders@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Rob Clark <robdclark@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: x1e80100-yoga: Update panel
- bindings
-Message-ID: <Zp4HCPYId4sjd32Q@linaro.org>
-References: <20240719185250.4877-1-robdclark@gmail.com>
- <20240719185250.4877-2-robdclark@gmail.com>
+	s=arc-20240116; t=1721633452; c=relaxed/simple;
+	bh=3YRS1MRKScvcEVF/jQk6O5jbkiEJeNub1pI9+YszTzc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=s7KrnfXJ/NWwyKY2OO+sPHLuMkg3VeWY8EfKF55hYIwZRqIOUX42ZpWRb38n0L6uYK5SS+XW46U8ajQYLhmMIRVA+XUWStCGG53D6DjnfpE9Hj9WGkt0VEm40N5Fd/riLScK0vz+7BKNRtrxQ6iHOTRJXmuJvsjGm37yj6CctII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Km/8mLVn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38E6C116B1;
+	Mon, 22 Jul 2024 07:30:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1721633451;
+	bh=3YRS1MRKScvcEVF/jQk6O5jbkiEJeNub1pI9+YszTzc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Km/8mLVndjHJ01nfdVEzkcu3h5bCGi03LAm0Z5i9MOyjZul1u8VeDCvYwFcrOc9o8
+	 kOiOzueWQQENI2CLOXkZPA0zlp5bmBTOB3ruTlZbPIMsvjGv1jN8Ly+YigXc1/UGhx
+	 ESSWMXzUXM+qkG5Y/9QMvqeYvptMKaNZLx7QEto/lqvc2ismFJOpEuASNMkT+0dkVK
+	 qW7+0KLAHWQ4aohMdFRYu5NijtryVkniQn7UJ6TB7bmFRPz86SFZ1Y5GQO/eMqsW9A
+	 NvUC5UNuNwisUuDovSR/hXsBQsSOl3NzEiuL65zhu3d/MOpggKVUmQtDDxdbBid/ob
+	 ag5IVyofjJBZg==
+Message-ID: <e820ecca-00be-4c87-b4c1-89ae2c390528@kernel.org>
+Date: Mon, 22 Jul 2024 09:30:45 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240719185250.4877-2-robdclark@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/12] arm64: dts: qcom: sm6115-pro1x: Update copyright
+ year
+To: Dang Huynh <danct12@riseup.net>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240722-qx1050-feature-expansion-v1-0-c4d486435b96@riseup.net>
+ <20240722-qx1050-feature-expansion-v1-8-c4d486435b96@riseup.net>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240722-qx1050-feature-expansion-v1-8-c4d486435b96@riseup.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jul 19, 2024 at 11:52:50AM -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On 22/07/2024 09:10, Dang Huynh wrote:
+> It's 2024, let's update the copyright year.
 > 
-> Use the correct panel compatible, and wire up enable-gpio.  It is wired
-> up in the same way as the x1e80100-crd.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Dang Huynh <danct12@riseup.net>
 > ---
->  .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts   | 13 ++++++++++++-
->  1 file changed, 12 insertions(+), 1 deletion(-)
+>  arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-> index f569f0fbd1fc..28a6ea5a24fd 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-> @@ -592,9 +592,13 @@ &mdss_dp3 {
->  
->  	aux-bus {
->  		panel {
-> -			compatible = "edp-panel";
-> +			compatible = "samsung,atna45dc02", "samsung,atna33xc20";
-> +			enable-gpios = <&pmc8380_3_gpios 4 GPIO_ACTIVE_HIGH>;
->  			power-supply = <&vreg_edp_3p3>;
->  
-> +			pinctrl-0 = <&edp_bl_en>;
-> +			pinctrl-names = "default";
-> +
->  			port {
->  				edp_panel_in: endpoint {
->  					remote-endpoint = <&mdss_dp3_out>;
-> @@ -663,6 +667,13 @@ &pcie6a_phy {
->  	status = "okay";
->  };
->  
-> +&pmc8380_3_gpios {
-> +	edp_bl_en: edp-bl-en-state {
-> +		pins = "gpio4";
-> +		function = "normal";
-> +	};
+> diff --git a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
+> index a32fc27bc783..6e9e4d9f8250 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
+> @@ -1,6 +1,6 @@
+>  // SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+>  /*
+> - * Copyright (c) 2023, Dang Huynh <danct12@riseup.net>
+> + * Copyright (c) 2023 - 2024, Dang Huynh <danct12@riseup.net>
 
-Did you omit the "power-source" here on purpose? It works without
-because the firmware already configures this pin, but ideally we should
-provide the full configuration.
+Please squash it. I don't think copyright update has a merit on its own.
 
-In /sys/kernel/debug/gpio you can check how the firmware has configured
-the pin. It is probably exactly the same as for the CRD.
+Best regards,
+Krzysztof
 
-Thanks,
-Stephan
 
