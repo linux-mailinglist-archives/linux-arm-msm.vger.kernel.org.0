@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-26735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85545938B6A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 10:41:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBD7A938B71
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 10:43:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A94291C21156
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 08:41:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 83D13280DBF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 08:43:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFE45168488;
-	Mon, 22 Jul 2024 08:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2335B1667F6;
+	Mon, 22 Jul 2024 08:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pdNwzozU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eWTeTs4p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D6E1667F6
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2024 08:41:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510F21662EF
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2024 08:43:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721637678; cv=none; b=J9QAZG5cEvMzfptG1WJlxvoMwOYpra6Ra9rpsWkhF0AvKNZDb6x2dYT1VJ3RecAcyPIPwA2uGJz3gthn+1URl2PTjwPD1qfVJYUho/uD/4qafZbPNIW30F61MWaZySeRQyDdoTevTjhkrSBz6RFElbmAomvbfcaGsrZDkNNxG6E=
+	t=1721637784; cv=none; b=CHp3an3l3MQDAoTuiOUecTFoLMGnClfMAUuGE6u/DiiU9JMXJi72PyI35Hr6DvhFlkm+hOMeQ5fWZUosJWyG5NYRJsbAdestJ8V6XeftaN8f6g98WfXsOp1Cir9uNoneX6QMtr7DcPv2+BvUHQqxZrzrsCi59oLQgQrk0+s6JJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721637678; c=relaxed/simple;
-	bh=crQJ4wyeOsfTSpiluJb4q9ypz+ScKayNLUC6MlarwGo=;
+	s=arc-20240116; t=1721637784; c=relaxed/simple;
+	bh=mZ2ZAr8/8AQLW0UxQVEkzfi7S7q+mzom0U/sJs8IMfw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZF9M6NTqvIDvzaa0IwUT3S6XweJjcIef6QtXnZhN+4vS+OF6WqUwO+FPMXdjALntcJ0QGYCZBOUDmBMNAYJaVA92P4vdJOFR5Z6Fu6N/scXMF4LeFnK3WCFzNgy3G7eRZ1g3eJ3ztiP+GF92HZNgBCh679T6T3McvfIFceHkjDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pdNwzozU; arc=none smtp.client-ip=209.85.208.43
+	 In-Reply-To:Content-Type; b=oV7QCv1lxGdJm67IRn5dkSEGR5PtK/vTkgMbxMvfLCKO2cpdg1jGVUOhoW9vwL6u21ggg0bHPDH7soRfSYPcUOXd8oi2TG+rihEnsaB4qFSrdkRrcr0tNxXrROBgHGv4kO3I7v1hN9f9xgquIUbRVduHG17wGyyzNa/L0hUL1TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eWTeTs4p; arc=none smtp.client-ip=209.85.208.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5a167b9df7eso3545947a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2024 01:41:16 -0700 (PDT)
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2eeb1ba040aso58329871fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2024 01:43:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721637675; x=1722242475; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1721637780; x=1722242580; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZTA14FdaQNW9XkBMhgQt78XSjFj6avUkxCXLTiPslI8=;
-        b=pdNwzozUIVsZK+6MfV8uFkgMlpOg7ltpFOiOTSVb2n+l8jLdNz+c7LSSH5+cdfpjSH
-         pi8EHe6byVAGRjwveDTr9aD6rKeCBaxQJGsbNTbf4IFo2IfhswDlmn0TbchOeHP0Tj68
-         ocRGWGvANXzETtSN2t0CtDuM0MWbDJaTwJdBAEw7WiUbI08A6rbPtrIkVGP4oJVqIk3z
-         7bA1iE16vdzxLzHySf+FL0RrDCdggnkws9EPGJmHoI9SnakGFqzqSWHEPZvXHipAw1OH
-         RV4dJ4jJQL9aXFbhuaGX+CFOMMKk/QtldxsClLAs2PeGAIM+IkTZE+JOcrd1w2JDaFwk
-         uftg==
+        bh=HyUaXhZy7w+rjNltMSOBdyRI/n7iZnDzkC1zUe6T1R0=;
+        b=eWTeTs4p77OGpuv+PtiXi0hJXDDkfc4Z5/gDeXdlbNcxUB98pcz4FqBb3OPt63TXFU
+         Vb9oWITVFAeA2CGeTSxXFDSjv2rBpjdHGQF9ps+JUXBIB2C3BgKZxDBPOQUK2Wl4vWGt
+         byI1J6vXh/j+L73LQuUAJt3rmpt86Tzr5iLQxS0RChOwU6AvCsKljE3raVyPcG7zw3Hv
+         ugqi/98dmhVKe/HhcbYoZKUiFlsJesfvb7UtxRyoK6PCKoChTkWVN2q3u8EumrLnzPc3
+         yirqG1KtkfgxYchjOGpLqxhclQaMIkZEKV6LXC1DfylaNXA5+GZCBmcu4fXitVuoyltE
+         ARRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721637675; x=1722242475;
+        d=1e100.net; s=20230601; t=1721637780; x=1722242580;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZTA14FdaQNW9XkBMhgQt78XSjFj6avUkxCXLTiPslI8=;
-        b=tWj2KkvULFRjD3idqnGsPAcIeDwrKwawn7EiYrseg3LwKjf7hwHnMQiOmrXXRuWUeG
-         izgaUGDLvnO/zgXHGUSiicGcda9fn6agObddR8UzGzAkHFlcTuwV5T/HBlPP09mf81wD
-         lgubmTY6kavgQrbTPrwQUg+ZdPkL0khsxL1iaWL+urZ71QQFJ7zYYrvtJWw8hwcbDUb4
-         FVsOHGWIaix2Ai+rTQaJns08oHBgZLA7yp5BATzIAXi5a+5WBTQejd+2qHE3M4ERBMeW
-         iitGJcof72Upfu0nMYNO1TGVegsYPqzQluoJov8hwRJvsVa0uvIxQdLeUkd1uhbYp0qF
-         KEZA==
-X-Forwarded-Encrypted: i=1; AJvYcCV7dGt1OCRE0xp8dyDlhvgKN7HxbXl2pRQN/o4Q1pXYHN0a8jwouc7kK4UhsPC+QO5ey9nzU8UTUVzNqF26zYYq4do3fOvysMIpCqAECA==
-X-Gm-Message-State: AOJu0Yww/MDFLpzp4MZH6LiBWdXE3rZcyL986UNOhBDtQMPCkzyvt/dg
-	56IS9ua6uANvXyKOCYwXFLED/E+b13aqBUJtTvScAwY3MuF0K8atU/lrhDZDaB4=
-X-Google-Smtp-Source: AGHT+IFYL/I4ym9/Jl39J/2wKn9aI+2LxgHZSOtKSMcHb950swo4fJ3f9ePkwXyWinB6qBMpehOahA==
-X-Received: by 2002:a50:d554:0:b0:5a2:1693:1a24 with SMTP id 4fb4d7f45d1cf-5a47807199amr3543460a12.15.1721637674844;
-        Mon, 22 Jul 2024 01:41:14 -0700 (PDT)
+        bh=HyUaXhZy7w+rjNltMSOBdyRI/n7iZnDzkC1zUe6T1R0=;
+        b=B+UaJhtgc5w+0MIal28zu36+b73kCxCXz7PSR+fPlVb3bb0oPnYSlnrGDIgBYQhMTA
+         n1XrhrxunDLF2rJ0s2ie9ojM7xXR2vDnYiePdr/o+uy0YmQQDHS1hDgRMmPfIWP3j+ay
+         yniKHU2jvXUWsJU61OLfSxEpw0hrH9P1YKFmuC1/2glBEqjmFuCyX3OovPQMJazcLGGH
+         7DezjDgamofeAAHQUz3xOuXpU93AXnpP/Ljzaj087Gx6ST+hzFPjzsr1YiCT+5bKuUoK
+         NsoV88HHd/TtPXiGaTGrJDRZshp3QdchhHGKZPkXlo8rZ0Bzv1Jm1OXZrW17zFRUz2hg
+         WxnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU+l2qpEaOvSZN1yktF8qgtmlNvEN5xczuwAQ1GGigGK5PUPfBs900Vj2MUYYIFF7+tEsP0QJYAj1HCCFixXTrPycyNnsaWU7DHdWPZOQ==
+X-Gm-Message-State: AOJu0Yx/qdwA+f8xKtZ23zBkpa29ZVpsCyWNEwN1ytd639hWAHVGquUQ
+	cwyqUjh+Pard+8IpBKeetvRo8GpM/yH2BJgpI/iuMdxkj9wYNUt6Ct2nAs6eEhg=
+X-Google-Smtp-Source: AGHT+IHnnQrBpEx4mKKZT6curmy2n5diSz0Y+cPDCOViZgapxBUutKjBWnf/d6QMEX7xqF6BduPUgQ==
+X-Received: by 2002:a05:651c:2224:b0:2ef:26dc:efb3 with SMTP id 38308e7fff4ca-2ef26dcf107mr38663731fa.2.1721637780134;
+        Mon, 22 Jul 2024 01:43:00 -0700 (PDT)
 Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5a30c2f86c3sm5789857a12.74.2024.07.22.01.41.13
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5a745917f82sm1989940a12.85.2024.07.22.01.42.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Jul 2024 01:41:14 -0700 (PDT)
-Message-ID: <287247ea-09a9-4ec0-b28f-f15f30d35d0a@linaro.org>
-Date: Mon, 22 Jul 2024 10:41:12 +0200
+        Mon, 22 Jul 2024 01:42:59 -0700 (PDT)
+Message-ID: <824edc08-f67f-4b2f-b4aa-da5df69b9df4@linaro.org>
+Date: Mon, 22 Jul 2024 10:42:57 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,15 +77,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/12] arm64: dts: qcom: sm6115-pro1x: Enable ATH10K WLAN
-To: Dang Huynh <danct12@riseup.net>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: Add X1E78100 ThinkPad T14s Gen 6
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240722-qx1050-feature-expansion-v1-0-c4d486435b96@riseup.net>
- <20240722-qx1050-feature-expansion-v1-12-c4d486435b96@riseup.net>
+ linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>
+References: <20240719-topic-t14s_upstream-v1-0-d7d97fdebb28@linaro.org>
+ <20240719-topic-t14s_upstream-v1-3-d7d97fdebb28@linaro.org>
+ <Zp055OR+OzSgiHhX@linaro.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -123,35 +124,95 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240722-qx1050-feature-expansion-v1-12-c4d486435b96@riseup.net>
+In-Reply-To: <Zp055OR+OzSgiHhX@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 22.07.2024 9:10 AM, Dang Huynh wrote:
-> Enable onboard Wi-Fi on the F(x)tec Pro1X.
+On 21.07.2024 6:40 PM, Abel Vesa wrote:
+> On 24-07-19 22:16:38, Konrad Dybcio wrote:
+>> Add support for the aforementioned laptop. That includes:
+>>
+>> - input methods, incl. lid switch (keyboard needs the pdc
+>>   wakeup-parent removal hack..)
+>> - NVMe, WiFi
+>> - USB-C ports
+>> - GPU, display
+>> - DSPs
+>>
+>> Notably, the USB-A ports on the side are depenedent on the USB
+>> multiport controller making it upstream.
+>>
+>> At least one of the eDP panels used (non-touchscreen) identifies as
+>> BOE 0x0b66.
+>>
+>> See below for the hardware description from the OEM.
+>>
+>> Link: https://www.lenovo.com/us/en/p/laptops/thinkpad/thinkpadt/lenovo-thinkpad-t14s-gen-6-(14-inch-snapdragon)/len101t0099
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
-> For reference, HW/SW identifies as:
-> qmi chip_id 0x120 chip_family 0x4007 board_id 0xff soc_id 0x40670000
-> qmi fw_version 0x324103d6 fw_build_timestamp 2021-12-02 08:20
-> fw_build_id QC_IMAGE_VERSION_STRING=WLAN.HL.3.2.4-00982-QCAHLSWMTPLZ-1
+> Few comments below. Otherwise, LGTM.
 > 
-> Signed-off-by: Dang Huynh <danct12@riseup.net>
-> ---
->  arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 11 +++++++++++
->  1 file changed, 11 insertions(+)
+> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-> index 14d4f533f741..c148ebd1c8b4 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-> @@ -531,6 +531,17 @@ &usb_qmpphy_out {
->  	remote-endpoint = <&pmi632_ss_in>;
->  };
->  
-> +&wifi {
-> +	status = "okay";
+>> ---
+>>  arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+>>  .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts     | 792 +++++++++++++++++++++
+>>  2 files changed, 793 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>> index 0e5c810304fb..734a05e04c4a 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -261,6 +261,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-hdk-display-card.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-hdk.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-mtp.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= sm8650-qrd.dtb
+>> +dtb-$(CONFIG_ARCH_QCOM)	+= x1e78100-lenovo-thinkpad-t14s.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-asus-vivobook-s15.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-crd.dtb
+>>  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-lenovo-yoga-slim7x.dtb
+>> diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
+> 
+> So what happens for SKUs of this model wil have x1e80100 ?
+> 
+> Maybe we should stick to x1e80100 ?
 
-status goes last
+This one only ships with 78100
+
+[...]
+
+>> +	vreg_edp_3p3: regulator-edp-3p3 {
+>> +		compatible = "regulator-fixed";
+>> +
+>> +		regulator-name = "VREG_EDP_3P3";
+>> +		regulator-min-microvolt = <3300000>;
+>> +		regulator-max-microvolt = <3300000>;
+>> +
+>> +		gpio = <&tlmm 70 GPIO_ACTIVE_HIGH>;
+>> +		enable-active-high;
+>> +
+>> +		pinctrl-0 = <&edp_reg_en>;
+>> +		pinctrl-names = "default";
+>> +
+>> +		regulator-always-on;
+> 
+> Drop this.
+
+Oops!
+
+[...]
+
+>> +
+>> +	edp_reg_en: edp-reg-en-state {
+>> +		pins = "gpio70";
+>> +		function = "gpio";
+>> +		drive-strength = <16>;
+>> +		bias-pull-up;
+> 
+> bias-disable, maybe ?
+
+Yeah, probably
 
 Konrad
+
 
