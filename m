@@ -1,166 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-26697-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26698-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42E459388DC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 08:26:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5170D9389A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 09:11:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9A683B20BD1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 06:26:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D0553B20A88
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 07:11:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F96D17BB6;
-	Mon, 22 Jul 2024 06:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 499F617BC9;
+	Mon, 22 Jul 2024 07:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l65nNzRL"
+	dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b="dNyJ235n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC71117BA7;
-	Mon, 22 Jul 2024 06:26:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE05D53F;
+	Mon, 22 Jul 2024 07:11:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.252.153.129
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721629582; cv=none; b=HnWFEMKk0QbqcKWoUJp4jMPjjAKkbspl+FvPQ1P2q3vIcyAbNlnFubI5SY8IWNGKXr5FbLdYgfqpmzG/tAyQqLl/cfbOyLhgJOpzjRBfNrbhpJSLTmo/2Uuy5iI6rwC+fDKW1jXYiRCBXjiW3GS4GOtapG23I50TgIxghkaDN34=
+	t=1721632266; cv=none; b=o8Uz/pfOxEFwnl9m8mqCqj9WhxJ8jZj5MK/MaChAf0miWNwHbCxCoNVjzbkGbCUtZSPLTNUlXA6hW+SqXsJnRGxWayqGF9x4HoyXUkgYQl/Rn3oqOXcJaHOVxrCKZ512lc6+QUT2e34cJfZcX3TE2MlNI0HkbafgXUn+eOnttEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721629582; c=relaxed/simple;
-	bh=2E488IRTbelelyapvBjmOTKnIJ3Ma9OdzspZXkZJrlo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=IXJtfmr8uQd6zAl/DG68kOudaHaDeOoaibi/EO9jw7XYv/QAHfBgNHcYQbJQHm6ay1BWU/aBMxajzA1LGUrHKwKHHiB2CmdNbcXbcr42stUu2Gem/Plw8BEESixCF2IorzN2izoBY0bU5tJiMObHGvOOQjzbhM6zkks+5m/eoLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l65nNzRL; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46LNrNF2009144;
-	Mon, 22 Jul 2024 06:25:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	epzHvjGfNTuW8kWBWUpAehPis3xDQaoIaU0NM0n+f38=; b=l65nNzRLrEmyaPSC
-	zlC0XogCCyj19J9HJ9R8TuN747Octzg28oBuDuHCiUeu9Djx3LD5g4i+C/9WfLm0
-	pZw6mc6oFHRW6p2vf4T/cJ2TDa/Bjf7qU3+ml0nCPTHdvWTokr/DrJhNVNSDSdJQ
-	e3bwsSM9mS5Qj8/WkkY7ECBE/upSJe2mIXPy9EEeNSeWDba+EOSlCgHxKUwnblIl
-	I7Y6LPTSpYgb4yoTJDgAZD36S8eue1VbAoZLJFgYZ37IMCeEx3dYF6NzPfkDIahG
-	5qY1INv1VI7dOcDxIK+LG1Yu10k+MFTTXnEEcH3DEat8kSpcSFcmy99odXdBZqdH
-	MScrxQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g487aubw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jul 2024 06:25:26 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46M6PPWc012603
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jul 2024 06:25:25 GMT
-Received: from [10.204.65.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 21 Jul
- 2024 23:25:22 -0700
-Message-ID: <35e52822-a81f-4b2c-adc1-903785ce1849@quicinc.com>
-Date: Mon, 22 Jul 2024 11:55:19 +0530
+	s=arc-20240116; t=1721632266; c=relaxed/simple;
+	bh=Nty9qEmvFD3zjctxi60UX8L3t/rMXaATRXBcG6VkeGg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=CygV4XI1imI/XcfBbYuxkE5Ybh9lM4mjoND9McO3/cTnZYcV57vtNGbWzrMspun6kixYpAlP51vISR5h/y5HmxNDqe4snzGLZ7x7eHNMx4FF2l7CeTwxPAMwiuYJwws/cl+y0gOh4NPGyuSus0/tVVilRLi8WTqvGblf0o1WUQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riseup.net; spf=pass smtp.mailfrom=riseup.net; dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b=dNyJ235n; arc=none smtp.client-ip=198.252.153.129
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riseup.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riseup.net
+Received: from fews01-sea.riseup.net (fews01-sea-pn.riseup.net [10.0.1.109])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx1.riseup.net (Postfix) with ESMTPS id 4WSBJl2k94zDqX8;
+	Mon, 22 Jul 2024 07:11:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+	t=1721632263; bh=Nty9qEmvFD3zjctxi60UX8L3t/rMXaATRXBcG6VkeGg=;
+	h=From:Subject:Date:To:Cc:From;
+	b=dNyJ235n4dCKzF2LPgswFnlNAVlgQ1lW8VYI+49l2l2m++vzdxEFBdm4Q+hYBtsfm
+	 /KcsUJ1e0wKboVQY07x1i/mdJpnZh43C+qlTVpnupM5Bz7OEufePV441rgryCInzsj
+	 esojVTDeeIZVxy9en0Nmeeki3JzvQ80OLTx0VbVE=
+X-Riseup-User-ID: 10048D71B9D1C5C1D8B2623470FC11309BFDDC133F94D03C7F3E159DE8C04C92
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	 by fews01-sea.riseup.net (Postfix) with ESMTPSA id 4WSBJT1wFWzJrYb;
+	Mon, 22 Jul 2024 07:10:49 +0000 (UTC)
+From: Dang Huynh <danct12@riseup.net>
+Subject: [PATCH 00/12] F(x)tec Pro1X feature expansion
+Date: Mon, 22 Jul 2024 14:10:10 +0700
+Message-Id: <20240722-qx1050-feature-expansion-v1-0-c4d486435b96@riseup.net>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/2] misc: fastrpc: Increase unsigned PD initmem size
-Content-Language: en-US
-To: Greg KH <gregkh@linuxfoundation.org>
-CC: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_bkumar@quicinc.com>, <linux-kernel@vger.kernel.org>,
-        <quic_chennak@quicinc.com>, <dri-devel@lists.freedesktop.org>,
-        <arnd@arndb.de>, stable <stable@kernel.org>
-References: <20240722055437.3467900-1-quic_ekangupt@quicinc.com>
- <20240722055437.3467900-3-quic_ekangupt@quicinc.com>
- <2024072235-daydream-clunky-0272@gregkh>
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
-In-Reply-To: <2024072235-daydream-clunky-0272@gregkh>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: g6mNA2sHTMUHVEl96SEUvXV5NRkW6U-8
-X-Proofpoint-GUID: g6mNA2sHTMUHVEl96SEUvXV5NRkW6U-8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-22_02,2024-07-18_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- suspectscore=0 phishscore=0 priorityscore=1501 mlxlogscore=998
- malwarescore=0 adultscore=0 impostorscore=0 clxscore=1015
- lowpriorityscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2407110000 definitions=main-2407220048
+X-B4-Tracking: v=1; b=H4sIANIFnmYC/x3MQQqDMBBG4avIrB2IQ9XiVcTF0P5pZ5NqohIQ7
+ 27q8i2+d1BCNCQaqoMidkv2CyWauqLXV8MHbO/SJE4erhfhJTeudeyh6xbByLOGP+LedyrdU7x
+ AqfA5wlu+1+N0nhdLXk0YagAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Dang Huynh <danct12@riseup.net>
 
+This patch series expand F(x)tec Pro1X (QX1050) device tree to support
+various components of the device.
 
+Most notably:
++ SD Card slot
++ Touchscreen
++ MDSS, DRM display panel
++ WLAN (ATH10K)
++ Hall sensor and camera button
 
-On 7/22/2024 11:30 AM, Greg KH wrote:
-> On Mon, Jul 22, 2024 at 11:24:37AM +0530, Ekansh Gupta wrote:
->> For unsigned PD offloading requirement, additional memory is required
->> because of additional static heap initialization. Without this
->> additional memory, PD initialization would fail. Increase the initmem
->> size by 2MB for unsigned PD initmem buffer allocation. Any additional
->> memory sent to DSP during PD init is used as the PD heap.
->>
->> Fixes: 7f1f481263c3 ("misc: fastrpc: check before loading process to the DSP")
->> Cc: stable <stable@kernel.org>
->> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
->> ---
->>  drivers/misc/fastrpc.c | 7 +++++++
->>  1 file changed, 7 insertions(+)
->>
->> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> index a3a5b745936e..18668b020a87 100644
->> --- a/drivers/misc/fastrpc.c
->> +++ b/drivers/misc/fastrpc.c
->> @@ -40,6 +40,7 @@
->>  #define FASTRPC_CTXID_MASK (0xFF0)
->>  #define INIT_FILELEN_MAX (2 * 1024 * 1024)
->>  #define FASTRPC_INITLEN_MIN (3 * 1024 * 1024)
->> +#define FASTRPC_STATIC_HEAP_LEN (2 * 1024 * 1024)
->>  #define INIT_FILE_NAMELEN_MAX (128)
->>  #define FASTRPC_DEVICE_NAME	"fastrpc"
->>  
->> @@ -1411,8 +1412,14 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
->>  			goto err;
->>  	}
->>  
->> +	/* Allocate buffer in kernel for donating to remote process.
->> +	 * Unsigned PD requires additional memory because of the
-> What is "PD"?
-DSP PD(protection domain) is execution environment supported by DSP.
->
->> +	 * additional static heap initialized within the process.
->> +	 */
-> Why are you using networking comment style for a non-networking file?
-I observed similar style in this driver file. I will update this in proper style in the next patch.
->
->>  	memlen = ALIGN(max(FASTRPC_INITLEN_MIN, (int)init.filelen * 4),
->>  		       1024 * 1024);
->> +	if (unsigned_module)
->> +		memlen += FASTRPC_STATIC_HEAP_LEN;
-> I don't understand, why is "static heap length" being added for
-> something that is "unsigned"?  Why isn't this just "SIGNING FREE SPACE"
-> or something like that?
-The difference between signed PD and unsigned PD is:
-Signed PD: Available on all DSPs and requires that the shared objects being loaded in the PD
-are signed with a digital signature.
+This patch series has been tested on Buildroot Linux with TQFTPSERV and
+RMTFS present in userspace.
 
-Unsigned PD: Sandboxed low-rights process that allows signature-free shared objects to run on
-CDSP.
+Signed-off-by: Dang Huynh <danct12@riseup.net>
+---
+Dang Huynh (12):
+      arm64: dts: qcom: sm6115-pro1x: Add Hall Switch and Camera Button
+      arm64: dts: qcom: sm6115-pro1x: Add PCA9534 IO Expander
+      arm64: dts: qcom: sm6115-pro1x: Add Goodix Touchscreen
+      arm64: dts: qcom: sm6115-pro1x: Add Caps Lock LED
+      arm64: dts: qcom: sm6115-pro1x: Enable SD card slot
+      arm64: dts: qcom: sm6115-pro1x: Enable MDSS and GPU
+      arm64: dts: qcom: sm6115-pro1x: Hook up USB3 SS
+      arm64: dts: qcom: sm6115-pro1x: Update copyright year
+      arm64: dts: qcom: sm6115-pro1x: Add PMI632 Type-C property
+      arm64: dts: qcom: sm6115-pro1x: Enable RGB LED
+      arm64: dts: qcom: sm6115-pro1x: Enable remoteprocs
+      arm64: dts: qcom: sm6115-pro1x: Enable ATH10K WLAN
 
-For unsigned PD there are some additional statically initialized heap for which additional memory
-is required. I'll try to come up with a better name.
+ arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 316 +++++++++++++++++++++++-
+ 1 file changed, 306 insertions(+), 10 deletions(-)
+---
+base-commit: 41c196e567fb1ea97f68a2ffb7faab451cd90854
+change-id: 20240722-qx1050-feature-expansion-7f6a2682f2ea
 
-Thanks for the review.
-
---Ekansh
->
-> thanks,
->
-> greg "naming is hard" k-h
->
+Best regards,
+-- 
+Dang Huynh <danct12@riseup.net>
 
 
