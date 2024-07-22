@@ -1,101 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-26823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78C0F93956A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 23:24:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DECF29395AB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 23:47:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AA93A1C2185A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 21:24:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 960AD2820AD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 21:47:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D934031A89;
-	Mon, 22 Jul 2024 21:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFF3A3BBE2;
+	Mon, 22 Jul 2024 21:47:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uS7CaUtI"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CWXMh9YC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F2F45945;
-	Mon, 22 Jul 2024 21:24:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54B31849;
+	Mon, 22 Jul 2024 21:47:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721683482; cv=none; b=aK/5N1fT/fmEBWFiz7DgzUIbCbxAV7KBCK1SqFcHGs2W2AQJ8eF3ImTuPpAKFsedernd9UyI8CYJU+Ankv8pnTLmx0eum1rLqC6Qua5/SoWdt/ASiuFD//AhHQtpFsYV6MBOmpvfyIFQbfeM2p2UPCUYUDmofcHXjYWlTmUYAe0=
+	t=1721684836; cv=none; b=cez0J0T3/G/eoo5bZ+onyiiPcuNnyg1MnvccxGfO3gwKlCrT9oXYwgNp2OjF1y5e2Ah99NVSp8B/W4nwo7C9Q4Iot/Ln1m6lcReysIan9N9oLKHEYBvx/0mpRwDMKpe17WPczhKhY35QS0Ob6bpvJLrkrngIzFEe1jkJjfhJ8Os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721683482; c=relaxed/simple;
-	bh=Q826C5u5k4qn7p6QfqtajjTKEgM16wlAc29c0ljUYIY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qJjReYPaxdSZ4Q58AfF8Bc8od2SHlbmWSuiOu1WVuKKhClv21KNODUBitxECeISFqC1SIZJMBLEIGrrGcypTbU9iPf7VklWuRzkyFWni9t+sEVsGcLO7EY7vgVTXwJjSk3Hm2ii9EMDuuQ8irbouUOHD2dYxV/88SeY0zClTB6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uS7CaUtI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C30C4AF0A;
-	Mon, 22 Jul 2024 21:24:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721683482;
-	bh=Q826C5u5k4qn7p6QfqtajjTKEgM16wlAc29c0ljUYIY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uS7CaUtIPUfTWiu+mra/lBkTQL0IiRtc3eCNU1mf0wqu5fZMkjMsmx4DzleXasWV8
-	 UYJL8clmsTuaHLA1uxzJbbX9xaNZoCuS73IdQSZkfrTDx2iCgV2yVKszDmElF6hcJl
-	 9ZRj2h3UVsP4oKiI+YYCOLEHEEY9xUBtm7awDNY/ATCiEphM9gvxBJHunZlWsk+hti
-	 7RsVATpcG983CZ3+R4yQpeIikznaxCIxAUlQvKN29HNI6M3DNk4ybm3sw9YiM875FC
-	 HhSzM3Bjsz5QTbbW9BkWVev5zlxfRJbJ5fl3j/gLzRNtb0NYWhhiVvyAJsh/m+NStK
-	 LXp66C/EFyDww==
-Date: Mon, 22 Jul 2024 15:24:34 -0600
-From: Rob Herring <robh@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: Add Lenovo ThinkPad T14s Gen
- 6
-Message-ID: <20240722212434.GA112051-robh@kernel.org>
-References: <20240719-topic-t14s_upstream-v1-0-d7d97fdebb28@linaro.org>
- <20240719-topic-t14s_upstream-v1-1-d7d97fdebb28@linaro.org>
+	s=arc-20240116; t=1721684836; c=relaxed/simple;
+	bh=JR+SY+2nPNlWy8HptYjfhNO/uli1R6DEjcPvFVCbSeY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=YIcFnlypRJLxe+lLetv9t3ZUMEyTFmblJDaI3BM4LJT2bUo0MmsOTo9aHRp1A3BnwsoSSxnJjFYSrI1CCojLUr/VANQedoyoQC8fFa6kKgX0M50rEHWGVoe2Jk+kbDw9yMM8f/rpehWT6cBLb8sO7sO0Z/ZptFz9Y+F4JrWFUY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CWXMh9YC; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46MJNjZ7014036;
+	Mon, 22 Jul 2024 21:47:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Qs/JP/ZIxvYyiw9RdROCi9EzriMnBVyMayND9ThSpWU=; b=CWXMh9YCViqFve5l
+	MUehGau6ajxT/Vs3d1pPBmWd6Cc8fSTSylOIEYUeGyqbP358ivXhsahexCe7Zd2r
+	+HG/IeTjvvTZ0GsbG3CUaeuOC+QuiQys5o018j+OUwJfjn2XnUZT4AF2I8o820j1
+	6Rwhc4dk6R2M49/NMf9nEN26ZWuHHcETFF2EyMbqDqxzCrZb9iQIG5fTtsHhD13B
+	z6kfsE7YL0ZmoUkLBnVuEij6Z+qCZRoBX5j4SnMXI66q/cT/Kkb7Fpvnvm9caa5w
+	nLxtrSc+opT+5jIr0cv8SU7LytBSbyWQcoGD+0c04qS3N0jtGHJ8S3+rl2fbQzNL
+	nWF/tg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g5m6vynr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Jul 2024 21:47:05 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46MLl4at006331
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Jul 2024 21:47:04 GMT
+Received: from [10.110.63.227] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 22 Jul
+ 2024 14:47:03 -0700
+Message-ID: <3c740b28-cb14-4d5d-ba0f-d8c658380ef7@quicinc.com>
+Date: Mon, 22 Jul 2024 14:47:03 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240719-topic-t14s_upstream-v1-1-d7d97fdebb28@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] PCI: qcom: Use OPP only if the platform supports it
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        <lpieralisi@kernel.org>, <kw@linux.com>
+CC: <robh@kernel.org>, <bhelgaas@google.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240722131128.32470-1-manivannan.sadhasivam@linaro.org>
+Content-Language: en-US
+From: Mayank Rana <quic_mrana@quicinc.com>
+In-Reply-To: <20240722131128.32470-1-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: es4YjzH_eq1RZucgzmMOdH5sgQ-0r7rK
+X-Proofpoint-ORIG-GUID: es4YjzH_eq1RZucgzmMOdH5sgQ-0r7rK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-22_15,2024-07-22_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
+ mlxlogscore=999 adultscore=0 bulkscore=0 mlxscore=0 spamscore=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1015 malwarescore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407220162
 
-On Fri, Jul 19, 2024 at 10:16:36PM +0200, Konrad Dybcio wrote:
-> Document the X1E78100-based ThinkPad.
+Hi Mani
+
+On 7/22/2024 6:11 AM, Manivannan Sadhasivam wrote:
+> With commit 5b6272e0efd5 ("PCI: qcom: Add OPP support to scale
+> performance"), OPP was used to control the interconnect and power domains
+> if the platform supported OPP. Also to maintain the backward compatibility
+> with platforms not supporting OPP but just ICC, the above mentioned commit
+> assumed that if ICC was not available on the platform, it would resort to
+> OPP.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Unfortunately, some old platforms don't support either ICC or OPP. So on
+> those platforms, resorting to OPP in the absence of ICC throws below errors
+> from OPP core during suspend and resume:
+> 
+> qcom-pcie 1c08000.pcie: dev_pm_opp_set_opp: device opp doesn't exist
+> qcom-pcie 1c08000.pcie: _find_key: OPP table not found (-19)
+> 
+> Also, it doesn't make sense to invoke the OPP APIs when OPP is not
+> supported by the platform at all. So let's use a flag to identify whether
+> OPP is supported by the platform or not and use it to control invoking the
+> OPP APIs.
+> 
+> Fixes: 5b6272e0efd5 ("PCI: qcom: Add OPP support to scale performance")
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
+>   drivers/pci/controller/dwc/pcie-qcom.c | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index f08e13b61172..8af56b602de3 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -1038,6 +1038,12 @@ properties:
->                - qcom,sm8650-qrd
->            - const: qcom,sm8650
->  
-> +      - items:
-> +          - enum:
-> +              - lenovo,thinkpad-t14s
-> +          - const: qcom,x1e78100
-> +          - const: qcom,x1e80100
-
-Why 2 chip compatibles? Please explain in the commit msg.
-
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 0180edf3310e..6f953e32d990 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -261,6 +261,7 @@ struct qcom_pcie {
+>   	const struct qcom_pcie_cfg *cfg;
+>   	struct dentry *debugfs;
+>   	bool suspended;
+> +	bool use_pm_opp;
+>   };
+>   
+>   #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
+> @@ -1433,7 +1434,7 @@ static void qcom_pcie_icc_opp_update(struct qcom_pcie *pcie)
+>   			dev_err(pci->dev, "Failed to set bandwidth for PCIe-MEM interconnect path: %d\n",
+>   				ret);
+>   		}
+> -	} else {
+> +	} else if (pcie->use_pm_opp) {
+>   		freq_mbps = pcie_dev_speed_mbps(pcie_link_speed[speed]);
+>   		if (freq_mbps < 0)
+>   			return;
+> @@ -1592,6 +1593,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>   				      max_freq);
+>   			goto err_pm_runtime_put;
+>   		}
 > +
->        - items:
->            - enum:
->                - asus,vivobook-s15
-> 
-> -- 
-> 2.45.2
-> 
+> +		pcie->use_pm_opp = true;
+>   	} else {
+>   		/* Skip ICC init if OPP is supported as it is handled by OPP */
+>   		ret = qcom_pcie_icc_init(pcie);
+> @@ -1683,7 +1686,7 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
+>   		if (ret)
+>   			dev_err(dev, "Failed to disable CPU-PCIe interconnect path: %d\n", ret);
+>   
+> -		if (!pcie->icc_mem)
+> +		if (pcie->use_pm_opp)
+>   			dev_pm_opp_set_opp(pcie->pci->dev, NULL);
+>   	}
+>   	return ret;
+ >
+Reviewed-by: Mayank Rana <quic_mrana@quicinc.com>
+
+Regards,
+Mayank
 
