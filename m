@@ -1,237 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-26815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 978F993920D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 17:49:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C513939239
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 18:03:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1048E1F2246F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 15:49:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D4B7C282562
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 16:03:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6838F16EB51;
-	Mon, 22 Jul 2024 15:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A09BC16D9A8;
+	Mon, 22 Jul 2024 16:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="bo6qTyPn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UzBt5Wow"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68B416D4FD
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2024 15:49:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85C616D9A2
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2024 16:03:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721663380; cv=none; b=rO0Z3uILd2PUuFUOq/+5nQWH+kHTNo+taQEJoWycAetnXk17l8lyOoTF4awNs1s+WYhsltvagl8vJYLP2l91H6PGdexo/2THsE8bJSvmJ5A2Ibvq17G7qxBud3B4aY39tDr0oi2Ip6N+UNgmZjrPYFzsP0UMkm5/rg2qv9M9uec=
+	t=1721664229; cv=none; b=joIcln+e/0ygr92/ccjvZ7DLhU4xgTdzUpsX4dp23sSxD3C+FT76yoYvtd6QeL0v2MaiXq4DBwy61fnSW4K30HnOzJfer0lpxdpFCpd2I+CVR8V5vzcRwntHg1FwcXgoWm7BLJqk+pmKbHfgiZQZqV6leFh8Fu7pCdRhDsB1p10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721663380; c=relaxed/simple;
-	bh=FesRx67elQmnqBSPlEkVYKJ2YOBEJnv2sFoRJSW3AlU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kpwUEdweoNYuQxX70pwe+4GIff/MpSDRmMt6//yIhVhH//e3mdIRpRGN6P91ZeqapF/EJRPFpZ+Y3pIH1TWoBVOU/4SSYSbxnkGHaDPzn6qGFX26YpgQpXl+u6RgggGKMYZOSQNr7uX5PwUNE+YVQDrwjZExOAlvAmNJvWN/y7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=bo6qTyPn; arc=none smtp.client-ip=209.85.210.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-704473c0698so1807976a34.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2024 08:49:38 -0700 (PDT)
+	s=arc-20240116; t=1721664229; c=relaxed/simple;
+	bh=KzgCofWjocBkzQAphXv6rA7vCk7eErxhoEfKd11ou9k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cYzSB1Iq7lwZjJ0kuCZ3X4Q74spAQB8OBvaYlwXcNSGBkMsYUS8CyNk/VEQ3sG8Xf5svIAQVEUsCcCN84Vr6SlCPmumCRtD4lwlRAFRDga2ktDwQUS8yF9/LhaVGR0AHT/BfOaiSKM5UdgtnsDohcGuvCvbadcrXwt6SOgGJnqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UzBt5Wow; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2ee920b0781so51838251fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2024 09:03:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1721663375; x=1722268175; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4M370blDs66N01Bpr2CSSKX57GkmsVaqanqtms3bvVw=;
-        b=bo6qTyPneLwQDaO/6SirDrWEwp2yLHwIPTb3oNbWXCCtjiFaIG4jR4lfMaiPxjYuaE
-         twKYc0EmnZ/4NaidXx+5/8241wmy2Cze/S9JECMGehydMjzH7KcA6bo8IDHE5LHg3pIT
-         kvh57CreFUUEtQ2349nHMFdr0H9zM/sftO1VI=
+        d=linaro.org; s=google; t=1721664226; x=1722269026; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=XMfnvFagM5jXY4OmVFyt8MNr6j8P8gpPmPAEFY+SDc4=;
+        b=UzBt5WowUExkJqozeTv9ZJeZdpn/0Ztu9/PozsEP4+56jFDUZY1ycGzUb65fjv621z
+         fmw8sHTlRCA4A5C77ucxJPbf7LfIrVreaWdB/3LkstvkAEobCadiPuwZniwhwnfMrtCK
+         v+GmnBnj4tfvl3uxpTtfj9RHfRV/WNu+G40u/iEazE04k8LzSboyOSbCJCo7Ocb/ynTt
+         PjVzi/dvfiSdApXpMefFAjKpe9f1BtJaQlsWkE4sHcB7u7y1dwFKtjfASMnsHSH/Be1L
+         WhYIA1J4rw/cfR+NdO1fcLzuZKNmMQeiBn/J3KdWx/dcoJCDxl6DeD9a4nu+/8lq+zub
+         APBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721663375; x=1722268175;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4M370blDs66N01Bpr2CSSKX57GkmsVaqanqtms3bvVw=;
-        b=sLjZX+liJzZiB+L+QRsx57vhEuYUi2AAwuxIgvjrpjJGyVbNkHvm4yIZhuvsTg8ZWd
-         LsRQYhZsxizoyfVj7CFY/TABzi29mJaJTI666t/vzMXKcsXrmo7n8CGAPBH2x0NH6ek+
-         hHihN1O+IWCjBRPtc5CzB6DYQ1tNPsaEVA0IWdGl1HvFUyZJ2qO3IUtVzL/oyf4nZ8mA
-         IEpsNWDe24x94ggiH0zCPWj29G43Pcd2b32+unB6uKQ1jFR2HCYnMek8c90jhnpCcvxz
-         +UN4pqe8v6E9LpA4gLHja9K0G6BzD/Ji5uNk64THmtS3Gt3JD7sczYNuD/d9yaIkoXa1
-         +n/Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXrdrwfEoj9EysdoS/fRNFgLdD9bgVLymfeHezofixaCxFc75cpfGx6ND6SMHcSEkJEN7ZdzyNJPpt72GqEjUN21EBtMRQ3P9Gl8Av/FQ==
-X-Gm-Message-State: AOJu0Yy7ITtjgQEu95DbTrvxTo9mylk7UWbxl4I4fOwrqudeW+3IbZaH
-	gjzCuQ9792C59L6OmD2ZYERYnk3jKroFt/iVw03Qu9MeP4w0mTgaJjdiCQyyDTyJKxcvBs7Qodg
-	=
-X-Google-Smtp-Source: AGHT+IElKljRzFmghZ63kLu6WL60OpjG4uuucR/3VsWZ9hFMPwNdnQrmBoPwKsK0PtjA49DPxr5RuQ==
-X-Received: by 2002:a05:6830:6381:b0:707:903a:cb0d with SMTP id 46e09a7af769-7090090689bmr6274897a34.13.1721663375272;
-        Mon, 22 Jul 2024 08:49:35 -0700 (PDT)
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com. [209.85.160.179])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6b7acae194dsm36417466d6.107.2024.07.22.08.49.34
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Jul 2024 08:49:34 -0700 (PDT)
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-44f9d7cb5c5so735421cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2024 08:49:34 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWl2rUrUGCekBQCUhsfagAWTxuJQ5awT7xrc84dWS94IhPNFPB3EHUodq/k9Y9ompQmJEgbT5YqEO20XC8oduIdu+14f9gEDi+Qn3KhBA==
-X-Received: by 2002:a05:622a:5b8e:b0:447:e3e3:77c1 with SMTP id
- d75a77b69052e-44faaa81ca5mr4992061cf.29.1721663373472; Mon, 22 Jul 2024
- 08:49:33 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1721664226; x=1722269026;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XMfnvFagM5jXY4OmVFyt8MNr6j8P8gpPmPAEFY+SDc4=;
+        b=BAWMbkfH6SCuu70gyvps6UmTgkZDm0fLKKHv0czRfld2WvfjNzp18jMeH6w+IaUdOl
+         anxQmvUoRxDsnNdZqqs6hu1DX1qfqDGDHTRMjwha/peJCD+wh1V60t9VCXLbZlk2MGML
+         JBQ2mqrksDobj2118otGAGokKf3U+o6TQQcnCBbHMaNAUR19PP/xm3ed90LEGZB/HCd/
+         k2UYbH4Uae3HHjen9Qy9EAaY/IdTsqIDGEiPhrVV6IlWcCc8L6YL2m4EOH5RncJi+CbT
+         nLMF0dMD2tywu467vZLZiBL68lXkkfDbHR38Y8Ag2+TCeXUXhgaGhVx5kSX0t1NS79jZ
+         3oSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUa+XmY/MH71GrtZv99aYgctd5HBvZ/qfq9iyAWeS+UmokFvaZf5MDARWGVDDm/W8OQgcpjum79AjXVgIxWDxoVlhIfFrAFTWcHzPYLtg==
+X-Gm-Message-State: AOJu0YzaXqYwOFycqct+MjU9IacjqgxQorz6U4Bz3snaZGEvFgS067t/
+	8jcM3O8N/9e+YPkRorVJOhyOhLbBupFNw6HVpAFKhM1CV+pjC24Rk3xcHmiu8VY=
+X-Google-Smtp-Source: AGHT+IGObe1qRLvGOWHkj6zBsUO752eB04WToNf3Kb1tTFIw7U5c47c7/ki1OSMnG6oSK3at4d5rSg==
+X-Received: by 2002:a2e:8e83:0:b0:2ef:1b1f:4b4f with SMTP id 38308e7fff4ca-2ef1b1f52bcmr44331031fa.34.1721664225802;
+        Mon, 22 Jul 2024 09:03:45 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2ef0fcdd670sm13088851fa.76.2024.07.22.09.03.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Jul 2024 09:03:45 -0700 (PDT)
+Date: Mon, 22 Jul 2024 19:03:43 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Rob Clark <robdclark@gmail.com>
+Cc: Abel Vesa <abel.vesa@linaro.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: Add X1E78100 ThinkPad T14s Gen 6
+Message-ID: <4w4b5pjrrl7jnanx3uodsjxw4cfenc3i6tgmp6kblgn6gavn45@uu2milys4n2z>
+References: <20240719-topic-t14s_upstream-v1-0-d7d97fdebb28@linaro.org>
+ <20240719-topic-t14s_upstream-v1-3-d7d97fdebb28@linaro.org>
+ <Zp055OR+OzSgiHhX@linaro.org>
+ <824edc08-f67f-4b2f-b4aa-da5df69b9df4@linaro.org>
+ <Zp4vghH5SK/rLEce@linaro.org>
+ <CAF6AEGszzRFiW16VzQQVF21U79uLcTNwwuGsHs98Zp_UGGTEBA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240715-x1e80100-crd-backlight-v2-0-31b7f2f658a3@linaro.org>
- <20240715-x1e80100-crd-backlight-v2-2-31b7f2f658a3@linaro.org>
- <7daa3c0d-cecf-4f50-be32-ae116b920db0@linaro.org> <ZpUcI3KkIa58zC55@linaro.org>
- <d1603248-afe8-4594-9e2e-81ba208dff00@linaro.org> <CAD=FV=WimxYmDrkfn0+E3MbXp8kS9TicN2kT3AM4eM+SAwYsOg@mail.gmail.com>
-In-Reply-To: <CAD=FV=WimxYmDrkfn0+E3MbXp8kS9TicN2kT3AM4eM+SAwYsOg@mail.gmail.com>
-From: Doug Anderson <dianders@chromium.org>
-Date: Mon, 22 Jul 2024 08:49:22 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XfvD1OniNBrCrA8C6XjOB15fye8EdnniNmgpu4DnpH6w@mail.gmail.com>
-Message-ID: <CAD=FV=XfvD1OniNBrCrA8C6XjOB15fye8EdnniNmgpu4DnpH6w@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] Revert "drm/panel-edp: Add SDC ATNA45AF01"
-To: neil.armstrong@linaro.org
-Cc: Stephan Gerhold <stephan.gerhold@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAF6AEGszzRFiW16VzQQVF21U79uLcTNwwuGsHs98Zp_UGGTEBA@mail.gmail.com>
 
-Hi,
+On Mon, Jul 22, 2024 at 08:00:19AM GMT, Rob Clark wrote:
+> On Mon, Jul 22, 2024 at 3:11 AM Abel Vesa <abel.vesa@linaro.org> wrote:
+> >
+> > On 24-07-22 10:42:57, Konrad Dybcio wrote:
+> > > On 21.07.2024 6:40 PM, Abel Vesa wrote:
+> > > > On 24-07-19 22:16:38, Konrad Dybcio wrote:
+> > > >> Add support for the aforementioned laptop. That includes:
+> > > >>
+> > > >> - input methods, incl. lid switch (keyboard needs the pdc
+> > > >>   wakeup-parent removal hack..)
+> > > >> - NVMe, WiFi
+> > > >> - USB-C ports
+> > > >> - GPU, display
+> > > >> - DSPs
+> > > >>
+> > > >> Notably, the USB-A ports on the side are depenedent on the USB
+> > > >> multiport controller making it upstream.
+> > > >>
+> > > >> At least one of the eDP panels used (non-touchscreen) identifies as
+> > > >> BOE 0x0b66.
+> > > >>
+> > > >> See below for the hardware description from the OEM.
+> > > >>
+> > > >> Link: https://www.lenovo.com/us/en/p/laptops/thinkpad/thinkpadt/lenovo-thinkpad-t14s-gen-6-(14-inch-snapdragon)/len101t0099
+> > > >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > > >
+> > > > Few comments below. Otherwise, LGTM.
+> > > >
+> > > > Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+> > > >
+> > > >> ---
+> > > >>  arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+> > > >>  .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts     | 792 +++++++++++++++++++++
+> > > >>  2 files changed, 793 insertions(+)
+> > > >>
+> > > >> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > > >> index 0e5c810304fb..734a05e04c4a 100644
+> > > >> --- a/arch/arm64/boot/dts/qcom/Makefile
+> > > >> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > > >> @@ -261,6 +261,7 @@ dtb-$(CONFIG_ARCH_QCOM)        += sm8650-hdk-display-card.dtb
+> > > >>  dtb-$(CONFIG_ARCH_QCOM)   += sm8650-hdk.dtb
+> > > >>  dtb-$(CONFIG_ARCH_QCOM)   += sm8650-mtp.dtb
+> > > >>  dtb-$(CONFIG_ARCH_QCOM)   += sm8650-qrd.dtb
+> > > >> +dtb-$(CONFIG_ARCH_QCOM)   += x1e78100-lenovo-thinkpad-t14s.dtb
+> > > >>  dtb-$(CONFIG_ARCH_QCOM)   += x1e80100-asus-vivobook-s15.dtb
+> > > >>  dtb-$(CONFIG_ARCH_QCOM)   += x1e80100-crd.dtb
+> > > >>  dtb-$(CONFIG_ARCH_QCOM)   += x1e80100-lenovo-yoga-slim7x.dtb
+> > > >> diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
+> > > >
+> > > > So what happens for SKUs of this model wil have x1e80100 ?
+> > > >
+> > > > Maybe we should stick to x1e80100 ?
+> > >
+> > > This one only ships with 78100
+> > >
+> >
+> > Sure, but then in upstream we only have 80100. Plus, it is included in
+> > this file as well.
+> >
+> > I don't know what's the right thing to do here. But I think it keeps
+> > things more simple if we keep everything under the x1e80100 umbrella.
+> 
+> plus sticking to x1e80100 will avoid angering tab completion :-P
 
-On Mon, Jul 15, 2024 at 6:51=E2=80=AFAM Doug Anderson <dianders@chromium.or=
-g> wrote:
->
-> Hi,
->
-> On Mon, Jul 15, 2024 at 6:02=E2=80=AFAM Neil Armstrong
-> <neil.armstrong@linaro.org> wrote:
-> >
-> > On 15/07/2024 14:54, Stephan Gerhold wrote:
-> > > On Mon, Jul 15, 2024 at 02:42:12PM +0200, Neil Armstrong wrote:
-> > >> On 15/07/2024 14:15, Stephan Gerhold wrote:
-> > >>> This reverts commit 8ebb1fc2e69ab8b89a425e402c7bd85e053b7b01.
-> > >>>
-> > >>> The panel should be handled through the samsung-atna33xc20 driver f=
-or
-> > >>> correct power up timings. Otherwise the backlight does not work cor=
-rectly.
-> > >>>
-> > >>> We have existing users of this panel through the generic "edp-panel=
-"
-> > >>> compatible (e.g. the Qualcomm X1E80100 CRD), but the screen works o=
-nly
-> > >>> partially in that configuration: It works after boot but once the s=
-creen
-> > >>> gets disabled it does not turn on again until after reboot. It beha=
-ves the
-> > >>> same way with the default "conservative" timings, so we might as we=
-ll drop
-> > >>> the configuration from the panel-edp driver. That way, users with o=
-ld DTBs
-> > >>> will get a warning and can move to the new driver.
-> > >>>
-> > >>> Reviewed-by: Douglas Anderson <dianders@chromium.org>
-> > >>> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> > >>> ---
-> > >>>    drivers/gpu/drm/panel/panel-edp.c | 2 --
-> > >>>    1 file changed, 2 deletions(-)
-> > >>>
-> > >>> diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/pa=
-nel/panel-edp.c
-> > >>> index 3a574a9b46e7..d2d682385e89 100644
-> > >>> --- a/drivers/gpu/drm/panel/panel-edp.c
-> > >>> +++ b/drivers/gpu/drm/panel/panel-edp.c
-> > >>> @@ -1960,8 +1960,6 @@ static const struct edp_panel_entry edp_panel=
-s[] =3D {
-> > >>>     EDP_PANEL_ENTRY('L', 'G', 'D', 0x05af, &delay_200_500_e200_d200=
-, "Unknown"),
-> > >>>     EDP_PANEL_ENTRY('L', 'G', 'D', 0x05f1, &delay_200_500_e200_d200=
-, "Unknown"),
-> > >>> -   EDP_PANEL_ENTRY('S', 'D', 'C', 0x416d, &delay_100_500_e200, "AT=
-NA45AF01"),
-> > >>> -
-> > >>>     EDP_PANEL_ENTRY('S', 'H', 'P', 0x1511, &delay_200_500_e50, "LQ1=
-40M1JW48"),
-> > >>>     EDP_PANEL_ENTRY('S', 'H', 'P', 0x1523, &delay_80_500_e50, "LQ14=
-0M1JW46"),
-> > >>>     EDP_PANEL_ENTRY('S', 'H', 'P', 0x153a, &delay_200_500_e50, "LQ1=
-40T1JH01"),
-> > >>>
-> > >>
-> > >> How will we handle current/old crd DT with new kernels ?
-> > >>
-> > >
-> > > I think this is answered in the commit message:
-> > >
-> > >>> We have existing users of this panel through the generic "edp-panel=
-"
-> > >>> compatible (e.g. the Qualcomm X1E80100 CRD), but the screen works o=
-nly
-> > >>> partially in that configuration: It works after boot but once the s=
-creen
-> > >>> gets disabled it does not turn on again until after reboot. It beha=
-ves the
-> > >>> same way with the default "conservative" timings, so we might as we=
-ll drop
-> > >>> the configuration from the panel-edp driver. That way, users with o=
-ld DTBs
-> > >>> will get a warning and can move to the new driver.
-> > >
-> > > Basically with the entry removed, the panel-edp driver will fallback =
-to
-> > > default "conservative" timings when using old DTBs. There will be a
-> > > warning in dmesg, but otherwise the panel will somewhat work just as
-> > > before. I think this is a good way to remind users to upgrade.
-> >
-> > I consider this as a regression
-> >
-> > >
-> > >> Same question for patch 3, thie serie introduces a bindings that won=
-'t be valid
-> > >> if we backport patch 3. I don't think patch should be backported, an=
-d this patch
-> > >> should be dropped.
-> > >
-> > > There would be a dtbs_check warning, yeah. Functionally, it would wor=
-k
-> > > just fine. Is that reason enough to keep display partially broken for
-> > > 6.11? We could also apply the minor binding change for 6.11 if needed=
-.
-> >
-> > I don't know how to answer this, I'll let the DT maintainer comment thi=
-s.
-> >
-> > The problem is I do not think we can pass the whole patchset as fixes
-> > for v6.11, patches 2 & 3 could, patches 1 & 4 definitely can't.
-> >
-> > Neil
->
-> IMO: patch #3 (dts) and #4 (CONFIG) go through the Qualcomm tree
-> whenever those folks agree to it. If we're worried about the
-> dtbs_check breakage I personally wouldn't mind "Ack"ing patch #1 to go
-> through the Qualcomm tree as long as it made it into 6.11-rc1. I have
-> a hunch that there are going to be more Samsung OLED panels in the
-> future that will need to touch the same file, but if the change is in
-> -rc1 it should make it back into drm-misc quickly, right?
->
-> Personally I think patch #2 could go in anytime since, as people have
-> said, things are pretty broken today and the worst that happens is
-> that someone gets an extra warning. That would be my preference. That
-> being said, we could also snooze that patch for a month or two and
-> land it later. There's no real hurry.
+This is an old argument, with no clear answer. For some devices we
+choose to use correct SoC name (sda660-inforce-ifc6560). For other we
+didn't (sdm845-db845c, which really is SDA845). However for most of the
+devices the goal is to be accurate (think about all the qcs vs qcm
+stories). So my 2c. would go to x1e78100.
 
-For now I'm going to snooze this patch for a month just to avoid any
-controversy. I'll plan to apply it (to drm-misc-next) when I see the
-device tree patch land. Since the device tree patch should land as a
-fix that should keep things landing in the correct order. ...and, as
-per above, the worst case is that if someone has an old DTS and a new
-kernel then a panel that was already not working well will print a fat
-warning and startup a bit slower.
-
-If somehow I mess up and forget about this patch, feel free to send me
-a poke when the device tree patch is landed.
-
--Doug
+-- 
+With best wishes
+Dmitry
 
