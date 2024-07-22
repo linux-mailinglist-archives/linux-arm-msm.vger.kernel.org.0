@@ -1,56 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-26701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD4709389B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 09:12:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 246299389BA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 09:12:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E0ABB1C20FC9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 07:12:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C51061F2169F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 07:12:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 068C0224FD;
-	Mon, 22 Jul 2024 07:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7D6738DD9;
+	Mon, 22 Jul 2024 07:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b="A9BH9qcv"
+	dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b="Dbh3wEg6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0.riseup.net (mx0.riseup.net [198.252.153.6])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E9D2E3F7;
-	Mon, 22 Jul 2024 07:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8285E381C2;
+	Mon, 22 Jul 2024 07:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.252.153.6
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721632274; cv=none; b=fyNZY7miBfnbrFra96REuAzxG5odm4bX1aL9BX4QB+VxGOD2LapsTv2Ao0Ve+IFaHyEN5iIfto8eDebY4Dhppdv3G44/uTm8sVobsvA025WHhojc8/zq02fVm5UdbgGDf9tw9WOsY4Qb57iesTKyHy4aWMc/rcwNR6DaKfSNSwU=
+	t=1721632277; cv=none; b=J3peXxO0WPhK5BUQth36q0ZELB9blxLdod3lPIpEJtuPBCLiHHPQgqyHlhZ5Xydx3OvlK/wzOX03TKs7fEEy/N+dmmLQfd69H7ug+OJqthFjkznXICPRvVQpSmiXh0hU4USjpo3HWLHcDA10FjYrypEOm0t/5NYjMMSNGZFoyyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721632274; c=relaxed/simple;
-	bh=h8Euqhb97+Bz0/Ll+6/8ichuSZtZkS5o+d22paiug2w=;
+	s=arc-20240116; t=1721632277; c=relaxed/simple;
+	bh=fOacE2MldaWk+v8NAutCiL/10T6wL7N4YRJ1r/eH6K8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=dKUdiROT7HtHDqnyMEpkx7RZinrQb4qoiirTQYyjp7WBcwdhtD8AigqPCq11zxhJKh4y7n0RljtZesqCTiZJkKE4eFVMRHMzEnzqVKEH0KeHuBaccr/g9Y9HCqjstTJgcUl3iQOWZEZeYBHbRpVhjDNlhZqtpBrn6LRCgB1hF/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riseup.net; spf=pass smtp.mailfrom=riseup.net; dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b=A9BH9qcv; arc=none smtp.client-ip=198.252.153.6
+	 In-Reply-To:To:Cc; b=uJAwcFPGNSLi5jPV6A7MUzhGRRgQ3yNsbdgHMqqhxF3D/cdRIcUaZTrwI9qsoeCYSkQ3JNoGxhO1MpPgigjDkFoSMIdZb6+XYR7iITK4bx9SS2ncEB8SG7hCWpvPrJ5A2iY/5FUXOKPrWyC8N8AXu5kvmpeJzSYQjHQRc8htqAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riseup.net; spf=pass smtp.mailfrom=riseup.net; dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b=Dbh3wEg6; arc=none smtp.client-ip=198.252.153.6
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riseup.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riseup.net
 Received: from fews01-sea.riseup.net (fews01-sea-pn.riseup.net [10.0.1.109])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mx0.riseup.net (Postfix) with ESMTPS id 4WSBJw5RvVz9v89;
-	Mon, 22 Jul 2024 07:11:12 +0000 (UTC)
+	by mx0.riseup.net (Postfix) with ESMTPS id 4WSBJz6P7Xz9v89;
+	Mon, 22 Jul 2024 07:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-	t=1721632272; bh=h8Euqhb97+Bz0/Ll+6/8ichuSZtZkS5o+d22paiug2w=;
+	t=1721632276; bh=fOacE2MldaWk+v8NAutCiL/10T6wL7N4YRJ1r/eH6K8=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=A9BH9qcvCkNh50+eZT4VBVMgf3zQJCZtKXM7q6AyvrLzPaqwhQTeyZdsrU9U6d1n+
-	 BzXtgXOzRl+FrFtNZ9WOCETZQuhSnB3xqURR/mzHmtt+rJx/FhWiZ4Ptp+kNXMgzJg
-	 Eoyz8R+VbXe9f2AqWx0SHJxj1huxynDdqPOHkl6Y=
-X-Riseup-User-ID: 1B349F001B19F7B62335CA1E7204DAFB91F54665BCE2597B92627E4B1D653422
+	b=Dbh3wEg6NvOClAUSyZZBOBw63wnsVC6MsWAv60iikJVASt1ct+9TUoS/XHy8b1KGX
+	 q38IWjpS/d0bPf33EgwTIckKnduqZ6FaB2wFkw1u2A0D+b1/3UuPROpTA66djkNsh9
+	 bETviO4110cg+wqze0akty1dsO7RfSx7RgC3tIBw=
+X-Riseup-User-ID: 5554F2B3F567B28ADE8C6CE4DB1B6F99BA99A8BAAB94677C95EC33963B910A2D
 Received: from [127.0.0.1] (localhost [127.0.0.1])
-	 by fews01-sea.riseup.net (Postfix) with ESMTPSA id 4WSBJs6Sm0zJmqy;
-	Mon, 22 Jul 2024 07:11:09 +0000 (UTC)
+	 by fews01-sea.riseup.net (Postfix) with ESMTPSA id 4WSBJx0T5FzJmqy;
+	Mon, 22 Jul 2024 07:11:12 +0000 (UTC)
 From: Dang Huynh <danct12@riseup.net>
-Date: Mon, 22 Jul 2024 14:10:13 +0700
-Subject: [PATCH 03/12] arm64: dts: qcom: sm6115-pro1x: Add Goodix
- Touchscreen
+Date: Mon, 22 Jul 2024 14:10:14 +0700
+Subject: [PATCH 04/12] arm64: dts: qcom: sm6115-pro1x: Add Caps Lock LED
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,7 +58,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240722-qx1050-feature-expansion-v1-3-c4d486435b96@riseup.net>
+Message-Id: <20240722-qx1050-feature-expansion-v1-4-c4d486435b96@riseup.net>
 References: <20240722-qx1050-feature-expansion-v1-0-c4d486435b96@riseup.net>
 In-Reply-To: <20240722-qx1050-feature-expansion-v1-0-c4d486435b96@riseup.net>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -70,87 +69,42 @@ Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Dang Huynh <danct12@riseup.net>
 
-The Fxtec Pro1X touchscreen uses Goodix GT9286 chip.
+The Pro1X has a caps lock LED on the keyboard.
 
 Signed-off-by: Dang Huynh <danct12@riseup.net>
 ---
- arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 49 +++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+ arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-index 43b4bee72dd8..d91d31646b29 100644
+index d91d31646b29..60c046fe8e52 100644
 --- a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
 +++ b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-@@ -62,6 +62,20 @@ key-volume-up {
- 			wakeup-source;
+@@ -8,6 +8,7 @@
+ #include "sm6115.dtsi"
+ #include "pm6125.dtsi"
+ #include <dt-bindings/arm/qcom,ids.h>
++#include <dt-bindings/leds/common.h>
+ 
+ / {
+ 	model = "F(x)tec Pro1X (QX1050)";
+@@ -63,6 +64,16 @@ key-volume-up {
  		};
  	};
-+
-+	ts_vdd_supply: ts-vdd-supply {
-+		compatible = "regulator-fixed";
-+		regulator-name = "ts_vdd_supply";
-+		gpio = <&pca9534 3 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+	};
-+
-+	ts_vddio_supply: ts-vddio-supply {
-+		compatible = "regulator-fixed";
-+		regulator-name = "ts_vddio_supply";
-+		gpio = <&pca9534 2 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+	};
- };
  
- &dispcc {
-@@ -86,6 +100,27 @@ pca9534: gpio@21 {
- 	};
- };
- 
-+&i2c2 {
-+	status = "okay";
-+	/* Clock frequency was not specified downstream, let's park it to 100 KHz */
-+	clock-frequency = <100000>;
++	gpio-leds {
++		compatible = "gpio-leds";
 +
-+	touchscreen@14 {
-+		compatible = "goodix,gt9286";
-+		reg = <0x14>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&ts_int_n>, <&ts_rst_n>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <80 IRQ_TYPE_LEVEL_LOW>;
-+
-+		irq-gpios = <&tlmm 80 IRQ_TYPE_LEVEL_LOW>;
-+		reset-gpios = <&tlmm 71 GPIO_ACTIVE_HIGH>;
-+		AVDD28-supply = <&ts_vdd_supply>;
-+		VDDIO-supply = <&ts_vddio_supply>;
-+	};
-+};
-+
- &pm6125_gpios {
- 	vol_up_n: vol-up-n-state {
- 		pins = "gpio5";
-@@ -262,6 +297,20 @@ key_camera_n: key-camera-n {
- 		drive-strength = <2>;
- 		bias-pull-up;
- 	};
-+
-+	ts_int_n: ts-int-n {
-+		pins = "gpio80";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
++		capslock-led {
++			color = <LED_COLOR_ID_GREEN>;
++			function = LED_FUNCTION_CAPSLOCK;
++			gpios = <&pca9534 1 GPIO_ACTIVE_HIGH>;
++		};
 +	};
 +
-+	ts_rst_n: ts-rst-n {
-+		pins = "gpio71";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
- };
- 
- &ufs_mem_hc {
+ 	ts_vdd_supply: ts-vdd-supply {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "ts_vdd_supply";
 
 -- 
 2.45.2
