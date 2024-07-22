@@ -1,161 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-26691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36A039388AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 07:57:56 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2C619388AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 07:58:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E20782814B6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 05:57:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8D7B21F21598
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 05:58:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B59928DCB;
-	Mon, 22 Jul 2024 05:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6653E17BA7;
+	Mon, 22 Jul 2024 05:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Z9XBfxRy"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUGtT63n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9127538DD2;
-	Mon, 22 Jul 2024 05:56:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2686417BAB;
+	Mon, 22 Jul 2024 05:58:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721627790; cv=none; b=uzFQxmwDq53xaF8M9cPcHtWd0E1Hd25rTbpWhrRNmaWxzLl/O5SZeUE0aJgj71JQNhMTvW690XSpHMWMUkcvA6XYKGr/HADoGvBABFqBMZv92dU5MayNiwVtQeTCgZssLL+0JRcZd0mseql+ZoGtHeQmj4kx2c1gL2meXXY9cu0=
+	t=1721627894; cv=none; b=g5rigIpMkzAmYus3l9DVsRnBVgAyha6cin8GAtX70l6qKpEUDmbeoMNm7JSLiBGoaNzm3JTAZjmsdmT7RF1QK684Wm7k8IfXrH61ngIIyurtBq0EBQue1lp5qm++8Iud/Oshw2l1m2MWRva7UXAaTFczTa9ydI3PJMOEb8kxEU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721627790; c=relaxed/simple;
-	bh=VgiJR7kEM+cnGMiBj+lSW8qPAhtGTOoj5UWbY5zfUyI=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ixTSINE5wJfXkZhPeb+MC7XljnAdoflq3hMJ/SvAnQAz7ySfFmRCLJtGtQqpF2gHUUrB3MtLp6gHV+vUmvOCT5Xa0LCqZfKXieRpY2Hh6aSXVQz0GOh9+va691o9UJtnod0irQMcxTUZTGaD4wv17/S3VHFRkLuhnFZuMPj+DzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Z9XBfxRy; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46LM0ElG031835;
-	Mon, 22 Jul 2024 05:56:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	9ifLbZTRgpqGEv2r30ppykhhVp36eH3TXwx0BaaMj7o=; b=Z9XBfxRyhVjX9i5/
-	JhlgmGdMyi0kWqC97ss1uEiDXkugknqFmz+2X0lp3ksR14O2hMR4Yb9IPMw1GD32
-	XOTTwN9t7bKhfR+PkJ7SQBg+8kSDQB2OgzN5m2J02gSwtx2oQv4AJDie1gv+4jkx
-	cDHDkv0G45G9rx4jrciE1BR0pQt199wHNt9KMdUMX88OHaHidaphkfxXMnrdGZ2Q
-	tzK9SNHk0Kdfg6wEUIC0OWWq9ctW9VnQNL4ogb5FLgDrWJ6Nd6hviXOK5aAkrcCX
-	exVkjO34Dk4QbX+UFXam/hV6Co47j/KLgDTRkn7seUp2R7ROBouf3w8BO1ToDbpr
-	/thwbw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g5m6tqp4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jul 2024 05:56:24 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46M5uM2u025155
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jul 2024 05:56:23 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 21 Jul 2024 22:56:17 -0700
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <konrad.dybcio@linaro.org>,
-        <djakov@kernel.org>, <quic_wcheng@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-pm@vger.kernel.org>
-CC: Varadarajan Narayanan <quic_varada@quicinc.com>
-Subject: [PATCH v3 5/5] arm64: dts: qcom: ipq5332: Add icc provider ability to gcc
-Date: Mon, 22 Jul 2024 11:25:39 +0530
-Message-ID: <20240722055539.2594434-6-quic_varada@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240722055539.2594434-1-quic_varada@quicinc.com>
-References: <20240722055539.2594434-1-quic_varada@quicinc.com>
+	s=arc-20240116; t=1721627894; c=relaxed/simple;
+	bh=nkeDblTR4S+2jmJ1dAlZ/enSxjGVeZVXYyKlqrDj3Js=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kw7j8BNXnEZAnNBq2rc+2L1QtBT92lMZe2MFC8ZAO858AisZDBEuwU7a0JFacAmaScf2GcKyUwLN/YJC7nxy0tLBCnoGSdR2O7aCA4pzdFvYAWTpoycR+2Rfaj4ZYVuhnSsrjDoQ2BPrU51A8PO9xHghIXfbb5xNHtcGG8BxBL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUGtT63n; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF1BC116B1;
+	Mon, 22 Jul 2024 05:58:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1721627893;
+	bh=nkeDblTR4S+2jmJ1dAlZ/enSxjGVeZVXYyKlqrDj3Js=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=SUGtT63nikfVm12vtiDGa4OygxddgbVElPGGEnc8wr1h3FG+N6u7N28tf5sGyBXuf
+	 EtMh6lTxuKqktB2kxtnsVcpGF1p7XECy+SfC5syCkgcRQ0M9VkRrguEEM3NG3yw5Xe
+	 NxoyPBKo7wCzMLVfD0u/snd0l/0OlXA0fefmHAtY=
+Date: Mon, 22 Jul 2024 07:58:10 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+	quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org,
+	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
+	arnd@arndb.de, stable <stable@kernel.org>
+Subject: Re: [PATCH v5 1/2] misc: fastrpc: Define a new initmem size for user
+ PD
+Message-ID: <2024072234-slug-payer-2dec@gregkh>
+References: <20240722055437.3467900-1-quic_ekangupt@quicinc.com>
+ <20240722055437.3467900-2-quic_ekangupt@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: YzwQuuPRByQakgHIiM-QCtKKz1Q_cKHI
-X-Proofpoint-ORIG-GUID: YzwQuuPRByQakgHIiM-QCtKKz1Q_cKHI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-22_02,2024-07-18_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- mlxlogscore=999 adultscore=0 bulkscore=0 mlxscore=0 spamscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 malwarescore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407220045
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240722055437.3467900-2-quic_ekangupt@quicinc.com>
 
-IPQ SoCs dont involve RPM in managing NoC related clocks and
-there is no NoC scaling. Linux itself handles these clocks.
-However, these should not be exposed as just clocks and align
-with other Qualcomm SoCs that handle these clocks from a
-interconnect provider.
+On Mon, Jul 22, 2024 at 11:24:36AM +0530, Ekansh Gupta wrote:
+> For user PD initialization, initmem is allocated and sent to DSP for
+> initial memory requirements like shell loading. The size of this memory
+> is decided based on the shell size that is passed by the user space.
+> With the current implementation, a minimum of 2MB is always allocated
+> for initmem even if the size passed by user is less than that. For this
+> a MACRO is being used which is intended for shell size bound check.
+> This minimum size of 2MB is not recommended as the PD will have very
+> less memory for heap and will have to request HLOS again for memory.
+> Define a new macro for initmem minimum length of 3MB.
+> 
+> Fixes: d73f71c7c6ee ("misc: fastrpc: Add support for create remote init process")
+> Cc: stable <stable@kernel.org>
+> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+> ---
+>  drivers/misc/fastrpc.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index a7a2bcedb37e..a3a5b745936e 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -39,6 +39,7 @@
+>  #define FASTRPC_DSP_UTILITIES_HANDLE	2
+>  #define FASTRPC_CTXID_MASK (0xFF0)
+>  #define INIT_FILELEN_MAX (2 * 1024 * 1024)
+> +#define FASTRPC_INITLEN_MIN (3 * 1024 * 1024)
 
-Hence include icc provider capability to the gcc node so that
-peripherals can use the interconnect facility to enable these
-clocks. Change USB to use the icc-clk framework for the iface
-clock.
+Meta-comment, for a future change, why not tabs to line things up?
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
----
-v3: Fix #include file order
----
- arch/arm64/boot/dts/qcom/ipq5332.dtsi | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+>  #define INIT_FILE_NAMELEN_MAX (128)
+>  #define FASTRPC_DEVICE_NAME	"fastrpc"
+>  
+> @@ -1410,7 +1411,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
+>  			goto err;
+>  	}
+>  
+> -	memlen = ALIGN(max(INIT_FILELEN_MAX, (int)init.filelen * 4),
+> +	memlen = ALIGN(max(FASTRPC_INITLEN_MIN, (int)init.filelen * 4),
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-index 573656587c0d..7e8f9d578382 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-@@ -7,6 +7,7 @@
- 
- #include <dt-bindings/clock/qcom,apss-ipq.h>
- #include <dt-bindings/clock/qcom,ipq5332-gcc.h>
-+#include <dt-bindings/interconnect/qcom,ipq5332.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- 
- / {
-@@ -208,6 +209,7 @@ gcc: clock-controller@1800000 {
- 			reg = <0x01800000 0x80000>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
-+			#interconnect-cells = <1>;
- 			clocks = <&xo_board>,
- 				 <&sleep_clk>,
- 				 <0>,
-@@ -327,11 +329,9 @@ usb: usb@8af8800 {
- 					  "dm_hs_phy_irq";
- 
- 			clocks = <&gcc GCC_USB0_MASTER_CLK>,
--				 <&gcc GCC_SNOC_USB_CLK>,
- 				 <&gcc GCC_USB0_SLEEP_CLK>,
- 				 <&gcc GCC_USB0_MOCK_UTMI_CLK>;
- 			clock-names = "core",
--				      "iface",
- 				      "sleep",
- 				      "mock_utmi";
- 
-@@ -342,6 +342,9 @@ usb: usb@8af8800 {
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 			ranges;
-+			interconnects = <&gcc MASTER_SNOC_USB &gcc SLAVE_SNOC_USB>,
-+					<&gcc MASTER_SNOC_USB &gcc SLAVE_SNOC_USB>;
-+			interconnect-names = "usb-ddr", "apps-usb";
- 
- 			status = "disabled";
- 
--- 
-2.34.1
+You are aligning it this way, but still checking the file size for
+INIT_FILELEN_MAX, so that's not really going to change anything here.
 
+How was this tested?
+
+thanks,
+
+greg k-h
 
