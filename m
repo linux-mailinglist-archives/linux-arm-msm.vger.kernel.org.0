@@ -1,63 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-26788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21FE6938D8F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 12:35:25 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1955938DA2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 12:46:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C98C0280D9B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 10:35:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4FD651F212B5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Jul 2024 10:46:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DB1216A39E;
-	Mon, 22 Jul 2024 10:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C5F71B977;
+	Mon, 22 Jul 2024 10:46:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Mj9aKqcX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WjYqf9zQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A793234;
-	Mon, 22 Jul 2024 10:35:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E6016A94F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2024 10:46:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721644520; cv=none; b=o97P44KH6C6SZurb1AL9BoPlWgTnf4rQGzhXFzlDwvfZf/oUCqnzb9ghc5dlR7r/2/ZY15DatvrwSiXmiSehz0Qn5O5GDeRHmCsPKsNx374sGN/f/KIcKJe2drcX4dftIdnGl97ox+hEzEYBLCqtCNujEdVeGt7yhvUz+L+j9ZE=
+	t=1721645215; cv=none; b=Jltu0aaeWAZJCrGgwJ0KRLoEMZrs3WeOO4/mCH4gKWTEA4y2AWqOoBhKU9LCOsNrHh1qyH7zRU/jnv2NY9qg45WMF0MSI+N0Hfo2BxNcYpwda9vSlmh+N0SjQ/0SM++LpYyj1pB7y229m8DZ+qU98w/vU4FK7c4FBRXELj1VwSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721644520; c=relaxed/simple;
-	bh=D7hVRLYfxkch1U1mtSpiAIE5Iff35/q9e/U0R4Lh5oA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=KUFm2faypuZH47oSQb1maNzwxfXAkkWynJGPDt1I/aBTsVsehs8H3aOiiy6NRSneSnosz+Sx8oq0+zXyOdAih0rVAEpSuQb1ScLHI0cz23erKnwm5A+f+kqoQCr9QByyARzO2oRZXGFwPPuIhKJuitOSx0/h5RqmgnsVPks1o0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Mj9aKqcX; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46M0Drod012212;
-	Mon, 22 Jul 2024 10:35:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4Zj27V7JTwoD0SUx9EXR9+qKQSy89DA4nYKIcLU0tdI=; b=Mj9aKqcX5g4cx4Ji
-	B93jWhPgqKKhWo9r/82mx7HzBxwEo2Xic8QG7jDvvdWhahzaINZw8gDUGZXVUet7
-	FohqkDqb1NZZOnm3Kuz+uVEmpA+W4BaRTtYqfadc5rW1U1KYdKY1QYoTmg9zrPKq
-	/xbDzsHSGUYACDE8VXBbwS1QDVSb+r/xUXyTC0PpNn5dY3MVJkkFvBfvYrW61RXx
-	W9J5nPAic+iaEad1/iJTEFnpIHCHFni0B6tE6tO6XiumsWLviFBXSYfcyVeIXhVp
-	TACU4knATFEvqvbxmZVwUHxzoOfsC20iKWrXC44o/esf4eQLOMyHICihqkUlOOgP
-	tKpK7g==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g5m6uebc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jul 2024 10:35:01 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46MAYxZg018256
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 Jul 2024 10:34:59 GMT
-Received: from [10.239.133.49] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 22 Jul
- 2024 03:34:56 -0700
-Message-ID: <bbfb3ab2-1b59-4e84-bdff-a150b0393378@quicinc.com>
-Date: Mon, 22 Jul 2024 18:34:53 +0800
+	s=arc-20240116; t=1721645215; c=relaxed/simple;
+	bh=r+jqmXvvmaex8/uEkN1osu3gYZAAVsAJT99/JnDhrUY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qBjvTkuMtftNQa0KwcNuGx/5HWvFb+0cuhqS57hWWR3ZGgkHcRqiW6AEQXunQ+G7xt2dgyAHVhyYuydkGgarr5qnlBEQROHkoUvHS12kuuEOEqmKJnaq/L6t8wasmtSFL3mBj19m3+INC3hhvdjj+yW/Y0CYxnl3aKxdcYd5cXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WjYqf9zQ; arc=none smtp.client-ip=209.85.208.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5a156557026so3323656a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Jul 2024 03:46:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721645212; x=1722250012; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Vwn7v6qPzsQ+W/oRt1+H5zX/vSu+roSyUBFZnaxVsk4=;
+        b=WjYqf9zQDHNUQ0SZ+vcYLOYEB/ThDWqeFhmvgCcVZ6UCiPQcgFO43KYFXDAV6Vq8aQ
+         /HJ0h2KDs2YL549aLdT3oqVH/jBzckui/OfUlNVifPZYk9BhR7CKFEPJr/OTElpPz4el
+         NHs5QleCyK5QDH2ykIlgbxPWXaDeUup3Oj7wIWBF5krvUTrFYLfM8bRwys83XXE0XF3D
+         mfp8UjACNpz71dOrLWsUpIJqIJBjpy7ZkoevNtI2YUz5kbazAEyk86Dmhh5a/QnRygno
+         UltOqIuvL62V4hoIazkPm3Zfbr2dBn8wKo2NJ15qC1do/Ycr8wffwb39VF+ZmQFL2pzm
+         78+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721645212; x=1722250012;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Vwn7v6qPzsQ+W/oRt1+H5zX/vSu+roSyUBFZnaxVsk4=;
+        b=c72fyoCm7STA6o1WpSqYl0AT45wu2/3bqvYGDl+p884jlU0LoXMAi6iOdopM/Ya34M
+         s4jFzBWts7GZswL8Osj8V8QJYmFpCi+2xPG4sjwLoDN5tDzakxthQoy/fFy4D8KdHElw
+         9ZBbMMLYa4zp4kwk3TnU1UjwKpue4L9PBNtM/lvCGyTy434To6sqRRxVkZvWBYLCVh3E
+         w4EfhuoWRbhS3B2rHBQ6VmdI9I3mHUDFy6wVGTXri0+BD3xGE1bsTN/N5K0rpv7E4v2z
+         DGythQiPKkHkMjgeh+kj8XWmnteYX6g42U2jGH7539L13C26CKiNXmDM8GTQ3Ya0qPWU
+         M95Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWaV+JjnMvRweLs04T0xfUaRN/WrqWXyLMmBQR3ZHAWVVVDwVOpyXusJrkQRQDQWfYjGbrbWx61pgpSkGR9ZfXhhxo+vCaHV+/gB534eQ==
+X-Gm-Message-State: AOJu0Yz8/qiMmh2f+IAJeKTnScMyzfvPlkYGdFrx2yRcygG6LjIv8LMN
+	9aOaAuP2nfnnhKjnKz6gMjgT1txrJn2XCGRy2KuVSBEoQfGxb430Y7QwBmNkfY8=
+X-Google-Smtp-Source: AGHT+IGYOyBTZzFHbDoRENbqf+GlRPBuTlQulZNSAcPldU/CItxchsXzjf+phgEu61UFbL2BEyH4yA==
+X-Received: by 2002:a05:6402:34c9:b0:5a1:b42f:c93 with SMTP id 4fb4d7f45d1cf-5a478b78e72mr5365701a12.13.1721645211406;
+        Mon, 22 Jul 2024 03:46:51 -0700 (PDT)
+Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5a30aaa31e0sm5915655a12.27.2024.07.22.03.46.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 Jul 2024 03:46:50 -0700 (PDT)
+Message-ID: <d92aa01c-eb13-4cfa-864e-3d39ba207ea1@linaro.org>
+Date: Mon, 22 Jul 2024 12:46:48 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,115 +77,64 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] coresight: Add preferred trace id support
-To: Mike Leach <mike.leach@linaro.org>
-CC: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        James Clark
-	<james.clark@arm.com>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        "Tingwei
- Zhang" <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang
-	<quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        songchai
-	<quic_songchai@quicinc.com>
-References: <20240626060724.28862-1-quic_jinlmao@quicinc.com>
- <CAJ9a7VhG4qNLnT87J7OiXpygbtMRZ8uAvNhZhcRCBxovMEPDEg@mail.gmail.com>
+Subject: Re: [PATCH 07/12] arm64: dts: qcom: sm6115-pro1x: Hook up USB3 SS
+To: Dang Huynh <danct12@riseup.net>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240722-qx1050-feature-expansion-v1-0-c4d486435b96@riseup.net>
+ <20240722-qx1050-feature-expansion-v1-7-c4d486435b96@riseup.net>
 Content-Language: en-US
-From: Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <CAJ9a7VhG4qNLnT87J7OiXpygbtMRZ8uAvNhZhcRCBxovMEPDEg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240722-qx1050-feature-expansion-v1-7-c4d486435b96@riseup.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: PvBxoxGpQ_XelUOUq5HNNU0_df6cCoP2
-X-Proofpoint-ORIG-GUID: PvBxoxGpQ_XelUOUq5HNNU0_df6cCoP2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-22_06,2024-07-18_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- mlxlogscore=999 adultscore=0 bulkscore=0 mlxscore=0 spamscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1011 malwarescore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407220081
+
+On 22.07.2024 9:10 AM, Dang Huynh wrote:
+> The F(x)tec Pro1X supports USB 3.0 through it's USB-C port.
+> 
+> Signed-off-by: Dang Huynh <danct12@riseup.net>
+> ---
 
 
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-On 2024/7/18 23:57, Mike Leach wrote:
-> Hi,
-> 
-> I have detailed comments in the following patches but in summary we should:
-> 1) consistently use the term "static trace id" for these devices where
-> the hardware sets a non-programmable trace ID
-> 2) Simplify the patch set by introducing a new API function
-> int coresight_trace_id_get_system_static_id(int trace_id)
-> This would avoid having to change drivers which use the existing
-> function where no static ID is required.
-> 
-
-Thanks for the comments, Mike.
-I will address your comments in next version.
-
-Thanks
-Jinlong Mao
-
-> Regards
-> 
-> Mike
-> 
-> 
-> On Wed, 26 Jun 2024 at 07:07, Mao Jinlong <quic_jinlmao@quicinc.com> wrote:
->>
->> Some HW has static trace id which cannot be changed via
->> software programming. For this case, configure the trace id
->> in device tree with "arm,trace-id = <xxx>", and
->> call coresight_trace_id_get_system_id with the trace id value
->> in device probe function. The id will be reserved for the HW
->> all the time if the device is probed.
->>
->> Changes since V2:
->> 1. Change "trace-id" to "arm,trace-id".
->> 2. Add trace id flag for getting preferred id or ODD id.
->>
->> Changes since V1:
->> 1. Add argument to coresight_trace_id_get_system_id for preferred id
->> instead of adding new function coresight_trace_id_reserve_system_id.
->> 2. Add constraint to trace-id in dt-binding file.
->>
->> Mao Jinlong (3):
->>    dt-bindings: arm: Add arm,trace-id for coresight dummy source
->>    coresight: Add support to get preferred id for system trace sources
->>    coresight: dummy: Add reserve atid support for dummy source
->>
->>   .../sysfs-bus-coresight-devices-dummy-source  | 15 +++++
->>   .../arm/arm,coresight-dummy-source.yaml       |  6 ++
->>   drivers/hwtracing/coresight/coresight-dummy.c | 59 +++++++++++++++++--
->>   .../hwtracing/coresight/coresight-platform.c  | 25 ++++++++
->>   drivers/hwtracing/coresight/coresight-stm.c   |  2 +-
->>   drivers/hwtracing/coresight/coresight-tpda.c  |  2 +-
->>   .../hwtracing/coresight/coresight-trace-id.c  | 35 +++++++----
->>   .../hwtracing/coresight/coresight-trace-id.h  | 11 +++-
->>   include/linux/coresight.h                     |  1 +
->>   9 files changed, 137 insertions(+), 19 deletions(-)
->>   create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
->>
->> --
->> 2.41.0
->>
-> 
-> 
-> --
-> Mike Leach
-> Principal Engineer, ARM Ltd.
-> Manchester Design Centre. UK
+Konrad
 
