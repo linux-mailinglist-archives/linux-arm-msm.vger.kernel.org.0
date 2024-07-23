@@ -1,138 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-26846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C4B89398F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 06:37:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE2C0939C26
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 10:01:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 06E0CB20F50
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 04:37:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F6F91F22AF8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 08:01:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9610F13BAD5;
-	Tue, 23 Jul 2024 04:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E96D14B964;
+	Tue, 23 Jul 2024 08:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MO5ejMxO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UpaNtI6K"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04941137748;
-	Tue, 23 Jul 2024 04:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D827910979;
+	Tue, 23 Jul 2024 08:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721709462; cv=none; b=R1rBm9+9DcepqQfZ9uSSAM8eQGvoRhbL6qT97NSaYVBZ4XlnyDNEn87T3rlqurIfWfRUC4WQacuT1ccC7X7WNBbGc9pvp+p8aekWNLdipJAR3G1k8lH9sjG4walpfYjYOAc2FTi4rakDReIL8VcP9IeLjuOYbPGLXZqXHHbjGTQ=
+	t=1721721700; cv=none; b=OJccnGC8DuiWCRm5b751mvmMWpXurQeB2jPzoFtxpTdP85xDetogP6bTCwwHhVcvuQoMsfL+MU6rgLAhnEi/VBgyZiC6eZiBEYTeU6l9ba6repqtf9t4FjXvySj//JprnmeaSyOnu9aC0HTvsUlknVBOOL/keR3heOrC0CLVQa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721709462; c=relaxed/simple;
-	bh=PqOBTAdKzoVaXVdW5HbqxaGdK8xAEULy483L4qTJzy8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=FG/MmUqkO++mHao7tEq7OD6v0KpVCS0UvR+dFHvl2fNLIbM6t45DfFv2xoSDkc3kyLnIQ8qTYCLfeV6ueTXLRBbALIlHvEq/wPm4fhUlJRm4lGkStHz2M/lcbWsJ2fcZY7/Lhx6hvklvRDJ8hg+CGHdBTwgCTNzXhz2hYRe8L1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MO5ejMxO; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1721721700; c=relaxed/simple;
+	bh=6pC2CGMi7y+367UwIGfE1eM5H+1abrAobyq5FKNJArA=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=NkUkh9TmpqhoG6yNU3FED6OI1M0voW8zaWiwKJSqZJR7hYYRQeV5ZXi3SbMqVkWPpQWdaLVskTnF9RPgWRjKzQn6R7Ron/S4hW+cSVSmgbp9HV5d67mGzqwXmBwE81GWisGIWY7uhtVC0iGU6KkFgsID2lL44HzSHuhPIg86XVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UpaNtI6K; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46MMP2bb026365;
-	Tue, 23 Jul 2024 04:37:35 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46MMrIB5025831;
+	Tue, 23 Jul 2024 08:01:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	RJZP5SvLZT9uydmvhiZ+gjBOkuDGN8SCcvs3Mq+DGbo=; b=MO5ejMxOJULsRUn8
-	3u3eIjQfvRfDdj8alHP7BmRTL7h6JduybLACimcxOTUReZ3dULaeWNn/Vwp3whB2
-	/NhiJc3WjRA2K9zTwk2yDIdAjMHpe7VxjWQ4dAs6y8EshJpq9R9bfzcvLCmCAmwP
-	HKy4WImocrba63UvF/TwV98yC6iMFB5kkEO8Stod7h4HWA8udEj/CPLRfcqIvy9x
-	aZIga8v3envUDlkqaGQe46AYgazCPXsj5346xLvY13FJjVfMdgE+5fTY8Ts8AwmR
-	tPaIGgU5Lx2DgCFbUKDgI1ItPUt8Lz64oHMJ+5PrRodTtVtZuC4YN+1LKGb16gvK
-	vrtBMA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g46s5kj2-1
+	cc:content-type:date:from:message-id:mime-version:subject:to; s=
+	qcppdkim1; bh=7lpUyfM1QRYB3NgtgCJcU7ncD7VavjZxyTa6XjbYDH0=; b=Up
+	aNtI6KmG4TDZtYx5C79kDqGTxa22qq3UuxWNpHrDBNOptAaN8toDFeSlhOq6R1nt
+	UdnX1JZiL4SkorymmazQZ1qzyplCLL6toa+cLy2zU1HwOGVwvN2tEjCZ6GvwoJoE
+	hPKzu7Wn2nFBXIo05hEDSTfUTNiWRFDgpYRj7Yj664QlyGsjcdW85vnjyVapW5mT
+	OcWFH9n27XqOtedHw4wBdAAPzrKJR9JnBRy3/HsRNNdFDC/5qiknSEdu82lk1HHn
+	rtU/aoEDFzTm66rYZzox6ANlU9HtxbN3WFJx2hwEBQkXc/1MobRpprIsxsTqoyIi
+	RqFyVLstRbaQZC6tbnKQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g60jwuna-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jul 2024 04:37:35 +0000 (GMT)
+	Tue, 23 Jul 2024 08:01:29 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46N4bYVr010787
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46N81S0O012311
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jul 2024 04:37:34 GMT
-Received: from [10.204.65.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 22 Jul
- 2024 21:37:31 -0700
-Message-ID: <396b3e20-19da-4c92-ba03-848627069c25@quicinc.com>
-Date: Tue, 23 Jul 2024 10:07:31 +0530
+	Tue, 23 Jul 2024 08:01:28 GMT
+Received: from hu-qqzhou-sha.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 23 Jul 2024 01:01:25 -0700
+From: Qingqing Zhou <quic_qqzhou@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <ahalaney@redhat.com>,
+        <manivannan.sadhasivam@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>,
+        Qingqing Zhou
+	<quic_qqzhou@quicinc.com>
+Subject: [PATCH v2] arm64: dts: qcom: sa8775p: Mark APPS and PCIe SMMUs as DMA coherent
+Date: Tue, 23 Jul 2024 13:29:48 +0530
+Message-ID: <20240723075948.9545-1-quic_qqzhou@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/2] Fix user PD inimem requirements
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>
-References: <20240722080200.3530850-1-quic_ekangupt@quicinc.com>
- <bob3pkwyu7g3qf4q546uittggzfywc6o5h7b73isx4lijsfj4j@h3uqpaevawgg>
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
-In-Reply-To: <bob3pkwyu7g3qf4q546uittggzfywc6o5h7b73isx4lijsfj4j@h3uqpaevawgg>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: vHUMvP8JrHEH1vYuWPYNe2S9dfyHnC9P
-X-Proofpoint-ORIG-GUID: vHUMvP8JrHEH1vYuWPYNe2S9dfyHnC9P
+X-Proofpoint-ORIG-GUID: 0XTLzj6SSnCR63HGHrND1hgXHa-GCfYh
+X-Proofpoint-GUID: 0XTLzj6SSnCR63HGHrND1hgXHa-GCfYh
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-22_18,2024-07-23_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- lowpriorityscore=0 bulkscore=0 clxscore=1015 malwarescore=0
- priorityscore=1501 phishscore=0 adultscore=0 suspectscore=0 spamscore=0
- mlxlogscore=862 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407230032
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=794
+ priorityscore=1501 bulkscore=0 impostorscore=0 lowpriorityscore=0
+ mlxscore=0 suspectscore=0 phishscore=0 clxscore=1011 spamscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407230058
 
+The SMMUs on sa8775p are cache-coherent. GPU SMMU is marked as such,
+mark the APPS and PCIe ones as well.
 
+Fixes: 603f96d4c9d0 ("arm64: dts: qcom: add initial support for qcom sa8775p-ride")
+Fixes: 2dba7a613a6e ("arm64: dts: qcom: sa8775p: add the pcie smmu node")
 
-On 7/22/2024 1:56 PM, Dmitry Baryshkov wrote:
-> On Mon, Jul 22, 2024 at 01:31:58PM GMT, Ekansh Gupta wrote:
->> This patch series fixes the incorrect initmem size assumptions for
->> signed and unsigned user PD.
->> Previous single patch[v4]: https://lore.kernel.org/all/20240719085708.1764952-1-quic_ekangupt@quicinc.com/
->>
->> Changes in v2:
->>   - Modified commit text.
->>   - Removed size check instead of updating max file size.
->> Changes in v3:
->>   - Added bound check again with a higher max size definition.
->>   - Modified commit text accordingly.
->> Changes in v4:
->>   - Defined new initmem specific MACROs.
->>   - Adding extra memory for unsigned PD.
->>   - Added comment suggesting the reason for this change.
->>   - Modified commit text.
->> Changes in v5:
->>   - Splitted the change into separate patches.
->> Changes in v6:
->>   - Changed Unsigned extra length macro name.
->>   - Add comment in proper format.
-> Please allow reviewers to finish with the previous iteration first. The
-> usual recommendation is to send new iteration once per 24h timeframe.
-Noted.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Qingqing Zhou <quic_qqzhou@quicinc.com>
+---
+Changes in v2:
+  - Add the Fixes tags.
+  - Update the commit message.
+  - Link to v1: https://lore.kernel.org/lkml/20240715071649.25738-1-quic_qqzhou@quicinc.com/
+---
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Thanks,
-Ekansh
->
->> Ekansh Gupta (2):
->>   misc: fastrpc: Define a new initmem size for user PD
->>   misc: fastrpc: Increase unsigned PD initmem size
->>
->>  drivers/misc/fastrpc.c | 11 ++++++++++-
->>  1 file changed, 10 insertions(+), 1 deletion(-)
->>
->> -- 
->> 2.34.1
->>
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+index 23f1b2e5e624..95691ab58a23 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+@@ -3070,6 +3070,7 @@
+ 			reg = <0x0 0x15000000 0x0 0x100000>;
+ 			#iommu-cells = <2>;
+ 			#global-interrupts = <2>;
++			dma-coherent;
+ 
+ 			interrupts = <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>,
+@@ -3208,6 +3209,7 @@
+ 			reg = <0x0 0x15200000 0x0 0x80000>;
+ 			#iommu-cells = <2>;
+ 			#global-interrupts = <2>;
++			dma-coherent;
+ 
+ 			interrupts = <GIC_SPI 920 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 921 IRQ_TYPE_LEVEL_HIGH>,
+-- 
+2.17.1
 
 
