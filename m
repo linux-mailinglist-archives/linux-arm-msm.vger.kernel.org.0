@@ -1,246 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-26928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B35B193A98C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 00:57:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90A5893AA08
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 01:54:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D6CE11C2216A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 22:57:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 483BC1F2265F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 23:54:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D57414830D;
-	Tue, 23 Jul 2024 22:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DC30149C5A;
+	Tue, 23 Jul 2024 23:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eHbDlyrM"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MyZYWoOG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D93725760;
-	Tue, 23 Jul 2024 22:57:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D2F4F615;
+	Tue, 23 Jul 2024 23:53:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721775460; cv=none; b=Dda+bu4MzK/AFgSQJaLuJM4nUyL/UnJ3726Lqi6iiNq8M7XwoA8TpL7ZZaR9ZKCYUUn76+BZXM3hAiF6/DgWbWCVser1ut61OeBOh7FWY/uJIU6RkEvWrGfEpKHWM5/ROvCa/TIMkEiAwjEE/azspmPEahwLBpolleYhN+IUG0U=
+	t=1721778842; cv=none; b=CzYP2gsmYHPUtB0cYC8P/Zn2MzM5bTSJ1HPbgg5ePAuJig0Ci7g+u+863emrQrYa6pmVkb59f2cIoP+gLbh+pRgo1r8tjEi/sN+5XCSAMmNvV+q9ZQfAhZJPBk0CKm/MJ01h052wXOiBswoRYIUgexaCJHIG+yxxkjUMJw3H45k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721775460; c=relaxed/simple;
-	bh=4HkF86r2tTWndomkjDKrfJ3vDAdjfYG+k0T/xRQJz7s=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=ugLWCHdxEP7LaqQ6Ka2K8Y+M2KmYb3DjZcrFtaC5V1Qi6CDyYxdRQGap7VjmXOfa3+lT6MyXDhG9l+2ywxRhbdj48L4yva5HubTzAaqrgdz07LnTjBZKs/wvC2mHOHjF5DpEuvMUrX9ifZE31vUAyx77wu9M72zSaxJaIAj/zMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eHbDlyrM; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46NHlj3S028604;
-	Tue, 23 Jul 2024 22:56:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	VpGSOjbGGSiM7Uoe2VHK5VFOWUwuexM+cF923++NpXU=; b=eHbDlyrMfUBhgRtM
-	1wn9T9Aqeq0Fehqrr+KtopXEuvJqImtpwsdmvHg4pnIebmt4bgtFqY0crjTizgYg
-	YJhcCBDFEyH1X7F2NcgFjyok4XMZ5W5sDYcJ5VM74T3qyhDf8zop0AIrwp6lZZLv
-	8j82ATBnAU2jpRn/Whir2TXEMEGup4VGLA07GvKIsdcnmkGSwiNdDttmkEB6+TC3
-	RDD+jW+gXsixTq1YoUqqPcxbNrL+dNAw8kE1OVYTaqy/6agM+kmzV6UOPK/zn+g/
-	uBvpZau1jdvbLelg4HmC7x4rGVYdLntc3K0zLN14Y69mMK0NT1PF2xslcGxmlyow
-	Rwji1g==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g5m70fe9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jul 2024 22:56:38 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46NMuawk032209
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jul 2024 22:56:36 GMT
-Received: from [10.110.63.227] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 23 Jul
- 2024 15:56:35 -0700
-Message-ID: <6038632d-92ec-4034-bc68-add9d47f2bad@quicinc.com>
-Date: Tue, 23 Jul 2024 15:56:35 -0700
+	s=arc-20240116; t=1721778842; c=relaxed/simple;
+	bh=AyDCjWs9pcLXSD/LTvowfTw3/Gd6OzHsLDwdnEgsUak=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hT5QmFM3vhbBxqN44ZVk34oPMDqByLdA34XLNiiA7yfcGXcGU/3IAvVmB3uPlwopR2YlgqnM/ntATIB5DhpFaXLybHM1aiDiEQU4N6ZNkTKjfWKKxEt7uwBPOJ4q6QnNWLxW5NM5A7HK9oH/mempBc5b/AxLz75WFzacsFt2u5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MyZYWoOG; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1721778840; x=1753314840;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=AyDCjWs9pcLXSD/LTvowfTw3/Gd6OzHsLDwdnEgsUak=;
+  b=MyZYWoOGaEGngHPwsqI/EAtD9+bkXp14FZz5yswJ6orl9o3CF11zm+nF
+   I4nSUI0xYXvBuujLKti0FwdgaaQ1JzpK/DYULhaCeYH3avMeKur7pV6Vy
+   1SmwbLwwIH5/aMUDmzefGJTpzQzRBZyWQgGlF1mvkz2U9XBYwaosu5q3e
+   n1X4I/LfSu2+9wqsHEBdItKcm9xI3ZtNQXWVCq6jM++eKloa5MjRS6Ek/
+   l8C3nnUyhggRdpmfuGs5rDvMoIW+6m+0fMUtbWxsEYW5UV2PBmeIJOMwa
+   wrC73isklDOsDt04lzC52fHwWX4wri0pA53ROGSk2vsEG1o824MprWgjB
+   g==;
+X-CSE-ConnectionGUID: Jsx9mn3LSkOlJI11HDy/NQ==
+X-CSE-MsgGUID: cp+H68+lTWq37bnSi7izbw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11142"; a="23297282"
+X-IronPort-AV: E=Sophos;i="6.09,231,1716274800"; 
+   d="scan'208";a="23297282"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jul 2024 16:53:59 -0700
+X-CSE-ConnectionGUID: qe4u3zLjSzeWlUmx7W9W2A==
+X-CSE-MsgGUID: 1ghdFbFsRBuu2NnAhCGGEg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,231,1716274800"; 
+   d="scan'208";a="57224743"
+Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
+  by orviesa003.jf.intel.com with ESMTP; 23 Jul 2024 16:53:56 -0700
+Received: from kbuild by 68891e0c336b with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1sWPKL-000mT6-2P;
+	Tue, 23 Jul 2024 23:53:53 +0000
+Date: Wed, 24 Jul 2024 07:53:40 +0800
+From: kernel test robot <lkp@intel.com>
+To: Rayyan Ansari <rayyan.ansari@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Rayyan Ansari <rayyan.ansari@linaro.org>
+Subject: Re: [PATCH v2 3/3] ARM: dts: qcom: pma8084: add pon node
+Message-ID: <202407240711.f7qtQGZG-lkp@intel.com>
+References: <20240723-pmic-bindings-v2-3-e1cd614f8c4a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 7/7] PCI: host-generic: Add dwc PCIe controller based
- MSI controller usage
-From: Mayank Rana <quic_mrana@quicinc.com>
-To: Rob Herring <robh@kernel.org>, Will Deacon <will@kernel.org>
-CC: <lpieralisi@kernel.org>, <kw@linux.com>, <bhelgaas@google.com>,
-        <jingoohan1@gmail.com>, <manivannan.sadhasivam@linaro.org>,
-        <cassel@kernel.org>, <yoshihiro.shimoda.uh@renesas.com>,
-        <s-vadapalli@ti.com>, <u.kleine-koenig@pengutronix.de>,
-        <dlemoal@kernel.org>, <amishin@t-argos.ru>, <thierry.reding@gmail.com>,
-        <jonathanh@nvidia.com>, <Frank.Li@nxp.com>,
-        <ilpo.jarvinen@linux.intel.com>, <vidyas@nvidia.com>,
-        <marek.vasut+renesas@gmail.com>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <linux-pci@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <quic_ramkri@quicinc.com>, <quic_nkela@quicinc.com>,
-        <quic_shazhuss@quicinc.com>, <quic_msarkar@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <linux-arm-msm@vger.kernel.org>
-References: <1721067215-5832-1-git-send-email-quic_mrana@quicinc.com>
- <1721067215-5832-8-git-send-email-quic_mrana@quicinc.com>
- <20240716085811.GA19348@willie-the-truck>
- <20240716134210.GA3534018-robh@kernel.org>
- <9b6eac04-f377-4afa-8712-ab916f831bba@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <9b6eac04-f377-4afa-8712-ab916f831bba@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: yMIb1vZTjHzgrE0Sw94Z46179o6FJvrl
-X-Proofpoint-ORIG-GUID: yMIb1vZTjHzgrE0Sw94Z46179o6FJvrl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-23_15,2024-07-23_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- mlxlogscore=999 adultscore=0 bulkscore=0 mlxscore=0 spamscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 malwarescore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407230160
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240723-pmic-bindings-v2-3-e1cd614f8c4a@linaro.org>
 
-Hi Rob
+Hi Rayyan,
 
-On 7/16/2024 3:32 PM, Mayank Rana wrote:
-> Hi Will and Rob
-> 
-> Thank you for your quick review comments.
-> 
-> On 7/16/2024 6:42 AM, Rob Herring wrote:
->> On Tue, Jul 16, 2024 at 09:58:12AM +0100, Will Deacon wrote:
->>> On Mon, Jul 15, 2024 at 11:13:35AM -0700, Mayank Rana wrote:
->>>> Add usage of Synopsys Designware PCIe controller based MSI 
->>>> controller to
->>>> support MSI functionality with ECAM compliant Synopsys Designware PCIe
->>>> controller. To use this functionality add device compatible string as
->>>> "snps,dw-pcie-ecam-msi".
->>>>
->>>> Signed-off-by: Mayank Rana <quic_mrana@quicinc.com>
->>>> ---
->>>>   drivers/pci/controller/pci-host-generic.c | 92 
->>>> ++++++++++++++++++++++++++++++-
->>>>   1 file changed, 91 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/drivers/pci/controller/pci-host-generic.c 
->>>> b/drivers/pci/controller/pci-host-generic.c
->>>> index c2c027f..457ae44 100644
->>>> --- a/drivers/pci/controller/pci-host-generic.c
->>>> +++ b/drivers/pci/controller/pci-host-generic.c
->>>> @@ -8,13 +8,73 @@
->>>>    * Author: Will Deacon <will.deacon@arm.com>
->>>>    */
->>>> -#include <linux/kernel.h>
->>>>   #include <linux/init.h>
->>>> +#include <linux/kernel.h>
->>>>   #include <linux/module.h>
->>>> +#include <linux/of_address.h>
->>>>   #include <linux/pci-ecam.h>
->>>>   #include <linux/platform_device.h>
->>>>   #include <linux/pm_runtime.h>
->>>> +#include "dwc/pcie-designware-msi.h"
->>>> +
->>>> +struct dw_ecam_pcie {
->>>> +    void __iomem *cfg;
->>>> +    struct dw_msi *msi;
->>>> +    struct pci_host_bridge *bridge;
->>>> +};
->>>> +
->>>> +static u32 dw_ecam_pcie_readl(void *p_data, u32 reg)
->>>> +{
->>>> +    struct dw_ecam_pcie *ecam_pcie = (struct dw_ecam_pcie *)p_data;
->>>> +
->>>> +    return readl(ecam_pcie->cfg + reg);
->>>> +}
->>>> +
->>>> +static void dw_ecam_pcie_writel(void *p_data, u32 reg, u32 val)
->>>> +{
->>>> +    struct dw_ecam_pcie *ecam_pcie = (struct dw_ecam_pcie *)p_data;
->>>> +
->>>> +    writel(val, ecam_pcie->cfg + reg);
->>>> +}
->>>> +
->>>> +static struct dw_ecam_pcie *dw_pcie_ecam_msi(struct platform_device 
->>>> *pdev)
->>>> +{
->>>> +    struct device *dev = &pdev->dev;
->>>> +    struct dw_ecam_pcie *ecam_pcie;
->>>> +    struct dw_msi_ops *msi_ops;
->>>> +    u64 addr;
->>>> +
->>>> +    ecam_pcie = devm_kzalloc(dev, sizeof(*ecam_pcie), GFP_KERNEL);
->>>> +    if (!ecam_pcie)
->>>> +        return ERR_PTR(-ENOMEM);
->>>> +
->>>> +    if (of_property_read_reg(dev->of_node, 0, &addr, NULL) < 0) {
->>
->> Using this function on MMIO addresses is wrong. It is an untranslated
->> address.
-> ok. do you prefer me to use of_address_to_resource() instead here ?
-> 
->>>> +        dev_err(dev, "Failed to get reg address\n");
->>>> +        return ERR_PTR(-ENODEV);
->>>> +    }
->>>> +
->>>> +    ecam_pcie->cfg = devm_ioremap(dev, addr, PAGE_SIZE);
->>>> +    if (ecam_pcie->cfg == NULL)
->>>> +        return ERR_PTR(-ENOMEM);
->>>> +
->>>> +    msi_ops = devm_kzalloc(dev, sizeof(*msi_ops), GFP_KERNEL);
->>>> +    if (!msi_ops)
->>>> +        return ERR_PTR(-ENOMEM);
->>>> +
->>>> +    msi_ops->readl_msi = dw_ecam_pcie_readl;
->>>> +    msi_ops->writel_msi = dw_ecam_pcie_writel;
->>>> +    msi_ops->pp = ecam_pcie;
->>>> +    ecam_pcie->msi = dw_pcie_msi_host_init(pdev, msi_ops, 0);
->>>> +    if (IS_ERR(ecam_pcie->msi)) {
->>>> +        dev_err(dev, "dw_pcie_msi_host_init() failed\n");
->>>> +        return ERR_PTR(-EINVAL);
->>>> +    }
->>>> +
->>>> +    dw_pcie_msi_init(ecam_pcie->msi);
->>>> +    return ecam_pcie;
->>>> +}
->>>
->>> Hmm. This looks like quite a lot of not-very-generic code to be adding
->>> to pci-host-generic.c. The file is now, what, 50% designware logic?
->>
->> Agreed.
->>
->> I would suggest you add ECAM support to the DW/QCom driver reusing some
->> of the common ECAM support code.
-> I can try although there is very limited reusage of code with 
-> pcie-qcom.c and pcie-designware-host.c except reusing MSI functionality. 
-> That would make more new OPs within pcie-designware-host.c and 
-> pcie-qcom.c just to perform few operation. As now MSI functionality is 
-> available outside pcie core designware driver (although those changes 
-> are under review), will you be ok to allow separate Qualcomm PCIe ECAM 
-> driver as previously submitted RFC as 
-> https://lore.kernel.org/all/d10199df-5fb3-407b-b404-a0a4d067341f@quicinc.com/T/
-> 
-> I can modify above ECAM driver to call into PCIe designware module based 
-> MSI ops as doing here and that would allow reusing of MSI functionality 
-> at same time allowing separate driver for handling firmware VM based 
-> implementation.
-Can you consider above request to have separate driver here ?
-Please suggest on this.
+kernel test robot noticed the following build errors:
 
->>
->> I suppose another option would be to define a node and driver which is
->> just the DW MSI controller. That might not work given the power domain
->> being added (which is not very generic either).
-> yes, I did consider this approach, and haven't used this due to concern 
-> as you mentioned, and also that ask for modifying devicetree usage for 
-> existing user of PCIe Designware controller based MSI controller.
-> 
-> Regards,
-> Mayank
-> 
+[auto build test ERROR on dee7f101b64219f512bb2f842227bd04c14efe30]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Rayyan-Ansari/arm64-dts-qcom-pmi8994-Add-label-to-wled-node/20240723-175020
+base:   dee7f101b64219f512bb2f842227bd04c14efe30
+patch link:    https://lore.kernel.org/r/20240723-pmic-bindings-v2-3-e1cd614f8c4a%40linaro.org
+patch subject: [PATCH v2 3/3] ARM: dts: qcom: pma8084: add pon node
+config: arm-randconfig-051-20240723 (https://download.01.org/0day-ci/archive/20240724/202407240711.f7qtQGZG-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 14.1.0
+dtschema version: 2024.6.dev4+g23441a4
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240724/202407240711.f7qtQGZG-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202407240711.f7qtQGZG-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> Error: arch/arm/boot/dts/qcom/pma8084.dtsi:31.19-20 syntax error
+   FATAL ERROR: Unable to parse input tree
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
