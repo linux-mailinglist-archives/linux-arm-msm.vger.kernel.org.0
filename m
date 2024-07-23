@@ -1,162 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-26859-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26860-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F656939D36
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 11:05:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91B4D939D52
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 11:13:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EF343B22488
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 09:05:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 494D72834AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 09:13:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 896BD14F9D2;
-	Tue, 23 Jul 2024 09:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D79014D2A8;
+	Tue, 23 Jul 2024 09:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="onFK2ggg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EiwR8UAs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A4314F9C9;
-	Tue, 23 Jul 2024 09:04:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F1714BFB4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 09:13:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721725445; cv=none; b=GEb7rSJFQUS0ayh6gdhUnpmMcGEnIXRzoMWYMVEsuqYdC0aMC3KjP8yaREam9onITFO0nm0oW4sXPhVudodrQn1lxFPUvgjATBu/VjmxBN4LWW2gb0J0kLlS3bmjlprJOpKKJ3FAe6b3vD/uDCos3uObShpSK1KUQd5ioZyS1xg=
+	t=1721726015; cv=none; b=ocuut0yKmHdHoSRJoxXOh8b2CfGMaMWWP7VUCfDF1SZNvAfKg2mSi4tpNBydJPNZ6Lk2BK6TmfhLqZTr/JXLXej+R76x5HJ2XvGzdagLzOyJvCXbzH7iZTbsEbyIQDIlCOvPomLM0BhHJ1ayQqjjxFRw5yi/KogxxTvS19Q9oq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721725445; c=relaxed/simple;
-	bh=VgiJR7kEM+cnGMiBj+lSW8qPAhtGTOoj5UWbY5zfUyI=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ufkUy0b61f/uFkkA5hIVaI2RzNZPQXyH1liU24yrrPW3IZFpdNnzWjU245BskT4p4tSTHKl7BVlqMMRsfqu5xDhqBvbbHQ4WozoJF48/n1rgeEdS9MpzjEdA/B/V6M7bAzJ2ufFK+81JRgQjqwzXv0d5iiw2IkwQRA9/7sytTR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=onFK2ggg; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46MNecBA019730;
-	Tue, 23 Jul 2024 09:03:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	9ifLbZTRgpqGEv2r30ppykhhVp36eH3TXwx0BaaMj7o=; b=onFK2gggnGzeJkK5
-	D9dDpIwId+j9w+zFoV2wjDkYyKiAMifg6AKVhzn/3ber4uVuC5XoTe5fW+/HqmBA
-	MNDRWEUjfkpNXn8Vw1lw3cOe6r8eDull5xph218eoILZl4kkjBx007/UcuOb9ZMr
-	0JENTcvCvLJbrFiSvJOmH50JD0aJo0wSfaJrsMBywX8yhTTArn+k8KEaC7AygBpv
-	Y+JY9rF90W6gQVxTqK7kIM+rzw+Xlobq3e4HJWr8yzPsX9tHcM3FPLEk1gTjNB2O
-	rzS8fMvZLalMqaGcBuByXJ+eb8gAKQxJjZpn6XWJOg7GEpIxQ/d9R3StATulJzP7
-	RlKbug==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g5m6x9ga-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jul 2024 09:03:59 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46N93wbk019074
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jul 2024 09:03:58 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 23 Jul 2024 02:03:52 -0700
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <konrad.dybcio@linaro.org>,
-        <djakov@kernel.org>, <quic_wcheng@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-CC: Varadarajan Narayanan <quic_varada@quicinc.com>
-Subject: [PATCH v4 5/5] arm64: dts: qcom: ipq5332: Add icc provider ability to gcc
-Date: Tue, 23 Jul 2024 14:33:04 +0530
-Message-ID: <20240723090304.336428-6-quic_varada@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240723090304.336428-1-quic_varada@quicinc.com>
-References: <20240723090304.336428-1-quic_varada@quicinc.com>
+	s=arc-20240116; t=1721726015; c=relaxed/simple;
+	bh=Umeiko+xkVHu2QDUnciYaVArEIkORregeZg9sT2rV+Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aMOk9hPfpSHJ26oo1hOhG1B2+BJszlpph6EguaBHmZaXVw5B85jOi320LgQ4jVlDcYjP2KIXqOaAFVlSaoSRQTzYk7yAsdbxxW40ZWuXrM7vgd2k9OQ/mK86N4SyaqAYF7pw68TzvackuH/ZTZF8ruzGESVMY4/vEyw9+KNLNzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EiwR8UAs; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6519528f44fso49364167b3.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 02:13:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721726010; x=1722330810; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=G2TkTpA3pGGEMQVrSmpubkD3J5dcZcnfjtaZ+X4Iz5w=;
+        b=EiwR8UAsyEEYuF3Mu2Sn90WzEECq6+vOmmUgBciWujsbcaU2v5onJUEBCb6EYY4E0a
+         ldRvlG4esW8566b9ovKXoyzmVrxXJz7mFU1713LjhpVi2kuiy7qTPifo0cvshQhuitSP
+         05d3PcscwiHMyVJYGV7kr8Y/AtlJbZw/BGwkzzwnGD5ewj36nfmOYVTe19gU6XGAanig
+         +T8gTh4c1uqRA2MM12VsIIfy4L4P/Wo2vxowlb9M59ch/NdPI8Pfy/1vvnCqU0e4Je1L
+         PV2B34NFgS8HI15wXF6sjvJs36Kq2w7bFE/daN3dTbjPTGuNLATLwv+0CR2WEXeL2/Kp
+         0q8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721726010; x=1722330810;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=G2TkTpA3pGGEMQVrSmpubkD3J5dcZcnfjtaZ+X4Iz5w=;
+        b=FX8paPJwhEjf5QIlQvMBDRm5QqUzOInZWSCGtdDAGIeX/iLHfF7pjNYRjS1jZL3vjj
+         9oTLCr/Ci3NzPJQ3KyY5Sn3UT31BxkjtwfDX+ZK4bid6bplocARSheVBUMROIueTEfV2
+         9Hu+mdkOoNoiHEVFLM+jscFkQ5Us30yEto2as9WBQSGJLUeHhQbdT/hItneQd44LiVB3
+         2IhdzvW9zgyg1i6uGQWaZpJdM6pScom5FKUVuh5Sz4IipBk664aVnZVRBkCgcFi3tHx4
+         SyAUWUO9DL5YlaIUUoCkd2NrwdbA90AOPxMtn8iUXsXTmMhjIX1SRL67cvjBasRQt6GQ
+         HzrQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVpuz9fS6mhWrUxtDhjoWHSJ7SB4NAEh7YsRCN8SuqW2wLvPkJ5TapuuwjtitF8FkBuEMBedEyFtu8A2OIa4zPwqbCvMMPGJmTCBDDw8g==
+X-Gm-Message-State: AOJu0YxkPHV9aZb+d609Z9ko9UjKLszdLXNKYKa93CUXDPz9nkfNonz6
+	hGgJgWi6QIKIlKGsgAM19IHYOPyrY52hLI85/oHe+lFqt95D3i9nn+ChfGFzsp0Wcj8QVQtT4/3
+	jsnmA0vBz4iLKP99ZeR0POb1fwKeQo6dBZjOewA==
+X-Google-Smtp-Source: AGHT+IEFyj21m/TdpHs/KSfSoW7V5VWMJIuVXvJvfA82UQX0au9dQs51sRr+TRBEGm0LSSW1B/6NWPvZ1qRsBhjfG/0=
+X-Received: by 2002:a05:690c:428e:b0:630:f7c9:80d6 with SMTP id
+ 00721157ae682-66a69837c4cmr96640487b3.27.1721726010101; Tue, 23 Jul 2024
+ 02:13:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: s-jyHQRhRpFyeGAC_DOwxgaez7pAiCeG
-X-Proofpoint-ORIG-GUID: s-jyHQRhRpFyeGAC_DOwxgaez7pAiCeG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-22_18,2024-07-23_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- mlxlogscore=999 adultscore=0 bulkscore=0 mlxscore=0 spamscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 malwarescore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407230067
+References: <20240722080200.3530850-1-quic_ekangupt@quicinc.com>
+ <20240722080200.3530850-2-quic_ekangupt@quicinc.com> <ydp5ntlresenovs6qaqt7wdaleuruubem5hajbfadkratfsiam@wjn33ymp4gyc>
+ <63c52fd2-9f31-418b-8c6c-4c91f7c69fd3@quicinc.com>
+In-Reply-To: <63c52fd2-9f31-418b-8c6c-4c91f7c69fd3@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 23 Jul 2024 12:13:18 +0300
+Message-ID: <CAA8EJpqZ5pgA3D2PB57nAQkK+w7PdbQe1dgSTbFmTJbutu6N7Q@mail.gmail.com>
+Subject: Re: [PATCH v6 1/2] misc: fastrpc: Define a new initmem size for user PD
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
+	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, 
+	linux-kernel@vger.kernel.org, quic_chennak@quicinc.com, 
+	dri-devel@lists.freedesktop.org, arnd@arndb.de, stable <stable@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-IPQ SoCs dont involve RPM in managing NoC related clocks and
-there is no NoC scaling. Linux itself handles these clocks.
-However, these should not be exposed as just clocks and align
-with other Qualcomm SoCs that handle these clocks from a
-interconnect provider.
+On Tue, 23 Jul 2024 at 07:35, Ekansh Gupta <quic_ekangupt@quicinc.com> wrote:
+>
+>
+>
+> On 7/22/2024 2:02 PM, Dmitry Baryshkov wrote:
+> > On Mon, Jul 22, 2024 at 01:31:59PM GMT, Ekansh Gupta wrote:
+> >> For user PD initialization, initmem is allocated and sent to DSP for
+> >> initial memory requirements like shell loading. The size of this memory
+> >> is decided based on the shell size that is passed by the user space.
+> >> With the current implementation, a minimum of 2MB is always allocated
+> >> for initmem even if the size passed by user is less than that. For this
+> >> a MACRO is being used which is intended for shell size bound check.
+> >> This minimum size of 2MB is not recommended as the PD will have very
+> >> less memory for heap and will have to request HLOS again for memory.
+> >> Define a new macro for initmem minimum length of 3MB.
+> >>
+> >> Fixes: d73f71c7c6ee ("misc: fastrpc: Add support for create remote init process")
+> >> Cc: stable <stable@kernel.org>
+> >> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+> >> ---
+> >>  drivers/misc/fastrpc.c | 3 ++-
+> >>  1 file changed, 2 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> >> index a7a2bcedb37e..a3a5b745936e 100644
+> >> --- a/drivers/misc/fastrpc.c
+> >> +++ b/drivers/misc/fastrpc.c
+> >> @@ -39,6 +39,7 @@
+> >>  #define FASTRPC_DSP_UTILITIES_HANDLE        2
+> >>  #define FASTRPC_CTXID_MASK (0xFF0)
+> >>  #define INIT_FILELEN_MAX (2 * 1024 * 1024)
+> >> +#define FASTRPC_INITLEN_MIN (3 * 1024 * 1024)
+> > So, what is the difference between INIT_FILELEN_MAX and
+> > FASTRPC_INITLEN_MIN?
+>
+> INIT_FILELEN_MAX is the maximum shell size that can be passed by user.
+> FASTRPC_INITLEN_MIN is the minimum initmem length for PD.
 
-Hence include icc provider capability to the gcc node so that
-peripherals can use the interconnect facility to enable these
-clocks. Change USB to use the icc-clk framework for the iface
-clock.
+At least this should be commented on in the source.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
----
-v3: Fix #include file order
----
- arch/arm64/boot/dts/qcom/ipq5332.dtsi | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+>
+> >
+> >>  #define INIT_FILE_NAMELEN_MAX (128)
+> >>  #define FASTRPC_DEVICE_NAME "fastrpc"
+> >>
+> >> @@ -1410,7 +1411,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
+> >>                      goto err;
+> >>      }
+> >>
+> >> -    memlen = ALIGN(max(INIT_FILELEN_MAX, (int)init.filelen * 4),
+> >> +    memlen = ALIGN(max(FASTRPC_INITLEN_MIN, (int)init.filelen * 4),
+> > BTW: why is the code multiplying filelen by 4? Nothing in the source
+> > code suggests that filelen is in u32 words, so I'd assume it's measured
+> > in bytes.
+>
+> The passed filelen is actually the size of fastrpc shell. This size is not sufficient for the user
+> PD initialization. The 4x of filelen gives the approx. needed memory for signed PD initialization.
+> Yes, filelen is measured in bytes.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-index 573656587c0d..7e8f9d578382 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-@@ -7,6 +7,7 @@
- 
- #include <dt-bindings/clock/qcom,apss-ipq.h>
- #include <dt-bindings/clock/qcom,ipq5332-gcc.h>
-+#include <dt-bindings/interconnect/qcom,ipq5332.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- 
- / {
-@@ -208,6 +209,7 @@ gcc: clock-controller@1800000 {
- 			reg = <0x01800000 0x80000>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
-+			#interconnect-cells = <1>;
- 			clocks = <&xo_board>,
- 				 <&sleep_clk>,
- 				 <0>,
-@@ -327,11 +329,9 @@ usb: usb@8af8800 {
- 					  "dm_hs_phy_irq";
- 
- 			clocks = <&gcc GCC_USB0_MASTER_CLK>,
--				 <&gcc GCC_SNOC_USB_CLK>,
- 				 <&gcc GCC_USB0_SLEEP_CLK>,
- 				 <&gcc GCC_USB0_MOCK_UTMI_CLK>;
- 			clock-names = "core",
--				      "iface",
- 				      "sleep",
- 				      "mock_utmi";
- 
-@@ -342,6 +342,9 @@ usb: usb@8af8800 {
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 			ranges;
-+			interconnects = <&gcc MASTER_SNOC_USB &gcc SLAVE_SNOC_USB>,
-+					<&gcc MASTER_SNOC_USB &gcc SLAVE_SNOC_USB>;
-+			interconnect-names = "usb-ddr", "apps-usb";
- 
- 			status = "disabled";
- 
+Ugh. Shouldn't it be sum(elf.ph[i].memsz) + some margin? I know this
+is a separate topic, but since you were touching these lines it has
+come to my attention.
+
+>
+> >
+> >>                     1024 * 1024);
+> >>      err = fastrpc_buf_alloc(fl, fl->sctx->dev, memlen,
+> >>                              &imem);
+> >> --
+> >> 2.34.1
+> >>
+>
+
+
 -- 
-2.34.1
-
+With best wishes
+Dmitry
 
