@@ -1,491 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-26852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70D6A939CBD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 10:33:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC4C3939CD6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 10:36:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2746C2823F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 08:33:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 822341F21F2B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 08:36:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABA6314D2BE;
-	Tue, 23 Jul 2024 08:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F93614BF97;
+	Tue, 23 Jul 2024 08:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TYnD7YS3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VFCAgjU2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5724214C585
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 08:33:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5BA14A0A4;
+	Tue, 23 Jul 2024 08:36:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721723589; cv=none; b=IwlqJnW4uXERy0G1aI9VwPpHUB4oHJvUWTaFGe5zoL9UB6l9GDhUM4tNFHvZvFCf5P+iuP6xyWtBXPhNnihCdakr44KWym0wTwQpWTDuwczyoQCvL//p7EjKeZlKNlgj4ohrvctHnr50tE48Z/k/GhNnF23rZ6QaCIvSFqNESdU=
+	t=1721723794; cv=none; b=kxKCUIzqxSP22TKR2XL5IFknHYqLh0DayBfoqSZtRgXUwWDMRYT0oPsp75/NONl47/p8N904OSnRnHhwwXAQUfFxJU4CrwQx/uvZf3WNH8uemv1XkrHQL8bXr5m4+A7HMbAL94qEQmqRoycXG4/bzUoFZ8nHLQey8OIbyamZPJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721723589; c=relaxed/simple;
-	bh=b8CoiMb5iphdulrbGF9IbDlgJakpNPEN+MYJHrdNTPY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LOKNEaxmUMuJQ79PFm/781ur4QgcFg7GgmC0CGAOfzIb42S7QoKC6SaghXsvSyX+C93UAXByD/ski6SL4xwGuJ8s2mL22o+ueQClHgvdi6hSUW4WzPwVKK54Zwbrfp1Zk2T3UKSy/i5PoDfqzCUxqLR9mlpUQ8sxtnT1gEGlxPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TYnD7YS3; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4257d5fc9b7so45137295e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 01:33:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721723585; x=1722328385; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=1t+iNJUM6/WeeHxpFiE1OIXXIHbHfdlbLYRP84zH2DY=;
-        b=TYnD7YS3YXDtTFBLWcmGOetaDhbvhAkRuiKJ9fG5gY6HHYfQOx/RVRAMGeIE7FvSac
-         tWnqQ1jV2TN9xVL8Vmw5Prt7wzRP5zs1/g/t809gFZUDhs7vTDyoOy4fQDlONSDHVxOX
-         dfvvpQymKHjedY9nvTxlCbrG3Lr7vA5IJW4PCSXzFve7aDc/YNd/PfedUS0w4IreVGqy
-         WGl1XQNRYr3pCN5Y7sld8WYoPCnq/WMdffaz+l6UyNPq8mhD0Tlv07EFx70BpdJcQyn6
-         RDRgOtHUFYlQLIzpQjRXvSQPaYnlcHNBWWjVpbDNEHE3PyY/4dsNSSkWt/d8FTKkTQ9K
-         znIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721723585; x=1722328385;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1t+iNJUM6/WeeHxpFiE1OIXXIHbHfdlbLYRP84zH2DY=;
-        b=d07Wuf86F2SVXL1Yn61egT9dv1eGUHnrhLPKSsIKmhf8g8ktMMveaLomE++Xb03LUx
-         MRq8S3NttioXhlLch7PMcggkOYYcs8O0/BwXa3utGbrus+i06u2jbebqV934+7z2sDBI
-         yVikkgFU4vvGUS/SKDCY+xNyVPuyx4/uLSrnynoYNBBzmC8xxZzYqDJtXFHKlnvToDTI
-         wDQjorwsiq2yXfT09zWySkBkdVhFogpw3tdlj8HvH1sGJ/MAMOMYBIMJjoeXwlmm/XSc
-         7Iv6KD653VadrHUzSz1I98E5jWreXSVV6mS9JUVBwlrBlKuQ/S7ZZdJgxCkKqIGcbpw2
-         T3gw==
-X-Forwarded-Encrypted: i=1; AJvYcCUTq3hDQGBu3qzYIhxvdGw3h5RyzO/N9+u3A0GDm3Ge0PRhKibl+sMc48bAbD+zTBXYvT0wwQX40QIwdls4cPdjmkjIsHbFdxfocDHdXg==
-X-Gm-Message-State: AOJu0YwH0xudtMMx+7x3epd1Y2k4xipT1cnyZDn8uyFX4DUO4pn8X4EH
-	Ucio+R976d7MilImcNSDOIpcTcFBVMKVNqcp10tW3FwqDiQKo5CEz+90VV5fJWs=
-X-Google-Smtp-Source: AGHT+IFr4CpzZyMvq6++T1fapTLZpMDNxT4jkNAHhBZudp0bJTnJiQ+DtD4LUAMj0LUFlA1zfq8k6Q==
-X-Received: by 2002:a05:600c:1912:b0:427:d8f2:33b with SMTP id 5b1f17b1804b1-427dc529086mr88754665e9.20.1721723585395;
-        Tue, 23 Jul 2024 01:33:05 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427d68fa171sm162857735e9.1.2024.07.23.01.33.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jul 2024 01:33:04 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Banajit Goswami <bgoswami@quicinc.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	alsa-devel@alsa-project.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Adam Skladowski <a39.skl@gmail.com>
-Subject: [PATCH] ASoC: dt-bindings: qcom,apq8016-sbc-sndcard: move to separate binding
-Date: Tue, 23 Jul 2024 10:33:00 +0200
-Message-ID: <20240723083300.35605-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1721723794; c=relaxed/simple;
+	bh=bdT6WXZm8HMSNPpbUWhqRb25Qc2ZpMdIwQWjm0rmeZc=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=rkihEJCOhASzs7h1ITPvl8Xmtqa6qR4Gbo97F8Amrhy8sRbAs23AGoVe2Xpg5cXW6tIb4FcUCUbiXPXB62c4Qd1xgPRNNMBSDGWI9nRzuc5i8TdO2Po4bYA+ZjfgHXcAiuXmd738pJ5pYLu6iQJ57PO0jUZPhZ5tJcLvspD9CHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VFCAgjU2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7BCC4AF09;
+	Tue, 23 Jul 2024 08:36:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1721723793;
+	bh=bdT6WXZm8HMSNPpbUWhqRb25Qc2ZpMdIwQWjm0rmeZc=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=VFCAgjU2CCrtWrmuu8FdY9bnqEjlELO5BjP+eN9w2cjoAHnlQEpF3I9bbQ8WEYmmF
+	 5yyu6SQJGQeIyVXXjRtHGQLDZuXmC5ERGIrczs6L1BPMZ/GMrN9c6De3rDovyBpOpL
+	 sJJDgne1rAVsSIFOZ1l/ayBA48IIgCmq/V/djcME2yJLFRRiJZvYz3UJt4euHTmfQT
+	 iZzvEFDKQmlj1MCWcE5CLdeSMrlIH/XrlkzyrysQ3gBWG/taCSTRDyspGI1Nsul7P5
+	 di8xyWENBqbl9wN0pCLes8ek0RJmFZPRM0PvrudaB0gZIrFZMyqMiwA3JGL6oINEH4
+	 GsdjYcs8f26vQ==
+Message-ID: <ea4436f1-1b85-4083-9807-98e814ba597e@kernel.org>
+Date: Tue, 23 Jul 2024 10:36:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] ASoC: dt-bindings: qcom,sm8250: Add
+ msm8953/msm8976-qdsp6-sndcard
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Adam Skladowski <a39.skl@gmail.com>
+Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
+ alsa-devel@alsa-project.org, linux-sound@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240722095147.3372-1-a39.skl@gmail.com>
+ <20240722095147.3372-4-a39.skl@gmail.com>
+ <c9386ee6-77bb-49be-97cd-2b25ebb08472@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <c9386ee6-77bb-49be-97cd-2b25ebb08472@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-The APQ8016 SBC and MSM8916 QDSP6 sound cards are a bit different from
-others: they have additional IO muxing address space and pin control.
-Move them to separate schema, so the original qcom,sm8250.yaml will be
-easier to manage.  New schema is going to grow for other platforms
-having more of IO muxing address spaces.
+On 23/07/2024 10:19, Krzysztof Kozlowski wrote:
+> On 22/07/2024 11:51, Adam Skladowski wrote:
+>> Document MSM8953/MSM8976 QDSP6 cards.
+>>
+>> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> 
+> ...
+> 
+>> +    then:
+>>        properties:
+>> -        reg: false
+>> -        reg-names: false
+>> +        reg:
+>> +          items:
+>> +            - description: Microphone I/O mux register address
+>> +            - description: Speaker I/O mux register address
+>> +            - description: Quinary Mi2S I/O mux register address
+>> +        reg-names:
+>> +          items:
+>> +            - const: mic-iomux
+>> +            - const: spkr-iomux
+>> +            - const: quin-iomux
+>> +      required:
+>> +        - compatible
+>> +        - model
+> 
+> Don't duplicate. It's already required.
 
-Cc: Adam Skladowski <a39.skl@gmail.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- .../sound/qcom,apq8016-sbc-sndcard.yaml       | 205 ++++++++++++++++++
- .../bindings/sound/qcom,sm8250.yaml           | 137 ------------
- 2 files changed, 205 insertions(+), 137 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/sound/qcom,apq8016-sbc-sndcard.yaml
+I suggest to rebase on top of my patch. Optionally, take it into your
+patchset.
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,apq8016-sbc-sndcard.yaml b/Documentation/devicetree/bindings/sound/qcom,apq8016-sbc-sndcard.yaml
-new file mode 100644
-index 000000000000..6ad451549036
---- /dev/null
-+++ b/Documentation/devicetree/bindings/sound/qcom,apq8016-sbc-sndcard.yaml
-@@ -0,0 +1,205 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/sound/qcom,apq8016-sbc-sndcard.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm APQ8016 and similar sound cards
-+
-+maintainers:
-+  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+  - Stephan Gerhold <stephan@gerhold.net>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,apq8016-sbc-sndcard
-+      - qcom,msm8916-qdsp6-sndcard
-+
-+  reg:
-+    items:
-+      - description: Microphone I/O mux register address
-+      - description: Speaker I/O mux register address
-+
-+  reg-names:
-+    items:
-+      - const: mic-iomux
-+      - const: spkr-iomux
-+
-+  audio-routing:
-+    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-+    description:
-+      A list of the connections between audio components. Each entry is a
-+      pair of strings, the first being the connection's sink, the second
-+      being the connection's source. Valid names could be power supplies,
-+      MicBias of codec and the jacks on the board.
-+
-+  aux-devs:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    description: |
-+      List of phandles pointing to auxiliary devices, such
-+      as amplifiers, to be added to the sound card.
-+
-+  model:
-+    $ref: /schemas/types.yaml#/definitions/string
-+    description: User visible long sound card name
-+
-+  pin-switches:
-+    description: List of widget names for which pin switches should be created.
-+    $ref: /schemas/types.yaml#/definitions/string-array
-+
-+  widgets:
-+    description: User specified audio sound widgets.
-+    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-+
-+patternProperties:
-+  ".*-dai-link$":
-+    description:
-+      Each subnode represents a dai link. Subnodes of each dai links would be
-+      cpu/codec dais.
-+
-+    type: object
-+
-+    properties:
-+      link-name:
-+        description: Indicates dai-link name and PCM stream name.
-+        $ref: /schemas/types.yaml#/definitions/string
-+        maxItems: 1
-+
-+      cpu:
-+        description: Holds subnode which indicates cpu dai.
-+        type: object
-+        additionalProperties: false
-+
-+        properties:
-+          sound-dai:
-+            maxItems: 1
-+
-+      platform:
-+        description: Holds subnode which indicates platform dai.
-+        type: object
-+        additionalProperties: false
-+
-+        properties:
-+          sound-dai:
-+            maxItems: 1
-+
-+      codec:
-+        description: Holds subnode which indicates codec dai.
-+        type: object
-+        additionalProperties: false
-+
-+        properties:
-+          sound-dai:
-+            minItems: 1
-+            maxItems: 8
-+
-+    required:
-+      - link-name
-+      - cpu
-+
-+    additionalProperties: false
-+
-+required:
-+  - compatible
-+  - reg
-+  - reg-names
-+  - model
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/sound/qcom,lpass.h>
-+    sound@7702000 {
-+        compatible = "qcom,apq8016-sbc-sndcard";
-+        reg = <0x07702000 0x4>, <0x07702004 0x4>;
-+        reg-names = "mic-iomux", "spkr-iomux";
-+
-+        model = "DB410c";
-+        audio-routing =
-+            "AMIC2", "MIC BIAS Internal2",
-+            "AMIC3", "MIC BIAS External1";
-+
-+        pinctrl-0 = <&cdc_pdm_lines_act &ext_sec_tlmm_lines_act &ext_mclk_tlmm_lines_act>;
-+        pinctrl-1 = <&cdc_pdm_lines_sus &ext_sec_tlmm_lines_sus &ext_mclk_tlmm_lines_sus>;
-+        pinctrl-names = "default", "sleep";
-+
-+        quaternary-dai-link {
-+            link-name = "ADV7533";
-+            cpu {
-+                sound-dai = <&lpass MI2S_QUATERNARY>;
-+            };
-+            codec {
-+                sound-dai = <&adv_bridge 0>;
-+            };
-+        };
-+
-+        primary-dai-link {
-+            link-name = "WCD";
-+            cpu {
-+                sound-dai = <&lpass MI2S_PRIMARY>;
-+            };
-+            codec {
-+                sound-dai = <&lpass_codec 0>, <&wcd_codec 0>;
-+            };
-+        };
-+
-+        tertiary-dai-link {
-+            link-name = "WCD-Capture";
-+            cpu {
-+                sound-dai = <&lpass MI2S_TERTIARY>;
-+            };
-+            codec {
-+                sound-dai = <&lpass_codec 1>, <&wcd_codec 1>;
-+            };
-+        };
-+    };
-+
-+  - |
-+    #include <dt-bindings/sound/qcom,q6afe.h>
-+    #include <dt-bindings/sound/qcom,q6asm.h>
-+    sound@7702000 {
-+        compatible = "qcom,msm8916-qdsp6-sndcard";
-+        reg = <0x07702000 0x4>, <0x07702004 0x4>;
-+        reg-names = "mic-iomux", "spkr-iomux";
-+
-+        model = "msm8916";
-+        widgets =
-+            "Speaker", "Speaker",
-+            "Headphone", "Headphones";
-+        pin-switches = "Speaker";
-+        audio-routing =
-+            "Speaker", "Speaker Amp OUT",
-+            "Speaker Amp IN", "HPH_R",
-+            "Headphones", "HPH_L",
-+            "Headphones", "HPH_R",
-+            "AMIC1", "MIC BIAS Internal1",
-+            "AMIC2", "MIC BIAS Internal2",
-+            "AMIC3", "MIC BIAS Internal3";
-+        aux-devs = <&speaker_amp>;
-+
-+        pinctrl-names = "default", "sleep";
-+        pinctrl-0 = <&cdc_pdm_lines_act>;
-+        pinctrl-1 = <&cdc_pdm_lines_sus>;
-+
-+        mm1-dai-link {
-+            link-name = "MultiMedia1";
-+            cpu {
-+                sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
-+            };
-+        };
-+
-+        primary-dai-link {
-+            link-name = "Primary MI2S";
-+            cpu {
-+                sound-dai = <&q6afedai PRIMARY_MI2S_RX>;
-+            };
-+            platform {
-+                sound-dai = <&q6routing>;
-+            };
-+            codec {
-+                sound-dai = <&lpass_codec 0>, <&wcd_codec 0>;
-+            };
-+        };
-+    };
-diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-index c9076dcd44c1..1d3acdc0c733 100644
---- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-@@ -27,9 +27,7 @@ properties:
-               - qcom,sm8650-sndcard
-           - const: qcom,sm8450-sndcard
-       - enum:
--          - qcom,apq8016-sbc-sndcard
-           - qcom,apq8096-sndcard
--          - qcom,msm8916-qdsp6-sndcard
-           - qcom,qcm6490-idp-sndcard
-           - qcom,qcs6490-rb3gen2-sndcard
-           - qcom,qrb5165-rb5-sndcard
-@@ -58,18 +56,6 @@ properties:
-     $ref: /schemas/types.yaml#/definitions/string
-     description: User visible long sound card name
- 
--  pin-switches:
--    description: List of widget names for which pin switches should be created.
--    $ref: /schemas/types.yaml#/definitions/string-array
--
--  widgets:
--    description: User specified audio sound widgets.
--    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
--
--  # Only valid for some compatibles (see allOf if below)
--  reg: true
--  reg-names: true
--
- patternProperties:
-   ".*-dai-link$":
-     description:
-@@ -122,34 +108,6 @@ required:
-   - compatible
-   - model
- 
--allOf:
--  - if:
--      properties:
--        compatible:
--          contains:
--            enum:
--              - qcom,apq8016-sbc-sndcard
--              - qcom,msm8916-qdsp6-sndcard
--    then:
--      properties:
--        reg:
--          items:
--            - description: Microphone I/O mux register address
--            - description: Speaker I/O mux register address
--        reg-names:
--          items:
--            - const: mic-iomux
--            - const: spkr-iomux
--      required:
--        - compatible
--        - model
--        - reg
--        - reg-names
--    else:
--      properties:
--        reg: false
--        reg-names: false
--
- additionalProperties: false
- 
- examples:
-@@ -231,98 +189,3 @@ examples:
-             };
-         };
-     };
--
--  - |
--    #include <dt-bindings/sound/qcom,lpass.h>
--    sound@7702000 {
--        compatible = "qcom,apq8016-sbc-sndcard";
--        reg = <0x07702000 0x4>, <0x07702004 0x4>;
--        reg-names = "mic-iomux", "spkr-iomux";
--
--        model = "DB410c";
--        audio-routing =
--            "AMIC2", "MIC BIAS Internal2",
--            "AMIC3", "MIC BIAS External1";
--
--        pinctrl-0 = <&cdc_pdm_lines_act &ext_sec_tlmm_lines_act &ext_mclk_tlmm_lines_act>;
--        pinctrl-1 = <&cdc_pdm_lines_sus &ext_sec_tlmm_lines_sus &ext_mclk_tlmm_lines_sus>;
--        pinctrl-names = "default", "sleep";
--
--        quaternary-dai-link {
--            link-name = "ADV7533";
--            cpu {
--                sound-dai = <&lpass MI2S_QUATERNARY>;
--            };
--            codec {
--                sound-dai = <&adv_bridge 0>;
--            };
--        };
--
--        primary-dai-link {
--            link-name = "WCD";
--            cpu {
--                sound-dai = <&lpass MI2S_PRIMARY>;
--            };
--            codec {
--                sound-dai = <&lpass_codec 0>, <&wcd_codec 0>;
--            };
--        };
--
--        tertiary-dai-link {
--            link-name = "WCD-Capture";
--            cpu {
--                sound-dai = <&lpass MI2S_TERTIARY>;
--            };
--            codec {
--                sound-dai = <&lpass_codec 1>, <&wcd_codec 1>;
--            };
--        };
--    };
--
--  - |
--    #include <dt-bindings/sound/qcom,q6afe.h>
--    #include <dt-bindings/sound/qcom,q6asm.h>
--    sound@7702000 {
--        compatible = "qcom,msm8916-qdsp6-sndcard";
--        reg = <0x07702000 0x4>, <0x07702004 0x4>;
--        reg-names = "mic-iomux", "spkr-iomux";
--
--        model = "msm8916";
--        widgets =
--            "Speaker", "Speaker",
--            "Headphone", "Headphones";
--        pin-switches = "Speaker";
--        audio-routing =
--            "Speaker", "Speaker Amp OUT",
--            "Speaker Amp IN", "HPH_R",
--            "Headphones", "HPH_L",
--            "Headphones", "HPH_R",
--            "AMIC1", "MIC BIAS Internal1",
--            "AMIC2", "MIC BIAS Internal2",
--            "AMIC3", "MIC BIAS Internal3";
--        aux-devs = <&speaker_amp>;
--
--        pinctrl-names = "default", "sleep";
--        pinctrl-0 = <&cdc_pdm_lines_act>;
--        pinctrl-1 = <&cdc_pdm_lines_sus>;
--
--        mm1-dai-link {
--            link-name = "MultiMedia1";
--            cpu {
--                sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
--            };
--        };
--
--        primary-dai-link {
--            link-name = "Primary MI2S";
--            cpu {
--                sound-dai = <&q6afedai PRIMARY_MI2S_RX>;
--            };
--            platform {
--                sound-dai = <&q6routing>;
--            };
--            codec {
--                sound-dai = <&lpass_codec 0>, <&wcd_codec 0>;
--            };
--        };
--    };
--- 
-2.43.0
+Best regards,
+Krzysztof
 
 
