@@ -1,130 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-26920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 708D893A3B6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 17:24:52 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0060493A3BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 17:26:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AAF8D1C22601
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 15:24:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFDB8284BEB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 15:26:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85086156972;
-	Tue, 23 Jul 2024 15:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BC60156F4D;
+	Tue, 23 Jul 2024 15:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kJ/F1kSY"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="Didv7mRh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A073D55D;
-	Tue, 23 Jul 2024 15:24:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB683D55D;
+	Tue, 23 Jul 2024 15:26:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.87.146.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721748288; cv=none; b=JSE2xSiLS33dh55LnsXjenEkNq/OJJvlAnbd6+bY7B522bQj/pe+ETkPMCLTgdeXgWGj90SYUY4Yx1MMWHf779CQHPOhTP4V19DtJ/sF813mWltn1TfZND1vqsSKul2n425jMcem7Uh5C/tMKYdg4b9kf4Gs4r+LmsfY0r4DjYA=
+	t=1721748373; cv=none; b=u8zZeziYi9+BGuRVQgDa0GK06apDK+ONaTIRSTlyPeZ3JcAATyhcRLb7fZZi1Gbi/W4NiqZFgRM+vVWaVBK/ok8hgzTyk94V+KnkLc++vV87Y0RDc/A4vUTN6KHnApMDh4JJyJmoJcyvBg6R7RaMue0L6ZDFPNVtl6JpBmVgu4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721748288; c=relaxed/simple;
-	bh=dohcu7uOihTyTEi4nFcjN51ggUN5yjixHpV42IvzYhg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QiVqwHflXAWaWeB6k5TETby+VTPNBH8MCqWyIQS1m8Bo2lxLhnjxlZc9XGdynaPJptzEJn44KFuNSNHDK2ep0jGtoPAov6SaE+W/j5CWoXxZKWw9K/LLLdbVNRRYXSvLwm7L+Wxp7SOpWGjb/dW/4Ys4ty+Xkl7qf8oomvLeGGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kJ/F1kSY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61B5C4AF0A;
-	Tue, 23 Jul 2024 15:24:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721748287;
-	bh=dohcu7uOihTyTEi4nFcjN51ggUN5yjixHpV42IvzYhg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kJ/F1kSY4yfVfn5e8MhSvH15MpkDjKAyU6GK3apBCi2J4S8m5DSLfjcd9xDYG23ai
-	 1QElkbqNQdjpWZ6N+APzgsvKTrLs4R47JJBQzTuUTwFldfouNOU7ancgmTACr6TLMH
-	 JU5IYcOx7p/PcStGqKVvX5AZ1HplhCdEXPH9LBuP9vgrhn75RWvtFjd5BWU4+5SdrV
-	 YQth2LyuHUVxWzxIMFibp/YiHgtWHofXZYdmD3M39joWaK9p8cKIWNbvtl0oxk/ohr
-	 HH89Q1lZ1DWYXo4I4Qu2ZyFtQ8uN0LcPh+Q421ziRXnOQKKoBlhiEXka9A9fzSIr7U
-	 3c89m4M5Hb8YA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1sWHNe-000000000KM-2fqO;
-	Tue, 23 Jul 2024 17:24:47 +0200
-Date: Tue, 23 Jul 2024 17:24:46 +0200
-From: Johan Hovold <johan@kernel.org>
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>
-Subject: Re: [PATCH 0/7] arm64: dts: qcom: x1e80100: PCIe fixes and CRD modem
- support
-Message-ID: <Zp_LPixNnh-2Fy5N@hovoldconsulting.com>
-References: <20240719131722.8343-1-johan+linaro@kernel.org>
- <172170324360.205121.298903694803259916.robh@kernel.org>
+	s=arc-20240116; t=1721748373; c=relaxed/simple;
+	bh=K8gU5w3T1PWXvWaMeSk5CCQtBdR9YrlwWnQneLiIZg8=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=pv1CEgExk615lqvpbInbIC5xbBqP1PxndwUNaO1S5aVrIryv29gqgZBNouE/gHQedFup+a1wQjaGcLho9E+W1gt1YKBvRRzENr0AdHSoAy0ylSPaQzYG8iMR4xGQGdUcht4eGZw2VvQmUyngW8SyYh7Udjs7b+pAQp0h7XtXLAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru; spf=pass smtp.mailfrom=trvn.ru; dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b=Didv7mRh; arc=none smtp.client-ip=194.87.146.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=trvn.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=trvn.ru
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id 07BA3403CC;
+	Tue, 23 Jul 2024 20:25:52 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1721748353; bh=K8gU5w3T1PWXvWaMeSk5CCQtBdR9YrlwWnQneLiIZg8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=Didv7mRh+P7gY7vwxcBRAwk7wzgC6LUS8/tHtyJ5Km8grz2X3SEbfBqgxT6pPidPY
+	 m/A48gRZUq+e9sQHZN3qSKl0P/ZCFJyGvrXmrq/GS2TGP0Ra8mY0f5hePQfJ5Ft3kx
+	 CFyZz97UcnOpVjAgVMV1n68iHhsc3q3iCFzDeaiF/aewQj1b0X3pyXJR8KreXTj+Pk
+	 2zSSe1eqCpNKF23voFXqfRQB0re+8DnbhnbCs8bBX9pxRz5InOOFqvzbSkTftLM2VV
+	 ayE7KiWUwB+ZzBZNYT3AdQPTXxhEU3Ua0vf6s8hq8djCMGUuDAUxfg89kK0nHSYJd3
+	 RtpeiUmAGkfRw==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <172170324360.205121.298903694803259916.robh@kernel.org>
+Date: Tue, 23 Jul 2024 20:25:50 +0500
+From: Nikita Travkin <nikita@trvn.ru>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, Anton
+ Bambura <jenneron@postmarketos.org>, Stephan Gerhold <stephan@gerhold.net>
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: msm8916-wingtech-wt865x8: Add
+ Lenovo A6000/A6010
+In-Reply-To: <0d982452-f41c-400e-b350-3c022927036c@linaro.org>
+References: <20240722-msm89xx-wingtech-init-v2-0-0c981bbc5238@trvn.ru>
+ <20240722-msm89xx-wingtech-init-v2-2-0c981bbc5238@trvn.ru>
+ <0d982452-f41c-400e-b350-3c022927036c@linaro.org>
+Message-ID: <bb270fce3c78314ffc5ac8590cc3685c@trvn.ru>
+X-Sender: nikita@trvn.ru
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jul 22, 2024 at 08:57:30PM -0600, Rob Herring wrote:
-> On Fri, 19 Jul 2024 15:17:15 +0200, Johan Hovold wrote:
-> > This series fixes some issues with the current x1e80100 PCIe support,
-> > adds the PCIe5 nodes and enables the modem on the CRD.
-> > 
-> > The fixes should go into 6.11, but the modem support depends on them so
-> > I decided to send everything in one series.
-
-> > Johan Hovold (7):
-> >   arm64: dts: qcom: x1e80100-crd: fix PCIe4 PHY supply
-> >   arm64: dts: qcom: x1e80100: fix PCIe domain numbers
-> >   arm64: dts: qcom: x1e80100-crd: fix up PCIe6a pinctrl node
-> >   arm64: dts: qcom: x1e80100-crd: disable PCIe6A perst pull down
-> >   arm64: dts: qcom: x1e80100-crd: fix missing PCIe4 gpios
-> >   arm64: dts: qcom: x1e80100: add PCIe5 nodes
-> >   arm64: dts: qcom: x1e80100-crd: enable SDX65 modem
-> > 
-> >  arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 110 +++++++++++++++++--
-> >  arch/arm64/boot/dts/qcom/x1e80100.dtsi    | 125 +++++++++++++++++++++-
-> >  2 files changed, 224 insertions(+), 11 deletions(-)
-
-> My bot found new DTB warnings on the .dts files added or changed in this
-> series.
-
-> New warnings running 'make CHECK_DTBS=y qcom/x1e80100-crd.dtb' for 20240719131722.8343-1-johan+linaro@kernel.org:
+Konrad Dybcio писал(а) 23.07.2024 16:24:
+> On 22.07.2024 2:47 PM, Nikita Travkin wrote:
+>> From: Anton Bambura <jenneron@postmarketos.org>
+>>
+>> Add initial device-tree for Lenovo A6000 (wt86518) and Lenovo A6010
+>> (wt86528), which are MSM8916-based devices. These devices are quite
+>> similar, so some configuration is shared in msm8916-wingtech-wt865x8.dtsi.
 > 
-> arch/arm64/boot/dts/qcom/x1e80100-crd.dtb: pci@1c00000: Unevaluated properties are not allowed ('vddpe-3v3-supply' was unexpected)
-> 	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+> [...]
+> 
+> 
+>> +/ {
+>> +	model = "Lenovo A6000 (Wingtech WT86518)";
+>> +	compatible = "wingtech,wt86518", "qcom,msm8916";
+>> +	chassis-type = "handset";
+>> +
+>> +	speaker_amp: audio-amplifier {
+>> +		compatible = "awinic,aw8738";
+>> +
+>> +		pinctrl-names = "default";
+>> +		pinctrl-0 = <&spk_ext_pa_default>;
+> 
+> flip
 
-I was surprised about this as this property is already used by this DT
-in the upcoming 6.11-rc1 (for the NVMe).
+Oops, missed this one, will fix.
 
-I found this thread were Abel tried to add the property to the new
-dedicated x1e80100 schema, but received some push back:
+> 
+> [...]
+> 
+>> +&sound {
+>> +	model = "wt88047";
+>> +	widgets =
+>> +		"Speaker", "Speaker",
+>> +		"Headphone", "Headphones";
+> 
+> Please don't start a new line for this (same below)
+> 
 
-	https://lore.kernel.org/lkml/20240604235806.GA1903493-robh@kernel.org/
+Ack, will re-align.
 
-Looking at the back story for this, the alternate name 'vpcie3v3' has
-been used by some non-Qualcomm controllers since 2016, while Qualcomm DT
-has been using 'vddpe-3v3' since 2018. And it's been clearly documented
-as part of the bindings the whole time.
+>> +	pin-switches = "Speaker", "Headphones";
+>> +	audio-routing =
+>> +		"Speaker", "Speaker Amp OUT",
+>> +		"Speaker Amp IN", "HPH_R",
+> 
+> [...]
+> 
+>> +	/* left AW8736 */
+>> +	speaker_amp_left: audio-amplifier-left {
+>> +		compatible = "awinic,aw8738";
+> 
+> Should this get a new compatible (with a fallback if sw-compatible)?
+> 
 
-Earlier this year, 'vddpe-3v3' was incorrectly removed from the Qualcomm
-binding, which results in a checker warnings for a bunch old Qualcomm
-DTs. I've just sent a patch to restore this Qualcomm name here:
+Per my understanding those two are supposed to be effectively same
+chip, not sure if there is any point in adding a new compatible/fallback
+in this case... 
 
-	https://lore.kernel.org/lkml/20240723151328.684-1-johan+linaro@kernel.org/
+Thanks for looking at this!
+Nikita
 
-If we want to replace the Qualcomm specific name with the alternate name
-then this would need to be done by deprecating the current name, while
-adding backward compatibility support for the old name to the driver.
-I'm not sure anyone cares enough about this inconsistency to actually
-pursue this.
-
-Johan
+>> +
+>> +		pinctrl-0 = <&spk_ext_pa_left_default>;
+>> +		pinctrl-names = "default";
+>> +
+>> +		mode-gpios = <&tlmm 119 GPIO_ACTIVE_HIGH>;
+>> +		sound-name-prefix = "Speaker Amp L";
+>> +		awinic,mode = <3>;
+>> +	};
+>> +
+>> +	/* right AW8736 */
+>> +	speaker_amp_right: audio-amplifier-right {
+>> +		compatible = "awinic,aw8738";
+> 
+> ditto
+> 
+> Konrad
 
