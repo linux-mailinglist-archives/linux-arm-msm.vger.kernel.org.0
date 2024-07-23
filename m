@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-26872-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83226939E6C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 12:00:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A16EC939E70
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 12:01:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C6B89B228B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 10:00:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2260A1F21218
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 10:01:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20BCF14BF98;
-	Tue, 23 Jul 2024 10:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABD4113D518;
+	Tue, 23 Jul 2024 10:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jxq0V/VJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d91vP7H8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CBD33FBAD
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 10:00:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109A028373
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 10:01:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721728830; cv=none; b=a6pJ5uaPw+Mrv3A4EOYJ8nZbTTHJHjqJ+mcT/gMxskLfJNU9dSoh08V6eofZpBA+qeAh4xUMauCckGwvUqLKIZR47FWk71dSKBNPhCn1uYZthOqao39v7moEmlcxQgnFlC8aBKPS1MKHLe5W3xijjA2AZzBpXt5/U8gFg7FHz9Y=
+	t=1721728867; cv=none; b=r1XO8M5X5/4SvVpREID4no3uIoFsc3h9JP5BnMzJo16XPtCj+wcS2+Xcuu0myA9YnIt6SPRYT7y06lgZp3DPpuMzOmHquxcC4TDWGWCrnsa50lNUFb+HL51D8TD2ndDFMcbAG4gDeIc+AOvHhWViCgjBiklEUwyvQXmDKejMhZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721728830; c=relaxed/simple;
-	bh=o0+hQh7jEe5ffI6mHetdk9uJCG3LuW576cSpmxKAX8w=;
+	s=arc-20240116; t=1721728867; c=relaxed/simple;
+	bh=vZZxV+o5uLF2qP1PaVWTk6ApupXzEVaSuioE5+fq2K0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VwqiTuDzZH/VuId9hiBf+4G13NffuHf2PfN0vGtmaZerusSaiXjYVdfRM2upupfwZw9JnhZ0np0sS4tTpx0w/mTXFXEAJiOoRFRwrbf+Q4bvxGVhEIXfSfAaF8ACG4FfM5dxi+VcF5KkC7Z69OC/ynQIv4GxLMwNEr5/iMMz/TM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jxq0V/VJ; arc=none smtp.client-ip=209.85.218.41
+	 In-Reply-To:Content-Type; b=Pfq+4pIjn8pDiTDZI8jxBCukrH97W5JBMv+VLzXBx9WRdITP6wwuoF+YLURRkoSfttMWB1sTgdD4lY4vGKhYB+ioZbY0YpuPxzizphy9ftVF0obfnmwsxwjJjO8sO0agxcqlOgIdRJ7vs0n0G8HROiWFViVl3UtPQDiXhB1oZK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=d91vP7H8; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a7aa086b077so24530966b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 03:00:28 -0700 (PDT)
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a7aa4bf4d1eso4893166b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 03:01:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721728827; x=1722333627; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1721728864; x=1722333664; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=AuETpAkS7dO1pVXt9IMoI+AKyQFXLNy7DvKlLNteMoo=;
-        b=jxq0V/VJXG+IF8z/iwalEjteiMd1TKR54+zC7huVAMbyLR5+lOa6m0Pw2gblArSH0F
-         vRODqcrlCQo7ixYWfHWi9Nmw05teG1JetglyvB9nUnNH6iC/17nIi2JMaaNmRRZMxMix
-         3Bbb+N7c+0zrJlZ0/9T9r3dzqHb4ZT/U+o2BWnK/UjrK2ULnsgnSVOxlH1yyTyJU3Fbh
-         o1IL8o3y/1TVT3WQWkHXxdHKm0UV04J0WK9q2/nNh9J1PmVVXwicUWDQRByoWemGFdAP
-         4nPsDdl9W1i5bew3yXmEHBHgCLxebslR3GeW3VFYaRPGT6IlWqe1hc5aVhN8XcW1nmAh
-         RrfA==
+        bh=JEzMe1jgFBvGgofA2N54tDKb0RkrlcfD1n3rhARXK/Y=;
+        b=d91vP7H8I87u9SdApHz1N5C1cbvs3m/5KriSz9psSpmgHHKafQxjtMH9f7wGVOsFJ9
+         4cBu/xxG3w67iIFBmymCaUCzeK3pNeU4egOvW/WNcnCfBJ8W7PDdVSetN/VtV4f0/jKF
+         EHWKJEf9nS2hrexQoprSesH2k948w1aeul7PfzIW8sbhvFjMkLi+G8zn1hPvkcKndGnW
+         oaLa/LOUSWoG1oYxdN+V2r0gI22d5nF0IfZImcgqQTklFxt/cUqG0VqJ6u9hVLzF7C06
+         aEafqszeiXHtsOVR38SMklJ25fVU4w8BC8HODIGFX/PQXbivj7j8W+UV5Xl5dQyw/hqd
+         4sdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721728827; x=1722333627;
+        d=1e100.net; s=20230601; t=1721728864; x=1722333664;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AuETpAkS7dO1pVXt9IMoI+AKyQFXLNy7DvKlLNteMoo=;
-        b=U+Ixjfa7ZuLDS/vWARr6yxc4qkIw3PVHhyUKZ7NP+6Hw6hFDbzyg2/vihy2RwK8OiD
-         XZ8bHok8qIDn8GgxJgCs6P1W6y90A20tmuA/LBM7Ax2EtzLjGtV42gX3m9jqfbVWRnhN
-         AV1tE7vic/edcRhozQHCFHF3R+/zDcc+iTSvjO92wHqNQXFJEO5c1HiZQpXxJ5CA89MD
-         C9YxQ5ybV/RFFM737Xt/G9/fijG1GsoYQNGa5450ol39ieFnPArGZ8sXY79x5eapZ1yB
-         Uj2H/YAyx6ya7JvXVLn1IOvMthBmbGRCcCz3Ekkq+i/9wbdYboYKEQ/cI/FB78SE5RnQ
-         gxbg==
-X-Gm-Message-State: AOJu0YyMyLs3FTQdDS17MmU1k+MecBZkFB1BHZTi6EYqKROWXreCRhRA
-	fXyVUoX5rbYG4PAxwHiU7KnfK9GQFtUbqizZwEGx277sj0EkxFDoTMirX3yg+2w=
-X-Google-Smtp-Source: AGHT+IEt0r2EOmdTkoQfh8/SbBZtB7+hXOk2yRtr2EguKFj6+gn2QABQYbu9O5eRk+r7Yaz1k5dd2A==
-X-Received: by 2002:a17:906:c142:b0:a72:6b08:ab27 with SMTP id a640c23a62f3a-a7a4c0f436dmr614822866b.36.1721728826475;
-        Tue, 23 Jul 2024 03:00:26 -0700 (PDT)
+        bh=JEzMe1jgFBvGgofA2N54tDKb0RkrlcfD1n3rhARXK/Y=;
+        b=v4KsTBTIEt0FIwf0uoOxCbejPZzQYhDdJuABFS+ma7ymIYBfoB/VKJUcr9pBstwCdS
+         fk4nQ1OkcHI9KFwDolpauAk+RGz77DniFlzbdaGmVDCR9kg2THcQnXB0FyKQl01uZQaP
+         i0K9jR5u/JvjL8DGcaAzhuPJd1D2yuuVbTaBjdYgww0I/A7NgJnZjg6BVSdlHvX7aoYs
+         iMzIXPhcDjztDJVGZN4oAZDPpGbKd87gAi+v8V5brZSUiikGFwssjgcuA+oLjprUy2IE
+         YauFy8TD7oncGWGdSJX0lyQ3VQOs/n7tkV8u4ohbO8kqSHagbkopAfdn/wCO3VBBkxIg
+         p3Tg==
+X-Forwarded-Encrypted: i=1; AJvYcCUZc8dwBZsKav5UxJ2tFYTZl9R51XZhojOny6wA/Mf3jKlTyL98w7XKI31mNUCfAEMlsgLjylQ22EhoxXV1KOrS5aq/VokmCo0qbWssBA==
+X-Gm-Message-State: AOJu0YwDIngI6heocNuLq+8QI+gX1XOQJf4Amf6pnVqr0+j0sfAQY9IG
+	x3AwRG3xmwCL1zgbKNPSZJPUvLriEyT/LFvY+GeDmp5yPgf6noFrywq+M5s+/t8=
+X-Google-Smtp-Source: AGHT+IFS/1YgwAOld8lTPSrjJAre4y00U739hX/8hG/SGCzxgliAVIWdabGNx/FzTBA8ecUgvO06VQ==
+X-Received: by 2002:a17:906:7315:b0:a6f:5f8f:6c43 with SMTP id a640c23a62f3a-a7a4c44631dmr811217966b.56.1721728864118;
+        Tue, 23 Jul 2024 03:01:04 -0700 (PDT)
 Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7a8c3ee792sm84573666b.80.2024.07.23.03.00.24
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7a3c785d7fsm519732666b.29.2024.07.23.03.01.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Jul 2024 03:00:25 -0700 (PDT)
-Message-ID: <008d5544-94d3-4e53-bcce-25133fed36c3@linaro.org>
-Date: Tue, 23 Jul 2024 12:00:23 +0200
+        Tue, 23 Jul 2024 03:01:03 -0700 (PDT)
+Message-ID: <2448216d-344d-4ffa-826f-d077ab9b1958@linaro.org>
+Date: Tue, 23 Jul 2024 12:01:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,15 +77,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: pmi8950: Remove address from lpg
- node
-To: Rayyan Ansari <rayyan.ansari@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: msm8998-lenovo-miix-630: enable
+ touchscreen
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <20240723-pmic-bindings-v2-0-e1cd614f8c4a@linaro.org>
- <20240723-pmic-bindings-v2-2-e1cd614f8c4a@linaro.org>
+References: <20240722-miix630-support-v1-0-a6483cfe8674@linaro.org>
+ <20240722-miix630-support-v1-1-a6483cfe8674@linaro.org>
+ <cac3d7ba-2a62-479d-94c2-c6dc4d7a5ba2@linaro.org>
+ <CAA8EJprROf-aJgJvUMb3D+dCzOUO-eRzM3khM6ZY8b+z+_gByA@mail.gmail.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
@@ -122,18 +126,82 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20240723-pmic-bindings-v2-2-e1cd614f8c4a@linaro.org>
+In-Reply-To: <CAA8EJprROf-aJgJvUMb3D+dCzOUO-eRzM3khM6ZY8b+z+_gByA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 23.07.2024 11:38 AM, Rayyan Ansari wrote:
-> Remove the address in both the reg property and node name to adhere to
-> the bindings.
+On 23.07.2024 3:09 AM, Dmitry Baryshkov wrote:
+> On Tue, 23 Jul 2024 at 02:22, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>> On 22.07.2024 1:57 PM, Dmitry Baryshkov wrote:
+>>> There is no point in keeping touchscreen disabled, enable corresponding
+>>> i2c-hid device.
+>>>
+>>> 04F3:2608 Touchscreen as /devices/platform/soc@0/c179000.i2c/i2c-0/0-0010/0018:04F3:2608.0001/input/input1
+>>> 04F3:2608 as /devices/platform/soc@0/c179000.i2c/i2c-0/0-0010/0018:04F3:2608.0001/input/input2
+>>> 04F3:2608 as /devices/platform/soc@0/c179000.i2c/i2c-0/0-0010/0018:04F3:2608.0001/input/input3
+>>> 04F3:2608 Stylus as /devices/platform/soc@0/c179000.i2c/i2c-0/0-0010/0018:04F3:2608.0001/input/input4
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>  .../boot/dts/qcom/msm8998-lenovo-miix-630.dts      | 28 ++++++++++++++++++++++
+>>>  1 file changed, 28 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts b/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts
+>>> index a105143bee4a..118c55f5bcfd 100644
+>>> --- a/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/msm8998-lenovo-miix-630.dts
+>>> @@ -11,6 +11,24 @@ / {
+>>>       chassis-type = "convertible";
+>>>  };
+>>>
+>>> +&blsp1_i2c5 {
+>>> +     clock-frequency = <400000>;
+>>> +     status = "okay";
+>>> +
+>>> +     tsc1: hid@10 {
+>> weird (and unused label)
+>>
+>> very non-specific node name too
+>>
+>>> +             compatible = "hid-over-i2c";
+>>> +             reg = <0x10>;
+>>> +             hid-descr-addr = <0x1>;
+>>> +
+>>> +             interrupts-extended = <&tlmm 125 IRQ_TYPE_LEVEL_LOW>;
+>>> +
+>>> +             pinctrl-0 = <&i2c5_hid_active>;
+>>> +             pinctrl-names = "default";
+>>> +
+>>> +             wakeup-source;
+>>
+>> double tap to wake? tap to wake?
+>>
+>>> +     };
+>>> +};
+>>> +
+>>>  &blsp1_i2c6 {
+>>>       status = "okay";
+>>>
+>>> @@ -35,3 +53,13 @@ &remoteproc_mss {
+>>>  &sdhc2 {
+>>>       cd-gpios = <&tlmm 95 GPIO_ACTIVE_HIGH>;
+>>>  };
+>>> +
+>>> +&tlmm {
+>>> +     i2c5_hid_active: i2c5-hid-active-state {
+>>> +             pins = "gpio125";
+>>> +             function = "gpio";
+>>> +
+>>> +             bias-pull-up;
+>>> +             drive-strength = <2>;
+>>
+>> Since there are no other pin definitions, you can do better and not
+>> copy the old rotten style ;)
 > 
-> Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
-> ---
+> Both node and pinctrl were c&p from c630. But was is rotten here?
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+yes, we stopped putting a random newline in there quite some years ago
 
 Konrad
 
