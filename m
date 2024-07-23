@@ -1,204 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-26914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD5A093A2F4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 16:40:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F275893A31B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 16:46:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0C9371C22F84
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 14:40:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AD3A0282AE9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 14:46:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7973E14F122;
-	Tue, 23 Jul 2024 14:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D77C1156962;
+	Tue, 23 Jul 2024 14:46:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="ySwd9f6T"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dvHnG7iD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B75115572F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 14:40:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2870915382C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 14:46:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721745653; cv=none; b=OrBOHNDij4L7xn3RiM6LeCAhvuAl7IsUWIozp5WSezsTQu6wHIENk9JAZ4ofyiRBuD+A9I/WvbZtWPB0Ng2rtGkNB8ejlZRfuxFti72OeISTyDyjnmMDZO5rxGTWc0F9TAq92+mXJE/dftUnfmWLfcqfHspt+A/lKTyZBMpp348=
+	t=1721745974; cv=none; b=SH5Migq6M5Md3uw3fg8J9N8N9ho37m5s69q2q2gat0YueJQO3WW7RLC+oOh1vqdWn3R0ngQjOkz9iTCaUI5ivh9IllAOIIuLaqkcuFpTtnKHdgbOsi4ZRZNoYNZYZeuHj+8LAPML7zU47Iq47RfgMtOg3NE7B6ZTJCvigsoyC+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721745653; c=relaxed/simple;
-	bh=Ii/qPPRPd4H6EAcpkggPFOvxtd203ZTNo2muiH3wxlY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=smTlHcfNwVJfCGqom3RZ5hV87eTN9MoXs0/ZV5eiLJUX4/Z2QbJYGF7UJVg8PSnUZ4R1qT7HcaPe/omUXU3ZVZwlVHGQAh1plU15EL2TvgOjalgPjB9bZqfT5D1yjmeaaKf11MSJRgsRgFhEvs626Z6vavrp3bjq7n9Uq5IdmVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=ySwd9f6T; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3687f91af40so2940651f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 07:40:50 -0700 (PDT)
+	s=arc-20240116; t=1721745974; c=relaxed/simple;
+	bh=f4nFfrVFsoZlAw2TqgkIjPVPxb5PG9oafUyuaGzF2hc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sflr0zEvBo9EZVEZTM5YaU5frLA/J1ELogsbFDk8XP4YBYMOoMv33csku3nH22AJ2SD9TDMc+wQek1jDGnCkm2UeSM4YtnGqe8IzSKNxQdlqdT1HXQaogpIGEG62eCeDE+K0LrnoXkNPWVDOfCVk9DxNRM2RyfzHld/AQM0XADM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dvHnG7iD; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5a10835480bso4955982a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 07:46:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1721745649; x=1722350449; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=T3K8m7UYLI9e2nw2FiKuLBXvna2sOiFY/YtJCGaVVwg=;
-        b=ySwd9f6T3cVcPvOs/tIHOcDBGnpO6XUGfRTtzTkwBea+r8F7JnQiKe77aKgSOfQ7/2
-         g4X7KE3i91VZ7dMThTcfS50JdgzFCgY/lb7Osh6YgfEjNsaJeZ8jBrZ/w3qc8sMPzlyy
-         CmeWoCc1wo/Eo9lrjTjiC+72xrQ9cDziLgWAHGsSy61e/QXH7tO6Mq88EKkbsdcN5buZ
-         6m0GGSDSt84wqCqETRMOmlOJysz8kN9L2FJs3Sd/sUDaeujc+T49PQqlq0iNsbMreYFY
-         b6IQCe3KFUnOpuhDnPYenojCQ8VBsMaKtm7dRKhJS14pOwKB9SWva/2rFuGy49cXG9Fe
-         8Nyg==
+        d=linaro.org; s=google; t=1721745971; x=1722350771; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TGhe5Ex1bPFfV1vlOFlhgJUy/23nt8E3XkBUwt2fp5w=;
+        b=dvHnG7iDG0W79pgxSUvSrwTmGOtdbod+NXVXJ27rz1cMklfqe9tTvFOl3jZJ86g0ym
+         GwQFmJL7s09OO1xc+qlaEwVFvWZaKkvnvT/W4Kmbl9lnqWW+q0KBqXdMTevvwxGpFBHL
+         N56SDcYAC4a3WwSoEVGt7Y21QE6AelrfgRO6PE3RaOh7wTA7NaresmHAFC1zmzkKfN9L
+         PA34EeWE28N//UtzTvsrVSLn16GxlZtmwthGLKAgD05iSoJUxqCq92iacjEj9tR0aQoc
+         T2XJti/S/n+ryjzMHXCQ0rf0bqI6lPv1XlbQYPaMi8xcHrdEyCqAgg46Cp/eigfyY5Gr
+         Sq5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721745649; x=1722350449;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=T3K8m7UYLI9e2nw2FiKuLBXvna2sOiFY/YtJCGaVVwg=;
-        b=KhSsabSeKvwFhqfT5LnfiQ/5zY6JWhqW2kiso6CadiybT02qjBj55AruIEEYIAMUmD
-         KqcnXO5gL3g0hwFs70LtFMk4ZqmDaTfy3Nj1e5ZnNniXS05Nq17xrt8H5gzueVcjLsYu
-         fzY1lxbG8hhhKC5qptmlYkTQ0kJMO/Nf9gqiEiZpNHLsI/23D06sNqqdv75k7/lw5olE
-         +XJ4WTYDct5TkJ44862iOx9NDUsBjhk9zfXlfkqVUuTSv4mMAPS9uX2DHihOjYQZst+F
-         ZufTNGNPn9IgT2iRVRAx4leiigcQ50CbIvKCbB1mM4V40dWbOGO/y57kxNHkX2B17pDK
-         Tx8A==
-X-Forwarded-Encrypted: i=1; AJvYcCUg7diScJzW0uxcx6oEjrq9xZBtS5u2C/7iC6aJZ7fyV/sFtMSXRKEW9E0KtL4QdH8Jb3iIVuE6mDi40WwRyaHO2zQLzJLhJsqu3w/Kyw==
-X-Gm-Message-State: AOJu0YwY56afMs88y0mcWJrWhttNBtBusHXeqevpyREybm5eMLIw9U1G
-	WvsCLkvo36ZpVzDNYPiLOhEm3dQcWulwewX3nzhD/IF39pI3YlzyEITfpubSYys=
-X-Google-Smtp-Source: AGHT+IGlwpdFnzbN5dFR3IJlUvCm4jcY/F9lixNZD/n0wR4wTR15Py/Fg3+cKLPkHHM/vuMRaPpzDw==
-X-Received: by 2002:a05:6000:4026:b0:367:8a3b:2098 with SMTP id ffacd0b85a97d-369bbbb2e21mr7254343f8f.3.1721745649159;
-        Tue, 23 Jul 2024 07:40:49 -0700 (PDT)
-Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-368787cf182sm11760210f8f.82.2024.07.23.07.40.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Jul 2024 07:40:48 -0700 (PDT)
-Message-ID: <0d5d3918-3988-4d29-8bb3-aaf7b0aa0045@freebox.fr>
-Date: Tue, 23 Jul 2024 16:40:47 +0200
+        d=1e100.net; s=20230601; t=1721745971; x=1722350771;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TGhe5Ex1bPFfV1vlOFlhgJUy/23nt8E3XkBUwt2fp5w=;
+        b=xObBD29GGNngWWddvorHOoDOYN659/cPIS7TuPVy4u9Je4qG3HrLobyPdDd/xBtiFI
+         GJTxor2X9qQKsOgm4I8aZihwlfzBNCjnkcTk3vl/BHOg32vHjwK4Uz9phWUZNjxtnXFG
+         PMGK3nNjL9DNY394VlGuXWf5rRocO82YZbtKmILjNke4t9JXZV/d7zCEHPO+UolOnX7S
+         NvB8Nu2O0TrwoQMfzg30Je6H1pct+X3WpADIFhBLPhPtSJGCBDC7on7ghz7SH6Lwtezq
+         u8bnjX6J8NHCP5t4dkoczvQYm3OWSCxcTSWBQ2InWnonwwC+mMXj/evSF9jpIRhOoAt9
+         Bgew==
+X-Forwarded-Encrypted: i=1; AJvYcCWsES82akKa1Gz7ykxh1huqRQVh8CVjicExgthtBCiDviNryZ55F4IEFlCtOH4C1sY1cJThgk+wJ67VPES9e17cISEiMzJjbFWDfXhe0w==
+X-Gm-Message-State: AOJu0YzJ57VgJB47/WR43bbpiFdTT3Ir7Ne533VNyJ8Z3D5Yh9XtxVzp
+	/7HqgZBnYnzweHqWGz/tjlOf6STp6D0wx7yr596eGICC1WbBuUy+PpPt7jlMHVw=
+X-Google-Smtp-Source: AGHT+IE6FPRxaRZAelP7XYoRe2kh2fF3fU2NbulOmAczM715i/eTYrmwCoGSdVXZHnXFZX+KM1NhGg==
+X-Received: by 2002:a50:a6ce:0:b0:57d:2659:9141 with SMTP id 4fb4d7f45d1cf-5a47b0e7da1mr5752175a12.24.1721745971395;
+        Tue, 23 Jul 2024 07:46:11 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.219.137])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5a30c2f88a5sm7592422a12.77.2024.07.23.07.46.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jul 2024 07:46:10 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Banajit Goswami <bgoswami@quicinc.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	alsa-devel@alsa-project.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] ASoC: codecs: lpass-wsa-macro: Do not hard-code dai in VI mixer
+Date: Tue, 23 Jul 2024 16:46:07 +0200
+Message-ID: <20240723144607.123240-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/4] arm64: dts: qcom: add HDMI nodes for msm8998
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
- <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- Arnaud Vrac <avrac@freebox.fr>, Pierre-Hugues Husson <phhusson@freebox.fr>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>
-References: <20240627-hdmi-tx-v5-0-355d5c1fbc3c@freebox.fr>
- <20240627-hdmi-tx-v5-4-355d5c1fbc3c@freebox.fr>
- <d9898342-2439-4d3d-8e3d-5bf0a7a40245@linaro.org>
- <b6f6c845-6094-44ce-8ad0-ed4f6d353cec@freebox.fr>
- <CAA8EJpqrAFKCr63JHEpZ3b3zdRfoNXoJP6SqKDOO4sqc=c6YdQ@mail.gmail.com>
- <44101ecd-61f4-4609-bb22-12b40b692552@freebox.fr>
- <CAA8EJpprtmefNM_CJFRbYVNxOWUVVWbedBq44r7GXOdDrQ2WjA@mail.gmail.com>
- <04ef978f-2bfd-46cc-a9f7-40a6f1c507f8@linaro.org>
- <7d34a857-6495-482b-9070-1817c88c9913@freebox.fr>
- <45f5dae6-c606-4612-900a-b719f58d92ce@linaro.org>
- <a8c7db04-7212-4bf0-b8b1-d371ee33478b@freebox.fr>
- <57c165e6-d942-4a17-a26b-7e4a0422127c@linaro.org>
-Content-Language: en-US
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <57c165e6-d942-4a17-a26b-7e4a0422127c@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 23/07/2024 15:43, Konrad Dybcio wrote:
+The wsa_macro_vi_feed_mixer_put() callback for setting VI feedback mixer
+value could be used for different DAIs (planned in the future CPS DAI),
+so make the code a bit more generic by using DAI ID from widget->shift,
+instead of hard-coding it.  The get() callback already follows such
+convention.
 
-> On 23.07.2024 3:38 PM, Marc Gonzalez wrote:
->
->> On 23/07/2024 15:08, Konrad Dybcio wrote:
->>
->>> On 23.07.2024 2:57 PM, Marc Gonzalez wrote:
->>>
->>>> On 23/07/2024 13:45, Konrad Dybcio wrote:
->>>>
->>>>> On 23.07.2024 11:59 AM, Dmitry Baryshkov wrote:
->>>>>
->>>>>> On Tue, 23 Jul 2024 at 12:48, Marc Gonzalez wrote:
->>>>>>
->>>>>>> On 16/07/2024 18:37, Dmitry Baryshkov wrote:
->>>>>>>
->>>>>>>> No, that's fine. It is the SMMU issue that Konrad has been asking you
->>>>>>>> to take a look at.
->>>>>>>
->>>>>>> Context:
->>>>>>>
->>>>>>> [    4.911422] arm-smmu cd00000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x0
->>>>>>> [    4.923353] arm-smmu cd00000.iommu: FSYNR0 = 00000021 [S1CBNDX=0 PNU PLVL=1]
->>>>>>> [    4.927893] arm-smmu cd00000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x0
->>>>>>> [    4.941928] arm-smmu cd00000.iommu: FSYNR0 = 00000021 [S1CBNDX=0 PNU PLVL=1]
->>>>>>> [    4.944438] arm-smmu cd00000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x0
->>>>>>> [    4.956013] arm-smmu cd00000.iommu: FSYNR0 = 00000021 [S1CBNDX=0 PNU PLVL=1]
->>>>>>> [    4.961055] arm-smmu cd00000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x0
->>>>>>> [    4.974565] arm-smmu cd00000.iommu: FSYNR0 = 00000021 [S1CBNDX=0 PNU PLVL=1]
->>>>>>> [    4.977628] arm-smmu cd00000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x0
->>>>>>> [    4.989670] arm-smmu cd00000.iommu: FSYNR0 = 00000021 [S1CBNDX=0 PNU PLVL=1]
->>>>>>>
->>>>>>>
->>>>>>> As I mentioned, I don't think I've ever seen issues from cd00000.iommu
->>>>>>> on my board.
->>>>>>
->>>>>> Interestingly enough, I can also see iommu errors during WiFi startup
->>>>>> / shutdown on msm8998 / miix630. This leads me to thinking that it
->>>>>> well might be that there is a missing quirk in the iommu driver.
->>>>>>
->>>>>>> I can test a reboot loop for a few hours, to see if anything shows up.
->>>>>>
->>>>>> Yes, please.
->>>>>
->>>>> Yeah I do trust you Marc that it actually works for you and I'm not
->>>>> gonna delay this series because of that, but please go ahead and
->>>>> reboot-loop your board
->>>>>
->>>>> 8998/660 is """famous""" for it's iommu problems
->>>>
->>>> [   20.501062] arm-smmu 16c0000.iommu: Unhandled context fault: fsr=0x402, iova=0x00000000, fsynr=0x1, cbfrsynra=0x1900, cb=0
->>>>
->>>> I get the above warning pretty reliably.
->>>> I don't think it's related to the issue(s) you mentioned.
->>>> System just keeps plodding along.
->>>
->>> Yeah that one's "fine"
->>
->> I booted 40 times in a loop.
->>
->> `grep -a -i FSYNR console.logs` just returns the same 16c0000.iommu
->> "Unhandled context fault" message 76 times (as above).
->>
->> NB: I have maxcpus=1 set in bootargs.
->>
->> Could the iommu issue be a race condition, NOT triggered when code
->> runs with less parallelism?
-> 
-> No clue, can you try without maxcpus=1?
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ sound/soc/codecs/lpass-wsa-macro.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-Same behavior without maxcpus=1
-
-40 boots, no panics, no FSYNR other than 16c0000.iommu
-
-> The thing will likely run slower (because reasons), but shouldn't
-> explode
-
-That makes sense!
-
-- Hey, boot is slow. What can we do to make it slower?
-- Well, just add a bunch of cores running in parallel, that will get the job done!
-
-As a matter of fact, trying to boot to command-line with
-maxcpus=1 causes the system to lock up & reboot.
-I had to add a systemd script to enable some cores at init.
-Some qcom daemon must be locking a core & expect progress
-from another process.
-
-Regards
+diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
+index 8351f0974e6a..4158657914fb 100644
+--- a/sound/soc/codecs/lpass-wsa-macro.c
++++ b/sound/soc/codecs/lpass-wsa-macro.c
+@@ -2296,36 +2296,37 @@ static int wsa_macro_vi_feed_mixer_put(struct snd_kcontrol *kcontrol,
+ 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
+ 	u32 enable = ucontrol->value.integer.value[0];
+ 	u32 spk_tx_id = mixer->shift;
++	u32 dai_id = widget->shift;
+ 
+ 	if (enable) {
+ 		if (spk_tx_id == WSA_MACRO_TX0 &&
+ 			!test_bit(WSA_MACRO_TX0,
+-				&wsa->active_ch_mask[WSA_MACRO_AIF_VI])) {
++				&wsa->active_ch_mask[dai_id])) {
+ 			set_bit(WSA_MACRO_TX0,
+-				&wsa->active_ch_mask[WSA_MACRO_AIF_VI]);
+-			wsa->active_ch_cnt[WSA_MACRO_AIF_VI]++;
++				&wsa->active_ch_mask[dai_id]);
++			wsa->active_ch_cnt[dai_id]++;
+ 		}
+ 		if (spk_tx_id == WSA_MACRO_TX1 &&
+ 			!test_bit(WSA_MACRO_TX1,
+-				&wsa->active_ch_mask[WSA_MACRO_AIF_VI])) {
++				&wsa->active_ch_mask[dai_id])) {
+ 			set_bit(WSA_MACRO_TX1,
+-				&wsa->active_ch_mask[WSA_MACRO_AIF_VI]);
+-			wsa->active_ch_cnt[WSA_MACRO_AIF_VI]++;
++				&wsa->active_ch_mask[dai_id]);
++			wsa->active_ch_cnt[dai_id]++;
+ 		}
+ 	} else {
+ 		if (spk_tx_id == WSA_MACRO_TX0 &&
+ 			test_bit(WSA_MACRO_TX0,
+-				&wsa->active_ch_mask[WSA_MACRO_AIF_VI])) {
++				&wsa->active_ch_mask[dai_id])) {
+ 			clear_bit(WSA_MACRO_TX0,
+-				&wsa->active_ch_mask[WSA_MACRO_AIF_VI]);
+-			wsa->active_ch_cnt[WSA_MACRO_AIF_VI]--;
++				&wsa->active_ch_mask[dai_id]);
++			wsa->active_ch_cnt[dai_id]--;
+ 		}
+ 		if (spk_tx_id == WSA_MACRO_TX1 &&
+ 			test_bit(WSA_MACRO_TX1,
+-				&wsa->active_ch_mask[WSA_MACRO_AIF_VI])) {
++				&wsa->active_ch_mask[dai_id])) {
+ 			clear_bit(WSA_MACRO_TX1,
+-				&wsa->active_ch_mask[WSA_MACRO_AIF_VI]);
+-			wsa->active_ch_cnt[WSA_MACRO_AIF_VI]--;
++				&wsa->active_ch_mask[dai_id]);
++			wsa->active_ch_cnt[dai_id]--;
+ 		}
+ 	}
+ 	snd_soc_dapm_mixer_update_power(widget->dapm, kcontrol, enable, NULL);
+-- 
+2.43.0
 
 
