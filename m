@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-26842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 882E3939897
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 05:15:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A018B9398B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 05:38:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B2BA11C2187B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 03:15:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 60A52282A5E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 03:38:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B160F13958C;
-	Tue, 23 Jul 2024 03:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44BFD13B2A8;
+	Tue, 23 Jul 2024 03:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="H+L/wcWY"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CPTBUqOo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05901E4AE;
-	Tue, 23 Jul 2024 03:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4D42C9D;
+	Tue, 23 Jul 2024 03:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721704542; cv=none; b=Pu7hG/k2i2H0Cm8uMVbhTUqY59WmTZucOuL8+Uw70fPdSYuryHx33ZeBGYMrCr4dxV8hYXF/PymfItrVJBi4/sCOeWtw3xj1se4SgJrWlrwQrNjR14B0csRP8MTqPxObvH5V7HVQ13lBqCxLQZKvIAVwtiz28uNhUaPzTWcxDTM=
+	t=1721705882; cv=none; b=N22xfERxfcxMcZcYFd3R/V+sBsPivw6X9hzojzi6UJmAwRqS0cq7z0GHVDsWJnMsA3Ci3Ag07dzvs2OxOETToLtDOepp9yMa2KZqMeINPHARsdbEJU08U7hYWKyU4JaVc1NfBlSDL2uBWzbJPLLFb5G9QT+VSFoMBx+Qx3NBMJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721704542; c=relaxed/simple;
-	bh=iSOFaeD86UGMPL4JJ3DmMtQNKs9kFCexcgKqQKNJsoc=;
+	s=arc-20240116; t=1721705882; c=relaxed/simple;
+	bh=av4nnq2UyFrGFqUgLcItP/04XGvmpJVv15UHd5UAA8I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=PkWS2Tdr58TTmH0W0slepiPov31gek3QQwmBnTdukRZCULVKLM/D0a5E5JOYDlBosyhtoZKRbQNKOyT7vreLpkOQYOAKMlryw4AQi+gO4Cd5hI4R30LxSSa5q/GCWNYqpp7Lunz1eop9ZXJ+QkRaEjucxhM2AuQalhgrbl9aZ/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=H+L/wcWY; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=dt4l7diE25eqN9LOkxstcsjZckKxdhOgZRs6ckgdrUefB5RDe5lZUvKDEBZ1lgHVdHOtNQM6M9cqnVazCooWM/iWQaiEKuBW6z/gcNb+ye4zP3z51t1mO3RaR1Hr+5wJLbS2t1ZeBwShht3RbtICW5cCVnd6GLrtyTAPWAd+bYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CPTBUqOo; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46MNNvTl016652;
-	Tue, 23 Jul 2024 03:15:34 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46MJNjwc014036;
+	Tue, 23 Jul 2024 03:37:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JDK9Qa40SE2RbF1J8N6jdHGbtx3jxSOkp8qLxvqIbjc=; b=H+L/wcWYaB0J2Zc2
-	UkNNrOuqGpr/RdFc0FizS8sG2mbJjBNUxo2ZorNoOqT9BYKH//woSy50NAyBvOG5
-	zK8T+m+cG7Lck8/MeWX74VycwG2LY8uFjTgaeU8ixuQWxc4jLe0nTxXYkbp0HQf0
-	/wWJn1KWFKFhwVcWWxbtCWbsliAFIFIzBdrn2w9I15vZ7xES2hPuB50wVBHCFjEt
-	YIHt+bGQShKuAlAQmdk2+yt1ES8QPB404KCYwx1pRifWq14KqyniCQPGEDFxwogu
-	DpQIvfmtods7+lz+iaUpxCMhOA//HDsAdxjym0bFpGZpWNs/UPmBptOHX6/nKnhx
-	ACrHwQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g5m6wh03-1
+	ZlgAt45pyKKvWtNr9nbveSfR/vxlIg0Z3D2jQe/f9PU=; b=CPTBUqOo07AbodG5
+	ERZrTUp10big1uYFflAXrCWrUSw/RKe9nSj6fwAQamcJaB8BVLy2/GOuV0ChtwlA
+	75hmyTLWdQqzoAUJtMCAO6dnLVWff4N8Ul8FxOeNk5wIb72zlwEqkUpqCHtjc8Bp
+	fVkUQDJ9DJv2yuinkW3wbCiR2YkArAalSXme6ySTeQoSIftoI/j82qNJQuhJdcwR
+	5ab8fAloyJdQpTqRjwPPZWDI6SWN639FjMnSFGLQmEWe9/Vq5EFdcbVHhcHOlz5P
+	clzS0srWYwLKEZY9sPYdc8wkTjcU39s2Pxhl30mFhFAMKng9DgDW0E2RmjtxVTyQ
+	mHdtOw==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g5m6wjd2-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jul 2024 03:15:34 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46N3FXiT031575
+	Tue, 23 Jul 2024 03:37:42 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46N3bekP004658
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jul 2024 03:15:33 GMT
-Received: from [10.239.154.73] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 23 Jul 2024 03:37:40 GMT
+Received: from [10.216.60.30] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 22 Jul
- 2024 20:15:28 -0700
-Message-ID: <b2c4d8da-780b-470d-87ee-263cafb050e8@quicinc.com>
-Date: Tue, 23 Jul 2024 11:15:26 +0800
+ 2024 20:37:35 -0700
+Message-ID: <4662b4fb-8ef2-4a4b-adef-e862090defd7@quicinc.com>
+Date: Tue, 23 Jul 2024 09:07:32 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,69 +65,95 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND v3] leds: flash: leds-qcom-flash: limit LED current
- based on thermal condition
-To: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        Pavel Machek
-	<pavel@ucw.cz>, Lee Jones <lee@kernel.org>
-CC: <linux-leds@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "David
- Collins" <quic_collinsd@quicinc.com>,
-        Subbaraman Narayanamurthy
-	<quic_subbaram@quicinc.com>
-References: <20240705-qcom_flash_thermal_derating-v3-1-8e2e2783e3a6@quicinc.com>
+Subject: Re: [PATCH v7 2/4] PCI: qcom-ep: Add support for D-state change
+ notification
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        "Manivannan
+ Sadhasivam" <manivannan.sadhasivam@linaro.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Kishon Vijay Abraham I
+	<kishon@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>, Jonathan Corbet
+	<corbet@lwn.net>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring
+	<robh@kernel.org>
+CC: <linux-pci@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <mhi@lists.linux.dev>, <quic_vbadigan@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_skananth@quicinc.com>, <quic_parass@quicinc.com>,
+        Manivannan Sadhasivam
+	<mani@kernel.org>
+References: <20240710-dstate_notifier-v7-0-8d45d87b2b24@quicinc.com>
+ <20240710-dstate_notifier-v7-2-8d45d87b2b24@quicinc.com>
 Content-Language: en-US
-From: Fenglin Wu <quic_fenglinw@quicinc.com>
-In-Reply-To: <20240705-qcom_flash_thermal_derating-v3-1-8e2e2783e3a6@quicinc.com>
+From: Yogesh Jadav <quic_yjadav@quicinc.com>
+In-Reply-To: <20240710-dstate_notifier-v7-2-8d45d87b2b24@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: f_v9o3rIQXJo7S6wc02iD-69h5dl3GTV
-X-Proofpoint-ORIG-GUID: f_v9o3rIQXJo7S6wc02iD-69h5dl3GTV
+X-Proofpoint-GUID: t283ZWU0wXzkdRumSYbkiu-xLkwsxvHu
+X-Proofpoint-ORIG-GUID: t283ZWU0wXzkdRumSYbkiu-xLkwsxvHu
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-22_18,2024-07-22_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- mlxlogscore=894 adultscore=0 bulkscore=0 mlxscore=0 spamscore=0
+ mlxlogscore=999 adultscore=0 bulkscore=0 mlxscore=0 spamscore=0
  priorityscore=1501 lowpriorityscore=0 clxscore=1011 malwarescore=0
  impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407230023
+ engine=8.19.0-2407110000 definitions=main-2407230025
 
 
 
-On 7/5/2024 3:55 PM, Fenglin Wu via B4 Relay wrote:
-> From: Fenglin Wu <quic_fenglinw@quicinc.com>
+On 7/10/2024 4:38 PM, Krishna chaitanya chundru wrote:
+> Add support to pass D-state change notification to Endpoint
+> function driver.
+> Read perst value to determine if the link is in D3Cold/D3hot.
 > 
-> The flash module has status bits to indicate different thermal
-> conditions which are called as OTSTx. For each OTSTx status,
-> there is a recommended total flash current for all channels to
-> prevent the flash module entering into higher thermal level.
-> For example, the total flash current should be limited to 1000mA/500mA
-> respectively when the HW reaches the OTST1/OTST2 thermal level.
-> 
-> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 > ---
-> Changes in v3:
-> - Fix coding style issues to address review comments in v2.
-> - Link to v2: https://lore.kernel.org/r/20240513-qcom_flash_thermal_derating-v2-1-e41a07d0eb83@quicinc.com
+>   drivers/pci/controller/dwc/pcie-qcom-ep.c | 8 +++++++-
+>   1 file changed, 7 insertions(+), 1 deletion(-)
 > 
-> Changes in v2:
-> - Update thermal threshold level 2 register definition for mvflash_4ch_regs.
->      Mvflash_4ch module thermal threshold level 2 configuration register
->      offset is 0x78, not succeeding from thermal threshold level 1 register 0x7a.
->      Hence it is not appropriate to use REG_FIELD_ID to define thermal threshold
->      register fileds like mvflash_3ch. Update to use REG_FIELD instead.
-> - Link to v1: https://lore.kernel.org/r/20240509-qcom_flash_thermal_derating-v1-1-1d5e68e5d71c@quicinc.com
-> ---
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> index 236229f66c80..817fad805c51 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> @@ -648,6 +648,7 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
+>   	struct device *dev = pci->dev;
+>   	u32 status = readl_relaxed(pcie_ep->parf + PARF_INT_ALL_STATUS);
+>   	u32 mask = readl_relaxed(pcie_ep->parf + PARF_INT_ALL_MASK);
+> +	pci_power_t state;
+>   	u32 dstate, val;
+>   
+>   	writel_relaxed(status, pcie_ep->parf + PARF_INT_ALL_CLEAR);
+> @@ -671,11 +672,16 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
+>   		dstate = dw_pcie_readl_dbi(pci, DBI_CON_STATUS) &
+>   					   DBI_CON_STATUS_POWER_STATE_MASK;
+>   		dev_dbg(dev, "Received D%d state event\n", dstate);
+> -		if (dstate == 3) {
+> +		state = dstate;
+Can we use some meaningful name for variable "state" ? There is 
+different purpose of variable "state" and "dstate" which is not getting 
+reflected by looking variable names.
 
-Hi Jones,
-
-Can you help to review the change again when you are available?
-
-Fenglin
+- Yogesh
+> +		if (dstate == PCI_D3hot) {
+>   			val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
+>   			val |= PARF_PM_CTRL_REQ_EXIT_L1;
+>   			writel_relaxed(val, pcie_ep->parf + PARF_PM_CTRL);
+> +
+> +			if (gpiod_get_value(pcie_ep->reset))
+> +				state = PCI_D3cold;
+>   		}
+> +		pci_epc_dstate_notify(pci->ep.epc, state);
+>   	} else if (FIELD_GET(PARF_INT_ALL_LINK_UP, status)) {
+>   		dev_dbg(dev, "Received Linkup event. Enumeration complete!\n");
+>   		dw_pcie_ep_linkup(&pci->ep);
 > 
-> Best regards,
 
