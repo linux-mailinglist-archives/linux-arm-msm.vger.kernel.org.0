@@ -1,132 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-26847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE2C0939C26
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 10:01:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A765E939C4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 10:12:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F6F91F22AF8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 08:01:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63C022832E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 08:12:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E96D14B964;
-	Tue, 23 Jul 2024 08:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE2C014B97E;
+	Tue, 23 Jul 2024 08:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UpaNtI6K"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vt9Y7TAP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D827910979;
-	Tue, 23 Jul 2024 08:01:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E52313D537;
+	Tue, 23 Jul 2024 08:12:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721721700; cv=none; b=OJccnGC8DuiWCRm5b751mvmMWpXurQeB2jPzoFtxpTdP85xDetogP6bTCwwHhVcvuQoMsfL+MU6rgLAhnEi/VBgyZiC6eZiBEYTeU6l9ba6repqtf9t4FjXvySj//JprnmeaSyOnu9aC0HTvsUlknVBOOL/keR3heOrC0CLVQa8=
+	t=1721722340; cv=none; b=ui7TYrAWTxGWD22znytFwBJ93T2zXdpNX7CpmrgzN2nc9pLRKIOGmpoJZe8i1994xcHSSJ3hJmRDnLurTNoT237yBQu7KObI7JN6l4vnk1Stk3UzHCvQmdWc7xJxNuvoMWAYLFBFC5fIpM37gQR+GA32XBODU8aGcmOfc42bNiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721721700; c=relaxed/simple;
-	bh=6pC2CGMi7y+367UwIGfE1eM5H+1abrAobyq5FKNJArA=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=NkUkh9TmpqhoG6yNU3FED6OI1M0voW8zaWiwKJSqZJR7hYYRQeV5ZXi3SbMqVkWPpQWdaLVskTnF9RPgWRjKzQn6R7Ron/S4hW+cSVSmgbp9HV5d67mGzqwXmBwE81GWisGIWY7uhtVC0iGU6KkFgsID2lL44HzSHuhPIg86XVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UpaNtI6K; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46MMrIB5025831;
-	Tue, 23 Jul 2024 08:01:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:message-id:mime-version:subject:to; s=
-	qcppdkim1; bh=7lpUyfM1QRYB3NgtgCJcU7ncD7VavjZxyTa6XjbYDH0=; b=Up
-	aNtI6KmG4TDZtYx5C79kDqGTxa22qq3UuxWNpHrDBNOptAaN8toDFeSlhOq6R1nt
-	UdnX1JZiL4SkorymmazQZ1qzyplCLL6toa+cLy2zU1HwOGVwvN2tEjCZ6GvwoJoE
-	hPKzu7Wn2nFBXIo05hEDSTfUTNiWRFDgpYRj7Yj664QlyGsjcdW85vnjyVapW5mT
-	OcWFH9n27XqOtedHw4wBdAAPzrKJR9JnBRy3/HsRNNdFDC/5qiknSEdu82lk1HHn
-	rtU/aoEDFzTm66rYZzox6ANlU9HtxbN3WFJx2hwEBQkXc/1MobRpprIsxsTqoyIi
-	RqFyVLstRbaQZC6tbnKQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g60jwuna-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jul 2024 08:01:29 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46N81S0O012311
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 23 Jul 2024 08:01:28 GMT
-Received: from hu-qqzhou-sha.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 23 Jul 2024 01:01:25 -0700
-From: Qingqing Zhou <quic_qqzhou@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <ahalaney@redhat.com>,
-        <manivannan.sadhasivam@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>,
-        Qingqing Zhou
-	<quic_qqzhou@quicinc.com>
-Subject: [PATCH v2] arm64: dts: qcom: sa8775p: Mark APPS and PCIe SMMUs as DMA coherent
-Date: Tue, 23 Jul 2024 13:29:48 +0530
-Message-ID: <20240723075948.9545-1-quic_qqzhou@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+	s=arc-20240116; t=1721722340; c=relaxed/simple;
+	bh=Nci5shqAtW9z0JkmjWOgIm73ZkR48ZhIoecaqh1v3o8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qJn1sEPdLQ3p5yYAMjYKkeEEYx0CcnboF4AYcbguwpXh0zliKG8MZYUgnoMQJi3tW3mabENAanoBoC4Frut5Tod2vChTL5qBqNPrx0xGl/X/hjMqdkQtjU7rPN1QfXLLdJMp/gitoA1JguzSjoaecbI7maMkgCiJ64YAGpE72qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vt9Y7TAP; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4266fd395eeso37237855e9.3;
+        Tue, 23 Jul 2024 01:12:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1721722337; x=1722327137; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=CM4w3yMUgJIqK5vukbkmgWzrmH9HIfj5GBxrPyujkoo=;
+        b=Vt9Y7TAPHO42cdP9kuxgEHNLIZ18qHVH1S4Te6ITcrEjOdNSWVhDfQurmtvvQ7tQtA
+         9kGr1PQygh4djm8RATwwsEM9MDhxXfSRp9tNjOFsVI3fmL1kqxIaUxMN1ieQg97qY4ky
+         V5BRFPxO3ofS6Y6D4ifOFz1yDVQ4jLtzZqXbgXiy2kGWWIGX5O0RxH3b1AV6GTNnMMMB
+         JQ04SXLNyLVTWhdGrBxWPx87y8tlDiTV6HApXglhzLR3xqcVUnK1u+iQAkfK8xHXApDZ
+         8pm35yk/M4W2z70Il2bCqVyguCqp68mewiSqSGmx01wWk8tjt56A2nk+mdcaJdkwZK73
+         RjpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721722337; x=1722327137;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CM4w3yMUgJIqK5vukbkmgWzrmH9HIfj5GBxrPyujkoo=;
+        b=lTWsGBzo2YwTv4JWO33D/2iXXhrIKtFp0AJHbLXGL3rmsA2q6/t7AYk7kN6L3Hd1oZ
+         srfrLBL8aw+LhmOVwIxMDcQKIF6sKQnWs4d3Mf7DN62Cz8EM8NramVrXAu+4cllm+nWu
+         3MOt8xhb9Hu7zxo5kGm3c+5A0YCppSG33+XlJdfDOyK9arlCbW+MaJMS20yYe2mAQX+I
+         t6K22XTXSlZcIYE5fSosg2YQQOVMoECFAZjjWiIExDnjbaRrTx7W3fPZHNJ+bTuUNLdD
+         ECb6IAyh2dpqRjFoHyj2vK3HJ4ZiKAiq4OvAslQInwek8aWaLjiWDjA1NBiDJXinFmpa
+         TJvw==
+X-Forwarded-Encrypted: i=1; AJvYcCUZX6txbcQ8z2Fzh6znWozu4Bag3RoZj7+xkGnkKrdp5yPyynZpYkAE+fD9OJg+vP+yVDHiV3YUW+ywLHZgdN+3Fh2dJ9Z/9Gj6H6YNu5wh0zeSuftj8ofqqSEPHFfmLNtHIq6oQ+1t+UkZEiBxsXMKLyHLJztsSPGw5SmrbAZjIA==
+X-Gm-Message-State: AOJu0YzgIhYO2xO8E3/eQVtIzUzggygvcAkgk93pOXthJ5H3SrIkVfPk
+	mwfNZ8vn8tPmpXBPV65FcpijzcI6ZtJHIpAyqlIydLMT/5qdG2Qb2GLi2A==
+X-Google-Smtp-Source: AGHT+IGJE1wZqeFHBiyy+ylY8S4SnHpUlSQBmitgx5l16e03ZYBnGsY5VZLmBRk8/HwaYXIe1VT/jg==
+X-Received: by 2002:a05:600c:4f8e:b0:427:98b4:624b with SMTP id 5b1f17b1804b1-427df7aa65bmr52889685e9.24.1721722337240;
+        Tue, 23 Jul 2024 01:12:17 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.137])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-427d2a53ccfsm186865295e9.11.2024.07.23.01.12.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 Jul 2024 01:12:16 -0700 (PDT)
+Message-ID: <7ae04ef2-bbd2-4e62-bf66-e61f64b12579@gmail.com>
+Date: Tue, 23 Jul 2024 10:12:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 0XTLzj6SSnCR63HGHrND1hgXHa-GCfYh
-X-Proofpoint-GUID: 0XTLzj6SSnCR63HGHrND1hgXHa-GCfYh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-22_18,2024-07-23_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=794
- priorityscore=1501 bulkscore=0 impostorscore=0 lowpriorityscore=0
- mlxscore=0 suspectscore=0 phishscore=0 clxscore=1011 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407230058
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] arm64: dts: qcom: sa8775p: Mark APPS and PCIe SMMUs as
+ DMA coherent
+To: Qingqing Zhou <quic_qqzhou@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, ahalaney@redhat.com, manivannan.sadhasivam@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20240723075948.9545-1-quic_qqzhou@quicinc.com>
+From: Krzysztof Kozlowski <k.kozlowski.k@gmail.com>
+Content-Language: en-US
+Autocrypt: addr=k.kozlowski.k@gmail.com; keydata=
+ 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
+ IS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20240723075948.9545-1-quic_qqzhou@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-The SMMUs on sa8775p are cache-coherent. GPU SMMU is marked as such,
-mark the APPS and PCIe ones as well.
+On 23/07/2024 09:59, Qingqing Zhou wrote:
+> The SMMUs on sa8775p are cache-coherent. GPU SMMU is marked as such,
+> mark the APPS and PCIe ones as well.
+> 
+> Fixes: 603f96d4c9d0 ("arm64: dts: qcom: add initial support for qcom sa8775p-ride")
+> Fixes: 2dba7a613a6e ("arm64: dts: qcom: sa8775p: add the pcie smmu node")
+> 
 
-Fixes: 603f96d4c9d0 ("arm64: dts: qcom: add initial support for qcom sa8775p-ride")
-Fixes: 2dba7a613a6e ("arm64: dts: qcom: sa8775p: add the pcie smmu node")
+For the future: there is never, never a line break between tags.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Qingqing Zhou <quic_qqzhou@quicinc.com>
----
-Changes in v2:
-  - Add the Fixes tags.
-  - Update the commit message.
-  - Link to v1: https://lore.kernel.org/lkml/20240715071649.25738-1-quic_qqzhou@quicinc.com/
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 23f1b2e5e624..95691ab58a23 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -3070,6 +3070,7 @@
- 			reg = <0x0 0x15000000 0x0 0x100000>;
- 			#iommu-cells = <2>;
- 			#global-interrupts = <2>;
-+			dma-coherent;
- 
- 			interrupts = <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>,
-@@ -3208,6 +3209,7 @@
- 			reg = <0x0 0x15200000 0x0 0x80000>;
- 			#iommu-cells = <2>;
- 			#global-interrupts = <2>;
-+			dma-coherent;
- 
- 			interrupts = <GIC_SPI 920 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 921 IRQ_TYPE_LEVEL_HIGH>,
--- 
-2.17.1
+Best regards,
+Krzysztof
 
 
