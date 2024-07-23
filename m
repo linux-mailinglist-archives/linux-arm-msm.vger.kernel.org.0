@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-26909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A50C93A182
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 15:32:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5069F93A1B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 15:38:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B6BC71F22D3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 13:32:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DC2FD1F228FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 13:38:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D077F153575;
-	Tue, 23 Jul 2024 13:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A3EA1534FC;
+	Tue, 23 Jul 2024 13:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mZmcCcI1"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="fN81/OOc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E020153569
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 13:31:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E67208A0
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 13:38:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721741519; cv=none; b=oz5iiIFIlnuBDd1WzV5Wq0BjNJ5w+2TliLStH6vL/IM8XwYBvZKPSuAuhVW5NHdm+kNMhGPaogyDVxHg7hBJqLj1YUntGn44l2zRdH9siahj1N6RXz/L6+JBNJVfG/eMb4alMuqwb+kaw5wExYjEjziS86L8dnmvnBTQ19r7Yb0=
+	t=1721741907; cv=none; b=fMX/FYkX9YbEplBbBr6a9tJhNIosfuhsAMsD1xu4ZUwTeqedOtGSQYtRuuKNkrMiaV97km/FYOXdOvPr0SGoV9h3rClJAly3iPNj4350E0VGQBdiDb+0QKdwNNRjbk4+geuJ36fzsfjOfWxF2o4toUkBdEI8R6tcQH9TDtaKtHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721741519; c=relaxed/simple;
-	bh=zCNh2P0/DBwn/kKY0pffdHi0nOLku+i55hHluL8cx5g=;
+	s=arc-20240116; t=1721741907; c=relaxed/simple;
+	bh=+E523LiZG+8eaRFNtnAcYUzaYyDbJAEf5+qMTt8FN/U=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gN3forlCdFM8OFxf8pLvvtXZKp54aaca2QKaiM9VKyOeQrGJNy7AOnCtfIK2FZIqZ4vixAQc6zfqQHkp3q+vPj8np6WAWWkat6Wplm6FZxcGY5T9Bw61B9HLXhSU7AJqi5T6vqyZgTOL9rw7RvgqB9yV16KD5ItMKcVRNzcOG0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mZmcCcI1; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5a1fcb611baso4662775a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 06:31:57 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=RYdoWpUSY5mXQ5ScRy3D3fGyD9Y7DEQ2T3pni4YFMwUOZ3Hzftod4XAvEKj7NV997yE1iH15CjUfHND8KWakXsgiW4AC8VW6tfqke2SCD1m4qavKfqgPk/NGQTotsZoeMj/KLmZv/7uV6zOMDcLHKEupr7PPAI4qSupb2c1tJ9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=fN81/OOc; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4279c10a40eso40383635e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 06:38:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721741516; x=1722346316; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=g8nrhlbIH0Tksi46Uegy0RJi7Yrw8vhJlUCiFl/oSgs=;
-        b=mZmcCcI10DmEixeMdcYIQyguQCQ6wunSVXnioK/nE8+I53+L+P2HyO275IsMPDGxVD
-         Gqo15XoRY0nK49ZsxFTvW0HyaImqxxC8CJYqZDTPvhsKYnLNRluLWm/0ulX4VeMpcPBB
-         vZdxh/ZSLXEbxMUerpxgDenX+CBymhrJS63/N1RVr2PqIFNNrKmUVkFp5YqUgez0Qq26
-         NyxQ547zSrFDVJofzEjsjPHG77DTiM704q0ZNoilGRQUnjksGBd1TYFHPtVDvv2ENc0j
-         L3jhEokiEzPen70bpf/gjopZrPFrifyukGeFlIac+8+QAnCOJoXDaDfCPAezPpLppXlb
-         hTKw==
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1721741903; x=1722346703; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=N3K8G5pHeQAwS16+pZRohvo75/Cf2iIKXzbelmWiAXE=;
+        b=fN81/OOcYQxGIY3wBOzQCWNCOaureVT3GGmeD7X1lXlWAY0gRDf9bOf8yGnHHKzBh9
+         rr46HFfBNTmbuZEzV61wFXH+/pdMG07kHH04gfb58qs3d3264wZDTedVAkU/iI7HIpfe
+         9B3l3WyLFObuwlezwNHhnBklqf72KnIqc6vSAbDQ40hrKy4uU7VytU5I3htLKUGKt6hp
+         5BGYav7NqfRIZYxe+7UtSC2fZUWtnSfIzcjBSvynGD8++o/rMasjgjsTDZ47fu4IumS0
+         Zb0tbJHPKHt4i5RZ4Pbo+ymqL0MLzeT658+3k6JA0bmPR8McjNX7jbs3drY+NNbuGgfq
+         3g+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721741516; x=1722346316;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=g8nrhlbIH0Tksi46Uegy0RJi7Yrw8vhJlUCiFl/oSgs=;
-        b=MU9qcFUPV9joyB3oO53SSrV9cL7fthr46U898f2Zjlq1ZNxSOLd78SH9Dx2C7yDrMz
-         NB0NtIYHvB7Ag2hRzfSwxeMendFE4zHdlAqgP/LiZTUjAatYjzYWF9UCXkQju2aRNmZ2
-         DY0obvQSme7TyeFkBILGfYsSiSCAF45ZwXiBPPg8DW29YYnBviJqlLUxjQwWpgCEhIGm
-         cBf1Samj4bFtmwmQQozevW/bdpoJjVYaNoMsr2LBj6sJwSLJ2VRHEj29Cv+C1R268Nux
-         zr0IEiWs5r3faQW0Fgsodt+7pobuObY20fTjo1IWGe34S22iwAs3cFraAFadga0R6WNn
-         DTrw==
-X-Forwarded-Encrypted: i=1; AJvYcCVOFDx49o8QM3rVTtNRUhwrk1R7Y5khbdY3vwxxGPGKy4viiPz6QfgF5bL1FxOzY/WzdrQhWhQS/cw/sbs3aSCiCYaYsbGMAs0y3FZcRQ==
-X-Gm-Message-State: AOJu0Ywwyl1tYtFxPTQ7s3VXNKKklVTUvXAoy77IVJzVJlpv2dHFcvOi
-	61t7mQ1xOVys/glrI3Kqdy1FXX0+BwxqNpYZnQa4u4PkCuoLz33xkirE0hiwykM=
-X-Google-Smtp-Source: AGHT+IEGNsf51enIuYh1jt7A5JhSN5f+kZKDQoJB+h6ulLScI7FnKYtzzx7GixXw9yc3mCNJZDOkKg==
-X-Received: by 2002:a50:99dd:0:b0:5a0:e62c:61c8 with SMTP id 4fb4d7f45d1cf-5a47bd7c796mr5991436a12.29.1721741515455;
-        Tue, 23 Jul 2024 06:31:55 -0700 (PDT)
-Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5a30c2f8c1bsm7530029a12.60.2024.07.23.06.31.53
+        d=1e100.net; s=20230601; t=1721741903; x=1722346703;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=N3K8G5pHeQAwS16+pZRohvo75/Cf2iIKXzbelmWiAXE=;
+        b=rP0FqW8WlA8fMa3aBSl9hPbfYeGG103nGBzHX9k9APCq3rk3TXfQTM4ggz0+znY8pG
+         my3GEhuszkqZEFr9Z+1fzmMW6c64wk3Nplz5dDrsuawCpGhI5Y5l/ZcWywWqtq+AdJI0
+         jYmx+tF/X1ElS5o/YbHLIzKBanzRfl0thrm1WS+cZLJNpR+kpCMBWqY2ZJWvRqB4e3QT
+         3A3zH/TMZyirW1ryj4W8LtjeWiQYgW5ghBLft1+AogkdvrzF2tKBsvXajz6SNMyj0TKR
+         UQ8aMASXAdSpF/7AO+yJg0BvtRCTg3BP/66bcKJ6H6bpr8s4NutKRoQ8GdtJq8gC7dQq
+         XgZQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUWM8HbBJ+Es8Qw6IFuef13uCg4cS7wT5ekc9NlhN5SPR0SyVdajxDuMgmbgXjO5Lahd/OydUTHoHf6dO9t+/2oOyZi+/Um0F+fHKZcuA==
+X-Gm-Message-State: AOJu0YyuImK5lz0w7H8/zi82/R4ts7NxngF6MUddLknK9B1Uu4igbnfW
+	rCRKWxPirEQ70u8AW/xPx0Y+ZF0oEnCcFNL1+vyfvY6nA+7R0+4tuX1jiCC+RbE=
+X-Google-Smtp-Source: AGHT+IGbKurHrcBQxOwjoCy3I00Mb7Ii4AMC80qELYY6RamyBgLgQUYcRMumqK9YF+XJH9OtD5bRNQ==
+X-Received: by 2002:a05:600c:4eca:b0:426:6876:83bb with SMTP id 5b1f17b1804b1-427dc52921amr59397295e9.17.1721741903494;
+        Tue, 23 Jul 2024 06:38:23 -0700 (PDT)
+Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427d2a8e420sm203734675e9.35.2024.07.23.06.38.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Jul 2024 06:31:55 -0700 (PDT)
-Message-ID: <5d448aeb-e57e-4203-a1d8-ef298fce097f@linaro.org>
-Date: Tue, 23 Jul 2024 15:31:52 +0200
+        Tue, 23 Jul 2024 06:38:23 -0700 (PDT)
+Message-ID: <a8c7db04-7212-4bf0-b8b1-d371ee33478b@freebox.fr>
+Date: Tue, 23 Jul 2024 15:38:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,66 +76,103 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: msm8916-samsung-rossa: Add touchscreen
-To: Raymond Hackley <raymondhackley@protonmail.com>,
- linux-kernel@vger.kernel.org
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>,
- Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht
-References: <20240723131441.1764-1-raymondhackley@protonmail.com>
+Subject: Re: [PATCH v5 4/4] arm64: dts: qcom: add HDMI nodes for msm8998
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
+ <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Rob Clark <robdclark@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ Arnaud Vrac <avrac@freebox.fr>, Pierre-Hugues Husson <phhusson@freebox.fr>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>
+References: <20240627-hdmi-tx-v5-0-355d5c1fbc3c@freebox.fr>
+ <20240627-hdmi-tx-v5-4-355d5c1fbc3c@freebox.fr>
+ <d9898342-2439-4d3d-8e3d-5bf0a7a40245@linaro.org>
+ <b6f6c845-6094-44ce-8ad0-ed4f6d353cec@freebox.fr>
+ <CAA8EJpqrAFKCr63JHEpZ3b3zdRfoNXoJP6SqKDOO4sqc=c6YdQ@mail.gmail.com>
+ <44101ecd-61f4-4609-bb22-12b40b692552@freebox.fr>
+ <CAA8EJpprtmefNM_CJFRbYVNxOWUVVWbedBq44r7GXOdDrQ2WjA@mail.gmail.com>
+ <04ef978f-2bfd-46cc-a9f7-40a6f1c507f8@linaro.org>
+ <7d34a857-6495-482b-9070-1817c88c9913@freebox.fr>
+ <45f5dae6-c606-4612-900a-b719f58d92ce@linaro.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20240723131441.1764-1-raymondhackley@protonmail.com>
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+In-Reply-To: <45f5dae6-c606-4612-900a-b719f58d92ce@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 23.07.2024 3:15 PM, Raymond Hackley wrote:
-> Core Prime uses an Imagis IST3038 touchscreen that is connected to
-> blsp_i2c5. Add it to the device tree.
+On 23/07/2024 15:08, Konrad Dybcio wrote:
+
+> On 23.07.2024 2:57 PM, Marc Gonzalez wrote:
+>
+>> On 23/07/2024 13:45, Konrad Dybcio wrote:
+>>
+>>> On 23.07.2024 11:59 AM, Dmitry Baryshkov wrote:
+>>>
+>>>> On Tue, 23 Jul 2024 at 12:48, Marc Gonzalez wrote:
+>>>>
+>>>>> On 16/07/2024 18:37, Dmitry Baryshkov wrote:
+>>>>>
+>>>>>> No, that's fine. It is the SMMU issue that Konrad has been asking you
+>>>>>> to take a look at.
+>>>>>
+>>>>> Context:
+>>>>>
+>>>>> [    4.911422] arm-smmu cd00000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x0
+>>>>> [    4.923353] arm-smmu cd00000.iommu: FSYNR0 = 00000021 [S1CBNDX=0 PNU PLVL=1]
+>>>>> [    4.927893] arm-smmu cd00000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x0
+>>>>> [    4.941928] arm-smmu cd00000.iommu: FSYNR0 = 00000021 [S1CBNDX=0 PNU PLVL=1]
+>>>>> [    4.944438] arm-smmu cd00000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x0
+>>>>> [    4.956013] arm-smmu cd00000.iommu: FSYNR0 = 00000021 [S1CBNDX=0 PNU PLVL=1]
+>>>>> [    4.961055] arm-smmu cd00000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x0
+>>>>> [    4.974565] arm-smmu cd00000.iommu: FSYNR0 = 00000021 [S1CBNDX=0 PNU PLVL=1]
+>>>>> [    4.977628] arm-smmu cd00000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x0
+>>>>> [    4.989670] arm-smmu cd00000.iommu: FSYNR0 = 00000021 [S1CBNDX=0 PNU PLVL=1]
+>>>>>
+>>>>>
+>>>>> As I mentioned, I don't think I've ever seen issues from cd00000.iommu
+>>>>> on my board.
+>>>>
+>>>> Interestingly enough, I can also see iommu errors during WiFi startup
+>>>> / shutdown on msm8998 / miix630. This leads me to thinking that it
+>>>> well might be that there is a missing quirk in the iommu driver.
+>>>>
+>>>>> I can test a reboot loop for a few hours, to see if anything shows up.
+>>>>
+>>>> Yes, please.
+>>>
+>>> Yeah I do trust you Marc that it actually works for you and I'm not
+>>> gonna delay this series because of that, but please go ahead and
+>>> reboot-loop your board
+>>>
+>>> 8998/660 is """famous""" for it's iommu problems
+>>
+>> [   20.501062] arm-smmu 16c0000.iommu: Unhandled context fault: fsr=0x402, iova=0x00000000, fsynr=0x1, cbfrsynra=0x1900, cb=0
+>>
+>> I get the above warning pretty reliably.
+>> I don't think it's related to the issue(s) you mentioned.
+>> System just keeps plodding along.
 > 
-> Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
-> ---
+> Yeah that one's "fine"
 
+I booted 40 times in a loop.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+`grep -a -i FSYNR console.logs` just returns the same 16c0000.iommu
+"Unhandled context fault" message 76 times (as above).
 
-Konrad
+NB: I have maxcpus=1 set in bootargs.
+
+Could the iommu issue be a race condition, NOT triggered when code
+runs with less parallelism?
+
+Regards
+
 
