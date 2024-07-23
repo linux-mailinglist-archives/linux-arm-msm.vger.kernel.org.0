@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-26916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B83393A321
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 16:46:52 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DE5293A323
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 16:47:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CABA52817DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 14:46:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 155E1282C08
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Jul 2024 14:47:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EF3B156F33;
-	Tue, 23 Jul 2024 14:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B9BF156F53;
+	Tue, 23 Jul 2024 14:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O6T9+TQI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Fs5k9JJw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190E5156C62
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 14:46:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43845153BE3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 14:46:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721745999; cv=none; b=RMsVlDI/VjJYCFjBwHTn38AMCtmn8ZDGt39mJF3BiucdUhmGAhGxYcRlerxjxyF6Bce6BwLzqu8bAYP7ofOLPoo9+J/bmywn/wnvnd0p99rKEAXf2bWkBSbuizjc8GZu9f/EVTfyJkQ/PSDgevJSqluB46gestA1mxB9E+ZUkA0=
+	t=1721746000; cv=none; b=b1pOpDebsDVm5OV0Kp1YG620zE6KfHBBjqWhulxPj7KJpRohPS+s3X6TmEIGsSBuakUPttkbtx/SQU8SMKm6vG73OI9OZwOxN8MeRVCj8ZNQLLigiQQmfmg/hAl72/Ee+NKsEfcm8VNSSq05tNbdfcBuELNnpqX7GhG+Eqf6qIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721745999; c=relaxed/simple;
-	bh=WX8LSh0rDhHf39Hv/bNh9FIYIrWp/QkmbC/T7oE22gQ=;
+	s=arc-20240116; t=1721746000; c=relaxed/simple;
+	bh=/Cz64eiORglL+JzsTj4J/qRQ+zkIqCGxhfUI/VtVVk8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Cp+0eXe3nbCSlHFDyzcYjMTGPXgq+Ld3ZEHPuYl6sfonnaKRf+rEmfgDvo92IbyPCiRMDKAfsv6RJL+LH7lzw8IkRM3f657jzp9VxnMr65JiUOT1cm34m5cJiuyA6pRmYkXnppKrxEMli3GGmOCQY804LqEc5IG8El6etWASoR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O6T9+TQI; arc=none smtp.client-ip=209.85.167.41
+	 MIME-Version; b=nxB8XxoHBpwMi8dpNKjo5m7XCUQslxYBIEP1rpZK+zCJ/wvNEO0awPXQFqeb29RsQpAwgdLxJbSQXH/AH+7dIPtWUWK1Q97PALILC37LX5wLVGg8uSeaiIztAF2MGuQ5xxBWqQPK6N+VVnEtl8T0vOirRbjAx/HfWrvXHwcV3JE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Fs5k9JJw; arc=none smtp.client-ip=209.85.167.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52efd855adbso4138485e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 07:46:36 -0700 (PDT)
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-52efd08e6d9so4178465e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Jul 2024 07:46:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721745995; x=1722350795; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1721745996; x=1722350796; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XBP7dKcnoInh8D+ltmvy6AsIFtXdPmqqH+0/BiruIy4=;
-        b=O6T9+TQIqTsJoMcf34HEDRSTyxQFYXXO43oDOHHj0ElP1oNrL2DfHi6TaHTmtlX/nm
-         yhnYdklrNNlkPPAYGAIuLsUwgmWJ7UXmjHezFyItqTJB/j3bxN83xOwkCQePy3IgbWzw
-         X/ySlHG93DX3qIMHB9NWvp1zcc5tK7a9LmKNxNJdEFxp6brc87iqhCAyC0CmQPptReic
-         +Pgz6SnJJvC1hZ5YGRlUCa1ma/HiFDF/Xtk3KYBwPW3skEi1Bz0y0w14z1GottaQzrcA
-         2vSRM46+qZbNUnb0z5fGfGGxZzFwWTeZnUnOnyf6b9L2XgLDcgOnm3jWkRcc5TMGfmlW
-         K0hA==
+        bh=FrrcMYfLG/IRNiRlIGOfcILMNeNyK16y6kYofjra+ME=;
+        b=Fs5k9JJwNkn38jF5j/3cTOW6MPopJSbKnXcOYPNzoZ50zhX4iUrWqyu240TFa2g3IA
+         zVT2RL9IhoYDT7vFkliRGTzQr5b3zEQsTcPY/sS6C7TDsDaFmMCkPGiYVf9hUQOJkioL
+         DTpccfRNR1ptBiu/0vHr3nmJB7QP+3HDqMMnJ+zrJgLUEX0Jqjz4jNLTk38pPoiZ+CTF
+         8mCT8+hzsynEXpfKscPA31g1PFhIgk7bR3LXGbJw7AilQtbBPXkUkgJjaNoDMU6Hfzu1
+         KG8y2Eq2R5eqGiuVdghPK15FCT6ZNazqsb5FS82Sb7BTbt/VTM2U6UOIHQPYRtLf9K/i
+         gumg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721745995; x=1722350795;
+        d=1e100.net; s=20230601; t=1721745996; x=1722350796;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XBP7dKcnoInh8D+ltmvy6AsIFtXdPmqqH+0/BiruIy4=;
-        b=PN8RXilWQ2r3cUUejGhNoxvZgelfepPX1VfVN9e6ybH/9LvI06MpV49YY7AcSd6ic0
-         HE9qyF8b6JvhIwayzg/E0rlgBHdupi/C11TnOGB9o9qjQf3CpEjx9fITu++UOGg/Dksm
-         vjCNaosO5Br/cnyFXdhCzTy/uSJWgv1hZbzGlgn8Fh0h1cmiHl1AGiRoeMqOnQe8Qj+E
-         v6L8zfLsNVC/P7qy1Oq8X6KNEtaYfrRUQUHYvNyEd8+ha3ByM2Xf7ed5O0aEL/oLD78X
-         w1bjlRYziNInfC6Mumef443YE40HDNRpMaohcJX2KHuS16dnSYF66iRAMY2fFB8VxqZv
-         UVHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWR/N0smU6f6KdAXH9NfMGKpoH9kvj9fQE1hgdvZFWAur7fDwGKoqRXKWnqRKj9W6VjSaRJN/6eZiDU4WoM0TULWx2XKrSYt3xDgAsjzQ==
-X-Gm-Message-State: AOJu0YxQ87Xeeo4yzHIPxU8s/B0Urctsd4w3Y6CYE5AW6nCMUFmWJUsm
-	u7iq1Qii9KTljzSgGKKMJAKJDHHWC2snW035lH4UKSoOnjOqMw5WCme8TMjVhpk=
-X-Google-Smtp-Source: AGHT+IFGj2dGhWRS15wyntOxuIbZDSW3f20N1Gxb1NU6kUm4Z5FMUXshX3IqJbFS6MM2MvmCAr6WLA==
-X-Received: by 2002:a05:6512:2204:b0:52c:cc38:592c with SMTP id 2adb3069b0e04-52fc3fef109mr2116350e87.0.1721745995211;
-        Tue, 23 Jul 2024 07:46:35 -0700 (PDT)
+        bh=FrrcMYfLG/IRNiRlIGOfcILMNeNyK16y6kYofjra+ME=;
+        b=LLYoYZezpNiq/B/SmFu10qzGYKhdbcAhrn7gaU51XK21kFO7rVgaHfQtAMFSjHepes
+         V/MmNnQUdT4hWr1HwZJl9nVKr8axbz5yasC3o2uAO8iS4CZKE5MUof6w0x7YTCsdS0GM
+         3stUywPfvhjz19CKJUaq0zKKqnocWb6ukX4yhsQ5IkCE5wo3QKP5dl9NF9sDkzil81OQ
+         KHyVZ3MetqjFoWVgN6FBH/3KWpxESc7U5XXc8LVDtsY8ixBntAkThYab9QYkGD7TMdLB
+         /G9GgPMB/7iT/j5SfoRAK3KU8675nEeAtzCTdXz3D7SDzGlH4tsvyY4WFxs3uyetju/0
+         GJFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUayOcQ/S0DAFsV4+U3NBm1GFUYzzqwm3ucgnomzMpPN52uaOcplO+Yc5dTGziTtpXQZozfQn48pHIermNW4dA6D5m9DvikFiundgZWCA==
+X-Gm-Message-State: AOJu0YyZvD+Urgf7XvW5Mpsn+7xUKw1c/VdjcEpZ9KMOXgJ3VfcrGg0d
+	unEQK5TfAGv+LEzStZxt4XO9qIEa7QSRO+W8f1NnY2UlQD3kNZBakhVM8G40I60=
+X-Google-Smtp-Source: AGHT+IHI7MKcmaUYwLbT8KpWV+gZCkHNesswZsoZOrPGXmC51ZgZNSlNboV0W17HiSXE+kZ3RDydkQ==
+X-Received: by 2002:a05:6512:31c7:b0:52e:be1f:bf8b with SMTP id 2adb3069b0e04-52fc406f0famr2550946e87.47.1721745996507;
+        Tue, 23 Jul 2024 07:46:36 -0700 (PDT)
 Received: from uffe-tuxpro14.. (h-178-174-189-39.A498.priv.bahnhof.se. [178.174.189.39])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52f0415eb08sm774540e87.9.2024.07.23.07.46.34
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52f0415eb08sm774540e87.9.2024.07.23.07.46.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jul 2024 07:46:34 -0700 (PDT)
+        Tue, 23 Jul 2024 07:46:36 -0700 (PDT)
 From: Ulf Hansson <ulf.hansson@linaro.org>
 To: Viresh Kumar <vireshk@kernel.org>,
 	Nishanth Menon <nm@ti.com>,
@@ -81,13 +81,12 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	linux-pm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	linux-media@vger.kernel.org,
+	Ilia Lin <ilia.lin@kernel.org>,
+	Stephan Gerhold <stephan@gerhold.net>,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH 2/4] media: venus: Use dev_pm_domain_attach|detach_list() for OPP PM domain
-Date: Tue, 23 Jul 2024 16:46:08 +0200
-Message-Id: <20240723144610.564273-3-ulf.hansson@linaro.org>
+Subject: [PATCH 3/4] cpufreq: qcom-nvmem: Convert to dev_pm_domain_attach|detach_list()
+Date: Tue, 23 Jul 2024 16:46:09 +0200
+Message-Id: <20240723144610.564273-4-ulf.hansson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240723144610.564273-1-ulf.hansson@linaro.org>
 References: <20240723144610.564273-1-ulf.hansson@linaro.org>
@@ -99,159 +98,182 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Rather than hooking up the PM domains through devm_pm_opp_attach_genpd()
-and manage the device-link, let's avoid the boilerplate-code by converting
-into dev_pm_domain_attach|detach_list.
+Rather than hooking up the PM domains through _opp_attach_genpd() and
+manually manage runtime PM for the corresponding virtual devices created by
+genpd during attach, let's avoid the boilerplate-code by converting into
+dev_pm_domain_attach|detach_list.
 
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 ---
- drivers/media/platform/qcom/venus/core.c      |  8 ++---
- drivers/media/platform/qcom/venus/core.h      |  6 +---
- .../media/platform/qcom/venus/pm_helpers.c    | 31 ++++++-------------
- 3 files changed, 14 insertions(+), 31 deletions(-)
+ drivers/cpufreq/qcom-cpufreq-nvmem.c | 79 +++++++++-------------------
+ 1 file changed, 26 insertions(+), 53 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index ce206b709754..a422bbb3b610 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -709,7 +709,7 @@ static const struct venus_resources sdm845_res_v2 = {
- 	.vcodec_clks_num = 2,
- 	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0", "vcodec1" },
- 	.vcodec_pmdomains_num = 3,
--	.opp_pmdomain = (const char *[]) { "cx", NULL },
-+	.opp_pmdomain = (const char *[]) { "cx" },
- 	.vcodec_num = 2,
- 	.max_load = 3110400,	/* 4096x2160@90 */
- 	.hfi_version = HFI_VERSION_4XX,
-@@ -758,7 +758,7 @@ static const struct venus_resources sc7180_res = {
- 	.vcodec_clks_num = 2,
- 	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0" },
- 	.vcodec_pmdomains_num = 2,
--	.opp_pmdomain = (const char *[]) { "cx", NULL },
-+	.opp_pmdomain = (const char *[]) { "cx" },
- 	.vcodec_num = 1,
- 	.hfi_version = HFI_VERSION_4XX,
- 	.vpu_version = VPU_VERSION_AR50,
-@@ -815,7 +815,7 @@ static const struct venus_resources sm8250_res = {
- 	.vcodec_clks_num = 1,
- 	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0" },
- 	.vcodec_pmdomains_num = 2,
--	.opp_pmdomain = (const char *[]) { "mx", NULL },
-+	.opp_pmdomain = (const char *[]) { "mx" },
- 	.vcodec_num = 1,
- 	.max_load = 7833600,
- 	.hfi_version = HFI_VERSION_6XX,
-@@ -874,7 +874,7 @@ static const struct venus_resources sc7280_res = {
- 	.vcodec_clks_num = 2,
- 	.vcodec_pmdomains = (const char *[]) { "venus", "vcodec0" },
- 	.vcodec_pmdomains_num = 2,
--	.opp_pmdomain = (const char *[]) { "cx", NULL },
-+	.opp_pmdomain = (const char *[]) { "cx" },
- 	.vcodec_num = 1,
- 	.hfi_version = HFI_VERSION_6XX,
- 	.vpu_version = VPU_VERSION_IRIS2_1,
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 6a77de374454..aec587e6294f 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -132,9 +132,7 @@ struct venus_format {
-  * @vcodec1_clks: an array of vcodec1 struct clk pointers
-  * @video_path: an interconnect handle to video to/from memory path
-  * @cpucfg_path: an interconnect handle to cpu configuration path
-- * @has_opp_table: does OPP table exist
-  * @pmdomains:	a pointer to a list of pmdomains
-- * @opp_dl_venus: an device-link for device OPP
-  * @opp_pmdomain: an OPP power-domain
-  * @resets: an array of reset signals
-  * @vdev_dec:	a reference to video device structure for decoder instances
-@@ -185,10 +183,8 @@ struct venus_core {
- 	struct clk *vcodec1_clks[VIDC_VCODEC_CLKS_NUM_MAX];
- 	struct icc_path *video_path;
- 	struct icc_path *cpucfg_path;
--	bool has_opp_table;
- 	struct dev_pm_domain_list *pmdomains;
--	struct device_link *opp_dl_venus;
--	struct device *opp_pmdomain;
-+	struct dev_pm_domain_list *opp_pmdomain;
- 	struct reset_control *resets[VIDC_RESETS_NUM_MAX];
- 	struct video_device *vdev_dec;
- 	struct video_device *vdev_enc;
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index 502822059498..e133683871aa 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -857,7 +857,6 @@ static int venc_power_v4(struct device *dev, int on)
- static int vcodec_domains_get(struct venus_core *core)
- {
- 	int ret;
--	struct device **opp_virt_dev;
- 	struct device *dev = core->dev;
- 	const struct venus_resources *res = core->res;
- 	struct dev_pm_domain_attach_data vcodec_data = {
-@@ -865,6 +864,11 @@ static int vcodec_domains_get(struct venus_core *core)
- 		.num_pd_names = res->vcodec_pmdomains_num,
- 		.pd_flags = PD_FLAG_NO_DEV_LINK,
- 	};
-+	struct dev_pm_domain_attach_data opp_pd_data = {
-+		.pd_names = res->opp_pmdomain,
-+		.num_pd_names = 1,
-+		.pd_flags = PD_FLAG_DEV_LINK_ON,
-+	};
+diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+index ea05d9d67490..65739ce98658 100644
+--- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
++++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+@@ -52,12 +52,13 @@ struct qcom_cpufreq_match_data {
+ 			   struct nvmem_cell *speedbin_nvmem,
+ 			   char **pvs_name,
+ 			   struct qcom_cpufreq_drv *drv);
+-	const char **genpd_names;
++	const char **pd_names;
++	unsigned int num_pd_names;
+ };
  
- 	if (!res->vcodec_pmdomains_num)
- 		goto skip_pmdomains;
-@@ -874,24 +878,14 @@ static int vcodec_domains_get(struct venus_core *core)
- 		return ret;
+ struct qcom_cpufreq_drv_cpu {
+ 	int opp_token;
+-	struct device **virt_devs;
++	struct dev_pm_domain_list *pd_list;
+ };
  
- skip_pmdomains:
--	if (!core->res->opp_pmdomain)
-+	if (!res->opp_pmdomain)
- 		return 0;
- 
- 	/* Attach the power domain for setting performance state */
--	ret = devm_pm_opp_attach_genpd(dev, res->opp_pmdomain, &opp_virt_dev);
-+	ret = dev_pm_domain_attach_list(dev, &opp_pd_data, &core->opp_pmdomain);
- 	if (ret)
- 		goto opp_attach_err;
- 
--	core->opp_pmdomain = *opp_virt_dev;
--	core->opp_dl_venus = device_link_add(dev, core->opp_pmdomain,
--					     DL_FLAG_RPM_ACTIVE |
--					     DL_FLAG_PM_RUNTIME |
--					     DL_FLAG_STATELESS);
--	if (!core->opp_dl_venus) {
--		ret = -ENODEV;
--		goto opp_attach_err;
--	}
--
+ struct qcom_cpufreq_drv {
+@@ -394,8 +395,6 @@ static int qcom_cpufreq_ipq8074_name_version(struct device *cpu_dev,
  	return 0;
- 
- opp_attach_err:
-@@ -902,12 +896,7 @@ static int vcodec_domains_get(struct venus_core *core)
- static void vcodec_domains_put(struct venus_core *core)
- {
- 	dev_pm_domain_detach_list(core->pmdomains);
--
--	if (!core->has_opp_table)
--		return;
--
--	if (core->opp_dl_venus)
--		device_link_del(core->opp_dl_venus);
-+	dev_pm_domain_detach_list(core->opp_pmdomain);
  }
  
- static int core_resets_reset(struct venus_core *core)
-@@ -996,9 +985,7 @@ static int core_get_v4(struct venus_core *core)
+-static const char *generic_genpd_names[] = { "perf", NULL };
+-
+ static const struct qcom_cpufreq_match_data match_data_kryo = {
+ 	.get_version = qcom_cpufreq_kryo_name_version,
+ };
+@@ -406,13 +405,13 @@ static const struct qcom_cpufreq_match_data match_data_krait = {
  
- 	if (core->res->opp_pmdomain) {
- 		ret = devm_pm_opp_of_add_table(dev);
--		if (!ret) {
--			core->has_opp_table = true;
--		} else if (ret != -ENODEV) {
-+		if (ret && ret != -ENODEV) {
- 			dev_err(dev, "invalid OPP table in device tree\n");
- 			return ret;
+ static const struct qcom_cpufreq_match_data match_data_msm8909 = {
+ 	.get_version = qcom_cpufreq_simple_get_version,
+-	.genpd_names = generic_genpd_names,
++	.pd_names = (const char *[]) { "perf" },
++	.num_pd_names = 1,
+ };
+ 
+-static const char *qcs404_genpd_names[] = { "cpr", NULL };
+-
+ static const struct qcom_cpufreq_match_data match_data_qcs404 = {
+-	.genpd_names = qcs404_genpd_names,
++	.pd_names = (const char *[]) { "cpr" },
++	.num_pd_names = 1,
+ };
+ 
+ static const struct qcom_cpufreq_match_data match_data_ipq6018 = {
+@@ -427,28 +426,16 @@ static const struct qcom_cpufreq_match_data match_data_ipq8074 = {
+ 	.get_version = qcom_cpufreq_ipq8074_name_version,
+ };
+ 
+-static void qcom_cpufreq_suspend_virt_devs(struct qcom_cpufreq_drv *drv, unsigned int cpu)
++static void qcom_cpufreq_suspend_pd_devs(struct qcom_cpufreq_drv *drv, unsigned int cpu)
+ {
+-	const char * const *name = drv->data->genpd_names;
++	struct dev_pm_domain_list *pd_list = drv->cpus[cpu].pd_list;
+ 	int i;
+ 
+-	if (!drv->cpus[cpu].virt_devs)
++	if (!pd_list)
+ 		return;
+ 
+-	for (i = 0; *name; i++, name++)
+-		device_set_awake_path(drv->cpus[cpu].virt_devs[i]);
+-}
+-
+-static void qcom_cpufreq_put_virt_devs(struct qcom_cpufreq_drv *drv, unsigned int cpu)
+-{
+-	const char * const *name = drv->data->genpd_names;
+-	int i;
+-
+-	if (!drv->cpus[cpu].virt_devs)
+-		return;
+-
+-	for (i = 0; *name; i++, name++)
+-		pm_runtime_put(drv->cpus[cpu].virt_devs[i]);
++	for (i = 0; i < pd_list->num_pds; i++)
++		device_set_awake_path(pd_list->pd_devs[i]);
+ }
+ 
+ static int qcom_cpufreq_probe(struct platform_device *pdev)
+@@ -505,7 +492,6 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 	of_node_put(np);
+ 
+ 	for_each_possible_cpu(cpu) {
+-		struct device **virt_devs = NULL;
+ 		struct dev_pm_opp_config config = {
+ 			.supported_hw = NULL,
+ 		};
+@@ -524,12 +510,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 				config.prop_name = pvs_name;
  		}
+ 
+-		if (drv->data->genpd_names) {
+-			config.genpd_names = drv->data->genpd_names;
+-			config.virt_devs = &virt_devs;
+-		}
+-
+-		if (config.supported_hw || config.genpd_names) {
++		if (config.supported_hw) {
+ 			drv->cpus[cpu].opp_token = dev_pm_opp_set_config(cpu_dev, &config);
+ 			if (drv->cpus[cpu].opp_token < 0) {
+ 				ret = drv->cpus[cpu].opp_token;
+@@ -538,25 +519,17 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 			}
+ 		}
+ 
+-		if (virt_devs) {
+-			const char * const *name = config.genpd_names;
+-			int i, j;
+-
+-			for (i = 0; *name; i++, name++) {
+-				ret = pm_runtime_resume_and_get(virt_devs[i]);
+-				if (ret) {
+-					dev_err(cpu_dev, "failed to resume %s: %d\n",
+-						*name, ret);
++		if (drv->data->pd_names) {
++			struct dev_pm_domain_attach_data attach_data = {
++				.pd_names = drv->data->pd_names,
++				.num_pd_names = drv->data->num_pd_names,
++				.pd_flags = PD_FLAG_DEV_LINK_ON,
++			};
+ 
+-					/* Rollback previous PM runtime calls */
+-					name = config.genpd_names;
+-					for (j = 0; *name && j < i; j++, name++)
+-						pm_runtime_put(virt_devs[j]);
+-
+-					goto free_opp;
+-				}
+-			}
+-			drv->cpus[cpu].virt_devs = virt_devs;
++			ret = dev_pm_domain_attach_list(cpu_dev, &attach_data,
++							&drv->cpus[cpu].pd_list);
++			if (ret < 0)
++				goto free_opp;
+ 		}
+ 	}
+ 
+@@ -572,7 +545,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 
+ free_opp:
+ 	for_each_possible_cpu(cpu) {
+-		qcom_cpufreq_put_virt_devs(drv, cpu);
++		dev_pm_domain_detach_list(drv->cpus[cpu].pd_list);
+ 		dev_pm_opp_clear_config(drv->cpus[cpu].opp_token);
+ 	}
+ 	return ret;
+@@ -586,7 +559,7 @@ static void qcom_cpufreq_remove(struct platform_device *pdev)
+ 	platform_device_unregister(cpufreq_dt_pdev);
+ 
+ 	for_each_possible_cpu(cpu) {
+-		qcom_cpufreq_put_virt_devs(drv, cpu);
++		dev_pm_domain_detach_list(drv->cpus[cpu].pd_list);
+ 		dev_pm_opp_clear_config(drv->cpus[cpu].opp_token);
+ 	}
+ }
+@@ -597,7 +570,7 @@ static int qcom_cpufreq_suspend(struct device *dev)
+ 	unsigned int cpu;
+ 
+ 	for_each_possible_cpu(cpu)
+-		qcom_cpufreq_suspend_virt_devs(drv, cpu);
++		qcom_cpufreq_suspend_pd_devs(drv, cpu);
+ 
+ 	return 0;
+ }
 -- 
 2.34.1
 
