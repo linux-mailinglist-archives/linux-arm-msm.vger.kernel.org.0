@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-26956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E22D893B0C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 13:55:57 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 069DB93B180
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 15:22:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 94CC22812EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 11:55:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 37DD81C232B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 13:22:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF274158211;
-	Wed, 24 Jul 2024 11:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55C8E158D74;
+	Wed, 24 Jul 2024 13:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gmHy6cNe"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l8st//Ie"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14DE1514ED;
-	Wed, 24 Jul 2024 11:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FB1158A01;
+	Wed, 24 Jul 2024 13:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721822150; cv=none; b=hYWLXpIwX8Y8xo2Dk5UkHTmLQGgqmJVECgb2MCF02lNNrsrvgDfBbs5kXecTue3/1egJiuf+R/6StfMXQWHcl4J81I7KCt5ppXYjl2DF/dzzeXW42OKAEEn0j8MiqevMTz/FUtFhQvYwgjY1esMF1ILEormmVX74RTmj+zrGikg=
+	t=1721827360; cv=none; b=dpcwpIyolI8HEaTbsSpMTZLxcOn/RgZ3TO+kx5QVK+CnHT1uf0sKsXP9WOwiUqmpPJZEnWqAvrxsmXAWxO3iyrAFiYVbp1p/gMYBJ1RVz+NgVaOXU86zCICHcuU5MXGrekRvg15k/QQ/DrPry5ZTcy1Y5BDSs/8Ci7So3iVwi78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721822150; c=relaxed/simple;
-	bh=aD1WuGUjqO0uEHPch3G63drQXoYwCBw9LLbsQd2a1pE=;
+	s=arc-20240116; t=1721827360; c=relaxed/simple;
+	bh=MbWcGKHLsBz3s1JF5yQsSo7cvuVml6sVGrY1qjjbzes=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EBqzwH0kU4Zx/QovXBFpgOGyjDZuT5Mu91nRPN305JpGjajjzqvKtZAqbMMN9k+bmgQNbBtL92pVXftbx+Gb0HMl+m1tuyDIznzA78wmAXXUA1qdj4D8Wmw2M11uSyXlYU+HB4RPLyDqFigbrRzLLM6CGVC2DdakKKY9id/CnGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gmHy6cNe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57EBDC4AF0E;
-	Wed, 24 Jul 2024 11:55:43 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=psP9Vh36SFPXRkBJIpMvoJkq7WpyFr23V7sQoVfs/3Mp68NfwYojLesANPOY6dnzXdDFTfJJIWNJwlA+L71dsFxq2ME4ozSry81sfkYCcSP3HYSR47oODj+Altg+rerppSaanzEzG2oAGqi8if88ZH2AWxE526+MzryLXn3uacQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l8st//Ie; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3594FC32782;
+	Wed, 24 Jul 2024 13:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721822150;
-	bh=aD1WuGUjqO0uEHPch3G63drQXoYwCBw9LLbsQd2a1pE=;
+	s=k20201202; t=1721827359;
+	bh=MbWcGKHLsBz3s1JF5yQsSo7cvuVml6sVGrY1qjjbzes=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=gmHy6cNea0ci0v+HR1ntWSL6sH/t3GZvvOMfoUNYnH6NqSxbnLWZTIDchw8eQlrLs
-	 D+3riNF1MyV3JFrqGfwe6/ZiQAKfrNXx34/hJyVQFGuSDBWAY0KuBsWNe0GPH6XSQg
-	 5pYGnrtZ6MNQUvb+9usuQSa6unPkIgNaZkJpWYWF3CNmVrs692IWi9YNJCpCp/ogpr
-	 6qbMo1aTECDoCQLxyX0PyGmw57WTpU1KZpRZ4RghNchjDRiGi+Wj4qeqb26R/04m+k
-	 MQzMwEArEo1QRvXQwVZrQnnGiugIidQMmBjL44xu2TiicxxkOh+RxXDrlVHYDHRUh3
-	 eiDi2Jzv3+Ggw==
-Message-ID: <bc2da461-fd21-44d1-85a7-f89c60e2b207@kernel.org>
-Date: Wed, 24 Jul 2024 13:55:41 +0200
+	b=l8st//Ie5qfMMa1MQZNJYcBjSKaKvMQTahrlvi3tL43CaPY8Q4yQsXsnNfFUgG4ky
+	 Tjp6h0zt85b9ljlHPBfHDxBJ/2bMnG34JnHl4PwNKoJA5TQYws9dIMJVJtWnd+lAy8
+	 4RJNIaxHKGcX3A9KcOwV0MVGXoJPkxBdAmT5UQLpNsCRNLv7+PUnrlP3DDoaRy0IG6
+	 yqaHl1tSU5adGLWyb1PMYn+SdAHLn/K1zwfc8z6SYhulYxxeq5Fr/zEjWpbzaUzdCF
+	 mBWXYXA0IxV0QLw4m/hn3f0H62sajSaMFQ666ePMmTo/gj6POAzD/JW2QcXKAfw2Iq
+	 gzo6MCsZKtHrg==
+Message-ID: <8cef6a08-c363-43f1-8d55-ad47b399fe5e@kernel.org>
+Date: Wed, 24 Jul 2024 15:22:32 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/5] dt-bindings: usb: qcom,dwc3: Update ipq5332 clock
- details
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- gregkh@linuxfoundation.org, konrad.dybcio@linaro.org, djakov@kernel.org,
- quic_wcheng@quicinc.com, quic_kathirav@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20240723090304.336428-1-quic_varada@quicinc.com>
- <20240723090304.336428-3-quic_varada@quicinc.com>
- <ac34c454-4800-4057-9a50-e0c5db1d3806@kernel.org>
- <ZqDoXu9+Y4+O8M7W@hu-varada-blr.qualcomm.com>
+Subject: Re: [PATCH] dt-bindings: PCI: qcom: Allow 'vddpe-3v3-supply' again
+To: Johan Hovold <johan+linaro@kernel.org>,
+ Bjorn Helgaas <bhelgaas@google.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240723151328.684-1-johan+linaro@kernel.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,37 +107,31 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <ZqDoXu9+Y4+O8M7W@hu-varada-blr.qualcomm.com>
+In-Reply-To: <20240723151328.684-1-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/07/2024 13:41, Varadarajan Narayanan wrote:
-> On Wed, Jul 24, 2024 at 08:27:03AM +0200, Krzysztof Kozlowski wrote:
->> On 23/07/2024 11:03, Varadarajan Narayanan wrote:
->>> USB uses icc-clk framework to enable the NoC interface clock.
->>> Hence the 'iface' clock is removed from the list of clocks.
->>> Update the clock-names list accordingly.
->>
->> But the clock is still there and is still used by this block. This looks
->> like adjusting hardware per Linux implementation.
->>
->> Why suddenly this clock was removed from this hardware?
+On 23/07/2024 17:13, Johan Hovold wrote:
+> Commit 756485bfbb85 ("dt-bindings: PCI: qcom,pcie-sc7280: Move SC7280 to
+> dedicated schema") incorrectly removed 'vddpe-3v3-supply' from the
+> bindings, which results in DT checker warnings like:
 > 
-> This clock per se is not used by the USB block. It is needed to
-> enable the path for CPU to reach the USB block (and vice versa).
-> Hence, we were adviced to use the ICC framework to enable this
-> clock and not the clocks/clock-names DT entries.
+> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb: pcie@600000: Unevaluated properties are not allowed ('vddpe-3v3-supply' was unexpected)
+>         from schema $id: http://devicetree.org/schemas/pci/qcom,pcie.yaml#
 > 
-> Please refer to [1] where similar clocks for IPQ9574 were NAK'ed.
+> Note that this property has been part of the Qualcomm PCIe bindings
+> since 2018 and would need to be deprecated rather than simply removed if
+> there is a desire to replace it with 'vpcie3v3' which is used for some
+> non-Qualcomm controllers.
+> 
+> Fixes: 756485bfbb85 ("dt-bindings: PCI: qcom,pcie-sc7280: Move SC7280 to dedicated schema")
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-So the original submission was not correct?
+Thanks. You could also mention in commit msg that Linux drivers for
+msm8996, SM8[123456]50 and few others actually requested that supply. In
+any case:
 
-You really need to stop sending DTS based on current driver support and
-focus on proper hardware description.
-
-Such things pop up from time to time for Qualcomm and I don't see much
-of improvement. And we do not talk about some ancient code, predating
-guidelines, but IPQ5332 upstreamed ~1 year ago.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
