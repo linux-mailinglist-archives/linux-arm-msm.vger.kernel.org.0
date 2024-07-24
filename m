@@ -1,160 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-26985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B42F93B73D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 21:13:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 16B0593B7E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 22:15:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D5DB31F21528
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 19:13:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 906EF1F21E98
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 20:15:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 855F816B722;
-	Wed, 24 Jul 2024 19:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 672DE1607A1;
+	Wed, 24 Jul 2024 20:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WNe8UZtr"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="j30C3brh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59550169AC5;
-	Wed, 24 Jul 2024 19:13:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8669873509;
+	Wed, 24 Jul 2024 20:15:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721848406; cv=none; b=CfrF2gq65eA45Q/y/Qq7+g23xX9+x+J6OTgevXROwWyn2IKJiMhHDKtQ3vk77IbB5vgLQ5lTgqTA2oetKF4PJxiCq+vT9HOoMqSXXdO6FD/QGBbAlIJ0NXAjW4oivrQCPM1fSo4PzttCHHn+3AC9SOxXYe96UlRMzF8ULEIrl6Q=
+	t=1721852143; cv=none; b=fCscfk9aw8cNshIYooP+DwL1zLNGMZvavPjl5Vs5gB3EWZGEwmu075Q/Kc59972Lia5G4HELL+pME2NOPB7YGvoLaiiVNkANh7UG8WFDPjprgWmmokyH05tD8SjNstPxhG/8aJMRdDt4Z/MKPt1sryetN/QFkTNdPsgaPBSO8Tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721848406; c=relaxed/simple;
-	bh=2lrlzS9qds2GD+/yfxzMA3VPWxbQct5yC0RJ4cs9XgM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RqDSE/Zh8vO9rUNj7hOhxtN19XDjycPBxRQ3J8JNCpENqSGQZH8z7fUuF7PPezcE1Uw3iDK5eeZsmDmUqBHlByxUURs5WnfxIEthik7wGBH9rW24LWHiTvVKweJ1QVwYIWhpm65hk6tr4FuGuCE5lPOxY49q2dlQqdCNp5saaIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WNe8UZtr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7206AC32781;
-	Wed, 24 Jul 2024 19:13:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721848405;
-	bh=2lrlzS9qds2GD+/yfxzMA3VPWxbQct5yC0RJ4cs9XgM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=WNe8UZtrMhNPRcRtdmDVxhGaUpLNOUwLtsNG6P+KzKydotRbbEaljZ4tnIJmx5nG4
-	 /+KCchVkAEPXDSyp25c63NodgiQgDkPt/F4r/uXZ00sK9fkWTagoBP19J9rJyiI6xk
-	 yPOQTfr72PizQFOH2kVdgTgH643XIyVEme/AILd4r6uAd9gNu6mboxnaLSCcE0qyAH
-	 epBGwrQ5XF95uZUchvYBaUk6T7dWbNIEMzBvx6Cv0IwwP3ic6XOEVPqGEYxIM3FU6e
-	 0XzJRKmGjyWtFXNEcS/RX7AJmodYA2NsNXVXPG2zjIibdkn9QYuGn62kVH8606wPmI
-	 /nT5kA89to+mg==
-Message-ID: <980422ea-8c44-47a4-8996-8653bab3ef8a@kernel.org>
-Date: Wed, 24 Jul 2024 21:13:18 +0200
+	s=arc-20240116; t=1721852143; c=relaxed/simple;
+	bh=7nXzHDV1fxOOOmXNYkOQZk9rfzCSrtSpWQi7+Sgl3yg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MTPhZZD6XObmD3uOU6aCQ3i5AUZIoOgCyg51gYrKTQFePOKFN+Z2XIfvGfdTGI1lyiUmCnSUMtfPbtI9qC1EuqIeO9/Q7P4Ns2ay9d1MGlIhLCP/XpfdWpHplvNSK49hyEP4n39BkmDI+jfww+O+rN5bzH/7CxSFWN+l6pK7uyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=j30C3brh; arc=none smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1721852142; x=1753388142;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=7nXzHDV1fxOOOmXNYkOQZk9rfzCSrtSpWQi7+Sgl3yg=;
+  b=j30C3brhHAZ0648cp0+WttfkE/cXqcs8hgrgvoyuqDSW9VdQeuOMg3w2
+   hPttvv59nZwCplUfFKlE0e37NzceHgR+L54Yt6xNCLPSU9XxHUsFysr5a
+   CFQuRjQWVls/sVCko18NRkb7cu0AXJEeKMzIGGMy7vJNLzukyzty1DYDC
+   zI+Xg+pe8zppPkDtj/GX/DVTcxuL29qXKxuG6ybcOxo24bNKbYvPgVFy1
+   ms613qa61bH44SHyhO0O82bPvmAqKhifkf5znfdvZ9fk3DjtaQSLWWYc+
+   IpoX1+rECZapJxkFaddcw1wg8yDmyBxBYeGN8YA7bATjshh7+en5G7T0p
+   A==;
+X-CSE-ConnectionGUID: Yb4y+Q6LQaCVWMl6ztrcdQ==
+X-CSE-MsgGUID: U6iFwbvARUaTJGCIO2zA1A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11143"; a="30948629"
+X-IronPort-AV: E=Sophos;i="6.09,233,1716274800"; 
+   d="scan'208";a="30948629"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jul 2024 13:15:41 -0700
+X-CSE-ConnectionGUID: OIW3Vw1jSh2WDXTU5oqssw==
+X-CSE-MsgGUID: QfmoQIcFTyC6ZCHVCEMiZA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,233,1716274800"; 
+   d="scan'208";a="75928078"
+Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
+  by fmviesa002.fm.intel.com with ESMTP; 24 Jul 2024 13:15:36 -0700
+Received: from kbuild by 68891e0c336b with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1sWiOb-000nOq-2v;
+	Wed, 24 Jul 2024 20:15:33 +0000
+Date: Thu, 25 Jul 2024 04:15:17 +0800
+From: kernel test robot <lkp@intel.com>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>, broonie@kernel.org,
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	andersson@kernel.org, konrad.dybcio@linaro.org,
+	miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+	manivannan.sadhasivam@linaro.org, esben@geanix.com,
+	linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-mtd@lists.infradead.org
+Cc: oe-kbuild-all@lists.linux.dev, quic_mdalam@quicinc.com,
+	quic_varada@quicinc.com, quic_srichara@quicinc.com
+Subject: Re: [PATCH v7 2/8] mtd: rawnand: qcom: cleanup qcom_nandc driver
+Message-ID: <202407250425.0AJoHyHa-lkp@intel.com>
+References: <20240724114225.2176448-3-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/2] dt-bindings: arm: Add device-name in the coresight
- components
-To: Mao Jinlong <quic_jinlmao@quicinc.com>,
- Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
- <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
- Yuanfang Zhang <quic_yuanfang@quicinc.com>,
- Tao Zhang <quic_taozha@quicinc.com>, songchai <quic_songchai@quicinc.com>,
- Jie Gan <quic_jiegan@quicinc.com>
-References: <20240703122340.26864-1-quic_jinlmao@quicinc.com>
- <20240703122340.26864-2-quic_jinlmao@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240703122340.26864-2-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240724114225.2176448-3-quic_mdalam@quicinc.com>
 
-On 03/07/2024 14:23, Mao Jinlong wrote:
-> Current name of coresight component's folder consists of prefix of
-> the device and the id in the device list. When run 'ls' command,
-> we can get the register address of the device. Take CTI for example,
-> if we want to set the config for modem CTI, but we can't know which
-> CTI is modem CTI from all current information.
-> 
-> cti_sys0 -> ../../../devices/platform/soc@0/138f0000.cti/cti_sys0
-> cti_sys1 -> ../../../devices/platform/soc@0/13900000.cti/cti_sys1
-> 
-> Add device-name in device tree which can provide a better description
-> of the coresight device. It can provide the info like the system or
-> HW it belongs to.
-> 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->  .../devicetree/bindings/arm/arm,coresight-cti.yaml          | 6 ++++++
->  .../devicetree/bindings/arm/arm,coresight-dummy-source.yaml | 6 ++++++
->  .../devicetree/bindings/arm/arm,coresight-stm.yaml          | 6 ++++++
->  .../devicetree/bindings/arm/qcom,coresight-tpdm.yaml        | 6 ++++++
->  4 files changed, 24 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
-> index 2d5545a2b49c..6a73eaa66a42 100644
-> --- a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
-> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
-> @@ -98,6 +98,12 @@ properties:
->    power-domains:
->      maxItems: 1
->  
-> +  arm,cs-dev-name:
-> +    $ref: /schemas/types.yaml#/definitions/string
-> +    description:
-> +      Define the name which can describe what kind of HW or system the
-> +      coresight device belongs to.
+Hi Md,
 
-Don't we use already label for such cases? Power domains, input, leds,
-panels, IIO, hwmon and more.
+kernel test robot noticed the following build warnings:
 
-Best regards,
-Krzysztof
+[auto build test WARNING on mtd/nand/next]
+[also build test WARNING on broonie-spi/for-next robh/for-next linus/master v6.10 next-20240724]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
+url:    https://github.com/intel-lab-lkp/linux/commits/Md-Sadre-Alam/spi-dt-bindings-Introduce-qcom-spi-qpic-snand/20240724-195819
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/mtd/linux.git nand/next
+patch link:    https://lore.kernel.org/r/20240724114225.2176448-3-quic_mdalam%40quicinc.com
+patch subject: [PATCH v7 2/8] mtd: rawnand: qcom: cleanup qcom_nandc driver
+config: i386-buildonly-randconfig-004-20240725 (https://download.01.org/0day-ci/archive/20240725/202407250425.0AJoHyHa-lkp@intel.com/config)
+compiler: gcc-8 (Ubuntu 8.4.0-3ubuntu2) 8.4.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240725/202407250425.0AJoHyHa-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202407250425.0AJoHyHa-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/mtd/nand/raw/qcom_nandc.c:682: warning: Function parameter or struct member 'chip' not described in 'nandc_set_read_loc_first'
+>> drivers/mtd/nand/raw/qcom_nandc.c:710: warning: Function parameter or struct member 'chip' not described in 'nandc_set_read_loc_last'
+
+
+vim +682 drivers/mtd/nand/raw/qcom_nandc.c
+
+   669	
+   670	/**
+   671	 * nandc_set_read_loc_first() - to set read location first register
+   672	 * @reg_base:		location register base
+   673	 * @cw_offset:		code word offset
+   674	 * @read_size:		code word read length
+   675	 * @is_last_read_loc:	is this the last read location
+   676	 *
+   677	 * This function will set location register value
+   678	 */
+   679	static void nandc_set_read_loc_first(struct nand_chip *chip,
+   680					     int reg_base, int cw_offset,
+   681					     int read_size, int is_last_read_loc)
+ > 682	{
+   683		struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
+   684		int val = (((cw_offset) << READ_LOCATION_OFFSET) |
+   685			  ((read_size) << READ_LOCATION_SIZE) |
+   686			  ((is_last_read_loc) << READ_LOCATION_LAST));
+   687	
+   688		if (reg_base == NAND_READ_LOCATION_0)
+   689			nandc->regs->read_location0 = val;
+   690		else if (reg_base == NAND_READ_LOCATION_1)
+   691			nandc->regs->read_location1 = val;
+   692		else if (reg_base == NAND_READ_LOCATION_2)
+   693			nandc->regs->read_location2 = val;
+   694		else if (reg_base == NAND_READ_LOCATION_3)
+   695			nandc->regs->read_location3 = val;
+   696	}
+   697	
+   698	/**
+   699	 * nandc_set_read_loc_last - to set read location last register
+   700	 * @reg_base:		location register base
+   701	 * @cw_offset:		code word offset
+   702	 * @read_size:		code word read length
+   703	 * @is_last_read_loc:	is this the last read location
+   704	 *
+   705	 * This function will set location last register value
+   706	 */
+   707	static void nandc_set_read_loc_last(struct nand_chip *chip,
+   708					    int reg_base, int cw_offset,
+   709					    int read_size, int is_last_read_loc)
+ > 710	{
+   711		struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
+   712	
+   713		int val = (((cw_offset) << READ_LOCATION_OFFSET) |
+   714			  ((read_size) << READ_LOCATION_SIZE) |
+   715			  ((is_last_read_loc) << READ_LOCATION_LAST));
+   716	
+   717		if (reg_base == NAND_READ_LOCATION_LAST_CW_0)
+   718			nandc->regs->read_location_last0 = val;
+   719		else if (reg_base == NAND_READ_LOCATION_LAST_CW_1)
+   720			nandc->regs->read_location_last1 = val;
+   721		else if (reg_base == NAND_READ_LOCATION_LAST_CW_2)
+   722			nandc->regs->read_location_last2 = val;
+   723		else if (reg_base == NAND_READ_LOCATION_LAST_CW_3)
+   724			nandc->regs->read_location_last3 = val;
+   725	}
+   726	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
