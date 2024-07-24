@@ -1,157 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-26959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F10A93B1FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 15:53:17 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBC1293B20F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 15:54:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A5E6E1F23CD3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 13:53:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1B20B1C21271
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 13:54:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBB0A158D89;
-	Wed, 24 Jul 2024 13:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14A55158DD9;
+	Wed, 24 Jul 2024 13:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XxzOCPBp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SEaWmgja"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FA71581F8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2024 13:53:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B991A158D83;
+	Wed, 24 Jul 2024 13:53:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721829192; cv=none; b=tpIzKRZ5+QMy5RXvw+P451HUoCF3ZeajeuCqMMHFwMEKW4zxjW+fdG1TihdUFxfBetrp+0X7dTSsdkVgu6tWOBcdwHr0eQH3974n9gArrOpALVjj+zniYf/IUl7Uru+zWHa+OgH2zRZEyxHsq07Or0iuFvpBeqMOjmF+Ynz6T4U=
+	t=1721829230; cv=none; b=LAfs3o48Sgk0lQARumolfiMgvglTTd9QPesUMzf49+R4CiwxtT0kobXEYxG+S6x/l2At1f6PuQ2S0U/8cPaPWidlhC4abBqHeVRwL4LJB3rvpVRfjL1rI9qZJSay17GFX3n/KA0aAywNjvBihoKWeMzpvmODW3fChqd33h3ZdXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721829192; c=relaxed/simple;
-	bh=K1Gm5FrXTgsaeMhym9PMm5RXH1m2mr4z+ndq5toTgcY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P9aRArpfw2J3pdqj0LpF/jg+HPFZJV1jDqRClYAIMZzcWRK6I8fAU8/qXAeP1bHWSa0/+VAIHTqi1e/AlM3J/DrwnpC1EZ2OAOsQEUxCJ0NM3LUHuwELFUttkhnFOgbbHsgmLK+2yg/POX5P2acvR2cDV32Bf7EkRrAN79TuHSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XxzOCPBp; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-1fc56fd4de1so6664665ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2024 06:53:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721829190; x=1722433990; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=SoDYcqz8sG/AIs+jpcWHgqP0knrGMe57oRo4EDfUESM=;
-        b=XxzOCPBpG8Wgq/2R5cpX4MUYvnbw881wHIeGDt9rbt+HTNxOhp5qlMdOUS8iT7DTXK
-         htPo//OnC6tfGQfTc5uxm/VBnKjPuqYMautfqI6WrlIURY2YCtfnCpju96wuP7+coqjj
-         Z9nyWpL2qGeuBzYjGcbX42dMu68oiJQsraCpI2LmjPf+/3KrxOLak67HQs8jrEdwd63J
-         uZ3eJuVkM3enOLKBwAwkz+QY9qDLrTIeuUYqzaVgrJvUL324vyxs4ckUCH0KvnfHXT9l
-         fAxugJC3mPrdQ4yiCjV6KZ81cnITJ8gJ9rO9nmXrJLppw4H9/Og+5LwwsDNLvRoL+WPD
-         2haA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721829190; x=1722433990;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SoDYcqz8sG/AIs+jpcWHgqP0knrGMe57oRo4EDfUESM=;
-        b=w76CNPKaX0DBDawaeEkN5Dc8lMAUHcnkAx9NHA/tqZFEwZ8+XP/gWCEuRPZJHOiEQG
-         wP2gEfrfcqJFOqbJmljVSfo74jYiuoU+pzECaSzycdE9TtV8FB74wNLiiXu8j3TQ0dIk
-         IIPzRacRLJKrK6kC/uJvfqwUhHiyvp8BCSZ6/vsK6+vHWVxHD5KH5Ci+gjRhE64twqEv
-         dwLCIU03K9/HMQPw7xP8Z2NH75hTun96VWrXFV/cL2T9BVrUizgSnzPxp8eHO8GMy06w
-         5opzF+66L9kJ4fNNkvpZoXIf8TYxrkh7K8bfYp0zlJ4p0tBVROtgc5a8Qb6pFh+6ON2E
-         n6mw==
-X-Forwarded-Encrypted: i=1; AJvYcCXPziMFSP686aDeuYFIjRUwBkybEiaYKrpztTqVeBGPd/qM2MdXbtQjcULrYxPCY0bzKD93GeDgXhUGP24dGV8dkofTFpLKRc7cyqwJGg==
-X-Gm-Message-State: AOJu0YxuCCNDC4zkffjkLebsKCXGU4PMBxlPrVdpRFK+Q8pXnN+QH0GN
-	u6XXuvYXQKCAd+7n42ZSIm7pm3i0nyFsqXTnIQbxCaRpTCPwUQgTMmQtj+GWug==
-X-Google-Smtp-Source: AGHT+IEmx7G7fByPz1gtOcoNPb6KHFdsEYyRBjys2M9fZj/hXEBf+Bn4FE+Hw7+Xaaw5KQegbGX9Vg==
-X-Received: by 2002:a17:903:230b:b0:1fb:9b91:d7d9 with SMTP id d9443c01a7336-1fdd6e80b55mr35063315ad.26.1721829190540;
-        Wed, 24 Jul 2024 06:53:10 -0700 (PDT)
-Received: from thinkpad ([103.244.168.26])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fd6f290eedsm94532535ad.93.2024.07.24.06.53.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jul 2024 06:53:10 -0700 (PDT)
-Date: Wed, 24 Jul 2024 19:23:05 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
-Cc: jingoohan1@gmail.com, lpieralisi@kernel.org, kw@linux.com,
-	robh@kernel.org, bhelgaas@google.com, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	quic_mrana@quicinc.com
-Subject: Re: [PATCH v3 1/2] PCI: dwc: Add dbi_phys_addr and atu_phys_addr to
- struct dw_pcie
-Message-ID: <20240724135305.GE3349@thinkpad>
-References: <20240724022719.2868490-1-quic_pyarlaga@quicinc.com>
- <20240724022719.2868490-2-quic_pyarlaga@quicinc.com>
+	s=arc-20240116; t=1721829230; c=relaxed/simple;
+	bh=JHsErZ1Ymd3xIUMEC7/hpzB8p/mlL/O9e+IDU+AKN8I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eq/4iZNentZKFWOohpADHzL50lzVZwsxliJ5ZwDmLA0u6CmxP4mQqgSf3sXdyNeWM6+AgpJEBwV0nIfUIzQUVXTX4pSe8bFWtb99uwxhO7kOodmW3EF5n9eI5t0bLhJph/XEXH8KeiEgY/fE1Z0dIlrwNPZw2XD7WiCmx2fmavo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SEaWmgja; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33282C4AF14;
+	Wed, 24 Jul 2024 13:53:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1721829229;
+	bh=JHsErZ1Ymd3xIUMEC7/hpzB8p/mlL/O9e+IDU+AKN8I=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=SEaWmgjaMdyUPpB+3WNdnu/Gu9TlKShfVaI3kaPtTDUgi1+yOW7Vw3WRWHs1vW6yC
+	 Y3vEwLQLJbKWWj7Dx4mkYjG+Fx1/bCL3TcivZM6ZsDaDYvp/z9r7LEiiNnP5NYrZkJ
+	 SYAnbs406vjYmOQu2+pBQlU/xloyJFw0x9MXtYErO8Y/t++x+Y1gVMuplBSs0dRN1A
+	 aFLBZLP7F5kEjA3DsPqSbJfUS1DcN6ec3Q2ZQcBVKquPBr0eI+0v6rCG5wVA5SqCn8
+	 HZaFcNq4Nj/FL+NccJEe0+3FebAjkiI31jd7YbrmcZFhm5ZDnSwVEnGW06SIOREjmw
+	 xrF3Btp6K9YPg==
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2ef2c56d9dcso39539251fa.2;
+        Wed, 24 Jul 2024 06:53:49 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVaaZbjJYjhHIqupl8vBGkyCEWx3fIX8DGzS1b+8uLkuMt1KfPyzgZ7dpoxC8rJY2vAKrQxjUQtOuV3GonK1AXgrStSN6+jGRdsRnKTe49MQYZgrB3OQKo+ACd48kxwoU7xqBiwWYU8JdQvTm6ju+TfjkaH7nnI7vqnlLAmtSawpQ3LVrNuqFwID2LxJ86iE1yM9ZktYF6hMtUiV+JYCdGeNq1IcHhF8uFG8BBkVgd3CLqtHWEaIijGe8GZpu2FoXEJbZDpe2DWVodGYY8F0ewSmjTtcMrO6O3TF176dny2Ki+cOQ4QsyUiCxoaxMeVHPcSTGnb4UPptXcgD1BfwG8alrSdnrJPn/9ImVSK6k0LzJOB098nA20sdYZaHOeCmf47INa/LL53KokpOdEs9SSy38S0SFqI70+AB2X0OiQ/NV17DNtLdUw3dwZtmFcqmfWwPp2oRxcT0n8IMbleLunhlxOXP/s90LIJMd9zCqXZgWFaOL9OSafFE+xruPbamieQ4FGoP/lM2uE=
+X-Gm-Message-State: AOJu0YzFHhNsC/LtZP3P1oBEd4uWCHuaVYueEwGIGMi2cujgF/otLn4x
+	0by/UuwcoIcftkZn0Qs9LF3HfQ75uDePSxJnJf3MvBJNb409tNRHQu5zge4YlvQlKBlg2YtJJd5
+	sf9fSpzthkKFWqH9VCMI+lVRv/w==
+X-Google-Smtp-Source: AGHT+IEk3YhHLLuWHQez8La65BtnRIR9t5/9BONqzEk5mOwWdTbwESXZpTYF2WmMXYwp6gfL+EkMMSd8FeS9sIIdSCk=
+X-Received: by 2002:a05:6512:3984:b0:51a:f689:b4df with SMTP id
+ 2adb3069b0e04-52efb7db65bmr9357884e87.44.1721829216849; Wed, 24 Jul 2024
+ 06:53:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240724022719.2868490-2-quic_pyarlaga@quicinc.com>
+References: <20240717-of_property_for_each_u32-v2-1-4060990f49c9@bootlin.com>
+ <1e36b1ba8af3584128550822a70cb072.sboyd@kernel.org> <20240718085651.63ddfb20@booty>
+In-Reply-To: <20240718085651.63ddfb20@booty>
+From: Rob Herring <robh@kernel.org>
+Date: Wed, 24 Jul 2024 08:53:24 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqKtOTgoDgfwq9Guvt_LbtnHHGJ+PDt-wgVRHU=oVzwhHw@mail.gmail.com>
+Message-ID: <CAL_JsqKtOTgoDgfwq9Guvt_LbtnHHGJ+PDt-wgVRHU=oVzwhHw@mail.gmail.com>
+Subject: Re: [PATCH v2] of: remove internal arguments from of_property_for_each_u32()
+To: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Cc: Stephen Boyd <sboyd@kernel.org>, Aaro Koskinen <aaro.koskinen@iki.fi>, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Andreas Kemnade <andreas@kemnade.info>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Bjorn Andersson <andersson@kernel.org>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Chen-Yu Tsai <wens@csie.org>, 
+	Chester Lin <chester62515@gmail.com>, Christophe Leroy <christophe.leroy@csgroup.eu>, 
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>, Damien Le Moal <dlemoal@kernel.org>, 
+	Daniel Lezcano <daniel.lezcano@linaro.org>, Dong Aisheng <aisheng.dong@nxp.com>, 
+	Doug Berger <opendmb@gmail.com>, =?UTF-8?Q?Emilio_L=C3=B3pez?= <emilio@elopez.com.ar>, 
+	Fabio Estevam <festevam@gmail.com>, Florian Fainelli <florian.fainelli@broadcom.com>, 
+	Ghennadi Procopciuc <ghennadi.procopciuc@oss.nxp.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jacky Bai <ping.bai@nxp.com>, 
+	Jaroslav Kysela <perex@perex.cz>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Jiri Slaby <jirislaby@kernel.org>, Jonathan Cameron <jic23@kernel.org>, 
+	Kevin Hilman <khilman@baylibre.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Lars-Peter Clausen <lars@metafoo.de>, Lee Jones <lee@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Linus Walleij <linus.walleij@linaro.org>, Mark Brown <broonie@kernel.org>, 
+	Matthias Brugger <mbrugger@suse.com>, Michael Ellerman <mpe@ellerman.id.au>, 
+	Michael Turquette <mturquette@baylibre.com>, Miguel Ojeda <ojeda@kernel.org>, 
+	Nathan Chancellor <nathan@kernel.org>, "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>, 
+	Nicholas Piggin <npiggin@gmail.com>, Nicolas Ferre <nicolas.ferre@microchip.com>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Richard Leitner <richard.leitner@linux.dev>, 
+	Roger Quadros <rogerq@kernel.org>, Samuel Holland <samuel@sholland.org>, 
+	Saravana Kannan <saravanak@google.com>, Shawn Guo <shawnguo@kernel.org>, 
+	Takashi Iwai <tiwai@suse.com>, Thomas Gleixner <tglx@linutronix.de>, Tony Lindgren <tony@atomide.com>, 
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <ukleinek@kernel.org>, 
+	"Peng Fan (OSS)" <peng.fan@oss.nxp.com>, Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	llvm@lists.linux.dev, linux-clk@vger.kernel.org, linux-omap@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-sunxi@lists.linux.dev, linux-samsung-soc@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org, 
+	linux-pwm@vger.kernel.org, linux-serial@vger.kernel.org, 
+	linux-usb@vger.kernel.org, patches@opensource.cirrus.com, 
+	linux-sound@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
+	linux-riscv@lists.infradead.org, Andre Przywara <andre.przywara@arm.com>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
+	Richard Fitzgerald <rf@opensource.cirrus.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 23, 2024 at 07:27:18PM -0700, Prudhvi Yarlagadda wrote:
+On Thu, Jul 18, 2024 at 1:57=E2=80=AFAM Luca Ceresoli <luca.ceresoli@bootli=
+n.com> wrote:
+>
+> Hello Stephen,
+>
+> On Wed, 17 Jul 2024 16:33:34 -0700
+> Stephen Boyd <sboyd@kernel.org> wrote:
+>
+> > > @@ -1191,20 +1191,24 @@ static int si5351_dt_parse(struct i2c_client =
+*client,
+> > >          * property silabs,pll-source : <num src>, [<..>]
+> > >          * allow to selectively set pll source
+> > >          */
+> > > -       of_property_for_each_u32(np, "silabs,pll-source", prop, p, nu=
+m) {
+> > > +       sz =3D of_property_read_variable_u32_array(np, "silabs,pll-so=
+urce", array, 2, 4);
+> > > +       sz =3D (sz =3D=3D -EINVAL) ? 0 : sz; /* Missing property is O=
+K */
+> > > +       if (sz < 0)
+> > > +               return dev_err_probe(&client->dev, sz, "invalid pll-s=
+ource");
+> >
+> > Needs a newline on the printk message.
+>
+> Ouch! Fix queued for v3.
 
-Subject could be modified as below:
+I need v3 like today if I'm going to send it for rc1.
 
-PCI: dwc: Cache DBI and iATU physical addresses in 'struct dw_pcie_ops'
-
-> Both DBI and ATU physical base addresses are needed by pcie_qcom.c
-> driver to program the location of DBI and ATU blocks in Qualcomm
-> PCIe Controller specific PARF hardware block.
-> 
-> Signed-off-by: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
-
-Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-- Mani
-
-> Reviewed-by: Mayank Rana <quic_mrana@quicinc.com>
-> ---
->  drivers/pci/controller/dwc/pcie-designware.c | 2 ++
->  drivers/pci/controller/dwc/pcie-designware.h | 2 ++
->  2 files changed, 4 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-> index 1b5aba1f0c92..bc3a5d6b0177 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware.c
-> @@ -112,6 +112,7 @@ int dw_pcie_get_resources(struct dw_pcie *pci)
->  		pci->dbi_base = devm_pci_remap_cfg_resource(pci->dev, res);
->  		if (IS_ERR(pci->dbi_base))
->  			return PTR_ERR(pci->dbi_base);
-> +		pci->dbi_phys_addr = res->start;
->  	}
->  
->  	/* DBI2 is mainly useful for the endpoint controller */
-> @@ -134,6 +135,7 @@ int dw_pcie_get_resources(struct dw_pcie *pci)
->  			pci->atu_base = devm_ioremap_resource(pci->dev, res);
->  			if (IS_ERR(pci->atu_base))
->  				return PTR_ERR(pci->atu_base);
-> +			pci->atu_phys_addr = res->start;
->  		} else {
->  			pci->atu_base = pci->dbi_base + DEFAULT_DBI_ATU_OFFSET;
->  		}
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> index 53c4c8f399c8..efc72989330c 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.h
-> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> @@ -407,8 +407,10 @@ struct dw_pcie_ops {
->  struct dw_pcie {
->  	struct device		*dev;
->  	void __iomem		*dbi_base;
-> +	phys_addr_t		dbi_phys_addr;
->  	void __iomem		*dbi_base2;
->  	void __iomem		*atu_base;
-> +	phys_addr_t		atu_phys_addr;
->  	size_t			atu_size;
->  	u32			num_ib_windows;
->  	u32			num_ob_windows;
-> -- 
-> 2.25.1
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Rob
 
