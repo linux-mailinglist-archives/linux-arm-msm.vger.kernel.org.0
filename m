@@ -1,138 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-26941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id D234293AD14
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 09:14:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 215E593ADC2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 10:08:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D8A15B22FB2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 07:14:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CC471281577
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 08:08:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7385373462;
-	Wed, 24 Jul 2024 07:13:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34D1513D882;
+	Wed, 24 Jul 2024 08:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wZJhcyce"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Afh4//Jn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46E112DDA2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2024 07:13:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B8513957C;
+	Wed, 24 Jul 2024 08:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721805218; cv=none; b=WRm5MVaIgGk5mn5PVI5LetvGZpSFfLOF8oieVZyQy89pyLj7tX4BGeRW2cmqWv+B7q2kFa9PWV8q/zcYYBOSQg6rAhAVHZEkvaZ7Amedry+K6AwgImhXftJ99WHHg8pf6CnQehq0VScnWRQnO5lwD6zIxxjChPJvNtDGsbTsuis=
+	t=1721808498; cv=none; b=nDEI4TM14QZc09jeGOxYOR22JN2zuXyZuPQ0RLk0MGZ2Tqy+bg0IVfmkYEf/5N8DMZFbAdRtg/duJAxPYD1RW7ZRjeW69OFbQ21oyMkJZ5j6I9Q+eZVy8TrMp5Yvo89cImDR6Gkryd1cWH1UlSul3Oi7hzq4ciV2YrMIMDopqj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721805218; c=relaxed/simple;
-	bh=uwyZFwSs4zyRVcD6GNu+z1tt0btijTTHCaceFk9BSDo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Cg+1+ZYYJVj20Hkt9kPDcF831Td9zypaNIzWI4C7MZQm0NFaafYCI/ztZqY4MagsRdIBxGQ90xwv5BegTA/pGGloZHXrxzS1PqGo8WFJIIY7IsXWQu1pDfQ7LeuUAj+Eso/S+WvIE44DxIwFNHQuYbOWmZSQ4ZAg2DyYvOj7S2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wZJhcyce; arc=none smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-65f7bd30546so4980727b3.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2024 00:13:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721805215; x=1722410015; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+a1tPg3HOKKRtQ+H1Jww0GEhJ0d9bDqysfDZw/250x0=;
-        b=wZJhcyceCLvqdj41AmHl6BSJWrbVGR5EJU9+lZHLvK8pAuzDotD58d3HLvX+WmCh1p
-         u9M+S3zqPuG1d/5nif5pRQSuKVfkGycZQqu/m9gBGgHRjlliK1jrckAbJW7/Q+kIdNdX
-         G/nqzIraJJ9WZpEo2huEdxucw/EPsFDQCA1b3Dw4qOcn4+PdBUWp9gcP0/El6t24vl9h
-         ByDU6qChUcpFh6eBjRMOF6IWuov6xdswoXsf13JqNI3fl+PIIOP+AYebfAREeOLFRJBp
-         tWxdYz/g/CdDxJxw5n8VNVXKlKdAnD7YHT55+atYQgepW8977MGPR/2/YJf4N2wvldc/
-         y5GA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721805215; x=1722410015;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+a1tPg3HOKKRtQ+H1Jww0GEhJ0d9bDqysfDZw/250x0=;
-        b=I9tWLwvA+PxY7aLSvSDZxcQf6iREZoc0luXz2/y2WXYDDn7bOYGEtvrZRD22iNokoQ
-         L0KWxdy6k6FmgDM/8vPh51jzbz5AgIpiu4v//0D30kuF7RMw0PY6frVL2LY8LLdNmwdw
-         s8M6Z53ivEwHXjOCZJFUf95J87DXiePgrk0e9kYFMlMemqvuOfN6+E2uAzkqKECQjJn3
-         LMhkc/SkRjO6dEKbbGf5/8gzuWgYElf5DQ+VAvoP3qGBwoQAIUv/oEHak2Clmg8xIjkM
-         P6KFqGANMrhQYrWpLNrjYzjbi264wl2x0X58/QOw0PTntR1hDgKkAeWEaeiyBsSrt3FG
-         6brw==
-X-Forwarded-Encrypted: i=1; AJvYcCVBCKwuLx6iGAUB68G7VLMiKMVtUCgkE6XxEzcb6HoKxE+D15q4IwIcJTY8bDO+scSVESIHscsltXcnW+4UIIc5RqhlTaa8eIinuBrTcQ==
-X-Gm-Message-State: AOJu0YwAafhOlCoppK09LH2ISQzRY5oslzNTmU8PXtz2Pu3T/yG+nFBR
-	qLFP+eeJb9h1uJq5Ibh42iTsvVQI5zm5eCPcf1fT+VExFR7scsewXLVV7g4XeIxZFbd8LsoE+yy
-	pZKAiE4kd1OICmGqXhr7lOioy+EG+5eXliXHHcw==
-X-Google-Smtp-Source: AGHT+IEPG1bHq5OcfqednTsQJ647G2YbNdaFkAv2JHjQWuG+H9RUFpS0NlqBBVg0Uc/Z02sFUMoTU5E5IsQ01hU01b4=
-X-Received: by 2002:a05:690c:2e0f:b0:65f:96e9:42f4 with SMTP id
- 00721157ae682-672bdaa5cd0mr5792037b3.15.1721805214701; Wed, 24 Jul 2024
- 00:13:34 -0700 (PDT)
+	s=arc-20240116; t=1721808498; c=relaxed/simple;
+	bh=3iI4LQNfIFMmQKl7mTJvx9fak4tI16w7TQnMXLRC6P8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LmMsVj7wiNKqmWdrPbSTdZhNG+TPHpTNWzs82r+OQ7IHFszG6bCnyKanSqx8asWLM3Fdocwt8KTfdlyiXMx2Mx4rSxxaGZezSYVtlSZMHOrZPpvn4NMS/6Ljvwn3wTnAj+JVWiqqXg2qFFtWhuFwTafkY4t+A9sybBhSYfNmQJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Afh4//Jn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3270FC32782;
+	Wed, 24 Jul 2024 08:08:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1721808497;
+	bh=3iI4LQNfIFMmQKl7mTJvx9fak4tI16w7TQnMXLRC6P8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Afh4//JnNVD1VuDOCFR7dnSHf5VvHfvu0jiXLDDMVdZQnolFbzxsUEpVy2P/oYTkc
+	 eBj0zFuWGKJtExIdBcpSuWz5LIVhwrZXv7SJLd4I8py7kh7BM298u7cHp5zjpxYgAc
+	 +kpcuCPwLQ+n6vcO4GoV7YeCs0Dpc4kPJcgYVrMGDe6jEM1bJLvaa6dsRLS1VqOmFW
+	 vZuhCd3v2jG+7UpGBSYRifF4KOORnbYwZfu2umJuvNwT1JINcDNiUkrODvzCM/zKpj
+	 pDmxf7ckPYZnPtdKaxEv/o6j5LfwIq04R22wrLRgXoups7iEnrjdkZmuf/lMjVJqJ9
+	 dkNOD/Ji8e8yA==
+Message-ID: <497c9438-5bb3-42d9-9df9-661235a556d2@kernel.org>
+Date: Wed, 24 Jul 2024 10:08:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240703091651.2820236-1-quic_varada@quicinc.com>
- <20240703091651.2820236-6-quic_varada@quicinc.com> <57dadb35-5dde-4127-87aa-962613730336@linaro.org>
- <ZqCCpf1FwLWulSgr@hu-varada-blr.qualcomm.com>
-In-Reply-To: <ZqCCpf1FwLWulSgr@hu-varada-blr.qualcomm.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 24 Jul 2024 10:13:23 +0300
-Message-ID: <CAA8EJpq5XLQ8WXVxr+3=DZ58URpfqM2phcWVhukpmc_HnRsRfQ@mail.gmail.com>
-Subject: Re: [PATCH v4 05/10] pmdomain: qcom: rpmpd: Add IPQ9574 power domains
-To: Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, vireshk@kernel.org, nm@ti.com, 
-	sboyd@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	angelogioacchino.delregno@collabora.com, andersson@kernel.org, 
-	mturquette@baylibre.com, ilia.lin@kernel.org, rafael@kernel.org, 
-	ulf.hansson@linaro.org, quic_sibis@quicinc.com, quic_rjendra@quicinc.com, 
-	quic_rohiagar@quicinc.com, abel.vesa@linaro.org, otto.pflueger@abscue.de, 
-	danila@jiaxyga.com, quic_ipkumar@quicinc.com, luca@z3ntu.xyz, 
-	stephan.gerhold@kernkonzept.com, nks@flawful.org, linux-pm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2] dt-bindings: clock: qcom: Remove required-opps from
+ required list on SM8650
+To: Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Taniya Das <quic_tdas@quicinc.com>,
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>,
+ Ajit Pandey <quic_ajipan@quicinc.com>, kernel test robot <lkp@intel.com>
+References: <20240720052818.26441-1-quic_jkona@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <20240720052818.26441-1-quic_jkona@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, 24 Jul 2024 at 07:27, Varadarajan Narayanan
-<quic_varada@quicinc.com> wrote:
->
-> On Tue, Jul 09, 2024 at 11:52:19AM +0200, Konrad Dybcio wrote:
-> > On 3.07.2024 11:16 AM, Varadarajan Narayanan wrote:
-> > > From: Praveenkumar I <quic_ipkumar@quicinc.com>
-> > >
-> > > Add the APC power domain definitions used in IPQ9574.
-> > >
-> > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > > ---
-> > > v4: Add Reviewed-by: Dmitry Baryshkov
-> > > v3: Fix patch author
-> > > v2: Fix Signed-off-by order
-> > > ---
-> > >  drivers/pmdomain/qcom/rpmpd.c | 19 +++++++++++++++++++
-> > >  1 file changed, 19 insertions(+)
-> > >
-> > > diff --git a/drivers/pmdomain/qcom/rpmpd.c b/drivers/pmdomain/qcom/rpmpd.c
-> > > index 5e6280b4cf70..947d6a9c3897 100644
-> > > --- a/drivers/pmdomain/qcom/rpmpd.c
-> > > +++ b/drivers/pmdomain/qcom/rpmpd.c
-> > > @@ -38,6 +38,7 @@ static struct qcom_smd_rpm *rpmpd_smd_rpm;
-> > >  #define KEY_FLOOR_CORNER   0x636676   /* vfc */
-> > >  #define KEY_FLOOR_LEVEL            0x6c6676   /* vfl */
-> > >  #define KEY_LEVEL          0x6c766c76 /* vlvl */
-> > > +#define RPM_KEY_UV         0x00007675 /* "uv" */
-> >
-> > The "uv" key is handled in qcom_smd-regulator.c.. I'm assuming on this
-> > platform, it accepts level idx instead of the regulator properties
-> > and this is intentional?
->
-> IPQ9574 RPM accepts regulator properties (uv) and not the level idx.
-> Hence added the "uv" key in the rpmpd.c
+On 20/07/2024 07:28, Jagadeesh Kona wrote:
+> On SM8650, the minimum voltage corner supported on MMCX from cmd-db is
+> sufficient for clock controllers to operate and there is no need to specify
+> the required-opps. Hence remove the required-opps property from the list of
+> required properties for SM8650 camcc and videocc bindings.
+> 
+> This fixes:
+> arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: clock-controller@aaf0000:
+> 'required-opps' is a required property
+> 
+> arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: clock-controller@ade0000:
+> 'required-opps' is a required property
+> 
+> Fixes: a6a61b9701d1 ("dt-bindings: clock: qcom: Add SM8650 video clock controller")
+> Fixes: 1ae3f0578e0e ("dt-bindings: clock: qcom: Add SM8650 camera clock controller")
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202407070147.C9c3oTqS-lkp@intel.com/
+> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+> ---
+> Changes in V2:
+>  - Made required: conditional and dropped required-opps from it only for SM8650 platform
+>  - Dropped Krzysztof Acked-by tag due to above changes
+>  - Link to V1: https://lore.kernel.org/all/20240708130836.19273-1-quic_jkona@quicinc.com/#r
+> 
+> .../bindings/clock/qcom,sm8450-camcc.yaml     | 26 +++++++++++++------
+>  .../bindings/clock/qcom,sm8450-videocc.yaml   | 25 +++++++++++++-----
+>  2 files changed, 36 insertions(+), 15 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+> index f58edfc10f4c..8698c801ed11 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+> @@ -21,9 +21,6 @@ description: |
+>      include/dt-bindings/clock/qcom,sm8650-camcc.h
+>      include/dt-bindings/clock/qcom,x1e80100-camcc.h
+>  
+> -allOf:
+> -  - $ref: qcom,gcc.yaml#
+> -
+>  properties:
+>    compatible:
+>      enum:
+> @@ -53,11 +50,24 @@ properties:
+>    reg:
+>      maxItems: 1
+>  
+> -required:
 
-Does it expect the actual voltage? If so, then it is not a power
-domain and it should be modelled as a regulator instead.
+You cannot remove required block.
 
+> -  - compatible
+> -  - clocks
+> -  - power-domains
+> -  - required-opps
+> +allOf:
+> +  - $ref: qcom,gcc.yaml#
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: qcom,sm8650-camcc
+> +    then:
+> +      required:
+> +        - compatible
+> +        - clocks
+> +        - power-domains
+> +    else:
+> +      required:
+> +        - compatible
+> +        - clocks
+> +        - power-domains
+> +        - required-opps
+>  
+>  unevaluatedProperties: false
+>  
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
+> index b2792b4bb554..2e5a061f33d6 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
+> @@ -40,15 +40,26 @@ properties:
+>      description:
+>        A phandle to an OPP node describing required MMCX performance point.
+>  
+> -required:
 
--- 
-With best wishes
-Dmitry
+No, you cannot remove required block.
+
+To clarify: there is almost no single binding using your style. Even if
+there is one, then 99 others are using it differently. Do not implement
+things entirely different than everyone else. This is the same for C
+code you send upstream. No difference here...
+
+Best regards,
+Krzysztof
+
 
