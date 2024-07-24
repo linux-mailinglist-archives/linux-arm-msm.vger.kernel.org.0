@@ -1,138 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-26935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C96D93AC1E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 07:02:28 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 092C593AC5B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 07:57:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F0F39282962
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 05:02:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 89222B2113F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 05:57:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB18322067;
-	Wed, 24 Jul 2024 05:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB1E93D982;
+	Wed, 24 Jul 2024 05:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l4Zfhmjv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WXahiLzJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E782572;
-	Wed, 24 Jul 2024 05:02:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826555695;
+	Wed, 24 Jul 2024 05:57:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721797343; cv=none; b=D87WkD2OmSEEK5+/1Jl84P4SSQOWdLuQzl8+bGviNUM48hjhqTNcRxQ0R+nxglFWdqJ3yK4XwDxqfC0rpNQmtNcDbEi7ocPuvrUA6Y4DjVuxh0zEydTZOEpgCZZW2TJKcL1HtMSJO1Q+g05OGASa7JbHF4vNgBadQRb7FDdCHGU=
+	t=1721800631; cv=none; b=nt17N4tXS+D5zUfoW/pUwsopcPcPNksaPcR1CmLy31Tut9z9bu4IxSmqEpSgl0lmgtHavK2xOfygUuPdPITkfKpx0BexfPK6GShow1lh5KwCZ/BZJnnNxU0QQS87ibAyLNUn1344WJhWn2sGj4/FY8jLs479X2s5b9vcLapiLkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721797343; c=relaxed/simple;
-	bh=XznGPAWH1LE+KdN7UzH3hCTk1TDPC7ZWm715rJxS5W0=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AVHHZUGtL4OIF5QnV4IfislY3w7gc+FcbI/HoK2scgXNCqFGN06gw2MjG8Nkl62WlbiK4I8u2Td1R2vTXoB3Kd/oarrCz5hSYAnryUu9vzeY8Z4PWM0wABudR5XtuG2dhlC3W7djwNIOvEmtqzeahX5fklsx+J7QXaMBGcbiQOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l4Zfhmjv; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46NKtgx7031494;
-	Wed, 24 Jul 2024 05:02:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=sSkacKMONTrzkrrMYc0qr0K3
-	kPoP3yT+LTuiwdNb9wQ=; b=l4ZfhmjvvmNmDJcwh+zONHP+JFxBNECGyfqOlQln
-	Z5mdPgpQ19xTjwu2sonjJxYWZ3KbbsXMVDhij4bLPIifbXNJwgzUsQjZ64sniQNk
-	Wk4vpk+EyK2N9GI+9K9cq/ve5kNFaqPA373TdoXH56UtzGCinQ/y/9xKMJFF7ju9
-	BQLG4xIWNhr0b5Xy1ubZc0dTLUzZKYwJx/CzfLeloPxmK5byuqnppCU389USoyvX
-	V1SDteLmYsoZ5Fvn5jhvlRnpm4QtUEFAWBgtNao/u06ru3QcN0Xees60vBlZL41/
-	85ZdpGXcXoc0nj1yGDE+oD/eIchNibyeB2nW0B1Z/tz4Gw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g46s9015-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Jul 2024 05:02:00 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46O51xdc013138
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Jul 2024 05:01:59 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 23 Jul 2024 22:01:54 -0700
-Date: Wed, 24 Jul 2024 10:31:51 +0530
-From: Pavan Kondeti <quic_pkondeti@quicinc.com>
-To: Caleb Connolly <caleb.connolly@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>
-CC: Maulik Shah <quic_mkshah@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>, <stephan@gerhold.net>,
-        <swboyd@chromium.org>, <dianders@chromium.org>, <robdclark@gmail.com>,
-        <nikita@trvn.ru>, <quic_eberman@quicinc.com>,
-        <quic_pkondeti@quicinc.com>, <quic_lsrao@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Volodymyr
- Babchuk" <Volodymyr_Babchuk@epam.com>,
-        <stable@vger.kernel.org>
-Subject: Re: [PATCH v2] soc: qcom: cmd-db: Map shared memory as WC, not WB
-Message-ID: <93c41b18-2280-496b-8328-9f46a68a6220@quicinc.com>
-References: <20240718-cmd_db_uncached-v2-1-f6cf53164c90@quicinc.com>
- <d17e7e6d-12dd-475d-80ae-fa48178d6cf2@linaro.org>
+	s=arc-20240116; t=1721800631; c=relaxed/simple;
+	bh=8nc4UXjqleX9ROlHeHnZxGX47iD/172z8ulcpcEUONc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Yx5hlJzbzbQRHbKn51NyyCtGwiaN34DbF7DbYTMk9N6+DVHJmlbw1WtCGGjYZHJvPeIB/DleMsGEAKUeQA2p+nwaEyZfAlZcZNfqgQXoPPjlwYFPSEhGqWRtYIqV8GtLADzurbHZ8RMmH8nwyFtt6caGCWO0dWPc+/CkUDJPh6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WXahiLzJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83CFC32782;
+	Wed, 24 Jul 2024 05:57:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1721800631;
+	bh=8nc4UXjqleX9ROlHeHnZxGX47iD/172z8ulcpcEUONc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=WXahiLzJ1b327mBdX5YyxCWOROOl6fDozKOFRDil2+vZXESrIgmR4Du4V/STrOSUP
+	 i4ALki+XnY6PJ7qCfN9h1aIt8CDBMy9c/vkJv++jqq2jJf3TU36aZo8yNsD6QhZkBe
+	 EaHeUs0jwGtrr6Sa+jodHb0SVN7rcAVu3BoykQn8/YU1OOQQ9rwMko4WrYNrLQKyR+
+	 y8sndoNjh4KI9P6mjKKg3tBegKTBpeVV8dVtgJAOE8Jr//AuYetdkunFn63Qx+Qhc7
+	 7cWjjqsQWdEazwMQjq7HS/k546lUhMqulC4NssLEf8pGzRTjxPx+H62qfEMynbazxG
+	 N9Y9DjzEZzuTg==
+Message-ID: <d2d6f29d-22d6-4ae8-9172-a4af589e398c@kernel.org>
+Date: Wed, 24 Jul 2024 14:57:08 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <d17e7e6d-12dd-475d-80ae-fa48178d6cf2@linaro.org>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SCHjLmbyun9BotGvVvxjTkQjNLrpgA2Y
-X-Proofpoint-ORIG-GUID: SCHjLmbyun9BotGvVvxjTkQjNLrpgA2Y
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-24_02,2024-07-23_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- lowpriorityscore=0 bulkscore=0 clxscore=1015 malwarescore=0
- priorityscore=1501 phishscore=0 adultscore=0 suspectscore=0 spamscore=0
- mlxlogscore=832 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407240035
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] Convert {a,i}pq8064 SATA AHCI controller bindings
+ to dtschema
+To: Rayyan Ansari <rayyan.ansari@linaro.org>, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+Cc: Conor Dooley <conor+dt@kernel.org>, de Goede <hdegoede@redhat.com>,
+ Jens Axboe <axboe@kernel.dk>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ linux-ide@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Niklas Cassel <cassel@kernel.org>, Rob Herring <robh@kernel.org>
+References: <20240717100600.19005-1-rayyan.ansari@linaro.org>
+From: Damien Le Moal <dlemoal@kernel.org>
+Content-Language: en-US
+Organization: Western Digital Research
+In-Reply-To: <20240717100600.19005-1-rayyan.ansari@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Bjorn,
-
-On Thu, Jul 18, 2024 at 09:41:34AM +0200, Caleb Connolly wrote:
+On 7/17/24 7:03 PM, Rayyan Ansari wrote:
+> Hi,
+> The following patches convert the old text bindings to dtschema by using
+> ahci-platform.yaml.
 > 
+> Note: patch 1/3 from v1 of this series has been sent as a separate patch
+> for v2: https://lore.kernel.org/all/20240717094914.17931-2-rayyan.ansari@linaro.org/
 > 
-> On 18/07/2024 08:03, Maulik Shah wrote:
-> > From: Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>
-> > 
-> > Linux does not write into cmd-db region. This region of memory is write
-> > protected by XPU. XPU may sometime falsely detect clean cache eviction
-> > as "write" into the write protected region leading to secure interrupt
-> > which causes an endless loop somewhere in Trust Zone.
-> > 
-> > The only reason it is working right now is because Qualcomm Hypervisor
-> > maps the same region as Non-Cacheable memory in Stage 2 translation
-> > tables. The issue manifests if we want to use another hypervisor (like
-> > Xen or KVM), which does not know anything about those specific mappings.
-> > 
-> > Changing the mapping of cmd-db memory from MEMREMAP_WB to MEMREMAP_WT/WC
-> > removes dependency on correct mappings in Stage 2 tables. This patch
-> > fixes the issue by updating the mapping to MEMREMAP_WC.
-> > 
-> > I tested this on SA8155P with Xen.
-> > 
-> > Fixes: 312416d9171a ("drivers: qcom: add command DB driver")
-> > Cc: stable@vger.kernel.org # 5.4+
-> > Signed-off-by: Volodymyr Babchuk <volodymyr_babchuk@epam.com>
-> > Tested-by: Nikita Travkin <nikita@trvn.ru> # sc7180 WoA in EL2
-> > Signed-off-by: Maulik Shah <quic_mkshah@quicinc.com>
+> v1: https://lore.kernel.org/all/20240716105245.49549-1-rayyan.ansari@linaro.org/
 > 
-> Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+> Thanks,
+> Rayyan
+> 
+> Rayyan Ansari (2):
+>   dt-bindings: ata: qcom,ipq806x-ahci: use dtschema
+>   dt-bindings: ata: qcom,apq8064-ahci: add to dtschema
+> 
+>  .../bindings/ata/ahci-platform.yaml           | 33 ++++++++++++-
+>  .../devicetree/bindings/ata/qcom-sata.txt     | 48 -------------------
+>  2 files changed, 31 insertions(+), 50 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/ata/qcom-sata.txt
 
-Is it possible to include it in v6.11-rc?
+Applied to for-6.12. Thanks !
 
-Thanks,
-Pavan
+-- 
+Damien Le Moal
+Western Digital Research
+
 
