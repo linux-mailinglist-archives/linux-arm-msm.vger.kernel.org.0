@@ -1,139 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-26957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 069DB93B180
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 15:22:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 206A593B19D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 15:29:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 37DD81C232B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 13:22:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 94E711F22F2D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 13:29:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55C8E158D74;
-	Wed, 24 Jul 2024 13:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBB1A79F0;
+	Wed, 24 Jul 2024 13:28:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l8st//Ie"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LgDdXhAY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FB1158A01;
-	Wed, 24 Jul 2024 13:22:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30FF9158D84
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2024 13:28:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721827360; cv=none; b=dpcwpIyolI8HEaTbsSpMTZLxcOn/RgZ3TO+kx5QVK+CnHT1uf0sKsXP9WOwiUqmpPJZEnWqAvrxsmXAWxO3iyrAFiYVbp1p/gMYBJ1RVz+NgVaOXU86zCICHcuU5MXGrekRvg15k/QQ/DrPry5ZTcy1Y5BDSs/8Ci7So3iVwi78=
+	t=1721827736; cv=none; b=nk+xMhLuRvOCOlUPUBNiR8PUqUhqs15HZAMg/QPXpn4ZYaNsbL2jVRtBuLVmPBMTOTczfHtNhcAKwztUjpDYgxYKskU0BSe93INhYqu+ANQsEkgDcr1ajFX+1TKlvx0hNFVbgglyDg8BWkDlJ4prCYCVLy6lJcSpzIOsfadYsQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721827360; c=relaxed/simple;
-	bh=MbWcGKHLsBz3s1JF5yQsSo7cvuVml6sVGrY1qjjbzes=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=psP9Vh36SFPXRkBJIpMvoJkq7WpyFr23V7sQoVfs/3Mp68NfwYojLesANPOY6dnzXdDFTfJJIWNJwlA+L71dsFxq2ME4ozSry81sfkYCcSP3HYSR47oODj+Altg+rerppSaanzEzG2oAGqi8if88ZH2AWxE526+MzryLXn3uacQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l8st//Ie; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3594FC32782;
-	Wed, 24 Jul 2024 13:22:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721827359;
-	bh=MbWcGKHLsBz3s1JF5yQsSo7cvuVml6sVGrY1qjjbzes=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=l8st//Ie5qfMMa1MQZNJYcBjSKaKvMQTahrlvi3tL43CaPY8Q4yQsXsnNfFUgG4ky
-	 Tjp6h0zt85b9ljlHPBfHDxBJ/2bMnG34JnHl4PwNKoJA5TQYws9dIMJVJtWnd+lAy8
-	 4RJNIaxHKGcX3A9KcOwV0MVGXoJPkxBdAmT5UQLpNsCRNLv7+PUnrlP3DDoaRy0IG6
-	 yqaHl1tSU5adGLWyb1PMYn+SdAHLn/K1zwfc8z6SYhulYxxeq5Fr/zEjWpbzaUzdCF
-	 mBWXYXA0IxV0QLw4m/hn3f0H62sajSaMFQ666ePMmTo/gj6POAzD/JW2QcXKAfw2Iq
-	 gzo6MCsZKtHrg==
-Message-ID: <8cef6a08-c363-43f1-8d55-ad47b399fe5e@kernel.org>
-Date: Wed, 24 Jul 2024 15:22:32 +0200
+	s=arc-20240116; t=1721827736; c=relaxed/simple;
+	bh=NbryZMNi++9IyWDKCW43oXUTr404zUv0RT78qB3Do6I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nNo/ujVl6ID82Hgemt+zagkShA8K4zvl/pXBjyBRkmHHv8+z5L5q4VASS8J8CrlDhbJxe32U+8n54AOWD4Z1znaKw2z7GPbvA4E/69wtEl3N4eouWQUZut7B4x0yrJeEAINRdpWlVzXfPPeW/tJKMWHSoLuheGBVJ7M8YOHxQL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LgDdXhAY; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-70d357040dbso2033382b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2024 06:28:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721827734; x=1722432534; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=EK7J1tmmD0LeVUI1TCcORLh7QZq/9jUNRzduMUl+rUQ=;
+        b=LgDdXhAYUCPAgQ/clGLOA5YPymW32ytYmvwjnGxYDsje7yLKqaXjN2ghOVosjavZwp
+         gCKMIAwR2SLPgUkKiLJM+5fhXwAzcjWGysuvamryNsuC8/+B27ZMznp5WiqFSeNqXZw5
+         waS9YE+ZFmuyV6F6YEhiCRBda5ozs1QzKjdyru+utGpZICR7LYYsAlejaKMMqEbseCsH
+         t8ya5OGY1NyMnVuycXKCWxLX9De9G9XWffIgY5cEuUN92dLyWhtFgr9T1OHj4LcsCVIx
+         ivGbam+R9SwR4vi/aZ7AcC8UfwKay1mPr2/bBak8FNRqV8r3kQ1Gafmh4YXPEYkKVCXc
+         ySAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721827734; x=1722432534;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EK7J1tmmD0LeVUI1TCcORLh7QZq/9jUNRzduMUl+rUQ=;
+        b=Z575hkkTNdnVD4HurNOdvgWW4VayDrW9LrnHwh7Ux3cFa6a6qffJe6mLMrpZiXYTEs
+         2EDrE5EWVtebh1QrqPvpyuPgtMy5AzwpcDkkoTwE/o+AJBYdh89lMyk8ttqlJ17Mpdvc
+         ikC7nlT9OPHT20+H4ltVuqcRgHK4gA7lhq6NDk+7j9mSIkRSP06DSdqhN7b0eKIgYrjw
+         ORoAJylTpT7suPBjm8/dNKCN+lNwrMC+wn2xzXNz3yHJQB3SMHq9bE9eseeSzqdnib06
+         cxvwx0cF8H5xjj6nB9SJLjOR7zvbyq59GS2vkPRzK5O6o4SWP4TQMjKCfm8hlz4Fq8Zg
+         n8YQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWYhqoTXxMn+t6QhGaQcQiC2G6fvYRkVVoAW9gk/qeaibE0zGBNVF5x2Mj2MvA1QBNzUWnqXjlAj7slvU5GiApaOKG4gT2g7ETtzI7HGw==
+X-Gm-Message-State: AOJu0YwoohTxlqRbC+Jpb/WRABmObZpS0brcosAcJBteWq9xjY215DHi
+	CA8Phz94jddF2GryZs0e3wDgZJdM7Bvv88CA1uDYachTdypkLHSLNbK3nrQ6cWZ6H0WaWQn01y4
+	=
+X-Google-Smtp-Source: AGHT+IGrrJr+Oo0dBAP1RDU3YHrRkUwB1oBOMPFPB4/1gpiTJwDY4uP4ocgeH+a+h16PfoQZz0jhTQ==
+X-Received: by 2002:a05:6a21:7884:b0:1c4:17e1:14d0 with SMTP id adf61e73a8af0-1c461a04b51mr2600716637.47.1721827734299;
+        Wed, 24 Jul 2024 06:28:54 -0700 (PDT)
+Received: from thinkpad ([103.244.168.26])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-70d2628be4fsm5226884b3a.80.2024.07.24.06.28.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Jul 2024 06:28:53 -0700 (PDT)
+Date: Wed, 24 Jul 2024 18:58:50 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Slark Xiao <slark_xiao@163.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: Re:Re: Re: [PATCH] bus: mhi: host: Add firehose support for
+ Foxconn SDX24/SDX55/SDX65
+Message-ID: <20240724132850.GA3349@thinkpad>
+References: <20240709015818.110384-1-slark_xiao@163.com>
+ <dduv77mdqe633m7amyljhqas7nomrtjrrimvmyqidymy3qjvfa@biepierrz5p3>
+ <17f0f426.4faf.190b4edaadd.Coremail.slark_xiao@163.com>
+ <CAA8EJpoiOLYMhxyJbdrgnMVfVggL9cOWtX8L__YKd=RPQWOcSg@mail.gmail.com>
+ <7036d57d.5904.190b512d00b.Coremail.slark_xiao@163.com>
+ <7b69f589.982a.190e4735077.Coremail.slark_xiao@163.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: PCI: qcom: Allow 'vddpe-3v3-supply' again
-To: Johan Hovold <johan+linaro@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240723151328.684-1-johan+linaro@kernel.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240723151328.684-1-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7b69f589.982a.190e4735077.Coremail.slark_xiao@163.com>
 
-On 23/07/2024 17:13, Johan Hovold wrote:
-> Commit 756485bfbb85 ("dt-bindings: PCI: qcom,pcie-sc7280: Move SC7280 to
-> dedicated schema") incorrectly removed 'vddpe-3v3-supply' from the
-> bindings, which results in DT checker warnings like:
+On Wed, Jul 24, 2024 at 07:14:40PM +0800, Slark Xiao wrote:
 > 
-> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb: pcie@600000: Unevaluated properties are not allowed ('vddpe-3v3-supply' was unexpected)
->         from schema $id: http://devicetree.org/schemas/pci/qcom,pcie.yaml#
+> At 2024-07-15 14:27:07, "Slark Xiao" <slark_xiao@163.com> wrote:
+> >
+> >At 2024-07-15 14:16:57, "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org> wrote:
+> >>On Mon, 15 Jul 2024 at 08:46, Slark Xiao <slark_xiao@163.com> wrote:
+> >>>
+> >>>
+> >>> At 2024-07-13 23:09:47, "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org> wrote:
+> >>> >On Tue, Jul 09, 2024 at 09:58:18AM GMT, Slark Xiao wrote:
+> >>> >> Since we implement the FIREHOSE channel support in foxconn mhi
+> >>> >> channels, that means each product which use this channel config
+> >>> >> would support FIREHOSE. But according to the trigger_edl feature,
+> >>> >> we need to enable it by adding '.edl_trigger = true' in device
+> >>> >> info struct.
+> >>> >> Also, we update all edl image path from 'qcom' to 'fox' in case of
+> >>> >> conflicting with other vendors.
+> >>> >
+> >>> >Separate patches please. Also don't use "we", just an imerative style:
+> >>> >do this and that.
+> >>> >
+> >>>
+> >>> Do you mean use 2 patches (1 for enabling trigger edl and 1 for
+> >>> modifying path)? Though these changes are aimed to make
+> >>> firehose download successfully.
+> >>
+> >>Yes. "Do this. Also do that" is usually a sign that the patch should be split.
+> >
+> >Will do a update in next version.
+> >
+> >>
+> >>>
+> >>> >>
+> >>> >> Signed-off-by: Slark Xiao <slark_xiao@163.com>
+> >>> >> ---
+> >>> >>  drivers/bus/mhi/host/pci_generic.c | 20 ++++++++++++++------
+> >>> >>  1 file changed, 14 insertions(+), 6 deletions(-)
+> >>> >>
+> >>> >> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> >>> >> index 14a11880bcea..440609b81e57 100644
+> >>> >> --- a/drivers/bus/mhi/host/pci_generic.c
+> >>> >> +++ b/drivers/bus/mhi/host/pci_generic.c
+> >>> >> @@ -433,8 +433,8 @@ static const struct mhi_controller_config modem_foxconn_sdx72_config = {
+> >>> >>
+> >>> >>  static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+> >>> >>      .name = "foxconn-sdx55",
+> >>> >> -    .fw = "qcom/sdx55m/sbl1.mbn",
+> >>> >> -    .edl = "qcom/sdx55m/edl.mbn",
+> >>> >> +    .edl = "fox/sdx55m/prog_firehose_sdx55.mbn",
+> >>> >
+> >>> >qcom/sdx55m/foxconn/prog_firehose_sdx55.mbn
+> >>>
+> >>> what's your opinion?Mani
 > 
-> Note that this property has been part of the Qualcomm PCIe bindings
-> since 2018 and would need to be deprecated rather than simply removed if
-> there is a desire to replace it with 'vpcie3v3' which is used for some
-> non-Qualcomm controllers.
+> This format mismatch with Foxconn SDX72 edl path"fox/sdx72m/edl.mbn".
+> I think we should align with that changes we just committed.
+> What's your opinion, Mani?
 > 
-> Fixes: 756485bfbb85 ("dt-bindings: PCI: qcom,pcie-sc7280: Move SC7280 to dedicated schema")
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-Thanks. You could also mention in commit msg that Linux drivers for
-msm8996, SM8[123456]50 and few others actually requested that supply. In
-any case:
+This really sneaked through. I shouldn't have allowed this path. We should bite
+the bullet and use a standard path for all modems as Dmitry suggested. So the
+path will become:
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+"qcom/<chip>/<vendor>/" where chip is 'sdx72m' and vendor is 'foxconn'.
 
-Best regards,
-Krzysztof
+If you need to use product specific firmware, then
 
+"qcom/<chip>/<vendor>/<product>"
+
+Since the firmware itself is not upstreamed to linux-firmware, changing the path
+is not a big deal.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
