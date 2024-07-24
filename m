@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-26979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 839C693B609
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 19:34:15 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 817DE93B655
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 19:59:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A6D2C1C213A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 17:34:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A532DB21D65
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 17:59:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 701B715ECF2;
-	Wed, 24 Jul 2024 17:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E71215F409;
+	Wed, 24 Jul 2024 17:59:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="21GCeZYU"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="qLljPGvq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FE92E639
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2024 17:34:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5502E639
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2024 17:59:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721842450; cv=none; b=XmXDccnZ4eHh4EJx8Hz9au1ma68+5qBATuyaLq5nScDItZyFvEKdFV0YFiGYZ1v66Afa2ugMBe5Ll3vC1vXXwmX5+Gnn3f4RgLx4Ay1lpG4WWm9PxsdIvnoCWecOqxtFbRpVZaSGSVQ1E1sQr5h0KTQobIU8HuFZ9gaFFqPETBg=
+	t=1721843967; cv=none; b=WXQZO2ki09hIv+ppuETmP6ftFwTi2XtjyG7ioah0pDyoUCnJ8C8U7BK/3WVRKHZefCFBTjGglJWB1C2aNJ/yJtjpKo0yfYTfKs3KxM9hfp6UK6jc12XDFLtRsmN7P+P1h2PUaNjetMp8yZgMlfVUIPhwmGB9MtmYX2cX4WWvr/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721842450; c=relaxed/simple;
-	bh=zERNpf3oWXvFjoLJlmFALzVVLrEhuPFttlDIlNr1mwI=;
+	s=arc-20240116; t=1721843967; c=relaxed/simple;
+	bh=WtAPgXVP/j0nWz8Ui8mgHJah+Yb50ePWbM4ijI8nTn8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A9CD7hor28bS+g+/HED2/P4/UCOOQ9ZNMf5DqAkNRqZ0Kdm2aOZePPzw5bcUmZ/TqWeIRVn8xVjoFTtBiwKdm61kjxg2ZdkhkFJwJN98RPJ7hKyLrhS7jyOJiheJ27cApud+D6X7ykRb8wJPFhMtPLGPdvuuK9Y3F7ClzajlJXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=21GCeZYU; arc=none smtp.client-ip=209.85.128.53
+	 In-Reply-To:Content-Type; b=jWop6i+DxBRoShpYOisOJ4sn9Q+ztzqRfFpLt9dvyxwiXyAHX1edybHASpMRu9ceS6ApVJrmi1N7z8CwzZX+cuup9Z+0Q1iBq9pvth3eGQ2AxJsKmJMS16v9lYqr7Mr3EgK29qUc/H+fQVoSJDg1VO61/LvhpeuTzFqjlghrqv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=qLljPGvq; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-42122ac2f38so561075e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2024 10:34:08 -0700 (PDT)
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-428035c0bb2so1081765e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2024 10:59:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1721842447; x=1722447247; darn=vger.kernel.org;
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1721843963; x=1722448763; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=3CF8kwNX6NMY/WwdtTRjKXajD0RVVOOrPiCE63zSxOE=;
-        b=21GCeZYUjyLlKR/PjTJ2+Xq9JfPHbTttoLBIolPr6UNS8wUUZAV1dmz9D8gJWDkStv
-         X18MTSe0FILalx18koy2xGWVr8Mf+z6lhSXb/znr6uJzQ4xyojFRuGQCa2Qgjk5CC3Kj
-         WXS51f5ZSlW8xrpNPI4qXaT/I4nM4zNDunWcq8inmoyZqp2KaxGcv5x1aJPBiKTBU2oZ
-         Q1VUUuuFlbURXTf+AYyhRHPD99EpC9zWW0L13juTYw4rNZgfT24vHK8xbsE9vXOU7C5d
-         KBOUrTnpXNSOaNkmoMTtRrO0eMdgMzwwuNXBz00OlZKqlKcMEym4/bbE+PP/X4KQ1V6B
-         Cy5A==
+        bh=bB2QAOI7VV4nz4PEqDaYS/ujHUAYYtna7nIFDg5mVV8=;
+        b=qLljPGvqS4Tdu3MRNK6mlgZ2ES3/3+GOaC0YzzIZ7W34rxiaTuKKnjDbDBWpduHmiU
+         6rKfRBHUixG1Qu8wfTyBjsMEvZALZERagMLH2UQjRfLpLtY5wsSq0017dmuRUwjWwGOY
+         DLATqlFLNIu9uS6RCfaRt3FyzqtC4eCXIkW2zbpSsBp9xY+3NfRA5LYUCC5JLHvz2M1C
+         ioNfTo50IhfnX4kvTZEhwchCYQgw7JcYdvzo1K9w/hQb/WzD3Urhp7y2qdiYCGUpMR+6
+         4iLV6wKxUuUbziLQ2T4JCgJPgmBXCzBDjCk/AvXQJFHnGFaGbAURvIDhfXX+iwbtQvSW
+         p+Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721842447; x=1722447247;
+        d=1e100.net; s=20230601; t=1721843963; x=1722448763;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3CF8kwNX6NMY/WwdtTRjKXajD0RVVOOrPiCE63zSxOE=;
-        b=qiUhF5UTLC7wyPLMuBoIwBK5APfAzbxujOHLKTcHNtbF6wqY3vLGHxsxr+mpgNfB0q
-         oA3HvPFHoRl4GA6H/3J8aMm5m6L1GbY6HCy+76Av8bkeMs9+niRhSewvrF50FzLSEIBy
-         Q6wejmLZS+E84asDIcQY3UPASbofYCUOKd69Mixx1IUWZCmavbjTHdlxjVxhHmhbX6S6
-         9p3/EhqY+SrgLcrMuIUTxWYwOaLk44aA4E3S+AVB1rMMM7mLsMaAHFkHFp2HYaLCAuQX
-         UtPsfAwZjI94a/Aox0hpQuIBdOUbuLnIkdyAe6W6jUk4PgRgfHpV97+GOy/P2odPCDuF
-         I7pg==
-X-Forwarded-Encrypted: i=1; AJvYcCW3XG3x9R3WAIDFbmyWdZI90+y2QxkMh/i2uagUnh7x8uZ30dJjJsZN63LkA+dq2jDK7E5JoiODUkw3hgFimpMA3OKdk84yIcatn1TnLw==
-X-Gm-Message-State: AOJu0Yy4oKhKDvlPHcWf3t3iU8ZRHrM4Nme72oMhmJi785KE6BTMlPfB
-	2oIqmlg5TLUdjYa6/fLX27tNApwcUG5/S37QvLom3ZOJNJQM2Mp59fDwlvGntbs=
-X-Google-Smtp-Source: AGHT+IFtTWi5rpFaTtER/Gz2ezWjweNVTL+H8GRpQpl1oXpGygMuuhcgu8RgoZHqAmmSVbrkhBv0Fw==
-X-Received: by 2002:a05:600c:4fc9:b0:426:6fb1:6b64 with SMTP id 5b1f17b1804b1-427f99f99f5mr21820095e9.7.1721842446996;
-        Wed, 24 Jul 2024 10:34:06 -0700 (PDT)
+        bh=bB2QAOI7VV4nz4PEqDaYS/ujHUAYYtna7nIFDg5mVV8=;
+        b=RnDe2OMXXjGW9Vhp+myi3AXOMnADDKa816H71prS5kLEa/4tgFlu8gvdzxOpZyQjIt
+         lOimtqGIhez1Wgo8U+EggGeIcZ83L2MUJmDNW6rrL6kLDffGmAU1UHjV9v27yXlRaiK4
+         Py6/oPyGgbsULnLzCwxT4ZUHA5lMLRIoVT+qv/j1Y3dIIekPy1rtwebk0h6IQM7zTodV
+         iuozFHh+RTKotpeSp5pDF7audz6BjzfX6NH6U53+tOnx/Dsx6Lnn35ym36FB4Z8C2WxJ
+         uF/JwiJSmSklUixT/9iWs97LEURz59gKovAKjffF5LrE0BLP5N0RlEDlPrE1+lUHSf5p
+         RjhQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUDsf6UMD7Jabl1o7Pgyc0ocBmcY6XjMtpkYuMqAV8CIChWRag2muAyCUtZ2dfKcdeyXZ9PgCx7v/2H/emCLUL52V/6Bogiv8uiHibpzQ==
+X-Gm-Message-State: AOJu0YzG6k8gVjzGu5QRRJ99Uis+RJZRORyilmInMy4Uof7Q30ljFmGA
+	fyaAMwVOlw7j35YVmOXrMQ6mpx0Wkbs2Ub8lDiIIjGXbijCBtnu5bcWO2xvW2d8=
+X-Google-Smtp-Source: AGHT+IFYzshvY6vOeAFXLV3Aba9jnBfSJVOk5zJI9cgMfhJjkemmfOUrnmKShd36XZ2Mek+kPAuwhQ==
+X-Received: by 2002:adf:e001:0:b0:368:6bb:f79e with SMTP id ffacd0b85a97d-36b31b3092dmr333633f8f.4.1721843962600;
+        Wed, 24 Jul 2024 10:59:22 -0700 (PDT)
 Received: from ?IPV6:2a01:e34:ec24:52e0:fcff:6f45:dab:b3a8? ([2a01:e34:ec24:52e0:fcff:6f45:dab:b3a8])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-368787ced33sm15029927f8f.86.2024.07.24.10.34.06
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-368787eda2fsm15265721f8f.108.2024.07.24.10.59.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Jul 2024 10:34:06 -0700 (PDT)
-Message-ID: <330ee34c-5a31-4232-8811-32a25a34fb5e@freebox.fr>
-Date: Wed, 24 Jul 2024 19:34:05 +0200
+        Wed, 24 Jul 2024 10:59:22 -0700 (PDT)
+Message-ID: <c302bc47-6492-44af-86a1-3ff6a815e314@freebox.fr>
+Date: Wed, 24 Jul 2024 19:59:21 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,10 +77,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 1/2] dt-bindings: display: bridge: add TI TDP158
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Maxime Ripard <mripard@kernel.org>
-Cc: Conor Dooley <conor+dt@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+To: Maxime Ripard <mripard@kernel.org>
+Cc: Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Andrzej Hajda <andrzej.hajda@intel.com>,
  Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
  Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
@@ -90,58 +89,65 @@ Cc: Conor Dooley <conor+dt@kernel.org>,
  Daniel Vetter <daniel@ffwll.ch>, Liam Girdwood <lgirdwood@gmail.com>,
  Mark Brown <broonie@kernel.org>, dri-devel@lists.freedesktop.org,
  devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- Arnaud Vrac <avrac@freebox.fr>, Pierre-Hugues Husson <phhusson@freebox.fr>
+ Arnaud Vrac <avrac@freebox.fr>, Pierre-Hugues Husson <phhusson@freebox.fr>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 References: <20240627-tdp158-v3-0-fb2fbc808346@freebox.fr>
  <20240627-tdp158-v3-1-fb2fbc808346@freebox.fr>
  <20240701-bug-of-great-honeydew-cfb6ef@houat>
- <e7bbbe4e-7deb-46c3-9cce-1922f9b6b3a2@freebox.fr>
- <20240708-ethereal-romantic-piculet-d4ae66@houat>
- <pp3rc5zob3xeghlatw4vnpzplc4yjpjadkea465zmhft55dyl5@3cpoc2zovftv>
- <20240715-shiny-enigmatic-firefly-2a6dec@houat>
- <CAA8EJpoJ0132ZYGCO=8xQt8J4Z9w5jDON1H-VRCemFdyV-9nUw@mail.gmail.com>
+ <e55d0f0e-a104-4790-b832-120dbddd93ad@freebox.fr>
+ <20240715-stirring-purple-toad-7de58c@houat>
 Content-Language: en-US
 From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <CAA8EJpoJ0132ZYGCO=8xQt8J4Z9w5jDON1H-VRCemFdyV-9nUw@mail.gmail.com>
+In-Reply-To: <20240715-stirring-purple-toad-7de58c@houat>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/07/2024 18:38, Dmitry Baryshkov wrote:
-
-> Please correct me if I'm wrong. We have following usecases.
+On 15/07/2024 16:40, Maxime Ripard wrote:
+> On Thu, Jul 04, 2024 at 07:04:41PM GMT, Marc Gonzalez wrote:
+>> On 01/07/2024 15:50, Maxime Ripard wrote:
+>>
+>>> The i2c register access (and the whole behaviour of the device) is
+>>> constrained on the I2C_EN pin status, and you can't read it from the
+>>> device, so it's also something we need to have in the DT.
+>>
+>> I think the purpose of the I2C_EN pin might have been misunderstood.
+>>
+>> I2C_EN is not meant to be toggled, ever, by anyone from this planet.
 > 
-> 1. I2C_EN pulled low. TI158 is in the pin strap mode, it is not
-> connected to the I2C bus. A0, A1, SDA and SCL pins are used for
-> strapping the settings.
->     board DT file should describe the bridge as a platform device
-> sitting directly under the root node.
+> Toggled, probably not. Connected to a GPIO and the kernel has to assert
+> a level at boot, I've seen worse hardware design already.
 > 
-> 2. I2C_EN pulled high. TI158 is in the I2C mode. It is connected to
-> the I2C bus, A0/A1 pins set the I2C bus address. The device is
-> controlled over the I2C bus
+>> I2C_EN is a layout-time setting, decided by a board manufacturer:
+>>
+>> - If the TDP158 is fully configured once-and-for-all at layout-time,
+>> then no I2C bus is required, and I2C_EN is pulled down forever.
+>>
+>> - If the board manufacturer wants to keep open the possibility
+>> to adjust some parameters at run-time, then they must connect
+>> the device to an I2C bus, and I2C_EN is pulled up forever.
 > 
-> 2.a. The same as 2, but the device is not controlled at all, default
-> settings are fine.
-> 
-> The driver covers usecase 2.a. The bindings allow extending the driver
-> to the usecase 2 (e.g. via optional properties which specify
-> board-specific settings)
+> How do you express both cases in your current binding?
 
-OK, I think I understand (maybe).
+It's not that I'm ignoring your question.
 
-You're saying: the current binding doesn't specify any
-particular setting because the default settings are OK.
-We can switch to use-case 2. simply by adding a prop
-that will change one specific setting (backward compatible)
+It's that I don't understand what you're asking.
 
-> The usecase 1 is a completely separate topic, it requires a different
-> schema file, specifying no i2c address, only voltages supplies and
-> enable-gpios.
+SITUATION 1
+tdp158 is pin strapped.
+Device node is child of root node.
+Properties in proposed binding are valid (regulators and power-on pin)
+Can be supported via module_platform_driver.
 
-I have tested this.
+SITUATION 2
+tdp158 is sitting on I2C bus.
+Device node is child of i2c bus node.
+(robh said missing reg prop would be flagged by the compiler)
+Properties in proposed binding are valid (regulators and power-on pin)
+Supported via module_i2c_driver.
 
-We can support use-case 1. by registering a module_platform_driver
-with the same compatible property. The probe function gets called
-only for a node that is a child of root. No different binding required.
+
+If some settings-specific properties are added later, like skew,
+they would only be valid for the I2C programmable mode, obviously.
 
 Regards
 
