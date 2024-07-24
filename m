@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-26937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85ABB93AC86
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 08:23:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 934C693AC95
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 08:27:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4668C2834BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 06:23:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4D4BA2836DB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 06:27:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B4633FE4A;
-	Wed, 24 Jul 2024 06:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEC1E5025E;
+	Wed, 24 Jul 2024 06:27:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UMpXJ1pd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VpftxuPe"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079CF4C84;
-	Wed, 24 Jul 2024 06:23:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE06D3E49D;
+	Wed, 24 Jul 2024 06:27:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721802201; cv=none; b=RTL92aLzlEMVwncGMYT9gxuv5kYliynouBi+nDIXUemWdivraElIBiDow7yu4O0JxFsRrOh0ukt8cZ/U+F13DIjwVZsB0i/wv2z0i81bZh+OtwMB/ZsrFiO1FZuf9qN2rlDmjVVOnR4l9/c0XC66mJUBT60g+IluKGunlA1mSek=
+	t=1721802431; cv=none; b=WJnWt9SPi2IkXih8/yN7OjtwrO6/r6r3dS3A0yTrjyBmBBv4f3GEQRTt0wpLzwlnF2dAwjc+YhmiyXI/NIW1gqom1+8oRHr1KhZ3kgRmzZzultCWwWnlzf7QCZgLcFXIkSpR3WiNWU373ee5HOHiCiqVDvs2hOKM7Lmye5283BY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721802201; c=relaxed/simple;
-	bh=VWEfGADZIYjZlIXiiTluhSsS8ifesulT9EoIKZebdqc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A77LZMFQ/RI4PFz2Z0GqghTSMb2Qq15VDI+NevZv6BrRy7U8snO7k+SheQqL6wLkw6h56QFoMmfcTlxYq9HCM6qy6mz0m+FActwxEvQrd7IfTG4eSRnTIF5QYAluZNVBRSK3Jv8miSuztqSnj1iAXIlDwhLzBdjKHjE+hoNRFaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UMpXJ1pd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A9AC32782;
-	Wed, 24 Jul 2024 06:23:16 +0000 (UTC)
+	s=arc-20240116; t=1721802431; c=relaxed/simple;
+	bh=2X0Ry7zeY8Ep1p58TlKAhA7i7D12mqF3dvDhfi5t5FA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=jo8W1CbNETAOBB0Z+z6o8WtqmKJEUjN8tVrQnH8u1GJUAXND+I+MU2aAlUV5X/DvphnpBcxVwUwxuIIyKC9blT8YMK2Dmu7obYyFmsgkfXYzjgqdpfQp9iFHjYKdqJNH9eoizMOULCnvHhLsDam7NQjw3qKXyZ/zV3rb7d/4hLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VpftxuPe; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91AA8C32782;
+	Wed, 24 Jul 2024 06:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721802200;
-	bh=VWEfGADZIYjZlIXiiTluhSsS8ifesulT9EoIKZebdqc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=UMpXJ1pdAFBy4905gKgbdKLvD4eMNlBn1LBmdcL2x1IQ9ZKeO8avKzCrxvdte7tkE
-	 J4doSXAKTaJa47RURbipIcnWCsMEjxhezr7HTHEDyUXdu8kFNgQLH1dXZHPIQzLHid
-	 gc1+vts/MzcTkyb5z/kDWwVcxhAnF+f6ayUfGq4evzMHlJl2CXTMN1OQs3ufHwo8AA
-	 WTkO2v1Zq62+4EG6UsDJG2NcgoQR0v5riUAixHFSe6cLRA3zDoAIbNfMG/LDPclxYF
-	 bqHeNtpJvpu0GmXKuWlAMKJ3zfC7KghFfz0kPBdou9ZHiL6QhpV6TrS/jubOdm074A
-	 yx76wRKAY6l0A==
-Message-ID: <f8c36008-0deb-41b2-b51a-84de84312bb4@kernel.org>
-Date: Wed, 24 Jul 2024 08:23:14 +0200
+	s=k20201202; t=1721802431;
+	bh=2X0Ry7zeY8Ep1p58TlKAhA7i7D12mqF3dvDhfi5t5FA=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=VpftxuPe+ul+mUuxKy4yqo1LmMWETOnaSBcHcRqzRDpQTOeYXIeYkYMxrkbiZxtvg
+	 ItpstGSiCG7h42APRFxvdGyuaEmwWN2cHMTSopQ5v+SQaqXhXjQjRL1FSF5ZPNAyaJ
+	 7oqSD3fz1B5vL3mEn1CdnGyf3LXxMIEdF7oRxqgcCziTNJAuaZc/yFzE2Ta2XuM/q0
+	 vyrZKeHD22UjS/kbTzlgeEEu41ebqy71RWPyyKW9HpbAU8/jp/hDocJKFpXooyUD5J
+	 t2ijdtnOhH0MQcdHLyEBMApvDbt9V2s7Vy8U8Xpzx3kf6ZKxhF09BUXoevS2GSdNZK
+	 HheD/6bP098HA==
+Message-ID: <ac34c454-4800-4057-9a50-e0c5db1d3806@kernel.org>
+Date: Wed, 24 Jul 2024 08:27:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,16 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: arm: qcom: Add msm8916/39 based
- Lenovo devices
-To: Nikita Travkin <nikita@trvn.ru>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20240722-msm89xx-wingtech-init-v2-0-0c981bbc5238@trvn.ru>
- <20240722-msm89xx-wingtech-init-v2-1-0c981bbc5238@trvn.ru>
+Subject: Re: [PATCH v4 2/5] dt-bindings: usb: qcom,dwc3: Update ipq5332 clock
+ details
+To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, gregkh@linuxfoundation.org,
+ konrad.dybcio@linaro.org, djakov@kernel.org, quic_wcheng@quicinc.com,
+ quic_kathirav@quicinc.com, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-pm@vger.kernel.org
+References: <20240723090304.336428-1-quic_varada@quicinc.com>
+ <20240723090304.336428-3-quic_varada@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,34 +107,52 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240722-msm89xx-wingtech-init-v2-1-0c981bbc5238@trvn.ru>
+In-Reply-To: <20240723090304.336428-3-quic_varada@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 22/07/2024 14:47, Nikita Travkin wrote:
-> Add compaitble values for some variants of Lenovo A6000/A6010/A6020
-> devices. These devices are based on designs from Wingtech so use it's
-> vendor prefix and part numbers for compatibles.
+On 23/07/2024 11:03, Varadarajan Narayanan wrote:
+> USB uses icc-clk framework to enable the NoC interface clock.
+> Hence the 'iface' clock is removed from the list of clocks.
+> Update the clock-names list accordingly.
+
+But the clock is still there and is still used by this block. This looks
+like adjusting hardware per Linux implementation.
+
+Why suddenly this clock was removed from this hardware?
+
 > 
-> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+>  .../devicetree/bindings/usb/qcom,dwc3.yaml      | 17 ++++++++++++++++-
+>  1 file changed, 16 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> index efde47a5b145..6c5f962bbcf9 100644
+> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> @@ -220,6 +220,22 @@ allOf:
+>              - const: sleep
+>              - const: mock_utmi
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,ipq5332-dwc3
+> +    then:
+> +      properties:
+> +        clocks:
+> +          maxItems: 3
+> +        clock-names:
+> +          items:
+> +            - const: core
+> +            - const: sleep
+> +            - const: mock_utmi
 
-<form letter>
-This is a friendly reminder during the review process.
-
-It looks like you received a tag and forgot to add it.
-
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-If a tag was not added on purpose, please state why and what changed.
-</form letter>
+So this is the same as first case. Just put it there. It's your task to
+check if you are duplicating a case, not reviewer's...
 
 Best regards,
 Krzysztof
