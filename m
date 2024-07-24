@@ -1,74 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-26980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 817DE93B655
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 19:59:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E89A93B6B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 20:29:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A532DB21D65
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 17:59:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5A028283ABF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 18:29:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E71215F409;
-	Wed, 24 Jul 2024 17:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 336E616A37C;
+	Wed, 24 Jul 2024 18:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="qLljPGvq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JFkn6aSY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5502E639
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2024 17:59:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739B715FA6B;
+	Wed, 24 Jul 2024 18:29:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721843967; cv=none; b=WXQZO2ki09hIv+ppuETmP6ftFwTi2XtjyG7ioah0pDyoUCnJ8C8U7BK/3WVRKHZefCFBTjGglJWB1C2aNJ/yJtjpKo0yfYTfKs3KxM9hfp6UK6jc12XDFLtRsmN7P+P1h2PUaNjetMp8yZgMlfVUIPhwmGB9MtmYX2cX4WWvr/k=
+	t=1721845761; cv=none; b=sj+w6QxborNrMbtOkEBybtbknV1U5nS3ahkrogVVWFxwbEQ2r+Dd/Yh2Iz9FPbw7kTCrWBkcaq3pz1jn81EKGgQ+mkyVonEevW3pCZxrGOivMpoNuk9IVrk1TmkRZo3DBizjiEkleMWEraKOojZJSPFiqdv5JJpkdbIxSseoAdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721843967; c=relaxed/simple;
-	bh=WtAPgXVP/j0nWz8Ui8mgHJah+Yb50ePWbM4ijI8nTn8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jWop6i+DxBRoShpYOisOJ4sn9Q+ztzqRfFpLt9dvyxwiXyAHX1edybHASpMRu9ceS6ApVJrmi1N7z8CwzZX+cuup9Z+0Q1iBq9pvth3eGQ2AxJsKmJMS16v9lYqr7Mr3EgK29qUc/H+fQVoSJDg1VO61/LvhpeuTzFqjlghrqv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=qLljPGvq; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-428035c0bb2so1081765e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2024 10:59:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1721843963; x=1722448763; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bB2QAOI7VV4nz4PEqDaYS/ujHUAYYtna7nIFDg5mVV8=;
-        b=qLljPGvqS4Tdu3MRNK6mlgZ2ES3/3+GOaC0YzzIZ7W34rxiaTuKKnjDbDBWpduHmiU
-         6rKfRBHUixG1Qu8wfTyBjsMEvZALZERagMLH2UQjRfLpLtY5wsSq0017dmuRUwjWwGOY
-         DLATqlFLNIu9uS6RCfaRt3FyzqtC4eCXIkW2zbpSsBp9xY+3NfRA5LYUCC5JLHvz2M1C
-         ioNfTo50IhfnX4kvTZEhwchCYQgw7JcYdvzo1K9w/hQb/WzD3Urhp7y2qdiYCGUpMR+6
-         4iLV6wKxUuUbziLQ2T4JCgJPgmBXCzBDjCk/AvXQJFHnGFaGbAURvIDhfXX+iwbtQvSW
-         p+Tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721843963; x=1722448763;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bB2QAOI7VV4nz4PEqDaYS/ujHUAYYtna7nIFDg5mVV8=;
-        b=RnDe2OMXXjGW9Vhp+myi3AXOMnADDKa816H71prS5kLEa/4tgFlu8gvdzxOpZyQjIt
-         lOimtqGIhez1Wgo8U+EggGeIcZ83L2MUJmDNW6rrL6kLDffGmAU1UHjV9v27yXlRaiK4
-         Py6/oPyGgbsULnLzCwxT4ZUHA5lMLRIoVT+qv/j1Y3dIIekPy1rtwebk0h6IQM7zTodV
-         iuozFHh+RTKotpeSp5pDF7audz6BjzfX6NH6U53+tOnx/Dsx6Lnn35ym36FB4Z8C2WxJ
-         uF/JwiJSmSklUixT/9iWs97LEURz59gKovAKjffF5LrE0BLP5N0RlEDlPrE1+lUHSf5p
-         RjhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUDsf6UMD7Jabl1o7Pgyc0ocBmcY6XjMtpkYuMqAV8CIChWRag2muAyCUtZ2dfKcdeyXZ9PgCx7v/2H/emCLUL52V/6Bogiv8uiHibpzQ==
-X-Gm-Message-State: AOJu0YzG6k8gVjzGu5QRRJ99Uis+RJZRORyilmInMy4Uof7Q30ljFmGA
-	fyaAMwVOlw7j35YVmOXrMQ6mpx0Wkbs2Ub8lDiIIjGXbijCBtnu5bcWO2xvW2d8=
-X-Google-Smtp-Source: AGHT+IFYzshvY6vOeAFXLV3Aba9jnBfSJVOk5zJI9cgMfhJjkemmfOUrnmKShd36XZ2Mek+kPAuwhQ==
-X-Received: by 2002:adf:e001:0:b0:368:6bb:f79e with SMTP id ffacd0b85a97d-36b31b3092dmr333633f8f.4.1721843962600;
-        Wed, 24 Jul 2024 10:59:22 -0700 (PDT)
-Received: from ?IPV6:2a01:e34:ec24:52e0:fcff:6f45:dab:b3a8? ([2a01:e34:ec24:52e0:fcff:6f45:dab:b3a8])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-368787eda2fsm15265721f8f.108.2024.07.24.10.59.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Jul 2024 10:59:22 -0700 (PDT)
-Message-ID: <c302bc47-6492-44af-86a1-3ff6a815e314@freebox.fr>
-Date: Wed, 24 Jul 2024 19:59:21 +0200
+	s=arc-20240116; t=1721845761; c=relaxed/simple;
+	bh=CTbhc2XR6ED+P758V6IIHvmcwsbhKOz48ZEW3Fuhb+o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=A24vs2c9mXvQ5ymiIwr0bJhXs5HFJnEAHdbH+28zvdFnFyj2BAkWvPAJCBlvoP0s0wIIWaSFlPpG5VdQPjw1gDlF6bB9b3QZbftOcOo7hSBeXWUW0fNPADJ6uNeGqiD12E35SSQXNqXnA2Dl+yL1qGxcYixdDDoOE6fZZJ+Q/68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JFkn6aSY; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46OFAUS6007443;
+	Wed, 24 Jul 2024 18:28:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	LYaajTvqjnJdCOkMntWCIMJGdccPtPX0LbzNyy7YInI=; b=JFkn6aSYf6KRb1eI
+	IUTMNMD09XCIsOGuHQeDl7RZe2CLHV/07K90V70SVKiElyahWYTiaS9r1I5F4ENn
+	aiy2gfLKEThzhT/HohvSH4XN1jaPtulrfEJhwvoBet1iUP73kN5/j8fXF3JlxeqA
+	yAJ3w10PIzLqtk1ZeS8YF8g7ykYpmrGwB2oSV8Xxj/zveZ/qmfnQ0VKtl1bBXVfy
+	dVFqsCaGMuq5oCd0l67WJdBLOFkEbYx8n5sT1lnm7ctC2Zd0zx/2nGJG4j/80cHj
+	eZa/wGbGE+Nz4lFzF38W/7Ao22GeUhAumXHTprQPoO14oyKTOre7JjwLwzhf4X1u
+	NCifwQ==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40k413ggpg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 24 Jul 2024 18:28:59 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46OISwhg007609
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 24 Jul 2024 18:28:58 GMT
+Received: from [10.110.66.115] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 24 Jul
+ 2024 11:28:58 -0700
+Message-ID: <f60f3c75-d1cf-4622-8815-8cea17ae323c@quicinc.com>
+Date: Wed, 24 Jul 2024 11:28:36 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,79 +65,109 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] dt-bindings: display: bridge: add TI TDP158
-To: Maxime Ripard <mripard@kernel.org>
-Cc: Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Andrzej Hajda <andrzej.hajda@intel.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
- Daniel Vetter <daniel@ffwll.ch>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, dri-devel@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- Arnaud Vrac <avrac@freebox.fr>, Pierre-Hugues Husson <phhusson@freebox.fr>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20240627-tdp158-v3-0-fb2fbc808346@freebox.fr>
- <20240627-tdp158-v3-1-fb2fbc808346@freebox.fr>
- <20240701-bug-of-great-honeydew-cfb6ef@houat>
- <e55d0f0e-a104-4790-b832-120dbddd93ad@freebox.fr>
- <20240715-stirring-purple-toad-7de58c@houat>
+Subject: Re: [PATCH v3 1/2] PCI: dwc: Add dbi_phys_addr and atu_phys_addr to
+ struct dw_pcie
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: <jingoohan1@gmail.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <robh@kernel.org>, <bhelgaas@google.com>, <linux-pci@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_mrana@quicinc.com>
+References: <20240724022719.2868490-1-quic_pyarlaga@quicinc.com>
+ <20240724022719.2868490-2-quic_pyarlaga@quicinc.com>
+ <20240724135305.GE3349@thinkpad>
 Content-Language: en-US
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <20240715-stirring-purple-toad-7de58c@houat>
-Content-Type: text/plain; charset=UTF-8
+From: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
+In-Reply-To: <20240724135305.GE3349@thinkpad>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: E7EKnnQ48I5svAshJPWH7wFIf2muEXbS
+X-Proofpoint-GUID: E7EKnnQ48I5svAshJPWH7wFIf2muEXbS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-24_19,2024-07-24_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ priorityscore=1501 phishscore=0 lowpriorityscore=0 malwarescore=0
+ clxscore=1015 mlxscore=0 spamscore=0 mlxlogscore=913 suspectscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407240133
 
-On 15/07/2024 16:40, Maxime Ripard wrote:
-> On Thu, Jul 04, 2024 at 07:04:41PM GMT, Marc Gonzalez wrote:
->> On 01/07/2024 15:50, Maxime Ripard wrote:
->>
->>> The i2c register access (and the whole behaviour of the device) is
->>> constrained on the I2C_EN pin status, and you can't read it from the
->>> device, so it's also something we need to have in the DT.
->>
->> I think the purpose of the I2C_EN pin might have been misunderstood.
->>
->> I2C_EN is not meant to be toggled, ever, by anyone from this planet.
+Hi Manivannan,
+
+Thanks for the review comments.
+
+On 7/24/2024 6:53 AM, Manivannan Sadhasivam wrote:
+> On Tue, Jul 23, 2024 at 07:27:18PM -0700, Prudhvi Yarlagadda wrote:
 > 
-> Toggled, probably not. Connected to a GPIO and the kernel has to assert
-> a level at boot, I've seen worse hardware design already.
+> Subject could be modified as below:
 > 
->> I2C_EN is a layout-time setting, decided by a board manufacturer:
->>
->> - If the TDP158 is fully configured once-and-for-all at layout-time,
->> then no I2C bus is required, and I2C_EN is pulled down forever.
->>
->> - If the board manufacturer wants to keep open the possibility
->> to adjust some parameters at run-time, then they must connect
->> the device to an I2C bus, and I2C_EN is pulled up forever.
+> PCI: dwc: Cache DBI and iATU physical addresses in 'struct dw_pcie_ops'
 > 
-> How do you express both cases in your current binding?
 
-It's not that I'm ignoring your question.
+ACK. I will update it in the next patch.
 
-It's that I don't understand what you're asking.
+>> Both DBI and ATU physical base addresses are needed by pcie_qcom.c
+>> driver to program the location of DBI and ATU blocks in Qualcomm
+>> PCIe Controller specific PARF hardware block.
+>>
+>> Signed-off-by: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
+> 
+> Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> - Mani
+> 
 
-SITUATION 1
-tdp158 is pin strapped.
-Device node is child of root node.
-Properties in proposed binding are valid (regulators and power-on pin)
-Can be supported via module_platform_driver.
+ACK. I will add it in the next patch.
 
-SITUATION 2
-tdp158 is sitting on I2C bus.
-Device node is child of i2c bus node.
-(robh said missing reg prop would be flagged by the compiler)
-Properties in proposed binding are valid (regulators and power-on pin)
-Supported via module_i2c_driver.
-
-
-If some settings-specific properties are added later, like skew,
-they would only be valid for the I2C programmable mode, obviously.
-
-Regards
-
+Thanks,
+Prudhvi
+>> Reviewed-by: Mayank Rana <quic_mrana@quicinc.com>
+>> ---
+>>  drivers/pci/controller/dwc/pcie-designware.c | 2 ++
+>>  drivers/pci/controller/dwc/pcie-designware.h | 2 ++
+>>  2 files changed, 4 insertions(+)
+>>
+>> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+>> index 1b5aba1f0c92..bc3a5d6b0177 100644
+>> --- a/drivers/pci/controller/dwc/pcie-designware.c
+>> +++ b/drivers/pci/controller/dwc/pcie-designware.c
+>> @@ -112,6 +112,7 @@ int dw_pcie_get_resources(struct dw_pcie *pci)
+>>  		pci->dbi_base = devm_pci_remap_cfg_resource(pci->dev, res);
+>>  		if (IS_ERR(pci->dbi_base))
+>>  			return PTR_ERR(pci->dbi_base);
+>> +		pci->dbi_phys_addr = res->start;
+>>  	}
+>>  
+>>  	/* DBI2 is mainly useful for the endpoint controller */
+>> @@ -134,6 +135,7 @@ int dw_pcie_get_resources(struct dw_pcie *pci)
+>>  			pci->atu_base = devm_ioremap_resource(pci->dev, res);
+>>  			if (IS_ERR(pci->atu_base))
+>>  				return PTR_ERR(pci->atu_base);
+>> +			pci->atu_phys_addr = res->start;
+>>  		} else {
+>>  			pci->atu_base = pci->dbi_base + DEFAULT_DBI_ATU_OFFSET;
+>>  		}
+>> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+>> index 53c4c8f399c8..efc72989330c 100644
+>> --- a/drivers/pci/controller/dwc/pcie-designware.h
+>> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+>> @@ -407,8 +407,10 @@ struct dw_pcie_ops {
+>>  struct dw_pcie {
+>>  	struct device		*dev;
+>>  	void __iomem		*dbi_base;
+>> +	phys_addr_t		dbi_phys_addr;
+>>  	void __iomem		*dbi_base2;
+>>  	void __iomem		*atu_base;
+>> +	phys_addr_t		atu_phys_addr;
+>>  	size_t			atu_size;
+>>  	u32			num_ib_windows;
+>>  	u32			num_ob_windows;
+>> -- 
+>> 2.25.1
+>>
+> 
 
