@@ -1,48 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-26942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 215E593ADC2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 10:08:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B93C93AF1C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 11:34:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CC471281577
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 08:08:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E9E51C23107
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 09:34:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34D1513D882;
-	Wed, 24 Jul 2024 08:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EF551514F6;
+	Wed, 24 Jul 2024 09:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Afh4//Jn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QTkmNCyo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B8513957C;
-	Wed, 24 Jul 2024 08:08:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235341448E1
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2024 09:34:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721808498; cv=none; b=nDEI4TM14QZc09jeGOxYOR22JN2zuXyZuPQ0RLk0MGZ2Tqy+bg0IVfmkYEf/5N8DMZFbAdRtg/duJAxPYD1RW7ZRjeW69OFbQ21oyMkJZ5j6I9Q+eZVy8TrMp5Yvo89cImDR6Gkryd1cWH1UlSul3Oi7hzq4ciV2YrMIMDopqj8=
+	t=1721813661; cv=none; b=H6/zPAeyKZ0d5XFXvZL1K6XD3wjpfsB6lLOdB8tpUTahroRvGWx4JKcuf6CcMHcIVD+rJtSUDB71rWR1bhO4vWCgbUq87mD5Yfqjw8feGP9400WBEJ7WplcY13HI/iASsRIW8MZQKNJYLyGOyoyFs7hcxvhhwrGelxiIisv5HbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721808498; c=relaxed/simple;
-	bh=3iI4LQNfIFMmQKl7mTJvx9fak4tI16w7TQnMXLRC6P8=;
+	s=arc-20240116; t=1721813661; c=relaxed/simple;
+	bh=/d/R+Jtv2TxyXOo1DyLnoVOlnVzpQs4G7vdwt3KYxHc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LmMsVj7wiNKqmWdrPbSTdZhNG+TPHpTNWzs82r+OQ7IHFszG6bCnyKanSqx8asWLM3Fdocwt8KTfdlyiXMx2Mx4rSxxaGZezSYVtlSZMHOrZPpvn4NMS/6Ljvwn3wTnAj+JVWiqqXg2qFFtWhuFwTafkY4t+A9sybBhSYfNmQJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Afh4//Jn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3270FC32782;
-	Wed, 24 Jul 2024 08:08:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721808497;
-	bh=3iI4LQNfIFMmQKl7mTJvx9fak4tI16w7TQnMXLRC6P8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Afh4//JnNVD1VuDOCFR7dnSHf5VvHfvu0jiXLDDMVdZQnolFbzxsUEpVy2P/oYTkc
-	 eBj0zFuWGKJtExIdBcpSuWz5LIVhwrZXv7SJLd4I8py7kh7BM298u7cHp5zjpxYgAc
-	 +kpcuCPwLQ+n6vcO4GoV7YeCs0Dpc4kPJcgYVrMGDe6jEM1bJLvaa6dsRLS1VqOmFW
-	 vZuhCd3v2jG+7UpGBSYRifF4KOORnbYwZfu2umJuvNwT1JINcDNiUkrODvzCM/zKpj
-	 pDmxf7ckPYZnPtdKaxEv/o6j5LfwIq04R22wrLRgXoups7iEnrjdkZmuf/lMjVJqJ9
-	 dkNOD/Ji8e8yA==
-Message-ID: <497c9438-5bb3-42d9-9df9-661235a556d2@kernel.org>
-Date: Wed, 24 Jul 2024 10:08:09 +0200
+	 In-Reply-To:Content-Type; b=hix38s75OIsMT5Fo1vWG+FHfCnumXgqxdR3nCHYhMwnebHyIRlRfALKQDmJWh01hTxsfKWUx53sUyME2zrChT64UbFMA97BGEUjmmJzqNRkpQPJTmRvDGeidifpq3y6sx7GM6gV4SJnghrvOQ54GwWPQWCS2slhOznoEuRLmInw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QTkmNCyo; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5a22f09d976so1182665a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2024 02:34:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721813657; x=1722418457; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=3tBRQ341G4zJiEApQuOjcWl/i8i6AP3dSWt1Dzj9wpw=;
+        b=QTkmNCyoGsEyEijxnRLb8XDTJOZ3gI1gG5zYz1qkZlH+mIvhFdDo1Zt+fLFxuUUZbL
+         0wZMLy1z4VvVph9mYYeff9Y9rAguy785PXQCuXaSDcY8hHLSkk96FT/OCOAp/+tbIY0/
+         4UASE/jvFMETASmEgZnvVrZCX7vxNKvh/0hozpfnNVwMqi6WbWTXGqeP/vYlYr6z7lDz
+         uN/pcBknWGkLYA1QH5Jassxh6K/7dI7woil6u0ywcfaib+nsrikRD0eV5ELn/ezqngGm
+         MHGKLUuovU9pOXpBVpbpkzN888NEHPdZT/VKOkbbAsvuG+GMkEtX7WIbSqgl8oVTam6K
+         tZsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721813657; x=1722418457;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3tBRQ341G4zJiEApQuOjcWl/i8i6AP3dSWt1Dzj9wpw=;
+        b=ZHX0IVM/PLK0aRlMytb8Cvwp+jRj0Bnsq3u+rs+z3gdN/vUiBUGh7gNAjopHEN9i75
+         abouvl11upCyinOLD3gG46VICGnJ5g4zfdAtxHjZ4vWe6uyA21+2TP11qaK31dPtHaZD
+         ihk6LjPgYG3mAIbYKZlYFEsA6tfQTnVDLUlvmdgC3NZ6Ka+Jr5sRU0hX9o0G1f4DKHO9
+         fPDTpdwXn+NcUJxMoIw2BceKzI+lZhIjp9YgJAJsnSbJKuJWlShJOvEtFjvq481EoH30
+         auQtMFNKHPdFlig607d105850/UC4Ox3qryNuyqf4Csjr+/ds36TDrPrLswLrGSrCnNR
+         Shaw==
+X-Forwarded-Encrypted: i=1; AJvYcCWDWdOfXzYoZ8da6ICj1T9yhM11Xa5W/dbYSj3730O0le4ZOmNCokcX1KcuAvI/mlztLvOvgoWvJcgPvNOcTdxrRFflDl6DU7/PRcbmtg==
+X-Gm-Message-State: AOJu0YzdE+yg9GUsbwG3T+tUCpCUvT24Mcgk3HWIZMujP2bOmOyo6dUl
+	oMrjwKmwgs0p0SrGoTRg5qbhbZZmhzI7fMBMOCiIA4D+a0EQ7PnzZ7+2Lf8g/Co=
+X-Google-Smtp-Source: AGHT+IFxhUTTRDvPyo0lpH0/GUkdZ8C/fIhzqnwjOo4eEGdyroaXawFTdeKqIkglMPf1olSrFmMRcw==
+X-Received: by 2002:a05:6402:3489:b0:59e:bd8b:53eb with SMTP id 4fb4d7f45d1cf-5ab1a9a2ae2mr1512717a12.9.1721813657174;
+        Wed, 24 Jul 2024 02:34:17 -0700 (PDT)
+Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5a30a4d6bf8sm8677605a12.18.2024.07.24.02.34.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Jul 2024 02:34:16 -0700 (PDT)
+Message-ID: <17772d95-5c76-4fdc-88bf-cc429e03d535@linaro.org>
+Date: Wed, 24 Jul 2024 11:34:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,166 +77,82 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2] dt-bindings: clock: qcom: Remove required-opps from
- required list on SM8650
-To: Jagadeesh Kona <quic_jkona@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Taniya Das <quic_tdas@quicinc.com>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>,
- Ajit Pandey <quic_ajipan@quicinc.com>, kernel test robot <lkp@intel.com>
-References: <20240720052818.26441-1-quic_jkona@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2 3/3] ARM: dts: qcom: pma8084: add pon node
+To: kernel test robot <lkp@intel.com>,
+ Rayyan Ansari <rayyan.ansari@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240723-pmic-bindings-v2-3-e1cd614f8c4a@linaro.org>
+ <202407240711.f7qtQGZG-lkp@intel.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240720052818.26441-1-quic_jkona@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <202407240711.f7qtQGZG-lkp@intel.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20/07/2024 07:28, Jagadeesh Kona wrote:
-> On SM8650, the minimum voltage corner supported on MMCX from cmd-db is
-> sufficient for clock controllers to operate and there is no need to specify
-> the required-opps. Hence remove the required-opps property from the list of
-> required properties for SM8650 camcc and videocc bindings.
+On 24.07.2024 1:53 AM, kernel test robot wrote:
+> Hi Rayyan,
 > 
-> This fixes:
-> arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: clock-controller@aaf0000:
-> 'required-opps' is a required property
+> kernel test robot noticed the following build errors:
 > 
-> arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: clock-controller@ade0000:
-> 'required-opps' is a required property
+> [auto build test ERROR on dee7f101b64219f512bb2f842227bd04c14efe30]
 > 
-> Fixes: a6a61b9701d1 ("dt-bindings: clock: qcom: Add SM8650 video clock controller")
-> Fixes: 1ae3f0578e0e ("dt-bindings: clock: qcom: Add SM8650 camera clock controller")
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202407070147.C9c3oTqS-lkp@intel.com/
-> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> ---
-> Changes in V2:
->  - Made required: conditional and dropped required-opps from it only for SM8650 platform
->  - Dropped Krzysztof Acked-by tag due to above changes
->  - Link to V1: https://lore.kernel.org/all/20240708130836.19273-1-quic_jkona@quicinc.com/#r
+> url:    https://github.com/intel-lab-lkp/linux/commits/Rayyan-Ansari/arm64-dts-qcom-pmi8994-Add-label-to-wled-node/20240723-175020
+> base:   dee7f101b64219f512bb2f842227bd04c14efe30
+> patch link:    https://lore.kernel.org/r/20240723-pmic-bindings-v2-3-e1cd614f8c4a%40linaro.org
+> patch subject: [PATCH v2 3/3] ARM: dts: qcom: pma8084: add pon node
+> config: arm-randconfig-051-20240723 (https://download.01.org/0day-ci/archive/20240724/202407240711.f7qtQGZG-lkp@intel.com/config)
+> compiler: arm-linux-gnueabi-gcc (GCC) 14.1.0
+> dtschema version: 2024.6.dev4+g23441a4
+> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240724/202407240711.f7qtQGZG-lkp@intel.com/reproduce)
 > 
-> .../bindings/clock/qcom,sm8450-camcc.yaml     | 26 +++++++++++++------
->  .../bindings/clock/qcom,sm8450-videocc.yaml   | 25 +++++++++++++-----
->  2 files changed, 36 insertions(+), 15 deletions(-)
+> If you fix the issue in a separate patch/commit (i.e. not just a new version of
+> the same patch/commit), kindly add following tags
+> | Reported-by: kernel test robot <lkp@intel.com>
+> | Closes: https://lore.kernel.org/oe-kbuild-all/202407240711.f7qtQGZG-lkp@intel.com/
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-> index f58edfc10f4c..8698c801ed11 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-> @@ -21,9 +21,6 @@ description: |
->      include/dt-bindings/clock/qcom,sm8650-camcc.h
->      include/dt-bindings/clock/qcom,x1e80100-camcc.h
->  
-> -allOf:
-> -  - $ref: qcom,gcc.yaml#
-> -
->  properties:
->    compatible:
->      enum:
-> @@ -53,11 +50,24 @@ properties:
->    reg:
->      maxItems: 1
->  
-> -required:
+> All errors (new ones prefixed by >>):
+> 
+>>> Error: arch/arm/boot/dts/qcom/pma8084.dtsi:31.19-20 syntax error
 
-You cannot remove required block.
+Need #include <dt-bindings/input/linux-event-codes.h>
 
-> -  - compatible
-> -  - clocks
-> -  - power-domains
-> -  - required-opps
-> +allOf:
-> +  - $ref: qcom,gcc.yaml#
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            const: qcom,sm8650-camcc
-> +    then:
-> +      required:
-> +        - compatible
-> +        - clocks
-> +        - power-domains
-> +    else:
-> +      required:
-> +        - compatible
-> +        - clocks
-> +        - power-domains
-> +        - required-opps
->  
->  unevaluatedProperties: false
->  
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
-> index b2792b4bb554..2e5a061f33d6 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-videocc.yaml
-> @@ -40,15 +40,26 @@ properties:
->      description:
->        A phandle to an OPP node describing required MMCX performance point.
->  
-> -required:
-
-No, you cannot remove required block.
-
-To clarify: there is almost no single binding using your style. Even if
-there is one, then 99 others are using it differently. Do not implement
-things entirely different than everyone else. This is the same for C
-code you send upstream. No difference here...
-
-Best regards,
-Krzysztof
-
+Konrad
 
