@@ -1,183 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-26986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26987-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16B0593B7E3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 22:15:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C20293B8C4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 23:43:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 906EF1F21E98
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 20:15:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 40DD41F24C4B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 21:43:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 672DE1607A1;
-	Wed, 24 Jul 2024 20:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70F4913C807;
+	Wed, 24 Jul 2024 21:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="j30C3brh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Y8opjxQx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8669873509;
-	Wed, 24 Jul 2024 20:15:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C5313C67B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2024 21:43:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721852143; cv=none; b=fCscfk9aw8cNshIYooP+DwL1zLNGMZvavPjl5Vs5gB3EWZGEwmu075Q/Kc59972Lia5G4HELL+pME2NOPB7YGvoLaiiVNkANh7UG8WFDPjprgWmmokyH05tD8SjNstPxhG/8aJMRdDt4Z/MKPt1sryetN/QFkTNdPsgaPBSO8Tw=
+	t=1721857386; cv=none; b=KGukjkZPxqObNwRBAw5EpCNHOXkXnyzmBevoiRvRFsygqOLFGnTjvFTD3wY8nWvrs9FoCqspzKKZcdrc0tyvHWC+pdD9HmNBNO5MoE330hg/UGQJnGInJ3U3UyBOk+GxzF3NLgPvJHIAWg0CJ2TcVgiM00Nm9sCOsQg/XgllWVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721852143; c=relaxed/simple;
-	bh=7nXzHDV1fxOOOmXNYkOQZk9rfzCSrtSpWQi7+Sgl3yg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MTPhZZD6XObmD3uOU6aCQ3i5AUZIoOgCyg51gYrKTQFePOKFN+Z2XIfvGfdTGI1lyiUmCnSUMtfPbtI9qC1EuqIeO9/Q7P4Ns2ay9d1MGlIhLCP/XpfdWpHplvNSK49hyEP4n39BkmDI+jfww+O+rN5bzH/7CxSFWN+l6pK7uyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=j30C3brh; arc=none smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1721852142; x=1753388142;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=7nXzHDV1fxOOOmXNYkOQZk9rfzCSrtSpWQi7+Sgl3yg=;
-  b=j30C3brhHAZ0648cp0+WttfkE/cXqcs8hgrgvoyuqDSW9VdQeuOMg3w2
-   hPttvv59nZwCplUfFKlE0e37NzceHgR+L54Yt6xNCLPSU9XxHUsFysr5a
-   CFQuRjQWVls/sVCko18NRkb7cu0AXJEeKMzIGGMy7vJNLzukyzty1DYDC
-   zI+Xg+pe8zppPkDtj/GX/DVTcxuL29qXKxuG6ybcOxo24bNKbYvPgVFy1
-   ms613qa61bH44SHyhO0O82bPvmAqKhifkf5znfdvZ9fk3DjtaQSLWWYc+
-   IpoX1+rECZapJxkFaddcw1wg8yDmyBxBYeGN8YA7bATjshh7+en5G7T0p
-   A==;
-X-CSE-ConnectionGUID: Yb4y+Q6LQaCVWMl6ztrcdQ==
-X-CSE-MsgGUID: U6iFwbvARUaTJGCIO2zA1A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11143"; a="30948629"
-X-IronPort-AV: E=Sophos;i="6.09,233,1716274800"; 
-   d="scan'208";a="30948629"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Jul 2024 13:15:41 -0700
-X-CSE-ConnectionGUID: OIW3Vw1jSh2WDXTU5oqssw==
-X-CSE-MsgGUID: QfmoQIcFTyC6ZCHVCEMiZA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,233,1716274800"; 
-   d="scan'208";a="75928078"
-Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
-  by fmviesa002.fm.intel.com with ESMTP; 24 Jul 2024 13:15:36 -0700
-Received: from kbuild by 68891e0c336b with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1sWiOb-000nOq-2v;
-	Wed, 24 Jul 2024 20:15:33 +0000
-Date: Thu, 25 Jul 2024 04:15:17 +0800
-From: kernel test robot <lkp@intel.com>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>, broonie@kernel.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	andersson@kernel.org, konrad.dybcio@linaro.org,
-	miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-	manivannan.sadhasivam@linaro.org, esben@geanix.com,
-	linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-mtd@lists.infradead.org
-Cc: oe-kbuild-all@lists.linux.dev, quic_mdalam@quicinc.com,
-	quic_varada@quicinc.com, quic_srichara@quicinc.com
-Subject: Re: [PATCH v7 2/8] mtd: rawnand: qcom: cleanup qcom_nandc driver
-Message-ID: <202407250425.0AJoHyHa-lkp@intel.com>
-References: <20240724114225.2176448-3-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1721857386; c=relaxed/simple;
+	bh=E2xr7KdHpOeVO8weg/YauvOwd3FI22iwYLqct3kkkuU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NZ/vk2SB5k9KDqCdO+NZGJQwdA7x7KKjgtXG0LjO1qcE40hfu8GnDbq19jBmsLtZUb/nJxBoPAYYzVeweAvTt3kA0CCDDrO9IkgLMDlWA+1e7ocxUmVgW1nohxKIVFe9GRH2Nhf2aCz82m0iQ6mQff4mA7UwFn6eyrU2N9UVApA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Y8opjxQx; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a7a9cf7d3f3so30968166b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Jul 2024 14:43:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721857383; x=1722462183; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=PVcOW0F31P5btkB2U94IntsHunux8cldHR5tp2dBkfU=;
+        b=Y8opjxQxdEgyznwS0k9r440vF2O+MuvdqCIJsPYi3PDQhus9VskEL+6JN7AqWDXqzi
+         khlueNx2JiQSLsSxeaihGaAoYNlXUuE4OpDwBcVjT2U4rd8aF1rgtldEKgS+A2riOtBX
+         4awJ+tQJrSMFLF/2IZ3lAVb335F968K4oqpX0CWXQuAUBNMnnyKFGLC/1a8ynB9EjtGW
+         0OOil7A+BSgQTdH9IDPLACovzKiCB6S6GVA9BSm37rvGICIN614hroHFtj9Dnxd1OBLz
+         f8VrP9I1V/v+4w2UCtGpT96EM78mSuNCbv9Sm8kXVQZlwjtiuBK96KYZto8BOrnv5Zg6
+         V6/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721857383; x=1722462183;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PVcOW0F31P5btkB2U94IntsHunux8cldHR5tp2dBkfU=;
+        b=PzyrKOoljM3k23vJ0ktMAAlkVFy84eZ1Q36aOnQTjR6uqEvsHgSSeBax7M5sehO+6h
+         V63xOITXv4JJ+vbQ0U+Aal8HWqyKt0DKv1SjenGXaDJzbyUIQ5P1CDqP080CUdHINVkC
+         xAGXXg0e+krLrIiH/q0pz3rUl7uC51FSusNz1z4/RPQYaifujcsFk4+L5PA+Tkpf2Zsz
+         H1gRw8rAPIyB+sdIZC6lSAW/k1bSuhyDYOOLvelZdgJLGkF4ux4T9WSfWm7B2se2QExD
+         lPQb7gCE1Gg+cZSRUVs45TZMdhsVFFwX8Dv6FK8HD2XCHASR81j7x7giaIYQMDII8dS+
+         GjIw==
+X-Forwarded-Encrypted: i=1; AJvYcCV1gbqc5V/Ca1os3cX9h6jIVSeDrDSLZM9M3n31k78+iBQyQ4exnw0jGUpSERHK0dEBPtz3X9IHYYUGXaaKxOuwVZF5rLWjTs2wIU6f4Q==
+X-Gm-Message-State: AOJu0YyU0tRJKDl1ow1An7v6OsSS3a1s1m4pnVG6oIThL0SpUWVbHiw4
+	R9UGZt1ch2C3ihOxqjipQz0x5UiBku9PNjeRjqAEVkzLSm7ci9qgtMSsqoKm9MQ=
+X-Google-Smtp-Source: AGHT+IFVM1Nkj2yYiNbf9q5q1cpfowyG3cIYVGgomj/kaPJhDFTuPBpzG2oJBpqSohsBTOMNFw8Xuw==
+X-Received: by 2002:a17:906:26d2:b0:a7a:8cb9:7491 with SMTP id a640c23a62f3a-a7ac503439emr44164966b.54.1721857382590;
+        Wed, 24 Jul 2024 14:43:02 -0700 (PDT)
+Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7acad414e2sm1071666b.127.2024.07.24.14.43.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Jul 2024 14:43:02 -0700 (PDT)
+Message-ID: <835d7a84-aa37-43da-a4e7-ef52d8642357@linaro.org>
+Date: Wed, 24 Jul 2024 23:42:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240724114225.2176448-3-quic_mdalam@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916-samsung-fortuna: Add touch keys
+To: Raymond Hackley <raymondhackley@protonmail.com>,
+ linux-kernel@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Stephan Gerhold <stephan@gerhold.net>,
+ Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht
+References: <20240724143230.3804-1-raymondhackley@protonmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20240724143230.3804-1-raymondhackley@protonmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Md,
+On 24.07.2024 4:32 PM, Raymond Hackley wrote:
+> Touch keys feature on fortuna phones are provided by Zinitix touchscreen.
+> Add property linux,keycodes to enable touch keys.
+> 
+> Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
+> ---
 
-kernel test robot noticed the following build warnings:
+please bump the revision (v1 -> v2) when changing the commit
+message and keep a link to the previous one & a changelog under
+the --- line
 
-[auto build test WARNING on mtd/nand/next]
-[also build test WARNING on broonie-spi/for-next robh/for-next linus/master v6.10 next-20240724]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+in this instance, don't bother as it's a simple change and it
+looks good now
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Md-Sadre-Alam/spi-dt-bindings-Introduce-qcom-spi-qpic-snand/20240724-195819
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/mtd/linux.git nand/next
-patch link:    https://lore.kernel.org/r/20240724114225.2176448-3-quic_mdalam%40quicinc.com
-patch subject: [PATCH v7 2/8] mtd: rawnand: qcom: cleanup qcom_nandc driver
-config: i386-buildonly-randconfig-004-20240725 (https://download.01.org/0day-ci/archive/20240725/202407250425.0AJoHyHa-lkp@intel.com/config)
-compiler: gcc-8 (Ubuntu 8.4.0-3ubuntu2) 8.4.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240725/202407250425.0AJoHyHa-lkp@intel.com/reproduce)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202407250425.0AJoHyHa-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/mtd/nand/raw/qcom_nandc.c:682: warning: Function parameter or struct member 'chip' not described in 'nandc_set_read_loc_first'
->> drivers/mtd/nand/raw/qcom_nandc.c:710: warning: Function parameter or struct member 'chip' not described in 'nandc_set_read_loc_last'
-
-
-vim +682 drivers/mtd/nand/raw/qcom_nandc.c
-
-   669	
-   670	/**
-   671	 * nandc_set_read_loc_first() - to set read location first register
-   672	 * @reg_base:		location register base
-   673	 * @cw_offset:		code word offset
-   674	 * @read_size:		code word read length
-   675	 * @is_last_read_loc:	is this the last read location
-   676	 *
-   677	 * This function will set location register value
-   678	 */
-   679	static void nandc_set_read_loc_first(struct nand_chip *chip,
-   680					     int reg_base, int cw_offset,
-   681					     int read_size, int is_last_read_loc)
- > 682	{
-   683		struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
-   684		int val = (((cw_offset) << READ_LOCATION_OFFSET) |
-   685			  ((read_size) << READ_LOCATION_SIZE) |
-   686			  ((is_last_read_loc) << READ_LOCATION_LAST));
-   687	
-   688		if (reg_base == NAND_READ_LOCATION_0)
-   689			nandc->regs->read_location0 = val;
-   690		else if (reg_base == NAND_READ_LOCATION_1)
-   691			nandc->regs->read_location1 = val;
-   692		else if (reg_base == NAND_READ_LOCATION_2)
-   693			nandc->regs->read_location2 = val;
-   694		else if (reg_base == NAND_READ_LOCATION_3)
-   695			nandc->regs->read_location3 = val;
-   696	}
-   697	
-   698	/**
-   699	 * nandc_set_read_loc_last - to set read location last register
-   700	 * @reg_base:		location register base
-   701	 * @cw_offset:		code word offset
-   702	 * @read_size:		code word read length
-   703	 * @is_last_read_loc:	is this the last read location
-   704	 *
-   705	 * This function will set location last register value
-   706	 */
-   707	static void nandc_set_read_loc_last(struct nand_chip *chip,
-   708					    int reg_base, int cw_offset,
-   709					    int read_size, int is_last_read_loc)
- > 710	{
-   711		struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
-   712	
-   713		int val = (((cw_offset) << READ_LOCATION_OFFSET) |
-   714			  ((read_size) << READ_LOCATION_SIZE) |
-   715			  ((is_last_read_loc) << READ_LOCATION_LAST));
-   716	
-   717		if (reg_base == NAND_READ_LOCATION_LAST_CW_0)
-   718			nandc->regs->read_location_last0 = val;
-   719		else if (reg_base == NAND_READ_LOCATION_LAST_CW_1)
-   720			nandc->regs->read_location_last1 = val;
-   721		else if (reg_base == NAND_READ_LOCATION_LAST_CW_2)
-   722			nandc->regs->read_location_last2 = val;
-   723		else if (reg_base == NAND_READ_LOCATION_LAST_CW_3)
-   724			nandc->regs->read_location_last3 = val;
-   725	}
-   726	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Konrad
 
