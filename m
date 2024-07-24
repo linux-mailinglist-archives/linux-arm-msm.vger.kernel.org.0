@@ -1,230 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-26984-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0358993B6F3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 20:43:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B42F93B73D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 21:13:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B20DF2839A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 18:43:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D5DB31F21528
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 19:13:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6429716A938;
-	Wed, 24 Jul 2024 18:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 855F816B722;
+	Wed, 24 Jul 2024 19:13:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C/Ji5Tcx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WNe8UZtr"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381DA15FA9E;
-	Wed, 24 Jul 2024 18:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59550169AC5;
+	Wed, 24 Jul 2024 19:13:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721846594; cv=none; b=NjR2UrcQdsF+H5JBhGb9GVUKpLu1JcIev7gjf3ZUp9xdqIJRKgZnLCZsbq2OiSd7MPvrMkzE0FQ7fPFthhycOdmbq5vOP3/n+4eGGEIhz85sV/ny9qjITpxyYNfxyo4ovabLyNo0/buFPPigDzPNxKkMVXOIcU3LQIEuGC1gyFY=
+	t=1721848406; cv=none; b=CfrF2gq65eA45Q/y/Qq7+g23xX9+x+J6OTgevXROwWyn2IKJiMhHDKtQ3vk77IbB5vgLQ5lTgqTA2oetKF4PJxiCq+vT9HOoMqSXXdO6FD/QGBbAlIJ0NXAjW4oivrQCPM1fSo4PzttCHHn+3AC9SOxXYe96UlRMzF8ULEIrl6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721846594; c=relaxed/simple;
-	bh=L80G3kPVO8gxwuFs2mPT1nO1RmFx/FrBSZjpfwFmHos=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=W4gcoT5ih/nNYsKFFF3+eTYpOIkYP8x8i/gav7PRZhprF9/zFZymX9Chc+t1vcghiZdYXTkBOMhQ1m3qLjgJk9QuorjmESPVM1E5CxFn96HhFd+cNaVFt6qUF4GCGZ9L8TnMxuzAFE1z2nF5C17VDOFX5Jvyz1ECaPLH5yx/K6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C/Ji5Tcx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B15C32786;
-	Wed, 24 Jul 2024 18:43:13 +0000 (UTC)
+	s=arc-20240116; t=1721848406; c=relaxed/simple;
+	bh=2lrlzS9qds2GD+/yfxzMA3VPWxbQct5yC0RJ4cs9XgM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RqDSE/Zh8vO9rUNj7hOhxtN19XDjycPBxRQ3J8JNCpENqSGQZH8z7fUuF7PPezcE1Uw3iDK5eeZsmDmUqBHlByxUURs5WnfxIEthik7wGBH9rW24LWHiTvVKweJ1QVwYIWhpm65hk6tr4FuGuCE5lPOxY49q2dlQqdCNp5saaIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WNe8UZtr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7206AC32781;
+	Wed, 24 Jul 2024 19:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721846593;
-	bh=L80G3kPVO8gxwuFs2mPT1nO1RmFx/FrBSZjpfwFmHos=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=C/Ji5Tcxdw6ztbZTRnedFT2zVntttve6JQGa4mgXO1sZyIuIobiM1o70bQIITCxZy
-	 LKIcIfUkltmdl7TAKz086FrJyWhy7Z3tg1LWQme1YnUeZ7klUO9jUM9V9Cjqu1G2ty
-	 pAIDSteK24dStdt5k/NplnXduMgNs+XtL2nRoRcV+2FdxFjccl5TZNRsqQmnQ329Au
-	 VnEauHY1lUFnMDEvy0PisKogV63MGv5g712+ntltz/QAUqxYNygueHv49te4S+CcXT
-	 uW31a+Fb5bewgLaBYHQcLGw6FxLXHcYJ++2PaY6m9DGHqol8JDMgwtkRJ9nIQpihWp
-	 k/XMpTmWC0XAQ==
-Date: Wed, 24 Jul 2024 13:43:11 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
-Cc: jingoohan1@gmail.com, manivannan.sadhasivam@linaro.org,
-	lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-	bhelgaas@google.com, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	quic_mrana@quicinc.com
-Subject: Re: [PATCH v3 2/2] PCI: qcom: Avoid DBI and ATU register space
- mirror to BAR/MMIO region
-Message-ID: <20240724184311.GA807002@bhelgaas>
+	s=k20201202; t=1721848405;
+	bh=2lrlzS9qds2GD+/yfxzMA3VPWxbQct5yC0RJ4cs9XgM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=WNe8UZtrMhNPRcRtdmDVxhGaUpLNOUwLtsNG6P+KzKydotRbbEaljZ4tnIJmx5nG4
+	 /+KCchVkAEPXDSyp25c63NodgiQgDkPt/F4r/uXZ00sK9fkWTagoBP19J9rJyiI6xk
+	 yPOQTfr72PizQFOH2kVdgTgH643XIyVEme/AILd4r6uAd9gNu6mboxnaLSCcE0qyAH
+	 epBGwrQ5XF95uZUchvYBaUk6T7dWbNIEMzBvx6Cv0IwwP3ic6XOEVPqGEYxIM3FU6e
+	 0XzJRKmGjyWtFXNEcS/RX7AJmodYA2NsNXVXPG2zjIibdkn9QYuGn62kVH8606wPmI
+	 /nT5kA89to+mg==
+Message-ID: <980422ea-8c44-47a4-8996-8653bab3ef8a@kernel.org>
+Date: Wed, 24 Jul 2024 21:13:18 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240724022719.2868490-3-quic_pyarlaga@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/2] dt-bindings: arm: Add device-name in the coresight
+ components
+To: Mao Jinlong <quic_jinlmao@quicinc.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
+ <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Tao Zhang <quic_taozha@quicinc.com>, songchai <quic_songchai@quicinc.com>,
+ Jie Gan <quic_jiegan@quicinc.com>
+References: <20240703122340.26864-1-quic_jinlmao@quicinc.com>
+ <20240703122340.26864-2-quic_jinlmao@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240703122340.26864-2-quic_jinlmao@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jul 23, 2024 at 07:27:19PM -0700, Prudhvi Yarlagadda wrote:
-> PARF hardware block which is a wrapper on top of DWC PCIe controller
-> mirrors the DBI and ATU register space. It uses PARF_SLV_ADDR_SPACE_SIZE
-> register to get the size of the memory block to be mirrored and uses
-> PARF_DBI_BASE_ADDR, PARF_ATU_BASE_ADDR registers to determine the base
-> address of DBI and ATU space inside the memory block that is being
-> mirrored.
+On 03/07/2024 14:23, Mao Jinlong wrote:
+> Current name of coresight component's folder consists of prefix of
+> the device and the id in the device list. When run 'ls' command,
+> we can get the register address of the device. Take CTI for example,
+> if we want to set the config for modem CTI, but we can't know which
+> CTI is modem CTI from all current information.
 > 
-> When a memory region which is located above the SLV_ADDR_SPACE_SIZE
-> boundary is used for BAR region then there could be an overlap of DBI and
-> ATU address space that is getting mirrored and the BAR region. This
-> results in DBI and ATU address space contents getting updated when a PCIe
-> function driver tries updating the BAR/MMIO memory region. Reference
-> memory map of the PCIe memory region with DBI and ATU address space
-> overlapping BAR region is as below.
+> cti_sys0 -> ../../../devices/platform/soc@0/138f0000.cti/cti_sys0
+> cti_sys1 -> ../../../devices/platform/soc@0/13900000.cti/cti_sys1
 > 
->                         |---------------|
->                         |               |
->                         |               |
->         ------- --------|---------------|
->            |       |    |---------------|
->            |       |    |       DBI     |
->            |       |    |---------------|---->DBI_BASE_ADDR
->            |       |    |               |
->            |       |    |               |
->            |    PCIe    |               |---->2*SLV_ADDR_SPACE_SIZE
->            |    BAR/MMIO|---------------|
->            |    Region  |       ATU     |
->            |       |    |---------------|---->ATU_BASE_ADDR
->            |       |    |               |
->         PCIe       |    |---------------|
->         Memory     |    |       DBI     |
->         Region     |    |---------------|---->DBI_BASE_ADDR
->            |       |    |               |
->            |    --------|               |
->            |            |               |---->SLV_ADDR_SPACE_SIZE
->            |            |---------------|
->            |            |       ATU     |
->            |            |---------------|---->ATU_BASE_ADDR
->            |            |               |
->            |            |---------------|
->            |            |       DBI     |
->            |            |---------------|---->DBI_BASE_ADDR
->            |            |               |
->            |            |               |
->         ----------------|---------------|
->                         |               |
->                         |               |
->                         |               |
->                         |---------------|
+> Add device-name in device tree which can provide a better description
+> of the coresight device. It can provide the info like the system or
+> HW it belongs to.
 > 
-> Currently memory region beyond the SLV_ADDR_SPACE_SIZE boundary is not
-> used for BAR region which is why the above mentioned issue is not
-> encountered. This issue is discovered as part of internal testing when we
-> tried moving the BAR region beyond the SLV_ADDR_SPACE_SIZE boundary. Hence
-> we are trying to fix this.
-> 
-> As PARF hardware block mirrors DBI and ATU register space after every
-> PARF_SLV_ADDR_SPACE_SIZE (default 0x1000000) boundary multiple, write
-> U32_MAX (all 0xFF's) to PARF_SLV_ADDR_SPACE_SIZE register to avoid
-> mirroring DBI and ATU to BAR/MMIO region. Write the physical base address
-> of DBI and ATU register blocks to PARF_DBI_BASE_ADDR (default 0x0) and
-> PARF_ATU_BASE_ADDR (default 0x1000) respectively to make sure DBI and ATU
-> blocks are at expected memory locations.
-> 
-> The register offsets PARF_DBI_BASE_ADDR_V2, PARF_SLV_ADDR_SPACE_SIZE_V2
-> and PARF_ATU_BASE_ADDR are applicable for platforms that use PARF
-> Qcom IP rev 1.9.0, 2.7.0 and 2.9.0. PARF_DBI_BASE_ADDR_V2 and
-> PARF_SLV_ADDR_SPACE_SIZE_V2 are applicable for PARF Qcom IP rev 2.3.3.
-> PARF_DBI_BASE_ADDR and PARF_SLV_ADDR_SPACE_SIZE are applicable for PARF
-> Qcom IP rev 1.0.0, 2.3.2 and 2.4.0. Updating the init()/post_init()
-> functions of the respective PARF versions to program applicable
-> PARF_DBI_BASE_ADDR, PARF_SLV_ADDR_SPACE_SIZE and PARF_ATU_BASE_ADDR
-> register offsets. And remove the unused SLV_ADDR_SPACE_SZ macro.
-> 
-> Signed-off-by: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
-> Reviewed-by: Mayank Rana <quic_mrana@quicinc.com>
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
 > ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 62 +++++++++++++++++++-------
->  1 file changed, 45 insertions(+), 17 deletions(-)
+>  .../devicetree/bindings/arm/arm,coresight-cti.yaml          | 6 ++++++
+>  .../devicetree/bindings/arm/arm,coresight-dummy-source.yaml | 6 ++++++
+>  .../devicetree/bindings/arm/arm,coresight-stm.yaml          | 6 ++++++
+>  .../devicetree/bindings/arm/qcom,coresight-tpdm.yaml        | 6 ++++++
+>  4 files changed, 24 insertions(+)
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 0180edf3310e..6976efb8e2f0 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -45,6 +45,7 @@
->  #define PARF_PHY_REFCLK				0x4c
->  #define PARF_CONFIG_BITS			0x50
->  #define PARF_DBI_BASE_ADDR			0x168
-> +#define PARF_SLV_ADDR_SPACE_SIZE		0x16C
->  #define PARF_MHI_CLOCK_RESET_CTRL		0x174
->  #define PARF_AXI_MSTR_WR_ADDR_HALT		0x178
->  #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
-> @@ -52,8 +53,13 @@
->  #define PARF_LTSSM				0x1b0
->  #define PARF_SID_OFFSET				0x234
->  #define PARF_BDF_TRANSLATE_CFG			0x24c
-> -#define PARF_SLV_ADDR_SPACE_SIZE		0x358
-> +#define PARF_DBI_BASE_ADDR_V2			0x350
-> +#define PARF_DBI_BASE_ADDR_V2_HI		0x354
-> +#define PARF_SLV_ADDR_SPACE_SIZE_V2		0x358
-> +#define PARF_SLV_ADDR_SPACE_SIZE_V2_HI		0x35C
->  #define PARF_NO_SNOOP_OVERIDE			0x3d4
-> +#define PARF_ATU_BASE_ADDR			0x634
-> +#define PARF_ATU_BASE_ADDR_HI			0x638
->  #define PARF_DEVICE_TYPE			0x1000
->  #define PARF_BDF_TO_SID_TABLE_N			0x2000
->  #define PARF_BDF_TO_SID_CFG			0x2c00
-> @@ -107,9 +113,6 @@
->  /* PARF_CONFIG_BITS register fields */
->  #define PHY_RX0_EQ(x)				FIELD_PREP(GENMASK(26, 24), x)
+> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+> index 2d5545a2b49c..6a73eaa66a42 100644
+> --- a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
+> @@ -98,6 +98,12 @@ properties:
+>    power-domains:
+>      maxItems: 1
 >  
-> -/* PARF_SLV_ADDR_SPACE_SIZE register value */
-> -#define SLV_ADDR_SPACE_SZ			0x10000000
-> -
->  /* PARF_MHI_CLOCK_RESET_CTRL register fields */
->  #define AHB_CLK_EN				BIT(0)
->  #define MSTR_AXI_CLK_EN				BIT(1)
-> @@ -324,6 +327,39 @@ static void qcom_pcie_clear_hpc(struct dw_pcie *pci)
->  	dw_pcie_dbi_ro_wr_dis(pci);
->  }
->  
-> +static void qcom_pcie_configure_dbi_base(struct qcom_pcie *pcie)
-> +{
-> +	struct dw_pcie *pci = pcie->pci;
-> +
-> +	if (pci->dbi_phys_addr) {
-> +		writel(lower_32_bits(pci->dbi_phys_addr), pcie->parf +
-> +							PARF_DBI_BASE_ADDR);
-> +		writel(U32_MAX, pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
-> +	}
-> +}
-> +
-> +static void qcom_pcie_configure_dbi_atu_base(struct qcom_pcie *pcie)
-> +{
-> +	struct dw_pcie *pci = pcie->pci;
-> +
-> +	if (pci->dbi_phys_addr) {
-> +		writel(lower_32_bits(pci->dbi_phys_addr), pcie->parf +
-> +							PARF_DBI_BASE_ADDR_V2);
-> +		writel(upper_32_bits(pci->dbi_phys_addr), pcie->parf +
-> +						PARF_DBI_BASE_ADDR_V2_HI);
-> +
-> +		if (pci->atu_phys_addr) {
-> +			writel(lower_32_bits(pci->atu_phys_addr), pcie->parf +
-> +							PARF_ATU_BASE_ADDR);
-> +			writel(upper_32_bits(pci->atu_phys_addr), pcie->parf +
-> +							PARF_ATU_BASE_ADDR_HI);
-> +		}
-> +
-> +		writel(U32_MAX, pcie->parf + PARF_SLV_ADDR_SPACE_SIZE_V2);
-> +		writel(U32_MAX, pcie->parf + PARF_SLV_ADDR_SPACE_SIZE_V2_HI);
-> +	}
-> +}
+> +  arm,cs-dev-name:
+> +    $ref: /schemas/types.yaml#/definitions/string
+> +    description:
+> +      Define the name which can describe what kind of HW or system the
+> +      coresight device belongs to.
 
-These functions write CPU physical addresses into registers.  I don't
-know where these registers live.  If they are on the PCI side of the
-world, they most likely should contain PCI bus addresses, not CPU
-physical addresses.
+Don't we use already label for such cases? Power domains, input, leds,
+panels, IIO, hwmon and more.
 
-In some systems, PCI bus addresses are the same as CPU physical
-addresses, but on many systems they are not the same, so it's better
-if we don't make implicit assumptions that they are the same.  
+Best regards,
+Krzysztof
 
-Bjorn
 
