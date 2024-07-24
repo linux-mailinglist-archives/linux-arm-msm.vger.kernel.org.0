@@ -1,43 +1,43 @@
-Return-Path: <linux-arm-msm+bounces-26966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7796893B34E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 17:02:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83E8593B34B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 17:02:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2F898282F48
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 15:02:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3B1451F21DB9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 15:02:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EEE7158DA3;
-	Wed, 24 Jul 2024 15:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74D3D1591EA;
+	Wed, 24 Jul 2024 15:02:08 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ns.iliad.fr (ns.iliad.fr [212.27.33.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D311112E71;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30D99474;
 	Wed, 24 Jul 2024 15:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.33.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721833329; cv=none; b=Mf5TB8HcCdeRKE0gjx1GRwK5LUUf7JcLIZuelUIGblAlJjgqYWnXeRl4JIwwmEoFYW/A/I2afePG8UvQsbpds9IOLx3cyAiv6CkpAvYdEtjNdwSO07cNEWMfocZJhoj/XQuaudMHuN03C/XkaDiyrAyqLR7FzHSmNadwdLxTGQw=
+	t=1721833328; cv=none; b=StolSus2DJd7G1BFNYwNP/1lIh2/zIr7zFVmzWO6aHBa5mHXliAM3xbBzZmAak7almApF26Pl0VR5b5BF4VcpcuYtBiYoJTLhNr135jJpWgYI6BX0GfCeCDhZwPSOI2UDndTnf2/IYn5viqjwyXcfyzBVNaST32IjTZZwL2uHHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721833329; c=relaxed/simple;
-	bh=UEpwc1sCiOSt7JHSYtQnKir00MQWhdJ0PXX7rkpvjJ8=;
+	s=arc-20240116; t=1721833328; c=relaxed/simple;
+	bh=Mojpcz4tfluA55WkjMI7U0USP3nVIzrabiETIoyZyLY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JV0lOQKruWWj3kKPnXobXz2QUqChvS3BpTgDuLDw9rtWheuhAXM7wxF3JInOMF9PDo3pEPvAsg9qTsj07FFhhpcKAGFgh2+N6O+7O4knvOC50Jm7RTM2+n+1RKIapA2KFl2VZS5zlTpz9S0xoXgZXs6euE9eyhB92XmZx2ly6Wo=
+	 In-Reply-To:To:Cc; b=qnNIiGZ9u5CiC1ZcAGdN5+oViSClgWLcNRDArJxJk7/wNKmhCTHLBV6KXfmvh5ilQTQpyE/Lq01q6UOmDc4dhAAbhTYNm0xWKS5a+oMnXT2JYTDfGUUV5r7Kv6AXIuqG8PREWaYUlAQHo3XOEOrOUnZNcj6l/AVUfmHLl19HPCQ=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=srs.iliad.fr; arc=none smtp.client-ip=212.27.33.1
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=srs.iliad.fr
 Received: from ns.iliad.fr (localhost [127.0.0.1])
-	by ns.iliad.fr (Postfix) with ESMTP id 49F3A2057C;
+	by ns.iliad.fr (Postfix) with ESMTP id 49D2420572;
 	Wed, 24 Jul 2024 17:01:55 +0200 (CEST)
 Received: from [127.0.1.1] (freebox.vlq16.iliad.fr [213.36.7.13])
-	by ns.iliad.fr (Postfix) with ESMTP id 0BF0520875;
+	by ns.iliad.fr (Postfix) with ESMTP id 1428F208F1;
 	Wed, 24 Jul 2024 17:01:55 +0200 (CEST)
 From: Marc Gonzalez <mgonzalez@freebox.fr>
-Date: Wed, 24 Jul 2024 17:01:38 +0200
-Subject: [PATCH v7 5/6] arm64: dts: qcom: msm8998: add HDMI GPIOs
+Date: Wed, 24 Jul 2024 17:01:39 +0200
+Subject: [PATCH v7 6/6] arm64: dts: qcom: add HDMI nodes for msm8998
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -46,7 +46,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240724-hdmi-tx-v7-5-e44a20553464@freebox.fr>
+Message-Id: <20240724-hdmi-tx-v7-6-e44a20553464@freebox.fr>
 References: <20240724-hdmi-tx-v7-0-e44a20553464@freebox.fr>
 In-Reply-To: <20240724-hdmi-tx-v7-0-e44a20553464@freebox.fr>
 To: Vinod Koul <vkoul@kernel.org>, 
@@ -68,63 +68,143 @@ Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
  Jeffrey Hugo <quic_jhugo@quicinc.com>, Marc Gonzalez <mgonzalez@freebox.fr>
 X-Mailer: b4 0.13.0
 
-MSM8998 GPIO pin controller reference design defines:
+From: Arnaud Vrac <avrac@freebox.fr>
 
-- CEC: pin 31
-- DDC: pin 32,33
-- HPD: pin 34
+Port device nodes from vendor code.
 
-Downstream vendor code for reference:
-
-https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/caf_migration/kernel.lnx.4.4.r38-rel/arch/arm/boot/dts/qcom/msm8998-pinctrl.dtsi#L2324-2400
-
-mdss_hdmi_{cec,ddc,hpd}_{active,suspend}
-
+Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
 ---
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 100 +++++++++++++++++++++++++++++++++-
+ 1 file changed, 99 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index e5f051f5a92de..ba5e873f0f35f 100644
+index ba5e873f0f35f..1eb15e6d0af4a 100644
 --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1434,6 +1434,34 @@ blsp2_spi6_default: blsp2-spi6-default-state {
- 				drive-strength = <6>;
- 				bias-disable;
+@@ -2785,7 +2785,7 @@ mmcc: clock-controller@c8c0000 {
+ 				 <&mdss_dsi0_phy 0>,
+ 				 <&mdss_dsi1_phy 1>,
+ 				 <&mdss_dsi1_phy 0>,
+-				 <0>,
++				 <&mdss_hdmi_phy 0>,
+ 				 <0>,
+ 				 <0>,
+ 				 <&gcc GCC_MMSS_GPLL0_DIV_CLK>;
+@@ -2890,6 +2890,14 @@ dpu_intf2_out: endpoint {
+ 							remote-endpoint = <&mdss_dsi1_in>;
+ 						};
+ 					};
++
++					port@2 {
++						reg = <2>;
++
++						dpu_intf3_out: endpoint {
++							remote-endpoint = <&hdmi_in>;
++						};
++					};
+ 				};
+ 			};
+ 
+@@ -3045,6 +3053,96 @@ mdss_dsi1_phy: phy@c996400 {
+ 
+ 				status = "disabled";
  			};
 +
-+			hdmi_cec_default: hdmi-cec-default-state {
-+				pins = "gpio31";
-+				function = "hdmi_cec";
-+				drive-strength = <2>;
-+				bias-pull-up;
++			mdss_hdmi: hdmi-tx@c9a0000 {
++				compatible = "qcom,hdmi-tx-8998";
++				reg =	<0x0c9a0000 0x50c>,
++					<0x00780000 0x6220>,
++					<0x0c9e0000 0x2c>;
++				reg-names = "core_physical",
++					    "qfprom_physical",
++					    "hdcp_physical";
++
++				interrupt-parent = <&mdss>;
++				interrupts = <8>;
++
++				clocks = <&mmcc MDSS_MDP_CLK>,
++					 <&mmcc MDSS_AHB_CLK>,
++					 <&mmcc MDSS_HDMI_CLK>,
++					 <&mmcc MDSS_HDMI_DP_AHB_CLK>,
++					 <&mmcc MDSS_EXTPCLK_CLK>,
++					 <&mmcc MDSS_AXI_CLK>,
++					 <&mmcc MNOC_AHB_CLK>,
++					 <&mmcc MISC_AHB_CLK>;
++				clock-names =
++					"mdp_core",
++					"iface",
++					"core",
++					"alt_iface",
++					"extp",
++					"bus",
++					"mnoc",
++					"iface_mmss";
++
++				phys = <&mdss_hdmi_phy>;
++				#sound-dai-cells = <1>;
++
++				pinctrl-0 = <&hdmi_hpd_default>,
++					    <&hdmi_ddc_default>,
++					    <&hdmi_cec_default>;
++				pinctrl-1 = <&hdmi_hpd_sleep>,
++					    <&hdmi_ddc_default>,
++					    <&hdmi_cec_default>;
++				pinctrl-names = "default", "sleep";
++
++				status = "disabled";
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++						hdmi_in: endpoint {
++							remote-endpoint = <&dpu_intf3_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++						hdmi_out: endpoint {
++						};
++					};
++				};
 +			};
 +
-+			hdmi_ddc_default: hdmi-ddc-default-state {
-+				pins = "gpio32", "gpio33";
-+				function = "hdmi_ddc";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
++			mdss_hdmi_phy: hdmi-phy@c9a0600 {
++				compatible = "qcom,hdmi-phy-8998";
++				reg = <0x0c9a0600 0x18b>,
++				      <0x0c9a0a00 0x38>,
++				      <0x0c9a0c00 0x38>,
++				      <0x0c9a0e00 0x38>,
++				      <0x0c9a1000 0x38>,
++				      <0x0c9a1200 0x0e8>;
++				reg-names = "hdmi_pll",
++					    "hdmi_tx_l0",
++					    "hdmi_tx_l1",
++					    "hdmi_tx_l2",
++					    "hdmi_tx_l3",
++					    "hdmi_phy";
 +
-+			hdmi_hpd_default: hdmi-hpd-default-state {
-+				pins = "gpio34";
-+				function = "hdmi_hot";
-+				drive-strength = <16>;
-+				bias-pull-down;
-+			};
++				#clock-cells = <0>;
++				#phy-cells = <0>;
 +
-+			hdmi_hpd_sleep: hdmi-hpd-sleep-state {
-+				pins = "gpio34";
-+				function = "hdmi_hot";
-+				drive-strength = <2>;
-+				bias-pull-down;
++				clocks = <&mmcc MDSS_AHB_CLK>,
++					 <&gcc GCC_HDMI_CLKREF_CLK>,
++					 <&rpmcc RPM_SMD_XO_CLK_SRC>;
++				clock-names = "iface",
++					      "ref",
++					      "xo";
++
++				status = "disabled";
 +			};
  		};
  
- 		remoteproc_mss: remoteproc@4080000 {
+ 		venus: video-codec@cc00000 {
 
 -- 
 2.34.1
