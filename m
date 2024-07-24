@@ -1,155 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-26946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-26948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7646F93B081
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 13:41:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 303DC93B08B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 13:43:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 20BD41F2191C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 11:41:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ADEF91F21E05
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Jul 2024 11:43:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 307A0158211;
-	Wed, 24 Jul 2024 11:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2526158849;
+	Wed, 24 Jul 2024 11:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="D833HqNt"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZmdYpabb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E47157491;
-	Wed, 24 Jul 2024 11:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B00F157491;
+	Wed, 24 Jul 2024 11:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721821302; cv=none; b=ZvD9blLyoSfIxoJr9t991mfgQi5WWm26PxEhpoWYEGCw7vrP8Non0vvlSSGspw3JNLlISTAeX9yNtpM+HIEu6ep73k4i68xADWo5gUIBvJSI81AnAitertdiHvy9lth9gyvlj3j+AalI1VMVJJXcFLvXZgeyx9CpLYAL6KDs3Gk=
+	t=1721821383; cv=none; b=jZHQiE7qGNo7KtBgcLoFQprr5P6XOEYw4Aukiphlw/W+ZT6KvAh8NC5b5pvXzE0dN3W3DVRrkG5L+2qf/BvS6+gvXrGmoKV3JDBJzSOZvBNvoSJ5i1sR2F55DBBW2TZK8nI13naBz4LpuPmLibfJtQxGC2RRIXOm/NPY8LwPwKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721821302; c=relaxed/simple;
-	bh=d1Ns+5LkQvsZe/siQ7yuoNSB6lvRMz+MwI0I58Jn1vo=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MZVV9JXq0N2XDDdPuq82tSn+n9ESUytHnWn/S9cOqllFRFvdvQikzySfohuP3BFrztVsMZOwQs/v6T4w444Wq4XG/vvTfluqjqrTf4+MekmkcxGYhHCCAH3T5wFeykSfcQ+c/lBtxrM7AaMpkL4HQe+Zp8he/4Kugk+fBCyLsOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=D833HqNt; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1721821383; c=relaxed/simple;
+	bh=Q2EB9YMEmMtqI62rc64mHaCVFEWUnko+hRH6e7HqamM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Fg25OCK9o4sO5siX6PsUcrFpe11v1u6KXx4R2Q9djy9UKLhPZACc6CYPYFrwFgn2TkQtIOUAT4V4qg/H4++Z5OPur1ps2oc1yyIFTU+eP0uD9mKCWnq3DLQ9beXjHYswqpFPsxJBqfpfDWSG6rbF2wJ0geLZO0AtDsfo+ezbZaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZmdYpabb; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46OA1BKX024464;
-	Wed, 24 Jul 2024 11:41:29 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46O8ldFL022838;
+	Wed, 24 Jul 2024 11:42:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=KhQqIkeiBaXXkN34/9Ic5EkX
-	2Yz+Ln/4BmYXrH6NppU=; b=D833HqNtNGPwsoFyoBj0m19fSmo3b+ZxEvCIBLxf
-	4qrHalXv5azR/QiVHfRQbN9CMFPLEfYGZXGElJKYmbrY1bx4PlPJJ0igvJVWiqqx
-	JOCUBistfbf6QGiPCDGb43pSKzzE4J+0xcmMZlmFg5iLmVEW7Itj7hPqiA3dpXEX
-	BHsXq319bcYkkjEu0yXDf1tEjlh7upTrN5uBAmdDuMfd5RshYD/ihPdpA9dFWQ/+
-	bCGf4EWZ8BYMqFF/g7M8D2SJRVn9cU+L88AEGdF9r/JhaMKs9pdq4IRgCzJCg7Il
-	VrY8EVCKuSuuqOHGMjcnTpu5zmQ7Ro7NLWYTMkSD6vV4xg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g487hw3t-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=5yQme0FUpube1OxRnubBbuDlqBLQj9ZnNnJ
+	4AmgTtng=; b=ZmdYpabbtzErMgIzQ81YryYxbz5/Cfjsd8o/MJcc3Yv3sG5z5GD
+	lJt6eQ6hDCK9TcxFMYbA3HOsH+9+ZDfc0s4MttnVK/D+9yzvS78NKYjyesZZV6IS
+	riRIMX7qYFPecDL2QqRb7CnvzX6Pb3f4V4jcvqOifEU3CVr6GT372Qm2tz9RsOhU
+	qu+2Y/T7YfDea7FzrZ95nJZ+Q8dp3c1RejoxX3UhASS//pGAatB39yby1roUAgWv
+	2LONX+J9hZPgMI/677soR6MbpL4+/Q2+YfijPvFMWtW7sdGkk06lcOeiwpazhall
+	ZrEWpt4fJYiyMtRnL23BNcMCoPcSFNzqxmA==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g2kn26m8-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Jul 2024 11:41:28 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46OBfRHV005665
+	Wed, 24 Jul 2024 11:42:32 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTP id 46OBgSW4024843;
+	Wed, 24 Jul 2024 11:42:28 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 40g6am4psh-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 24 Jul 2024 11:41:27 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 24 Jul 2024 04:41:22 -0700
-Date: Wed, 24 Jul 2024 17:11:18 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <gregkh@linuxfoundation.org>, <konrad.dybcio@linaro.org>,
-        <djakov@kernel.org>, <quic_wcheng@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH v4 2/5] dt-bindings: usb: qcom,dwc3: Update ipq5332 clock
- details
-Message-ID: <ZqDoXu9+Y4+O8M7W@hu-varada-blr.qualcomm.com>
-References: <20240723090304.336428-1-quic_varada@quicinc.com>
- <20240723090304.336428-3-quic_varada@quicinc.com>
- <ac34c454-4800-4057-9a50-e0c5db1d3806@kernel.org>
+	Wed, 24 Jul 2024 11:42:28 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 46OBgSkQ024803;
+	Wed, 24 Jul 2024 11:42:28 GMT
+Received: from hu-devc-blr-u22-a.qualcomm.com (hu-mdalam-blr.qualcomm.com [10.131.36.157])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 46OBgS09024798
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 24 Jul 2024 11:42:28 +0000
+Received: by hu-devc-blr-u22-a.qualcomm.com (Postfix, from userid 466583)
+	id A0572411CF; Wed, 24 Jul 2024 17:12:27 +0530 (+0530)
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+To: broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
+        manivannan.sadhasivam@linaro.org, esben@geanix.com,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mtd@lists.infradead.org
+Cc: quic_mdalam@quicinc.com, quic_varada@quicinc.com,
+        quic_srichara@quicinc.com
+Subject: [PATCH v7 0/8] Add QPIC SPI NAND driver
+Date: Wed, 24 Jul 2024 17:12:17 +0530
+Message-Id: <20240724114225.2176448-1-quic_mdalam@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <ac34c454-4800-4057-9a50-e0c5db1d3806@kernel.org>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: AJVnSnLziNAnVkth4RS54Zj9prH9RW5_
-X-Proofpoint-GUID: AJVnSnLziNAnVkth4RS54Zj9prH9RW5_
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Pz87i4f-QQZ7v-WDbT4pRxMhflYZ7irb
+X-Proofpoint-GUID: Pz87i4f-QQZ7v-WDbT4pRxMhflYZ7irb
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-24_09,2024-07-23_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- suspectscore=0 phishscore=0 priorityscore=1501 mlxlogscore=999
- malwarescore=0 adultscore=0 impostorscore=0 clxscore=1015
- lowpriorityscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2407110000 definitions=main-2407240086
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
+ spamscore=0 mlxscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ adultscore=0 clxscore=1011 mlxlogscore=655 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407240086
 
-On Wed, Jul 24, 2024 at 08:27:03AM +0200, Krzysztof Kozlowski wrote:
-> On 23/07/2024 11:03, Varadarajan Narayanan wrote:
-> > USB uses icc-clk framework to enable the NoC interface clock.
-> > Hence the 'iface' clock is removed from the list of clocks.
-> > Update the clock-names list accordingly.
->
-> But the clock is still there and is still used by this block. This looks
-> like adjusting hardware per Linux implementation.
->
-> Why suddenly this clock was removed from this hardware?
+v7:
+ * Added read_oob() and write_oob() api
+ * Added FIELD_PREP() in spi init
+ * Made CONFIG_SPI_QPIC_SNAND and CONFIG_MTD_NAND_QCOM
+   as bool type
+ * Removed offset 0 in oob_ecc() layout
+ * Handled multiple error condition
 
-This clock per se is not used by the USB block. It is needed to
-enable the path for CPU to reach the USB block (and vice versa).
-Hence, we were adviced to use the ICC framework to enable this
-clock and not the clocks/clock-names DT entries.
+v6:
+ * Added FIELD_PREP() and GENMASK() macro
+ * Added qpic_spi_nand{..} structure for
+   spi nand realted variables
+ * Made qpic_common.c slectable based on
+   either CONFIG_MTD_NAND_QCOM or CONFIG_SPI_QPIC_SNAND
+ * Removed rawnand.h from qpic-common.h 
+ * Removed partitions.h and rawnand.h form spi-qpic-snand.c
+ * Added qcom_nand_unalloc() in remove()
 
-Please refer to [1] where similar clocks for IPQ9574 were NAK'ed.
+v5:
+ * Fixes nandbiterr issue
+ * Added raw_read() and raw_write() API
+ * Added qcom_ prefix to all the common API
+ * Removed register indirection
+ * Following tests for SPI-NAND devices passed
 
-[1] https://lore.kernel.org/linux-arm-msm/CAA8EJppabK8j9T40waMv=t-1aksXfqJibWuS41GhruzLhpatrg@mail.gmail.com/
+   - mtd_oobtest
+   - mtd_pagetest
+   - mtd_readtest
+   - mtd_speedtest
+   - mtd_stresstest
+   - mtd_subpagetest
+   - mtd_nandbiterrs
+   - nandtest
+   - nanddump
+   - nandwrite
+   - nandbiterr -i
+   - mtd erase
+   - mtd write
+   - dd
+   - hexddump
 
-> > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > ---
-> >  .../devicetree/bindings/usb/qcom,dwc3.yaml      | 17 ++++++++++++++++-
-> >  1 file changed, 16 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> > index efde47a5b145..6c5f962bbcf9 100644
-> > --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> > +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> > @@ -220,6 +220,22 @@ allOf:
-> >              - const: sleep
-> >              - const: mock_utmi
-> >
-> > +  - if:
-> > +      properties:
-> > +        compatible:
-> > +          contains:
-> > +            enum:
-> > +              - qcom,ipq5332-dwc3
-> > +    then:
-> > +      properties:
-> > +        clocks:
-> > +          maxItems: 3
-> > +        clock-names:
-> > +          items:
-> > +            - const: core
-> > +            - const: sleep
-> > +            - const: mock_utmi
->
-> So this is the same as first case. Just put it there. It's your task to
-> check if you are duplicating a case, not reviewer's...
+v4:
+ * In this patch series fixes kernel doc for all the cmmon api
+ * Also fixes dm-binding commit message
+ * Fix qpic_common.c compilation based on config
 
-Will fix that.
+v3:
+ * In this patch series fixes multiple things like
+   added clock-name, added _alloc_controller api instead
+   of alloc_master, made common apis more generic etc.
 
-Thanks
-Varada
+ * Addressed all the comment from v2 patch series
+
+v2:
+ * https://lore.kernel.org/linux-arm-msm/20240215134856.1313239-1-quic_mdalam@quicinc.com/
+ * In this series of patchs we have added basic working QPIC SPI NAND
+   driver with READ, WRITE, ERASE etc functionality
+
+ * Addressed all the comments given in RFC [v1] patch
+
+v1:
+ * https://lore.kernel.org/linux-arm-msm/20231031120307.1600689-1-quic_mdalam@quicinc.com/
+ * Initial set of patches for handling QPIC SPI NAND.
+
+Md Sadre Alam (8):
+  spi: dt-bindings: Introduce qcom,spi-qpic-snand
+  mtd: rawnand: qcom: cleanup qcom_nandc driver
+  mtd: rawnand: qcom: Add qcom prefix to common api
+  mtd: nand: Add qpic_common API file
+  mtd: rawnand: qcom: use FIELD_PREP and GENMASK
+  spi: spi-qpic: add driver for QCOM SPI NAND flash Interface
+  arm64: dts: qcom: ipq9574: Add SPI nand support
+  arm64: dts: qcom: ipq9574: Disable eMMC node
+
+ .../bindings/spi/qcom,spi-qpic-snand.yaml     |   83 +
+ .../boot/dts/qcom/ipq9574-rdp-common.dtsi     |   43 +
+ arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts   |    2 +-
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         |   27 +
+ drivers/mtd/nand/Makefile                     |    8 +-
+ drivers/mtd/nand/qpic_common.c                |  738 +++++++
+ drivers/mtd/nand/raw/Kconfig                  |    2 +-
+ drivers/mtd/nand/raw/qcom_nandc.c             | 1708 +++--------------
+ drivers/spi/Kconfig                           |    8 +
+ drivers/spi/Makefile                          |    1 +
+ drivers/spi/spi-qpic-snand.c                  | 1638 ++++++++++++++++
+ include/linux/mtd/nand-qpic-common.h          |  480 +++++
+ 12 files changed, 3318 insertions(+), 1420 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
+ create mode 100644 drivers/mtd/nand/qpic_common.c
+ create mode 100644 drivers/spi/spi-qpic-snand.c
+ create mode 100644 include/linux/mtd/nand-qpic-common.h
+
+-- 
+2.34.1
+
 
