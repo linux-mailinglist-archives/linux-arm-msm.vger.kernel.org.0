@@ -1,129 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-27043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32E6F93C0C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 13:27:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AB22A93C0D2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 13:28:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DEB1B1F21AFD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 11:27:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 60EEC1F22383
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 11:28:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75E5319924A;
-	Thu, 25 Jul 2024 11:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B561B1991D9;
+	Thu, 25 Jul 2024 11:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yr2l1lTN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NLRcDziV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D838E199249
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2024 11:27:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8489B197A77;
+	Thu, 25 Jul 2024 11:28:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721906864; cv=none; b=cUqZzzpqKOKowZjsYq0e47nGV6P3O9vY4idhi/8/ibHzi3EWGWPxGqdAvjVgBH9HoeKgioriLAjmd21ChdQsoPkxAkZQWGzR40kHP8SOORgeTLgoPQPz+DWbTfWFsav8hloEVydwbY5ICNA6GfOCdWZF1BUrtKeoXnFSf0elJJE=
+	t=1721906921; cv=none; b=PxGY1K9n5vU7AN3abEomYTr8UpdBJVmVLdT02VSY06Nr0ECqVN9v7AkOTeTPFJwDu8ZNUS7ejWdwuA5rHd83nCXPQ8Vz5W4BMnkLd4IZDmXZm6zKh/By3q8um3rBM2czx9lUtqHZ8L7s6+pQd3V32AIg7ObTIOObKL09y8Mbo8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721906864; c=relaxed/simple;
-	bh=+XTWa9hpEf4S+deZBp3LjU6C8IT8BthfSBNlMkyWCAY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=BmF+rnWy8VlL9d0RDwKhEZWok37trhTr2+lFjVpN2LHuWSFPhP2JciLxFNSFcCp+GeERbCiNrFT5wxSPTwyQADNzaawthmk5oyLJC1pUTu/WTlhrCbZ5XJYWZ4u25sEAG/Q3sasKn7B7y0T/wWhgXjFcmMm9/u9kJEBsWOWnRqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yr2l1lTN; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-52fc4388a64so76199e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2024 04:27:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721906861; x=1722511661; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RdP3yGNeewRdl+uUZaeGE/lFC2ApLtozrXP5QIFLxBE=;
-        b=yr2l1lTNfAri2FZ8luzQ54uqifA+3b4q60BRXydEFYJLfBqQIeInqK2/QL/31oIFux
-         jgRZ9Lss+Q+HlFREQY55BIYWVfmzhVTudLvwx34kxqc9oow98nEPCMPdJLFkssc+xdHS
-         ZwKN6aAybei53R06GNH5skYV1fcdexO59GecRiT3KAuV5ODZNSUfFRpNACzT9rUj9YZX
-         PW1F7y7+xx84FyGooAUYOBt0gf5g5etH3F8gyR0UhRZaGzhtOHfZUIWlcWSkxTFDojnM
-         L3Mn1fdbVV1hgH+8t5znc4EXk0siV8VmSIjDw1T1cxDLAuh8RaY+ZuZdx+f5Pm4S5T/U
-         J7Zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721906861; x=1722511661;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RdP3yGNeewRdl+uUZaeGE/lFC2ApLtozrXP5QIFLxBE=;
-        b=Vtx+N4upJomF5peK1vdiKwVvAh4GCc4Lmb3fOxKAyyH2z3V8xOY0JoqnJYUG6Oh5L1
-         5L0sxFsKp1/yYW2FaoAst5EZ2j4cYtSXHgvbS3FbeaY0RXrs/UBPzyrASxbI3w0m5/vE
-         +zikDOryA6VXrucEPPvu+hFjvNWlj6SpAMyRlIed940waFGeonfHDkndFipYWBw9h/9d
-         N576Qe2NJ5yFow8s+S/OzFORsafJPmlGbpLBIBT6uKP9x3ZK54BRQIAAbA3+xEN5tm3Q
-         o2vz3br2YtRju9UTF+LMq6bQ4/aWljD3Bg3XZJXBEn2WYfeLJURGs5c6URfc/Qy0j9oR
-         LuDg==
-X-Gm-Message-State: AOJu0YxwJB3Dh4jKQUMd3+w1sDbZe5xxrPymHP4Fig13Lh8aJpDC77M8
-	pLW19GJp0KMgp81zXu+9D2uhDXmqSXtpfY/Zh3Y3tJRrgQ7bQys93vUxkhukjCA=
-X-Google-Smtp-Source: AGHT+IFhbtKpxAHdMYK8H7+fG4jmhEs/+GrCat1GPYdIv4DpNNfgCXV9V8g1hKOE95kDn+bbcz8PyA==
-X-Received: by 2002:a05:6512:304b:b0:52e:767a:ada3 with SMTP id 2adb3069b0e04-52fd60f4f14mr1053270e87.47.1721906860992;
-        Thu, 25 Jul 2024 04:27:40 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52fd5bc3e8dsm194177e87.5.2024.07.25.04.27.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jul 2024 04:27:40 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 25 Jul 2024 14:27:39 +0300
-Subject: [PATCH] firmware: qcom: enable qseecom on Lenovo Yoga C630
+	s=arc-20240116; t=1721906921; c=relaxed/simple;
+	bh=tqxpcbUfbmXq4gYPOLPFEL8D1WTclkWhQrqiFH5NKao=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UXYpyHy5ps0K+o9aGlWbDInOoTTnTC9Zu1SjUphTge1+Hfv4nWsnklrPNt5StCjyZgdvoJL5uZ4V2c2ZqYXi5J8RP2nwruS3Fg//BiQ4RJb1KAgQO/TAgbUUnd/hFqUaV0rN7aN/Tv1Tl3QwQ2CUnUZkddDdy3vKkvJvQ3AFbl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NLRcDziV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3CB5C116B1;
+	Thu, 25 Jul 2024 11:28:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1721906921;
+	bh=tqxpcbUfbmXq4gYPOLPFEL8D1WTclkWhQrqiFH5NKao=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NLRcDziVx8Skyei78ECJYsXdlBEmexjDpO0sziANWvbsRbLGYmkRaqzL2cNxWH2zk
+	 d0Jt1RT3BSbMOuk2KD/Y1iKCbpelLxP+uVJ+WUv17zQiUalLM3bLRVKhAlbINfMvkB
+	 ot1zwl8vHI1kq834F3+NVSTv9752DfX/uE49ojNQOhqyLCwlXo/Af2np5GytZ7zNwz
+	 Jw5SbkZOddNs2rviEi9l8Bqe6apTsp5TKcx7wifpHfdW/2r/AqvC5TkyaaWyiGMJ8C
+	 Y9vo4MGteIv98aiGWY1q5pd2xktQ8Lz+DmzKtXENI1IthCa0GxwEisSiE7hXtJdM9m
+	 t0U1Y9d3B5StA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sWweI-00000000094-2Ffb;
+	Thu, 25 Jul 2024 13:28:42 +0200
+Date: Thu, 25 Jul 2024 13:28:42 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: PCI: qcom: Allow 'vddpe-3v3-supply' again
+Message-ID: <ZqI26iACl_mQX-zG@hovoldconsulting.com>
+References: <20240723151328.684-1-johan+linaro@kernel.org>
+ <nanfhmds3yha3g52kcou2flgn3sltjkzhr4aop75iudhvg2rui@fsp3ecz4vgkb>
+ <ZqHuE2MqfGuLDGDr@hovoldconsulting.com>
+ <CAA8EJppZ5V8dFC5z1ZG0u0ed9HwGgJRzGTYL-7k2oGO9FB+Weg@mail.gmail.com>
+ <ZqIJE5MSFFQ4iv-R@hovoldconsulting.com>
+ <y6ctin3zp55gzbvzamj2dxm4rdk2h5odmyprlnt4m4j44pnkvu@bfhmhu6djvz2>
+ <ZqIVQzQA5kHpwFgN@hovoldconsulting.com>
+ <pbkzwy63j7dh365amgdze2ns4krykckqyx2ncqjw2u4dufuoky@fg6rdpnqh5vb>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240725-more-qseecom-v1-1-a55a3553d1fe@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAKo2omYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDcyNT3dz8olTdwuLU1OT8XF1jc0tLY+Mky2RzM0sloJaCotS0zAqwcdG
- xtbUAQvVTJ14AAAA=
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1046;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=+XTWa9hpEf4S+deZBp3LjU6C8IT8BthfSBNlMkyWCAY=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmojarqF0R/OZSmoYGrVDMvllZo7y5HQgCeYoT/
- eZVnpNt3dyJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZqI2qwAKCRCLPIo+Aiko
- 1dsyB/4gvN3N5LSDmUw7IC5bD8PIl396dkxFn/AMhhPoZ8vg3Ct4meoi3KYCIazx+L6ai/YMmNb
- KBnJudRmjMl2LMoW4henuOaGEHsMe0wU8zgTfxjDui5UZ0U4br+9xhRfp4+40AiH2KEnk6BZV/G
- bwE2gwovyZo3hTxhGNI1+MCtS0Zh9izACiTvxjBAJacNRLCUvB4oF38DwC06VNH2WJfiNpHKwjf
- 5Jvq1WVtm7MKElFVTGxs7Wr0Xdfg5fZ/phe1xRrFgTGlMGVwvDDaAXutglem0miYiZVOO9ciZMc
- zxGTIjY0xifz8H6X08MSfZmOYyOCjPKEejePXCMefFo07d6j
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pbkzwy63j7dh365amgdze2ns4krykckqyx2ncqjw2u4dufuoky@fg6rdpnqh5vb>
 
-qseecom driver end uefi vars access works on the Lenovo Yoga C630.
-Enable the QSEECOM device on that laptop.
+On Thu, Jul 25, 2024 at 01:24:27PM +0300, Dmitry Baryshkov wrote:
+> On Thu, Jul 25, 2024 at 11:05:07AM GMT, Johan Hovold wrote:
+> > On Thu, Jul 25, 2024 at 11:57:39AM +0300, Dmitry Baryshkov wrote:
+> > > On Thu, Jul 25, 2024 at 10:13:07AM GMT, Johan Hovold wrote:
+> > 
+> > > > It is already part of the bindings for all platforms.
+> > > 
+> > > It is not, it is enabled only for sc7280 and sc8280xp. 
+> > 
+> > No, that's both incorrect and irrelevant. It is used by msm8996 and
+> > older platforms by in-kernel DTs as well. But the point is that is has
+> > been part of the bindings an cannot simply be removed as there can be
+> > out-of-tree DTs that are correctly using this property for any of these
+> > platforms.
+> 
+> It can not be removed from the driver, but it definitely can be remove
+> from bindings.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/firmware/qcom/qcom_scm.c | 1 +
- 1 file changed, 1 insertion(+)
+You apparently ignored the word "simply" in "cannot simply be removed".
 
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index 00c379a3cceb..9b427bab2028 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -1725,6 +1725,7 @@ EXPORT_SYMBOL_GPL(qcom_scm_qseecom_app_send);
- static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
- 	{ .compatible = "lenovo,flex-5g" },
- 	{ .compatible = "lenovo,thinkpad-x13s", },
-+	{ .compatible = "lenovo,yoga-c630", },
- 	{ .compatible = "qcom,sc8180x-primus" },
- 	{ .compatible = "qcom,x1e80100-crd" },
- 	{ .compatible = "qcom,x1e80100-qcp" },
-
----
-base-commit: 864b1099d16fc7e332c3ad7823058c65f890486c
-change-id: 20240725-more-qseecom-379933b9c769
-
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+Johan
 
