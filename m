@@ -1,59 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-27010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC6F393BC31
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 07:51:15 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9002993BC6E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 08:18:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6638D284272
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 05:51:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2AABDB2154D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 06:17:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B4061CD3F;
-	Thu, 25 Jul 2024 05:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E86D513C67E;
+	Thu, 25 Jul 2024 06:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TpidYFZq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cp7yPmeL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04ACA1BC43;
-	Thu, 25 Jul 2024 05:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEAB41CA8A;
+	Thu, 25 Jul 2024 06:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721886671; cv=none; b=H0P17JaI4lXkPVjRNAyGz5gP4l54x/XuvfdNPMZyXUxhA69GjHIDYSTQTAANyc7iuR3psmzzRmJtidTZOrJDWWgOFkRcTSNGcyG7Fkgpc1cK7fPhPj8w+tZj98yLUEhjFTTecInmEbHFR78czpAXdOEuU9e9GJCghHSYv2lK1V8=
+	t=1721888274; cv=none; b=mUpr1TUcpDb7/I2J5DO2LkDxr28NX0XmPGne2g15zBP8Zt5kL3LxemJwPkCOovEVMjlHfRF/jf7e2VR+glcKS1fXcnLAxXRZrFlhyiX3J7gYNZSj2UP6euvC6lc81DQryc2/8PDZrKW8Q16U22u/9uXNSNa2KgPdwvaOrdnf7wA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721886671; c=relaxed/simple;
-	bh=/A9NAsn/VM9v7m4m+IepAXROAxVNPOGJaU/7RULXU8U=;
+	s=arc-20240116; t=1721888274; c=relaxed/simple;
+	bh=iqW6sJvc25bsmnZbAhXI5ixAD8RqziptNaP/wBtMiK0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Zfmezp31TjQJ5GheXnry9uXqyvv2I0g0Gi9qKVvZ77aWTjB71J9e1Xm7UyMjCMQoVd81BIHsMF3gFzNo518OdQ0HWjnGbbJnDlE6S/dJsQXaqXLdpxlhDv0XkeDUazEQ/V48NQxADmQVAcxQRpmpOznnSNMVuu4yRMqQsB2jvb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TpidYFZq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27B9C116B1;
-	Thu, 25 Jul 2024 05:51:09 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=jVhhRWZIKUJnpbESYv0aAF3Zf4dXkKGDqBDLJ96vrZPCrPlRWOiuzVf2HHwQ5enhlqqrZAqiL41EMcCjRCEGZYMlaRyXQ/kFLBhM/n7wa0uf+C5kiz1gZEp2ZE3SRgYs4wldkm7Gf9OUnJNP+YFCVj/t4OL8MiXlyZrmI0FRVM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cp7yPmeL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F07C116B1;
+	Thu, 25 Jul 2024 06:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721886670;
-	bh=/A9NAsn/VM9v7m4m+IepAXROAxVNPOGJaU/7RULXU8U=;
+	s=k20201202; t=1721888274;
+	bh=iqW6sJvc25bsmnZbAhXI5ixAD8RqziptNaP/wBtMiK0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TpidYFZq2mlMfxGraBAQqtsZGoUzNzXzD9pxr53u1kv3rLme4QcD6KHIORPyLWrX7
-	 /jKhHLWCV4/7+t8HvDaHzxS7NLOppvpu22+4P12mrE48fVLTl/zOUARk0iAf80MgGH
-	 A5Z9CqE0Tq5nexRA/IAkBLCbLRYPVMsIZtkEmwOLUHBkPbOEwEnxEDQhCOVmWCivfD
-	 ahShert4AvcMePVGCEN7mndeSjCicXuGCpOagBozDOppEpe20jj75n0TTB+4fpmCR0
-	 F1tBCJLsqvcgpnLjmZOzZAoL5jB2bjYByyRvNxlDXOl62vhQgvG0kp7ffyEfhV4UKh
-	 xcjDVA19HC7zQ==
-Date: Thu, 25 Jul 2024 11:21:06 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Jeff Johnson <quic_jjohnson@quicinc.com>
-Cc: Sinan Kaya <okaya@kernel.org>, kernel@quicinc.com,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	kernel-janitors@vger.kernel.org,
-	Greg KH <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH] dmaengine: qcom: add missing MODULE_DESCRIPTION() macros
-Message-ID: <ZqHnynG0pFPryn3E@matsya>
-References: <20240603-md-drivers-dma-qcom-v1-1-d1bd919352bf@quicinc.com>
- <171778244108.276050.8818140072679051239.b4-ty@kernel.org>
- <36f5502c-a07f-4809-aa24-7f996afc0a88@quicinc.com>
+	b=Cp7yPmeL/DAW9lXgHvZezv+yeEA1No6qFv8q5neg0UaXVPLZVDZwRVdcdz3xMTRKy
+	 Y98g4Dx+Vb51rHpYiCrzhq/pCCMQJfuk5YsdEzBAYT7M+YvFnXEjo/3gG9FItzjcyl
+	 m108xuqv4GsemfZtfQQzvd69sZFpQi5gGyt1o+W8ssBAt04MDSFeiEZ89x1YQG5d3U
+	 TV1LAvTeIdhJPTNi52C/25LxGC2/qnUWQzaEMtbWgTgJIoUQA/iIWeCMc9Eg7MRgbM
+	 qScMUuZYSQpu/eyKYGVYy5X8/7QSuvMp4G9554IiRBN9ENY1zT0xntlaplswz5xUBx
+	 1bjrhCpfObeVw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sWrnX-000000007pD-2lw2;
+	Thu, 25 Jul 2024 08:17:55 +0200
+Date: Thu, 25 Jul 2024 08:17:55 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: PCI: qcom: Allow 'vddpe-3v3-supply' again
+Message-ID: <ZqHuE2MqfGuLDGDr@hovoldconsulting.com>
+References: <20240723151328.684-1-johan+linaro@kernel.org>
+ <nanfhmds3yha3g52kcou2flgn3sltjkzhr4aop75iudhvg2rui@fsp3ecz4vgkb>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,35 +72,34 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <36f5502c-a07f-4809-aa24-7f996afc0a88@quicinc.com>
+In-Reply-To: <nanfhmds3yha3g52kcou2flgn3sltjkzhr4aop75iudhvg2rui@fsp3ecz4vgkb>
 
-On 23-07-24, 11:36, Jeff Johnson wrote:
-> On 6/7/2024 10:47 AM, Vinod Koul wrote:
+On Wed, Jul 24, 2024 at 08:22:54PM +0300, Dmitry Baryshkov wrote:
+> On Tue, Jul 23, 2024 at 05:13:28PM GMT, Johan Hovold wrote:
+> > Commit 756485bfbb85 ("dt-bindings: PCI: qcom,pcie-sc7280: Move SC7280 to
+> > dedicated schema") incorrectly removed 'vddpe-3v3-supply' from the
+> > bindings, which results in DT checker warnings like:
 > > 
-> > On Mon, 03 Jun 2024 10:06:42 -0700, Jeff Johnson wrote:
-> >> make allmodconfig && make W=1 C=1 reports:
-> >> WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/dma/qcom/hdma_mgmt.o
-> >> WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/dma/qcom/hdma.o
-> >>
-> >> Add the missing invocations of the MODULE_DESCRIPTION() macro, using
-> >> the descriptions from the associated Kconfig items.
-> >>
-> >> [...]
+> > 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb: pcie@600000: Unevaluated properties are not allowed ('vddpe-3v3-supply' was unexpected)
+> >         from schema $id: http://devicetree.org/schemas/pci/qcom,pcie.yaml#
 > > 
-> > Applied, thanks!
-> > 
-> > [1/1] dmaengine: qcom: add missing MODULE_DESCRIPTION() macros
-> >       commit: 8e9d83d7228f663ef340ebb339eaffc677277bd4
-> > 
+> > Note that this property has been part of the Qualcomm PCIe bindings
+> > since 2018 and would need to be deprecated rather than simply removed if
+> > there is a desire to replace it with 'vpcie3v3' which is used for some
+> > non-Qualcomm controllers.
 > 
-> Hi Vinod,
-> I see this landed in linux-next, but is not currently in Linus' tree for 6.11.
-> Will you be able to have this pulled during the merge window?
-> I'm trying to eradicate all of these warnings before 6.11 rc-final.
+> I think Rob Herring suggested [1] adding the property to the root port
+> node rather than the host. If that suggestion still applies it might be
+> better to enable the deprecated propertly only for the hosts, which
+> already used it, and to define a new property at the root port.
 
-We are still in merge window!
-FWIW, this is in linus's tree now
+You seem to miss the point that this is just restoring status quo (and
+that the property has not yet been deprecated).
 
--- 
-~Vinod
+I assume you've already read my reply to Rob's bot, but here it is for
+reference for others:
+
+Link: https://lore.kernel.org/lkml/Zp_LPixNnh-2Fy5N@hovoldconsulting.com/	
+
+Johan
 
