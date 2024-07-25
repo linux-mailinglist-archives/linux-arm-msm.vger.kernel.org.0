@@ -1,146 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-27023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8AD1593BF0E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 11:26:24 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84D7493BFDB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 12:24:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 374F01F239C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 09:26:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0FA2BB212BB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 10:24:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 469E0198A2B;
-	Thu, 25 Jul 2024 09:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EFD5198A3D;
+	Thu, 25 Jul 2024 10:24:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EkfWu6KT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nhiw/56j"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91976198851
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2024 09:25:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7AA1741F0
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2024 10:24:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721899532; cv=none; b=fK/JRVZYPVu02fg4F76vofqwObrV9TsPaiyPb7mOZZgOGQmD4sY5cphcucaYSLrWSK7TBvqC1FgXIDm7xqhg1VC2OyrWMKqTCPw2nuLBaC0xCxml8LrlOyAo9W5L0y67sGn6mZO1PDuDXu/On/Cso1Ft+MWARUFG3Rpw6ZN+AlQ=
+	t=1721903073; cv=none; b=qzKDPPpuSNG4Ey9boOCkmn/9JMngCRA8CwmaJ+n7XVTjqvNRdO45b/s2r1fIbYTsK7OpDDY6mYbIV/BSOtSrqG0f/LLa2YLJfkUMElZFQO0xDSQq2T12rXxnTq1y/c5ynmwkyuUkIvsxmZapA+NIFP5Y01GGnO/JoZP6p1RLPis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721899532; c=relaxed/simple;
-	bh=gfhDSYv+goNLSY8skJzBs3DMp2QrQFXE3Vf40oQG+YY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=TWPIPKoz+nfy5ENOfNOkTqsq7ONsM3ts+yg0ksTO33LaYiRoJDtMfgM4dePxbNE5KqKN1CvqN/mawDIsI+aHj0MUFKRLgzcvG9xeaTEZWKtIglX2RTCAx4OUbDPg//sXZiNWL3729FTYnAaj1iqrMW/XUtevaYY7mYShUjZ1Rz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EkfWu6KT; arc=none smtp.client-ip=209.85.208.169
+	s=arc-20240116; t=1721903073; c=relaxed/simple;
+	bh=CwvaLmHe/vs0rLGhaPMxOTOImY4e3eJPnOPidzlP8+8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uYLlBTHtOF7n7z5K2DhKov6F3Lde3RKdqs5L8FG5PBk+rlZaB9mexTk12cfkHEAJoF0ZHIAV7idzB4LEl+gC/CBIQVHZWL+/yc7gfC4tgKn7YSJWK4ZvMnx4vwr+UN693EVISXjjfKEuda2oz6iEdJIfKnxf0MjAZj3DQ7AK2LM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nhiw/56j; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2ef2c56da6cso7304531fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2024 02:25:30 -0700 (PDT)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-52f01b8738dso610460e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2024 03:24:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721899529; x=1722504329; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nh61NQ937S+7o1q94LnjJk/BLrUb/CjZ3hidr6TzOuk=;
-        b=EkfWu6KTqcBlg442LugSKiIdHn/9eQ5GI3FmhXhC1dDEGOd9DBXbQUUZ3jbHjOYPyC
-         JS+wHlg+KIvwuV4Tk0h4f6W40gdAC8ig0bIIIlM8DsEniEU9qABkv/6B5NxaG3aYYRfQ
-         vT/40wx4x9jMpdK3BSgWoMdAuqDQqb/J8GrC5212uXxqtBOzkaTiiFzLbBsSHQSWQ6gD
-         rpRZd3vAjH11TXvbVJJUlEVKAPhL/zyRWP4lffGAGBkqrnnbqgctwxmmyu9Vblt9zBTK
-         W9azppmdMoetwS6zjrdq4Y/3/ZNx7nK1SZRUB+SzRFW59vfjTqKK1f8jaFoc/mszef0d
-         W/2w==
+        d=linaro.org; s=google; t=1721903070; x=1722507870; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WoxYQNUTCa1T0SH6iTcHddQ7maMyu3El9N4s8NEmbaI=;
+        b=nhiw/56jnuizFAnCeyPLNVQnh6Iu7PRZFMwcCFJ117cfMWIAgg8HRySx8enbX/UqdQ
+         00//43FeX3eFqYWDpBc0IUr5fNRjzMcA2ugOHk/cGs/333CjT9xu1Cyc4y+yck5r8AQ+
+         wsO9qOnOI4Gi6TES6BFSfghTt9VDa+AZI6JQb/XsKNxH/DWaU+e+Ok2FydwlH8hdJx+i
+         ytN0g2jzN0dcMM2ZK/8aRx20eikd3OmmvX7SJRj+LMNezxZhAQXBpiA4QnYj6BbE2sHg
+         CfgWQoJqQdhw4yOInCM1cg+zmoI3OUxbFvx3lrzVyU2Yz45ftCqhroxZ4dp3UnGo+0Po
+         bJDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721899529; x=1722504329;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nh61NQ937S+7o1q94LnjJk/BLrUb/CjZ3hidr6TzOuk=;
-        b=v/2cAWkyDqff27hRmh9H3yde77aPagbSlJOhdskEGtutJBb+oQnM0TnwUsr+Z/t49h
-         hxJiy/2Uf8jWXcUex06OGWBxqQxToz/Zr3eFWll5PEzNnpvZBYUXiURQzaQfBFZyf8UV
-         o3+VmZ1rFYCQ70Fyn76m5GBGqAkBEikR/WQT1d7zz0K4EkmzQ3iKqcUR12hzaMMWi2JH
-         lmNEB8+iZhp6r2jTFcT6wAwI19nbZn/L9SmGspRxLxdHlvvz7pR6ViDTqCIF1HMYL3ig
-         LYqzPx8oo71DXcEsGAQ8miU+G4b90bGqnohEosBqcr0X4q70l3DFqj0hwCl7f4o49DhD
-         xnQw==
-X-Gm-Message-State: AOJu0YzoIrcq+nfm9xQOT4Lqc+DPMMvEybqDSLgOfjJkYhS5N3WdBoCb
-	kIjoTtF7JND8c4jzX1h+a2t9WdcMs7WUu9qdO76udkxqfAfBqF8MYtY3Yur1tK4=
-X-Google-Smtp-Source: AGHT+IGi1wWEtfy7NWIDUmswNS4L1qJnX2gEGDOlhDHPBUMSNCMI4YEcpdjGn6OBceYfrQekIFXE7A==
-X-Received: by 2002:a2e:7d14:0:b0:2ef:232c:6938 with SMTP id 38308e7fff4ca-2f03db740edmr9284641fa.6.1721899528717;
-        Thu, 25 Jul 2024 02:25:28 -0700 (PDT)
-Received: from [192.168.1.191] ([2a0a:ef40:ee7:2401:197d:e048:a80f:bc44])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427ef3f45cfsm65830385e9.0.2024.07.25.02.25.27
+        d=1e100.net; s=20230601; t=1721903070; x=1722507870;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WoxYQNUTCa1T0SH6iTcHddQ7maMyu3El9N4s8NEmbaI=;
+        b=jS34tAolielFd7686HqFWK6H26JLQvihDAaNEUr2sEWY9mHtxNCZ49txpSZGGZ+sN1
+         eKVZW/IbVa3NhSZ/b1ypkdzYbxF14p2Sr2/F5VdowrSJzcINzcfr62VjH1OW34JA/5re
+         p6WnLPT7waZuSKWnAQKj28afQ+rD04GQcH1ukGHsDNl431vQbn9KVNp/SfnVgsDIG8Sx
+         Fh3Z2x2C7galcBB0KNqD0wTW8sNO9MKzHgP+jYFl/Y7GlmrpS+UOau+qKV2h7YP9x4tt
+         KO2Ps42Y1WHFAQwLRnx7e8AwD2Z0XTM3fLe3srfQskza47k51KLpGO3tFAHCHbWB3N/1
+         OFfg==
+X-Forwarded-Encrypted: i=1; AJvYcCUpJQvUZPnUF4po5pnYsrxafQvVoawAQ7M+deHsTMxB7Jl4OakEXz73nBhP5whsWKz+thI49lbVjZx2vpJqq6ej4UQ0KGAFvtJWOUxANg==
+X-Gm-Message-State: AOJu0YzbNqXekCH8vma10ORrh0ZCLF1oD/UpQY7taq96a0tay1+pbPt6
+	Dlv+57/HRlUqpae7g28rxNyASrNG/Rx8EfwzHRNCPBGXZd9I/Ba8y8Hrf/2Ij6o=
+X-Google-Smtp-Source: AGHT+IGON4hLG0hEzvd0Z/9nSbx4Zc3GQMs6yIMVvA/tKBhu9hBIRLjsY50KwApJu8PHZ19IjLHfQA==
+X-Received: by 2002:a05:6512:3e15:b0:52e:7125:c70a with SMTP id 2adb3069b0e04-52fd3f7e820mr1730350e87.47.1721903069556;
+        Thu, 25 Jul 2024 03:24:29 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52fd5c196e7sm175346e87.190.2024.07.25.03.24.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jul 2024 02:25:28 -0700 (PDT)
-From: Rayyan Ansari <rayyan.ansari@linaro.org>
-Date: Thu, 25 Jul 2024 10:25:18 +0100
-Subject: [PATCH v3 3/3] ARM: dts: qcom: pma8084: add pon node
+        Thu, 25 Jul 2024 03:24:28 -0700 (PDT)
+Date: Thu, 25 Jul 2024 13:24:27 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: PCI: qcom: Allow 'vddpe-3v3-supply' again
+Message-ID: <pbkzwy63j7dh365amgdze2ns4krykckqyx2ncqjw2u4dufuoky@fg6rdpnqh5vb>
+References: <20240723151328.684-1-johan+linaro@kernel.org>
+ <nanfhmds3yha3g52kcou2flgn3sltjkzhr4aop75iudhvg2rui@fsp3ecz4vgkb>
+ <ZqHuE2MqfGuLDGDr@hovoldconsulting.com>
+ <CAA8EJppZ5V8dFC5z1ZG0u0ed9HwGgJRzGTYL-7k2oGO9FB+Weg@mail.gmail.com>
+ <ZqIJE5MSFFQ4iv-R@hovoldconsulting.com>
+ <y6ctin3zp55gzbvzamj2dxm4rdk2h5odmyprlnt4m4j44pnkvu@bfhmhu6djvz2>
+ <ZqIVQzQA5kHpwFgN@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240725-pmic-bindings-v3-3-d7f6007b530d@linaro.org>
-References: <20240725-pmic-bindings-v3-0-d7f6007b530d@linaro.org>
-In-Reply-To: <20240725-pmic-bindings-v3-0-d7f6007b530d@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Rayyan Ansari <rayyan.ansari@linaro.org>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1332;
- i=rayyan.ansari@linaro.org; h=from:subject:message-id;
- bh=gfhDSYv+goNLSY8skJzBs3DMp2QrQFXE3Vf40oQG+YY=;
- b=owGbwMvMwCXmtuJiX/SRuS2Mp9WSGNIWSbHu2VYfYMq3pvWuR9PBnXa6sgLuK9yWWd26smJJ/
- dbDSksrO0pZGMS4GGTFFFkON31Z83q7k9CV7VWnYOawMoEMYeDiFICJ/PrN8D8wpLQ+8/VC5xwW
- ngdV15umxSSLz1r79pNzGa+ZvJbp0yUM/6vWxpZkPC91uOodtcLI/9T2A0FquW1s++QUzgcK1rK
- 8YwUA
-X-Developer-Key: i=rayyan.ansari@linaro.org; a=openpgp;
- fpr=C382F4ACEBB74212D4B77ACA46A8D18E5BC49D84
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZqIVQzQA5kHpwFgN@hovoldconsulting.com>
 
-Wrap existing pwrkey node inside a pon node, to conform to dt schema.
+On Thu, Jul 25, 2024 at 11:05:07AM GMT, Johan Hovold wrote:
+> On Thu, Jul 25, 2024 at 11:57:39AM +0300, Dmitry Baryshkov wrote:
+> > On Thu, Jul 25, 2024 at 10:13:07AM GMT, Johan Hovold wrote:
+> 
+> > > It is already part of the bindings for all platforms.
+> > 
+> > It is not, it is enabled only for sc7280 and sc8280xp. 
+> 
+> No, that's both incorrect and irrelevant. It is used by msm8996 and
+> older platforms by in-kernel DTs as well. But the point is that is has
+> been part of the bindings an cannot simply be removed as there can be
+> out-of-tree DTs that are correctly using this property for any of these
+> platforms.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
----
- arch/arm/boot/dts/qcom/pma8084.dtsi | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
-
-diff --git a/arch/arm/boot/dts/qcom/pma8084.dtsi b/arch/arm/boot/dts/qcom/pma8084.dtsi
-index 2985f4805b93..309f5256754b 100644
---- a/arch/arm/boot/dts/qcom/pma8084.dtsi
-+++ b/arch/arm/boot/dts/qcom/pma8084.dtsi
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <dt-bindings/iio/qcom,spmi-vadc.h>
-+#include <dt-bindings/input/linux-event-codes.h>
- #include <dt-bindings/interrupt-controller/irq.h>
- #include <dt-bindings/spmi/spmi.h>
- 
-@@ -19,12 +20,17 @@ rtc@6000 {
- 			interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
- 		};
- 
--		pwrkey@800 {
--			compatible = "qcom,pm8941-pwrkey";
-+		pon@800 {
-+			compatible = "qcom,pm8941-pon";
- 			reg = <0x800>;
--			interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
--			debounce = <15625>;
--			bias-pull-up;
-+
-+			pwrkey {
-+				compatible = "qcom,pm8941-pwrkey";
-+				interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
-+				debounce = <15625>;
-+				bias-pull-up;
-+				linux,code = <KEY_POWER>;
-+			};
- 		};
- 
- 		pma8084_gpios: gpio@c000 {
+It can not be removed from the driver, but it definitely can be remove
+from bindings.
 
 -- 
-2.45.2
-
+With best wishes
+Dmitry
 
