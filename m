@@ -1,339 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-27056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3446A93C9F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 22:56:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E668793CA91
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2024 00:04:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57F261C21A68
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 20:56:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 448811C21C40
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 22:04:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2B5E13D502;
-	Thu, 25 Jul 2024 20:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2EEA13AA2A;
+	Thu, 25 Jul 2024 22:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LplQ4HkG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dcSTU7ZV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC5E58222;
-	Thu, 25 Jul 2024 20:56:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61501F17B;
+	Thu, 25 Jul 2024 22:04:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721940991; cv=none; b=uSkqIh1ahM/+LxnPj1abgkA62dYfZBGmaNcmZ50CvFk9AqIMSrdENduOjguE6HTtEmuUD+XOVSlkH182YNiICLMDhIoGUZPsz75G3esQnGB7nindHqUBA6McFfpyRmftfWEYUgzH2xmu0+WfgilbtS17CdiBnDPfrOKv3wmJ6Y0=
+	t=1721945080; cv=none; b=XMsiYkFMtK6JcaIomCQxKUBtkw6BCoagK3U+V4Gzh/wk98icpJZ8/oUazxVhXynwf4O4JdBsQV7daNHyMdL9MWJQ6MdwFCw1boXhTFeCDVxQ8Ckemit7SBq+OtrZmPdikGNRmGjlrQuE/I2psfznhE1XPrWCgtiJ+wk+FxMx4jQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721940991; c=relaxed/simple;
-	bh=Md8zYIkrMQp4ajNMUkVKmw71LgOlOxo3vyoJD4FQQjw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V6M4lvuPZZTsT/MryuDgrUlTwc9D1FoiDihlRzFTYdtKKQMtoMFs5teOj6akFiueTcHyETCEjDh9jtEWlja6BkvbUwJe8N2QcC9B3syyVlRHbG4MU/Nj2oNMwZQ2N2gbpgAv1uviyTuJ0EwG0tbCyEeq1Pfc37DS86ykjWtOsBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LplQ4HkG; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1721940988; x=1753476988;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Md8zYIkrMQp4ajNMUkVKmw71LgOlOxo3vyoJD4FQQjw=;
-  b=LplQ4HkGcMJuNxViNXC9LYGLcRIaxK9Cshz1JHaRDGUcZUM1nqKl+AXg
-   6B0lXZGhBKuAAqei3IVBe2yeomC5jAc9grmhs69mSppnDx8G287DBplXq
-   Yu1OGQ9Z3dJWEDlJadpJhjDiKoKGmaALipm/dUCGDQZK6b4MZPS9YNsHx
-   EHBvLwhU4ymmMzdYp9iRXZ0BWSwv7rrEXtSipLZC+4/hyh8oJeh0mcRHu
-   bFsw0tfk2nbRtW8tz5ekwM7pC715Wegf+BLDCzF8QlDJTH48mJAhWyu7v
-   +KQMrG2Bfej+g2NJWfLZxJRIzOiiOVQAaJW39vDVvIz+h8ZgsYw7DFymW
-   g==;
-X-CSE-ConnectionGUID: jbJ3wWtwTe6KkfO+Pru22g==
-X-CSE-MsgGUID: 73+80x6URdSzs7uqDtqgtw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11144"; a="19587921"
-X-IronPort-AV: E=Sophos;i="6.09,236,1716274800"; 
-   d="scan'208";a="19587921"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jul 2024 13:56:28 -0700
-X-CSE-ConnectionGUID: 9k9hBbk0R5isvuddizYT2A==
-X-CSE-MsgGUID: 5r0SnpW5RR+xsmPCfC+miA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,236,1716274800"; 
-   d="scan'208";a="53820029"
-Received: from lkp-server01.sh.intel.com (HELO 68891e0c336b) ([10.239.97.150])
-  by orviesa008.jf.intel.com with ESMTP; 25 Jul 2024 13:56:23 -0700
-Received: from kbuild by 68891e0c336b with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1sX5Vb-000oRo-2O;
-	Thu, 25 Jul 2024 20:56:19 +0000
-Date: Fri, 26 Jul 2024 04:55:38 +0800
-From: kernel test robot <lkp@intel.com>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>, broonie@kernel.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	andersson@kernel.org, konrad.dybcio@linaro.org,
-	miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-	manivannan.sadhasivam@linaro.org, esben@geanix.com,
-	linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-mtd@lists.infradead.org
-Cc: oe-kbuild-all@lists.linux.dev, quic_mdalam@quicinc.com,
-	quic_varada@quicinc.com, quic_srichara@quicinc.com
-Subject: Re: [PATCH v7 5/8] mtd: rawnand: qcom: use FIELD_PREP and GENMASK
-Message-ID: <202407260410.p2IXTwQb-lkp@intel.com>
-References: <20240724114225.2176448-6-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1721945080; c=relaxed/simple;
+	bh=uuroARgVnFJ0rHpxVbnK78XB3KFDXuwJbRPhEOuTF5E=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=U2xtiz0cUREfSV/FUEtq2JizNrUDWssmTiqgVL+TDxNP+0jI4y7xdsB8RlD9c4Vyu2XlqaAq4WWo+ptTAuq/XrvCUH61Ow5AXHmvEp/folbGge+SVOUxLGGka6alTthptsm+460yehwPqjMqHRCDgnwmi84vqGR2gRUAsLM9T3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dcSTU7ZV; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46PJbVra009144;
+	Thu, 25 Jul 2024 22:03:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=N6UbJAMi1bU7nIh+XutsN6
+	bZa8Is03DzQ1MqeidxQVU=; b=dcSTU7ZV3wtNGUlgKRqMR4/kMp7oSjcnxounf/
+	cIUzENz7kDQjWTH0iXiR/Ey9JNk+a3WCGe5grM0e5/Tm0H9+ypOkPLt566vg5A2Y
+	eEakexNIfOhAZCFdLlzBLvzOwE7yReQAYhL2mcZBY5QC3ISprp06HiujwypMfCQX
+	MQ1VP4Nzb4XO77yp6FF295mbTYlg4/8/Mhqj4Bd1zTG8PvNKHmJY4ELzxKJO9lgP
+	ICfQPGKfkeiNcmZbcQVREL+ivSCLHxFvdbfqRK947YP9omk4BuUNGWOkUc64L+nA
+	3KCVksikn8+ptCiCVhdIz9oQIiEYF25XV+iuEmEs2Iz8vkfQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40g487pbem-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Jul 2024 22:03:54 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46PM3rHH013267
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Jul 2024 22:03:53 GMT
+Received: from abhinavk-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 25 Jul 2024 15:03:52 -0700
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+To: <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Daniel
+ Vetter" <daniel@ffwll.ch>,
+        Guenter Roeck <groeck@chromium.org>,
+        Tanmay Shah
+	<tanmay@codeaurora.org>,
+        Vara Reddy <quic_varar@quicinc.com>,
+        Stephen Boyd
+	<swboyd@chromium.org>
+CC: <dri-devel@lists.freedesktop.org>, <quic_jesszhan@quicinc.com>,
+        <neil.armstrong@linaro.org>, <abel.vesa@linaro.org>,
+        <quic_khsieh@quicinc.com>, Rob Clark <robdclark@chromium.org>,
+        "Chandan
+ Uddaraju" <chandanu@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH] drm/msm/dp: fix the max supported bpp logic
+Date: Thu, 25 Jul 2024 15:03:19 -0700
+Message-ID: <20240725220320.130916-1-quic_abhinavk@quicinc.com>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240724114225.2176448-6-quic_mdalam@quicinc.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ziitW6v3wi2a0z_fAkYGICI3PhFNMyt5
+X-Proofpoint-GUID: ziitW6v3wi2a0z_fAkYGICI3PhFNMyt5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-25_22,2024-07-25_03,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ suspectscore=0 phishscore=0 priorityscore=1501 mlxlogscore=999
+ malwarescore=0 adultscore=0 impostorscore=0 clxscore=1011
+ lowpriorityscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2407250151
 
-Hi Md,
+Currently the DP driver hard-codes the max supported bpp to 30.
+This is incorrect because the number of lanes and max data rate
+supported by the lanes need to be taken into account.
 
-kernel test robot noticed the following build warnings:
+Replace the hardcoded limit with the appropriate math which accounts
+for the accurate number of lanes and max data rate.
 
-[auto build test WARNING on mtd/nand/next]
-[also build test WARNING on broonie-spi/for-next robh/for-next linus/master v6.10 next-20240725]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+---
+ drivers/gpu/drm/msm/dp/dp_panel.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Md-Sadre-Alam/spi-dt-bindings-Introduce-qcom-spi-qpic-snand/20240724-195819
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/mtd/linux.git nand/next
-patch link:    https://lore.kernel.org/r/20240724114225.2176448-6-quic_mdalam%40quicinc.com
-patch subject: [PATCH v7 5/8] mtd: rawnand: qcom: use FIELD_PREP and GENMASK
-config: microblaze-randconfig-r133-20240725 (https://download.01.org/0day-ci/archive/20240726/202407260410.p2IXTwQb-lkp@intel.com/config)
-compiler: microblaze-linux-gcc (GCC) 14.1.0
-reproduce: (https://download.01.org/0day-ci/archive/20240726/202407260410.p2IXTwQb-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202407260410.p2IXTwQb-lkp@intel.com/
-
-sparse warnings: (new ones prefixed by >>)
-   drivers/mtd/nand/raw/qcom_nandc.c:171:45: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] read_location0 @@     got int val @@
-   drivers/mtd/nand/raw/qcom_nandc.c:171:45: sparse:     expected restricted __le32 [usertype] read_location0
-   drivers/mtd/nand/raw/qcom_nandc.c:171:45: sparse:     got int val
-   drivers/mtd/nand/raw/qcom_nandc.c:173:45: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] read_location1 @@     got int val @@
-   drivers/mtd/nand/raw/qcom_nandc.c:173:45: sparse:     expected restricted __le32 [usertype] read_location1
-   drivers/mtd/nand/raw/qcom_nandc.c:173:45: sparse:     got int val
-   drivers/mtd/nand/raw/qcom_nandc.c:175:45: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] read_location2 @@     got int val @@
-   drivers/mtd/nand/raw/qcom_nandc.c:175:45: sparse:     expected restricted __le32 [usertype] read_location2
-   drivers/mtd/nand/raw/qcom_nandc.c:175:45: sparse:     got int val
-   drivers/mtd/nand/raw/qcom_nandc.c:177:45: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] read_location3 @@     got int val @@
-   drivers/mtd/nand/raw/qcom_nandc.c:177:45: sparse:     expected restricted __le32 [usertype] read_location3
-   drivers/mtd/nand/raw/qcom_nandc.c:177:45: sparse:     got int val
-   drivers/mtd/nand/raw/qcom_nandc.c:200:50: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] read_location_last0 @@     got int val @@
-   drivers/mtd/nand/raw/qcom_nandc.c:200:50: sparse:     expected restricted __le32 [usertype] read_location_last0
-   drivers/mtd/nand/raw/qcom_nandc.c:200:50: sparse:     got int val
-   drivers/mtd/nand/raw/qcom_nandc.c:202:50: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] read_location_last1 @@     got int val @@
-   drivers/mtd/nand/raw/qcom_nandc.c:202:50: sparse:     expected restricted __le32 [usertype] read_location_last1
-   drivers/mtd/nand/raw/qcom_nandc.c:202:50: sparse:     got int val
-   drivers/mtd/nand/raw/qcom_nandc.c:204:50: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] read_location_last2 @@     got int val @@
-   drivers/mtd/nand/raw/qcom_nandc.c:204:50: sparse:     expected restricted __le32 [usertype] read_location_last2
-   drivers/mtd/nand/raw/qcom_nandc.c:204:50: sparse:     got int val
-   drivers/mtd/nand/raw/qcom_nandc.c:206:50: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] read_location_last3 @@     got int val @@
-   drivers/mtd/nand/raw/qcom_nandc.c:206:50: sparse:     expected restricted __le32 [usertype] read_location_last3
-   drivers/mtd/nand/raw/qcom_nandc.c:206:50: sparse:     got int val
-   drivers/mtd/nand/raw/qcom_nandc.c:239:28: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] addr0 @@     got int @@
-   drivers/mtd/nand/raw/qcom_nandc.c:239:28: sparse:     expected restricted __le32 [usertype] addr0
-   drivers/mtd/nand/raw/qcom_nandc.c:239:28: sparse:     got int
-   drivers/mtd/nand/raw/qcom_nandc.c:240:28: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] addr1 @@     got int @@
-   drivers/mtd/nand/raw/qcom_nandc.c:240:28: sparse:     expected restricted __le32 [usertype] addr1
-   drivers/mtd/nand/raw/qcom_nandc.c:240:28: sparse:     got int
-   drivers/mtd/nand/raw/qcom_nandc.c:280:26: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] cmd @@     got unsigned int [assigned] [usertype] cmd @@
-   drivers/mtd/nand/raw/qcom_nandc.c:280:26: sparse:     expected restricted __le32 [usertype] cmd
-   drivers/mtd/nand/raw/qcom_nandc.c:280:26: sparse:     got unsigned int [assigned] [usertype] cmd
-   drivers/mtd/nand/raw/qcom_nandc.c:281:27: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] cfg0 @@     got unsigned int [assigned] [usertype] cfg0 @@
-   drivers/mtd/nand/raw/qcom_nandc.c:281:27: sparse:     expected restricted __le32 [usertype] cfg0
-   drivers/mtd/nand/raw/qcom_nandc.c:281:27: sparse:     got unsigned int [assigned] [usertype] cfg0
-   drivers/mtd/nand/raw/qcom_nandc.c:282:27: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] cfg1 @@     got unsigned int [assigned] [usertype] cfg1 @@
-   drivers/mtd/nand/raw/qcom_nandc.c:282:27: sparse:     expected restricted __le32 [usertype] cfg1
-   drivers/mtd/nand/raw/qcom_nandc.c:282:27: sparse:     got unsigned int [assigned] [usertype] cfg1
-   drivers/mtd/nand/raw/qcom_nandc.c:283:34: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] ecc_bch_cfg @@     got unsigned int [assigned] [usertype] ecc_bch_cfg @@
-   drivers/mtd/nand/raw/qcom_nandc.c:283:34: sparse:     expected restricted __le32 [usertype] ecc_bch_cfg
-   drivers/mtd/nand/raw/qcom_nandc.c:283:34: sparse:     got unsigned int [assigned] [usertype] ecc_bch_cfg
-   drivers/mtd/nand/raw/qcom_nandc.c:286:42: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] ecc_buf_cfg @@     got unsigned int [usertype] ecc_buf_cfg @@
-   drivers/mtd/nand/raw/qcom_nandc.c:286:42: sparse:     expected restricted __le32 [usertype] ecc_buf_cfg
-   drivers/mtd/nand/raw/qcom_nandc.c:286:42: sparse:     got unsigned int [usertype] ecc_buf_cfg
-   drivers/mtd/nand/raw/qcom_nandc.c:288:37: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] clrflashstatus @@     got unsigned int [usertype] clrflashstatus @@
-   drivers/mtd/nand/raw/qcom_nandc.c:288:37: sparse:     expected restricted __le32 [usertype] clrflashstatus
-   drivers/mtd/nand/raw/qcom_nandc.c:288:37: sparse:     got unsigned int [usertype] clrflashstatus
-   drivers/mtd/nand/raw/qcom_nandc.c:289:36: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] clrreadstatus @@     got unsigned int [usertype] clrreadstatus @@
-   drivers/mtd/nand/raw/qcom_nandc.c:289:36: sparse:     expected restricted __le32 [usertype] clrreadstatus
-   drivers/mtd/nand/raw/qcom_nandc.c:289:36: sparse:     got unsigned int [usertype] clrreadstatus
-   drivers/mtd/nand/raw/qcom_nandc.c:290:27: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] exec @@     got int @@
-   drivers/mtd/nand/raw/qcom_nandc.c:290:27: sparse:     expected restricted __le32 [usertype] exec
-   drivers/mtd/nand/raw/qcom_nandc.c:290:27: sparse:     got int
-   drivers/mtd/nand/raw/qcom_nandc.c:1708:26: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] cmd @@     got unsigned int [addressable] [usertype] cmd_reg @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1708:26: sparse:     expected restricted __le32 [usertype] cmd
-   drivers/mtd/nand/raw/qcom_nandc.c:1708:26: sparse:     got unsigned int [addressable] [usertype] cmd_reg
-   drivers/mtd/nand/raw/qcom_nandc.c:1709:27: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] exec @@     got int @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1709:27: sparse:     expected restricted __le32 [usertype] exec
-   drivers/mtd/nand/raw/qcom_nandc.c:1709:27: sparse:     got int
-   drivers/mtd/nand/raw/qcom_nandc.c:1765:26: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] cmd @@     got unsigned int [addressable] [usertype] cmd_reg @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1765:26: sparse:     expected restricted __le32 [usertype] cmd
-   drivers/mtd/nand/raw/qcom_nandc.c:1765:26: sparse:     got unsigned int [addressable] [usertype] cmd_reg
-   drivers/mtd/nand/raw/qcom_nandc.c:1766:28: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] addr0 @@     got unsigned int [addressable] [usertype] addr1_reg @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1766:28: sparse:     expected restricted __le32 [usertype] addr0
-   drivers/mtd/nand/raw/qcom_nandc.c:1766:28: sparse:     got unsigned int [addressable] [usertype] addr1_reg
-   drivers/mtd/nand/raw/qcom_nandc.c:1767:28: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] addr1 @@     got unsigned int [addressable] [usertype] addr2_reg @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1767:28: sparse:     expected restricted __le32 [usertype] addr1
-   drivers/mtd/nand/raw/qcom_nandc.c:1767:28: sparse:     got unsigned int [addressable] [usertype] addr2_reg
-   drivers/mtd/nand/raw/qcom_nandc.c:1768:31: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] chip_sel @@     got unsigned long @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1768:31: sparse:     expected restricted __le32 [usertype] chip_sel
-   drivers/mtd/nand/raw/qcom_nandc.c:1768:31: sparse:     got unsigned long
-   drivers/mtd/nand/raw/qcom_nandc.c:1769:27: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] exec @@     got int @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1769:27: sparse:     expected restricted __le32 [usertype] exec
-   drivers/mtd/nand/raw/qcom_nandc.c:1769:27: sparse:     got int
-   drivers/mtd/nand/raw/qcom_nandc.c:1809:36: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] addr0 @@     got unsigned int [addressable] [assigned] [usertype] addr1_reg @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1809:36: sparse:     expected restricted __le32 [usertype] addr0
-   drivers/mtd/nand/raw/qcom_nandc.c:1809:36: sparse:     got unsigned int [addressable] [assigned] [usertype] addr1_reg
-   drivers/mtd/nand/raw/qcom_nandc.c:1810:36: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] addr1 @@     got unsigned int [addressable] [assigned] [usertype] addr2_reg @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1810:36: sparse:     expected restricted __le32 [usertype] addr1
-   drivers/mtd/nand/raw/qcom_nandc.c:1810:36: sparse:     got unsigned int [addressable] [assigned] [usertype] addr2_reg
-   drivers/mtd/nand/raw/qcom_nandc.c:1811:35: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] cfg0 @@     got unsigned int @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1811:35: sparse:     expected restricted __le32 [usertype] cfg0
-   drivers/mtd/nand/raw/qcom_nandc.c:1811:35: sparse:     got unsigned int
-   drivers/mtd/nand/raw/qcom_nandc.c:1812:35: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] cfg1 @@     got unsigned int [usertype] cfg1_raw @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1812:35: sparse:     expected restricted __le32 [usertype] cfg1
-   drivers/mtd/nand/raw/qcom_nandc.c:1812:35: sparse:     got unsigned int [usertype] cfg1_raw
-   drivers/mtd/nand/raw/qcom_nandc.c:1825:26: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] cmd @@     got unsigned int [addressable] [assigned] [usertype] cmd_reg @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1825:26: sparse:     expected restricted __le32 [usertype] cmd
-   drivers/mtd/nand/raw/qcom_nandc.c:1825:26: sparse:     got unsigned int [addressable] [assigned] [usertype] cmd_reg
-   drivers/mtd/nand/raw/qcom_nandc.c:1826:27: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] exec @@     got int @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1826:27: sparse:     expected restricted __le32 [usertype] exec
-   drivers/mtd/nand/raw/qcom_nandc.c:1826:27: sparse:     got int
-   drivers/mtd/nand/raw/qcom_nandc.c:1872:26: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] cmd @@     got unsigned int [addressable] [assigned] [usertype] cmd_reg @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1872:26: sparse:     expected restricted __le32 [usertype] cmd
-   drivers/mtd/nand/raw/qcom_nandc.c:1872:26: sparse:     got unsigned int [addressable] [assigned] [usertype] cmd_reg
->> drivers/mtd/nand/raw/qcom_nandc.c:1890:42: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] ecc_buf_cfg @@     got unsigned long @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1890:42: sparse:     expected restricted __le32 [usertype] ecc_buf_cfg
-   drivers/mtd/nand/raw/qcom_nandc.c:1890:42: sparse:     got unsigned long
-   drivers/mtd/nand/raw/qcom_nandc.c:1894:34: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] vld @@     got unsigned long @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1894:34: sparse:     expected restricted __le32 [usertype] vld
-   drivers/mtd/nand/raw/qcom_nandc.c:1894:34: sparse:     got unsigned long
-   drivers/mtd/nand/raw/qcom_nandc.c:1895:35: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] cmd1 @@     got unsigned int @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1895:35: sparse:     expected restricted __le32 [usertype] cmd1
-   drivers/mtd/nand/raw/qcom_nandc.c:1895:35: sparse:     got unsigned int
-   drivers/mtd/nand/raw/qcom_nandc.c:1899:27: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] exec @@     got int @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1899:27: sparse:     expected restricted __le32 [usertype] exec
-   drivers/mtd/nand/raw/qcom_nandc.c:1899:27: sparse:     got int
-   drivers/mtd/nand/raw/qcom_nandc.c:1902:40: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] orig_cmd1 @@     got unsigned int [usertype] cmd1 @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1902:40: sparse:     expected restricted __le32 [usertype] orig_cmd1
-   drivers/mtd/nand/raw/qcom_nandc.c:1902:40: sparse:     got unsigned int [usertype] cmd1
-   drivers/mtd/nand/raw/qcom_nandc.c:1903:39: sparse: sparse: incorrect type in assignment (different base types) @@     expected restricted __le32 [usertype] orig_vld @@     got unsigned int [usertype] vld @@
-   drivers/mtd/nand/raw/qcom_nandc.c:1903:39: sparse:     expected restricted __le32 [usertype] orig_vld
-   drivers/mtd/nand/raw/qcom_nandc.c:1903:39: sparse:     got unsigned int [usertype] vld
-   drivers/mtd/nand/raw/qcom_nandc.c: note: in included file:
-   include/linux/mtd/nand-qpic-common.h:453:34: sparse: sparse: marked inline, but without a definition
-   include/linux/mtd/nand-qpic-common.h:453:34: sparse: sparse: marked inline, but without a definition
-   include/linux/mtd/nand-qpic-common.h:453:34: sparse: sparse: marked inline, but without a definition
-   include/linux/mtd/nand-qpic-common.h:453:34: sparse: sparse: marked inline, but without a definition
-   include/linux/mtd/nand-qpic-common.h:453:34: sparse: sparse: marked inline, but without a definition
-
-vim +1890 drivers/mtd/nand/raw/qcom_nandc.c
-
-  1849	
-  1850	static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_subop *subop)
-  1851	{
-  1852		struct qcom_nand_host *host = to_qcom_nand_host(chip);
-  1853		struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
-  1854		struct qcom_op q_op = {};
-  1855		const struct nand_op_instr *instr = NULL;
-  1856		unsigned int op_id = 0;
-  1857		unsigned int len = 0;
-  1858		int ret;
-  1859	
-  1860		ret = qcom_parse_instructions(chip, subop, &q_op);
-  1861		if (ret)
-  1862			return ret;
-  1863	
-  1864		q_op.cmd_reg |= PAGE_ACC | LAST_PAGE;
-  1865	
-  1866		nandc->buf_count = 0;
-  1867		nandc->buf_start = 0;
-  1868		host->use_ecc = false;
-  1869		qcom_clear_read_regs(nandc);
-  1870		qcom_clear_bam_transaction(nandc);
-  1871	
-  1872		nandc->regs->cmd = q_op.cmd_reg;
-  1873		nandc->regs->addr0 = 0;
-  1874		nandc->regs->addr1 = 0;
-  1875	
-  1876		host->cfg0 = FIELD_PREP(CW_PER_PAGE_MASK, 0) |
-  1877			     FIELD_PREP(UD_SIZE_BYTES_MASK, 512) |
-  1878			     FIELD_PREP(NUM_ADDR_CYCLES_MASK, 5) |
-  1879			     FIELD_PREP(SPARE_SIZE_BYTES_MASK, 0);
-  1880	
-  1881		host->cfg1 = FIELD_PREP(NAND_RECOVERY_CYCLES_MASK, 7) |
-  1882			     FIELD_PREP(BAD_BLOCK_BYTE_NUM_MASK, 17) |
-  1883			     FIELD_PREP(CS_ACTIVE_BSY, 0) |
-  1884			     FIELD_PREP(BAD_BLOCK_IN_SPARE_AREA, 1) |
-  1885			     FIELD_PREP(WR_RD_BSY_GAP_MASK, 2) |
-  1886			     FIELD_PREP(WIDE_FLASH, 0) |
-  1887			     FIELD_PREP(DEV0_CFG1_ECC_DISABLE, 1);
-  1888	
-  1889		if (!nandc->props->qpic_version2)
-> 1890			nandc->regs->ecc_buf_cfg = ECC_CFG_ECC_DISABLE;
-  1891	
-  1892		/* configure CMD1 and VLD for ONFI param probing in QPIC v1 */
-  1893		if (!nandc->props->qpic_version2) {
-  1894			nandc->regs->vld = (nandc->vld & ~READ_START_VLD);
-  1895			nandc->regs->cmd1 = (nandc->cmd1 & ~(0xFF << READ_ADDR))
-  1896					    | NAND_CMD_PARAM << READ_ADDR;
-  1897		}
-  1898	
-  1899		nandc->regs->exec = 1;
-  1900	
-  1901		if (!nandc->props->qpic_version2) {
-  1902			nandc->regs->orig_cmd1 = nandc->cmd1;
-  1903			nandc->regs->orig_vld = nandc->vld;
-  1904		}
-  1905	
-  1906		instr = q_op.data_instr;
-  1907		op_id = q_op.data_instr_idx;
-  1908		len = nand_subop_get_data_len(subop, op_id);
-  1909	
-  1910		nandc_set_read_loc(chip, 0, 0, 0, len, 1);
-  1911	
-  1912		if (!nandc->props->qpic_version2) {
-  1913			qcom_write_reg_dma(nandc, &nandc->regs->vld, NAND_DEV_CMD_VLD, 1, 0);
-  1914			qcom_write_reg_dma(nandc, &nandc->regs->cmd1, NAND_DEV_CMD1, 1, NAND_BAM_NEXT_SGL);
-  1915		}
-  1916	
-  1917		nandc->buf_count = len;
-  1918		memset(nandc->data_buffer, 0xff, nandc->buf_count);
-  1919	
-  1920		config_nand_single_cw_page_read(chip, false, 0);
-  1921	
-  1922		qcom_read_data_dma(nandc, FLASH_BUF_ACC, nandc->data_buffer, nandc->buf_count, 0);
-  1923	
-  1924		/* restore CMD1 and VLD regs */
-  1925		if (!nandc->props->qpic_version2) {
-  1926			qcom_write_reg_dma(nandc, &nandc->regs->orig_cmd1, NAND_DEV_CMD1_RESTORE, 1, 0);
-  1927			qcom_write_reg_dma(nandc, &nandc->regs->orig_vld, NAND_DEV_CMD_VLD_RESTORE, 1,
-  1928					   NAND_BAM_NEXT_SGL);
-  1929		}
-  1930	
-  1931		ret = qcom_submit_descs(nandc);
-  1932		if (ret) {
-  1933			dev_err(nandc->dev, "failure in submitting param page descriptor\n");
-  1934			goto err_out;
-  1935		}
-  1936	
-  1937		ret = qcom_wait_rdy_poll(chip, q_op.rdy_timeout_ms);
-  1938		if (ret)
-  1939			goto err_out;
-  1940	
-  1941		memcpy(instr->ctx.data.buf.in, nandc->data_buffer, len);
-  1942	
-  1943	err_out:
-  1944		return ret;
-  1945	}
-  1946	
-
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+index a916b5f3b317..56ce5e4008f8 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.c
++++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+@@ -397,6 +397,7 @@ int dp_panel_init_panel_info(struct dp_panel *dp_panel)
+ {
+ 	struct drm_display_mode *drm_mode;
+ 	struct dp_panel_private *panel;
++	u32 max_supported_bpp;
+ 
+ 	drm_mode = &dp_panel->dp_mode.drm_mode;
+ 
+@@ -423,8 +424,10 @@ int dp_panel_init_panel_info(struct dp_panel *dp_panel)
+ 				drm_mode->clock);
+ 	drm_dbg_dp(panel->drm_dev, "bpp = %d\n", dp_panel->dp_mode.bpp);
+ 
+-	dp_panel->dp_mode.bpp = max_t(u32, 18,
+-				min_t(u32, dp_panel->dp_mode.bpp, 30));
++	max_supported_bpp = dp_panel_get_mode_bpp(dp_panel, dp_panel->dp_mode.bpp,
++						  dp_panel->dp_mode.drm_mode.clock);
++	dp_panel->dp_mode.bpp = max_t(u32, 18, max_supported_bpp);
++
+ 	drm_dbg_dp(panel->drm_dev, "updated bpp = %d\n",
+ 				dp_panel->dp_mode.bpp);
+ 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.44.0
+
 
