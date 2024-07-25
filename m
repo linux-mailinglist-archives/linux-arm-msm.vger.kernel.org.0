@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-27020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D4A793BF07
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 11:26:03 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72F0793BF0A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 11:26:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 570CE1C20EFE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 09:26:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 17CAFB22835
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 09:26:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CE54198843;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96C47198853;
 	Thu, 25 Jul 2024 09:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H0FfPFgw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AQQr5Qkf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4993119882F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E114F198830
 	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2024 09:25:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721899530; cv=none; b=uuelpSeQlruliCKnAvyNQyAQKlPIZ8NzprAiULfJae3H6ld02rc/KAfD5QfGYG7l6ypSgIl0t7b9DMPMCi12WdC82KIqvtSQs20bnjktyvitVbbmcjmjMVKuvHJazfvJdabXsM+jj/IlFLYPw3lxa4b1s2/1ejuD1WV3yh/jI+I=
+	t=1721899530; cv=none; b=qMAkZZs2qHCF1/qIskGs+myFqD9xkP9LVi6r8GXaq5rTFSH0Pnra/aRCZxGdkfmvnLCE6a9QXUXSS0XuV5QFwcYhSE28VmblNWegeoNaCFgEMQDTyjW0/Stz3tPTbu77MUZ03P3miY81fYof6oxfX4R+5MP4NiMhXrW0iGeBYks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1721899530; c=relaxed/simple;
-	bh=kVnq7lEY6gwrjM1mi4zF3FeC0D0Ncx7lnf9pQHV9Zy0=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=LusOQ7D0tipT+QwGm3OoFlwedBiyMY5iQbo+oY6IElS4feyhM8hOsZ3YyQuD1wnD/cU04GRj9GNI4/6CBTm/u57T9A+NQaoeyUV7lBlhd5AUbaNJU7okqglzJZmHOooT8mCKjp+/8plrv7JygYpvSRjc2jQ50IRLAkQtcqdlN3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H0FfPFgw; arc=none smtp.client-ip=209.85.128.46
+	bh=0YFEJi/WmQ/U4OybGyjc7Rq181VxIAo6erfNivtbOZY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=N+4LlWhquz0cN6fa815oARGYpV2S3YRDeK0MQ6HxLLJMbjM/O3uocJoiuMF1D+VcKpAJAd4QopHG+q+3PkMSAqn81ft44mB00KkykQyTLiZ4lg5XW0kt+BqHdgsPNvjA1x0kfIsm2NsY3S/98lioSSD9ec4xyVQzhjj7rKqxfD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AQQr5Qkf; arc=none smtp.client-ip=209.85.208.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4272738eb9eso5201035e9.3
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2eeb1ba0481so10202631fa.2
         for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2024 02:25:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721899526; x=1722504326; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=D2MlzuOoUoymThNON9rT97vhUbZBnF3LUPxsjQQSfSM=;
-        b=H0FfPFgwEuAecy3+4TxcBMRo2E0uMc+JAecNdlz8D/4esnYF9sVJ7ybiQACJ6jNiOJ
-         1iW1X6pfds1PpZCQUGJbohnPOU5v6Fd3Sq7c+oZamrs8Fs8pC8+CmFiAU2CuMDhEJwVw
-         QtRoxeiNM/AlyKnyKiOZTq1fgq6e2LOwTt0JyhdiawL8laSThnLWmg1hEW+dnNGxUEkE
-         98mO7mZIJVGGP8N3etglms4Ykl0chBFEPACVQM7CUWu9myFrfLZwEX6XImVpN65HS+xC
-         twwUUOwZ9OjsxVXsOGbueZ0YHdidF0ohN79Qnad9YXf5/R5Y3/ykDN0QRC+iylFrN0K/
-         kpeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721899526; x=1722504326;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1721899527; x=1722504327; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=D2MlzuOoUoymThNON9rT97vhUbZBnF3LUPxsjQQSfSM=;
-        b=sCcjJo768F+EEorD9pJLYEPGRmM2YdGQFt8giCiNpmdBc80EXfZEj+OpfC73pbW4j+
-         EKBZhV9U6KwpTTv7qoaZEhb2uRRLp3eUtJtnbKLjRIHPuDfoBvMZVJhAtfj6kmUhwGU5
-         BYHJkVGYYYa67M+i20U6wZHQ86RV6bUCg7Kwx+8nkst3xZ7jkCr8taL8d5L4aOHZQZsh
-         akFjvqrryZ1xAYNRxyWU2XwZrPssMOVm2wIan/RUhVSgXRNASk4I1vGYsA045PDRSUcZ
-         3PeNcfssP1qRaztBxO2JDDAQMXWBck6ghNSkh9XIt5A1Xd9fdopXKERNHh0jRNl43VSG
-         efnA==
-X-Gm-Message-State: AOJu0YxjA4LyBHAR8opTeELmwLfO/uODTgUnd+4TOFWD1j7+EJtU4Mqw
-	q3+0prejO/KcD6Yyeeq/eeXWpaoyfQ6IYtH5TsXa+K6sagd2dHlyfFTSeG5uK+I=
-X-Google-Smtp-Source: AGHT+IGig2kx03GSwxPx4hLAblVlwgWHF3naMDhrXLgI2PJBfer6j+Z3YpqWo44+c4+YFSI2hVfbAg==
-X-Received: by 2002:a05:600c:154f:b0:426:5b3a:96c with SMTP id 5b1f17b1804b1-4280573c824mr11106235e9.28.1721899526472;
-        Thu, 25 Jul 2024 02:25:26 -0700 (PDT)
+        bh=dCOtS+JQDOh3lld/j8QIIBoHly9qM/Xm+yrx3ENKznA=;
+        b=AQQr5QkfJpATwz9u5Ik6msL0Uyu/Nff16rOqKSveRkugQVWPePDEpNI5jsa3tqrOQA
+         S5XlfbDDA2IorGumTZmNUHXJN+7MlBaIodyMP+tk3SD61v43qpQguQWJz8aN5noQEt+U
+         vGeEm9T5FGjIU900/ijj09TZw6HzJlRp/dYNbFkF6pM9WzA9/64utWHPRw6vgLBkHAoV
+         xmNIH9qZiRVqOhEmcy027QvwJhxiDI+yF77NubJSsupWkiRCnMmdNlj/VpR9OQf7Vt/5
+         dtCZltaOUgo1eiGYP3NzBJkIO+2v90skLmMQcG3Sb+dPoU60cSFkFr1PpspN/gJeeuku
+         gmBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721899527; x=1722504327;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dCOtS+JQDOh3lld/j8QIIBoHly9qM/Xm+yrx3ENKznA=;
+        b=b8xxjbmDP+3ZaSnBKbLDy7nMaUySkB9XIqIsvnMZ0mCCGA8e6eKRJOlJJfaiyZ3Yss
+         uQFfpsQ4nGQQxCY6bhA3NQz6qIDTl9G1CORkzJ318HmQ8XXS9TpClnUDTbUagTTaXwjo
+         Yanfbw+1i3X2jKtMjrgJzlxNhB5A8CA9xIxa1vSFef64ZbMz/ME/gORpgTYU3WCFtLM5
+         5hNM76uIM+3kWXNE6vVugIL0wjlB1r3XjOatrOwqw/Ycbk5HIUkA9RpbOyFi7qSGavYA
+         RlBxcnERrG+EhsaUFuJwJMHi1CK4oIX63i2pmXn+7R9ckO2p+ddF/X+IMX9vcWXsev6w
+         5QOw==
+X-Gm-Message-State: AOJu0Yzu4OH8p06ru4iyfYg3bk+eXU+Z11N02segGTcYyTrTPxNiDip6
+	1FUqlVOIfh9rrWFJL1/j+ncfokHKdPvLx4VA7gJVqAWCXGWKFTJCZC7G/dJcOKw=
+X-Google-Smtp-Source: AGHT+IEcrJ3ZZDkd2FkI8wiYYADKO7Kk4PfC61/9vDE9WsXeqSuZscjvzYcMoth2EgYAsIohbWjVFw==
+X-Received: by 2002:a2e:7d14:0:b0:2ef:232c:6938 with SMTP id 38308e7fff4ca-2f03db740edmr9284271fa.6.1721899527087;
+        Thu, 25 Jul 2024 02:25:27 -0700 (PDT)
 Received: from [192.168.1.191] ([2a0a:ef40:ee7:2401:197d:e048:a80f:bc44])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427ef3f45cfsm65830385e9.0.2024.07.25.02.25.25
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427ef3f45cfsm65830385e9.0.2024.07.25.02.25.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jul 2024 02:25:25 -0700 (PDT)
+        Thu, 25 Jul 2024 02:25:26 -0700 (PDT)
 From: Rayyan Ansari <rayyan.ansari@linaro.org>
-Subject: [PATCH v3 0/3] arm(64): dts: qcom: fix dtbs_check warnings for
- qcom,spmi-pmic.yaml
-Date: Thu, 25 Jul 2024 10:25:15 +0100
-Message-Id: <20240725-pmic-bindings-v3-0-d7f6007b530d@linaro.org>
+Date: Thu, 25 Jul 2024 10:25:16 +0100
+Subject: [PATCH v3 1/3] arm64: dts: qcom: pmi8994: Add label to wled node
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,10 +77,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPsZomYC/3XMQQ7CIBCF4asY1mLKFNrqynsYFxSGdhKFBgzRN
- L27tCs1cfle8v0zSxgJEzvtZhYxU6Lgy6j3O2ZG7QfkZMtmUIGsWgA+3cnwnrwlPyTeqsY61Wm
- nhWLFTBEdPbfe5Vr2SOkR4mvLZ7G+/0pZ8IorpY4S+tpIFOcbeR3DIcSBrakMn7z+5VA4CmMbI
- V1npP7iy7K8AfaBUrrqAAAA
+Message-Id: <20240725-pmic-bindings-v3-1-d7f6007b530d@linaro.org>
+References: <20240725-pmic-bindings-v3-0-d7f6007b530d@linaro.org>
+In-Reply-To: <20240725-pmic-bindings-v3-0-d7f6007b530d@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -88,47 +87,42 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Rayyan Ansari <rayyan.ansari@linaro.org>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1126;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=803;
  i=rayyan.ansari@linaro.org; h=from:subject:message-id;
- bh=kVnq7lEY6gwrjM1mi4zF3FeC0D0Ncx7lnf9pQHV9Zy0=;
- b=owGbwMvMwCXmtuJiX/SRuS2Mp9WSGNIWSf7Ls9qu2LZ38smbSmcZYvq+a7ifUdRZWnfUzMzMW
- ulk9c7nHaUsDGJcDLJiiiyHm76seb3dSejK9qpTMHNYmUCGMHBxCsBEuicxMjTMDn3Cn54Z1rE5
- I9/3tp27x9GrXgVlag9/O685cfpUnQ8jw/d8S795Xne/vAhg2fR5bl7MpSD3J4Fn3s5Z/yKjTZz
- RhB0A
+ bh=0YFEJi/WmQ/U4OybGyjc7Rq181VxIAo6erfNivtbOZY=;
+ b=owGbwMvMwCXmtuJiX/SRuS2Mp9WSGNIWSbEmRqbNeySZ+zXw4GaBb5Wif7Nl1JwMjkycc78h8
+ umUz1YsHaUsDGJcDLJiiiyHm76seb3dSejK9qpTMHNYmUCGMHBxCsBE8qwYGS5tzuG/v3A5y9Ze
+ ZYWb/oonJl5Yt4BRYoLBK/HcDq1t8+cxMlw0tVzN/W3ejv/vv9i3/oiw03Bp0kxTyWfsZLGNf5w
+ XwwsA
 X-Developer-Key: i=rayyan.ansari@linaro.org; a=openpgp;
  fpr=C382F4ACEBB74212D4B77ACA46A8D18E5BC49D84
 
-Hi,
-These patches fix all [1] warnings whilst running
-make dtbs_check DT_SCHEMA_FILES=qcom,spmi-pmic.yaml
-on both arm and arm64 qcom device trees.
+Add a label, which is a required property, to the wled node.
 
-[1]: There is still one warning left that was fixed by an earlier patch
-by someone else, which has not been picked up: 
-https://lore.kernel.org/all/20240606181027.98537-2-adrian@travitia.xyz/
-
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Rayyan Ansari <rayyan.ansari@linaro.org>
 ---
-- Link to v1: https://lore.kernel.org/r/20240722-pmic-bindings-v1-0-555942b3c4e1@linaro.org
+ arch/arm64/boot/dts/qcom/pmi8994.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
----
-- Link to v2: https://lore.kernel.org/r/20240723-pmic-bindings-v2-0-e1cd614f8c4a@linaro.org
+diff --git a/arch/arm64/boot/dts/qcom/pmi8994.dtsi b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
+index 36d6a1fb553a..9ee59e6d2cdb 100644
+--- a/arch/arm64/boot/dts/qcom/pmi8994.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
+@@ -57,8 +57,11 @@ pmi8994_wled: wled@d800 {
+ 			interrupts = <0x3 0xd8 0x1 IRQ_TYPE_EDGE_RISING>,
+ 				     <0x3 0xd8 0x2 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "ovp", "short";
++			label = "backlight";
++
+ 			qcom,cabc;
+ 			qcom,external-pfet;
++
+ 			status = "disabled";
+ 		};
+ 	};
 
----
-Rayyan Ansari (3):
-      arm64: dts: qcom: pmi8994: Add label to wled node
-      arm64: dts: qcom: pmi8950: Remove address from lpg node
-      ARM: dts: qcom: pma8084: add pon node
-
- arch/arm/boot/dts/qcom/pma8084.dtsi   | 16 +++++++++++-----
- arch/arm64/boot/dts/qcom/pmi8950.dtsi |  3 +--
- arch/arm64/boot/dts/qcom/pmi8994.dtsi |  3 +++
- 3 files changed, 15 insertions(+), 7 deletions(-)
----
-base-commit: dee7f101b64219f512bb2f842227bd04c14efe30
-change-id: 20240722-pmic-bindings-756df58afa15
-
-Best regards,
 -- 
-Rayyan Ansari <rayyan.ansari@linaro.org>
+2.45.2
 
 
