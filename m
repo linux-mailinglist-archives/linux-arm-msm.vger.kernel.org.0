@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-27040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37F1793C0B7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 13:25:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E55393C0BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 13:25:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C81E7B2258C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 11:25:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A2E6D1F221C7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Jul 2024 11:25:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FCB019A288;
-	Thu, 25 Jul 2024 11:24:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D041A19A2A8;
+	Thu, 25 Jul 2024 11:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TuK5iHPh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JbpkpJTX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33E1199E92
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2024 11:24:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6F3199EB6
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2024 11:24:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721906644; cv=none; b=bgOhs8BQ9psUs0ztiSZCiqOFBDYM0MZP9P5zTSGuw4DUJhbz/ZmrX+6LUn+jhUKTAyZ9fMLQ9tV/pbe+5FWTYUnZSYoZ3YXc3zQPCyMgRvXXxwKVJQ+6Id7bT5PJ9BtDOMdYhtXzN/1Fv0o9PxB/odIr2NhKvmikuGApP6BOu4s=
+	t=1721906645; cv=none; b=lrzUAWijSnNhaCn3g2jdjVAN4oqg3gAM9igKxZA+KPRteFRsbNMO8vJivtFIEx5yfGnlNHW3H5st4tJmNGXmvHP3uODLswYxwwXWoNdIdxGfa1AXE+z0cGtFvXcyZSj+pyYqYYKGma7uNXu+yoFnghIuKI3d26klb75VDN2qwtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721906644; c=relaxed/simple;
-	bh=V8vd4iZFObHif1p5HOQA8sXHu2YEJwGEScZnEYASwyc=;
+	s=arc-20240116; t=1721906645; c=relaxed/simple;
+	bh=Z4sl3UsaDoDW0qIaCARjl/i/ur/SZTyjyXlvlMhISio=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=p1QrvRdcWiHtEzdZGJIw+E+80b2bYYlvwlQu3BoM67h2cDCBwTcKugrGzbUoIYZZQzBBdrLZNXLjodR1DIiwN4Q6+mvTHqwbrvIL7c9Dj5KL0OlAXFHlkf4P1LNLQr7bsyksmVJUrPJbTIn9KSmJJCc0V+FR05QKQfgE9+iZypE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TuK5iHPh; arc=none smtp.client-ip=209.85.128.54
+	 In-Reply-To:To:Cc; b=pb/HgsEzRw1YGiS6be/DG3On4kgOxvYEVusVWYS1kSjLxCkl/SRxxevoLP182klHWKQHiGg+P8rKnv/fEwvjfIrzXCe788lWSsi1dyqMfwuUjIq54crk1ilbwk9m0RgOW7zE5pKQaoUopy7kNMKTDZMakkIQaZt4i00STX1Wh4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JbpkpJTX; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-42660b8dd27so6364955e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2024 04:24:02 -0700 (PDT)
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-369f68f63b1so463012f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Jul 2024 04:24:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1721906641; x=1722511441; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1721906642; x=1722511442; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=him59Jh0Za/FpncLD54ryW3nFixGnrEeRbEKdwDMQEw=;
-        b=TuK5iHPhU+Ocqou7m8QUUH4OCsb8HBY45iJR2KJ2LPF8vjS7YVYe7koUHyrnMVDugY
-         YrBznCTPF+iwFPxc8CT/4ai3WLQ46HBLezOXipr22MKR4n1hkuOvdTAD++xdhHy1T9Fp
-         A730blIF+c1QCC2UrwS0rLsJQwNbY5kWSl9D/o1EZB02+9NNdngtn6dEX8vI6uR5wbl7
-         +zsKc3JFoCyPU0tj4y2dHt90NWUO5Bngof+eWRaiHA52L6s69SZw77G5QvfPskHpq93c
-         BUu1djzTGOdto39++VEnmp7MXn/fKV/oHp/MVMglj4HitWSgzvpp8HxpdmTxYZ03wkrZ
-         MLiA==
+        bh=T8qPNmhqMV5uO1WWAeGcfg+Xje+HVJGnsDnxifCQEj4=;
+        b=JbpkpJTXWan/nRQjHIHFXYwexKFJsDxsrWCurkJkD8EDtRkpUJ2AEbFiPvyzRKgaFp
+         snoMjDsDnv9TDBmygSifP46Q5Y5zGz7ZQHr6Ilsp2fUNgBezCYVvzoo5SG8kcyu6by3/
+         OpcQzmIQfVJjtHLWvFQSHBVZZb5gOeJlynfqg9GBZqBcqSZ0ciPmvTMWqBDy7jY5tN27
+         eMfuI+fyVk9uAwe3ppZFN+P66X7DiqwrxTwBX+CskkeLzSQ5P1/aiZL5AA2NktgYJJ0F
+         zs8P0TTgb+4CC6KL+k1ZGIIKl5I4vBZnR7x5fL7AoRj1e2oGZvmjN5HLewcGVL9Y4s9L
+         uCSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721906641; x=1722511441;
+        d=1e100.net; s=20230601; t=1721906642; x=1722511442;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=him59Jh0Za/FpncLD54ryW3nFixGnrEeRbEKdwDMQEw=;
-        b=cnKlA3brZ7NqfcUkg2sDO2wd79/XT/CpkfJKtPftbZprRM/+cxVhR+7idJoErmmHyI
-         q0Up4WKdRClHchMVTPlA3LwFGKlKn7MYhIxiwQqLNQd/pIjkMbQ5ZbzzZ09jH0rq0Onj
-         qLuOv6edydknxytZk7jpbX26pHZ7X015wNiFg48io8sDiM2ujGl8rCOLpCfO8U//wkL/
-         hVgPP81kxJq6uIwoCflXABrCtxs1WgUxu3uTGwCX4r5NOj5W2vSIOwGw3+kctRfxc7DI
-         HV9KgmpxuaX1WlQTWxVibkG9hrvRcdn3TN2TrRco3acKM0y5Opjqgp2+QHiosHnIz+aZ
-         ac7A==
-X-Forwarded-Encrypted: i=1; AJvYcCVC3d75K3Z9NHwxulPALjaQxw34WX2UCE+t5E6Px04IUBQ70WX62c1YL+n2FGTC562R5g+vlw2XTbLEugazN9YufqzLlkfDYFuUzPRkrg==
-X-Gm-Message-State: AOJu0Yzx5PE/aK7lHPPXlEt2nAzfikuD21KleHbAztNbwkXfADiFg2c5
-	XrdZUjVI4J4Hujf/6XGN2aKKn8V+8uWRPPd5LnEZNc68QgUcCIUVDSPY4XMm6r4=
-X-Google-Smtp-Source: AGHT+IE2/MDS0EvvoNMsY4tzNjk68cr5dxij8RbWrbzM/zyGhZ/Yw33L8LYx0zf/UyaMoZNqXyZL0g==
-X-Received: by 2002:a5d:6a51:0:b0:367:9904:e6b9 with SMTP id ffacd0b85a97d-36b36421ab2mr1215212f8f.44.1721906641227;
-        Thu, 25 Jul 2024 04:24:01 -0700 (PDT)
+        bh=T8qPNmhqMV5uO1WWAeGcfg+Xje+HVJGnsDnxifCQEj4=;
+        b=JKFBSFjdRJtf15pjuTplUH1lWHx+kyITf+Q9r3J12XIT2prRkRGx0zyYiwe1J2NrJw
+         25MpF3YR9szFBU3k/UeQCuZxo4uG8lGxAuGeIUKNXMPjDbE+MYYLTF4H2HrXMY4Ogdcy
+         1RH32VcORpCO5gS9EwmubJOLD1m8MASDkwSdo3VGazgYrV1/NqmD2H7/RP2RWc05+a43
+         4MsJ49BLajHxgoXpmqpyGDZd5+6aJ9cl3WivyigMNkx31hRcwkuHz6gVlYq6HDUYuRKU
+         SxMXrUhyP0LAm9VcDfZ88qogNeyGo1v/Ip8n7pImIXi8lebwO0hfCBkzkdC8sBBhugen
+         fPcw==
+X-Forwarded-Encrypted: i=1; AJvYcCWyIo50Gl3Btl+vUch/NWBSOmhfui9nYEvPBrXz0myBtZtnOW9Q+55upHtogy2SSzCSw3DzgfscByQj7cujFPaojhIbkMpJlp6a8MNJTQ==
+X-Gm-Message-State: AOJu0Yzxc3Q+9pWgP8U4FpCIsCgarqhzvyGGIa1FEGLXg1nTMWko7KGY
+	LETlbYLqqAsbJ8eexDVPl8P1Lg7V9M7UWtbN8RM8Y1BYIUH7hKD4VZo1sw5NDg8=
+X-Google-Smtp-Source: AGHT+IFHswFHg9qmycJf/sCn7iOfKPi40kcr6NaDof8fg3mdrjY/DuoYO/J2eafkoWqxIU+1HxAapA==
+X-Received: by 2002:a5d:5491:0:b0:367:94a7:12c8 with SMTP id ffacd0b85a97d-36b3637efaemr1166676f8f.6.1721906642614;
+        Thu, 25 Jul 2024 04:24:02 -0700 (PDT)
 Received: from [127.0.1.1] ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36b367e072asm1823607f8f.42.2024.07.25.04.23.59
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36b367e072asm1823607f8f.42.2024.07.25.04.24.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jul 2024 04:24:00 -0700 (PDT)
+        Thu, 25 Jul 2024 04:24:01 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Thu, 25 Jul 2024 13:23:47 +0200
-Subject: [PATCH 5/7] ASoC: codecs: wcd937x: Move max port number defines to
+Date: Thu, 25 Jul 2024 13:23:48 +0200
+Subject: [PATCH 6/7] ASoC: codecs: wcd938x: Move max port number defines to
  enum
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240725-asoc-wsa88xx-port-arrays-v1-5-80a03f440c72@linaro.org>
+Message-Id: <20240725-asoc-wsa88xx-port-arrays-v1-6-80a03f440c72@linaro.org>
 References: <20240725-asoc-wsa88xx-port-arrays-v1-0-80a03f440c72@linaro.org>
 In-Reply-To: <20240725-asoc-wsa88xx-port-arrays-v1-0-80a03f440c72@linaro.org>
 To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
@@ -90,21 +90,21 @@ Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
  linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2085;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1409;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=V8vd4iZFObHif1p5HOQA8sXHu2YEJwGEScZnEYASwyc=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmojXHiWSSUY3gTrQtwvbi3XTqFF5y9M+V6TBdA
- UjzT+daecWJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZqI1xwAKCRDBN2bmhouD
- 10BoD/9s4CyMl1vgd0j2Wq1A1AtT/gXwWXp0KYUGAtiYtOHBYxeqlx3cigfTNWTPVh/nSVaRmQr
- Fsdau1R9aTSu2uGyVHaqRk9V9V/Zg9tMQ3IOwzX6HZqgdwgBjQ89kstBVfsIwr5wQ4Xd2g04fcN
- lwA3Yed9dKQXJdkx20InzbWvK8YtuS4fvjU5t/rbLwDzrwgfHjlVLcFurBdHyhi+ubvFjCLxXiJ
- VEbYYDtAE3+CKRl+YLuZeqclG7zbkj3+vSHBatrEzwICkF8x2MARCH4tdKnvwC4lkJP1mLfEi9p
- yk5psVzerdgGGIKEGOINLAjA7vBNeZCrWeEcswBQGu0wkqA7gqPI1+I1wDdTZRGiiQkWWXQGMKz
- iHDXbdTobDgxjcDtQAqUGK4Ioz/NfmIwJWkJooFevfSqbMYivOJG/V2Jtj13G/F6aoXrxiSE4DS
- jPwOvKNQl0kmOqUawrTw+Nsvd4fn5CUAm4agfba9Xs8fxAjCzZgdBi1vn0VihKFiI5p64zfgIoD
- GmBo1ytrBslM8x/1o8+iLXNib07en48TsLulNL23bAHPp0+l6VsCiNfJsyqy2jDTTyV9CA+5wIr
- C0yKnVstuVTUkv3lES2ereAS4UrGpCknu6F8Wwmel9YC8kKHeXwZNDsMBPu6rUBv5AO6oR5P2G7
- f2vn3sq0fsshdvA==
+ bh=Z4sl3UsaDoDW0qIaCARjl/i/ur/SZTyjyXlvlMhISio=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmojXHFok6viGl1t4tqCGW8JGde7k+DNzVVWwgU
+ 3NqGUpxprCJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZqI1xwAKCRDBN2bmhouD
+ 1wdtD/9b3CBdXYwVtROD9UQpPesni0OskgB0SQJW7DEily9DHVNcaKvnwyguS7HHt6uoRedT09y
+ 0w2vb7l1TxEms5pi1ntoFI05ZHtU12m23kxLITMfYOFshfCL/4rz38IFgstCyWEJOY7qvecqC0m
+ bPMv0eynywhZdWD/kn6z+IzdtRfUmxVL6ann7pvf+ELOmn5xl2Dui4YwAFzIPwhwV4M8G96MLj7
+ NF3cvmIbE1tNr2eJbGIlJV8aZJkcV9eaGVFwUdeHxQ1kQMGhmvlbbzGJfgCHCiZfi3tf4XDECPe
+ BGP+VhExGXM7DzhrMlHG3cg7H6dE8lrg4222cgvDiE7r5QwO2MTKVpwW2H4h+2Es5yEOafabJ3C
+ vcUxFmpkZmfaQIu1O/NpjGyX2Z2NQLmYjDhFJYyL7W6IYVAEajpWoU/QLA+7Gn23WrJH9wfs7IW
+ emOew4ct4ILK46h4qCLfGXtIiiGEpHMD9gIig4HvVxiKcTw3ZyrWjA1SNMkV4/igeHVzbj4ycei
+ LmOjWh3I9P/QAD7KIsSPg0uEtcJFdiGvWAywG2BtrudfE/SaIivPaiPBq6umH7A9f7Fj1xhidQr
+ eBFyBvYxheeshYPAH+/5GIGP8hePYktBgEPoV6nBXuM8rUXCHwoxSztqMZPf8ZKcynUCDLW7tlG
+ iMZ7OHWB8i8ZzaQ==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
@@ -115,75 +115,40 @@ number of TX/RX ports.
 Note: the enums start from 1, thus number of ports equals to the last
 vaue in the enum.
 
-WCD937X_MAX_SWR_PORTS is used in one of structures in the header, so
-entire enum must be moved to the top of the header file.
-
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- sound/soc/codecs/wcd937x.h | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ sound/soc/codecs/wcd938x.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/wcd937x.h b/sound/soc/codecs/wcd937x.h
-index 37bff16e88dd..35f3d48bd7dd 100644
---- a/sound/soc/codecs/wcd937x.h
-+++ b/sound/soc/codecs/wcd937x.h
-@@ -484,10 +484,25 @@
+diff --git a/sound/soc/codecs/wcd938x.h b/sound/soc/codecs/wcd938x.h
+index b2ad98026ae2..fb6a0e4ef337 100644
+--- a/sound/soc/codecs/wcd938x.h
++++ b/sound/soc/codecs/wcd938x.h
+@@ -585,8 +585,6 @@
+ #define WCD938X_DIGITAL_DEM_BYPASS_DATA3        (0x34D8)
+ #define WCD938X_MAX_REGISTER			(WCD938X_DIGITAL_DEM_BYPASS_DATA3)
  
- #define WCD937X_MAX_MICBIAS			3
- #define WCD937X_MAX_BULK_SUPPLY			4
--#define WCD937X_MAX_TX_SWR_PORTS		4
--#define WCD937X_MAX_SWR_PORTS			5
- #define WCD937X_MAX_SWR_CH_IDS			15
+-#define WCD938X_MAX_SWR_PORTS	5
+-#define WCD938X_MAX_TX_SWR_PORTS 4
+ #define WCD938X_MAX_SWR_CH_IDS	15
  
-+enum wcd937x_tx_sdw_ports {
-+	WCD937X_ADC_1_PORT = 1,
-+	WCD937X_ADC_2_3_PORT,
-+	WCD937X_DMIC_0_3_MBHC_PORT,
-+	WCD937X_DMIC_4_6_PORT,
-+	WCD937X_MAX_TX_SWR_PORTS = WCD937X_DMIC_4_6_PORT,
-+};
-+
-+enum wcd937x_rx_sdw_ports {
-+	WCD937X_HPH_PORT = 1,
-+	WCD937X_CLSH_PORT,
-+	WCD937X_COMP_PORT,
-+	WCD937X_LO_PORT,
-+	WCD937X_DSD_PORT,
-+	WCD937X_MAX_SWR_PORTS = WCD937X_DSD_PORT,
-+};
-+
- struct wcd937x_sdw_ch_info {
- 	int port_num;
- 	unsigned int ch_mask;
-@@ -581,13 +596,6 @@ enum {
- 	WCD937X_NUM_IRQS,
+ struct wcd938x_sdw_ch_info {
+@@ -606,6 +604,7 @@ enum wcd938x_tx_sdw_ports {
+ 	/* DMIC0_0, DMIC0_1, DMIC1_0, DMIC1_1 */
+ 	WCD938X_DMIC_0_3_MBHC_PORT,
+ 	WCD938X_DMIC_4_7_PORT,
++	WCD938X_MAX_TX_SWR_PORTS = WCD938X_DMIC_4_7_PORT,
  };
  
--enum wcd937x_tx_sdw_ports {
--	WCD937X_ADC_1_PORT = 1,
--	WCD937X_ADC_2_3_PORT,
--	WCD937X_DMIC_0_3_MBHC_PORT,
--	WCD937X_DMIC_4_6_PORT,
--};
--
- enum wcd937x_tx_sdw_channels {
- 	WCD937X_ADC1,
- 	WCD937X_ADC2,
-@@ -602,14 +610,6 @@ enum wcd937x_tx_sdw_channels {
- 	WCD937X_DMIC6,
+ enum wcd938x_tx_sdw_channels {
+@@ -630,6 +629,7 @@ enum wcd938x_rx_sdw_ports {
+ 	WCD938X_COMP_PORT,
+ 	WCD938X_LO_PORT,
+ 	WCD938X_DSD_PORT,
++	WCD938X_MAX_SWR_PORTS = WCD938X_DSD_PORT,
  };
  
--enum wcd937x_rx_sdw_ports {
--	WCD937X_HPH_PORT = 1,
--	WCD937X_CLSH_PORT,
--	WCD937X_COMP_PORT,
--	WCD937X_LO_PORT,
--	WCD937X_DSD_PORT,
--};
--
- enum wcd937x_rx_sdw_channels {
- 	WCD937X_HPH_L,
- 	WCD937X_HPH_R,
+ enum wcd938x_rx_sdw_channels {
 
 -- 
 2.43.0
