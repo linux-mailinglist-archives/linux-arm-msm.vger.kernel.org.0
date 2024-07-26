@@ -1,169 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-27064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D64FA93CDD7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2024 07:56:25 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B999293CE38
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2024 08:37:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 58B3E1F23409
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2024 05:56:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 632C71F20F5D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2024 06:37:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB29015667E;
-	Fri, 26 Jul 2024 05:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31EF5176222;
+	Fri, 26 Jul 2024 06:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="GFJKXki/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="n3l+YBIL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.219])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04FB918641;
-	Fri, 26 Jul 2024 05:56:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.219
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F93208DA;
+	Fri, 26 Jul 2024 06:37:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721973383; cv=none; b=BXvwC6ieMoWnS3V+RoZireja+TCG1dnxzI6AGDYxdsyO+WPZ+tt4E31a4g+r7QxbxJioSO+AjRNRB5WExdwt2rTUdiqFJzf7M4RJ5G6zwXWtJVhbsAjTrHXby7Ncb3OoXoEYqs4b+LqmN+7gHZ38xCKYMbRtFdc2MfPXrbSq7tg=
+	t=1721975839; cv=none; b=lYQG1Gh78c2mKdURgc6937ntONPEvVo4+U5fn9HYI7hdeOsVLC7r2ZQFo36G6Qet0Dc7oDNoVSPfxPaSYT8xdN3t3cgA4qQhZ4LUdmout15jp4ZHIf8MIp9caeAo9dHf9iTt7wmr7Bh1t5TXhgFx9fKN18guetUcaqTIykW4cV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721973383; c=relaxed/simple;
-	bh=Yv6YnquaJR+7s5kkMZ1WaQR28i8RML9zoz3vMC2yYiE=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=J9B45XkvGL+/U1N9pHqctc0HUEoahJ6TrTcdXNFHyS3V7ljkVcgkdK0iNducbT+9vAmlG2UZ7pJr32B38eBCfG0Ma0C6hc6Nq+NdNlGXbAdZS8B4r4CADCMfsAr/Ml3gEDI8iodWjFfyINyqKZatf5OuKm7BJeVfCREL9BOTH04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=GFJKXki/ reason="signature verification failed"; arc=none smtp.client-ip=45.254.50.219
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=AxKXyD8rptQV0LY9/v84VGXH3WprRNEeQMnUtqC2/W0=; b=G
-	FJKXki/wnDXNE9OpF0ZQY+yCHEB/zr5XJ+dDyMh/K7729YsqZmf++qw23nBFayKC
-	Jpo5W3gauHruc5OYcSG4bjMZZhKF4Z/iWxvWX8JfT5SvpTAT0gsluGl6XfGi8usp
-	hlYtffHSK5q62NLVhImSwr1uHdtruYxNu8+BmIJFkw=
-Received: from slark_xiao$163.com ( [112.97.49.20] ) by
- ajax-webmail-wmsvr-40-110 (Coremail) ; Fri, 26 Jul 2024 13:55:40 +0800
- (CST)
-Date: Fri, 26 Jul 2024 13:55:40 +0800 (CST)
-From: "Slark Xiao" <slark_xiao@163.com>
-To: "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re:Re: Re: [PATCH v2 1/2] bus: mhi: host: pci_generic: Update the
- file path for Foxconn SDX55/SDX72
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <20240726050051.GA2628@thinkpad>
-References: <20240725022941.65948-1-slark_xiao@163.com>
- <20240725035954.GA2317@thinkpad>
- <6dd00891.8235.190e91ac139.Coremail.slark_xiao@163.com>
- <20240726050051.GA2628@thinkpad>
-X-NTES-SC: AL_Qu2ZA/WcvEsv5iCRZukfmk8Sg+84W8K3v/0v1YVQOpF8jCfp6yY8d2ZAJnTv2+GDCDCwtRuUdgJo2MNifrdmeo4Bed+C2lL+eOjB5L5uauyX1w==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1721975839; c=relaxed/simple;
+	bh=V/An2Y/cLtt53TAvP9RGOabckYsak2fL5zYfeS2JV5M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=RZqYfcRo6LIgkwkuKbSSu6BXr+SzbotCoed9jVgrnE+0i05BMb9JrD6ur47JS0lvCE8oJ1KlOiFjip0TGM0iRr5agmsKSaYYNIA7z/NwO9Rpo/uW0+qeIO4SGysaaX7jWt8Hl8eY1y0OUuXlX/WVrWiYxSvoxZJL/ibXLdsx69U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=n3l+YBIL; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46Q13OHV011892;
+	Fri, 26 Jul 2024 06:37:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	BDzEEdHj9cjl1zrl9gf9hPGAKm3gSwRCDeYDZQFiZyE=; b=n3l+YBILc+cBY6qq
+	pL3zxdGKqPZu4lViaoyuF9/t8cWlzIh5t7BNC1ciCynDg1OI4S5pi2vaN7TUpqYm
+	IvdrvtgxW/LWLzJb3H1CAZ99VYOJYJ2NTzH0CmNyXk5PIZMznY4uUvyuN218SWgf
+	yoPAF0O9gXz7mWFi7jJ6/ZgtPF0X5SRqcTsWWY83y8fA0B9qV7gYScHTmgua0nTw
+	hRFfNkpaV7Fxq6UmtAbrw3WXUdjjAcFayKUooeiE5aRMklp6hmGSq4SfSvFakTIS
+	ZbonuKHtK4SOy1ND0V+2eNBcYhucdxv35WWdu9QRr42g8m/IS7OQpnc9Y4uEgl5z
+	f0c/8A==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40m1srgk9d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 26 Jul 2024 06:37:06 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46Q6b5CS032449
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 26 Jul 2024 06:37:05 GMT
+Received: from [10.204.65.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 25 Jul
+ 2024 23:37:02 -0700
+Message-ID: <677db00b-117f-4732-b3ed-0a6714dab7cb@quicinc.com>
+Date: Fri, 26 Jul 2024 12:06:58 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <5aa442e3.4d45.190ed9bf7c0.Coremail.slark_xiao@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wD3v09cOqNmMkw8AA--.60277W
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbioxUnZGVOEm2jbwAFso
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] misc: fastrpc: Add support for multiple PD from one
+ process
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>
+References: <20240720034611.2219308-1-quic_ekangupt@quicinc.com>
+ <nggoobovb223pxknzai5luaq6wqrv7ovtawodds4bjiegbxlth@ro5cvoxed24w>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+In-Reply-To: <nggoobovb223pxknzai5luaq6wqrv7ovtawodds4bjiegbxlth@ro5cvoxed24w>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: yu5Ll9rFh8ZyccaiCQ5XTMPb9t-6f42r
+X-Proofpoint-ORIG-GUID: yu5Ll9rFh8ZyccaiCQ5XTMPb9t-6f42r
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-26_04,2024-07-25_03,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ lowpriorityscore=0 spamscore=0 clxscore=1015 mlxscore=0 mlxlogscore=999
+ suspectscore=0 adultscore=0 malwarescore=0 priorityscore=1501
+ impostorscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2407260043
 
-CkF0IDIwMjQtMDctMjYgMTM6MDA6NTEsICJNYW5pdmFubmFuIFNhZGhhc2l2YW0iIDxtYW5pdmFu
-bmFuLnNhZGhhc2l2YW1AbGluYXJvLm9yZz4gd3JvdGU6Cj5PbiBUaHUsIEp1bCAyNSwgMjAyNCBh
-dCAwNDo1NjowM1BNICswODAwLCBTbGFyayBYaWFvIHdyb3RlOgo+PiAKPj4gQXQgMjAyNC0wNy0y
-NSAxMTo1OTo1NCwgIk1hbml2YW5uYW4gU2FkaGFzaXZhbSIgPG1hbml2YW5uYW4uc2FkaGFzaXZh
-bUBsaW5hcm8ub3JnPiB3cm90ZToKPj4gPk9uIFRodSwgSnVsIDI1LCAyMDI0IGF0IDEwOjI5OjQw
-QU0gKzA4MDAsIFNsYXJrIFhpYW8gd3JvdGU6Cj4+ID4+IFRvIHNlcGFyYXRlIHRoZSBpbWFnZXMg
-b2YgRm94Y29ubiBmcm9tIG90aGVyIHZlbmRvcnMsIGFkZGluZyBhCj4+ID4+IG5ldyBmb3hjb25u
-IHN1YmZvbGRlciB1bmRlciBxY29tLzxwbGF0Zm9ybT4gZm9yIGVkbCBpbWFnZSBwYXRoLgo+PiA+
-PiBBbmQgZGVsZXRlIHRoZSBmdyBwYXRjaCBzaW5jZSBpdCdzIHVzZWxlc3MgZm9yIEZveGNvbm4g
-ZGV2aWNlcy4KPj4gPj4gCj4+ID4+IEZpeGVzOiBiZjMwYTc1ZTZlMDAgKCJidXM6IG1oaTogaG9z
-dDogQWRkIHN1cHBvcnQgZm9yIEZveGNvbm4gU0RYNzIgbW9kZW1zIikKPj4gPj4gU2lnbmVkLW9m
-Zi1ieTogU2xhcmsgWGlhbyA8c2xhcmtfeGlhb0AxNjMuY29tPgo+PiA+PiAtLS0KPj4gPj4gdjI6
-IGNoYW5nZSB0aGUgZm9sZGVyIHBhdGggYXJjaGl0ZWN0dXJlCj4+ID4+IC0tLQo+PiA+PiAgZHJp
-dmVycy9idXMvbWhpL2hvc3QvcGNpX2dlbmVyaWMuYyB8IDEzICsrKysrLS0tLS0tLS0KPj4gPj4g
-IDEgZmlsZSBjaGFuZ2VkLCA1IGluc2VydGlvbnMoKyksIDggZGVsZXRpb25zKC0pCj4+ID4+IAo+
-PiA+PiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9idXMvbWhpL2hvc3QvcGNpX2dlbmVyaWMuYyBiL2Ry
-aXZlcnMvYnVzL21oaS9ob3N0L3BjaV9nZW5lcmljLmMKPj4gPj4gaW5kZXggMTRhMTE4ODBiY2Vh
-Li5mMTU5YTlkZDUzZTcgMTAwNjQ0Cj4+ID4+IC0tLSBhL2RyaXZlcnMvYnVzL21oaS9ob3N0L3Bj
-aV9nZW5lcmljLmMKPj4gPj4gKysrIGIvZHJpdmVycy9idXMvbWhpL2hvc3QvcGNpX2dlbmVyaWMu
-Ywo+PiA+PiBAQCAtNDMzLDggKzQzMyw3IEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3QgbWhpX2NvbnRy
-b2xsZXJfY29uZmlnIG1vZGVtX2ZveGNvbm5fc2R4NzJfY29uZmlnID0gewo+PiA+PiAgCj4+ID4+
-ICBzdGF0aWMgY29uc3Qgc3RydWN0IG1oaV9wY2lfZGV2X2luZm8gbWhpX2ZveGNvbm5fc2R4NTVf
-aW5mbyA9IHsKPj4gPj4gIAkubmFtZSA9ICJmb3hjb25uLXNkeDU1IiwKPj4gPj4gLQkuZncgPSAi
-cWNvbS9zZHg1NW0vc2JsMS5tYm4iLAo+PiA+PiAtCS5lZGwgPSAicWNvbS9zZHg1NW0vZWRsLm1i
-biIsCj4+ID4+ICsJLmVkbCA9ICJxY29tL3NkeDU1bS9mb3hjb25uL3Byb2dfZmlyZWhvc2Vfc2R4
-NTUubWJuIiwKPj4gPgo+PiA+SSB0aGluayB5b3UgbWlzdW5kZXJzdG9vZCB3aGF0IEkgc3VnZ2Vz
-dGVkIGluIGVhcmxpZXIgcmV2aXNpb24uIFlvdSBzaG91bGQgYWRkCj4+ID50aGUgRm94Y29ubiBz
-cGVjaWZpYyBmdyBvbmx5IGlmIGl0IGlzIGRpZmZlcmVudCBmcm9tIHRoZSBxY29tIG9uZS4gSXMg
-aXQgcmVhbGx5Cj4+ID5kaWZmZXJlbnQgZm9yIGFsbCB0aGVzZSBtb2RlbXM/IE90aGVyd2lzZSwg
-d2hhdCBpcyB0aGUgcG9pbnQgb2YgYWRkaW5nIHRoZW0/Cj4+ID4KPj4gPi0gTWFuaQo+PiAKPj4g
-Pgo+PiBIaSBNYW5pLAo+PiBZZXMsIGFsbCBwcm9ncmFtZXIgZmlsZXMgYXJlIGRpZmZlcmVudCB3
-aXRoIGRlZmF1bHQuIFdlIGFkZCBhIHNpZ24gc3RlcCBmb3IgZWFjaCBpbWFnZQo+PiBmaWxlLiBU
-aGF0IG1lYW5zIG90aGVyIHZlbmRvcidzIGVkbCBpbWFnZShpbmNsdWRpbmcgUXVhbGNvbW0pIGNh
-bid0IGJlIGFwcGxpZWQgZm9yCj4+IEZveGNvbm4gZGV2aWNlcy4gCj4+IAo+Cj5Hb3RjaGEuIFBs
-ZWFzZSBpbmNsdWRlIHRoaXMgaW5mbyBpbiB0aGUgY29tbWl0IG1lc3NhZ2UgYXMgcGVvcGxlIG1h
-eSB3b25kZXIgd2hhdAo+dGhlIGRpZmZlcmVuY2UgYmV0d2VlbiB5b3VycyBhbmQgcWNvbS4KCj4K
-SWYgcG9zc2libGUsIHBlbGFzZSBoZWxwIG1lIGFkZCBpdCBpbnRvIG15IGNvbW1pdCBtZXNzYWdl
-LgoKCj5VbnJlbGF0ZWQgcXVlc3Rpb24gdG8gdGhpcyBwYXRjaDogT25jZSB0aGUgRURMIGlzIHBy
-b2dyYW1tZWQsIHdoYXQgYXJlIHRoZQo+aW1hZ2VzIHRoYXQgdGhlIHVzZXIgaGFzIHRvIGZsYXNo
-IHVzaW5nIEZpcmVob3NlIHByb3RvY29sPyBJcyB0aGF0IHRoZSBmdWxsIFNESwo+b3IganVzdCBT
-QkwvQVBQUyBpbWFnZT8KPgoKPklmIHNvLCB3aGF0IGlzIHRoZSBzaXplIG9mIHRoZSBpbWFnZXM/
-CgoKVGhpcyBkZXBlbmRzIG9uIGEgcmF3IGZpbGUsIGxldCdzIHRha2UgU0RYNjUgYXMgYW4gZXhh
-bXBsZS4gVGhlIGZpbGXCoApyYXdwcm9ncmFtX25hbmRfcDRLX2IyNTZLLnhtbCBjb250YWlucyBi
-ZWxvdyBpdGVtczoKLi4uLi4KPGVyYXNlIFBBR0VTX1BFUl9CTE9DSz0iNjQiIFNFQ1RPUl9TSVpF
-X0lOX0JZVEVTPSI0MDk2IiBudW1fcGFydGl0aW9uX3NlY3RvcnM9IjY0MCIgc3RhcnRfc2VjdG9y
-PSIwIi8+Cjxwcm9ncmFtIFBBR0VTX1BFUl9CTE9DSz0iNjQiIFNFQ1RPUl9TSVpFX0lOX0JZVEVT
-PSI0MDk2IiBmaWxlbmFtZT0ieGJsLmVsZi5lbmMiIGxhYmVsPSJzYmwiIGxhc3Rfc2VjdG9yPSI2
-MzkiIG51bV9wYXJ0aXRpb25fc2VjdG9ycz0iNjQwIiBwaHlzaWNhbF9wYXJ0aXRpb25fbnVtYmVy
-PSIwIiBzdGFydF9zZWN0b3I9IjAiLz4KLi4uLi4KPGVyYXNlIFBBR0VTX1BFUl9CTE9DSz0iNjQi
-IFNFQ1RPUl9TSVpFX0lOX0JZVEVTPSI0MDk2IiBudW1fcGFydGl0aW9uX3NlY3RvcnM9IjI3NDU2
-IiBzdGFydF9zZWN0b3I9IjE2NTEyIi8+CsKgIDxwcm9ncmFtIFBBR0VTX1BFUl9CTE9DSz0iNjQi
-IFNFQ1RPUl9TSVpFX0lOX0JZVEVTPSI0MDk2IiBmaWxlbmFtZT0iTk9OLUhMT1MudWJpLmVuYyIg
-bGFiZWw9Im1vZGVtIiBsYXN0X3NlY3Rvcj0iNDM5NjciIG51bV9wYXJ0aXRpb25fc2VjdG9ycz0i
-Mjc0NTYiIHBoeXNpY2FsX3BhcnRpdGlvbl9udW1iZXI9IjAiIHN0YXJ0X3NlY3Rvcj0iMTY1MTIi
-Lz4KLi4uCgoKVGhpcyBmaWxlIGNvbnRhaW5zIDIgcGFydCwgImVyYXNlIiBhbmQgInByb2dyYW0i
-LgplcmFzZSB3aWxsIHRlbGwgdGhlIHRvb2wgdG8gZXJhc2UgdGhlIHBhcnRpdGlvbiBmcm9tIHNl
-Y3RvciB4IHRvIHkuCkFuZCAicHJvZ3JhbSIgd2lsbCB0ZWxsIHRoZSB0b29sIHRvIGZsYXNoIHRo
-ZSBmaWxlIGludG8gdGhhdCBwYXJ0aW9uIHdoaWNoIHN0YXJ0IGZyb20gc2VjdG9yIG0gdG8gbi4K
-CgpTbyB0aGUgbG9naWNhbCBpcywgZnVsbCBTREsgb3IganVzdCBvbmUgb3Igc29tZSBwYXJ0aXRp
-b25zIGFyZSBmbGFzaGVkIGRlcGVuZHMgb24gdGhpcyByYXcgZmlsZS4KTm9ybWFsbHksIGZ1bGwg
-U0RLIGlzIHRoZSBtYWluIHNjZW5hcmlvLiBBbmQgdGhlIHNpemUgaXMgYWJvdXQgMTUwTUIgdG8g
-MjAwTUIuClRoYW5rcy4gCgo+Cj4tIE1hbmkKPgo+PiA+PiAgCS5jb25maWcgPSAmbW9kZW1fZm94
-Y29ubl9zZHg1NV9jb25maWcsCj4+ID4+ICAJLmJhcl9udW0gPSBNSElfUENJX0RFRkFVTFRfQkFS
-X05VTSwKPj4gPj4gIAkuZG1hX2RhdGFfd2lkdGggPSAzMiwKPj4gPj4gQEAgLTQ0NCw4ICs0NDMs
-NyBAQCBzdGF0aWMgY29uc3Qgc3RydWN0IG1oaV9wY2lfZGV2X2luZm8gbWhpX2ZveGNvbm5fc2R4
-NTVfaW5mbyA9IHsKPj4gPj4gIAo+PiA+PiAgc3RhdGljIGNvbnN0IHN0cnVjdCBtaGlfcGNpX2Rl
-dl9pbmZvIG1oaV9mb3hjb25uX3Q5OXcxNzVfaW5mbyA9IHsKPj4gPj4gIAkubmFtZSA9ICJmb3hj
-b25uLXQ5OXcxNzUiLAo+PiA+PiAtCS5mdyA9ICJxY29tL3NkeDU1bS9zYmwxLm1ibiIsCj4+ID4+
-IC0JLmVkbCA9ICJxY29tL3NkeDU1bS9lZGwubWJuIiwKPj4gPj4gKwkuZWRsID0gInFjb20vc2R4
-NTVtL2ZveGNvbm4vcHJvZ19maXJlaG9zZV9zZHg1NS5tYm4iLAo+PiA+PiAgCS5jb25maWcgPSAm
-bW9kZW1fZm94Y29ubl9zZHg1NV9jb25maWcsCj4+ID4+ICAJLmJhcl9udW0gPSBNSElfUENJX0RF
-RkFVTFRfQkFSX05VTSwKPj4gPj4gIAkuZG1hX2RhdGFfd2lkdGggPSAzMiwKPj4gPj4gQEAgLTQ1
-NSw4ICs0NTMsNyBAQCBzdGF0aWMgY29uc3Qgc3RydWN0IG1oaV9wY2lfZGV2X2luZm8gbWhpX2Zv
-eGNvbm5fdDk5dzE3NV9pbmZvID0gewo+PiA+PiAgCj4+ID4+ICBzdGF0aWMgY29uc3Qgc3RydWN0
-IG1oaV9wY2lfZGV2X2luZm8gbWhpX2ZveGNvbm5fZHc1OTMwZV9pbmZvID0gewo+PiA+PiAgCS5u
-YW1lID0gImZveGNvbm4tZHc1OTMwZSIsCj4+ID4+IC0JLmZ3ID0gInFjb20vc2R4NTVtL3NibDEu
-bWJuIiwKPj4gPj4gLQkuZWRsID0gInFjb20vc2R4NTVtL2VkbC5tYm4iLAo+PiA+PiArCS5lZGwg
-PSAicWNvbS9zZHg1NW0vZm94Y29ubi9wcm9nX2ZpcmVob3NlX3NkeDU1Lm1ibiIsCj4+ID4+ICAJ
-LmNvbmZpZyA9ICZtb2RlbV9mb3hjb25uX3NkeDU1X2NvbmZpZywKPj4gPj4gIAkuYmFyX251bSA9
-IE1ISV9QQ0lfREVGQVVMVF9CQVJfTlVNLAo+PiA+PiAgCS5kbWFfZGF0YV93aWR0aCA9IDMyLAo+
-PiA+PiBAQCAtNTAyLDcgKzQ5OSw3IEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3QgbWhpX3BjaV9kZXZf
-aW5mbyBtaGlfZm94Y29ubl9kdzU5MzJlX2luZm8gPSB7Cj4+ID4+ICAKPj4gPj4gIHN0YXRpYyBj
-b25zdCBzdHJ1Y3QgbWhpX3BjaV9kZXZfaW5mbyBtaGlfZm94Y29ubl90OTl3NTE1X2luZm8gPSB7
-Cj4+ID4+ICAJLm5hbWUgPSAiZm94Y29ubi10OTl3NTE1IiwKPj4gPj4gLQkuZWRsID0gImZveC9z
-ZHg3Mm0vZWRsLm1ibiIsCj4+ID4+ICsJLmVkbCA9ICJxY29tL3NkeDcybS9mb3hjb25uL2VkbC5t
-Ym4iLAo+PiA+PiAgCS5lZGxfdHJpZ2dlciA9IHRydWUsCj4+ID4+ICAJLmNvbmZpZyA9ICZtb2Rl
-bV9mb3hjb25uX3NkeDcyX2NvbmZpZywKPj4gPj4gIAkuYmFyX251bSA9IE1ISV9QQ0lfREVGQVVM
-VF9CQVJfTlVNLAo+PiA+PiBAQCAtNTEzLDcgKzUxMCw3IEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3Qg
-bWhpX3BjaV9kZXZfaW5mbyBtaGlfZm94Y29ubl90OTl3NTE1X2luZm8gPSB7Cj4+ID4+ICAKPj4g
-Pj4gIHN0YXRpYyBjb25zdCBzdHJ1Y3QgbWhpX3BjaV9kZXZfaW5mbyBtaGlfZm94Y29ubl9kdzU5
-MzRlX2luZm8gPSB7Cj4+ID4+ICAJLm5hbWUgPSAiZm94Y29ubi1kdzU5MzRlIiwKPj4gPj4gLQku
-ZWRsID0gImZveC9zZHg3Mm0vZWRsLm1ibiIsCj4+ID4+ICsJLmVkbCA9ICJxY29tL3NkeDcybS9m
-b3hjb25uL2VkbC5tYm4iLAo+PiA+PiAgCS5lZGxfdHJpZ2dlciA9IHRydWUsCj4+ID4+ICAJLmNv
-bmZpZyA9ICZtb2RlbV9mb3hjb25uX3NkeDcyX2NvbmZpZywKPj4gPj4gIAkuYmFyX251bSA9IE1I
-SV9QQ0lfREVGQVVMVF9CQVJfTlVNLAo+PiA+PiAtLSAKPj4gPj4gMi4yNS4xCj4+ID4+IAo+PiA+
-Cj4+ID4tLSAKPj4gPuCuruCuo+Cuv+CuteCuo+CvjeCuo+CuqeCvjSDgrprgrqTgrr7grprgrr/g
-rrXgrq7gr40KPgo+LS0gCj7grq7grqPgrr/grrXgrqPgr43grqPgrqngr40g4K6a4K6k4K6+4K6a
-4K6/4K614K6u4K+NCg==
+
+
+On 7/22/2024 1:48 PM, Dmitry Baryshkov wrote:
+> On Sat, Jul 20, 2024 at 09:16:11AM GMT, Ekansh Gupta wrote:
+>> Memory intensive applications(which requires more tha 4GB) that wants
+>> to offload tasks to DSP might have to split the tasks to multiple
+>> user PD to make the resources available.
+>>
+>> For every call to DSP, fastrpc driver passes the process tgid which
+>> works as an identifier for the DSP to enqueue the tasks to specific PD.
+>> With current design, if any process opens device node more than once
+>> and makes PD initmrequest, same tgid will be passed to DSP which will
+>> be considered a bad request and this will result in failure as the same
+>> identifier cannot be used for multiple DSP PD.
+>>
+>> Allocate and pass an effective pgid to DSP which would be allocated
+> effective pgid makes me think about the setegid() system call. Can we
+> just name them "client ID" (granted that session is already reserved)?
+> Or is it really session ID? Can we use the index of the session instead
+> and skip the whole IDR allocation?
+Thanks for the suggestion, I'm trying out experiments with the index of session as
+client ID to avoid idr operations. This sounds much better. I will update the patch
+soon.
+
+--Ekansh
+>> during device open and will have a lifetime till the device is closed.
+>> This will allow the same process to open the device more than once and
+>> spawn multiple dynamic PD for ease of processing.
+>>
+>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+>> ---
+>> Changes in v2:
+>>   - Reformatted commit text.
+>>   - Moved from ida to idr.
+>>   - Changed dsp_pgid data type.
+>>   - Resolved memory leak.
+>>
+>>  drivers/misc/fastrpc.c | 49 +++++++++++++++++++++++++++++++-----------
+>>  1 file changed, 37 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index a7a2bcedb37e..b4a5af2d2dfa 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -105,6 +105,10 @@
+>>  
+>>  #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
+>>  
+>> +#define MAX_DSP_PD	64	/* Maximum 64 PDs are allowed on DSP */
+> Why?
+>
+>> +#define MIN_FRPC_PGID	1000
+> Is it some random number or some pre-defined constant? Can we use 0
+> instead?
+>
+>> +#define MAX_FRPC_PGID	(MIN_FRPC_PGID + MAX_DSP_PD)
+>> +
+>>  static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
+>>  						"sdsp", "cdsp"};
+>>  struct fastrpc_phy_page {
+>
+
 
