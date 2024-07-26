@@ -1,137 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-27067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDF1793CE63
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2024 09:01:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7ADC693CEB7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2024 09:17:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C1391F21E83
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2024 07:01:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 938E81C20D54
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2024 07:17:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB7F21741E8;
-	Fri, 26 Jul 2024 07:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13BB1548EE;
+	Fri, 26 Jul 2024 07:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BSR16UfT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZmyjPj6q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F74023D2;
-	Fri, 26 Jul 2024 07:01:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE2517557E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jul 2024 07:17:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721977296; cv=none; b=OCLHp2zfCRnX2d5eYXDhjs96Hd8hht0oeKp9OWbaWY4A64D+pC87sJzuDDVZezSuiVQ/NaiHiNRP88ah4T2vz5YnEboLjL68RhFAFpUZO8KrvpjKV2S1ZaVfSTSWnUT2c/i5CXYZ2CaZCH+sd8KuZwLZ7qe/iJ546/FTvIbARXg=
+	t=1721978228; cv=none; b=jBXuXjPK/S7JPEZFuwzjcAvw5yifJ/4F69KP5V6ZPYi8to3XRbndlbNhuo7MppOwaU8aORawN0DBG998MNwqhCqlLyQP9EU7BP4gpGuGV1MvVwjWKrHwXUkX9Ju4ZUpbzal4DDldVnLQJImsM+Ln/EaebwWGfaYZWomRxaQ7BUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721977296; c=relaxed/simple;
-	bh=BpykowJ9h4lhejSBCRQ5ewjt4CV375wwZQYHRzmFWM0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=gqbi6LqiylpFTPRibLjMpz9A4AEthBVCXO8VST/n8YLXmp8m5vo0GjyJZov3GYeE+HiDz8mRFg2VOsJfjWMHmIAlEk3Fw34JbHXXSb1WCIMR8MwW83vbXP9K2UGlhn8URWNb7EUegA67i5JUirTgGPsLNuBBxB0MKlxxw88JaN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BSR16UfT; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46Q15ifB018586;
-	Fri, 26 Jul 2024 07:01:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	B3zvec5pWB4rOB8Rd2yXXfGVchNT6ea4/aUuH8APNBI=; b=BSR16UfTDhZs4nTj
-	OA6uZWOgJ4yag78zdXwy4YRwK8pIee8sgEahe53VqUKzMfCdnSusLHVCFnRrS5YN
-	jbhZstejMisRbgvCajsjdQxOUz5HGmeYDtkITSZlUiTY2aR3ld3pdQySUFA4aqlk
-	P4DiJoECDCQkxBbWy7elUcAm9Y7nIma9Dn5qsslWBelcujaAugM3aW4o4VEPoKWF
-	o+PtW2nVR6MliJdIUmD7U/bG6/B0ONl1srXFAjFLEL02E0VIDUr+gagEToK/JivV
-	CLMViQzvwRsIi4bTq/2/YDbk7F1caLf652ia+237MpkoHL6zogpj29vsU8AO3yM+
-	Io1O2Q==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40m1u5gmht-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Jul 2024 07:01:25 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46Q71OAr003454
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 26 Jul 2024 07:01:24 GMT
-Received: from [10.218.19.46] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 26 Jul
- 2024 00:01:21 -0700
-Message-ID: <fe44268d-76bb-bdbd-e54e-39a38e4e5a49@quicinc.com>
-Date: Fri, 26 Jul 2024 12:31:16 +0530
+	s=arc-20240116; t=1721978228; c=relaxed/simple;
+	bh=1Nvs/8Kt+upgOyjXRd8HbkEzugVKCAjoIpWCWBKxlWk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=rBUqyBYLpWXW13CsL2MsxdoAj4NWml1HfkqECCSFWe8RdtUyqpaUVYRyfopraI3mC2m9oOyGcRGC5qONcMMlawH/54ARNjQB+FKZe5THJjF8VyPX8Rc7c18LuoQ5nulePXAzMMJxn9pswlsbEcA1QH15WzVeTq/QaucC/3IEWnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZmyjPj6q; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-428035c0bb2so9505245e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Jul 2024 00:17:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721978224; x=1722583024; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=f5fZc0Z1BPfgBmbUxSwFiphndMv9OlBc2qr6if08fJ8=;
+        b=ZmyjPj6qqxVlBRBoLR2mk8trCOATQM54xNynYkXn2t0k617DnTKKCd7pZ+fSspT/2e
+         yS71oA31c29vb/oaNhbpxxIzc6SSQKtdi5ZDOedttoOKn/EVVYVu9g1YvTcfEE4ArrYr
+         oKynVtRZ9lvEdIlmD8tR+B5GUPIfo/gQJf9N3QXhkLrkQDmbsVziAoYQagIBQjmSCRHL
+         uv6WWoilg5pHmnIqw1qbJ6Eu/3vmKY213toPrOnQl2BfUOBH1hFIVC8fd3Pqv3WKBgBb
+         nPArAy+kHGKzpdXGQGoFZvbUbFMDKltpTTIgJ2SVVpHStOLtk4sUbssp3qr4OBq8QeIX
+         fEcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721978224; x=1722583024;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=f5fZc0Z1BPfgBmbUxSwFiphndMv9OlBc2qr6if08fJ8=;
+        b=rJkKFHzq3PYlW9WKufdMGhTHeQ8DgBDuOBfWoFiAu/5d5Z1izvHvZEqL5dh0Ezktit
+         k6uGewdsalmVz7qe/6FduDYXu++fzci8PgDqbKcTbmZexBCg6venNrK6Z4XixtLUzZCA
+         PiTWbFhUl8OAoRFmXYnq19+c9fT9MnFDh+EUKjkRPTFhxcSOx1wkLADgsn133zYFDF5a
+         c55/Of3P6AsNY++kcpcEhoIMJxjG2rJYpfE7xRowH2k5vAJe21NPah+fMOPIML2yeX2l
+         /g3GRpWjIZaixxM+Pns7AFQBCgQD67Cazqw14s9XtXDluKEYsTCN0/+pxiadLbYff+lF
+         rS0A==
+X-Forwarded-Encrypted: i=1; AJvYcCV/+hJ4ziCp8/UR8GMjKNDCV1TGUh2SG99h7BhO9YbG8lMVV/JcXIOgY9OPI/zLi44SHWvQFk0WdsXJF1XDmB+7Iy0h0MOGeghRAb0+kA==
+X-Gm-Message-State: AOJu0YxF0f5a7bqx5i+le1iXv9k6gsfj65gP0AbPtTA8YiokMDlAHUjw
+	i2jXFmJOydeRkQCgrlq0Dr41x6xx5dP7Ev/ShBD74r961+sQVVrWH0CWHBP5beg=
+X-Google-Smtp-Source: AGHT+IHmUYcCHoBWim6hLPveQGEcMSW+Ez+euODuPwLymBdFGWqWwJg4HKqug+jFC6v9z6Jn9sZeVA==
+X-Received: by 2002:a05:600c:3c8f:b0:426:5cc7:82f with SMTP id 5b1f17b1804b1-42803b43d7fmr36330175e9.13.1721978223535;
+        Fri, 26 Jul 2024 00:17:03 -0700 (PDT)
+Received: from [127.0.1.1] ([82.79.124.209])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-427f9359422sm109096335e9.10.2024.07.26.00.17.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Jul 2024 00:17:03 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+Date: Fri, 26 Jul 2024 10:16:56 +0300
+Subject: [PATCH] phy: qcom-qmp-pcie: Fix X1E80100 PCIe Gen4 PHY
+ initialisation
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH] clk: qcom: camcc-sc8280xp: Remove always-on GDSC
- hard-coding
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen
- Boyd <sboyd@kernel.org>
-CC: <dmitry.baryshkov@linaro.org>, <stable@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240715-linux-next-24-07-13-sc8280xp-camcc-fixes-v1-1-fadb5d9445c1@linaro.org>
- <f0d4b7a3-2b61-3d42-a430-34b30eeaa644@quicinc.com>
- <86068581-0ce7-47b5-b1c6-fda4f7d1037f@linaro.org>
- <02679111-1a35-b931-fecd-01c952553652@quicinc.com>
- <ce14800d-7411-47c5-ad46-6baa6fb678f4@linaro.org>
- <dd588276-8f1c-4389-7b3a-88f483b7072e@quicinc.com>
- <610efa39-e476-45ae-bd2b-3a0b8ea485dc@linaro.org>
- <6055cb14-de80-97bc-be23-7af8ffc89fcc@quicinc.com>
- <a0ac4c3b-3c46-4c89-9947-d91ba06309f4@linaro.org>
-From: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>
-In-Reply-To: <a0ac4c3b-3c46-4c89-9947-d91ba06309f4@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: MJgTtgTg9D62WMhxtZohgcFV0K8Ibioy
-X-Proofpoint-GUID: MJgTtgTg9D62WMhxtZohgcFV0K8Ibioy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-26_04,2024-07-25_03,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- mlxlogscore=885 adultscore=0 phishscore=0 malwarescore=0
- priorityscore=1501 lowpriorityscore=0 spamscore=0 mlxscore=0 bulkscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407260046
+Message-Id: <20240726-x1e80100-phy-qmp-pcie-fix-config-v1-1-b569f03c0c48@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAGdNo2YC/x2NywqAIBAAfyX23MIqRY9fiQ6la+0hM4Uoon9PO
+ g4DMw8kjsIJ+uKByKck2X0GVRZg1skvjGIzgyZdUaNrvBS3pIgwrDceW8BghNHJhWb3Thacutm
+ apna2cww5EyJn+y+G8X0/JtDbFHIAAAA=
+To: Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ Johan Hovold <johan@kernel.org>, Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5152; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=1Nvs/8Kt+upgOyjXRd8HbkEzugVKCAjoIpWCWBKxlWk=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmo01pxKZ5wvkYHH6ICmnpqaZVZxnCO3YKe4DfU
+ O2DhkxoYPWJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZqNNaQAKCRAbX0TJAJUV
+ Vkl0D/0V28qaDgycM1xGtsm+T8qpFarPqqpb6VhqZ+kHgYvlaO5w3lFJQBsI8p6h60koXJP3p5R
+ DgroXWfQbRD/Xl791JVXfr11OAUa2lx9Yh4jEzVRNXjUedX0nR5A6wFSRJpBWthrv37bFvfz+MH
+ 6N8CG9qOcA2qwShoBx+tOaHHsD4OtoLhMtrmZGCtPgryafOzxx2+EDewG1mNu4cjlmY/XcQexv1
+ 4L9MmsyI5uLuuFkwzVMoNjPLbY37d8EYH0UN1/HODWiULyXWRPqFlDW/Qc9jNll/Na5V4XSmTFT
+ BbZmck3/CRJRp0ZMxnUZWAEJWdfhSrdLrXWTAp9YjdXtNSpeReVsCivJIw82PD0ZJRuYspzH84J
+ ThyR7+gTUKQOzkaC7lxVXPrY+r7lyUD/CFmsNYeGdo2+X9xPRhnxK5K/3XzbR/QoSWCDFspzh8g
+ v5Mzbrur6pGaezgigY60nrxB2klwl0mgdJoNnHRUoZf+VVbAciqwINaNXVVEBLN+mspDJjnP/ra
+ LJSz9r6OOBvmQe5/y9I1K9+u32TfIvammdjAKkpjazfPxR83jy8k0249ID9ZZCkS0kfKQqIhQPi
+ EshkTD2/dtI23BKgYAu7poHaM5nH+4W+fxSsOC3LiKSelg8BA5EF3b1lepGMh6fMAhW41+OCTOG
+ wLxT0MvqZE+etcA==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
+Update the PCIe Gen4 PHY init sequence with the latest based on internal
+Qualcomm documentation.
 
-On 7/23/2024 2:59 PM, Bryan O'Donoghue wrote:
-> On 22/07/2024 09:57, Satya Priya Kakitapalli (Temp) wrote:
->>> I have no idea. Why does it matter ?
->>>
->>
->> This clock expected to be kept always ON, as per design, or else the 
->> GDSC transition form ON to OFF (vice versa) wont work.
->
-> Yes, parking to XO per this patch works for me. So I guess its already 
-> on and is left in that state by the park.
->
->> Want to know the clock status after bootup, to understand if the 
->> clock got turned off during the late init. May I know exactly what 
->> you have tested? Did you test the camera usecases as well?
->
-> Of course.
->
-> The camera works on x13s with this patch. That's what I mean by tested.
->
+Fixes: 606060ce8fd0 ("phy: qcom-qmp-pcie: Add support for X1E80100 g3x2 and g4x2 PCIE")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-It might be working in your case, but it is not the HW design 
-recommended way to do. The same should not be propagated to other 
-target's camcc drivers, as I already observed it is not working on SM8150.
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+index 5b36cc7ac78b..8b624afbf014 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+@@ -1245,8 +1245,8 @@ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_serdes_tbl[] = {
+ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_ln_shrd_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RXCLK_DIV2_CTRL, 0x01),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_DFE_DAC_ENABLE1, 0x88),
+-	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_TX_ADAPT_POST_THRESH1, 0x00),
+-	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_TX_ADAPT_POST_THRESH2, 0x1f),
++	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_TX_ADAPT_POST_THRESH1, 0x02),
++	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_TX_ADAPT_POST_THRESH2, 0x0d),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B0, 0xd4),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B1, 0x12),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MODE_RATE_0_1_B2, 0xdb),
+@@ -1263,6 +1263,7 @@ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_ln_shrd_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH4_RATE3, 0x1f),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH5_RATE3, 0x1f),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_MARG_COARSE_THRESH6_RATE3, 0x1f),
++	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RX_SUMMER_CAL_SPD_MODE, 0x5b),
+ };
+ 
+ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_tx_tbl[] = {
+@@ -1286,12 +1287,15 @@ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_rx_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_DFE_1, 0x01),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_DFE_2, 0x01),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_DFE_3, 0x45),
+-	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_VGA_CAL_MAN_VAL, 0x0b),
++	QMP_PHY_INIT_CFG_LANE(QSERDES_V6_20_RX_VGA_CAL_MAN_VAL, 0x0A, 1),
++	QMP_PHY_INIT_CFG_LANE(QSERDES_V6_20_RX_VGA_CAL_MAN_VAL, 0x0B, 2),
++	QMP_PHY_INIT_CFG(QSERDES_V6_20_VGA_CAL_CNTRL1, 0x00),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_GM_CAL, 0x0d),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_EQU_ADAPTOR_CNTRL4, 0x0b),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_SIGDET_ENABLES, 0x1c),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_PHPRE_CTRL, 0x20),
+-	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_DFE_CTLE_POST_CAL_OFFSET, 0x38),
++	QMP_PHY_INIT_CFG_LANE(QSERDES_V6_20_RX_DFE_CTLE_POST_CAL_OFFSET, 0x3A, 1),
++	QMP_PHY_INIT_CFG_LANE(QSERDES_V6_20_RX_DFE_CTLE_POST_CAL_OFFSET, 0x38, 2),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_Q_PI_INTRINSIC_BIAS_RATE32, 0x39),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE2_B0, 0x14),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE2_B1, 0xb3),
+@@ -1307,6 +1311,7 @@ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_rx_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE3_B4, 0x4b),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE3_B5, 0x76),
+ 	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_MODE_RATE3_B6, 0xff),
++	QMP_PHY_INIT_CFG(QSERDES_V6_20_RX_TX_ADPT_CTRL, 0x10),
+ };
+ 
+ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_pcs_tbl[] = {
+@@ -1314,6 +1319,8 @@ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_pcs_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QPHY_V6_20_PCS_RX_SIGDET_LVL, 0xcc),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_20_PCS_EQ_CONFIG4, 0x00),
+ 	QMP_PHY_INIT_CFG(QPHY_V6_20_PCS_EQ_CONFIG5, 0x22),
++	QMP_PHY_INIT_CFG(QPHY_V6_20_PCS_TX_RX_CONFIG1, 0x04),
++	QMP_PHY_INIT_CFG(QPHY_V6_20_PCS_TX_RX_CONFIG2, 0x02),
+ };
+ 
+ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_pcs_misc_tbl[] = {
+@@ -1324,11 +1331,13 @@ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_pcs_misc_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G4_PRE_GAIN, 0x2e),
+ 	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_RX_MARGINING_CONFIG1, 0x03),
+ 	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_RX_MARGINING_CONFIG3, 0x28),
++	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G3_RXEQEVAL_TIME, 0x27),
++	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G4_RXEQEVAL_TIME, 0x27),
+ 	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_TX_RX_CONFIG, 0xc0),
+ 	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_POWER_STATE_CONFIG2, 0x1d),
+-	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_RX_MARGINING_CONFIG5, 0x0f),
+-	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G3_FOM_EQ_CONFIG5, 0xf2),
+-	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G4_FOM_EQ_CONFIG5, 0xf2),
++	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_RX_MARGINING_CONFIG5, 0x18),
++	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G3_FOM_EQ_CONFIG5, 0x7a),
++	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G4_FOM_EQ_CONFIG5, 0x8a),
+ };
+ 
+ static const struct qmp_phy_init_tbl sm8250_qmp_pcie_serdes_tbl[] = {
 
+---
+base-commit: 864b1099d16fc7e332c3ad7823058c65f890486c
+change-id: 20240725-x1e80100-phy-qmp-pcie-fix-config-a9bdc75fd9fe
 
-> ---
-> bod
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
+
 
