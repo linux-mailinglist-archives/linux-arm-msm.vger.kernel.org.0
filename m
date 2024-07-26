@@ -1,49 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-27106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5DB093DAB7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jul 2024 00:39:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8ABA493DABA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jul 2024 00:39:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 71234283DC6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2024 22:39:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BB5E31C211E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Jul 2024 22:39:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B5001527AC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DED2153801;
 	Fri, 26 Jul 2024 22:39:17 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5004C15099D;
-	Fri, 26 Jul 2024 22:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E4951527B4;
+	Fri, 26 Jul 2024 22:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722033557; cv=none; b=MYJPcbva8iM+UiVJ8Qwn9JFeRV5S6YdPNVHgHjLJIdY/QZLTK3YekBePgfsFM+8zs8i55NobwhTLkbBWHwwUHClBZ22wjfv9MQX/Ht8XiUUzbj1iFip+bc3JNgx8eNZrWXBQVzevL9jiW2VXO8WaA3EPt1ZhE21xNzOgmfH91UM=
+	t=1722033557; cv=none; b=ZKkOwxH8SVU7NfA+wgbTarMft23ExWowmZtfsVBHYKMI4mZeIUZMZ+REGpc7cosOQUBXMy+98vQV/51yHUlz71IBJYzWa1DT+DHeNFFGKwmBWQwvcX8WG2D6MlBsu+UIEfQwrLdWHc2SDUZ5cIRtM5psFflGYMns5u5i09XAj2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1722033557; c=relaxed/simple;
-	bh=Bu5UslRBZq44O0sqBkTIKfN+TgpcyydLs8owUsPUz8w=;
+	bh=ZypOPMYT7LnQZE/cklTe2XVxU0bVptXb5S3g48F+Qmo=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=M466wzzR+rlZh/3fyC+S1Q3r5y9AbOBEW/QzeLu4pUzOfJtmmwD4dSrKIRb4HQRZ2VcbfqYsNZZ6go0LCjNcVeZEKW6iK0VSWTNn8EmtpybDI3NAISuEYOczkN/B3mGdV38MLq1bUNOnVn2n2Mz44gch1h6nIzSdQfS4QxEAkzc=
+	 MIME-Version:Content-Type; b=hFvUIS9LWqq1/G3lN0lxp8UGcR1W74Fnmty6LT356MfZzofdNu5cot7OOSIEnxVS0HQoD60Oyu3vhn5LHnYi01+JgbdqIKI3EfWFm8M98QTUvbWmPdijOj2bxmbeM4Bpfbhxx32jhJQWsPVD0t8oTUP1ihKqQ9bows29E9z2zZA=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7141C32782;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F047AC4AF0E;
 	Fri, 26 Jul 2024 22:39:16 +0000 (UTC)
 Received: by mercury (Postfix, from userid 1000)
-	id 6CB721060980; Sat, 27 Jul 2024 00:39:14 +0200 (CEST)
+	id 7142E1060981; Sat, 27 Jul 2024 00:39:14 +0200 (CEST)
 From: Sebastian Reichel <sebastian.reichel@collabora.com>
 To: Sebastian Reichel <sre@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Daniel Lezcano <daniel.lezcano@linaro.org>, 
- "Rafael J. Wysocki" <rjw@rjwysocki.net>, linux-arm-msm@vger.kernel.org, 
- linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- stable@vger.kernel.org
-In-Reply-To: <20240715-topic-sm8x50-upstream-fix-battmgr-temp-tz-warn-v1-1-16e842ccead7@linaro.org>
-References: <20240715-topic-sm8x50-upstream-fix-battmgr-temp-tz-warn-v1-1-16e842ccead7@linaro.org>
-Subject: Re: [PATCH] power: supply: qcom_battmgr: return EAGAIN when
- firmware service is not up
-Message-Id: <172203355443.246603.13662219731890792931.b4-ty@collabora.com>
+ Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
+ Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20240712-x1e80100-battmgr-v1-1-a253d767f493@linaro.org>
+References: <20240712-x1e80100-battmgr-v1-1-a253d767f493@linaro.org>
+Subject: Re: [PATCH] power: supply: qcom_battmgr: Ignore extra __le32 in
+ info payload
+Message-Id: <172203355445.246603.641268123308931375.b4-ty@collabora.com>
 Date: Sat, 27 Jul 2024 00:39:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -56,23 +55,18 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Mon, 15 Jul 2024 14:57:06 +0200, Neil Armstrong wrote:
-> The driver returns -ENODEV when the firmware battmrg service hasn't
-> started yet, while per-se -ENODEV is fine, we usually use -EAGAIN to
-> tell the user to retry again later. And the power supply core uses
-> -EGAIN when the device isn't initialized, let's use the same return.
+On Fri, 12 Jul 2024 12:00:03 +0200, Stephan Gerhold wrote:
+> Some newer ADSP firmware versions on X1E80100 report an extra __le32 at the
+> end of the battery information request payload, causing qcom_battmgr to
+> fail to initialize. Adjust the check to ignore the extra field in the info
+> payload so we can support both old and newer firmware versions.
 > 
-> This notably causes an infinite spam of:
-> thermal thermal_zoneXX: failed to read out thermal zone (-19)
-> because the thermal core doesn't understand -ENODEV, but only
-> considers -EAGAIN as a non-fatal error.
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] power: supply: qcom_battmgr: return EAGAIN when firmware service is not up
-      commit: bf9d5cb588755ee41ac12a8976dccf44ae18281b
+[1/1] power: supply: qcom_battmgr: Ignore extra __le32 in info payload
+      commit: d6cca7631a4b54a8995e3bc53e5afb11d3b0c8ff
 
 Best regards,
 -- 
