@@ -1,51 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-27132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49DBB93E0DC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jul 2024 22:14:52 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B3D393E0DB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jul 2024 22:14:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7AFA81C20E03
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jul 2024 20:14:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E47D72821F3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jul 2024 20:14:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0D383C6A6;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 776503B784;
 	Sat, 27 Jul 2024 20:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="e8Rsk+BK"
+	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="g33h+S3e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
+Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90129208DA
-	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jul 2024 20:14:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4413612D
+	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jul 2024 20:14:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722111280; cv=none; b=oNlGuxOxbYhuWxOdRK4z96ORliMW1nErdnpggC0de6WgWJoiyiv2UsLB9Zk6LTEMEf4ht957HP1Yx6ZbMy13ziGF2R8+bJuR9JwOVC3nacnr+X5UOyrDYNgkedD1ZrhLAwkbbgi7OxGNcftlXdg9L3vIWjsl5w/F92gcIAn4D88=
+	t=1722111280; cv=none; b=S/6hldWJ6xUSWR/nGVoAyyvlLLEBef+d2t0keUcfl8xqC2+aAxKTPRJ2tpOMkEf1cUIsEzZLROVCspAGlHU7ZexzQRY2Iab8kLHKpTWAChflpJoYmrZucSa+7rVh37wk0MjLpWwX8drTIapq5YFnNUOk7XPYHKSjSek/iLluLDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1722111280; c=relaxed/simple;
-	bh=R6vOt84YOoIAaK+WRWFakbaXcceo08nM1eGDlst0cQk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OolSXasNXoWbmKGZuLUqNpJBGxBu+KS7uc1mE76JXTXpXdBYl+sLljQ1P8sQ5JYAT8rJsajZx+dlvlnTo17+JSuAR8svb3I8PPaCNoXWRmikQFKvKoh/ZezME3/ZZsrMWH9enhhuyuTVx60KhnbdsQq1I/fCeVHz1CZsAfV+vJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=e8Rsk+BK; arc=none smtp.client-ip=185.67.36.65
+	bh=b/bwYa2KaiPMsL7zw8XYW9nhn4IkF5uvVsNPxcJk3z4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qOxrbihzn5eDZzkbU3U8y6RwlgU8l4jF7ixD39EOpS5YA36qq5Is9K9FuG8paslapejGLeSzGiDZEsUloMPN0w/kwaJam0rXS0wK6tAJOqzh1GpaZoUyJgRMuV5sCYtM650v4PTRODf3vVo6Q5REcqhkSpRSPGdzH9qR0lGBrLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=g33h+S3e; arc=none smtp.client-ip=185.67.36.66
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
 Received: from submission (posteo.de [185.67.36.169]) 
-	by mout01.posteo.de (Postfix) with ESMTPS id BAC23240029
-	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jul 2024 22:14:29 +0200 (CEST)
+	by mout02.posteo.de (Postfix) with ESMTPS id A0C71240104
+	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jul 2024 22:14:30 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
-	t=1722111269; bh=R6vOt84YOoIAaK+WRWFakbaXcceo08nM1eGDlst0cQk=;
+	t=1722111270; bh=b/bwYa2KaiPMsL7zw8XYW9nhn4IkF5uvVsNPxcJk3z4=;
 	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:
 	 Content-Transfer-Encoding:From;
-	b=e8Rsk+BKWeUZYao5mv4C0JKh/9xo4znYwtAn7xO9C6aiXrNFbQdFk0Xb1Ps05kgmI
-	 HX1MAfNzS+qOFwJ3gusTx3OvNT80KNyflghEl39NQyEwH2mfjFhjPsQUeLx0YRhZMD
-	 VEAH/p0svG7sAWHhWtdencZUmCjVisd9/UG+fp9SWMjkUYDo7YeEXRamWWdIK/XPRk
-	 6MAfM6B/f6eOhVSUhRZgdO1W+FXesbsKPcOjFbnhYI7Ukv2XAltiPeL9akmcyvUebO
-	 cT9qxIu3B7iNNaiS8zF+5x6lkktEaCYJTwHniD02+1UNUgCTiNYL5tuZBebkDOWAaQ
-	 pBTOGbR44xJNA==
+	b=g33h+S3eTfYsgcNXNfrWL2dR3EJo50J0AsZofEjeH2+UMO8cAOCX2u/Nu4jLOz66L
+	 ZMl9QYKorfcpO6339yzGOxVc0wIqXRSrtSJ2NLKs54J9M3fbHKP+kn6zf49NwZXWY6
+	 DVdElz4KFtaGMv2SaK9r4jNVIOI4OhVIPcwtNjeS/Hit9cfMEyQfesdKqDHdnCfdB8
+	 rooQPz92IUzjXZLthjhWfzJns19UuxSuwqjS2zLi/NtjzpXPf52k63gu0vgsvq/NdR
+	 RlDShhP1b5AVpUxZ1KE/cLQb8GhL93m/CDXz2nvaRys5qEsX/1zT9xiZhrGBCHM36Q
+	 uYwOGYwNr/KAA==
 Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4WWbSN3Ynqz6trs;
-	Sat, 27 Jul 2024 22:14:28 +0200 (CEST)
+	by submission (posteo.de) with ESMTPSA id 4WWbSP3Qs8z6tym;
+	Sat, 27 Jul 2024 22:14:29 +0200 (CEST)
 From: Alexander Reimelt <alexander.reimelt@posteo.de>
 To: andersson@kernel.org,
 	petr.vorel@gmail.com,
@@ -56,9 +57,11 @@ To: andersson@kernel.org,
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v3 0/2] arm64: Add basic support for LG H815
-Date: Sat, 27 Jul 2024 20:04:48 +0000
-Message-ID: <20240727201413.114317-1-alexander.reimelt@posteo.de>
+Subject: [PATCH v3 1/2] dt-bindings: arm: qcom: Add LG G4 (h815)
+Date: Sat, 27 Jul 2024 20:04:49 +0000
+Message-ID: <20240727201413.114317-2-alexander.reimelt@posteo.de>
+In-Reply-To: <20240727201413.114317-1-alexander.reimelt@posteo.de>
+References: <20240727201413.114317-1-alexander.reimelt@posteo.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,28 +70,25 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello,
+International variant of the LG G4 from 2015.
 
-Changes in v3:
-- use 0x0 consistently
-- pad to 8 digits
-- drop compatible = "framebuffer" because it's unused
-- drop chosen
+Signed-off-by: Alexander Reimelt <alexander.reimelt@posteo.de>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks again for your time.
-
-v2: https://lore.kernel.org/linux-devicetree/20240530135922.23326-1-alexander.reimelt@posteo.de/
-
-Alexander Reimelt (2):
-  dt-bindings: arm: qcom: Add LG G4 (h815)
-  arm64: dts: qcom: msm8992-lg-h815: Initial support for LG G4 (H815)
-
- .../devicetree/bindings/arm/qcom.yaml         |   1 +
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts  | 231 ++++++++++++++++++
- 3 files changed, 233 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8992-lg-h815.dts
-
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index f08e13b61172..f79730d02eb7 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -250,6 +250,7 @@ properties:
+       - items:
+           - enum:
+               - lg,bullhead
++              - lg,h815
+               - microsoft,talkman
+               - xiaomi,libra
+           - const: qcom,msm8992
 -- 
 2.45.2
 
