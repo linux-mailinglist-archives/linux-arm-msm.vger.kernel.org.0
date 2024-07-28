@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-27143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70CA593E425
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 10:47:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2342A93E484
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 12:30:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1C33B281A21
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 08:47:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B10C1F217BD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 10:30:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17A7F15E97;
-	Sun, 28 Jul 2024 08:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DD182E64A;
+	Sun, 28 Jul 2024 10:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R4qQcqNZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k/xYx9T7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAF7111AD;
-	Sun, 28 Jul 2024 08:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336C52C69B;
+	Sun, 28 Jul 2024 10:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722156459; cv=none; b=s5UZAobwSKU4JJqFYrzkQfFErW0yJNbvntH2vgzwOegkefVnMtmQR1dw5ilybP7VGKWyEuBUNGbxtW3lo8wNc6I9vyNi0CR2B+S0edBFt3bJP50az22gW/PqUA0yDNPVJ2I7jY2AWlKNmvt1N30z9KkGDev+uwZHVgZLZtYS7b4=
+	t=1722162620; cv=none; b=MEdylj8WdMJhf5SBxrUcuOVB+66VPuGADSsgYvamHk1RnlNWKM8l41qdRHQzPzc9qWgv+ktQ424pto3Ed5i6xVCqm8xTdIeXoK3lWouiQK1u4QWOpsNlk+nj+ri4M6alKkcMmQ9TBUKnY2aMlHCc/2umxSY5KykyWh3oYlRu1ZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722156459; c=relaxed/simple;
-	bh=R03aHgTg/jV6w3nu84n0N8Wysordsme2YV/oKsx4+tQ=;
+	s=arc-20240116; t=1722162620; c=relaxed/simple;
+	bh=eDWjhLzi6G1agWre6Y7l9EsOG8ksGnVzkj/CACSAyj0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EikxtzCod8W1Iu3A4bxidQQCvhxjWXG9td0ynnkqWBEO5EtaA/G/DT4DJVLwgVJFYyQnykRkRGEo2CsCwmhI+64PTiEhk0R3B2ac48+6yqeZgS/aUWKX2CQpOatEdZp6k9KHwx22JIq0Pp84SFWMaVXJ6OWZvPSJdy7SILif6ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R4qQcqNZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13209C116B1;
-	Sun, 28 Jul 2024 08:47:31 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=EVFvbq+bJ1T75Uhz/RPhV833GOrZgEAt2RtxFpGogZJp8UcxOuTOlbrujJ1w6zjy9hvzpmcbOadrB35elFqccHB/Mw238Q3EKeO86c7Uyoz74rMqlOogvOKUJS6EvVmN4iAXC86bebWBEsHReAUC2zqMsJ9DWuM2nLylHKNYW8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k/xYx9T7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C7AC116B1;
+	Sun, 28 Jul 2024 10:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722156458;
-	bh=R03aHgTg/jV6w3nu84n0N8Wysordsme2YV/oKsx4+tQ=;
+	s=k20201202; t=1722162619;
+	bh=eDWjhLzi6G1agWre6Y7l9EsOG8ksGnVzkj/CACSAyj0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=R4qQcqNZtBv3I/k0YIphQrYQ7pzTkW33mZls/b2t+ciZYrZBtMwKxbA1RiHGvqC0k
-	 qVZbiEpLLVsiIQ+JlNAranL1rpf/XXk9cvss1RMbJjYGKOu19RKHuBdPeXQfKMtwhK
-	 V645f2x0PtCCtA7NIVMs/O/rHQwb7xXnRR8i/92dr/NtQFvaRB6uiA0dtHmny3NKr4
-	 q68RvklopzLhdP31wrcHfjWPnRBAVmAgoWiRjBLPyph23IDPY+l14QERcbYIh24fvG
-	 7tFKcUz/O+OWGqFcMCaoCu24FUIgujUwfCkLTVswLOh0xRmNhIXluiK6A01UCEZBYd
-	 zironSjr/isVA==
-Message-ID: <00b6a3bf-082a-415c-b112-16b273d1af7c@kernel.org>
-Date: Sun, 28 Jul 2024 10:47:29 +0200
+	b=k/xYx9T7/I2WLfcnu+Qa5RkJFKH7BboES21hXWKrBAIClTAFCPA1Oqyli2VQYQn7h
+	 9yVsmefHU5cfToCSrPRG9wTIeOo3mD93MxzSc9NScVH/PEtZZgsgsei8bcXhXW01PW
+	 WkbOvyR8aNgRuZZXiIZayXSyK08RAWwZd3Si9fGI+0tmLcz3vo4gs2aGf4OuLgFvAu
+	 wVow3KrkyVlKuzd2cKdAlWDieWPy1zSFbfwBxUxOMBlEQNmSk0hZyZxeiBc6ACZn9H
+	 zcJCbeuVv5/ssY8PSXvoooSn0oGM/6RcYMka/BqlBsGWVdVVr+hOSsmAurOZetqJJN
+	 pO04cnEfEZNTA==
+Message-ID: <3d9f76c1-2e14-43dc-b438-5fac94ffc73e@kernel.org>
+Date: Sun, 28 Jul 2024 12:30:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,24 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] ASoC: dt-bindings: apq8016-sbc: Add
- msm8953/msm8976-qdsp6-sndcard
-To: Adam Skladowski <a39.skl@gmail.com>
-Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+Subject: Re: [PATCH] ASoC: dt-bindings: qcom,apq8016-sbc-sndcard: move to
+ separate binding
+To: Stephan Gerhold <stephan@gerhold.net>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
  Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
  Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, Nathan Chancellor <nathan@kernel.org>,
- Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling
- <morbo@google.com>, Justin Stitt <justinstitt@google.com>,
- Stephan Gerhold <stephan@gerhold.net>, alsa-devel@alsa-project.org,
+ <conor+dt@kernel.org>, alsa-devel@alsa-project.org,
  linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- llvm@lists.linux.dev
-References: <20240727182031.35069-1-a39.skl@gmail.com>
- <20240727182031.35069-4-a39.skl@gmail.com>
+ Adam Skladowski <a39.skl@gmail.com>,
+ Stephan Gerhold <stephan.gerhold@linaro.org>
+References: <20240723083300.35605-1-krzysztof.kozlowski@linaro.org>
+ <ZqVXUI37fNB5D0DM@gerhold.net>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,104 +110,73 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240727182031.35069-4-a39.skl@gmail.com>
+In-Reply-To: <ZqVXUI37fNB5D0DM@gerhold.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27/07/2024 20:20, Adam Skladowski wrote:
-> Document MSM8953/MSM8976 QDSP6 cards.
+On 27/07/2024 22:23, Stephan Gerhold wrote:
+> On Tue, Jul 23, 2024 at 10:33:00AM +0200, Krzysztof Kozlowski wrote:
+>> The APQ8016 SBC and MSM8916 QDSP6 sound cards are a bit different from
+>> others: they have additional IO muxing address space and pin control.
+>> Move them to separate schema, so the original qcom,sm8250.yaml will be
+>> easier to manage.  New schema is going to grow for other platforms
+>> having more of IO muxing address spaces.
+>>
+>> Cc: Adam Skladowski <a39.skl@gmail.com>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+>> .../sound/qcom,apq8016-sbc-sndcard.yaml       | 205 ++++++++++++++++++
+>> .../bindings/sound/qcom,sm8250.yaml           | 137 ------------
+>> 2 files changed, 205 insertions(+), 137 deletions(-)
+>> create mode 100644 Documentation/devicetree/bindings/sound/qcom,apq8016-sbc-sndcard.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/sound/qcom,apq8016-sbc-sndcard.yaml b/Documentation/devicetree/bindings/sound/qcom,apq8016-sbc-sndcard.yaml
+>> new file mode 100644
+>> index 000000000000..6ad451549036
+>> [...]
+>> diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+>> index c9076dcd44c1..1d3acdc0c733 100644
+>> --- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+>> +++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+>> @@ -27,9 +27,7 @@ properties:
+>>               - qcom,sm8650-sndcard
+>>           - const: qcom,sm8450-sndcard
+>>       - enum:
+>> -          - qcom,apq8016-sbc-sndcard
+>>           - qcom,apq8096-sndcard
+>> -          - qcom,msm8916-qdsp6-sndcard
+>>           - qcom,qcm6490-idp-sndcard
+>>           - qcom,qcs6490-rb3gen2-sndcard
+>>           - qcom,qrb5165-rb5-sndcard
+>> @@ -58,18 +56,6 @@ properties:
+>>     $ref: /schemas/types.yaml#/definitions/string
+>>     description: User visible long sound card name
+>>
+>> -  pin-switches:
+>> -    description: List of widget names for which pin switches should be created.
+>> -    $ref: /schemas/types.yaml#/definitions/string-array
+>> -
+>> -  widgets:
+>> -    description: User specified audio sound widgets.
+>> -    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
+>> -
 > 
-> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
-> ---
-
-Your cover letter must ALWAYS clearly document the dependency.
-
->  .../sound/qcom,apq8016-sbc-sndcard.yaml       | 51 ++++++++++++++++---
->  1 file changed, 45 insertions(+), 6 deletions(-)
+> These two properties are also valid and supported on all newer
+> platforms, please keep them here! There are certain use cases where
+> these are needed independent of the platform, e.g. to control an analog
+> switch or mux connected to speaker or headphone outputs.
 > 
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,apq8016-sbc-sndcard.yaml b/Documentation/devicetree/bindings/sound/qcom,apq8016-sbc-sndcard.yaml
-> index 6ad451549036..1706ce334d2f 100644
-> --- a/Documentation/devicetree/bindings/sound/qcom,apq8016-sbc-sndcard.yaml
-> +++ b/Documentation/devicetree/bindings/sound/qcom,apq8016-sbc-sndcard.yaml
-> @@ -15,16 +15,16 @@ properties:
->      enum:
->        - qcom,apq8016-sbc-sndcard
->        - qcom,msm8916-qdsp6-sndcard
-> +      - qcom,msm8953-qdsp6-sndcard
-> +      - qcom,msm8976-qdsp6-sndcard
->  
->    reg:
-> -    items:
-> -      - description: Microphone I/O mux register address
-> -      - description: Speaker I/O mux register address
+> I agree that it is cleaner to move the IO muxing to a new schema though.
+> Perhaps we could define something like a shared qcom,sndcard-common.yaml
+> schema to avoid duplication for these generic properties? In the Linux
+> driver, these are handled for all platforms in sound/soc/qcom/common.c.
 
-As I explained you on IRC, grow the list here and add minItems
+This was added to the common driver code but it does not mean it is
+reasonable binding. I don't understand why for example we even accept
+here aux-devs, instead of putting them into one of DAI links.
 
-> +    minItems: 2
-> +    maxItems: 3
->  
->    reg-names:
-> -    items:
-
-As I explained you on IRC, grow the list here and add minItems
-
-> -      - const: mic-iomux
-> -      - const: spkr-iomux
-> +    minItems: 2
-> +    maxItems: 3
->  
->    audio-routing:
->      $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-> @@ -106,6 +106,45 @@ required:
->    - reg-names
->    - model
->  
-> +allOf:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,apq8016-sbc-sndcard
-> +              - qcom,msm8916-qdsp6-sndcard
-> +    then:
-> +      properties:
-> +        reg:
-
-maxItems: 2
-
-> +          items:
-> +            - description: Microphone I/O mux register address
-> +            - description: Speaker I/O mux register address
-> +        reg-names:
-
-maxItems :2
-
-> +          items:
-> +            - const: mic-iomux
-> +            - const: spkr-iomux
-> +
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,msm8953-qdsp6-sndcard
-> +              - qcom,msm8976-qdsp6-sndcard
-> +    then:
-> +      properties:
-> +        reg:
-
-minItems: 3
-
-> +          items:
-> +            - description: Microphone I/O mux register address
-> +            - description: Speaker I/O mux register address
-> +            - description: Quinary Mi2S I/O mux register address
-> +        reg-names:
-
-minItems: 3
-
+The pin-switches and widgets could be used, but are they? The only valid
+argument to keep them is that you added them to common driver code.
 
 Best regards,
 Krzysztof
