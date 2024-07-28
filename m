@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-27144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2342A93E484
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 12:30:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD2B193E48B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 12:32:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9B10C1F217BD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 10:30:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B25B1F216C9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 10:32:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DD182E64A;
-	Sun, 28 Jul 2024 10:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7507E28683;
+	Sun, 28 Jul 2024 10:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k/xYx9T7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DaNOv1Eh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336C52C69B;
-	Sun, 28 Jul 2024 10:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42503BA20;
+	Sun, 28 Jul 2024 10:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722162620; cv=none; b=MEdylj8WdMJhf5SBxrUcuOVB+66VPuGADSsgYvamHk1RnlNWKM8l41qdRHQzPzc9qWgv+ktQ424pto3Ed5i6xVCqm8xTdIeXoK3lWouiQK1u4QWOpsNlk+nj+ri4M6alKkcMmQ9TBUKnY2aMlHCc/2umxSY5KykyWh3oYlRu1ZU=
+	t=1722162718; cv=none; b=VdJKLrfvUyu4qBCWUbQWNL5MU1a1N/xmCeFmqAjGR49fkc8Kfqx180aRVYgWTVuJZokwahQStso/inJeNIHm57NroLgx/ivVcDQNQoYbt9R+vqab7h7MCfrOGHLfir+V7VAr/gMhdKXIHQcxYz79YUWokQYP3yx0kGc4rcELTb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722162620; c=relaxed/simple;
-	bh=eDWjhLzi6G1agWre6Y7l9EsOG8ksGnVzkj/CACSAyj0=;
+	s=arc-20240116; t=1722162718; c=relaxed/simple;
+	bh=BMRSblR934AdpnWQpAjlrspDYQyMCJ5zSvB///CEgfU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EVFvbq+bJ1T75Uhz/RPhV833GOrZgEAt2RtxFpGogZJp8UcxOuTOlbrujJ1w6zjy9hvzpmcbOadrB35elFqccHB/Mw238Q3EKeO86c7Uyoz74rMqlOogvOKUJS6EvVmN4iAXC86bebWBEsHReAUC2zqMsJ9DWuM2nLylHKNYW8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k/xYx9T7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C7AC116B1;
-	Sun, 28 Jul 2024 10:30:14 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=mYgp4cAgecDUL4JF2WoSeAyUlD5c9ZxAB5kIKucevVCB59toJJoeDzyq2zUFPtxzQzLVfwas8zlgN5zdrbIPcSnY7/JL91zWTtceW1lBXtWMZfNJIOOdMu/LxLhSYPNsurWkGpF+fnSC1QkqfstN9WZBdtIOBBa2W3I83GT7ZUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DaNOv1Eh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F699C4AF0A;
+	Sun, 28 Jul 2024 10:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722162619;
-	bh=eDWjhLzi6G1agWre6Y7l9EsOG8ksGnVzkj/CACSAyj0=;
+	s=k20201202; t=1722162717;
+	bh=BMRSblR934AdpnWQpAjlrspDYQyMCJ5zSvB///CEgfU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=k/xYx9T7/I2WLfcnu+Qa5RkJFKH7BboES21hXWKrBAIClTAFCPA1Oqyli2VQYQn7h
-	 9yVsmefHU5cfToCSrPRG9wTIeOo3mD93MxzSc9NScVH/PEtZZgsgsei8bcXhXW01PW
-	 WkbOvyR8aNgRuZZXiIZayXSyK08RAWwZd3Si9fGI+0tmLcz3vo4gs2aGf4OuLgFvAu
-	 wVow3KrkyVlKuzd2cKdAlWDieWPy1zSFbfwBxUxOMBlEQNmSk0hZyZxeiBc6ACZn9H
-	 zcJCbeuVv5/ssY8PSXvoooSn0oGM/6RcYMka/BqlBsGWVdVVr+hOSsmAurOZetqJJN
-	 pO04cnEfEZNTA==
-Message-ID: <3d9f76c1-2e14-43dc-b438-5fac94ffc73e@kernel.org>
-Date: Sun, 28 Jul 2024 12:30:12 +0200
+	b=DaNOv1EhFvepmO6ofxXNgNjnpEGCGzbhPmDgHmYqsJYMR7jvA2/etNSAY2iz4OIYc
+	 aP/5IipCja8HG6IoVrN6/nkEWN+qpwlk5s6+HHLz4GJn+c8kzEN1jdP/Jfah1f7XSw
+	 ZcJ4wzZPHfL6JCKWz3VNwLtuV8vIrYOHrgIzdx8Pg3nq1RFlf51/16JIUXK5Zo7wBe
+	 LAb3ekoneauYDsDPoKLWp6c6tiZPX8YIR3IhjKC/7FBD5AXo1AymcKP1n7BdjMEqKV
+	 Gg/AOyflhmw9F2kczII8BZ3FlxMpBN/4jCp+e2/bezlncxtdXLQlQBTGq43zRvLpQ4
+	 FTD0rE1paXJQQ==
+Message-ID: <6165e455-6101-44c7-b9eb-e21c6a917357@kernel.org>
+Date: Sun, 28 Jul 2024 12:31:51 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,21 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ASoC: dt-bindings: qcom,apq8016-sbc-sndcard: move to
- separate binding
-To: Stephan Gerhold <stephan@gerhold.net>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, alsa-devel@alsa-project.org,
- linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Adam Skladowski <a39.skl@gmail.com>,
- Stephan Gerhold <stephan.gerhold@linaro.org>
-References: <20240723083300.35605-1-krzysztof.kozlowski@linaro.org>
- <ZqVXUI37fNB5D0DM@gerhold.net>
+Subject: Re: [PATCH 2/4] dt-bindings: clock: qcom: Add GPLL9 support on
+ gcc-sc8180x
+To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20240725-gcc-sc8180x-fixes-v1-0-576a55fe4780@quicinc.com>
+ <20240725-gcc-sc8180x-fixes-v1-2-576a55fe4780@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,73 +109,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <ZqVXUI37fNB5D0DM@gerhold.net>
+In-Reply-To: <20240725-gcc-sc8180x-fixes-v1-2-576a55fe4780@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27/07/2024 22:23, Stephan Gerhold wrote:
-> On Tue, Jul 23, 2024 at 10:33:00AM +0200, Krzysztof Kozlowski wrote:
->> The APQ8016 SBC and MSM8916 QDSP6 sound cards are a bit different from
->> others: they have additional IO muxing address space and pin control.
->> Move them to separate schema, so the original qcom,sm8250.yaml will be
->> easier to manage.  New schema is going to grow for other platforms
->> having more of IO muxing address spaces.
->>
->> Cc: Adam Skladowski <a39.skl@gmail.com>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->> .../sound/qcom,apq8016-sbc-sndcard.yaml       | 205 ++++++++++++++++++
->> .../bindings/sound/qcom,sm8250.yaml           | 137 ------------
->> 2 files changed, 205 insertions(+), 137 deletions(-)
->> create mode 100644 Documentation/devicetree/bindings/sound/qcom,apq8016-sbc-sndcard.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/sound/qcom,apq8016-sbc-sndcard.yaml b/Documentation/devicetree/bindings/sound/qcom,apq8016-sbc-sndcard.yaml
->> new file mode 100644
->> index 000000000000..6ad451549036
->> [...]
->> diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
->> index c9076dcd44c1..1d3acdc0c733 100644
->> --- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
->> +++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
->> @@ -27,9 +27,7 @@ properties:
->>               - qcom,sm8650-sndcard
->>           - const: qcom,sm8450-sndcard
->>       - enum:
->> -          - qcom,apq8016-sbc-sndcard
->>           - qcom,apq8096-sndcard
->> -          - qcom,msm8916-qdsp6-sndcard
->>           - qcom,qcm6490-idp-sndcard
->>           - qcom,qcs6490-rb3gen2-sndcard
->>           - qcom,qrb5165-rb5-sndcard
->> @@ -58,18 +56,6 @@ properties:
->>     $ref: /schemas/types.yaml#/definitions/string
->>     description: User visible long sound card name
->>
->> -  pin-switches:
->> -    description: List of widget names for which pin switches should be created.
->> -    $ref: /schemas/types.yaml#/definitions/string-array
->> -
->> -  widgets:
->> -    description: User specified audio sound widgets.
->> -    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
->> -
+On 25/07/2024 13:33, Satya Priya Kakitapalli wrote:
+> Add the missing GPLL9 which is required for the gcc sdcc2 clock.
 > 
-> These two properties are also valid and supported on all newer
-> platforms, please keep them here! There are certain use cases where
-> these are needed independent of the platform, e.g. to control an analog
-> switch or mux connected to speaker or headphone outputs.
-> 
-> I agree that it is cleaner to move the IO muxing to a new schema though.
-> Perhaps we could define something like a shared qcom,sndcard-common.yaml
-> schema to avoid duplication for these generic properties? In the Linux
-> driver, these are handled for all platforms in sound/soc/qcom/common.c.
+> Fixes: 0fadcdfdcf57 ("dt-bindings: clock: Add SC8180x GCC binding")
+> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+> ---
 
-This was added to the common driver code but it does not mean it is
-reasonable binding. I don't understand why for example we even accept
-here aux-devs, instead of putting them into one of DAI links.
-
-The pin-switches and widgets could be used, but are they? The only valid
-argument to keep them is that you added them to common driver code.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
