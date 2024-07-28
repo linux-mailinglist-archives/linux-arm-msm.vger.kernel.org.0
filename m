@@ -1,254 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-27138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41A6593E154
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 00:22:41 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB35B93E236
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 03:01:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E28FB281B4C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Jul 2024 22:22:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EC2C11C20912
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 01:01:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE76A42058;
-	Sat, 27 Jul 2024 22:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B24818C34A;
+	Sun, 28 Jul 2024 00:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i9athftF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kfXf5GnK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29EB38FB0
-	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jul 2024 22:22:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D0818C347;
+	Sun, 28 Jul 2024 00:49:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722118957; cv=none; b=DrjqGgHkV1xWA5GwndnsbzUzUuUMwD3VRqTzsWN/oLg9191EyqyuR5tuBtKm84mfK8w2zdn0iBQlZgfH8SwPZb7jEHYbq/ZHDKBFP4Z2vGGOdndAkS7OcLnKdqdgbiUzTKR+7rOgK0oruCvTOaMBs6itbA176FnYx0cSCeYaYz4=
+	t=1722127783; cv=none; b=enRyTuk8DMOLir+U6u5+LSmk+9yNTdJdwzw/Azdn7TrQn7Fkxy7/PTnADRs1rDJqYz037WZhJ54wteP6gsbRJEs4U7I3eHQzexRgaIaRK5KXe5vAfApBkQUMJxsXOVCYsYbsXHKwtrOheI4e7QzhWktUKxn7JA7UyYAq7m7Mu2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722118957; c=relaxed/simple;
-	bh=fDjNUHr6dA8rOXDlgnigy+h72KTsuiW6mnnOcpO2mks=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q6PoKOAquuuSG8SbYrvdIIHPrgp8NLIOdk7fe6kUzt0mB4CZCTh7lfzaasMExKfnrzpimM7AwLm4H461662XUZM0Q5P7NWCrkEedaeB6oreMJ2a+4uLtBYJVMYI1hg0vp7wlaYgw/q3p3HEaO7HsQqkwGcipB/2yhR8vwqocuhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=i9athftF; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-52f01b8738dso2358202e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Jul 2024 15:22:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722118954; x=1722723754; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SmqlrirUFtzyURY6qK3fyfdNBiwmBrDBIWtbVFCj68k=;
-        b=i9athftFb3IK36fqslbvcmnAQ2IVj8sK6Mh52pfqUBCgX3WoERtBL9+5ztFVpR5mGw
-         4PQnq/6uc/zWab+VEKNuJh+NGuj2UrvOBU/YAM1VugJJiGEmd9TKWVoSzrmEXiUlh9WK
-         ZQpdhFfZ/G1piXm9/mwveuZ318WjblQELLd78tKIbXv2TN+Xmlt/TGaiN6eO24pqjKaL
-         xEAgEUDJXS+9RQ43DlfTWZ9ypyZEQTTFyyNUkdyWvxy2O4AADzYYmUldCTnKltzTBfFj
-         WKPMzh+0id9tNbZwaMghrkAx37nO/aqeBErILlJLZyOY5vJIBtRqcB9i7BQDWnCew5D4
-         MbHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722118954; x=1722723754;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SmqlrirUFtzyURY6qK3fyfdNBiwmBrDBIWtbVFCj68k=;
-        b=YviuRy6U2c48uRLr13CLRCM4BLHymQ9OHVgCiZaQ3Ye7do38XEtbY0E/v7AHPMs8R1
-         Z6yFHoMRUqy1IAt1ABZfVKfCa/RJSbVGmu+HPD65+m67VSgDsYW3H4GHert5USyeQUcV
-         es9NJxu2fHIrATgWbIsLxnjnnsblOo4JiA+vwTnDj9OK2SHJG+3vKlgZIeqwJOIHSY77
-         T4uuScwq6RhDTnh7c29UvJwIKKOKdYiBwjzy/2s7cqGURKJuZVa5Uc3QOKWuqZeHYzHO
-         pQh2mmzcjNTYr7qLNvwIcN8Uk5CL/z2H1t/KMsCDg6R73w6pa1nls/Z4ZPvusXH/2P9/
-         kmkA==
-X-Forwarded-Encrypted: i=1; AJvYcCW6P01l40oaP15NmRTV2znyIjFQqgtYKay6vBKznPFxW/Dw+oPIA5N6xyDFEPKbJ1FdxH9XM+cY6sWIrH4gmx2UIwyu8f3WuKdxlHP4qw==
-X-Gm-Message-State: AOJu0YxryCSA79IE7af8PfDpuyingvO2eXmvW4+1w9HKOu2Gm+boxz2h
-	M3aMY2YILgcJAbZb907RyGcG6ydeROkYomtVI8cD4i/OExu5HFLWme6t67+ZOSg=
-X-Google-Smtp-Source: AGHT+IF/s11CSBZC1Ioc8fNTDjjnGQIm4OyRZiAH0axmuM5wcvd3DkIFT4ZzI5q6QFp25Q1zWlz7ZA==
-X-Received: by 2002:ac2:511c:0:b0:52e:6d71:e8f1 with SMTP id 2adb3069b0e04-5309b2ce524mr2179378e87.53.1722118953841;
-        Sat, 27 Jul 2024 15:22:33 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52fd5bc40cesm871534e87.28.2024.07.27.15.22.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Jul 2024 15:22:33 -0700 (PDT)
-Date: Sun, 28 Jul 2024 01:22:31 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Adam Skladowski <a39.skl@gmail.com>
-Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Banajit Goswami <bgoswami@quicinc.com>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
-	Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
-	Stephan Gerhold <stephan@gerhold.net>, alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org, 
-	linux-sound@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	llvm@lists.linux.dev, Vladimir Lypak <vladimir.lypak@gmail.com>
-Subject: Re: [PATCH v2 4/4] ASoC: qcom: apq8016_sbc: Add support for
- msm8953/msm8976 SoC
-Message-ID: <4ncs2zopzh2qnf4cgb7wnq2ai3vw2zjyhnv4tsgdhu3zqqnvug@63ypk324n3mr>
-References: <20240727182031.35069-1-a39.skl@gmail.com>
- <20240727182031.35069-5-a39.skl@gmail.com>
+	s=arc-20240116; t=1722127783; c=relaxed/simple;
+	bh=RuHSkVzhSk+XMgIda+c8t08zULhs9kC6nOlengVVwcw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=gvrRHlVKnggZGkOAQDznjzBVf99pzbOLyt6xIjo1XoIA5EMLFPw/DIkONRVetiqRMrq+bwkc4RaPfBX/n0OfDUnFuTe+2CDWu2SxG6R2dXzgQ7ojPwkEPuq2N1RwTSk/AG9qKxksrJuzZwXWnHBvHlNKUvOQ63duhpPrOVTZDZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kfXf5GnK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F71C4AF09;
+	Sun, 28 Jul 2024 00:49:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722127783;
+	bh=RuHSkVzhSk+XMgIda+c8t08zULhs9kC6nOlengVVwcw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=kfXf5GnK9mpQimhOZwsC3x5bzaV1rMsZnOkwRowBk+o4QvIv7SQ54dv2wMBqi6Fkp
+	 usNNPiO0OnrM5PjjQi6eC13TjkxG9R/STkLsC6bUJT2EF2oQO2wDXqRliG4FGWMujT
+	 Y/5oSOhD8yAVvYnlWNQ8/x7IGzG84ZlHRbq3OtnBV/OxE9u+uIwZlJi0lUvNG9CllA
+	 sEiLyIgfcfgWhwMIVAco28lzNTrRcUw/mGzoz0m6Gq2bvZP1guq+pZxAFuUgpLI5ZE
+	 XW6PbWPyrpmew6zUGzRYsnZZyndmbgilyVYT7TNJOfJ/i0hmVaW697Zzk1tP/XwaX7
+	 upKnZ7Emew/cA==
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Cc: Sibi Sankar <quic_sibis@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	krzysztof.kozlowski@linaro.org,
+	konrad.dybcio@linaro.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.10 5/9] soc: qcom: icc-bwmon: Allow for interrupts to be shared across instances
+Date: Sat, 27 Jul 2024 20:49:25 -0400
+Message-ID: <20240728004934.1706375-5-sashal@kernel.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240728004934.1706375-1-sashal@kernel.org>
+References: <20240728004934.1706375-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240727182031.35069-5-a39.skl@gmail.com>
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.10.2
+Content-Transfer-Encoding: 8bit
 
-On Sat, Jul 27, 2024 at 08:20:27PM GMT, Adam Skladowski wrote:
-> From: Vladimir Lypak <vladimir.lypak@gmail.com>
-> 
-> Introduce support for audio card on MSM8953/MSM8976 platform.
-> Main difference between those two is Q6AFE CLK API supported by firmware
-> which influence way we enable digital codec clock.
-> Either inside machine driver or outside via q6afe-clocks driver.
-> 
-> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-> [Adam: Add MSM8976, rename functions, add mclk setting,add msg]
-> Co-developed-by: Adam Skladowski <a39.skl@gmail.com>
-> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
-> ---
->  sound/soc/qcom/apq8016_sbc.c | 68 ++++++++++++++++++++++++++++++++++--
->  1 file changed, 66 insertions(+), 2 deletions(-)
-> 
-> diff --git a/sound/soc/qcom/apq8016_sbc.c b/sound/soc/qcom/apq8016_sbc.c
-> index 303dd88206b1..453ca4795603 100644
-> --- a/sound/soc/qcom/apq8016_sbc.c
-> +++ b/sound/soc/qcom/apq8016_sbc.c
-> @@ -22,6 +22,11 @@
->  
->  #define MI2S_COUNT  (MI2S_QUINARY + 1)
->  
-> +enum afe_clk_api {
-> +	Q6AFE_CLK_V1,
-> +	Q6AFE_CLK_V2
-> +};
+From: Sibi Sankar <quic_sibis@quicinc.com>
 
-Are these v1/v2 coming from some msm-N.M kernel? It's not obvious from
-the patch, but msm8916 also falls into v1 category. Is that expected?
+[ Upstream commit dc18836435e7f8dda019db2c618c69194933157f ]
 
-> +
->  struct apq8016_sbc_data {
->  	struct snd_soc_card card;
->  	void __iomem *mic_iomux;
-> @@ -29,6 +34,8 @@ struct apq8016_sbc_data {
->  	void __iomem *quin_iomux;
->  	struct snd_soc_jack jack;
->  	bool jack_setup;
-> +	enum afe_clk_api q6afe_clk_ver;
-> +	bool dig_cdc_mclk_en;
->  	int mi2s_clk_count[MI2S_COUNT];
->  };
->  
-> @@ -192,6 +199,28 @@ static int qdsp6_dai_get_lpass_id(struct snd_soc_dai *cpu_dai)
->  	}
->  }
->  
-> +static int qdsp6_get_clk_id(struct apq8016_sbc_data *data, int mi2s_id)
-> +{
-> +	if (data->q6afe_clk_ver == Q6AFE_CLK_V2) {
-> +		switch (mi2s_id) {
-> +		case MI2S_PRIMARY:
-> +			return Q6AFE_LPASS_CLK_ID_PRI_MI2S_IBIT;
-> +		case MI2S_SECONDARY:
-> +			return Q6AFE_LPASS_CLK_ID_SEC_MI2S_IBIT;
-> +		case MI2S_TERTIARY:
-> +			return Q6AFE_LPASS_CLK_ID_TER_MI2S_IBIT;
-> +		case MI2S_QUATERNARY:
-> +			return Q6AFE_LPASS_CLK_ID_QUAD_MI2S_IBIT;
-> +		case MI2S_QUINARY:
-> +			return Q6AFE_LPASS_CLK_ID_QUI_MI2S_IBIT;
-> +		default:
-> +			break;
-> +		}
-> +	}
-> +	/* If AFE CLK isn't V2 return V1 */
-> +	return LPAIF_BIT_CLK;
-> +}
-> +
->  static int msm8916_qdsp6_dai_init(struct snd_soc_pcm_runtime *rtd)
->  {
->  	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
-> @@ -214,8 +243,17 @@ static int msm8916_qdsp6_startup(struct snd_pcm_substream *substream)
->  
->  	if (++data->mi2s_clk_count[mi2s] > 1)
->  		return 0;
-> +	/*
-> +	 * On newer legacy SoC (MSM8976) lpass codec clocks are not available in gcc region
-> +	 * so we have to request clock from machine driver using V1 API)
-> +	 */
-> +	if (data->q6afe_clk_ver == Q6AFE_CLK_V1 && data->dig_cdc_mclk_en == true) {
+The multiple BWMONv4 instances available on the X1E80100 SoC use the
+same interrupt number. Mark them are shared to allow for re-use across
+instances.
 
-Nit: line feed after &&
+Using IRQF_SHARED coupled with devm_request_threaded_irq implies that
+the irq can still trigger during/after bwmon_remove due to other active
+bwmon instances. Handle this race by relying on bwmon_disable to disable
+the interrupt and coupled with explicit request/free irqs.
 
-> +		ret = snd_soc_dai_set_sysclk(cpu_dai,  LPAIF_DIG_CLK, DEFAULT_MCLK_RATE, 0);
-> +		if (ret)
-> +			dev_err(card->dev, "Failed to enable LPAIF dig clk: %d\n", ret);
-> +	}
->  
-> -	ret = snd_soc_dai_set_sysclk(cpu_dai, LPAIF_BIT_CLK, MI2S_BCLK_RATE, 0);
-> +	ret = snd_soc_dai_set_sysclk(cpu_dai, qdsp6_get_clk_id(data, mi2s), MI2S_BCLK_RATE, 0);
->  	if (ret)
->  		dev_err(card->dev, "Failed to enable LPAIF bit clk: %d\n", ret);
->  	return ret;
-> @@ -236,9 +274,16 @@ static void msm8916_qdsp6_shutdown(struct snd_pcm_substream *substream)
->  	if (--data->mi2s_clk_count[mi2s] > 0)
->  		return;
->  
-> -	ret = snd_soc_dai_set_sysclk(cpu_dai, LPAIF_BIT_CLK, 0, 0);
-> +	ret = snd_soc_dai_set_sysclk(cpu_dai, qdsp6_get_clk_id(data, mi2s), 0, 0);
->  	if (ret)
->  		dev_err(card->dev, "Failed to disable LPAIF bit clk: %d\n", ret);
-> +
-> +	if (data->q6afe_clk_ver == Q6AFE_CLK_V1 && data->dig_cdc_mclk_en == true) {
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240624092214.146935-4-quic_sibis@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/soc/qcom/icc-bwmon.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-Nit: And here too, please.
-
-> +		ret = snd_soc_dai_set_sysclk(cpu_dai,  LPAIF_DIG_CLK, 0, 0);
-> +		if (ret)
-> +			dev_err(card->dev, "Failed to disable LPAIF dig clk: %d\n", ret);
-> +	}
-> +
->  }
->  
->  static const struct snd_soc_ops msm8916_qdsp6_be_ops = {
-> @@ -279,6 +324,23 @@ static void msm8916_qdsp6_add_ops(struct snd_soc_card *card)
->  	}
->  }
->  
-> +static void msm8953_qdsp6_add_ops(struct snd_soc_card *card)
-> +{
-> +	struct apq8016_sbc_data *pdata = snd_soc_card_get_drvdata(card);
-> +
-> +	pdata->q6afe_clk_ver = Q6AFE_CLK_V2;
-> +	msm8916_qdsp6_add_ops(card);
-> +}
-> +
-> +static void msm8976_qdsp6_add_ops(struct snd_soc_card *card)
-> +{
-> +	struct apq8016_sbc_data *pdata = snd_soc_card_get_drvdata(card);
-> +
-> +	pdata->q6afe_clk_ver = Q6AFE_CLK_V1;
-> +	pdata->dig_cdc_mclk_en = true;
-> +	msm8916_qdsp6_add_ops(card);
-> +}
-> +
->  static const struct snd_kcontrol_new apq8016_sbc_snd_controls[] = {
->  	SOC_DAPM_PIN_SWITCH("Headphone Jack"),
->  	SOC_DAPM_PIN_SWITCH("Mic Jack"),
-> @@ -343,6 +405,8 @@ static int apq8016_sbc_platform_probe(struct platform_device *pdev)
->  static const struct of_device_id apq8016_sbc_device_id[] __maybe_unused = {
->  	{ .compatible = "qcom,apq8016-sbc-sndcard", .data = apq8016_sbc_add_ops },
->  	{ .compatible = "qcom,msm8916-qdsp6-sndcard", .data = msm8916_qdsp6_add_ops },
-> +	{ .compatible = "qcom,msm8953-qdsp6-sndcard", .data = msm8953_qdsp6_add_ops },
-> +	{ .compatible = "qcom,msm8976-qdsp6-sndcard", .data = msm8976_qdsp6_add_ops },
->  	{},
->  };
->  MODULE_DEVICE_TABLE(of, apq8016_sbc_device_id);
-> -- 
-> 2.45.2
-> 
-
+diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
+index fb323b3364db4..e1ffd453ecdf0 100644
+--- a/drivers/soc/qcom/icc-bwmon.c
++++ b/drivers/soc/qcom/icc-bwmon.c
+@@ -781,9 +781,14 @@ static int bwmon_probe(struct platform_device *pdev)
+ 	bwmon->dev = dev;
+ 
+ 	bwmon_disable(bwmon);
+-	ret = devm_request_threaded_irq(dev, bwmon->irq, bwmon_intr,
+-					bwmon_intr_thread,
+-					IRQF_ONESHOT, dev_name(dev), bwmon);
++
++	/*
++	 * SoCs with multiple cpu-bwmon instances can end up using a shared interrupt
++	 * line. Using the devm_ variant might result in the IRQ handler being executed
++	 * after bwmon_disable in bwmon_remove()
++	 */
++	ret = request_threaded_irq(bwmon->irq, bwmon_intr, bwmon_intr_thread,
++				   IRQF_ONESHOT | IRQF_SHARED, dev_name(dev), bwmon);
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "failed to request IRQ\n");
+ 
+@@ -798,6 +803,7 @@ static void bwmon_remove(struct platform_device *pdev)
+ 	struct icc_bwmon *bwmon = platform_get_drvdata(pdev);
+ 
+ 	bwmon_disable(bwmon);
++	free_irq(bwmon->irq, bwmon);
+ }
+ 
+ static const struct icc_bwmon_data msm8998_bwmon_data = {
 -- 
-With best wishes
-Dmitry
+2.43.0
+
 
