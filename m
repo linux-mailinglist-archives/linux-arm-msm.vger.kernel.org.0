@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-27140-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C64C93E2A5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 03:12:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0AA0B93E2E8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 03:19:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D1858281F36
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 01:12:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BC0FF281EE3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 01:19:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0D9C192B64;
-	Sun, 28 Jul 2024 00:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D182A19B3F9;
+	Sun, 28 Jul 2024 00:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fyNo8UNZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WGoLXoxI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75278192B60;
-	Sun, 28 Jul 2024 00:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FC519B3CC;
+	Sun, 28 Jul 2024 00:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722128061; cv=none; b=gTnhXTUE62enKy0mwnsYNTQthZA+dtMfAyw8BrHXl6hH8BPbGrmwJwn51RqbbK47qLPDo4DE0iY90RYFYufopXMZBNh8dIOiItkOjwkWWPouT+vqht5sKCWt8XYRKH0eoKZg34oQQ/JUlBexuXROdUdOatAXhm6XG06qDL0ZPVM=
+	t=1722128110; cv=none; b=pyDapV55bpzkm5XCZWw3gw/21pLJtcIozpMf+zn65OoIPvvu+MuA/x/6nXRD/xtspOM2Unc7SeP0hUCeFynIVViWPhh6RqZH96g4XOFuyvmc2pHqD098Hq+/JKJK14IYt96z25K1e4zJFOevBs4D7YvOQ82ueOOtCaxlQ3Kz2UY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722128061; c=relaxed/simple;
-	bh=o0NcRSSMSeFpC/3bL4/Dz8Ss4YnMFhGRnW2k0JyOfVA=;
+	s=arc-20240116; t=1722128110; c=relaxed/simple;
+	bh=lFNyJQ8s2ms9QVeZ4BLP0TUfAp/xvy6FewGjopPJvFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HJNIw1e6+ORmcwABEMLGgyP7TLodjKzUkTOJnC0ifRLKbn53WFfCZeg6c3IK2BE2VNrfhr7oldBJhzyj/U2kQbr45BKvV7yq3OaD94CWiyGm7NsnvK/S+24dxmqyxSXpWCr43cGW2LUU3iKNnidQyf2wczsldJgSmkZWd9TLXpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fyNo8UNZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 623E7C4AF07;
-	Sun, 28 Jul 2024 00:54:19 +0000 (UTC)
+	 MIME-Version; b=iPCiWOUFkRGa+pFGH8etzWH1J775xoReVruwnVmkHWoaIl8lRVfONG3pryhnNd7hjBkWC9TuNo1OL4rCt7QP7J67QLkqtozMO+RLz7THVjtKgrrLcPTxV2m/kCuXyGxZl5/L/c44mTa+TqgzZCuzd6U0503OpqSzUIklb2BxU1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WGoLXoxI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491D6C4AF07;
+	Sun, 28 Jul 2024 00:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722128061;
-	bh=o0NcRSSMSeFpC/3bL4/Dz8Ss4YnMFhGRnW2k0JyOfVA=;
+	s=k20201202; t=1722128110;
+	bh=lFNyJQ8s2ms9QVeZ4BLP0TUfAp/xvy6FewGjopPJvFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fyNo8UNZkqCwzTe5V8g21UQnLuaGtuh2rxuNWeJ40Yf+DHJzv//KwsQB9nVfBpOPb
-	 dVaU4T6bVQ1dh2pDMDk3HP91unbtcmw8MTnspcKurMPvHgidiwDvABEHMrT91tE0/1
-	 9Pu363DfXECXylYQ4qG54V+R4V/PkyU6SWmpY0JKyK6kPYuAseVBCRT3OU9uEPxqS8
-	 1/xRzTno0r6UE2JULP86/A7sQwxOVybJvs1TvT7PzaYJqviSOeiLXnR+P/0jz/mBQz
-	 slaRoLjTcDTcSsz54gk9mfK3O0/us34OREzL/NKc/QfMjp6AJDkViKfJiwwNUYWsJM
-	 Jn9oNIkPJvu2A==
+	b=WGoLXoxIEheEuwwxf1akagePsT1VlhiQw/mwjxpU0LPSRe7MgMb4cfMc+Pn76cAQu
+	 4Hu4xGl6N2m3ZmFRhTQrIvQwVX04mHofmL4QEBcWH0H27T/avkj5yrXqHNTov8PwDY
+	 TaGDaXsm/KLNzbwjxdBZTuKjShoP2kbyLNkL7xd3Sp773ZWcSC7MH3ny4vZYsiEOgZ
+	 c8W2oUIOWvtXhx6c8If1Qfjdj9zqujkgLCXjtkcR9/BjmmD3ZzXx0b+uPHAWBs6LEb
+	 q80RigCKVx7KTmyZvvpu0NrPNYeX0ZqlOHXlJ346dbQYthvs30FiWVZk3TQHLUPKNk
+	 qBJfpq87n9+ag==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -59,12 +59,12 @@ Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-stm32@st-md-mailman.stormreply.com,
 	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.10 19/27] net: stmmac: qcom-ethqos: enable SGMII loopback during DMA reset on sa8775p-ride-r3
-Date: Sat, 27 Jul 2024 20:53:02 -0400
-Message-ID: <20240728005329.1723272-19-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 12/15] net: stmmac: qcom-ethqos: enable SGMII loopback during DMA reset on sa8775p-ride-r3
+Date: Sat, 27 Jul 2024 20:54:33 -0400
+Message-ID: <20240728005442.1729384-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240728005329.1723272-1-sashal@kernel.org>
-References: <20240728005329.1723272-1-sashal@kernel.org>
+In-Reply-To: <20240728005442.1729384-1-sashal@kernel.org>
+References: <20240728005442.1729384-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,7 +73,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.10.2
+X-stable-base: Linux 6.6.43
 Content-Transfer-Encoding: 8bit
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
@@ -103,7 +103,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 23 insertions(+)
 
 diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index 466c4002f00d4..3a7f3a8b06718 100644
+index d5d2a4c776c1c..ded1bbda5266f 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
 @@ -21,6 +21,7 @@
@@ -132,7 +132,7 @@ index 466c4002f00d4..3a7f3a8b06718 100644
  };
  
  struct qcom_ethqos {
-@@ -114,6 +119,7 @@ struct qcom_ethqos {
+@@ -113,6 +118,7 @@ struct qcom_ethqos {
  	unsigned int num_por;
  	bool rgmii_config_loopback_en;
  	bool has_emac_ge_3;
@@ -140,7 +140,7 @@ index 466c4002f00d4..3a7f3a8b06718 100644
  };
  
  static int rgmii_readl(struct qcom_ethqos *ethqos, unsigned int offset)
-@@ -191,8 +197,22 @@ ethqos_update_link_clk(struct qcom_ethqos *ethqos, unsigned int speed)
+@@ -187,8 +193,22 @@ ethqos_update_link_clk(struct qcom_ethqos *ethqos, unsigned int speed)
  	clk_set_rate(ethqos->link_clk, ethqos->link_clk_rate);
  }
  
@@ -163,7 +163,7 @@ index 466c4002f00d4..3a7f3a8b06718 100644
  	rgmii_updatel(ethqos, RGMII_CONFIG_FUNC_CLK_EN,
  		      RGMII_CONFIG_FUNC_CLK_EN, RGMII_IO_MACRO_CONFIG);
  }
-@@ -277,6 +297,7 @@ static const struct ethqos_emac_driver_data emac_v4_0_0_data = {
+@@ -273,6 +293,7 @@ static const struct ethqos_emac_driver_data emac_v4_0_0_data = {
  	.has_emac_ge_3 = true,
  	.link_clk_name = "phyaux",
  	.has_integrated_pcs = true,
@@ -171,7 +171,7 @@ index 466c4002f00d4..3a7f3a8b06718 100644
  	.dma_addr_width = 36,
  	.dwmac4_addrs = {
  		.dma_chan = 0x00008100,
-@@ -674,6 +695,7 @@ static void ethqos_fix_mac_speed(void *priv, unsigned int speed, unsigned int mo
+@@ -646,6 +667,7 @@ static void ethqos_fix_mac_speed(void *priv, unsigned int speed, unsigned int mo
  {
  	struct qcom_ethqos *ethqos = priv;
  
@@ -179,7 +179,7 @@ index 466c4002f00d4..3a7f3a8b06718 100644
  	ethqos->speed = speed;
  	ethqos_update_link_clk(ethqos, speed);
  	ethqos_configure(ethqos);
-@@ -809,6 +831,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+@@ -781,6 +803,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
  	ethqos->num_por = data->num_por;
  	ethqos->rgmii_config_loopback_en = data->rgmii_config_loopback_en;
  	ethqos->has_emac_ge_3 = data->has_emac_ge_3;
