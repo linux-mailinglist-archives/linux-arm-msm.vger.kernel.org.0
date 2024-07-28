@@ -1,186 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-27152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 331A993E7BB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 18:15:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0ED793E8F2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 21:00:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D0AB21F22868
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 16:15:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0CAB71C20EF9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Jul 2024 19:00:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BDC713DB92;
-	Sun, 28 Jul 2024 16:06:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B863745CB;
+	Sun, 28 Jul 2024 19:00:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kUT0F6/o"
+	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="ltQDmRo/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2046313D8B8;
-	Sun, 28 Jul 2024 16:06:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6F955886
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jul 2024 19:00:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722182805; cv=none; b=sTH4qbCEG8SFRxDP7/C5mizQBqjJs8KbLeOXSh5nz0xPnl9ZRpC1Guk0oRob+z7+laMjfd9XgON9lRlT0aLTlcpSDQ4tVcZWorBl3+YsL/X+dyAcAQuU9WDbkvfFPhPZLy5SLRDdpiJ7UutpMnTHhn6UEC5voswcGYOL+9TfcDk=
+	t=1722193203; cv=none; b=RA2oQmrF8tL8JhfJrojYgeqIzrBJ5cgCkD12JTQiDRFdSrlyyo8OsG6wwLNmueZrGv2qBxdq3ziwtzVFLYzLixVA3SPehb9ksY2oWQvO8Ae1FvpWdRjlaKu6Xh/nqm+gZ3eliSwqecHGscvHLA9sIm5pgcq9LLkRUz1hlKjDcS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722182805; c=relaxed/simple;
-	bh=Ws5Q04YOAjNwQASF43MKlxvsOsBeMJr+riONtpHxQo4=;
+	s=arc-20240116; t=1722193203; c=relaxed/simple;
+	bh=1MyMmZ97Pppecmq9EM2Z5W/UBgCxk2y+Yc/6WxfOg2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xke9ZQppuS6BxnUdjwMhobdYUhCOTkNylSbqxHCYe9wRLN+53nBYNGNJLsvK5mDRNSHM69BV/XQkyLsSCSMia6f/ez//T8ds2XReSXGXsooUlvKOUoO+xK1fYliYrbekE1aWwHNjT9igsZS+pvrGF2jlEP4tM3cwa5ApIwQgkdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kUT0F6/o; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8479AC4AF0E;
-	Sun, 28 Jul 2024 16:06:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722182805;
-	bh=Ws5Q04YOAjNwQASF43MKlxvsOsBeMJr+riONtpHxQo4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kUT0F6/oGa5Br/cn6Zb5ZMze+xLOIhrOoTRedewTfzt+eJG76IH/UpfJmejQVN+wF
-	 k+X3fGXoXm/6sKWhq1hhzRNcq2CAjbgQrwsgOoDj5ilv967fayhQSzCvaFbQGjIbmQ
-	 NS3ODWo8dZ7rViZ6ef5SHO4fMailjjyxrCHQ//qdltv48swNScPSslN38oq1gXWg9v
-	 oDzlz4GjNTK+jmdY0lH8ylMAyIgCrHU+sYALbvv1YS0lvmLFzvLd3dsJzBGklMtbm3
-	 kp21MUZHSzl+OWW3gdyZ2vALp/AOk61oApOsro9hdk8k68Y8asLFg7uCv3XUh7lZvE
-	 sWAG+wARhUh4w==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: Mrinmay Sarkar <quic_msarkar@quicinc.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	lpieralisi@kernel.org,
-	kw@linux.com,
-	linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.10 20/23] PCI: qcom: Override NO_SNOOP attribute for SA8775P RC
-Date: Sun, 28 Jul 2024 12:05:01 -0400
-Message-ID: <20240728160538.2051879-20-sashal@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240728160538.2051879-1-sashal@kernel.org>
-References: <20240728160538.2051879-1-sashal@kernel.org>
+	 MIME-Version:Content-Type; b=f+scAwToXBRs856vS9G9jQf2g4+PpbCGFVyXTnOqodPojDBcA+HHLdtceub/vnBGyjlSNANI65AqawFqaeBATbjgM87/Ur9xTqhBZGWYwavdlNEB+VulE5/ZrgnmYXzvtyJ5/xF9ngpDErTZ5EKlGOnFnIQFxOdQMmXKbqr/bZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=ltQDmRo/; arc=none smtp.client-ip=185.67.36.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout02.posteo.de (Postfix) with ESMTPS id 35E0C240101
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jul 2024 21:00:00 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
+	t=1722193200; bh=1MyMmZ97Pppecmq9EM2Z5W/UBgCxk2y+Yc/6WxfOg2s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:
+	 Content-Transfer-Encoding:Content-Type:Autocrypt:OpenPGP:From;
+	b=ltQDmRo/FOKt6uTnPiadITldqlg/J4KZf9v3mm93HktGcKKcX3uR4YnogZmaqOTfS
+	 qisaX2m79uzJadvXDrSI4XntTB3l/fsTNeENURQ4DjiH9ll3W61qaGHDMI6Hz5U7Gz
+	 D2S2JHTml79OnacdEpYrqvlTK4HA52mMJ2O+60MmzFgmIZUP294i1TUrBC+ytQQEDI
+	 +dYg2fADYePs31ISzig2ZJhQAMkUmssukSrPdHb9LJTDbb3HC59mbyJ9TGuc3wr4mY
+	 2tnuD0ZyX0HqEnpzw8xIcNFSFXMFT31n+4eBjzrmk1m7dmGDVEMtHZoSURNuJu0e8b
+	 sTJbihUnCPONA==
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4WX9ly53pMz9rxL;
+	Sun, 28 Jul 2024 20:59:58 +0200 (CEST)
+From: Alexander Reimelt <alexander.reimelt@posteo.de>
+To: Petr Vorel <petr.vorel@gmail.com>
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] dt-bindings: arm: qcom: Add LG G4 (h815)
+Date: Sun, 28 Jul 2024 18:59:48 +0000
+Message-ID: <5636859.rdbgypaU67@desktop>
+In-Reply-To: <20240728151329.GA1196482@pevik>
+References:
+ <20240727201413.114317-1-alexander.reimelt@posteo.de>
+ <20240727201413.114317-2-alexander.reimelt@posteo.de>
+ <20240728151329.GA1196482@pevik>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.10.2
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Autocrypt: addr=alexander.reimelt@posteo.de;
+  keydata=xjMEZg0fSRYJKwYBBAHaRw8BAQdAIcaNTdj3NWDe5HQPCUs6oYyQygAJWP9LCzhr+C7RwMrNG2Fs
+  ZXhhbmRlci5yZWltZWx0QHBvc3Rlby5kZcKZBBMWCgBBFiEEM+Wy6sI/mP5S0zIFHqi3OKk8uRIF
+  AmYNH0kCGwMFCQWjo9cFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQHqi3OKk8uRJ8ogD9
+  EVg4zgfmC2SqXCgms6LETAzVX4CrAS8yMhyd7Md921cA/R8lhm9B96RYgA7MvFPFJb1T6JFY75Jg
+  QLXrtIE5llwHzjgEZg0fSRIKKwYBBAGXVQEFAQEHQBGDuxZLOTvppxyM4G18fSR6xzT0xkkPOia7
+  Bh6L1vAAAwEIB8J+BBgWCgAmFiEEM+Wy6sI/mP5S0zIFHqi3OKk8uRIFAmYNH0kCGwwFCQWjo9cA
+  CgkQHqi3OKk8uRIa1wD8CZDdCAKXstgXY96eeSSP7MecEF5TBdmWOiVgjlEIpoEA/RnGuDaj06B1
+  F51wyGAjYXSmn5qFoNHu3yXyLUkFz1ME
+OpenPGP: url=https://posteo.de/keys/alexander.reimelt@posteo.de.asc
 
-From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+Hello,
 
-[ Upstream commit 1d648bf79d4dca909f242b1a0cdc458e4f9d0253 ]
+> Alexander, others have added their tags in previous versions. IMHO generally
+> it'd be worth if you carry others tags in next versions (when nothing
+> changes).
+I already replied to Krzysztof, but I messed it up and sent it only to him. 
+I'm sorry I wasted everyone's time. I didn't fully understand how the system 
+behind these tags worked until now. I should have asked earlier, but thanks 
+for pointing it out.
 
-Due to some hardware changes, SA8775P has set the NO_SNOOP attribute
-in its TLP for all the PCIe controllers. NO_SNOOP attribute when set,
-the requester is indicating that no cache coherency issue exist for
-the addressed memory on the endpoint i.e., memory is not cached. But
-in reality, requester cannot assume this unless there is a complete
-control/visibility over the addressed memory on the endpoint.
+Kind regards,
+Alexander
 
-And worst case, if the memory is cached on the endpoint, it may lead to
-memory corruption issues. It should be noted that the caching of memory
-on the endpoint is not solely dependent on the NO_SNOOP attribute in TLP.
 
-So to avoid the corruption, this patch overrides the NO_SNOOP attribute
-by setting the PCIE_PARF_NO_SNOOP_OVERIDE register. This patch is not
-needed for other upstream supported platforms since they do not set
-NO_SNOOP attribute by default.
 
-8775 has IP version 1.34.0 so introduce a new cfg(cfg_1_34_0) for this
-platform. Assign override_no_snoop flag into struct qcom_pcie_cfg and
-set it true in cfg_1_34_0 and enable cache snooping if this particular
-flag is true.
-
-Link: https://lore.kernel.org/linux-pci/1710166298-27144-2-git-send-email-quic_msarkar@quicinc.com
-Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-[bhelgaas: wrap comments to fit in 80 columns]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 14772edcf0d34..7fa1fe5a29e3d 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -51,6 +51,7 @@
- #define PARF_SID_OFFSET				0x234
- #define PARF_BDF_TRANSLATE_CFG			0x24c
- #define PARF_SLV_ADDR_SPACE_SIZE		0x358
-+#define PARF_NO_SNOOP_OVERIDE			0x3d4
- #define PARF_DEVICE_TYPE			0x1000
- #define PARF_BDF_TO_SID_TABLE_N			0x2000
- #define PARF_BDF_TO_SID_CFG			0x2c00
-@@ -118,6 +119,10 @@
- /* PARF_LTSSM register fields */
- #define LTSSM_EN				BIT(8)
- 
-+/* PARF_NO_SNOOP_OVERIDE register fields */
-+#define WR_NO_SNOOP_OVERIDE_EN			BIT(1)
-+#define RD_NO_SNOOP_OVERIDE_EN			BIT(3)
-+
- /* PARF_DEVICE_TYPE register fields */
- #define DEVICE_TYPE_RC				0x4
- 
-@@ -231,8 +236,15 @@ struct qcom_pcie_ops {
- 	int (*config_sid)(struct qcom_pcie *pcie);
- };
- 
-+ /**
-+  * struct qcom_pcie_cfg - Per SoC config struct
-+  * @ops: qcom PCIe ops structure
-+  * @override_no_snoop: Override NO_SNOOP attribute in TLP to enable cache
-+  * snooping
-+  */
- struct qcom_pcie_cfg {
- 	const struct qcom_pcie_ops *ops;
-+	bool override_no_snoop;
- 	bool no_l0s;
- };
- 
-@@ -986,6 +998,12 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
- 
- static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
- {
-+	const struct qcom_pcie_cfg *pcie_cfg = pcie->cfg;
-+
-+	if (pcie_cfg->override_no_snoop)
-+		writel(WR_NO_SNOOP_OVERIDE_EN | RD_NO_SNOOP_OVERIDE_EN,
-+				pcie->parf + PARF_NO_SNOOP_OVERIDE);
-+
- 	qcom_pcie_clear_aspm_l0s(pcie->pci);
- 	qcom_pcie_clear_hpc(pcie->pci);
- 
-@@ -1366,6 +1384,11 @@ static const struct qcom_pcie_cfg cfg_1_9_0 = {
- 	.ops = &ops_1_9_0,
- };
- 
-+static const struct qcom_pcie_cfg cfg_1_34_0 = {
-+	.ops = &ops_1_9_0,
-+	.override_no_snoop = true,
-+};
-+
- static const struct qcom_pcie_cfg cfg_2_1_0 = {
- 	.ops = &ops_2_1_0,
- };
-@@ -1667,7 +1690,7 @@ static const struct of_device_id qcom_pcie_match[] = {
- 	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
- 	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
- 	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_sc8280xp },
--	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_9_0},
-+	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_34_0},
- 	{ .compatible = "qcom,pcie-sc7280", .data = &cfg_1_9_0 },
- 	{ .compatible = "qcom,pcie-sc8180x", .data = &cfg_1_9_0 },
- 	{ .compatible = "qcom,pcie-sc8280xp", .data = &cfg_sc8280xp },
--- 
-2.43.0
 
 
