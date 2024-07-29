@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-27297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29A9193FE7E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 21:52:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 608BF93FE80
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 21:52:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4822B1C224E4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 19:52:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8C4861C225AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 19:52:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78CF51891D2;
-	Mon, 29 Jul 2024 19:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02169189F33;
+	Mon, 29 Jul 2024 19:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Fho+fYXS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DYDNzClN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585D71891A1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22561891AA
 	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 19:52:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722282742; cv=none; b=TYBacOkU39w1TS79/4bQ72WJCpBD6tbbU+F8FRqEuF+MbtrwS+tDrA2R4Wxk3VenYlCmCxx8RZUnulVRHnDXYwaEUKSEhF7j6ij1/QqKuO9grxCdC+GHihTZVOpWHypMyr8GDMbsL/wxHhDdvpzBs8LEZni8lqrogD55xNw5mW0=
+	t=1722282742; cv=none; b=MDAXjKyoxPAC1rsAphoW3VbahH0GwxiO2JKjAx1/0KdgVnr8kK5CiJHDURV2odz8GbO58BHWf/Upho1PmqI3I9xezwgS7D3AChhKMzG2+az2x7IsANN02el/l1p8ZprgtwrKpxYJGxCQpXzTYpnxO9VSyqEWA1iSQATUGzaxTVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1722282742; c=relaxed/simple;
-	bh=ShlF7topp1rVhGyInCAgMDeIPA25eqOxSbLCWQw2i+E=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=gJCmdgcct8SSUaFknSs0OiS07GAjq9cHhBrox9/UwbpUR5L0BwfM5f+7nm348Uesl7fVbgv4KTpVkDNTrSOP8cfgWyEiwUFq7IpR93cV/FFzazZRsO5q4u954+Rjr6LGXfhT1h6kCjlui5mhGAc1U1ACsaGMfo+kHzrcPUqELzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Fho+fYXS; arc=none smtp.client-ip=209.85.167.45
+	bh=eAWrLr7syK4v9OEqvlyX0jICgB4CRiMGpoCpwqQgJpI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=DnIHwI0Oe7cCJ9qYmS9AXRZN1gE4g9fbbsnG8+/I0XKriJzsgRL8D4BA9avFA+ZXiDnXNp7L+0GSzbXXnPxEHEEYIs7zq5xqCHcHMm21us/I+9RR1C94ElI6ZbWbQ4T5UBokLD9PtbWKLeiW+srxOgrdB5iVidsIy52Oooxrohk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DYDNzClN; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52efba36802so6526660e87.2
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-52efaae7edfso4319924e87.2
         for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 12:52:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722282738; x=1722887538; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=VD5PikJv4K4yv/VPTbjyVvFb/B4dWYe16gK9mJyOoIM=;
-        b=Fho+fYXSWkFmrzQMp62b3lNy7xEnHMtze4/BJ+HaOobuN9qgL7C1z9EhmGN/noC/S6
-         oIxmnvdNqJsQKvOpV0yO9SiWVA24ByKZCzkto1ipiVO54Px05EvIorul9X+wtF/rS5HO
-         QVK43GgbF3r2kLHSB8NoFd0P+uhRRUkNBPHFsa/ug2GbrPlMyuTPhZ9Pdzd9bEES4pyR
-         4RRJhLeFU1Go/rsrYJ1Tafc8Fvu424UNEIE2cRaIzuu+RRVdmeNq3vkINlKStfjz1XIM
-         4W6XB2lSsySnqiY1raxbyFpIqEkjm8U5dw66m33mJ4IQuNgHUevVnG0GmUq/GBbHlQ23
-         KxdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722282738; x=1722887538;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1722282739; x=1722887539; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=VD5PikJv4K4yv/VPTbjyVvFb/B4dWYe16gK9mJyOoIM=;
-        b=cTJgdGMa6HlOXSGx6tEz2RNJDSNOTwMb4CqvB6XJjqEcP8QOaU3xHxscUPZqkRHnNx
-         KU1/w+wdii2JZqf/0WsJSVLUxgJH2LNiT4l3hOiWn7T+vUdCXAlAK2lvyBSTCnraocAz
-         YDAk5F3c0/7J3bpFWTkCuOGK4C28VhmHXGgnW6hK5SdrZZH5jOWVPolkqe4U9qD/CE6h
-         qTg9TO7xrd4YWj/H433aM/RNaMKU3wrePROj/JSXUYuyARrv2EdvOn01+6jwL7TMt/Te
-         YH0g7frKnL8Soy4so8YewTTf7lTJ31FqXo/hWUX+3RP7ZBwYGLhwkIrEanwJkgQe3udB
-         Fh+A==
-X-Gm-Message-State: AOJu0YznVybeUgW2ypfktizscq7k9t0MLZeWFlVhW+1HxWzDpYkAHiZe
-	zm5QBHroP9pQs/6ntJPie9Ugwb+FtFZwCXRqEDnfcna3hAcSkGKnkWdzAbwwQFuDY81moSJWYth
-	2
-X-Google-Smtp-Source: AGHT+IFuq/6ZLfwCne+3wXSdDbfRg7SE11vLXq3Fq6vozrWyuvXfBwn22/wxUKTwF8P6KSNFWUkk4g==
-X-Received: by 2002:a05:6512:1143:b0:52e:934c:8e76 with SMTP id 2adb3069b0e04-5309b2bcb7fmr6412687e87.41.1722282738273;
+        bh=Nvigx8ftGFF7H3oC6jrwYCq182+kCMKq67geJyZJwro=;
+        b=DYDNzClN3HjqbPrO9e2tHHpL8Vua6aB0g5eAW6bFL+y0NslgYm1GZs+Z2h33uSrtcP
+         dqqQWBd4t3bHqrpU92YQjuSb111rT5KvHN1Ku2Amuafa20ab28NQdxPUmoZzVCyjV31E
+         eIQ6bx8khWnhMNK4O/Im4JMA+nqyhkJlrBTh9iy/ar8QN78VTmSjgyiUVK8R1EJ6IOif
+         z0BsvwiIb6pjlQFuLJMNEMZo2WUJ8FiST8An5/nNIk4siJOOC/zouJ/swmZB/HzzLrRY
+         bter5rw4aDWzfeh7HrkZ74uk+8SX/fFVHYNCGqE6L84MC/sCoc3hs79cRH1jLeNaN2sQ
+         9DPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722282739; x=1722887539;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Nvigx8ftGFF7H3oC6jrwYCq182+kCMKq67geJyZJwro=;
+        b=qH/AcgwOVCxj0bhQqDxqA+c7v/m6oxLyILBqsWxFDyAYm4gDIKuEqY6KNIoI/vZ2fH
+         21KkEc8ivDCM0xUHzreltpeqJZF2laq0al05s4YRTPtGXR0aqoUyDkBv81KkycwJ6mAo
+         e29o/A1cl3DN7L2CGyMZUHEiub3kLznb6jjyx/o06GfosnQjdEhtoBrfmufc9bYORLmP
+         X691k8RcHzSichotsZGKOHLsEKEsRxiAblpMbT/U4TdA95/sqGyrWmjwmrebuSSEAMWK
+         TcBjiDTbBgR2h1jdV1Wo2FxgmZ9lSriCLXId67kDMawSU1ozWRlf3nOG9AhCuxjtI2K+
+         H6wA==
+X-Gm-Message-State: AOJu0Yyv7R/JwofqFSkgK6IYb/xhKyM60miSz6gK9bheAs/0rM1+lsiS
+	g28jP8t/8T7bTXKP2kasFOGscH9wvB2UuhiXkDjFvGbcaGgoN+HhpEvqW9ptSTY=
+X-Google-Smtp-Source: AGHT+IGZlWDv3cUJamS7yAPDFJ6RuaWt80rzcBym584uDDeV+HSA4wGbfxK7k/Vq0NoejHp/4NZMYA==
+X-Received: by 2002:a05:6512:39c2:b0:52e:9f6b:64 with SMTP id 2adb3069b0e04-5309b280988mr6581712e87.34.1722282738946;
         Mon, 29 Jul 2024 12:52:18 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52fd5bd1088sm1615590e87.106.2024.07.29.12.52.17
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52fd5bd1088sm1615590e87.106.2024.07.29.12.52.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jul 2024 12:52:17 -0700 (PDT)
+        Mon, 29 Jul 2024 12:52:18 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH v2 0/5] soc: qcom: fix rpm_requests module probing
-Date: Mon, 29 Jul 2024 22:52:13 +0300
-Message-Id: <20240729-fix-smd-rpm-v2-0-0776408a94c5@linaro.org>
+Date: Mon, 29 Jul 2024 22:52:14 +0300
+Subject: [PATCH v2 1/5] Revert "soc: qcom: smd-rpm: Match rpmsg channel
+ instead of compatible"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,9 +78,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAO3yp2YC/22MQQ6CMBBFr0Jm7Zi2SLGsvIdhUUqFSYSSqWk0p
- He3snb5/s97O0TP5CN01Q7sE0UKawF1qsDNdp080lgYlFAX0SqDD3pjXEbkbUGjG+mvrTXDIKA
- YG/tyH7V7X3im+Ar8OeJJ/tb/nSRRoDHWaFnXzunm9qTVcjgHnqDPOX8BRG1csacAAAA=
+Message-Id: <20240729-fix-smd-rpm-v2-1-0776408a94c5@linaro.org>
+References: <20240729-fix-smd-rpm-v2-0-0776408a94c5@linaro.org>
+In-Reply-To: <20240729-fix-smd-rpm-v2-0-0776408a94c5@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -94,78 +95,94 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-clk@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, stable@vger.kernel.org
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3021;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2654;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=ShlF7topp1rVhGyInCAgMDeIPA25eqOxSbLCWQw2i+E=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmp/LwfsCZ2h2+bBKIeZlfvZWYbksHgOKEPNGUA
- bWWWI6aAyGJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZqfy8AAKCRCLPIo+Aiko
- 1ZWeB/9cbXMLT0KtCArVjCvqsIGzUvMsUngRlUMv/AXLYhUpyvejYjbUrUsJLG2kUkRSJeYyk3I
- Cml+sfuuyGUppRU+g7HTDUdgkDiS2I3Rwa0ZQWz8U46J4sN5GiFoGw59RGfN5c/2uZIp5nVnv1Q
- GburKTlsLh22P7S2QNPwl+woQe+0xyVPsaFw+wVG2LoiWLXBIo5UOdXpDAM6mtI5Ny2YL6G4UNo
- 2ZazynPxiPOqvtfmPn2dUZZesi4nyVY2TvCIUurb/7zqBvA4BCN7Gms9vc8mJ4Dspjm+X9OMMx2
- 4++twAOh8WMW22AQvqJyNFvvQ7SMLj8M/44KwZ6yxLreDx1Q
+ bh=eAWrLr7syK4v9OEqvlyX0jICgB4CRiMGpoCpwqQgJpI=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmp/LwCTuCYU/6YSCjas4tG0SVviSh/CHbKxAIY
+ fuevwTc63KJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZqfy8AAKCRCLPIo+Aiko
+ 1al3B/sHtT2AVBPTL48APedB46dbqPApKIDMgtlWXbXRRqxinGGdDTVgPF+JEQXY43+bzpO5X9H
+ kP603xOrJ0y9Iq+d5Xnz0sRHcKENQMXbiNV2jmpFwuoe/4SORdHShTmrwIpIC/65GegFokHc3Y9
+ nP9aCSfF1WbV2JSzSRR7QKWoWbHk7o6a51sClz/cBepB3iOKObdLvbPLC5DOqgyjNFTHeN2orME
+ 7lnDmaH7pnIV+5CQ/V7Q2rIHU+0pb9t9RlWC7uzdS05a+5x8UXmSAbHMugoo6OV7KqNRx3WfHGd
+ FabAM4MlzKiRgXvJ4uG7ZXdhfEeONdh6eQ2G5BskecsAX0rw
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-The GLINK RPMSG channels get modalias based on the compatible string
-rather than the channel type, however the smd-rpm module uses rpmsg ID
-instead. Thus if the smd-rpm is built as a module, it doesn't get
-automatically loaded. Add generic compatible to such devices and fix
-module's ID table.
+The rpm_requests device nodes have the compatible node. As such the
+rpmsg core uses OF modalias instead of a native rpmsg modalias. Thus if
+smd-rpm is built as a module, it doesn't get autoloaded for the device.
 
-Module loading worked before the commit bcabe1e09135 ("soc: qcom:
-smd-rpm: Match rpmsg channel instead of compatible"), because the driver
-listed all compatible strings, but the mentioned commit changed ID
-table. Revert the offending commit and add generic compatible strings
-instead.
+Revert the commit bcabe1e09135 ("soc: qcom: smd-rpm: Match rpmsg channel
+instead of compatible")
 
+Fixes: bcabe1e09135 ("soc: qcom: smd-rpm: Match rpmsg channel instead of compatible")
+Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-Changes in v2:
-- Separate fix from the improvements (Krzysztof
-- Split the qcom,glink-smd-rpm compat from the qcom,smd-rpm as they use
-  different channels underneath.
-- Link to v1: https://lore.kernel.org/r/20240729-fix-smd-rpm-v1-0-99a96133cc65@linaro.org
+ drivers/soc/qcom/smd-rpm.c | 35 ++++++++++++++++++++++++++---------
+ 1 file changed, 26 insertions(+), 9 deletions(-)
 
----
-Dmitry Baryshkov (5):
-      Revert "soc: qcom: smd-rpm: Match rpmsg channel instead of compatible"
-      dt-bindings: soc: qcom: smd-rpm: add generic compatibles
-      soc: qcom: smd-rpm: add qcom,smd-rpm compatible
-      ARM: dts: qcom: add generic compat string to RPM glink channels
-      arm64: dts: qcom: add generic compat string to RPM glink channels
+diff --git a/drivers/soc/qcom/smd-rpm.c b/drivers/soc/qcom/smd-rpm.c
+index b7056aed4c7d..9d64283d2125 100644
+--- a/drivers/soc/qcom/smd-rpm.c
++++ b/drivers/soc/qcom/smd-rpm.c
+@@ -196,9 +196,6 @@ static int qcom_smd_rpm_probe(struct rpmsg_device *rpdev)
+ {
+ 	struct qcom_smd_rpm *rpm;
+ 
+-	if (!rpdev->dev.of_node)
+-		return -EINVAL;
+-
+ 	rpm = devm_kzalloc(&rpdev->dev, sizeof(*rpm), GFP_KERNEL);
+ 	if (!rpm)
+ 		return -ENOMEM;
+@@ -218,18 +215,38 @@ static void qcom_smd_rpm_remove(struct rpmsg_device *rpdev)
+ 	of_platform_depopulate(&rpdev->dev);
+ }
+ 
+-static const struct rpmsg_device_id qcom_smd_rpm_id_table[] = {
+-	{ .name = "rpm_requests", },
+-	{ /* sentinel */ }
++static const struct of_device_id qcom_smd_rpm_of_match[] = {
++	{ .compatible = "qcom,rpm-apq8084" },
++	{ .compatible = "qcom,rpm-ipq6018" },
++	{ .compatible = "qcom,rpm-ipq9574" },
++	{ .compatible = "qcom,rpm-msm8226" },
++	{ .compatible = "qcom,rpm-msm8909" },
++	{ .compatible = "qcom,rpm-msm8916" },
++	{ .compatible = "qcom,rpm-msm8936" },
++	{ .compatible = "qcom,rpm-msm8953" },
++	{ .compatible = "qcom,rpm-msm8974" },
++	{ .compatible = "qcom,rpm-msm8976" },
++	{ .compatible = "qcom,rpm-msm8994" },
++	{ .compatible = "qcom,rpm-msm8996" },
++	{ .compatible = "qcom,rpm-msm8998" },
++	{ .compatible = "qcom,rpm-sdm660" },
++	{ .compatible = "qcom,rpm-sm6115" },
++	{ .compatible = "qcom,rpm-sm6125" },
++	{ .compatible = "qcom,rpm-sm6375" },
++	{ .compatible = "qcom,rpm-qcm2290" },
++	{ .compatible = "qcom,rpm-qcs404" },
++	{}
+ };
+-MODULE_DEVICE_TABLE(rpmsg, qcom_smd_rpm_id_table);
++MODULE_DEVICE_TABLE(of, qcom_smd_rpm_of_match);
+ 
+ static struct rpmsg_driver qcom_smd_rpm_driver = {
+ 	.probe = qcom_smd_rpm_probe,
+ 	.remove = qcom_smd_rpm_remove,
+ 	.callback = qcom_smd_rpm_callback,
+-	.id_table = qcom_smd_rpm_id_table,
+-	.drv.name = "qcom_smd_rpm",
++	.drv  = {
++		.name  = "qcom_smd_rpm",
++		.of_match_table = qcom_smd_rpm_of_match,
++	},
+ };
+ 
+ static int __init qcom_smd_rpm_init(void)
 
- .../devicetree/bindings/clock/qcom,rpmcc.yaml      |  2 +-
- .../bindings/remoteproc/qcom,glink-rpm-edge.yaml   |  2 +-
- .../bindings/remoteproc/qcom,rpm-proc.yaml         |  4 +-
- .../devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml | 74 ++++++++++------------
- .../devicetree/bindings/soc/qcom/qcom,smd.yaml     |  2 +-
- arch/arm/boot/dts/qcom/qcom-apq8084.dtsi           |  2 +-
- arch/arm/boot/dts/qcom/qcom-msm8226.dtsi           |  2 +-
- arch/arm/boot/dts/qcom/qcom-msm8974.dtsi           |  2 +-
- arch/arm64/boot/dts/qcom/ipq6018.dtsi              |  2 +-
- arch/arm64/boot/dts/qcom/ipq9574.dtsi              |  2 +-
- arch/arm64/boot/dts/qcom/msm8916.dtsi              |  2 +-
- arch/arm64/boot/dts/qcom/msm8939.dtsi              |  2 +-
- arch/arm64/boot/dts/qcom/msm8953.dtsi              |  2 +-
- arch/arm64/boot/dts/qcom/msm8976.dtsi              |  2 +-
- arch/arm64/boot/dts/qcom/msm8994.dtsi              |  2 +-
- arch/arm64/boot/dts/qcom/msm8996.dtsi              |  2 +-
- arch/arm64/boot/dts/qcom/msm8998.dtsi              |  2 +-
- arch/arm64/boot/dts/qcom/qcm2290.dtsi              |  2 +-
- arch/arm64/boot/dts/qcom/qcs404.dtsi               |  2 +-
- arch/arm64/boot/dts/qcom/sdm630.dtsi               |  2 +-
- arch/arm64/boot/dts/qcom/sm6115.dtsi               |  2 +-
- arch/arm64/boot/dts/qcom/sm6125.dtsi               |  2 +-
- arch/arm64/boot/dts/qcom/sm6375.dtsi               |  2 +-
- drivers/soc/qcom/smd-rpm.c                         | 41 +++++++++---
- 24 files changed, 88 insertions(+), 73 deletions(-)
----
-base-commit: 668d33c9ff922c4590c58754ab064aaf53c387dd
-change-id: 20240729-fix-smd-rpm-9651e87a9bb0
-
-Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+2.39.2
 
 
