@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-27292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27293-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D127D93FD71
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 20:36:45 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5206E93FD7D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 20:39:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8C66D281E4A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 18:36:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9BD8FB20D67
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 18:39:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F84E16B735;
-	Mon, 29 Jul 2024 18:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BDB216B38D;
+	Mon, 29 Jul 2024 18:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qKOsipiW"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pLGzTvLV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDFE1419B5;
-	Mon, 29 Jul 2024 18:36:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CEB71E86F;
+	Mon, 29 Jul 2024 18:39:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722278201; cv=none; b=pb6cLe/t1PNndtzWrXx8Vt9nLRA+h4Ox0afIHu0iOXWUXtGa9eyMlDFbP59GvNlCYy6P3l47ha158SYITYtyUB37UqlfMilsmk97LE9FoUeBnEShizKFTtvnbqfbu8FKVtAr21TQ5tBYpoM3axB6x4YULJ1eN4htExAXeEwR2N4=
+	t=1722278347; cv=none; b=NWeMpvKh6KhvaYAkSqBwO4kyqM+r3N9dgr2QLb8yR46ptEa22Z7A6hr7Ip/BnK8zWKbYHOuy6pd9X5PwEacWZE73YXznY+uErywWDC7c52fSBH1IC2a3qrQmwaTGQFFi+8C7/ramCr/xBhGT2c5+YQAp2b9ATuo7TER0lTeh1xI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722278201; c=relaxed/simple;
-	bh=dOxVPTqHWx0tgCDJzrCOgB2DzxZOygqH997rgNkim6c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tqcihrbdYD+OSrFyYPCjmja+m8AA565zQ9FJbUyn/XPhBhSKCRA5oFePSi9VmaWeVL72pu7+SVL+2WTWHCRtsW7OwdUDDjy9kj45Eq53yJG4LLXxtZ8SSedlxTAdAuPqDw6v8gtr8hzgPKkHyKIM6VX8XTglHYLdSzWrK8s5Rlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qKOsipiW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92BCBC32786;
-	Mon, 29 Jul 2024 18:36:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722278200;
-	bh=dOxVPTqHWx0tgCDJzrCOgB2DzxZOygqH997rgNkim6c=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=qKOsipiW/R2Jzl3WHrSS6dsXQP0IomZlCZNtPlTQCmKXXzfTX4w/RRErRTzqB11AG
-	 YCHlHtkpFZCBebqwqQNPikvWrXS8mckFQod1aNZL72TRP50O0XCdG1iF9b2Q3nGyR5
-	 /pfjbVgjFys7ozrIBIyv0ehAvXn0B2NI4Db3Ou4pTyhXg9+JeSMy1lWXr7q1eB6yIl
-	 K717Gud9Tb0ECVKlKqKDKLHjY//sfFecyFR8XIbVfKKkyQpThf5tl7/wtsh1lmaPjs
-	 Crci3YMJ8E8V4l/POYPEl3w1/Td8+O9cFOb7Ewc6Ol9XhchTYAxWn+jkikFaDi+iuW
-	 akLVZLazQyhmw==
-Message-ID: <77a21001-09b1-48c3-8aa7-a32ed83e8893@kernel.org>
-Date: Mon, 29 Jul 2024 20:36:34 +0200
+	s=arc-20240116; t=1722278347; c=relaxed/simple;
+	bh=nkoK74H/6NJBAnfzX1ThmA6ZDcLIRN8quji/k/3AT8Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=YrQ4sZAWwOQdSdESjMNPrYQ88TuhXHdezjNz7c2J/gzG6paJP6rL9NuGT1Ekwtft9Da/jcvR68kZP3MeYhZxGVj2kCDy7zgUWRK6+f/hTDoO71Dsp7z6Qbol1wmV6BU/IliSaAdnQSkEWRObXjKigwT7cLlGlXjiNrlT0VLaQWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pLGzTvLV; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46TAFwn3027258;
+	Mon, 29 Jul 2024 18:38:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	eWE57PADrMUHeCMcSP39AUqkKwW/yy1cFIXe7CXKmho=; b=pLGzTvLVMehdxIUm
+	tbcozS4GLomYBynDs6FlLieJ7ztIuV0/cDb7bS6t8kIsZurLK+vzI2YSrE5UqJoH
+	TXcBZfujnMpFbbCh9kpGJVZPBbkfPShDeqPco0Ffbcpuv8PtQ6EzseyjN5hkOUEl
+	feLX7UnWx7/QjilcKKA4TdwOer91To6S2rDhE6Py+Mh1sASoA7G9g889RiECB3Bv
+	6xMRgBhBONHsXYnKMbjPgUT8ETAALZhKDSFOLtm+1FQQhqJatXLtD5QMtK5B4C6V
+	qkfo0bjlR3gnXWo2Xon5ntDY4Vx0XLE5Nx7NTPNte8hT81P60M+/4BOFbGghSBww
+	jLsDew==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40msne51hb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jul 2024 18:38:29 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46TIcSZ9020586
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jul 2024 18:38:28 GMT
+Received: from [10.134.71.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 29 Jul
+ 2024 11:38:27 -0700
+Message-ID: <5f2983ea-d694-44c3-8231-78c0de6db856@quicinc.com>
+Date: Mon, 29 Jul 2024 11:38:27 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,89 +65,112 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] soc: qcom: smd-rpm: add qcom,smd-rpm compatible
+Subject: Re: [PATCH] drm/msm/dp: fix the max supported bpp logic
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
- Stephan Gerhold <stephan@gerhold.net>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240729-fix-smd-rpm-v1-0-99a96133cc65@linaro.org>
- <20240729-fix-smd-rpm-v1-2-99a96133cc65@linaro.org>
- <6c5acb84-0d09-4a87-adb2-d0b10c67b98d@kernel.org>
- <CAA8EJppO_fohT_NWJ1P95YYejgAnZQdzrBpz7Ooceiu-t_MkQg@mail.gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+CC: <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        "Sean
+ Paul" <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Guenter
+ Roeck <groeck@chromium.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Vara Reddy
+	<quic_varar@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>, <dri-devel@lists.freedesktop.org>,
+        <quic_jesszhan@quicinc.com>, <neil.armstrong@linaro.org>,
+        <abel.vesa@linaro.org>, <quic_khsieh@quicinc.com>,
+        Rob Clark <robdclark@chromium.org>,
+        "Chandan
+ Uddaraju" <chandanu@codeaurora.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240725220320.130916-1-quic_abhinavk@quicinc.com>
+ <CAA8EJpoYqHnG_=jt6Lo6v7a7h3CdF66bKqRf63RCmvqHWb4kFQ@mail.gmail.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <CAA8EJppO_fohT_NWJ1P95YYejgAnZQdzrBpz7Ooceiu-t_MkQg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpoYqHnG_=jt6Lo6v7a7h3CdF66bKqRf63RCmvqHWb4kFQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Uqb9sr00ouQSmW-KP5PjCLILbb0NXce4
+X-Proofpoint-ORIG-GUID: Uqb9sr00ouQSmW-KP5PjCLILbb0NXce4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-29_16,2024-07-26_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
+ lowpriorityscore=0 mlxlogscore=999 priorityscore=1501 clxscore=1015
+ spamscore=0 mlxscore=0 bulkscore=0 suspectscore=0 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407290126
 
-On 29/07/2024 19:49, Dmitry Baryshkov wrote:
-> On Mon, 29 Jul 2024 at 18:04, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+
+
+On 7/27/2024 5:51 AM, Dmitry Baryshkov wrote:
+> On Fri, 26 Jul 2024 at 01:04, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >>
->> On 29/07/2024 13:04, Dmitry Baryshkov wrote:
->>> The device node has the compatible string, so the glink channel name
->>> isn't used for modprobing. Add the qcom,smd-rpm compatible to let the
->>> module be automatically loaded when required.
+>> Currently the DP driver hard-codes the max supported bpp to 30.
+>> This is incorrect because the number of lanes and max data rate
+>> supported by the lanes need to be taken into account.
 >>
->> So autoloading is not working? I don't understand whether you are fixing
->> real issue or just making something complete based on your feelings.
+>> Replace the hardcoded limit with the appropriate math which accounts
+>> for the accurate number of lanes and max data rate.
+>>
+>> Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_panel.c | 7 +++++--
+>>   1 file changed, 5 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+>> index a916b5f3b317..56ce5e4008f8 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+>> @@ -397,6 +397,7 @@ int dp_panel_init_panel_info(struct dp_panel *dp_panel)
+>>   {
+>>          struct drm_display_mode *drm_mode;
+>>          struct dp_panel_private *panel;
+>> +       u32 max_supported_bpp;
+>>
+>>          drm_mode = &dp_panel->dp_mode.drm_mode;
+>>
+>> @@ -423,8 +424,10 @@ int dp_panel_init_panel_info(struct dp_panel *dp_panel)
+>>                                  drm_mode->clock);
+>>          drm_dbg_dp(panel->drm_dev, "bpp = %d\n", dp_panel->dp_mode.bpp);
+>>
+>> -       dp_panel->dp_mode.bpp = max_t(u32, 18,
+>> -                               min_t(u32, dp_panel->dp_mode.bpp, 30));
+>> +       max_supported_bpp = dp_panel_get_mode_bpp(dp_panel, dp_panel->dp_mode.bpp,
+>> +                                                 dp_panel->dp_mode.drm_mode.clock);
+>> +       dp_panel->dp_mode.bpp = max_t(u32, 18, max_supported_bpp);
 > 
-> Yes, autoloading of smd-rpm is not working since bcabe1e09135, kernel
-> looks for qcom,rpm-FOO rather than the rpmsg:rpm_requests.
-> The obvious fix is to revert the commit, but I don't think that
-> listing all the chipsets there is a correct thing.
+> I think that in mode_valid() the driver should filter out modes that
+> result in BPP being less than 18. Then the max_t can be dropped
+> completely.
 > 
 
-OK, to me it wasn't so sure whether there is a real issue. Anyway, the
-reason behind adding common compatible is not to fix autoloading but be
-explicit that all of devices follow some sort of FW<->OS protocol.
+With Stephen's suggested change, dp_panel_get_supported_bpp() will not 
+return anything below min_supported_bpp which is 18 so we can absorb 
+that part and drop the max_t part here.
 
-Best regards,
-Krzysztof
+> Nevertheless this indeed fixes an issue with the screen corruption,
+> this is great!
+> 
+> Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # SM8350-HDK
+> 
 
+Thanks for reporting and testing this. I need to give you Reported-by 
+credits as well.
+
+>> +
+>>          drm_dbg_dp(panel->drm_dev, "updated bpp = %d\n",
+>>                                  dp_panel->dp_mode.bpp);
+>>
+>> --
+>> 2.44.0
+>>
+> 
+> 
 
