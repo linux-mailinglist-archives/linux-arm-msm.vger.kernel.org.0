@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-27273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D28C693F904
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 17:04:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 060EB93F90C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 17:06:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 68E7B282584
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 15:04:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 23CE81C214A5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 15:06:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68DBC15534D;
-	Mon, 29 Jul 2024 15:04:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED0C8155A39;
+	Mon, 29 Jul 2024 15:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tm2Ia2Su"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gzC56+RB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C02D14830F;
-	Mon, 29 Jul 2024 15:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13F33C24;
+	Mon, 29 Jul 2024 15:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722265459; cv=none; b=ppmYw0H0P6sFZ3ptXEg0Sj4LqOgyZWasjlUtGJPbg39aIp59VrO49023fgFp7x1CNF1KISs53EpAzUM1q9ITdHm/UHDiWuQSOUnvURSLerxlH/fdOj+M/jjMP8xecUCA9S5zebih00LBZG2H3BrFeNAkwFLluiC/ioN46Pnm814=
+	t=1722265575; cv=none; b=J915uJPJLBki41YeEiQrfMmmTFUYM/IsIqPl12qqQ7xXvE/9R5dZ0ST3j3VP/qHW14XPv5kDE0ymOuefHeQzQmEnH1uJUz/bBaQ05Jv/0yvFv3jR8K8bzrGBIo8jg5QieLZN9XU2EhlnXACjo/V5wDuP94kf16y5zG11tC/RU6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722265459; c=relaxed/simple;
-	bh=WefnLXd3E1nfnuZA/krRi3p9Qvy4P9MRlIum+ADvtKo=;
+	s=arc-20240116; t=1722265575; c=relaxed/simple;
+	bh=dty+BTPh9Wqu8ZsRUupJ1Mht41LlDdpIwBe9xI+zdGo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iqGMkJW3hUKF88bzJyl0J4wfivR2doK/np5x6yzEU5uGufyebYSg96zoPBEKCwHGnGf5l4S30xxfsSc1+ukKqjDF8yQ8tBpcJtGz+rLrNxTcuIFLRzsR3dvbOSEB2SagGa7vjFvORX5u3o+BmBPqVYE5rcI8waQ1fz/G7XbT4XY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tm2Ia2Su; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C39C4AF09;
-	Mon, 29 Jul 2024 15:04:16 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=kPX1X+3/DoHsVsfYpRz0fVA1GNLdgQn4T8YWpCmKdPGMtY3H/nPRsvw7StURu7wvCHhKXzmRwrdWBgcCF0+7EzrWB7AIn1qay0lSM46P2KwIHb30+wMzqFMBW1cz9OuHHsdikOzYCtu1OKF6UD/2IBQsEK6admF1ZIe4c3xZqrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gzC56+RB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5A21C32786;
+	Mon, 29 Jul 2024 15:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722265458;
-	bh=WefnLXd3E1nfnuZA/krRi3p9Qvy4P9MRlIum+ADvtKo=;
+	s=k20201202; t=1722265575;
+	bh=dty+BTPh9Wqu8ZsRUupJ1Mht41LlDdpIwBe9xI+zdGo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tm2Ia2Su7rKEDolTzEONcCbhJWmWOIDSSO5z7BfklFwkQpf0+m80olpg24mL+V9XC
-	 QEM2MQ+NsYaVS4TNXS+wM80fF59kYp1VmIBcMebWPUFcqSqjrGLGgilqqQp1NjEHSr
-	 tC6FGtonF+atpvQ47PMCmzd3FY2nDNlePO8HNy1vS5Te92DqARXtl82ec/V2oxYWmx
-	 8boR5Oe7P1+rlK8VqwJkx9d+WhdESj9lKXEG3jZ2dDWyG22pXVlcv95usGUIhHx1U/
-	 eGaUlha4NFv9W0zEYm/G6aE5Q8U7otCLRPBTmw0dTaQ5+gZ8jhn/PUV/yplmAanp+n
-	 fNN9BNVv45xlg==
-Message-ID: <6c5acb84-0d09-4a87-adb2-d0b10c67b98d@kernel.org>
-Date: Mon, 29 Jul 2024 17:04:14 +0200
+	b=gzC56+RBJ9BBUtP2m70LR+UevtVVjajVzJiSqIjd30SP8VM4bma8EnYxzOssPXolX
+	 o8W5+PJ0JwBBtkggKm9j8V9LvTtttzMbmd8+zaOWaXlCmuj0A0F/nZgcXVFhR8WMeM
+	 pR2Rso0jz6hRz1xd5twr4MCVPWvXJOMLi8SepQXAVps654GMPbmB82soUOnN+M47lN
+	 I6vcVMfDg1bAaMu783vb/pJBCaSzdW/6qon/sEY/moPzsWz9UX5eGeFnsFty0TKzNX
+	 T70JD4yQJIUzLYXGQzj0yZrwIOs56fjzLSErzaZE+PyIv6+8JKplAG25Ajo+ObMjLk
+	 jkGwjZ8D1L7uw==
+Message-ID: <bff687dc-5e21-4879-b771-762d0daceb44@kernel.org>
+Date: Mon, 29 Jul 2024 17:06:11 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] soc: qcom: smd-rpm: add qcom,smd-rpm compatible
+Subject: Re: [PATCH 3/4] ARM: dts: qcom: add generic compat string to RPM
+ glink channels
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -60,7 +61,7 @@ To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20240729-fix-smd-rpm-v1-0-99a96133cc65@linaro.org>
- <20240729-fix-smd-rpm-v1-2-99a96133cc65@linaro.org>
+ <20240729-fix-smd-rpm-v1-3-99a96133cc65@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,23 +107,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240729-fix-smd-rpm-v1-2-99a96133cc65@linaro.org>
+In-Reply-To: <20240729-fix-smd-rpm-v1-3-99a96133cc65@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 29/07/2024 13:04, Dmitry Baryshkov wrote:
-> The device node has the compatible string, so the glink channel name
-> isn't used for modprobing. Add the qcom,smd-rpm compatible to let the
-> module be automatically loaded when required.
-
-So autoloading is not working? I don't understand whether you are fixing
-real issue or just making something complete based on your feelings.
+> Add the generic qcom,smd-rpm compatible to RPM nodes to follow the
+> schema (and to allow automatic driver loading in a sane way).
 > 
 > Fixes: bcabe1e09135 ("soc: qcom: smd-rpm: Match rpmsg channel instead of compatible")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/soc/qcom/smd-rpm.c | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
+
+That's nowhere a fix or please share some details what is the bug being
+fixed here.
 
 Best regards,
 Krzysztof
