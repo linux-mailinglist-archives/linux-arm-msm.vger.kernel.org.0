@@ -1,60 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-27164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDF8A93EC13
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 05:59:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8B3E93EC19
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 05:59:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0667B1C21776
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 03:59:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9ED751F21E5D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 03:59:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 682E4839F7;
-	Mon, 29 Jul 2024 03:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28E3484A3E;
+	Mon, 29 Jul 2024 03:58:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FcCwZB0v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EjoqFBFU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3812582D8E;
-	Mon, 29 Jul 2024 03:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB968405D;
+	Mon, 29 Jul 2024 03:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722225522; cv=none; b=Sjdu55K56IleMX1nRUsoTjb26EQqKAZWQXAncSsHWgvs9cN7AoKngcFVeR8H/tMQAPFTy/UR5ouZlVU7BgLPYuXk+EYYUOqQ+3FpP93EM58tGIUW6X7diUH/4QhpYuP3SQt+Bh3ruBXmgyQsOPrGVMB8d6FPrYg0/AEJRwozvHc=
+	t=1722225523; cv=none; b=i1JMS1KY8Yph9yohu2I4mAeB87/QbINp3y9yrvxRxLgvR0VqeF/CKeRcdA8S/kDc8wlwixlrgF7sLHXXSEAKP0rT2XuBMgXVq1Kt/ge8w/B7ivPWipH1n2TAB+uPOdg+v51XNsoyUsMpq0AeLPHEB4iud+89Yc3+DHrcql/+MOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722225522; c=relaxed/simple;
-	bh=uC+kHph6ZlE3LKYL8XLpfKF9GkQtsulqxQzM2ueqVa8=;
+	s=arc-20240116; t=1722225523; c=relaxed/simple;
+	bh=LmVqQmuz9xZZcRUniQRMKVTeGtz3bp9z68kpBWoskVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OiPVBUU2MHie7hro5sGBojv+/9u8lnfaJ3YJ5xrx8VRqR2vqhWZ78ujboJK+QsAZBo5uIc+zkaPXjqcGkgV6J/1GVlnPhihWlY+REpqdS1+P/8zMZAGiYiwMwm7Igl9/pMIVd1ETjRn9kY6PCMQg9uaPL7uUbFAw2t4bNwEk81k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FcCwZB0v; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11758C4AF10;
-	Mon, 29 Jul 2024 03:58:41 +0000 (UTC)
+	 MIME-Version:Content-Type; b=O5oltAohDjJzZBzmM4H4PV7T6S4yVzyYUEIGtvDSQe9gxm9dseAvpjoy5Gonxyav7AKcgOO7YCzygl1Tj1pDD22KCdB102AtIX2hl/Vr1Hdm70Pr0DhdeKvLlwRlsyoHvL3qBqa+OxlpQnBSG8Ln7S4Ou3EizJHOxeneK020GTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EjoqFBFU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C11C4AF0F;
+	Mon, 29 Jul 2024 03:58:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722225521;
-	bh=uC+kHph6ZlE3LKYL8XLpfKF9GkQtsulqxQzM2ueqVa8=;
+	s=k20201202; t=1722225522;
+	bh=LmVqQmuz9xZZcRUniQRMKVTeGtz3bp9z68kpBWoskVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FcCwZB0vL5xc2ng4VIF+J7hfNufy+MvMLqZjgiNaRjyqPVsNHpIy8mleZMAYbyE8H
-	 jSmraqcd8QEF5zag/s/gvXmPyIfElfVfx52tWjzdl38zqQAF0NSaYEVenPFxT94opn
-	 6nfM8yOWraFVVflh+YpUkKNNLpfSXFxJh8SDN60BhZ2hbmRHGr1L5pv8vtIEgNmlLE
-	 mKMnAzDgtq1Drr+SEL+8ufXKOjbxvdoghfAuWnT+t7Jr+hZ6wgAaqAOXSD2X6++CBI
-	 BykhVSImFu4kH1I8LrlnpNWx3fiPufzFb/4eSAJh/EXmAq8+jQZBor3uUY1QUR+Ziv
-	 uDaFdzzw6yYdg==
+	b=EjoqFBFUUhrGqyEse2AQ0xsVvTxjp0gdne4Cjoo2GA6sinUyMhuGK9+55lya1Ymbz
+	 JEB8sfEQFI+tr7G8lTdWbjbYxAl24fc1OSsvIiwwtVqIpsULFf0B2ryW6IPCPxexNp
+	 PlMWIcgdTzo3Dxrwutn/iNCm4FSr6IFXvff9x7IUqEcIOdCVAxZcaUMjfhukCp87sT
+	 8y3Ds0p74jUpQhYAKaUQefVas0oEbW6hZF87ROHe6DVPK5qjrmo8rFK3rP9vJYQktZ
+	 hRgWuYjPA8Vl1lQ2uKmj21EKmpnxzQmoe5PaSFJDYd6WqCVtqULtJ1ImF06s2b4X2+
+	 cvURMqo6LK81w==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: linux-kernel@vger.kernel.org,
-	kernel-janitors@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: Constify struct freq_tbl
-Date: Sun, 28 Jul 2024 22:58:08 -0500
-Message-ID: <172222551303.175430.15476491165760895112.b4-ty@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	=?UTF-8?q?St=C3=A9phane=20Martins?= <stemartins@proton.me>
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916-longcheer-l8910: Add rear flash
+Date: Sun, 28 Jul 2024 22:58:09 -0500
+Message-ID: <172222551323.175430.4176360480927663011.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <e8aee66fa83a4e65f7e855eb8bdbc91275d6994b.1720962107.git.christophe.jaillet@wanadoo.fr>
-References: <e8aee66fa83a4e65f7e855eb8bdbc91275d6994b.1720962107.git.christophe.jaillet@wanadoo.fr>
+In-Reply-To: <20240722-x5_sy7802-v1-1-b2ffeeaf8d2d@apitzsch.eu>
+References: <20240722-x5_sy7802-v1-1-b2ffeeaf8d2d@apitzsch.eu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,24 +67,15 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sun, 14 Jul 2024 15:01:58 +0200, Christophe JAILLET wrote:
-> 'struct freq_tbl' are not modified in these drivers.
+On Mon, 22 Jul 2024 22:05:01 +0200, André Apitzsch wrote:
+> The phone has a Silergy SY7802 flash LED controller.
 > 
-> Constifying this structure moves some data to a read-only section, so
-> increase overall security.
 > 
-> On a x86_64, with allmodconfig, as an example:
-> Before:
-> ======
->    text	   data	    bss	    dec	    hex	filename
->    7595	  43696	      0	  51291	   c85b	drivers/clk/qcom/mmcc-apq8084.o
-> 
-> [...]
 
 Applied, thanks!
 
-[1/1] clk: qcom: Constify struct freq_tbl
-      commit: da3c15ea05d8257c1987e527004e6331126e9451
+[1/1] arm64: dts: qcom: msm8916-longcheer-l8910: Add rear flash
+      commit: 7a373bbc1b50de75572b00063b52ac79eaeb9701
 
 Best regards,
 -- 
