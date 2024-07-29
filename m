@@ -1,119 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-27295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31E9593FDCD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 20:53:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D176C93FE59
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 21:37:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A72F91F2294D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 18:53:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0F6461C225F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 19:37:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D589187325;
-	Mon, 29 Jul 2024 18:53:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1B87186E51;
+	Mon, 29 Jul 2024 19:37:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="R29XOyCo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XUrKe0VV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7FF8183084
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 18:53:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA4F585947;
+	Mon, 29 Jul 2024 19:37:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722279228; cv=none; b=Xm0N0K0CfRORFo8gMyzgllR4GtsWSia9WkKHqt7xMrOIKttReAdPFpXeT/+8TtQMlEI4vvw4tKgy0BMQf3MxS5EMUp55oIY6udHq+jLSdgafKndk1qAoUJ7P6h5y4u4ZZyaxLg/uswg8JtoS0UgtXiAsxSGAsMSu3lQ6dXL+4ic=
+	t=1722281854; cv=none; b=g6YDf2eSJoIGcplJhRFVXx7/i+rVKUqKu9fAasbgZGw71S7TbMdP0xUvweQOMN/jEU3L31vru9DfztH4RcP6gLyxLE7LgUqHgqSUEyZ+CxzAdjBsItITNf+xSqLPV0ZQn0yge6HB/KkiXCB2npT9A/ivZlg4r0VQ+ND/j0JHBsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722279228; c=relaxed/simple;
-	bh=8Sjx8Obls6gX6rSbN48TLHFUDVIzxgkNR+cTsGWHTvc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rShgewclwSvzJwvul5otqiXF+CK7CJwPF8vUuFk57FeiCcIFJOYFY1qYuVjlUj7vomqKqQ5+bd8ygpz8iMLYA8NF4X5NtQQoVeGmF31j9JXtP6qYtTeA86NFolbyRW4/7Kmiit0LzsWwIfieZ4anMx20393B+8dtJgeplucxuNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=R29XOyCo; arc=none smtp.client-ip=209.85.128.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-664ccd158b0so23565187b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 11:53:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722279226; x=1722884026; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=21Sbux2VhZeoha2Iax/qNcis/EQe7uYNS3kIJS0grv0=;
-        b=R29XOyCox9MUv/941ZKCgGelWYa2p5HSaKGcwkypkIGKYypVUWLOArdTZXLba6P3KI
-         gF6+qfA+KjrAFGQfQyFRXdOM33y+Z+Io/iPbNQCXqcSVNr+xSnpslxzcHZepAvSqqc7P
-         Y6DtTc1FOuxbHqunv9xkgFmuF/9pb7D9WR6n/i7SkUqcI5sA9S0Z3xvsFYNTbawoEbE2
-         aXFVjAjp64eAXhoRVBs0OCesPRgzkLdCoIMUBINEngmxmqfXCrZCNbesz+JsPXysDGCk
-         JwfliObl/4WCABTgFJ7P+Eh8f1cqKUbqEoK1RdyvZUQkiAI4Q4zHCT3XL5FJOvg73oay
-         O/xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722279226; x=1722884026;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=21Sbux2VhZeoha2Iax/qNcis/EQe7uYNS3kIJS0grv0=;
-        b=oOsA+zb5xnp4eFVZMW/QvT+dEWd8CGi+nMeiLZiwpSHKXtZwJs6aKRqimqgJENNqv+
-         aqnmovv7Z4wO00aVzhrSyWN8zDso85H8cbHx3LzolMvrVYYooPeW/x5Fv9mZ8BWSda5T
-         ZVUK1Utat+Vjx21MjVAR7XHquINh5DOGfUZa5FDdlpTZCq5DQ2Tu4Qg/gXWn2eWBS1L+
-         2aK1aEliVlgKkKxlMWOI3gsfwquDHm23vm8RblBKrTd2IvwF9np3SVryj6Y2hAvto2Sb
-         7E7wopWx8efEzU+AJgfCTR26cw87AWrGImZo3qZObSx7KEC6MSMSuRCCq+pSqziUygs6
-         /D5w==
-X-Forwarded-Encrypted: i=1; AJvYcCUUX5bVXu0Q78DHru+bBWEgyF5ZgxVshHL+JHUwkpPWDGcITdaYltrnxqCDg4sKWrLBHMcAbPTLhdl5cPgOW07oDn82q/KZPcsII5d6sQ==
-X-Gm-Message-State: AOJu0Yz7hYOd9AV1AAKOb9LecGOP3/gHKyz8H0UPESDW7O/Z4WuzD8AW
-	RA7skhBz0LnFq80+4DbYBzQbvmI76hNhCXdSTxbZgDURiS2Jv/P7vs64Ptqr3+hk9qCfqFjfcez
-	WU03+siVmpWUZIGNPCXQb48RA2iDbSqVN5OUDcg==
-X-Google-Smtp-Source: AGHT+IF6ldJ/Go146OJdcc3KaWTg8VW6N+1GHTa2p69EzB1Qwh3+3x7noP+n6XeEzzBoym9FpiYF7khV+gAjx88QKsU=
-X-Received: by 2002:a0d:c641:0:b0:644:ffb2:5b19 with SMTP id
- 00721157ae682-67a053e0eb6mr96740867b3.9.1722279225766; Mon, 29 Jul 2024
- 11:53:45 -0700 (PDT)
+	s=arc-20240116; t=1722281854; c=relaxed/simple;
+	bh=lQ1UwaSVRVCr28nA9MaSL3OK4CCm3hBI4Kq6+31BSqY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=ZktlTnncVajWPKhfLz48QzFJQDHI5QIcFvCiBVJCkKvsHyWWRF26TSiUAji0tzcVxA2+7zmF9XI/tqWu9dfKsX6aTu/hp4yvw/hr+qSn5bZoG48ebWqqwYCejO7K5cbVf46MwKE0YxkAl+A6vSolOtjlrljCoBngfU3qaE4Q+Jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XUrKe0VV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA431C32786;
+	Mon, 29 Jul 2024 19:37:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722281854;
+	bh=lQ1UwaSVRVCr28nA9MaSL3OK4CCm3hBI4Kq6+31BSqY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=XUrKe0VVUZj94jTxc8zqQQzjE9ymJYbBPAUKm9WXeaaAPjwudJ7XUgr5DtcD8uGRA
+	 ohdogn/7LFCPN6kcrLqkohq92gXMdVL0ax9ubaiNZm3wzk3cCIlP5aGqpSdi5u//jO
+	 6iqRrBkbVBHQqU/JWZmqshQQ0MAy2llTqnskQIa/ahzK7h+ACyj7PuR4K5z06DaPUU
+	 ZtRddCROjSiT0Zk3uiOWXDx+979TCIIucX2imDjjOChWD+zKmQD8Ug8wLUBRPvjWkv
+	 19fqCpUw7U0J3rRrKVDwRTf9WCjZwWcIuVXMpshJ+CpzHw5VUT6no60zqNoYx3SyOs
+	 i4zSuUNixVwQw==
+From: Mark Brown <broonie@kernel.org>
+To: Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Mohammad Rafi Shaik <quic_mohs@quicinc.com>, 
+ Prasad Kumpatla <quic_pkumpatl@quicinc.com>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Banajit Goswami <bgoswami@quicinc.com>, 
+ Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org
+In-Reply-To: <20240726-asoc-wcd-wsa-swr-ports-genmask-v1-0-d4d7a8b56f05@linaro.org>
+References: <20240726-asoc-wcd-wsa-swr-ports-genmask-v1-0-d4d7a8b56f05@linaro.org>
+Subject: Re: [PATCH 0/6] ASoC: codecs: wcd93xx/wsa88xx: Correct Soundwire
+ ports mask
+Message-Id: <172228185142.141226.9862825989484734633.b4-ty@kernel.org>
+Date: Mon, 29 Jul 2024 20:37:31 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240729-fix-smd-rpm-v1-0-99a96133cc65@linaro.org>
- <20240729-fix-smd-rpm-v1-2-99a96133cc65@linaro.org> <6c5acb84-0d09-4a87-adb2-d0b10c67b98d@kernel.org>
- <CAA8EJppO_fohT_NWJ1P95YYejgAnZQdzrBpz7Ooceiu-t_MkQg@mail.gmail.com> <77a21001-09b1-48c3-8aa7-a32ed83e8893@kernel.org>
-In-Reply-To: <77a21001-09b1-48c3-8aa7-a32ed83e8893@kernel.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 29 Jul 2024 21:53:34 +0300
-Message-ID: <CAA8EJpqQjsHd+k2KkDumo-Wb5PHAv2g+JPciJ6FL6EQ24T3Gow@mail.gmail.com>
-Subject: Re: [PATCH 2/4] soc: qcom: smd-rpm: add qcom,smd-rpm compatible
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Andy Gross <agross@kernel.org>, Stephan Gerhold <stephan@gerhold.net>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-37811
 
-On Mon, 29 Jul 2024 at 21:36, Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> On 29/07/2024 19:49, Dmitry Baryshkov wrote:
-> > On Mon, 29 Jul 2024 at 18:04, Krzysztof Kozlowski <krzk@kernel.org> wrote:
-> >>
-> >> On 29/07/2024 13:04, Dmitry Baryshkov wrote:
-> >>> The device node has the compatible string, so the glink channel name
-> >>> isn't used for modprobing. Add the qcom,smd-rpm compatible to let the
-> >>> module be automatically loaded when required.
-> >>
-> >> So autoloading is not working? I don't understand whether you are fixing
-> >> real issue or just making something complete based on your feelings.
-> >
-> > Yes, autoloading of smd-rpm is not working since bcabe1e09135, kernel
-> > looks for qcom,rpm-FOO rather than the rpmsg:rpm_requests.
-> > The obvious fix is to revert the commit, but I don't think that
-> > listing all the chipsets there is a correct thing.
-> >
->
-> OK, to me it wasn't so sure whether there is a real issue. Anyway, the
-> reason behind adding common compatible is not to fix autoloading but be
-> explicit that all of devices follow some sort of FW<->OS protocol.
+On Fri, 26 Jul 2024 16:10:40 +0200, Krzysztof Kozlowski wrote:
+> Incorrect mask of Soundwire ports - one bit too long/big - was passed.
+> 
+> Theoretically, too wide mask could cause an out of bounds read in
+> sdw_get_slave_dpn_prop() in stream.c, however only in the case of buggy
+> driver, e.g. adding incorrect number of ports via
+> sdw_stream_add_slave().
+> 
+> [...]
 
-Well, it is both. But I see your point, let's fix the offending commit
-first by listing all RPM blocks and then fix the issue as a separate
-set of patches.
+Applied to
 
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
--- 
-With best wishes
-Dmitry
+Thanks!
+
+[1/6] ASoC: codecs: wcd937x-sdw: Correct Soundwire ports mask
+      commit: aebb1813c279ce8f3a2dfa3f86def0c0ec1cbb8d
+[2/6] ASoC: codecs: wcd938x-sdw: Correct Soundwire ports mask
+      commit: 3f6fb03dae9c7dfba7670858d29e03c8faaa89fe
+[3/6] ASoC: codecs: wcd939x-sdw: Correct Soundwire ports mask
+      commit: 74a79977c4e1d09eced33e6e22f875a5bb3fad29
+[4/6] ASoC: codecs: wsa881x: Correct Soundwire ports mask
+      commit: eb11c3bb64ad0a05aeacdb01039863aa2aa3614b
+[5/6] ASoC: codecs: wsa883x: Correct Soundwire ports mask
+      commit: 6801ac36f25690e14955f7f9eace1eaa29edbdd0
+[6/6] ASoC: codecs: wsa884x: Correct Soundwire ports mask
+      commit: dcb6631d05152930e2ea70fd2abfd811b0e970b5
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
