@@ -1,157 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-27240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C85693F376
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 13:01:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D75C93F389
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 13:05:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EECD11F22657
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 11:01:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4CCAD1C21CDA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 11:05:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3578A145339;
-	Mon, 29 Jul 2024 11:01:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9A8E1459F8;
+	Mon, 29 Jul 2024 11:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RSwST0MB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iJCh7IZc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8964414532C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 11:01:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33FC145339
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 11:04:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722250897; cv=none; b=VkXtYjAIKQuwdVd/GwMq3kyAAM7mR5wEHhgeHNsldd+omX83OJY2hQiuPnyAGI5y3pCNvraQNl+nt7l8RFhzArcKR2x42jvjbuet5zaO9kt1fEAKkssuDkwHHma49ebIrsJleaaVlYm0KjVAwVsJxOI470u8GVanuyMFnz26z2g=
+	t=1722251095; cv=none; b=Mv96UCbmRlGgNaKxG4btc6jY2U+fhzAuIq9CZZmSdqtmeWex64ByUrGJx3R0puKMPWpJLgCyv99I3jKLLWMm3iPSfefuCeXupMrZPSwRB6f26FVdjtp7z38xnJXbAOazI2ISWIBHHXQydaZpvjlucg94fttDV0UekhlaDLwftEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722250897; c=relaxed/simple;
-	bh=lduqLSkWyJhKYjonatWIdfC2fjHw1mpU9LAVB9RFSNY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Brf51yylRba3gzF8qQGmbePTcvZ2iTZ2Khobx106yWehwGzXN2P2zHk700rFgvn5p2666RBEfYfmB/BEpMy8047W68cd/7NvF8YyipHSM9aqBroh0ATedXpWjJjtGmscSC6g87gK/YXTnLhNa3D6fd9yN/41WGnFMn9MyqwX8Lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RSwST0MB; arc=none smtp.client-ip=209.85.128.176
+	s=arc-20240116; t=1722251095; c=relaxed/simple;
+	bh=H2Muob7dk11oRV21anlzfmTL75LiqgcTURYex0h8N/I=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ByQvNpkBE79T/I8dIIHAMlBrkSTGk2Jtc8wRroVEGX0ymG3lAIE+pNc0O5uneAbluDZ4aHlMa0bzWhrDUtFDKevuL4zKSgbcmEi3On6KhEk4L5U1YzaSFM03x3sIL6kGtGukc199xkK9hlRjk50srSdmt/I8pPfY0cwq1Vwangw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iJCh7IZc; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-66ca5e8cc51so20237787b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 04:01:35 -0700 (PDT)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-52efdf02d13so5116428e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 04:04:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722250894; x=1722855694; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qS74thyXlKVfCHirad4RXHuJPQsnIZHpLWb7ffO4dsY=;
-        b=RSwST0MBcfy2ofcxx/T4Yg9NhttQLBFmZB69eqATNFnB9V2TTL921sV+JYh38tE/01
-         hwuFFfurRgFo9LtpJK/gro6s46cB1ZMlAY01X/dzuI6FLSqMVT+xg1Z28J2R3I/LLzUE
-         0diRlt4QwY2GW4WZVvfMpGpRTdn1YOIMvKP+sMx24ULV6rBct6u5ajQQcY+Xg82Nv2j4
-         yGgewXb3fhVydFK7F7gJ9t6oWToH+tKAmI3NMJnzZ9pWljP4fT55Ft14YUQW+RaRTilK
-         8/6JKlwqocwAVyhHHSvZ4xhUxClp3D0mQrdxV6NIQUZbalSB+H/o6AA9A7/1gg141Vge
-         /mLg==
+        d=linaro.org; s=google; t=1722251092; x=1722855892; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fAn4RVxTnpgnao4vM7hy07ohwvLBby85rLUIHJlEjok=;
+        b=iJCh7IZcR5ZMSi+224/bVFlCl32FWvRUj/71f9GktXpCJEnigwklbDXv8XEujwt7Cj
+         wprB08Iu1gYCRaKawwCDPMPNlcoV2+JHcQ2B8IR7k2cjyQE5N7NKLAfXLP+NzQUOyyvB
+         KBADTqllRDFO3YJzXJbQAMxFu0ohVKzt+Ncf6+aRmoRQdTuOsCBO3W9sbCBZNh9AEx8Q
+         lGPLA1QXnaw9eVVzrT5ECp4TQIoqRukujRnKdqULq2mjY7cY5LG/pvhmTz+EXJadZuTm
+         jOvWUT2v91QqPGo30il+9QXI/bfIa+/w5TsOd5Z1y/VwyhQVUxX7AhwDqPIC9o++IIFj
+         O+yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722250894; x=1722855694;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1722251092; x=1722855892;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qS74thyXlKVfCHirad4RXHuJPQsnIZHpLWb7ffO4dsY=;
-        b=Im39coCq/DMlGDbVlpUS9yR00oAgi/BY1QsxOONGgERX3zwLHRJqlBFG4UftH3mXKp
-         7a7wHogzJR/pYGjCdXABeuMalt06RkpYbc9EfISAIiFovL8cvdRksdW/YK2Zc/G2K/PP
-         urUcTmkhbu4PQDYt8S1xApDMpP9F4LOqtVb4epkUEbNEcb32g98qj5h2MIK/O66mwcaj
-         x6WTjU5Uf4BrfzPuLb2lVF6XlADavsQgjeUcZgpiSM/bqiowlVCuuWHF6/5N/864FO5n
-         3XBFAdDfDCPgkV7Xgi3IHvRAhCg5IKJ13bHMR+rl2DNG3DInELEtUyqXit41m/OpkPyI
-         gHwg==
-X-Forwarded-Encrypted: i=1; AJvYcCX1aAhCyG+DscfnBUH18uxkCLWpkc2n8z18TjATogQAli3LJ68YuO3ohL2H3fKKaA6fPmsY1g9xFNaYYi97/H/t5GPzG5kcWNz5ojB3Sw==
-X-Gm-Message-State: AOJu0YycEpWZr3E0hT1N8+EzGLsY6KdelnqhfYruTqaRB/hF3ur5ahYo
-	Gz+DWocvtGUIXX/JAujYDVdxC3WQFHzmAdrF6hPzVMegY4LHx6v3ZEHN39y+cHarQWHF6ajidbi
-	HjB7WTlrBTcVHbqYvvyYmNjbvzlVFtEVie33f0A==
-X-Google-Smtp-Source: AGHT+IG3EA/0IxeNAJtBbqjvCrC/pwaKq0AyGdVeJ+5pV3M8HdGLRf4CJd0exHD7znc1SNb7/XMwKGZypKi+qJlQgw8=
-X-Received: by 2002:a0d:d007:0:b0:673:1ac6:4be0 with SMTP id
- 00721157ae682-67a0a3231d1mr80378567b3.44.1722250894530; Mon, 29 Jul 2024
- 04:01:34 -0700 (PDT)
+        bh=fAn4RVxTnpgnao4vM7hy07ohwvLBby85rLUIHJlEjok=;
+        b=nXzUJTnRx02qSONZGlzZt1Q7zy8KqpvaekByNYzguz3014E9osyJnewlR9bNXXKs3I
+         52ZotPgHtfDJJUfw7HZyy57ONKEkOGV9w+00MVc0U69aJEQqQMw38+Z0yRwp5CudcWw/
+         5Zg+9l1ihN9sPhW+cf9Gs0CDJ/d0471m120uj+WUN/67P5GM2zX0CHHn4JyUzo1Sn7Q6
+         OmsrtSrZ2HLwHSAw3XQ2ZU1bI9xrzBqUfNlCb2F+9VcTQv2GL7G5cliFTKUtPDDKvdzg
+         IbRdQaL4MQY28K/b1RpLuXU2yXQWDD/2VDmDvK/xHTUOBazvwkHZiGOfK5Lmw5ckTJF8
+         Ku4w==
+X-Gm-Message-State: AOJu0Yz10bopSRyy+jlMcOyzFqihW/N3E58WM6OTD6mz7SN/SIx9hHgA
+	lmDSdJ+xrfh7r8ouucGbyiurDkro5NKOAKbvdtilSXRhew8OJ0ecwUak/gAxf6o=
+X-Google-Smtp-Source: AGHT+IH/kP7pAMTn1q68QbNIDyPd3UjktcOBDnVWdWcd34XE8UaGSIaKLrcRBYDZIHIXLFiIqe9VkA==
+X-Received: by 2002:a05:6512:606:b0:52c:83c7:936a with SMTP id 2adb3069b0e04-5309b2cac07mr5526622e87.42.1722251091848;
+        Mon, 29 Jul 2024 04:04:51 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52fd5c09093sm1457806e87.172.2024.07.29.04.04.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jul 2024 04:04:51 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 0/4] soc: qcom: fix rpm_requests module probing
+Date: Mon, 29 Jul 2024 14:04:44 +0300
+Message-Id: <20240729-fix-smd-rpm-v1-0-99a96133cc65@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <su3wp6s44hrxf4ijvsdfzbvv4unu4ycb7kkvwbx6ltdafkldir@4g7ydqm2ap5j> <aa9d6aec-ef94-4137-b2ff-0c86d9a92d42@molgen.mpg.de>
-In-Reply-To: <aa9d6aec-ef94-4137-b2ff-0c86d9a92d42@molgen.mpg.de>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 29 Jul 2024 14:01:23 +0300
-Message-ID: <CAA8EJpqGXe0A0yDpEP==60k-bPEbDORpLUtsiPvGSi+b_XphAg@mail.gmail.com>
-Subject: Re: btqca: crash with linux-next on bt power down
-To: Paul Menzel <pmenzel@molgen.mpg.de>
-Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, linux-bluetooth@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
-	regressions@lists.linux.dev, Zijun Hu <quic_zijuhu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEx3p2YC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDcyNL3bTMCt3i3BTdooJcXUszU8NUC/NEy6QkAyWgjoKiVKA02LTo2Np
+ aAPqVPI9dAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>, 
+ Stephan Gerhold <stephan@gerhold.net>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2167;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=H2Muob7dk11oRV21anlzfmTL75LiqgcTURYex0h8N/I=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBmp3dSjeXGRToe4IvLPl+bO4gAoxQn90haPCAmq
+ RTxCRFEqF2JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZqd3UgAKCRCLPIo+Aiko
+ 1cEaB/4tIGYqvwox3T1je/qKjFL1+J0nnPzxWZIcvUz2qVDvRG7x05O/mZmmi/aNsGzoNKavvTk
+ y/UicNfKlq2NaEK375rVKdkRnQQ8OYPeg+g/VkesprzK3siBK9e1aNtVJOLIAVSU1agfHH/NGif
+ dx63r6Xi0IR5fzZPCYRmNHtLMNL+UUCYPsEx86d7ddZHpqOgqDxd35ql1v9haCdy0LW3EL+RN9M
+ eB+UEa/a6IuVOxjGATfJknL49vNxOQ5BVD4Or4KIZ7Pp2bqp2lB4T+CzEv3Hi+LLFgVNvlCkmJm
+ Xi/GMEfpeq2F9u3PAJVi28Jo3ZTK0uYa2tt0mYaG3O4nB7NY
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-#regzbot: introduced:
-973dd9c4db4746200f88fe46e30eada7054fdbea..84f9288208dfcd955446060a53add15b9e01af4e
+The GLINK RPMSG channels get modalias based on the compatible string
+rather than the channel type, however the smd-rpm module uses rpmsg ID
+instead. Thus if the smd-rpm is built as a module, it doesn't get
+automatically loaded. Add generic compatible to such devices and fix
+module's ID table.
 
-On Mon, 29 Jul 2024 at 13:21, Paul Menzel <pmenzel@molgen.mpg.de> wrote:
-> Am 29.07.24 um 04:11 schrieb Dmitry Baryshkov:
->
-> > On Qualcomm Dragonboard 820c (APQ8096, QCA6174) soon after the boot I
-> > observe the following crash:
-> >
-> > Unable to handle kernel NULL pointer dereference at virtual address 0000000000000018
-> > Mem abort info:
-> >    ESR = 0x0000000096000006
-> >    EC = 0x25: DABT (current EL), IL = 32 bits
-> >    SET = 0, FnV = 0
-> >    EA = 0, S1PTW = 0
-> >    FSC = 0x06: level 2 translation fault
-> > Data abort info:
-> >    ISV = 0, ISS = 0x00000006, ISS2 = 0x00000000
-> >    CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-> >    GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-> > user pgtable: 4k pages, 48-bit VAs, pgdp=000000010da63000
-> > [0000000000000018] pgd=080000010da62003, p4d=080000010da62003, pud=080000010da61003, pmd=0000000000000000
-> > Internal error: Oops: 0000000096000006 [#1] PREEMPT SMP
-> > Modules linked in: hci_uart btqca
-> > CPU: 2 UID: 0 PID: 66 Comm: kworker/u19:0 Not tainted 6.10.0-next-20240726-13923-gd3ce7ebd61f9-dirty #2722
->
-> I am unable to find the commit. Your tree also seems dirty. What is the
-> last working commit?
+Module loading worked before the commit bcabe1e09135 ("soc: qcom:
+smd-rpm: Match rpmsg channel instead of compatible"), because the driver
+listed all compatible strings, but the mentioned commit changed ID
+table. All patches in this series list this commit in the Fixes tags.
 
-Checked the commit range on the linux-bluetooth branch, hope this helps.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Dmitry Baryshkov (4):
+      dt-bindings: soc: qcom: smd-rpm: add generic compatible
+      soc: qcom: smd-rpm: add qcom,smd-rpm compatible
+      ARM: dts: qcom: add generic compat string to RPM glink channels
+      arm64: dts: qcom: add generic compat string to RPM glink channels
 
->
-> > Hardware name: Qualcomm Technologies, Inc. DB820c (DT)
-> > Workqueue: hci0 hci_power_off
-> > pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> > pc : qca_power_shutdown+0x8c/0x210 [hci_uart]
-> > lr : qca_power_shutdown+0x7c/0x210 [hci_uart]
-> > sp : ffff8000836f3c50
-> > x29: ffff8000836f3c50 x28: ffff00008337b900 x27: ffff000084085000
-> > x26: 0000000000000000 x25: 0000000000000000 x24: ffff00009276f800
-> > x23: ffff00009276f918 x22: ffff000081e1fc80 x21: 0000000000000001
-> > x20: ffff000081e1fc80 x19: ffff00009276f800 x18: ffff0000de422170
-> > x17: 0000000000061d88 x16: 0000000000000000 x15: 0000000000000001
-> > x14: ffff0000813b3580 x13: 0000000000000000 x12: 00000000000001a0
-> > x11: 0000000000000001 x10: 00000000000013f0 x9 : 0000000000000000
-> > x8 : ffff8000836f3b40 x7 : 0000000000000000 x6 : ffff800080d52e88
-> > x5 : 0000000000000000 x4 : ffff8000836f0000 x3 : 0000000000000000
-> > x2 : 0000000000000000 x1 : ffff00008f56d000 x0 : 0000000000000000
-> > Call trace:
-> >   qca_power_shutdown+0x8c/0x210 [hci_uart]
-> >   qca_power_off+0x70/0xfb8 [hci_uart]
-> >   hci_dev_close_sync+0x4b0/0x6d8
-> >   hci_power_off+0x2c/0x44
-> >   process_one_work+0x20c/0x62c
-> >   worker_thread+0x1bc/0x36c
-> >   kthread+0x120/0x124
-> >   ret_from_fork+0x10/0x20
-> > Code: f9400681 b4000441 f9403c36 f94102c0 (f9400c00)
-> > ---[ end trace 0000000000000000 ]---
-> If you can reproduce this, bisecting this would be great.
->
->
-> Kind regards,
->
-> Paul
+ .../devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml | 52 +++++++++++-----------
+ arch/arm/boot/dts/qcom/qcom-apq8084.dtsi           |  2 +-
+ arch/arm/boot/dts/qcom/qcom-msm8226.dtsi           |  2 +-
+ arch/arm/boot/dts/qcom/qcom-msm8974.dtsi           |  2 +-
+ arch/arm64/boot/dts/qcom/msm8916.dtsi              |  2 +-
+ arch/arm64/boot/dts/qcom/msm8939.dtsi              |  2 +-
+ arch/arm64/boot/dts/qcom/msm8953.dtsi              |  2 +-
+ arch/arm64/boot/dts/qcom/msm8976.dtsi              |  2 +-
+ arch/arm64/boot/dts/qcom/msm8994.dtsi              |  2 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi              |  2 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi              |  2 +-
+ arch/arm64/boot/dts/qcom/sdm630.dtsi               |  2 +-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi               |  2 +-
+ arch/arm64/boot/dts/qcom/sm6125.dtsi               |  2 +-
+ arch/arm64/boot/dts/qcom/sm6375.dtsi               |  2 +-
+ drivers/soc/qcom/smd-rpm.c                         | 11 ++++-
+ 16 files changed, 51 insertions(+), 40 deletions(-)
+---
+base-commit: 668d33c9ff922c4590c58754ab064aaf53c387dd
+change-id: 20240729-fix-smd-rpm-9651e87a9bb0
 
-
-
+Best regards,
 -- 
-With best wishes
-Dmitry
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
