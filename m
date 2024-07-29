@@ -1,139 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-27254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3631D93F537
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 14:23:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14D4493F564
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 14:29:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 98141B21009
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 12:23:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8A0091F22A4B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 12:29:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F35E147C9B;
-	Mon, 29 Jul 2024 12:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E39931482FC;
+	Mon, 29 Jul 2024 12:28:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S5/IL0hK"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kiFaHVi3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A071474BF;
-	Mon, 29 Jul 2024 12:23:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49741145A01;
+	Mon, 29 Jul 2024 12:28:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722255812; cv=none; b=ooGdwEHc0r9g+zC9ZBcDfY71sLA1mWKP7NNr6amd8meJwyDCqW4aX+hmXMLfEKEcm5yFSa+WqO44Qeb84nNbm0v7/SL8tYbh20F7JLahMjGakmBJbWc86PGZ5v9UX8zZP9J6tvmBeNOrCpe9x1k5LrwzOSToEFwm5zW5w4Bjcqo=
+	t=1722256131; cv=none; b=kcctLwkTdJIVrQ/Saqr/rYUst1dvgpXjg/Ti0Jiw96BUPMujXc9c9tYid8HjF3FVpLhQyDV2h2jqvOE4CqOOBiQslHWjYvEiqycJ/hkkYoe8NHaD97/RsGptTesrytd750UYzc70L64L3L4LFEipZ92b/rg3gjsg10bR7SPIzro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722255812; c=relaxed/simple;
-	bh=1N+ztFIlf30RwFKnrqwKSYju6X0Gb4F8KBDdvM6jD3M=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=JHS1F08xK7gc9XKaOGpJnSE2sIhHtITkKJvE0sSlMmZoavn1cOYUPViQjfmIUCg0Oduw92zVrSgMrh7uzA/QkoeAKnTQ5CxgGsLGGIc6Wh0KJplCs2Stk5VrgWugGp5FRNU9q8wKI0Kyz2AfOklxz/a5XPP1/XJ+ZWTXZ1pbfJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S5/IL0hK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90F4EC32786;
-	Mon, 29 Jul 2024 12:23:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722255811;
-	bh=1N+ztFIlf30RwFKnrqwKSYju6X0Gb4F8KBDdvM6jD3M=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=S5/IL0hKXN/3UiQR2cF9IqO9RK7He/LLqmltqft7Exes7d+2fFRAtJ4iFBFCNkdQU
-	 i2DHaJJNx/2fPc+N4DOrOUWO0zp4G9HAvplP2NWeKe41P6MNyx6C2a3RnKbS+eomqe
-	 pKaywOSD0E/DgPgl6t+u5AsLXPiW7Ey5/oN5AD/YIdxjpo5wMPqdGA30YOWkvDOfVm
-	 Pesuui9BsOuh83nFO7uUxS5hLjZOs4NqFx0fX9/T3k7Q2lb49Cgo53Ev09qGT7WJ0v
-	 oBrQ/rE0wnfjNj3dj36+m8Uv9/Dq7LmBDScGiSEI5yv8JFBZfm9WLq/xGHAxC2fx8f
-	 g5LHaTa5UBNVQ==
-Date: Mon, 29 Jul 2024 07:23:30 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1722256131; c=relaxed/simple;
+	bh=IRqd+oo1mq+g4LO1zPcPaDVg+dznO3Layv/JAbNPjyI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=uM0epPq4FqmSuuFZh6nx6KODH4h3QOk4ZLWKLFOhRfFyUT2zsnspZKfDZx5V2IJ0vq2D8cqyw2YKTyTPE6ImjdOoMeu/M9WD5Ze/kPte7Ssa9b3xHlTG7VaAM6boNWjsmUFROLd9futgAMEiIdqAtphK+OZ2H3a/WCSZ6sG+rVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kiFaHVi3; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46TATHpO023650;
+	Mon, 29 Jul 2024 12:28:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	3DEt+ZdHR6AdfF8Av7/wPvcvAXWbOzS3yxyQqXgfbBU=; b=kiFaHVi3YnH1RT5p
+	3Yz06r5IHwNEUpLRnw1m8NCxdFPi053RGAlsVONmwbjxhDuBkiC4hiy/WXDS/j/c
+	8OFNJhKaxdhH9iSfGbt03imuEGYeWbQjD8SqVBNhq223HFmLCXfLNbnGs9dWn9DP
+	iJAdiLkxbWEGzhLkIvvbPcJh7BVa9igN9B24pzYRzpJo6vMiCHmZK4CUTJoWWNiK
+	WxRlkRw+gMHWuLGTqqbTQ/2LhBG1rD5GIgBzUsAObAWENacBMTJZ6f7rh4UkH6zq
+	u/azpv+PyMm5ecvWSvnht5Porv7GMs7QXFnTutxTtNAHEBd0mr3bSt6mdbP6xjHr
+	oysgXg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40mt68m4ev-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jul 2024 12:28:38 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46TCSbuU018418
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jul 2024 12:28:37 GMT
+Received: from [10.216.48.244] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 29 Jul
+ 2024 05:28:34 -0700
+Message-ID: <98264d15-fb30-32e0-7eba-72b3a50347e0@quicinc.com>
+Date: Mon, 29 Jul 2024 17:58:31 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Stephan Gerhold <stephan@gerhold.net>, devicetree@vger.kernel.org, 
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org
-In-Reply-To: <20240729-fix-smd-rpm-v1-1-99a96133cc65@linaro.org>
-References: <20240729-fix-smd-rpm-v1-0-99a96133cc65@linaro.org>
- <20240729-fix-smd-rpm-v1-1-99a96133cc65@linaro.org>
-Message-Id: <172225581057.232302.5916799518300911282.robh@kernel.org>
-Subject: Re: [PATCH 1/4] dt-bindings: soc: qcom: smd-rpm: add generic
- compatible
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH] PCI: qcom-ep: Move controller cleanups to
+ qcom_pcie_perst_deassert()
+Content-Language: en-US
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        <lpieralisi@kernel.org>, <kw@linux.com>
+CC: <robh@kernel.org>, <bhelgaas@google.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240729122245.33410-1-manivannan.sadhasivam@linaro.org>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20240729122245.33410-1-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: i_B38skPQuLZgVvanh0FB5a8iG_rSYiV
+X-Proofpoint-GUID: i_B38skPQuLZgVvanh0FB5a8iG_rSYiV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-29_10,2024-07-26_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 adultscore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0
+ impostorscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0
+ clxscore=1015 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407290084
 
 
-On Mon, 29 Jul 2024 14:04:45 +0300, Dmitry Baryshkov wrote:
-> Add generic compatible to all smd-rpm devices, they follow the same
-> RPMSG protocol.
+
+On 7/29/2024 5:52 PM, Manivannan Sadhasivam wrote:
+> Currently, the endpoint cleanup function dw_pcie_ep_cleanup() and EPF
+> deinit notify function pci_epc_deinit_notify() are called during the
+> execution of qcom_pcie_perst_assert() i.e., when the host has asserted
+> PERST#. But quickly after this step, refclk will also be disabled by the
+> host.
 > 
-> Fixes: bcabe1e09135 ("soc: qcom: smd-rpm: Match rpmsg channel instead of compatible")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> All of the Qcom endpoint SoCs supported as of now depend on the refclk from
+> the host for keeping the controller operational. Due to this limitation,
+> any access to the hardware registers in the absence of refclk will result
+> in a whole endpoint crash. Unfortunately, most of the controller cleanups
+> require accessing the hardware registers (like eDMA cleanup performed in
+> dw_pcie_ep_cleanup(), powering down MHI EPF etc...). So these cleanup
+> functions are currently causing the crash in the endpoint SoC once host
+> asserts PERST#.
+> 
+> One way to address this issue is by generating the refclk in the endpoint
+> itself and not depending on the host. But that is not always possible as
+> some of the endpoint designs do require the endpoint to consume refclk from
+> the host (as I was told by the Qcom engineers).
+> 
+> So let's fix this crash by moving the controller cleanups to the start of
+> the qcom_pcie_perst_deassert() function. qcom_pcie_perst_deassert() is
+> called whenever the host has deasserted PERST# and it is guaranteed that
+> the refclk would be active at this point. So at the start of this function,
+> the controller cleanup can be performed. Once finished, rest of the code
+> execution for PERST# deassert can continue as usual.
+> 
+How about doing the cleanup as part of pme turnoff message.
+As host waits for L23 ready from the device side. we can use that time
+to cleanup the host before sending L23 ready.
+
+- Krishna Chaitanya.
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  .../devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml | 52 +++++++++++-----------
->  1 file changed, 27 insertions(+), 25 deletions(-)
+>   drivers/pci/controller/dwc/pcie-qcom-ep.c | 12 ++++++++++--
+>   1 file changed, 10 insertions(+), 2 deletions(-)
 > 
-
-My bot found errors running 'make dt_binding_check' on your patch:
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,glink-rpm-edge.example.dtb: glink-edge: rpm-requests:compatible: ['qcom,rpm-msm8996'] is too short
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,glink-rpm-edge.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,glink-rpm-edge.example.dtb: glink-edge: rpm-requests: Unevaluated properties are not allowed ('compatible' was unexpected)
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,glink-rpm-edge.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,glink-rpm-edge.example.dtb: rpm-requests: compatible: ['qcom,rpm-msm8996'] is too short
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,smd-rpm.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.example.dtb: remoteproc: smd-edge:rpm-requests:compatible: ['qcom,rpm-msm8916'] is too short
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,rpm-proc.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.example.dtb: smd-edge: rpm-requests:compatible: ['qcom,rpm-msm8916'] is too short
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,smd-edge.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.example.dtb: rpm-requests: compatible: ['qcom,rpm-msm8916'] is too short
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,smd-rpm.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.example.dtb: remoteproc: glink-edge:rpm-requests:compatible: ['qcom,rpm-qcm2290'] is too short
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,rpm-proc.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.example.dtb: remoteproc: glink-edge:rpm-requests: Unevaluated properties are not allowed ('compatible' was unexpected)
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,rpm-proc.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.example.dtb: glink-edge: rpm-requests:compatible: ['qcom,rpm-qcm2290'] is too short
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,glink-rpm-edge.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.example.dtb: glink-edge: rpm-requests: Unevaluated properties are not allowed ('compatible' was unexpected)
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,glink-rpm-edge.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.example.dtb: rpm-requests: compatible: ['qcom,rpm-qcm2290'] is too short
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,smd-rpm.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,smd.example.dtb: shared-memory: rpm:rpm-requests:compatible: ['qcom,rpm-msm8974'] is too short
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,smd.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,smd.example.dtb: shared-memory: rpm: Unevaluated properties are not allowed ('rpm-requests' was unexpected)
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,smd.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,smd.example.dtb: rpm-requests: compatible: ['qcom,rpm-msm8974'] is too short
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,smd-rpm.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.example.dtb: remoteproc: smd-edge:rpm-requests:compatible: ['qcom,rpm-msm8916'] is too short
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,rpm-proc.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.example.dtb: smd-edge: rpm-requests:compatible: ['qcom,rpm-msm8916'] is too short
-	from schema $id: http://devicetree.org/schemas/remoteproc/qcom,smd-edge.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.example.dtb: rpm-requests: compatible: ['qcom,rpm-msm8916'] is too short
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,smd-rpm.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/clock/qcom,rpmcc.example.dtb: rpm-requests: compatible: ['qcom,rpm-msm8916'] is too short
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,smd-rpm.yaml#
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240729-fix-smd-rpm-v1-1-99a96133cc65@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> index 2319ff2ae9f6..e024b4dcd76d 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> @@ -186,6 +186,8 @@ struct qcom_pcie_ep_cfg {
+>    * @link_status: PCIe Link status
+>    * @global_irq: Qualcomm PCIe specific Global IRQ
+>    * @perst_irq: PERST# IRQ
+> + * @cleanup_pending: Cleanup is pending for the controller (because refclk is
+> + *                   needed for cleanup)
+>    */
+>   struct qcom_pcie_ep {
+>   	struct dw_pcie pci;
+> @@ -214,6 +216,7 @@ struct qcom_pcie_ep {
+>   	enum qcom_pcie_ep_link_status link_status;
+>   	int global_irq;
+>   	int perst_irq;
+> +	bool cleanup_pending;
+>   };
+>   
+>   static int qcom_pcie_ep_core_reset(struct qcom_pcie_ep *pcie_ep)
+> @@ -389,6 +392,12 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
+>   		return ret;
+>   	}
+>   
+> +	if (pcie_ep->cleanup_pending) {
+> +		pci_epc_deinit_notify(pci->ep.epc);
+> +		dw_pcie_ep_cleanup(&pci->ep);
+> +		pcie_ep->cleanup_pending = false;
+> +	}
+> +
+>   	/* Assert WAKE# to RC to indicate device is ready */
+>   	gpiod_set_value_cansleep(pcie_ep->wake, 1);
+>   	usleep_range(WAKE_DELAY_US, WAKE_DELAY_US + 500);
+> @@ -522,10 +531,9 @@ static void qcom_pcie_perst_assert(struct dw_pcie *pci)
+>   {
+>   	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
+>   
+> -	pci_epc_deinit_notify(pci->ep.epc);
+> -	dw_pcie_ep_cleanup(&pci->ep);
+>   	qcom_pcie_disable_resources(pcie_ep);
+>   	pcie_ep->link_status = QCOM_PCIE_EP_LINK_DISABLED;
+> +	pcie_ep->cleanup_pending = true;
+>   }
+>   
+>   /* Common DWC controller ops */
 
