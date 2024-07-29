@@ -1,150 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-27249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C684393F4B5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 13:58:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 382DB93F4CE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 14:03:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 797E7282C2F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 11:58:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 30C1C28147B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 12:03:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87853146588;
-	Mon, 29 Jul 2024 11:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C620146A63;
+	Mon, 29 Jul 2024 12:03:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="sZPfL+x5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R42JEzSH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC6B13EFEE
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 11:58:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8D8143752;
+	Mon, 29 Jul 2024 12:03:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722254323; cv=none; b=MBPvsA1O3inmolHQrYKwio+hXnYSkBKY7IhBJlrfeZcsVzDlPLZBlFZY4xBL0PKWEbDPQ/2gccIXQbliijoBSqGTn1TJmq0I88Mth3x1UkuJGF/tZuMGUC9EUlu2KWdVOlWG17XLHvqPRLPq/3naQLwxhBLnlro+UA+dsW1/COk=
+	t=1722254601; cv=none; b=s4Cr4GntsEpYS1fIX8GF4omQomHppYj53XTBYDFDVjJjwxI1+FEdlHty7a8aCktarLfUAqTSzT9GP3mlYjN9FZF6VhR5xZEyWGVhFj2erhAo5m3IMhbtR1MOY5+5jk917stYaIj0Q1cviORpZqIun9i1Yklwsl15Gys5Hq8zB50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722254323; c=relaxed/simple;
-	bh=c72EjlqA28dc0cQ+h0l2X7FgfD4mZ+IPBZQ7Qhv91us=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=J0ypYiRPLvoFPRnhZ6D+QWBa5uaTnFmA6pt+6Zu/LkXN48AB35CiVuIVvQjYxyr7DvRSrGHfOYePvCl2yS4kgh6wAdp15wfesFWnLNhkItdbtfAt8pDdJ90a0xYD2+LJhiaQvnTFfDSRJpZYWUrBy3tbfj1/VtqO2mmXBcmLpJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=sZPfL+x5; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-52f0277daa5so5247967e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 04:58:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1722254320; x=1722859120; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=C5aKXY+rQL013Kd98lZMP0BnWp1j2sIi9Lubv/zV5lc=;
-        b=sZPfL+x5CBB7CNCxr1opT0K06MsnJTjIu7R2UJqWqUPr3c08pqx+z7HehfjD0Fjuys
-         XwjrCI7HyllyAgmDcUDsBQjNdbyoTgho1V5x+Xv7YXuCVtutIyDNI4k6jqOTDocjo22E
-         4iXOqh98MUgDE+TvAfKWOB7B2pH3+/rUcPP1z6u7H/fq13yVkArxZkETbOmXnF+wEPuU
-         Mm8Yu7IQOjiXm9fFoq4HZReMjqVyu3Mxf6vZvyffEmXFJ4lAGDLely+jpG14x/AZk6in
-         P8x24aLPVCJ/94RC+pyz1dpkYLdbh+JsLAxJlbHa3hm32betvVPt2hhduCHf6T8MyaRb
-         Vo1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722254320; x=1722859120;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=C5aKXY+rQL013Kd98lZMP0BnWp1j2sIi9Lubv/zV5lc=;
-        b=iwZTNN17Xt/jGnhCezhPJ+ixuavCIOuvRZ+qztotdKNso9YeE7/2IKoqx4GKYjV0if
-         gWET4yd8+16HSToGDrwRytfGxjtKa6Qab58c8W+AGBbv7GPOEP8qaYau8qXyF/afI1fk
-         bjekV7/QgIacsHd0r60Y2/wKW8T53baFbBz8VjENRKe68jQt39bjCY6lM2Vm59WnEeX/
-         dnWUnSVkGj1WZRlis5okmT1zJUnmQeusf1PJ/di82i4Jfq5yA6cTVrT73uzwjKbmeI8J
-         HE42ynfV0RHi7UC+FG3FlmXnVeVdDnX2TTkBBcyLXQhcL7Y66RuK4nPopGxFBp7Ou7mG
-         g8EA==
-X-Forwarded-Encrypted: i=1; AJvYcCVWmdFk1KLlCMKL6a+QrB/O5d5//+rkEN0ret4rEhPKfoHlR7eZvmXsDeHELsEcqdowByRflZsN+l/f24TJrUfpOgISkvkqw0yvLTxrBw==
-X-Gm-Message-State: AOJu0YyOTQBTJmyCivtIu5VZICDlP6HJFezh0rKhX4aWpx0blRb7ZzoR
-	hLpROWmIcB2LoaytNVmyx+uTihfqX9a4lShn7gAIzVUq7XZCMijU0aVLS1w3MsTGdqb9KRDFCQM
-	aQM/8F27Xt8zgChkt+NAl2wuHVreCOJ91yItVYA==
-X-Google-Smtp-Source: AGHT+IHHG7LQv3D/QMCXMSd2qTDF+4AQ+9sT9jnNdxu3pbyDekRAZRSxu1fvZL/uwPOmcaZy06nbOqUENU6gObECHpY=
-X-Received: by 2002:ac2:5597:0:b0:52e:fa37:f9ca with SMTP id
- 2adb3069b0e04-5309b27231cmr5295449e87.22.1722254319298; Mon, 29 Jul 2024
- 04:58:39 -0700 (PDT)
+	s=arc-20240116; t=1722254601; c=relaxed/simple;
+	bh=lXf72ckhhbgg5O3Y7wY7iYMZFSmYWB3p3X2wf1yGDdo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oOGvpCFBatvASPzlhUsxNyCCxvu8M8QpEuUcc1KB2oWv22kjn5IwsSjL7gHLvCP6bcW9s+W18U0iT22sSi6JMBCXPBlpIJiRbepacl9WDJl13Md+PweEGPjXAj/ZEVzVskTXCZ1ysaIIEUu4PJYB+t5+XbXniIB6KnZTrOokRiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R42JEzSH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D46C4AF0A;
+	Mon, 29 Jul 2024 12:03:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722254600;
+	bh=lXf72ckhhbgg5O3Y7wY7iYMZFSmYWB3p3X2wf1yGDdo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=R42JEzSHdRhncXb5jmbBQ7FQckeyskXB9yTXuYjH8/CLaG4+zKgIanX2tYGc7BDAv
+	 W0S8cI7e51U5+FtAWVlz3bUiCtOBqnU1nzO+3dt0f99J58TicPdvOJDREgo8+up+Iw
+	 O7BQM5xP7h2BqTJXKlYl0yITUXOwzN0M/O1jSH4DchK9Z8hEM9+3n3QpBGLTx4vgKe
+	 b9qMngnnNz8LjzbT884qOOWCBCwaMIVJQyXA0pbeJONMHqIfQMzlIIEycr1lOUAevc
+	 7+u1YR3bhwHexSYgYYrlQGHbe+KHBeApqCkHIxugvOu97+E9HwU6xFGIz5B7U1MHQE
+	 O3l/WMprLMc0Q==
+Message-ID: <a1dae393-7951-4dcc-9340-484ea9a5d404@kernel.org>
+Date: Mon, 29 Jul 2024 14:03:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <su3wp6s44hrxf4ijvsdfzbvv4unu4ycb7kkvwbx6ltdafkldir@4g7ydqm2ap5j>
- <aa9d6aec-ef94-4137-b2ff-0c86d9a92d42@molgen.mpg.de> <CAA8EJpqGXe0A0yDpEP==60k-bPEbDORpLUtsiPvGSi+b_XphAg@mail.gmail.com>
- <CABBYNZJP2c4L-nFHtug0isqnKPR+Q0CE09o_ACsPLobjLpHtcg@mail.gmail.com>
-In-Reply-To: <CABBYNZJP2c4L-nFHtug0isqnKPR+Q0CE09o_ACsPLobjLpHtcg@mail.gmail.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 29 Jul 2024 13:58:27 +0200
-Message-ID: <CAMRc=McB1hY+Lad-gBj9-_Ve2OeW+rXaRqHL2xO4zDPMRD41jw@mail.gmail.com>
-Subject: Re: btqca: crash with linux-next on bt power down
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Paul Menzel <pmenzel@molgen.mpg.de>, 
-	Marcel Holtmann <marcel@holtmann.org>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-pm@vger.kernel.org, regressions@lists.linux.dev, 
-	Zijun Hu <quic_zijuhu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/11] arm64: dts: qcom: sm6115-pro1x: Add Hall Switch
+ and Camera Button
+To: Dang Huynh <danct12@riseup.net>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240725-qx1050-feature-expansion-v2-0-5fac4bbd946f@riseup.net>
+ <20240725-qx1050-feature-expansion-v2-1-5fac4bbd946f@riseup.net>
+Content-Language: en-US
+From: Konrad Dybcio <konradybcio@kernel.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ JDZelR9Xqh8=
+In-Reply-To: <20240725-qx1050-feature-expansion-v2-1-5fac4bbd946f@riseup.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jul 29, 2024 at 1:56=E2=80=AFPM Luiz Augusto von Dentz
-<luiz.dentz@gmail.com> wrote:
->
-> Hi Dmitry,
->
-> On Mon, Jul 29, 2024 at 12:01=E2=80=AFPM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > #regzbot: introduced:
-> > 973dd9c4db4746200f88fe46e30eada7054fdbea..84f9288208dfcd955446060a53add=
-15b9e01af4e
-> >
-> > On Mon, 29 Jul 2024 at 13:21, Paul Menzel <pmenzel@molgen.mpg.de> wrote=
-:
-> > > Am 29.07.24 um 04:11 schrieb Dmitry Baryshkov:
-> > >
-> > > > On Qualcomm Dragonboard 820c (APQ8096, QCA6174) soon after the boot=
- I
-> > > > observe the following crash:
-> > > >
-> > > > Unable to handle kernel NULL pointer dereference at virtual address=
- 0000000000000018
-> > > > Mem abort info:
-> > > >    ESR =3D 0x0000000096000006
-> > > >    EC =3D 0x25: DABT (current EL), IL =3D 32 bits
-> > > >    SET =3D 0, FnV =3D 0
-> > > >    EA =3D 0, S1PTW =3D 0
-> > > >    FSC =3D 0x06: level 2 translation fault
-> > > > Data abort info:
-> > > >    ISV =3D 0, ISS =3D 0x00000006, ISS2 =3D 0x00000000
-> > > >    CM =3D 0, WnR =3D 0, TnD =3D 0, TagAccess =3D 0
-> > > >    GCS =3D 0, Overlay =3D 0, DirtyBit =3D 0, Xs =3D 0
-> > > > user pgtable: 4k pages, 48-bit VAs, pgdp=3D000000010da63000
-> > > > [0000000000000018] pgd=3D080000010da62003, p4d=3D080000010da62003, =
-pud=3D080000010da61003, pmd=3D0000000000000000
-> > > > Internal error: Oops: 0000000096000006 [#1] PREEMPT SMP
-> > > > Modules linked in: hci_uart btqca
-> > > > CPU: 2 UID: 0 PID: 66 Comm: kworker/u19:0 Not tainted 6.10.0-next-2=
-0240726-13923-gd3ce7ebd61f9-dirty #2722
-> > >
-> > > I am unable to find the commit. Your tree also seems dirty. What is t=
-he
-> > > last working commit?
-> >
-> > Checked the commit range on the linux-bluetooth branch, hope this helps=
-.
->
-> Im currently traveling so it would take some time for me to
-> investigate this but I suspect it could be some of the changes
-> introduced by Bartosz with power sequence, @Bartosz Golaszewski
-> perhaps you can help?
->
+On 25.07.2024 3:42 AM, Dang Huynh wrote:
+> The Pro1X has a flip keyboard and a single-state camera button.
+> 
+> Signed-off-by: Dang Huynh <danct12@riseup.net>
+> ---
 
-Hi!
+[...]
 
-I just came back from last week's vacation to a bunch of different
-regressions. I will get to it but it may be later this week.
 
-Bart
+>  
+>  &tlmm {
+>  	gpio-reserved-ranges = <0 4>, <14 4>;
+> +
+> +	hall_sensor_n: hall-sensor-n {
+
+These must end in -state to pass binding checks (also in other
+patches)
+
+Also,
+
+https://docs.kernel.org/devicetree/bindings/dts-coding-style.html#order-of-nodes
+
+suggests to sort these nodes by gpio number
+
+Konrad
 
