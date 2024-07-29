@@ -1,450 +1,296 @@
-Return-Path: <linux-arm-msm+bounces-27338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 850399401C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 01:39:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FB349401D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 01:58:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 38CA9282C90
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 23:39:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7385B1C22105
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 23:58:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9F8E18EFED;
-	Mon, 29 Jul 2024 23:39:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AE03145B3F;
+	Mon, 29 Jul 2024 23:58:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AtSV3pmO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Sqfzsm6N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0527E1
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 23:39:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8FA1E49E;
+	Mon, 29 Jul 2024 23:58:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722296356; cv=none; b=OWxqNUCA/gLYxkH+AKHuMP3GgwRT5KdEhPPJ12kzHfRvpgL4HWne98pBEA8IgIP/I3RBAQkijzL7wm48l7x1ZaXsC9+49P1C4RzmHzDZI0KgH+GY8af/E1ShPqM1raIZyzZfK0aCBgL5W4uIJ1NjTNrNeSLOMVPzTlBfPn5rqow=
+	t=1722297496; cv=none; b=NLFEFjWOIAem4VWAbcWUL7KCcUNqP9+CjZm0jX/aHKS79QfPm68lwf3Y0PiuxcARssVI2I00L8P11NWM0Pu2bAqDFtchskwsL+JTWuXr8w4jp6fESstWmZVyudKhrpayd+tLMTcnPa0h8kKRXSKyxxUwFnCcbG+AYzQ3YBDdsIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722296356; c=relaxed/simple;
-	bh=Z/qYg5geWHFYXWacWooahW94iKZ3GqH4MYLN4CRPPsA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bMSOSbo+ci0sejiA3bSh1fAocjGENylLq0dsPJblt8JjtUuhPe3GyU/Y0jcX5MC2dKgdKSKLWgPUP5trFMDN4BahOSCE/UXbTFVJNvcCcWNzjsDyUkB9TBCO9J8taACRDTxA3IcyzW3om2h1gzszSiG/jGEG18Nj1CvLVntHmZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AtSV3pmO; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2f035ae0fd1so48747001fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 16:39:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722296352; x=1722901152; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=tZ+5jJwz1GItlEJ4uF49j4Wqp0aV1o2OFMU19Rkln1A=;
-        b=AtSV3pmODf7M74D07mlx53SkYXoBkf5dLUbZVAFCiHeqpygmI64afHhan+7LL2uDFm
-         USjR3rTDSSXlxyJqpBvXrf4aP6c+DNURYEuDm9UKxKZ752ADgS+Cc4/r7onfQ/AU46iT
-         kAXdKsVJ9qNbAx9ulmEY52gkbxMk+ayzQbHPnn7IvSAyf9q4VnxjfX8J/YrM0sSRXp4g
-         4cm7biXTIYp7w03GVGzH/10YaptIsqbLF900KpjmyFKHWsA3FntSlNE7AZHIqbaZ6dNn
-         jSwgWsGP6biccRRralVtG02dl3ZwcGmKjRB3E2gSRYHrVbPE4Rr8xYPpypCGrIRFj8tz
-         RYfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722296352; x=1722901152;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tZ+5jJwz1GItlEJ4uF49j4Wqp0aV1o2OFMU19Rkln1A=;
-        b=WQtOe7Q1ZJ8ljF16u3D+Wn7p/pz/KeJnTyr/TXNiaW/KcssLxWteh3X7sBH+4lpyOP
-         XeW3kYvAqoPmAihjm9zTk34JVLZNE8GvbK1lwdh/eMn2Gs+P+dzogFc9I7B++f07iLIv
-         joYcMAkBzsmkWrxGtLcUadXP0/vREQin0MozNl04MtVkOXwYK0G/Vb0kpt5mOwwNVkWP
-         ZxFn+1o9tsqOfaNxmrn3pLraiBZJeqrO2cJsDJHReLfcJ7P/mo5Tp7XXpIxQyaSt42oE
-         AbQPy7i4Mn536YMWEYlv4FoF1aiFGYc5Eap7+3GuSM++eUIqTkgAo+ULV2bmoq26kdwr
-         Idkw==
-X-Forwarded-Encrypted: i=1; AJvYcCWPGm+qbpjIvyr6mSFoqltivgOKy4STl2ytUTPFJ1eMLYa5NLGMGg5GPIKqVhAYWvJqGzY6hXr8ILdh8sTwG0LlbJC0zGYRfNBnoGbHrg==
-X-Gm-Message-State: AOJu0Yw9pS6SnCUHS15wlSCPS/RuAhXIiG6bpZf8kk8TWFnuhjtOzIXn
-	EcQr1TUsFC7+MEX9LV+VHzfGKnWo9T1U95TQUO/3tKPyKgAGr08NbEUcI1NvXMQ=
-X-Google-Smtp-Source: AGHT+IHm6u2V0FI1Cdg05g8yw1b7p4C0R/76aPnJv1xQaVOoP6+9stttZj3CqYqpdVkh8/zOf575qQ==
-X-Received: by 2002:a2e:3a19:0:b0:2ee:4c2e:3d3b with SMTP id 38308e7fff4ca-2f12ee02fa2mr60204081fa.4.1722296351880;
-        Mon, 29 Jul 2024 16:39:11 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f03cf0f950sm14937121fa.23.2024.07.29.16.39.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jul 2024 16:39:11 -0700 (PDT)
-Date: Tue, 30 Jul 2024 02:39:09 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Anjelique Melendez <quic_amelende@quicinc.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	amitk@kernel.org, thara.gopinath@gmail.com, andersson@kernel.org, 
-	quic_collinsd@quicinc.com, rafael@kernel.org, daniel.lezcano@linaro.org, 
-	rui.zhang@intel.com, lukasz.luba@arm.com, linux-arm-msm@vger.kernel.org, 
-	linux-pm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/5] thermal: qcom-spmi-temp-alarm: add support for LITE
- PMIC peripherals
-Message-ID: <ttswrupepg5yvxyzai2w7muam2rbpv6nh3y4klv6kd7jiztm7y@n3775q6qtaqt>
-References: <20240729231259.2122976-1-quic_amelende@quicinc.com>
- <20240729231259.2122976-6-quic_amelende@quicinc.com>
+	s=arc-20240116; t=1722297496; c=relaxed/simple;
+	bh=0JnTojU8EeCLJw+zfm7ioDfWkNQvetMdzoq7Znr+H9w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=CnMQqax6uqCbX4tyGLvcMD6zk5vN+t7LOMw94CbYnN204fcnZLpU2cd6f+fqp+jSnb9PcyWAs+EdoL1ZNLF2ePmmdddxgxluv6FiM2cqPmqBdRw25jJUlB5t9SpizkLc64wRveTFsRuVq3gJLMhwlnZb3YlTOOq8pvrA/9VQDHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Sqfzsm6N; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46TAkBf8020946;
+	Mon, 29 Jul 2024 23:58:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	nENGhiNZISMiSicI2eXh7IQVBNmUMpbS5gGPHPD7UEU=; b=Sqfzsm6NQvVtRz9B
+	JvXuBd4W1IiElKz8xB02chw3UqzGyMo5OuuZNiKlXOboIR7BvTTtV0eT9ef3gEW2
+	L6di0puxa5glJZ4FDDwR9HPkk+nnlmiIArA1PtVkoQlUyRw+oRnc+5An6p3HuJUc
+	gb0HvbR5JiRV8uM99P591wtd/8ChjV6qxxv5jfRaaXwNWro7jHoXJMmWrp3aIX/M
+	ZFoQ79ks6KkOgNT7S7ZJpfZ/zS2vJOxtbVT1HDQH4T5EuTNGkPYYz+ZebWk//Z6M
+	/U1c2B0K5m4xoZq06Rn7mxA0gxQRIl6w1CCDnI9qzxcLzlF6oDeh7wyEPa2G+eco
+	QF0ROQ==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40mt68nj85-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jul 2024 23:58:07 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46TNw6sI014683
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jul 2024 23:58:06 GMT
+Received: from [10.46.163.151] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 29 Jul
+ 2024 16:58:06 -0700
+Message-ID: <aaaf044c-0c8c-425d-83b4-e9180cf63689@quicinc.com>
+Date: Mon, 29 Jul 2024 16:57:33 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240729231259.2122976-6-quic_amelende@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] PCI: qcom: Avoid DBI and ATU register space mirror
+ to BAR/MMIO region
+To: Bjorn Helgaas <helgaas@kernel.org>
+CC: <jingoohan1@gmail.com>, <manivannan.sadhasivam@linaro.org>,
+        <lpieralisi@kernel.org>, <kw@linux.com>, <robh@kernel.org>,
+        <bhelgaas@google.com>, <linux-pci@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_mrana@quicinc.com>
+References: <20240729225102.GA8214@bhelgaas>
+Content-Language: en-US
+From: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
+In-Reply-To: <20240729225102.GA8214@bhelgaas>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: E7IHQBWcshjzL6VKwcdEWpzwOV0_X_Lq
+X-Proofpoint-GUID: E7IHQBWcshjzL6VKwcdEWpzwOV0_X_Lq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-29_21,2024-07-26_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 adultscore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0
+ impostorscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0
+ clxscore=1015 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407290165
 
-On Mon, Jul 29, 2024 at 04:12:59PM GMT, Anjelique Melendez wrote:
-> Add support for TEMP_ALARM LITE PMIC peripherals.  This subtype
-> utilizes a pair of registers to configure a warning interrupt
-> threshold temperature and an automatic hardware shutdown
-> threshold temperature.
+Hi Bjorn,
+
+On 7/29/2024 3:51 PM, Bjorn Helgaas wrote:
+> On Thu, Jul 25, 2024 at 04:03:56PM -0700, Prudhvi Yarlagadda wrote:
+>> Hi Bjorn,
+>>
+>> Thanks for the review comments.
+>>
+>> On 7/24/2024 11:43 AM, Bjorn Helgaas wrote:
+>>> On Tue, Jul 23, 2024 at 07:27:19PM -0700, Prudhvi Yarlagadda wrote:
+>>>> PARF hardware block which is a wrapper on top of DWC PCIe controller
+>>>> mirrors the DBI and ATU register space. It uses PARF_SLV_ADDR_SPACE_SIZE
+>>>> register to get the size of the memory block to be mirrored and uses
+>>>> PARF_DBI_BASE_ADDR, PARF_ATU_BASE_ADDR registers to determine the base
+>>>> address of DBI and ATU space inside the memory block that is being
+>>>> mirrored.
+>>>>
+>>>> When a memory region which is located above the SLV_ADDR_SPACE_SIZE
+>>>> boundary is used for BAR region then there could be an overlap of DBI and
+>>>> ATU address space that is getting mirrored and the BAR region. This
+>>>> results in DBI and ATU address space contents getting updated when a PCIe
+>>>> function driver tries updating the BAR/MMIO memory region. Reference
+>>>> memory map of the PCIe memory region with DBI and ATU address space
+>>>> overlapping BAR region is as below.
+>>>>
+>>>>                         |---------------|
+>>>>                         |               |
+>>>>                         |               |
+>>>>         ------- --------|---------------|
+>>>>            |       |    |---------------|
+>>>>            |       |    |       DBI     |
+>>>>            |       |    |---------------|---->DBI_BASE_ADDR
+>>>>            |       |    |               |
+>>>>            |       |    |               |
+>>>>            |    PCIe    |               |---->2*SLV_ADDR_SPACE_SIZE
+>>>>            |    BAR/MMIO|---------------|
+>>>>            |    Region  |       ATU     |
+>>>>            |       |    |---------------|---->ATU_BASE_ADDR
+>>>>            |       |    |               |
+>>>>         PCIe       |    |---------------|
+>>>>         Memory     |    |       DBI     |
+>>>>         Region     |    |---------------|---->DBI_BASE_ADDR
+>>>>            |       |    |               |
+>>>>            |    --------|               |
+>>>>            |            |               |---->SLV_ADDR_SPACE_SIZE
+>>>>            |            |---------------|
+>>>>            |            |       ATU     |
+>>>>            |            |---------------|---->ATU_BASE_ADDR
+>>>>            |            |               |
+>>>>            |            |---------------|
+>>>>            |            |       DBI     |
+>>>>            |            |---------------|---->DBI_BASE_ADDR
+>>>>            |            |               |
+>>>>            |            |               |
+>>>>         ----------------|---------------|
+>>>>                         |               |
+>>>>                         |               |
+>>>>                         |               |
+>>>>                         |---------------|
+>>>>
+>>>> Currently memory region beyond the SLV_ADDR_SPACE_SIZE boundary is not
+>>>> used for BAR region which is why the above mentioned issue is not
+>>>> encountered. This issue is discovered as part of internal testing when we
+>>>> tried moving the BAR region beyond the SLV_ADDR_SPACE_SIZE boundary. Hence
+>>>> we are trying to fix this.
+>>>>
+>>>> As PARF hardware block mirrors DBI and ATU register space after every
+>>>> PARF_SLV_ADDR_SPACE_SIZE (default 0x1000000) boundary multiple, write
+>>>> U32_MAX (all 0xFF's) to PARF_SLV_ADDR_SPACE_SIZE register to avoid
+>>>> mirroring DBI and ATU to BAR/MMIO region. Write the physical base address
+>>>> of DBI and ATU register blocks to PARF_DBI_BASE_ADDR (default 0x0) and
+>>>> PARF_ATU_BASE_ADDR (default 0x1000) respectively to make sure DBI and ATU
+>>>> blocks are at expected memory locations.
+>>>>
+>>>> The register offsets PARF_DBI_BASE_ADDR_V2, PARF_SLV_ADDR_SPACE_SIZE_V2
+>>>> and PARF_ATU_BASE_ADDR are applicable for platforms that use PARF
+>>>> Qcom IP rev 1.9.0, 2.7.0 and 2.9.0. PARF_DBI_BASE_ADDR_V2 and
+>>>> PARF_SLV_ADDR_SPACE_SIZE_V2 are applicable for PARF Qcom IP rev 2.3.3.
+>>>> PARF_DBI_BASE_ADDR and PARF_SLV_ADDR_SPACE_SIZE are applicable for PARF
+>>>> Qcom IP rev 1.0.0, 2.3.2 and 2.4.0. Updating the init()/post_init()
+>>>> functions of the respective PARF versions to program applicable
+>>>> PARF_DBI_BASE_ADDR, PARF_SLV_ADDR_SPACE_SIZE and PARF_ATU_BASE_ADDR
+>>>> register offsets. And remove the unused SLV_ADDR_SPACE_SZ macro.
+>>>>
+>>>> Signed-off-by: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
+>>>> Reviewed-by: Mayank Rana <quic_mrana@quicinc.com>
+>>>> ---
+>>>>  drivers/pci/controller/dwc/pcie-qcom.c | 62 +++++++++++++++++++-------
+>>>>  1 file changed, 45 insertions(+), 17 deletions(-)
+>>>>
+>>>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>>>> index 0180edf3310e..6976efb8e2f0 100644
+>>>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>>>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>>>> @@ -45,6 +45,7 @@
+>>>>  #define PARF_PHY_REFCLK				0x4c
+>>>>  #define PARF_CONFIG_BITS			0x50
+>>>>  #define PARF_DBI_BASE_ADDR			0x168
+>>>> +#define PARF_SLV_ADDR_SPACE_SIZE		0x16C
+>>>>  #define PARF_MHI_CLOCK_RESET_CTRL		0x174
+>>>>  #define PARF_AXI_MSTR_WR_ADDR_HALT		0x178
+>>>>  #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
+>>>> @@ -52,8 +53,13 @@
+>>>>  #define PARF_LTSSM				0x1b0
+>>>>  #define PARF_SID_OFFSET				0x234
+>>>>  #define PARF_BDF_TRANSLATE_CFG			0x24c
+>>>> -#define PARF_SLV_ADDR_SPACE_SIZE		0x358
+>>>> +#define PARF_DBI_BASE_ADDR_V2			0x350
+>>>> +#define PARF_DBI_BASE_ADDR_V2_HI		0x354
+>>>> +#define PARF_SLV_ADDR_SPACE_SIZE_V2		0x358
+>>>> +#define PARF_SLV_ADDR_SPACE_SIZE_V2_HI		0x35C
+>>>>  #define PARF_NO_SNOOP_OVERIDE			0x3d4
+>>>> +#define PARF_ATU_BASE_ADDR			0x634
+>>>> +#define PARF_ATU_BASE_ADDR_HI			0x638
+>>>>  #define PARF_DEVICE_TYPE			0x1000
+>>>>  #define PARF_BDF_TO_SID_TABLE_N			0x2000
+>>>>  #define PARF_BDF_TO_SID_CFG			0x2c00
+>>>> @@ -107,9 +113,6 @@
+>>>>  /* PARF_CONFIG_BITS register fields */
+>>>>  #define PHY_RX0_EQ(x)				FIELD_PREP(GENMASK(26, 24), x)
+>>>>  
+>>>> -/* PARF_SLV_ADDR_SPACE_SIZE register value */
+>>>> -#define SLV_ADDR_SPACE_SZ			0x10000000
+>>>> -
+>>>>  /* PARF_MHI_CLOCK_RESET_CTRL register fields */
+>>>>  #define AHB_CLK_EN				BIT(0)
+>>>>  #define MSTR_AXI_CLK_EN				BIT(1)
+>>>> @@ -324,6 +327,39 @@ static void qcom_pcie_clear_hpc(struct dw_pcie *pci)
+>>>>  	dw_pcie_dbi_ro_wr_dis(pci);
+>>>>  }
+>>>>  
+>>>> +static void qcom_pcie_configure_dbi_base(struct qcom_pcie *pcie)
+>>>> +{
+>>>> +	struct dw_pcie *pci = pcie->pci;
+>>>> +
+>>>> +	if (pci->dbi_phys_addr) {
+>>>> +		writel(lower_32_bits(pci->dbi_phys_addr), pcie->parf +
+>>>> +							PARF_DBI_BASE_ADDR);
+>>>> +		writel(U32_MAX, pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
+>>>> +	}
+>>>> +}
+>>>> +
+>>>> +static void qcom_pcie_configure_dbi_atu_base(struct qcom_pcie *pcie)
+>>>> +{
+>>>> +	struct dw_pcie *pci = pcie->pci;
+>>>> +
+>>>> +	if (pci->dbi_phys_addr) {
+>>>> +		writel(lower_32_bits(pci->dbi_phys_addr), pcie->parf +
+>>>> +							PARF_DBI_BASE_ADDR_V2);
+>>>> +		writel(upper_32_bits(pci->dbi_phys_addr), pcie->parf +
+>>>> +						PARF_DBI_BASE_ADDR_V2_HI);
+>>>> +
+>>>> +		if (pci->atu_phys_addr) {
+>>>> +			writel(lower_32_bits(pci->atu_phys_addr), pcie->parf +
+>>>> +							PARF_ATU_BASE_ADDR);
+>>>> +			writel(upper_32_bits(pci->atu_phys_addr), pcie->parf +
+>>>> +							PARF_ATU_BASE_ADDR_HI);
+>>>> +		}
+>>>> +
+>>>> +		writel(U32_MAX, pcie->parf + PARF_SLV_ADDR_SPACE_SIZE_V2);
+>>>> +		writel(U32_MAX, pcie->parf + PARF_SLV_ADDR_SPACE_SIZE_V2_HI);
+>>>> +	}
+>>>> +}
+>>>
+>>> These functions write CPU physical addresses into registers.  I don't
+>>> know where these registers live.  If they are on the PCI side of the
+>>> world, they most likely should contain PCI bus addresses, not CPU
+>>> physical addresses.
+>>>
+>>> In some systems, PCI bus addresses are the same as CPU physical
+>>> addresses, but on many systems they are not the same, so it's better
+>>> if we don't make implicit assumptions that they are the same.  
+>>
+>> On Qualcomm platforms, CPU physical address and PCI bus addresses
+>> for DBI and ATU registers are same. PARF registers live outside the
+>> PCI address space in the system memory.
+>>
+>> There is a mapping logic in the QCOM PARF wrapper which detects any
+>> incoming read/write transactions from the NOC towards PCIe
+>> controller and checks its addresses against PARF_DBI_BASE_ADDR and
+>> PARF_ATU_BASE_ADDR registers so that these transactions can be
+>> routed to DBI and ATU registers inside the PCIe controller.
+>>
+>> So, these PARF registers needs to be programmed with base CPU
+>> physical addresses of DBI and ATU as the incoming DBI and ATU
+>> transactions from the NOC contain CPU physical adresses.
 > 
-> Co-developed-by: David Collins <quic_collinsd@quicinc.com>
-> Signed-off-by: David Collins <quic_collinsd@quicinc.com>
-> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
-> ---
->  drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 208 +++++++++++++++++++-
->  1 file changed, 202 insertions(+), 6 deletions(-)
+> Can you add a comment to this effect that these registers are
+> effectively in the CPU address domain, not the PCI bus domain?
+> Otherwise the next person who reviews this will have the same
+> question, and somebody may even try to "fix" this by converting it to
+> a PCI bus address.
 > 
-> diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-> index 1f56acd8f637..e50ce66ec096 100644
-> --- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-> +++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
-> @@ -4,6 +4,7 @@
->   * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
->   */
->  
-> +#include <linux/bitfield.h>
->  #include <linux/bitops.h>
->  #include <linux/delay.h>
->  #include <linux/err.h>
-> @@ -22,21 +23,28 @@
->  #define QPNP_TM_REG_TYPE		0x04
->  #define QPNP_TM_REG_SUBTYPE		0x05
->  #define QPNP_TM_REG_STATUS		0x08
-> +#define QPNP_TM_REG_IRQ_STATUS		0x10
->  #define QPNP_TM_REG_SHUTDOWN_CTRL1	0x40
->  #define QPNP_TM_REG_ALARM_CTRL		0x46
->  /* TEMP_DAC_* registers are only present for TEMP_GEN2 v2.0 */
->  #define QPNP_TM_REG_TEMP_DAC_STG1	0x47
->  #define QPNP_TM_REG_TEMP_DAC_STG2	0x48
->  #define QPNP_TM_REG_TEMP_DAC_STG3	0x49
-> +#define QPNP_TM_REG_LITE_TEMP_CFG1	0x50
-> +#define QPNP_TM_REG_LITE_TEMP_CFG2	0x51
->  
->  #define QPNP_TM_TYPE			0x09
->  #define QPNP_TM_SUBTYPE_GEN1		0x08
->  #define QPNP_TM_SUBTYPE_GEN2		0x09
-> +#define QPNP_TM_SUBTYPE_LITE		0xC0
->  
->  #define STATUS_GEN1_STAGE_MASK		GENMASK(1, 0)
->  #define STATUS_GEN2_STATE_MASK		GENMASK(6, 4)
->  #define STATUS_GEN2_STATE_SHIFT		4
->  
-> +/* IRQ status only needed for TEMP_ALARM_LITE */
-> +#define IRQ_STATUS_MASK			BIT(0)
-> +
->  #define SHUTDOWN_CTRL1_OVERRIDE_S2	BIT(6)
->  #define SHUTDOWN_CTRL1_THRESHOLD_MASK	GENMASK(1, 0)
->  
-> @@ -44,6 +52,8 @@
->  
->  #define ALARM_CTRL_FORCE_ENABLE		BIT(7)
->  
-> +#define LITE_TEMP_CFG_THRESHOLD_MASK	GENMASK(3, 2)
-> +
->  #define THRESH_COUNT			4
->  #define STAGE_COUNT			3
->  
-> @@ -88,6 +98,19 @@ static const long temp_dac_max[STAGE_COUNT] = {
->  	119375, 159375, 159375
->  };
->  
-> +/*
-> + * TEMP_ALARM_LITE has two stages: warning and shutdown with independently
-> + * configured threshold temperatures.
-> + */
-> +
-> +static const long temp_map_lite_warning[THRESH_COUNT] = {
-> +	115000, 125000, 135000, 145000
-> +};
-> +
-> +static const long temp_map_lite_shutdown[THRESH_COUNT] = {
-> +	135000, 145000, 160000, 175000
-> +};
-> +
->  /* Temperature in Milli Celsius reported during stage 0 if no ADC is present */
->  #define DEFAULT_TEMP			37000
->  
-> @@ -171,19 +194,26 @@ static long qpnp_tm_decode_temp(struct qpnp_tm_chip *chip, unsigned int stage)
->   * qpnp_tm_get_temp_stage() - return over-temperature stage
->   * @chip:		Pointer to the qpnp_tm chip
->   *
-> - * Return: stage (GEN1) or state (GEN2) on success, or errno on failure.
-> + * Return: stage (GEN1), state (GEN2), or alarm interrupt state (LITE) on
-> + *	   success; or errno on failure.
->   */
->  static int qpnp_tm_get_temp_stage(struct qpnp_tm_chip *chip)
->  {
->  	int ret;
-> +	u16 addr = QPNP_TM_REG_STATUS;
->  	u8 reg = 0;
->  
-> -	ret = qpnp_tm_read(chip, QPNP_TM_REG_STATUS, &reg);
-> +	if (chip->subtype == QPNP_TM_SUBTYPE_LITE)
-> +		addr = QPNP_TM_REG_IRQ_STATUS;
-> +
-> +	ret = qpnp_tm_read(chip, addr, &reg);
->  	if (ret < 0)
->  		return ret;
->  
->  	if (chip->subtype == QPNP_TM_SUBTYPE_GEN1)
->  		ret = reg & STATUS_GEN1_STAGE_MASK;
-> +	else if (chip->subtype == QPNP_TM_SUBTYPE_LITE)
-> +		ret = reg & IRQ_STATUS_MASK;
->  	else
->  		ret = (reg & STATUS_GEN2_STATE_MASK) >> STATUS_GEN2_STATE_SHIFT;
->  
-> @@ -206,7 +236,8 @@ static int qpnp_tm_update_temp_no_adc(struct qpnp_tm_chip *chip)
->  		return ret;
->  	stage = ret;
->  
-> -	if (chip->subtype == QPNP_TM_SUBTYPE_GEN1) {
-> +	if (chip->subtype == QPNP_TM_SUBTYPE_GEN1
-> +	    || chip->subtype == QPNP_TM_SUBTYPE_LITE) {
->  		stage_new = stage;
->  		stage_old = chip->stage;
->  	} else {
-> @@ -289,6 +320,78 @@ static int qpnp_tm_gen2_rev2_set_temp_thresh(struct qpnp_tm_chip *chip, int trip
->  	return 0;
->  }
->  
-> +static int qpnp_tm_lite_set_temp_thresh(struct qpnp_tm_chip *chip, int trip,
-> +				       int temp)
-> +{
-> +	int ret, temp_cfg, i;
-> +	const long *temp_map;
-> +	u16 addr;
-> +	u8 reg, thresh;
-> +
-> +	if (trip < 0 || trip >= STAGE_COUNT) {
-> +		dev_err(chip->dev, "invalid TEMP_LITE trip = %d\n", trip);
-> +		return -EINVAL;
-> +	}
-> +
-> +	switch (trip) {
-> +	case 0:
-> +		temp_map = temp_map_lite_warning;
-> +		addr = QPNP_TM_REG_LITE_TEMP_CFG1;
-> +		break;
-> +	case 1:
-> +		/*
-> +		 * The second trip point is purely in software to facilitate
-> +		 * a controlled shutdown after the warning threshold is crossed
-> +		 * but before the automatic hardware shutdown threshold is
-> +		 * crossed.
-> +		 */
-> +		return 0;
-> +	case 2:
-> +		temp_map = temp_map_lite_shutdown;
-> +		addr = QPNP_TM_REG_LITE_TEMP_CFG2;
-> +		break;
-> +	default:
-> +		return 0;
-> +	}
-> +
-> +	if (temp < temp_map[THRESH_MIN] || temp > temp_map[THRESH_MAX]) {
-> +		dev_err(chip->dev, "invalid TEMP_LITE temp = %d\n", temp);
-> +		return -EINVAL;
-> +	}
-> +
-> +	thresh = 0;
-> +	temp_cfg = temp_map[thresh];
-> +	for (i = THRESH_MAX; i >= THRESH_MIN; i--) {
-> +		if (temp >= temp_map[i]) {
-> +			thresh = i;
-> +			temp_cfg = temp_map[i];
-> +			break;
-> +		}
-> +	}
-> +
-> +	if (temp_cfg == chip->temp_dac_map[trip])
-> +		return 0;
-> +
-> +	ret = qpnp_tm_read(chip, addr, &reg);
-> +	if (ret < 0) {
-> +		dev_err(chip->dev, "LITE_TEMP_CFG read failed, ret=%d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	reg &= ~LITE_TEMP_CFG_THRESHOLD_MASK;
-> +	reg |= FIELD_PREP(LITE_TEMP_CFG_THRESHOLD_MASK, thresh);
-> +
-> +	ret = qpnp_tm_write(chip, addr, reg);
-> +	if (ret < 0) {
-> +		dev_err(chip->dev, "LITE_TEMP_CFG write failed, ret=%d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	chip->temp_dac_map[trip] = temp_cfg;
-> +
-> +	return 0;
-> +}
-> +
->  static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
->  					     int temp)
->  {
-> @@ -374,6 +477,24 @@ static const struct thermal_zone_device_ops qpnp_tm_gen2_rev2_sensor_ops = {
->  	.set_trip_temp = qpnp_tm_gen2_rev2_set_trip_temp,
->  };
->  
-> +static int qpnp_tm_lite_set_trip_temp(struct thermal_zone_device *tz,
-> +					   int trip, int temp)
-> +{
-> +	struct qpnp_tm_chip *chip = tz->devdata;
-> +	int ret;
-> +
-> +	mutex_lock(&chip->lock);
-> +	ret = qpnp_tm_lite_set_temp_thresh(chip, trip, temp);
-> +	mutex_unlock(&chip->lock);
-> +
-> +	return ret;
-> +}
-> +
-> +static const struct thermal_zone_device_ops qpnp_tm_lite_sensor_ops = {
-> +	.get_temp = qpnp_tm_get_temp,
-> +	.set_trip_temp = qpnp_tm_lite_set_trip_temp,
-> +};
-> +
->  static irqreturn_t qpnp_tm_isr(int irq, void *data)
->  {
->  	struct qpnp_tm_chip *chip = data;
-> @@ -452,6 +573,68 @@ static int qpnp_tm_gen2_rev2_init(struct qpnp_tm_chip *chip)
->  	return 0;
->  }
->  
-> +/* Configure TEMP_LITE registers based on DT thermal_zone trips */
-> +static int qpnp_tm_lite_update_trip_temps(struct qpnp_tm_chip *chip)
-> +{
-> +	struct thermal_trip trip = {0};
-> +	int ret, ntrips, i;
-> +
-> +	ntrips = thermal_zone_get_num_trips(chip->tz_dev);
-> +	/* Keep hardware defaults if no DT trips are defined. */
-> +	if (ntrips <= 0)
-> +		return 0;
-> +
-> +	for (i = 0; i < ntrips; i++) {
-> +		ret = thermal_zone_get_trip(chip->tz_dev, i, &trip);
-> +		if (ret < 0)
-> +			return ret;
-> +
-> +		ret = qpnp_tm_lite_set_temp_thresh(chip, i, trip.temperature);
-> +		if (ret < 0)
-> +			return ret;
-> +	}
-> +
-> +	/* Verify that trips are strictly increasing. */
+> Bjorn
 
-Again, this looks like artificial limitations.
+ACK. I will add a comment in the next patch.
 
-> +	if (chip->temp_dac_map[2] <= chip->temp_dac_map[0]) {
-> +		dev_err(chip->dev, "Threshold 2=%ld <= threshold 0=%ld\n",
-> +			chip->temp_dac_map[2], chip->temp_dac_map[0]);
-> +		return -EINVAL;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +/* Read the hardware default TEMP_LITE stage threshold temperatures */
-> +static int qpnp_tm_lite_init(struct qpnp_tm_chip *chip)
-> +{
-> +	int ret, thresh;
-> +	u8 reg = 0;
-> +
-> +	/*
-> +	 * Store the warning trip temp in temp_dac_map[0] and the shutdown trip
-> +	 * temp in temp_dac_map[2].  The second trip point is purely in software
-> +	 * to facilitate a controlled shutdown after the warning threshold is
-> +	 * crossed but before the automatic hardware shutdown threshold is
-> +	 * crossed.  Thus, there is no register to read for the second trip
-> +	 * point.
-> +	 */
-
-What if the DT define 4 trip points? Or two?
-
-> +	ret = qpnp_tm_read(chip, QPNP_TM_REG_LITE_TEMP_CFG1, &reg);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	thresh = FIELD_GET(LITE_TEMP_CFG_THRESHOLD_MASK, reg);
-> +	chip->temp_dac_map[0] = temp_map_lite_warning[thresh];
-> +
-> +	ret = qpnp_tm_read(chip, QPNP_TM_REG_LITE_TEMP_CFG2, &reg);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	thresh = FIELD_GET(LITE_TEMP_CFG_THRESHOLD_MASK, reg);
-> +	chip->temp_dac_map[2] = temp_map_lite_shutdown[thresh];
-> +
-> +	return 0;
-> +}
-> +
->  static const struct spmi_temp_alarm_data spmi_temp_alarm_data = {
->  	.ops = &qpnp_tm_sensor_ops,
->  	.has_temp_dac = false,
-> @@ -466,6 +649,13 @@ static const struct spmi_temp_alarm_data spmi_temp_alarm_gen2_rev2_data = {
->  	.update_trip_temps = qpnp_tm_gen2_rev2_update_trip_temps,
->  };
->  
-> +static const struct spmi_temp_alarm_data spmi_temp_alarm_lite_data = {
-> +	.ops = &qpnp_tm_lite_sensor_ops,
-> +	.has_temp_dac = true,
-> +	.setup = qpnp_tm_lite_init,
-> +	.update_trip_temps = qpnp_tm_lite_update_trip_temps,
-> +};
-> +
->  /*
->   * This function initializes the internal temp value based on only the
->   * current thermal stage and threshold. Setup threshold control and
-> @@ -492,8 +682,9 @@ static int qpnp_tm_init(struct qpnp_tm_chip *chip)
->  		goto out;
->  	chip->stage = ret;
->  
-> -	stage = (chip->subtype == QPNP_TM_SUBTYPE_GEN1)
-> -		? chip->stage : alarm_state_map[chip->stage];
-> +	stage = (chip->subtype == QPNP_TM_SUBTYPE_GEN1
-> +		 || chip->subtype == QPNP_TM_SUBTYPE_LITE)
-> +			? chip->stage : alarm_state_map[chip->stage];
-
-Even more play with revisions. Please replace this with match data.
-
->  
->  	if (stage)
->  		chip->temp = qpnp_tm_decode_temp(chip, stage);
-> @@ -611,7 +802,8 @@ static int qpnp_tm_probe(struct platform_device *pdev)
->  	}
->  
->  	if (type != QPNP_TM_TYPE || (subtype != QPNP_TM_SUBTYPE_GEN1
-> -				     && subtype != QPNP_TM_SUBTYPE_GEN2)) {
-> +				     && subtype != QPNP_TM_SUBTYPE_GEN2
-> +				     && subtype != QPNP_TM_SUBTYPE_LITE)) {
->  		dev_err(&pdev->dev, "invalid type 0x%02x or subtype 0x%02x\n",
->  			type, subtype);
->  		return -ENODEV;
-> @@ -662,6 +854,10 @@ static const struct of_device_id qpnp_tm_match_table[] = {
->  		.compatible = "qcom,spmi-temp-alarm-gen2-rev2",
->  		.data = &spmi_temp_alarm_gen2_rev2_data,
->  	},
-> +	{
-> +		.compatible = "qcom,spmi-temp-alarm-lite",
-> +		.data = &spmi_temp_alarm_lite_data,
-> +	},
->  	{ }
->  };
->  MODULE_DEVICE_TABLE(of, qpnp_tm_match_table);
-> -- 
-> 2.34.1
-> 
-
--- 
-With best wishes
-Dmitry
+Thanks,
+Prudhvi
 
