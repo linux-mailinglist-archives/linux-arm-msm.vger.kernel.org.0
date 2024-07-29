@@ -1,248 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-27195-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D49793EE3D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 09:15:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 658B593EE65
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 09:28:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 24B891F232D0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 07:15:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1D1902823AB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 07:27:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F15CA128369;
-	Mon, 29 Jul 2024 07:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E752126F1A;
+	Mon, 29 Jul 2024 07:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IwUJuHBx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eFsXWBme"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C59D823DD;
-	Mon, 29 Jul 2024 07:14:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BB26F2F8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 07:27:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722237295; cv=none; b=AZ9JVWRWtjP4hSikDj2py7FzhPSFb2zPFq5u0WpPE2C3OFMcI59dY5O3W9vkkWaVfMhgktZzds/xTErzmPUz+fOxRA9r9aihcehyM+j+qKfQ7KiE149/fipwakUolvBbBvrOZqtllAgGjMG4Ln0n2qvWSxNABXftAHwoA5sRVX4=
+	t=1722238074; cv=none; b=kk10Dx5u9Cc6yxwwcy4NyUtpkzxFdkLPwAAygJ4NMi55E3GyyTuq7EokvgiISJPRTzv5JMH614rrGFvvITG1/Fjf3wuzwSpNF/k8Y/x1idnrJZiYs4u1NdvEmOSzLYU5GyjNy5xmEIOYHI8qiTcs3uDir0GAranzE2qRAeVeUig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722237295; c=relaxed/simple;
-	bh=RdfTI2KZiM+vkRQIifXgBsd8PwGWSic2FxFTsUrP5CY=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YBselkFCDx/cIy3CzVxQzxqHqORJjyhbQ+lYtkPLuhYj+XgzwK4Xlr/orQyuLL6shyyt5XjGmMfWLozpezXbwNkYAcue01DU1JBvMptYKPOmEamTokLoEC8BTgKWALN5Cs5XiMusE8exdQ0HIv9b+lH+opTxqxE4LyuyG0aMp+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IwUJuHBx; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46T0Dav7008728;
-	Mon, 29 Jul 2024 07:14:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	yuE6lHQaiymgzezeg/JMUuNCBfhrSeNRdvstmcxrGy8=; b=IwUJuHBxdSi3SgR0
-	b6nJaHkJmB3rTFuthmr2Q/6TfmO84d0GRO/6wuDrw2sBypgr8VtdEDi2ZFgwipr+
-	g90KbrhtfFGnmfSuRFyxemBWCuuE0ftd4HbioLy1c/W2UsBACIet+h7ZjQkXzQOt
-	Qkl1tLZUAiVgFV2TjdTS00YjWJ/fHM0f5XfBx67EXwrjnDNHjcbq3zztj3ZfvTcY
-	pJROsEBiOCTBz6HWUNIrxEP5dQaFO3iAzXaN6r8Un8v3pJ3ozzHd+5DxxFBU1ZLQ
-	cp2x721B9lRkBK/3N5oGRG/r1CbuY4ljyCZ2x86fizGcoe7E7674dCm3lpsziMw3
-	ROW7IQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40mqw73buf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 29 Jul 2024 07:14:27 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46T7EQUX008085
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 29 Jul 2024 07:14:26 GMT
-Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 29 Jul 2024 00:14:26 -0700
-From: Mao Jinlong <quic_jinlmao@quicinc.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Mao Jinlong <quic_jinlmao@quicinc.com>,
-        "Alexander
- Shishkin" <alexander.shishkin@linux.intel.com>
-CC: <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: [PATCH v4 3/3] coresight: dummy: Add static trace id support for dummy source
-Date: Mon, 29 Jul 2024 00:14:11 -0700
-Message-ID: <20240729071414.5410-4-quic_jinlmao@quicinc.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240729071414.5410-1-quic_jinlmao@quicinc.com>
-References: <20240729071414.5410-1-quic_jinlmao@quicinc.com>
+	s=arc-20240116; t=1722238074; c=relaxed/simple;
+	bh=g1Bfdx1NZahC3TeP1Q0uSYngscxSAC9NK7v3LPtb4g4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BkEweHWdqpE1eRUTT+3yPFNbKaxQ3Ioz1Hl1oN1Q0/Qtyhk5KPdX3SbhWZwRT8ZEYsUWk6jiBqvxfzsj6OZSBfxucj9S2Jnecbk/1LuZwSgWKDQfnkCnYXJeED/m3JGOxGhmRKQC/ooLFGaWJYs+r5fbsBavvYwum78MODnZHIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eFsXWBme; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52efcbfacb9so249888e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 00:27:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1722238069; x=1722842869; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZzbU8q+FWgrm3i/pjC78LeEzfxb8uIRGDB17iTu2b90=;
+        b=eFsXWBme8AAe5Tgpl7oj6KJNizsd4sLixRGTDUZZsR5/tPdcxJ5Srt3+NV6lghW2wG
+         3zgVFM/3S0K+BZvu8bhTbPT3V3OyULCCRy6MOs16DQI53OHDm8hri7gEU9h5emb41PyP
+         UfCxoCxYqAH3clmnz8YsBLjWppmOZ1vBn4MsU4JAzmhINnIORn/yAHT+Lul9v7B23qpn
+         qn6vupRObr0pLT7p08GWyoeAJkz+OmG4a6S0s8JCr5r9rbUTyt/I+SACugOwfQxG/Rpl
+         kMHuCfhZStI/HMn7teEjen87OHljLMLg8uhMFm8pQwQrZGqLCgRqeLimK1yHYr34x8e3
+         9dvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722238069; x=1722842869;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZzbU8q+FWgrm3i/pjC78LeEzfxb8uIRGDB17iTu2b90=;
+        b=sZEWnVaLyQKM0NASMW63w8VEVO6F1gboLIgClRt4oBBdOaugBsGi6gZRnholdFcz7t
+         y8m8pbiJ9P6Qc5n7tRGeUVXT0IGCAxMEhls2E8uOgc4+eALW3cg9ezF/R0jy7aiINzKE
+         srDHqnqy8f8VfQMnMrMD6W9Ch2qKvXKG6n+kjqwUVJl5nsgKHV5jsTSdvCuxLNGSbLqI
+         guy/+1Zz6w/pARFUf5nCMxk15sCw+i8NRM5ByeB5e0QUXIE6/YMV0aWmnruAQyP1JKYt
+         GwjSCyldChwlAC+m4EBDZdeBGUvV1z/uf5qMOSkCXDpQNvTn1z6K4vOE8hi7ZyHrFnZb
+         L94g==
+X-Gm-Message-State: AOJu0YyZTiSlJQqsTTuN41bvpQHz5mZflokU5UJXg84jzm6TYLT1aZQZ
+	o2cFIp/O2k71figLSKBReH5UeV/5U732NenajdO51hpr+qmWC1iO3L7Tp+zG+t8=
+X-Google-Smtp-Source: AGHT+IHGka7Vyt+PFTMS4CYDvtnk6UifRKtbJJ+Elb2ByPtE3I5NLETmc6bBkdbUhn4+QGJPOhZ1+g==
+X-Received: by 2002:a05:6512:3b84:b0:52e:9beb:bc09 with SMTP id 2adb3069b0e04-52fd5275421mr4871735e87.3.1722238069148;
+        Mon, 29 Jul 2024 00:27:49 -0700 (PDT)
+Received: from [10.8.0.5] (mleia.com. [178.79.152.223])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52fd5bd127csm1372806e87.89.2024.07.29.00.27.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Jul 2024 00:27:48 -0700 (PDT)
+Message-ID: <d760dfb1-b86b-4d1b-a927-575416e780fd@linaro.org>
+Date: Mon, 29 Jul 2024 10:27:36 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Oy02sxsnzyeXip9V_D0R0NmyAwzVHNN8
-X-Proofpoint-GUID: Oy02sxsnzyeXip9V_D0R0NmyAwzVHNN8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-29_05,2024-07-26_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=999 spamscore=0 impostorscore=0 lowpriorityscore=0
- clxscore=1015 bulkscore=0 adultscore=0 suspectscore=0 malwarescore=0
- phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407290048
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2] dt-bindings: clock: qcom: Remove required-opps from
+ required list on SM8650
+Content-Language: en-US
+To: Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Taniya Das <quic_tdas@quicinc.com>,
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>,
+ Ajit Pandey <quic_ajipan@quicinc.com>, kernel test robot <lkp@intel.com>
+References: <20240720052818.26441-1-quic_jkona@quicinc.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20240720052818.26441-1-quic_jkona@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Some dummy source has static trace id configured in HW and it cannot
-be changed via software programming. Configure the trace id in device
-tree and reserve the id when device probe.
+Hi Jagadeesh,
 
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
----
- .../sysfs-bus-coresight-devices-dummy-source  | 15 +++++
- drivers/hwtracing/coresight/coresight-dummy.c | 59 +++++++++++++++++--
- 2 files changed, 70 insertions(+), 4 deletions(-)
- create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
+On 7/20/24 08:28, Jagadeesh Kona wrote:
+> On SM8650, the minimum voltage corner supported on MMCX from cmd-db is
+> sufficient for clock controllers to operate and there is no need to specify
+> the required-opps. Hence remove the required-opps property from the list of
+> required properties for SM8650 camcc and videocc bindings.
+> 
+> This fixes:
+> arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: clock-controller@aaf0000:
+> 'required-opps' is a required property
+> 
+> arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: clock-controller@ade0000:
+> 'required-opps' is a required property
+> 
+> Fixes: a6a61b9701d1 ("dt-bindings: clock: qcom: Add SM8650 video clock controller")
+> Fixes: 1ae3f0578e0e ("dt-bindings: clock: qcom: Add SM8650 camera clock controller")
+> Reported-by: kernel test robot <lkp@intel.com>
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source b/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
-new file mode 100644
-index 000000000000..db770bc972d9
---- /dev/null
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
-@@ -0,0 +1,15 @@
-+What:		/sys/bus/coresight/devices/dummy_source<N>/enable_source
-+Date:		July 2024
-+KernelVersion:	6.9
-+Contact:	Mao Jinlong <quic_jinlmao@quicinc.com>
-+Description:	(RW) Enable/disable tracing of dummy source. A sink should be activated
-+		before enabling the source. The path of coresight components linking
-+		the source to the sink is configured and managed automatically by the
-+		coresight framework.
-+
-+What:		/sys/bus/coresight/devices/dummy_source<N>/traceid
-+Date:		July 2024
-+KernelVersion:	6.9
-+Contact:	Mao Jinlong <quic_jinlmao@quicinc.com>
-+Description:	(R) Show the trace ID that will appear in the trace stream
-+		coming from this trace entity.
-diff --git a/drivers/hwtracing/coresight/coresight-dummy.c b/drivers/hwtracing/coresight/coresight-dummy.c
-index ac70c0b491be..3bf5437cbfb1 100644
---- a/drivers/hwtracing/coresight/coresight-dummy.c
-+++ b/drivers/hwtracing/coresight/coresight-dummy.c
-@@ -11,10 +11,12 @@
- #include <linux/pm_runtime.h>
- 
- #include "coresight-priv.h"
-+#include "coresight-trace-id.h"
- 
- struct dummy_drvdata {
- 	struct device			*dev;
- 	struct coresight_device		*csdev;
-+	u8				traceid;
- };
- 
- DEFINE_CORESIGHT_DEVLIST(source_devs, "dummy_source");
-@@ -67,6 +69,32 @@ static const struct coresight_ops dummy_sink_cs_ops = {
- 	.sink_ops = &dummy_sink_ops,
- };
- 
-+/* User can get the trace id of dummy source from this node. */
-+static ssize_t traceid_show(struct device *dev,
-+			    struct device_attribute *attr, char *buf)
-+{
-+	unsigned long val;
-+	struct dummy_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+
-+	val = drvdata->traceid;
-+	return scnprintf(buf, PAGE_SIZE, "%#lx\n", val);
-+}
-+static DEVICE_ATTR_RO(traceid);
-+
-+static struct attribute *coresight_dummy_attrs[] = {
-+	&dev_attr_traceid.attr,
-+	NULL,
-+};
-+
-+static const struct attribute_group coresight_dummy_group = {
-+	.attrs = coresight_dummy_attrs,
-+};
-+
-+static const struct attribute_group *coresight_dummy_groups[] = {
-+	&coresight_dummy_group,
-+	NULL,
-+};
-+
- static int dummy_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -74,6 +102,11 @@ static int dummy_probe(struct platform_device *pdev)
- 	struct coresight_platform_data *pdata;
- 	struct dummy_drvdata *drvdata;
- 	struct coresight_desc desc = { 0 };
-+	int ret, trace_id;
-+
-+	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
-+	if (!drvdata)
-+		return -ENOMEM;
- 
- 	if (of_device_is_compatible(node, "arm,coresight-dummy-source")) {
- 
-@@ -85,6 +118,25 @@ static int dummy_probe(struct platform_device *pdev)
- 		desc.subtype.source_subtype =
- 					CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS;
- 		desc.ops = &dummy_source_cs_ops;
-+		desc.groups = coresight_dummy_groups;
-+
-+		ret = coresight_get_static_trace_id(dev, &trace_id);
-+		if (!ret) {
-+			/* Get the static id if id is set in device tree. */
-+			ret = coresight_trace_id_get_static_system_id(trace_id);
-+			if (ret < 0)
-+				return ret;
-+
-+		} else {
-+			/* Get next available id if id is not set in device tree. */
-+			trace_id = coresight_trace_id_get_system_id();
-+			if (trace_id < 0) {
-+				ret = trace_id;
-+				return ret;
-+			}
-+		}
-+		drvdata->traceid = (u8)trace_id;
-+
- 	} else if (of_device_is_compatible(node, "arm,coresight-dummy-sink")) {
- 		desc.name = coresight_alloc_device_name(&sink_devs, dev);
- 		if (!desc.name)
-@@ -103,10 +155,6 @@ static int dummy_probe(struct platform_device *pdev)
- 		return PTR_ERR(pdata);
- 	pdev->dev.platform_data = pdata;
- 
--	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
--	if (!drvdata)
--		return -ENOMEM;
--
- 	drvdata->dev = &pdev->dev;
- 	platform_set_drvdata(pdev, drvdata);
- 
-@@ -126,7 +174,10 @@ static void dummy_remove(struct platform_device *pdev)
- {
- 	struct dummy_drvdata *drvdata = platform_get_drvdata(pdev);
- 	struct device *dev = &pdev->dev;
-+	struct device_node *node = dev->of_node;
- 
-+	if (of_device_is_compatible(node, "arm,coresight-dummy-source"))
-+		coresight_trace_id_put_system_id(drvdata->traceid);
- 	pm_runtime_disable(dev);
- 	coresight_unregister(drvdata->csdev);
- }
--- 
-2.41.0
+Well, I believe I reported about this problem way before the change has been merged
+and the problem reported by the robot, however it was not taken into account in time:
+
+https://lore.kernel.org/all/0f13ab6b-dff1-4b26-9707-704ae2e2b535@linaro.org/
+
+> Closes: https://lore.kernel.org/oe-kbuild-all/202407070147.C9c3oTqS-lkp@intel.com/
+> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+
+--
+Best wishes,
+Vladimir
 
 
