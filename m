@@ -1,78 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-27159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0DF593EAF6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 04:11:15 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4ACEB93EBC5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 05:09:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 480741F21DB4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 02:11:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5FFD71C21338
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 03:09:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66B682BD04;
-	Mon, 29 Jul 2024 02:11:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3223878281;
+	Mon, 29 Jul 2024 03:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L5Ournst"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EDRy8Alj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8756F2A1D1
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 02:11:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32222B9D2;
+	Mon, 29 Jul 2024 03:09:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722219070; cv=none; b=nVMnR2T3G7AlafEd1jaObo3LNhajw0HHiU6ViuVPuGRqCNa72n2MXz3GUqYwy9YZnb63eYK/hIoOCwb1c/AGn7aNyMwwiU1r4CMnr36+BmCnEtamYIEKikNC1/1m13l/E76c2neJKzwMr4aKdoT6QfqCIrgBQCSpolLXWbUCbCE=
+	t=1722222591; cv=none; b=gSJwTNJVnN7qPjxQlNyR808QWA8GGOIeDq+sYfC93AuJ4QHDo9utHayAuEfpufuLPqDBJdfOOw7tpKY04FI4khSZoPdWNEJvqtfN0s0pSwuv29e2o+vvT0ZxIj3v4BkwEh4KkHp0hi2Ugbr6QcIemS1b8QArVgp/9U/OFXInPt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722219070; c=relaxed/simple;
-	bh=rzSC/+7MmXGe8fFYbuiaxXZ2dppzDayVi1vNINMcxUk=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=mcjXpjR4aQ0nCYXQmysMJ7DHvGifLoJd3A9m7DQJ2oFapguLYFlhX4Ti9Bf1GeXXN6COUZV7pTchi1xpkBSmsFNAGVN07cRLnOe4SOb6h8nYixRDR2UOH0CQ4hOpQ2h6VEtlcQ47fGEhv1L5QW9UAscX0LzPT4LkhI6AMB5d+Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=L5Ournst; arc=none smtp.client-ip=209.85.208.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2ef2ed592f6so33832181fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Jul 2024 19:11:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722219067; x=1722823867; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iU1x8aVaLzA4F2JnVLfCjUZyWRs33d+LxRoec+AWvSg=;
-        b=L5OurnstwAwvvEFn97csILk/bbmQhqohRY7XttVldnBg7Hq8JrbwPfkP7g/UN5s0dz
-         zZ6+1Zjboxe2IB8Nqju/4NGgYCRsHuDxaweQ6egyWbAav4KrulPQdLTrcKnd7tNVbn39
-         JyfwL7QwgjR0VpVaXjcDOAQOaMZMhIGMosehbRSvGtK2Z2pGX/dHITsVmYoxJc/hzX+1
-         jr9oeLzzDjONL2XIC6v93Z1kl5eAvmntTPoYixD5e18LcNfcBdtwkky2ki6qy5pjWenu
-         aQOd3c6FnaRixnO4tgmnRKLbf6mlqbgMgVeil6+pOKijqLTLxtFxyaAxR5+Rm4bTtWab
-         ZprQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722219067; x=1722823867;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iU1x8aVaLzA4F2JnVLfCjUZyWRs33d+LxRoec+AWvSg=;
-        b=SBo30+SbmrlRZu3VtxsyBgfrTpy9S1AAFqhGWCrS6+f8OvAd3pRqW1XifOZsYavRdC
-         /+zNf5Krb/blpywohb7O7vkJdQShbYo4iV6V6BxUbUzcwpyw4Zw2tQRsdVRjF/kuUtAW
-         SyzuIczbDdJS1h//c86ORU4HWJFjS3fbRuuzH8NaNuwu5ablNKknOS7hR5nPmDaMh1sR
-         Jah1Dj5lDlXQTkP1Gh/nz7GA4scDTcbge77gt2KS2Pno/Y0/1terBj1xxo2kO7PK/dl9
-         aZFI1R/dBiBNw6sGpE1pg1QWk7l79hhQAzKXXUtITJJQD9NtDbxz+Li4ZcRlP4FkC7EL
-         r3ZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCURv31sepUG2UBTmgmTBLuvSOF3Z5VHuYoiwbajsBPVkHDoUfSUkG+6yKT4hEBSbCB2r8KKbb9v8LaNLRoBVB23nktB7ZctmNzOCIHZzQ==
-X-Gm-Message-State: AOJu0YyabvJJi1k9Lyh3J8mQWMIRQ8brZtOVb9oKflFri2Ka1xVafQ+I
-	wEDbTUKLzp4J93/D6Ka1QL9x2my6R8nCTaQgTLm7yNLHP6YEpELjeRo8Vnt7EXc=
-X-Google-Smtp-Source: AGHT+IE/XvWTqnCXyVDdPbcSgR6WZ0jDW/AiwgDef44mOyk02SJU/5+hLBTeP5SZfCg0gb0efKnTSw==
-X-Received: by 2002:a2e:878f:0:b0:2ee:974c:596f with SMTP id 38308e7fff4ca-2f12ee279dcmr41340591fa.28.1722219066390;
-        Sun, 28 Jul 2024 19:11:06 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f03d07583csm11648401fa.113.2024.07.28.19.11.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Jul 2024 19:11:05 -0700 (PDT)
-Date: Mon, 29 Jul 2024 05:11:04 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Marcel Holtmann <marcel@holtmann.org>, 
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Cc: linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-pm@vger.kernel.org
-Subject: btqca: crash with linux-next on bt power down
-Message-ID: <su3wp6s44hrxf4ijvsdfzbvv4unu4ycb7kkvwbx6ltdafkldir@4g7ydqm2ap5j>
+	s=arc-20240116; t=1722222591; c=relaxed/simple;
+	bh=qGGqw71micBXJaxsXmYl7/ikb6fEH786nZP1LH2K67g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=my82nJpL72sCwpgV6S1sVnCaAaFFEc4odJE5oEbsG8cRiajWFY+VJDfzRH84OtwXNpwvwueF8fWkuiAoiDjTDAbuI+ecKMm/cOXVd3DQbdjQNO2Sm2mi9EWkojHAAAz4kX3+sS4KeuyIxkvmpNGMQ7NmUYG88g71mCgKT507YnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EDRy8Alj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25655C116B1;
+	Mon, 29 Jul 2024 03:09:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722222590;
+	bh=qGGqw71micBXJaxsXmYl7/ikb6fEH786nZP1LH2K67g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EDRy8Alj7pCf8ehwMe8nZmF0kvOxHfoiUpmGC2NTrEnUld/VshbLgo+YpZogWA8Lc
+	 OobPt4gVIemc3bubHDY/K2415bYqiUi+ewv/tAFkxV9pQFx364hSHOrfifNY7V2oJ2
+	 8DdhiZJsVDtNO2hsnNRWTNNUxcxJ2YXQp2USESkxTufa4cll5QP36oTQj7DB4mz5+7
+	 c4P7ki5V6tMQEQ7/7685GLCK8/jDh2E6Wq2RGRD5FsDUd+H5vxc0pxi8mit7x6gpqw
+	 eby+qHk4W4gGJJj9IriXsNL4TL36yGavtfiaHF0Ol1UnWmBH6SwyKu7TFsPGb4Tgma
+	 quA+SGf4/OLaQ==
+Date: Sun, 28 Jul 2024 22:09:47 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Danila Tikhonov <danila@jiaxyga.com>
+Cc: konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, robdclark@gmail.com, sean@poorly.run, quic_abhinavk@quicinc.com, 
+	dmitry.baryshkov@linaro.org, marijn.suijten@somainline.org, airlied@gmail.com, 
+	daniel@ffwll.ch, fekz115@gmail.com, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, cros-qcom-dts-watchers@chromium.org
+Subject: Re: [PATCH 1/2] drivers: drm/msm/a6xx_catalog: Add A642L speedbin
+ (0x81)
+Message-ID: <4v5kl65wurifvkpious5ae4zhpv7zklejalg4sp4vcjiwhfbv2@o7jee7jil5ke>
+References: <20240722184314.36510-1-danila@jiaxyga.com>
+ <20240722184314.36510-2-danila@jiaxyga.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,58 +63,39 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20240722184314.36510-2-danila@jiaxyga.com>
 
-Hi,
+On Mon, Jul 22, 2024 at 09:43:13PM GMT, Danila Tikhonov wrote:
+> From: Eugene Lepshy <fekz115@gmail.com>
+> 
 
-On Qualcomm Dragonboard 820c (APQ8096, QCA6174) soon after the boot I
-observe the following crash:
+Please make sure the subject prefix matches other changes in the same
+driver/files.
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000018
-Mem abort info:
-  ESR = 0x0000000096000006
-  EC = 0x25: DABT (current EL), IL = 32 bits
-  SET = 0, FnV = 0
-  EA = 0, S1PTW = 0
-  FSC = 0x06: level 2 translation fault
-Data abort info:
-  ISV = 0, ISS = 0x00000006, ISS2 = 0x00000000
-  CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-  GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-user pgtable: 4k pages, 48-bit VAs, pgdp=000000010da63000
-[0000000000000018] pgd=080000010da62003, p4d=080000010da62003, pud=080000010da61003, pmd=0000000000000000
-Internal error: Oops: 0000000096000006 [#1] PREEMPT SMP
-Modules linked in: hci_uart btqca
-CPU: 2 UID: 0 PID: 66 Comm: kworker/u19:0 Not tainted 6.10.0-next-20240726-13923-gd3ce7ebd61f9-dirty #2722
-Hardware name: Qualcomm Technologies, Inc. DB820c (DT)
-Workqueue: hci0 hci_power_off
-pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : qca_power_shutdown+0x8c/0x210 [hci_uart]
-lr : qca_power_shutdown+0x7c/0x210 [hci_uart]
-sp : ffff8000836f3c50
-x29: ffff8000836f3c50 x28: ffff00008337b900 x27: ffff000084085000
-x26: 0000000000000000 x25: 0000000000000000 x24: ffff00009276f800
-x23: ffff00009276f918 x22: ffff000081e1fc80 x21: 0000000000000001
-x20: ffff000081e1fc80 x19: ffff00009276f800 x18: ffff0000de422170
-x17: 0000000000061d88 x16: 0000000000000000 x15: 0000000000000001
-x14: ffff0000813b3580 x13: 0000000000000000 x12: 00000000000001a0
-x11: 0000000000000001 x10: 00000000000013f0 x9 : 0000000000000000
-x8 : ffff8000836f3b40 x7 : 0000000000000000 x6 : ffff800080d52e88
-x5 : 0000000000000000 x4 : ffff8000836f0000 x3 : 0000000000000000
-x2 : 0000000000000000 x1 : ffff00008f56d000 x0 : 0000000000000000
-Call trace:
- qca_power_shutdown+0x8c/0x210 [hci_uart]
- qca_power_off+0x70/0xfb8 [hci_uart]
- hci_dev_close_sync+0x4b0/0x6d8
- hci_power_off+0x2c/0x44
- process_one_work+0x20c/0x62c
- worker_thread+0x1bc/0x36c
- kthread+0x120/0x124
- ret_from_fork+0x10/0x20
-Code: f9400681 b4000441 f9403c36 f94102c0 (f9400c00)
----[ end trace 0000000000000000 ]---
+Regards,
+Bjorn
 
-
--- 
-With best wishes
-Dmitry
+> According to downstream, A642L's speedbin is 129 and uses 4 as index
+> 
+> Signed-off-by: Eugene Lepshy <fekz115@gmail.com>
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> index 68ba9aed5506e..99f0ee1a2edea 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> @@ -869,6 +869,7 @@ static const struct adreno_info a6xx_gpus[] = {
+>  		.speedbins = ADRENO_SPEEDBINS(
+>  			{ 0,   0 },
+>  			{ 117, 0 },
+> +			{ 129, 4 },
+>  			{ 172, 2 }, /* Called speedbin 1 downstream, but let's not break things! */
+>  			{ 190, 1 },
+>  		),
+> -- 
+> 2.45.2
+> 
 
