@@ -1,57 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-27179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 681C393EC49
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 06:02:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39FBE93EC4B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 06:02:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 066CC28266B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 04:02:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 657681C2157A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 04:02:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 803B113D53F;
-	Mon, 29 Jul 2024 03:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8031013DBBB;
+	Mon, 29 Jul 2024 03:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dJmFBbcF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uUuigub7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FF813D51B;
-	Mon, 29 Jul 2024 03:58:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5704113DB99;
+	Mon, 29 Jul 2024 03:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722225538; cv=none; b=Xwt30qCyTFL9y/za6p4YGVTbJImfBT0nhKKggknYFEMKB4v6AhWeMfKLR/9oxLsgkNjEB9adDik7aTmP5h0Awjn2QQ9ClM5MWwD9qp2RjSucKz4jlOXUvzz80esAEZtWvuv7ZfxLCLRvlgbnUsMsc5dgg74uEsVcwtZvAf1MPzQ=
+	t=1722225539; cv=none; b=qEUhDWlrcjAhY+PWmk/qAH7kdvIDF9yjQOmErlLZHTp9DxUuJbklAUbY3J5hLo0wr6Z7mErnhJ6qGkqgk6ZLhLj+iC7NTZByqHkU3TeLeAaWG2S9cyF0T5rkHZ9/UP8fpb8aoZK8H1dwNcvC+dbyM7kSWMpIKE6HSaeqXXwQgaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722225538; c=relaxed/simple;
-	bh=1t7/FltCQU50AljIErNTnLoHcOSZdN118ZE8rm1jyr0=;
+	s=arc-20240116; t=1722225539; c=relaxed/simple;
+	bh=o+7NscFlntH8IpheuGOfBNKanM/LsZ9nMHeTmUJjy2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OT/ospmtpP4SeN/BNHFXqnDO8g0FOMalwlaIpSL1jx/u936VKXk2T3371BzxQgc+xCJkVebFzwt+J0Bik8wKAMjbmILhArE544EiEd24X9O4yD4mIjtLDR0BYgxQLx9yg7jqx9cC2PfbYw4fBEEZE9Gzx9WpMgj1PpS1WuZsCdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dJmFBbcF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E06AC4AF13;
-	Mon, 29 Jul 2024 03:58:57 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Ny723VHZ1Uz0OREE+Ex892RzSMxPIv79vdo4KgYpFWrw8Wgna4X8eiJzUa2UHGK0PUH/bFJqG2GFXhWq9J2cUDnB1G82AsGn0Ootd7rUGM4Eo9Xku8iNSB8VHxqfA3vCZa0Sbszy4g1srsTvpVm3K2/31PnyaLXSOnG0Lr3Ccnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uUuigub7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18104C32786;
+	Mon, 29 Jul 2024 03:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722225537;
-	bh=1t7/FltCQU50AljIErNTnLoHcOSZdN118ZE8rm1jyr0=;
+	s=k20201202; t=1722225539;
+	bh=o+7NscFlntH8IpheuGOfBNKanM/LsZ9nMHeTmUJjy2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dJmFBbcFRiLN364VuI268pAtq2TG2Zr/Hngh2sktSo3w6WOlO7aUcrA9P7fIVJCYu
-	 Yzq4ht1WVcc5L3WTSbNKRs855/KcxswdpryMD2gWXIlDssfBfjpORw9yQT7/eAoAPL
-	 Gh1+P9BdMOyVIHYJwDwdFB3bfEb+K11c9kixEhIUOrHPIy9Vw5ro+rNaorOwxEiI4y
-	 YUUtHpBn3QbW43dXXXFZy88GiJ6KJEIQ6BbM2cddD5IoBLoPEs5SbDBZB5OFhqgf9E
-	 78pXRZnQGGkwE5New7vPkttj6I2o/6zW1K3i+lhUy4y0y1FZjHuymO+PWJZ5VzMQNn
-	 a1yRkpyWpN2uQ==
+	b=uUuigub70RLbT3x5M23CE9fZ9iqerrMNRa0hONePulsS1HtcIIwUQTCEKvc5eDkPj
+	 4OmOzv7HKk1vYYHOq42jzWoilXV289Pay27W+eIn9DQqNd5iVZMCAwr5bMmLJGYC7m
+	 M6r2eeNWBFwY2Kqf5lc4UXXKIETpjmq5W0okNiX/BsFhm2mXDJvyc9AIsyEvCGHbK8
+	 2sAqpYTzSv5NZ55zi5C+FtmVxhsGmgV/jlgBHsgOGPUsY8YPrbMgB58Br7hTk35vTN
+	 lzdpKcOHvFXzwKfyIMwm4aT0LbCYwKH72UW99zMLz0g9401bOWTg6yK5v2r1JVhVr0
+	 HcDGCiw5qQWnw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: konrad.dybcio@linaro.org,
-	Rajendra Nayak <quic_rjendra@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Sagar Cheluvegowda <quic_scheluve@quicinc.com>
 Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] soc: qcom: llcc: Update configuration data for x1e80100
-Date: Sun, 28 Jul 2024 22:58:23 -0500
-Message-ID: <172222551324.175430.6844502288201270672.b4-ty@kernel.org>
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Andrew Lunn <andrew@lunn.ch>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	kernel@quicinc.com
+Subject: Re: [PATCH v2] arm64: dts: qcom: sa8775p: Add interconnects for ethernet
+Date: Sun, 28 Jul 2024 22:58:24 -0500
+Message-ID: <172222551298.175430.15440221416185805132.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240723081542.1522249-1-quic_rjendra@quicinc.com>
-References: <20240723081542.1522249-1-quic_rjendra@quicinc.com>
+In-Reply-To: <20240709-icc_bw_voting_emac_dtsi-v2-1-a1e02c7099a5@quicinc.com>
+References: <20240709-icc_bw_voting_emac_dtsi-v2-1-a1e02c7099a5@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,16 +69,15 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 23 Jul 2024 13:45:42 +0530, Rajendra Nayak wrote:
-> Update the configuration table for x1e80100 with the latest recommendations
-> from the SCT table.
+On Tue, 09 Jul 2024 11:21:40 -0700, Sagar Cheluvegowda wrote:
+> Define interconnect properties for ethernet hardware.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] soc: qcom: llcc: Update configuration data for x1e80100
-      commit: 99a7b371eef63507c1761e367382d78ebec0a5ab
+[1/1] arm64: dts: qcom: sa8775p: Add interconnects for ethernet
+      commit: e93230d0597a2736f1123cd7790a4e549f3049a8
 
 Best regards,
 -- 
