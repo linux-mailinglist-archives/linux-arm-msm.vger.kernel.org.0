@@ -1,116 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-27266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA41C93F682
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 15:14:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7283493F6B7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 15:31:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A39A228503E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 13:14:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F1E391F2278F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 13:31:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E27681487C6;
-	Mon, 29 Jul 2024 13:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6039B146A71;
+	Mon, 29 Jul 2024 13:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bclbK1iY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eIsfwdWt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA4A145B3E;
-	Mon, 29 Jul 2024 13:14:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3216145B27;
+	Mon, 29 Jul 2024 13:31:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722258848; cv=none; b=i5mJ9zI1TeszZBQmz5kRW9qA4hu0UA0hxMOgSz0M69b35IyvPvRMrRvaa2AhGMroUDbiErJnw75JNpRH1pMoDYDG6ExsLHKbCtatL9pVg3YTdBDGyL1nTx87B4vut2+c0T8PMu8FleuxqoyAs1FreVbJgS+KeiJ7Udxm410B/zw=
+	t=1722259875; cv=none; b=mYBiOjV3Z/rx0qTUVh7HiIUbpLw7K6hRurbITa04Ux35BKl/eziBV2bi94BvaML57HR1/wuXf7oKSRBq8iBWPm1yolQhZDLEZF9sAAquJneUG3UXb1jCY5+vgrjtjxayEaJQGs+laM2r/Vx7yhwreDCHYMqbNSFXRX+CT+DYMhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722258848; c=relaxed/simple;
-	bh=2/YZLHYwe6VeiM3pUFkU5Uwf+RFlzvvWMDWutDwHs1Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=T2BubfQAfdYgymnwz0RN4mq4mAxsL/3CqB62x3wAHZrJ3qG7cx/6NMUclLmiWgpkIVp/UDNSMt9feDYa0Io0yoZ8cTEqfbXUunwFTBu8Eb4dIPuN79dsZ5Liixyqwn0AWIpe34/fco2s9wH8bAJuFbUxTufLdliFOwmx1Koyj7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bclbK1iY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A48C32786;
-	Mon, 29 Jul 2024 13:14:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722258848;
-	bh=2/YZLHYwe6VeiM3pUFkU5Uwf+RFlzvvWMDWutDwHs1Q=;
-	h=From:To:Cc:Subject:Date:From;
-	b=bclbK1iYJNgcrsT5kdKuydrNKIIhB9Xkxuu1vbCk/IdIchAHY6fpEbFbDii9Glg8A
-	 0/Qbp/aoa7Axdt7t/0BEA4CsN1wHaj7u5GNvphqVma1VRiAhZs649aYytLB3nM0oml
-	 0/6VaNQmEls7l/T0BYUAVW5rJL/5DUL7F4xgS980I3Kahyo+Nek+D/G3/hVJwdbRLx
-	 YqmlZRo0FlELbCfH7iCamL0xvOhnpQX2TjiPtqu1cDrL3J6jUVl/R6TVgMkwyaPzqK
-	 xV/8LfAblWT7U5DkEL/SqAvZJJrQXP4CwZdKpxwlZzofWC/fr0PMh9rJU6AO0g1N2O
-	 JH9JhCwmkpcGw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1sYQCa-000000007G9-1tX1;
-	Mon, 29 Jul 2024 15:14:13 +0200
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Banajit Goswami <bgoswami@quicinc.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Cc: Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	alsa-devel@alsa-project.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>,
-	regressions@lists.linux.dev
-Subject: [PATCH] ASoC: codecs: lpass-macro: fix missing codec version
-Date: Mon, 29 Jul 2024 15:13:51 +0200
-Message-ID: <20240729131351.27886-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.44.2
+	s=arc-20240116; t=1722259875; c=relaxed/simple;
+	bh=dC4StydkvhN4D2FnulCowDb8t4nCXLe2HWtCaL9svbs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dxgDw684swh9a7zMdB3LmX3bAzUEvwegyQgLEGAqCXlCQmPsYedKQOu05JGb1cCWFclRqO1pkzBq67aGXKHupJVOnwJW/pxZEp+vdntzpwk8H4VaKMmDVu+GRjJxIczgAzyMkkCKw+m+tOLadt+IkP4g4JjaJqxh6ACV+cfoLaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eIsfwdWt; arc=none smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2f0271b0ae9so44472441fa.1;
+        Mon, 29 Jul 2024 06:31:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722259872; x=1722864672; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oOY+AlMeRwJs0YCYC6hzJCvRhv1dC+GmSx9gBu2yiuA=;
+        b=eIsfwdWtksxaDwol+JBUEY3S1XHvPGcSGVyUMgOsgZJFrl3rN15ZC45ghAujJha5KB
+         1iabPY7jskcKdleR4DdUaEOxy+pdybhQMqjA87Cxmeci07YlyPK+0nhmlI7xwWy+zOF0
+         GWtsNpBTY6Ulb+Sq+UOh0PyazL8VkzIB1opFoxenvzzum9dN09xvFNEOPX3HdC709gL0
+         hLXP7LK5y5+JjuMWRpWKr9ERc2nTk1Z/I5/akZJNFHSHMirjiXH2j420QhjsaFc9lfaq
+         EHEoBgUR9myBjvM+X60PXYPWqKMtFdFqoPj7rSeU0IA2lw7esCNSbwk0/6liK7jwooHa
+         Qh9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722259872; x=1722864672;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oOY+AlMeRwJs0YCYC6hzJCvRhv1dC+GmSx9gBu2yiuA=;
+        b=RcOA5tiT4RQt3oZ1WsZZ/WDFoN1Jc5o3BQEaf4TIbZ96fWgeRH5YBNijqF3excTcZt
+         /JOQH6TWZCRXG5Gf1Ur6zn0syPO615rhSgljeYqe+1Ik4XzBOVtPcVUR5jSugvGK5mQW
+         RaIW6/0MbnGo+DpcwjfiGhcXSfPMbDtgJUGby2sEIMoU/jUxnD/TH6m51RXtflzN3K3f
+         5T1v/tlzqn+XPDOPKeg8VlbcV5g546DWOXq5PyzOMJtt+R//sc59HiAn9QWGx9dxxrcx
+         Q02ZMSw/vCqfGCih4Dtw2Oy678hBr/RNrI3KYDXPyMVRZ9jhxj65tKwK1whiYfCpn9gj
+         i9dg==
+X-Forwarded-Encrypted: i=1; AJvYcCWTn7UysmnOl14qiMu5eow3ItLw4M4zs19aci6C4/b/g4S3fU2dF/qmejXpdcdxeGyOVj5TMSisWy+DBPzTZIts7QR1edOT2AlZFGcMKhAh/whotGhCFLs/iBkjhrnsgHBBy+2HqaVZ5RzC7D/IFq+QhGYPttaWse5IbSoXpi6UsGl7D2KXmAaT
+X-Gm-Message-State: AOJu0YzvP++cpCg708x1gcCFlcKCpUZ2YsOATE86Aeb9seNmTc57Gc8J
+	XnuSn7j39EVJP0qgwQafOqjl4WAHXOEb8mWaivUdlVLE7CNYmz52lbv03yvdQNcHtYXTJaKpIKH
+	YZap/1AUUEYCx2hvd4VaLoam8WwM=
+X-Google-Smtp-Source: AGHT+IEkj8gJtt7Xa/PRg0sMhXYsUI0z5cB0Kqpuw44BH7fbPSlxtdi/VtkbDXSJ+OEuJ4+ru7ds3EoONnjafiZrjfk=
+X-Received: by 2002:a2e:8710:0:b0:2ef:2f60:1950 with SMTP id
+ 38308e7fff4ca-2f12ee1bdf2mr47796711fa.30.1722259871270; Mon, 29 Jul 2024
+ 06:31:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <su3wp6s44hrxf4ijvsdfzbvv4unu4ycb7kkvwbx6ltdafkldir@4g7ydqm2ap5j>
+ <aa9d6aec-ef94-4137-b2ff-0c86d9a92d42@molgen.mpg.de> <CAA8EJpqGXe0A0yDpEP==60k-bPEbDORpLUtsiPvGSi+b_XphAg@mail.gmail.com>
+ <CABBYNZJP2c4L-nFHtug0isqnKPR+Q0CE09o_ACsPLobjLpHtcg@mail.gmail.com> <CAMRc=McB1hY+Lad-gBj9-_Ve2OeW+rXaRqHL2xO4zDPMRD41jw@mail.gmail.com>
+In-Reply-To: <CAMRc=McB1hY+Lad-gBj9-_Ve2OeW+rXaRqHL2xO4zDPMRD41jw@mail.gmail.com>
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date: Mon, 29 Jul 2024 14:30:57 +0100
+Message-ID: <CABBYNZJXgJmfe=o2bgj_Gs1wsD=OQRokEkzVRc_OhBs5-_+Dww@mail.gmail.com>
+Subject: Re: btqca: crash with linux-next on bt power down
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Paul Menzel <pmenzel@molgen.mpg.de>, 
+	Marcel Holtmann <marcel@holtmann.org>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-pm@vger.kernel.org, regressions@lists.linux.dev, 
+	Zijun Hu <quic_zijuhu@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Recent changes that started checking the codec version broke audio on
-the Lenovo ThinkPad X13s:
+Hi Bartosz,
 
-	wsa_macro 3240000.codec: Unsupported Codec version (0)
-	wsa_macro 3240000.codec: probe with driver wsa_macro failed with error -22
-	rx_macro 3200000.rxmacro: Unsupported Codec version (0)
-	rx_macro 3200000.rxmacro: probe with driver rx_macro failed with error -22
+On Mon, Jul 29, 2024 at 12:58=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl=
+> wrote:
+>
+> On Mon, Jul 29, 2024 at 1:56=E2=80=AFPM Luiz Augusto von Dentz
+> <luiz.dentz@gmail.com> wrote:
+> >
+> > Hi Dmitry,
+> >
+> > On Mon, Jul 29, 2024 at 12:01=E2=80=AFPM Dmitry Baryshkov
+> > <dmitry.baryshkov@linaro.org> wrote:
+> > >
+> > > #regzbot: introduced:
+> > > 973dd9c4db4746200f88fe46e30eada7054fdbea..84f9288208dfcd955446060a53a=
+dd15b9e01af4e
+> > >
+> > > On Mon, 29 Jul 2024 at 13:21, Paul Menzel <pmenzel@molgen.mpg.de> wro=
+te:
+> > > > Am 29.07.24 um 04:11 schrieb Dmitry Baryshkov:
+> > > >
+> > > > > On Qualcomm Dragonboard 820c (APQ8096, QCA6174) soon after the bo=
+ot I
+> > > > > observe the following crash:
+> > > > >
+> > > > > Unable to handle kernel NULL pointer dereference at virtual addre=
+ss 0000000000000018
+> > > > > Mem abort info:
+> > > > >    ESR =3D 0x0000000096000006
+> > > > >    EC =3D 0x25: DABT (current EL), IL =3D 32 bits
+> > > > >    SET =3D 0, FnV =3D 0
+> > > > >    EA =3D 0, S1PTW =3D 0
+> > > > >    FSC =3D 0x06: level 2 translation fault
+> > > > > Data abort info:
+> > > > >    ISV =3D 0, ISS =3D 0x00000006, ISS2 =3D 0x00000000
+> > > > >    CM =3D 0, WnR =3D 0, TnD =3D 0, TagAccess =3D 0
+> > > > >    GCS =3D 0, Overlay =3D 0, DirtyBit =3D 0, Xs =3D 0
+> > > > > user pgtable: 4k pages, 48-bit VAs, pgdp=3D000000010da63000
+> > > > > [0000000000000018] pgd=3D080000010da62003, p4d=3D080000010da62003=
+, pud=3D080000010da61003, pmd=3D0000000000000000
+> > > > > Internal error: Oops: 0000000096000006 [#1] PREEMPT SMP
+> > > > > Modules linked in: hci_uart btqca
+> > > > > CPU: 2 UID: 0 PID: 66 Comm: kworker/u19:0 Not tainted 6.10.0-next=
+-20240726-13923-gd3ce7ebd61f9-dirty #2722
+> > > >
+> > > > I am unable to find the commit. Your tree also seems dirty. What is=
+ the
+> > > > last working commit?
+> > >
+> > > Checked the commit range on the linux-bluetooth branch, hope this hel=
+ps.
+> >
+> > Im currently traveling so it would take some time for me to
+> > investigate this but I suspect it could be some of the changes
+> > introduced by Bartosz with power sequence, @Bartosz Golaszewski
+> > perhaps you can help?
+> >
+>
+> Hi!
+>
+> I just came back from last week's vacation to a bunch of different
+> regressions. I will get to it but it may be later this week.
 
-Add the missing codec version to the lookup table so that the codec
-drivers probe successfully.
+Thanks, looks like there were other reports saying QCA driver is not
+working which perhaps is related.
 
-Note that I'm just assuming that this is a 2.0 codec based on the fact
-that this device uses the older register layout.
-
-Fixes: 378918d59181 ("ASoC: codecs: lpass-macro: add helpers to get codec version")
-Fixes: dbacef05898d ("ASoC: codec: lpass-rx-macro: prepare driver to accomdate new codec versions")
-Fixes: 727de4fbc546 ("ASoC: codecs: lpass-wsa-macro: Correct support for newer v2.5 version")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
-Cc: regressions@lists.linux.dev
-#regzbot introduced: 378918d59181
+> Bart
 
 
- sound/soc/codecs/lpass-va-macro.c | 2 ++
- 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
-index b852cc7ffad9..a62ccd09bacd 100644
---- a/sound/soc/codecs/lpass-va-macro.c
-+++ b/sound/soc/codecs/lpass-va-macro.c
-@@ -1472,6 +1472,8 @@ static void va_macro_set_lpass_codec_version(struct va_macro *va)
- 
- 	if ((core_id_0 == 0x01) && (core_id_1 == 0x0F))
- 		version = LPASS_CODEC_VERSION_2_0;
-+	if ((core_id_0 == 0x02) && (core_id_1 == 0x0F) && core_id_2 == 0x01)
-+		version = LPASS_CODEC_VERSION_2_0;
- 	if ((core_id_0 == 0x02) && (core_id_1 == 0x0E))
- 		version = LPASS_CODEC_VERSION_2_1;
- 	if ((core_id_0 == 0x02) && (core_id_1 == 0x0F) && (core_id_2 == 0x50 || core_id_2 == 0x51))
--- 
-2.44.2
-
+--=20
+Luiz Augusto von Dentz
 
