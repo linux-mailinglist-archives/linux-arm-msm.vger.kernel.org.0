@@ -1,60 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-27173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 235D193EC33
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 06:01:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AEBFA93EC37
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 06:01:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C32491F22B55
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 04:01:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63515281F95
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 04:01:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E319132492;
-	Mon, 29 Jul 2024 03:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4287F137905;
+	Mon, 29 Jul 2024 03:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LJjsrnBX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="goCk/Ivq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D1013212E;
-	Mon, 29 Jul 2024 03:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A35E13774B;
+	Mon, 29 Jul 2024 03:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722225531; cv=none; b=pkQK7OYG3g8jdJDg7nyAMAFOKKpLTaiB60n89/cF9GUsgBd/DaJBxCqA2IniODuaEMhWQ6VIkbV7POWWLMN6rZyNsy79w5ny8Y44PdxkcKXXLERLtsXb/Y9H6HLLjigIM/t0qrT3ZUoF01u+p4zhbcNg29WlCY/dibryiO4yKZE=
+	t=1722225532; cv=none; b=WzAd1dc2b0i/0t/Bj7FuRzuvZ+jfEg9hYMcz+CaFZczKgg9RJznCz4y4/LG30typge/wKRudo2aWeuZGW5p8BHs/I1ZWnOZHmPGfkrvASsLpM70iFMJ073A8W9JA6Z84GKikTK5iKwWime+TX2SPYXz4azWCbCusfCD5nd7Ho34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722225531; c=relaxed/simple;
-	bh=APVt9llq5myGDFCtafVZJaXHoIIcdZz+kIdn3LaHTnY=;
+	s=arc-20240116; t=1722225532; c=relaxed/simple;
+	bh=Bc/hBMJ+lQFooYOF2TcG+dcTNSSr+5tFNBcsfoNlPkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ATLbZ7GvudRaSHpNBHwAMkxkfWTy5rY2m7ueR/PfStnfuvdLK9mFeYA4pgK/dSxipq064Wfiet2AHoURIy3+rPr1uxefSWj3Pu4KIC7s94OY8bcESmRWUbLC1KIx/UVTnr7xIY4kgvkj7+a8Wm8f7Q7wh/3CuJKwqWyap4h47Kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LJjsrnBX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5539FC4AF09;
-	Mon, 29 Jul 2024 03:58:50 +0000 (UTC)
+	 MIME-Version:Content-Type; b=q/0JyUkKlfgRUaQo6On2cjf4CIcza/KYmmVLK8ShcvAT67Aci2Q2kKNk/ukdsewr4WjHWWiV7qe92jijANO19rPphqNtdJKSkz5Wyxfv5tBkB8bT+fc3mRzNBPyVTJ67IIg24bjnw+dS+jdCR5KqtOtdN3aCs64ZV/rpVPkkYqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=goCk/Ivq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FA2FC4AF07;
+	Mon, 29 Jul 2024 03:58:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722225531;
-	bh=APVt9llq5myGDFCtafVZJaXHoIIcdZz+kIdn3LaHTnY=;
+	s=k20201202; t=1722225532;
+	bh=Bc/hBMJ+lQFooYOF2TcG+dcTNSSr+5tFNBcsfoNlPkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LJjsrnBXTBuYxr9GVG64C5gAz6IicTYKdCiePGQZiVYzGd5cEh18K/O6frLEq4WNy
-	 ZpVJbA/4K2FA1PIyKVuLV10SPXXAEMgR4vYeep6Zyt4RL/BN81RNsIHtZpGN53w5/G
-	 XbB0v5a091Qo7sNmkNXeXNFLxqN6KgKtuWapT2wE37ce8JopLThCSRJ1iCkTdte8+I
-	 xWjfYA8dDWwWJza8M2uNOt0fQonHbrELs4V15rdEcAYAOAS9r0SKu10xmCZOlRGp6l
-	 K1ppYe+iRxc+KkjD4XPK0Wh2mPAr+bLpZCL2+ho5hnC0HUUsEE4Oq2w5fijh+lN4wT
-	 JP/jt1Pr5PXjg==
+	b=goCk/IvqKMS8e4faCtiBCT7BDdCIBQG9aWQV4WWfywOwQo8EdODDcPnl8T6Xz+1rP
+	 A4QXecLnDCPkfnobiLbZkDYSb/qu2AJXlJPlRjccMkYIDobbMnzBGT36QUlCJ0rriA
+	 f45j1/uDRYZqbVwYA9EX1cSgd2HHGfHy8dnAOqe5j0pZr0YSFtk64M/FQpe9Cznreg
+	 M3OgqC9SBGHfJnTdXMbCpc3p5hV+vKOu3h35pv81zchYyzCh1M0kMPFLv1r2MpR5LX
+	 lGlxMnabDRufoJx67Dm4RxmUWJe9zByXTpraKyrxUteJSvigOKjUOMNsv+FtE3EK/f
+	 astr7Ab6YPQQw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: mturquette@baylibre.com,
-	sboyd@kernel.org,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: gcc-sm8450: Do not turn off PCIe GDSCs during gdsc_disable()
-Date: Sun, 28 Jul 2024 22:58:17 -0500
-Message-ID: <172222551323.175430.9264124704995863171.b4-ty@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] arm64: dts: qcom: sm8[56]50: use the PMU to power up bluetooth
+Date: Sun, 28 Jul 2024 22:58:18 -0500
+Message-ID: <172222551311.175430.11797522159810417451.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240722105733.13040-1-manivannan.sadhasivam@linaro.org>
-References: <20240722105733.13040-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20240716-topic-sm8x50-upstream-use-pmu-to-power-up-bt-v1-0-67b3755edf6a@linaro.org>
+References: <20240716-topic-sm8x50-upstream-use-pmu-to-power-up-bt-v1-0-67b3755edf6a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,22 +67,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 22 Jul 2024 16:27:33 +0530, Manivannan Sadhasivam wrote:
-> With PWRSTS_OFF_ON, PCIe GDSCs are turned off during gdsc_disable(). This
-> can happen during scenarios such as system suspend and breaks the resume
-> of PCIe controllers from suspend.
+On Tue, 16 Jul 2024 11:45:09 +0200, Neil Armstrong wrote:
+> Update DT of SM8550-QRD and SM865-HDK to use the PMU to power up bluetooth.
 > 
-> So use PWRSTS_RET_ON to indicate the GDSC driver to not turn off the GDSCs
-> during gdsc_disable() and allow the hardware to transition the GDSCs to
-> retention when the parent domain enters low power state during system
-> suspend.
+> Based on the SM8650-QRD change at [1]
+> 
+> [1] https://lore.kernel.org/all/20240709-hci_qca_refactor-v3-6-5f48ca001fed@linaro.org/
+> 
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] clk: qcom: gcc-sm8450: Do not turn off PCIe GDSCs during gdsc_disable()
-      commit: 889e1332310656961855c0dcedbb4dbe78e39d22
+[1/2] arm64: dts: qcom: sm8650-hdk: use the PMU to power up bluetooth
+      commit: dd5f9b31bb1af9da835fd67def673eba9096b864
+[2/2] arm64: dts: qcom: sm8550-qrd: use the PMU to power up bluetooth
+      commit: af8f801f59ed6fbe490414fa61276287f7aca332
 
 Best regards,
 -- 
