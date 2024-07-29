@@ -1,89 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-27328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58E2D940077
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 23:30:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 618C194015A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 00:51:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C0188B2195A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 21:30:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D65EE283056
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 22:51:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4ED1B18E753;
-	Mon, 29 Jul 2024 21:30:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74ED113A25F;
+	Mon, 29 Jul 2024 22:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iUaDFskl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S6VQuomt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0217D3F1
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 21:30:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43751824AD;
+	Mon, 29 Jul 2024 22:51:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722288631; cv=none; b=YcsF9xs9v4LzzaDS3ffqeHlvIZQlfU8RhwjTgNRgXP517cWtOL2I8g7WHsfaAE86RYHhmvaNEks7Sg4KtySdQTJftxlAd6JVlueT0CNdS6yJ0par/j+zmotgZqDM12eSCyMkWP2qO8A3pskCVsnqyEGG10nP9y4uukcaBdsxYcI=
+	t=1722293465; cv=none; b=GjF+riSSOenkY/1eXnFrBY/TM9sc1FCMyyCriWwSmMTTbDbCggNEt6ibAqhrj+EjEL9cvAkUjEUqt3d2pCtZ3JLuadR/2Vk/pOKJwGTotBCPFzUQ0CJf1Kj81JfNT3ulFgPAzVS5hV2q0UWGWVNG2EtN4bVe2qAHLk79lFjXjos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722288631; c=relaxed/simple;
-	bh=nkh3RY87LSj7T5WSe1L7vT9axB9xoj0Dh0BC+iFxZ1g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ecwMLViIFPgl/c+miXh9dG2IgIOyQR89bEOMuzXKvSD4qnmJNkqn7uZQBWNoJOzT0QGyPCl7/yOyHNfvOU7uhaJ5J47x4QyFBcZ2N6SW3/875xd3yQ60YivumA2mk3ld+3CCaEevciNWjl9Bl+ZjPzgjpn/YtPJxZpXv04wyVVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iUaDFskl; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2f035ae0fe0so45736341fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 14:30:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722288626; x=1722893426; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=w+XeGVGpXC/9raSm+hbwTOeiVV3/eRdhAJVqlpmquSE=;
-        b=iUaDFsklFwK2/PiEXk2a4wFP+8Z0VcQ1C66GPfpSKxykbpuyIzvqCFTSdvICEbuRBj
-         hacpHDLqplm2s3g3MJb3yW/ZpbeJ25cYwcEhGT2oOUG2jEm2NMGm7FrlMNmlSXpeKXjy
-         3uk41R9/kcSreBW865yhiaMf9lXiZL7x42GTnGuM1w5S3wYj0yaQAy4I6GZICdt94p6e
-         JjMp8020WC+8854OMo05xgm5uzg54VmOmD6RFH5ms0rt7UcmIdMLAz6bu/xv/lowfBuw
-         81x3t0HIUdlD7crcLlwU7Dv8pL3dPBPqVmQcFoWlaZ/OnADnIEkFOm4sZYreoJXx25t/
-         pr/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722288626; x=1722893426;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=w+XeGVGpXC/9raSm+hbwTOeiVV3/eRdhAJVqlpmquSE=;
-        b=sZwswkWV2EO7Rmfgl4gwQHfavihvrEVxBTjc0MdJ1FaYA41GFjkueitLBQURnRk+8T
-         tTT0BW3UB1itYB1qfM+drdH9hDI5T9/q5RL7nPi6NmnI0lzXTvyGa/PN/h8/G9hHVeg4
-         qkG7LaZ4Q8OorYoMwxBqqgdJdEYZwNVgei1VMd98bQ5pAVyky11QpJ2Wq62YV45s3Gdy
-         Tj3Zfvu5XkYEZB9del0DUCQgPuXDWWxlhLsgFsURBoNGZr4X7LsArvnIx2PsWNqh+4t+
-         nrISBvXoXGthTL+jSG7pP4UuTIw9GhrKXTJTEVbY/NNzivJX9xtQOYx2zERDy6HMBTMt
-         jDLA==
-X-Forwarded-Encrypted: i=1; AJvYcCXzHcY5+2RkW9Of7oEr66TP8kyVwJ7jYvQp5xHz8V/LxOkISUAtp6QY6tAawd51hMsxOcVW/Fuy7c3jtXSPfX6JjoxnoeiYS0e+JmeXXg==
-X-Gm-Message-State: AOJu0YzM6ImFeTvOYoES0roIBUZHTfFYfmv91JaDKpQDmjT8DeeIiS9R
-	nnSno9xPggTHtBw0vcGA3zuepki91YF387ElL8e93R0BZzFuEIE4QUXGpW4PJZE=
-X-Google-Smtp-Source: AGHT+IHkuA/ybS+vTEmAhWPiJMmSXwxniP06izUiJNBrRHRDIu1+0MlWYxSP7AAgk4esgMEHJO2Ehw==
-X-Received: by 2002:a2e:7c01:0:b0:2ef:2c86:4d47 with SMTP id 38308e7fff4ca-2f12ecd2cb8mr59018661fa.15.1722288626513;
-        Mon, 29 Jul 2024 14:30:26 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f03d09574dsm14265531fa.140.2024.07.29.14.30.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jul 2024 14:30:26 -0700 (PDT)
-Date: Tue, 30 Jul 2024 00:30:24 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Danila Tikhonov <danila@jiaxyga.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	andersson@kernel.org, konrad.dybcio@linaro.org, rafael@kernel.org, 
-	viresh.kumar@linaro.org, heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org, 
-	kees@kernel.org, tony.luck@intel.com, gpiccoli@igalia.com, sudeep.holla@arm.com, 
-	quic_rjendra@quicinc.com, andre.przywara@arm.com, ulf.hansson@linaro.org, 
-	davidwronek@gmail.com, neil.armstrong@linaro.org, heiko.stuebner@cherry.de, 
-	rafal@milecki.pl, macromorgan@hotmail.com, linus.walleij@linaro.org, 
-	johan+linaro@kernel.org, javier.carrasco.cruz@gmail.com, quic_kriskura@quicinc.com, 
-	lpieralisi@kernel.org, fekz115@gmail.com, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
-	linux-usb@vger.kernel.org, linux-hardening@vger.kernel.org, linux@mainlining.org
-Subject: Re: [PATCH 08/11] arm64: dts: qcom: Add SM7325 device tree
-Message-ID: <g6w2z2apwu5ng2jolpnddduqqpxp27by7e2xshqpxrzkutyuhc@gyprjccngtya>
-References: <20240729201843.142918-1-danila@jiaxyga.com>
- <20240729201843.142918-9-danila@jiaxyga.com>
+	s=arc-20240116; t=1722293465; c=relaxed/simple;
+	bh=R/3Bp5nDPxYfZYzMdq/s37q7W4NYEETC7u1zeH2tWc4=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=hC/xRyQVz8wcIN4o2+Jjym9QnQQg4hUVbQoKebT/yxVPUqM32Ypeqs8Bnf7PmP3oDrQyUU0KY5ll7jkU2Dsw0E6Q2/p0XO0ymDXnnmMRN2ppSPSU27nMmsERDaxutAF/LY6XM5AaAMt440dLDXesxqnRWQ4Mp8ggsvGwtu9eeNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S6VQuomt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82E76C32786;
+	Mon, 29 Jul 2024 22:51:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722293464;
+	bh=R/3Bp5nDPxYfZYzMdq/s37q7W4NYEETC7u1zeH2tWc4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=S6VQuomt2fZvGkX1iXywyQ8YuZgrsr/M1I+SS2lpQedfDdY//XYtmd5FVhY8RptEh
+	 k/M3c/PAwnnam6q9EIM8y/DVF2X4C0l1ptrzHdffOs7P/bl1OrRFxqlFQkqImb//51
+	 mYGqSAIiM/D5/DiJ1nRY4gCA40l6AeDg3GjpqsiVo5E2ss2t57vzkoElRZ7yCQErEp
+	 BhOICcRWuqDDNfuybSnd6slLMUmCiKEzFiNaWUpI3JN2u9xBkFExut8B27O7IRK5kg
+	 /Lx45HqDVhvZ1Wfw87iWrlzoMfNuM9Wl4mSdM5fQVD2pKbVnDLNYV4HLSrudVFVGtJ
+	 9m6ufy8GOJMYw==
+Date: Mon, 29 Jul 2024 17:51:02 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
+Cc: jingoohan1@gmail.com, manivannan.sadhasivam@linaro.org,
+	lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+	bhelgaas@google.com, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	quic_mrana@quicinc.com
+Subject: Re: [PATCH v3 2/2] PCI: qcom: Avoid DBI and ATU register space
+ mirror to BAR/MMIO region
+Message-ID: <20240729225102.GA8214@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,29 +60,197 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240729201843.142918-9-danila@jiaxyga.com>
+In-Reply-To: <704e4cd2-06ce-47f4-bdd0-1d5ddbe06850@quicinc.com>
 
-On Mon, Jul 29, 2024 at 11:18:15PM GMT, Danila Tikhonov wrote:
-> From: Eugene Lepshy <fekz115@gmail.com>
+On Thu, Jul 25, 2024 at 04:03:56PM -0700, Prudhvi Yarlagadda wrote:
+> Hi Bjorn,
 > 
-> The Snapdragon 778G (SM7325) / 778G+ (SM7325-AE) / 782G (SM7325-AF)
-> is software-wise very similar to the Snapdragon 7c+ Gen 3 (SC7280).
+> Thanks for the review comments.
 > 
-> It uses the Kryo670.
+> On 7/24/2024 11:43 AM, Bjorn Helgaas wrote:
+> > On Tue, Jul 23, 2024 at 07:27:19PM -0700, Prudhvi Yarlagadda wrote:
+> >> PARF hardware block which is a wrapper on top of DWC PCIe controller
+> >> mirrors the DBI and ATU register space. It uses PARF_SLV_ADDR_SPACE_SIZE
+> >> register to get the size of the memory block to be mirrored and uses
+> >> PARF_DBI_BASE_ADDR, PARF_ATU_BASE_ADDR registers to determine the base
+> >> address of DBI and ATU space inside the memory block that is being
+> >> mirrored.
+> >>
+> >> When a memory region which is located above the SLV_ADDR_SPACE_SIZE
+> >> boundary is used for BAR region then there could be an overlap of DBI and
+> >> ATU address space that is getting mirrored and the BAR region. This
+> >> results in DBI and ATU address space contents getting updated when a PCIe
+> >> function driver tries updating the BAR/MMIO memory region. Reference
+> >> memory map of the PCIe memory region with DBI and ATU address space
+> >> overlapping BAR region is as below.
+> >>
+> >>                         |---------------|
+> >>                         |               |
+> >>                         |               |
+> >>         ------- --------|---------------|
+> >>            |       |    |---------------|
+> >>            |       |    |       DBI     |
+> >>            |       |    |---------------|---->DBI_BASE_ADDR
+> >>            |       |    |               |
+> >>            |       |    |               |
+> >>            |    PCIe    |               |---->2*SLV_ADDR_SPACE_SIZE
+> >>            |    BAR/MMIO|---------------|
+> >>            |    Region  |       ATU     |
+> >>            |       |    |---------------|---->ATU_BASE_ADDR
+> >>            |       |    |               |
+> >>         PCIe       |    |---------------|
+> >>         Memory     |    |       DBI     |
+> >>         Region     |    |---------------|---->DBI_BASE_ADDR
+> >>            |       |    |               |
+> >>            |    --------|               |
+> >>            |            |               |---->SLV_ADDR_SPACE_SIZE
+> >>            |            |---------------|
+> >>            |            |       ATU     |
+> >>            |            |---------------|---->ATU_BASE_ADDR
+> >>            |            |               |
+> >>            |            |---------------|
+> >>            |            |       DBI     |
+> >>            |            |---------------|---->DBI_BASE_ADDR
+> >>            |            |               |
+> >>            |            |               |
+> >>         ----------------|---------------|
+> >>                         |               |
+> >>                         |               |
+> >>                         |               |
+> >>                         |---------------|
+> >>
+> >> Currently memory region beyond the SLV_ADDR_SPACE_SIZE boundary is not
+> >> used for BAR region which is why the above mentioned issue is not
+> >> encountered. This issue is discovered as part of internal testing when we
+> >> tried moving the BAR region beyond the SLV_ADDR_SPACE_SIZE boundary. Hence
+> >> we are trying to fix this.
+> >>
+> >> As PARF hardware block mirrors DBI and ATU register space after every
+> >> PARF_SLV_ADDR_SPACE_SIZE (default 0x1000000) boundary multiple, write
+> >> U32_MAX (all 0xFF's) to PARF_SLV_ADDR_SPACE_SIZE register to avoid
+> >> mirroring DBI and ATU to BAR/MMIO region. Write the physical base address
+> >> of DBI and ATU register blocks to PARF_DBI_BASE_ADDR (default 0x0) and
+> >> PARF_ATU_BASE_ADDR (default 0x1000) respectively to make sure DBI and ATU
+> >> blocks are at expected memory locations.
+> >>
+> >> The register offsets PARF_DBI_BASE_ADDR_V2, PARF_SLV_ADDR_SPACE_SIZE_V2
+> >> and PARF_ATU_BASE_ADDR are applicable for platforms that use PARF
+> >> Qcom IP rev 1.9.0, 2.7.0 and 2.9.0. PARF_DBI_BASE_ADDR_V2 and
+> >> PARF_SLV_ADDR_SPACE_SIZE_V2 are applicable for PARF Qcom IP rev 2.3.3.
+> >> PARF_DBI_BASE_ADDR and PARF_SLV_ADDR_SPACE_SIZE are applicable for PARF
+> >> Qcom IP rev 1.0.0, 2.3.2 and 2.4.0. Updating the init()/post_init()
+> >> functions of the respective PARF versions to program applicable
+> >> PARF_DBI_BASE_ADDR, PARF_SLV_ADDR_SPACE_SIZE and PARF_ATU_BASE_ADDR
+> >> register offsets. And remove the unused SLV_ADDR_SPACE_SZ macro.
+> >>
+> >> Signed-off-by: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
+> >> Reviewed-by: Mayank Rana <quic_mrana@quicinc.com>
+> >> ---
+> >>  drivers/pci/controller/dwc/pcie-qcom.c | 62 +++++++++++++++++++-------
+> >>  1 file changed, 45 insertions(+), 17 deletions(-)
+> >>
+> >> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> >> index 0180edf3310e..6976efb8e2f0 100644
+> >> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> >> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> >> @@ -45,6 +45,7 @@
+> >>  #define PARF_PHY_REFCLK				0x4c
+> >>  #define PARF_CONFIG_BITS			0x50
+> >>  #define PARF_DBI_BASE_ADDR			0x168
+> >> +#define PARF_SLV_ADDR_SPACE_SIZE		0x16C
+> >>  #define PARF_MHI_CLOCK_RESET_CTRL		0x174
+> >>  #define PARF_AXI_MSTR_WR_ADDR_HALT		0x178
+> >>  #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
+> >> @@ -52,8 +53,13 @@
+> >>  #define PARF_LTSSM				0x1b0
+> >>  #define PARF_SID_OFFSET				0x234
+> >>  #define PARF_BDF_TRANSLATE_CFG			0x24c
+> >> -#define PARF_SLV_ADDR_SPACE_SIZE		0x358
+> >> +#define PARF_DBI_BASE_ADDR_V2			0x350
+> >> +#define PARF_DBI_BASE_ADDR_V2_HI		0x354
+> >> +#define PARF_SLV_ADDR_SPACE_SIZE_V2		0x358
+> >> +#define PARF_SLV_ADDR_SPACE_SIZE_V2_HI		0x35C
+> >>  #define PARF_NO_SNOOP_OVERIDE			0x3d4
+> >> +#define PARF_ATU_BASE_ADDR			0x634
+> >> +#define PARF_ATU_BASE_ADDR_HI			0x638
+> >>  #define PARF_DEVICE_TYPE			0x1000
+> >>  #define PARF_BDF_TO_SID_TABLE_N			0x2000
+> >>  #define PARF_BDF_TO_SID_CFG			0x2c00
+> >> @@ -107,9 +113,6 @@
+> >>  /* PARF_CONFIG_BITS register fields */
+> >>  #define PHY_RX0_EQ(x)				FIELD_PREP(GENMASK(26, 24), x)
+> >>  
+> >> -/* PARF_SLV_ADDR_SPACE_SIZE register value */
+> >> -#define SLV_ADDR_SPACE_SZ			0x10000000
+> >> -
+> >>  /* PARF_MHI_CLOCK_RESET_CTRL register fields */
+> >>  #define AHB_CLK_EN				BIT(0)
+> >>  #define MSTR_AXI_CLK_EN				BIT(1)
+> >> @@ -324,6 +327,39 @@ static void qcom_pcie_clear_hpc(struct dw_pcie *pci)
+> >>  	dw_pcie_dbi_ro_wr_dis(pci);
+> >>  }
+> >>  
+> >> +static void qcom_pcie_configure_dbi_base(struct qcom_pcie *pcie)
+> >> +{
+> >> +	struct dw_pcie *pci = pcie->pci;
+> >> +
+> >> +	if (pci->dbi_phys_addr) {
+> >> +		writel(lower_32_bits(pci->dbi_phys_addr), pcie->parf +
+> >> +							PARF_DBI_BASE_ADDR);
+> >> +		writel(U32_MAX, pcie->parf + PARF_SLV_ADDR_SPACE_SIZE);
+> >> +	}
+> >> +}
+> >> +
+> >> +static void qcom_pcie_configure_dbi_atu_base(struct qcom_pcie *pcie)
+> >> +{
+> >> +	struct dw_pcie *pci = pcie->pci;
+> >> +
+> >> +	if (pci->dbi_phys_addr) {
+> >> +		writel(lower_32_bits(pci->dbi_phys_addr), pcie->parf +
+> >> +							PARF_DBI_BASE_ADDR_V2);
+> >> +		writel(upper_32_bits(pci->dbi_phys_addr), pcie->parf +
+> >> +						PARF_DBI_BASE_ADDR_V2_HI);
+> >> +
+> >> +		if (pci->atu_phys_addr) {
+> >> +			writel(lower_32_bits(pci->atu_phys_addr), pcie->parf +
+> >> +							PARF_ATU_BASE_ADDR);
+> >> +			writel(upper_32_bits(pci->atu_phys_addr), pcie->parf +
+> >> +							PARF_ATU_BASE_ADDR_HI);
+> >> +		}
+> >> +
+> >> +		writel(U32_MAX, pcie->parf + PARF_SLV_ADDR_SPACE_SIZE_V2);
+> >> +		writel(U32_MAX, pcie->parf + PARF_SLV_ADDR_SPACE_SIZE_V2_HI);
+> >> +	}
+> >> +}
+> > 
+> > These functions write CPU physical addresses into registers.  I don't
+> > know where these registers live.  If they are on the PCI side of the
+> > world, they most likely should contain PCI bus addresses, not CPU
+> > physical addresses.
+> > 
+> > In some systems, PCI bus addresses are the same as CPU physical
+> > addresses, but on many systems they are not the same, so it's better
+> > if we don't make implicit assumptions that they are the same.  
 > 
-> Signed-off-by: Eugene Lepshy <fekz115@gmail.com>
-> Co-developed-by: Danila Tikhonov <danila@jiaxyga.com>
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
-> ---
->  arch/arm64/boot/dts/qcom/sm7325.dtsi | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm7325.dtsi
+> On Qualcomm platforms, CPU physical address and PCI bus addresses
+> for DBI and ATU registers are same. PARF registers live outside the
+> PCI address space in the system memory.
 > 
+> There is a mapping logic in the QCOM PARF wrapper which detects any
+> incoming read/write transactions from the NOC towards PCIe
+> controller and checks its addresses against PARF_DBI_BASE_ADDR and
+> PARF_ATU_BASE_ADDR registers so that these transactions can be
+> routed to DBI and ATU registers inside the PCIe controller.
+> 
+> So, these PARF registers needs to be programmed with base CPU
+> physical addresses of DBI and ATU as the incoming DBI and ATU
+> transactions from the NOC contain CPU physical adresses.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Can you add a comment to this effect that these registers are
+effectively in the CPU address domain, not the PCI bus domain?
+Otherwise the next person who reviews this will have the same
+question, and somebody may even try to "fix" this by converting it to
+a PCI bus address.
 
-
--- 
-With best wishes
-Dmitry
+Bjorn
 
