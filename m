@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-27185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 607B093EC5B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 06:03:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B838A93EC5E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 06:04:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 17A39281D9B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 04:03:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7DAEA28245F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 04:03:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACD5614388F;
-	Mon, 29 Jul 2024 03:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 839F7143C70;
+	Mon, 29 Jul 2024 03:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FHaOVZTI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ocRL3XaS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCAF143876;
-	Mon, 29 Jul 2024 03:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD77143C55;
+	Mon, 29 Jul 2024 03:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722225544; cv=none; b=PYT9uxK7Eokgui+91bsDXiaXp82/Qlo2AaxMIHc66N6DAa+B9LWO37D/rZBosZdSAlHCLUX8GksCsNwEHzLYDPBrGFnbPJMJvAzh9ND4RFO0cvg5bj3uUfx8CtsaSR/ek8U+ax3NqoR8+PF89dj6/JNDu0MnTOD76hsHwL7qR2o=
+	t=1722225545; cv=none; b=XdWc6pXEZKhCe1eUqamuqet3cuPv8z0+t6o1yBMpcUDS4k+Axff7quXLzt2ZI9JcgpfINC7MKeL88yy7zgled8ilu81v5R64OEeWW3GCGCAAPXr5KXuFDgpdV2bWHCgWFj6Fp9UdBXDfTYo9MVFbNksyu6Mrrhdrc4OWevYJIug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722225544; c=relaxed/simple;
-	bh=5GUEJV9MXDB7l0vlcjqUpgR1m+lYPH6IQd45Mjdjr+s=;
+	s=arc-20240116; t=1722225545; c=relaxed/simple;
+	bh=WmzVry7X9ZYGVrQa8PD+Trqhtih9BzgquIuX9aqJJec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oILPGHCi2/fm3iVJX3z8lluQXEgs32YO9GqmmFuBN1lInn5bUq4qinydpAzlLTahCUxbVvrPO3+frZteycWaMs/1/v2cMTi0sOKKVdRE7TNbDQkTyrx5SdWBJA46F88owQAsL2AxWEj5R11WQS3RiWKjb0kBBrRf7v6WF73Ayq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FHaOVZTI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC3EC4AF09;
-	Mon, 29 Jul 2024 03:59:03 +0000 (UTC)
+	 MIME-Version:Content-Type; b=kKF6WbK9jf18UifwPAeP5YvMIbAGBJsmI+cN0BkHJUxQeLSf5JMGHh3cSy8RzJGs6omxaNUeKYX+H0XEL9+i27FMfxPh0Jnt0sM4xb+RGc0bCVSrp8NXyD/mDNnsg+qo1GTy8zD0Ssj3CfPdVZrxartSUGzpW4noWLWEjfV0DYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ocRL3XaS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E7DC4AF11;
+	Mon, 29 Jul 2024 03:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722225544;
-	bh=5GUEJV9MXDB7l0vlcjqUpgR1m+lYPH6IQd45Mjdjr+s=;
+	s=k20201202; t=1722225545;
+	bh=WmzVry7X9ZYGVrQa8PD+Trqhtih9BzgquIuX9aqJJec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FHaOVZTI2Y2fLiuRRZYXwb3izKM6GxB+4USpLUCx0Xk78IXaVMmNjvPv2vZ6KfhFq
-	 3UnmmN6l8tT7YlX9YWg9mBGC3trWKQt+gqSXv3/cKp7OKwABLFi6buzCXOeWtFgOjD
-	 ChE02isb4CzsHBnrAnH+ttDbAeAZaimBujwW88vvu3cfasraVaQbR+GOpe2JJBAyTl
-	 Aui/eBw39RlKyMbVyGIrGognJdXJjCzLsR/KYqaHTw2qDhwGUH6LkHlafh4G9C9QDy
-	 0RPY6AF/qx5igAj2t+EE0qisfFrNCjZhx5qc8dql0C6d1QlxKE9hjyCEpDLAQCYCPb
-	 XJlVesao6G7lQ==
+	b=ocRL3XaSl3SbC/PBKScGtd8CFQXUHaHACP4cWNlyFRR3cjQIIqEaZj5uLKCHoWzHl
+	 F+lyCiS2UELQfYaIeV2Ki2QnIKF7yOrdQ3fPrR2Tsc9fSB3pRxcjsV2efzaM2OgQqU
+	 eh8L/YxF40fS1vAb0tTdW/IK8TycMrVUd8UwFckG0d8+9oYXiG/0RKiRqvkZIDMga2
+	 sIxUXydlnsQ8Rff3+MRHE8MZsc40RUCDCKJrpo/pILz5HsvI9tEw4UbiEyGR1A9jI5
+	 bdXDDrnQtFLPEsnrsygedEHCPSHCKqUs0mR6gIAuTALO9lees6GBaqga27ZSOaYwU9
+	 4RVKyUDk433MQ==
 From: Bjorn Andersson <andersson@kernel.org>
 To: linux-arm-msm@vger.kernel.org,
 	Rayyan Ansari <rayyan.ansari@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+Cc: Conor Dooley <conor+dt@kernel.org>,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: msm8939-samsung-a7: rename pwm node to conform to dtschema
-Date: Sun, 28 Jul 2024 22:58:29 -0500
-Message-ID: <172222551312.175430.7931052918795017037.b4-ty@kernel.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	linux-kernel@vger.kernel.org,
+	Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v2 0/5] ARM: dts: qcom: adhere to pinctrl dt schema
+Date: Sun, 28 Jul 2024 22:58:30 -0500
+Message-ID: <172222551302.175430.13462932727966070475.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240716135339.87192-1-rayyan.ansari@linaro.org>
-References: <20240716135339.87192-1-rayyan.ansari@linaro.org>
+In-Reply-To: <20240711110545.31641-2-rayyan.ansari@linaro.org>
+References: <20240711110545.31641-2-rayyan.ansari@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,15 +66,30 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 16 Jul 2024 14:53:38 +0100, Rayyan Ansari wrote:
-> Rename the pwm node from "pwm-vibrator" to "pwm" to conform to the dt schema.
+On Thu, 11 Jul 2024 12:01:37 +0100, Rayyan Ansari wrote:
+> The following patches make the device trees compliant with the pinctrl
+> text to dt schema conversion here:
+> https://lore.kernel.org/all/20240709162009.5166-1-rayyan.ansari@linaro.org/
 > 
+> v1: https://lore.kernel.org/all/20240710084250.11342-1-rayyan.ansari@linaro.org/
 > 
+> Thanks,
+> Rayyan
+> 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: msm8939-samsung-a7: rename pwm node to conform to dtschema
-      commit: 6b18c5d2cd61ac0b526a9524110d4068ecfb1298
+[1/5] ARM: dts: qcom: apq8064-pins: correct error in drive-strength property
+      commit: 046301eafc3296efe7266832b47c9cc93ff0ad38
+[2/5] ARM: dts: qcom: asus,nexus7-flo: remove duplicate pinctrl handle in i2c nodes
+      commit: 6dbec1c39d3ff53e24e434862c7b7da3552b1ffe
+[3/5] ARM: dts: qcom: apq8064: adhere to pinctrl dtschema
+      commit: c9c8f449c8a27791bd8540cbcb538a19568608cc
+[4/5] ARM: dts: qcom: ipq8064: adhere to pinctrl dtschema
+      commit: de52c020e1a9c3313d88405a4545020b1f5ab24d
+[5/5] ARM: dts: qcom: ipq4019: adhere to pinctrl dtschema
+      commit: 268a968ef946ccce45be7c01bf915dddce7208c9
 
 Best regards,
 -- 
