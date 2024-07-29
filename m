@@ -1,141 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-27198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 015DF93EFFF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 10:38:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC23A93F15D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 11:38:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AAE5F28342E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 08:38:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DED6A1C21DC7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 09:38:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52D0613CFA3;
-	Mon, 29 Jul 2024 08:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F8BF13DDDF;
+	Mon, 29 Jul 2024 09:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IyZzHb2v"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZrOVh4hq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2047713C9A7;
-	Mon, 29 Jul 2024 08:37:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6C778B4E;
+	Mon, 29 Jul 2024 09:38:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722242276; cv=none; b=QR+ZypUqQRaXeEhtCKrtVsk5MiP3U9+NVtkSS/mrIXl/GrQdn4Rz2gAaUeaCkgimuGHMJIvWwZvfFJ1XshR5YJXOsMWhfRbnD6zxHyl5Ltam1oq7f8IC250HFZwUnZ0O8Pye1fHxr+F5764FimD9/LAI87gAh2h44BRFJEwm3Xc=
+	t=1722245899; cv=none; b=F+YLsrYyYCnzauIpf+bsCNuYT9by4mMT5hqa0t5tiPKDdYeVtF4FXC0dyEnJ0nZAcx2lmRlQB+xYAw6SrWLyq+4gDSacisnDBSO9dBpiTwKrwkR0/XxN27Auzb6LS9PIEmZg1De0CxLMCoBcPfyeY8Va9god6Mi/Z2EKw0eGsT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722242276; c=relaxed/simple;
-	bh=V9wFi+MX2139fI/I1jgkjhCzse15vxUwsNcBTc5sszY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=GRYn3Pg7d7KmKz+I/xhXyFMUrQsbTLxvFncydDUULd+zpxn3XQn6v75G+wTkdUzRwNYTk9wl/Ohdo0fn3yGDcpim/EgQbtCKNTN+wEhW9cRENlnHLlUvQIdZh151k1PxYJ8Pc1OvzgK1w3s8mrKxY/F51jDeBfRdRq8BFnNuyNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IyZzHb2v; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DFB0C32786;
-	Mon, 29 Jul 2024 08:37:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722242276;
-	bh=V9wFi+MX2139fI/I1jgkjhCzse15vxUwsNcBTc5sszY=;
-	h=From:Date:Subject:To:Cc:From;
-	b=IyZzHb2vH+E0LTpNKmwOtI8sgfUgguJwCTeV4822DeBWr4CbUrjTG5SC8J5ZFvpEc
-	 TEvSLqKME1VRrCbO+syepVH2Xkmon0CPp/bYSQFFHRAqaGjhN7E3it70evYv+2wGMO
-	 u7wPFcvYoD/OzWnG1W3G6vr+hvCv0+UW3/t16rG9HExpH8yxq2WlLKgVbhViMQZ0Gg
-	 0pgL2cXiw3vzFOA58XRr5q2LksCMp092sdfLxGzQUNcDIPPfOsQyC9/VoZP/mwK27q
-	 ql6zVEBL8dLi61HyVykxhhh+YOKynyy/JnJFEqp2rc8+BpZdtUirGmOOTS0BUlSiDU
-	 odE1ktcY5KaOw==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Mon, 29 Jul 2024 10:37:48 +0200
-Subject: [PATCH] iommu/arm-smmu-qcom: Work around SDM845 Adreno SMMU w/ 16K
- pages
+	s=arc-20240116; t=1722245899; c=relaxed/simple;
+	bh=6sWnXud9P85ib8ufCmqhXtUqgGoURmUP09U905hOr4Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=upGAnXFOA1AKAwJcftwNXnuy7nhoY7SRm7ZwIEVC+pCdR/dNFQ+JtNbeGLA6C68IOMh9VTLyfF4HUUAB3kaS1U3CwOLb+bUZHuyJCQLsWqDjm/qPti9OLZdllmVne1OEZlDRTTApuNxwoSSzusfbwes0f66woMFiObHHpv8d5qA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZrOVh4hq; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46SNFngQ030779;
+	Mon, 29 Jul 2024 09:38:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	R3DuZyTIPM+eAkEnapQy5bueU7+MV+bnyZV02KN0a68=; b=ZrOVh4hqVbIJWyFo
+	VZAtWQ6y5ICGxz2ZE/zvks2yptENpNQio8aCFWSx6emuv7Cmmw5c95UDeWmtn0Hm
+	tCZR8sgp+FlDT5q/kiXS8Mh25qDEykkHEeOT9KDgg2YxeQRMBL7OOkrryoWQuO1r
+	gHdryfYGDV84+AvjoPm20pAMH/5qV1IDwb382P30pzdVVBE7gq1l98FkddoVxCpJ
+	7Z4PlrX72wIKZIR1YqGY0imRyUYRr1oIs+hL/qAu7FpceUny9PR+/Nsi7P/rdY0K
+	MvGi6ma1VYrezu/cBKyFzPo3ZTpgnn9PA0vvuENd0/gXXKh3Pnsvotgb8qKvoF+W
+	y02NOQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40mrytuna5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jul 2024 09:38:09 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46T9c73H024169
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jul 2024 09:38:07 GMT
+Received: from [10.239.132.150] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 29 Jul
+ 2024 02:38:01 -0700
+Message-ID: <108d2cf4-2b17-4ce1-80aa-988e36de533d@quicinc.com>
+Date: Mon, 29 Jul 2024 17:37:59 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] dt-bindings: phy: qcom,usb-snps-femto-v2: Add bindings
+ for QCS9100
+To: Rob Herring <robh@kernel.org>
+CC: Trilok Soni <quic_tsoni@quicinc.com>,
+        Tengfei Fan
+	<quic_tengfan@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+        "Kishon Vijay
+ Abraham I" <kishon@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+References: <20240709-document_qcs9100_usb_hs_phy_compatible-v2-1-c84fbbafa9d6@quicinc.com>
+ <20240710162745.GA3212156-robh@kernel.org>
+ <3b8684f0-c89d-1a76-6bc5-93ced59dc51c@quicinc.com>
+ <51302de0-5e4c-4e2a-85a0-e22549baa13c@quicinc.com>
+ <20240711200354.GA2482879-robh@kernel.org>
+From: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <20240711200354.GA2482879-robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240729-topic-845_gpu_smmu-v1-1-8e372abbde41@kernel.org>
-X-B4-Tracking: v=1; b=H4sIANtUp2YC/x3MQQqAIBBA0avIrBPMLKOrRITZWLOoRDOC6O5Jy
- 7f4/4GIgTBCxx4IeFGkY88oCwZ2NfuCnOZskEIqoWXDz8OT5a2qx8WnMW5b4mbSVeu0EWVlIYc
- +oKP7n/bD+360dp+KZAAAAA==
-To: Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>, 
- Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
- Joerg Roedel <joro@8bytes.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Sumit Semwal <sumit.semwal@linaro.org>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1722242271; l=2469;
- i=konradybcio@kernel.org; s=20230215; h=from:subject:message-id;
- bh=2WVG4OVq/a0X1nt/OAVRPPSlDahdsoGHbN6xyxn5/YE=;
- b=hGjcIevB0Wn7lOG4ywLtp4lmqnr4qxzsOJxqCNiUIqZyUhcghFBYu93Rj0DFKYBbHubGFVdV1
- +URYCL6jDIQCy6PVA0crNynhwSa+8s061yIQ2CyNJ2CeSxTik1wPU/H
-X-Developer-Key: i=konradybcio@kernel.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Uy67C5vQlgEaIe1ALIPFJy3iwFF2f_Jm
+X-Proofpoint-GUID: Uy67C5vQlgEaIe1ALIPFJy3iwFF2f_Jm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-29_07,2024-07-26_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 suspectscore=0 bulkscore=0 adultscore=0 spamscore=0
+ impostorscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=999
+ mlxscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407290065
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-SDM845's Adreno SMMU is unique in that it actually advertizes support
-for 16K (and 32M) pages, which doesn't hold for newer SoCs.
 
-This however, seems either broken in the hardware implementation, the
-hypervisor middleware that abstracts the SMMU, or there's a bug in the
-Linux kernel somewhere down the line that nobody managed to track down.
+On 7/12/2024 4:03 AM, Rob Herring wrote:
+> On Thu, Jul 11, 2024 at 06:05:57PM +0800, Aiqun Yu (Maria) wrote:
+>>
+>>
+>> On 7/11/2024 12:45 AM, Trilok Soni wrote:
+>>> On 7/10/2024 9:27 AM, Rob Herring wrote:
+>>>> On Tue, Jul 09, 2024 at 08:46:19PM +0800, Tengfei Fan wrote:
+>>>>> Document the compatible string for USB phy found in Qualcomm QCS9100
+>>>>> SoC.
+>>>>> QCS9100 is drived from SA8775p. Currently, both the QCS9100 and SA8775p
+>>>>> platform use non-SCMI resource. In the future, the SA8775p platform will
+>>>>> move to use SCMI resources and it will have new sa8775p-related device
+>>>>> tree. Consequently, introduce "qcom,qcs9100-usb-hs-phy" to describe
+>>>>> non-SCMI based USB phy.
+>>>>>
+>>>>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>>>>> ---
+>>>>> Introduce support for the QCS9100 SoC device tree (DTSI) and the
+>>>>> QCS9100 RIDE board DTS. The QCS9100 is a variant of the SA8775p.
+>>>>> While the QCS9100 platform is still in the early design stage, the
+>>>>> QCS9100 RIDE board is identical to the SA8775p RIDE board, except it
+>>>>> mounts the QCS9100 SoC instead of the SA8775p SoC.
+>>>>>
+>>>>> The QCS9100 SoC DTSI is directly renamed from the SA8775p SoC DTSI, and
+>>>>> all the compatible strings will be updated from "SA8775p" to "QCS9100".
+>>>>> The QCS9100 device tree patches will be pushed after all the device tree
+>>>>> bindings and device driver patches are reviewed.
+>>>>
+>>>> I'm not convinced this is not just pointless churn. Aren't we going to 
+>>>> end up with 2 compatible strings for everything? SCMI should just change 
+>>>> the providers, but otherwise the consumers are the same. I suppose if 
+>>>> clocks are abstracted into power-domains (an abuse IMO) then the 
+>>>> bindings change.
+>>>>
+>>>> Why do we need to support both SCMI and not-SCMI for the same chip?
+>>>
+>>> IOT SKU of this SOC is using the non-SCMI solution and Auto SKU
+>>> of this SOC is using the SCMI based solution due to additional
+>>> safety requirements. 
+>>
+>> More add-on information, IOT SKU which have qcs9100 soc mounted will
+>> have firmware releases which support non-scmi solution.
+>> And AUTO SKU which mounted with SA8775p will have different firmware
+>> releases which support SCMI solution.
+> 
+> Yes, I understand the difference. My question is why should upstream 
+> support that? Normally, I wouldn't notice or care, but the churn of 
+> renaming everything makes me notice. Why do the maintainers need to 
+> review all these extra changes because QCom couldn't figure out their 
+> plans?
+> 
+> So after you duplicate all the compatible strings, what's next? Changing 
+> all the SA8775p bindings which is an ABI break? Presumably, some 
+> bindings may not change at all? In that case, you don't need any rename.
+> I have no visibility into what's coming next, so please educate me.
+> 
+> The minimal amount of changes here is you are stuck with the existing 
+> identifiers for the non-SCMI SKU. Then you can add a "new SoC" for the 
+> SCMI SKU. You might not like the names now, but you picked them and are 
 
-Booting SDM845 with 16K page sizes and drm/msm results in:
+After considering the feedback provided on the subject, We have decided
+to keep current SA8775p compatible and ABI compatibility in drivers.
+Let's close this session and ignore all the current patches here.
+Thank you for your input.
+> kind of stuck with them.
+> 
+> Rob
 
-*** gpu fault: ttbr0=0000000000000000 iova=000100000000c000 dir=READ
-type=TRANSLATION source=CP (0,0,0,0)
-
-right after loading the firmware. The GPU then starts spitting out
-illegal intstruction errors, as it's quite obvious that it got a
-bogus pointer.
-
-Hide 16K support on SDM845's Adreno SMMU to work around this.
-
-Reported-by: Sumit Semwal <sumit.semwal@linaro.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-There's a mismatch in sender/committer addresses but that's "fine":
-https://lore.kernel.org/linux-usb/2024072734-scenic-unwilling-71ea@gregkh/
----
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 36c6b36ad4ff..d25825c05817 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -338,6 +338,15 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
- 	return 0;
- }
- 
-+static int qcom_adreno_smmuv2_cfg_probe(struct arm_smmu_device *smmu)
-+{
-+	/* SDM845 Adreno SMMU advertizes 16K pages support, but something is broken */
-+	if (of_device_is_compatible(smmu->dev->of_node, "qcom,sdm845-smmu-v2"))
-+		smmu->features &= ~ARM_SMMU_FEAT_FMT_AARCH64_16K;
-+
-+	return 0;
-+}
-+
- static void qcom_smmu_write_s2cr(struct arm_smmu_device *smmu, int idx)
- {
- 	struct arm_smmu_s2cr *s2cr = smmu->s2crs + idx;
-@@ -436,6 +445,7 @@ static const struct arm_smmu_impl sdm845_smmu_500_impl = {
- 
- static const struct arm_smmu_impl qcom_adreno_smmu_v2_impl = {
- 	.init_context = qcom_adreno_smmu_init_context,
-+	.cfg_probe = qcom_adreno_smmuv2_cfg_probe,
- 	.def_domain_type = qcom_smmu_def_domain_type,
- 	.alloc_context_bank = qcom_adreno_smmu_alloc_context_bank,
- 	.write_sctlr = qcom_adreno_smmu_write_sctlr,
-
----
-base-commit: 931a3b3bccc96e7708c82b30b2b5fa82dfd04890
-change-id: 20240726-topic-845_gpu_smmu-ab738f7a013c
-
-Best regards,
 -- 
-Konrad Dybcio <konradybcio@kernel.org>
-
+Thx and BRs,
+Aiqun(Maria) Yu
 
