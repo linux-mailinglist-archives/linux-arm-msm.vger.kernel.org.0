@@ -1,205 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-27324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 739D2940047
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 23:22:41 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05614940064
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 23:29:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2A523281116
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 21:22:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC2E3283855
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 21:29:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4B2018C351;
-	Mon, 29 Jul 2024 21:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED2B118E744;
+	Mon, 29 Jul 2024 21:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PmAt9mx5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xOgYJwNz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8796182869;
-	Mon, 29 Jul 2024 21:22:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF7518D4C9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 21:29:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722288156; cv=none; b=i4F7h3oTtX0ojoEU4J4M32gsgTuos9aIBHVtu+aNqeK/B+HopU4syuvMEk8BO3bS0mVDC+T+wDE/ITZ0YgjbdGeLPDjiMJABqNAA7IPQpKtEgxj4B18ldFLnOy3D58xL8pXDovYoBTCjD5fBd/zj1vSUIpV7rjRbh2FmGNO4hWY=
+	t=1722288558; cv=none; b=IknD2ZjSDV2ekUlMRf7bfy7oj3FapLguKTCeswtZqn8t5ooQlj5QXNA26AlKaUD62XLaX9JKNO0eUrVN4fY+LEV+aS3cvUN27HoFAFaryqe1++LMQBr29KJRkLn5+1oDmZGl6Qc/rQup/vRKY9q+DjmZoQw9MUPj8LpeHugTTVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722288156; c=relaxed/simple;
-	bh=F8ef2LDwx73H3bb2EMmW031XbE67mopRtD6WTxjZLwQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Zr5Gwe/j6WQqshJB87bfp6F6XYFaRf9WH4Qv4IvzaEJXjTDzCZm7A6XE6GDLkjVQXkWxuJIgMPjeH1g5sO4KX//x+3sJE2Jj3dqvTjR1p886+gY1jftQOQcO+yDImNRSgDCJe+jorRJEqjXH4NUswnW5W//IErkrqLzStUw3HTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PmAt9mx5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0EAF3C32786;
-	Mon, 29 Jul 2024 21:22:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722288156;
-	bh=F8ef2LDwx73H3bb2EMmW031XbE67mopRtD6WTxjZLwQ=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=PmAt9mx5DLPTLR9pzzN+MNia/8Zg+5f7ddSrppVHUoxoNwaP+W9qeymFNDeGCLdCB
-	 KtTXISWn/Sxno7pF339Q1L++CAdfqrhUNRAVqQbtBcAcOQpQLMbjKJdgn7tkY40WvM
-	 YLu00LqZ+MU7xCiUXgAsKSOnful/TLzadr4JSbpxlS1yed7osSooSvFp+dT9k8B5Fh
-	 v4H5JmpGzW5oh0KPonvw1/+Vp3Cvl1Fsqcee4wojz+qtBDKe5psAKWfdG655ZGmupS
-	 zRWAJjnM9uHDVgVk4/+P/tm/Ejfv+AyOUTDRHa3RrZrZBp2DkSHv7mFv08M+9Qz1hk
-	 l0Qjs4wgaYJ4A==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1687C3DA61;
-	Mon, 29 Jul 2024 21:22:35 +0000 (UTC)
-From: =?utf-8?q?Andr=C3=A9_Apitzsch_via_B4_Relay?= <devnull+git.apitzsch.eu@kernel.org>
-Date: Mon, 29 Jul 2024 23:23:04 +0200
-Subject: [PATCH RESEND v6] arm64: dts: qcom: msm8939-longcheer-l9100: Add
- rear flash
+	s=arc-20240116; t=1722288558; c=relaxed/simple;
+	bh=TVFN/CXZ51tNyS9FDN34bX0XjUq6i+6bt6GMO8uJeCA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=R3RMBxFahVug4oN3BelG3iqDJoauLAQ2SL7EmEvusK037n1O9LFqV68+oMpTGaaWauCHOpEwF3fvryzIYTnnPoyK+GLxSQZvviL6LLpVmdWefxmR3px38s4JSR0ahyJgpKBqQggZ40t2IPGAYv1oeIDUPQpVPwQdSaaCyg5TLCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xOgYJwNz; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2f0dfdc9e16so46640231fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 14:29:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1722288554; x=1722893354; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=R3tBjhHkIyFqAEajxTJPjMrc5LRc364fGp0t/5OMkxw=;
+        b=xOgYJwNzBKMtEUjIXPz5krdDzaDV47wLY4/Lt9lyvXX1O7W/S1EJha060cHAvm72Vg
+         JNT0567w/zdDwAPF7dEwN+b/URq5ZhR6N9pxj8wWrsYUryKW5Oie+wtnwyi+TmO+2sY7
+         Q4lvBnAYoiUNIkES5yHfdTJZkQB/54JigBewd80VCpu+XSKc6DsYCrnNU+u/8+3mYTez
+         Kvrc+3I2dpFokM/vwodDa8V0iVQ+cUjSKqvG5dce7SrDKa40SmUGmz2LB2gfa+fcPfxL
+         rEyD3rpDliLBm49gFVi1TdUb1PyHJB2Xne2JQLo1SVRhssRyI5a+QFt6nTpoe0iRS7x0
+         O+eQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722288554; x=1722893354;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=R3tBjhHkIyFqAEajxTJPjMrc5LRc364fGp0t/5OMkxw=;
+        b=OPCWUC78tmaaQn3Kx6htbBoHhH6GMaSaNSNaqvW8pbGamYXtPa3q8dLfsMgvm0Ww/z
+         olQyhKm4BgE9OTMcc3LaJVDD7mLhBO1FiPUmh1n1QptOQKqNAA2j8eB2sBkHzIF6Pcd9
+         BO8CDJfO0KXfiLwPJBqAfgI38CbjAGwiLoMmgBf51V9J37BU8LAG7opboUi0sYwZThTq
+         ns6oBM0Le46fPXx1u66awEnMKDLTIgtgnE3PhXGoz2g6ItzRxmB/dDAaptWC/MQvo3O4
+         xAFvFH/Yv42+UmWAXMAm51zS8wR9077mqh+0hgqToZU5piL6Wc36nrOgAFGMp7lkGEpS
+         /Mbg==
+X-Forwarded-Encrypted: i=1; AJvYcCXHT3eMDUJ5D31ypu0Rok+PsopWIn+5kCmzLqCWqF/HccRVDdaoWLrlEx7/nrpXr1DYH76di6s7BMo6xqpkGMprR7wT1/bK2rbzwO0tJg==
+X-Gm-Message-State: AOJu0YylrlpZOj/MMcVIDBjXBUYSHWI0hJ7b27zQL9N+yCUxvOUGdxTq
+	jm49p7jGVcXq0z3CIsRQbo1KRAcPxV4049/NoWccp6MKk/YYUQiy3AzguYh4scY=
+X-Google-Smtp-Source: AGHT+IHGXIrdh6i1p9LXgEyc3MwjtnVaZOQUxFLXA43PhKktUbIyS0XJQZwMOAUl5Oc4lX823qdsTQ==
+X-Received: by 2002:a2e:95d4:0:b0:2ef:dd45:8755 with SMTP id 38308e7fff4ca-2f12edf7f37mr56827991fa.9.1722288553889;
+        Mon, 29 Jul 2024 14:29:13 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f03d04e138sm14669861fa.85.2024.07.29.14.29.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jul 2024 14:29:13 -0700 (PDT)
+Date: Tue, 30 Jul 2024 00:29:11 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Danila Tikhonov <danila@jiaxyga.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	andersson@kernel.org, konrad.dybcio@linaro.org, rafael@kernel.org, 
+	viresh.kumar@linaro.org, heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org, 
+	kees@kernel.org, tony.luck@intel.com, gpiccoli@igalia.com, sudeep.holla@arm.com, 
+	quic_rjendra@quicinc.com, andre.przywara@arm.com, ulf.hansson@linaro.org, 
+	davidwronek@gmail.com, neil.armstrong@linaro.org, heiko.stuebner@cherry.de, 
+	rafal@milecki.pl, macromorgan@hotmail.com, linus.walleij@linaro.org, 
+	johan+linaro@kernel.org, javier.carrasco.cruz@gmail.com, quic_kriskura@quicinc.com, 
+	lpieralisi@kernel.org, fekz115@gmail.com, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+	linux-usb@vger.kernel.org, linux-hardening@vger.kernel.org, linux@mainlining.org
+Subject: Re: [PATCH 06/11] usb: typec: ucsi: Add qcom,sm7325-pmic-glink as
+ needing PDOS quirk
+Message-ID: <vfo3bwozhf3f5bv6yipx6h3zgapiwzotw5l43he2q5h5ofpg5s@o34fxv3ly5ue>
+References: <20240729201843.142918-1-danila@jiaxyga.com>
+ <20240729201843.142918-7-danila@jiaxyga.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240729-sy7802-v6-1-86bb9083e40b@apitzsch.eu>
-To: Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>, 
- Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Christophe JAILLET <christophe.jaillet@wanadoo.fr>, 
- Trilok Soni <quic_tsoni@quicinc.com>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Kees Cook <kees@kernel.org>
-Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- phone-devel@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1722288184; l=3739;
- i=git@apitzsch.eu; s=20240325; h=from:subject:message-id;
- bh=PCHxsETnqMCOtnrhqJf1EyDZwF469Myb53EG0JzMbr8=;
- b=R41Cn5ZKcw2KtJh8ebGpfkx53Ew/zWyK2YNsULcY/fu5FAXW8J1xss0PQq6fsocyHz6f22SRm
- C1GF2/xvJwuBWbUHV2FMavpMU+x7Fxny+yIK5EXtoABuKtQfm69wCJ8
-X-Developer-Key: i=git@apitzsch.eu; a=ed25519;
- pk=wxovcZRfvNYBMcTw4QFFtNEP4qv39gnBfnfyImXZxiU=
-X-Endpoint-Received: by B4 Relay for git@apitzsch.eu/20240325 with
- auth_id=142
-X-Original-From: =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-Reply-To: git@apitzsch.eu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240729201843.142918-7-danila@jiaxyga.com>
 
-From: André Apitzsch <git@apitzsch.eu>
+On Mon, Jul 29, 2024 at 11:18:13PM GMT, Danila Tikhonov wrote:
+> The SM7325 Linux Android firmware needs this workaround as well. Add it
+> to the list.
 
-The phone has a Silergy SY7802 flash LED controller.
+Which one? quirk_sc8280xp enables two workardounds: one for the firmware
+crash on GET_PDOS command and another one for the empty PDOs being
+returned unless there is PD-enabled partner.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: André Apitzsch <git@apitzsch.eu>
----
-This series introduces a driver for the Silergy SY7802 charge pump used
-in the BQ Aquaris M5 and X5 smartphones.
+> 
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> ---
+>  drivers/usb/typec/ucsi/ucsi_glink.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
+> index 16c328497e0b..80fb04473617 100644
+> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
+> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+> @@ -294,6 +294,7 @@ static const struct of_device_id pmic_glink_ucsi_of_quirks[] = {
+>  	{ .compatible = "qcom,qcm6490-pmic-glink", .data = &quirk_sc8280xp, },
+>  	{ .compatible = "qcom,sc8180x-pmic-glink", .data = &quirk_sc8180x, },
+>  	{ .compatible = "qcom,sc8280xp-pmic-glink", .data = &quirk_sc8280xp, },
+> +	{ .compatible = "qcom,sm7325-pmic-glink", .data = &quirk_sc8280xp, },
+>  	{ .compatible = "qcom,sm8350-pmic-glink", .data = &quirk_sc8180x, },
+>  	{ .compatible = "qcom,sm8450-pmic-glink", .data = &quirk_sm8450, },
+>  	{ .compatible = "qcom,sm8550-pmic-glink", .data = &quirk_sm8450, },
+> -- 
+> 2.45.2
+> 
 
-The implementation is based on information extracted from downstream as
-the datasheet provided by a distributor of the hardware didn't include
-any information about the i2c register description.
----
-Changes in v6:
-- Drop applied patches 1/3 and 2/3
-- Move #address-/size-cells to the end
-- Add R-b tag
-- Link to v5: https://lore.kernel.org/r/20240624-sy7802-v5-0-7abc9d96bfa6@apitzsch.eu
-
-Changes in v5:
-- Fix language in driver description comment
-- Unwrap function arguments
-- Remove unnecessary empty lines
-- Add Acked-by tag to second patch
-- Link to v4: https://lore.kernel.org/r/20240616-sy7802-v4-0-789994180e05@apitzsch.eu
-
-Changes in v4:
-- Use for_each_available_child_of_node_scoped() to simplify code
-- Use dev_err_probe() to be consistent with the other code in
-  sy7802_probe()
-- Split devm_add_action() into 2 devm_add_action_or_reset() to simplify
-  code and balance regulator_enable()
-- Link to v3: https://lore.kernel.org/r/20240612-sy7802-v3-0-1e9cc1c79b79@apitzsch.eu
-
-Changes in v3:
-- Add R-b tag to first patch
-- Extend driver commit message
-- Improve readability of defines by using BIT()
-- Rename some variables/parameters
-  * led_no -> led_id
-  * level -> brightness
-  * curr -> fled_{strobe,torch}_used_tmp
-  * mask -> {flash,torch}_mask
-  * i -> child_num
-- Restructure structs ("Place th big stuff at the top")
-- Declare 'child' on a separate line
-- Move multi-line assignments out of declaration block
-- Update warning/error messages and comments
-- Use gotos to handle error path
-- Use devm API to cleanup module's resources
-- Init mutex before LED class device is registered to avoid race
-  condition
-- Link to v2: https://lore.kernel.org/r/20240401-sy7802-v2-0-1138190a7448@apitzsch.eu
-
-Changes in v2:
-- bindings: remove unneeded allOf
-- bindings: example: move flash-led-controller under i2c node to fix
-  check error
-- Cc to phone-devel
-- Link to v1: https://lore.kernel.org/r/20240327-sy7802-v1-0-db74ab32faaf@apitzsch.eu
----
- .../boot/dts/qcom/msm8939-longcheer-l9100.dts      | 27 ++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts b/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
-index e3404c4455cf..b845da4fa23e 100644
---- a/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
-@@ -159,6 +159,26 @@ led@2 {
- 			};
- 		};
- 	};
-+
-+	flash-led-controller@53 {
-+		compatible = "silergy,sy7802";
-+		reg = <0x53>;
-+
-+		enable-gpios = <&tlmm 16 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&camera_rear_flash_default>;
-+		pinctrl-names = "default";
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		led@0 {
-+			reg = <0>;
-+			function = LED_FUNCTION_FLASH;
-+			color = <LED_COLOR_ID_WHITE>;
-+			led-sources = <0>, <1>;
-+		};
-+	};
- };
- 
- &blsp_i2c3 {
-@@ -318,6 +338,13 @@ camera_front_flash_default: camera-front-flash-default-state {
- 		bias-disable;
- 	};
- 
-+	camera_rear_flash_default: camera-rear-flash-default-state {
-+		pins = "gpio9", "gpio16", "gpio51";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	gpio_hall_sensor_default: gpio-hall-sensor-default-state {
- 		pins = "gpio20";
- 		function = "gpio";
-
----
-base-commit: 0b58e108042b0ed28a71cd7edf5175999955b233
-change-id: 20240325-sy7802-f40fc6f56525
-
-Best regards,
 -- 
-André Apitzsch <git@apitzsch.eu>
-
-
+With best wishes
+Dmitry
 
