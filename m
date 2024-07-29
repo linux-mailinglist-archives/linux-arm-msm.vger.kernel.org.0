@@ -1,63 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-27189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27190-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F8E293EC67
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 06:04:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47EF493EC6A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 06:05:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A7F19282239
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 04:04:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E5B281F257F1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 04:05:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9465E145332;
-	Mon, 29 Jul 2024 03:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F33E1459EC;
+	Mon, 29 Jul 2024 03:59:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D15UlbKB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ds3zqQjK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0D414532A;
-	Mon, 29 Jul 2024 03:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06261145320;
+	Mon, 29 Jul 2024 03:59:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722225548; cv=none; b=kieO8SHdWui6vtUAdj3deU7qRFoq/mSarFCMcw7J2iH7LbCN/QtKsifZF3oVxu9HU6dUDwVdascCRWir7nRoVT5Cq2wTshXcIexArosy3KKLo4jp0pr481KdRKVPQjhbZMn+D2waBvDzJmPWbqDmuHGq2syPRErK9AKnwx0OziQ=
+	t=1722225550; cv=none; b=i9upnrumTVSegdu+cKRApu3fa6BYToOXRlx0vuwrVlLWGNbI5tMzQxyazuFe7lh+i0pPRdG8NQ0CU/jBIU19gO0l0sWUJdwBxAsiQM7OrcnDYdauVekleijjpkOcJPFN1wIfI+l1Ta+S1/zdXFQq2xggTRHlql7SJY0jcLah9O8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722225548; c=relaxed/simple;
-	bh=LSzhW820pd4iupGl9rs9YZKADthdpOlqn3O87nxlgE0=;
+	s=arc-20240116; t=1722225550; c=relaxed/simple;
+	bh=QsVvXcCHZNxRL5RZ+daszDVZggo7dXOXTjWKQdt6jS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LMd8424cE49Zwg2pko1LTNmJL9KYOgupKZIDFWNPZiQQWjqqr0WNTruQKWKT/tekXjTgXb5nLolEx+NKraSD2hAj/W3nvdlDzNs5AvFjG1Ue3RK/OqWyo/5itD6mQwV8chxFlLSgT3yextrxGB3kLiFSbUsfkzIY5aIqQEQRJzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D15UlbKB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B24C32786;
-	Mon, 29 Jul 2024 03:59:07 +0000 (UTC)
+	 MIME-Version:Content-Type; b=QbOhgnReUqkziT0yvmCSq2bI86Ymjkwr3wtTydiq6GG+C6aQtC9XDcptKSGcBYihxROd8JqlLZQUHMvposuy8ZlKpXlH9WqKDGCh2B5KNcgQQxCtLeWSq+Yz/FuS+FrZrcVrCvHILYT/tRY4g+WL8a8zs/h8YDH53/ceIw1eCSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ds3zqQjK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BF64C4AF17;
+	Mon, 29 Jul 2024 03:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722225548;
-	bh=LSzhW820pd4iupGl9rs9YZKADthdpOlqn3O87nxlgE0=;
+	s=k20201202; t=1722225549;
+	bh=QsVvXcCHZNxRL5RZ+daszDVZggo7dXOXTjWKQdt6jS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D15UlbKBRNu6fMdswVLyWZDUEWYh1esucksZ6jo/e8CxiSNE0KU8fN1QG6P8JLvON
-	 IcvBzZSqvFJLCIL4Vo2cV/4csMf12bI3JNdxD2kzsTCxEubDo2d1pffr5Xn9ZKwiWE
-	 QvKU7Ve/zH66kEcPE1FF4sbPdBXOt/yUxHxyuk8nYXotzWVcezdfqgHRy4/eEuAf45
-	 vnWQIKMW7PO4UBmMEoZiJXDbwaYCDgAo5QQjLOMrrM6GNvTrHLSGoObn9PwQp/9IuC
-	 qrEaH396EmdivkrDLT2F4ExbBUS9C9KBfmZqRbQ7gh0z1bCvMc/PbO8Qi6Y3OAGANm
-	 1FBHoOhSlocrg==
+	b=Ds3zqQjKqBKvrRLcqOQAe2iquzCNVOs+0nThdoYtAy4k6LWNOKLD9eAHWjqdxyxLu
+	 c74LY8FmWMn02L2HoLIZ0qke4JmViAZfraKZAvIGwllLtoC2JPKQJpdBdlJDef3YvV
+	 b3DxAnc5GxNgwRHFEcwTfURNax9FtB3V8RCg3P/vqiv+9fIYHOEpuyv2mI1OXTZrxl
+	 dDp8WcguJ/4/swTodSAAzmPFAVccxfOVMI0ayJ4kl11+pf2BGRIXIsOOfHvmG9M9OG
+	 n+/xDCffsMrVs8tpjVLw8YBSy6aU+MNPciqTh8z89Tby2gQn3SzNgLujJVHxn+VdgY
+	 KUlrX/VUDhlKw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Rob Herring <robh@kernel.org>,
+Cc: Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
+	Douglas Anderson <dianders@chromium.org>,
+	dri-devel@lists.freedesktop.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Johan Hovold <johan@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-crd: Add LID switch
-Date: Sun, 28 Jul 2024 22:58:33 -0500
-Message-ID: <172222551297.175430.9346186776128991289.b4-ty@kernel.org>
+Subject: Re: (subset) [PATCH v2 0/4] drm/panel: atna33xc20: Fix the Samsung ATNA45AF01 panel
+Date: Sun, 28 Jul 2024 22:58:34 -0500
+Message-ID: <172222551304.175430.2591366335166834304.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240710-x1e80100-crd-lid-v1-1-0156e8a62af6@linaro.org>
-References: <20240710-x1e80100-crd-lid-v1-1-0156e8a62af6@linaro.org>
+In-Reply-To: <20240715-x1e80100-crd-backlight-v2-0-31b7f2f658a3@linaro.org>
+References: <20240715-x1e80100-crd-backlight-v2-0-31b7f2f658a3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,16 +72,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 10 Jul 2024 10:18:20 +0200, Stephan Gerhold wrote:
-> Add gpio-keys for exposing the LID switch state, similar to
-> sc8280xp-lenovo-thinkpad-x13s.dts. Only the GPIO number is different.
+On Mon, 15 Jul 2024 14:15:36 +0200, Stephan Gerhold wrote:
+> The backlight of the Samsung ATNA45AF01 panel used in the Qualcomm X1E80100
+> CRD does not work correctly with the current display panel configuration
+> and drivers: It works after boot, but once the display gets disabled it is
+> not possible to get it back on. It turns out that the ATNA45AF01 panel
+> needs exactly the same non-standard power sequence as implemented for
+> ATNA33XC20 in the panel-samsung-atna33xc20 driver.
 > 
-> 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: x1e80100-crd: Add LID switch
-      commit: 8d86550c2fc262c49a10a4a0e9837d8949f3578b
+[4/4] arm64: defconfig: Add CONFIG_DRM_PANEL_SAMSUNG_ATNA33XC20
+      commit: 10f98bb9d98137b544b00abb4f9df45e9be7878d
 
 Best regards,
 -- 
