@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-27274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 060EB93F90C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 17:06:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 864CA93F916
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 17:07:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 23CE81C214A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 15:06:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D8631C2165C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 15:07:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED0C8155A39;
-	Mon, 29 Jul 2024 15:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA5D2156237;
+	Mon, 29 Jul 2024 15:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gzC56+RB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jyTEgguz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13F33C24;
-	Mon, 29 Jul 2024 15:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E28155CBA;
+	Mon, 29 Jul 2024 15:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722265575; cv=none; b=J915uJPJLBki41YeEiQrfMmmTFUYM/IsIqPl12qqQ7xXvE/9R5dZ0ST3j3VP/qHW14XPv5kDE0ymOuefHeQzQmEnH1uJUz/bBaQ05Jv/0yvFv3jR8K8bzrGBIo8jg5QieLZN9XU2EhlnXACjo/V5wDuP94kf16y5zG11tC/RU6Y=
+	t=1722265657; cv=none; b=EsmcZ8rhHp5bvdtAAYxspwzhz+QPzWtb9Sgxud/r77PnPGqTux38vZ2t2z4lEnKAOnQeerbyT0k0XlXk/oh88/S38FYDeLdjyxtSb6x6j4yFOxBYU1xhpt5+4KBlYK8MkyfOmbG039aF+xjDl8f4pILX3zuK7/YoU0TfTPImZhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722265575; c=relaxed/simple;
-	bh=dty+BTPh9Wqu8ZsRUupJ1Mht41LlDdpIwBe9xI+zdGo=;
+	s=arc-20240116; t=1722265657; c=relaxed/simple;
+	bh=OwAUwVLJ7+eVQc6vfbdzjd3PzOUWGzQjMCm8iSIEeik=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kPX1X+3/DoHsVsfYpRz0fVA1GNLdgQn4T8YWpCmKdPGMtY3H/nPRsvw7StURu7wvCHhKXzmRwrdWBgcCF0+7EzrWB7AIn1qay0lSM46P2KwIHb30+wMzqFMBW1cz9OuHHsdikOzYCtu1OKF6UD/2IBQsEK6admF1ZIe4c3xZqrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gzC56+RB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5A21C32786;
-	Mon, 29 Jul 2024 15:06:12 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=PNWXlYLCzc1WTEwBeenUHeRTy5KweAV2Cwao0ysda6iPmpY+Njtw5tL8Kp+12ZQCCL77v3tkjOO97vRMmSomPMDZW8UQ52uF/ryNe5dOJzzuejRVv9t9sxZPyC7fnFcZmFrWnXpBhJymeHR5Y2D5544co7xUa3PVIIzm6+3a2A4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jyTEgguz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF1F0C32786;
+	Mon, 29 Jul 2024 15:07:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722265575;
-	bh=dty+BTPh9Wqu8ZsRUupJ1Mht41LlDdpIwBe9xI+zdGo=;
+	s=k20201202; t=1722265657;
+	bh=OwAUwVLJ7+eVQc6vfbdzjd3PzOUWGzQjMCm8iSIEeik=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=gzC56+RBJ9BBUtP2m70LR+UevtVVjajVzJiSqIjd30SP8VM4bma8EnYxzOssPXolX
-	 o8W5+PJ0JwBBtkggKm9j8V9LvTtttzMbmd8+zaOWaXlCmuj0A0F/nZgcXVFhR8WMeM
-	 pR2Rso0jz6hRz1xd5twr4MCVPWvXJOMLi8SepQXAVps654GMPbmB82soUOnN+M47lN
-	 I6vcVMfDg1bAaMu783vb/pJBCaSzdW/6qon/sEY/moPzsWz9UX5eGeFnsFty0TKzNX
-	 T70JD4yQJIUzLYXGQzj0yZrwIOs56fjzLSErzaZE+PyIv6+8JKplAG25Ajo+ObMjLk
-	 jkGwjZ8D1L7uw==
-Message-ID: <bff687dc-5e21-4879-b771-762d0daceb44@kernel.org>
-Date: Mon, 29 Jul 2024 17:06:11 +0200
+	b=jyTEgguzCTVdoWSLiwtmoQrXfIoDfde227P7yBp/bgLMaQJVI77NWiDQGV6aStq2A
+	 7B8lySoIkr9ZyG0PbjUqpNQ2EWMJlj0+cVShvLoyQGcwty9G++pOtcOxqlalkHGFNg
+	 rlVn2A0115LWsMKhdCtff1fJMXnsTMZmxihekfUxkueizPgOnIEu9OpC4WL8qQpACi
+	 qU+TuJm09syxX3OUcRGaoBypvNAwWB4xyhXDwZ2781+5Kr4iCQrMpRS6qUJbUzQCjO
+	 vXChfChfj7cQdF54OpnSD+qPCFTfvKhdNdBUCxF8LC9uAgaudAgLRl/1Z9bNZb/heT
+	 JLsUcXBPgXE+Q==
+Message-ID: <91004ef6-7904-412c-bc3b-28a50b704579@kernel.org>
+Date: Mon, 29 Jul 2024 17:07:32 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] ARM: dts: qcom: add generic compat string to RPM
- glink channels
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
- Stephan Gerhold <stephan@gerhold.net>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+Subject: Re: [PATCH v2 01/11] arm64: dts: qcom: sm6115-pro1x: Add Hall Switch
+ and Camera Button
+To: Dang Huynh <danct12@riseup.net>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <20240729-fix-smd-rpm-v1-0-99a96133cc65@linaro.org>
- <20240729-fix-smd-rpm-v1-3-99a96133cc65@linaro.org>
+References: <20240725-qx1050-feature-expansion-v2-0-5fac4bbd946f@riseup.net>
+ <20240725-qx1050-feature-expansion-v2-1-5fac4bbd946f@riseup.net>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,18 +105,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240729-fix-smd-rpm-v1-3-99a96133cc65@linaro.org>
+In-Reply-To: <20240725-qx1050-feature-expansion-v2-1-5fac4bbd946f@riseup.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/07/2024 13:04, Dmitry Baryshkov wrote:
-> Add the generic qcom,smd-rpm compatible to RPM nodes to follow the
-> schema (and to allow automatic driver loading in a sane way).
+On 25/07/2024 03:42, Dang Huynh wrote:
+> The Pro1X has a flip keyboard and a single-state camera button.
 > 
-> Fixes: bcabe1e09135 ("soc: qcom: smd-rpm: Match rpmsg channel instead of compatible")
+> Signed-off-by: Dang Huynh <danct12@riseup.net>
+> ---
+>  arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 34 +++++++++++++++++++++++--
+>  1 file changed, 32 insertions(+), 2 deletions(-)
+> 
 
-That's nowhere a fix or please share some details what is the bug being
-fixed here.
+It does not look like you tested the DTS against bindings. Please run
+`make dtbs_check W=1` (see
+Documentation/devicetree/bindings/writing-schema.rst or
+https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+for instructions).
 
 Best regards,
 Krzysztof
