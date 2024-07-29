@@ -1,229 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-27318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B42FE93FFA8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 22:42:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B0D8393FFF3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 22:58:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 69330282573
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 20:42:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6D524282802
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 20:58:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B9BE1891B8;
-	Mon, 29 Jul 2024 20:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CE4C189F53;
+	Mon, 29 Jul 2024 20:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YzS1IyPb"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="pg3jRxjr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp41.i.mail.ru (smtp41.i.mail.ru [95.163.41.64])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A00770F6;
-	Mon, 29 Jul 2024 20:42:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B0D7F484;
+	Mon, 29 Jul 2024 20:57:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.163.41.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722285740; cv=none; b=fmUC/jdhrTtSkbRHEJxBnGsS9f5euye+2ODVGD8WvcpSRzjUxeOIkrehRSGe4YMqvm3TxBt2hYSx0CBms8kf1jgzgyE293iFxLAM35GNTbboLmCXRO2sdbNkiSv07A9MG4QvGBsak6psVYsC5fs3sN30sc9zbw7u7hx7bIHzLYs=
+	t=1722286678; cv=none; b=pfhHQqfVTE/Rsn6eBS4eef1qiKi/HoaubF8nvISRUj3BmMZFUX8zRuIx9lpxRjiTYFpgICYY9xgbcZvVZ0rqRIxkGJ99nNGaaqd8Eg5PHUtHMxVq2oBpUiA7xLPbsJn12xms4X3Lf9J0LodipaOFN2iwz8Mv+UhrN6wSczunowM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722285740; c=relaxed/simple;
-	bh=IQiKkzaTDl7twmBKLWj9YjzgADMmay2FkJMxC7ZbwrQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MJUOYzh9mIBAG2zUWaiOC2RHtwR6NMybT+tfbbGZlnerqSbZ7ABEmM+VFYEUNA2ByrVt0KBd9P3lgKGMFXfwhuIPVRfqHwrayhqWJl3kRREAtpuPURkBvE6rOpcyi/yKDX14/ywrpVnTaT4gxiGkmBw1tGqk69KoSDK2aB7/WXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YzS1IyPb; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-595856e2336so8001053a12.1;
-        Mon, 29 Jul 2024 13:42:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722285737; x=1722890537; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KZpqW1FNzf6K1KcY9MxfqaCZ/LDFNl8Inmwxrmuyygw=;
-        b=YzS1IyPbXCyxmUaKntUJSmbICOXoCFxFNBW4seweHEM9ufMM4uMqpaf5qgkqF/cS7A
-         NRHiBToBRQlECIPZu0ZfvDwRs2Q87RN4/dYz7yK6kmZyg2gwcG1R/Ab8RGi/o/kOps3L
-         2tC9HCioEbrlsyXp15g+V28eU1/69lTFgTqyGIMoKCvGjgPO7P94lpTgU/au0Tv0s9md
-         M7sjB95swjzNfcxx2mZ5L6UOieswM0yHfsRGkEKV2/VmkLNcif979VWxTJLqZNFuWwgp
-         CNBDqTvJ+o2d7xwqRN5bhP68hiP6Wuqpesxr5k0i2hlrIzKMBqueEvDFYMLo73d+4JqG
-         Q6fQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722285737; x=1722890537;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KZpqW1FNzf6K1KcY9MxfqaCZ/LDFNl8Inmwxrmuyygw=;
-        b=J1Yp80hL7yUfTEMR7PL1Qtyc89tFV0/bKZ6sExuEoKe6loTEfwaWAP7nqtAMW314c+
-         7CqRv6P7xeYDeACo5jDdDQNuuz+6sw3Se2ICwzMvYOY37XgCI1LzjtspukLX3KNzKa/r
-         Nh7uCTqhtkNmrdV934zJ+RE8rSUlZZAY5NJFy6boonzqJxs1W6O6KMJE1UcIx26ooNBc
-         b/TrdN2n+dhn2C/FlmtJ9hXQLw9PRls0piVQkTJdO4V9uJn6Q0xPKVFsY5rpzUIN1L+R
-         fFr62vf/krj9pnPhhPzfYf7JnuST1lteAc2GF7gc+6m6L1I6ADBKcZ9YZ9Swx1/PWSST
-         8NCg==
-X-Forwarded-Encrypted: i=1; AJvYcCUJV+dANSjio/AuT8/sXQC9O/0Sq1jNw72BaaQxo1FDLpzrtghN9IEgmlAu6hnuhISoDRf+eL+tOoMSRnGM2lVFOZ7/Fm/w90Wxr+O8H0ko5F+rQMj9mjJnG9g9HNqM27wDatNRHiUMzqqiggfHS8fTGNAs9j6yj5ZlwKEeaJ8eKFo43nOMh8g=
-X-Gm-Message-State: AOJu0YxiHtE+6sCUWf/nk28qkzKc76JNlMrVFGYRa0eeHCh+oxn+Qf94
-	BJeO9eiWirpvA1qrj5FxO5s7eidZHOEGCwvkvcPZi1qjPF6xjrXuIyB+65in8GLIq/4+XmO/O4i
-	Ds3DCR9xrgOKrrxmFaYnWcbpNX0o=
-X-Google-Smtp-Source: AGHT+IELVmUsxUqYVsUBpaSO4qSLMUdrKZlg0f0o3R5olNU3hsTcYbTRf6kbLbRKSE2iOv0ZVYTu2ALyuE6vHzEW+Ws=
-X-Received: by 2002:a50:9984:0:b0:57d:3e48:165d with SMTP id
- 4fb4d7f45d1cf-5b016cdaa27mr8243785a12.4.1722285736445; Mon, 29 Jul 2024
- 13:42:16 -0700 (PDT)
+	s=arc-20240116; t=1722286678; c=relaxed/simple;
+	bh=WstChANbA7SvfR+Aj+VLGTVexV2GfobSXd8n+qdUMk4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oiZaKJYub6ZNOMrH4AKuM4VdfCTDrUyBQ7XtZ+E1FeyEMPHxhyg6y4osFGVOL3v9EuPyhfFYRyBh8AUs+ZmegNHBFJQs3FQqIKT4frvgU1gefWybTm+kAZ+y+vMYT+yapa6/77k/w6H/anhWmL3zm+G7ly0E2HQLOP9NRtNks5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=pg3jRxjr; arc=none smtp.client-ip=95.163.41.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
+	; s=mailru; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:From:Sender:Reply-To:To
+	:Cc:Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+	List-Archive:X-Cloud-Ids:Disposition-Notification-To;
+	bh=WstChANbA7SvfR+Aj+VLGTVexV2GfobSXd8n+qdUMk4=; t=1722286675; x=1722376675; 
+	b=pg3jRxjrL7eTYiJfHMjb7gi4WMwbZleipI4XqSMX1BUJmc3OFjPxtAYaC2i3/BuSYq7et8ghDCb
+	ci0l2EPjy8pLk28rpV/U0WDNV269YF+Vv+UoCxOC5M6nGfezyuWP4KH5HaYxcXkQFx4h17jYmnLwf
+	9gNinwNGECz3UCrS1xA=;
+Received: by exim-smtp-868bf69f6c-jz7wc with esmtpa (envelope-from <danila@jiaxyga.com>)
+	id 1sYXRC-00000000Lgt-42wv; Mon, 29 Jul 2024 23:57:47 +0300
+Message-ID: <2e70738e-24b9-4660-b094-4ac055bd5fa1@jiaxyga.com>
+Date: Mon, 29 Jul 2024 23:57:09 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240719-topic-t14s_upstream-v1-0-d7d97fdebb28@linaro.org>
- <20240719-topic-t14s_upstream-v1-3-d7d97fdebb28@linaro.org>
- <Zp055OR+OzSgiHhX@linaro.org> <824edc08-f67f-4b2f-b4aa-da5df69b9df4@linaro.org>
- <Zp4vghH5SK/rLEce@linaro.org> <CAF6AEGszzRFiW16VzQQVF21U79uLcTNwwuGsHs98Zp_UGGTEBA@mail.gmail.com>
- <4w4b5pjrrl7jnanx3uodsjxw4cfenc3i6tgmp6kblgn6gavn45@uu2milys4n2z>
- <atjcj5qnetxilrnoom7xisqbl5yhq5ktg3jb7dfnkdnzbqblb5@qbkqupznvrua> <87o76ng5mr.fsf@bloch.sibelius.xs4all.nl>
-In-Reply-To: <87o76ng5mr.fsf@bloch.sibelius.xs4all.nl>
-From: Rob Clark <robdclark@gmail.com>
-Date: Mon, 29 Jul 2024 13:42:04 -0700
-Message-ID: <CAF6AEGvjkStnnL=51LCVnyqMyupzfUT-HVrgyREXW+uAFWCTgQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: Add X1E78100 ThinkPad T14s Gen 6
-To: Mark Kettenis <mark.kettenis@xs4all.nl>
-Cc: Bjorn Andersson <andersson@kernel.org>, dmitry.baryshkov@linaro.org, abel.vesa@linaro.org, 
-	konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, marijn.suijten@somainline.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, johan@kernel.org, patrick@openbsd.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] drivers: drm/msm/a6xx_catalog: Add A642L speedbin
+ (0x81)
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, robdclark@gmail.com, sean@poorly.run,
+ quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
+ marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch,
+ fekz115@gmail.com, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ cros-qcom-dts-watchers@chromium.org, danila@jiaxyga.com
+References: <20240722184314.36510-1-danila@jiaxyga.com>
+ <20240722184314.36510-2-danila@jiaxyga.com>
+ <4v5kl65wurifvkpious5ae4zhpv7zklejalg4sp4vcjiwhfbv2@o7jee7jil5ke>
+Content-Language: en-US
+From: Danila Tikhonov <danila@jiaxyga.com>
+In-Reply-To: <4v5kl65wurifvkpious5ae4zhpv7zklejalg4sp4vcjiwhfbv2@o7jee7jil5ke>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: exim-smtp-868bf69f6c-jz7wc; auth=pass smtp.auth=danila@jiaxyga.com smtp.mailfrom=danila@jiaxyga.com
+X-Mailru-Src: smtp
+X-4EC0790: 10
+X-7564579A: B8F34718100C35BD
+X-77F55803: 4F1203BC0FB41BD9000B6812E77BE1C6854AF46E97D2152892C6A59DA105ADB3182A05F53808504060C4600FFE09C8F53DE06ABAFEAF67052AA636E252999B2E1A9F61335A0CD567A938C1B4F21A4609
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7D3E352D4AD7EBF54EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006375AC38C7EC4509C8B8638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D89D4A26D28DE3AF79F31B418E4BCB5C522F823D4E39098394CC7F00164DA146DAFE8445B8C89999728AA50765F7900637F6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F79006375FFD5C25497261569FA2833FD35BB23DF004C90652538430302FCEF25BFAB3454AD6D5ED66289B5278DA827A17800CE73E9A205C6FEB9DE5D32BA5DBAC0009BE395957E7521B51C2330BD67F2E7D9AF1090A508E0FED6299176DF2183F8FC7C05BA2E4CC9113A626CD04E86FAF290E2DB606B96278B59C421DD303D21008E29813377AFFFEAFD269A417C69337E82CC2E827F84554CEF50127C277FBC8AE2E8BA83251EDC214901ED5E8D9A59859A8B60E26A56DB46E81E4089D37D7C0E48F6C5571747095F342E88FB05168BE4CE3AF
+X-C1DE0DAB: 0D63561A33F958A524FB376BB7EE73F85002B1117B3ED696C6F54A22AD937764CA7E60A991436CA2823CB91A9FED034534781492E4B8EEAD97DCCBFEAAA0BC6ABDAD6C7F3747799A
+X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742424CF958EAFF5D571004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D349A949488F6BF46DDA8A79E8062A6CA7174963014F8FF3F0AF81E76E12A14E3B5475EFE7A0B9C313D1D7E09C32AA3244C638414D35EF316DE77DD89D51EBB774228BAEE884F4A908DEA455F16B58544A2E6014D08E9BF26855DA084F8E80FEBD322CFFF16B4474ECB4573B60270F1EB7C214C2BC1176D5C25
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojX2k8aL79D6V1hbAjFQeYHQ==
+X-Mailru-Sender: 9EB879F2C80682A09F26F806C739498119976140086885851F93A76BF6F7B0A637FD5CEC06DF74311457E6F54EDCE5FF2C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
 
-On Tue, Jul 23, 2024 at 2:28=E2=80=AFPM Mark Kettenis <mark.kettenis@xs4all=
-.nl> wrote:
+On 7/29/24 06:09, Bjorn Andersson wrote:
+> On Mon, Jul 22, 2024 at 09:43:13PM GMT, Danila Tikhonov wrote:
+>> From: Eugene Lepshy <fekz115@gmail.com>
+>>
+> Please make sure the subject prefix matches other changes in the same
+> driver/files.
 >
-> > Date: Tue, 23 Jul 2024 13:55:20 -0500
-> > From: Bjorn Andersson <andersson@kernel.org>
-> >
-> > On Mon, Jul 22, 2024 at 07:03:43PM GMT, Dmitry Baryshkov wrote:
-> > > On Mon, Jul 22, 2024 at 08:00:19AM GMT, Rob Clark wrote:
-> > > > On Mon, Jul 22, 2024 at 3:11=E2=80=AFAM Abel Vesa <abel.vesa@linaro=
-.org> wrote:
-> > > > >
-> > > > > On 24-07-22 10:42:57, Konrad Dybcio wrote:
-> > > > > > On 21.07.2024 6:40 PM, Abel Vesa wrote:
-> > > > > > > On 24-07-19 22:16:38, Konrad Dybcio wrote:
-> > > > > > >> Add support for the aforementioned laptop. That includes:
-> > > > > > >>
-> > > > > > >> - input methods, incl. lid switch (keyboard needs the pdc
-> > > > > > >>   wakeup-parent removal hack..)
-> > > > > > >> - NVMe, WiFi
-> > > > > > >> - USB-C ports
-> > > > > > >> - GPU, display
-> > > > > > >> - DSPs
-> > > > > > >>
-> > > > > > >> Notably, the USB-A ports on the side are depenedent on the U=
-SB
-> > > > > > >> multiport controller making it upstream.
-> > > > > > >>
-> > > > > > >> At least one of the eDP panels used (non-touchscreen) identi=
-fies as
-> > > > > > >> BOE 0x0b66.
-> > > > > > >>
-> > > > > > >> See below for the hardware description from the OEM.
-> > > > > > >>
-> > > > > > >> Link: https://www.lenovo.com/us/en/p/laptops/thinkpad/thinkp=
-adt/lenovo-thinkpad-t14s-gen-6-(14-inch-snapdragon)/len101t0099
-> > > > > > >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > > > > > >
-> > > > > > > Few comments below. Otherwise, LGTM.
-> > > > > > >
-> > > > > > > Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-> > > > > > >
-> > > > > > >> ---
-> > > > > > >>  arch/arm64/boot/dts/qcom/Makefile                  |   1 +
-> > > > > > >>  .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts     | 792 ++=
-+++++++++++++++++++
-> > > > > > >>  2 files changed, 793 insertions(+)
-> > > > > > >>
-> > > > > > >> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/=
-boot/dts/qcom/Makefile
-> > > > > > >> index 0e5c810304fb..734a05e04c4a 100644
-> > > > > > >> --- a/arch/arm64/boot/dts/qcom/Makefile
-> > > > > > >> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > > > > > >> @@ -261,6 +261,7 @@ dtb-$(CONFIG_ARCH_QCOM)        +=3D sm86=
-50-hdk-display-card.dtb
-> > > > > > >>  dtb-$(CONFIG_ARCH_QCOM)   +=3D sm8650-hdk.dtb
-> > > > > > >>  dtb-$(CONFIG_ARCH_QCOM)   +=3D sm8650-mtp.dtb
-> > > > > > >>  dtb-$(CONFIG_ARCH_QCOM)   +=3D sm8650-qrd.dtb
-> > > > > > >> +dtb-$(CONFIG_ARCH_QCOM)   +=3D x1e78100-lenovo-thinkpad-t14=
-s.dtb
-> > > > > > >>  dtb-$(CONFIG_ARCH_QCOM)   +=3D x1e80100-asus-vivobook-s15.d=
-tb
-> > > > > > >>  dtb-$(CONFIG_ARCH_QCOM)   +=3D x1e80100-crd.dtb
-> > > > > > >>  dtb-$(CONFIG_ARCH_QCOM)   +=3D x1e80100-lenovo-yoga-slim7x.=
-dtb
-> > > > > > >> diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkp=
-ad-t14s.dts b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts
-> > > > > > >
-> > > > > > > So what happens for SKUs of this model wil have x1e80100 ?
-> > > > > > >
-> > > > > > > Maybe we should stick to x1e80100 ?
-> > > > > >
-> > > > > > This one only ships with 78100
-> > > > > >
-> > > > >
-> > > > > Sure, but then in upstream we only have 80100. Plus, it is includ=
-ed in
-> > > > > this file as well.
-> > > > >
-> > > > > I don't know what's the right thing to do here. But I think it ke=
-eps
-> > > > > things more simple if we keep everything under the x1e80100 umbre=
-lla.
-> > > >
-> > > > plus sticking to x1e80100 will avoid angering tab completion :-P
-> > >
-> > > This is an old argument, with no clear answer. For some devices we
-> > > choose to use correct SoC name (sda660-inforce-ifc6560). For other we
-> > > didn't (sdm845-db845c, which really is SDA845). However for most of t=
-he
-> > > devices the goal is to be accurate (think about all the qcs vs qcm
-> > > stories). So my 2c. would go to x1e78100.
-> > >
-> >
-> > I agree, x1e78100 follows the naming scheme we have agreed upon - for
-> > better or worse.
+> Regards,
+> Bjorn
 >
-> So should the device trees for the Asus Vivobook S15 and the Lenovo
-> Yoga Slim 7x be renamed then?  Since those also (only) ship with
-> X1E-78-100 variants of the SoC.
->
-> There is supposed to be a variant of the Vivobook with the X1P-64-100
-> (I haven't seen it actually for sale yet).  Since that one has only 10
-> CPU cores, should that one gets its own device tree?  That may not be
-> possible.  I have a strong suspicion that all the variants are just
-> binned versions of the same SoC, where the X1P just has two of the
-> cores disabled.  If Qualcomm, like Apple, attempts to increase the
-> yield by binning SoCs with broken or badly performing cores as X1P it
-> might be a lottery which of the 12 cores get disabled.
->
-> And for the vendors that do offer models with different X1E variants,
-> are there going to multiple device trees, one for each variant?
->
-> I'm asking because on OpenBSD we load the device trees in our
-> bootloader and map SMBIOS vendor and product names to a device tree
-> name.  So a consistent naming scheme for the device trees is
-> desirable.
 
-multi-sku laptops are going to make this a mess..  We really should
-just reconsider.. or maybe sidestep the issue and call them all
-"x1-crd.dts", "x1-lenovo-yoga-7x.dts", etc
+Thanks for the advice
 
-BR,
--R
+"drm/msm/a6xx: --//--" will be better?
 
-> Thanks,
->
-> Mark
->
-> > Regards,
-> > Bjorn
-> >
-> > > --
-> > > With best wishes
-> > > Dmitry
-> >
+Best wishes,
+Danila
 
