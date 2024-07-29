@@ -1,70 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-27175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8C8993EC3D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 06:01:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 490D993EC3F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 06:01:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 12B341C219BF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 04:01:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DD611280C92
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 04:01:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45B4613AD1D;
-	Mon, 29 Jul 2024 03:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B10413BAD7;
+	Mon, 29 Jul 2024 03:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DGjnkw/S"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k0i5DxQz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0505513AA42;
-	Mon, 29 Jul 2024 03:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3054A13B7BE;
+	Mon, 29 Jul 2024 03:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722225534; cv=none; b=mI663+mDfqfe3j9NCHach8qt8/tvxpuJn8Wb3Yeth81Bn7jqezNlqKKdWQpsYzl9nccwAY6C45YdzPJBA28fHijYMDnTZwZv3wYTej42k+7fLR2Hn3YZKfgvswP/L4mN59NE4v6M4We7ZhZKLndJN+Cy7+kpLofMVKWVIQPFp3s=
+	t=1722225535; cv=none; b=Q+wpQZQuXn6MQsVt9tJZjzLssOPInhlpli8M3Q5NQFi/eGPYvdOKQZWja3p8lWn3eC+qO04c72uWKklRq7BrddaJGGTu6hpL/XsttLqGUdzy5EgdYfXfPA5huRoxeR5xjLJlqtC0GyQmw5xNztW2ceg7aNVNyHjD+qivTHbHS4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722225534; c=relaxed/simple;
-	bh=OTJPkGkpde1iTM4/DKCFCr5P3BMKKGLJcgjquoJy3ho=;
+	s=arc-20240116; t=1722225535; c=relaxed/simple;
+	bh=VqGHeVHANwWL/8GfM9MB8YYAt2hiOqKp0PHxhvnaqaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J/grXCca8+RgtRC4ugJpInYUoq39ZemKkw/0QihL9EfBAo1G9uZF8qmRDoGw0JU9kt5hEtlm64eD17pqzGxrH2TlOIYUm8ps6/F+9g5KhRQJCDiVMtYZAJ15umQVHiuUBDNPcqkF8Ii9GArV/W0WvEb/ItH3Sgj/S70yyxSQWE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DGjnkw/S; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A26BC32786;
-	Mon, 29 Jul 2024 03:58:52 +0000 (UTC)
+	 MIME-Version:Content-Type; b=jW6qAiP9t0sHBP36BMqn/P/DBXGKqy5goGZK9F7ROC8/HWXO73w/8lVbE6zmfMu+dfr2RFB4CXcK4X9d0ERrR3T9A6jpaD3nRgoAxfS5SDlSSobtfgZiMtWGJuQN6yEj9ZfgJT/czO7w24ub9KP5rVYVuMUa6ciRwDoQAoVO0YA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k0i5DxQz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA443C4AF13;
+	Mon, 29 Jul 2024 03:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722225533;
-	bh=OTJPkGkpde1iTM4/DKCFCr5P3BMKKGLJcgjquoJy3ho=;
+	s=k20201202; t=1722225535;
+	bh=VqGHeVHANwWL/8GfM9MB8YYAt2hiOqKp0PHxhvnaqaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DGjnkw/SwHaYz0anxSPQI6esforJZ3DJG9/e43+VFjeVFqPuJ0jwZwEW/5NgftaaJ
-	 mv+U+j2swUOjuFm841UpghBsM63o0Hq9WgI09OGEVLLDqlECKBPjFvvyoZ6EsrW64y
-	 K/CvzJEX3sczcOVjzrj4N1ucGlO1wWRuyp5GkcAYHnjqOEDWu/5IuY8HAjB3/A8QhY
-	 Gn0kXhVxS8qBINLGEkM6xzzdKeO/j7pRNfUZOP2tLJVKIOiD+uDeS41NS1I5bGdZio
-	 VRjPTN7gNbk/8Yx8TFMvnk4s9C+W1ZjrmNyeyGrrKtjfapQtg43SOzYNNSi3R8cA3N
-	 yIS86o3s4wVBw==
+	b=k0i5DxQzlsqhuPsgFgAzqaD27n6aS8HjaEZwUcPHLGR/544TXlKGY5yvY1Y/4gDBz
+	 Gs4XCPHdrS8yBiDkcEFz9YaCRAorBVwwVf9Gf0cKYLft8pyv8K7GQR5xdOsD6Uk/dA
+	 RQMEyln1Erk6e7TkWLKTzQ2RHiupIPvVAFvrmTiH5RHsHD79AjxctZTH8xGPNXDaXn
+	 VIucLaieKuFGseAcRcQgZpL6583lYlxmtsPffzNrZLAcQxndO6nQvf1jOBY0WhqNxl
+	 mCn0YJeoJv2nj0RzQcvSL5UOnsuS6BGEO1lDtAklAyGpq8yUdp4uv9lqr4A3CC7MPB
+	 8Vd5nNBZy735A==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Kalle Valo <kvalo@kernel.org>,
-	Patrick Wildt <patrick@blueri.se>
-Cc: "David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Andy Gross <agross@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Steev Klimaszewski <steev@kali.org>,
-	linux-wireless@vger.kernel.org,
-	netdev@vger.kernel.org,
-	devicetree@vger.kernel.org,
+To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Maulik Shah <quic_mkshah@quicinc.com>
+Cc: caleb.connolly@linaro.org,
+	stephan@gerhold.net,
+	swboyd@chromium.org,
+	dianders@chromium.org,
+	robdclark@gmail.com,
+	nikita@trvn.ru,
+	quic_eberman@quicinc.com,
+	quic_pkondeti@quicinc.com,
+	quic_lsrao@quicinc.com,
 	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: (subset) [PATCH 0/2] arm64: dts: qcom: x1e80100-yoga: add wifi calibration variant
-Date: Sun, 28 Jul 2024 22:58:19 -0500
-Message-ID: <172222551311.175430.13568156026564706830.b4-ty@kernel.org>
+	Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>,
+	stable@vger.kernel.org,
+	Volodymyr Babchuk <volodymyr_babchuk@epam.com>
+Subject: Re: [PATCH v2] soc: qcom: cmd-db: Map shared memory as WC, not WB
+Date: Sun, 28 Jul 2024 22:58:20 -0500
+Message-ID: <172222551317.175430.12484132433706298927.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <ZpV6o8JUJWg9lZFE@windev.fritz.box>
-References: <ZpV6o8JUJWg9lZFE@windev.fritz.box>
+In-Reply-To: <20240718-cmd_db_uncached-v2-1-f6cf53164c90@quicinc.com>
+References: <20240718-cmd_db_uncached-v2-1-f6cf53164c90@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,21 +74,23 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 15 Jul 2024 21:38:11 +0200, Patrick Wildt wrote:
-> This series adds the missing calibration variant devicetree property
-> which is needed to load the calibration data and use the ath12k wifi
-> on the Lenovo Yoga Slim 7x.
+On Thu, 18 Jul 2024 11:33:23 +0530, Maulik Shah wrote:
+> Linux does not write into cmd-db region. This region of memory is write
+> protected by XPU. XPU may sometime falsely detect clean cache eviction
+> as "write" into the write protected region leading to secure interrupt
+> which causes an endless loop somewhere in Trust Zone.
 > 
-> Patrick Wildt (2):
->   dt-bindings: net: wireless: add ath12k pcie bindings
->   arm64: dts: qcom: x1e80100-yoga: add wifi calibration variant
+> The only reason it is working right now is because Qualcomm Hypervisor
+> maps the same region as Non-Cacheable memory in Stage 2 translation
+> tables. The issue manifests if we want to use another hypervisor (like
+> Xen or KVM), which does not know anything about those specific mappings.
 > 
 > [...]
 
 Applied, thanks!
 
-[2/2] arm64: dts: qcom: x1e80100-yoga: add wifi calibration variant
-      commit: 8bc7cb73df8644423758c79d4504d501c8ef3854
+[1/1] soc: qcom: cmd-db: Map shared memory as WC, not WB
+      commit: f9bb896eab221618927ae6a2f1d566567999839d
 
 Best regards,
 -- 
