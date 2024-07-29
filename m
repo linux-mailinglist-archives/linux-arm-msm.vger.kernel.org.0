@@ -1,59 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-27161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C67B93EC0C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 05:58:42 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DDBB893EC0F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 05:58:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A7791281CCC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 03:58:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 92B7D1F21E2C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 03:58:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BE1180BEC;
-	Mon, 29 Jul 2024 03:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B14F5823DE;
+	Mon, 29 Jul 2024 03:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MLJKHBUh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rjk5BaiN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4053B2AD15;
-	Mon, 29 Jul 2024 03:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D89C823AC;
+	Mon, 29 Jul 2024 03:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722225519; cv=none; b=CC1Cj8nA72M7YGikRqttbhH2WQdaaD1QwYzTqDWnvuZ84sLyY4wIOM/6hc+BPrBivdBwn7PTE+21L2d6TLGa2Ch0KIfmYksxKjUUnHioYL84U7I0HW2JYsZJwG+HuQCdjMBGyzsjxgL2JGUKj8FH7QGatZ+ivZLosKPshh/ZOz4=
+	t=1722225520; cv=none; b=US0a0UJZFwOP11p4D8hSgUmhdfsfh/k+eTc2mVH0b6z0Fx3yOue/ux+JXeKW7HvnKT9xVfeZtcqti8kjiHFahD1xa2ok2dcnmgCkplsDlvWWrP9NZB9aZa4RT9p0yREySza7sa8o9gc3xIu3atpegk9H+cl7679qvMtIWEOA9j8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722225519; c=relaxed/simple;
-	bh=vvqVnCeHJvgfAzD1HkRbya53CiHXZp2IQuZWKejiS0U=;
+	s=arc-20240116; t=1722225520; c=relaxed/simple;
+	bh=TA5poETAAz92aOIyTBfRr7V2ADhM0BC36aDqASPb1yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GXG9eHDobYUbDKiEWBwkxLy2Z2wjkJGlJgtdk114IqjohHMtR2evoUpVlgPzRYR9X66HASDONkhHiqAOwcj8pQXtQdeDkP8TkwEt94LiqLXTIUpDjhfl3Jvli4sl8LYbiWCLtEAEmOGMYU7afPMRXbc8jIBCpd2Fd87x2Vt5n0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MLJKHBUh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47FC4C32786;
-	Mon, 29 Jul 2024 03:58:38 +0000 (UTC)
+	 MIME-Version:Content-Type; b=K6y+zAvLZk/U2+sPVFMe3q1ZRgimLxL5Mm21u75fAA7/ObeoRMwVtl/Dt8FgR3WG1hSbEzgQHUaVSCWaJwOZLS75l6Yq2sRV3oy7wISgGdM+Ez4wTXK5BSA8SP4W6GWtgyE2OvOyg1pvM2OBGyPR+TzwNQXhWMfq9YkV6iPHg/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rjk5BaiN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C9AC4AF09;
+	Mon, 29 Jul 2024 03:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722225518;
-	bh=vvqVnCeHJvgfAzD1HkRbya53CiHXZp2IQuZWKejiS0U=;
+	s=k20201202; t=1722225520;
+	bh=TA5poETAAz92aOIyTBfRr7V2ADhM0BC36aDqASPb1yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MLJKHBUh8GQpaunc7mmLuiXQQhC5caVby7i9aGLM9M/NRkaphE+Aun1h/qV9znyuZ
-	 zkSOcwXU/hMFp1oaDjW9+8F2btWN0RGzvG+zBIzAHbQHWZqMaNQk2fxw8pM7LfSX1d
-	 U22/axuLeWPe+wHrLgM1iFlT1tCluhHVEzONdEZHPPXp3q5UIsdjcBLGeSPU8d7+co
-	 7qov1RDxKHHkFzb/REIo07xfoqt8Zqz+cG858DZc78TJy6uoXNC7w4LZ02TC/65FAi
-	 oYOKsvsZFiYzkNTgx00h9l8s4N2Bflp9tImY3sR+RMO34KLTahe7+igZUoH4Pex0rm
-	 O3qKPQMguuUdQ==
+	b=rjk5BaiNex5Nb2WgfjNPLRG+bP0SIXreQ/mpaGms+hfyPfCXlYxiqW+yYwbcvpqlw
+	 mdDSUuS/k6JWBUoACxhdnQW5Ga5R07PoksOweJKBZlOeE/Sz9jh1EzT3eU2V+EKuX0
+	 6845m1hzOUmsFHWgjjCNzS1QjdIii9qNBpsmrtW5WNENJ85J8KBwf0tB18/QTRlSXa
+	 nQQ0+9gxyZaHd8KDtkQ+4x+ougfE+wQATXPFHZu2RxZAFu70l/AJnQ0nLfYsgGyOE6
+	 0PNX2hLQazjjtyqes6mQcag/RJEE+sGFmLf6R0pwpsqlH07twYYOuCWVGHsYYpWw3Y
+	 r6BHnkIlqpanw==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Chris Lew <quic_clew@quicinc.com>,
-	Andrew Halaney <ahalaney@redhat.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] soc: qcom: pd-mapper: Depend on ARCH_QCOM || COMPILE_TEST
-Date: Sun, 28 Jul 2024 22:58:05 -0500
-Message-ID: <172222551299.175430.6158692391772729987.b4-ty@kernel.org>
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Amit Pundir <amit.pundir@linaro.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+	dt <devicetree@vger.kernel.org>,
+	lkml <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sm8550-hdk: add the Wifi node
+Date: Sun, 28 Jul 2024 22:58:06 -0500
+Message-ID: <172222551318.175430.1023758913285401428.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240725-pd-mapper-config-v1-1-f26e513608c6@redhat.com>
-References: <20240725-pd-mapper-config-v1-1-f26e513608c6@redhat.com>
+In-Reply-To: <20240718125545.2238857-1-amit.pundir@linaro.org>
+References: <20240718125545.2238857-1-amit.pundir@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,18 +68,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 25 Jul 2024 11:23:33 -0500, Andrew Halaney wrote:
-> The pd-mapper driver doesn't make sense on non Qualcomm systems. Let's
-> follow suit with the rest of the Qualcomm SoC Kconfigs and depend on
-> ARCH_QCOM || COMPILE_TEST to avoid asking users about a config they will
-> not use.
+On Thu, 18 Jul 2024 18:25:45 +0530, Amit Pundir wrote:
+> Describe the ath12k WLAN on-board the WCN7850 module present on the
+> board.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] soc: qcom: pd-mapper: Depend on ARCH_QCOM || COMPILE_TEST
-      commit: e4ab5d7cb5f19858305395e034f214c92afc3cf5
+[1/1] arm64: dts: qcom: sm8550-hdk: add the Wifi node
+      commit: 73655137a570e4a3cd226fd9f17920f507cec028
 
 Best regards,
 -- 
