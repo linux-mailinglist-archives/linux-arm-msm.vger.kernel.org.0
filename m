@@ -1,126 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-27257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5528593F5A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 14:41:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9686993F5AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 14:42:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05EA91F22657
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 12:41:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 235981F22AF9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 12:42:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1215D1494AB;
-	Mon, 29 Jul 2024 12:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC03A149DFA;
+	Mon, 29 Jul 2024 12:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mIYD5Ml5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SPyH3Z9n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95441494A6;
-	Mon, 29 Jul 2024 12:40:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CE914882B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 12:42:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722256839; cv=none; b=igJzLVm79/Kg7NopSHpnjMawCoNzlJTIPeMN3mhBuTOX0ERwlaIXSAMAIVi9ybZtNZIMe9ytf/bykc/fYNsWsR0EDqzrSYE/fTli173KXRSPR3+Sp7uIX1swI6qgoSq1gUFPDBqCGPrSDoTkIRjoIzwWHMqCt8YMfWudBcqhcqw=
+	t=1722256938; cv=none; b=DuhmJnTOQ7weC1ka6c/rA9rKKK/j32hJP4ZSycpbXFjF3I8iKCVMsepNeY0Giw1rYrFN2a4MXct12vlY0/EPhDKUw8ah+DtYTYnniKElHMXYA/KaxD/WoPA/IcTdxjeqCdWG8DzRaXpD4S5HpCk88wmCqqTV5l0gxPNcgRUBBNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722256839; c=relaxed/simple;
-	bh=N3xXeZ5Sz94ZClfXA2KC8TLwvIpUwZiE2+p14uPFP0U=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=vE0cYKU3XWqWl4I5DpTEXK2Zs1MmB6y5zQb93tlxjuMkEJH0vY0ZP776Z42Q8dcfIuSkP2kdNmXf/1HA4/4M+qmD3uQJiDynM4W2rr4k39WRmGJvoHf/4kwnkt0ZVPvEXRk2NE+kV0aDdmII5MbCPKMKdCW/dSNj1H36b3PIbSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mIYD5Ml5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 038F3C32786;
-	Mon, 29 Jul 2024 12:40:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722256838;
-	bh=N3xXeZ5Sz94ZClfXA2KC8TLwvIpUwZiE2+p14uPFP0U=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=mIYD5Ml5u6jBbAhz4WBkGgqO6N37dImmRT5PYLWABPIwOVl9rxQyXhvqF2WTzKuiX
-	 uO7wSu1FteyPMT7TlL2SxhguOg9jZZVMTD7NzQn0558cQxqAcxt5W35CcxjHha28vx
-	 nxU1fXT/+fpEDGsaIUAUweGv51VHDz/XAt9DNRAiGxcy/B1449qgp1LCC48K+tNuZw
-	 s0SaQEOUMSX1MuE01fZczIbVXIJi1mdwW2+/4Q7qtVeyPkJnnMiNqq+jCFbmfTQWOF
-	 hkHN0iAgil+j6hW1Krw1lv5nftLljpu92YMHKoOYSgsBC2vdJOoctfLWcACZ86mauj
-	 F/1Enhe/KWCBQ==
-Message-ID: <aaf74e25-ba24-454c-8bc1-c2b079d549e3@kernel.org>
-Date: Mon, 29 Jul 2024 14:40:30 +0200
+	s=arc-20240116; t=1722256938; c=relaxed/simple;
+	bh=RYzzjJz5prGd3ejqUdhZWnFpTvpjktmzCWoGFDU6NgQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=TNyqlG5Zym8DqjOvOB6LqlXzkULdaO1FylfVTbNRWCiFAYrxMa9IOhBYdCUWD8jll+IL1jAVjCErfbmThJVZpmz2kkeYhB7dzSsyKbwjuxwJAGgKoLJwGpBQCbToLgjgpBz0W47hNgZiWFWu2KRk5oNkJRhldNiTuPEVWI0HWCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SPyH3Z9n; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3685a5e7d3cso1542454f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 05:42:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1722256935; x=1722861735; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FPb05zxTMe2gnwm5BKRFygHzXK2icK+E4h74wEJLW4g=;
+        b=SPyH3Z9nrL1KDs06wxR+0t2pO9jU4QN7DskCrnJuBiOQejJqHZIL1sx6kAOITxYTLq
+         xnl0A4Sr4PXsffct+m5rcrkDgnOcHVvhOEBjr+xGgLMfSZm1t7zsevBP/zmrGDVTZkyD
+         6jW7wAwdwzEzy6dQoPKbCfCOcI8OWXIqvq536CQ5k/U/fR6EFsT/Wd3V70oxdC6D2HJN
+         8tT005a1JDv5vWicn+k2i2xNSr13D0B3XS+sHE3LE0Ehhc8lVd+AlJfCqZMk8v5LgVqw
+         hYH4znYna6P9NfTLOZ/Wr27hnsOyP8vhbjytbf+2k6gv//MRlxGpgsZhpPqqz/U+1sHo
+         +ddQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722256935; x=1722861735;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FPb05zxTMe2gnwm5BKRFygHzXK2icK+E4h74wEJLW4g=;
+        b=lQ1Q9WdmM697Tb9KU3jfoyKWw/hBfYWDd+m6xouU9FLn7CyG33rrCxbH3cUNanabj/
+         jBaPWzdJ611JJeqWvoAu8X8M5//aAtfZfzQOEhJtP2w+xZSA2cRw2mq0VkmlBBVYzAaP
+         ScGXfqpQrjyYHrZMpp7865UxWDEpzxj/NSNxteFkcilS98DSHbvSjeiJ6f0RhOsuwGAQ
+         n8ykVCAc5izyH+eT+Iy6porGgLdfAOX4/QKoTjMyB9ajc7hd9Z/RB+5kFKUILi78i/s7
+         D41J7DYnwkspiXoHZCEYbSYbsAv8BrDaH0R11fjguCH/DpNmHljC4K5keDpfF/VRxk7E
+         YBDw==
+X-Forwarded-Encrypted: i=1; AJvYcCU+D80edBer4tcvU/LGF/KR220RuKbF1nCCbGLAsHMRdKr8Rsa80fwtH2Nj6Txc5Z8KtBVPmRrWOC9ZjVW7F9WqSKwch+oKfW5nGEcXPQ==
+X-Gm-Message-State: AOJu0Yz8/mkqIHJ1BIkJLdxiEhf/2rVLTGOwEnzTkru2daKgTIbGWuJx
+	8SV5VUPZGxyRFslDEOsMEkGprlUbDoQOFSrzzR7yyru1NewnIgert9ZBpfXI9qs=
+X-Google-Smtp-Source: AGHT+IFCPeByOJeTAi0+ljH2ZZVPmMsgCbFxLiDS7EiauYHmtB3LsGyZ4a45Zcu5haF0ODLghRY2uA==
+X-Received: by 2002:a5d:4392:0:b0:368:75:2702 with SMTP id ffacd0b85a97d-36b5d0b0472mr4241650f8f.13.1722256934589;
+        Mon, 29 Jul 2024 05:42:14 -0700 (PDT)
+Received: from [127.0.1.1] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36b367c092esm12106275f8f.13.2024.07.29.05.42.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jul 2024 05:42:14 -0700 (PDT)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v3 0/2] media: qcom: camss: Fix two CAMSS bugs found by
+ dogfooding with SoftISP
+Date: Mon, 29 Jul 2024 13:42:01 +0100
+Message-Id: <20240729-linux-next-24-07-13-camss-fixes-v3-0-38235dc782c7@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/5] drm/msm/adreno: Implement SMEM-based speed bin
-From: Konrad Dybcio <konradybcio@kernel.org>
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, Elliot Berman <quic_eberman@quicinc.com>
-References: <20240709-topic-smem_speedbin-v5-0-e2146be0c96f@linaro.org>
- <20240709-topic-smem_speedbin-v5-1-e2146be0c96f@linaro.org>
- <20240715200419.l47ng6efa25in6sg@hu-akhilpo-hyd.qualcomm.com>
- <8e2ebc97-f455-4f41-81da-af56263e6cf6@linaro.org>
- <87607d2c-a4b1-4923-ba9f-9cfc56a0aa38@kernel.org>
-Content-Language: en-US
-In-Reply-To: <87607d2c-a4b1-4923-ba9f-9cfc56a0aa38@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABmOp2YC/4XNwQqDMAwG4FeRnpdRa611p73H2KGrUQubHa0rD
+ vHdF4XBdvIS+P+QLzOLGBxGdspmFjC56PxAoThkzPZm6BBcQ5kJLiSv8gLubnhNMOA0gpDAK6D
+ OmkeM0LoJaZpaW16r0pQNI+UZcFsQcrlS7l0cfXhvD1O+tl9b7topBw661XUpb1ZbXZ7pwgR/9
+ KFjK57EL6j2QUEgKm7rVlVStOIPXJblA3NLUKcgAQAA
+To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Hans Verkuil <hansverk@cisco.com>, Hans Verkuil <hverkuil-cisco@xs4all.nl>, 
+ Milen Mitkov <quic_mmitkov@quicinc.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Mauro Carvalho Chehab <mchehab+samsung@kernel.org>, 
+ Johan Hovold <johan+linaro@kernel.org>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, stable@vger.kernel.org
+X-Mailer: b4 0.15-dev-13183
 
+v3:
+- Amends the commit log for patch #1 per Johan's suggestion.
+- Link to v2: https://lore.kernel.org/r/20240716-linux-next-24-07-13-camss-fixes-v2-0-e60c9f6742f2@linaro.org
 
+v2:
+- Updates commits with Johan's Review/Reported tags
+- Adds Closes: https://lore.kernel.org/lkml/ZoVNHOTI0PKMNt4_@hovoldconsulting.com
+- Cc's stable
+- Adds in suggested kernel log to allow others to more easily match kernel
+  log to fixes
+- Link to v1: https://lore.kernel.org/r/20240714-linux-next-24-07-13-camss-fixes-v1-0-8f8954bc8c85@linaro.org
 
-On 29.07.2024 2:13 PM, Konrad Dybcio wrote:
-> On 16.07.2024 1:56 PM, Konrad Dybcio wrote:
->> On 15.07.2024 10:04 PM, Akhil P Oommen wrote:
->>> On Tue, Jul 09, 2024 at 12:45:29PM +0200, Konrad Dybcio wrote:
->>>> On recent (SM8550+) Snapdragon platforms, the GPU speed bin data is
->>>> abstracted through SMEM, instead of being directly available in a fuse.
->>>>
->>>> Add support for SMEM-based speed binning, which includes getting
->>>> "feature code" and "product code" from said source and parsing them
->>>> to form something that lets us match OPPs against.
->>>>
->>>> Due to the product code being ignored in the context of Adreno on
->>>> production parts (as of SM8650), hardcode it to SOCINFO_PC_UNKNOWN.
->>>>
->>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> ---
->> [...]
->>
->>>>  
->>>> -	if (adreno_read_speedbin(dev, &speedbin) || !speedbin)
->>>> +	if (adreno_read_speedbin(adreno_gpu, dev, &speedbin) || !speedbin)
->>>>  		speedbin = 0xffff;
->>>> -	adreno_gpu->speedbin = (uint16_t) (0xffff & speedbin);
->>>> +	adreno_gpu->speedbin = speedbin;
->>> There are some chipsets which uses both Speedbin and Socinfo data for
->>> SKU detection [1].
->> 0_0
->>
->>
->>> We don't need to worry about that logic for now. But
->>> I am worried about mixing Speedbin and SKU_ID in the UABI with this patch.
->>> It will be difficult when we have to expose both to userspace.
->>>
->>> I think we can use a separate bitfield to expose FCODE/PCODE. Currently,
->>> the lower 32 bit is reserved for chipid and 33-48 is reserved for speedbin,
->>> so I think we can use the rest of the 16 bits for SKU_ID. And within that
->>> 16bits, 12 bits should be sufficient for FCODE and the rest 8 bits
->>> reserved for future PCODE.
->> Right, sounds reasonable. Hopefully nothing overflows..
-> +CC Elliot
-> 
-> Would you know whether these sizes ^ are going to be sufficient for
-> the foreseeable future?
+V1:
+Dogfooding with SoftISP has uncovered two bugs in this series which I'm
+posting fixes for.
 
-Also Akhil, 12 + 8 > 16.. did you mean 8 bits for both P and FCODE? Or
-12 for FCODE and 4 for PCODE?
+- The first error:
+  A simple race condition which to be honest I'm surprised I haven't found
+  earlier nor has anybody else. Simply stated the order we typically
+  end up loading CAMSS on boot has masked out the pm_runtime_enable() race
+  condition that has been present in CAMSS for a long time.
 
-Konrad
+  If you blacklist qcom-camss in modules.d and then modprobe after boot,
+  the race condition shows up easily.
+
+  Moving the pm_runtime_enable prior to subdevice registration fixes the
+  problem.
+
+The second error:
+  Nomenclature:
+    - CSIPHY: CSI Physical layer analogue to digital domain serialiser
+    - CSID: CSI Decoder
+    - VFE: Video Front End
+    - RDI: Raw Data Interface
+    - VC: Virtual Channel
+
+  In order to support streaming multiple virtual-channels on the same RDI a
+  V4L2 provided use_count variable is used to decide whether or not to actually
+  terminate streaming and release buffers for 'msm_vfe_rdiX'.
+
+  Unfortunately use_count indicates the number of times msm_vfe_rdiX has
+  been opened by user-space not the number of concurrent streams on
+  msm_vfe_rdiX.
+
+  Simply stated use_count and stream_count are two different things.
+
+  The silicon enabling code to select between VCs is valid but, a different
+  solution needs to be found to support _concurrent_ VC streams.
+
+  Right now the upstream use_count as-is is breaking the non concurrent VC
+  case and I don't believe there are upstream users of concurrent VCs on
+  CAMSS.
+
+  This series implements a revert for the invalid use_count check,
+  retaining the ability to select which VC is active on the RDI.
+
+  Dogfooding with libcamera's SoftISP in Hangouts, Zoom and multiple runs
+  of libcamera's "qcam" application is a very different test-case to the
+  simple capture of frames we previously did when validating the
+  'use_count' change.
+
+  A partial revert in expectation of a renewed push to fixup that
+  concurrent VC issue is included.
+
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Bryan O'Donoghue (2):
+      media: qcom: camss: Remove use_count guard in stop_streaming
+      media: qcom: camss: Fix ordering of pm_runtime_enable
+
+ drivers/media/platform/qcom/camss/camss-video.c | 6 ------
+ drivers/media/platform/qcom/camss/camss.c       | 5 +++--
+ 2 files changed, 3 insertions(+), 8 deletions(-)
+---
+base-commit: c6ce8f9ab92edc9726996a0130bfc1c408132d47
+change-id: 20240713-linux-next-24-07-13-camss-fixes-fa98c0965a5d
+
+Best regards,
+-- 
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
 
