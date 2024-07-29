@@ -1,65 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-27183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19AF893EC55
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 06:03:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0250D93EC58
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 06:03:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 343921C21451
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 04:03:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AEA1B2819A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 04:03:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CDE41422DD;
-	Mon, 29 Jul 2024 03:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF93614373E;
+	Mon, 29 Jul 2024 03:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pCc9K3NE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UUXx0giR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F77A1422C5;
-	Mon, 29 Jul 2024 03:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C98143737;
+	Mon, 29 Jul 2024 03:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722225542; cv=none; b=lNPDSbyrgIkJMRTGYh1Pw3681rXpr03urY2dOvg1HETpPtiprw4zbCjHRCsuI9m3AFcU2saX27PzPOrNPdKUvDl/Pw3VmiPtTczhIHOjH1V5es8zzihjocOEjxrKFeks3Ecv0B3ci1n8nQrL54uSgR+WajI+3aumsSlQhYoum88=
+	t=1722225543; cv=none; b=P6M51PX6cudJ4jgj7ha8nWH/Ehj3yR3BdMnRVC1YtxIpaimyHyKKjK6hO+XKuMuVSF6nxc1kXQ1gand+JAUvf7+NvEP9tIr8Dg6wAbYqDRMVsBAPpgwbsN/pTFhejpe6ELA8ZLrwvvgx2JNGrAon8c7I1A/E7gPyZeQAHSG4pNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722225542; c=relaxed/simple;
-	bh=dSrPOgUsIyjtjeJHQWCuoWo1xW0ghb5lu9T5CfWdiUM=;
+	s=arc-20240116; t=1722225543; c=relaxed/simple;
+	bh=d7mQ9oAbEN3Huq+8SSbGBTmEpr4TMrj4uYmbvA2I2No=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=F14mYCKwf6paWw1xxp0dO51+46BDrr1xVfpd/Yh9c4UxEaYi4qQD/Syu1KjKjoPsW21sAGTJ6wfKALfR+XTZmhJRCZLtz3qs8bghPTw50OvW+XFUdZijSxiXsz75+6v63/MgLccGaBnvMgTvhILmk1kh7k/OwS4jNTrX8OTua8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pCc9K3NE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51557C4AF10;
-	Mon, 29 Jul 2024 03:59:01 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Phxr/pLHt73Jn8GXy0QXpxukX5TMhWrZikqZEggzQ8xOiQaMBvrIhEtm9PgAhGtfFzj8VQP7EvLVHHjKBFa7Z0eDeBamuFKez5WcF8FMCdJ0tIA4rhKmh0wECBnFHVkgYXK7McnxAS73ImLVWWt5qOSWJcMlaS4miHg5LtGhVt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UUXx0giR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8061FC32786;
+	Mon, 29 Jul 2024 03:59:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722225542;
-	bh=dSrPOgUsIyjtjeJHQWCuoWo1xW0ghb5lu9T5CfWdiUM=;
+	s=k20201202; t=1722225543;
+	bh=d7mQ9oAbEN3Huq+8SSbGBTmEpr4TMrj4uYmbvA2I2No=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pCc9K3NEA+loMC6zoy9B2ANaD1drrVbgNdx6IofJKzeENk1ZrFxF+Hz+a1d7D30I0
-	 pkNCsPgzC1dbXpZl01FP3keDu4sls/k3fDOJyPfJpI5GbKhmCHxP5VzBQINMq7ILzp
-	 4zVbZBjzfpotzThAieuhTGIFJWkCJmmSRaC7weIlztiJnSAma/s+7WyiySAbPVGK1W
-	 niw845j9q9/pE7/Tux0COrK46qLZDiSWKWeAjRGi2RoGqK78gmTmvbVEYUaMTNmm1F
-	 cHZGtDgAIwCf3FeiTfBlv/yrBWg7pOgdwZDvvZgN6HetdIa7Z2t2wm1tDPeO6bjAij
-	 43rD2cNuOdrNg==
+	b=UUXx0giR2NKmXZcAGMaGV+JfmT1OBUWf0uXDGKj5a/FR4wWPvEq9Bie/J0x8SDxge
+	 mhLKpuF+DkeOh0wALXAIl88NOgZgk4X1c+2MU686EznsJkInF+h1yMbL8efKVuVOZO
+	 Y5eNgNOIafn1kK0SLtQDcYn7CEKua1C1j4uWE3Pm3OzB15PyeaocPFTxDiKv1Z636b
+	 527iudfGo3aSEHK4Y2/PdkwtF5UM1/uUiF172GFR837OfqIWpqV5P0J3FPSuyUtOoW
+	 /op36JS8Q4FZ8+ljEkbzYxIAjyEArqLqBbmWQL1bKJ+F0ww2IkVG1+kjZTtmx5wqH8
+	 Or+jM8BV/jpGQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	Raymond Hackley <raymondhackley@protonmail.com>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Nikita Travkin <nikita@trvn.ru>,
+To: devicetree@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	phone-devel@vger.kernel.org,
-	~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH] arm64: dts: qcom: msm8916-samsung-rossa: Add touchscreen
-Date: Sun, 28 Jul 2024 22:58:27 -0500
-Message-ID: <172222551326.175430.16332190112821856592.b4-ty@kernel.org>
+	Rayyan Ansari <rayyan.ansari@linaro.org>
+Cc: Conor Dooley <conor+dt@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	linux-kernel@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	Rob Herring <robh@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: Re: (subset) [PATCH 0/2] Convert Qualcomm SATA PHY bindings to dtschema
+Date: Sun, 28 Jul 2024 22:58:28 -0500
+Message-ID: <172222551307.175430.11891440918185574607.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240723131441.1764-1-raymondhackley@protonmail.com>
-References: <20240723131441.1764-1-raymondhackley@protonmail.com>
+In-Reply-To: <20240715130854.53501-1-rayyan.ansari@linaro.org>
+References: <20240715130854.53501-1-rayyan.ansari@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,16 +69,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 23 Jul 2024 13:15:09 +0000, Raymond Hackley wrote:
-> Core Prime uses an Imagis IST3038 touchscreen that is connected to
-> blsp_i2c5. Add it to the device tree.
+On Mon, 15 Jul 2024 14:01:05 +0100, Rayyan Ansari wrote:
+> The following patches:
+> - Convert the old apq8064 and ipq806x text bindings, to a new unified
+>   qcom,sata-phy binding in yaml.
+> - Remove reg-names from the SATA PHY node in apq8064.dtsi to conform to
+>   the bindings
 > 
+> Thanks,
+> Rayyan
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: msm8916-samsung-rossa: Add touchscreen
-      commit: 2bb08c4c9adcff11855b4a8d5e2f583306da883b
+[2/2] ARM: dts: qcom: apq8064: drop reg-names on sata-phy node
+      commit: 89721c0e5bf14e06dea2b42ab5efdff4bf035f83
 
 Best regards,
 -- 
