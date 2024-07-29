@@ -1,129 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-27250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 382DB93F4CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 14:03:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9800193F4DE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 14:09:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 30C1C28147B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 12:03:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 395911F21EF6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 12:09:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C620146A63;
-	Mon, 29 Jul 2024 12:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5B78146D54;
+	Mon, 29 Jul 2024 12:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R42JEzSH"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LQAOB/ix"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8D8143752;
-	Mon, 29 Jul 2024 12:03:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB43F146A7A;
+	Mon, 29 Jul 2024 12:09:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722254601; cv=none; b=s4Cr4GntsEpYS1fIX8GF4omQomHppYj53XTBYDFDVjJjwxI1+FEdlHty7a8aCktarLfUAqTSzT9GP3mlYjN9FZF6VhR5xZEyWGVhFj2erhAo5m3IMhbtR1MOY5+5jk917stYaIj0Q1cviORpZqIun9i1Yklwsl15Gys5Hq8zB50=
+	t=1722254961; cv=none; b=Y0ezKhdBSP7dKjDoxWcgndIEOOgbFsRwlVcuE9BcvfcREJONkMo6ZdHFtTbsEPiqFXNFD8sV9LE/j/dPL+7LOH8GtFMpsyIJScL0/UFKv7udSLZjfFp3+2hXK+rW5e0IYRRhxgyx+Gma8cONk2ZJztogaF5GEUnuWYIYA7sDxQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722254601; c=relaxed/simple;
-	bh=lXf72ckhhbgg5O3Y7wY7iYMZFSmYWB3p3X2wf1yGDdo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oOGvpCFBatvASPzlhUsxNyCCxvu8M8QpEuUcc1KB2oWv22kjn5IwsSjL7gHLvCP6bcW9s+W18U0iT22sSi6JMBCXPBlpIJiRbepacl9WDJl13Md+PweEGPjXAj/ZEVzVskTXCZ1ysaIIEUu4PJYB+t5+XbXniIB6KnZTrOokRiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R42JEzSH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D46C4AF0A;
-	Mon, 29 Jul 2024 12:03:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722254600;
-	bh=lXf72ckhhbgg5O3Y7wY7iYMZFSmYWB3p3X2wf1yGDdo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=R42JEzSHdRhncXb5jmbBQ7FQckeyskXB9yTXuYjH8/CLaG4+zKgIanX2tYGc7BDAv
-	 W0S8cI7e51U5+FtAWVlz3bUiCtOBqnU1nzO+3dt0f99J58TicPdvOJDREgo8+up+Iw
-	 O7BQM5xP7h2BqTJXKlYl0yITUXOwzN0M/O1jSH4DchK9Z8hEM9+3n3QpBGLTx4vgKe
-	 b9qMngnnNz8LjzbT884qOOWCBCwaMIVJQyXA0pbeJONMHqIfQMzlIIEycr1lOUAevc
-	 7+u1YR3bhwHexSYgYYrlQGHbe+KHBeApqCkHIxugvOu97+E9HwU6xFGIz5B7U1MHQE
-	 O3l/WMprLMc0Q==
-Message-ID: <a1dae393-7951-4dcc-9340-484ea9a5d404@kernel.org>
-Date: Mon, 29 Jul 2024 14:03:14 +0200
+	s=arc-20240116; t=1722254961; c=relaxed/simple;
+	bh=LoVudDo8zgjRoSSoWDd0Q66VlmVsXWeKDSdQXYU7Ogg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=caP9mal7Aazjod2QitJUuOjTZZNO0tRyjHcBQCd4hVymFZmIWjbw+dD/fmMFinruAemO2V+V5TESG9BDzcfIhpx6Wg/ju+V8kVPvJ0bvq2cS2tiywWIkcHKQbsDdaerGm9z/m0CBalBzhAGjGnX0MMEo0Mo2lJUzaoSzi2pEF20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LQAOB/ix; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46TAENev017247;
+	Mon, 29 Jul 2024 12:09:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+LtnkQYKPqwyNkDNQjheET71CL/67jvh+i4upFihUAA=; b=LQAOB/ixPAU9XJMN
+	6YVsjx+lV9Vh8dPv7QPlYaNizUHtae7AZkH+ylpXIOF8mM4bgNKixjBbB4rzUx2a
+	lYBcqLBrxIalc0BGUWNMQ6gKcrLXiB9OQNIMvWA8CWw2s/Hip+YP31DyBfCNj6Si
+	8cCecchz3qYiF3LbizHzUAOx/M+slflNlonSfdkYwP0XDbEHvs9nBJiX8VJ4wWva
+	srYpuxPtA0VJdoNsZJ0amRAW/NNWz/CBicCbBx3HWmCNf7aaByg2O50CpflM5474
+	rWg4ARTgp6QWA8lnBdixGCDalcd1zM/libVfztOQ4l1XIFm83uPZ+rnRaRnXEFgT
+	EjKY8g==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40mrytv793-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jul 2024 12:09:00 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46TC8wes004776
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 29 Jul 2024 12:08:58 GMT
+Received: from [10.216.48.244] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 29 Jul
+ 2024 05:08:52 -0700
+Message-ID: <593b2c5e-0add-b6eb-5f2e-bbc832a1b0f2@quicinc.com>
+Date: Mon, 29 Jul 2024 17:38:49 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/11] arm64: dts: qcom: sm6115-pro1x: Add Hall Switch
- and Camera Button
-To: Dang Huynh <danct12@riseup.net>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240725-qx1050-feature-expansion-v2-0-5fac4bbd946f@riseup.net>
- <20240725-qx1050-feature-expansion-v2-1-5fac4bbd946f@riseup.net>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v7 2/4] PCI: qcom-ep: Add support for D-state change
+ notification
 Content-Language: en-US
-From: Konrad Dybcio <konradybcio@kernel.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- JDZelR9Xqh8=
-In-Reply-To: <20240725-qx1050-feature-expansion-v2-1-5fac4bbd946f@riseup.net>
-Content-Type: text/plain; charset=UTF-8
+To: Bjorn Helgaas <helgaas@kernel.org>
+CC: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Kishon Vijay Abraham I
+	<kishon@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>, Jonathan Corbet
+	<corbet@lwn.net>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Rob Herring
+	<robh@kernel.org>, <linux-pci@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <mhi@lists.linux.dev>,
+        <quic_vbadigan@quicinc.com>, <quic_ramkri@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_parass@quicinc.com>, Manivannan Sadhasivam
+	<mani@kernel.org>
+References: <20240711184842.GA285502@bhelgaas>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20240711184842.GA285502@bhelgaas>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: BOVJUMJcVrPtEzQ8uQoLJrOhfrjJo6Of
+X-Proofpoint-GUID: BOVJUMJcVrPtEzQ8uQoLJrOhfrjJo6Of
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-29_10,2024-07-26_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 suspectscore=0 bulkscore=0 adultscore=0 spamscore=0
+ impostorscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=999
+ mlxscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407290081
 
-On 25.07.2024 3:42 AM, Dang Huynh wrote:
-> The Pro1X has a flip keyboard and a single-state camera button.
+
+
+On 7/12/2024 12:18 AM, Bjorn Helgaas wrote:
+> On Thu, Jul 11, 2024 at 11:57:35AM +0530, Krishna Chaitanya Chundru wrote:
+>> On 7/10/2024 5:41 PM, Bjorn Helgaas wrote:
+>>> On Wed, Jul 10, 2024 at 04:38:15PM +0530, Krishna chaitanya chundru wrote:
+>>>> Add support to pass D-state change notification to Endpoint
+>>>> function driver.
+>> ...
 > 
-> Signed-off-by: Dang Huynh <danct12@riseup.net>
-> ---
+>>> I don't understand the connection between PERST# state and the device
+>>> D state.  D3cold is defined to mean main power is absent.  Is the
+>>> endpoint firmware still running when main power is absent?
+>>
+>> Host as part of its d3cold sequence will assert the perst. so we are
+>> reading perst to know the link the state.
+> 
+> I think it's true that when the device is in D3cold, PERST# will be
+> asserted (PCIe CEM r5.0, sec 2.2.3, fig 2-6).
+> 
+> But I don't think it's necessarily true that when PERST# is asserted,
+> the device is in D3cold.  For example, PCIe Mini CEM r2.1, sec
+> 3.2.5.3, says "The system may also use PERST# to cause a warm reset of
+> the add-in card."  In a warm reset, the component remains powered up,
+> i.e., it is not in D3cold (PCIe r6.0, sec 6.6.1).
+> 
+> I would think the endpoint firmware would be able to directly read the
+> state of main power or the LTSSM state of the link, without having to
+> use PERST# to infer it.
+>
+Ack, we will use LTSSM state to know the link state.
 
-[...]
+> I guess the ultimate point of figuring out D3hot vs D3cold is to
+> figure out whether to use PME or WAKE#?  I'm a little bit dubious
+> about that being racy, as I mentioned elsewhere.  If there were a way
+> to attempt PME and fall back to WAKE# if you can determine that PME
+> failed, maybe that would be safer and obviate the need for the D-state
+> tracking?
+> 
+We don't have a way to know that PME is received by the host.
 
+We can add logic to send pme in d3hot and wait for sometime for the
+state to move to D0. if it doesn't move to D0 for that period, the we
+can check the LTSSM state to see if it in D3cold(L2/L3) then we can use
+WAKE# else return with failure.
 
->  
->  &tlmm {
->  	gpio-reserved-ranges = <0 4>, <14 4>;
-> +
-> +	hall_sensor_n: hall-sensor-n {
-
-These must end in -state to pass binding checks (also in other
-patches)
-
-Also,
-
-https://docs.kernel.org/devicetree/bindings/dts-coding-style.html#order-of-nodes
-
-suggests to sort these nodes by gpio number
-
-Konrad
+- Krishna Chaitanya.
+>> Qcom devices are drawing power from the PCIe, so even when PCIe is in
+>> D3cold endpoint firmware can still run.
+>>
+>> - Krishna Chaitanya.
+>>>> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+>>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>>>> ---
+>>>>    drivers/pci/controller/dwc/pcie-qcom-ep.c | 8 +++++++-
+>>>>    1 file changed, 7 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+>>>> index 236229f66c80..817fad805c51 100644
+>>>> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+>>>> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+>>>> @@ -648,6 +648,7 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
+>>>>    	struct device *dev = pci->dev;
+>>>>    	u32 status = readl_relaxed(pcie_ep->parf + PARF_INT_ALL_STATUS);
+>>>>    	u32 mask = readl_relaxed(pcie_ep->parf + PARF_INT_ALL_MASK);
+>>>> +	pci_power_t state;
+>>>>    	u32 dstate, val;
+>>>>    	writel_relaxed(status, pcie_ep->parf + PARF_INT_ALL_CLEAR);
+>>>> @@ -671,11 +672,16 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
+>>>>    		dstate = dw_pcie_readl_dbi(pci, DBI_CON_STATUS) &
+>>>>    					   DBI_CON_STATUS_POWER_STATE_MASK;
+>>>>    		dev_dbg(dev, "Received D%d state event\n", dstate);
+>>>> -		if (dstate == 3) {
+>>>> +		state = dstate;
+>>>> +		if (dstate == PCI_D3hot) {
+>>>>    			val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
+>>>>    			val |= PARF_PM_CTRL_REQ_EXIT_L1;
+>>>>    			writel_relaxed(val, pcie_ep->parf + PARF_PM_CTRL);
+>>>> +
+>>>> +			if (gpiod_get_value(pcie_ep->reset))
+>>>> +				state = PCI_D3cold;
+>>>>    		}
+>>>> +		pci_epc_dstate_notify(pci->ep.epc, state);
+>>>>    	} else if (FIELD_GET(PARF_INT_ALL_LINK_UP, status)) {
+>>>>    		dev_dbg(dev, "Received Linkup event. Enumeration complete!\n");
+>>>>    		dw_pcie_ep_linkup(&pci->ep);
+>>>>
+>>>> -- 
+>>>> 2.42.0
+>>>>
 
