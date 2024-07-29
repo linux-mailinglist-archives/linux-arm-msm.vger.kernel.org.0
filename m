@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-27235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A10E993F310
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 12:47:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6ACE93F31B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 12:49:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 16BF31F228AB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 10:47:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C92051C21B12
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 10:49:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C736313D29A;
-	Mon, 29 Jul 2024 10:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80CC81422C4;
+	Mon, 29 Jul 2024 10:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DbtcPf63"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="T30bWih4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6489A163;
-	Mon, 29 Jul 2024 10:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F076C28399;
+	Mon, 29 Jul 2024 10:49:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722250034; cv=none; b=LYjgf9EiFXB2shg7zom+deuzwedXsKZaCK+OKghpQW2fNdX+ex+RkXwqkEUHkTJL2mrMiGfUm6tHDzXk2dpHKV7leJDlV13WYdDo14ppvQQUdOYtQrp6e/2ZQMOGTQYbIssTKn29BEQv1UGQe6+yCVYQh0S5wyp0tVWpO5R6tFo=
+	t=1722250146; cv=none; b=dTMjjuxWE4CIClY1AzR6dkVmKSpGvbexcF9HvdbbAhR0LC0VgNt/oxj8zwt3cyr7AmgUysnFxbSy7ukhAtqN/MV55ChjrouNiQHNvTHulhlxMPxQZVkNS7KR5LbbHmMm217JJr8WXQfk99uKDh/gTXrxDwfV7Zvu3MYhhgscKts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722250034; c=relaxed/simple;
-	bh=b9bI8wUZikmqwq2909k7MKHP6UiqrDlVYbCzcp6ouho=;
+	s=arc-20240116; t=1722250146; c=relaxed/simple;
+	bh=iLObMJcPpAv1PmLfMjcnb4awXSesMGgiYmxAenv/EVM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=f9K9oFtthqI3xbLc+zq7lFEy8X3hQTGSkn+hOqHa96UQLnFA9CP85e5O0jITqsndpLDNsflHOqfyatXEJ//4CFu1tmktnNlPV3u9kRgv58Dtnlm7JeYSwhQk82BtrTcyrdUs7QtuDuBmbi7gO0qMsIoECazJjLEXWWSGTRh8dpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DbtcPf63; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=shnF43pAYaqDFfnZb1lO7vMpSu5g00xOdSViGny0ZCpmWp/VkUeGNDLD7ysXzlRwV+hKNrjPKoLeu562VD/ENLUk2zqKSpGytRlsupeRKqqfR4HKoCdNZK1+3d8HwARA2in3FDh0RXtvktGn0tV1rCk2Q+nUByW9iUcuGByQ/c8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=T30bWih4; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46TAJJ3n021468;
-	Mon, 29 Jul 2024 10:47:10 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46TAN1kV026715;
+	Mon, 29 Jul 2024 10:48:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	QDmS9fIU1t0UqW3++dlX2LtdqKUcOSk5P6upLOLTP+0=; b=DbtcPf635ombhF8d
-	DDOsMl50lUulJ3Ph4g5Y4+OCLGvB0Yx1ovj2+0lEWzSRTpicfz5FF5pP7lAC6WB5
-	edo6voCOQEFsxvvghiaMnCh+4Oyi1h7+S42hk7EmM/ocXmao+LIuiAzrViUUTfHr
-	xVcFKpTbOj0fXKzhJNraghUxeIrRGSsdb6b3ftCKmD2JnDyNUBSRHYAt9nURUrbL
-	jxfOYljNWAlaOAAwA0Kw6DnVJBVawWltvVYwCGhsYe/soDbnMw2As6uysnItbhe5
-	iYzWqSU7V9iGG+2iNarYAwwcN3j22CReg/nHfPf5eFB/C/J2+dyp5jUOINt+0aB4
-	IU0Brw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40ms433xku-1
+	0e3BFw5kPzxWMlrNAMjsdgQe7xXiJVJKUJTTC5HyRus=; b=T30bWih4F4YIN4nT
+	N1fnDuuvWE8rOGlcA/Ja++KNQhWbDhMA21VAskeXqPtxiSA8uyQXlculwEMeF9g2
+	zWo9GpXgVncRzmtpcaW7Ieew1CEM12IS0KyCaptuRp4ay1KCsoFcpojlnEveu5AI
+	oXs+vG7GHGcWMlrY423L0os4hiC/9ZvWodbdlmH3/NmH1w4BSac34v944mqT9GiA
+	6dOVxTgNq+0TvvzYach+U+PGdNlFxTJ2XkEPT53ijuhQpJWBbF/GdJACi78x8QHp
+	5cVuMlUOjo5WZjuVu+pQIU/KvE3gwjhpBg1U0e7Jks4UZzAqhDhpSrLURp5AeKqh
+	8n5dyQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40mpkev4js-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 29 Jul 2024 10:47:10 +0000 (GMT)
+	Mon, 29 Jul 2024 10:48:58 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46TAl98n026553
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46TAmvvC031966
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 29 Jul 2024 10:47:09 GMT
+	Mon, 29 Jul 2024 10:48:57 GMT
 Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 29 Jul
- 2024 03:47:06 -0700
-Message-ID: <f1d987d3-d1fc-4c3c-af4e-b23833c936d0@quicinc.com>
-Date: Mon, 29 Jul 2024 18:47:03 +0800
+ 2024 03:48:53 -0700
+Message-ID: <1f5c5be4-f864-489c-941d-aad4a914508e@quicinc.com>
+Date: Mon, 29 Jul 2024 18:48:51 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,88 +65,50 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] arm64: dts: qcom: sa8775p: Add UART node
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski
-	<krzk@kernel.org>,
-        Viken Dadhaniya <quic_vdadhani@quicinc.com>, <andersson@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <conor+dt@kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC: <quic_msavaliy@quicinc.com>, <quic_anupkulk@quicinc.com>,
-        Tingwei
-	<quic_tingweiz@quicinc.com>,
+Subject: Re: [PATCH 1/2] dt-bindings: mfd: qcom,tcsr: Add compatible for
+ sa8775p
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Mukesh Ojha
+	<quic_mojha@quicinc.com>, <lee@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Tingwei <quic_tingweiz@quicinc.com>,
         "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
-References: <20240710094149.13299-1-quic_vdadhani@quicinc.com>
- <2e309d52-8180-4922-9a5a-022fc8bf8ef5@kernel.org>
- <f5ed3285-82da-4ba8-9b4d-a0cc7323fde4@linaro.org>
+References: <20240705153252.1571814-1-quic_mojha@quicinc.com>
+ <3b16214b-4693-4754-b62a-fea2e070269c@kernel.org>
 From: Tengfei Fan <quic_tengfan@quicinc.com>
-In-Reply-To: <f5ed3285-82da-4ba8-9b4d-a0cc7323fde4@linaro.org>
+In-Reply-To: <3b16214b-4693-4754-b62a-fea2e070269c@kernel.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: zzi39QicOOrkfOXe103u-luHm4fcb9V4
-X-Proofpoint-ORIG-GUID: zzi39QicOOrkfOXe103u-luHm4fcb9V4
+X-Proofpoint-ORIG-GUID: 92WqJAmdmNqETMym4RWt-0xvpGYsNlj1
+X-Proofpoint-GUID: 92WqJAmdmNqETMym4RWt-0xvpGYsNlj1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-29_09,2024-07-26_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- impostorscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
- mlxlogscore=999 suspectscore=0 phishscore=0 priorityscore=1501
- clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ mlxlogscore=799 priorityscore=1501 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 spamscore=0 phishscore=0 adultscore=0 mlxscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2407110000 definitions=main-2407290073
 
 
 
-On 7/10/2024 6:39 PM, Konrad Dybcio wrote:
-> On 10.07.2024 11:47 AM, Krzysztof Kozlowski wrote:
->> On 10/07/2024 11:41, Viken Dadhaniya wrote:
->>> Add missing UART configuration for sa8775.
->>>
->>> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sa8775p.dtsi | 231 ++++++++++++++++++++++++++
->>>   1 file changed, 231 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
->>> index 23f1b2e5e624..c107ee40341d 100644
->>> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
->>> @@ -1,6 +1,7 @@
->>>   // SPDX-License-Identifier: BSD-3-Clause
->>>   /*
->>>    * Copyright (c) 2023, Linaro Limited
->>> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
->>>    */
->>>   
->>>   #include <dt-bindings/interconnect/qcom,icc.h>
->>> @@ -657,6 +658,21 @@
->>>   				status = "disabled";
->>>   			};
->>>   
->>> +			uart14: serial@880000 {
->>> +				compatible = "qcom,geni-uart";
->>> +				reg = <0x0 0x00880000 0x0 0x4000>;
->>> +				interrupts = <GIC_SPI 373 IRQ_TYPE_LEVEL_HIGH>;
->>> +				clocks = <&gcc GCC_QUPV3_WRAP2_S0_CLK>;
->>> +				clock-names = "se";
->>> +				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
->>> +						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
->>> +						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
->>> +						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
->>> +				interconnect-names = "qup-core", "qup-config";
->>> +				power-domains = <&rpmhpd SA8775P_CX>;
+On 7/7/2024 8:46 PM, Krzysztof Kozlowski wrote:
+> On 05/07/2024 17:32, Mukesh Ojha wrote:
+>> Document the compatible for sa8775p SoC.
 >>
->> All the clocks, interconenct and power domains look to me questionable.
->> AFAIK, most of it (if not all) is going to be removed.
+>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 > 
-> Yeah.. I'm lukewarm on accepting any sa8775p changes until that qcs9100(?)
-> situation is squared out first
+> Eh? SA8775p is going to be removed/changed... why adding this?
 > 
-> Konrad
+> Best regards,
+> Krzysztof
+> 
 
 After considering the feedback provided on the subject, We have decided
 to keep current SA8775p compatible and ABI compatibility in drivers.
