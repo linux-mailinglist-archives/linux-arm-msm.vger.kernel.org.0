@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-27275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 864CA93F916
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 17:07:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2732293F92C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 17:13:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D8631C2165C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 15:07:41 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 783DAB21C8D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Jul 2024 15:13:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA5D2156237;
-	Mon, 29 Jul 2024 15:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9BB815665D;
+	Mon, 29 Jul 2024 15:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jyTEgguz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TLvLepuk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E28155CBA;
-	Mon, 29 Jul 2024 15:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7156F15624C;
+	Mon, 29 Jul 2024 15:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722265657; cv=none; b=EsmcZ8rhHp5bvdtAAYxspwzhz+QPzWtb9Sgxud/r77PnPGqTux38vZ2t2z4lEnKAOnQeerbyT0k0XlXk/oh88/S38FYDeLdjyxtSb6x6j4yFOxBYU1xhpt5+4KBlYK8MkyfOmbG039aF+xjDl8f4pILX3zuK7/YoU0TfTPImZhs=
+	t=1722265990; cv=none; b=dfkT2mbSiFD/EmATLnWaYPuUvs9kf5vgKWGq4OuG0ohE6o55iis8IoHsYwGEPI5Jx4E5+oXBThO1HU1uUk8yyyoQVRmfaUcMGpsPfILOmBYSLBOVF0clSkzfhDS9rxwt2SXPS3dFKwG+aWBJYVChMCgELqhHKQIpBN7fjGXonyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722265657; c=relaxed/simple;
-	bh=OwAUwVLJ7+eVQc6vfbdzjd3PzOUWGzQjMCm8iSIEeik=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PNWXlYLCzc1WTEwBeenUHeRTy5KweAV2Cwao0ysda6iPmpY+Njtw5tL8Kp+12ZQCCL77v3tkjOO97vRMmSomPMDZW8UQ52uF/ryNe5dOJzzuejRVv9t9sxZPyC7fnFcZmFrWnXpBhJymeHR5Y2D5544co7xUa3PVIIzm6+3a2A4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jyTEgguz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF1F0C32786;
-	Mon, 29 Jul 2024 15:07:34 +0000 (UTC)
+	s=arc-20240116; t=1722265990; c=relaxed/simple;
+	bh=lqnvlkLMFozm2wwc3+7Pn5KfGkqDgWA8zFqYfPHqMwQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Css49ERYqDan5eWg6jymVf5KQPfnE68wZU3w6oY5W+UryMo4mn/6KcB5YvNRF6D2y18QhsKotuxgLuJ84f6QyzoiUYhIFMwIjgiGGAXvnG/brkOh/ux6tIoY9pz5WYA74P63zx2rT2NOL9zKvOqovigTy4Z2WI6nqgDhjCzJ+QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TLvLepuk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ABC0C32786;
+	Mon, 29 Jul 2024 15:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722265657;
-	bh=OwAUwVLJ7+eVQc6vfbdzjd3PzOUWGzQjMCm8iSIEeik=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=jyTEgguzCTVdoWSLiwtmoQrXfIoDfde227P7yBp/bgLMaQJVI77NWiDQGV6aStq2A
-	 7B8lySoIkr9ZyG0PbjUqpNQ2EWMJlj0+cVShvLoyQGcwty9G++pOtcOxqlalkHGFNg
-	 rlVn2A0115LWsMKhdCtff1fJMXnsTMZmxihekfUxkueizPgOnIEu9OpC4WL8qQpACi
-	 qU+TuJm09syxX3OUcRGaoBypvNAwWB4xyhXDwZ2781+5Kr4iCQrMpRS6qUJbUzQCjO
-	 vXChfChfj7cQdF54OpnSD+qPCFTfvKhdNdBUCxF8LC9uAgaudAgLRl/1Z9bNZb/heT
-	 JLsUcXBPgXE+Q==
-Message-ID: <91004ef6-7904-412c-bc3b-28a50b704579@kernel.org>
-Date: Mon, 29 Jul 2024 17:07:32 +0200
+	s=k20201202; t=1722265990;
+	bh=lqnvlkLMFozm2wwc3+7Pn5KfGkqDgWA8zFqYfPHqMwQ=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=TLvLepukpOP2F8N4Dv4txfPbezkREc1aTC3uvBFwEDV5tE4x1gElGfjR5w5kC3xSx
+	 K9sXgiz7DfMLspa5ukpOZfGV0BifdQ+hRa82/ztEgH3J3e3LumgoFPRG9WyaeM/j11
+	 xRHWF+l4FHdnDnHrsQVcGBuiX8zR/1wQo6SSH9HozZ/TtkBk1R3qtoiTfkpsVrWp0l
+	 r6JD54awGqwgiievGjLW8M1NeWodfxSjRcRLSlCnomS11IQLI7mcOIWjEtfx7Ze0dS
+	 X+ESMgT/JhnycQuec66WIEutrV2w+yD8c1PirvlSgYig13ffh7CxQo/HFI1JqSVQPF
+	 E8s8F2CgSd+3Q==
+Message-ID: <3ae2671d-d8ff-426d-8cc8-c1603e616f8c@kernel.org>
+Date: Mon, 29 Jul 2024 17:13:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,16 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/11] arm64: dts: qcom: sm6115-pro1x: Add Hall Switch
- and Camera Button
-To: Dang Huynh <danct12@riseup.net>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240725-qx1050-feature-expansion-v2-0-5fac4bbd946f@riseup.net>
- <20240725-qx1050-feature-expansion-v2-1-5fac4bbd946f@riseup.net>
+Subject: Re: [PATCH v5 2/5] dt-bindings: usb: qcom,dwc3: Update ipq5332 clock
+ details
+To: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, gregkh@linuxfoundation.org,
+ konrad.dybcio@linaro.org, djakov@kernel.org, quic_wcheng@quicinc.com,
+ quic_kathirav@quicinc.com, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-pm@vger.kernel.org
+References: <20240725104528.3504967-1-quic_varada@quicinc.com>
+ <20240725104528.3504967-3-quic_varada@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,24 +107,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240725-qx1050-feature-expansion-v2-1-5fac4bbd946f@riseup.net>
+In-Reply-To: <20240725104528.3504967-3-quic_varada@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 25/07/2024 03:42, Dang Huynh wrote:
-> The Pro1X has a flip keyboard and a single-state camera button.
+On 25/07/2024 12:45, Varadarajan Narayanan wrote:
+> USB uses icc-clk framework to enable the NoC interface clock.
+> Hence the 'iface' clock is removed from the list of clocks.
+> Update the clock-names list accordingly.
 > 
-> Signed-off-by: Dang Huynh <danct12@riseup.net>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 34 +++++++++++++++++++++++--
->  1 file changed, 32 insertions(+), 2 deletions(-)
-> 
 
-It does not look like you tested the DTS against bindings. Please run
-`make dtbs_check W=1` (see
-Documentation/devicetree/bindings/writing-schema.rst or
-https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
-for instructions).
+Explanation you gave in v4 should be in the commit msg.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
