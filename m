@@ -1,99 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-27348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 415B69403EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 03:39:11 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3CEE94046B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 04:17:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F2D8A282EAB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 01:39:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2466B1C20F98
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 02:17:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E2D8101C5;
-	Tue, 30 Jul 2024 01:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 022FA2A1D5;
+	Tue, 30 Jul 2024 02:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dgdOAqPS"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="d7+7tAMz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E03101DE;
-	Tue, 30 Jul 2024 01:38:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BBBECA6B;
+	Tue, 30 Jul 2024 02:16:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722303539; cv=none; b=a0bLnHVo7ov4YhGQ7iBsxNuNBI+Rd+1SXpwPkzgfw4vCunCm5Lzbwf/1sqiOOQJZa7Wp7CSe2Fu5C1FjpEHtQG6NHIqyr1ymp0RYQ5AP6MMJmyvu3SGoPLlAlCUdMnTdRirGzRDFLtNa7NwkLcSLUSVADj/zY2ojDhfpPXImHj4=
+	t=1722305801; cv=none; b=fs0/zTsSy8dZpndTRPfgJTxiZWtBmyZLWPWbL3IJu/+fn2pUj0MSaOFDV4A0rPxsgbrn6qA0iB+XXqn0Ut1tbMAWjPfxXHx5DWarwFxGA/1oHE66KOOcp2pNIWkVZJ5S/N849JIhMYWWW7uwW8Jf9GieB74UkVp5omgkQaBgLak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722303539; c=relaxed/simple;
-	bh=KAID1401/yovJn3uQZvS2PURUS+l7Z9Dh1uBQxKOEwQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HFkYLQVMr6snSnROh0SdLUpIa57NeiL0He4ghW0Q2CXkr0tYXd/BOBHE+t45ddu+q0o4a80MLy0SphXPALcNSZPXqxeMGVKCM68Ja/8nHIqWlywTCmZlnnhIlxv5+1KREn3Nro3crR0nR4yb0UQas6m8R8ZIrprCYh9CBJBpXUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dgdOAqPS; arc=none smtp.client-ip=209.85.219.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6b5d3113168so23276796d6.2;
-        Mon, 29 Jul 2024 18:38:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722303537; x=1722908337; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IwijiQXrp5DlEM6JJIJ/GaHG36m5U+A+7dOKNwuF2TM=;
-        b=dgdOAqPSW2rysy99l+gzup8xkyuUgyMg7PxM8cjFkFOMOVxWAIrexX60fnN0yPdxOT
-         mjdFCkfeE9ywInRcWKqWF/zsM3ueWhSr8JrseY7kLE5xcsadKu0HqoFZY3O/U2C9KuMo
-         5AoSKoRTxK3zI3iirp8amviJ5oqjFrkYClvSJK258AmfJt0VNEv5PqfVPpWcJhZEk4lx
-         Pzw3AzwjGf5w9HM0cG/HIARPCwSVYJyYC//644/Ygg+aHBD5xLebA9jrtrALpwQOkhbB
-         +a9ePfshk0meaUyF62xXDjyI2tE8Sksf1DYOsljkMjRMVe0osMANSAcMvTGXCfHGB3rJ
-         1mYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722303537; x=1722908337;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IwijiQXrp5DlEM6JJIJ/GaHG36m5U+A+7dOKNwuF2TM=;
-        b=LpAgEw1HFP7uBZIHnoa1MzmCVaMxR8VhLB2BB3ZfHXeHYCYGqch/3Gk+ZRbQJ768AH
-         tRHab9DMlKLE7AK4LxBePBjIi5QJyQ5C5ZSZjtu4gKTvTEIQTyIUZAuiqA2pvUl2qt6V
-         y6kBmJa19D5PQq5ZQ9V60wBajHD4bYqXQ2xA7PZLNPNTHfWk7Wazo3pPQTwyyjTFAkOJ
-         czH3+xK1/k6Ajfc6FpiP30IE0sVMNvFAR7i4RaE3sAfAnLm9VkH00jgBDmU6KNu4m7IV
-         h1WaNF5GHVHeFJ2JZ6LD9rO0XGz3Qv2K/x+uBGeh2eri3tO7teMGUlIEA++KLvd40nb3
-         g/pQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVRWXjpg3kGrA+f3Q3dN2BhkwNT/C8Gx9dgv3TqibxfdoPcEPj4Nbdmd/XopWwBMuSZq5DWRjsdp0ydaZwvB/aGcVempSUk2/tfD/m78JcvGaZ9N6z9nK1vMOKdpk5uM15vvPTq4j74+XA=
-X-Gm-Message-State: AOJu0YwcopLifLhXOphZgPxoMt+c6dTM4SjdLYKKrMt+B3wEojLi8NJl
-	FmEIIyBhssM3Xp47VagHA8K98OU01sTfj4dQqEMClo9KmiqTRFr0
-X-Google-Smtp-Source: AGHT+IFV16qAcfMqLWnSDqEkg2eRkXAFyIb+aIGVTG94FYyBQh9KiIsTQXx20fyc3j8qOo7IH/YlCg==
-X-Received: by 2002:a05:6214:402:b0:6b5:80e0:1301 with SMTP id 6a1803df08f44-6bb55aeca19mr135400336d6.55.1722303536758;
-        Mon, 29 Jul 2024 18:38:56 -0700 (PDT)
-Received: from localhost ([2607:fea8:52a3:d200:324c:b818:b179:79b])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bb3fa950a3sm58221016d6.90.2024.07.29.18.38.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jul 2024 18:38:56 -0700 (PDT)
-From: Richard Acayan <mailingradian@gmail.com>
-To: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	s=arc-20240116; t=1722305801; c=relaxed/simple;
+	bh=9oRikuIjBeqowAAlsBB19ZugmBxBNVEEhZNvOJNY0EM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YAp7sKItk8LAhLT0ivbjt1s79BV7wekgIgqTrGZKdaXlqacgnSGyg9Zr21d4mcedLXmu0AR5tJoSbIjK/F+iqOfV1hlD+UOojdGamEcML22qNa7PH8JLxY/rrnTYPQKIU8s6jtqqUBnGfKUHYE7nT3m9y1Hb0tvv7bVcK3+Zdcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=d7+7tAMz; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1722305797;
+	bh=9oRikuIjBeqowAAlsBB19ZugmBxBNVEEhZNvOJNY0EM=;
+	h=From:To:Cc:Subject:Date:From;
+	b=d7+7tAMzg034Q6hb+PheTRmGGdCSeSco+Y1qjunn9X4foOCRvBCjvMbviWdmRiezw
+	 GwO1fSlOIHN8KFMIyx+0MpWkL1/VnrV/LHsOKPmvrNtJEug2L5c2000yTWWXHdVZgp
+	 nwtHY5W7nhyInReyTCExYmisJfIDMXFKqXzj8sr1RJai258jBHUo8xl7dy6pzNxjue
+	 9++jWqQBiACeZwgxBrXtkdFGMrdqTAfubOJdGIpAYRemCOqj9qOhRVDzp0pigneKd5
+	 L7nBKx6Fmv9Ufrmb4Dv32oTT3Uluz/6bDP/eCC/eGI3ZTpLkv4yI1N0MU7c1+/iun7
+	 LoLkBx3RjdLbQ==
+Received: from localhost.localdomain (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: vignesh)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id B741F3780521;
+	Tue, 30 Jul 2024 02:16:32 +0000 (UTC)
+From: Vignesh Raman <vignesh.raman@collabora.com>
+To: dri-devel@lists.freedesktop.org
+Cc: daniels@collabora.com,
+	helen.koike@collabora.com,
+	airlied@gmail.com,
+	daniel@ffwll.ch,
+	robdclark@gmail.com,
+	guilherme.gallo@collabora.com,
+	sergi.blanch.torne@collabora.com,
+	deborah.brouwer@collabora.com,
+	dmitry.baryshkov@linaro.org,
+	mcanal@igalia.com,
+	melissa.srw@gmail.com,
+	linux-mediatek@lists.infradead.org,
+	linux-amlogic@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	amd-gfx@lists.freedesktop.org,
 	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	devicetree@vger.kernel.org
-Cc: Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH 4/4] arm64: dts: qcom: sdm670-google-common: enable gpu
-Date: Mon, 29 Jul 2024 21:38:49 -0400
-Message-ID: <20240730013844.41951-10-mailingradian@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730013844.41951-6-mailingradian@gmail.com>
-References: <20240730013844.41951-6-mailingradian@gmail.com>
+	intel-gfx@lists.freedesktop.org,
+	virtualization@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v9 0/6] drm/ci: Add support for GPU and display testing
+Date: Tue, 30 Jul 2024 07:45:35 +0530
+Message-ID: <20240730021545.912271-1-vignesh.raman@collabora.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -102,43 +80,93 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Enable the A615 GPU and GMU for the Pixel 3a. It has zap firmware, so
-add that in as well.
+Some ARM SOCs have a separate display controller and GPU, each with
+different drivers. For mediatek mt8173, the GPU driver is powervr,
+and the display driver is mediatek. In the case of mediatek mt8183,
+the GPU driver is panfrost, and the display driver is mediatek.
+With rockchip rk3288/rk3399, the GPU driver is panfrost, while the
+display driver is rockchip. For amlogic meson G12B (A311D) SOC, the
+GPU driver is panfrost, and the display driver is meson.
 
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
----
- arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+IGT tests run various tests with different xfails and can test both
+GPU devices and KMS/display devices. Currently, in drm-ci for MediaTek,
+Rockchip, and Amlogic Meson platforms, only the GPU driver is tested.
+This leads to incomplete coverage since the display is never tested on
+these platforms. This commit series adds support in drm-ci to run tests
+for both GPU and display drivers for MediaTek mt8173/mt8183, Rockchip
+rk3288/rk3399, and Amlogic Meson G12B (A311D) platforms.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts b/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-index 176b0119fe6d..7acbcb5b69e1 100644
---- a/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-@@ -403,10 +403,23 @@ &gcc {
- 			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>;
- };
- 
-+&gmu {
-+	status = "okay";
-+};
-+
- &gpi_dma1 {
- 	status = "okay";
- };
- 
-+&gpu {
-+	status = "okay";
-+
-+	zap-shader {
-+		memory-region = <&gpu_mem>;
-+		firmware-name = "qcom/sdm670/sargo/a615_zap.mbn";
-+	};
-+};
-+
- &i2c9 {
- 	clock-frequency = <100000>;
- 	status = "okay";
+Update the expectations file, and skip driver-specific tests and
+tools_test on non-intel platforms.
+
+Working pipeline link,
+https://gitlab.freedesktop.org/vigneshraman/linux/-/pipelines/1235518
+
+Vignesh Raman (6):
+  drm/ci: arm64.config: Enable CONFIG_DRM_ANALOGIX_ANX7625
+  drm/ci: skip tools_test on non-intel platforms
+  drm/ci: mediatek: add tests for mediatek display driver
+  drm/ci: mediatek: add tests for powervr gpu driver
+  drm/ci: meson: add tests for meson display driver
+  drm/ci: rockchip: add tests for rockchip display driver
+
+ MAINTAINERS                                   |   2 +
+ drivers/gpu/drm/ci/arm64.config               |   1 +
+ drivers/gpu/drm/ci/gitlab-ci.yml              |   3 +-
+ drivers/gpu/drm/ci/igt_runner.sh              |  10 --
+ drivers/gpu/drm/ci/test.yml                   | 123 ++++++++++++++----
+ .../gpu/drm/ci/xfails/amdgpu-stoney-fails.txt |   1 -
+ .../gpu/drm/ci/xfails/amdgpu-stoney-skips.txt |   1 +
+ .../drm/ci/xfails/mediatek-mt8173-fails.txt   |   1 -
+ .../drm/ci/xfails/mediatek-mt8173-skips.txt   |   1 +
+ .../drm/ci/xfails/mediatek-mt8183-fails.txt   |  28 +++-
+ .../drm/ci/xfails/mediatek-mt8183-flakes.txt  |  20 +++
+ .../drm/ci/xfails/mediatek-mt8183-skips.txt   |   5 +-
+ .../gpu/drm/ci/xfails/meson-g12b-fails.txt    |  19 ++-
+ .../gpu/drm/ci/xfails/meson-g12b-skips.txt    |   5 +-
+ .../gpu/drm/ci/xfails/msm-apq8016-fails.txt   |   1 -
+ .../gpu/drm/ci/xfails/msm-apq8016-skips.txt   |   1 +
+ .../gpu/drm/ci/xfails/msm-apq8096-fails.txt   |   1 -
+ .../gpu/drm/ci/xfails/msm-apq8096-skips.txt   |   1 +
+ .../msm-sc7180-trogdor-kingoftown-fails.txt   |   1 -
+ .../msm-sc7180-trogdor-kingoftown-skips.txt   |   1 +
+ ...sm-sc7180-trogdor-lazor-limozeen-fails.txt |   1 -
+ ...sm-sc7180-trogdor-lazor-limozeen-skips.txt |   1 +
+ .../gpu/drm/ci/xfails/msm-sdm845-fails.txt    |   1 -
+ .../gpu/drm/ci/xfails/msm-sdm845-skips.txt    |   1 +
+ .../gpu/drm/ci/xfails/panfrost-g12b-fails.txt |   1 +
+ .../gpu/drm/ci/xfails/panfrost-g12b-skips.txt |  23 ++++
+ .../drm/ci/xfails/panfrost-mt8183-fails.txt   |   1 +
+ .../drm/ci/xfails/panfrost-mt8183-skips.txt   |  23 ++++
+ .../drm/ci/xfails/panfrost-rk3288-fails.txt   |   1 +
+ .../drm/ci/xfails/panfrost-rk3288-skips.txt   |  26 ++++
+ .../drm/ci/xfails/panfrost-rk3399-fails.txt   |   1 +
+ .../drm/ci/xfails/panfrost-rk3399-flakes.txt  |   6 +
+ .../drm/ci/xfails/panfrost-rk3399-skips.txt   |  26 ++++
+ .../drm/ci/xfails/rockchip-rk3288-fails.txt   |  22 +++-
+ .../drm/ci/xfails/rockchip-rk3288-flakes.txt  |   6 +
+ .../drm/ci/xfails/rockchip-rk3288-skips.txt   |  55 +-------
+ .../drm/ci/xfails/rockchip-rk3399-fails.txt   |  90 ++++++++++++-
+ .../drm/ci/xfails/rockchip-rk3399-flakes.txt  |  50 ++++++-
+ .../drm/ci/xfails/rockchip-rk3399-skips.txt   |   8 +-
+ .../drm/ci/xfails/virtio_gpu-none-fails.txt   |   1 -
+ .../drm/ci/xfails/virtio_gpu-none-skips.txt   |   1 +
+ drivers/gpu/drm/ci/xfails/vkms-none-fails.txt |   1 -
+ drivers/gpu/drm/ci/xfails/vkms-none-skips.txt |   1 +
+ 43 files changed, 433 insertions(+), 140 deletions(-)
+ create mode 100644 drivers/gpu/drm/ci/xfails/mediatek-mt8183-flakes.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/panfrost-g12b-fails.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/panfrost-g12b-skips.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/panfrost-mt8183-fails.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/panfrost-mt8183-skips.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/panfrost-rk3288-fails.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/panfrost-rk3288-skips.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/panfrost-rk3399-fails.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/panfrost-rk3399-flakes.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/panfrost-rk3399-skips.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/rockchip-rk3288-flakes.txt
+
 -- 
-2.45.2
+2.43.0
 
 
