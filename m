@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-27370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D976694084D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 08:22:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 96E9F940858
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 08:24:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6ABEEB21776
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 06:22:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5D5CBB23350
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 06:24:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9239169AD2;
-	Tue, 30 Jul 2024 06:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36E5118FC80;
+	Tue, 30 Jul 2024 06:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N9cy7gRK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UIOcj2ca"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD2115746E;
-	Tue, 30 Jul 2024 06:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075D418FC7D;
+	Tue, 30 Jul 2024 06:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722320544; cv=none; b=aO2uSqE2wQizGUoKlPOYwGjxxXFB9gSM67VLMQczRHF6DrxXx6DDYWRKqNLexVDvjmXoHoFgqjJpZ5aB89sMW0llQpczMCBGqvoDgAKARKIVrblS7oeTs7Wyw51QHa2mY3k8qsjaEy15xzT/j2Tjjzu4Va6joT3Bs3vcmqt1Ssc=
+	t=1722320631; cv=none; b=dajLoRYAbrDWZuaBVo7d2zUx4qAuFtVxJxF4fQlUZjOHItPOHCZ1zK3GcIR6vOPDEkpOO8fVyCB9wnq3VTUjTiVHmxlc6dagSZTwNen20mb7NKZ9Scl4fx3OcrGHBW7atwWUBKKaMPJjoYafJc8GH4lgOYaUdyikj/2g0gAHt4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722320544; c=relaxed/simple;
-	bh=rMdN1gHFV39fx0Bjbg3Zc3KHjuUFlLidSLS4SJAgTAo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dV3RcbAhCegrSGIEgQBshrTMwEhgkOm7ndzNOy9EGNOCVBsdEK4QnIkpr4AMXA2UZrClXf2z48nbcZ/sxSZOvcCK/SuCHRZg5EOJz6MPaLXvkQTNQZn2RI3n7iOfqoUc6Q9vANBMctklSOC6FZNsjnj60EYhPRHBHfFxy+dWfm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N9cy7gRK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907A6C32782;
-	Tue, 30 Jul 2024 06:22:17 +0000 (UTC)
+	s=arc-20240116; t=1722320631; c=relaxed/simple;
+	bh=1DiTRqgQbcEHcJ5mX8weo82LnSLeL3Szs5YNmmxWstA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Mn9tI1V4Mue8TAkGZUz0/oXSGyPQ/tNbhDLtvR4bgVaN+TUH2ai8gzTWGqPv9LlJj0kF+QP6HEtQX3MwvS/5V8Y2DbWfRmfNcJSYyodrmxeXbfjZ/C6K2EHqz2GvBD67mPBELiBQ2E4lR1Dc0SGOeqSckh+cucFfDM4ePueswUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UIOcj2ca; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF7D8C32782;
+	Tue, 30 Jul 2024 06:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722320544;
-	bh=rMdN1gHFV39fx0Bjbg3Zc3KHjuUFlLidSLS4SJAgTAo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=N9cy7gRK7uqB5U9Ujr6HO6cUV8V2x146a6NOC+VIcQCACed16JbLPxFAah968vF5l
-	 b5aF5MAneLjLY0K0sav6hRQ9J9NDzZ2hyZ/ealWtBvS8Y829mw+DvdVHO4xX3izS0g
-	 ft7CnhOVCzNeyt43H7p1nbq5vCRJdxQY3uJ/YRsDraymYYCl+mO8EJxuNkaI6mRETI
-	 dqfPgXKerHFGFPfbcLYvCAvhiGZSG2ZtgH84x/YG57ijVrhdAidV6Q2y8dIeLXj3MJ
-	 x/d7kDoH0sAvXp74zBVJXnsPdSuoZMm91jS1Q8sbrZrefePovW+PEKWvth+FI2uvbW
-	 t2SCHxq3tu8Eg==
-Message-ID: <ef707429-6021-43a9-b8ff-77e393de9cef@kernel.org>
-Date: Tue, 30 Jul 2024 08:22:15 +0200
+	s=k20201202; t=1722320630;
+	bh=1DiTRqgQbcEHcJ5mX8weo82LnSLeL3Szs5YNmmxWstA=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=UIOcj2caRV5LpfXCe2zIdX0I9Gc6KY8HF1t0SjbaZoM/Mfy4+0UodIL5r4Xunrlra
+	 vjJoO0CeY3h9i9fPMNngwPYrFYOTOz5ywKmJ9rWSvmJ/KjiOvbbWtL8ccP4SqZtcuX
+	 mxin/NaqreCtOPTg0UAEB8I9faB/jTNUPOVX5Qvfegj8iFdey8UM6zxGh4GGwgHzx0
+	 j4GU+xk/xvBhx10kGZlq2vdBTRQJZsMc5ccJ9mPKm50igIv18FZrU2P8b7ZkjTYxvr
+	 16iwj9Tjuq7mFPGWrvcrP3MuRrrPb1cxy4ST5KQO4UqHQYBQpP1ov5I5jzHf96j1WV
+	 YyzmypUM9FoDw==
+Message-ID: <9c4a586c-e9f2-44eb-a8ce-0b3943b07de0@kernel.org>
+Date: Tue, 30 Jul 2024 08:23:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,22 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: display/msm/gmu: Add SDM670 compatible
-To: Richard Acayan <mailingradian@gmail.com>, Rob Clark
- <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+Subject: Re: [PATCH 2/2] iommu/arm-smmu-qcom: add sdm670 adreno iommu
+ compatible
+To: Richard Acayan <mailingradian@gmail.com>, Will Deacon <will@kernel.org>,
+ Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- devicetree@vger.kernel.org
-Cc: Maxime Ripard <mripard@kernel.org>,
- Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
- Daniel Vetter <daniel@ffwll.ch>
-References: <20240730013844.41951-6-mailingradian@gmail.com>
- <20240730013844.41951-7-mailingradian@gmail.com>
+ Conor Dooley <conor+dt@kernel.org>, Rob Clark <robdclark@gmail.com>,
+ linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20240730013820.41702-4-mailingradian@gmail.com>
+ <20240730013820.41702-6-mailingradian@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,16 +105,33 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240730013844.41951-7-mailingradian@gmail.com>
+In-Reply-To: <20240730013820.41702-6-mailingradian@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 30/07/2024 03:38, Richard Acayan wrote:
-> The Snapdragon 670 has a GMU. Add its compatible.
+> Add the compatible for the separate IOMMU on SDM670 for the Adreno GPU.
 > 
 > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index 36c6b36ad4ff..7f4b15be4a11 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -539,6 +539,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+>  	{ .compatible = "qcom,sc8180x-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>  	{ .compatible = "qcom,sc8280xp-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>  	{ .compatible = "qcom,sdm630-smmu-v2", .data = &qcom_smmu_v2_data },
+> +	{ .compatible = "qcom,sdm670-smmu-v2", .data = &qcom_smmu_v2_data },
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Do the people even read the comments? What the comment is saying? I
+admit it might be not precise, but "500" and "v2" are the same from that
+point of view.
+
+NAK.
 
 Best regards,
 Krzysztof
