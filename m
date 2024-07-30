@@ -1,70 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-27344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5B759403E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 03:39:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD03E9403E7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 03:39:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 030EE1C21377
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 01:39:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 29A8228303F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 01:39:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3B9BA23;
-	Tue, 30 Jul 2024 01:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BD74CA6B;
+	Tue, 30 Jul 2024 01:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LSA57cnE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FlnENwmH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DC51426C;
-	Tue, 30 Jul 2024 01:38:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60708C1F;
+	Tue, 30 Jul 2024 01:38:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722303532; cv=none; b=d4NKXZP6X3QPyBLuoZh5bAAa+IXqPnfuQqTt3J4n7PCRidRQqpwSVymBkiNcid8edTtPdV9fYhWDIOIyUVjS0BTp4PlJFhKKfYkXit8HvT2MUZuG+Shk3Fm93VVAiS3oE4MnJS4HLdzW6UEhoKMRxxSC1qyEu4U9V1SYmBgGpF8=
+	t=1722303534; cv=none; b=X3mf0P21o5FAFrURA2vTtlf/5uibsuLKUNHU1SFg4cLLBgIcobdauCYV2ekTUv7uBulQceEhdjERrMbyyy1iWcW6OyMfT9Er6cv5+C4cU+yUNF8rpaXOKjYnlB78vqyx3Xq4c8vJ0kZ3qUHnFWIdIpjgYVh/WpCEoCpcpefc/PY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722303532; c=relaxed/simple;
-	bh=DeWrz3VqxhKlcDlvp2OeARJOtHuhyh1WuRgVwy3hW/Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NyOg/NsP++/nAlg7/7GpLf99sZ7iXO/NPAhG7mgmQSerSZ/r8IU9gKU+a0W2XoH5K6LZtgzJviKyEyfK4WZpbolXiDxgA4uY9KRrwYHdVjbt2DtwTTwsf7557OAYjLEMGpbhObi1utX7SWC5Ft8dtjV8haclIns7OnxAsZ7IIOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LSA57cnE; arc=none smtp.client-ip=209.85.219.181
+	s=arc-20240116; t=1722303534; c=relaxed/simple;
+	bh=dduTlr6uUWI8tNY2VGnFDDzuS6zEuw0++81bTrldRmQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=XtLjGZwtw/xpSrihradqeIUEZinquJ9JuYDUwpkCWc89X6IyKxBh+z7uAh8QPLTrbu+3andrO69ssA7oUoMCIQl/87MpOpUvVq/wKaAnGuf7UahW2e6r+JH6F5Wqt0Bsb4YNOteHYXkrrIEQ/24aBERvGtu7/byVaXFxevVHjmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FlnENwmH; arc=none smtp.client-ip=209.85.219.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e05f913e382so2388985276.2;
-        Mon, 29 Jul 2024 18:38:51 -0700 (PDT)
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6b7acf213a3so20841476d6.1;
+        Mon, 29 Jul 2024 18:38:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722303530; x=1722908330; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=o5T2H1MxibV59R6E5ponVFEf8aVMT7LzzdBaNyOKYAQ=;
-        b=LSA57cnEMyMyBdbLRsKCebWzhMWKupN1iWE6urUNNI8Y3uA82FYgRXmAU7AQQ1zcSj
-         Tosfa6H3UQIblcFY+VIS1lRhhUm3KLehdAgzvvQjgAjtMpKOYaf9lOmzreCX239pi6LO
-         gYaHpFg4HaKO5vRe+Xeawknr38pIG9GWiLaUOSedP/QACAO7hae3+Km/o986B1P1W9vk
-         4D5x3hmNq7H2WDa1bycACo+hHG5WG7FivLL2SjosGu/68GdZHNccXOKko2S9NRR6TpA/
-         ciVJju6QEkvDV1z7PdS5cNo05g36Bu2yUezwx4BtMu732szRNJJ86dZTJtYjybKygihR
-         vYrw==
+        d=gmail.com; s=20230601; t=1722303532; x=1722908332; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=R5V8v6mJVu45H98XTICckmU1hS1yE/o0aFhw7aKg4Kw=;
+        b=FlnENwmHjuugozaxkTHl3ryrcZ8XTuQBkXLZpAztlEz3SXY3Cd3qXuelOycTuR1bnU
+         COn6JFRHH3WFOtJMWoraoYlXSm0MpUInfXlRlfyF1qRl0cF7grQ7Ua2dBufefpP9H4MO
+         XYwy4A84O0v7CgtRPDCgS5v9m1/4kKuK0t9NsO/+gUWnp3GrweduyeCrW6XC+4PQBkzA
+         AMIQAPkIkFcxJk3NngagUjaTpT5n97/NyYt/VH38lWm1LDKTtIw6l+C7nu9DYC6pIot8
+         +FCEGVDThkLmSUw2nUEOlS37+8+Rfh1Ja0xMcVbQx37ium6bFli4INKNW5/qzKA003jc
+         8Whg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722303530; x=1722908330;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=o5T2H1MxibV59R6E5ponVFEf8aVMT7LzzdBaNyOKYAQ=;
-        b=UqFTKV6plrnFjf4ghIy1FlSAhM+k36z/aTIHwJoHLL69/kGpkOANjg93iI8DxBRwXe
-         9kYKECoOadTw2Sc/kSlscJ2lT5OljNPY/gFuz3B5HRBwA0DhD7ZIOM4cJGAvoP+1G3tQ
-         iUHhUBcNZUjBSCEDF0QCm+D6d6G/U5a7OfVnn8xsKDzoQmW4zAtBfJt3vAJZtDUhnV0y
-         oPkyfIr4mCP+WuPTmfDfoNdskU8xnMhKiGFknqCqOJZVmU5jTQYfhjnVXMiOhnoi/vX3
-         KHqSmh3s0Me4w2PJuLc0/6a07Qy4g702GtAM3yoe4PcHuiKbztIJdj2CJzySXkTbJOYq
-         uhNA==
-X-Forwarded-Encrypted: i=1; AJvYcCUqr0e2D/QSOuXx3Eg0zpqN7Ch8a92/Ihn8VMLW2rQWZ4D+PSFFwFAwN/Ph/yMz6aDOVP1Qp8MvhvS3y8pCUw==@vger.kernel.org, AJvYcCVvqIBt9Y6L5gzM3K20IeJ0q/Cq+oy22z6VZgNQ7cg/aJoAOf4OYZPLeu1j0Wq6hPhWbdg4KIgBn7Fq@vger.kernel.org
-X-Gm-Message-State: AOJu0YxQfXJswkwfIm2/F9ljrAeG7h9NFiNDXJlXnEFXj+R4OJ79Wz1m
-	NIznFd3sEUEdJiEkKGO9BrrnHqifqPThzCWlasaUlywzW8bkuaD/
-X-Google-Smtp-Source: AGHT+IE8CCqiBQzc9P2bfVnL3NGKo0Stf9R5bLEeJaR55c3XfqJse2oFJU3IpAa/r9TGBMegBbSatw==
-X-Received: by 2002:a05:6902:124e:b0:e0b:97c4:77cb with SMTP id 3f1490d57ef6-e0b97c4831fmr2285692276.27.1722303530216;
-        Mon, 29 Jul 2024 18:38:50 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1722303532; x=1722908332;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=R5V8v6mJVu45H98XTICckmU1hS1yE/o0aFhw7aKg4Kw=;
+        b=CGb6Lwpfp5HW7eXHN0EXEsZb3KMv8RlCgWRfbj50ywyzNByhjUsL5QdrG7ZeO/tw46
+         FSxHDfHKq7xoMo5mYO/4q2HbFvlBhmnYB6vw5bxYvLCX+/xJOl9AcvQQ8ADnybyo5Cb6
+         sWTyeOKZmINjEEPrtJIhR8Y5cmv0FQNXX89uZZLfmc1hzW6gwTQ1AubxHRQRX0gYOMoO
+         tZUmWZFKH+lWFHr2Qt4DTjyLRe0xnk2bW4OEdpAXsi38g3f+ariTa72dxWpjMFfa5M7P
+         I1tOnqZaMbSx93JfWcPslys1OmfI9/vXMw4oZeZN4NqYMRFTWG+mvK96ypUMRqJhqb98
+         DAkw==
+X-Forwarded-Encrypted: i=1; AJvYcCUYddx+sxOBV1so1SngoFp3gzoo8gla5CvnUMNkXyYkpyhku1XuoxJWkOBBg6Hp6dQY/IviXYMZuTM71oZ3SeqTWeaaeB2DWx+sVW82UXqm3rnx/iJGBvMcqRKBm/93cVsIzQHLc8luSao=
+X-Gm-Message-State: AOJu0Yxq0fcFiV19Jj5SuJLhA2TxbzQbgSgS1nt+ns3dnOYWbIPscTU8
+	3+pLRzfxkO8XGIOqc7O7TA7Ngnru7RTJRhMpmZ44CBEH3vETBp57
+X-Google-Smtp-Source: AGHT+IFAXnDbbOCYtDoXYpx9BApuVpqU8RCmPc/YjsBZVC5fX+KPk+EzHwB2giEEE4IPMKHBD+VtPg==
+X-Received: by 2002:a05:6214:2501:b0:6bb:3f69:dd0b with SMTP id 6a1803df08f44-6bb55a1a621mr139961136d6.18.1722303531781;
+        Mon, 29 Jul 2024 18:38:51 -0700 (PDT)
 Received: from localhost ([2607:fea8:52a3:d200:324c:b818:b179:79b])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-45034f7804dsm2284681cf.16.2024.07.29.18.38.49
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bb5bcffd18sm36115946d6.15.2024.07.29.18.38.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jul 2024 18:38:49 -0700 (PDT)
+        Mon, 29 Jul 2024 18:38:51 -0700 (PDT)
 From: Richard Acayan <mailingradian@gmail.com>
 To: Rob Clark <robdclark@gmail.com>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -86,10 +88,12 @@ Cc: Maxime Ripard <mripard@kernel.org>,
 	David Airlie <airlied@gmail.com>,
 	Daniel Vetter <daniel@ffwll.ch>,
 	Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH 0/4] drm/msm/adreno: Add A615 GPU for SDM670 and Pixel 3a
-Date: Mon, 29 Jul 2024 21:38:45 -0400
-Message-ID: <20240730013844.41951-6-mailingradian@gmail.com>
+Subject: [PATCH 1/4] dt-bindings: display/msm/gmu: Add SDM670 compatible
+Date: Mon, 29 Jul 2024 21:38:46 -0400
+Message-ID: <20240730013844.41951-7-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240730013844.41951-6-mailingradian@gmail.com>
+References: <20240730013844.41951-6-mailingradian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,20 +102,25 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This adds support for the speed-binned A615 GPU on SDM670.
+The Snapdragon 670 has a GMU. Add its compatible.
 
-Richard Acayan (4):
-  dt-bindings: display/msm/gmu: Add SDM670 compatible
-  drm/msm/adreno: add a615 support
-  arm64: dts: qcom: sdm670: add gpu
-  arm64: dts: qcom: sdm670-google-common: enable gpu
+Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+---
+ Documentation/devicetree/bindings/display/msm/gmu.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
- .../devicetree/bindings/display/msm/gmu.yaml  |   1 +
- .../boot/dts/qcom/sdm670-google-sargo.dts     |  13 ++
- arch/arm64/boot/dts/qcom/sdm670.dtsi          | 168 ++++++++++++++++++
- drivers/gpu/drm/msm/adreno/a6xx_catalog.c     |  27 +++
- 4 files changed, 209 insertions(+)
-
+diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+index b1bd372996d5..1c055ba64038 100644
+--- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
++++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+@@ -91,6 +91,7 @@ allOf:
+         compatible:
+           contains:
+             enum:
++              - qcom,adreno-gmu-615.0
+               - qcom,adreno-gmu-618.0
+               - qcom,adreno-gmu-630.2
+     then:
 -- 
 2.45.2
 
