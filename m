@@ -1,159 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-27390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6628940CFD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 11:08:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7D28940D46
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 11:22:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 755281F22E27
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 09:08:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9900D1F2462A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 09:22:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08272194133;
-	Tue, 30 Jul 2024 09:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6FE01946DC;
+	Tue, 30 Jul 2024 09:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LPcSFeZA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uFpBNT+A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0550442C;
-	Tue, 30 Jul 2024 09:07:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF70C1667FA
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jul 2024 09:22:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722330466; cv=none; b=SawI6e8hqaxOGl0XBW8iCoiacm9LtaTTO0vgoxeF/B04VW3RhiI9mniCHd/nMfe0b+20hvgSTYYdtNzNIyMZ0H0w/UsYt0hs1N33ZF7AuznH7xNaULjIDtzXGjasTHjmL1E9LhIkzVa/z/VK/WzYBwWu47r0+dWKvSpk/cM6nBw=
+	t=1722331327; cv=none; b=otSN+Q6HocYlnc8wLjc08r08g1CkJRzTOO4Qp1JbVaNPqlm86QnrdEv5G4sWfWqVK46UzCNBZm2jUsfT6VHu4XLPw34x0eLgO5+l2vOeZ2LRpYGFiCrAgj4ujR3Sy8zBzy3fo5y9z5Esl4waZdWABRb0mmhjuJOOkk/AFPxHTnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722330466; c=relaxed/simple;
-	bh=Dx+qGB5ivvHdAixyU4wClkTxaB6RCHdWtG0QU3+YkPM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Otqpc4p+ZpPuTnnFqtryaLH9IVmMo3X01ReviygOmPsHy7NRJLcP3qVf1VX+kM6HlhLrZ7xdhLv2t+uwLRDoAfLyeWiYF3QfS1bUCLz1Q2PsvU11Llp1B+h7Z//mjCnfyI8/MOogX7GzZnNeljH+PS+ofTmxI8WUTom12yrRcxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LPcSFeZA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CCF3C4AF0B;
-	Tue, 30 Jul 2024 09:07:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722330466;
-	bh=Dx+qGB5ivvHdAixyU4wClkTxaB6RCHdWtG0QU3+YkPM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=LPcSFeZAIWRhX86nBBVNttOSbEDN0U71SJUnsd82NnTtGpGMBs812v4ebtZ+azK3X
-	 FuWyvalHESZLpdXOTTE+1f7pFS1Bf51P6DPumEB3OiA4wX7L+RcPYs97h8khXlmItR
-	 FiPvvaTaEkYWQRkbrRh/92fRnrJDf9ODbej8B/IebsjKeLYO/AndZQs+9wnZr2IMd1
-	 KISO0ElwVs6OQzkzj/SO3c+0ifazso3RONu1IVrIflxBVn9CrCktHnCgov3qCB4TKF
-	 VPgxPptb3PA5CqA7ZScgkHrKgcB6k631uqY7W8SuM8nKKAVJNzoCNPA+IuhXaib8Rz
-	 PFPSlh9FWbPBQ==
-Message-ID: <6e79d848-b1f0-4d56-b5cb-5fcf80868138@kernel.org>
-Date: Tue, 30 Jul 2024 11:07:33 +0200
+	s=arc-20240116; t=1722331327; c=relaxed/simple;
+	bh=qc4+vz7nNBQX6rw27KLvTXvTj448QyhgejGiWWuvDsk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RDv/xDCQdRp06rFnakACGmsuJISt9Y2I80H/JQysj1VboLWbZacuYMqreepNKdNtPXNdNFDzei5ERMev12/bdOLpoJ0+fF3bi6XAW63DqqOZLV/iWHr/o7krUPWQQoQuH24RLsLbOPh8tGIQ7NXPG+477cGBRJz+AYWhDmQlXrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uFpBNT+A; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2ef2d7d8854so54980201fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jul 2024 02:22:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1722331323; x=1722936123; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=hbTPUWP7dEvHs9yHy9hlJD4fx65Y8B6hataVoHic/KU=;
+        b=uFpBNT+AsCp4sTvC0i7DPT5Qcopfn7aw9PMTbSTHH9r8LWm6Cap/ATWvraCk/fdzTO
+         4LpFKM7jBd6G48TbomN8Hi2jq12bM08UbhshzJx/mwAdWw6lZ8fAPew8AttsHqHRlGY+
+         tpwMWa06No14E3JlFohF1QmuS04uHllhTOUpaXU0FhXZaY2uYmtB5sY74VBovkp1bw/4
+         PDCth88wZdEdyiLXPE/JKPrNboib+LX+lioXBzAj0IpUSGCJ8xYy7YYoBiOd7ELpl9qr
+         UTkW1OY6p+A5mVIiCKur9Ev/Q+BEiiFnmH/fTdnHifDZnUoFN2O2Mfv03iX0zNLb1Q42
+         xxtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722331323; x=1722936123;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hbTPUWP7dEvHs9yHy9hlJD4fx65Y8B6hataVoHic/KU=;
+        b=DYu9LJmY3HGeVN2KwZ02q8ZC35sLpzKIGbrXjCRzwE7rC3VgCJlKI2OA/eDSKeitsz
+         Pp9L21xx7Nhu9k0+hsX6XkGoOf2fC8UuUy1G7NuGtiuPJU91jGzCFPTMmQQbL1fumdm3
+         z+tc6jEx1M0u6z4Ge3QQ05TM8ukuOUu1duJEyi4u/7C+aHeDHWQPMcobmsmblzUTY+6d
+         ltd+GrSQbxoHbVsUqqpNMnA90WHPyD2WDplSC5exkkGLk1ZjbsTiWxJHPms+nDj70n2r
+         wqbxtXyMSjRcSDQDZIPdENeFHGMi1r6FsIfnIarQuEhQi1o2e3h0T5iOJqnZKdxT8qer
+         1xpw==
+X-Forwarded-Encrypted: i=1; AJvYcCVauHFBYWU5NA8LSlHqsUxZshDErO4yYojLEiTFjkD7mPIOp84p/tdb0pSz/JzGw66E1gXrUAs7uuyEoaeYtfLMCTbx60MwL+fn2/zwhQ==
+X-Gm-Message-State: AOJu0YxArXFQYZvTvhiflo6sKJO2C5iLj7g2xJ/WrSQs7WVZ4AbEOmL/
+	0UAjoy2WNWBK1yVKqvTATR7wpjw7T3Rqvv/p7J6JOxSF7kxv43gltW5KO/sn6lmxdk1vQLuNjtS
+	l
+X-Google-Smtp-Source: AGHT+IHFbaEWsPpnN36GEwy4+3Xjn07ym7RpZkkVMFK8u4jwJ6w8wTu0z813D8wad9QBLW/ixrXKNA==
+X-Received: by 2002:a2e:8508:0:b0:2ed:275d:aa44 with SMTP id 38308e7fff4ca-2f12edd67f5mr64620911fa.28.1722331322853;
+        Tue, 30 Jul 2024 02:22:02 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f03cf2e62dsm16009241fa.29.2024.07.30.02.22.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jul 2024 02:22:02 -0700 (PDT)
+Date: Tue, 30 Jul 2024 12:22:00 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Richard Acayan <mailingradian@gmail.com>, 
+	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
+	Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Rob Clark <robdclark@gmail.com>, linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/2] iommu/arm-smmu-qcom: add sdm670 adreno iommu
+ compatible
+Message-ID: <aim6b46amzzrfg6pohmdjr6cnhnmxqwfidlebqeou22cjludb3@kwi3mcjf7v4j>
+References: <20240730013820.41702-4-mailingradian@gmail.com>
+ <20240730013820.41702-6-mailingradian@gmail.com>
+ <9c4a586c-e9f2-44eb-a8ce-0b3943b07de0@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/11] arm64: dts: qcom: sm7325: Add device-tree for
- Nothing Phone 1
-To: Danila Tikhonov <danila@jiaxyga.com>, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
- konrad.dybcio@linaro.org, rafael@kernel.org, viresh.kumar@linaro.org,
- heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
- kees@kernel.org, tony.luck@intel.com, gpiccoli@igalia.com,
- sudeep.holla@arm.com, quic_rjendra@quicinc.com, andre.przywara@arm.com,
- ulf.hansson@linaro.org, davidwronek@gmail.com, neil.armstrong@linaro.org,
- heiko.stuebner@cherry.de, rafal@milecki.pl, macromorgan@hotmail.com,
- linus.walleij@linaro.org, dmitry.baryshkov@linaro.org,
- johan+linaro@kernel.org, javier.carrasco.cruz@gmail.com,
- quic_kriskura@quicinc.com, lpieralisi@kernel.org, fekz115@gmail.com
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-hardening@vger.kernel.org,
- linux@mainlining.org
-References: <20240729201843.142918-1-danila@jiaxyga.com>
- <20240729201843.142918-12-danila@jiaxyga.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240729201843.142918-12-danila@jiaxyga.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9c4a586c-e9f2-44eb-a8ce-0b3943b07de0@kernel.org>
 
-On 29/07/2024 22:18, Danila Tikhonov wrote:
-> From: Eugene Lepshy <fekz115@gmail.com>
+On Tue, Jul 30, 2024 at 08:23:44AM GMT, Krzysztof Kozlowski wrote:
+> On 30/07/2024 03:38, Richard Acayan wrote:
+> > Add the compatible for the separate IOMMU on SDM670 for the Adreno GPU.
+> > 
+> > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> > ---
+> >  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > index 36c6b36ad4ff..7f4b15be4a11 100644
+> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > @@ -539,6 +539,7 @@ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+> >  	{ .compatible = "qcom,sc8180x-smmu-500", .data = &qcom_smmu_500_impl0_data },
+> >  	{ .compatible = "qcom,sc8280xp-smmu-500", .data = &qcom_smmu_500_impl0_data },
+> >  	{ .compatible = "qcom,sdm630-smmu-v2", .data = &qcom_smmu_v2_data },
+> > +	{ .compatible = "qcom,sdm670-smmu-v2", .data = &qcom_smmu_v2_data },
 > 
-> Add device tree for the Nothing Phone 1 (nothing,spacewar) smartphone
-> which is based on the SM7325 SoC.
+> Do the people even read the comments? What the comment is saying? I
+> admit it might be not precise, but "500" and "v2" are the same from that
+> point of view.
 
-...
+Well, the comment speaks about -500 explicitly, because -v2 have
+differences (it is known that these platforms require more quirks).
 
-> +
-> +&i2c2 {
-> +	clock-frequency = <100000>;
-> +	status = "okay";
-> +
-> +	/* nxp,tfa9873 (EAR speaker codec) @ 34 */
-> +	/* nxp,tfa9873 (Main speaker codec) @ 35 */
-> +};
-> +
-> +&i2c9 {
-> +	clock-frequency = <1000000>;
-> +	status = "okay";
-> +
-> +	nfc@28 {
-> +		compatible = "nxp,nxp-nci-i2c";
+> 
+> NAK.
+> 
+> Best regards,
+> Krzysztof
+> 
 
-Prepend it with proper compatible for this NFC chip and update the bindings.
-
-> +		reg = <0x28>;
-> +
-> +		interrupt-parent = <&tlmm>;
-> +		interrupts = <41 IRQ_TYPE_NONE>;
-
-This does not look like valid interrupt type...
-
-
-
-Best regards,
-Krzysztof
-
+-- 
+With best wishes
+Dmitry
 
