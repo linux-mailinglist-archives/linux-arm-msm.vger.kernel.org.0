@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-27351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE9AB940471
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 04:17:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 386FC940474
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 04:18:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4AD3C1F21B43
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 02:17:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5B69C1C20754
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 02:18:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C86A214F9FF;
-	Tue, 30 Jul 2024 02:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7481D15FA73;
+	Tue, 30 Jul 2024 02:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="QmwZ6vTg"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="OxQFiWXx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A759618E1A;
-	Tue, 30 Jul 2024 02:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A95778C98;
+	Tue, 30 Jul 2024 02:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722305810; cv=none; b=GQyJZYW0nMD1IWilnEqGmtcjklgN8Ab+KwHl0vlykhsdiZgaLOql0+Zw9vKTm7YaTtXKQOhkmpRNt5f7ZVswOHiFdCObLI6MWG4Bq3MM3cKi3QhHZBbWth6br9CySyt4BdBCy1uBcqbpZs/7/XsYOmF49i6XFdjiXwRfAky9TXU=
+	t=1722305816; cv=none; b=leesTF+2ZSKUCW5I3tdsegNdGVJpoAPb18AXvjInhsQ/j7geEGjRgayAYa+UKivRWLPbcZrZA83JXJgDQfGKylDnGc5BmXZ4b0I8+Zb1vATUV8Zh33V75QqESU3pDGp38ZqHJZMYSn9Cga0raQqRKoA/R5lJc32zZmjAlQOdjAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722305810; c=relaxed/simple;
-	bh=aPC4lqVpqndGrwQFtOuzXyLxaYVgQ+nFEt7rSHAt3Ro=;
+	s=arc-20240116; t=1722305816; c=relaxed/simple;
+	bh=uMbh7Osl28ZaSw+7CfzYyeg/kT8fDaFHO1NY0dBJ4Y8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UEetHV9IH9GC2FHa6TAAWj6MmQv75ClX3c3vxCZ87NmTeLig5Eh1rszgh9X9PaGkP+fFGdsHnLRYcUTEtmqf3JRiPk3CyvS6YC93eNEAhy0K8/pFYeXICAO9L5J0KGTTKaz0dkiCqSZ8wkYpxio+mQJb8gUUUPiSiY3p6Evd7pM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=QmwZ6vTg; arc=none smtp.client-ip=46.235.227.194
+	 MIME-Version; b=BoMf97xmNTa3wKdnWvCPeqMEDqyNYmcFNNY5kuUjTBLZst8Z31C/tfU/b/NK3GaODL2UEnlZfahQolUicGf0JvOpKfZ5zPh3d76kaMPa2jdW7t1PQaWIQ0LsCgXQzP9bFWnBN+b734W3vIBLvEluSziqU7c/oEES5u0eSoBAY7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=OxQFiWXx; arc=none smtp.client-ip=46.235.227.194
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1722305807;
-	bh=aPC4lqVpqndGrwQFtOuzXyLxaYVgQ+nFEt7rSHAt3Ro=;
+	s=mail; t=1722305811;
+	bh=uMbh7Osl28ZaSw+7CfzYyeg/kT8fDaFHO1NY0dBJ4Y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QmwZ6vTgwhXQZc/u3sa8xfIn9umbm0qSCaTBk12dWGsNA5kRRTGmE5imibjwdrGNF
-	 PGTts8Zs+VI8X9TWQzb5efXy48xUrr/Yc8Z1iYGfZ7NqzGVYULBX32t6+rIL8PxI6O
-	 xEkBvtsLO8c2nYT7rqNEFXAjKIkR5m3A1AMgnd4CVXNxRs+uLxrG6kfZ4cD5x7hfsW
-	 ZD7ioI5fbsNMZVTpESCY9j4dGKKZl5IsZXlBxf29fpOJtpDycMG8fA+amFTkPpYFpi
-	 JhPIGkLod8zk4DDqP/eh3ej4sgzaEZ0pAISRSqxlR/YEEZgA4XwsY5Q+u+Eh4znuld
-	 qphAc2CPPqcVQ==
+	b=OxQFiWXxQ2JT1RD/G8XjyTIU0oW95ZYTInaNxtnpQS9wN2iwnzMwb56oiNT35pvn/
+	 vu08K/n4qlH9k8NvTiv+ULXMf7aWyUeEkzoVY4gOrmDLGoa2U1X2I0qAe051DLGaUR
+	 YGqb/LYyY2xDZpL7Bdi88Fzt2KDfI+Jf1MrgD/ilM7LS238I6ur+DSjqstqTN0Fkc8
+	 hzR8ZeWmx2FWbO302Bkk1g0DpSkvVYQAFhL1SMzOFeQfL8q+Fibsh3L8rcEacY4G2R
+	 rGnuMVw3/h1geArWXEbYt0/FI7ZchpgOmCMiH3vXnE+ixtLCeykBN9JkS8QHBDOye9
+	 4SSxlO4jRvtcA==
 Received: from localhost.localdomain (cola.collaboradmins.com [195.201.22.229])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: vignesh)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id BEE3F3782190;
-	Tue, 30 Jul 2024 02:16:42 +0000 (UTC)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 8551F3782191;
+	Tue, 30 Jul 2024 02:16:47 +0000 (UTC)
 From: Vignesh Raman <vignesh.raman@collabora.com>
 To: dri-devel@lists.freedesktop.org
 Cc: daniels@collabora.com,
@@ -69,9 +69,9 @@ Cc: daniels@collabora.com,
 	intel-gfx@lists.freedesktop.org,
 	virtualization@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v9 2/6] drm/ci: skip tools_test on non-intel platforms
-Date: Tue, 30 Jul 2024 07:45:37 +0530
-Message-ID: <20240730021545.912271-3-vignesh.raman@collabora.com>
+Subject: [PATCH v9 3/6] drm/ci: mediatek: add tests for mediatek display driver
+Date: Tue, 30 Jul 2024 07:45:38 +0530
+Message-ID: <20240730021545.912271-4-vignesh.raman@collabora.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240730021545.912271-1-vignesh.raman@collabora.com>
 References: <20240730021545.912271-1-vignesh.raman@collabora.com>
@@ -83,315 +83,300 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-tools_test is a wrapper for running tools/intel_reg
-and tools/intel_l3_parity. So skip these tests on
-non-intel platforms and update expectaion files.
+For mediatek mt8183, the display driver is mediatek, while the
+gpu driver is panfrost. Currently, in drm-ci for mt8183, only
+the gpu driver is tested. Refactor the existing mediatek jobs
+and add support in drm-ci to test both display and gpu driver
+for mt8183 and update xfails.
+
+Since the correct driver name is passed from the job to test gpu
+and display driver, remove the check to set IGT_FORCE_DRIVER
+based on driver name for mediatek jobs.
+
+Update the MAINTAINERS file to include xfails for panfrost driver.
 
 Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
 ---
 
+v2:
+  - Refactor the patch to rename job to indicate display driver testing,
+    rename the existing xfail files, and remove IGT_FORCE_DRIVER from the
+    script since it's now set by the job.
+
+v3:
+  - Add the job name in GPU_VERSION and use it for xfail file names instead
+    of using DRIVER_NAME. Also update xfails.
+
+v4:
+  - Remove the display suffix in job and rename xfails accordingly.
+    Remove the change adding job name in GPU_VERSION.
+
+v5:
+  - Add mediatek-display job.
+
+v6:
+  - Squash commits for display and gpu driver testing. Reword the commit message.
+
+
+v7:
+  - Rebase with recent drm-ci fixes and retest with latest IGT.
+
+v8:
+  - Add header for each flaky test.
+
 v9:
-  - New patch in the series to skip tools_test on non-intel platforms
+  - Skip display functionality tests for GPU-only drivers and update expectation files.
 
 ---
- drivers/gpu/drm/ci/xfails/amdgpu-stoney-fails.txt                | 1 -
- drivers/gpu/drm/ci/xfails/amdgpu-stoney-skips.txt                | 1 +
- drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt              | 1 -
- drivers/gpu/drm/ci/xfails/mediatek-mt8173-skips.txt              | 1 +
- drivers/gpu/drm/ci/xfails/mediatek-mt8183-fails.txt              | 1 -
- drivers/gpu/drm/ci/xfails/mediatek-mt8183-skips.txt              | 1 +
- drivers/gpu/drm/ci/xfails/meson-g12b-fails.txt                   | 1 -
- drivers/gpu/drm/ci/xfails/meson-g12b-skips.txt                   | 1 +
- drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt                  | 1 -
- drivers/gpu/drm/ci/xfails/msm-apq8016-skips.txt                  | 1 +
- drivers/gpu/drm/ci/xfails/msm-apq8096-fails.txt                  | 1 -
- drivers/gpu/drm/ci/xfails/msm-apq8096-skips.txt                  | 1 +
- .../gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-fails.txt    | 1 -
- .../gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-skips.txt    | 1 +
- .../drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-fails.txt    | 1 -
- .../drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-skips.txt    | 1 +
- drivers/gpu/drm/ci/xfails/msm-sdm845-fails.txt                   | 1 -
- drivers/gpu/drm/ci/xfails/msm-sdm845-skips.txt                   | 1 +
- drivers/gpu/drm/ci/xfails/rockchip-rk3288-fails.txt              | 1 -
- drivers/gpu/drm/ci/xfails/rockchip-rk3288-skips.txt              | 1 +
- drivers/gpu/drm/ci/xfails/rockchip-rk3399-fails.txt              | 1 -
- drivers/gpu/drm/ci/xfails/rockchip-rk3399-skips.txt              | 1 +
- drivers/gpu/drm/ci/xfails/virtio_gpu-none-fails.txt              | 1 -
- drivers/gpu/drm/ci/xfails/virtio_gpu-none-skips.txt              | 1 +
- drivers/gpu/drm/ci/xfails/vkms-none-fails.txt                    | 1 -
- drivers/gpu/drm/ci/xfails/vkms-none-skips.txt                    | 1 +
- 26 files changed, 13 insertions(+), 13 deletions(-)
+ MAINTAINERS                                   |  1 +
+ drivers/gpu/drm/ci/gitlab-ci.yml              |  2 +-
+ drivers/gpu/drm/ci/igt_runner.sh              |  7 ----
+ drivers/gpu/drm/ci/test.yml                   | 38 +++++++++++++++----
+ .../drm/ci/xfails/mediatek-mt8183-fails.txt   | 27 ++++++++++---
+ .../drm/ci/xfails/mediatek-mt8183-flakes.txt  | 20 ++++++++++
+ .../drm/ci/xfails/mediatek-mt8183-skips.txt   |  4 +-
+ .../drm/ci/xfails/panfrost-mt8183-fails.txt   |  1 +
+ .../drm/ci/xfails/panfrost-mt8183-skips.txt   | 23 +++++++++++
+ 9 files changed, 99 insertions(+), 24 deletions(-)
+ create mode 100644 drivers/gpu/drm/ci/xfails/mediatek-mt8183-flakes.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/panfrost-mt8183-fails.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/panfrost-mt8183-skips.txt
 
-diff --git a/drivers/gpu/drm/ci/xfails/amdgpu-stoney-fails.txt b/drivers/gpu/drm/ci/xfails/amdgpu-stoney-fails.txt
-index 2f74880671ca..8e2fed6d76a3 100644
---- a/drivers/gpu/drm/ci/xfails/amdgpu-stoney-fails.txt
-+++ b/drivers/gpu/drm/ci/xfails/amdgpu-stoney-fails.txt
-@@ -38,4 +38,3 @@ kms_plane@pixel-format,Fail
- kms_plane_cursor@primary,Fail
- kms_rotation_crc@primary-rotation-180,Fail
- perf@i915-ref-count,Fail
--tools_test@tools_test,Fail
-diff --git a/drivers/gpu/drm/ci/xfails/amdgpu-stoney-skips.txt b/drivers/gpu/drm/ci/xfails/amdgpu-stoney-skips.txt
-index 931d6d1d0165..f41b3e112976 100644
---- a/drivers/gpu/drm/ci/xfails/amdgpu-stoney-skips.txt
-+++ b/drivers/gpu/drm/ci/xfails/amdgpu-stoney-skips.txt
-@@ -13,6 +13,7 @@ nouveau_.*
- gem_.*
- i915_.*
- xe_.*
-+tools_test.*
+diff --git a/MAINTAINERS b/MAINTAINERS
+index cb8355f20b36..f3783f2269ff 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1741,6 +1741,7 @@ L:	dri-devel@lists.freedesktop.org
+ S:	Supported
+ T:	git https://gitlab.freedesktop.org/drm/misc/kernel.git
+ F:	Documentation/gpu/panfrost.rst
++F:	drivers/gpu/drm/ci/xfails/panfrost*
+ F:	drivers/gpu/drm/panfrost/
+ F:	include/uapi/drm/panfrost_drm.h
  
- # Currently fails and causes coverage loss for other tests
- # since core_getversion also fails.
-diff --git a/drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt b/drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt
-index 95aadef2fa2d..a14349a1967f 100644
---- a/drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt
-+++ b/drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt
-@@ -34,4 +34,3 @@ kms_properties@get_properties-sanity-atomic,Fail
- kms_properties@plane-properties-atomic,Fail
- kms_properties@plane-properties-legacy,Fail
- kms_rmfb@close-fd,Fail
--tools_test@tools_test,Fail
-diff --git a/drivers/gpu/drm/ci/xfails/mediatek-mt8173-skips.txt b/drivers/gpu/drm/ci/xfails/mediatek-mt8173-skips.txt
-index 562662eff802..8198e06344a3 100644
---- a/drivers/gpu/drm/ci/xfails/mediatek-mt8173-skips.txt
-+++ b/drivers/gpu/drm/ci/xfails/mediatek-mt8173-skips.txt
-@@ -10,6 +10,7 @@ nouveau_.*
- # Skip intel specific tests
- gem_.*
- i915_.*
-+tools_test.*
+diff --git a/drivers/gpu/drm/ci/gitlab-ci.yml b/drivers/gpu/drm/ci/gitlab-ci.yml
+index b09976c3d2c2..9d800f629f08 100644
+--- a/drivers/gpu/drm/ci/gitlab-ci.yml
++++ b/drivers/gpu/drm/ci/gitlab-ci.yml
+@@ -121,8 +121,8 @@ stages:
+   - mediatek
+   - meson
+   - msm
++  - panfrost
+   - rockchip
+-  - virtio-gpu
+   - software-driver
  
- # Currently fails and causes coverage loss for other tests
- # since core_getversion also fails.
+ # YAML anchors for rule conditions
+diff --git a/drivers/gpu/drm/ci/igt_runner.sh b/drivers/gpu/drm/ci/igt_runner.sh
+index 37c724dba8cb..6193865f23a3 100755
+--- a/drivers/gpu/drm/ci/igt_runner.sh
++++ b/drivers/gpu/drm/ci/igt_runner.sh
+@@ -23,13 +23,6 @@ case "$DRIVER_NAME" in
+     rockchip|meson)
+         export IGT_FORCE_DRIVER="panfrost"
+         ;;
+-    mediatek)
+-        if [ "$GPU_VERSION" = "mt8173" ]; then
+-            export IGT_FORCE_DRIVER=${DRIVER_NAME}
+-        elif [ "$GPU_VERSION" = "mt8183" ]; then
+-            export IGT_FORCE_DRIVER="panfrost"
+-        fi
+-        ;;
+     amdgpu|vkms)
+         # Cannot use HWCI_KERNEL_MODULES as at that point we don't have the module in /lib
+         mv /install/modules/lib/modules/* /lib/modules/. || true
+diff --git a/drivers/gpu/drm/ci/test.yml b/drivers/gpu/drm/ci/test.yml
+index ee908b66aad2..219eca5ef24c 100644
+--- a/drivers/gpu/drm/ci/test.yml
++++ b/drivers/gpu/drm/ci/test.yml
+@@ -280,38 +280,62 @@ amdgpu:stoney:
+     GPU_VERSION: stoney
+     RUNNER_TAG: mesa-ci-x86-64-lava-hp-11A-G6-EE-grunt
+ 
+-.mediatek:
++.mediatek-device:
+   extends:
+     - .lava-igt:arm64
+   stage: mediatek
+   variables:
+-    DRIVER_NAME: mediatek
+     DTB: ${DEVICE_TYPE}
+     BOOT_METHOD: depthcharge
+     KERNEL_IMAGE_TYPE: ""
+ 
+-mediatek:mt8173:
++.mediatek-display:
++  stage: mediatek
++  variables:
++    DRIVER_NAME: mediatek
++
++.panfrost-gpu:
++  stage: panfrost
++  variables:
++    DRIVER_NAME: panfrost
++
++.mt8173:
+   extends:
+-    - .mediatek
++    - .mediatek-device
+   parallel: 4
+   variables:
+     DEVICE_TYPE: mt8173-elm-hana
+     GPU_VERSION: mt8173
+     RUNNER_TAG: mesa-ci-x86-64-lava-mt8173-elm-hana
+ 
+-mediatek:mt8183:
++.mt8183:
+   extends:
+-    - .mediatek
++    - .mediatek-device
+   parallel: 3
+   variables:
+     DEVICE_TYPE: mt8183-kukui-jacuzzi-juniper-sku16
+     GPU_VERSION: mt8183
+     RUNNER_TAG: mesa-ci-x86-64-lava-mt8183-kukui-jacuzzi-juniper-sku16
+ 
++mediatek:mt8173:
++  extends:
++    - .mt8173
++    - .mediatek-display
++
++mediatek:mt8183:
++  extends:
++    - .mt8183
++    - .mediatek-display
++
++panfrost:mt8183:
++  extends:
++    - .mt8183
++    - .panfrost-gpu
++
+ # drm-mtk doesn't even probe yet in mainline for mt8192
+ .mediatek:mt8192:
+   extends:
+-    - .mediatek
++    - .mediatek-device
+   parallel: 3
+   variables:
+     DEVICE_TYPE: mt8192-asurada-spherion-r0
 diff --git a/drivers/gpu/drm/ci/xfails/mediatek-mt8183-fails.txt b/drivers/gpu/drm/ci/xfails/mediatek-mt8183-fails.txt
-index 5b7d623f404b..70053ea74b5d 100644
+index 70053ea74b5d..8cb2cb67853d 100644
 --- a/drivers/gpu/drm/ci/xfails/mediatek-mt8183-fails.txt
 +++ b/drivers/gpu/drm/ci/xfails/mediatek-mt8183-fails.txt
-@@ -5,4 +5,3 @@ dumb_buffer@map-invalid-size,Fail
- dumb_buffer@map-uaf,Fail
- dumb_buffer@map-valid,Fail
- panfrost/panfrost_prime@gem-prime-import,Fail
--tools_test@tools_test,Fail
+@@ -1,7 +1,22 @@
+-dumb_buffer@create-clear,Fail
+-dumb_buffer@create-valid-dumb,Fail
++core_setmaster@master-drop-set-shared-fd,Fail
++device_reset@cold-reset-bound,Fail
++device_reset@reset-bound,Fail
++device_reset@unbind-cold-reset-rebind,Fail
++device_reset@unbind-reset-rebind,Fail
++dumb_buffer@create-clear,Crash
+ dumb_buffer@invalid-bpp,Fail
+-dumb_buffer@map-invalid-size,Fail
+-dumb_buffer@map-uaf,Fail
+-dumb_buffer@map-valid,Fail
+-panfrost/panfrost_prime@gem-prime-import,Fail
++fbdev@eof,Fail
++fbdev@pan,Fail
++fbdev@read,Fail
++fbdev@unaligned-read,Fail
++kms_bw@connected-linear-tiling-1-displays-1920x1080p,Fail
++kms_bw@connected-linear-tiling-1-displays-2160x1440p,Fail
++kms_bw@connected-linear-tiling-1-displays-2560x1440p,Fail
++kms_bw@linear-tiling-1-displays-1920x1080p,Fail
++kms_bw@linear-tiling-1-displays-3840x2160p,Fail
++kms_color@invalid-gamma-lut-sizes,Fail
++kms_flip@flip-vs-panning-vs-hang,Fail
++kms_flip@flip-vs-suspend,Fail
++kms_lease@lease-uevent,Fail
++kms_properties@plane-properties-atomic,Fail
++kms_rmfb@close-fd,Fail
+diff --git a/drivers/gpu/drm/ci/xfails/mediatek-mt8183-flakes.txt b/drivers/gpu/drm/ci/xfails/mediatek-mt8183-flakes.txt
+new file mode 100644
+index 000000000000..df7e5ce7a036
+--- /dev/null
++++ b/drivers/gpu/drm/ci/xfails/mediatek-mt8183-flakes.txt
+@@ -0,0 +1,20 @@
++# Board Name: mt8183-kukui-jacuzzi-juniper-sku16
++# Bug Report: https://lore.kernel.org/linux-mediatek/0b2a1899-15dd-42fa-8f63-ea0ca28dbb17@collabora.com/T/#u
++# Failure Rate: 100
++# IGT Version: 1.28-gf13702b8e
++# Linux Version: 6.10.0-rc5
++kms_bw@linear-tiling-1-displays-2560x1440p
++
++# Board Name: mt8183-kukui-jacuzzi-juniper-sku16
++# Bug Report: https://lore.kernel.org/linux-mediatek/0b2a1899-15dd-42fa-8f63-ea0ca28dbb17@collabora.com/T/#u
++# Failure Rate: 100
++# IGT Version: 1.28-gf13702b8e
++# Linux Version: 6.10.0-rc5
++kms_cursor_legacy@cursor-vs-flip-atomic-transitions
++
++# Board Name: mt8183-kukui-jacuzzi-juniper-sku16
++# Bug Report: https://lore.kernel.org/linux-mediatek/0b2a1899-15dd-42fa-8f63-ea0ca28dbb17@collabora.com/T/#u
++# Failure Rate: 100
++# IGT Version: 1.28-gf13702b8e
++# Linux Version: 6.10.0-rc5
++fbdev@write
 diff --git a/drivers/gpu/drm/ci/xfails/mediatek-mt8183-skips.txt b/drivers/gpu/drm/ci/xfails/mediatek-mt8183-skips.txt
-index 03eefa518afa..aeec535107c1 100644
+index aeec535107c1..8198e06344a3 100644
 --- a/drivers/gpu/drm/ci/xfails/mediatek-mt8183-skips.txt
 +++ b/drivers/gpu/drm/ci/xfails/mediatek-mt8183-skips.txt
-@@ -9,6 +9,7 @@ nouveau_.*
- # Skip intel specific tests
- gem_.*
+@@ -2,6 +2,7 @@
+ ^amdgpu.*
+ ^msm.*
+ nouveau_.*
++^panfrost.*
+ ^v3d.*
+ ^vc4.*
+ ^vmwgfx*
+@@ -11,9 +12,6 @@ gem_.*
  i915_.*
-+tools_test.*
+ tools_test.*
  
- # Panfrost is not a KMS driver, so skip the KMS tests
- kms_.*
-diff --git a/drivers/gpu/drm/ci/xfails/meson-g12b-fails.txt b/drivers/gpu/drm/ci/xfails/meson-g12b-fails.txt
-index 5b7d623f404b..70053ea74b5d 100644
---- a/drivers/gpu/drm/ci/xfails/meson-g12b-fails.txt
-+++ b/drivers/gpu/drm/ci/xfails/meson-g12b-fails.txt
-@@ -5,4 +5,3 @@ dumb_buffer@map-invalid-size,Fail
- dumb_buffer@map-uaf,Fail
- dumb_buffer@map-valid,Fail
- panfrost/panfrost_prime@gem-prime-import,Fail
--tools_test@tools_test,Fail
-diff --git a/drivers/gpu/drm/ci/xfails/meson-g12b-skips.txt b/drivers/gpu/drm/ci/xfails/meson-g12b-skips.txt
-index 03eefa518afa..aeec535107c1 100644
---- a/drivers/gpu/drm/ci/xfails/meson-g12b-skips.txt
-+++ b/drivers/gpu/drm/ci/xfails/meson-g12b-skips.txt
-@@ -9,6 +9,7 @@ nouveau_.*
- # Skip intel specific tests
- gem_.*
- i915_.*
-+tools_test.*
- 
- # Panfrost is not a KMS driver, so skip the KMS tests
- kms_.*
-diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt b/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
-index b57884650306..4ac46168eff3 100644
---- a/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
-+++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
-@@ -9,4 +9,3 @@ kms_force_connector_basic@force-edid,Fail
- kms_hdmi_inject@inject-4k,Fail
- kms_lease@lease-uevent,Fail
- msm/msm_mapping@ring,Fail
--tools_test@tools_test,Fail
-diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8016-skips.txt b/drivers/gpu/drm/ci/xfails/msm-apq8016-skips.txt
-index ef7697190fff..1674c8e214d6 100644
---- a/drivers/gpu/drm/ci/xfails/msm-apq8016-skips.txt
-+++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-skips.txt
-@@ -9,6 +9,7 @@ nouveau_.*
- # Skip intel specific tests
- gem_.*
- i915_.*
-+tools_test.*
- 
+-# Panfrost is not a KMS driver, so skip the KMS tests
+-kms_.*
+-
  # Currently fails and causes coverage loss for other tests
  # since core_getversion also fails.
-diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8096-fails.txt b/drivers/gpu/drm/ci/xfails/msm-apq8096-fails.txt
-index 46ca69ce2ffe..bd0653caf7a0 100644
---- a/drivers/gpu/drm/ci/xfails/msm-apq8096-fails.txt
-+++ b/drivers/gpu/drm/ci/xfails/msm-apq8096-fails.txt
-@@ -5,4 +5,3 @@ device_reset@unbind-reset-rebind,Fail
- dumb_buffer@invalid-bpp,Fail
- kms_3d,Fail
- kms_lease@lease-uevent,Fail
--tools_test@tools_test,Fail
-diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8096-skips.txt b/drivers/gpu/drm/ci/xfails/msm-apq8096-skips.txt
-index 244324d38964..5550be5486ed 100644
---- a/drivers/gpu/drm/ci/xfails/msm-apq8096-skips.txt
-+++ b/drivers/gpu/drm/ci/xfails/msm-apq8096-skips.txt
-@@ -12,6 +12,7 @@ nouveau_.*
- # Skip intel specific tests
- gem_.*
- i915_.*
+ core_hotunplug.*
+diff --git a/drivers/gpu/drm/ci/xfails/panfrost-mt8183-fails.txt b/drivers/gpu/drm/ci/xfails/panfrost-mt8183-fails.txt
+new file mode 100644
+index 000000000000..fe8ce2ce33e6
+--- /dev/null
++++ b/drivers/gpu/drm/ci/xfails/panfrost-mt8183-fails.txt
+@@ -0,0 +1 @@
++panfrost/panfrost_prime@gem-prime-import,Fail
+diff --git a/drivers/gpu/drm/ci/xfails/panfrost-mt8183-skips.txt b/drivers/gpu/drm/ci/xfails/panfrost-mt8183-skips.txt
+new file mode 100644
+index 000000000000..3c7e494857b5
+--- /dev/null
++++ b/drivers/gpu/drm/ci/xfails/panfrost-mt8183-skips.txt
+@@ -0,0 +1,23 @@
++# Skip driver specific tests
++^amdgpu.*
++^msm.*
++nouveau_.*
++^v3d.*
++^vc4.*
++^vmwgfx*
++
++# Skip intel specific tests
++gem_.*
++i915_.*
 +tools_test.*
- 
- # Currently fails and causes coverage loss for other tests
- # since core_getversion also fails.
-diff --git a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-fails.txt b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-fails.txt
-index 8e02392a24cb..d42004cd6977 100644
---- a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-fails.txt
-+++ b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-fails.txt
-@@ -43,4 +43,3 @@ kms_plane_alpha_blend@coverage-vs-premult-vs-constant,Fail
- kms_plane_lowres@tiling-none,Fail
- kms_rmfb@close-fd,Fail
- kms_vblank@ts-continuation-dpms-rpm,Fail
--tools_test@tools_test,Fail
-diff --git a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-skips.txt b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-skips.txt
-index bd5a975a1b2f..c2833eee1c4b 100644
---- a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-skips.txt
-+++ b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-skips.txt
-@@ -12,6 +12,7 @@ nouveau_.*
- # Skip intel specific tests
- gem_.*
- i915_.*
-+tools_test.*
- 
- # Currently fails and causes coverage loss for other tests
- # since core_getversion also fails.
-diff --git a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-fails.txt b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-fails.txt
-index 8e02392a24cb..d42004cd6977 100644
---- a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-fails.txt
-+++ b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-fails.txt
-@@ -43,4 +43,3 @@ kms_plane_alpha_blend@coverage-vs-premult-vs-constant,Fail
- kms_plane_lowres@tiling-none,Fail
- kms_rmfb@close-fd,Fail
- kms_vblank@ts-continuation-dpms-rpm,Fail
--tools_test@tools_test,Fail
-diff --git a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-skips.txt b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-skips.txt
-index d06c3621300d..7c69c1f1d55b 100644
---- a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-skips.txt
-+++ b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-skips.txt
-@@ -12,6 +12,7 @@ nouveau_.*
- # Skip intel specific tests
- gem_.*
- i915_.*
-+tools_test.*
- 
- # Currently fails and causes coverage loss for other tests
- # since core_getversion also fails.
-diff --git a/drivers/gpu/drm/ci/xfails/msm-sdm845-fails.txt b/drivers/gpu/drm/ci/xfails/msm-sdm845-fails.txt
-index 8f010c8a9c4f..770a1c685fde 100644
---- a/drivers/gpu/drm/ci/xfails/msm-sdm845-fails.txt
-+++ b/drivers/gpu/drm/ci/xfails/msm-sdm845-fails.txt
-@@ -33,4 +33,3 @@ kms_plane_alpha_blend@coverage-vs-premult-vs-constant,Fail
- kms_plane_cursor@overlay,Fail
- kms_plane_cursor@viewport,Fail
- kms_rmfb@close-fd,Fail
--tools_test@tools_test,Fail
-diff --git a/drivers/gpu/drm/ci/xfails/msm-sdm845-skips.txt b/drivers/gpu/drm/ci/xfails/msm-sdm845-skips.txt
-index 041a9637cc3e..90651048ab61 100644
---- a/drivers/gpu/drm/ci/xfails/msm-sdm845-skips.txt
-+++ b/drivers/gpu/drm/ci/xfails/msm-sdm845-skips.txt
-@@ -17,6 +17,7 @@ nouveau_.*
- # Skip intel specific tests
- gem_.*
- i915_.*
-+tools_test.*
- 
- # Currently fails and causes coverage loss for other tests
- # since core_getversion also fails.
-diff --git a/drivers/gpu/drm/ci/xfails/rockchip-rk3288-fails.txt b/drivers/gpu/drm/ci/xfails/rockchip-rk3288-fails.txt
-index 10689906da3a..99928a24e636 100644
---- a/drivers/gpu/drm/ci/xfails/rockchip-rk3288-fails.txt
-+++ b/drivers/gpu/drm/ci/xfails/rockchip-rk3288-fails.txt
-@@ -5,4 +5,3 @@ dumb_buffer@map-invalid-size,Crash
- dumb_buffer@map-uaf,Crash
- dumb_buffer@map-valid,Crash
- panfrost/panfrost_prime@gem-prime-import,Crash
--tools_test@tools_test,Crash
-diff --git a/drivers/gpu/drm/ci/xfails/rockchip-rk3288-skips.txt b/drivers/gpu/drm/ci/xfails/rockchip-rk3288-skips.txt
-index b8cb31842323..e86ff00dc58a 100644
---- a/drivers/gpu/drm/ci/xfails/rockchip-rk3288-skips.txt
-+++ b/drivers/gpu/drm/ci/xfails/rockchip-rk3288-skips.txt
-@@ -62,6 +62,7 @@ nouveau_.*
- # Skip intel specific tests
- gem_.*
- i915_.*
-+tools_test.*
- 
- # Panfrost is not a KMS driver, so skip the KMS tests
- kms_.*
-diff --git a/drivers/gpu/drm/ci/xfails/rockchip-rk3399-fails.txt b/drivers/gpu/drm/ci/xfails/rockchip-rk3399-fails.txt
-index 5b7d623f404b..70053ea74b5d 100644
---- a/drivers/gpu/drm/ci/xfails/rockchip-rk3399-fails.txt
-+++ b/drivers/gpu/drm/ci/xfails/rockchip-rk3399-fails.txt
-@@ -5,4 +5,3 @@ dumb_buffer@map-invalid-size,Fail
- dumb_buffer@map-uaf,Fail
- dumb_buffer@map-valid,Fail
- panfrost/panfrost_prime@gem-prime-import,Fail
--tools_test@tools_test,Fail
-diff --git a/drivers/gpu/drm/ci/xfails/rockchip-rk3399-skips.txt b/drivers/gpu/drm/ci/xfails/rockchip-rk3399-skips.txt
-index 743f3eeb2f80..8f22ff6d8cb7 100644
---- a/drivers/gpu/drm/ci/xfails/rockchip-rk3399-skips.txt
-+++ b/drivers/gpu/drm/ci/xfails/rockchip-rk3399-skips.txt
-@@ -15,6 +15,7 @@ nouveau_.*
- # Skip intel specific tests
- gem_.*
- i915_.*
-+tools_test.*
- 
- # Panfrost is not a KMS driver, so skip the KMS tests
- kms_.*
-diff --git a/drivers/gpu/drm/ci/xfails/virtio_gpu-none-fails.txt b/drivers/gpu/drm/ci/xfails/virtio_gpu-none-fails.txt
-index 248943c2a738..c72fee70e739 100644
---- a/drivers/gpu/drm/ci/xfails/virtio_gpu-none-fails.txt
-+++ b/drivers/gpu/drm/ci/xfails/virtio_gpu-none-fails.txt
-@@ -187,4 +187,3 @@ kms_vblank@wait-forked,Fail
- kms_vblank@wait-forked-busy,Fail
- kms_vblank@wait-idle,Fail
- perf@i915-ref-count,Fail
--tools_test@tools_test,Fail
-diff --git a/drivers/gpu/drm/ci/xfails/virtio_gpu-none-skips.txt b/drivers/gpu/drm/ci/xfails/virtio_gpu-none-skips.txt
-index 8198905c5fd4..9c9e048725f8 100644
---- a/drivers/gpu/drm/ci/xfails/virtio_gpu-none-skips.txt
-+++ b/drivers/gpu/drm/ci/xfails/virtio_gpu-none-skips.txt
-@@ -18,6 +18,7 @@ nouveau_.*
- gem_.*
- i915_.*
- xe_.*
-+tools_test.*
- 
- # Currently fails and causes coverage loss for other tests
- # since core_getversion also fails.
-diff --git a/drivers/gpu/drm/ci/xfails/vkms-none-fails.txt b/drivers/gpu/drm/ci/xfails/vkms-none-fails.txt
-index 8385b26073ed..5408110f4c60 100644
---- a/drivers/gpu/drm/ci/xfails/vkms-none-fails.txt
-+++ b/drivers/gpu/drm/ci/xfails/vkms-none-fails.txt
-@@ -50,4 +50,3 @@ kms_writeback@writeback-fb-id-XRGB2101010,Fail
- kms_writeback@writeback-invalid-parameters,Fail
- kms_writeback@writeback-pixel-formats,Fail
- perf@i915-ref-count,Fail
--tools_test@tools_test,Fail
-diff --git a/drivers/gpu/drm/ci/xfails/vkms-none-skips.txt b/drivers/gpu/drm/ci/xfails/vkms-none-skips.txt
-index 6c1f2b2b6e53..5ccc771fbb36 100644
---- a/drivers/gpu/drm/ci/xfails/vkms-none-skips.txt
-+++ b/drivers/gpu/drm/ci/xfails/vkms-none-skips.txt
-@@ -218,3 +218,4 @@ nouveau_.*
- gem_.*
- i915_.*
- xe_.*
-+tools_test.*
++
++# Panfrost is not a KMS driver, so skip the KMS tests
++kms_.*
++
++# Skip display functionality tests for GPU-only drivers
++dumb_buffer.*
++fbdev.*
++
++# Currently fails and causes coverage loss for other tests
++# since core_getversion also fails.
++core_hotunplug.*
 -- 
 2.43.0
 
