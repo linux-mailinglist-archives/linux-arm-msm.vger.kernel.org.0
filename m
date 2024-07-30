@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-27345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD03E9403E7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 03:39:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CC1A9403EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 03:39:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 29A8228303F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 01:39:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4EE2B1C2136B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 01:39:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BD74CA6B;
-	Tue, 30 Jul 2024 01:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3545DDF78;
+	Tue, 30 Jul 2024 01:38:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FlnENwmH"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RuKax83r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60708C1F;
-	Tue, 30 Jul 2024 01:38:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2EA1426C;
+	Tue, 30 Jul 2024 01:38:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722303534; cv=none; b=X3mf0P21o5FAFrURA2vTtlf/5uibsuLKUNHU1SFg4cLLBgIcobdauCYV2ekTUv7uBulQceEhdjERrMbyyy1iWcW6OyMfT9Er6cv5+C4cU+yUNF8rpaXOKjYnlB78vqyx3Xq4c8vJ0kZ3qUHnFWIdIpjgYVh/WpCEoCpcpefc/PY=
+	t=1722303536; cv=none; b=rlR20xIdLhzvbHWiuzyLSwRiJm3Ik2LRVJr7/clCYK9i9lk01QOpQs1KpwnXXDHpAz+bTWu3A9yYayPo4PEuleMF9MdOvpViNCbYM704BN7wlYlE59jy997HBFieKWS4WlnqYpmyx2vCoVS4pQodFQidhWN9I1M0FhwHCWd+EhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722303534; c=relaxed/simple;
-	bh=dduTlr6uUWI8tNY2VGnFDDzuS6zEuw0++81bTrldRmQ=;
+	s=arc-20240116; t=1722303536; c=relaxed/simple;
+	bh=wME1vzhzNffBnYVgZMcmE7wNLX8b9FSNKe98Dh8jRSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XtLjGZwtw/xpSrihradqeIUEZinquJ9JuYDUwpkCWc89X6IyKxBh+z7uAh8QPLTrbu+3andrO69ssA7oUoMCIQl/87MpOpUvVq/wKaAnGuf7UahW2e6r+JH6F5Wqt0Bsb4YNOteHYXkrrIEQ/24aBERvGtu7/byVaXFxevVHjmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FlnENwmH; arc=none smtp.client-ip=209.85.219.52
+	 MIME-Version; b=ZMj40es6egcy8SrIrgyBk5updQxEEE3nr1FuVlkFeFVL8IKImRtymTKWxs/l+p09pLwF83oQ3B12bpX5n4NhWH7DC3KP7pnAtxd8lHDs7rvR8eIztoIYmwvTUQUKFB3Id/gHnfw4x7yUyZz1tc//ROlI04dxcVqY9kHln7sPew0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RuKax83r; arc=none smtp.client-ip=209.85.160.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6b7acf213a3so20841476d6.1;
-        Mon, 29 Jul 2024 18:38:52 -0700 (PDT)
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-44ff7cc5432so26634301cf.3;
+        Mon, 29 Jul 2024 18:38:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722303532; x=1722908332; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1722303533; x=1722908333; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=R5V8v6mJVu45H98XTICckmU1hS1yE/o0aFhw7aKg4Kw=;
-        b=FlnENwmHjuugozaxkTHl3ryrcZ8XTuQBkXLZpAztlEz3SXY3Cd3qXuelOycTuR1bnU
-         COn6JFRHH3WFOtJMWoraoYlXSm0MpUInfXlRlfyF1qRl0cF7grQ7Ua2dBufefpP9H4MO
-         XYwy4A84O0v7CgtRPDCgS5v9m1/4kKuK0t9NsO/+gUWnp3GrweduyeCrW6XC+4PQBkzA
-         AMIQAPkIkFcxJk3NngagUjaTpT5n97/NyYt/VH38lWm1LDKTtIw6l+C7nu9DYC6pIot8
-         +FCEGVDThkLmSUw2nUEOlS37+8+Rfh1Ja0xMcVbQx37ium6bFli4INKNW5/qzKA003jc
-         8Whg==
+        bh=4SCz45+BPbCjHq8X/VdUn+0NTCgnAzl07b5UECsnodY=;
+        b=RuKax83rO4LFzR9QeSh83BGxpfP3tMUwZ2v5xbbDZEjd4eppTUyg6SA77/GbYbwnWP
+         FfdKzUimiagRBLCWuQgCN8qHL2ffPkL6K2cjPFMkVtXbEnmxKAtFmHgafTrcC3OLvMV+
+         eh0qZIcSF6UuRrlfx/ClKAbYiylDYGY3Xq8qIjmU094/KKtvq639OD2gdw/YX4bFWbeJ
+         5flmks9uYwz6M2+k7u348foXSr3vFSGNU9Dpqt+cS6TBBHiS88NDmFOMDzD0L3nV1lj4
+         aHHmw31QuiRu4ZQWlN6yLmStYjdWDJNLR0PouFb6A5+LKxsM/N4TQ4AeiXPachPUO6ZS
+         oZKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722303532; x=1722908332;
+        d=1e100.net; s=20230601; t=1722303533; x=1722908333;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=R5V8v6mJVu45H98XTICckmU1hS1yE/o0aFhw7aKg4Kw=;
-        b=CGb6Lwpfp5HW7eXHN0EXEsZb3KMv8RlCgWRfbj50ywyzNByhjUsL5QdrG7ZeO/tw46
-         FSxHDfHKq7xoMo5mYO/4q2HbFvlBhmnYB6vw5bxYvLCX+/xJOl9AcvQQ8ADnybyo5Cb6
-         sWTyeOKZmINjEEPrtJIhR8Y5cmv0FQNXX89uZZLfmc1hzW6gwTQ1AubxHRQRX0gYOMoO
-         tZUmWZFKH+lWFHr2Qt4DTjyLRe0xnk2bW4OEdpAXsi38g3f+ariTa72dxWpjMFfa5M7P
-         I1tOnqZaMbSx93JfWcPslys1OmfI9/vXMw4oZeZN4NqYMRFTWG+mvK96ypUMRqJhqb98
-         DAkw==
-X-Forwarded-Encrypted: i=1; AJvYcCUYddx+sxOBV1so1SngoFp3gzoo8gla5CvnUMNkXyYkpyhku1XuoxJWkOBBg6Hp6dQY/IviXYMZuTM71oZ3SeqTWeaaeB2DWx+sVW82UXqm3rnx/iJGBvMcqRKBm/93cVsIzQHLc8luSao=
-X-Gm-Message-State: AOJu0Yxq0fcFiV19Jj5SuJLhA2TxbzQbgSgS1nt+ns3dnOYWbIPscTU8
-	3+pLRzfxkO8XGIOqc7O7TA7Ngnru7RTJRhMpmZ44CBEH3vETBp57
-X-Google-Smtp-Source: AGHT+IFAXnDbbOCYtDoXYpx9BApuVpqU8RCmPc/YjsBZVC5fX+KPk+EzHwB2giEEE4IPMKHBD+VtPg==
-X-Received: by 2002:a05:6214:2501:b0:6bb:3f69:dd0b with SMTP id 6a1803df08f44-6bb55a1a621mr139961136d6.18.1722303531781;
-        Mon, 29 Jul 2024 18:38:51 -0700 (PDT)
+        bh=4SCz45+BPbCjHq8X/VdUn+0NTCgnAzl07b5UECsnodY=;
+        b=IJrdO4nTEFaFWySzs4fe7QgJ/d88xTwjCER+f2qNcvfIuUklnXGAwreQDvvy5Klz9n
+         LhV8BiHdSNJE+aZy15UCsugZZ7hNjD/V8HL47tjMKzJeGuitOIpq69jGz4Gq3/Jc1W4o
+         YqKohHFVubCinMEIqc78N8XKufpi2ODyL6aVJbznANRKhanzCvR6GGjKaAk0SEjxaT0G
+         E/vJyl+UVzr61MByp8X2XSVPSYwU9vcntscIPwV81QE25rAiQCwcJ+1m4SLP069y/ZZw
+         vU9S7UHj/PwdF9sGraYkaHda1mmgzSZ003XA/BIX+aNF5/aGhxo9Hqc7aCVRLAt8X2to
+         +Emg==
+X-Forwarded-Encrypted: i=1; AJvYcCU/PFB45HEpWb1Yf2uter7kSVXsSzmSYFUEb8CjmPYOUTmj+SmHnwlCWJa5rpstOUxBw4rphI4TxhSfidx8ygp1fhzEur8kBy0TRBJSnBnEa7HHzTlqUqUeYscuLFoz5ygWjP3KSKT/V2Q=
+X-Gm-Message-State: AOJu0YwbZIcZGXnqAcKMxr59gX+BOEJ/Cct1BaOh5WgTvq4KvtqOX3gu
+	gi2sFKXbecT38KX7kxx7LAgYTdKdW8kPLIu2dAfT+pCFBKO6/9kK
+X-Google-Smtp-Source: AGHT+IFeEeg8clOiGdEAAhcNy0xa4Aaj0rQjm2UC8tAdca4VXiAtuGxBMfi7SFMT9uW+nbvQLLdP9w==
+X-Received: by 2002:a05:622a:8b:b0:44f:f20e:84e5 with SMTP id d75a77b69052e-45004e0b738mr154738761cf.34.1722303533388;
+        Mon, 29 Jul 2024 18:38:53 -0700 (PDT)
 Received: from localhost ([2607:fea8:52a3:d200:324c:b818:b179:79b])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bb5bcffd18sm36115946d6.15.2024.07.29.18.38.51
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-44fe814d0bfsm46525421cf.33.2024.07.29.18.38.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jul 2024 18:38:51 -0700 (PDT)
+        Mon, 29 Jul 2024 18:38:53 -0700 (PDT)
 From: Richard Acayan <mailingradian@gmail.com>
 To: Rob Clark <robdclark@gmail.com>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -88,9 +88,9 @@ Cc: Maxime Ripard <mripard@kernel.org>,
 	David Airlie <airlied@gmail.com>,
 	Daniel Vetter <daniel@ffwll.ch>,
 	Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH 1/4] dt-bindings: display/msm/gmu: Add SDM670 compatible
-Date: Mon, 29 Jul 2024 21:38:46 -0400
-Message-ID: <20240730013844.41951-7-mailingradian@gmail.com>
+Subject: [PATCH 2/4] drm/msm/adreno: add a615 support
+Date: Mon, 29 Jul 2024 21:38:47 -0400
+Message-ID: <20240730013844.41951-8-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730013844.41951-6-mailingradian@gmail.com>
 References: <20240730013844.41951-6-mailingradian@gmail.com>
@@ -102,25 +102,52 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The Snapdragon 670 has a GMU. Add its compatible.
+The Adreno A615 is used in SDM670. Add an entry to support it along with
+the speed bins.
 
 Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 ---
- Documentation/devicetree/bindings/display/msm/gmu.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 27 +++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-index b1bd372996d5..1c055ba64038 100644
---- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
-@@ -91,6 +91,7 @@ allOf:
-         compatible:
-           contains:
-             enum:
-+              - qcom,adreno-gmu-615.0
-               - qcom,adreno-gmu-618.0
-               - qcom,adreno-gmu-630.2
-     then:
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+index 68ba9aed5506..fc4fa2a9547d 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+@@ -651,6 +651,33 @@ static const struct adreno_info a6xx_gpus[] = {
+ 			{ 157, 3 },
+ 			{ 127, 4 },
+ 		),
++	}, {
++		.chip_ids = ADRENO_CHIP_IDS(0x06010500),
++		.family = ADRENO_6XX_GEN1,
++		.revn = 615,
++		.fw = {
++			[ADRENO_FW_SQE] = "a630_sqe.fw",
++			[ADRENO_FW_GMU] = "a630_gmu.bin",
++		},
++		.gmem = SZ_512K,
++		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
++		.init = a6xx_gpu_init,
++		.zapfw = "a615_zap.mdt",
++		.a6xx = &(const struct a6xx_info) {
++			.hwcg = a615_hwcg,
++			.protect = &a630_protect,
++		},
++		.speedbins = ADRENO_SPEEDBINS(
++			/*
++			 * The default speed bin (0) has the same values as
++			 * speed bin 90 which goes up to 432 MHz.
++			 */
++			{ 0,   0 },
++			{ 90,  0 },
++			{ 105, 1 },
++			{ 146, 2 },
++			{ 163, 3 },
++		),
+ 	}, {
+ 		.machine = "qcom,sm7150",
+ 		.chip_ids = ADRENO_CHIP_IDS(0x06010800),
 -- 
 2.45.2
 
