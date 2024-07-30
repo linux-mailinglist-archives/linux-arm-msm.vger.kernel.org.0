@@ -1,182 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-27423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00B3294158F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 17:39:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 998AE94163C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 17:58:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 23CFD1C22DE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 15:39:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1A3A91F2557C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 15:58:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8AE71A38FE;
-	Tue, 30 Jul 2024 15:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 713D81BA87B;
+	Tue, 30 Jul 2024 15:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="MH+gbM4C"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yk0D11Qb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271931A2C1A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jul 2024 15:39:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51ECD1BB6A9;
+	Tue, 30 Jul 2024 15:57:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722353961; cv=none; b=iWbzg5r5B8Mjsa8C2B4OT9XC8oq2emOFNAqq30bSAD7r/jgk5wcB112qwggs6wVk+jZJY9VKKYlQqHWRHpC16tevXBmz9eY8w56pX1tKMMoAjPonAQ5urCH4pkr24sbR7hLAcxzxlDxk24dyPWganc+VgmpS9X2y1rmxcKd+kBQ=
+	t=1722355067; cv=none; b=ipM2horrfACU052MdJoGl8g5WNOOo7ymNMD+YqJ71GOvH3qjroMKaFbqJ0nt5o39bkSwaMbVxnGqubl3NDiYNMERYcktT28yfiw7adRUdZ6oh6Wv/dbYxAySUCC9Y5+rx/d5ex2dsBpiB50LcJ2LI405+Gtaa7p7oSrKGj6nXCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722353961; c=relaxed/simple;
-	bh=R4ZooqWbss9xGs6bIU5o5lnNh9rXB8hpYCrHpZgXAXE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qogsJVoow/fqvgAkmjOsR1fvRWl8+oxYt12bw3ver2XuTAu5qFvMT9m0CYESWHtIVf/cC0jOI7kuo5unB30iXhhLFKJyLhmbqCap7FU1Yqld1+MFFbBagxDFHEvDVt6NXUqr+6maQqiRb50vgVS0TZL+V9sCFp4NiLp1prjSs5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=MH+gbM4C; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-42816ca782dso26822675e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jul 2024 08:39:19 -0700 (PDT)
+	s=arc-20240116; t=1722355067; c=relaxed/simple;
+	bh=tn400rVvllJNXhu3yHGfVTbwd98gV9dFnEHtKt4lEKk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Tzx7gCJRkFFyprlX/3VVD9j61/gfK3NPrr7dhf//tP2y2YfRureYA2tn6qI+vCEgVuXuK8HQhkXYRT7A4Gehy0KicwRkUJvF0gUCqhihkowkkeJMK1NK99Q2Yc5N62qUpclSl4JowIOc8G0YGCvDcUNafipiR0zHJ4cbXRdsnqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yk0D11Qb; arc=none smtp.client-ip=209.85.208.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2ef2fccca2cso58631521fa.1;
+        Tue, 30 Jul 2024 08:57:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1722353958; x=1722958758; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dxLhBkZsmeEaZb3So1QjwudQ+G7ZrlTozU/Owae9ajE=;
-        b=MH+gbM4CbHKo19tibXuAPuzlmxMpRlOIqoZbl386w3lo91ifPSTvhhnQLcdi6zkRyq
-         ZVa+BhBmr6nrmZlZdDtnIfwP8grv/qG9kndY95wp7O5tzJrSlegA2ohwLZEXojcZ1Ozt
-         sJqAtNHE9xcm+1L/i0qKpKIb/LKFjCxmW+KRVWNviYpYLEoAoMwDu42Bu2z9pqPJtPQp
-         z1rXqafgWhZg4vuMnuqYnau6bqL5llr6J2AtNhVUJPMTwAZUEmjCq+NztsRB6Ts6lI4y
-         U+B5lQN8Bh3ojEkxed8RQ073AmHcsgLLKwNP+AdepIV2FWBVDgIqXuRTOI4oDg0KC3O/
-         9Ksw==
+        d=gmail.com; s=20230601; t=1722355062; x=1722959862; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=27/gAqx5lgeC8Os2LV97u4YOEZtWJlnLTdD+mQUAxaU=;
+        b=Yk0D11Qb6gfOVsWatJuC46gues9TwNkqkGRqmCW/0apKrzlVfUdpccxUgeByGvUGYi
+         LBxNGwP6rlr+leJ/gs+LIhMp96PyP95RT5c+X/GzITBQcqpDy9fBrA4M02hMsST4+vMM
+         yqLBb5HAwAf+DYzClwSOdnu5Z98p8jockiWg7I+WdMwpi0pzFRhpqshVXhJ1BDtmQxLI
+         g0PKlOVa1JcuEv37Iy3Vjhy2PJ8vU054qeHddqDUh+iSjnY/1MfheQn0KRh9OH3LH1rk
+         blElQ0ASF9/LNuIHjojUlDhigPA64yLkHcfYGEIIY79KI11EkOMn//c1u4t87oLDCHFC
+         +WUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722353958; x=1722958758;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1722355062; x=1722959862;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dxLhBkZsmeEaZb3So1QjwudQ+G7ZrlTozU/Owae9ajE=;
-        b=pa1kwYrvHcG4I7uQ0W5RdLNgtmsYLVMBPzypnBK1fmV27LdWJw75t2/i0X/88akofX
-         yAB3KwBeOJ51kIyoCnT0Xidh9Wuq1/jhCdKKVDqLXVqUhnQlww8HE2oXj73B7L78npOC
-         XIj1X+9W6oJuiuRpsKTQ1QyZk6A3XCHokjDEwRWP4YvGFVhYXZl2fSKtiFy/XUW60kup
-         rW1iJka5obFPJD0NCvxoNYg1ZbwiSxuTiX6864SiqYyeeqyAAVI9Bcek7HCkccoIyBxW
-         ynzRrfFb6OjSx/TwgjzNbVjAGsKNn/JDdQCGc8OGVC5SOENUWT4LiSPlTbWX/+T9r0gj
-         XSkQ==
-X-Gm-Message-State: AOJu0YxI0EiB7B5AT1gIBDgtYWFPTK9Zch09DCyPrflHhXfHuGrgnGxT
-	hUTP2ym0zlR47hJI9BmE1XQye0z2YVlSf5TWyM0jyyBG7f/v9X9Qa2Yh2qCz1z4=
-X-Google-Smtp-Source: AGHT+IH8imLvNOLJLmKJfopOT+JooKZj/DFqqPvo2Vc3XOjFHpKLCFiWyIm19qQeRu1stKkmPLTQPw==
-X-Received: by 2002:a5d:4c45:0:b0:35f:f90:f383 with SMTP id ffacd0b85a97d-36b5d0dd17cmr6831632f8f.56.1722353958448;
-        Tue, 30 Jul 2024 08:39:18 -0700 (PDT)
-Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:ccf2:71b3:8f46:e8cb])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36b36857d5asm14952522f8f.84.2024.07.30.08.39.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jul 2024 08:39:17 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 30 Jul 2024 17:38:49 +0200
-Subject: [PATCH 2/2] firmware: qcom: qseecom: remove unused functions
+        bh=27/gAqx5lgeC8Os2LV97u4YOEZtWJlnLTdD+mQUAxaU=;
+        b=McK3hk05S7MtYwDqPhYTm1vVDt6z+6/OlqGzgZplYwE0WpkbvLACl2gE0Yo1ToMQhl
+         n/26b52sd2sc9znFYXzk3YqOUaX5daFDWtjfEQh5rAxpJpuIriTfkkJYe9/yZHP98Hq9
+         NdxD1aPtN8oVW9N/PaMMeNtRnb4yQKuRyxgl6KN2unFjoazFpU6DeD3nALPhuOGGh4Ld
+         rHYJh/zYIKWvLA1xLrjnWLOiDISQ5eiRQuUYwy0zfUTFFFtnn5Wys+fqgNuLBb19LlKO
+         ne+GeZI7R33LXpp3ZoPuPelEvw80WUuyB5vlkaLK8PE8ilZqSmZSnjMtsLgjPOAmkL06
+         F8Ag==
+X-Forwarded-Encrypted: i=1; AJvYcCXK/bEr1NEwTByfXV+fjlPaO8UwUBS7clAaid3nsedGZbo9tHdrQ62vFQuoi++ysBElvw6JjQVSTDRdhsfo6azyTWaouYOhGSsBMTosmlD4+aELPjdgnB7cNqteeIxSWWaatdji428UKfsXXg==
+X-Gm-Message-State: AOJu0Yy7eQuyMI+G2rc9ul5mRa/6jQbahiuyAG22JfLlIfTD5A/C/oAC
+	7PcS4OOnffB97rTD2J/STZbafupS+FKPRrr0zb6TigOAFAaYWO0BT4S5+myoOgVxQdp2N3iMf3i
+	RnOrNhwGVqxPMAkchFkvLIUxMClM=
+X-Google-Smtp-Source: AGHT+IF9SiJw/Eq3Ic3bT8iin39x3OBr3WmKzKTHYF3cEnCHRD8ZJpdkfSIHWO0NCT3VovNiOyKE81Rskxkmlexa+6M=
+X-Received: by 2002:a2e:7c07:0:b0:2ec:5c94:3d99 with SMTP id
+ 38308e7fff4ca-2f12edf8009mr75537151fa.2.1722355061989; Tue, 30 Jul 2024
+ 08:57:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240730-tzmem-efivars-fix-v1-2-bb78884810b5@linaro.org>
-References: <20240730-tzmem-efivars-fix-v1-0-bb78884810b5@linaro.org>
-In-Reply-To: <20240730-tzmem-efivars-fix-v1-0-bb78884810b5@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Elliot Berman <quic_eberman@quicinc.com>, 
- Andrew Halaney <ahalaney@redhat.com>, 
- Amirreza Zarrabi <quic_azarrabi@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
- Johan Hovold <johan+linaro@kernel.org>, 
- Maximilian Luz <luzmaximilian@gmail.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2671;
- i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=QFummjheRYx42R3XUj/t91RnTBlfQL2DLWjzOiD7yT0=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBmqQki4LkotceIbvXtuG/VsWPUMi/8hiDdKaZn9
- cBckW2pHNWJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCZqkJIgAKCRARpy6gFHHX
- ctEEEACXIEEth/3X8H6OSIH6yjzMuZiOH/b3Ke7y0bU7W4BtPjpDKAf9fyCf1X5hD8Ok4+RnKxW
- /4atYl3xxHQCbwPLq2xvNw29t/0Kmpw3XZO6DDc4Ml120gUPX2Te6fYxbUy9Et+/ge0h8g7ossh
- KVG6n24FXmwOLzkgJ35X7ViJZJKTQF3sLZwfwWOhiCcrTEnVeaWlTBhdCiJynlirYtmSFZ1oFdO
- FZLju/Op8r+3nEaAsMZmFjKl1QVzbXKQejxfOWtEKZVt6yO+ImbtiikexKrgW1p5b+flDJkTWIK
- Kj3K8B1GVuKNj2YMqec70srPjsXDfgZwC182mgZl5NLYivK313Lq1AWLZDsJehwGpn9JnnUDdgV
- 1NbPLMky8HKucKuogBNqHMhY0Deu5cJd5IJlnn44FQNltFmxxyLfw4GrnBm2iLhXwgf2HPLdH1t
- RTaiHBZy7R2Uld5HBvWesgnxEtqpzuH7VfyMOHwRtUKK+W2Abkz4zyY+j0IAB3eY6doq+NHhUOP
- 6kY8JmjMY+DLtuVvtmPWPNzBenFu40Dq+RAguWacdUz97wpnEV1SeOI33P7igdtsDrPs5DLP50b
- voEGX80k9kmt42dqp5XpUnLI/5SQUUEqgbvl2cZgy8UqbYiySYgcO/gWZhJpF3a/DTvoUoMOlhy
- ye7Rff4YP/xwGvA==
-X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
- fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
+References: <20240729-topic-845_gpu_smmu-v1-1-8e372abbde41@kernel.org>
+ <osxynb352ubxgcb5tv3u7mskkon23nmm3gxkfiiiqss5zp67jf@fv5d6bob2rgp>
+ <CAF6AEGuWULwrJDWW37nQhByTpc-2bBYVv3b_Ac6OCwaJ83Ed9w@mail.gmail.com>
+ <CAA8EJpp9zaQSKbis7J9kYTudTt=RFhfbzeayz3b-VbGQENtqeA@mail.gmail.com>
+ <3332c732-4555-46bf-af75-aa36ce2d58df@gmail.com> <CAA8EJppZsNTqh_KxD=BWXjmedA1ogeMa74cA=vVbCWAU7A-qgQ@mail.gmail.com>
+ <691ee925-b214-4b68-8d7b-ecb54f865cfc@kernel.org>
+In-Reply-To: <691ee925-b214-4b68-8d7b-ecb54f865cfc@kernel.org>
+From: Rob Clark <robdclark@gmail.com>
+Date: Tue, 30 Jul 2024 08:57:29 -0700
+Message-ID: <CAF6AEGuPanMBmguk9GRKekPEkdzxb8fOsb0qEVsUVEeedtG3=Q@mail.gmail.com>
+Subject: Re: [PATCH] iommu/arm-smmu-qcom: Work around SDM845 Adreno SMMU w/
+ 16K pages
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Sumit Semwal <sumit.semwal@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Tue, Jul 30, 2024 at 3:12=E2=80=AFAM Konrad Dybcio <konradybcio@kernel.o=
+rg> wrote:
+>
+> On 30.07.2024 10:50 AM, Dmitry Baryshkov wrote:
+> > On Tue, 30 Jul 2024 at 11:08, Konrad Dybcio <konradybcio@gmail.com> wro=
+te:
+> >>
+> >> On 29.07.2024 11:21 PM, Dmitry Baryshkov wrote:
+> >>> On Tue, 30 Jul 2024 at 00:08, Rob Clark <robdclark@gmail.com> wrote:
+> >>>>
+> >>>> On Mon, Jul 29, 2024 at 1:14=E2=80=AFPM Dmitry Baryshkov
+> >>>> <dmitry.baryshkov@linaro.org> wrote:
+> >>>>>
+> >>>>> On Mon, Jul 29, 2024 at 10:37:48AM GMT, Konrad Dybcio wrote:
+> >>>>>> From: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >>>>>>
+> >>>>>> SDM845's Adreno SMMU is unique in that it actually advertizes supp=
+ort
+> >>>>>> for 16K (and 32M) pages, which doesn't hold for newer SoCs.
+> >>>>>>
+> >>>>>> This however, seems either broken in the hardware implementation, =
+the
+> >>>>>> hypervisor middleware that abstracts the SMMU, or there's a bug in=
+ the
+> >>>>>> Linux kernel somewhere down the line that nobody managed to track =
+down.
+> >>>>>>
+> >>>>>> Booting SDM845 with 16K page sizes and drm/msm results in:
+> >>>>>>
+> >>>>>> *** gpu fault: ttbr0=3D0000000000000000 iova=3D000100000000c000 di=
+r=3DREAD
+> >>>>>> type=3DTRANSLATION source=3DCP (0,0,0,0)
+> >>>>>>
+> >>>>>> right after loading the firmware. The GPU then starts spitting out
+> >>>>>> illegal intstruction errors, as it's quite obvious that it got a
+> >>>>>> bogus pointer.
+> >>>>>>
+> >>>>>> Hide 16K support on SDM845's Adreno SMMU to work around this.
+> >>>>>>
+> >>>>>> Reported-by: Sumit Semwal <sumit.semwal@linaro.org>
+> >>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >>>>>> ---
+> >>>>>> There's a mismatch in sender/committer addresses but that's "fine"=
+:
+> >>>>>> https://lore.kernel.org/linux-usb/2024072734-scenic-unwilling-71ea=
+@gregkh/
+> >>>>>> ---
+> >>>>>>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 10 ++++++++++
+> >>>>>>  1 file changed, 10 insertions(+)
+> >>>>>>
+> >>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/=
+iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >>>>>> index 36c6b36ad4ff..d25825c05817 100644
+> >>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >>>>>> @@ -338,6 +338,15 @@ static int qcom_smmu_cfg_probe(struct arm_smm=
+u_device *smmu)
+> >>>>>>       return 0;
+> >>>>>>  }
+> >>>>>>
+> >>>>>> +static int qcom_adreno_smmuv2_cfg_probe(struct arm_smmu_device *s=
+mmu)
+> >>>>>> +{
+> >>>>>> +     /* SDM845 Adreno SMMU advertizes 16K pages support, but some=
+thing is broken */
+> >>>>>> +     if (of_device_is_compatible(smmu->dev->of_node, "qcom,sdm845=
+-smmu-v2"))
+> >>>>>> +             smmu->features &=3D ~ARM_SMMU_FEAT_FMT_AARCH64_16K;
+> >>>>>
+> >>>>> Shouldn't we hide that uncoditionally as it's likely that none of v=
+2
+> >>>>> Adreno SMMUs support 16k pages?
+> >>>>
+> >>>> Hmm, that would be unfortunate to have the GPU not supporting the CP=
+U
+> >>>> page size.  I guess we could still map 16k pages as multiple 4k page=
+s,
+> >>>> but that is a bit sad..
+> >>>
+> >>> For now this might be limited to older platforms (v2 vs -500)
+> >>
+> >> In the commit message:
+> >>
+> >>>>>> SDM845's Adreno SMMU is unique in that it actually advertizes supp=
+ort
+> >>>>>> for 16K (and 32M) pages, which doesn't hold for newer SoCs.
+> >
+> > My question is about forbidding 16k pages for sdm845 only or for other
+> > chips too. I'd assume that it shouldn't also work for other smmu-v2
+> > platforms.
+>
+> I'd say we shouldn't cause trouble unless we know it's an issue
 
-qseecom_scm_dev(), qseecom_dma_alloc() and qseecom_dma_free() are no
-longer used following the conversion to using tzmem. Remove them.
+I guess the other direction (gpu only supporting _larger_ pgsize as
+cpu) would be more problematic
 
-Fixes: 6612103ec35a ("firmware: qcom: qseecom: convert to using the TZ allocator")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- include/linux/firmware/qcom/qcom_qseecom.h | 45 ------------------------------
- 1 file changed, 45 deletions(-)
+What is the next larger pg size above 4k which is supported by both gpu and=
+ cpu?
 
-diff --git a/include/linux/firmware/qcom/qcom_qseecom.h b/include/linux/firmware/qcom/qcom_qseecom.h
-index 1dc5b3b50aa9..3387897bf368 100644
---- a/include/linux/firmware/qcom/qcom_qseecom.h
-+++ b/include/linux/firmware/qcom/qcom_qseecom.h
-@@ -25,51 +25,6 @@ struct qseecom_client {
- 	u32 app_id;
- };
- 
--/**
-- * qseecom_scm_dev() - Get the SCM device associated with the QSEECOM client.
-- * @client: The QSEECOM client device.
-- *
-- * Returns the SCM device under which the provided QSEECOM client device
-- * operates. This function is intended to be used for DMA allocations.
-- */
--static inline struct device *qseecom_scm_dev(struct qseecom_client *client)
--{
--	return client->aux_dev.dev.parent->parent;
--}
--
--/**
-- * qseecom_dma_alloc() - Allocate DMA memory for a QSEECOM client.
-- * @client:     The QSEECOM client to allocate the memory for.
-- * @size:       The number of bytes to allocate.
-- * @dma_handle: Pointer to where the DMA address should be stored.
-- * @gfp:        Allocation flags.
-- *
-- * Wrapper function for dma_alloc_coherent(), allocating DMA memory usable for
-- * TZ/QSEECOM communication. Refer to dma_alloc_coherent() for details.
-- */
--static inline void *qseecom_dma_alloc(struct qseecom_client *client, size_t size,
--				      dma_addr_t *dma_handle, gfp_t gfp)
--{
--	return dma_alloc_coherent(qseecom_scm_dev(client), size, dma_handle, gfp);
--}
--
--/**
-- * dma_free_coherent() - Free QSEECOM DMA memory.
-- * @client:     The QSEECOM client for which the memory has been allocated.
-- * @size:       The number of bytes allocated.
-- * @cpu_addr:   Virtual memory address to free.
-- * @dma_handle: DMA memory address to free.
-- *
-- * Wrapper function for dma_free_coherent(), freeing memory previously
-- * allocated with qseecom_dma_alloc(). Refer to dma_free_coherent() for
-- * details.
-- */
--static inline void qseecom_dma_free(struct qseecom_client *client, size_t size,
--				    void *cpu_addr, dma_addr_t dma_handle)
--{
--	return dma_free_coherent(qseecom_scm_dev(client), size, cpu_addr, dma_handle);
--}
--
- /**
-  * qcom_qseecom_app_send() - Send to and receive data from a given QSEE app.
-  * @client:   The QSEECOM client associated with the target app.
-
--- 
-2.43.0
-
+BR,
+-R
 
