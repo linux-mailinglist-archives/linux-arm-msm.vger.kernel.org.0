@@ -1,79 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-27343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 791DC9403E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 03:38:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C5B759403E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 03:39:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A98F21C21B47
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 01:38:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 030EE1C21377
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 01:39:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9078711187;
-	Tue, 30 Jul 2024 01:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3B9BA23;
+	Tue, 30 Jul 2024 01:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m8qgsh+a"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LSA57cnE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17535BA50
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jul 2024 01:38:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DC51426C;
+	Tue, 30 Jul 2024 01:38:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722303524; cv=none; b=l4onuLR23l9xRDyesvIkraFOOjvAW4bxijOswgOddCV5/J/E0teKMS02+JositAC90bOPf/zDOljeEACMo5CHcoSvyVjqhjTpfJygHscjV2IdCAP/hOBJcU6Utqp0ka5GNumVKewkLS8e2Q/tggM/LgbpO2ruOxaOrwfmEqRK00=
+	t=1722303532; cv=none; b=d4NKXZP6X3QPyBLuoZh5bAAa+IXqPnfuQqTt3J4n7PCRidRQqpwSVymBkiNcid8edTtPdV9fYhWDIOIyUVjS0BTp4PlJFhKKfYkXit8HvT2MUZuG+Shk3Fm93VVAiS3oE4MnJS4HLdzW6UEhoKMRxxSC1qyEu4U9V1SYmBgGpF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722303524; c=relaxed/simple;
-	bh=xNW3kN7ZSX0e0dAq/+fmIZsv1U5V2APK4QPpSC5MnNk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Yr45FDlywPHNmyLVhGYsh1RYdxdra7MSSBWNEu2Coli+eaFAV6Xa8NjWj8aFyLFGVa/Rpl2it7E0G/rlJZc6vxla3P30FhN3u4YcrahEOxvkK5Z+vUuw8VBTI4JNUq+9R7/Gmwe/pQfaJfa1Hu1OUpLygaBW2zg0t5gO7l3BDzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m8qgsh+a; arc=none smtp.client-ip=209.85.222.179
+	s=arc-20240116; t=1722303532; c=relaxed/simple;
+	bh=DeWrz3VqxhKlcDlvp2OeARJOtHuhyh1WuRgVwy3hW/Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NyOg/NsP++/nAlg7/7GpLf99sZ7iXO/NPAhG7mgmQSerSZ/r8IU9gKU+a0W2XoH5K6LZtgzJviKyEyfK4WZpbolXiDxgA4uY9KRrwYHdVjbt2DtwTTwsf7557OAYjLEMGpbhObi1utX7SWC5Ft8dtjV8haclIns7OnxAsZ7IIOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LSA57cnE; arc=none smtp.client-ip=209.85.219.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-7a1d7a544e7so291636885a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Jul 2024 18:38:42 -0700 (PDT)
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e05f913e382so2388985276.2;
+        Mon, 29 Jul 2024 18:38:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722303522; x=1722908322; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1722303530; x=1722908330; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=R7Ce16ep8oGXOywNJjzf4pkNH4LytOu6+bjW+V94IM4=;
-        b=m8qgsh+aGikHq3h5jn1GsqzeYpOzlRVKlR6fMTPydLR4TxaX8IeedqYqCy7CGnPU0O
-         WLyNbzjxRINRcKw+7LmTY7k/ecdldk6B1BwAoDMv104701uqINP5eTH/jzv/DI3wDthY
-         w45YSBwpOMDhVMsQGDc2kK8U02rinlQoceCtYOVe+7p/HpFrKlFdCPnZcPzSFjqDWHP7
-         2ds9GPYUv92SSuX569cu2AIuasbiqBCkVTwf2SAqZOIu0FR0yLLxI+qBGRkKWjzB5fV1
-         vI3ip7ZQ7A3EuTP/cEC1eXYLhW4FSsLOOERqctFpyirAGTdAavgX9n9QWNO71xfTKIMR
-         RUSg==
+        bh=o5T2H1MxibV59R6E5ponVFEf8aVMT7LzzdBaNyOKYAQ=;
+        b=LSA57cnEMyMyBdbLRsKCebWzhMWKupN1iWE6urUNNI8Y3uA82FYgRXmAU7AQQ1zcSj
+         Tosfa6H3UQIblcFY+VIS1lRhhUm3KLehdAgzvvQjgAjtMpKOYaf9lOmzreCX239pi6LO
+         gYaHpFg4HaKO5vRe+Xeawknr38pIG9GWiLaUOSedP/QACAO7hae3+Km/o986B1P1W9vk
+         4D5x3hmNq7H2WDa1bycACo+hHG5WG7FivLL2SjosGu/68GdZHNccXOKko2S9NRR6TpA/
+         ciVJju6QEkvDV1z7PdS5cNo05g36Bu2yUezwx4BtMu732szRNJJ86dZTJtYjybKygihR
+         vYrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722303522; x=1722908322;
+        d=1e100.net; s=20230601; t=1722303530; x=1722908330;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=R7Ce16ep8oGXOywNJjzf4pkNH4LytOu6+bjW+V94IM4=;
-        b=GtonrNyFLJQsXR6GiwElmn/ZO3N5mJjoA6WYdbiBYNpgd3a5+WQ69aBDbT3sGLEnur
-         AI9cl7ndxQmARx+NbTDPqDSDKrrcIO8e1Ed/i+wo+0Q4t/+KzCUkDnPFhaCLg6wkMscJ
-         WPUHHf45eMLrexiDNEKtQ6s7Suld7PWhOYqWWsalnAgPVnZOIMK5+nFrbquIDx3cfW2c
-         9oIv0pI2aQT3kliU4+jGhTgjR3MbrquIsBosKkScb0yAaHeZNsEZDJOtUR9ATQTyMoCi
-         Oe8Br9xgUxBrvKd6GLEtyZZ7S8/9jngdA+s7vRJeqKHlDecyTUWDlQlF2zrJ8XCdVsUT
-         ywGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXtC/d99TfAeQRGW6F0whgQJLLOcLolxzuj4Y8XeN+wZN0lo3M8BZ/gq29PT2gcbO1ysJ3UvPT1smr8OsZE+I3qCN9gLOkabkyBnYcOGw==
-X-Gm-Message-State: AOJu0YyLdDYYuJeKXuvBOdnG+Y1w2VZk8eQwfguxGY48It7nEwtk9g6n
-	oQSfvnU/ukhNEPeQ+IBjomtO4T6owP78x16AQgCYUxghorKBlBHv1antKdJC
-X-Google-Smtp-Source: AGHT+IEm8Ltj1jd8rqMWNmhQJpMbx5+Qt+xsqYApCE1e4u1XCDV8ikgEUNgDCNHO0gbCq7NqzqBUzA==
-X-Received: by 2002:a05:620a:258e:b0:79d:6349:32de with SMTP id af79cd13be357-7a1e522fb28mr1146254385a.7.1722303521839;
-        Mon, 29 Jul 2024 18:38:41 -0700 (PDT)
+        bh=o5T2H1MxibV59R6E5ponVFEf8aVMT7LzzdBaNyOKYAQ=;
+        b=UqFTKV6plrnFjf4ghIy1FlSAhM+k36z/aTIHwJoHLL69/kGpkOANjg93iI8DxBRwXe
+         9kYKECoOadTw2Sc/kSlscJ2lT5OljNPY/gFuz3B5HRBwA0DhD7ZIOM4cJGAvoP+1G3tQ
+         iUHhUBcNZUjBSCEDF0QCm+D6d6G/U5a7OfVnn8xsKDzoQmW4zAtBfJt3vAJZtDUhnV0y
+         oPkyfIr4mCP+WuPTmfDfoNdskU8xnMhKiGFknqCqOJZVmU5jTQYfhjnVXMiOhnoi/vX3
+         KHqSmh3s0Me4w2PJuLc0/6a07Qy4g702GtAM3yoe4PcHuiKbztIJdj2CJzySXkTbJOYq
+         uhNA==
+X-Forwarded-Encrypted: i=1; AJvYcCUqr0e2D/QSOuXx3Eg0zpqN7Ch8a92/Ihn8VMLW2rQWZ4D+PSFFwFAwN/Ph/yMz6aDOVP1Qp8MvhvS3y8pCUw==@vger.kernel.org, AJvYcCVvqIBt9Y6L5gzM3K20IeJ0q/Cq+oy22z6VZgNQ7cg/aJoAOf4OYZPLeu1j0Wq6hPhWbdg4KIgBn7Fq@vger.kernel.org
+X-Gm-Message-State: AOJu0YxQfXJswkwfIm2/F9ljrAeG7h9NFiNDXJlXnEFXj+R4OJ79Wz1m
+	NIznFd3sEUEdJiEkKGO9BrrnHqifqPThzCWlasaUlywzW8bkuaD/
+X-Google-Smtp-Source: AGHT+IE8CCqiBQzc9P2bfVnL3NGKo0Stf9R5bLEeJaR55c3XfqJse2oFJU3IpAa/r9TGBMegBbSatw==
+X-Received: by 2002:a05:6902:124e:b0:e0b:97c4:77cb with SMTP id 3f1490d57ef6-e0b97c4831fmr2285692276.27.1722303530216;
+        Mon, 29 Jul 2024 18:38:50 -0700 (PDT)
 Received: from localhost ([2607:fea8:52a3:d200:324c:b818:b179:79b])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a1d73b1786sm595208485a.33.2024.07.29.18.38.41
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-45034f7804dsm2284681cf.16.2024.07.29.18.38.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jul 2024 18:38:41 -0700 (PDT)
+        Mon, 29 Jul 2024 18:38:49 -0700 (PDT)
 From: Richard Acayan <mailingradian@gmail.com>
-To: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-arm-msm@vger.kernel.org
-Cc: Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH] firmware: qcom: tzmem: disable sdm670 platform
-Date: Mon, 29 Jul 2024 21:38:35 -0400
-Message-ID: <20240730013834.41840-2-mailingradian@gmail.com>
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	devicetree@vger.kernel.org
+Cc: Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH 0/4] drm/msm/adreno: Add A615 GPU for SDM670 and Pixel 3a
+Date: Mon, 29 Jul 2024 21:38:45 -0400
+Message-ID: <20240730013844.41951-6-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -83,27 +98,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The Pixel 3a returns 4291821499 (-3145797 or 0xFFCFFFBB) when attempting
-to load the GPU firmware if tzmem is allowed. Disable it on SDM670 so
-the GPU can successfully probe.
+This adds support for the speed-binned A615 GPU on SDM670.
 
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
----
- drivers/firmware/qcom/qcom_tzmem.c | 1 +
- 1 file changed, 1 insertion(+)
+Richard Acayan (4):
+  dt-bindings: display/msm/gmu: Add SDM670 compatible
+  drm/msm/adreno: add a615 support
+  arm64: dts: qcom: sdm670: add gpu
+  arm64: dts: qcom: sdm670-google-common: enable gpu
 
-diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
-index 17948cfc82e7..5767ef210036 100644
---- a/drivers/firmware/qcom/qcom_tzmem.c
-+++ b/drivers/firmware/qcom/qcom_tzmem.c
-@@ -78,6 +78,7 @@ static bool qcom_tzmem_using_shm_bridge;
- /* List of machines that are known to not support SHM bridge correctly. */
- static const char *const qcom_tzmem_blacklist[] = {
- 	"qcom,sc8180x",
-+	"qcom,sdm670", /* failure in GPU firmware loading */
- 	"qcom,sdm845", /* reset in rmtfs memory assignment */
- 	"qcom,sm8150", /* reset in rmtfs memory assignment */
- 	NULL
+ .../devicetree/bindings/display/msm/gmu.yaml  |   1 +
+ .../boot/dts/qcom/sdm670-google-sargo.dts     |  13 ++
+ arch/arm64/boot/dts/qcom/sdm670.dtsi          | 168 ++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c     |  27 +++
+ 4 files changed, 209 insertions(+)
+
 -- 
 2.45.2
 
