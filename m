@@ -1,125 +1,304 @@
-Return-Path: <linux-arm-msm+bounces-27436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 663C794223B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 23:35:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C501942286
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 00:04:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D77ECB23B1D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 21:35:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 80FE21F24BE7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 22:04:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 370A818DF6D;
-	Tue, 30 Jul 2024 21:35:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A72918DF96;
+	Tue, 30 Jul 2024 22:04:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="ecDyCFC8"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="jZPCrk6/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272BB145FEF;
-	Tue, 30 Jul 2024 21:35:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23D218991F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jul 2024 22:04:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722375311; cv=none; b=o/9hBSBUtbBRB9Z6Gb3WzuQ4WWdJt1u4ptnP8zngYDVK5sRVqJnj3o3A6YQBX4c9QYWdALEja1auzlwMXjvj86CjHFhI74PojBpNeu4v2AXTrhna0OTOjXX2mUJzCEQA5q/C8dmotbjbgX7dlntE4dViwjlZvua3kUGHSlmtOuE=
+	t=1722377075; cv=none; b=MbYhhJB/25+bO17kjVrU+QEEzQGifmafh6N/LqJzdeR+pD9LilpvR3koYr2o3WkwsDPzgQ1SQXYNwnp8K81imSDfZJ38fb9Ai6902zs8R77/ZNpGe3Zf3JXEZ5eOO5EIFbrkWb6JcsUfUMmGwiHGrmYtoQasshLDmhY6HrQCo5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722375311; c=relaxed/simple;
-	bh=ctDG2bG0XENPg/VqQnbh/QCYHEzS3RNBXDCkNFEQrsc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=WWvX6xFPZ1mOgHA4IRIpAhrn/313p3ui6dIphHzXB4s8UvqDaX9eLxtLHw/NpzXo5xtDBFsYHy2YUXqHFCBEyXzZdBImSepwWWltTWdnS8SyQgkR7ISCmVB+cSTL2qMNTOX79CSathu9PrvnBYbyO8AcFjF15yUI87cIvGDBVrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=ecDyCFC8; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from [192.168.1.90] (86FF58DB.dsl.pool.telekom.hu [134.255.88.219])
-	by mail.mainlining.org (Postfix) with ESMTPSA id A0645E4504;
-	Tue, 30 Jul 2024 21:25:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1722374701;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=Y7VCxzsf3pZpKOzW/R1A0W10YAcvNsxQEBCVv4UBoPQ=;
-	b=ecDyCFC8tj0o/Y3YknQ/1XjFgL/xK8zK/tNh05ee3GnCpRiKWS1uiY9fsIbAeaDEgaG0uS
-	VAeN9XmgFcysjYuUvIL8fHmdAU6QHjePaKNyzH8ADXJ/9UTvWq22Or6DiuEbEnE364jAIi
-	rEcRqIrtNG+vrGCL9/P8V23RfbZUlp/K1mWWvJ7dQHbFPLFjBDi4pKS0PonY9f3veTBR2H
-	M2qC7v1yb3ojCncj87QYzNr7n5ZONn1Ym991b+CaICjgfAthdVjrBiKmHEvJcy/1yBsa2k
-	sGG1JLrwO2F6ipagnKt7sCnMrLsuQ74iKqleE8xf8aj7BRSkU/8Zb1X0R84dSg==
-From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-Date: Tue, 30 Jul 2024 23:24:59 +0200
-Subject: [PATCH] arm64: dts: qcom: pm8950: Add resin node
+	s=arc-20240116; t=1722377075; c=relaxed/simple;
+	bh=7R5vy4mzepzaYp/WvefjDb72imB4mI6hl0dLiKlthRM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Oo+V9X8fUc38/wMiCcmPLt0yLs+yjZGpigjcPxg0NitRjl9yAc6Q8RlXqw6VpPDkyktNw/0bNE/gkBOgfckLo3+NkgS2FRi9H/EpbF0HSrCLeApTrc6KVFNcPipRJuFj6fVVNjWIlJa1kv63J7GtbJEqBvR7x8o+gV/ob36q/JY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=jZPCrk6/; arc=none smtp.client-ip=194.117.254.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=from:to:cc:subject:date:message-id
+	:mime-version:content-transfer-encoding; s=k1; bh=CcSAv36yv7IbKf
+	FtDxqWUi5Diosg6MwOf+yrK4IAbCI=; b=jZPCrk6/E2oAkPeJr61ZZRMFPj6fKs
+	3e8InET8RA4dlSMRdPh4H+jxxUnZLaw0d8XLCN93VcZDsrV55sgnn0kBUtsJGGw/
+	2blwiCg53xABQr2FmtkW461oYfi5I//7V/BgGUSralrPfsiZWVNGPDrevd8M0eek
+	jZd2RmSF1+TehGfDOcvGn+7zfogvshHDLCvk8i5memUezlfEpOHlj/WzUGXYEzIN
+	AftyeWTI8G2anoc+8Uwfa9t7Dwf2CwcL7GZGpVtfLDP4vsb8MfJ1hKfUpAIx9q1i
+	1MYNUyJXz2w8Z4R08bboYgZT+LTd214JS2Q7Glv9MpXF7JirqYpQRZ/w==
+Received: (qmail 344796 invoked from network); 31 Jul 2024 00:04:22 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 31 Jul 2024 00:04:22 +0200
+X-UD-Smtp-Session: l3s3148p1@Laj4KH4e3Ixehh9q
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: linux-i2c@vger.kernel.org
+Cc: Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Jean Delvare <jdelvare@suse.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Elie Morisse <syniurge@gmail.com>,
+	Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+	Joel Stanley <joel@jms.id.au>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Baruch Siach <baruch@tkos.co.il>,
+	Dong Aisheng <aisheng.dong@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Aaro Koskinen <aaro.koskinen@iki.fi>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Tony Lindgren <tony@atomide.com>,
+	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
+	Vignesh R <vigneshr@ti.com>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	openbmc@lists.ozlabs.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-aspeed@lists.ozlabs.org,
+	imx@lists.linux.dev,
+	linux-omap@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-samsung-soc@vger.kernel.org
+Subject: [PATCH] i2c: don't use ',' after delimiters
+Date: Wed, 31 Jul 2024 00:01:59 +0200
+Message-ID: <20240730220401.3649-2-wsa+renesas@sang-engineering.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240730-pm8950_resin-v1-1-26de4d933f95@mainlining.org>
-X-B4-Tracking: v=1; b=H4sIACpaqWYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDc2MD3YJcC0tTg/ii1OLMPN3ERGPjxGRTCzMjwzQloJaCotS0zAqwcdG
- xtbUAi2aWFl4AAAA=
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1722374701; l=1351;
- i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
- bh=ctDG2bG0XENPg/VqQnbh/QCYHEzS3RNBXDCkNFEQrsc=;
- b=eaCm34fkaCMbKBYk9HqKth6fIVnfLE8arYDc9pLkTmXL1YaEEQ99fGMLT5VsRA0LYa982MP2H
- D7Ivvco+F4/BXmvcDeHLWbP0QWXDl7EIW4IBVD+jOfKmVnOS2sLAoFI
-X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
- pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
-Add pm8950 resin node as a feature of the PMIC it should be declared
-in pm8950.dtsi, disabled by default. Like all other optional components
-it can then by enabled and configured in the board-specific device tree
-part.
+Delimiters are meant to be last, no need for a ',' there. Remove a
+superfluous newline in the ali1535 driver while here.
 
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 ---
- arch/arm64/boot/dts/qcom/pm8950.dtsi | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pm8950.dtsi b/arch/arm64/boot/dts/qcom/pm8950.dtsi
-index f03095779de0..ed72c6101813 100644
---- a/arch/arm64/boot/dts/qcom/pm8950.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8950.dtsi
-@@ -18,7 +18,7 @@ pmic@0 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
+@Andi: These changes are super trivial so I put them into one patch. Let
+me know if you prefer broken out patches. I think it is better if it
+goes through your tree, but I can also take if you prefer.
+
+ drivers/i2c/busses/i2c-ali1535.c      | 3 +--
+ drivers/i2c/busses/i2c-amd-mp2-plat.c | 2 +-
+ drivers/i2c/busses/i2c-aspeed.c       | 2 +-
+ drivers/i2c/busses/i2c-digicolor.c    | 2 +-
+ drivers/i2c/busses/i2c-imx-lpi2c.c    | 2 +-
+ drivers/i2c/busses/i2c-omap.c         | 2 +-
+ drivers/i2c/busses/i2c-piix4.c        | 2 +-
+ drivers/i2c/busses/i2c-pnx.c          | 2 +-
+ drivers/i2c/busses/i2c-pxa-pci.c      | 2 +-
+ drivers/i2c/busses/i2c-pxa.c          | 2 +-
+ drivers/i2c/busses/i2c-qcom-geni.c    | 2 +-
+ drivers/i2c/busses/i2c-qup.c          | 2 +-
+ drivers/i2c/busses/i2c-s3c2410.c      | 2 +-
+ drivers/i2c/i2c-core-base.c           | 2 +-
+ 14 files changed, 14 insertions(+), 15 deletions(-)
+
+diff --git a/drivers/i2c/busses/i2c-ali1535.c b/drivers/i2c/busses/i2c-ali1535.c
+index 9d7b4efe26ad..544c94e86b89 100644
+--- a/drivers/i2c/busses/i2c-ali1535.c
++++ b/drivers/i2c/busses/i2c-ali1535.c
+@@ -479,9 +479,8 @@ static struct i2c_adapter ali1535_adapter = {
  
--		pon@800 {
-+		pm8950_pon: pon@800 {
- 			compatible = "qcom,pm8916-pon";
- 			reg = <0x0800>;
- 			mode-bootloader = <0x2>;
-@@ -31,6 +31,14 @@ pwrkey {
- 				bias-pull-up;
- 				linux,code = <KEY_POWER>;
- 			};
-+
-+			pm8950_resin: resin {
-+				compatible = "qcom,pm8941-resin";
-+				interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-+				debounce = <15625>;
-+				bias-pull-up;
-+				status = "disabled";
-+			};
- 		};
+ static const struct pci_device_id ali1535_ids[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AL, PCI_DEVICE_ID_AL_M7101) },
+-	{ },
++	{ }
+ };
+-
+ MODULE_DEVICE_TABLE(pci, ali1535_ids);
  
- 		pm8950_temp: temp-alarm@2400 {
-
----
-base-commit: cd19ac2f903276b820f5d0d89de0c896c27036ed
-change-id: 20240730-pm8950_resin-aa33ac58621f
-
-Best regards,
+ static int ali1535_probe(struct pci_dev *dev, const struct pci_device_id *id)
+diff --git a/drivers/i2c/busses/i2c-amd-mp2-plat.c b/drivers/i2c/busses/i2c-amd-mp2-plat.c
+index d3ac1c77a509..6f0ef587e76d 100644
+--- a/drivers/i2c/busses/i2c-amd-mp2-plat.c
++++ b/drivers/i2c/busses/i2c-amd-mp2-plat.c
+@@ -340,7 +340,7 @@ static void i2c_amd_remove(struct platform_device *pdev)
+ 
+ static const struct acpi_device_id i2c_amd_acpi_match[] = {
+ 	{ "AMDI0011" },
+-	{ },
++	{ }
+ };
+ MODULE_DEVICE_TABLE(acpi, i2c_amd_acpi_match);
+ 
+diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
+index ce8c4846b7fa..f411576a024c 100644
+--- a/drivers/i2c/busses/i2c-aspeed.c
++++ b/drivers/i2c/busses/i2c-aspeed.c
+@@ -991,7 +991,7 @@ static const struct of_device_id aspeed_i2c_bus_of_table[] = {
+ 		.compatible = "aspeed,ast2600-i2c-bus",
+ 		.data = aspeed_i2c_25xx_get_clk_reg_val,
+ 	},
+-	{ },
++	{ }
+ };
+ MODULE_DEVICE_TABLE(of, aspeed_i2c_bus_of_table);
+ 
+diff --git a/drivers/i2c/busses/i2c-digicolor.c b/drivers/i2c/busses/i2c-digicolor.c
+index 3e6b80e59b90..3dc5a46698fc 100644
+--- a/drivers/i2c/busses/i2c-digicolor.c
++++ b/drivers/i2c/busses/i2c-digicolor.c
+@@ -357,7 +357,7 @@ static void dc_i2c_remove(struct platform_device *pdev)
+ 
+ static const struct of_device_id dc_i2c_match[] = {
+ 	{ .compatible = "cnxt,cx92755-i2c" },
+-	{ },
++	{ }
+ };
+ MODULE_DEVICE_TABLE(of, dc_i2c_match);
+ 
+diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
+index 0197786892a2..976d43f73f38 100644
+--- a/drivers/i2c/busses/i2c-imx-lpi2c.c
++++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
+@@ -559,7 +559,7 @@ static const struct i2c_algorithm lpi2c_imx_algo = {
+ 
+ static const struct of_device_id lpi2c_imx_of_match[] = {
+ 	{ .compatible = "fsl,imx7ulp-lpi2c" },
+-	{ },
++	{ }
+ };
+ MODULE_DEVICE_TABLE(of, lpi2c_imx_of_match);
+ 
+diff --git a/drivers/i2c/busses/i2c-omap.c b/drivers/i2c/busses/i2c-omap.c
+index 35a3f0a64986..1d9ad25c89ae 100644
+--- a/drivers/i2c/busses/i2c-omap.c
++++ b/drivers/i2c/busses/i2c-omap.c
+@@ -1261,7 +1261,7 @@ static const struct of_device_id omap_i2c_of_match[] = {
+ 		.compatible = "ti,omap2420-i2c",
+ 		.data = &omap2420_pdata,
+ 	},
+-	{ },
++	{ }
+ };
+ MODULE_DEVICE_TABLE(of, omap_i2c_of_match);
+ #endif
+diff --git a/drivers/i2c/busses/i2c-piix4.c b/drivers/i2c/busses/i2c-piix4.c
+index 4e32d57ae0bf..febbd9950d8f 100644
+--- a/drivers/i2c/busses/i2c-piix4.c
++++ b/drivers/i2c/busses/i2c-piix4.c
+@@ -146,7 +146,7 @@ static const struct dmi_system_id piix4_dmi_ibm[] = {
+ 		.ident = "IBM",
+ 		.matches = { DMI_MATCH(DMI_SYS_VENDOR, "IBM"), },
+ 	},
+-	{ },
++	{ }
+ };
+ 
+ /*
+diff --git a/drivers/i2c/busses/i2c-pnx.c b/drivers/i2c/busses/i2c-pnx.c
+index f448505d5468..1dafadda73af 100644
+--- a/drivers/i2c/busses/i2c-pnx.c
++++ b/drivers/i2c/busses/i2c-pnx.c
+@@ -721,7 +721,7 @@ static void i2c_pnx_remove(struct platform_device *pdev)
+ #ifdef CONFIG_OF
+ static const struct of_device_id i2c_pnx_of_match[] = {
+ 	{ .compatible = "nxp,pnx-i2c" },
+-	{ },
++	{ }
+ };
+ MODULE_DEVICE_TABLE(of, i2c_pnx_of_match);
+ #endif
+diff --git a/drivers/i2c/busses/i2c-pxa-pci.c b/drivers/i2c/busses/i2c-pxa-pci.c
+index 6b3c6a733368..af2094720a4d 100644
+--- a/drivers/i2c/busses/i2c-pxa-pci.c
++++ b/drivers/i2c/busses/i2c-pxa-pci.c
+@@ -135,7 +135,7 @@ static int ce4100_i2c_probe(struct pci_dev *dev,
+ 
+ static const struct pci_device_id ce4100_i2c_devices[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x2e68)},
+-	{ },
++	{ }
+ };
+ 
+ static struct pci_driver ce4100_i2c_driver = {
+diff --git a/drivers/i2c/busses/i2c-pxa.c b/drivers/i2c/busses/i2c-pxa.c
+index 031175113dd4..4d76e71cdd4b 100644
+--- a/drivers/i2c/busses/i2c-pxa.c
++++ b/drivers/i2c/busses/i2c-pxa.c
+@@ -218,7 +218,7 @@ static const struct platform_device_id i2c_pxa_id_table[] = {
+ 	{ "ce4100-i2c",		REGS_CE4100 },
+ 	{ "pxa910-i2c",		REGS_PXA910 },
+ 	{ "armada-3700-i2c",	REGS_A3700  },
+-	{ },
++	{ }
+ };
+ MODULE_DEVICE_TABLE(platform, i2c_pxa_id_table);
+ 
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index 0a8b95ce35f7..e435dcbac688 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -721,7 +721,7 @@ static const struct i2c_algorithm geni_i2c_algo = {
+ static const struct acpi_device_id geni_i2c_acpi_match[] = {
+ 	{ "QCOM0220"},
+ 	{ "QCOM0411" },
+-	{ },
++	{ }
+ };
+ MODULE_DEVICE_TABLE(acpi, geni_i2c_acpi_match);
+ #endif
+diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
+index 4a2c745751a2..d480162a4d39 100644
+--- a/drivers/i2c/busses/i2c-qup.c
++++ b/drivers/i2c/busses/i2c-qup.c
+@@ -1648,7 +1648,7 @@ static void qup_i2c_disable_clocks(struct qup_i2c_dev *qup)
+ 
+ static const struct acpi_device_id qup_i2c_acpi_match[] = {
+ 	{ "QCOM8010"},
+-	{ },
++	{ }
+ };
+ MODULE_DEVICE_TABLE(acpi, qup_i2c_acpi_match);
+ 
+diff --git a/drivers/i2c/busses/i2c-s3c2410.c b/drivers/i2c/busses/i2c-s3c2410.c
+index 01419c738cfc..7698d9d59744 100644
+--- a/drivers/i2c/busses/i2c-s3c2410.c
++++ b/drivers/i2c/busses/i2c-s3c2410.c
+@@ -130,7 +130,7 @@ static const struct platform_device_id s3c24xx_driver_ids[] = {
+ 	}, {
+ 		.name		= "s3c2440-hdmiphy-i2c",
+ 		.driver_data	= QUIRK_S3C2440 | QUIRK_HDMIPHY | QUIRK_NO_GPIO,
+-	}, { },
++	}, { }
+ };
+ MODULE_DEVICE_TABLE(platform, s3c24xx_driver_ids);
+ 
+diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
+index b63f75e44296..6cf57e32119c 100644
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -1068,7 +1068,7 @@ EXPORT_SYMBOL(i2c_find_device_by_fwnode);
+ static const struct i2c_device_id dummy_id[] = {
+ 	{ "dummy", },
+ 	{ "smbus_host_notify", },
+-	{ },
++	{ }
+ };
+ 
+ static int dummy_probe(struct i2c_client *client)
 -- 
-Barnabás Czémán <barnabas.czeman@mainlining.org>
+2.43.0
 
 
