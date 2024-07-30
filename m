@@ -1,126 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-27400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A1A7940F88
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 12:36:28 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71D6D940FEE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 12:50:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B89D71F27449
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 10:36:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A1F0BB2C5DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 10:41:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A14D319E7F9;
-	Tue, 30 Jul 2024 10:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C458F1A071E;
+	Tue, 30 Jul 2024 10:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cu7YWSAM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WT8RJLWt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1FB19DF70;
-	Tue, 30 Jul 2024 10:31:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2C019922A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jul 2024 10:35:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722335482; cv=none; b=XsGQhw9kAITzlCyiyTddSvvfoAAmAW2ouASyOnQsw2isBse2hryHRewO/F2tyU6YjqeU5wLJLSu7DP9xaiQwwIPvoMUXuneJqzvOw7ACWZLatv+0+5V0Dmj077cUWVQvOWooxAzJy4+qbUQ4E1hhb1WDzzeqsO5oRYVkDWoeT08=
+	t=1722335722; cv=none; b=X9ZoB88yrTOkk7EXNqjcon3CWBH+Ubsixb5EkS5umlmAIZ+Yn6Il4uEecJpWgq5Iob1h1gsmc9ZIuhdDAJUzuqdm7frvTNYGt+KaG7qnNuVc3l5ZaqFFEkrBKZWvNbS7E8z7asgSGMPicjOS3X8HBWZMakpF3HVaY2GVfaSh+d8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722335482; c=relaxed/simple;
-	bh=iJFVbRYOc1jzsjpJ08jTc7C7wyjX0vVNNK+tZsJP1m4=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cDfjp//1I5Ini1zscY7BKFAdgmxuEMytL6eqIPxqLuJt6Ob12LuXgNSHMmtOLWVRgGgq4zf3CRe1WjxeWE2aIiEt9lBF0QDMSyKDYnNozF7JuLI7qlM9+SD730dXuBAJromgfr2iOT6xjib9ualWn1UnIqTf05ECvrCZt87+nyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cu7YWSAM; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46U0r8HB026407;
-	Tue, 30 Jul 2024 10:30:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:message-id:mime-version:subject:to; s=
-	qcppdkim1; bh=wI3Q4nVFdXrvJugbyJuL+mmiWCTxUxemt3HF/N24QaU=; b=cu
-	7YWSAM2wnb6m0/51y1xg0JULxz/Cz1tjR3Xaf/HVy9ieWKmdxleWSG4OW44m/3g4
-	TmNjkNVuzFaTeIZ7UZOjZLbbkFCLUd68VUtVMcZ3df2ZJc+ys9lRaIPoCxLMjniw
-	UWaF9NDZh3RZTljKmFww/KLV8mosseMPbbg1gFgu5J6LF78NeB20gBJNUdliUJve
-	ar3BtaRnCjXoAbSIuv88aLj7SAp+Z3p+pjArDFVLgLOcYtiP5oPNdfgPFzI/gqWy
-	KN/Y8E/k50xfvfLzj5rJYXPuHrKvxLkgTiHGyScM/pmCf1OVhlkxk5lTteoMSqVP
-	23sYAYlhdKrP1RgHZsWA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40mpkey4jy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Jul 2024 10:30:57 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46UAUv2J017631
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 Jul 2024 10:30:57 GMT
-Received: from zhenhuah-gv.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 30 Jul 2024 03:30:54 -0700
-From: Zhenhua Huang <quic_zhenhuah@quicinc.com>
-To: <robdclark@gmail.com>, <will@kernel.org>, <robin.murphy@arm.com>,
-        <joro@8bytes.org>
-CC: <iommu@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <quic_c_gdjako@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        Zhenhua Huang
-	<quic_zhenhuah@quicinc.com>
-Subject: [PATCH 1/1] iommu/arm-smmu-qcom: remove runtime pm enabling for TBU driver
-Date: Tue, 30 Jul 2024 18:30:43 +0800
-Message-ID: <1722335443-30080-1-git-send-email-quic_zhenhuah@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+	s=arc-20240116; t=1722335722; c=relaxed/simple;
+	bh=b75YOHBxm2lQYDbG5iuWV5yJhvgfQruxGNEGB+zBnrQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=p94UlVwQaspO/5PL6DLyh7mLIX+srabAcGan8EbxbwiGN7uXAUlzs++XhDi/fdyPanQSONUSJuFID6Xg1AK0QuOly0uO6apCgkPP7eKjvMgk24I4ORlbLjk6n6OQ4uZ6uNx9ONqeq2PEOwsy3Q+qtmXibYEKqbiIvT+SiUdOPN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WT8RJLWt; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3684407b2deso2036369f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jul 2024 03:35:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1722335718; x=1722940518; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2k7WfqvNrE7q/baTECjG6uCgYMUMqGAXr8zev5hDQtc=;
+        b=WT8RJLWtCu7YKXagIOYx7OpehU+d9157smwQf4ZrarAgu7syI5XKl72z9BAx8LbE7n
+         w9pLqpiWoD2/HdS7AQkZBXllPCM1VUHWSBn+RViLn658BH7NUxzR5Gi49jM6EFecYGE4
+         5Ztw/MIcfJuOMBgY9BA5e0Aa+O5gwsVfQiNSnMdv9scgEg6aVFkdWH1h/vRsIZdtDRy5
+         +Zx6dCzDKFZ3ctr2cnesqPzxvl4TiJ5SJKSMlsJ7ou58LA0BHbiw8EDJTkhxK8AsE2Pr
+         rJRzABsdCTBpNasXEyNqI+BD4/FaT1RL9OzbvIltKO3DPe6sRr3Njuds1kk1tpGHpDh6
+         u12Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722335718; x=1722940518;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2k7WfqvNrE7q/baTECjG6uCgYMUMqGAXr8zev5hDQtc=;
+        b=iXx/xtilVH2BYjDPEWOM2xPsBFwM/Gz007s16lAc9TIrJrFWR/s2Yxa1hQDmZYY/ln
+         QAqScigNr6J7Dtlb/c+ri+uD4cDkHmZ1At32toD+HH0q0FfPwHnA8UMHmZOobsiE+NvL
+         L/TM2s2BkUTOG+qoodNt52yabGTC34Zdyoptv178m5ZRgAdOlBqEHk1gUCnVZwd44EPC
+         KkDdCZDHEBiuYatG80rLAPNX8nPD00rlo50aoGnPEd/uelAeCNXgIROk6ArLt5CTSccs
+         jWiYKL2mgE2aIq+rMxzwjeDh+ppZVFb5YZWV4PTdJPBziRM2ZdokTbLQFWaIbAebhmKC
+         pAzQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVY6HlRfH58QA+lRgasqE9sxV9MFfJWE99u1LdtB4x9T+9vfYRr34s7UOm2qUCZdPFKpk52fXo40gd0EEpDxrlAYFgxchd/BgLVrxs19A==
+X-Gm-Message-State: AOJu0Yy3WU+mk9YNNYalfqjcFPnNMeI2taFWg0F/rPeaGhGH5voZL9bO
+	bphWQ0bfr2tBFEZDIrz83GsCdjJO5CSiuWa8zoI5cuTzhfG+wy8GQfLsEvPJVm0=
+X-Google-Smtp-Source: AGHT+IE9D+3MsMR02xuAhjzlxgXskiGjsFnlnKtGunsAe9F0MUMFrjLgF7vKlnZ2xqmjqZZBdUI2XA==
+X-Received: by 2002:a5d:560d:0:b0:369:5d7d:ee96 with SMTP id ffacd0b85a97d-36b5ceee0dfmr7519309f8f.27.1722335717783;
+        Tue, 30 Jul 2024 03:35:17 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.219.137])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36b36863d87sm14284048f8f.110.2024.07.30.03.35.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jul 2024 03:35:17 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	alsa-devel@alsa-project.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] ASoC: MAINTAINERS: Drop Banajit Goswami from Qualcomm sound drivers
+Date: Tue, 30 Jul 2024 12:35:11 +0200
+Message-ID: <20240730103511.21728-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: XjEMwOAqJCLO1XM-tP_-gvA0hscz3qUh
-X-Proofpoint-GUID: XjEMwOAqJCLO1XM-tP_-gvA0hscz3qUh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-30_11,2024-07-26_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- mlxlogscore=919 priorityscore=1501 impostorscore=0 malwarescore=0
- lowpriorityscore=0 spamscore=0 phishscore=0 adultscore=0 mlxscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407300075
+Content-Transfer-Encoding: 8bit
 
-TBU driver has no runtime pm support now, adding pm_runtime_enable()
-seems to be useless. Remove it.
+There was no active maintenance from Banajit Goswami - last email is
+from 2019 - so make obvious that Qualcomm sound drivers are maintained
+by only one person.
 
-Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 6 ------
- 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 36c6b36ad4ff..aff2fe1fda13 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -566,7 +566,6 @@ static struct acpi_platform_list qcom_acpi_platlist[] = {
+Not moving to credits because lore does not point to significant
+contributions. Just ~140 emails:
+https://lore.kernel.org/all/?q=f%3A%22Banajit+Goswami%22
+---
+ MAINTAINERS | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index c8e16a649a0e..43e7668aacb0 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -18419,7 +18419,6 @@ F:	drivers/crypto/intel/qat/
  
- static int qcom_smmu_tbu_probe(struct platform_device *pdev)
- {
--	struct device *dev = &pdev->dev;
- 	int ret;
- 
- 	if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM_DEBUG)) {
-@@ -575,11 +574,6 @@ static int qcom_smmu_tbu_probe(struct platform_device *pdev)
- 			return ret;
- 	}
- 
--	if (dev->pm_domain) {
--		pm_runtime_set_active(dev);
--		pm_runtime_enable(dev);
--	}
--
- 	return 0;
- }
- 
+ QCOM AUDIO (ASoC) DRIVERS
+ M:	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+-M:	Banajit Goswami <bgoswami@quicinc.com>
+ L:	alsa-devel@alsa-project.org (moderated for non-subscribers)
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Supported
 -- 
-2.7.4
+2.43.0
 
 
