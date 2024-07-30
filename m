@@ -1,258 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-27381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F289940C0D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 10:44:30 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 31BB9940C23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 10:47:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D92E4286C86
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 08:44:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 795F5B25010
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 08:47:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07B1E193091;
-	Tue, 30 Jul 2024 08:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 814B81940AB;
+	Tue, 30 Jul 2024 08:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VCciYEnQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WSZiYF2m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B13193089;
-	Tue, 30 Jul 2024 08:44:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E86194094
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jul 2024 08:46:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722329058; cv=none; b=OtCYraql80YICuiSgVa4Av9u4vf2Uch5lf6m/QK2ETJGFK46V8AYDD+BK5B0GY4p4hmKO+1NIk2+ssbtNyDeAZwsGMBzpUsB3Z1ZXr+xyXPuDclVLE4S0xWcF1pqYGEn7jmX7tdpNma8fpGNTaU8phowYlyOqYCzXosYtdsgHU0=
+	t=1722329198; cv=none; b=sTfOkyayKr3JuJNiQZ2PQ04Nj6BThk5nUCyrorWbs+Ea4tVQqtFC2bXaVKQk9cqsQhAcLSdzdq6EeSDMWm1TGCPHxihh4Q+B41ebpmWsdNuymIL6V8erszClb/ArAS8Jt9+ykeAXSISYqc6GaHo/IBD6voy185W+qRlfHGiI8es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722329058; c=relaxed/simple;
-	bh=vsycLV4HC9MssFQzKIw/JPQ6W65DZeKe1BGboHBw5uI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=upzByPWGMofFMiB/1zmCCFS7AMSU1tOJHByWH+WyTh+Pj+y2fe93mlOqvvq7GSN0PSNxXKXWjZPJq4HQlDvmUYT3qNZZ/6LNJ6/akiXxJrbHUpdxvLWUPGPk2bmVli/iIVGwZC3nIHJad82FwH9WOrLby7vNHad2q1mc4BF9ueo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VCciYEnQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EEC2C32782;
-	Tue, 30 Jul 2024 08:44:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722329058;
-	bh=vsycLV4HC9MssFQzKIw/JPQ6W65DZeKe1BGboHBw5uI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VCciYEnQERwQGTRjZ0w43PzMjCLbk/6iQwA/iXfzbSTqDo8WwoSNcWTxiIBjMqGw5
-	 rb4VxN15RQG2lK/x1GostHRgzunSsu7GeQ5KJRHZJ+Jl9U+7Ibt2fMTxGKDRYxKMw0
-	 BH9TOEOa05kM8hN28OgGLhpqaJQc40+TQkcDsPS7E1V0nwbbnlRUWhq77cvIES3Es1
-	 4gAZW+FqdHlmdGFEO/BnoLArBXmWo5zJSRxzhAEbXWG0lsgcszrWmG897cGjL6Q87Q
-	 9SiASwGd2o2LUISgFPzAn6cY1mY/vkSZ7GhpAFx1eCa/t3rphoHKTiKujKhgAPryn2
-	 wur28LNWz+GFA==
-Date: Tue, 30 Jul 2024 10:44:15 +0200
-From: Maxime Ripard <mripard@kernel.org>
-To: Marc Gonzalez <mgonzalez@freebox.fr>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Andrzej Hajda <andrzej.hajda@intel.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Liam Girdwood <lgirdwood@gmail.com>, 
-	Mark Brown <broonie@kernel.org>, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Arnaud Vrac <avrac@freebox.fr>, 
-	Pierre-Hugues Husson <phhusson@freebox.fr>
-Subject: Re: [PATCH v3 1/2] dt-bindings: display: bridge: add TI TDP158
-Message-ID: <20240730-stirring-convivial-ermine-f0acc3@houat>
-References: <20240627-tdp158-v3-0-fb2fbc808346@freebox.fr>
- <20240627-tdp158-v3-1-fb2fbc808346@freebox.fr>
- <20240701-bug-of-great-honeydew-cfb6ef@houat>
- <e7bbbe4e-7deb-46c3-9cce-1922f9b6b3a2@freebox.fr>
- <20240708-ethereal-romantic-piculet-d4ae66@houat>
- <pp3rc5zob3xeghlatw4vnpzplc4yjpjadkea465zmhft55dyl5@3cpoc2zovftv>
- <20240715-shiny-enigmatic-firefly-2a6dec@houat>
- <f40de173-0c61-4400-87b2-51c171a52baa@freebox.fr>
- <j2ouvtywaasnkxq344rm4b6mrlqtu6bxlq4wrvz4fawzww3xad@yjp7k4zmfygu>
- <2cd0af8d-aced-4460-95d0-376ecb783806@freebox.fr>
+	s=arc-20240116; t=1722329198; c=relaxed/simple;
+	bh=WkiyHbdJ5NrdJz1oK2Jrc7fN+l1CyWz/UI4TUfj/WQs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kou5I7yNkJLcZekBft4XXXD/AqOpqWSrwRo1P61lVLsqH6G0DlhHnrsKxfrzY3229mlEcmc5TbBn/zNDyffSvn0zC9dovNgdirFPdatEyRfgOHWmRAGUCb17w9H5myRtsvMyeqgFgcfIafKcOh/9E+RcWkQwdhrI+xNebX2VVxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WSZiYF2m; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-65f7bd30546so22328557b3.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jul 2024 01:46:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1722329196; x=1722933996; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=N1SVRoOfwAGT1ArgnhX1cCtDllghjDDbgYirxLnYNzQ=;
+        b=WSZiYF2mxZGLVMRNeruKwa87RJ4ntJR1aAHa3UYQmC8QyAmkQ6ZDcDQHwSUYgLSBeq
+         zEg2dsvBtDbgk9oirzruZJp0LYjFRM1vKgS641yF7SMMMOTMQA0ufFOVetmg5F5ojADu
+         h6XhyjYA8Ae7EyYon1xOfXolejBSYH/IpsySGvF8cVeagit6gMvb66FdM077PJr2r+xi
+         lKEAxGzC8FfKPx1tTDs0cn6W4EBi8sbb+w62WJJZvzSrQoqWuDeIH6x7RIjTc/Wm7W3h
+         rllLMgwZAbhXmtVAQLJNMF3hKAfYT2a2mZn2/TJp7rmxSGA5K9+6KjGHXwoHGC9KDW78
+         uMPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722329196; x=1722933996;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=N1SVRoOfwAGT1ArgnhX1cCtDllghjDDbgYirxLnYNzQ=;
+        b=lHpTo7jGYyUlHKMBp7VGhg8ESAP4goH4+cJXNg4vwBMdT4CL4/pXtSp4HKcDISc7/C
+         xb9dLWatWk3OlfAeT8AVLJ8Utu3oDFFOzb3o+bJ0pKTyozvMmYJLSt6KTbHLxx7g+Vj3
+         oPwINFI3a3f86iZMR6iuOLS9iRvp0VwHGIrZAslI6TmEUy1xz+lQpTCL/X9iBKS+xwad
+         Qb+3fetuy3d2DvDy3cBjVmiU1BciN1QWU9QkeARkJJE1eYceVG45CPKoBxhj/IJhs81Y
+         If8Ql/4FcvaCW0qsLgy2gl3OL0qP3Tz1YIkkPt7jnfVVHkFvE5NiPjPCVHB21U624M7y
+         cVtg==
+X-Forwarded-Encrypted: i=1; AJvYcCXiH+ixfEWi8zAdAxKGlLeXav0zCHRVau4yVKBscM2ZOZPnwgC6luAuwNDk4rXxTEb4D4bGkRJrqEON1q/boR8CMwAurLhuSXrKUXCtLg==
+X-Gm-Message-State: AOJu0YyOIEaZN/6jvwd14zE3nF0plA0Ouyn0zjqyW52Wub4t692YSkPp
+	3qH0tOPHweNUsEeEu+elyyu5nf3LYPEVOFbonS3bfhRe9qPW6BKj02/iduO4/ysV00fIin1ljTd
+	9UiKSZVF7l0vUdK4TO9ZqZi0xt5IhmJy39ApcFw==
+X-Google-Smtp-Source: AGHT+IHjFfHgqjmlzduFLfBafbIgZJ6xlEV6ruFB9cW2gDIL63vUlMWZer/56XD5APUD0hpf/X8faq6H0va63gFoa5w=
+X-Received: by 2002:a0d:fec4:0:b0:65f:cdb7:46a7 with SMTP id
+ 00721157ae682-6826d4349a5mr12295097b3.22.1722329195668; Tue, 30 Jul 2024
+ 01:46:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="ial5uy4ghyorb3ea"
-Content-Disposition: inline
-In-Reply-To: <2cd0af8d-aced-4460-95d0-376ecb783806@freebox.fr>
+References: <20240627-tdp158-v3-0-fb2fbc808346@freebox.fr> <20240627-tdp158-v3-1-fb2fbc808346@freebox.fr>
+ <20240701-bug-of-great-honeydew-cfb6ef@houat> <e55d0f0e-a104-4790-b832-120dbddd93ad@freebox.fr>
+ <20240715-stirring-purple-toad-7de58c@houat> <c302bc47-6492-44af-86a1-3ff6a815e314@freebox.fr>
+ <20240730-eminent-venomous-condor-8ef421@houat>
+In-Reply-To: <20240730-eminent-venomous-condor-8ef421@houat>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 30 Jul 2024 11:46:24 +0300
+Message-ID: <CAA8EJprQJJ2AuB99RFU+d074PV+NHMPwjFWn_auju7HYQQ8R7w@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: display: bridge: add TI TDP158
+To: Maxime Ripard <mripard@kernel.org>
+Cc: Marc Gonzalez <mgonzalez@freebox.fr>, Conor Dooley <conor+dt@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Mark Brown <broonie@kernel.org>, dri-devel@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Arnaud Vrac <avrac@freebox.fr>, Pierre-Hugues Husson <phhusson@freebox.fr>
+Content-Type: text/plain; charset="UTF-8"
 
+On Tue, 30 Jul 2024 at 11:27, Maxime Ripard <mripard@kernel.org> wrote:
+>
+> On Wed, Jul 24, 2024 at 07:59:21PM GMT, Marc Gonzalez wrote:
+> > On 15/07/2024 16:40, Maxime Ripard wrote:
+> > > On Thu, Jul 04, 2024 at 07:04:41PM GMT, Marc Gonzalez wrote:
+> > >> On 01/07/2024 15:50, Maxime Ripard wrote:
+> > >>
+> > >>> The i2c register access (and the whole behaviour of the device) is
+> > >>> constrained on the I2C_EN pin status, and you can't read it from the
+> > >>> device, so it's also something we need to have in the DT.
+> > >>
+> > >> I think the purpose of the I2C_EN pin might have been misunderstood.
+> > >>
+> > >> I2C_EN is not meant to be toggled, ever, by anyone from this planet.
+> > >
+> > > Toggled, probably not. Connected to a GPIO and the kernel has to assert
+> > > a level at boot, I've seen worse hardware design already.
+> > >
+> > >> I2C_EN is a layout-time setting, decided by a board manufacturer:
+> > >>
+> > >> - If the TDP158 is fully configured once-and-for-all at layout-time,
+> > >> then no I2C bus is required, and I2C_EN is pulled down forever.
+> > >>
+> > >> - If the board manufacturer wants to keep open the possibility
+> > >> to adjust some parameters at run-time, then they must connect
+> > >> the device to an I2C bus, and I2C_EN is pulled up forever.
+> > >
+> > > How do you express both cases in your current binding?
+> >
+> > It's not that I'm ignoring your question.
+> >
+> > It's that I don't understand what you're asking.
+>
+> And that's fine, you just need to say so.
+>
+> Generally speaking, you're focusing on the driver. The driver is not the
+> issue here. You can do whatever you want in the driver for all I care,
+> we can change that later on as we wish.
+>
+> The binding however cannot change, so it *has* to ideally cover all
+> possible situations the hardware can be used in, or at a minimum leave
+> the door open to support those without a compatibility breakage.
+>
+> That's why I've been asking those questions, because so far the only
+> thing you've claimed is that "I can't test the driver for anything
+> else", but, again, whether there's a driver or not, or if it's
+> functional, is completely missing the point.
+>
+> > SITUATION 1
+> > tdp158 is pin strapped.
+> > Device node is child of root node.
+> > Properties in proposed binding are valid (regulators and power-on pin)
+> > Can be supported via module_platform_driver.
+> >
+> > SITUATION 2
+> > tdp158 is sitting on I2C bus.
+> > Device node is child of i2c bus node.
+> > (robh said missing reg prop would be flagged by the compiler)
+> > Properties in proposed binding are valid (regulators and power-on pin)
+> > Supported via module_i2c_driver.
+> >
+> > If some settings-specific properties are added later, like skew,
+> > they would only be valid for the I2C programmable mode, obviously.
+>
+> I think there's a couple more combinations:
+>
+>   - The device is connected on an I2C bus, but I2C_EN is tied low
 
---ial5uy4ghyorb3ea
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+No, this is not possible. I2C pins are repurposed if I2C_EN is low.
+You can not call that an i2c bus anymore.
 
-On Wed, Jul 24, 2024 at 07:28:41PM GMT, Marc Gonzalez wrote:
-> On 24/07/2024 19:25, Dmitry Baryshkov wrote:
-> > On Wed, Jul 24, 2024 at 07:18:39PM GMT, Marc Gonzalez wrote:
-> >> On 15/07/2024 16:42, Maxime Ripard wrote:
-> >>> On Mon, Jul 08, 2024 at 11:29:46PM GMT, Dmitry Baryshkov wrote:
-> >>>> On Mon, Jul 08, 2024 at 04:59:23PM GMT, Maxime Ripard wrote:
-> >>>>> On Mon, Jul 01, 2024 at 05:36:18PM GMT, Marc Gonzalez wrote:
-> >>>>>> On 01/07/2024 15:50, Maxime Ripard wrote:
-> >>>>>>
-> >>>>>>> On Thu, Jun 27, 2024 at 01:13:03PM GMT, Marc Gonzalez wrote:
-> >>>>>>>
-> >>>>>>>> TDP158 is an AC-coupled DVI / HDMI to TMDS level shifting Redriv=
-er.
-> >>>>>>>> It supports DVI 1.0, HDMI 1.4b and 2.0b.
-> >>>>>>>> It supports 4 TMDS channels, HPD, and a DDC interface.
-> >>>>>>>> It supports dual power supply rails (1.1V on VDD, 3.3V on VCC)
-> >>>>>>>> for power reduction. Several methods of power management are
-> >>>>>>>> implemented to reduce overall power consumption.
-> >>>>>>>> It supports fixed receiver EQ gain using I2C or pin strap to
-> >>>>>>>> compensate for different lengths input cable or board traces.
-> >>>>>>>>
-> >>>>>>>> Features
-> >>>>>>>>
-> >>>>>>>> - AC-coupled TMDS or DisplayPort dual-mode physical layer input
-> >>>>>>>> to HDMI 2.0b TMDS physical layer output supporting up to 6Gbps
-> >>>>>>>> data rate, compatible with HDMI 2.0b electrical parameters
-> >>>>>>>> - DisplayPort dual-mode standard version 1.1
-> >>>>>>>> - Programmable fixed receiver equalizer up to 15.5dB
-> >>>>>>>> - Global or independent high speed lane control, pre-emphasis
-> >>>>>>>> and transmit swing, and slew rate control
-> >>>>>>>> - I2C or pin strap programmable
-> >>>>>>>> - Configurable as a DisplayPort redriver through I2C
-> >>>>>>>> - Full lane swap on main lanes
-> >>>>>>>> - Low power consumption (200 mW at 6Gbps, 8 mW in shutdown)
-> >>>>>>>>
-> >>>>>>>> https://www.ti.com/lit/ds/symlink/tdp158.pdf
-> >>>>>>>>
-> >>>>>>>> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
-> >>>>>>>> ---
-> >>>>>>>>  .../bindings/display/bridge/ti,tdp158.yaml         | 51 +++++++=
-+++++++++++++++
-> >>>>>>>>  1 file changed, 51 insertions(+)
-> >>>>>>>>
-> >>>>>>>> diff --git a/Documentation/devicetree/bindings/display/bridge/ti=
-,tdp158.yaml b/Documentation/devicetree/bindings/display/bridge/ti,tdp158.y=
-aml
-> >>>>>>>> new file mode 100644
-> >>>>>>>> index 0000000000000..21c8585c3bb2d
-> >>>>>>>> --- /dev/null
-> >>>>>>>> +++ b/Documentation/devicetree/bindings/display/bridge/ti,tdp158=
-=2Eyaml
-> >>>>>>>> @@ -0,0 +1,51 @@
-> >>>>>>>> +# SPDX-License-Identifier: GPL-2.0-only
-> >>>>>>>> +%YAML 1.2
-> >>>>>>>> +---
-> >>>>>>>> +$id: http://devicetree.org/schemas/display/bridge/ti,tdp158.yam=
-l#
-> >>>>>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >>>>>>>> +
-> >>>>>>>> +title: TI TDP158 HDMI to TMDS Redriver
-> >>>>>>>> +
-> >>>>>>>> +maintainers:
-> >>>>>>>> +  - Arnaud Vrac <avrac@freebox.fr>
-> >>>>>>>> +  - Pierre-Hugues Husson <phhusson@freebox.fr>
-> >>>>>>>> +
-> >>>>>>>> +properties:
-> >>>>>>>> +  compatible:
-> >>>>>>>> +    const: ti,tdp158
-> >>>>>>>> +
-> >>>>>>>> +  reg:
-> >>>>>>>> +    description: I2C address of the device
-> >>>>>>>> +
-> >>>>>>>> +  enable-gpios:
-> >>>>>>>> +    description: GPIO controlling bridge enable
-> >>>>>>>> +
-> >>>>>>>> +  vcc-supply:
-> >>>>>>>> +    description: Power supply 3.3V
-> >>>>>>>> +
-> >>>>>>>> +  vdd-supply:
-> >>>>>>>> +    description: Power supply 1.1V
-> >>>>>>>> +
-> >>>>>>>> +  ports:
-> >>>>>>>> +    $ref: /schemas/graph.yaml#/properties/ports
-> >>>>>>>> +
-> >>>>>>>> +    properties:
-> >>>>>>>> +      port@0:
-> >>>>>>>> +        $ref: /schemas/graph.yaml#/properties/port
-> >>>>>>>> +        description: Bridge input
-> >>>>>>>> +
-> >>>>>>>> +      port@1:
-> >>>>>>>> +        $ref: /schemas/graph.yaml#/properties/port
-> >>>>>>>> +        description: Bridge output
-> >>>>>>>> +
-> >>>>>>>> +    required:
-> >>>>>>>> +      - port@0
-> >>>>>>>> +      - port@1
-> >>>>>>>
-> >>>>>>> The device supports DVI, HDMI or DP input, with various requireme=
-nts and
-> >>>>>>> capabilities depending on the input. Your binding doesn't address=
- that.
-> >>>>>>>
-> >>>>>>> Similarly, it can do lane-swapping, so we should probably have a
-> >>>>>>> property to describe what mapping we want to use.
-> >>>>>>>
-> >>>>>>> The i2c register access (and the whole behaviour of the device) is
-> >>>>>>> constrained on the I2C_EN pin status, and you can't read it from =
-the
-> >>>>>>> device, so it's also something we need to have in the DT.
-> >>>>>>
-> >>>>>> We are using the device in its default configuration.
-> >>>>>> (Power on via OE, then it works as expected)
-> >>>>>
-> >>>>> I know, but that doesn't really matter for a binding.
-> >>>>>
-> >>>>>> Can we leave any additional properties to be defined by whomever n=
-eeds
-> >>>>>> them in the future?
-> >>>>>
-> >>>>> If you can guarantee that doing so would be backward compatible, su=
-re.
-> >>>>> But that means being able to answer those questions with a reasonab=
-le
-> >>>>> plan.
-> >>>>
-> >>>> I think proposed bindings are generic enough to cover other possible
-> >>>> usecases in future.
-> >>>
-> >>> I don't think it is. The current binding is for a I2C device that
-> >>> shouldn't be accessed through I2C.
-> >>>
-> >>> It's working for now because the driver doesn't do any access, so it's
-> >>> all great, but as soon as we add support for the other case, then we'=
-ll
-> >>> have to add a property that states that while it's an i2c device, it
-> >>> shouldn't be accessed.
-> >>>
-> >>> And adding such a property is a compatibility-breaking change.
-> >>
-> >> Why do you say:
-> >> "current binding is for a I2C device that
-> >> shouldn't be accessed through I2C" ?
-> >>
-> >> As a matter of fact, my debug code queries the device ID using
-> >> regmap_read() to make sure I set the correct I2C address.
-> >=20
-> > Please note: bingdings do not cover the driver at all. The driver might
-> > do whatever it wants. The bindings describe the hardware.
->=20
-> OK.
-> How does the proposed binding say
-> "I2C device shouldn't be accessed through I2C" ?
+>   - The device is connected on an I2C bus, but I2C_EN is connected to a
+>     GPIO and the kernel needs to assert its state at boot.
 
-It doesn't, but then again, neither your commit log or cover letter say
-"it can be accessed by i2c" either, so we went on the wrong track.
+This is a pretty strange configuration.  The I2C_EN pin isn't supposed
+to be toggled dynamically. Anyway, if that happens, I'd use pinctrl /
+hog to control the pin.
 
-Maxime
+>
+> The GPIO case can be easily dealt with later on using an optional GPIO
+> in the binding, but the current binding infers the I2C_EN level from the
+> bus it's connected to, and I think we don't have a good way to deal with
+> cases that would break that assumption.
+>
+> So I think we need an extra property to report the state of the i2c_en
+> pin (and would be mutually exclusive with the GPIO if we ever have to
+> support it).
 
---ial5uy4ghyorb3ea
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZqin3wAKCRAnX84Zoj2+
-dqm7AX4iBvmtv0UsDynx5SPjL58xvrB4RoEAUBSvFlE4rZwBdiXBAHDMD6tHTdlG
-qib8j/wBgO6D7bAqAdFphLbaYHpEzNQeNiTdJUt/WFfsadlm1pf09vMuFLNW0RPT
-vBgzl3BA9Q==
-=q6Sm
------END PGP SIGNATURE-----
-
---ial5uy4ghyorb3ea--
+-- 
+With best wishes
+Dmitry
 
