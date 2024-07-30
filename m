@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-27369-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9C4C940846
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 08:21:38 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D976694084D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 08:22:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E37F1C20E91
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 06:21:37 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6ABEEB21776
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Jul 2024 06:22:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E72316C86F;
-	Tue, 30 Jul 2024 06:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9239169AD2;
+	Tue, 30 Jul 2024 06:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u94Qza5X"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N9cy7gRK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B563168489;
-	Tue, 30 Jul 2024 06:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD2115746E;
+	Tue, 30 Jul 2024 06:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722320493; cv=none; b=AhkjJ5jbQZYO6faSnjvMVbJNWHTfMnliyzlCvsTNvVCPj67o3e76DsjHg2Aze61j/bRqZETwiUaGCE8jw0cJl8vTwssdODCKdqHNuDnK0EzBGgWySm1HDt+WMinXQdMUknU/nDD+g+QpgSl/vJN0AFLvcqB51LXLyy3tpJNZXOI=
+	t=1722320544; cv=none; b=aO2uSqE2wQizGUoKlPOYwGjxxXFB9gSM67VLMQczRHF6DrxXx6DDYWRKqNLexVDvjmXoHoFgqjJpZ5aB89sMW0llQpczMCBGqvoDgAKARKIVrblS7oeTs7Wyw51QHa2mY3k8qsjaEy15xzT/j2Tjjzu4Va6joT3Bs3vcmqt1Ssc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722320493; c=relaxed/simple;
-	bh=I8YEZoPXuK/rV+92d5hmzQkGsOnReI5ypdriFlV7UWU=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=sw6drzgUDGB+J6ywWRycipK3zsAyV/6xrLCvwzTVhTs/K4gtjBTZmVo24hUN4frwq7jAXE9Zvpfu/qwz1oB3K3ODj6D3u+sdqHnVZGYkQnyR53VYf6APwU76auaWrl6WC4W1aPXzM8T4FtWTeBJrH8qKH0ATn68jedx4K8VTjPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u94Qza5X; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1D1C4AF09;
-	Tue, 30 Jul 2024 06:21:27 +0000 (UTC)
+	s=arc-20240116; t=1722320544; c=relaxed/simple;
+	bh=rMdN1gHFV39fx0Bjbg3Zc3KHjuUFlLidSLS4SJAgTAo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dV3RcbAhCegrSGIEgQBshrTMwEhgkOm7ndzNOy9EGNOCVBsdEK4QnIkpr4AMXA2UZrClXf2z48nbcZ/sxSZOvcCK/SuCHRZg5EOJz6MPaLXvkQTNQZn2RI3n7iOfqoUc6Q9vANBMctklSOC6FZNsjnj60EYhPRHBHfFxy+dWfm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N9cy7gRK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907A6C32782;
+	Tue, 30 Jul 2024 06:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722320492;
-	bh=I8YEZoPXuK/rV+92d5hmzQkGsOnReI5ypdriFlV7UWU=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=u94Qza5XRkMfpv8tn8GGGjPEl2SqqlnWaTJfCSJCwKRIH/SdKhSyWmpKV7bycx93t
-	 urgnzWdjgB84w6ityIkZO9zVW2Qb4F89/cKs5DPQh3FEt5rkhPO9B/jvJXb3vxTICA
-	 8js3zd6+wbXsBqm2GfC22Tvr0st3CJGHOcSfRa/Q7pwxqpFWfshuEIrnsgrtgPrnOg
-	 2nlyeT1MbSEH3jRSAIarKYew6pgJPjP8aXRZ7qBO7I6TLzPuxgBXjFNnXsixI2J4fQ
-	 d9+MDc4uTL6qzgbqXypOiETjb/J8JKatvHTjzkelbYJYbqODrRAtI1SFxAlvhPV5qa
-	 f0wXeXxTjd68A==
-Message-ID: <ad2e41f6-05e9-4ded-9e2a-d263e0bfeacc@kernel.org>
-Date: Tue, 30 Jul 2024 08:21:25 +0200
+	s=k20201202; t=1722320544;
+	bh=rMdN1gHFV39fx0Bjbg3Zc3KHjuUFlLidSLS4SJAgTAo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=N9cy7gRK7uqB5U9Ujr6HO6cUV8V2x146a6NOC+VIcQCACed16JbLPxFAah968vF5l
+	 b5aF5MAneLjLY0K0sav6hRQ9J9NDzZ2hyZ/ealWtBvS8Y829mw+DvdVHO4xX3izS0g
+	 ft7CnhOVCzNeyt43H7p1nbq5vCRJdxQY3uJ/YRsDraymYYCl+mO8EJxuNkaI6mRETI
+	 dqfPgXKerHFGFPfbcLYvCAvhiGZSG2ZtgH84x/YG57ijVrhdAidV6Q2y8dIeLXj3MJ
+	 x/d7kDoH0sAvXp74zBVJXnsPdSuoZMm91jS1Q8sbrZrefePovW+PEKWvth+FI2uvbW
+	 t2SCHxq3tu8Eg==
+Message-ID: <ef707429-6021-43a9-b8ff-77e393de9cef@kernel.org>
+Date: Tue, 30 Jul 2024 08:22:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,19 +50,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] dt-bindings: qcom,spmi-temp-alarm: Add compatible for
- GEN2 rev2 temp alarm
+Subject: Re: [PATCH 1/4] dt-bindings: display/msm/gmu: Add SDM670 compatible
+To: Richard Acayan <mailingradian@gmail.com>, Rob Clark
+ <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ devicetree@vger.kernel.org
+Cc: Maxime Ripard <mripard@kernel.org>,
+ Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
+ Daniel Vetter <daniel@ffwll.ch>
+References: <20240730013844.41951-6-mailingradian@gmail.com>
+ <20240730013844.41951-7-mailingradian@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Anjelique Melendez <quic_amelende@quicinc.com>, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, amitk@kernel.org,
- thara.gopinath@gmail.com, andersson@kernel.org
-Cc: quic_collinsd@quicinc.com, rafael@kernel.org, daniel.lezcano@linaro.org,
- rui.zhang@intel.com, lukasz.luba@arm.com, linux-arm-msm@vger.kernel.org,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240729231259.2122976-1-quic_amelende@quicinc.com>
- <20240729231259.2122976-2-quic_amelende@quicinc.com>
- <e4f17f44-522e-47bd-aafb-f93595298e7b@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -107,50 +111,16 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <e4f17f44-522e-47bd-aafb-f93595298e7b@kernel.org>
+In-Reply-To: <20240730013844.41951-7-mailingradian@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 30/07/2024 08:19, Krzysztof Kozlowski wrote:
-> On 30/07/2024 01:12, Anjelique Melendez wrote:
->> Add compatible "qcom,spmi-temp-alarm-gen2-rev2" for SPMI temp alarm GEN2
->> revision 2 peripherals. GEN2 rev2 peripherals have individual temp DAC
->> registers to set temperature thresholds for over-temperature stages 1-3.
->> Registers are configured based on thermal zone trip definition.
->>
->> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
->> ---
->>  .../devicetree/bindings/thermal/qcom,spmi-temp-alarm.yaml   | 6 ++++--
->>  1 file changed, 4 insertions(+), 2 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/thermal/qcom,spmi-temp-alarm.yaml b/Documentation/devicetree/bindings/thermal/qcom,spmi-temp-alarm.yaml
->> index 30b22151aa82..f9af88d51c2d 100644
->> --- a/Documentation/devicetree/bindings/thermal/qcom,spmi-temp-alarm.yaml
->> +++ b/Documentation/devicetree/bindings/thermal/qcom,spmi-temp-alarm.yaml
->> @@ -12,14 +12,16 @@ maintainers:
->>  description:
->>    QPNP temperature alarm peripherals are found inside of Qualcomm PMIC chips
->>    that utilize the Qualcomm SPMI implementation. These peripherals provide an
->> -  interrupt signal and status register to identify high PMIC die temperature.
->> +  interrupt signal and status registers to identify high PMIC die temperature.
->>  
->>  allOf:
->>    - $ref: thermal-sensor.yaml#
->>  
->>  properties:
->>    compatible:
->> -    const: qcom,spmi-temp-alarm
->> +    enum:
->> +      - qcom,spmi-temp-alarm
->> +      - qcom,spmi-temp-alarm-gen2-rev2
+On 30/07/2024 03:38, Richard Acayan wrote:
+> The Snapdragon 670 has a GMU. Add its compatible.
 > 
-> Nah, no. I have no clue what is gen2 rev2 and no one would be able to
-> decipher it, even with usermanual. Do not invent some random versions.
-> If you want to use them, document them and make them available for public.
-> 
-> Use SoC compatibles. ONLY.
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 
-SoC->PMIC, obviously.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
