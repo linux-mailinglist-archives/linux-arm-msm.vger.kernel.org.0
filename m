@@ -1,55 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-27484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F2AE94267C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 08:21:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 614A794267F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 08:21:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 296B31F238F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 06:21:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 76C631C243A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 06:21:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAC9D16DC0D;
-	Wed, 31 Jul 2024 06:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 055DF16DC2A;
+	Wed, 31 Jul 2024 06:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b="eSbZ+fRk"
+	dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b="X0cNyRUn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
+Received: from mx0.riseup.net (mx0.riseup.net [198.252.153.6])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E81E16C445;
-	Wed, 31 Jul 2024 06:19:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.252.153.129
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB6416DC1D;
+	Wed, 31 Jul 2024 06:19:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.252.153.6
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722406784; cv=none; b=REN+TtRmy2a0ttzGTfxlBTMhfLXItKa9lZwaeqAUTOGJKqYUzcBb0Mf/rdZNqp9qEHHY7qBp5bpp39Qy6taHZvanelQOC5OrRu6oqTgQBIk961pjBK92nOUOIBwBazLZvJCH4itDHwr8SqeFktihmh6c0xDOR1HTZwICHwfCqiE=
+	t=1722406786; cv=none; b=k+H9IlwzIUAOk/wE6wumSqMdhk5dpomg7g7bm6ls8r6IB9fGm+Zc1cCL9D+F6R6PvJTPUyo0323XdCWrVn4X78I9R6JTP0pOHluR9yEzhaiRIaA5lFN3rS6FLWt1oIHEQEzoO6jeEOBRFjN5JV+GeuP/KzHVufQQYi+8NcWXESY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722406784; c=relaxed/simple;
-	bh=f5zeoTB04tLRJsV6ArCgkMBLNSpD1K4LawmTzHY4Zaw=;
+	s=arc-20240116; t=1722406786; c=relaxed/simple;
+	bh=4+E89Igb8pJU07wTpnP4b6t+jrZA950FAqCmNFzLwfU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=TW9sWy+spXoAcbQL4FtnSlm+OuhyUQVLp+nb/CdCTcBSAY7a2PqzkLobnRWl8PJDmps0Kw7kll3Z0177+0ro+6t1BW6weznyR50Pcv1NZTFoL7CkvVElZoQcrGFg2P5qRRc9363vVFKsFMdviG01naAxX96iWyz3ySpJWzBMAsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riseup.net; spf=pass smtp.mailfrom=riseup.net; dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b=eSbZ+fRk; arc=none smtp.client-ip=198.252.153.129
+	 In-Reply-To:To:Cc; b=MLq6BK+eagnUPoAToqT/opOQ8hTYp1cMwKBzJ5SOSrp277NGlr7OZ/BC3SRGeoOyfOPzxYvjDpDRZF2Pv7CqI4uB92Zisjpijoz04GUUu2weSadkbYjgZ962f8hcIlLD1QqyLEzfbFmAAonX3s/kUS09ZohAMBHzsvM989lfxgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riseup.net; spf=pass smtp.mailfrom=riseup.net; dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b=X0cNyRUn; arc=none smtp.client-ip=198.252.153.6
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riseup.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riseup.net
 Received: from fews01-sea.riseup.net (fews01-sea-pn.riseup.net [10.0.1.109])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mx1.riseup.net (Postfix) with ESMTPS id 4WYhlL2BhlzDqfm;
-	Wed, 31 Jul 2024 06:19:42 +0000 (UTC)
+	by mx0.riseup.net (Postfix) with ESMTPS id 4WYhlP1gSVz9thY;
+	Wed, 31 Jul 2024 06:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-	t=1722406782; bh=f5zeoTB04tLRJsV6ArCgkMBLNSpD1K4LawmTzHY4Zaw=;
+	t=1722406785; bh=4+E89Igb8pJU07wTpnP4b6t+jrZA950FAqCmNFzLwfU=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=eSbZ+fRkx9QNdaTK+Bmhnba04CVGfVar9zxfY0wzc8CSb1vDEVswdBinMWiI/v1rK
-	 S+NXF1U+6gY1wZ5vrWHmThQZWum3bn8iS2SbgEPLovVm9/ykpZI92A4lI/750JOAfv
-	 UlDbQX2Pv2oNJJjR8RS3fLF91/3q6w/gr4UYj0ks=
-X-Riseup-User-ID: 7B93F4D4A2B396377C99452AFE7B4825CB412DCD47F921405976E221EB395DC0
+	b=X0cNyRUnRn+e5R10z+S/n4DSoD+Ymr+1o82z6g/nWEcuo1krSwiIRVIvN7nWDfcWE
+	 oLk7BDP1WCYkqwNbgCQ4MElAfioc6ZxEpen9POgr+xCmgqzcbDzgmQ5KFRkybMgmEw
+	 rhGVI7SLY3CdX//Ee327aNzhshtHuY4Pe1xHHOfw=
+X-Riseup-User-ID: EE02B06630D4F35A30203847CBE53B034F3A790A4F5A3427A4793BBFA8E12C18
 Received: from [127.0.0.1] (localhost [127.0.0.1])
-	 by fews01-sea.riseup.net (Postfix) with ESMTPSA id 4WYhlH3nGWzJsxW;
-	Wed, 31 Jul 2024 06:19:39 +0000 (UTC)
+	 by fews01-sea.riseup.net (Postfix) with ESMTPSA id 4WYhlL3jcxzJt03;
+	Wed, 31 Jul 2024 06:19:42 +0000 (UTC)
 From: Dang Huynh <danct12@riseup.net>
-Date: Wed, 31 Jul 2024 13:18:48 +0700
-Subject: [PATCH v3 07/11] arm64: dts: qcom: sm6115-pro1x: Hook up USB3 SS
+Date: Wed, 31 Jul 2024 13:18:49 +0700
+Subject: [PATCH v3 08/11] arm64: dts: qcom: sm6115-pro1x: Add PMI632 Type-C
+ property
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,7 +59,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240731-qx1050-feature-expansion-v3-7-b945527fa5d2@riseup.net>
+Message-Id: <20240731-qx1050-feature-expansion-v3-8-b945527fa5d2@riseup.net>
 References: <20240731-qx1050-feature-expansion-v3-0-b945527fa5d2@riseup.net>
 In-Reply-To: <20240731-qx1050-feature-expansion-v3-0-b945527fa5d2@riseup.net>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -69,34 +70,95 @@ Cc: phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Dang Huynh <danct12@riseup.net>
 
-The F(x)tec Pro1X supports USB 3.0 through it's USB-C port.
+The USB-C port is used for powering external devices and transfer
+data from/to them.
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dang Huynh <danct12@riseup.net>
 ---
- arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 51 +++++++++++++++++++++++--
+ 1 file changed, 48 insertions(+), 3 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-index 0301f04041e7..d28b870320c9 100644
+index d28b870320c9..be77a8318800 100644
 --- a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
 +++ b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-@@ -457,7 +457,6 @@ &usb {
+@@ -7,8 +7,10 @@
  
- &usb_dwc3 {
- 	/delete-property/ usb-role-switch;
--	maximum-speed = "high-speed";
- 	dr_mode = "peripheral";
+ #include "sm6115.dtsi"
+ #include "pm6125.dtsi"
++#include "pmi632.dtsi"
+ #include <dt-bindings/arm/qcom,ids.h>
+ #include <dt-bindings/leds/common.h>
++#include <dt-bindings/usb/pd.h>
+ 
+ / {
+ 	model = "F(x)tec Pro1X (QX1050)";
+@@ -209,6 +211,46 @@ vol_up_n: vol-up-n-state {
+ 	};
  };
  
-@@ -468,6 +467,12 @@ &usb_hsphy {
++&pmi632_typec {
++	status = "okay";
++
++	connector {
++		compatible = "usb-c-connector";
++
++		power-role = "dual";
++		data-role = "dual";
++		self-powered;
++
++		typec-power-opmode = "default";
++		pd-disable;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++				pmi632_hs_in: endpoint {
++					remote-endpoint = <&usb_dwc3_hs>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++				pmi632_ss_in: endpoint {
++					remote-endpoint = <&usb_qmpphy_out>;
++				};
++			};
++		};
++	};
++};
++
++&pmi632_vbus {
++	regulator-min-microamp = <500000>;
++	regulator-max-microamp = <1000000>;
++	status = "okay";
++};
++
+ &pon_pwrkey {
+ 	status = "okay";
+ };
+@@ -455,9 +497,8 @@ &usb {
  	status = "okay";
  };
  
-+&usb_qmpphy {
-+	vdda-phy-supply = <&pm6125_l4a>;
-+	vdda-pll-supply = <&pm6125_l12a>;
-+	status = "okay";
+-&usb_dwc3 {
+-	/delete-property/ usb-role-switch;
+-	dr_mode = "peripheral";
++&usb_dwc3_hs {
++	remote-endpoint = <&pmi632_hs_in>;
+ };
+ 
+ &usb_hsphy {
+@@ -473,6 +514,10 @@ &usb_qmpphy {
+ 	status = "okay";
+ };
+ 
++&usb_qmpphy_out {
++	remote-endpoint = <&pmi632_ss_in>;
 +};
 +
  &xo_board {
