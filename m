@@ -1,172 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-27495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E20C39426DE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 08:32:08 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B858942851
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 09:45:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1112C1C242A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 06:32:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5DD771C22B50
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 07:45:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC4E716DC03;
-	Wed, 31 Jul 2024 06:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1939D1A76C2;
+	Wed, 31 Jul 2024 07:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VPxQ2gkH"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="weMhtW1/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D6A16D9D8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2024 06:31:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CAF1A721F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2024 07:45:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722407464; cv=none; b=Z4uuvvwaHK12CmtT7V7MLK0i0SZfAg+emDdRfwNC0U70IVaXIhJ7mK0WpEk0xkUGQliUH8UjdUAOJYgjf4v5W8Mz/a4Ah5PfkTyB+/VzMHfmZcdFloNyGoWz8ney2UK53nIxGq/50vPV5nmsFcdj4OBpysu5Xbq0AknJe263llE=
+	t=1722411917; cv=none; b=h45ALGdTPDHR3S6AJz/UfKP1poK5inAJvflMZmpCVm4UuUeww6MBIE/IhGe9JRJONTt3tObDCrCuz7wykGTJY2DR7yBhW6RLUH8/9Czx4qtOD2vhphSWCHAk1P39NPUZuas0HvmOn/7ZPM3pGYqAafv/m7BRjKBDAZw4Kw21Z5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722407464; c=relaxed/simple;
-	bh=pa3CQ9bxYVXwHYkNX9hjJpLm6eHiBjrBFs33d2EzD0M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OSzYFkSdMxGyezrWfGQ8u2/cfTTTpQDO5l44W5lWdpz4X1dRnMi5edzztKUojRKLljGmA8pDd9cgAVDAa8L7cagsJhPur4jMLM/235+6YXZ4GUOdmPK2KY1YjETziP9jRtirPHvLbl5BPGuwwWaoWscE7M/EQgGjfoNNIzCrtos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VPxQ2gkH; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4280c55e488so3227665e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Jul 2024 23:31:02 -0700 (PDT)
+	s=arc-20240116; t=1722411917; c=relaxed/simple;
+	bh=/yuGnClbBC1nyLwZVAYr+cginh8pqpSnbTlYXoo7Mig=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=aZknLs1QEs1jPGDCQYs8y1av3bGYc0cVVI4KZ8TTEKe/2cCPGkrdKgw4L2Pgbl1fGLz+I3NmYIFlZy3/WTRxBB5lTecRX9QAVZxnI1RMyRiEtCc9jZN8c0DmLnw5WaGNRTg/HRnE7fSpJc3jKB97O4zBz4v67Qc8a/9yqOFnbqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=weMhtW1/; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4280c493719so32252155e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2024 00:45:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722407461; x=1723012261; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=uOZXqthV2P+FgW0nVV1tWia67XT+IyQh+CwEpq/Dl+E=;
-        b=VPxQ2gkHvFv9IyfUMgaol0/WjaNVYkZneYNFzoMSFCOjkVIXPdVgIk4GeqT68aLqIN
-         gmyCS4FmawmZw4W2oZCoE8UkI5hxpdGSks5hBBGU0jSkdBW8BG94L57ibIycg7KTLcUE
-         7fJCeagFDH1uwKz1A7D8i3geV0dqMGxnNDTj2NR3g5MFIcHAxUvecGa4bzsfn26+teBg
-         4riPrrpXeOfCZg7mg+YEYjj0kKZN1rb7Y/EmIQoMje0QtLiqA42HmynuCacbQoORRTvB
-         5IM+/EojGoHkxFFVt3K5qD4gQeq34cd/XnL/JU8ADOaYaEX7RDCQ9y5e37iPnUDFYV4I
-         qaCw==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1722411913; x=1723016713; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Rqz+Epw25ZtWfd9xQ4ZQ2o9n8Tqu4oJntDWi/cHmjog=;
+        b=weMhtW1/yDNlvEtlXGSf1UHvXOf0KUEf2q6fxl8xdoS5B8twISMQP6fYHu2Co9o54H
+         8UrTG4Hf67tlthDceATB88B9eoYKJdni9GBgLU5r4EeoIX/w4wfjedW2oV3MRIZNt18v
+         WDI+ZQi00H2jmT+r0NdkF/58FDJ3xis83JuzrDRaO+OZyhTItqWo4KWDfq3C6nqYQg+q
+         9o+1z9bitVtiz/DMHWb4U9034SG0ZkU4xnn9v6fNAOU0WxMEj6f+4BkrAtchQIjAWO/D
+         KoegsIFJLBopO02rHTVtPCF5rqmia+vlwqOortQMghnoeqJaM4Q2vfjqJ18L/f0hOM1i
+         /oIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722407461; x=1723012261;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uOZXqthV2P+FgW0nVV1tWia67XT+IyQh+CwEpq/Dl+E=;
-        b=QmCoW1sKa4h0fMdJ4sn49TWDSqPc5kQIHKll8jVyYwWboYQnyuTKJ3BARTPpcxHtbi
-         eNytMIZvhl97e4h2XtN9Gln7fadMQlhtPBIZBEVvzgES7DA9VEdoq3ZBwM6aH9dc/2iy
-         hO1CeL6owmKij079lplLrYkOwf+iuW3zs/khZH+yTQo75HNuLFo07S0PXzCvOLlyYExz
-         YkbNAp2wgi3EKpnyr9eVJtWskFNuA6hZwZexekQkZR8E0DuZDSiOUHQju/ClQnntZ4la
-         PaJXJNURH76h8CSqbohMh5fpGuFb7+FUeIzBF8qsBaMWGQkkMIm2w0jA08bNpdPHx/tl
-         n70w==
-X-Forwarded-Encrypted: i=1; AJvYcCXbOahiWRtrzXq7I7GqBugXLpDusDBMm9YssBTlUXHQixguTd7VcqpFkLsQGevjuACmEMk+DXjkwHq2mFNGztOE0Q3nSCputPDzPyiLAw==
-X-Gm-Message-State: AOJu0Yz3rSx10MwzzUk6pH8uuqRp9c9O1VBP7GiVT5rcWOUOJqT0fbU0
-	lDCKEETQ/7dF32kP4CW2S92Vc2b1QLWM7LtS4jACSTwcBi2NS8C59MoKt/Ou+AQ=
-X-Google-Smtp-Source: AGHT+IFmJdfvLb6VhAFLslGTLaw+H2btyom1nAYAcnl0gPZyCCjPKB8aY6hajHaIZRwfyFdCbLFmhw==
-X-Received: by 2002:a05:600c:1f92:b0:427:abfd:4432 with SMTP id 5b1f17b1804b1-4282444061cmr27919755e9.12.1722407461004;
-        Tue, 30 Jul 2024 23:31:01 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4282babaa2esm8637485e9.25.2024.07.30.23.30.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Jul 2024 23:31:00 -0700 (PDT)
-Message-ID: <d139339c-32cf-4804-87f8-8fd4588cc925@linaro.org>
-Date: Wed, 31 Jul 2024 08:30:59 +0200
+        d=1e100.net; s=20230601; t=1722411913; x=1723016713;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Rqz+Epw25ZtWfd9xQ4ZQ2o9n8Tqu4oJntDWi/cHmjog=;
+        b=OiJRBF06VnMKaNiKvCCw/63y+P3Cl2RCFZhD7jDs+I+6lYGGUU5z9z4QiK4IsvoFlB
+         ppD50rPxmax3rcOYhql8eNEx0IQyTOCxJJCfwb0QlZooKsVF2Sq8bvE79pK03oz9TaHX
+         oyDGRZRzisj5HukEjcJVdv4D3SxYCwjSFJM+vm8+qTYD2J6oYG6eHdAwQ7T6TF/TmLVl
+         7FFcrc/vrj9aK3GaFSUFsfvu0ikXIf0lWVKCzwXZHN5lsCjw+Fc3KmalzzarTtMWh2DA
+         s2hh+go2UTeuWXOf5K9PbQkBybfHT3QAbuDYq0fTSd5AbTKix6GoAbyjmWiL+qca+2k0
+         C5uw==
+X-Gm-Message-State: AOJu0YyFVhSnLmdALgXndNyXt3hRUfZkhRElriPQ+aQRIC9+e+OTVk+n
+	s8kKtUCDqIgeWR8+dXz9AaGfKqYU73Qgy7yvTB+cLMC0s2/tudv5AlLZ9up8K1o=
+X-Google-Smtp-Source: AGHT+IERHg31L0LLzRskNikI5TpikbIFOdMzsFXQ3EMo+io8H+Z7u5PSmL/XZMA1omH/ifPmwPFVgg==
+X-Received: by 2002:a05:600c:1c93:b0:426:5fbc:f319 with SMTP id 5b1f17b1804b1-42811e0b6b7mr92539285e9.33.1722411912610;
+        Wed, 31 Jul 2024 00:45:12 -0700 (PDT)
+Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:9c3f:3dd8:b524:cb31])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36b36857dcesm16283104f8f.85.2024.07.31.00.45.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Jul 2024 00:45:12 -0700 (PDT)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Subject: [PATCH v2 0/2] firmware: qcom: fix an efivars regression in
+ qseecom
+Date: Wed, 31 Jul 2024 09:44:55 +0200
+Message-Id: <20240731-tzmem-efivars-fix-v2-0-f0e84071ec07@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3] dt-bindings: clock: qcom: Remove required-opps from
- required list on SM8650
-To: Jagadeesh Kona <quic_jkona@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Taniya Das <quic_tdas@quicinc.com>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>,
- Ajit Pandey <quic_ajipan@quicinc.com>, kernel test robot <lkp@intel.com>
-References: <20240730034552.31271-1-quic_jkona@quicinc.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240730034552.31271-1-quic_jkona@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHfrqWYC/32NQQ6CMBBFr0Jm7ZhSQIor72FYtNDCJELJlDQo4
+ e5WDuDy/Z///g7BMtkA92wHtpEC+TmBvGTQjXoeLFKfGKSQpagLgetnshNaR1FzQEcb9s2tqPq
+ i6YyTkHYLp3Y7nc828Uhh9fw+L2L+S//ZYo4CjamVUqXKhakeL5o1+6vnAdrjOL7f39v2swAAA
+ A==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Elliot Berman <quic_eberman@quicinc.com>, 
+ Andrew Halaney <ahalaney@redhat.com>, 
+ Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+ Johan Hovold <johan+linaro@kernel.org>, 
+ Maximilian Luz <luzmaximilian@gmail.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1018;
+ i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
+ bh=/yuGnClbBC1nyLwZVAYr+cginh8pqpSnbTlYXoo7Mig=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBmqeuEN8r1CHvvf0UpTfmTk9Q29pqH/8y5BETy6
+ 1WpaKQhS0yJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCZqnrhAAKCRARpy6gFHHX
+ crKAEADSUPyL2tAF2AYiOzyPKZKJ2aLGJGgEC0qFWTDW1xdUZah/lG3ovfizdk9ymqfBxoWlcKs
+ Sx8OMmGpYsw5gCl2l9z94/DXVB6R0AfgrOxjDgUXHyuJzl+J6GX1nW53ATxhtoO/vdzd9HhNOic
+ oJbzNUtro2hatchUFwmiyIQidQxPjUOJlM/9Ktc04tOyR7u7zAzZ6WZJ7UhxIX5sUg6PObt3YDP
+ Yi44tHqtjbLL1/UvPtyHJSP7qQKZyHwN4SqmbQYrBnd2Trv9fvJh7gtrJVhEM+aKJfbdL3G9B6z
+ C0iVeM7AMLY10NMJil2vseahE9WupgZiLVUVp2/Q2Ot4Tw+Cg0LT4IKRQzMnui3e14EzEGTEFOS
+ GBbIuaprxW+9CGDvxVC0E94yefHoEZLKrNEiLlzgv+tCoN7ebyeH0lDPnS6TFw0PpFC0J+BmzP4
+ NNc/pB63/LPmqty7yps7BEp8NyOOa1DmmqzaqeYPU62Irvop6Yzv1Oj4qlR8SIj7ZSlF9Sc2aV/
+ WvhuDJaqm5TQGvIapVD53gFhxPBbSgewqUYWXMTQ6t7/ZQLx3X7njK8RMM07TSKNkabWNTb76DT
+ AtuGWhO5eH5BKS+ZbpYgyvj35OPjTzx2j+NTra1oLnL9lYgAEY/ykgQf9bwyeyQi5xxFxwOiQOM
+ CKmc56lnINkVsZg==
+X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
+ fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
-On 30/07/2024 05:45, Jagadeesh Kona wrote:
-> On SM8650, the minimum voltage corner supported on MMCX from cmd-db is
-> sufficient for clock controllers to operate and there is no need to specify
-> the required-opps. Hence remove the required-opps property from the list of
-> required properties for SM8650 camcc and videocc bindings.
-> 
-> This fixes:
-> arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: clock-controller@aaf0000:
-> 'required-opps' is a required property
-> 
-> arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: clock-controller@ade0000:
-> 'required-opps' is a required property
-> 
-> Fixes: a6a61b9701d1 ("dt-bindings: clock: qcom: Add SM8650 video clock controller")
-> Fixes: 1ae3f0578e0e ("dt-bindings: clock: qcom: Add SM8650 camera clock controller")
+The first patch address the regression with efivars using the qseecom
+driver reported by Johan Hovold. The second patch removed dead code that
+was left over during the conversion of the qseecom driver to using
+tzmeme.
 
-Also, these should be two separate commits. Each fix for one issue is
-one logical change.
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+Changes in v2:
+- Update the kerneldoc for qcom_tzmem_to_phys()
+- Link to v1: https://lore.kernel.org/r/20240730-tzmem-efivars-fix-v1-0-bb78884810b5@linaro.org
 
->  
+---
+Bartosz Golaszewski (2):
+      firmware: qcom: tzmem: fix virtual-to-physical address conversion
+      firmware: qcom: qseecom: remove unused functions
+
+ drivers/firmware/qcom/qcom_tzmem.c         | 32 +++++++++++++--------
+ include/linux/firmware/qcom/qcom_qseecom.h | 45 ------------------------------
+ 2 files changed, 21 insertions(+), 56 deletions(-)
+---
+base-commit: 931a3b3bccc96e7708c82b30b2b5fa82dfd04890
+change-id: 20240730-tzmem-efivars-fix-d9635d39cbf2
 
 Best regards,
-Krzysztof
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
 
