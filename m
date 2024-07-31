@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-27506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67E4A942B61
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 12:00:28 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50706942B82
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 12:04:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B8271B23CD5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 10:00:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6F45BB24644
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 10:03:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B139B1AB51C;
-	Wed, 31 Jul 2024 09:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21AAC1AED32;
+	Wed, 31 Jul 2024 10:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BspajmhJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PrO+fFf8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE6918DF9F;
-	Wed, 31 Jul 2024 09:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB401AB520;
+	Wed, 31 Jul 2024 10:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722419989; cv=none; b=n1Q+b6nhz4DCC/JenBAfKkijlCq8+of84NT7LhSkczNVVLR+dAjXYW3ometm5hf6bmHNnXDWJr6pFGFSMxtzX7wnF2YEL0YZ2PGYxxGUOB8Fu9Nf16F4utFBfLt76jOBNauO04hik5YSzcNijs+9mgpzLmwN8w0TjczttHnaaDg=
+	t=1722420128; cv=none; b=TWTEEfCJdcq1NjC0bXB+rHBWNP9jTBwgq3q1OkkWtjW8MxS46A9bzwyl+nTBegMAhBgm3Zb05xxbqQsmw5T5vmLbUq8FVFFtmDLidhaiiw5+TUscrIiGEZvpM0FmZJREvOIJa9nULvBe0I53Oz0aiKXBTIp4Tv2kW168gWKYR7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722419989; c=relaxed/simple;
-	bh=CR54JQjLO7K+orD25I2mqnuNLtjgDhVHMk1eBZ7uSuM=;
+	s=arc-20240116; t=1722420128; c=relaxed/simple;
+	bh=fNL6J3gruPoAz9RrtXEOWbhT4gbwezlFWCSBfnTPmws=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=FMwGahY4Nrfq7RXOIAl64VlaF2FQC9PVbGgwptuc1Q3GirT9FFeMsfKhuzYPedxaB4o43feFkgC03vRixBk/1AneedbssEamEE1IN9knadNlP6aBu0j+lfELOg4l0U5TNwujm4Am3jNEc7XqxJ+nHbCPZ+MduKtSv8I6XlfhdgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BspajmhJ; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=ZZVAOhyVYy1CdXaGlag4N1Jmxw0yL1IA+4KiHvv/n2FMJWei38hcy0rhH1uZEWYCq3Qs3nPK2Xpn89n3iUM46RIYp3A4BbFbhuOU68C2hHrO//zVfSPowgMpa/rS+VyVohyl1YJsI9HvarCXHcsChtuKWxivE16SBEDnLdcu4Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PrO+fFf8; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46V74kCO012798;
-	Wed, 31 Jul 2024 09:58:57 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46V5swoF019227;
+	Wed, 31 Jul 2024 10:02:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	fRi1qWS3I1/J7lbxMVZucJ6J1N0+O71myL70AfynqCQ=; b=BspajmhJEKSVH1fz
-	UqG+DUmiM/rQjVHLoD+xP3k0F9uZ6YZh55nMbTOdA9zIDTXzXopQX03nYcH43G+W
-	IvrilQDetzkRi2DanyJhh5jcgGH9Ko4XAAJ36CDD4FneTP0cr5Fe6qT3Ky4WmFS2
-	yPgV8k+0Kdq8q6uqFWs+dAm1ZoLj2qrJqhpQO46ZFYyVJe4oq6NvAAKR/FWTpQIr
-	4sgH0Lyz486Eu087jO6R9EeX5kbCwoZQmeSFa20DMNHGNiVvf11A6FU5Gu+pWDOa
-	htsJOfAvV5VeaARh3/u8IcVl3NjuMoPWubeEnFTU3nTCUqMilAdoPjuQohQ8978R
-	PB1Arg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40msneam6e-1
+	eUo+XsBh2F7oq/ik4Tf3xjN3GW8On+vNp4e6MUkKoZY=; b=PrO+fFf8cT991lIm
+	jzmZbUGW7gWYmvpNucOS6pj+MmbzFlLt2I5qPVBiJ8I0T2Eu5kVBDxfcejJnGcmM
+	Vkfrx+7+hS5Uw/1jomRAX7Xx2QXfFi2dYAM5ReP/iwoq7D4Ig5tn7ae/IStNoaAB
+	iwsOOXoc/1xFHQZjHzsm8JODqSpjUow3Wpnd6ObGxDX4xkHd/3PQOs1dqnMM3cNM
+	xoFSAzk7NocLDQzfI749blWYjrsVXvVBCjG5OJFucNPluEInH/foDFIOIot5taZA
+	vZFJvz4BFeTqSwCGAkkw+XPWZTiB5Kj81RXZl3qWNU5AT4p3O1JCVZcaMmz8ZoX5
+	qmZ9cQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40msneamkb-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jul 2024 09:58:56 +0000 (GMT)
+	Wed, 31 Jul 2024 10:01:59 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46V9wtC3031265
+	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46VA1woQ020568
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jul 2024 09:58:55 GMT
+	Wed, 31 Jul 2024 10:01:58 GMT
 Received: from [10.217.216.47] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 31 Jul
- 2024 02:58:49 -0700
-Message-ID: <7da6d498-d050-4de2-9f97-36bf9458806b@quicinc.com>
-Date: Wed, 31 Jul 2024 15:28:34 +0530
+ 2024 03:01:53 -0700
+Message-ID: <8ca233d6-78be-49f6-92f9-a04bc98adff0@quicinc.com>
+Date: Wed, 31 Jul 2024 15:31:50 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,59 +91,72 @@ CC: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
 	<quic_ajipan@quicinc.com>,
         kernel test robot <lkp@intel.com>
 References: <20240730034552.31271-1-quic_jkona@quicinc.com>
- <d139339c-32cf-4804-87f8-8fd4588cc925@linaro.org>
+ <c3671b29-d860-4374-80fe-c284da4ac300@linaro.org>
 Content-Language: en-US
 From: Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <d139339c-32cf-4804-87f8-8fd4588cc925@linaro.org>
+In-Reply-To: <c3671b29-d860-4374-80fe-c284da4ac300@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Cyh9xmAlETNLcgr8PBlS5exwZ4W0afBy
-X-Proofpoint-ORIG-GUID: Cyh9xmAlETNLcgr8PBlS5exwZ4W0afBy
+X-Proofpoint-GUID: Xlrpwzo7auuP2ZAh-kJGsxoIrPaySlDs
+X-Proofpoint-ORIG-GUID: Xlrpwzo7auuP2ZAh-kJGsxoIrPaySlDs
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-31_07,2024-07-30_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
- lowpriorityscore=0 mlxlogscore=773 priorityscore=1501 clxscore=1015
+ lowpriorityscore=0 mlxlogscore=999 priorityscore=1501 clxscore=1011
  spamscore=0 mlxscore=0 bulkscore=0 suspectscore=0 impostorscore=0
  malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2407110000 definitions=main-2407310073
 
 
 
-On 7/31/2024 12:00 PM, Krzysztof Kozlowski wrote:
+On 7/31/2024 11:57 AM, Krzysztof Kozlowski wrote:
 > On 30/07/2024 05:45, Jagadeesh Kona wrote:
->> On SM8650, the minimum voltage corner supported on MMCX from cmd-db is
->> sufficient for clock controllers to operate and there is no need to specify
->> the required-opps. Hence remove the required-opps property from the list of
->> required properties for SM8650 camcc and videocc bindings.
->>
->> This fixes:
->> arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: clock-controller@aaf0000:
->> 'required-opps' is a required property
->>
->> arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: clock-controller@ade0000:
->> 'required-opps' is a required property
->>
->> Fixes: a6a61b9701d1 ("dt-bindings: clock: qcom: Add SM8650 video clock controller")
->> Fixes: 1ae3f0578e0e ("dt-bindings: clock: qcom: Add SM8650 camera clock controller")
+>> -
+>>   properties:
+>>     compatible:
+>>       enum:
+>> @@ -57,7 +54,24 @@ required:
+>>     - compatible
+>>     - clocks
+>>     - power-domains
+>> -  - required-opps
+>> +
+>> +allOf:
+>> +  - $ref: qcom,gcc.yaml#
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - qcom,sc8280xp-camcc
+>> +              - qcom,sm8450-camcc
+>> +              - qcom,sm8550-camcc
+>> +              - qcom,x1e80100-camcc
+>> +    then:
+>> +      required:
+>> +        - required-opps
+>> +    else:
+>> +      properties:
+>> +        required-opps: false
 > 
-> Also, these should be two separate commits. Each fix for one issue is
-> one logical change.
+> 
+> Why would required-opps be invalid for SM8650? What if we want some
+> higher opp for some reason? The point of v1 and v2 was oonly to require
+> required-opps on certain variants, not to disallow it in other cases.
 > 
 
 Thanks Krzysztof for your review.
 
-Sure, will split this into two separate commits.
+Yes, agree, will drop the else part in next series.
 
 Thanks,
 Jagadeesh
 
->>   
-> 
 > Best regards,
 > Krzysztof
 > 
