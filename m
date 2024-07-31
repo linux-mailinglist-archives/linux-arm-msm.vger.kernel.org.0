@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-27469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 438759425C7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 07:34:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D6789425D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 07:37:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ED5311F24D95
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 05:34:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B7DAE1F24D97
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 05:37:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C565154FB5;
-	Wed, 31 Jul 2024 05:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC3BD49651;
+	Wed, 31 Jul 2024 05:37:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I067pFtu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GOZ0aVoB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9186C5464A;
-	Wed, 31 Jul 2024 05:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A78341C6E;
+	Wed, 31 Jul 2024 05:37:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722404028; cv=none; b=h7dRAkB+QgFDXeRQ3bHVbLa+aw8pdDscCwEXrHuojiP6Zmh6DoYtB8E1Rn8+tdDcxjrkM1UJ0HwoI4Y5tbEPhIHKXyNuNozkYtM8zAiibDa4aqHO1m4FK5F4fTX7241QSECPun1NK3SAfyS5EcLYX2dMroJPS9HmXWNOPlzF01k=
+	t=1722404222; cv=none; b=WlaOHxBldO/tiCuVA9UxQR2n/70zhW0yhEdLaHIH20I4V7A0o0IR0svLabcY4lwKu6dZr2ZeLjpjA/nZYCVdHIwV4X/wxt25Hg3UXDbVPARhaPh09fyss1v6WoytdeNCeiQe4mUFqqoxw67hhIVAar9FQtWuneMdU+/4yo/9jkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722404028; c=relaxed/simple;
-	bh=5u+EinhdB9b6/nYjsUPtYkZPrkKBMixxBO6GoOekOTE=;
+	s=arc-20240116; t=1722404222; c=relaxed/simple;
+	bh=nHJXzEqeLU+420fe24cRxrD97j4CV4e0LAG/WVFTejE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LZSb9x++zr0qUpVVj9xqs7ZFkdS2OU7BqAib+2FZ9zYUVEIH0CZwMqSUteBXAoCVEmqQmb0By8OA4tC4lG2M7pjyRK0IanrJYdXqNkYLsn7U8/KPv/qWWHVx+LyMFRpIu/m1phona+TU2vNrQlvW5gKoqb2xFZ+4ndB6ViFJdGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I067pFtu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A3DBC116B1;
-	Wed, 31 Jul 2024 05:33:44 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=QDUgZfuItyRw/v0PQ/Nk3ZIhhCg/bt01puPg82u6rR67feDW2KvdnkwgKlcxwCO4Bn6F2ns6nlmodFEb9eu6pWlFBVDJedDLiCUlpd3AAU+7gGdCHbrP7k3vT80uPifx/qwhzpo9SqbYBGW84yUVKDeGUWVRD9ye5wK+UxexrBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GOZ0aVoB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D34C116B1;
+	Wed, 31 Jul 2024 05:36:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722404028;
-	bh=5u+EinhdB9b6/nYjsUPtYkZPrkKBMixxBO6GoOekOTE=;
+	s=k20201202; t=1722404222;
+	bh=nHJXzEqeLU+420fe24cRxrD97j4CV4e0LAG/WVFTejE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=I067pFtuSkDMorXm5LuTEpDWkNEchym7Oh+pAlj5D6N7a71lDTpG24u6280HA5m6T
-	 FwHGovJdOa6kbALo9yeUpunM4u/TT3/8sIxBvmo2Ck2W6kRs6xp5lTJWbGhMnGTTIJ
-	 fmUohiIIsUWqXZ8tJ/Km8gi68G0SmSuhQ82opgqUwq/O0BVs763ImVPht7oY1A+Tp/
-	 xasWADBM4xCbVDmOhkTxr9u1vj7+gb9WByEynPkbmxmKPSEaT5JODmb8VO27HPcccK
-	 O1wO88FISAkObjH2ZEx+Fqb+/f3yJyGu4xbP3RP9nGI0lQl7Q0DNnjsiN/ML200y3u
-	 t1cjLKzZWARig==
-Message-ID: <63cf3198-fb79-466f-b80a-024e970e400a@kernel.org>
-Date: Wed, 31 Jul 2024 07:33:41 +0200
+	b=GOZ0aVoB1EdydKz1HOBONOS5WcZKwaJPiptHyONId53X/mrAzgbu3TiugE9xq1Aak
+	 yC7bKdmICSxNrFQczyO/+CRMdiZ1UMBmV7siC42qD6V4HtEg3zcc40Hmto4XQN0l9R
+	 IxV8hqo2c75SwGYQeHFw1UCnZJ2BWIB7h3JQqnB1gvY0vCnE8FEjDCylUh9bKTKree
+	 A8rxUeLcV9zTeR5njIaJX664OsS3a4TVDweBkBl6RTSvei/MHKqzHLPCT84dJFlmqO
+	 5t88MTqDI6Eo2x0UaMRrIzZ11phYsl1ei8wdaVUQCpUNPOpGFFUJARXENyJBNJxYIS
+	 LGExUDPSk75Qg==
+Message-ID: <7aec2a72-3276-4837-87fb-ac974588fd53@kernel.org>
+Date: Wed, 31 Jul 2024 07:36:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,14 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] dt-bindings: soc: qcom: eud: Add phy related bindings
+Subject: Re: [PATCH 2/8] dt-bindings: soc: qcom: eud: Add usb role switch
+ property
 To: Elson Roy Serrao <quic_eserrao@quicinc.com>, andersson@kernel.org,
  konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
  conor+dt@kernel.org, gregkh@linuxfoundation.org
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
 References: <20240730222439.3469-1-quic_eserrao@quicinc.com>
- <20240730222439.3469-2-quic_eserrao@quicinc.com>
+ <20240730222439.3469-3-quic_eserrao@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -103,53 +104,34 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240730222439.3469-2-quic_eserrao@quicinc.com>
+In-Reply-To: <20240730222439.3469-3-quic_eserrao@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 31/07/2024 00:24, Elson Roy Serrao wrote:
-> Embedded USB Debugger(EUD) being a High-Speed USB  hub needs
-> HS-Phy support for it's operation. Hence document phy bindings
-> to support this.
+> EUD hub is physically present in between the USB connector and the
+> USB controller. So the role switch notifications originating from
+> the connector should route through EUD. Hence to interpret the usb
+> role assigned by the connector, role switch property is needed.
 > 
 > Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
-
-A nit, subject: drop second/last, redundant "bindings". The
-"dt-bindings" prefix is already stating that these are bindings.
-See also:
-https://elixir.bootlin.com/linux/v6.7-rc8/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
-
 > ---
->  .../devicetree/bindings/soc/qcom/qcom,eud.yaml       | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+>  Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
 > diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
-> index f2c5ec7e6437..fca5b608ec63 100644
+> index fca5b608ec63..0fa4608568d0 100644
 > --- a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
 > +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
-> @@ -29,6 +29,14 @@ properties:
->      description: EUD interrupt
->      maxItems: 1
+> @@ -37,6 +37,10 @@ properties:
+>      items:
+>        - const: usb2-phy
 >  
-> +  phys:
-> +    items:
-> +      - description: USB2/HS PHY needed for EUD functionality
-> +
-> +  phy-names:
-> +    items:
-> +      - const: usb2-phy
-> +
->    ports:
->      $ref: /schemas/graph.yaml#/properties/ports
->      description:
-> @@ -48,6 +56,8 @@ properties:
->  required:
->    - compatible
->    - reg
-> +  - phys
-> +  - phy-names
+> +  usb-role-switch:
+> +    $ref: /schemas/types.yaml#/definitions/flag
+> +    description: Support role switch.
 
-That's an ABI break and nothing in commit msg justified it.
+So both EUD and DWC3 controller (as this binding states) are role switching?
 
 Best regards,
 Krzysztof
