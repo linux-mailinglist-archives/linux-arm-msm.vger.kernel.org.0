@@ -1,151 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-27531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 165F4942E0D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 14:21:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10B0C942ECD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 14:41:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CA693283DB5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 12:21:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 80B641F28FB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 12:41:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CC8A1B29B4;
-	Wed, 31 Jul 2024 12:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 028BC1B012E;
+	Wed, 31 Jul 2024 12:41:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pxb6RGFz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EaR84pAJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9944B1B1401
-	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2024 12:19:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3678A1B0136;
+	Wed, 31 Jul 2024 12:41:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722428370; cv=none; b=Bdc511j8i6vRcLyFsCAw/SgHPfKqPdvGSN9Fs5/sYe3k4UbLdUbzDf4sg0nFfQiASEJ6m8PXvrwcdDNYoap47nc4S1XwQzzgdxWERbdToMO3Yc3Fa/ojUkkTABUZBYcYf8riDqswsdt3o/xXE8SHbW+nLu4kcyE6jL7HdjoADZo=
+	t=1722429679; cv=none; b=TJHWQ5Ht3boXQuo6BHJsAvZPJRFgnLNAZna5Fb5CY/gIy7BGux2DArK0OoE4rmASlZKVW7awpmwpICxHPQbAbynNxpesvQZ3CVlcNS1+8bKnBaCiJps4ffKTGLuNbALdQbSn+7JquLqtQC93rcd1rVQjSF0IsNcINUf5BAGEFGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722428370; c=relaxed/simple;
-	bh=A5r0NANpmhLQHt+RRxDRqKsHTSeSEtZr5R1TqvCSWPQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AznUZPDQLbZeh7mOgkNLcKc6fAK2Qlp7vtPfZ8aa3RsoZXN/q/8xux+0V3I9xKU3/ICr6qcLIyma0FF6g+mfcuFhFEXhuecNV7yS+GyMhHcbTnX8paLTmEhrh14pzzhggu9Pq8DA7a+xDvM3zmGat+hXpxq467hGfeX3exKwx7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pxb6RGFz; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2ef2d582e31so68619081fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2024 05:19:28 -0700 (PDT)
+	s=arc-20240116; t=1722429679; c=relaxed/simple;
+	bh=hWzgiXWVrjpTN1nVuyODYR9+OxLdhgMRH76UuMtK06A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=liyZuKhPxQYehGpOHftJq2d5j54jorD0uCjWnWK99gcs2TmROq/T4a/vsc0Bncp/tkuv4KZTsSjqm6MVvdESZKqEHjlg9/2xUSJ7wQK0BYCFMSQ7PJil8JOrtmt+Bqt7WuRWeBRRC5CraCiJ/9BJ/oQ6bu1zJlzVvJIAQjLGMZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EaR84pAJ; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5a15c2dc569so4948712a12.3;
+        Wed, 31 Jul 2024 05:41:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722428367; x=1723033167; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZS7SjZ0Q1lIeKnPxLIzMq7+G1/0CZ8+qiYitWCXl91c=;
-        b=pxb6RGFzVNvX+YrVQVmA2qIX3UxnLDlFa8awgp7sy2SDmsBI9g5pQpOlR3H99CQPgJ
-         PHKN07fyiG+6FsPPh7oKWjMZLtde2KkiMzKFZJuLEvzwyR5/PukPqyxWLO5xU+Qw00Yw
-         E/+XlWiL1La24Lj+AxIh7w+4S7bCMWFKEb2jerFFNZBQsBvph030MGfDMc/LusMTPqMu
-         10Fx1GtU6r+xHJG/vlOPbtzb//tRkZbyo4UttBFss1vuqG+i5pSLZxhnnCV1IvCZCjZg
-         bS7wP9YuKQA5DbqJXzWDNIDV2VME3/H2adYCZvyBw2Wt2mfakiz1TtXovQV3Z1mBJ2AF
-         FwYQ==
+        d=gmail.com; s=20230601; t=1722429676; x=1723034476; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=/Q2l7kPRbHfPSAmXr8/i+HQUpkMV0CfBoozBQvEj2VM=;
+        b=EaR84pAJg5DRWkyDdcKFNR5Cob0cUS6MwUrIcKjfohzB4s0FyeExBRMrIGH5W9W25L
+         uFe9uD+C9kuVZU0QPljWA9C7y+X9fHEdQJjhtN5UorSyYmS8rxrXEz8Ywe9nN+JmYKZP
+         Gb4n8URbNmW5DhS1zi33jxb+QY3fLV4hAsfA+tI2nLX51A0SGc+lw17U3s6qbOqE319W
+         AYc7E1WdNVozp6R6ZGZszcGW1vrLILwQVfc57Nsga/kkimnIVVG3FzGhxkF5ni1x3pLO
+         ZXCyZu9b/PsJ70AmcDerVEMiA42YuP81rH40ttVkO3p2x42wJwKkFjqS240dDb0HnghC
+         dJIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722428367; x=1723033167;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZS7SjZ0Q1lIeKnPxLIzMq7+G1/0CZ8+qiYitWCXl91c=;
-        b=V//uyfQ2BOsY/RpDl4NyKsE9rTWkkzbK7hPiiM0yqIcXDWyaJ/ipj9JTrEy3UVuR44
-         odVgH7rTLoPBoe0RLhf1bXRgSAPOjbx1ccTpXMNibMZeO588FLac3z/Rmj/bLMjYvy4M
-         5h7y0r6UY+Po42uNRhYXOPJQvmsRdXiBdIND998U80Sa16RoEZ2JU3wGdb6P9yMG2ek5
-         wPk2cH7FNurLbYCqbOA3lVM7KWNtpP/SXNI7MwN6f8HT5qW72Py48mYEjklNWDqo3Qkh
-         kQCDvStZX8m8vFhr82ZZlkjGA/qHMNE7rocIofvwYm/6eY7I2EoTtXJgzXQJvFiaPwXQ
-         owwg==
-X-Forwarded-Encrypted: i=1; AJvYcCUnvI9Z2bgn66ToVJMezCBJLRyVozKPTPn4V1MckkIIEKaLu6PFmK2a5AD+h8i2Rt64Qjiwngx9cEGoArpAVhflTB85IJuP5x3m27uSLQ==
-X-Gm-Message-State: AOJu0YzOzmHlGgvNvts+w7aP/e1CyJsFDx/79EXfZgnEk7kONu5eXvSc
-	LKWxolIAlBmPfVrmoP8Q7YFcg64Y75pzKdEIHh6SuLJAViPOrSD/cyDrMWUwIWc=
-X-Google-Smtp-Source: AGHT+IFwcEfe8qCY6v5xorKupZOP+DOCeKfMqDzht/uIvX7Fps/kmNwieXy5dgRLm35+kmGBuw2/7w==
-X-Received: by 2002:a05:6512:1142:b0:52c:def3:44b with SMTP id 2adb3069b0e04-5309b27d680mr7587479e87.31.1722428366532;
-        Wed, 31 Jul 2024 05:19:26 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52fd5c08cf9sm2201909e87.149.2024.07.31.05.19.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Jul 2024 05:19:26 -0700 (PDT)
-Date: Wed, 31 Jul 2024 15:19:24 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	kishon@kernel.org, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] phy: qcom: qmp: Add debug prints for register writes
-Message-ID: <sqaeseivhysqzzc2udkjv23l5tysjr6hxtlide3an7dngwtdoe@njmgfk3kcvt6>
-References: <20240730100351.51454-1-manivannan.sadhasivam@linaro.org>
- <ZqoY5kFLDEmkb495@matsya>
- <knjl4q5zyqz3wrqp5aawgpxk6aqggvteb72enpsgweulgrxmnu@ol42qtug4xvi>
+        d=1e100.net; s=20230601; t=1722429676; x=1723034476;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/Q2l7kPRbHfPSAmXr8/i+HQUpkMV0CfBoozBQvEj2VM=;
+        b=TrYxjXiEUiy87haG4hpVHfuxdh5MIpez2mHGKld+HUW872NkqJlXIEBe/Qv8H7HGGA
+         g/txP6sWPih+/VHeJHo9wpAs6kf09h3Im5DbiXl3G48fIcj1eY8GEOEK7St7P91YkfNi
+         k3yCIsEEIDDWIGNUUNAB5S2FEUm2VTq8JnkuRG8gr6VFOHR6is6xOXTOX11sxjS3KJSK
+         3503nlIC4G6xiH60CQE+uwQ/O8NWr2AnerTplQUpm7Bg59wiCLWGMBIVG5qhYnsKikx3
+         QbFEgPendAp66S1LEbJ+NTRSIj1nDud69gBiIFRjlpDE2DcNwuvXyX++DB7aNCy+9UfA
+         KD+w==
+X-Forwarded-Encrypted: i=1; AJvYcCWSa8MHW9ex/6X5a6vGHhWnHFvlNZ9mgU8X1vlayaqX7iVlt8IrjZEXnfOlw4v9YfJAEVcTShjnxpL6O2hrL+ddwFno6xyrtZvboI3uRB939+Z7v+/gjRjvD+L8Snu8izll0bNi2ja/lwBV0rNQPOGrRkL1/gN5rzqJb95nOzrlxBi5xQn9L3wHEI+9S/wBBjynI+eaptwqCDGH5Ffqbqp5kedT
+X-Gm-Message-State: AOJu0Yx5YVRw3G8dxI4ehw53c7X9De0BL3oCJ4fDwZKPykTWI5vRqe4k
+	YUfazOPHe5OYrHr06/JWVUgCph1+j6s+9xv2GLxcDyx+g/YdZGpoxGZiDnsM
+X-Google-Smtp-Source: AGHT+IH12mfwgxzN+nLyjdSXs3/FhfTaWeWx6KdoyfAElTnn/87OsFBoXHWcj137YDoCOE8gXgpMKg==
+X-Received: by 2002:a50:f68d:0:b0:5a2:8f7d:aff4 with SMTP id 4fb4d7f45d1cf-5b021f0dd2amr11840822a12.20.1722429676231;
+        Wed, 31 Jul 2024 05:41:16 -0700 (PDT)
+Received: from [147.251.42.107] (laomedon.fi.muni.cz. [147.251.42.107])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5b52ab8f09dsm1604442a12.26.2024.07.31.05.41.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 31 Jul 2024 05:41:15 -0700 (PDT)
+Message-ID: <c897b521-0520-429e-9e94-ba7da74a921f@gmail.com>
+Date: Wed, 31 Jul 2024 14:41:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <knjl4q5zyqz3wrqp5aawgpxk6aqggvteb72enpsgweulgrxmnu@ol42qtug4xvi>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/6] md: dm-crypt: Set cc->iv_size to 4 bytes
+To: Md Sadre Alam <quic_mdalam@quicinc.com>, axboe@kernel.dk, agk@redhat.com,
+ snitzer@kernel.org, mpatocka@redhat.com, adrian.hunter@intel.com,
+ quic_asutoshd@quicinc.com, ritesh.list@gmail.com, ulf.hansson@linaro.org,
+ andersson@kernel.org, konrad.dybcio@linaro.org, linux-block@vger.kernel.org,
+ linux-kernel@vger.kernel.org, dm-devel@lists.linux.dev,
+ linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ quic_viswanat@quicinc.com, quic_srichara@quicinc.com, quic_varada@quicinc.com
+References: <20240730115838.3507302-1-quic_mdalam@quicinc.com>
+ <20240730115838.3507302-3-quic_mdalam@quicinc.com>
+Content-Language: en-US
+From: Milan Broz <gmazyland@gmail.com>
+Autocrypt: addr=gmazyland@gmail.com; keydata=
+ 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
+In-Reply-To: <20240730115838.3507302-3-quic_mdalam@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jul 31, 2024 at 03:18:34PM GMT, Dmitry Baryshkov wrote:
-> On Wed, Jul 31, 2024 at 04:28:46PM GMT, Vinod Koul wrote:
-> > On 30-07-24, 15:33, Manivannan Sadhasivam wrote:
-> > > These register prints are useful to validate the init sequence against the
-> > > Qcom internal documentation and also to share with the Qcom hw engineers to
-> > > debug issues related to PHY.
-> > > 
-> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > ---
-> > >  drivers/phy/qualcomm/phy-qcom-qmp-common.h | 4 ++++
-> > >  1 file changed, 4 insertions(+)
-> > > 
-> > > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-common.h b/drivers/phy/qualcomm/phy-qcom-qmp-common.h
-> > > index 799384210509..e6a6bcfcac28 100644
-> > > --- a/drivers/phy/qualcomm/phy-qcom-qmp-common.h
-> > > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-common.h
-> > > @@ -9,6 +9,7 @@
-> > >  struct qmp_phy_init_tbl {
-> > >  	unsigned int offset;
-> > >  	unsigned int val;
-> > > +	char *name;
-> > >  	/*
-> > >  	 * mask of lanes for which this register is written
-> > >  	 * for cases when second lane needs different values
-> > > @@ -20,6 +21,7 @@ struct qmp_phy_init_tbl {
-> > >  	{				\
-> > >  		.offset = o,		\
-> > >  		.val = v,		\
-> > > +		.name = #o,		\
-> > >  		.lane_mask = 0xff,	\
-> > >  	}
-> > >  
-> > > @@ -27,6 +29,7 @@ struct qmp_phy_init_tbl {
-> > >  	{				\
-> > >  		.offset = o,		\
-> > >  		.val = v,		\
-> > > +		.name = #o,		\
-> > >  		.lane_mask = l,		\
-> > >  	}
-> > >  
-> > > @@ -45,6 +48,7 @@ static inline void qmp_configure_lane(void __iomem *base,
-> > >  		if (!(t->lane_mask & lane_mask))
-> > >  			continue;
-> > >  
-> > > +		pr_debug("QMP PHY: Writing: %s --> 0x%02x\n", t->name, t->val);
-> > 
-> > This lgtm, but fails to help when offset _might_ be incorrect, including
-> > the offset value as well (not just the name) would be better imo... 
+On 7/30/24 1:58 PM, Md Sadre Alam wrote:
+> Set cc->iv_size to 4 bytes instead of 8 bytes, since
+> this cc->iv_size is passing as data unit bytes to
+> blk_crypto_init_key(). Since CQHCI driver having
+> limitation for data unit bytes to 32-bit only.
+
+In dm-crypt, plain64 IV is defined as "little-endian 64bit IV"
+and was introduced to fix security problem when 32bit "plain" IV
+overflows and IV is reused.
+
+In that case you can move ciphertext sector between places with
+the same IV (but different offsets) and these will be still
+correctly decrypted.
+
+If I understand it correctly, this reintroduces the same problem here.
+If you have 32bit only, just use "plain" and do not support plain64 here.
+
+(In general, I do not understand why you are sending patches
+for dm-crypt code that is clearly not upstream.
+I hope this code will never be accepted.)
+
+Milan
+
 > 
-> Can we please use dev_vdbg instead? Having dev_ part makes sure that we
-> can not mismatch PHYs and the sequences. _vdbg is less important, but
-> I don't think we want this in the log messages unless absolutely
-> required.
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> ---
+>   drivers/md/dm-crypt.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Also, could you possibly apply this to all other QMP drivers?
+> diff --git a/drivers/md/dm-crypt.c b/drivers/md/dm-crypt.c
+> index 37add222b169..c0257d961968 100644
+> --- a/drivers/md/dm-crypt.c
+> +++ b/drivers/md/dm-crypt.c
+> @@ -2490,7 +2490,7 @@ static int crypt_select_inline_crypt_mode(struct dm_target *ti, char *cipher,
+>   	}
+>   
+>   	if (ivmode == NULL || (strcmp(ivmode, "plain64") == 0)) {
+> -		cc->iv_size = 8;
+> +		cc->iv_size = 4;
+>   	} else {
+>   		ti->error = "Invalid IV mode for inline_crypt";
+>   		return -EINVAL;
 
-Please ignore the last phrase, it is used by all QMP drivers.
-
--- 
-With best wishes
-Dmitry
 
