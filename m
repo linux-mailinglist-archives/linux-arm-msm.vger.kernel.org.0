@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-27544-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DEB19431F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 16:25:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F34AB9431F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 16:25:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D1853B2445A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 14:25:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE343282508
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 14:25:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23D1A1B5810;
-	Wed, 31 Jul 2024 14:25:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA4D61B5825;
+	Wed, 31 Jul 2024 14:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sxzNc61Q"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I3RGX8ly"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E672A1AE85E;
-	Wed, 31 Jul 2024 14:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A119E1B5820;
+	Wed, 31 Jul 2024 14:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722435940; cv=none; b=uSqUtpvbf/uCQwZU8eRuK2Gj+0TDImCHA+nSYbteE0sD6iR9afympTLL1J2j3xF3011OKJJySLW032coAqGrjg6GIc2wZqsOexRfqIyTXp/yFa8eFq+vutbic6LcXlnDWYNjFb20SnX/YmtpFe6kVuzPzZUI+jwuIJ43k/lIw9E=
+	t=1722435941; cv=none; b=MmVXSP+vxvMkEVN/7O3t4WAukY38a0CS5D85HOdJzXEhmlCvl/BMB+Roya3TnTOW1HsDhnwu18j5YOXCQJlKKcK7AUflHUcwrz1IYOet8CEPUxk1inHZgmpCLdxhg3dWzw+rwn6r0DYOrGe9//aYYKFyVB5AJuVC+gcclbRNiyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722435940; c=relaxed/simple;
-	bh=pS9J1rziTWqbAUaa9TbwxEFT2fa70ib1zWNhi/CApQ8=;
+	s=arc-20240116; t=1722435941; c=relaxed/simple;
+	bh=iLMn/G9k1cRR/ZvGnS+j1lMkO0nrAGYKNimaeBu6t1U=;
 	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=E1N2yP6R9ghIMe46WKlj4PgGeq8NmHyn30YiMh6MSNSZoExHfjqJkeNNVZU5Ru/jPfML6wHielpKcq9siXLnM3cmKKYUMqDlfLEJcMWccGTAnMRZHE3/H1AlqhrXGLwm49y8vLzNeXwX+Zr0MJNEvxviK/N5BQjzaVZW7dRNglM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sxzNc61Q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428E2C116B1;
-	Wed, 31 Jul 2024 14:25:39 +0000 (UTC)
+	 Message-Id:Subject; b=E/oUoOIICQUoASgdU+3sow7odnKVzZ5vpTWkpLi6rwC/BDnJn6PAFD5rvuQssXzCsK4GOAU9gaPkckjOG2V3uXTiPmS0vNceP/Wrof3VF0YO/YXAu4diNIHbVJAr3uIBaHRi4wBEdp9D5UsIFZhVTPAybsroc7gSkNwm4Gjn3Mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I3RGX8ly; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE780C116B1;
+	Wed, 31 Jul 2024 14:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722435939;
-	bh=pS9J1rziTWqbAUaa9TbwxEFT2fa70ib1zWNhi/CApQ8=;
+	s=k20201202; t=1722435941;
+	bh=iLMn/G9k1cRR/ZvGnS+j1lMkO0nrAGYKNimaeBu6t1U=;
 	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=sxzNc61Q99tHxUzl8OhvzEwMH40OK/M1tLYLjiuFqnTU+33fHhdd0gZGocxsEMq6P
-	 S1LlEYic17BKiUEEK4MV4W9ARif2GTBIeTUqbwEtqSOpBVnMUo9UwDS6y3TsPFDq0v
-	 kp+IWiTAfoWi3bv8zH6gMej5axB0cuvUEqP9f72edK8HRzuPw4odrLq5nYhyJEo1bu
-	 8l+2u7kX288ls1XM9qgvkE1HNXtt9sKO/WJueHcWEN8IXL5QuIV5rw7XQ9LABcQyB9
-	 cW3SdRX86+s9KVjOZA0olnC5ys9Av2klMnqUwAzlKHcpiZBdG1GjJNNQ+Da6sKPv8X
-	 BLuSzxwMZJXRg==
-Date: Wed, 31 Jul 2024 08:25:38 -0600
+	b=I3RGX8lym/EOh1geccrd6PVCQnKFPmYWLZ5q2JkquVTv1jsee5AVkkxm+SYAq3JZJ
+	 uNM4OeEHyNLO5kdR9hr022TmTXz8abOHYq15/wTIuCakLijIONShCtscBCVnOHjb/L
+	 BOsjYnFI92tGIU5fReojLwCBoAXSC7zhqKHCT3TZKhYUlOfA8f/ceRfrO2HCea58FZ
+	 S+uK2oeFYoqka34nkhRz85VtkPneaKbXXxNid+IUyharxvK3aOB1bSC6XIC4hIXvAa
+	 qUzt52WuCRljc9VHz0bxj7E+0sVI28G8O2rOnaDRH8yV7/NsZlmT4rXIGZYZT2r9os
+	 cbApfycMneubg==
+Date: Wed, 31 Jul 2024 08:25:39 -0600
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,79 +51,44 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Nikita Travkin <nikita@trvn.ru>
-Cc: Conor Dooley <conor+dt@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- =?utf-8?q?Adam_S=C5=82abo=C5=84?= <asaillen@protonmail.com>, 
- Stephan Gerhold <stephan@gerhold.net>, linux-arm-msm@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Anton Bambura <jenneron@postmarketos.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-In-Reply-To: <20240729-msm89xx-wingtech-init-v3-0-32c35476f098@trvn.ru>
-References: <20240729-msm89xx-wingtech-init-v3-0-32c35476f098@trvn.ru>
-Message-Id: <172243537200.718642.16313954167444233211.robh@kernel.org>
-Subject: Re: [PATCH v3 0/3] Introduce msm8916/39 based Lenovo devices
+To: Richard Acayan <mailingradian@gmail.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
+ David Airlie <airlied@gmail.com>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, devicetree@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Maxime Ripard <mripard@kernel.org>, Daniel Vetter <daniel@ffwll.ch>, 
+ Rob Clark <robdclark@gmail.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20240730013844.41951-6-mailingradian@gmail.com>
+References: <20240730013844.41951-6-mailingradian@gmail.com>
+Message-Id: <172243537297.718676.16575598294797737179.robh@kernel.org>
+Subject: Re: [PATCH 0/4] drm/msm/adreno: Add A615 GPU for SDM670 and Pixel
+ 3a
 
 
-On Mon, 29 Jul 2024 21:38:46 +0500, Nikita Travkin wrote:
-> Continuing the work of upstreaming the various msm8916 devices from the
-> backlog, this series introduces few 8916 and 8939 Lenovo/Wingtech
-> devices (where Wingtech is the ODM for these designs).
+On Mon, 29 Jul 2024 21:38:45 -0400, Richard Acayan wrote:
+> This adds support for the speed-binned A615 GPU on SDM670.
 > 
-> Included devices are:
+> Richard Acayan (4):
+>   dt-bindings: display/msm/gmu: Add SDM670 compatible
+>   drm/msm/adreno: add a615 support
+>   arm64: dts: qcom: sdm670: add gpu
+>   arm64: dts: qcom: sdm670-google-common: enable gpu
 > 
-> - Lenovo A6000 (Wingtech WT86518)
-> - Lenovo A6010 (Wingtech WT86528)
-> - Lenovo Vibe K5 (Wingtech WT82918)
-> - Lenovo Vibe K5 (HD) (Wingtech WT82918hd)
+>  .../devicetree/bindings/display/msm/gmu.yaml  |   1 +
+>  .../boot/dts/qcom/sdm670-google-sargo.dts     |  13 ++
+>  arch/arm64/boot/dts/qcom/sdm670.dtsi          | 168 ++++++++++++++++++
+>  drivers/gpu/drm/msm/adreno/a6xx_catalog.c     |  27 +++
+>  4 files changed, 209 insertions(+)
 > 
-> Note that "HD" variant of K5 is based on msm8929 which is a lower bin
-> of msm8939 SoC. A simple dtsi is added for this soc along with the new
-> devices.
-> 
-> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-> ---
-> Changes in v3:
-> - Minor styling cleanup (Konrad)
-> - Link to v2: https://lore.kernel.org/r/20240722-msm89xx-wingtech-init-v2-0-0c981bbc5238@trvn.ru
-> 
-> Changes in v2:
-> - Reorder pinctrl properties (Konrad)
-> - Convert msm8929.dtsi to be more in line with other soc dtsi (Krzysztof, Dmitry)
-> - Link to v1: https://lore.kernel.org/r/20240712-msm89xx-wingtech-init-v1-0-64f4aa1870bd@trvn.ru
-> 
-> ---
-> Adam Słaboń (1):
->       arm64: dts: qcom: msm8939-wingtech-wt82918: Add Lenovo Vibe K5 devices
-> 
-> Anton Bambura (1):
->       arm64: dts: qcom: msm8916-wingtech-wt865x8: Add Lenovo A6000/A6010
-> 
-> Nikita Travkin (1):
->       dt-bindings: arm: qcom: Add msm8916/39 based Lenovo devices
-> 
->  Documentation/devicetree/bindings/arm/qcom.yaml    |   9 +
->  arch/arm64/boot/dts/qcom/Makefile                  |   5 +
->  .../boot/dts/qcom/msm8916-wingtech-wt86518.dts     |  87 +++++++
->  .../boot/dts/qcom/msm8916-wingtech-wt86528.dts     | 158 +++++++++++++
->  .../boot/dts/qcom/msm8916-wingtech-wt865x8.dtsi    | 215 ++++++++++++++++++
->  arch/arm64/boot/dts/qcom/msm8929-pm8916.dtsi       | 162 +++++++++++++
->  .../boot/dts/qcom/msm8929-wingtech-wt82918hd.dts   |  17 ++
->  arch/arm64/boot/dts/qcom/msm8929.dtsi              |   7 +
->  .../boot/dts/qcom/msm8939-wingtech-wt82918.dts     |  17 ++
->  .../boot/dts/qcom/msm8939-wingtech-wt82918.dtsi    | 252 +++++++++++++++++++++
->  .../boot/dts/qcom/msm8939-wingtech-wt82918hd.dts   |  17 ++
->  11 files changed, 946 insertions(+)
-> ---
-> base-commit: 931a3b3bccc96e7708c82b30b2b5fa82dfd04890
-> change-id: 20240710-msm89xx-wingtech-init-e07095e2b2ec
-> 
-> Best regards,
 > --
-> Nikita Travkin <nikita@trvn.ru>
+> 2.45.2
+> 
 > 
 > 
 
@@ -142,82 +107,30 @@ make sure dt-schema is up to date:
   pip3 install dtschema --upgrade
 
 
-New warnings running 'make CHECK_DTBS=y qcom/msm8916-wingtech-wt86518.dtb qcom/msm8916-wingtech-wt86528.dtb qcom/msm8929-wingtech-wt82918hd.dtb qcom/msm8939-wingtech-wt82918.dtb qcom/msm8939-wingtech-wt82918hd.dtb' for 20240729-msm89xx-wingtech-init-v3-0-32c35476f098@trvn.ru:
+New warnings running 'make CHECK_DTBS=y qcom/sdm670-google-sargo.dtb' for 20240730013844.41951-6-mailingradian@gmail.com:
 
-arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918hd.dtb: iommu@1f08000: clocks: [[31, 129], [31, 140], [31, 175]] is too long
-	from schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml#
-arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918hd.dtb: iommu@1f08000: clock-names: ['iface', 'bus', 'tbu'] is too long
-	from schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml#
-arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918.dtb: iommu@1f08000: clocks: [[31, 129], [31, 140], [31, 175]] is too long
-	from schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml#
-arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918.dtb: iommu@1f08000: clock-names: ['iface', 'bus', 'tbu'] is too long
-	from schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml#
-arch/arm64/boot/dts/qcom/msm8929-wingtech-wt82918hd.dtb: iommu@1f08000: clocks: [[31, 129], [31, 140], [31, 175]] is too long
-	from schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml#
-arch/arm64/boot/dts/qcom/msm8929-wingtech-wt82918hd.dtb: iommu@1f08000: clock-names: ['iface', 'bus', 'tbu'] is too long
-	from schema $id: http://devicetree.org/schemas/iommu/qcom,iommu.yaml#
-arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918hd.dtb: pmic@0: mpps@a000:mpp4-state: 'oneOf' conditional failed, one must be fixed:
-	'function', 'output-low', 'pins', 'power-source', 'qcom,dtest' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
-	[1] is not of type 'integer'
-	[1] is not one of [1, 2, 3, 4]
-	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
-arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918.dtb: pmic@0: mpps@a000:mpp4-state: 'oneOf' conditional failed, one must be fixed:
-	'function', 'output-low', 'pins', 'power-source', 'qcom,dtest' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
-	[1] is not of type 'integer'
-	[1] is not one of [1, 2, 3, 4]
-	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
-arch/arm64/boot/dts/qcom/msm8929-wingtech-wt82918hd.dtb: pmic@0: mpps@a000:mpp4-state: 'oneOf' conditional failed, one must be fixed:
-	'function', 'output-low', 'pins', 'power-source', 'qcom,dtest' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
-	[1] is not of type 'integer'
-	[1] is not one of [1, 2, 3, 4]
-	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
-arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918hd.dtb: mpps@a000: mpp4-state: 'oneOf' conditional failed, one must be fixed:
-	'function', 'output-low', 'pins', 'power-source', 'qcom,dtest' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
-	[1] is not of type 'integer'
-	[1] is not one of [1, 2, 3, 4]
-	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,pmic-mpp.yaml#
-arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918.dtb: mpps@a000: mpp4-state: 'oneOf' conditional failed, one must be fixed:
-	'function', 'output-low', 'pins', 'power-source', 'qcom,dtest' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
-	[1] is not of type 'integer'
-	[1] is not one of [1, 2, 3, 4]
-	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,pmic-mpp.yaml#
-arch/arm64/boot/dts/qcom/msm8929-wingtech-wt82918hd.dtb: mpps@a000: mpp4-state: 'oneOf' conditional failed, one must be fixed:
-	'function', 'output-low', 'pins', 'power-source', 'qcom,dtest' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
-	[1] is not of type 'integer'
-	[1] is not one of [1, 2, 3, 4]
-	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,pmic-mpp.yaml#
-arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86528.dtb: pmic@0: mpps@a000:mpp4-state: 'oneOf' conditional failed, one must be fixed:
-	'function', 'output-low', 'pins', 'power-source', 'qcom,dtest' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
-	[1] is not of type 'integer'
-	[1] is not one of [1, 2, 3, 4]
-	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
-arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86518.dtb: pmic@0: mpps@a000:mpp4-state: 'oneOf' conditional failed, one must be fixed:
-	'function', 'output-low', 'pins', 'power-source', 'qcom,dtest' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
-	[1] is not of type 'integer'
-	[1] is not one of [1, 2, 3, 4]
-	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
-arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86528.dtb: mpps@a000: mpp4-state: 'oneOf' conditional failed, one must be fixed:
-	'function', 'output-low', 'pins', 'power-source', 'qcom,dtest' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
-	[1] is not of type 'integer'
-	[1] is not one of [1, 2, 3, 4]
-	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,pmic-mpp.yaml#
-arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86518.dtb: mpps@a000: mpp4-state: 'oneOf' conditional failed, one must be fixed:
-	'function', 'output-low', 'pins', 'power-source', 'qcom,dtest' do not match any of the regexes: '-pins$', 'pinctrl-[0-9]+'
-	[1] is not of type 'integer'
-	[1] is not one of [1, 2, 3, 4]
-	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,pmic-mpp.yaml#
-arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86518.dtb: /soc@0/power-manager@b088000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86528.dtb: /soc@0/power-manager@b088000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918hd.dtb: /usb-id: failed to match any schema with compatible: ['linux,extcon-usb-gpio']
-arch/arm64/boot/dts/qcom/msm8929-wingtech-wt82918hd.dtb: /usb-id: failed to match any schema with compatible: ['linux,extcon-usb-gpio']
-arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86528.dtb: /soc@0/power-manager@b098000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/msm8939-wingtech-wt82918.dtb: /usb-id: failed to match any schema with compatible: ['linux,extcon-usb-gpio']
-arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86528.dtb: /soc@0/power-manager@b0a8000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86528.dtb: /soc@0/power-manager@b0b8000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86518.dtb: /soc@0/power-manager@b098000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86518.dtb: /soc@0/power-manager@b0a8000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86518.dtb: /soc@0/power-manager@b0b8000: failed to match any schema with compatible: ['qcom,msm8916-acc']
-arch/arm64/boot/dts/qcom/msm8916-wingtech-wt86528.dtb: /usb-id: failed to match any schema with compatible: ['linux,extcon-usb-gpio']
+arch/arm64/boot/dts/qcom/sdm670-google-sargo.dtb: iommu@5040000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sdm670-smmu-v2', 'qcom,adreno-smmu', 'qcom,smmu-v2'] is too long
+	['qcom,sdm670-smmu-v2', 'qcom,adreno-smmu', 'qcom,smmu-v2'] is too short
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,msm8996-smmu-v2', 'qcom,msm8998-smmu-v2', 'qcom,sdm630-smmu-v2', 'qcom,sm6375-smmu-v2']
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,qcm2290-smmu-500', 'qcom,qdu1000-smmu-500', 'qcom,sa8775p-smmu-500', 'qcom,sc7180-smmu-500', 'qcom,sc7280-smmu-500', 'qcom,sc8180x-smmu-500', 'qcom,sc8280xp-smmu-500', 'qcom,sdm670-smmu-500', 'qcom,sdm845-smmu-500', 'qcom,sdx55-smmu-500', 'qcom,sdx65-smmu-500', 'qcom,sdx75-smmu-500', 'qcom,sm6115-smmu-500', 'qcom,sm6125-smmu-500', 'qcom,sm6350-smmu-500', 'qcom,sm6375-smmu-500', 'qcom,sm8150-smmu-500', 'qcom,sm8250-smmu-500', 'qcom,sm8350-smmu-500', 'qcom,sm8450-smmu-500', 'qcom,sm8550-smmu-500', 'qcom,sm8650-smmu-500', 'qcom,x1e80100-smmu-500']
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,qcm2290-smmu-500', 'qcom,sc7180-smmu-500', 'qcom,sc7280-smmu-500', 'qcom,sc8180x-smmu-500', 'qcom,sc8280xp-smmu-500', 'qcom,sdm845-smmu-500', 'qcom,sm6115-smmu-500', 'qcom,sm6350-smmu-500', 'qcom,sm6375-smmu-500', 'qcom,sm8150-smmu-500', 'qcom,sm8250-smmu-500', 'qcom,sm8350-smmu-500', 'qcom,sm8450-smmu-500']
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,qcm2290-smmu-500', 'qcom,sa8775p-smmu-500', 'qcom,sc7280-smmu-500', 'qcom,sc8180x-smmu-500', 'qcom,sc8280xp-smmu-500', 'qcom,sm6115-smmu-500', 'qcom,sm6125-smmu-500', 'qcom,sm8150-smmu-500', 'qcom,sm8250-smmu-500', 'qcom,sm8350-smmu-500', 'qcom,sm8450-smmu-500', 'qcom,sm8550-smmu-500', 'qcom,sm8650-smmu-500', 'qcom,x1e80100-smmu-500']
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,sc7280-smmu-500', 'qcom,sm8150-smmu-500', 'qcom,sm8250-smmu-500']
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,msm8996-smmu-v2', 'qcom,sc7180-smmu-v2', 'qcom,sdm630-smmu-v2', 'qcom,sdm845-smmu-v2', 'qcom,sm6350-smmu-v2', 'qcom,sm7150-smmu-v2']
+	'qcom,sdm845-smmu-v2' was expected
+	'marvell,ap806-smmu-500' was expected
+	'qcom,sdm670-smmu-v2' is not one of ['nvidia,tegra186-smmu', 'nvidia,tegra194-smmu', 'nvidia,tegra234-smmu']
+	'arm,mmu-500' was expected
+	'qcom,sdm670-smmu-v2' is not one of ['arm,mmu-400', 'arm,mmu-401']
+	'qcom,sdm670-smmu-v2' is not one of ['arm,smmu-v1', 'arm,smmu-v2', 'arm,mmu-400', 'arm,mmu-401', 'arm,mmu-500', 'cavium,smmu-v2']
+	'qcom,smmu-v2' was expected
+	'qcom,smmu-500' was expected
+	'nvidia,smmu-500' was expected
+	'arm,smmu-v2' was expected
+	'arm,smmu-v1' was expected
+	from schema $id: http://devicetree.org/schemas/iommu/arm,smmu.yaml#
+arch/arm64/boot/dts/qcom/sdm670-google-sargo.dtb: /soc@0/iommu@5040000: failed to match any schema with compatible: ['qcom,sdm670-smmu-v2', 'qcom,adreno-smmu', 'qcom,smmu-v2']
 
 
 
