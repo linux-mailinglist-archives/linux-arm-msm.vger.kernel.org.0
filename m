@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-27539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8272F9430CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 15:28:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A18079430DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 15:30:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B43E41C21CC5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 13:28:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5C0852840E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 13:30:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F9FA1B14E4;
-	Wed, 31 Jul 2024 13:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF8F81B1505;
+	Wed, 31 Jul 2024 13:30:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ErUut1kc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VMrxPYkX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07831A8BEB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2024 13:28:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120571B1513
+	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2024 13:30:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722432527; cv=none; b=ta1ZlYkTzsJlVTidL/LeJ0aowE9QM4dpbvcKB6fXzadrsw7CML0+HKab+w5Dq5JC3PFTrsFEw/CGwrUKEGNtbYyuGxH3t1s+OAqoGNY8Oyl6ijvD8kiZ4asAovlDU47UA1VgSgDys9jgyGJTLcbZLn/KEgA9FYBEGxMljL5r5o0=
+	t=1722432604; cv=none; b=KX/CDOX5OTRlyUCvgNy8KWibn0rGhCAMUqfl8QGOfPgPkxubcH4lc9oN+lmKBJN62NTnCga+aXS0VHS0HLbc17FifWTZGthLzWkSypCEsUr2nnokOH1ecBGVDI289DagqaiEtXmGwcw8/H2Ra0UaCAwXy/HianobPu4PJuXas8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722432527; c=relaxed/simple;
-	bh=AN6dcobfsnNdYLOXFrgy8ln44GUPCni1YdOBd+ilrH0=;
+	s=arc-20240116; t=1722432604; c=relaxed/simple;
+	bh=TryEV3yA8sFKaSQ7T/iEgFWFIg2FZ89jJhsb0Zgqbi0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VvIZc+S9GWusTM95m6gXtxc05jv3w+FeOFmj/42nUSvPvgvKF85wx6HyPs8QFAMJxM8MBFOKlm1C8k1mMx5pRz9uP5tcmVJ8aTESWpC+YptHMl5b/ymMhy7xSLgDc/5EpuCfXMPGfWGCBb1ngt21GTM4bVTwmdiBxmavkHk7Jm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ErUut1kc; arc=none smtp.client-ip=209.85.167.46
+	 Content-Type:Content-Disposition:In-Reply-To; b=vDh3CifQv1Zy5YSaeahEWNi4eNrl0lfZZLQfJFtoYYDALybZXclzN+uqtvea33/W4HWXAHU6qFmug8MpkqHvxP6sY0oD8tYdbT5f1p27jOD7VBVhAGqIzBTe9D8TzOya2p0h3gMoMpiwgZxv3/TZsBz3H0z+pWtfMBwOzKpkTNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VMrxPYkX; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-52fc14d6689so6068204e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2024 06:28:44 -0700 (PDT)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-52f024f468bso8529474e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2024 06:30:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722432523; x=1723037323; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1722432601; x=1723037401; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UjNb/W9PzqFhyA7ecL9dMbHE01A2sX3SN01rofguaBg=;
-        b=ErUut1kc3ExWCE4ZGijB1wIaTrsUQ+/Oma+Wfw/CnYab3Kymr1uTP16AthNUgo4z7a
-         m3YW3jVdJ4pKP4MJ3H9mgluhPkp3Z5Vdj2G3LrRtfafsMRMlz0K7HyHtiIVxWYqCX5Um
-         lwJXTByeNDsocFnK1XUm1Coe5f22WvS3nrTWj8fBYEXWXPMj93Q3QQ9LqVDtgJiFNBy6
-         anf6/XkK4aVyW4zuhsiI6m+v9L2+i4JCpi5aGOzdjDm0Bocc4/83sKgYM+yLX0uI46Bj
-         pMBBOGoJ6gOyaguMg95ra+XirI8+9D7BvIIByEPVcIV74DLMVksWd6BmQRzv/yuwYA07
-         wTZA==
+        bh=9LAEsWWHOaUu7e2ckya9k4oMqGrC/8Bo8kmjtXWGK3c=;
+        b=VMrxPYkXxs9XESjVBGQTDo7FmU9D0B2r1wANyB2IgilvpkYxHRZtUxLOrH1ZqJpWgP
+         mbpdW2X2OBo0VQdguq+2vdia2nXtPecspt2v/PlUknHAS7vCkChD9tPteDdw+Yei9PJk
+         /2/MZqv3CjluyR1FJ1hQDZgfULzKuA+CxN86WJ5eJEDNrOGaxlWZkgI94HwzXjdpb+S3
+         hCHFrI91NN4wsILGxELijBboCFAhIxuY9RXwRfV7kJWwryCxTpJS/PgVmIu/4gUyfDhV
+         qgc5/7MAbjkD9vJmVNTJAbDtHbM+vSymCXzy0sxCo+mc6YPC62VlC7Zk4lNDBpyHhVzD
+         OmcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722432523; x=1723037323;
+        d=1e100.net; s=20230601; t=1722432601; x=1723037401;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UjNb/W9PzqFhyA7ecL9dMbHE01A2sX3SN01rofguaBg=;
-        b=wv/q5kjgUuDB8ju3hW5QdmDN2ooYuTLxkAi5R7Jvu4iZFqL7N/wj7cuL5HGhGhBXHv
-         02BFj5a/0kLk+sdQ5XNl8OVn6kjyGfFDyO6OOMoGbSbz7LvnVJBhLFZyWNw+qsXrt2wB
-         ROyicJViXL+7Qdf+vYcC2y3z2D777L8IyfWgtwhBFwzzEt9cpMNh3XHEb1ocCEDJPEjT
-         Hvi8FSG+pZn+k8/lpqeZLUqoTm5AsoJeheW+j6qRNLtHMl0QrZp2mmZ7BOdhEpEpuD/g
-         dB++8ED8qNofbDqq0WBPMATFLUTrWcKjJL6aRV6to9gvBQXomd43ayDep2KMdYDcQObT
-         mkSw==
-X-Forwarded-Encrypted: i=1; AJvYcCW+cU5heHpRouxEYQqlg3lObi9X15hifI7cLKXQfBsjTnnIk+MWjZsZhtQ6ZkJlK5p/1zEMTc6uDS3UfwIv@vger.kernel.org
-X-Gm-Message-State: AOJu0YyKZ0RnxKQLomZjrgPdyz+ViGex20V3+JMl10KRRuIne0dJILin
-	RiUAMbB2npPA8AaLlNWYTSbhXQ5Qu9t43HNVPqajPpHxXyTPE7yA8VzvOhTdcqk=
-X-Google-Smtp-Source: AGHT+IE6atB6z6OV9CQhmRK/cwk7H5bC/E7Z6lhESECLwGOuzOQFg2ndG+qf9TrXDb9ItYztuLPMiQ==
-X-Received: by 2002:ac2:5a4b:0:b0:52c:dfe6:6352 with SMTP id 2adb3069b0e04-5309b2bcc1dmr9914290e87.48.1722432522905;
-        Wed, 31 Jul 2024 06:28:42 -0700 (PDT)
+        bh=9LAEsWWHOaUu7e2ckya9k4oMqGrC/8Bo8kmjtXWGK3c=;
+        b=KsZmCW+wyh4Ov9aeVw7Ie9jODKs8G2C9f5yPccOBbJYxlORj6m5/6X3986bsRaT2S/
+         ZdCzO0DkCznGHZ5VCFARR336MP9BcdM57CxWf8SnIvtfs9lFLh6jQhxVXFeeO5wG0R+R
+         MM+Fea4JABjxC8rslvkJ0UT9XfvI/6iRq87BuZzcEunTtTwC82K2Iski2ABELXiJQd9L
+         ADA5b8AY48JlYmxSGqIZCjvEN7pR7WpsjlEGBDRQha2eD9w13oxWsCnsaKpAuHLIJNBe
+         c4A122ouj/4GLhP7PsmDoaWYZDVN/KwKhnL7pHLoA1ry813rUtQx/cMOr26+WWTZ2Hn9
+         gHFA==
+X-Forwarded-Encrypted: i=1; AJvYcCWxB8qvX6Y5vgOZCWgiVLeDavaXy7IfEfg3bn5XgXZIbLCsBo4rA/ar+XMdQwO/xqukQ2tF3IpfWUNcBfziiZimuY4VQnXIxSyHWC5cEA==
+X-Gm-Message-State: AOJu0YyTgeAe30tQakoi/z3a87xNFWq8kYpj8nABUebV8+vcy5WqKiRJ
+	inyK0z69mV5OBFCgubxMuZ9Fbu+I/beFeUVPmpv6/57MdNFg9h+/WOZ8BFiPku0=
+X-Google-Smtp-Source: AGHT+IFhu3uk0FBLVkWyOnfiEusFw+fqZbcmDHLa23kO7nJ3nPVkV2aj02bD2oZHCvbGNofksWO2yQ==
+X-Received: by 2002:a05:6512:b10:b0:52c:e556:b7e4 with SMTP id 2adb3069b0e04-5309b2707f5mr10695014e87.15.1722432601169;
+        Wed, 31 Jul 2024 06:30:01 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52fd5c363aesm2225844e87.291.2024.07.31.06.28.42
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52fd5bd0a6esm2278743e87.65.2024.07.31.06.30.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Jul 2024 06:28:42 -0700 (PDT)
-Date: Wed, 31 Jul 2024 16:28:40 +0300
+        Wed, 31 Jul 2024 06:30:00 -0700 (PDT)
+Date: Wed, 31 Jul 2024 16:29:59 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
@@ -79,11 +79,11 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
 	Jagadeesh Kona <quic_jkona@quicinc.com>, stable@vger.kernel.org, 
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH V3 4/8] clk: qcom: clk-alpha-pll: Update set_rate for
- Zonda PLL
-Message-ID: <6ntwin4iu7ue4n6kvz6hiqv7ixuc32bc6goxm4bg4czkdlsyyk@25qfz47opij2>
+Subject: Re: [PATCH V3 5/8] clk: qcom: clk-alpha-pll: Add support for Regera
+ PLL ops
+Message-ID: <5tzuitj6zeqpua45dzabpaaorx6q3x57eiipgrku6lttqhpkaw@zevn4bk6pi3u>
 References: <20240731062916.2680823-1-quic_skakitap@quicinc.com>
- <20240731062916.2680823-5-quic_skakitap@quicinc.com>
+ <20240731062916.2680823-6-quic_skakitap@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,23 +92,24 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240731062916.2680823-5-quic_skakitap@quicinc.com>
+In-Reply-To: <20240731062916.2680823-6-quic_skakitap@quicinc.com>
 
-On Wed, Jul 31, 2024 at 11:59:12AM GMT, Satya Priya Kakitapalli wrote:
-> The Zonda PLL has a 16 bit signed alpha and in the cases where the alpha
-> value is greater than 0.5, the L value needs to be adjusted accordingly.
-> Thus update the logic to handle the signed alpha val.
+On Wed, Jul 31, 2024 at 11:59:13AM GMT, Satya Priya Kakitapalli wrote:
+> From: Taniya Das <quic_tdas@quicinc.com>
 > 
-> Fixes: f21b6bfecc27 ("clk: qcom: clk-alpha-pll: add support for zonda pll")
-> Cc: stable@vger.kernel.org
+> Regera PLL ops are required to control the Regera PLL from clock
+> controller drivers, hence add the Regera PLL ops and configure
+> function.
+> 
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 > ---
->  drivers/clk/qcom/clk-alpha-pll.c | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
+>  drivers/clk/qcom/clk-alpha-pll.c | 32 +++++++++++++++++++++++++++++++-
+>  drivers/clk/qcom/clk-alpha-pll.h |  5 +++++
+>  2 files changed, 36 insertions(+), 1 deletion(-)
 > 
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
 
 -- 
 With best wishes
