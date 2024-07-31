@@ -1,81 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-27536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 397CB942FC2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 15:11:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A09F3942FCD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 15:13:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B8E65B24D32
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 13:11:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D22411C21B0E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 13:13:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F2A91B142B;
-	Wed, 31 Jul 2024 13:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E5FF1B143B;
+	Wed, 31 Jul 2024 13:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PaX3JNIz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Yt8sB5js"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C131B1414
-	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2024 13:10:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825721B1437
+	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2024 13:12:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722431447; cv=none; b=aTyNg+u6WLod2uqTmE2DLikMHnsZYOnBX2K+WCz1tfr3o8VXK6//janapF835P2CBe0hnWsv5s0GGLdG5q5hNO0QjC+m9ojgR566iYDHx5tW+QvNk9OUksR6Anf+Jwp/tvNX7VDb57a/fMnMP3ZXE+DpYX7tBEVSaiNvgq3+Inc=
+	t=1722431566; cv=none; b=oVYStGp+DPzSE3GlrQGPn9cn8OtXR8+rD6TKl4wm0vL4Pr1nR6sA9lh2NNMnXjnKky8N8UH5CqGIWIA7AjQMQjpM7Ky41VtId8GNhtOjzmZAp8DfivOkxGIkMz8Imv8CDbisQzlM8P26udf5YiogsNHnbUjGWwVkYzIocx2M0qE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722431447; c=relaxed/simple;
-	bh=dX9kVn4xUeFUcfWVpo/tCIEzYvdt9I8uq2wPXw5+h4M=;
+	s=arc-20240116; t=1722431566; c=relaxed/simple;
+	bh=qFPHgeIMW1gfQ9EjXLEKz2PkwY5EiqpBjeWefyfIctU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yc96iSFrJ3Q52bPVXZuSOzjUVUmBkE+Tdm5Bdfo7pTWuHf0iERe3g/7b2MWLZTq/6J7cNiTtYi1lX6/FI59Bn7B7PIigyFo3a2ekGLB9CGORTYhpNX97ZC3nCEqKfrKIjV0x9tVNYoctP4tRFgvnKyj7DRcRrKnHmfQjPeDp4rI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PaX3JNIz; arc=none smtp.client-ip=209.85.208.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=sCQElaWSHoDV5IPBYZ/iBQeg/9epuP75hnkFI4lkKMS7JAZaq+p8SWOfg6H0t+8tuh9089KZAyyHTvqX8aignaSjqfsY2gUIK993CYor08j+seVvkBOcNp6f2K2iQHeUdtYj1FZ1b7/gxja2qNU0QK2Oc0uWlb2nVsDP0A4TXs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Yt8sB5js; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2f01e9f53e3so85155611fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2024 06:10:45 -0700 (PDT)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-52efbc57456so5866878e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2024 06:12:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722431443; x=1723036243; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1722431563; x=1723036363; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BtHopVaA5DnFXJsXndmzbhLYPQA3VMI9Krw2dYXiGpg=;
-        b=PaX3JNIzFYbsCPDfbtmZfIW7qx9/DubdYdvDdxTxqwxogNPETLetmlgRF9pzbfd6p9
-         mITEV62n3OGwGaO0xCyRQBjYTT7EaKaHUK/j+G9WIcKgdHEs07L9BSnVhV1YKOH8X+MX
-         FlmCOHZ3AwVBNGoSBqB5+DhpwDnYYbr+vFPtmNUnT25mL8qUwtRAzfvLfrE6VqzU9aiH
-         g5+gP5Piv1V7BcafR7OEbjP8gruO3n4KJjgpUeDLCd5fxgfleiJ+aQnSIeNQDSYGfYDi
-         l9h52r20BwNGKN51j+cOASuathL35kiLaF+eP6oHtP0+8IRhMqbZbpaUCaQTVX1LUdBb
-         RzWw==
+        bh=Z3wPO5io9Fiq+8Cz2nYy2B8gHrLGSiZUTaKFQ+l1bhA=;
+        b=Yt8sB5jsCdMQ2zGpQUEa9ZffF+2/jwj1xKezLZ6RpaKRZOIUtlX1PFuArG9tuhn2il
+         4SAzu5lW0sq7JiaoHLR2+RJOtuFdlYeQRLU7IAX9tGtnGcBw2BVzTx41m7mAk2QQlMLE
+         mRhzWfnTZgs31vrR85WtMUM2N1r9rNYkLxLYcNkRnJdSx0MUOZvdf5SOSZaHU786SmQS
+         68lWYB9G5thMLzBgK+k/QR2J0wniKX86umPt+GvpHmzRbKbKvB7AESCe/2jrPn957YA/
+         PNJAe/5INb1fLtJ8Fle5dJOEoSFr8SA95AQjalijWlT43RpX+XfXpqyBZcm7g3ACtEYF
+         /Rfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722431443; x=1723036243;
+        d=1e100.net; s=20230601; t=1722431563; x=1723036363;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BtHopVaA5DnFXJsXndmzbhLYPQA3VMI9Krw2dYXiGpg=;
-        b=EEZ/4/wazLeYVhp3RIA9g4BolanQY4duYbhm9v8jxkVQ7ZAAS/wpv/RULApAUDha+R
-         nFZ269/aMZxGqEJ+a1Czg3LgcaraxLdzxmScqUtnFGfzxfRRel7gAnvqqmNv8msvhH18
-         qSpEjZP+bCwoQoLcNkFxr0TARZg2Tj18mau61Pi0EiNFk4T6Jq/GaOsATDX8tB8ZTKE/
-         EOJEvUI50VZMGkttzBmwTvWaRb6AZyuJQhgw0A/eqr4sJcwP+VD1FILdv899BqUI3MUU
-         vdcCBwMdDn0Nm7i4xjAVitsbQ2eBh1ZPdghbHpnw7vA3owLQBkDyz/D6Q4nPqMXrtm1o
-         cxkQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXcmk8OFqej2d+7s+2uPFqnvejG6HD+dGgXvPzGmD7FynYbjk8IiZcLV9bcieeI4kzXtYu0QN8Pkr9MYC58D14eNuexuxYm1M3pir/f0A==
-X-Gm-Message-State: AOJu0Yy+TuSknLZjCejdTGC8dABFw/BUoskFFgdqTccNoMpjVuUO+uyi
-	7Uq93R9/Kuo86zWnABvvVP655VyQx9MWrFpPYxyQSY5d5STQnlHMg/zUe3LTvTg=
-X-Google-Smtp-Source: AGHT+IFKydn1H0rLRwTRWvuLChZ8ue/chEQn7wpdnSNhAgn3Eg7AyBP8EzlGjX88wgzpDyvecJjSEw==
-X-Received: by 2002:a2e:a30e:0:b0:2ef:18ae:5cbd with SMTP id 38308e7fff4ca-2f12ee289ddmr117984021fa.27.1722431443345;
-        Wed, 31 Jul 2024 06:10:43 -0700 (PDT)
+        bh=Z3wPO5io9Fiq+8Cz2nYy2B8gHrLGSiZUTaKFQ+l1bhA=;
+        b=G3PEG0xOVUkMEt0VqxTmp8O3AeSu07Fa9Kt+VmB0+2vEHnL9LiI86gIiiJGOaLdV/K
+         tYLTSoK6FhiTxn4RNc812DeunUcI5Zw1KLkS0AwK9+sNlKKZo7D2+NdtHgxjWTMFsw+X
+         lHWG+sHOsqGgINPB7WXfHSDKv6G3tz/rBlema14sixIHEX2+ADwkO5kk/Kq7gJ3uiAQQ
+         juYYCtaVdorXso3Mw5ZqFeArTTirhQqwy1EGZ6LWY+TspWPAxk/idmuFdVfEmCXnitj9
+         Y+j7ZFxW3H4WT//lnXq0NSdRrbpfawEjVixTphWrA0n+RdsH0wyqimR73FIia2DhIiwP
+         bG9g==
+X-Forwarded-Encrypted: i=1; AJvYcCVDqoFLIvQ0BHxfjKkA17KPvKdWqAfMSZtE/Drw5AguWvTnPRij/XlBSgIarEVdv6Q5xmkbvpGJ+fGZMjDwEwCxR4OTNs80xARR4d9rEw==
+X-Gm-Message-State: AOJu0YzYzPxQWFP6rAVUSUbzKC0o+5LdzU29gvE5ZdPjkhmyTgDre70X
+	5bLcv7NIA3bQnD8d0ISBs72W0wQMT8DgEOwOQMYX/gPEMFXEgAHnxhbM/NEyCkg=
+X-Google-Smtp-Source: AGHT+IF8UOb4KQI/0UVDYgflYuJp0DmJs4aWutYRmDvRhXlkI1Lu/RNu43VC91/zjHYdf/h1W/xzPQ==
+X-Received: by 2002:ac2:5968:0:b0:52f:d090:6dae with SMTP id 2adb3069b0e04-5309b2ce519mr9332247e87.52.1722431562460;
+        Wed, 31 Jul 2024 06:12:42 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f03d075447sm19696621fa.121.2024.07.31.06.10.42
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52fd5c0839bsm2223322e87.168.2024.07.31.06.12.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Jul 2024 06:10:42 -0700 (PDT)
-Date: Wed, 31 Jul 2024 16:10:41 +0300
+        Wed, 31 Jul 2024 06:12:41 -0700 (PDT)
+Date: Wed, 31 Jul 2024 16:12:39 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] usb: misc: eud: switch to fallback compatible for device
- matching
-Message-ID: <blagk4fkptszkmuk7qkeiptpi6uzigw4t4t6djlb3uxsu66eoz@vrt5u6ag2arg>
-References: <20240731054438.9073-1-krzysztof.kozlowski@linaro.org>
+To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@codeaurora.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>, 
+	Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
+	Jagadeesh Kona <quic_jkona@quicinc.com>, stable@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH V3 2/8] clk: qcom: clk-alpha-pll: Fix the trion pll
+ postdiv set rate API
+Message-ID: <uc5imfadtdq4krsht6t4fbzdyglbzhlivdbw5rxgvwjft3qthl@uibz2cbw3x3o>
+References: <20240731062916.2680823-1-quic_skakitap@quicinc.com>
+ <20240731062916.2680823-3-quic_skakitap@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,21 +92,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240731054438.9073-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20240731062916.2680823-3-quic_skakitap@quicinc.com>
 
-On Wed, Jul 31, 2024 at 07:44:38AM GMT, Krzysztof Kozlowski wrote:
-> The bindings require two compatibles to be used: qcom,sc7280-eud
-> followed by fallback qcom,eud.  The convention is to use fallback
-> compatible in OF device ID tables, unless some device-specific quirks
-> are needed.
+On Wed, Jul 31, 2024 at 11:59:10AM GMT, Satya Priya Kakitapalli wrote:
+> Correct the pll postdiv shift used in clk_trion_pll_postdiv_set_rate
+> API. The shift value is not same for different types of plls and
+> should be taken from the pll's .post_div_shift member.
 > 
-> This will also simplify matching any new devices - they will use
-> existing OF device ID entry, instead of adding a new one.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Fixes: 548a909597d5 ("clk: qcom: clk-alpha-pll: Add support for Trion PLLs")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 > ---
->  drivers/usb/misc/qcom_eud.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/clk/qcom/clk-alpha-pll.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
