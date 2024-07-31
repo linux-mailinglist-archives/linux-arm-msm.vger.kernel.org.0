@@ -1,139 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-27580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DEAB943685
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 21:36:17 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 393439436C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 21:59:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 47DB4281DE4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 19:36:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C8152B21142
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 19:59:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F39C0149C51;
-	Wed, 31 Jul 2024 19:36:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B417414831F;
+	Wed, 31 Jul 2024 19:59:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WV+3aTGy"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ViktmJ9O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645B31401B;
-	Wed, 31 Jul 2024 19:36:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224E0446DC;
+	Wed, 31 Jul 2024 19:58:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722454568; cv=none; b=dLXcqHe8ElEDKqIQnbJVbwqSR2Sm0rc3XJqFGeWmYp57UrjaIbObYkazTSuMj8EaTyLsXaXxOY7Kd/OjglTCIvpF5d6C1RN8QJqy4nQCpQVXl/opdYhO1wikSPkxdSQyjucyRmbNIenh0vSzZJHkEF8xCjYUArWOXUWC+gCDtrA=
+	t=1722455941; cv=none; b=q00Z1GPG3eMIM2Jlst4ryHBneAyl/+kY08OBLdIrHP2Bo7/j2Ju/BaCHT6CcamV/j2iNS9OIWR/t1hdu1hlf9Oma1k8otPAhU8aVHh9xLWQ7kUGe7c2YPoeFbtCIeuobvFEp5pAAazzTVhMMGMu3tXmW9ZD241J2qJOjuJl241c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722454568; c=relaxed/simple;
-	bh=8ojbeoanxn0CIvSxRftV+pYw2YCTgebLo46YNrzP7RY=;
+	s=arc-20240116; t=1722455941; c=relaxed/simple;
+	bh=KyQI+sweQMt5785Uw0yRrolEVdjCSVNq4NEAr1ITaFE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=hWmQEkvOJjuMiP/DsDOmWvP5xYkvUSip8scU334GFp92oMtkNdaGJ69bQicfvoQAI/XUBVqcGYQIttx3OuJNIME+H1TmIl1D+ctBdW5A+iSaSMrQyPSXE4fb/oC2ac578mT569xq8W+wqTRQfF23GJRzQh7+o81DyWbSc/cq+CA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WV+3aTGy; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=Jlrk5Ohu8gd2po0ymK379QivJXqCNefSMIZREuEAPE0Kb/S2d4iSj+Jp7ILwQ7wDcSCTRjNkSZrWUGbhSEzIDMGgpKvs66Tsj5xmIMBoQvhW60/7dmDtgiI6T43HHrsyBAFReL20PcTrg0F5yjNY52KBYh0ZmfHFqEfA2VMzyr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ViktmJ9O; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46VDiXQ0030426;
-	Wed, 31 Jul 2024 19:36:00 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46VAZahg028742;
+	Wed, 31 Jul 2024 19:58:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	NT7UQKnSzFK33S9HAkOJuDPnUO8RYziYTLbY6ku6Rxs=; b=WV+3aTGyS1swsakX
-	0YtC7LtRnTVS7AYTInOSYX4+h5FIwa1AJXW8U5OT6aKN6F0F9OBAGTeWE360Nu/I
-	TY2Z7Zc04+Sc7FDREs3ahAW9TPl25vBJ3KkHpof/UjTwQB+SklKIJQUDAJ81Trj7
-	UVYp9EUhXbOy504FpaX4/yyGGQck2uSP5I6duUh1Kpj80aQWm8AnxJcbA8vLf1Lk
-	eYrWhopzyZGQW8CPKHmksZ/ViNZi3vrqSp4Y33s4lPyIuFLi9vCr8mpS83AsECqF
-	3LIi7plzbk9GeU+jdiZpO//IAjKL6qlQ+yRwjdiug6+LARdvLokrlyp3UuVKLOlx
-	ujSvnA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40pw445qgx-1
+	2NDo4XKsdJgp0/vprHSd5f7d52rSBjEnKwcp9vYBjX0=; b=ViktmJ9OXaAQLmtz
+	rW8UqfRFcm9UoiAOCwaKg04bC1Z50aWfPC3AgZdv+GxCFoAwEsenbmdumCZHuk2I
+	oYxWRtPloaSDwyEhpfKk2j0qu3RhyxpO3Z1M63lVGkhn9J0pn5p53wk+ssQR8sU+
+	xCXROrP04rYsmNIDsZCVCrxDuH+htkVTmdkv/0m5/VNn1uAiFKfhd7pe74zt/Tu5
+	2B8cHVjt/hZBCuNtPabk7hOn+ck19wQGNlF1I23oR7MtSvr0dxy+GgfbhKEbDOUo
+	2PfxPqI5Ai4BeqTJLk4sIO7X+LX5jrhDQ5Db0i2Hd4d1pRnmmZ5TYuPBa/MS7pyc
+	heClKQ==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40q232vprd-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jul 2024 19:36:00 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46VJZxs5030852
+	Wed, 31 Jul 2024 19:58:55 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46VJwsxD002431
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jul 2024 19:35:59 GMT
-Received: from [10.134.71.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 31 Jul 2024 19:58:54 GMT
+Received: from [10.110.68.245] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 31 Jul
- 2024 12:35:58 -0700
-Message-ID: <b2cceeb8-fe81-4212-9b07-b70cad8d3b9b@quicinc.com>
-Date: Wed, 31 Jul 2024 12:35:58 -0700
+ 2024 12:58:53 -0700
+Message-ID: <2a17eaca-54af-d1fa-304d-c7e0afd85b33@quicinc.com>
+Date: Wed, 31 Jul 2024 12:58:53 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 02/12] drm/msm/dpu: relax YUV requirements
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20240627-dpu-virtual-wide-v5-0-5efb90cbb8be@linaro.org>
- <20240627-dpu-virtual-wide-v5-2-5efb90cbb8be@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 0/8] Enable EUD on Qualcomm sm8450 SoC
 Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240627-dpu-virtual-wide-v5-2-5efb90cbb8be@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+To: Caleb Connolly <caleb.connolly@linaro.org>,
+        Elson Roy Serrao
+	<quic_eserrao@quicinc.com>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <gregkh@linuxfoundation.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>
+References: <20240730222439.3469-1-quic_eserrao@quicinc.com>
+ <023d4ea8-635d-435f-bae2-87284f70123b@linaro.org>
+From: Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <023d4ea8-635d-435f-bae2-87284f70123b@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Wn5JybqfBLeFCkNXswGN0uEFo1zBsTfu
-X-Proofpoint-ORIG-GUID: Wn5JybqfBLeFCkNXswGN0uEFo1zBsTfu
+X-Proofpoint-GUID: 2rhD_10awpfiG3nfYMiTmoKOY28lUfIJ
+X-Proofpoint-ORIG-GUID: 2rhD_10awpfiG3nfYMiTmoKOY28lUfIJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-31_10,2024-07-31_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- priorityscore=1501 adultscore=0 mlxlogscore=999 clxscore=1015
- impostorscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407310138
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
+ malwarescore=0 bulkscore=0 priorityscore=1501 spamscore=0 adultscore=0
+ mlxscore=0 mlxlogscore=432 clxscore=1011 suspectscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2407310140
 
-
-
-On 6/26/2024 2:45 PM, Dmitry Baryshkov wrote:
-> YUV formats require only CSC to be enabled. Even decimated formats
-> should not require scaler. Relax the requirement and don't check for the
-> scaler block while checking if YUV format can be enabled.
+On 7/31/2024 4:13 AM, Caleb Connolly wrote:
+>>     
+>> 2.) Proper routing of USB role switch notifications: EUD hub is physically
+>>      present in between the USB connector and the USB controller. So the
+>>      usb role switch notifications originating from the connector should
+>>      route through EUD. EUD also relies on role switch notifications to
+>>      communicate with the USB, regarding EUD attach/detach events.
+>>
+>> This series aims at implementing the above aspects to enable EUD on
+>> Qualcomm sm8450 SoC.
 > 
-> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
+> Are there any plans to make this feature available for folks outside of Qualcomm / an NDA?
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 1c3a2657450c..148bd79bdcef 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -743,10 +743,9 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
->   	min_src_size = MSM_FORMAT_IS_YUV(fmt) ? 2 : 1;
->   
->   	if (MSM_FORMAT_IS_YUV(fmt) &&
-> -	    (!pipe->sspp->cap->sblk->scaler_blk.len ||
-> -	     !pipe->sspp->cap->sblk->csc_blk.len)) {
-> +	    !pipe->sspp->cap->sblk->csc_blk.len) {
->   		DPU_DEBUG_PLANE(pdpu,
-> -				"plane doesn't have scaler/csc for yuv\n");
-> +				"plane doesn't have csc for yuv\n");
->   		return -EINVAL;
->   	}
+> There is an openOCD fork on CodeLinaro but it still requires some proprietary library which is only available to folks with a quicinc email as I understand it.
 > 
 
-Change seems fine, but one question, is there a chipset in the catalog 
-with a Vig SSPP which has only csc but not scaler? Even qcm2290 has 
-neither scaler nor csc
+Which codelinaro link are you referring here? 
 
-So was this just a code-walkthrough fix or was there any issue hit due 
-to this?
 
-> 
+-- 
+---Trilok Soni
+
 
