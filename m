@@ -1,63 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-27586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A22AD94390A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 00:38:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F814943934
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 01:10:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5EB07285104
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 22:38:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B9511F228ED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 23:10:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB2CA16D4CD;
-	Wed, 31 Jul 2024 22:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEB8516DC07;
+	Wed, 31 Jul 2024 23:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="i5v/+86I"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H7tgGZK3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E36135280;
-	Wed, 31 Jul 2024 22:38:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14B816D4F7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2024 23:10:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722465508; cv=none; b=KIn0FtDJHtfQwId1VW7K6crGMFmBzYZTEU9lMzfxkIx6uAtHKYJZu3UjmoMjOil3NJD91FnobfYkMg8X5hfiUklUKl+SJeQAjn5dFTi/uMd4fO9vmwwTY6WxDqApQgi74e+vsnI/5ffOV4laSP57KzXDge+pSDfSI4ttgByXFU0=
+	t=1722467422; cv=none; b=B4pNrwYEXwZ6a0DuibDXxubAeFgNcXdlVX/wsbSauwUAYBXIpoVXhokuZkzJws04lyZ/bb300BB/XYG1Rm5zoZ+gD+CAQ0ug2KUEFJyYSlLeTqTNh0SndktlQ/PvyARd6bE4Z5pR2xW+iMbgm56Oj6+/unugWKaeim5/qugtaAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722465508; c=relaxed/simple;
-	bh=PldbjTm3myb40ZJfjU8jMnVIBncYA81UDAQXR+o+Mws=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Ozj1KLO3/9Xk75RUArYeIxvegFoOY4PpKsdvTweF968eVfDoqzPhdAPciYNKXmZ0nhVcpdhqsGpdMvXA2MlGNVwpZQ+L0kLk19xVLSKZ7KVWLjeKxiutetTg085u6/wbJ9Vl/2YKFYZud34Qikdknd55gwa0WXREL5gpAgln/QI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=i5v/+86I; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46VIkhKl005319;
-	Wed, 31 Jul 2024 22:38:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	unPAnDAwhbhRPpFBmuuyf/vcTyTk5Q1IxUM/QINemDg=; b=i5v/+86IVL+2vGXN
-	5cs1zLX85hPvm4Fwaadt+kVkUziJcNwE3/dov+gtdC5cp8d6010z9xjF1ln68VKY
-	3HHOgT7g9RqXSkKuMi0iNMnELzId2xzj/OZBHRvBiER28IMElOsWPhzyHPwfUcbC
-	L8VkqkT+s6dYijSQLBI/3zoAfwDhAaQ1Hi6oldQbIyPEBH7YAlf4okLbtemQbNQc
-	npcYr4BMDES+Lja9FCp2D1kr8yQiHUWln/g8G4vCI2lD/EdvOIMIAjx2nTy8hJRZ
-	uAR5l9SYpJ7sTpAboV3ItRq30jzSggSzQjgZAIDEGZJS4srU13CewLqN1bPlS/Ps
-	wDcIKQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40qjpja4ac-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jul 2024 22:38:22 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 46VMcLMe006103
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 31 Jul 2024 22:38:21 GMT
-Received: from [10.110.31.235] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 31 Jul
- 2024 15:38:20 -0700
-Message-ID: <240305c2-54d3-4b75-a938-7b40abedddc9@quicinc.com>
-Date: Wed, 31 Jul 2024 15:38:20 -0700
+	s=arc-20240116; t=1722467422; c=relaxed/simple;
+	bh=CAk9ysRCcF3vskHHnHSmnixeypTkrfG/o972KRWzdMc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ms6epEIlEpeZH4PmduIVC5t7lzv8Kg6HNL1TFKIga9uQND0wIsSjIComFkjssL+rxBSg+QpNx/5/06An6uS5NylgL7hea6Gucb+37FhTXTwXZ1PnB85MK1XZ/HMu/eR703dD4yreVLDBJz5+2mENwHg9JB8Hw0rArWMQVVqsTYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H7tgGZK3; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2ef20c3821cso12287451fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 Jul 2024 16:10:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1722467418; x=1723072218; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CypGwDRORaDBdaeBYRtf5G7bF1/i+g0iKz6yREaWD1c=;
+        b=H7tgGZK3QoEi5mHHly4ZS8BVPWpLaYN7yuqmQRkl04hI2CLLu4pqnpxql+6AihoHUZ
+         QF6PGATGHQC7A98LqMcYARHKLaNlOEcm16W9EW0PpKnNCY0vxXZ6+gwkQxTKAGOefRdL
+         znk0tcp2grzc/uYCsyt7GiEomS1TNbUddXc6uTm8QdKZu3gEZb/7juHVHU0jmZpSNALk
+         ebTQ2NDGfOJaMY4WgqbM2vrrIg/+LwvSzONethklQi4c/4heWi95dApqqnWhumHsQUNf
+         qAuCZC5ZWxQT5i7O5i4bSc5tSt6OJaP4y1byDEMRQrcYGQQjjFjETJUGYvWehHLTOk+0
+         xjKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722467418; x=1723072218;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CypGwDRORaDBdaeBYRtf5G7bF1/i+g0iKz6yREaWD1c=;
+        b=jL587/hzAV8K7VhYJV52pnBvtnaPCoK1Abl5PoKl+yS0T6amqFFjtbeFYKeYmOM7UV
+         bj2kpLZtmxCIdlcH8LXLShvQXDihJ+HkKRxMg83ys5qbJzZU6LqNRZbyGM420mANbXvG
+         fVD32R4JJj6vt3K06tQkQwqVKhVvB2Cg6Z/87p3yXp9eRBXXyE8Z7M/ToQaIJIBIUu5Q
+         pybiNwppLK1r3IRnKw1TYCnwcT5Ci/FbsBAxOCrC0l1Rdki30pRk2a6wUPmh0CV52j6S
+         2624ZEt1QhYYKcPcKlVie8fC6YgEiMU65lxOJRGyg/PYB6FIUQvDV+tIQK7rLkOKlXOL
+         orPA==
+X-Gm-Message-State: AOJu0YwAUg+9/bvjvGoipMem3OWFqyhKvZJ98IV/hnSB4SqU2LwuODcy
+	x6AkjNRgu2HB67ikXAMEdpC6iZSVaz4wdRvtwVrAni95gSQ38hM0IxJQ32FY7Cc=
+X-Google-Smtp-Source: AGHT+IFtzNOWKxUx8nFCdmmu5o7DSqCQwuqvKIC9LKKbz4i7GsH5EMsq1GELa1yZk6QUxNV2IHOjww==
+X-Received: by 2002:a05:6512:39cb:b0:52f:c22f:32a4 with SMTP id 2adb3069b0e04-530b61f7818mr140798e87.6.1722467417776;
+        Wed, 31 Jul 2024 16:10:17 -0700 (PDT)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-52fd5bd12cdsm2388761e87.92.2024.07.31.16.10.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 31 Jul 2024 16:10:17 -0700 (PDT)
+Message-ID: <0232aa10-5f40-433b-804a-2fff30e8b143@linaro.org>
+Date: Thu, 1 Aug 2024 02:10:10 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,67 +75,70 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/8] usb: misc: eud: Add High-Speed Phy control for EUD
- operations
-To: Krzysztof Kozlowski <krzk@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <gregkh@linuxfoundation.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>
-References: <20240730222439.3469-1-quic_eserrao@quicinc.com>
- <20240730222439.3469-7-quic_eserrao@quicinc.com>
- <a2460e27-697c-495f-9106-bdb9109d674b@kernel.org>
+Subject: Re: [PATCH 01/10] dt-bindings: clock: qcom,gcc-sm8450: Add SM8475 GCC
+ bindings
 Content-Language: en-US
-From: Elson Serrao <quic_eserrao@quicinc.com>
-In-Reply-To: <a2460e27-697c-495f-9106-bdb9109d674b@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To: Danila Tikhonov <danila@jiaxyga.com>, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, p.zabel@pengutronix.de,
+ vkoul@kernel.org, quic_jkona@quicinc.com, dmitry.baryshkov@linaro.org,
+ konradybcio@kernel.org, quic_tdas@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux@mainlining.org
+References: <20240731175919.20333-1-danila@jiaxyga.com>
+ <20240731175919.20333-2-danila@jiaxyga.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20240731175919.20333-2-danila@jiaxyga.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CTDJsBCJNzVEjVpjnRinAeCeXtERbfxr
-X-Proofpoint-ORIG-GUID: CTDJsBCJNzVEjVpjnRinAeCeXtERbfxr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-31_10,2024-07-31_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0 mlxlogscore=999
- spamscore=0 malwarescore=0 bulkscore=0 phishscore=0 priorityscore=1501
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407310159
 
+Hello Danila.
 
-
-On 7/30/2024 10:39 PM, Krzysztof Kozlowski wrote:
-> On 31/07/2024 00:24, Elson Roy Serrao wrote:
->> The Embedded USB Debugger(EUD) is a HS-USB on-chip hub to support the
->> debug and trace capabilities on Qualcomm devices. It is physically
->> present in between the usb connector and the usb controller. Being a
->> HS USB hub, it relies on HS Phy for its functionality. Add HS phy
->> support in the eud driver and control the phy during eud enable/disable
->> operations.
->>
+On 7/31/24 20:59, Danila Tikhonov wrote:
+> Add SM8475 GCC bindings, which are simply a symlink to the SM8450
+> bindings. Update the documentation with the new compatible.
 > 
-> ...
->>  static ssize_t enable_show(struct device *dev,
->> @@ -186,6 +216,11 @@ static int eud_probe(struct platform_device *pdev)
->>  
->>  	chip->dev = &pdev->dev;
->>  
->> +	chip->usb2_phy = devm_phy_get(chip->dev, "usb2-phy");
->> +	if (IS_ERR(chip->usb2_phy))
->> +		return dev_err_probe(chip->dev, PTR_ERR(chip->usb2_phy),
->> +				     "no usb2 phy configured\n");
-> 
-> This nicely breaks all users.
-> 
-> NAK
-> 
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
 
-As per my comment in [patch 1/8], phy would be a required property and hence I will first modify
-and enable EUD on the existing user (sc7280 SoC) and then extend this to other users.
 
-Thanks
-Elson
+> diff --git a/include/dt-bindings/clock/qcom,gcc-sm8450.h b/include/dt-bindings/clock/qcom,gcc-sm8450.h
+> index 9679410843a0..5f1f9ab71a22 100644
+> --- a/include/dt-bindings/clock/qcom,gcc-sm8450.h
+> +++ b/include/dt-bindings/clock/qcom,gcc-sm8450.h
+> @@ -194,6 +194,8 @@
+>   #define GCC_VIDEO_AXI0_CLK					182
+>   #define GCC_VIDEO_AXI1_CLK					183
+>   #define GCC_VIDEO_XO_CLK					184
+> +#define GCC_GPLL2						185
+> +#define GCC_GPLL3						186
+
+To avoid any probable confusion related to the list of clocks on SM8450
+platform let's add a new header file.
+
+>   /* GCC resets */
+>   #define GCC_CAMERA_BCR						0
+> diff --git a/include/dt-bindings/clock/qcom,sm8475-gcc.h b/include/dt-bindings/clock/qcom,sm8475-gcc.h
+> new file mode 120000
+> index 000000000000..daafdd881892
+> --- /dev/null
+> +++ b/include/dt-bindings/clock/qcom,sm8475-gcc.h
+> @@ -0,0 +1 @@
+> +qcom,gcc-sm8450.h
+> \ No newline at end of file
+
+Instead of adding a symbolic link to the already existing header file please
+create a header file, which includes the old one:
+
+#include "qcom,gcc-sm8450.h"
+
+#define GCC_GPLL2						185
+#define GCC_GPLL3						186
+
+In drivers/clk/qcom/gcc-sm8450.c file along with new functional changes
+include the new header file instead of the old one.
+
+--
+Best wishes,
+Vladimir
 
