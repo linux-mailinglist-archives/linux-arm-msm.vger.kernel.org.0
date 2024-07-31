@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-27472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20B739425DA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 07:39:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9585D9425DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 07:41:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ADE17B20DAC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 05:39:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 50FD32870D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 Jul 2024 05:41:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3C7649643;
-	Wed, 31 Jul 2024 05:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 089E649649;
+	Wed, 31 Jul 2024 05:41:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RD58f+n+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VTTFC+Vx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF3C2747B;
-	Wed, 31 Jul 2024 05:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2F22905;
+	Wed, 31 Jul 2024 05:41:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722404386; cv=none; b=ZpDtIG42F/2d9chvOND3GM7zTeDx1MLSiRMrFrrpkIntn6Dlr2O5UsH4f0smCtQeDD2w0lADbgViJnrdn61rBUR59QNfehW26N+UTH+hxhM9YXLGS4vh9AHa3dtQDOKuQynsF9Qyvk5ivy9v7xQ7I/02fQVLy8f6XMe/s6ecm84=
+	t=1722404462; cv=none; b=gbIatojVIwsJf8XmG2Uh3S5F7seRubN3UXq+u/uUMcPwoKrRA/TdDYMRUsuE5dzvnFfgA+22uMUv48aNqlwcsMycFyK6+SNDGF646t8bt9Jp6l1n59A5H1Ifo9GFbuKL0CerIJ0Phvy0tWnnw/xTQ6MFXwCR8mMAEyKgFfjoA4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722404386; c=relaxed/simple;
-	bh=IIGjwgC4hvKDffPjlio/HhuDMKmEPz4k+x7kKfG2ObQ=;
+	s=arc-20240116; t=1722404462; c=relaxed/simple;
+	bh=fKgL4zb1iqlbHuVVHRC49clDJtM3aTkOg/gvHqVg19c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=URwCxUSjjNlN+kQoWWMvn8Vv0DlblO/HfC9kj26hPLl2CVPd7eFNdTr0ToFJMBXOnWjtDT8Y5RCudIWWpAoWsptXDoGdog1J2Z/heaCy8+jlE9ZdWtTDImLxiJ724aEoRsWTVOxyMxYRe8644elantS/Rx4jWcwpWR+ZXRey3MM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RD58f+n+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DCEC116B1;
-	Wed, 31 Jul 2024 05:39:41 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=gK5NM53J7X0nQ7RxBOb7wRVlryiPMKazETtpszgiIzuazCmKJ6Cq3Nn+3LZ30aGBHv4WhfTV0fGr4cyBHS5ofD0Ad7RRvrbsDOu7nw2H/XhK8Mwv7127jJdRtPXYWzWDYu5i4RZQVDYjwEp8PM7gsvDwDm32U+UD8AoqYp+ORV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VTTFC+Vx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D61C116B1;
+	Wed, 31 Jul 2024 05:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722404386;
-	bh=IIGjwgC4hvKDffPjlio/HhuDMKmEPz4k+x7kKfG2ObQ=;
+	s=k20201202; t=1722404462;
+	bh=fKgL4zb1iqlbHuVVHRC49clDJtM3aTkOg/gvHqVg19c=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RD58f+n+/aSTkkICHlVo1KpebPDFnfEpo6FeVyubqYwvRH7xbopuKn464MhYipzPZ
-	 dtIKLTS5B8ZS6+9roVWxUFTCWr6QiLSmskektD3jsWgisw4n+xxBwY96fbmXJQJYth
-	 pww8471jC/Y//yTyu1WGf3eSk/QYoBMkTDM+c09P+mg5SlSoTzfDm38ftnoSpt56+X
-	 x5G6bQJUIhnJluu3iKluIXYxN5TrGL7yWQsEVTNQcxqTyJdicu802nzwQIbwMzeO0y
-	 mv/c4WLCf27YQLNNZ7cbJ0P09JCvsigcioSENTNR0MzrEVW9Nqfhx9d1QH6XJszE3o
-	 /H5tieAdIDygw==
-Message-ID: <a2460e27-697c-495f-9106-bdb9109d674b@kernel.org>
-Date: Wed, 31 Jul 2024 07:39:39 +0200
+	b=VTTFC+VxRa6kN12GQu6P+2O+jbzejsJVUC81bbbXCKmOkZLCMwCFeHEvJIDHX0RKJ
+	 QcILrG1ibZqs91fcfHlhePnkMM3/EFnonIsBY3gC5NIqYKzNnbXi+hxXC0aQ4BE2LR
+	 sjBJ3VL4Dp27i1AUXcSpxoG1Qb9oo5B9dmNdvx34J237k7K4GQKhPb7Luiq4bhulSN
+	 QEjhiYrJNaNF+5SqaLskS3sgrVkiDKf8mav+aN3HJkTQGznivXHKrAEHvxJsZRVOD6
+	 vaTGuMsVC5jlVYhPCSqZPxQ9DzSOUasmEzzJSOGfc89iw8+Y/w52HmQhEFpLg2Qifj
+	 TFk9j3BeXkX/w==
+Message-ID: <45ecf94c-ccf4-420e-a2f7-8674b643e469@kernel.org>
+Date: Wed, 31 Jul 2024 07:40:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,15 +50,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/8] usb: misc: eud: Add High-Speed Phy control for EUD
- operations
+Subject: Re: [PATCH 8/8] usb: misc: eud: Add compatible for sm8450
 To: Elson Roy Serrao <quic_eserrao@quicinc.com>, andersson@kernel.org,
  konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
  conor+dt@kernel.org, gregkh@linuxfoundation.org
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
 References: <20240730222439.3469-1-quic_eserrao@quicinc.com>
- <20240730222439.3469-7-quic_eserrao@quicinc.com>
+ <20240730222439.3469-9-quic_eserrao@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,33 +103,31 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240730222439.3469-7-quic_eserrao@quicinc.com>
+In-Reply-To: <20240730222439.3469-9-quic_eserrao@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 31/07/2024 00:24, Elson Roy Serrao wrote:
-> The Embedded USB Debugger(EUD) is a HS-USB on-chip hub to support the
-> debug and trace capabilities on Qualcomm devices. It is physically
-> present in between the usb connector and the usb controller. Being a
-> HS USB hub, it relies on HS Phy for its functionality. Add HS phy
-> support in the eud driver and control the phy during eud enable/disable
-> operations.
+> Add compatible string to enable EUD on sm8450 SoC.
 > 
-
-...
->  static ssize_t enable_show(struct device *dev,
-> @@ -186,6 +216,11 @@ static int eud_probe(struct platform_device *pdev)
+> Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
+> ---
+>  drivers/usb/misc/qcom_eud.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
+> index 9a49c934e8cf..465d57c05c3c 100644
+> --- a/drivers/usb/misc/qcom_eud.c
+> +++ b/drivers/usb/misc/qcom_eud.c
+> @@ -315,6 +315,7 @@ static void eud_remove(struct platform_device *pdev)
 >  
->  	chip->dev = &pdev->dev;
->  
-> +	chip->usb2_phy = devm_phy_get(chip->dev, "usb2-phy");
-> +	if (IS_ERR(chip->usb2_phy))
-> +		return dev_err_probe(chip->dev, PTR_ERR(chip->usb2_phy),
-> +				     "no usb2 phy configured\n");
+>  static const struct of_device_id eud_dt_match[] = {
+>  	{ .compatible = "qcom,sc7280-eud" },
+> +	{ .compatible = "qcom,sm8450-eud" },
 
-This nicely breaks all users.
+No, let's don't.
 
-NAK
+I'll fix the existing file.
 
 Best regards,
 Krzysztof
