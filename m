@@ -1,224 +1,319 @@
-Return-Path: <linux-arm-msm+bounces-27726-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6C5B944AB1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 14:00:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CC2B944B34
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 14:25:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 33F60B20FF6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 12:00:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B7113285857
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 12:25:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04C27198A29;
-	Thu,  1 Aug 2024 12:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A8C618950D;
+	Thu,  1 Aug 2024 12:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="er7Qgl+v"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VufHuDqH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9D5196DA1
-	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Aug 2024 12:00:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16671CA81;
+	Thu,  1 Aug 2024 12:25:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722513608; cv=none; b=ScQKsXqelgx9oCSOCni7kvgM45hayWtP2CRpkXLTIpqC5fhtwYpVb/3T0J1TJgXX1aeoYdkMUEUWswpOvOuxc1sJAJzXr5JfZdRs875QGFDseyIwtzvVvNLA5z8yML2u/8IdtKdHw6L25d9qCQ5LyRXszSWFKga/aiad9qCT52Q=
+	t=1722515121; cv=none; b=G/Jmp5ZFOiv+eP5QbS6FReleg3/n3SqIOKEgqpBwtKAwdD1zUauLyDH5sWTXw1gvK+LHyEs3MRyxmaZ9i6paj1R7mlDB7m2hWA3uWo0ZAHCIeWUckzqZJ0igXkLmcra3r47eezvxWp11EG54tgEsVVfrlrHe1UH8Yeo1OMh+aRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722513608; c=relaxed/simple;
-	bh=3ch82ZGw9itWwM3foqXc9vkSYoQPWEdSIpMsxQEbjX8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=vD48RzCBbniXfN/mPh7ViKEK8osT7W9x1Viv/LWlR5xMYOgLHMmNMWu5xWxKQI4uGtCzY/AW2syNPyNNdTjoP1YpRG7Q69DFIDAhqZMWNJFYrHGZI7Kgql8OdaF5TKoHkk9YRHvvWv5rMhPNV9/5SugM0aUCcAjBs8/H8+syN0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=er7Qgl+v; arc=none smtp.client-ip=209.85.221.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-4f51af903a7so1196014e0c.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Aug 2024 05:00:05 -0700 (PDT)
+	s=arc-20240116; t=1722515121; c=relaxed/simple;
+	bh=phqoO4fF9e5NG9XuFEWKyVq5ybJWJZ11PHdBImjcays=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k26PHJLpiuyRYOLCqZLaWhm59kxFddc2iM377rLtafm0cbSD7m77J9Qf3ARS9FmlqwV/WmF0/Fj1tvFACVKuaC/6XfB6mVHdsV5vqdmkVU8GyzC5Qiyhof4CGH9zbbhDZyBc7z/qhwfrSKu9FTLjAZWa0rrwC/vQ84416JHQ8dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VufHuDqH; arc=none smtp.client-ip=209.85.208.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2eeb1ba040aso111659051fa.1;
+        Thu, 01 Aug 2024 05:25:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722513605; x=1723118405; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=39/okCXpvEfDdVyBNIEADsyPVsMtXQG7Jd9DbMIJnl8=;
-        b=er7Qgl+vgb0irGjABjEJkrAESgX0nQ8Y3Nl2ZQ7oLFQPQIUySz1SxvB71lnTmQqiZW
-         GPEaOfSbQ0n8ipBG08Cjbqlwc8cztnwuWcrTTL6cAMIpKF0f7lb+zGLkZ7tYvpVNVCX/
-         W4RxTK+mrBw6E3tNKLISOplqwWxGK8E20g6eKNbjQzraFTwzJZXkEjBBFMva8yY81Hdu
-         68655ENPE+iCZMrAiB09/j+g0GTasxyN6u72YnfBfLmtZXQav/550mZiVSD88jns7hMb
-         dmd/Vl+E3au8YzdkqtaOPww0sN5XGXpNYu9XHCrx6AL+gIcx5yvir+rcwyWN4kKDkddb
-         i+2g==
+        d=gmail.com; s=20230601; t=1722515118; x=1723119918; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=IE6qgZ4rcTyQeTCYx/z4n2FJeaYWlB8FUWK+7JYDiws=;
+        b=VufHuDqHiAvyaaCP03r1Fzb1/x9zf3FJjPVGFF5urrBOA4Oa9x5VayEZluxib+LWC1
+         1hdmdbm1hSFanQQOgmJUOpczQ9nhnYBKFmwJYXGEAz5g+0Ucidw37aM//f//rETfFDyA
+         XORY+5lU0mWB/c6Nc/7PlksSnSaHlFsPNRluFsl6RbuVisFBPjnHvoGIxyiUOysbKnU+
+         3e4oO1uGUI1KpXyUQ3XkzQ5rf4ZqF3wwUrerchJC/5XoblyrOiMJXIPSgBOxC4ONEMit
+         JfbX879a6kcPaXXJglDweTI8kIaCLKw1FyfIJokH1Gwd3vFNdr1D4yox2TQIKJ+RbjPj
+         +uKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722513605; x=1723118405;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=39/okCXpvEfDdVyBNIEADsyPVsMtXQG7Jd9DbMIJnl8=;
-        b=j72s/2DgPyZbTWjpQK2kmJpm152cUPYrsXLwYM0iDhjcQuS5ajoJD2mCDCb19SnaqL
-         VNW6QtKeGQsb9UbmuMFXvPLP+vvGRxRSNsMW+IVnbc365f6x/VkmBiYla01JNP7ncmKF
-         M/sUPHDVzYSYM/uHRLspMjHzEU3bbRlJ93wFGy50s/hVhqf5UDtVDUBs4GDOBn6WQmDv
-         HWNaCPnx9//D5Kc8FJrXxsjDWeEJpBaJW+p6Q/iKAk+FymJGuv6t2Q8PWD1sHvNeVGmv
-         c1UBGza4ZjMWM4uX8KL6XIRI39XzwxmCjdZpmac3FTVQJce5t+GrL1pmK6suwd76tpRb
-         f1vw==
-X-Forwarded-Encrypted: i=1; AJvYcCU8Be58g3GWO/8zXTojdBX20BNpEr9LC2m3kxQbfCVdv70wgyrPrKBbFnSvC9Ohd0V3Ze2wnokZWrNuMXdJrxRpzgP05cfarS+CVh2P7g==
-X-Gm-Message-State: AOJu0Ywfp2MhPYxMdVHnl0HQzC+lGJjoLsBVC2C/mIxhs1p9NHNfjvaQ
-	UrFR9kJJ22W5JMeukb5Nwg7hqjoBhvcrTN6HmUk0lQFM65dODcqxKdcIlwzIby68yj7A71PPHO4
-	RaUWsQvgGRLTMtnzyycft40Hyq9ju6+ApF8J/og==
-X-Google-Smtp-Source: AGHT+IF/TDUkHDgBItBjFUIVrxnPpACFopWfjdE9RH7NLEAE+ZcE6DNqzAmrrpGzUOTkY/FD0CW07WIZVLL23BzdnyM=
-X-Received: by 2002:a1f:e404:0:b0:4f2:ffa6:dbd5 with SMTP id
- 71dfb90a1353d-4f89c16eb50mr351810e0c.6.1722513604907; Thu, 01 Aug 2024
- 05:00:04 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1722515118; x=1723119918;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IE6qgZ4rcTyQeTCYx/z4n2FJeaYWlB8FUWK+7JYDiws=;
+        b=YAJ576cbt+UXCh+RdFxfVHPVlZ6bTbrmc17DGQPFqe4mxuZoE+X2X57jT3t05pnrIV
+         9Xs6df5+y0WUtsJ0NpeA9VV8m5fo0ToAy4Q2rHKYyZ1urwE1oUzWA1+NX3qk49aWYGkS
+         cSYDSU8Fvi2UIUgsKJjuPhyPzooA/ueRIVeJ2SFHD5cJT0X6Gorps2+Z6QFna9nsGed2
+         Vd/jURhoI5ywvxAUpQe+KOoVOx4iYhrWJe/TUbzsTkNq408CNA05I9R3662tp58sj8QF
+         Zz/oXGfbDbdri82KdDm1MPccu4bswnlD+R2yjwPwUGfZDvjY11q/IoN7fXkA2P01HzJ/
+         msmg==
+X-Forwarded-Encrypted: i=1; AJvYcCWkMHRAnCtqQNLOrJS7m+nO7OiFWiIb9FZJaK+XRbivbnUF0waZoHitMFcdHbv/Bg1bKIHHzowNFYHr7UaIvRSvR3NzyaUbuxll7NkkC9KiX4b934ERHQ0O5YoyfH6CPUZZutAsswk05uzG3g==
+X-Gm-Message-State: AOJu0YyZpjJ2FfzppudUq3kIoM19T9F+qd3RJ77yby62Zs8TMVazLHXO
+	6jOdSlLrVbOvN7onW+3HTCvyLjsWaiCOqNyCat8wXoDUUHz/87/SbsShmdDy
+X-Google-Smtp-Source: AGHT+IG943eA0ry+JhccUVZUIMThycHbSJevQ0g1kmn0332vlbW23arsJG6hBeaAFPOswQpq+lnHZg==
+X-Received: by 2002:a2e:9cc9:0:b0:2ef:259f:a569 with SMTP id 38308e7fff4ca-2f15aa872a4mr655561fa.15.1722515117536;
+        Thu, 01 Aug 2024 05:25:17 -0700 (PDT)
+Received: from trashcan ([222.118.21.173])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36b367fce64sm19345452f8f.61.2024.08.01.05.25.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Aug 2024 05:25:16 -0700 (PDT)
+Date: Thu, 1 Aug 2024 12:22:29 +0000
+From: Vladimir Lypak <vladimir.lypak@gmail.com>
+To: Connor Abbott <cwabbott0@gmail.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Jordan Crouse <jordan@cosmicpenguin.net>,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/4] drm/msm/a5xx: fix races in preemption evaluation
+ stage
+Message-ID: <Zqt9Cxu7FsSALi4y@trashcan>
+References: <20240711100038.268803-1-vladimir.lypak@gmail.com>
+ <20240711100038.268803-4-vladimir.lypak@gmail.com>
+ <CACu1E7HkRN7pkBOUeC3G59K5rbsMRj81HvfAocpHuG6XuNbCyQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240502224703.103150-1-swboyd@chromium.org> <CAE-0n50VDgsg-4QnynvLOzykr3KP5JsnHqeFPA=uRT3EfgL19g@mail.gmail.com>
-In-Reply-To: <CAE-0n50VDgsg-4QnynvLOzykr3KP5JsnHqeFPA=uRT3EfgL19g@mail.gmail.com>
-From: Amit Pundir <amit.pundir@linaro.org>
-Date: Thu, 1 Aug 2024 17:29:28 +0530
-Message-ID: <CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: Park shared RCGs upon registration
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
-	patches@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	Laura Nao <laura.nao@collabora.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Douglas Anderson <dianders@chromium.org>, Taniya Das <quic_tdas@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACu1E7HkRN7pkBOUeC3G59K5rbsMRj81HvfAocpHuG6XuNbCyQ@mail.gmail.com>
 
-Hi Stephen,
-
-On Tue, 9 Jul 2024 at 00:03, Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Stephen Boyd (2024-05-02 15:47:02)
-> > There's two problems with shared RCGs.
+On Mon, Jul 29, 2024 at 06:26:45PM +0100, Connor Abbott wrote:
+> On Thu, Jul 11, 2024 at 11:10 AM Vladimir Lypak
+> <vladimir.lypak@gmail.com> wrote:
 > >
-> > The first problem is that they incorrectly report the parent after
-> > commit 703db1f5da1e ("clk: qcom: rcg2: Cache CFG register updates for
-> > parked RCGs"). That's because the cached CFG register value needs to be
-> > populated when the clk is registered. clk_rcg2_shared_enable() writes
-> > the cached CFG register value 'parked_cfg'. This value is initially zero
-> > due to static initializers. If a driver calls clk_enable() before
-> > setting a rate or parent, it will set the parent to '0' which is
-> > (almost?) always XO, and may not reflect the parent at registration. In
-> > the worst case, this switches the RCG from sourcing a fast PLL to the
-> > slow crystal speed.
+> > On A5XX GPUs when preemption is used it's invietable to enter a soft
+> > lock-up state in which GPU is stuck at empty ring-buffer doing nothing.
+> > This appears as full UI lockup and not detected as GPU hang (because
+> > it's not). This happens due to not triggering preemption when it was
+> > needed. Sometimes this state can be recovered by some new submit but
+> > generally it won't happen because applications are waiting for old
+> > submits to retire.
 > >
-> > The second problem is that the force enable bit isn't cleared. The force
-> > enable bit is only used during parking and unparking of shared RCGs.
-> > Otherwise it shouldn't be set because it keeps the RCG enabled even when
-> > all the branches on the output of the RCG are disabled (the hardware has
-> > a feedback mechanism so that any child branches keep the RCG enabled
-> > when the branch enable bit is set). This problem wastes power if the clk
-> > is unused, and is harmful in the case that the clk framework disables
-> > the parent of the force enabled RCG. In the latter case, the GDSC the
-> > shared RCG is associated with will get wedged if the RCG's source clk is
-> > disabled and the GDSC tries to enable the RCG to do "housekeeping" while
-> > powering on.
+> > One of the reasons why this happens is a race between a5xx_submit and
+> > a5xx_preempt_trigger called from IRQ during submit retire. Former thread
+> > updates ring->cur of previously empty and not current ring right after
+> > latter checks it for emptiness. Then both threads can just exit because
+> > for first one preempt_state wasn't NONE yet and for second one all rings
+> > appeared to be empty.
 > >
-> > Both of these problems combined with incorrect runtime PM usage in the
-> > display driver lead to a black screen on Qualcomm sc7180 Trogdor
-> > chromebooks. What happens is that the bootloader leaves the
-> > 'disp_cc_mdss_rot_clk' enabled and the 'disp_cc_mdss_rot_clk_src' force
-> > enabled and parented to 'disp_cc_pll0'. The mdss driver probes and
-> > runtime suspends, disabling the mdss_gdsc which uses the
-> > 'disp_cc_mdss_rot_clk_src' for "housekeeping". The
-> > 'disp_cc_mdss_rot_clk' is disabled during late init because the clk is
-> > unused, but the parent 'disp_cc_mdss_rot_clk_src' is still force enabled
-> > because the force enable bit was never cleared. Then 'disp_cc_pll0' is
-> > disabled because it is also unused. That's because the clk framework
-> > believes the parent of the RCG is XO when it isn't. A child device of
-> > the mdss device (e.g. DSI) runtime resumes mdss which powers on the
-> > mdss_gdsc. This wedges the GDSC because 'disp_cc_mdss_rot_clk_src' is
-> > parented to 'disp_cc_pll0' and that PLL is off. With the GDSC wedged,
-> > mdss_runtime_resume() tries to enable 'disp_cc_mdss_mdp_clk' but it
-> > can't because the GDSC has wedged all the clks associated with the GDSC
-> > causing clks to stay stuck off.
+> > To prevent such situations from happening we need to establish guarantee
+> > for preempt_trigger to be called after each submit. To implement it this
+> > patch adds trigger call at the end of a5xx_preempt_irq to re-check if we
+> > should switch to non-empty or higher priority ring. Also we find next
+> > ring in new preemption state "EVALUATE". If the thread that updated some
+> > ring with new submit sees this state it should wait until it passes.
 > >
-> > This leads to the following warning seen at boot and a black screen
-> > because the display driver fails to probe.
-> >
-> >  disp_cc_mdss_mdp_clk status stuck at 'off'
-> >  WARNING: CPU: 1 PID: 81 at drivers/clk/qcom/clk-branch.c:87 clk_branch_toggle+0x114/0x168
-> >  Modules linked in:
-> >  CPU: 1 PID: 81 Comm: kworker/u16:4 Not tainted 6.7.0-g0dd3ee311255 #1 f5757d475795053fd2ad52247a070cd50dd046f2
-> >  Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
-> >  Workqueue: events_unbound deferred_probe_work_func
-> >  pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> >  pc : clk_branch_toggle+0x114/0x168
-> >  lr : clk_branch_toggle+0x110/0x168
-> >  sp : ffffffc08084b670
-> >  pmr_save: 00000060
-> >  x29: ffffffc08084b680 x28: ffffff808006de00 x27: 0000000000000001
-> >  x26: ffffff8080dbd4f4 x25: 0000000000000000 x24: 0000000000000000
-> >  x23: 0000000000000000 x22: ffffffd838461198 x21: ffffffd838007997
-> >  x20: ffffffd837541d5c x19: 0000000000000001 x18: 0000000000000004
-> >  x17: 0000000000000000 x16: 0000000000000010 x15: ffffffd837070fac
-> >  x14: 0000000000000003 x13: 0000000000000004 x12: 0000000000000001
-> >  x11: c0000000ffffdfff x10: ffffffd838347aa0 x9 : 08dadf92e516c000
-> >  x8 : 08dadf92e516c000 x7 : 0000000000000000 x6 : 0000000000000027
-> >  x5 : ffffffd8385a61f2 x4 : 0000000000000000 x3 : ffffffc08084b398
-> >  x2 : ffffffc08084b3a0 x1 : 00000000ffffdfff x0 : 00000000fffffff0
-> >  Call trace:
-> >   clk_branch_toggle+0x114/0x168
-> >   clk_branch2_enable+0x24/0x30
-> >   clk_core_enable+0x5c/0x1c8
-> >   clk_enable+0x38/0x58
-> >   clk_bulk_enable+0x40/0xb0
-> >   mdss_runtime_resume+0x68/0x258
-> >   pm_generic_runtime_resume+0x30/0x44
-> >   __genpd_runtime_resume+0x30/0x80
-> >   genpd_runtime_resume+0x124/0x214
-> >   __rpm_callback+0x7c/0x15c
-> >   rpm_callback+0x30/0x88
-> >   rpm_resume+0x390/0x4d8
-> >   rpm_resume+0x43c/0x4d8
-> >   __pm_runtime_resume+0x54/0x98
-> >   __device_attach+0xe0/0x170
-> >   device_initial_probe+0x1c/0x28
-> >   bus_probe_device+0x48/0xa4
-> >   device_add+0x52c/0x6fc
-> >   mipi_dsi_device_register_full+0x104/0x1a8
-> >   devm_mipi_dsi_device_register_full+0x28/0x78
-> >   ti_sn_bridge_probe+0x1dc/0x2bc
-> >   auxiliary_bus_probe+0x4c/0x94
-> >   really_probe+0xf8/0x270
-> >   __driver_probe_device+0xa8/0x130
-> >   driver_probe_device+0x44/0x104
-> >   __device_attach_driver+0xa4/0xcc
-> >   bus_for_each_drv+0x94/0xe8
-> >   __device_attach+0xf8/0x170
-> >   device_initial_probe+0x1c/0x28
-> >   bus_probe_device+0x48/0xa4
-> >   deferred_probe_work_func+0x9c/0xd8
-> >
-> > Fix these problems by parking shared RCGs at boot. This will properly
-> > initialize the parked_cfg struct member so that the parent is reported
-> > properly and ensure that the clk won't get stuck on or off because the
-> > RCG is parented to the safe source (XO).
-> >
-> > Fixes: 703db1f5da1e ("clk: qcom: rcg2: Cache CFG register updates for parked RCGs")
-> > Reported-by: Stephen Boyd <sboyd@kernel.org>
-> > Closes: https://lore.kernel.org/r/1290a5a0f7f584fcce722eeb2a1fd898.sboyd@kernel.org
-> > Closes: https://issuetracker.google.com/319956935
-> > Reported-by: Laura Nao <laura.nao@collabora.com>
-> > Closes: https://lore.kernel.org/r/20231218091806.7155-1-laura.nao@collabora.com
-> > Cc: Bjorn Andersson <andersson@kernel.org>
-> > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Cc: Douglas Anderson <dianders@chromium.org>
-> > Cc: Taniya Das <quic_tdas@quicinc.com>
-> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > Fixes: b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
+> > Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
 > > ---
->
-> Applied to clk-next
->
+> >  drivers/gpu/drm/msm/adreno/a5xx_gpu.c     |  6 +++---
+> >  drivers/gpu/drm/msm/adreno/a5xx_gpu.h     | 11 +++++++----
+> >  drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 24 +++++++++++++++++++----
+> >  3 files changed, 30 insertions(+), 11 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> > index 6c80d3003966..266744ee1d5f 100644
+> > --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> > +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> > @@ -110,7 +110,7 @@ static void a5xx_submit_in_rb(struct msm_gpu *gpu, struct msm_gem_submit *submit
+> >         }
+> >
+> >         a5xx_flush(gpu, ring, true);
+> > -       a5xx_preempt_trigger(gpu);
+> > +       a5xx_preempt_trigger(gpu, true);
+> >
+> >         /* we might not necessarily have a cmd from userspace to
+> >          * trigger an event to know that submit has completed, so
+> > @@ -240,7 +240,7 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+> >         a5xx_flush(gpu, ring, false);
+> >
+> >         /* Check to see if we need to start preemption */
+> > -       a5xx_preempt_trigger(gpu);
+> > +       a5xx_preempt_trigger(gpu, true);
+> >  }
+> >
+> >  static const struct adreno_five_hwcg_regs {
+> > @@ -1296,7 +1296,7 @@ static irqreturn_t a5xx_irq(struct msm_gpu *gpu)
+> >                 a5xx_gpmu_err_irq(gpu);
+> >
+> >         if (status & A5XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS) {
+> > -               a5xx_preempt_trigger(gpu);
+> > +               a5xx_preempt_trigger(gpu, false);
+> >                 msm_gpu_retire(gpu);
+> >         }
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.h b/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
+> > index c7187bcc5e90..1120824853d4 100644
+> > --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
+> > +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.h
+> > @@ -57,10 +57,12 @@ void a5xx_debugfs_init(struct msm_gpu *gpu, struct drm_minor *minor);
+> >   * through the process.
+> >   *
+> >   * PREEMPT_NONE - no preemption in progress.  Next state START.
+> > - * PREEMPT_START - The trigger is evaulating if preemption is possible. Next
+> > - * states: TRIGGERED, NONE
+> > + * PREEMPT_EVALUATE - The trigger is evaulating if preemption is possible. Next
+> > + * states: START, ABORT
+> >   * PREEMPT_ABORT - An intermediate state before moving back to NONE. Next
+> >   * state: NONE.
+> > + * PREEMPT_START - The trigger is preparing for preemption. Next state:
+> > + * TRIGGERED
+> >   * PREEMPT_TRIGGERED: A preemption has been executed on the hardware. Next
+> >   * states: FAULTED, PENDING
+> >   * PREEMPT_FAULTED: A preemption timed out (never completed). This will trigger
+> > @@ -71,8 +73,9 @@ void a5xx_debugfs_init(struct msm_gpu *gpu, struct drm_minor *minor);
+> >
+> >  enum preempt_state {
+> >         PREEMPT_NONE = 0,
+> > -       PREEMPT_START,
+> > +       PREEMPT_EVALUATE,
+> >         PREEMPT_ABORT,
+> > +       PREEMPT_START,
+> >         PREEMPT_TRIGGERED,
+> >         PREEMPT_FAULTED,
+> >         PREEMPT_PENDING,
+> > @@ -156,7 +159,7 @@ void a5xx_set_hwcg(struct msm_gpu *gpu, bool state);
+> >
+> >  void a5xx_preempt_init(struct msm_gpu *gpu);
+> >  void a5xx_preempt_hw_init(struct msm_gpu *gpu);
+> > -void a5xx_preempt_trigger(struct msm_gpu *gpu);
+> > +void a5xx_preempt_trigger(struct msm_gpu *gpu, bool new_submit);
+> >  void a5xx_preempt_irq(struct msm_gpu *gpu);
+> >  void a5xx_preempt_fini(struct msm_gpu *gpu);
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+> > index 67a8ef4adf6b..f8d09a83c5ae 100644
+> > --- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+> > +++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+> > @@ -87,21 +87,33 @@ static void a5xx_preempt_timer(struct timer_list *t)
+> >  }
+> >
+> >  /* Try to trigger a preemption switch */
+> > -void a5xx_preempt_trigger(struct msm_gpu *gpu)
+> > +void a5xx_preempt_trigger(struct msm_gpu *gpu, bool new_submit)
+> >  {
+> >         struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> >         struct a5xx_gpu *a5xx_gpu = to_a5xx_gpu(adreno_gpu);
+> >         unsigned long flags;
+> >         struct msm_ringbuffer *ring;
+> > +       enum preempt_state state;
+> >
+> >         if (gpu->nr_rings == 1)
+> >                 return;
+> >
+> >         /*
+> > -        * Try to start preemption by moving from NONE to START. If
+> > -        * unsuccessful, a preemption is already in flight
+> > +        * Try to start preemption by moving from NONE to EVALUATE. If current
+> > +        * state is EVALUATE/ABORT we can't just quit because then we can't
+> > +        * guarantee that preempt_trigger will be called after ring is updated
+> > +        * by new submit.
+> >          */
+> > -       if (!try_preempt_state(a5xx_gpu, PREEMPT_NONE, PREEMPT_START))
+> > +       state = atomic_cmpxchg(&a5xx_gpu->preempt_state, PREEMPT_NONE,
+> > +                              PREEMPT_EVALUATE);
+> > +       while (new_submit && (state == PREEMPT_EVALUATE ||
+> > +                             state == PREEMPT_ABORT)) {
+> 
+> This isn't enough because even if new_submit is false then we may
+> still need to guarantee that evaluation happens. We've seen a hang in
+> a scenario like:
+> 
+> 1. A job is submitted and executed on ring 0.
+> 2. A job is submitted on ring 2 while ring 0 is still active but
+> almost finished.
+> 3. The submission thread starts evaluating and sees that ring 0 is still busy.
+> 4. The job on ring 0 finishes and a CACHE_FLUSH IRQ is raised.
+> 5. The IRQ tries to trigger a preemption but the state is still
+> PREEMPT_EVALUATE or PREEMPT_ABORT and exits.
+> 6. The submission thread finishes update_wptr() and finally sets the
+> state to PREEMPT_NONE too late.
+> 
+> Then we never preempt to ring 2 and there's a soft lockup.
 
-This patch caused a few deferred probes on sm8550-hdk breaking the
-audio codec and usb-c host mode support. This breakage is not 100%
-reproducible but can be fairly easily reproduced though.
-I have attached the relevant logs and defconfig here
-https://bugs.linaro.org/show_bug.cgi?id=6053 for reference. Let me
-know if you need more information or if I can assist you in testing a
-debug patch to diagnose it further.
+Thanks, i've missed that. It would need to always wait to prevent such
+scenario. The next patch prevented this from happening for me so i have
+overlooked it.
 
-Regards,
-Amit Pundir
+Alternatively there is another approach which should perform better: to
+let evaluation stage run in parallel.
+
+Also i've tried serializing preemption handling on ordered workqueue and
+GPU kthread worker. It's a lot simpler but latency from IRQ doesn't look
+good:
+
+           flush-trigger    SW_IRQ-pending   flush_IRQ-trigger
+    uSecs    1    2    3       1    2    3       1    2    3
+     0-10 1515   43   65    4423   39   24     647    0    2
+    10-20 1484  453  103     446  414  309     399    1    1
+    20-40  827 1802  358      19  819  587       2   21    6
+    40-60    7 1264  397       1  368  329       0   30   14
+    60-80    4  311  115       0  181  178       0   24   12
+   80-120    2   36  251       0  250  188       0    9   13
+  120-160    0    4  244       0  176  248       0  226  150
+  160-200    0    1  278       0  221  235       0   86   78
+  200-400    0    2 1266       0 1318 1186       0  476  688
+  400-700    0    0  553       0  745 1028       0  150  106
+ 700-1000    0    0  121       0  264  366       0   65   28
+1000-1500    0    0   61       0  160  205       0   21    8
+    >2000    0    0   12       0   71   48       0    0    0
+
+1 - current implementation but with evaluation in parallel.
+2 - serialized on ordered workqueue.
+3 - serialized on GPU kthread_worker.
+
+Vladimir
+
+> 
+> Connor
+> 
+> > +               cpu_relax();
+> > +               state = atomic_cmpxchg(&a5xx_gpu->preempt_state, PREEMPT_NONE,
+> > +                                      PREEMPT_EVALUATE);
+> > +       }
+> > +
+> > +       if (state != PREEMPT_NONE)
+> >                 return;
+> >
+> >         /* Get the next ring to preempt to */
+> > @@ -130,6 +142,8 @@ void a5xx_preempt_trigger(struct msm_gpu *gpu)
+> >                 return;
+> >         }
+> >
+> > +       set_preempt_state(a5xx_gpu, PREEMPT_START);
+> > +
+> >         /* Make sure the wptr doesn't update while we're in motion */
+> >         spin_lock_irqsave(&ring->preempt_lock, flags);
+> >         a5xx_gpu->preempt[ring->id]->wptr = get_wptr(ring);
+> > @@ -188,6 +202,8 @@ void a5xx_preempt_irq(struct msm_gpu *gpu)
+> >         update_wptr(gpu, a5xx_gpu->cur_ring);
+> >
+> >         set_preempt_state(a5xx_gpu, PREEMPT_NONE);
+> > +
+> > +       a5xx_preempt_trigger(gpu, false);
+> >  }
+> >
+> >  void a5xx_preempt_hw_init(struct msm_gpu *gpu)
+> > --
+> > 2.45.2
+> >
 
