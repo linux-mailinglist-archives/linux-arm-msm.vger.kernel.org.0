@@ -1,65 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-27704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E33E1944798
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 11:13:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AEA3194464E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 10:17:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 099841C21D11
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 09:13:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 62FD41F22E9A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 08:17:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC6C1183CD5;
-	Thu,  1 Aug 2024 09:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 234001586C6;
+	Thu,  1 Aug 2024 08:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="O9imaoEt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OvIFEuGp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3DF170A34;
-	Thu,  1 Aug 2024 09:11:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D0B13CA8E
+	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Aug 2024 08:16:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722503520; cv=none; b=Y0JejNcru6HTqRjanqVx7nvmxsN9fQQG3xFZFq7IsnIFNLYoDRmydyulCP3hToD8vTwasCgczqwpeaTV6XSuWlmmgSG0U9igc1FEybpwWP1ObkTTGSSNcKsM+dmjfv+A/RqmvhhMAjkvdUOR2+PwaYT6R9QFU3bEox79ExHx9sQ=
+	t=1722500220; cv=none; b=RGyK2msW1QsOh/b2w64L7ogeTWl4//XAM67RuyULdwgTU03inT+k6aLRhmlc2lXUJwtALcECeMAW9fJcMJFXUbNf9LCErv0dmcQ4bamBQotsf1F9OfeRor1Xw7te7eZEsBuuX8kqYjqjCW/33mROFt5rj5GfNl8k2WMsVYl75uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722503520; c=relaxed/simple;
-	bh=YyMMtwwfLvF7XbN3Hd27FU6gmaTz5OzC5jyQFcvLAO4=;
+	s=arc-20240116; t=1722500220; c=relaxed/simple;
+	bh=q5fun1stuBG+6UPuqpS76nEA11lt40c4cJptlg3SGjc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pH6//PXD/3dYsZFRAbzeItcXx2lcmGI+vtriw2gVImVv5fFwHTzL+XeMeP32CQ1O/vJhpbDYt2W9YlqmuTEfzjWu/4L2FFBpGaXTrsl5r0BUUSQ5N/VC4aJXYFDMJ/TUe0X0cBXz3G3GINUKDZTXma8WgH3/cbhNbjhWwzOWQCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=O9imaoEt; arc=none smtp.client-ip=198.175.65.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1722503519; x=1754039519;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=YyMMtwwfLvF7XbN3Hd27FU6gmaTz5OzC5jyQFcvLAO4=;
-  b=O9imaoEtsvrnILyp4ZsiMg3UAccO//SL7xjzq7HKgx88PHeFOatLHSDw
-   fIV7tfnrKCG6gJER4JQUUn8uAsi2tbtltbGJocohONUuBatoC0xjt/zjB
-   8JyRFN+MrO/th8vNlUS6wiv0CrwCLHDR8rUWcH8mlT7HVhk59E8umVP3A
-   0SiAnykYLksxs1MgEm8zkB94CGAqVCLOBjWflk5CflET1E46LwKQhm+VM
-   6gtG0QqLUfejXSU82oumWNMAGuRDWojmdHGSgLZA/Io8AzcRyLQ1D2qFU
-   Ji3JIk/Du2U6g/KihmrScFwtP4Ym4J7Cr0uxE7nqExaFb7JOyF2UEShUt
-   w==;
-X-CSE-ConnectionGUID: 0usLmvSVTKeoU76GHYtmpw==
-X-CSE-MsgGUID: yxNdqo/8Tu6uDuYoegDxxg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11150"; a="20383480"
-X-IronPort-AV: E=Sophos;i="6.09,254,1716274800"; 
-   d="scan'208";a="20383480"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2024 02:11:21 -0700
-X-CSE-ConnectionGUID: ELbweMuJSkOz6l0VdhQiCQ==
-X-CSE-MsgGUID: BARAQ/IiRXWsmTikx+x+nA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,254,1716274800"; 
-   d="scan'208";a="59089817"
-Received: from lfiedoro-mobl.ger.corp.intel.com (HELO [10.245.246.220]) ([10.245.246.220])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2024 02:11:15 -0700
-Message-ID: <63c20e7a-f62a-4b6c-8ea1-1608e06e5b58@linux.intel.com>
-Date: Thu, 1 Aug 2024 10:11:43 +0200
+	 In-Reply-To:Content-Type; b=iD3qcIpJJ2WkBquVZhZqnl5dtbqKXxQyJtaxqOVHjs7STGVsjcOkpV5tDi8xHNaPJLn4ky0pl9jKzuGjPsYDJwMxZLf9mfYgnbmNiD9D19KPJo56Feacp0brloSoBcQw9BikH+jY8/+5VseYWGqbVw7PuvpxKk3hcl2VEmUpDpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OvIFEuGp; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3685a5e7d3cso3803726f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Aug 2024 01:16:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1722500217; x=1723105017; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XP9tpFtaN6upuW6t7vjYg0wgdfL/oQQOrVIWRer9/9A=;
+        b=OvIFEuGplgnRFbJ71Y7Zv14yuDJHIDp2TaVBF9QaIvJqNhPv287Uzi009ebJWh7OSE
+         KSR8mEK5balCEEuXd9Y0iI7Ob7DOpE1NGOdYAFGVRrn2IIajPrb6V7+2HrmgLx8fuw/d
+         N4DlAN34bHFRHGGi5Z9rw9JC2tv0Cp8VSpsuKGFhGu52Z5MMeBY73MVdnOSy2Y2SFtUU
+         MREb0se2+bmDOHoCmH4Dq9VQcNJ0+QNivAtlNhjeNIa7YW/nbHeWpk8rnbQjjLJrvQow
+         N2NbBG20TyHHSMLWOeJHZBIKwpNi0LR6GqdAJ+/YZkldgFkII/ttZi5vQh99o+f6RcMq
+         vjJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722500217; x=1723105017;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XP9tpFtaN6upuW6t7vjYg0wgdfL/oQQOrVIWRer9/9A=;
+        b=BIvUZuMW5QMzAhbOAjeFK7zhgUvBg0Nicjh4N3r85JVho/i3DrVKXG61W7eUTp2Jp5
+         S+xT+dpDMm6+sgvEEKU8RT4zFsvH817X1whBYa8PddQQQZXAgHT6TE8TjpCzZxpZk8e1
+         hGg9CHMNxbzP+dmnFh1EQwsXvodCG1pzZoFJoCkLvSiFuNha62t+IEspK0FznAW5UTqx
+         2LjLXbUevOC5R7Uz12MRRWls5bmvnBGaoSUDOtcbOZsfLchqfhZjP+tYSPoXdX/5EfSO
+         +0+O0wobrRdCQIhBqh5FtvXpVFV8xKGybsgWtDLJGToXgKurTuZ3g7DK8z95reMvKFpD
+         g2yw==
+X-Forwarded-Encrypted: i=1; AJvYcCW0OvjG6GyXja/NqvuNZ/fKzw8Qy6jVMtSHYCM2xnEec6hW+dlFAfItnTGsAfKhKXum3IJUXjFcbHoMgwLHLNKX89n2gb5URZp/jjD9VA==
+X-Gm-Message-State: AOJu0YztYpBebTxQVluSxyc2z0Z4hmu+5EuzvEsOOu4sL0r9ZPUY2LhZ
+	JZPdtXZKQhi4JYfmZX1qfmojioju7uYOrhSUrnlEkzmz2o9KEVVRSMx4c3HFz7U=
+X-Google-Smtp-Source: AGHT+IEZ6N3OkZhSfrB0OlObra87UiMAZT58iQxNd4nFWX93KOp+dwXPH4pd9kz7+mSHV+7alm6HBQ==
+X-Received: by 2002:a05:6000:1364:b0:367:9ce3:1667 with SMTP id ffacd0b85a97d-36baacc7d04mr1233681f8f.15.1722500216713;
+        Thu, 01 Aug 2024 01:16:56 -0700 (PDT)
+Received: from [192.168.0.25] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36b367d9b30sm18869773f8f.40.2024.08.01.01.16.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Aug 2024 01:16:56 -0700 (PDT)
+Message-ID: <fafda7d5-3853-428a-b0eb-9993fc2d4f56@linaro.org>
+Date: Thu, 1 Aug 2024 09:16:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,141 +76,31 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v24 11/34] ASoC: usb: Fetch ASoC card and pcm device
- information
-To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
- mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
- corbet@lwn.net, broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
- Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, tiwai@suse.com,
- gregkh@linuxfoundation.org, robh@kernel.org
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
- alsa-devel@alsa-project.org
-References: <20240801011730.4797-1-quic_wcheng@quicinc.com>
- <20240801011730.4797-12-quic_wcheng@quicinc.com>
+Subject: Re: [PATCH 04/13] media: qcom: camss: csiphy: Add an init callback to
+ CSI PHY devices
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: quic_eberman@quicinc.com, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20240709160656.31146-1-quic_depengs@quicinc.com>
+ <20240709160656.31146-5-quic_depengs@quicinc.com>
+ <6dfc2c79-fc6d-4eed-bf3f-94396130cb4f@linaro.org>
 Content-Language: en-US
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <20240801011730.4797-12-quic_wcheng@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <6dfc2c79-fc6d-4eed-bf3f-94396130cb4f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
-
-On 8/1/24 03:17, Wesley Cheng wrote:
-> USB SND needs to know how the USB offload path is being routed.  This would
-> allow for applications to open the corresponding sound card and pcm device
-> when it wants to take the audio offload path.  This callback should return
-> the mapped indexes based on the USB SND device information.
+On 01/08/2024 00:43, Vladimir Zapolskiy wrote:
+>> +    ret = csiphy->res->hw_ops->init(csiphy);
 > 
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-> ---
->  include/sound/soc-usb.h | 16 ++++++++++++++++
->  sound/soc/soc-usb.c     | 28 ++++++++++++++++++++++++++++
->  2 files changed, 44 insertions(+)
-> 
-> diff --git a/include/sound/soc-usb.h b/include/sound/soc-usb.h
-> index d6b576f971ae..a167e3de0a78 100644
-> --- a/include/sound/soc-usb.h
-> +++ b/include/sound/soc-usb.h
-> @@ -8,6 +8,11 @@
->  
->  #include <sound/soc.h>
->  
-> +enum snd_soc_usb_kctl {
-> +	SND_SOC_USB_KCTL_CARD_ROUTE,
-> +	SND_SOC_USB_KCTL_PCM_ROUTE,
-> +};
-> +
->  /**
->   * struct snd_soc_usb_device
->   * @card_idx - sound card index associated with USB device
-> @@ -32,6 +37,7 @@ struct snd_soc_usb_device {
->   * @component - reference to ASoC component
->   * @num_supported_streams - number of supported concurrent sessions
->   * @connection_status_cb - callback to notify connection events
-> + * @get_offload_dev - callback to fetch mapped ASoC device
->   * @priv_data - driver data
->   **/
->  struct snd_soc_usb {
-> @@ -40,6 +46,8 @@ struct snd_soc_usb {
->  	unsigned int num_supported_streams;
->  	int (*connection_status_cb)(struct snd_soc_usb *usb,
->  			struct snd_soc_usb_device *sdev, bool connected);
-> +	int (*get_offload_dev)(struct snd_soc_component *component,
-> +				int card, int pcm, enum snd_soc_usb_kctl route);
->  	void *priv_data;
->  };
->  
-> @@ -51,6 +59,8 @@ void *snd_soc_usb_find_priv_data(struct device *dev);
->  int snd_soc_usb_setup_offload_jack(struct snd_soc_component *component,
->  					struct snd_soc_jack *jack);
->  int snd_soc_usb_disable_offload_jack(struct snd_soc_component *component);
-> +int soc_usb_get_offload_device(struct device *dev, int card, int pcm,
-> +				enum snd_soc_usb_kctl route);
->  
->  struct snd_soc_usb *snd_soc_usb_allocate_port(struct snd_soc_component *component,
->  					      int num_streams, void *data);
-> @@ -86,6 +96,12 @@ static inline int snd_soc_usb_disable_offload_jack(struct snd_soc_component *com
->  	return -ENODEV;
->  }
->  
-> +static int soc_usb_get_offload_device(struct device *dev, int card, int pcm,
-> +					enum snd_soc_usb_kctl route)
-> +{
-> +	return -ENODEV;
-> +}
-> +
->  static inline struct snd_soc_usb *snd_soc_usb_allocate_port(
->  					      struct snd_soc_component *component,
->  					      int num_streams, void *data)
-> diff --git a/sound/soc/soc-usb.c b/sound/soc/soc-usb.c
-> index fe2a75a28af4..3c217ac67c57 100644
-> --- a/sound/soc/soc-usb.c
-> +++ b/sound/soc/soc-usb.c
-> @@ -117,6 +117,34 @@ int snd_soc_usb_disable_offload_jack(struct snd_soc_component *component)
->  }
->  EXPORT_SYMBOL_GPL(snd_soc_usb_disable_offload_jack);
->  
-> +/**
-> + * soc_usb_get_offload_device - Set active USB offload path
+> Here.
 
-get or set?
+What name would make more sense to you ?
 
-> + * @dev - USB device to get offload status
-> + * @card - USB card index
-> + * @pcm - USB PCM device index
-> + *> + * Fetch the current status for the USB SND card and PCM device
-indexes
-> + * specified.
-
-the function returns an integer, how does this return the 'mapped indices"?
-
-> + */
-> +int soc_usb_get_offload_device(struct device *dev, int card, int pcm,
-> +				enum snd_soc_usb_kctl route)
-
-missing route in kernel doc.
-
-> +{
-> +	struct snd_soc_usb *ctx;
-> +	int ret;
-> +
-> +	ctx = snd_soc_find_usb_ctx(dev);
-> +	if (!ctx)
-> +		return -ENODEV;
-> +
-> +	mutex_lock(&ctx_mutex);
-> +	if (ctx && ctx->get_offload_dev)
-> +		ret = ctx->get_offload_dev(ctx->component, card, pcm, route);
-> +	mutex_unlock(&ctx_mutex);
-> +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(soc_usb_get_offload_device);
-> +
->  /**
->   * snd_soc_usb_find_priv_data() - Retrieve private data stored
->   * @dev: device reference
-
+---
+bod
 
