@@ -1,60 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-27666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2865B9444E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 08:55:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1E399444EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 08:55:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D81DB281B51
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 06:55:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ACBDC2809B2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 06:55:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF01A15855B;
-	Thu,  1 Aug 2024 06:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F013716E871;
+	Thu,  1 Aug 2024 06:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d9kiV361"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nzkXvzZE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B683915854E;
-	Thu,  1 Aug 2024 06:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C608316E866;
+	Thu,  1 Aug 2024 06:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722495304; cv=none; b=W1rBrIU/7/v0kfN6W35MqCRIPaLU1+opRGGecZ6KsErgq5GsuMXVgqD6GpNy8ZtsAgbjRya+YWrS2X8ob6Fv6Cg5XdVt085LqI7PKquNI+BP1mdpJ0Y/f+QlncJ6oclPNHALw73CsW27j8YaE0VFzfcCSxoTYe+iIQAWYH5HiIg=
+	t=1722495315; cv=none; b=n/kcyIkcnByqWloVyrtPO1Q0oaef3MD7EQ+h2HLWMVBjeeXscdBff4gukmED51BBjV/fyh7S92JsG0nrNnFZrT1Pg4c48CBSnZpkVdfuWjtqLnVZ05K2nEO6APgPvvUWAAZU2BjBOcc8WjhB0tifObYgMUfOHapx6rwwcNXP2p4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722495304; c=relaxed/simple;
-	bh=HOKNNnybr8vVI+CenbuRHSy81M/wqIhPpxRQv9NWUoY=;
+	s=arc-20240116; t=1722495315; c=relaxed/simple;
+	bh=Xpd5cHohiKAVitbHGS98ZWti2OlD/kYcr8OPOsuncGw=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=t9iYNj7e/G/3n2NQUj0/dTTAWYfX7QcDZY/bOudVu+jqUKI9KiFeyGjJkCwr6WfGGoWlNuCs2gjCAQHv5FKqi59qWQDy6Cbat0OC2b/MbX6xq6Wn5OSLTgq5Nlx2VLAldsEI4mPr/6jHpOKJrF/2LFWNkjyA50h4w9PdubJqMTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d9kiV361; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71DFC4AF0A;
-	Thu,  1 Aug 2024 06:55:00 +0000 (UTC)
+	 MIME-Version:Content-Type; b=r9Tc4FawukVzJcsdkAeFritjhWsF2LghsSLIXCiLn7hi3uK/ttgyiQ4I84cZAT+jg/ARQbp253SqIp4qrK+SNf9TO/9HmbBC/A4llw9TpmedTi12cIvrg5wqikrR8wuStlrBo8GGRiQsioGRgsJvRnPLBIUyvIZCbUur2WCjqKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nzkXvzZE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CE2C4AF12;
+	Thu,  1 Aug 2024 06:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722495304;
-	bh=HOKNNnybr8vVI+CenbuRHSy81M/wqIhPpxRQv9NWUoY=;
+	s=k20201202; t=1722495315;
+	bh=Xpd5cHohiKAVitbHGS98ZWti2OlD/kYcr8OPOsuncGw=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=d9kiV361GzPZKR5XC0GAwJInrK5PlMk4VKb6GpKn61lZtw/FdY8aVZZVg+i7zk+O8
-	 KOo1FJZwsDy1cXt1znBqm6pqjlYnQ9dRsEaJy9S1KzxxMkU/AXpoX5Uw/dxVcUnTVn
-	 YT554rTNpJvU/kg8JRJpSOSe0kLJPvAbSe0nppGwdEPWNLyaSn/VuOK8R+ePvZxdm2
-	 9z97fPncxIhLi9IHPotLj80NaatGpOF/eOmTxZ6b2ubG5oJUyKFfIc4gNlckpxYnvC
-	 2+AUmGvn0fiDTyIOFjtsUxo3xBRjmIqssK63kzus/in1zrLVEhv/xldS8pAlTwMXZp
-	 D2HxiqXgiIExg==
+	b=nzkXvzZE+D1aHhy8dE4eUotLGQEwSvpek0mkDAvvZIXB2aYqQL3qLfQkJMQOkMkcW
+	 m/AzkGJmERRRGk60pT5tbuiwHWRm5ufbB8D3CaizDR/jTajRtcwlpI5wMR3mUgD4XT
+	 bQ/HY5Qipz3j2osuTSrlfQ5NfclsYTwFcG33OiqBdF2DzXffmMxt6EMx22LTHTA19J
+	 efWUvZLH1fBAJxFeu8mi8/WPYYn2Pq+wvNEYzLJtOiSzLoUAdHjcIj5hNnCwfquh01
+	 jZV/2h8xrIBpIRShWKPxHo0hKza8sMG7pBxYuGEqktpum6hnsQlEWOlrk4uGDbXw/i
+	 kKyQbIUHCyPCg==
 From: Vinod Koul <vkoul@kernel.org>
-To: devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Rayyan Ansari <rayyan.ansari@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org, 
- linux-phy@lists.infradead.org, Rob Herring <robh@kernel.org>
-In-Reply-To: <20240715130854.53501-1-rayyan.ansari@linaro.org>
-References: <20240715130854.53501-1-rayyan.ansari@linaro.org>
-Subject: Re: [PATCH 0/2] Convert Qualcomm SATA PHY bindings to dtschema
-Message-Id: <172249530042.256913.13518178288820179470.b4-ty@kernel.org>
-Date: Thu, 01 Aug 2024 12:25:00 +0530
+To: devicetree@vger.kernel.org, Rayyan Ansari <rayyan.ansari@linaro.org>
+Cc: Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20240711122016.41806-1-rayyan.ansari@linaro.org>
+References: <20240711122016.41806-1-rayyan.ansari@linaro.org>
+Subject: Re: [PATCH] dt-bindings: phy: drop obsolete qcom,usb-8x16-phy
+ bindings
+Message-Id: <172249531217.256913.16966169857085379098.b4-ty@kernel.org>
+Date: Thu, 01 Aug 2024 12:25:12 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,24 +64,16 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.13.0
 
 
-On Mon, 15 Jul 2024 14:01:05 +0100, Rayyan Ansari wrote:
-> The following patches:
-> - Convert the old apq8064 and ipq806x text bindings, to a new unified
->   qcom,sata-phy binding in yaml.
-> - Remove reg-names from the SATA PHY node in apq8064.dtsi to conform to
->   the bindings
+On Thu, 11 Jul 2024 13:20:14 +0100, Rayyan Ansari wrote:
+> Remove the bindings for the Qualcomm 8x16 PHY driver that was dropped
+> in commit 4756f35fdf14 ("usb: phy: remove phy-qcom-8x16-usb.c") in 2017.
 > 
-> Thanks,
-> Rayyan
 > 
-> [...]
 
 Applied, thanks!
 
-[1/2] dt-bindings: phy: qcom,sata-phy: convert to dtschema
-      commit: 4bf8b462f84dd81c5938341a5468c3b669dbb1af
-[2/2] ARM: dts: qcom: apq8064: drop reg-names on sata-phy node
-      (no commit info)
+[1/1] dt-bindings: phy: drop obsolete qcom,usb-8x16-phy bindings
+      commit: b52a38ab1e157e43a2f5f1d846c4f52ef2105763
 
 Best regards,
 -- 
