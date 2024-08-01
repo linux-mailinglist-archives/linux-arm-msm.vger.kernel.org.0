@@ -1,112 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-27642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BFF2944112
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 04:26:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96257944123
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 04:27:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0419E1F21CE7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 02:26:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C718B1C20962
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 02:27:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37A37EC2;
-	Thu,  1 Aug 2024 02:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A7E51EB493;
+	Thu,  1 Aug 2024 02:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g0NGMFz1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uHkqHvP+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F151210E0;
-	Thu,  1 Aug 2024 02:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40211EB4A9;
+	Thu,  1 Aug 2024 02:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722478933; cv=none; b=PBz8SnWJim5cPpoeZSuHnQvwXgHAOX1eozuAnlQxugsJwGchZTzkGZdIo+Nl2O+6n93aXpfGH8v60RzHqgNYRnO1ohitZjEACKXKioRat4dHeOtyp7MWJ80FYuFZ2xyTbYtAMkBdIQapM8NpdaEXPx9nrHtYbVoVrgwnOGWaoq0=
+	t=1722479190; cv=none; b=al3B757C5bKhOR5DiB+XPdm4QbN6zNmXhHLHx6T39h8SEiyXy2NcytEH6/5LDlXS/Pj73WLerwf+2JB2Kr8yBIZQAXKrmCwleg51rCzKS28e35/Jv+CPUbTiQQOny0tosSPwyhlR2HFZG30ikuGLLHkTKykxal/BRIfT2E4LUak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722478933; c=relaxed/simple;
-	bh=cgxg4rbo4fUOa9zSmibfWqsv00PQFdhsSeKcX4HAPjg=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=RkzC5IkxQSimb3+/2li3tiijvMReY6TVbgS/R5sCsu1tUyj9PKrZ6QEmoGDHWvASoXP+yJuSyva83v+rmj4XGlMDGUGgzaegR9A2dtkDXwx2sIdWPqtJdKjihSLpojWSRDDrz4VyHWYvx+h6Cif83YlvkLRag0m3dI82bo/em0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g0NGMFz1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24934C116B1;
-	Thu,  1 Aug 2024 02:22:11 +0000 (UTC)
+	s=arc-20240116; t=1722479190; c=relaxed/simple;
+	bh=dOz9CZJAwvcwTM3cno/e4aaYLwlNEIrTcbyLJ2I+nmk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EbyKHdCogCVtOGl5s/nKA9ZNzUrLoK3Iippap/6WsfYh6fS1RXtx6BHcc5cEn9qTnKT02opNRKPUKnEel2kY/LxDqtjThOYEI6Fn145JLYfxw8V62DL2rZVruyAtcgGgYGxNJyXBMimIclaxyCMvY6DYh441n4gFbAL8O/oPfcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uHkqHvP+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A26C4AF10;
+	Thu,  1 Aug 2024 02:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722478932;
-	bh=cgxg4rbo4fUOa9zSmibfWqsv00PQFdhsSeKcX4HAPjg=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=g0NGMFz1HOD7/T0s35VIIArFp5yKZQqK2zn5bgOKLqFQWsYd2iG92tRhhtE2CpZQF
-	 QBuD9G/910Q7Mw1q+xOpDWtVsZ4sszv644qjVVhmFSml9jrzsiCclJE25xEyWcDc/W
-	 SHfoGtCNOu/yzzmspyvZOkdZN9+ockI+hBATMnlbH2aszcTagPa1fHk/Wr6X05VvgQ
-	 h9ToZZi1ciswwXnPVXqurmNQFmlwQzwRE7FgzaiyAkcQRK6d+h6WdzlTs73VNxDx9l
-	 pm1zKgvDDqkWBF5H/iUyc6pJ3msqajhP+PoFAptHCJkmRki/JKN1Cm2NsjlT3cxxnY
-	 0VUev0OBhuy5g==
-Date: Wed, 31 Jul 2024 20:22:10 -0600
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+	s=k20201202; t=1722479189;
+	bh=dOz9CZJAwvcwTM3cno/e4aaYLwlNEIrTcbyLJ2I+nmk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=uHkqHvP+xvPRb7QSZmGyY4+JKZSbz5E+Rr6bMaoJtEzGgfv1C4fHmQrgJDKxpWcRC
+	 700Y+cm9k78zsGNIEoNArxJN9YLrOc/DzplgjHl49xr2S0vhoIpSprKUdCCN707165
+	 5CSX6zaB/AHGA6FcYx/DZijwLwPvoIaGcNiDlzB1kbybNAEpyvBYlPUoTYhIRyusds
+	 4FYsfTUDvIoOJNyPMiYeGvXgbONgeZ/xqmKjieG8ImqZXmu9u4zo7bblvFAhi/5It7
+	 h1UnXYGm3p7y4v9Uqjpaz8GsNWy3yn7tvqW/GlJeI7K8jSsNOmeaYPuAUv9IEb7/JG
+	 vq9w8FkC1QHVQ==
+Date: Wed, 31 Jul 2024 21:26:27 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: vkoul@kernel.org, kishon@kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] phy: qcom: qmp: Add debug prints for register writes
+Message-ID: <nkfrtuxv4ueow66bnazyb4ul3pz3z3wo6zsptu6wnw7hflxerx@pkwn7sx6gfqi>
+References: <20240731115637.90351-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Wesley Cheng <quic_wcheng@quicinc.com>
-Cc: mathias.nyman@intel.com, linux-usb@vger.kernel.org, 
- Thinh.Nguyen@synopsys.com, krzk+dt@kernel.org, 
- srinivas.kandagatla@linaro.org, linux-doc@vger.kernel.org, 
- bgoswami@quicinc.com, linux-arm-msm@vger.kernel.org, tiwai@suse.com, 
- lgirdwood@gmail.com, alsa-devel@alsa-project.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, corbet@lwn.net, 
- perex@perex.cz, gregkh@linuxfoundation.org, conor+dt@kernel.org, 
- linux-sound@vger.kernel.org, broonie@kernel.org
-In-Reply-To: <20240801011730.4797-14-quic_wcheng@quicinc.com>
-References: <20240801011730.4797-1-quic_wcheng@quicinc.com>
- <20240801011730.4797-14-quic_wcheng@quicinc.com>
-Message-Id: <172247893082.2670643.17763625549296585780.robh@kernel.org>
-Subject: Re: [PATCH v24 13/34] ASoC: dt-bindings: Update example for
- enabling USB offload on SM8250
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240731115637.90351-1-manivannan.sadhasivam@linaro.org>
 
-
-On Wed, 31 Jul 2024 18:17:09 -0700, Wesley Cheng wrote:
-> Add an example on enabling of USB offload for the Q6DSP.  The routing can
-> be done by the mixer, which can pass the multimedia stream to the USB
-> backend.
+On Wed, Jul 31, 2024 at 05:26:37PM GMT, Manivannan Sadhasivam wrote:
+> These register prints are useful to validate the init sequence against the
+> Qcom internal documentation and also to share with the Qcom hw engineers to
+> debug issues related to PHY.
 > 
-> Acked-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+
+I've written this patch every time I've touched one of these PHYs, so I
+certainly like this.
+
+> Sample debug prints:
+> 
+> QMP PHY: Writing Reg: QSERDES_V5_COM_SYSCLK_EN_SEL Offset: 0x0094 Val: 0xd9
+> QMP PHY: Writing Reg: QSERDES_V5_COM_HSCLK_SEL Offset: 0x0158 Val: 0x11
+
+That said, with multiple instances of PHYs being configured at about the
+same time it seems this would benefit greatly from something identifying
+which PHY instance the write relates to?
+
+dev_dbg() would certainly be nice...
+
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  .../devicetree/bindings/sound/qcom,sm8250.yaml    | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
 > 
+> Changes in v2:
+> 
+> * Modifed the debug print to include reg offset
+> 
+>  drivers/phy/qualcomm/phy-qcom-qmp-common.h | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-common.h b/drivers/phy/qualcomm/phy-qcom-qmp-common.h
+> index 799384210509..40beb413328f 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-common.h
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-common.h
+> @@ -9,6 +9,7 @@
+>  struct qmp_phy_init_tbl {
+>  	unsigned int offset;
+>  	unsigned int val;
+> +	char *name;
 
-My bot found errors running 'make dt_binding_check' on your patch:
+const?
 
-yamllint warnings/errors:
+Regards,
+Bjorn
 
-dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/sound/qcom,sm8250.example.dts:97.44-45 syntax error
-FATAL ERROR: Unable to parse input tree
-make[2]: *** [scripts/Makefile.lib:427: Documentation/devicetree/bindings/sound/qcom,sm8250.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1430: dt_binding_check] Error 2
-make: *** [Makefile:240: __sub-make] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240801011730.4797-14-quic_wcheng@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+>  	/*
+>  	 * mask of lanes for which this register is written
+>  	 * for cases when second lane needs different values
+> @@ -20,6 +21,7 @@ struct qmp_phy_init_tbl {
+>  	{				\
+>  		.offset = o,		\
+>  		.val = v,		\
+> +		.name = #o,		\
+>  		.lane_mask = 0xff,	\
+>  	}
+>  
+> @@ -27,6 +29,7 @@ struct qmp_phy_init_tbl {
+>  	{				\
+>  		.offset = o,		\
+>  		.val = v,		\
+> +		.name = #o,		\
+>  		.lane_mask = l,		\
+>  	}
+>  
+> @@ -45,6 +48,8 @@ static inline void qmp_configure_lane(void __iomem *base,
+>  		if (!(t->lane_mask & lane_mask))
+>  			continue;
+>  
+> +		pr_debug("QMP PHY: Writing Reg: %s Offset: 0x%04x Val: 0x%02x\n",
+> +			t->name, t->offset, t->val);
+>  		writel(t->val, base + t->offset);
+>  	}
+>  }
+> -- 
+> 2.25.1
+> 
+> 
 
