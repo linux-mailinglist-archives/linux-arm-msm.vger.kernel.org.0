@@ -1,48 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-27685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21EAE9446B5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 10:36:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4264A9447BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 11:14:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 52F841C2323C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 08:36:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F2064286E3F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 09:14:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD48616EB40;
-	Thu,  1 Aug 2024 08:36:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26C2E189BBE;
+	Thu,  1 Aug 2024 09:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VLrhxaOX"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Zgz2dlHr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9530145BEC;
-	Thu,  1 Aug 2024 08:36:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25DB18951C;
+	Thu,  1 Aug 2024 09:12:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722501372; cv=none; b=piPH8wwmamlqQgiF52wg9d0BMme1OPXIUMvNqLpzGzxS6Bh9Ozo2jwZ1FbXMYq5/rieKLbRa5D3b9I71MiAnwE2ddsnjD8H2lJ3yKOuSBRyBjzDUMKwKZ3i7hhujoakLua5CnZDejuEi1TGJpHeJ5MR7od7KTjncH4v8HbpwSxQ=
+	t=1722503526; cv=none; b=nI1+bPRURalqMwRLBwu9diT+jchLZKGqP6WiC7P3xdc9g+5t4HyEZsDqNLT13Ahn4bTpEY3M/TSp3spYDrX6yoeH2b+f5we1w/CySew0H3HEIWdAFZhIk8g++YDJsaJSEzCe8zTFeIfBZ96dGz9KjgdP7fy0VITj2Gd3lIuOOcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722501372; c=relaxed/simple;
-	bh=kToZ6DZN3bFkEWpJg2KNEaPPOHmkG/700tM2Y/uwC+0=;
+	s=arc-20240116; t=1722503526; c=relaxed/simple;
+	bh=OziTlghW/wlMQZK0K9+wYZg1uMjzZ8EsjYPZDOViGlo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=E+olWtx5G2y4PCY3kYeON1Po24MAPLh2MYp3aypNIlaah5yTcZoOfEZ6SKEPBNGg4n0diSq4hAt+HEVSZweW1F1lOMQK0yv1kaKc9GmydaIpRDO9TgFx7LbIfCBVR3JTYeXDI730z1ZLIQli6TFTGg+onC00J/s3w93PtmEXg/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VLrhxaOX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2022C4AF0A;
-	Thu,  1 Aug 2024 08:36:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722501372;
-	bh=kToZ6DZN3bFkEWpJg2KNEaPPOHmkG/700tM2Y/uwC+0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=VLrhxaOX4PX/0DIu6qpOcie50YWnPC8GTK+YPBX9WKJrXecs7MOCGPBJj4jZIh+6o
-	 DYrvpQYAGKbe7W+9oFtz9lkMCnAg2kzp3XkGCs2xgKoEf39T29WVr7pWhyxqUgiMWa
-	 fYvhEHtA43AcyUJTL3X/WMm1ZCGGfP8gtzKcM4lS+3/9qc8LPvlzBnI2DJfOC4Thhw
-	 2VIw+J5Ur5OwpBsXKpoC0CKRAUcK6s5ZMEJYTAlVDJlesl9t18Q5NZarzQfLIVDhS9
-	 jHbfnIg0jea9Q7wFA69Rh2mvmmOGTyoAktXok6FvSYg1mHsuz0ECQxcjkY2mzz+l1r
-	 Z5ViKhMzv4AJQ==
-Message-ID: <0b86676e-0750-46dd-815b-8959a77d4f2d@kernel.org>
-Date: Thu, 1 Aug 2024 10:36:03 +0200
+	 In-Reply-To:Content-Type; b=QadoQ+S7XtZzWQ9gw+iujkDFQG5Clo5xAo8y0FP9qDIejNIhW6JpSrkwApIAfZGiw7EiIOKgIlogEkwtW0RKnRmvCUF/ixRdmO5hakKGPu/HaB5stnO9lsLzzfhLHvX/VEAjhJCP/lCNPx3s1zr5ux3XSsEXijwz2o+DjHvVPDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Zgz2dlHr; arc=none smtp.client-ip=198.175.65.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1722503525; x=1754039525;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=OziTlghW/wlMQZK0K9+wYZg1uMjzZ8EsjYPZDOViGlo=;
+  b=Zgz2dlHrdoWS3aE0aJhPmuHk7fkclfHoFk4GyMnJK/VW4ceQ69A5jYKq
+   QJnN5RYw4j2Wz8zpqvfxFREyAhRvoMo7HxzHhe1XqTXe+RhuXodna4Wzp
+   jKJFhBVHlbac/ahGL/dj4dfINr+RS9MMxhP/WtoG8h/79RMnErDNh8qQG
+   37wO/ftf3ptWFokCb56vQqY7jdsfeVHOdV5acdvT4jR+y0B4+WK4X/Z/X
+   TfINh3HrMRvd9yej+TXs9s2gJNm+L180IE1YEisJLCqU9GGfqnTo2Iu8O
+   0NF5Kqbb+H/5EF+s51E2Lu8JlnLcI2Dp6TBwqPS10X+oVqNLPr+p0EKzw
+   w==;
+X-CSE-ConnectionGUID: dtHe+PwnTgCqtZ7Wweu3cw==
+X-CSE-MsgGUID: Lhyx2c0rQTCQSxf6zwYOew==
+X-IronPort-AV: E=McAfee;i="6700,10204,11150"; a="20383575"
+X-IronPort-AV: E=Sophos;i="6.09,254,1716274800"; 
+   d="scan'208";a="20383575"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2024 02:11:50 -0700
+X-CSE-ConnectionGUID: BHajjV1SQTOmkqgtPprL1g==
+X-CSE-MsgGUID: wBaSr/dKTH29cbTi2Z2zog==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,254,1716274800"; 
+   d="scan'208";a="59089939"
+Received: from lfiedoro-mobl.ger.corp.intel.com (HELO [10.245.246.220]) ([10.245.246.220])
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2024 02:11:43 -0700
+Message-ID: <5f37c04d-f564-40b9-a9f3-d071ea0a6f19@linux.intel.com>
+Date: Thu, 1 Aug 2024 10:40:20 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +67,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v24 00/34] Introduce QC USB SND audio offloading support
+Subject: Re: [PATCH v24 17/34] ASoC: qcom: qdsp6: Add USB backend ASoC driver
+ for Q6
 To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
  mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
  corbet@lwn.net, broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
@@ -61,72 +79,61 @@ Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
  alsa-devel@alsa-project.org
 References: <20240801011730.4797-1-quic_wcheng@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <20240801011730.4797-18-quic_wcheng@quicinc.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240801011730.4797-1-quic_wcheng@quicinc.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <20240801011730.4797-18-quic_wcheng@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 01/08/2024 03:16, Wesley Cheng wrote:
-> Requesting to see if we can get some Acked-By tags, and merge on usb-next.
-> 
-> Several Qualcomm based chipsets can support USB audio offloading to a
-> dedicated audio DSP, which can take over issuing transfers to the USB
-> host controller.  The intention is to reduce the load on the main
-> processors in the SoC, and allow them to be placed into lower power modes.
-> There are several parts to this design:
->   1. Adding ASoC binding layer
->   2. Create a USB backend for Q6DSP
->   3. Introduce XHCI interrupter support
 
-Your patchset is not bisectable. It's v24 and such issues should not pop
-up... So please wait a week for reviews and then post v25 fixing all
-bisectability issues and any other comments.
 
-Best regards,
-Krzysztof
+
+> +static int q6usb_hw_params(struct snd_pcm_substream *substream,
+> +			   struct snd_pcm_hw_params *params,
+> +			   struct snd_soc_dai *dai)
+> +{
+> +	struct q6usb_port_data *data = dev_get_drvdata(dai->dev);
+> +	struct snd_soc_pcm_runtime *rtd = substream->private_data;
+> +	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
+> +	struct q6afe_port *q6usb_afe;
+> +	struct snd_soc_usb_device *sdev;
+> +	int ret;
+> +
+> +	/* No active chip index */
+> +	if (list_empty(&data->devices))
+> +		return -EINVAL;
+> +
+> +	mutex_lock(&data->mutex);
+> +	sdev = list_last_entry(&data->devices, struct snd_soc_usb_device, list);
+> +
+> +	q6usb_afe = q6afe_port_get_from_id(cpu_dai->dev, USB_RX);
+> +	if (IS_ERR(q6usb_afe))
+> +		goto out;
+> +
+> +	/* Notify audio DSP about the devices being offloaded */
+> +	ret = afe_port_send_usb_dev_param(q6usb_afe, sdev->card_idx,
+> +						sdev->pcm_idx);
+> +
+> +out:
+> +	mutex_unlock(&data->mutex);
+> +
+> +	return ret;
+> +}
+
+Humm, multiple questions here
+
+a) is this intentional that the params are not used in a hw_params routine?
+
+b) if yes, could this be replaced by a .prepare callback
+
+c) along the same lines as b), is suspend-resume during playback
+supported? Usually this is handled with a .prepare callback to restore
+connections.
+> +
+> +static const struct snd_soc_dai_ops q6usb_ops = {
+> +	.hw_params = q6usb_hw_params,
+> +};
+
 
 
