@@ -1,179 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-27664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26AB29444AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 08:46:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2865B9444E5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 08:55:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4B1D81C222D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 06:46:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D81DB281B51
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 06:55:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D90B5157A61;
-	Thu,  1 Aug 2024 06:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF01A15855B;
+	Thu,  1 Aug 2024 06:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VvXCQPoy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d9kiV361"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F1F157485;
-	Thu,  1 Aug 2024 06:46:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B683915854E;
+	Thu,  1 Aug 2024 06:55:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722494781; cv=none; b=WwcKxft9ZrIFlrz3A3g8AbiTTq15Qvs5u+Zcze/o4IlhcPDEILITiK8+QYt+hPB+I57IGAnzl615UufaGJnPt+iwUkA99DllqkVbSnNfCEUhsSW4CkLgxXokIeBG3A1Y9X5N1T/o0srmINIKM1RGfh7ZJFhWrbIJ0bCVIhTpaYs=
+	t=1722495304; cv=none; b=W1rBrIU/7/v0kfN6W35MqCRIPaLU1+opRGGecZ6KsErgq5GsuMXVgqD6GpNy8ZtsAgbjRya+YWrS2X8ob6Fv6Cg5XdVt085LqI7PKquNI+BP1mdpJ0Y/f+QlncJ6oclPNHALw73CsW27j8YaE0VFzfcCSxoTYe+iIQAWYH5HiIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722494781; c=relaxed/simple;
-	bh=/w+LuyiehuoQOmgW5szWQzLu9BG3A4kyfYsruydpDnE=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UnxnJMzha29+euZ6n3t/It4rMNRywMZJ3vJKOMQsuneUcsJ7AR7J23iYUxFgSGtDXDCnn2He1W3sOAG5qWKqLpW8IRS155OLpdGppdTC4do1m+Nw7xLOHtngYsyT0ObaMqeS+YdnOPgSS18+a1qbmVMLflMqP75CBQdJT/PW0hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VvXCQPoy; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47120tth031483;
-	Thu, 1 Aug 2024 06:46:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	8/PGrtCu/nw9yK9UjzOwGi0VHWjtRnilWB9+2fUVZrI=; b=VvXCQPoyINGkae/m
-	tNgnTl8lemAO0FPO+oNYSvGZfOGFrlAXZWAbR2rZgB2BMiOI/8a9ETyL9ESbWnd1
-	TpdqBZP/I77pu/MxsuVrn9RbmYnWoRZ78NQhDZ75NR9zL9q3kG1SPk7/xOOS9RM/
-	QHnD1mp04VtKKF3Om8TkzCSJ2u39B2KSVA8XNUNDT92YGuNV7liBXLQXUJX2aFTh
-	fq767hzs02RCxGi8eR81yxiTycWhPU63TPhirlqq8s9+21jeXWHA6TfW/+QKvLbN
-	HBmAfMsBhmEMMsf0Ft936s0jew0dvnlYyZ2yBxN735gZcG09Bc0A8bzmztLlCNHc
-	Gky4wg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40mqw7dxht-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 01 Aug 2024 06:46:13 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4716kC25023942
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 1 Aug 2024 06:46:12 GMT
-Received: from hu-jkona-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 31 Jul 2024 23:46:06 -0700
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Taniya Das
-	<quic_tdas@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        "Satya
- Priya Kakitapalli" <quic_skakitap@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        "kernel
- test robot" <lkp@intel.com>
-Subject: [PATCH V4 2/2] dt-bindings: clock: qcom: Drop required-opps in required on SM8650 camcc
-Date: Thu, 1 Aug 2024 12:14:48 +0530
-Message-ID: <20240801064448.29626-3-quic_jkona@quicinc.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240801064448.29626-1-quic_jkona@quicinc.com>
-References: <20240801064448.29626-1-quic_jkona@quicinc.com>
+	s=arc-20240116; t=1722495304; c=relaxed/simple;
+	bh=HOKNNnybr8vVI+CenbuRHSy81M/wqIhPpxRQv9NWUoY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=t9iYNj7e/G/3n2NQUj0/dTTAWYfX7QcDZY/bOudVu+jqUKI9KiFeyGjJkCwr6WfGGoWlNuCs2gjCAQHv5FKqi59qWQDy6Cbat0OC2b/MbX6xq6Wn5OSLTgq5Nlx2VLAldsEI4mPr/6jHpOKJrF/2LFWNkjyA50h4w9PdubJqMTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d9kiV361; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71DFC4AF0A;
+	Thu,  1 Aug 2024 06:55:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722495304;
+	bh=HOKNNnybr8vVI+CenbuRHSy81M/wqIhPpxRQv9NWUoY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=d9kiV361GzPZKR5XC0GAwJInrK5PlMk4VKb6GpKn61lZtw/FdY8aVZZVg+i7zk+O8
+	 KOo1FJZwsDy1cXt1znBqm6pqjlYnQ9dRsEaJy9S1KzxxMkU/AXpoX5Uw/dxVcUnTVn
+	 YT554rTNpJvU/kg8JRJpSOSe0kLJPvAbSe0nppGwdEPWNLyaSn/VuOK8R+ePvZxdm2
+	 9z97fPncxIhLi9IHPotLj80NaatGpOF/eOmTxZ6b2ubG5oJUyKFfIc4gNlckpxYnvC
+	 2+AUmGvn0fiDTyIOFjtsUxo3xBRjmIqssK63kzus/in1zrLVEhv/xldS8pAlTwMXZp
+	 D2HxiqXgiIExg==
+From: Vinod Koul <vkoul@kernel.org>
+To: devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Rayyan Ansari <rayyan.ansari@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org, 
+ linux-phy@lists.infradead.org, Rob Herring <robh@kernel.org>
+In-Reply-To: <20240715130854.53501-1-rayyan.ansari@linaro.org>
+References: <20240715130854.53501-1-rayyan.ansari@linaro.org>
+Subject: Re: [PATCH 0/2] Convert Qualcomm SATA PHY bindings to dtschema
+Message-Id: <172249530042.256913.13518178288820179470.b4-ty@kernel.org>
+Date: Thu, 01 Aug 2024 12:25:00 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: b1Z__1SiHS0ITgBcUam6BXWOpRqKi71L
-X-Proofpoint-GUID: b1Z__1SiHS0ITgBcUam6BXWOpRqKi71L
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-01_04,2024-07-31_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=954 spamscore=0 impostorscore=0 lowpriorityscore=0
- clxscore=1015 bulkscore=0 adultscore=0 suspectscore=0 malwarescore=0
- phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408010037
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
-On SM8650, the minimum voltage corner supported on MMCX from cmd-db is
-sufficient for clock controllers to operate and there is no need to specify
-the required-opps. Hence remove the required-opps property from the list of
-required properties for SM8650 camcc bindings.
 
-This fixes:
+On Mon, 15 Jul 2024 14:01:05 +0100, Rayyan Ansari wrote:
+> The following patches:
+> - Convert the old apq8064 and ipq806x text bindings, to a new unified
+>   qcom,sata-phy binding in yaml.
+> - Remove reg-names from the SATA PHY node in apq8064.dtsi to conform to
+>   the bindings
+> 
+> Thanks,
+> Rayyan
+> 
+> [...]
 
-arch/arm64/boot/dts/qcom/sm8650-hdk.dtb: clock-controller@ade0000:
-'required-opps' is a required property
+Applied, thanks!
 
-arch/arm64/boot/dts/qcom/sm8650-mtp.dtb: clock-controller@ade0000:
-'required-opps' is a required property
+[1/2] dt-bindings: phy: qcom,sata-phy: convert to dtschema
+      commit: 4bf8b462f84dd81c5938341a5468c3b669dbb1af
+[2/2] ARM: dts: qcom: apq8064: drop reg-names on sata-phy node
+      (no commit info)
 
-arch/arm64/boot/dts/qcom/sm8650-qrd.dtb: clock-controller@ade0000:
-'required-opps' is a required property
-
-Fixes: 1ae3f0578e0e ("dt-bindings: clock: qcom: Add SM8650 camera clock controller")
-Reported-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Closes: https://lore.kernel.org/all/0f13ab6b-dff1-4b26-9707-704ae2e2b535@linaro.org/
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202407070147.C9c3oTqS-lkp@intel.com/
-Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
----
- .../bindings/clock/qcom,sm8450-camcc.yaml     | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-index f58edfc10f4c..26afbbe65511 100644
---- a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
-@@ -21,9 +21,6 @@ description: |
-     include/dt-bindings/clock/qcom,sm8650-camcc.h
-     include/dt-bindings/clock/qcom,x1e80100-camcc.h
- 
--allOf:
--  - $ref: qcom,gcc.yaml#
--
- properties:
-   compatible:
-     enum:
-@@ -57,7 +54,21 @@ required:
-   - compatible
-   - clocks
-   - power-domains
--  - required-opps
-+
-+allOf:
-+  - $ref: qcom,gcc.yaml#
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,sc8280xp-camcc
-+              - qcom,sm8450-camcc
-+              - qcom,sm8550-camcc
-+              - qcom,x1e80100-camcc
-+    then:
-+      required:
-+        - required-opps
- 
- unevaluatedProperties: false
- 
+Best regards,
 -- 
-2.45.2
+Vinod Koul <vkoul@kernel.org>
 
 
