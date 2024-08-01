@@ -1,126 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-27700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0ED5894475D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 11:02:47 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CEC59447DC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 11:16:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ADEEB1F229A4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 09:02:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D5A85B26438
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 09:16:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EC63170854;
-	Thu,  1 Aug 2024 09:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E59AB19EEC0;
+	Thu,  1 Aug 2024 09:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4WsrT4I0"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KXUJfgKW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f74.google.com (mail-wr1-f74.google.com [209.85.221.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D02917165E
-	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Aug 2024 09:01:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58ABD19E7E3;
+	Thu,  1 Aug 2024 09:12:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722502908; cv=none; b=fCXXvFKvTj6hWmVMAKIAgcMiFp3ihCGMJBEHkaoKBnmjPOzLoVtk0f7arSMRVwyyRl2ik3/IvrBnstMNfKqey4jYyBCVB3RsR/XFel9hGFcU8QuI/qMZRIWN8s4Gqgh1H0hWxwCHAjiNMe0VdmK7oxINPA2NU1bPVtfLNZxWR9w=
+	t=1722503537; cv=none; b=mPsqAJd+lJ4rrYkf6KLSj7LL2iorzVEGCm/qE1ouCgf4qc3zlfqjabPtIYSHqVXJTSCbjUyx8BKjLZJpmKS3O3ffwoHDF2Dn3JISDJ72tUQZVLQRRUx6eHIQWAUYevfFXW4dGtgIIXcxS+rGqTXGS4zsxU+l2nv/cTbhPWegJ8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722502908; c=relaxed/simple;
-	bh=7g0DlirT/kYCBVr+9dRDXVKvBiF25jbrjn9HL4AfHFU=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=MTRlUVHFdMXMivUt4ZlQ7n21RUz6IC9a52gbEZuOFxh2CuXNhkFTOtKOOk9QkONyvJagC2gfWh8AlxjgIvA3nx4KpKv51On/ENH9a+v9H/PnkH9g6QkqFBceSQpLmrSK2k3rQ+Bwx8YDk2JxvuRgddoyjn3JtT2fPVEly7qKzj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4WsrT4I0; arc=none smtp.client-ip=209.85.221.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--tabba.bounces.google.com
-Received: by mail-wr1-f74.google.com with SMTP id ffacd0b85a97d-36835f6ebdcso4080146f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Aug 2024 02:01:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1722502905; x=1723107705; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8IHbq3nRTqO2jYrZNiv7GHjdo//AKiTG6CX0+AzFu78=;
-        b=4WsrT4I0qutrM2J00Hx5SwFkHKE2/Yqxxsf/jyyolCuZcKHupiH1NreW4EREe43vQA
-         6sMadTeeGwIrdfK/bzLKIpruH9Vn0Pmk//r90gSjoZVGBIZiHHod2GBada5gVznf78/7
-         3UwWOaA8eQZelmW5D8T1yFadxYxojWBcXb/6XfiO7rbTDPlcMww54fqUrdJXiu8R/xaV
-         d75AllT4LqPgZrejYZmN5cyeH75vZRjN1UJuENhZIVsmczYzFKFtJLt1upmz/SfZX0l1
-         5/6Tj13lIzJv10PKUun6oO18WmabQlFvzx6Nympy3VaWzAIRp8zVHa61CIZLWJUbSiZq
-         86YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722502905; x=1723107705;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8IHbq3nRTqO2jYrZNiv7GHjdo//AKiTG6CX0+AzFu78=;
-        b=BRxB+9CX6jPPeNg276iP//vY1lqCNkCsttYLqiz1yc35MWXsdp53jEL51TGHwL7xN2
-         yRIJpOywLD/jygRbykcuKYsH8lBSvYksRMSvsBZtBJk2R7YR36+VFjl9UFa3C8nrKNmS
-         gLN5qpYaaYlaAVkMnpB4SaFQgB409jN4bNXuWX5Q3MFlI1a+GhjbL03ZFnd+yFwq8+hJ
-         /RUjV4aIEQekrQukvsRKheo5qnwoYtC9iHysdPKdYbqqZ2QCOpiAcObQIblT7yd8U4TW
-         AJDZFYO3CVPfbiS1v+zN+kmPV3M6s0gz9tCaYpMPsMHyhO0eIb26yJVdFJG6641HiBrm
-         H8Hw==
-X-Forwarded-Encrypted: i=1; AJvYcCVgtHk4nwutlO0wDnDTwGJD6JL3Yui2Whf2pgsvDTCZDbP5+lvyByDx0I9TulfOb2CdeRU4cNUgO2RDOgBESxgVl9qOHLQweB9P7Cv00w==
-X-Gm-Message-State: AOJu0YxC+uvvFCyNZ75Y+WUGCeIBLE3SnoiPvi68w+U0PPAT5aNTCsLX
-	D3EnINSvjktOpl+bdM6SEKGfAS6uW+r4sfcgVEt8K8AycsyEIbnN2UE+poM7318W2zE9H+4IdA=
-	=
-X-Google-Smtp-Source: AGHT+IEYAOIgImAvC/AtXq27Mfc53Y7PA+fVTX3Rlx+IY0/mIU2S6P/V0TnGwu9UoSydDFeidGnaFL2tvg==
-X-Received: from fuad.c.googlers.com ([fda3:e722:ac3:cc00:28:9cb1:c0a8:1613])
- (user=tabba job=sendgmr) by 2002:a5d:4569:0:b0:368:5d2:9e5b with SMTP id
- ffacd0b85a97d-36baa9ed838mr3368f8f.0.1722502905208; Thu, 01 Aug 2024 02:01:45
- -0700 (PDT)
-Date: Thu,  1 Aug 2024 10:01:17 +0100
-In-Reply-To: <20240801090117.3841080-1-tabba@google.com>
+	s=arc-20240116; t=1722503537; c=relaxed/simple;
+	bh=hlG5dmxzgBQ8QYdl97vTifyi/3aA4LNWtHjoLyb36DE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IjKqT5vsTgAyNd1n68XHPUivfU7wlmXTakn/t1K79w7Zz15D6lnx5pNl+6pMlz0TCDiNZ3NNM9VQbt9r59OWkEMGO9XOdoZeDwmo0R05PEudV+1CfVKLKIm6OFXI5cydIaSF91wWroDue/8C5NOx6n7h+WHbOqCAxwnJup4BOH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KXUJfgKW; arc=none smtp.client-ip=198.175.65.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1722503537; x=1754039537;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=hlG5dmxzgBQ8QYdl97vTifyi/3aA4LNWtHjoLyb36DE=;
+  b=KXUJfgKWoOEfFByV2rhbtJe9TbUq6DkE8ZWcvaUhxf6ZEdKkDIEKy70A
+   OPdg3L3kzpAtgBG3xcf8cGyMCv2okkJcMJNFZvgf+H+CfFCxY/TFsZ3eO
+   0inHlU7jdOlznPlofZAO0SQw6az+Vw464lrELJC+9Wvkn6pLrBPNOACzq
+   3REdCteyIWf5Si1zfUsOWvlecLkEthmkIYW6fkxnCa++tR6ui3lSIEiqu
+   qQ/FFo3pkNDwVTYh/kWV15I9pR10iaq446bjJfGG0KmHqGjU9+jefTjRU
+   28dJJxfmV1VfijVHir2HCNWPcy/mihKlBnsCI1qjnx3AkogEuqNust4YC
+   Q==;
+X-CSE-ConnectionGUID: KuOPl7lDTD+2/78Q//cjDA==
+X-CSE-MsgGUID: 1+9KjdwUSmunaba3aYz9ag==
+X-IronPort-AV: E=McAfee;i="6700,10204,11150"; a="20383695"
+X-IronPort-AV: E=Sophos;i="6.09,254,1716274800"; 
+   d="scan'208";a="20383695"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2024 02:12:16 -0700
+X-CSE-ConnectionGUID: as0uoOqLRVyGfgF+j/kEug==
+X-CSE-MsgGUID: YgCYS42HRumVFZ5NUqy/dA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,254,1716274800"; 
+   d="scan'208";a="59090227"
+Received: from lfiedoro-mobl.ger.corp.intel.com (HELO [10.245.246.220]) ([10.245.246.220])
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Aug 2024 02:12:10 -0700
+Message-ID: <4d5fe3f8-d7ba-4647-8dd7-22656ec2fde5@linux.intel.com>
+Date: Thu, 1 Aug 2024 11:02:08 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20240801090117.3841080-1-tabba@google.com>
-X-Mailer: git-send-email 2.46.0.rc1.232.g9752f9e123-goog
-Message-ID: <20240801090117.3841080-11-tabba@google.com>
-Subject: [RFC PATCH v2 10/10] KVM: arm64: Enable private memory kconfig for arm64
-From: Fuad Tabba <tabba@google.com>
-To: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
-	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
-	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	tabba@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v24 29/34] ALSA: usb-audio: qcom: Add USB offload route
+ kcontrol
+To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+ mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+ corbet@lwn.net, broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
+ Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, tiwai@suse.com,
+ gregkh@linuxfoundation.org, robh@kernel.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ alsa-devel@alsa-project.org
+References: <20240801011730.4797-1-quic_wcheng@quicinc.com>
+ <20240801011730.4797-30-quic_wcheng@quicinc.com>
+Content-Language: en-US
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <20240801011730.4797-30-quic_wcheng@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Now that the infrastructure is in place for arm64 to support
-guest private memory, enable it in the arm64 kernel
-configuration.
 
-Signed-off-by: Fuad Tabba <tabba@google.com>
----
- arch/arm64/kvm/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/kvm/Kconfig b/arch/arm64/kvm/Kconfig
-index 58f09370d17e..8b166c697930 100644
---- a/arch/arm64/kvm/Kconfig
-+++ b/arch/arm64/kvm/Kconfig
-@@ -37,6 +37,7 @@ menuconfig KVM
- 	select HAVE_KVM_VCPU_RUN_PID_CHANGE
- 	select SCHED_INFO
- 	select GUEST_PERF_EVENTS if PERF_EVENTS
-+	select KVM_PRIVATE_MEM_MAPPABLE
- 	help
- 	  Support hosting virtualized guest machines.
- 
--- 
-2.46.0.rc1.232.g9752f9e123-goog
+> +ifneq ($(CONFIG_SND_USB_QC_OFFLOAD_MIXER),)
+> +snd-usb-audio-qmi-objs += mixer_usb_offload.o
+> +endif
+> \ No newline at end of file
 
+add one?
+
+> diff --git a/sound/usb/qcom/mixer_usb_offload.c b/sound/usb/qcom/mixer_usb_offload.c
+> new file mode 100644
+> index 000000000000..c00770400c67
+> --- /dev/null
+> +++ b/sound/usb/qcom/mixer_usb_offload.c
+> @@ -0,0 +1,101 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/usb.h>
+> +
+> +#include <sound/core.h>
+> +#include <sound/control.h>
+> +#include <sound/soc-usb.h>
+> +
+> +#include "../card.h"
+> +#include "../mixer.h"
+> +#include "../usbaudio.h"
+> +
+> +#include "mixer_usb_offload.h"
+> +
+> +#define PCM_IDX(n)  (n & 0xffff)
+> +#define CARD_IDX(n) (n >> 16)
+> +
+> +static int
+> +snd_usb_offload_route_get(struct snd_kcontrol *kcontrol,
+> +		      struct snd_ctl_elem_value *ucontrol)
+> +{
+> +	struct device *sysdev = snd_kcontrol_chip(kcontrol);
+> +	int card;
+> +	int pcm;
+> +
+> +	card = soc_usb_get_offload_device(sysdev, CARD_IDX(kcontrol->private_value),
+> +					  PCM_IDX(kcontrol->private_value),
+> +					  SND_SOC_USB_KCTL_CARD_ROUTE);
+> +
+> +	pcm = soc_usb_get_offload_device(sysdev, CARD_IDX(kcontrol->private_value),
+> +					 PCM_IDX(kcontrol->private_value),
+> +					 SND_SOC_USB_KCTL_PCM_ROUTE);
+> +	if (card < 0 || pcm < 0) {
+> +		card = -1;
+> +		pcm = -1;
+> +	}
+> +
+> +	ucontrol->value.integer.value[0] = card;
+> +	ucontrol->value.integer.value[1] = pcm;
+> +
+> +	return 0;
+> +}
+
+see my earlier comment, should those two calls be collapsed to return
+all the information in one shot?
+
+> +
+> +static int snd_usb_offload_route_info(struct snd_kcontrol *kcontrol,
+> +			      struct snd_ctl_elem_info *uinfo)
+> +{
+> +	uinfo->type = SNDRV_CTL_ELEM_TYPE_INTEGER;
+> +	uinfo->count = 2;
+> +	uinfo->value.integer.min = -1;
+> +	/* Arbitrary max value, as there is no 'limit' on number of PCM devices */
+> +	uinfo->value.integer.max = 0xff;
+> +
+> +	return 0;
+> +}
+> +
+> +static struct snd_kcontrol_new snd_usb_offload_mapped_ctl = {
+> +	.iface = SNDRV_CTL_ELEM_IFACE_CARD,
+> +	.access = SNDRV_CTL_ELEM_ACCESS_READ,
+> +	.info = snd_usb_offload_route_info,
+> +	.get = snd_usb_offload_route_get,
+> +};
+> +
+> +/**
+> + * snd_usb_offload_create_ctl() - Add USB offload bounded mixer
+> + * @chip - USB SND chip device
+> + *
+> + * Creates a sound control for a USB audio device, so that applications can
+> + * query for if there is an available USB audio offload path, and which
+> + * card is managing it.
+> + */
+> +int snd_usb_offload_create_ctl(struct snd_usb_audio *chip)
+> +{
+> +	struct usb_device *udev = chip->dev;
+> +	struct snd_kcontrol_new *chip_kctl;
+> +	struct snd_usb_stream *as;
+> +	char ctl_name[37];
+> +	int ret;
+> +
+> +	list_for_each_entry(as, &chip->pcm_list, list) {
+> +		chip_kctl = &snd_usb_offload_mapped_ctl;
+> +		chip_kctl->count = 1;
+> +		/*
+> +		 * Store the associated USB SND card number and PCM index for
+> +		 * the kctl.
+> +		 */
+> +		chip_kctl->private_value = as->pcm_index |
+> +					  chip->card->number << 16;
+> +		sprintf(ctl_name, "USB Offload Playback Route PCM#%d",
+> +			as->pcm_index);
+> +		chip_kctl->name = ctl_name;
+> +		ret = snd_ctl_add(chip->card, snd_ctl_new1(chip_kctl,
+> +				  udev->bus->sysdev));
+> +		if (ret < 0)
+> +			break;
+> +	}
+> +
+> +	return ret;
+
+None of this looks Qualcomm-specific, shouldn't this be part of the
+soc_usb framework instead of being added in the qcom/ stuff?
 
