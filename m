@@ -1,160 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-27752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C36119454CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 01:11:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 92DBB9454E7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 01:27:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A6F4DB214A1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 23:11:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 10BE0B22492
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 23:27:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05D3F14D42C;
-	Thu,  1 Aug 2024 23:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 368CF14D6F9;
+	Thu,  1 Aug 2024 23:26:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IE8pL9G/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kGeep0n8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AEE1482E2;
-	Thu,  1 Aug 2024 23:11:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C83A14D294
+	for <linux-arm-msm@vger.kernel.org>; Thu,  1 Aug 2024 23:26:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722553886; cv=none; b=RMHFk0kun6fFCG8UTQ8xILSzaIal7PHTAasVDpT7JNAEZnM4Ei04RTc9QwnzYK/nkzSIWZwcQEJEFSvc3AmZMGAjFRCXijLwHrJV6OxBtMpb+IBAPCxm9rX52sIlTlYXoz+f3QhBelKK5Ssb0+ZHB1JmFDp9oIX3e8yvWh5W4Dw=
+	t=1722554814; cv=none; b=dSVComWzv8z1rABfw3OP71oQQ7C4Cn4akF6qArxPMhdqtGgffL+vOAAueKpfJzyRvYpP5Z1Cd4ElJinhdYOYzwYtc0e3K/sRSgMgToLPYzF7Q0w4AkiRbQ17DdVaLLKmpUP4Dm8uAK4QBMPZo2nHhVN5skWiM0+QKH/ijHzZZtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722553886; c=relaxed/simple;
-	bh=yi8KpVxNcIf5YHxoeXQGLtFB31e6KiwZl0CwWBdzZqk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=fX8Acj/PORniCTxO0j3w3kbwNL1kt7oy/+O0Q3XWg5d+DxJz5CZ8l31LNPhRAacHSIJnMpTgq6rCeN+1XBmLvfUcYf2RfSzgAb8yVM3f0DqfhH8cs3J+p6bB4SfTcdtsfWMTeu0hnqWamDTZP8ZwD0e/h+ffZY2HeTBDC2w2CO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IE8pL9G/; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 471LaAgY009955;
-	Thu, 1 Aug 2024 23:11:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	c7sFS96b9Nrhzms9CFZDvZZzdzQm/xXxadPg2syXGPk=; b=IE8pL9G/F8tc8k68
-	hsBudRVPhDpBI44vQhO5LH1vM8leRlpxiHLbpAIeTxPJBrD+1lTWE0ZSPGjPhOLg
-	SWRBX5sTwIrd7EpARqfxFqdDDREOdxv0fiCjghL7D8PUa7CWqUdCK9h0+htn5cug
-	K3y//UhRxy1XFLw55fgwQ4MwhHiPcAZKlj4XLuDxf8eLUWs9/AoxfuV35zndmOjN
-	KxMGF6zB5Q7I+74+rbgcgt0Wn62ykr+m85vvTUQ2VfxAOVJlExQJ45np9lQtvPI4
-	rDEczFDvPPqmdBexy7I2SmI+bU1cR1yYMB4ZaPcWvjJUSr/roqujFxWCo8zUS7wA
-	pgdXJw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40rje204ra-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 01 Aug 2024 23:11:01 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 471NB0uA029525
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 1 Aug 2024 23:11:00 GMT
-Received: from [10.71.115.74] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 1 Aug 2024
- 16:11:00 -0700
-Message-ID: <1a284449-204a-4d01-90c9-ec6b1ed56e30@quicinc.com>
-Date: Thu, 1 Aug 2024 16:10:59 -0700
+	s=arc-20240116; t=1722554814; c=relaxed/simple;
+	bh=2COs+2CScpsMjyw2XQ+B14vKPr0ufm67TpkB8p3L3+M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ijMKRfyylOA0POG8Sffi5V1wndEXwFPm6XAoCWDnlHl7d/to3IOv+S4STeRSzCIseCHvqtTCaU8DwIjvO5GDik9zM67RjH8TP8jvqVciBrr4O5tUdC0uCjbVVEJW2DlbjuYDTXtEVaVDERiE4yx5cmFpqmB0O1DqO7apDJO/hKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kGeep0n8; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2ef2c56da6cso85246341fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Aug 2024 16:26:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1722554809; x=1723159609; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2VEGUPDRRqhVW/PJkPAae6CRq9ZnKyovwy6ZCh6qQPw=;
+        b=kGeep0n8kgNqKaASCLO8rx5bg6N/xKELmRIILVmiExvb9LYO31x96KKV9kqzGEiYEM
+         REYO6NRcPlbl2dV4HFavtNIO4OD3PXnoEhQz7XS7GN1MsQz8wWs5OCVQyTB8OSZ/eSbg
+         3ZxAQ1TFA4YVx3l41J2xUx4OQTIYPFfLBfQ8v2zx6IBhMRal93aafUo//x0sEG5fokUa
+         q8qOR3s5PM3tT0D0stlQRq+5Fk46JBmK9H/PO9HUmY25lA642T/c/EhCq6XhEYZ71Ljp
+         4vnVsCXKH7Tc8Ntu3dQjLbrvnfzhOx8Swb+Dn2+sxTMOtyY3UcvEekkU1IB3lm5U4NgI
+         /gyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722554809; x=1723159609;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2VEGUPDRRqhVW/PJkPAae6CRq9ZnKyovwy6ZCh6qQPw=;
+        b=TVlRL1nFMnQ0TUm0WjyeUaYh2G5HQj+Mr0NfhNYjBNW8uOp5tu/0bWwqkXYxwJnvJC
+         J6YuHd2QajBIza15JJx4EK2k/0ne4Yc5c356ZDHxsQrK6QHR44LLqulTiJA0+zYdJRlP
+         LsU29aa+uvoIfHuFcyg+MF94Yrx+Wl467oSvzfPnIpPO8fpfCUVTBk/AlyC22z29S36U
+         +yCLr+r1y5ldsKnpCuklrGQPyU0ayTSnw3yPIX3+gk9uJHYkllAD2x3MWDx5u4ogCczJ
+         c69BPN2tKgIulYJHgDWZ3kpp8i/ecjA4uOYlTGBfavju6RWsT6a3aOn9ds6YFf2T0rCC
+         LGsg==
+X-Forwarded-Encrypted: i=1; AJvYcCWJdFyFVzw/EB8JOll9Wv83eQvdbjKHeQIj9MLJVa1BBFB4Jp1AoaXGhMmDMbPrHMGn+TflvkxDzO8+xH8CpNmvG+knYryGpbHC0Sqfrw==
+X-Gm-Message-State: AOJu0Yx96G6C7Lim00p0HtdX0OBKc3gdlG2p2qq9/bvsKJPusVJgAo0H
+	8+y0FE11lORsQGvNnMflyla0GtRQNWYtlx4NSjrn3YbgazVaSmEjjITRGJVNcts=
+X-Google-Smtp-Source: AGHT+IE4Mua+Rvlk/mPH7ZfoTa6bGdKOO4U17oj0KhChirq7ABB8vqTIToIdDn48zSCe17DTxHCx/g==
+X-Received: by 2002:a05:6512:118a:b0:52c:dc57:868b with SMTP id 2adb3069b0e04-530bb3b150cmr1017683e87.13.1722554809015;
+        Thu, 01 Aug 2024 16:26:49 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (dzdbxzyyyyyyyyyyybrhy-3.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-530bba3cfe3sm75233e87.281.2024.08.01.16.26.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Aug 2024 16:26:48 -0700 (PDT)
+Date: Fri, 2 Aug 2024 02:26:46 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Chandan Uddaraju <chandanu@codeaurora.org>, 
+	Rajesh Yadav <ryadav@codeaurora.org>, Jeykumar Sankaran <jsanka@codeaurora.org>, 
+	Sravanthi Kollukuduru <skolluku@codeaurora.org>, Archit Taneja <architt@codeaurora.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dpu: move dpu_encoder's connector assignment to
+ atomic_enable()
+Message-ID: <tdmzxhdd2hml4zrecawelmw5p2wrqqhzqoxip4wlbzmb2dvfpe@tmoinnmcpxsf>
+References: <20240731191723.3050932-1-quic_abhinavk@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v24 17/34] ASoC: qcom: qdsp6: Add USB backend ASoC driver
- for Q6
-To: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
-        <broonie@kernel.org>, <lgirdwood@gmail.com>, <krzk+dt@kernel.org>,
-        <Thinh.Nguyen@synopsys.com>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
-        <gregkh@linuxfoundation.org>, <robh@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>
-References: <20240801011730.4797-1-quic_wcheng@quicinc.com>
- <20240801011730.4797-18-quic_wcheng@quicinc.com>
- <5f37c04d-f564-40b9-a9f3-d071ea0a6f19@linux.intel.com>
-Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <5f37c04d-f564-40b9-a9f3-d071ea0a6f19@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: hQDGrD7cDUhEfYLSjo0qNE7E1pifnf-y
-X-Proofpoint-ORIG-GUID: hQDGrD7cDUhEfYLSjo0qNE7E1pifnf-y
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-01_21,2024-08-01_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- spamscore=0 mlxscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0
- priorityscore=1501 adultscore=0 mlxlogscore=999 clxscore=1015
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408010155
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240731191723.3050932-1-quic_abhinavk@quicinc.com>
 
-Hi Pierre,
+On Wed, Jul 31, 2024 at 12:17:22PM GMT, Abhinav Kumar wrote:
+> For cases where the crtc's connectors_changed was set without enable/active
+> getting toggled , there is an atomic_enable() call followed by an
+> atomic_disable() but without an atomic_mode_set().
+> 
+> This results in a NULL ptr access for the dpu_encoder_get_drm_fmt() call in
+> the atomic_enable() as the dpu_encoder's connector was cleared in the
+> atomic_disable() but not re-assigned as there was no atomic_mode_set() call.
+> 
+> Fix the NULL ptr access by moving the assignment for atomic_enable() and also
+> use drm_atomic_get_new_connector_for_encoder() to get the connector from
+> the atomic_state.
+> 
+> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+> Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 
-On 8/1/2024 1:40 AM, Pierre-Louis Bossart wrote:
->
->
->> +static int q6usb_hw_params(struct snd_pcm_substream *substream,
->> +			   struct snd_pcm_hw_params *params,
->> +			   struct snd_soc_dai *dai)
->> +{
->> +	struct q6usb_port_data *data = dev_get_drvdata(dai->dev);
->> +	struct snd_soc_pcm_runtime *rtd = substream->private_data;
->> +	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
->> +	struct q6afe_port *q6usb_afe;
->> +	struct snd_soc_usb_device *sdev;
->> +	int ret;
->> +
->> +	/* No active chip index */
->> +	if (list_empty(&data->devices))
->> +		return -EINVAL;
->> +
->> +	mutex_lock(&data->mutex);
->> +	sdev = list_last_entry(&data->devices, struct snd_soc_usb_device, list);
->> +
->> +	q6usb_afe = q6afe_port_get_from_id(cpu_dai->dev, USB_RX);
->> +	if (IS_ERR(q6usb_afe))
->> +		goto out;
->> +
->> +	/* Notify audio DSP about the devices being offloaded */
->> +	ret = afe_port_send_usb_dev_param(q6usb_afe, sdev->card_idx,
->> +						sdev->pcm_idx);
->> +
->> +out:
->> +	mutex_unlock(&data->mutex);
->> +
->> +	return ret;
->> +}
-> Humm, multiple questions here
->
-> a) is this intentional that the params are not used in a hw_params routine?
-Think this was answered in patch#34.
-> b) if yes, could this be replaced by a .prepare callback
->
-> c) along the same lines as b), is suspend-resume during playback
-> supported? Usually this is handled with a .prepare callback to restore
-> connections.
 
-I don't see us supporting that throughout any of the QC based DAI drivers, so this probably isn't implemented yet.  In terms of supporting system PM suspend for this USB offload path, we're going to explicitly stop the audio stream from the USB offload driver (qc_audio_offload) before we suspend the usb device. (refer to qc_usb_audio_offload_suspend())
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # SM8350-HDK
 
-Thanks
+Thanks a lot!
 
-Wesley Cheng
-
->> +
->> +static const struct snd_soc_dai_ops q6usb_ops = {
->> +	.hw_params = q6usb_hw_params,
->> +};
->
+-- 
+With best wishes
+Dmitry
 
