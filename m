@@ -1,169 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-27609-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27640-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61EFA9440E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 04:20:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D2399440E2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 04:21:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 18FA6B2E164
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 01:59:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 009621F27E3B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 02:21:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42E5C157E62;
-	Thu,  1 Aug 2024 01:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 761D81EB4B8;
+	Thu,  1 Aug 2024 01:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HEeyU4JC"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gKPPOgho"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC375153BD7;
-	Thu,  1 Aug 2024 01:18:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1EC51EB481;
+	Thu,  1 Aug 2024 01:53:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722475116; cv=none; b=fXY/vKnoYC7wVMob/Dv9rCSoK3UYkLA5jt6BFnZfrR3aLbv+GDtMUUzjhddD6u+pvXzm5mriPeKy/J2BJGYxzItGeTebW27sCitO0D4Cgh4GkzxqpY/sALbsdCchk25EcobD/IouVYB8sjrltV0+oo/2YOtsMBVOkwt0/k5IzO4=
+	t=1722477212; cv=none; b=ud6zFxJ1fungcDBmyPkFQ0+rTGNc9Vzp1m9LN/XUZTYQYUezYNkN37vlLE7AGAp3cW3cGaFZYs4iwiJx+l69xm5fVF65NZHybAfQ6TAKO8ZTcGqRgPsRi2haOcJ+Dz/oQAiMrezET9d02pa9aANnHS/0ow1tNyw9JDT/jwYITf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722475116; c=relaxed/simple;
-	bh=nbpzghXoozOSKRfY4X/efc5Vvr75u27iINS2af+nHL0=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C/jvvpxWPtMSs3oBuzghZx7EtBeSXw3f78iDkXFNckRE0eLCckE8dCIjYjP6Lfm6cwZcppt+euQWBqxQIsM6ppmQjDy0mU+lz5iKLZ98YFzu7j8UNq7Ocor7z7Ki4LEWkZW3Z753my/WucIzZs+9ThDuQZqIcV+Jn5Vco1vSJWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HEeyU4JC; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1722477212; c=relaxed/simple;
+	bh=UQ9V6G6YvgbMQzkYH2Dccn5w29o7+DCl2JMf1pWwIJk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=lX51E6d+UEc2KL5mCXEKCTfx3cWuGm246yJJbkiHb3ppykTRgCmgKAJSR5ezTU8rQ+TqOPUx3Z6ApzBxL9zRj3zoh/9s1rjKAGJ1GRtfjsev7L04YxHYdBlX8YdGcyaulJFFbtPvQAy5ewh2je6vAASfgsHNcD3xnWefaz2I+Z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gKPPOgho; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46VF2WmX021468;
-	Thu, 1 Aug 2024 01:17:51 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46VJUwRD011775;
+	Thu, 1 Aug 2024 01:53:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=9a7035xQ2oD3K2KYVWK3JXn2
-	oRFgQXUvTYxERWW8hWM=; b=HEeyU4JCmldJXQlsD9YYIzitVI9NC4AzkZOdnj3P
-	6S7pufN4pa1nvHwuTZuLPXwl7jOs8KXUa2uy/IXpWBkemToSuFroGtJMhMdB/rCJ
-	HZTLP3R/mmqd8h2EiAPpYweGzZfjjp5FNZWmNUEU/NUZVsssJ6/SokC3yX1JZGnX
-	7eemXCe6J9U8X7u5sqaqSHStm6fFacYE5QuoWq6U5iGbU3Cuu6FctQ5EzXFqJ5k7
-	rhEWnDxUmG4wHSDzntqer9hOHRzMkh2UNS2Cohl6uyaad67tYKuCKO0bsSZ4qngc
-	+3gVtSK4SHSnOQvikhHoUmLXfUO2yuW/zH2//cVRuY4WEQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40ms43d1t3-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QMQGHGQgU140SfEEIFKk2WOGgR8jjWSTdiIYe2/sfjw=; b=gKPPOgho5vXY3/DU
+	09KzLJBymRbyRBOpTX4cutETGmfL7fVMzSfVfLvUu0LLFcJH+S54s/FEcqe0YJ52
+	kjo+nBSupUCWfCj31bUyzElm1yG4kXZwa1R7rdu+i6CPyMNUFm0FDnvXbAJePe2s
+	62b0M9s9fS8iST9ogSsE7AmEWENKBllzBnUPgJocd7cpdYD6tu8PBX7jkFcVrTRt
+	c1y2AhDLXCNJSxQh7xca9bE95SFCnDnsv0r1PiPpZRye5ZnmyaikZLCQWcwKB/1D
+	0nspfS9q3+gY+mFF4ndexVNjXjYwREsgyM/IpBsq5T9PYvRj8b/ty4hrGiZ/hrjA
+	52YZ0g==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40qugagtk3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 01 Aug 2024 01:17:50 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4711HooP020179
+	Thu, 01 Aug 2024 01:53:26 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4711rOEx011016
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 1 Aug 2024 01:17:50 GMT
-Received: from hu-wcheng-lv.qualcomm.com (10.49.16.6) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 31 Jul 2024 18:17:49 -0700
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-To: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
-        <broonie@kernel.org>, <lgirdwood@gmail.com>, <krzk+dt@kernel.org>,
-        <Thinh.Nguyen@synopsys.com>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
-        <gregkh@linuxfoundation.org>, <robh@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, Wesley Cheng <quic_wcheng@quicinc.com>
-Subject: [PATCH v24 30/34] ALSA: usb-audio: Allow for rediscovery of connected USB SND devices
-Date: Wed, 31 Jul 2024 18:17:26 -0700
-Message-ID: <20240801011730.4797-31-quic_wcheng@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240801011730.4797-1-quic_wcheng@quicinc.com>
-References: <20240801011730.4797-1-quic_wcheng@quicinc.com>
+	Thu, 1 Aug 2024 01:53:24 GMT
+Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 31 Jul
+ 2024 18:53:19 -0700
+Message-ID: <30d56910-df7b-4459-b557-effc21ffa132@quicinc.com>
+Date: Thu, 1 Aug 2024 09:53:16 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/13] media: qcom: camss: Add CSID Gen3 support for
+ SM8550
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Krzysztof Kozlowski
+	<krzk@kernel.org>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
+CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        Yongsheng Li
+	<quic_yon@quicinc.com>
+References: <20240709160656.31146-1-quic_depengs@quicinc.com>
+ <20240709160656.31146-10-quic_depengs@quicinc.com>
+ <1da50dd1-b170-4775-94fc-19a10b7f9c47@kernel.org>
+ <4c8095dd-4f96-4b0e-9282-8bdfb5badbc3@quicinc.com>
+ <9255b3e4-874c-4919-b50a-919cf0f42f75@kernel.org>
+ <3011c561-d39e-4ce5-a544-33f24ca7a67c@quicinc.com>
+ <bd6f3613-5a96-438a-a2df-cb2728e30c29@linaro.org>
+Content-Language: en-US
+From: Depeng Shao <quic_depengs@quicinc.com>
+In-Reply-To: <bd6f3613-5a96-438a-a2df-cb2728e30c29@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9S_P9pn8659PSrOAQXeQjyZHGgMI6Ucx
-X-Proofpoint-ORIG-GUID: 9S_P9pn8659PSrOAQXeQjyZHGgMI6Ucx
+X-Proofpoint-GUID: VxdVmoKdjTn37BnJuEMLqdhBNhhZrjJu
+X-Proofpoint-ORIG-GUID: VxdVmoKdjTn37BnJuEMLqdhBNhhZrjJu
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-31_11,2024-07-31_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- impostorscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
- mlxlogscore=999 suspectscore=0 phishscore=0 priorityscore=1501
- clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408010004
+ definitions=2024-07-31_12,2024-07-31_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
+ impostorscore=0 mlxscore=0 spamscore=0 malwarescore=0 phishscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2408010010
 
-In case of notifying SND platform drivers of connection events, some of
-these use cases, such as offloading, require an ASoC USB backend device to
-be initialized before the events can be handled.  If the USB backend device
-has not yet been probed, this leads to missing initial USB audio device
-connection events.
+Hi Bryan,
 
-Expose an API that traverses the usb_chip array for connected devices, and
-to call the respective connection callback registered to the SND platform
-driver.
+On 8/1/2024 12:12 AM, Bryan O'Donoghue wrote:
+> On 31/07/2024 16:26, Depeng Shao wrote:
+>> I'm preparing the next version patches, then I find it is hard to 
+>> avoid such warning if only apply current patch, since this will be 
+>> used in the below patch, it will be in structures csid_res_8550 -> 
+>> sm8550_resources -> camss_dt_match, so I need to add all 
+>> csid_res_8550, sm8550_resources, camss_dt_match into this patch if I 
+>> want to avoid the compile warning,
+>> then I also need to add compatible info for it to avoid 
+>> sm8550_resources has unused variable warning, but the sm8550_resources 
+>> structure also need to add other items to make it complete, then the 
+>> driver will be incomplete but can be probed with this patch.
+>>
+>> { .compatible = "qcom,sm8550-camss", .data = &sm8550_resources },
+>>
+>> https://lore.kernel.org/all/20240709160656.31146-14-quic_depengs@quicinc.com/
+> 
+> Couldn't you just add the public structures at the same time they are 
+> referenced in &sm8550_resources ?
+> 
+> That way your patchset would progressively apply with no warnings.
+> 
 
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
----
- sound/usb/card.c                  | 21 +++++++++++++++++++++
- sound/usb/card.h                  |  2 ++
- sound/usb/qcom/qc_audio_offload.c |  2 ++
- 3 files changed, 25 insertions(+)
+Sorry, I don't get it, but in my understanding, but looks like the only 
+way to avoid the compile warning is that adding compatible change in 
+early patch set.
 
-diff --git a/sound/usb/card.c b/sound/usb/card.c
-index 8f1051e1716e..70b7f22ff495 100644
---- a/sound/usb/card.c
-+++ b/sound/usb/card.c
-@@ -155,6 +155,27 @@ int snd_usb_unregister_platform_ops(void)
- }
- EXPORT_SYMBOL_GPL(snd_usb_unregister_platform_ops);
- 
-+/*
-+ * in case the platform driver was not ready at the time of USB SND
-+ * device connect, expose an API to discover all connected USB devices
-+ * so it can populate any dependent resources/structures.
-+ */
-+void snd_usb_rediscover_devices(void)
-+{
-+	int i;
-+
-+	guard(mutex)(&register_mutex);
-+
-+	if (!platform_ops || !platform_ops->connect_cb)
-+		return;
-+
-+	for (i = 0; i < SNDRV_CARDS; i++) {
-+		if (usb_chip[i])
-+			platform_ops->connect_cb(usb_chip[i]);
-+	}
-+}
-+EXPORT_SYMBOL_GPL(snd_usb_rediscover_devices);
-+
- /*
-  * disconnect streams
-  * called from usb_audio_disconnect()
-diff --git a/sound/usb/card.h b/sound/usb/card.h
-index e98883785301..f0794aa06cd7 100644
---- a/sound/usb/card.h
-+++ b/sound/usb/card.h
-@@ -218,4 +218,6 @@ struct snd_usb_platform_ops {
- 
- int snd_usb_register_platform_ops(struct snd_usb_platform_ops *ops);
- int snd_usb_unregister_platform_ops(void);
-+
-+void snd_usb_rediscover_devices(void);
- #endif /* __USBAUDIO_CARD_H */
-diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
-index b862aa15aa37..3a89dedfd9ac 100644
---- a/sound/usb/qcom/qc_audio_offload.c
-+++ b/sound/usb/qcom/qc_audio_offload.c
-@@ -1898,6 +1898,8 @@ static int __init qc_usb_audio_offload_init(void)
- 	if (ret < 0)
- 		goto release_qmi;
- 
-+	snd_usb_rediscover_devices();
-+
- 	return 0;
- 
- release_qmi:
+I can add the compatible change and structure sm8550_resources in the 
+early patch, but the structure sm8550_resources will just have very few 
+info in this patch. Then fill the other elements in sm8550_resources in 
+the following patches, this can avoid the warning, but the issue is that 
+the sm8550 can be probed once having patch set 1, but the 
+sm8550_resources isn't complete in patch set 1.
+Could you please common if this is fine?
+
+patch set 1
++{ .compatible = "qcom,sm8550-camss", .data = &sm8550_resources },
+
+
++static const struct camss_resources sm8550_resources = {
++	.version = CAMSS_8550,
++	.pd_name = "top",
++	.icc_res = icc_res_sm8550,
++	.icc_path_num = ARRAY_SIZE(icc_res_sm8550),
++	.link_entities = camss_link_entities
++};
+
+
+patch set2 - Adding csiphy driver and csiphy res to sm8550_resources
+static const struct camss_resources sm8550_resources = {
+	.version = CAMSS_8550,
+	.pd_name = "top",
++	.csiphy_res = csiphy_res_8550,
+	.icc_res = icc_res_sm8550,
+	.icc_path_num = ARRAY_SIZE(icc_res_sm8550),
++	.csiphy_num = ARRAY_SIZE(csiphy_res_8550),
+	.link_entities = camss_link_entities
+};
+
+
+patch set 3 - Adding csid driver and csid res to sm8550_resources
+static const struct camss_resources sm8550_resources = {
+	.version = CAMSS_8550,
+	.pd_name = "top",
+	.csiphy_res = csiphy_res_8550,
++	.csid_res = csid_res_8550,
+	.icc_res = icc_res_sm8550,
+	.icc_path_num = ARRAY_SIZE(icc_res_sm8550),
+	.csiphy_num = ARRAY_SIZE(csiphy_res_8550),
++	.csid_num = ARRAY_SIZE(csid_res_8550),
+	.link_entities = camss_link_entities
+};
+
+> ---
+> bod
+
+Thanks,
+Depeng
 
