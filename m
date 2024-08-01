@@ -1,64 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-27654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73F4D9441C5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 05:22:34 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BAB269441C7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 05:22:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A65491C22735
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 03:22:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7615128450E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 03:22:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F54714A60E;
-	Thu,  1 Aug 2024 03:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE74C14B090;
+	Thu,  1 Aug 2024 03:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dh7t1DnS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cqONjEU4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC5014A600;
-	Thu,  1 Aug 2024 03:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E82E14B06E;
+	Thu,  1 Aug 2024 03:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722482406; cv=none; b=BCj9zF57yD6JR1qQ2USodcPyTbUSf/3+iKLq4CfzjBBg0h7eEg/kHKxcb2qU6KjSJzR05by15RYyJ5dNVZaAhclvsnf6L7ZcbRW7kVKTbmu5HSnZs+sV5YhncI8slThzD1qkFJky33PBLGt5s5poj9FVxijbDlxhIU7Cor71OL8=
+	t=1722482407; cv=none; b=lxVydyFv0fmDQntpno5l3bN8EG68Ea3bXcTFN8gA7JQll3pVBXTUau5FcxriubhArNFz8bfe60fq3HUQwNhxsmoOPKBlDNWfizbMwTY8hvPMWq/B3skdoPtOMzAkdSAsGqM9Q33NIMLp4OLIqS605QbpMDGP+xSL5K63wLgTsyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722482406; c=relaxed/simple;
-	bh=rLUjBEvMax6m2utxb/++8xf71UtwXVnjbOIIQiIN6/U=;
+	s=arc-20240116; t=1722482407; c=relaxed/simple;
+	bh=NPDnxqoGeG1tj/Br1Mz6ALdJhdHfEc7EQxfanZLFBQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EDMTXDrMT5vqgHiajh/iymSxhGwx+sF4O79ZfRaJfldrRzChW1pWbhzyp+rQthvf8YiKYhj8GYWn4HzKj10XIWSjhIuTd5uN4i5EXAYCU3U82mZeiFOkEAlYJJ4zz45BUOKfvAQjGWCX0J8dY30Kk173TTrwY2WHfM9AE/w8hks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dh7t1DnS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A11C4AF12;
-	Thu,  1 Aug 2024 03:20:04 +0000 (UTC)
+	 MIME-Version:Content-Type; b=IEltEMpNU8QZ4xVPe2kaSjmKAp0CjCe14lK9TFRrgaaX55Bl0RCFACgWIgXfBBw2XbHp2Cbm6pJ9eZsAh+9qpKTCg+kZLC36xZYcRF4LFxuOKY5xA3/b7TYUJLjAvTl7gXVfHfH4L2wYEUwybXWiV7+Xw0HzzPNLCxmfRVR5BGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cqONjEU4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF07C4AF0E;
+	Thu,  1 Aug 2024 03:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722482405;
-	bh=rLUjBEvMax6m2utxb/++8xf71UtwXVnjbOIIQiIN6/U=;
+	s=k20201202; t=1722482407;
+	bh=NPDnxqoGeG1tj/Br1Mz6ALdJhdHfEc7EQxfanZLFBQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dh7t1DnS50Kqt/2amN+2xosOEchT1E+9tWxZxWZTzIS99coNl+BL2UQ/r9uxRl1ji
-	 o4ZOrA3Y6zSK2sT+eReCa80ybhoIHnBULxgInqoKGWRgaIMp3JLsmIAEmMaSRmL04r
-	 VlHo+lkqWmmeQdqkTN+L3JcEWLwo0ds8d9Yiv1EptPZx0Ak6+3bbKyL3ygKFjAzqLu
-	 hlDmisU7jn5pjLam7RwmjdHId+ohDH7SSgtJ8KBLTk7cHTaW7jJGs8Fmw0xBWJNURy
-	 /CrXB/MPbSJtEn5y2r28k6NT1JQ1OeEDoIfbsdy8Hko1RN/NTfHuylXuW57NtZTNAX
-	 znZj/gEwSw+uQ==
+	b=cqONjEU4Sj94/hQV3IMGI1TqCxY4ELmBHpaXZPMCZVutz0ETD4F5HTfJ5Qbj8PbIW
+	 y5cUcgBAmAdLRadXqezImPpXNKEvIm+jQxbmxJX09gAHqM+9/39oRLDBKaaLQn14eg
+	 htttqYD0xIIwNUTTDVW271rWhwrUZPEgF8ydHX8+IUicjiNXU+ebA4uUC9/0dzVkKz
+	 mqW1Cl837ybAYVOn1WBFZFbU9bCLcgkROLbYdzoKFFv8IIFt9yE8Uvu5G9BpiaNRTX
+	 UM0ZO3QFix3FCOR+oT+E82Ly+ljkyMtG6yFWzKCxmD1aR+rmACUXmQkKFN8N8dQhbG
+	 TCRmYgnAIxjoQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: agross@kernel.org,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org,
-	richardcochran@gmail.com,
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Abhishek Sahu <absahu@codeaurora.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	Ankit Sharma <quic_anshar@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Cc: Stephen Boyd <sboyd@codeaurora.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org
-Subject: Re: [PATCH V1] arm64: dts: qcom: sa8775p: Add capacity and DPC properties
-Date: Wed, 31 Jul 2024 22:19:47 -0500
-Message-ID: <172248238600.319692.2947279740029817295.b4-ty@kernel.org>
+	devicetree@vger.kernel.org,
+	Ajit Pandey <quic_ajipan@quicinc.com>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>,
+	stable@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: (subset) [PATCH V3 0/8] Add camera clock controller support for SM8150
+Date: Wed, 31 Jul 2024 22:19:48 -0500
+Message-ID: <172248238599.319692.12998742883120092670.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240731111951.6999-1-quic_anshar@quicinc.com>
-References: <20240731111951.6999-1-quic_anshar@quicinc.com>
+In-Reply-To: <20240731062916.2680823-1-quic_skakitap@quicinc.com>
+References: <20240731062916.2680823-1-quic_skakitap@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,17 +78,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 31 Jul 2024 16:49:51 +0530, Ankit Sharma wrote:
-> The "capacity-dmips-mhz" and "dynamic-power-coefficient" are
-> used to build Energy Model which in turn is used by EAS to take
-> placement decisions.
+On Wed, 31 Jul 2024 11:59:08 +0530, Satya Priya Kakitapalli wrote:
+> Add camcc support and Regera PLL ops. Also, fix the pll post div mask.
 > 
+> Changes in V3:
+>  - Split the fixes into separate patches, remove RETAIN_FF flag for
+>    gdscs and document the BIT(15) of pll alpha value.
+>  - Link to v2: https://lore.kernel.org/all/20240702-camcc-support-sm8150-v2-1-4baf54ec7333@quicinc.com
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sa8775p: Add capacity and DPC properties
-      commit: 717ca334afd7ceb8170aa1bdad736f6a712c9220
+[8/8] arm64: dts: qcom: Add camera clock controller for sm8150
+      commit: f75537a42afbbe3f652c73493741448586df7719
 
 Best regards,
 -- 
