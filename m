@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-27650-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27651-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63ECF9441B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 05:21:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 292209441B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 05:21:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C8C15B23904
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 03:21:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D29E91F22B68
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 03:21:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D8EF145B1E;
-	Thu,  1 Aug 2024 03:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90EA21487D1;
+	Thu,  1 Aug 2024 03:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HYL/5EfD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eZFOptOk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53BA1145A18;
-	Thu,  1 Aug 2024 03:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669C61474D3;
+	Thu,  1 Aug 2024 03:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722482400; cv=none; b=M6YsEDtASsPX0hh5orpeBkw2ia7eZACNi5SrPFpdXxK51bUWw/feKcJBLqZPvlKsYG/a95qG8l8dP+FdVP6QlceuoEVmXHyFIk4gQNk0z0O5lTYovU7649NA5AvpNNbmnx/5/K+6DsljPxvQ/bkTD7ycb+APmXaWrjJmprRJKDk=
+	t=1722482401; cv=none; b=OWct063iD+Ga41vZQCl1edaDhjzojq8YnyYFRYwxjDr/d2HhTnj6W2yWjQ4Xom2dM24kaCd8oLK0nn5EgRTAOnlEVaPqO/FiPxgJ2QClzudVIhJfwJ9R1Yvxev58IR5dXcNtjJqB1hSD37HwMrm3zjVTlG/kLo74bXKVkwNV5Zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722482400; c=relaxed/simple;
-	bh=iSl0QKKw7pMP+VcoYhgRu1y6qOW+jX9zX4plqWU2MrY=;
+	s=arc-20240116; t=1722482401; c=relaxed/simple;
+	bh=25TrG4O2kN94BnmymtTMRYzSKgHLaUJUcOFTVR/I09g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qzY/SdJ+saOZFNeHF9F3Z0FzU0oH/5lSL4BbE8pEmkCOU0+cROx/baOBTXXQYtXNIdrQHj/D8hyxcl5yBts/FjB/su6T5/PncX+mzuIJQa45HfgoxMuAvDZjfSIknA4qJW4pwYEvgMjND9pC+VfkbdNhRMscjS01+xGJ5OEHAjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HYL/5EfD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E954C4AF0F;
-	Thu,  1 Aug 2024 03:19:59 +0000 (UTC)
+	 MIME-Version:Content-Type; b=lX92IqJ5AbV6mWtmXdkmw2LnkPxS6dc7UE4vbxfsCnrJEelFyyrNnxvavcaNzvPGIKamYDPMUGUolxvphX0uAkKJjMdHxPR+jFHJ7YP69raHytjBYD4V48JMUbn1BVjbPAUUglibLdWmZRal7oXv6RsyrTjl9Z/jBBtJ+dOk2iM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eZFOptOk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7154DC4AF09;
+	Thu,  1 Aug 2024 03:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722482400;
-	bh=iSl0QKKw7pMP+VcoYhgRu1y6qOW+jX9zX4plqWU2MrY=;
+	s=k20201202; t=1722482401;
+	bh=25TrG4O2kN94BnmymtTMRYzSKgHLaUJUcOFTVR/I09g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HYL/5EfDFogWU0M/XdPkCwnyP6JapJmoooqqjLvotJAxjNRWGxKGIRt1f/GmmfaQB
-	 6bSCmi8F7lRC07K29xWx1w9Nue4r2DAcjV2uOpHOo9yv6hOcSxmCwofC8o3isxwDeF
-	 oQTp42gVA/YKEri0Ra0IRu44lPlYee9xS7y+LBxf3TAVOhN6i8zT8wPQPHMUZ0MDPi
-	 1/CBpIb/MrLUXK6m+70bgp5lTPFSMH7SoVRA1JEwIc0rmMMQBFMMTHJw+c6ihWiJCr
-	 cPMX8pbV998lraghr5O5Zajabdk3yzaipXm+jVrojZTPHTSoqMdVvPesXFSZ6sLS3D
-	 kYuMyC+VmUt+Q==
+	b=eZFOptOkeNNCr2kwiS6tnofW2NUH4GnmpYoU1LHNgjmIQNpdiXUNUPKsr02+4hfov
+	 hpQsSXYhfdPLU0riLjIis0gkDJei5fNMQ1s2BVOBMccfrIBFnedX+/uHWJ0NN0fjFD
+	 p6qCEwUUNVEDs/m59W1RjOa2ed9fXU81opgF23UUwUdqLaplO60L4i1lGkbK4XEGh4
+	 0hD7GqQ+Q3Fj5Cbfnhh+d1dJrQ5NV8hLVqtdKapQ48PRNL+5JJ9CVXdKEDzr/ZQCcR
+	 5vkigLu80QjLXObPyq7YGM9PdTcGlEsFm7rRKxbMLHidWxYyZF7iLKAYNWQkppUX3y
+	 Uwx5ZlpEQFKCg==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Johan Hovold <johan+linaro@kernel.org>
@@ -50,17 +50,15 @@ Cc: Rob Herring <robh@kernel.org>,
 	Sibi Sankar <quic_sibis@quicinc.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Xilin Wu <wuxilin123@gmail.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 00/12] arm64: dts: qcom: x1e80100: QCP/Vivobook/Yoga PCIe fixes
-Date: Wed, 31 Jul 2024 22:19:43 -0500
-Message-ID: <172248238584.319692.1972804229523008569.b4-ty@kernel.org>
+Subject: Re: (subset) [PATCH v2 0/8] arm64: dts: qcom: x1e80100: PCIe fixes and CRD modem support
+Date: Wed, 31 Jul 2024 22:19:44 -0500
+Message-ID: <172248238583.319692.7680841582882308787.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240722095459.27437-1-johan+linaro@kernel.org>
-References: <20240722095459.27437-1-johan+linaro@kernel.org>
+In-Reply-To: <20240722094249.26471-1-johan+linaro@kernel.org>
+References: <20240722094249.26471-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,43 +69,32 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 22 Jul 2024 11:54:47 +0200, Johan Hovold wrote:
-> Here's a follow-up series addressing some issues in the QCP, Vivobook
-> and Yoga devicetrees that had been carried over from the x1e80100 CRD
-> dts.
+On Mon, 22 Jul 2024 11:42:41 +0200, Johan Hovold wrote:
+> This series fixes some issues with the current x1e80100 PCIe support,
+> adds the PCIe5 nodes and enables the modem on the CRD.
 > 
-> Note that I don't have access to the schematics for these machine so
-> this is based on the qualified assumption that the PHY supplies are the
-> same as on the reference design (and similarly for the PCIe4 pins).
+> The fixes should go into 6.11, but the modem support depends on them so
+> I decided to send everything in one series.
+> 
+> As Konrad noted some of these issues have been reproduced in the other
+> x1e80100 dts. I'll send a separate series addressing that.
 > 
 > [...]
 
 Applied, thanks!
 
-[01/12] arm64: dts: qcom: x1e80100-qcp: fix PCIe4 PHY supply
-        commit: f03dd49f884f428ba71efe23383ff842f4f15e0e
-[02/12] arm64: dts: qcom: x1e80100-qcp: fix up PCIe6a pinctrl node
-        commit: 0aab6eaac72ac140dfc5e0a38bf3178497762e43
-[03/12] arm64: dts: qcom: x1e80100-qcp: disable PCIe6a perst pull down
-        commit: 12661b333374c892f9053261b4bceb346a709ea4
-[04/12] arm64: dts: qcom: x1e80100-qcp: fix missing PCIe4 gpios
-        commit: 2ac90e4d2b6d6823ca10642ef39595ff1181c3fa
-[05/12] arm64: dts: qcom: x1e80100-vivobook-s15: fix PCIe4 PHY supply
-        commit: e89fe0596c62363082cabbaa5ccb38989e714e68
-[06/12] arm64: dts: qcom: x1e80100-vivobook-s15: fix up PCIe6a pinctrl node
-        commit: c67b3dfd8d69164f70ab3aaff889fca1e536c909
-[07/12] arm64: dts: qcom: x1e80100-vivobook-s15: disable PCIe6a perst pull down
-        commit: d7ff5d1868d1cfd1c06a601a7cfa2dbb6dba4be9
-[08/12] arm64: dts: qcom: x1e80100-vivobook-s15: fix missing PCIe4 gpios
-        commit: e7f3f3cbbfef84729ad6c10eb589957e7b28b95a
-[09/12] arm64: dts: qcom: x1e80100-yoga-slim7x: fix PCIe4 PHY supply
-        commit: b90567c262fc3a3e703f3091499dec799a6147ab
-[10/12] arm64: dts: qcom: x1e80100-yoga-slim7x: fix up PCIe6a pinctrl node
-        commit: a655dacf2a35a35eadd95f0ba8fe9cf70359eeb9
-[11/12] arm64: dts: qcom: x1e80100-yoga-slim7x: disable PCIe6a perst pull down
-        commit: 750b8a3b5a4476cf000f3db1fe46293c97fcd979
-[12/12] arm64: dts: qcom: x1e80100-yoga-slim7x: fix missing PCIe4 gpios
-        commit: 86c71c0e893d58447e4a9e5c0d1c2c0f89c1b9e1
+[1/8] arm64: dts: qcom: x1e80100-crd: fix PCIe4 PHY supply
+      commit: 30f593fa0088b89f479f7358640687b3cbca93d4
+[2/8] arm64: dts: qcom: x1e80100: fix PCIe domain numbers
+      commit: f8fa1f2f6412bffa71972f9506b72992d0e6e485
+[3/8] arm64: dts: qcom: x1e80100: add missing PCIe minimum OPP
+      commit: 98abf2fbd179017833c38edc9f3b587c69d07e2a
+[4/8] arm64: dts: qcom: x1e80100-crd: fix up PCIe6a pinctrl node
+      commit: 6e3902c499544291ac4fd1a1bb69f2e9037a0e86
+[5/8] arm64: dts: qcom: x1e80100-crd: disable PCIe6a perst pull down
+      commit: 8a6e1dbf1362e78081e71b2690750e9556136f26
+[6/8] arm64: dts: qcom: x1e80100-crd: fix missing PCIe4 gpios
+      commit: 42b33ad188466292eaac9825544b8be8deddb3cb
 
 Best regards,
 -- 
