@@ -1,62 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-27644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF7CA944199
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 05:19:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2A3A94419D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 05:20:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F65A1F22AD0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 03:19:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 305231C2229B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 03:20:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DCFF101C4;
-	Thu,  1 Aug 2024 03:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6C8213D606;
+	Thu,  1 Aug 2024 03:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C+t5D0Qm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SHqVWmKS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212B2D2F5;
-	Thu,  1 Aug 2024 03:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A10813D511;
+	Thu,  1 Aug 2024 03:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722482393; cv=none; b=VauGzqtqMbDjVuz8dhEbFbrYnjBvgjx4B/Kz+MfUq+YsjuNUlXAfkLWpitupgtlCZ+uU6a50JxRMGh+FD+D6xiZG/zMgMC1One1ohoCDd6QCvN1E1YEVlYEpcetQk1xK7jzb6ns1hFs/a4DzDI9C/KDe55UhlyYMM4AwgVIx3p4=
+	t=1722482394; cv=none; b=ST8K8wd4Wrx9pfxN64jV3ifE1HFxYSkx0rg3RE0GUQzl18utvKH+8ImR1IV9uwLKBZoaZzF7CnZomlXBUHe4iHp0nzOorCV7N6ORSxWRgykFGkRzUouR6N+s4f8XEum94fJzFjm5ZyrouDxyMGVEp78OpBtKxgcVhhMFChF0AxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722482393; c=relaxed/simple;
-	bh=j4qNjnFeaBxGuhlpqsnK2Dt/QWclDh6C1BYeV7o8GGs=;
+	s=arc-20240116; t=1722482394; c=relaxed/simple;
+	bh=hq4fbO0nCQySaHAPhslUho5zCLTVTAPlslWr291HDKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ghyH0BNxOBd3kvnFgWRv4u+uvFE3TkT4ctmyURd6ZnvM15XzhK/w7wYykbqhaZGO2QLkdkgs1OLbutcW9vlzwCTIDJ/Dc5PQXXda4mq/AaPWLV+XUjV16UBxesHooeQkYuljFw+6J1fPWcLstGseCWIUz9JoVTKQUegjTm4D0ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C+t5D0Qm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD9DC116B1;
-	Thu,  1 Aug 2024 03:19:51 +0000 (UTC)
+	 MIME-Version:Content-Type; b=W17c+QwoxoJmMzQAvJJzW4jTneixAqhLcxMAGPfjRYZvVFj2h8XEK1sR0pEkyUN2iy7xYd8NQCjSAgLfVD7LsjSavr604MhMobgvB7dj2N7cAzm+BKvsfFqSsrUWox6C1xVOVp9M9qHJ8mddU34WlxYAMvEvYfmF9g/j3zsfjC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SHqVWmKS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18F5C4AF0C;
+	Thu,  1 Aug 2024 03:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722482392;
-	bh=j4qNjnFeaBxGuhlpqsnK2Dt/QWclDh6C1BYeV7o8GGs=;
+	s=k20201202; t=1722482394;
+	bh=hq4fbO0nCQySaHAPhslUho5zCLTVTAPlslWr291HDKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C+t5D0Qmr5zV8JDJ4oYfPO+2/CsYEaIc4LGwiVwPGWv0veumfeGMY1+OOFFgAMMA7
-	 icLneJqgivfGSP1TaAAH9UvlZ8cxhO6jBkuu9gk9y69Aou/8ECJK829aQj5ZeDhvwN
-	 Igqoio9qj6o/wtgnMVsSQctKd1sDgc/1n8Zqb56yVQCtbXWWPZMVvnyLG10WHMyAJ5
-	 t6Q4nli0o261nkZZmfPq2+Hyja9Du0vnTsUCUriwr9Mj13NTIgTscqKDCuApMnP36S
-	 +DmmH2mzaxMuv/r4nRk/T6w57h425qv03xnOZRAOYpQJBKMD5VRz4MPKNzCIcdPWKB
-	 RzCsnKQgP9csA==
+	b=SHqVWmKSl9pE1TV+5t/34D4SnsqzdPUhVXoG0ScO8o0tVa1dVRjk1d/gjxXugY3+T
+	 vRKXmCYUTo2roTXVjOieKNvOSxBdx42UYhVQ+AGnqs5SEhitsIwkg8ufh1tNCkLsu9
+	 8OMPKTY1WikNJmfMTQ+sIBm7UJWD8tIeiGvCGAyG8AazMP3ummgYoytr97YKZxzoNL
+	 hstTmA5aIL/ZexhDYActmyaO8FGRuDOxf+A6+Yi7SbETEUcGKDWKlj7wLZSOpCHalq
+	 J8ym84hpfeLibXinSm9J8s8S/2g4FzLqtQ/5S/4wWehQb+602QsdWIIhbO9LxIUw3Q
+	 zTUmoxDzzX/zQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: petr.vorel@gmail.com,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org,
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	Alexander Reimelt <alexander.reimelt@posteo.de>
+	Bjorn Andersson <andersson@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 0/2] arm64: Add basic support for LG H815
-Date: Wed, 31 Jul 2024 22:19:37 -0500
-Message-ID: <172248238592.319692.13778827618889612885.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: (subset) [PATCH v2 0/7] arm64: dts: qcom: sc8180x: Enable the USB multiport controller
+Date: Wed, 31 Jul 2024 22:19:38 -0500
+Message-ID: <172248238596.319692.11676986885229900887.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240727201413.114317-1-alexander.reimelt@posteo.de>
-References: <20240727201413.114317-1-alexander.reimelt@posteo.de>
+In-Reply-To: <20240730-sc8180x-usb-mp-v2-0-a7dc4265b553@quicinc.com>
+References: <20240730-sc8180x-usb-mp-v2-0-a7dc4265b553@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,23 +72,24 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sat, 27 Jul 2024 20:04:48 +0000, Alexander Reimelt wrote:
-> Changes in v3:
-> - use 0x0 consistently
-> - pad to 8 digits
-> - drop compatible = "framebuffer" because it's unused
-> - drop chosen
+On Tue, 30 Jul 2024 20:24:37 -0700, Bjorn Andersson wrote:
+> The USB multiport controller found in SC8180X is used to driver the
+> camera in the Lenovo Flex 5G, and a couple of additional USB ports on
+> the Primus AUX board.
 > 
-> Thanks again for your time.
-> 
-> [...]
 
 Applied, thanks!
 
-[1/2] dt-bindings: arm: qcom: Add LG G4 (h815)
-      commit: d2e577267cc29841d9f316ff65494d1892fed13c
-[2/2] arm64: dts: qcom: msm8992-lg-h815: Initial support for LG G4 (H815)
-      commit: ed3c955cab3a9d5a9bce4756e4bd3390f9c23e1f
+[3/7] arm64: dts: qcom: sc8180x-pmics: Add second PMC8180 GPIO
+      commit: c8d8e936bc820eaad0ca725ac0456f4839e50ad3
+[4/7] arm64: dts: qcom: sc8180x: Align USB nodes with binding
+      commit: 82a40c7b06566bf0ff4fb7fbf29ab7b267c78f03
+[5/7] arm64: dts: qcom: sc8180x: Add USB MP controller and phys
+      commit: 96aab8ff59a9fca54dd0e13660684b4a8e73e1a3
+[6/7] arm64: dts: qcom: sc8180x-primus: Enable the two MP USB ports
+      commit: e12953d3b126dbff40a8531b99c377d653f0e27d
+[7/7] arm64: dts: qcom: sc8180x-lenovo-flex-5g: Enable USB multiport controller
+      commit: c1ece392ed906cc598a7b96234961721060aae05
 
 Best regards,
 -- 
