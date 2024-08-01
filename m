@@ -1,98 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-27657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DED119441D4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 05:24:00 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 686B09442CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 07:48:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 89F431F21F31
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 03:24:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C19AAB20E91
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Aug 2024 05:48:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6EE113C90C;
-	Thu,  1 Aug 2024 03:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAEFD152532;
+	Thu,  1 Aug 2024 05:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sv+rifGd"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DvodYHVr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962F31EB494;
-	Thu,  1 Aug 2024 03:22:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E4B13D62F;
+	Thu,  1 Aug 2024 05:48:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722482558; cv=none; b=OWXXDeNsIxtYFNaVSIK5+Mo8zUaKQTUYWnvAUKS4M2s9hmV2SXUFYAnHiap9U2BshCTzeMpGDfRYtY1kp3jm372CYVCN5M3pHhef86223LUYMAHYaqWfB36jfoiRyx5uneYRrxMLpnvs5ICOV2bHbuVK8sQN0072ZMhLxs+96So=
+	t=1722491319; cv=none; b=NkOr/PjnCE+8N4H7nD9PtbI3nm6fOoA8tW19N760mqPhjewv3NafMbRhG9gYl3Ukukz/m6QzH2CvSBSVoIc2jI3YslkntJLvs4p/we2BpsKT3lCb7qvy/+Nl/LXqY0Iei0wbkXzaCKX+BWQzuDvmPawvwg1s1AY3w07aS84x9zU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722482558; c=relaxed/simple;
-	bh=cwZNlFkg/6uwcZmn5bSEtGCnUEUd5RzuUF0gLreCNwE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cNzi2DS5bFWNv2BnxBldf675ygnvQP7FZTNEqcUqAQSANMvF5CQYd81uvVTUjdePdK8B+P0GGaxxz6zbUIQ7Vu/4q2ScEyg1Nh04BJK9mC61GzUi+NT5aI/HToTuNb/TJN7ja0AqW3RaijGMQRt9odYHQ6ZtViyih1mlsSt5Y+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sv+rifGd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8026DC116B1;
-	Thu,  1 Aug 2024 03:22:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722482558;
-	bh=cwZNlFkg/6uwcZmn5bSEtGCnUEUd5RzuUF0gLreCNwE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sv+rifGdffMkhnY2qFffaLJTiAOLVRqb4P/j9gx/xSonU9bN0O2jJNa8DJ5Egblhn
-	 HhmTAfByfPx5ZYnFDLWJgN7yCV1fe9P6dxJI9OsEnstGE1uL60H7+uVA1MzLnZnDT9
-	 q7OXjpCwNa+c+CQetKRHWOUZeVcXoPJnDKlhwyQF/nifcm8M2k2rFMDblP5uWu1jlA
-	 mA+Bx4pcC3AxSwblGA6k0Tol+ohmM7e0iEqchtNH/6dIcPyPz/FOYN1tn3L9xl9f62
-	 f8XROjy1dC7Km6SRk4r+T+XeTnlcyi6ocpCGnNSVrELwqY9rP7xjfPoYh6JeLthYCW
-	 Mb5iqozqkwYpg==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-	Rocky Liao <quic_rjliao@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: linux-bluetooth@vger.kernel.org,
-	netdev@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: (subset) [PATCH v3 0/6] Bluetooth: hci_qca: use the power sequencer for wcn7850
-Date: Wed, 31 Jul 2024 22:22:34 -0500
-Message-ID: <172248255231.320687.3384796233476988761.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240709-hci_qca_refactor-v3-0-5f48ca001fed@linaro.org>
-References: <20240709-hci_qca_refactor-v3-0-5f48ca001fed@linaro.org>
+	s=arc-20240116; t=1722491319; c=relaxed/simple;
+	bh=4Oi3TlIwbkpbXlafnRz5aqGDixiGI5TFcsOjgVMRHh4=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bybQibn/cirUSY1Bzh6jLRRtLXvCpHwFQsdHPiMd87oHzQlfgTMeCJv/gLVnialvue38YuBO+GfvT9TGLpbWmDxi1irl2oq+blR/ejMg4GamXvepWTmcYCHYy7odvCMu/yOAytdvLWJ90V90oeEXf3/FN+D54SoNnW2LX27oQMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DvodYHVr; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4711OmXU010039;
+	Thu, 1 Aug 2024 05:48:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=vHAaWI3Ut3AytiltVZPSLF
+	fAZdB5xqKJCdLEWslzcJI=; b=DvodYHVrWBkyspXFpAyYuVq9VmkDR6at1HNwGG
+	A3jtS7fhlfKvZNwjMKv3XCgxMJ5BWg8/EIQHJ274W/J/pHg7GoNR2nnN9jrdN2qA
+	zq/E6nPRn6KTmHOf2+gEWvW740oB7BVet/rE3KTNNeGREPBE6BsL1Qe+JNIqKpK+
+	kEeWOyHoS82qPRkTDJbyzxiMKYaXNJ6144KxIIyYWa1tkXw/+5zZxwAhty8QN/1D
+	nLIGlJgFhjYb0Pv0S1x+zGhBZlPQ+RrccoRqboyisaNwstmmdCkoMoZzOU7Azav/
+	P3rtzA0gzMJVUNxfIC1+BeuMtkx75xyY+WQhdblmCdauXlGQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40qnbaakr2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 01 Aug 2024 05:48:22 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4715mKpi019296
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 1 Aug 2024 05:48:20 GMT
+Received: from hu-srichara-blr.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 31 Jul 2024 22:48:16 -0700
+From: Sricharan R <quic_srichara@quicinc.com>
+To: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <manivannan.sadhasivam@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC: <quic_srichara@quicinc.com>
+Subject: [PATCH V7 0/4] Add PCIe support for IPQ9574
+Date: Thu, 1 Aug 2024 11:17:59 +0530
+Message-ID: <20240801054803.3015572-1-quic_srichara@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 8uIZrj58ON7ALV60yoFkfU2Ly_lVfYQ2
+X-Proofpoint-GUID: 8uIZrj58ON7ALV60yoFkfU2Ly_lVfYQ2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-01_02,2024-07-31_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ bulkscore=0 lowpriorityscore=0 mlxlogscore=908 phishscore=0 mlxscore=0
+ impostorscore=0 clxscore=1011 suspectscore=0 adultscore=0 spamscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408010032
 
+This series adds support for enabling the PCIe host devices (PCIe0, PCIe1,
+PCIe2, PCIe3) found on IPQ9574 platform. The PCIe0 & PCIe1 are 1-lane Gen3
+host and PCIe2 & PCIe3 are 2-lane Gen3 host.
 
-On Tue, 09 Jul 2024 14:18:31 +0200, Bartosz Golaszewski wrote:
-> The following series extend the usage of the power sequencing subsystem
-> in the hci_qca driver.
-> 
-> The end goal is to convert the entire driver to be exclusively pwrseq-based
-> and simplify it in the process. However due to a large number of users we
-> need to be careful and consider every case separately.
-> 
-> [...]
+[V7]    - Fixed review comments from Konrad, Krysztof, Manivannan and picked up review tags
+          Rebased patch 4 on top of [1] for avoiding DBI/ATU mirroring
+          Both dt_binding_check and dtbs_check passed and tested on ipq9574-rdp433
 
-Applied, thanks!
+	  [1] - https://lore.kernel.org/linux-arm-msm/a01404d2-2f4d-4fb8-af9d-3db66d39acf7@quicinc.com/  
 
-[6/6] arm64: dts: qcom: sm8650-qrd: use the PMU to power up bluetooth
-      commit: 4e71c38244dbeb6619156b417d469771bba52b83
+[V6]
+        - Dropped patches [1] and [2] for clks, since its already merged.
+        - Addressed all comments from Krzysztof, Manivannan, Bjorn Helgaas.
+          Specifically dropped defining a new macro for SLV_ADDR_SPACE_SZ.
+          Letting it at reset value is fine.
 
-Best regards,
+          Both dt_binding_check and dtbs_check passed and tested on ipq9574-rdp433
+
+	[1] - https://patchwork.kernel.org/project/linux-pci/patch/20240512082858.1806694-2-quic_devipriy@quicinc.com/
+	[2] - https://patchwork.kernel.org/project/linux-pci/patch/20240512082858.1806694-3-quic_devipriy@quicinc.com/
+
+[V5]
+	Change logs are added to the respective patches
+	This series depends on the below series which adds support for
+	Interconnect driver[1] and fetching clocks from the Device Tree[2]
+	[1] - https://lore.kernel.org/linux-arm-msm/20240430064214.2030013-1-quic_varada@quicinc.com/
+	[2] - https://lore.kernel.org/linux-pci/20240417-pci-qcom-clk-bulk-v1-1-52ca19b3d6b2@linaro.org/
+[V4]
+https://lore.kernel.org/linux-arm-msm/20230528142111.GC2814@thinkpad/
+
+[V3]
+https://lore.kernel.org/linux-arm-msm/20230421124938.21974-1-quic_devipriy@quicinc.com/
+	- Dropped the phy driver and binding patches as they have been
+	  posted as a separate series.
+	- Dropped the pinctrl binding fix patch as it is unrelated to the series
+	  dt-bindings: pinctrl: qcom: Add few missing functions.
+	- Rebased on linux-next/master.
+	- Detailed change logs are added to the respective patches.
+
+[V2]
+https://lore.kernel.org/linux-arm-msm/20230404164828.8031-1-quic_devipriy@quicinc.com/
+	- Reordered the patches and split the board DT changes
+	  into a separate patch as suggested
+	- Detailed change logs are added to the respective patches
+[V1]
+https://lore.kernel.org/linux-arm-msm/20230214164135.17039-1-quic_devipriy@quicinc.com/
+
+devi priya (4):
+  dt-bindings: PCI: qcom: Document the IPQ9574 PCIe controller
+  arm64: dts: qcom: ipq9574: Add PCIe PHYs and controller nodes
+  arm64: dts: qcom: ipq9574: Enable PCIe PHYs and controllers
+  PCI: qcom: Add support for IPQ9574
+
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |  50 +++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts   | 113 +++++
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         | 421 +++++++++++++++++-
+ drivers/pci/controller/dwc/pcie-qcom.c        |   1 +
+ 4 files changed, 581 insertions(+), 4 deletions(-)
+
 -- 
-Bjorn Andersson <andersson@kernel.org>
+2.34.1
+
 
