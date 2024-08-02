@@ -1,156 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-27773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A96B945C23
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 12:28:41 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22522945C3B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 12:45:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3C1042898B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 10:28:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C17DD282AAE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 10:45:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91FD91DC487;
-	Fri,  2 Aug 2024 10:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 615EE14D2B7;
+	Fri,  2 Aug 2024 10:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Dus9GJwl"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="PgYJkaH2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D582D1DC472
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Aug 2024 10:26:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5439714C5A3;
+	Fri,  2 Aug 2024 10:45:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722594410; cv=none; b=FBz3ESTsScuugzuDPrIyrS6v+GKqZuYqo6TLzeNhJ90iVhnEPwDpFrxvqi6JJKwo8jOEhkKfLHRx3hQn6frP2z1C5qteeUcit4pa3bpJ3If0b9dHo4GyUvQqsUNB6vY0lof9Pa3OR0yxY0G0YOXdgmX0eojB6znLIBG2DIL6BAo=
+	t=1722595537; cv=none; b=B+sWvdcAZ2kCMdAJO2E+fU/89zNPowUCUa7+P0hW3aoZ8CpxPu0LTY6Y3GatfXeR5SWoa5+YZKKdYK+pTAswyOEzyOITNaW/Tb0ljRD2klAnISuqmLVQdxSa3+hnK1FSkkwtHtEQ1AaR48QTAsWp2E1ebL/80v+5gaIhFdv4kJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722594410; c=relaxed/simple;
-	bh=88EsHwdU6Y+t2Ieew7M7TZT/MUEah4z8QXOdX5NNz4Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YVSfA22EKo2Cf5jJEFOmwehT4JV+mSCzWshb0PXzsc0RXDSnbZQWg/Ca8tbT40X6GEUwtJ20DT1MlWeO7SxKYHLPghzJ4EnJ/xDw8+q/wpL0fTxfgrI/IOaF0iM+Bxuhvpeahs/sbpZjeSZnT6mOnnpfDSEfiWbHmldxKnvs2Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Dus9GJwl; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a7d26c2297eso993292366b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Aug 2024 03:26:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722594406; x=1723199206; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=MZClsDIezKC5v39tjWHXTTLMvzNHfVoW5l/xW5hpIwo=;
-        b=Dus9GJwlp1+Ifbn9sgMQy96Xn8bIW6khRhjvZX/HO5Z6hImwMkah+DUPI3WDMsJAbS
-         7wfUsrs7aEXMkaPx/UNoHRL8DJ5g3nLhOCtt+HtqJkgHWwUgaut7pcHdVzjeUYZRr8Le
-         tskPPufz4ojx6eey900TCDqzuQGnrt41vuwtfQc6P56ldGAji1E8cp6wvmIkZMYIH+s/
-         BlLbxVOPZl9YQeja6kZfxHCOcqrv36kpxTthIcFYhYTQPmzbqj3joy0P06irL5pqRASF
-         5hp4eBa3SSL86gfkGKyQxQ3AfjNkpn3iYx/vAROWM7zpdYkrMTehcR1HhI50EZWRGsbq
-         m/zA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722594406; x=1723199206;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MZClsDIezKC5v39tjWHXTTLMvzNHfVoW5l/xW5hpIwo=;
-        b=u/AszDIuOAhQxEGbYwRK1CzqDN0yrHndLv3bTuCi4xBO6vTNSV1dHdilmjmJbxgdz5
-         SSgPoYMjxSEgh8BPmaA7rYPNXKdqUQXw2Jb1QpQtiMdE5fBTs4a+BZvZWGlA7fPaXgTa
-         MjMVJGuQ3IbiARNfBtTfr/tJnksbE7RFnZIk53uS0gQBBdhysUKdGZiFqWSDpEjYrXZA
-         Ma7zC/+npwzW0hiBhKVQkA5WOB/Xs1T3WvhMS4KaSMGkLM6xEKyTmJgmZj/GS+9NbH9T
-         vB6LZNumTK+fX8O/PoaV+DnlaBRRn0W3//UgD3u7qXi0Fb0zBnRxJSFkY0wfpWxPGlEP
-         wyXw==
-X-Gm-Message-State: AOJu0Yy3jY1vyR+gKJNGo8v3x7JamiV6pD3eNyavsqgH3UtN6KHCyR3U
-	YwYO8S7GX8LIzAwAjNLcQCBGgI2kU17GzWajgk5r2amQkes5JIcvT6yzr5CRLpM=
-X-Google-Smtp-Source: AGHT+IFUaE5rrsfA9b5/ZoGfuC8RNmYZJr/mp6vmwHEmr3g3yDGqsB5UvpfbLaTZwfHnbynPxGVM1A==
-X-Received: by 2002:a17:906:730f:b0:a6f:501d:c224 with SMTP id a640c23a62f3a-a7dc5100bbcmr210051566b.57.1722594406014;
-        Fri, 02 Aug 2024 03:26:46 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff1f:b280:780c:5cd0:3813:8ce9])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7dc9ec4a8dsm81645566b.190.2024.08.02.03.26.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Aug 2024 03:26:45 -0700 (PDT)
-Date: Fri, 2 Aug 2024 12:26:40 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Rob Clark <robdclark@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Rob Clark <robdclark@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-	open list <linux-kernel@vger.kernel.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: x1e80100-yoga: Update panel
- bindings
-Message-ID: <Zqy0YAj74iM_9zJI@linaro.org>
-References: <20240729205726.7923-1-robdclark@gmail.com>
- <20240729205726.7923-2-robdclark@gmail.com>
- <Zqi5rUQqWa9wZCva@linaro.org>
- <CAF6AEGvDJO7T8DMZLy7764AxO1fqPmUWDm2eh1gqV5T-sTfKOQ@mail.gmail.com>
+	s=arc-20240116; t=1722595537; c=relaxed/simple;
+	bh=WfEgqwVjPa+A7KEG0kvsq448oudwsQFXrO3TTGxBOuY=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=NpZFZ/oV95PTiXGMDr6jiQxGHPY28guHcVYbUE/xDsJxdPDf+Hmr4XwUA4WrEH42YhvRt2IioVzQVMbmekpQ+y5dUMot2T4fAgFz0ooVFRTCBjoJh3ZDwks1nmICAKSLalUKIeJy58bn/5bHfc1BKUJ4PL63xAb9MXSCiRw/wKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=PgYJkaH2; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:Content-Type:MIME-Version:
+	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=ELRBiV+NFPdRv506pfEBONqV6CMGl+dUQISWbSD9N2k=; b=PgYJkaH2AhOeu4FWMLBDVLYXuv
+	u2Idj8nqwr3ZdsZXUqhSj8/B3jarxTL6F3PAFeU2RsBQXUgxcjKWqrmhotWIRzvkQTBOKkVjh81Qe
+	zZotiydz62/8Px2UIPyWPI2o8r+ycpoytC7cqXqg8yp1hQxKNLiYDRvoopYYR/0e9HY/tM1Fe5IXM
+	267/Fi1UIC+iEGqQEvGfRgIHpOptbxUrs75mc9XJBho2fckh9pXMg6g26NQlXO47pLUL9oTl/y/LM
+	zBrvI18F/AYYzkJjWuJIjlLZSITAgUnRDO3kBMVS6xZKbRAhR5DO+68TtOuLMBSzMej7lEWbsQS4w
+	mOwsHmDg==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:36234)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1sZpmi-0006D4-1X;
+	Fri, 02 Aug 2024 11:45:20 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1sZpmk-0007yO-43; Fri, 02 Aug 2024 11:45:22 +0100
+Date: Fri, 2 Aug 2024 11:45:21 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Serge Semin <fancer.lancer@gmail.com>
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrew Halaney <ahalaney@redhat.com>, bpf@vger.kernel.org,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH RFC v3 0/14] net: stmmac: convert stmmac "pcs" to phylink
+Message-ID: <Zqy4wY0Of8noDqxt@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF6AEGvDJO7T8DMZLy7764AxO1fqPmUWDm2eh1gqV5T-sTfKOQ@mail.gmail.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On Tue, Jul 30, 2024 at 07:26:27AM -0700, Rob Clark wrote:
-> On Tue, Jul 30, 2024 at 3:00 AM Stephan Gerhold
-> <stephan.gerhold@linaro.org> wrote:
-> >
-> > On Mon, Jul 29, 2024 at 01:57:25PM -0700, Rob Clark wrote:
-> > > From: Rob Clark <robdclark@chromium.org>
-> > >
-> > > Use the correct panel compatible, and wire up enable-gpio.  It is wired
-> > > up in the same way as the x1e80100-crd.
-> > >
-> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > > Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-> > > ---
-> > > Note that the power-source differs from the CRD.  Figured that out by
-> > > diffing $debugfs/gpio.
-> > >
-> > >  .../dts/qcom/x1e80100-lenovo-yoga-slim7x.dts    | 17 +++++++++++++++--
-> > >  1 file changed, 15 insertions(+), 2 deletions(-)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-> > > index 70977e9fa266..6f8d52c368a4 100644
-> > > --- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-> > > [...]
-> > > @@ -669,6 +672,16 @@ &pcie6a_phy {
-> > >       status = "okay";
-> > >  };
-> > >
-> > > +&pmc8380_3_gpios {
-> > > +     edp_bl_en: edp-bl-en-state {
-> > > +             pins = "gpio4";
-> > > +             function = "normal";
-> > > +             power-source = <0>; /* 1.8V */
-> >
-> > Hm, are you sure the firmware sets it like this?
-> >
-> > power-source = <0> is typically VPH, i.e. the main battery supply
-> > voltage or similar. This will definitely be higher than 1.8V. It seems a
-> > bit odd to use a variable voltage source for a GPIO...
-> 
-> :shrug:
-> 
-> Board level stuff is a bit outside my area of expertise, but it's what
-> made /sys/kernel/debug/gpio match for gpiochip3 gpio4 and it's what
-> made the panel work.  Using <1> resulted in a black screen.
-> 
-> AFAIU Srini has a yoga 7x as well, and perhaps knows how to read ACPI
-> better than I do, so maybe he can double check.
-> 
+Hi,
 
-It looks like you're right, I think ACPI also configures power-source = <0>.
-Can you just remove the 1.8V comment then? I'm pretty sure it's not 1.8V.
+This is version 3 of the series switching stmmac to use phylink PCS
+isntead of going behind phylink's back.
 
-Thanks,
-Stephan
+Changes since version 2:
+- Adopted some of Serge's feedback.
+- New patch: adding ethqos_pcs_set_inband() for qcom-ethqos so we
+  have one place to modify for AN control rather than many.
+- New patch: pass the stmmac_priv structure into the pcs_set_ane()
+  method.
+- New patch: remove pcs_get_adv_lp() early, as this is only for TBI
+  and RTBI, support for which we dropped in an already merged patch.
+- Provide stmmac_pcs structure to encapsulate the pointer to
+  stmmac_priv, PCS MMIO address pointer and phylink_pcs structure.
+- Restructure dwmac_pcs_config() so we can eventually share code
+  with dwmac_ctrl_ane().
+- New patch: move dwmac_ctrl_ane() into stmmac_pcs.c, and share code.
+- New patch: pass the stmmac_pcs structure into dwmac_pcs_isr().
+- New patch: similar to Serge's patch, rename the PCS registers, but
+  use STMMAC_PCS_ as the prefix rather than just PCS_ which is too
+  generic.
+- New patch: incorporate "net: stmmac: Activate Inband/PCS flag
+  based on the selected iface" from Serge.
+
+On the subject of whether we should have two PCS instances, I
+experimented with that and have now decided against it. Instead,
+dwmac_pcs_config() now tests whether we need to fiddle with the
+PCS control register or not.
+
+Note that I prefer not to have multiple layers of indirection, but
+instead prefer a library-style approach, which is why I haven't
+turned the PCS support into something that's self contained with
+a method in the MAC driver to grab the RGSMII status.
+
+
+Previous cover messages from earlier posts below:
+
+This is version 2 of the series switching stmmac to use phylink PCS
+instead of going behind phylink's back.
+
+Changes since version 1:
+- Addition of patches from Serge Semin to allow RGMII to use the
+  "PCS" code even if priv->dma_cap.pcs is not set (including tweaks
+  by me.)
+- Restructuring of the patch set to be a more logical split.
+- Leave the pcs_ctrl_ane methods until we've worked out what to do
+  with the qcom-ethqos driver (this series may still end up breaking
+  it, but at least we will now successfully compile.)
+
+A reminder that what I want to hear from this patch set are the results
+of testing - and thanks to Serge, the RGMII paths were exercised, but
+I have not had any results for the SGMII side of this.
+
+There are still a bunch of outstanding questions:
+
+- whether we should be using two separate PCS instances, one for
+  RGMII and another for SGMII. If the PCS hardware is not present,
+  but are using RGMII mode, then we probably don't want to be
+  accessing the registers that would've been there for SGMII.
+- what the three interrupts associated with the PCS code actually
+  mean when they fire.
+- which block's status we're reading in the pcs_get_state() method,
+  and whether we should be reading that for both RGMII and SGMII.
+- whether we need to activate phylink's inband mode in more cases
+  (so that the PCS/MAC status gets read and used for the link.)
+
+There's probably more questions to be asked... but really the critical
+thing is to shake out any breakage from making this conversion. Bear
+in mind that I have little knowledge of this hardware, so this
+conversion has been done somewhat blind using only what I can observe
+from the current driver.
+
+Original blurb below.
+
+As I noted recently in a thread (and was ignored) stmmac sucks. (I
+won't hide my distain for drivers that make my life as phylink
+maintainer more difficult!)
+
+One of the contract conditions for using phylink is that the driver
+will _not_ mess with the netif carrier. stmmac developers/maintainers
+clearly didn't read that, because stmmac messes with the netif
+carrier, which destroys phylink's guarantee that it'll make certain
+calls in a particular order (e.g. it won't call mac_link_up() twice
+in a row without an intervening mac_link_down().) This is clearly
+stated in the phylink documentation.
+
+Thus, this patch set attempts to fix this. Why does it mess with the
+netif carrier? It has its own independent PCS implementation that
+completely bypasses phylink _while_ phylink is still being used.
+This is not acceptable. Either the driver uses phylink, or it doesn't
+use phylink. There is no half-way house about this. Therefore, this
+driver needs to either be fixed, or needs to stop using phylink.
+
+Since I was ignored when I brought this up, I've hacked together the
+following patch set - and it is hacky at the moment. It's also broken
+because of recentl changes involving dwmac-qcom-ethqos.c - but there
+isn't sufficient information in the driver for me to fix this. The
+driver appears to use SGMII at 2500Mbps, which simply does not exist.
+What interface mode (and neg_mode) does phylink pass to pcs_config()
+in each of the speeds that dwmac-qcom-ethqos.c is interested in.
+Without this information, I can't do that conversion. So for the
+purposes of this, I've just ignored dwmac-qcom-ethqos.c (which means
+it will fail to build.)
+
+The patch splitup is not ideal, but that's not what I'm interested in
+here. What I want to hear is the results of testing - does this switch
+of the RGMII/SGMII "pcs" stuff to a phylink_pcs work for this driver?
+
+Please don't review the patches, but you are welcome to send fixes to
+them. Once we know that the overall implementation works, then I'll
+look at how best to split the patches. In the mean time, the present
+form is more convenient for making changes and fixing things.
+
+There is still more improvement that's needed here.
+
+Thanks.
+
+ drivers/net/ethernet/stmicro/stmmac/Makefile       |   2 +-
+ drivers/net/ethernet/stmicro/stmmac/common.h       |  25 ++--
+ .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    |  13 +-
+ drivers/net/ethernet/stmicro/stmmac/dwmac1000.h    |  13 +-
+ .../net/ethernet/stmicro/stmmac/dwmac1000_core.c   | 110 +++++++-------
+ drivers/net/ethernet/stmicro/stmmac/dwmac4.h       |  13 +-
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c  |  99 +++++++------
+ drivers/net/ethernet/stmicro/stmmac/hwif.h         |  24 ++--
+ .../net/ethernet/stmicro/stmmac/stmmac_ethtool.c   | 111 +-------------
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c  |  30 +---
+ drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c   |  63 ++++++++
+ drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h   | 159 ++++++++++-----------
+ 12 files changed, 306 insertions(+), 356 deletions(-)
+ create mode 100644 drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
