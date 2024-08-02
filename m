@@ -1,149 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-27792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9830D945DAE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 14:11:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1336945ED6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 15:44:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BC02C1C223BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 12:11:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 493121F22497
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 13:44:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8951E1E3CBA;
-	Fri,  2 Aug 2024 12:10:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0F631E4846;
+	Fri,  2 Aug 2024 13:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Y+aYgezj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aMyq8Au5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A270114A4C8;
-	Fri,  2 Aug 2024 12:10:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186041E3CA2;
+	Fri,  2 Aug 2024 13:44:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722600656; cv=none; b=Aw3qVwWEr7hlRWQdoIzzhlESNqJ7cnYL5KnQT05cPfm+sJbG5akEXNcEhNgFfEhsnGSAiAIoU9fPY4z2j5/DvJlixECL8UQ6nRc11p8BTlY2YRuHOadexn9feazSZYK8z9gfCYo2WK8eZ7DASeailkdl+NrnGgmjFjeX12/pEew=
+	t=1722606265; cv=none; b=SaeJNzVc+tcSM61CZVsN8Kc91rgpnDwytKgBEuRQlI3RqHTvGfWXlfQDFfog+ej96trNMAGwCKFvFEfBnRWQx6Eo4nAn/ibRhjdI/b6fNMPncvrxOy15e9VufRvIUc0aWvGocqLM5ntZI8tx3Xz1WUWT8DJ70VhYxfBBAg9iBU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722600656; c=relaxed/simple;
-	bh=KEYXx/jAB3vyQ6OMi4gTqUazWDOQK45pIkjybNC7SuQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=W0ixrjS16z7r3o067+7/1JXiuoPCy/ZGq6jyvitE46vsmSTgDKkN+GNJ5nrtwKnJlHtD4Ryshwo8xA/xu7Ut0KH3Rjv6NU1gJDb8c/COfjFicghHQKMCVkZRYstC3ghglOEAgRd53qCU4VWETpYBeuSZpRp+sSrCNmh+FNlJydE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Y+aYgezj; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1722600653; x=1754136653;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=KEYXx/jAB3vyQ6OMi4gTqUazWDOQK45pIkjybNC7SuQ=;
-  b=Y+aYgezjFqv+K5AaTC4vZGcAh5hr2dQwe9wm9pi4K3h0Yz24cUe+d3H9
-   ZsqbKBkwhHNZc+7OtZ0lDfh8wDGYvnp5h2Ecwagae2cWQzviJIh8hZLb/
-   VLja1EpZGQdbrnB/DWdAKtdjgY3yqY1ka63zpxvjBzohWs1l8tFY6JAIN
-   fxmTJv+pxr4H5ZVuQetR9jYG60Q42WYoIqi5LUXYPHj/G3sftzD34n49+
-   ltFwKxKv0qx184oJS3CzJLMWzUYialY6SJZx3xynsE4nd9klZCq5FNH00
-   KEpbbbtZQzWIjGoUr1zIcbSGhlmEkEPb37Xpz8nyE4eX0VjODfZ0jkAoP
-   w==;
-X-CSE-ConnectionGUID: ZapiAaSiQsKXTYMnVIxb0g==
-X-CSE-MsgGUID: Ey9/KvnNTiCDawbkGRz3gA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11151"; a="24484218"
-X-IronPort-AV: E=Sophos;i="6.09,257,1716274800"; 
-   d="scan'208";a="24484218"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Aug 2024 05:10:53 -0700
-X-CSE-ConnectionGUID: eze3z9pvRdWNf/nfC0oIGw==
-X-CSE-MsgGUID: nX2dhYZKTa2IYxh8hBSGJg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,257,1716274800"; 
-   d="scan'208";a="55978928"
-Received: from ltuz-desk.ger.corp.intel.com (HELO [10.245.246.89]) ([10.245.246.89])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Aug 2024 05:10:48 -0700
-Message-ID: <1a2d0962-405d-4ccf-a0da-00a624c0f3e8@linux.intel.com>
-Date: Fri, 2 Aug 2024 08:32:30 +0200
+	s=arc-20240116; t=1722606265; c=relaxed/simple;
+	bh=/tGFo5EhmHo+7tTxulMq0gsuoQFEf0lq3lT6jXbNUrs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qPuny+C3vPzlsm/hZwzp+GsGb5x1HGMIrXT7q1sjN8coniEPR7WVxKwK9MfQ52vJZnsv9niZefaEYJab7b7zgXu6iX6WLKiJ+dve5Ey9Ccv962dKsIKUV8H3zSJsYR/bVluVcH+8ullSMrekVRe56mPmAEhAtjnjwNdXda61YQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aMyq8Au5; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-428e0d18666so14533395e9.3;
+        Fri, 02 Aug 2024 06:44:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722606262; x=1723211062; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CcwtTMQVfhKv7XwexErI3oh4Oa+G3cV+0RcW1awDBRA=;
+        b=aMyq8Au5oGSVN4OXf3FyYHd8Vlukjka1SmWgwAgsAj6u3zSf2xI8ErXhMFKCF6HnMK
+         FLG48QkKZLWMZdYeBNI1v3ktvBEgU7WjAke0tGCXtCCreJ9QF8B/HSsM53PX2HfeuY4j
+         i1ebIybJ+Jeot1eXbgqBBWvr9GVP9dTiJ8Kx+zM40Jt/Z88UoXRm1ZejMzHkIHBH22wo
+         rFp+VxWMYMXLaz0y4yepsgcInaaHOPKzzXeI078zVn8RkdZoQ+mvW8LL8PHsgk/CPS28
+         mANZVag95GXmVZvr70z0cbJl8MZhXnfSpqj0/vHh56e90nxfxixzuqh8rx4eHIvPqWxD
+         hPPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722606262; x=1723211062;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CcwtTMQVfhKv7XwexErI3oh4Oa+G3cV+0RcW1awDBRA=;
+        b=wKZOngPfgkzQKnM/BGHRYZrPtr+5XVI+LqfED5B8KkPUNTHHkHAGVicxN93dc5tKPp
+         5T+qesGtn0lslbawTmD9CqSD2xt8Vi3z5KC+9XIjy5DMBNyIqB2gu1UzPz1np8Q6UV3p
+         1WJ1ZQP2zGzkdHYLgPQK0Fo1+tcbUA/c7KpikInavSKTtHykdnjqDOusQCyDFp2zSCTY
+         6cvMv4tP0bd+J+Y7C11Wj7kXrlVw7BngaVKCv23KquDXaNbM/R2WhM9QAtUKxTThZIsm
+         BhNwm/AKJqr5gsa6P8ydRFDR8F6D6DDHXhToIUtAohfv2EsprYwwzMBnAZPKmsJzpdsf
+         AHUw==
+X-Forwarded-Encrypted: i=1; AJvYcCVpx9Z4rfEQLA+Otj+D0Xv+t41Ryqt5jwZZ+aXfBm+Pk6nu6w5ap1vq7rAh8HArEWCgoH5697VFw6g4qJ+zZU4I0GvRHXSSVK6KY3Gy6SXppSth18cyAgg2cOYQ22EhUOO+vxDowAtwr42mOg==
+X-Gm-Message-State: AOJu0Yx5pO/ELQa/AzWmotsqwa0e1tHnrYCS1a9DHaQYo+cQpvwcuXIl
+	5Tpkdv72ZdMtmEFdgK82moSVNOmZSO8LJX3HDQjTkRgqbsKJt19T
+X-Google-Smtp-Source: AGHT+IHfG0vqtO7zxfbhIi4ginfwQxwejcFL5nLLqb66mHVAL/Ea2qkix54dImYnaTW7CYLeXdZ4wA==
+X-Received: by 2002:a05:600c:1d24:b0:426:6e9a:7a1c with SMTP id 5b1f17b1804b1-428e6fb66eamr19397065e9.25.1722606262025;
+        Fri, 02 Aug 2024 06:44:22 -0700 (PDT)
+Received: from trashcan ([222.118.21.173])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4282bb63f16sm94131435e9.33.2024.08.02.06.44.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Aug 2024 06:44:21 -0700 (PDT)
+Date: Fri, 2 Aug 2024 13:41:32 +0000
+From: Vladimir Lypak <vladimir.lypak@gmail.com>
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Jordan Crouse <jordan@cosmicpenguin.net>,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/4] drm/msm/a5xx: properly clear preemption records on
+ resume
+Message-ID: <ZqziDJlrhvSnijpw@trashcan>
+References: <20240711100038.268803-1-vladimir.lypak@gmail.com>
+ <20240711100038.268803-3-vladimir.lypak@gmail.com>
+ <20240801131610.jtcpo5l2gd34uqbf@hu-akhilpo-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v24 17/34] ASoC: qcom: qdsp6: Add USB backend ASoC driver
- for Q6
-To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
- mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
- corbet@lwn.net, broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
- Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, tiwai@suse.com,
- gregkh@linuxfoundation.org, robh@kernel.org
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
- alsa-devel@alsa-project.org
-References: <20240801011730.4797-1-quic_wcheng@quicinc.com>
- <20240801011730.4797-18-quic_wcheng@quicinc.com>
- <5f37c04d-f564-40b9-a9f3-d071ea0a6f19@linux.intel.com>
- <1a284449-204a-4d01-90c9-ec6b1ed56e30@quicinc.com>
-Content-Language: en-US
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <1a284449-204a-4d01-90c9-ec6b1ed56e30@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240801131610.jtcpo5l2gd34uqbf@hu-akhilpo-hyd.qualcomm.com>
 
-
-
-On 8/2/24 01:10, Wesley Cheng wrote:
-> Hi Pierre,
+On Thu, Aug 01, 2024 at 06:46:10PM +0530, Akhil P Oommen wrote:
+> On Thu, Jul 11, 2024 at 10:00:19AM +0000, Vladimir Lypak wrote:
+> > Two fields of preempt_record which are used by CP aren't reset on
+> > resume: "data" and "info". This is the reason behind faults which happen
+> > when we try to switch to the ring that was active last before suspend.
+> > In addition those faults can't be recovered from because we use suspend
+> > and resume to do so (keeping values of those fields again).
+> > 
+> > Fixes: b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
+> > Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+> > ---
+> >  drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 2 ++
+> >  1 file changed, 2 insertions(+)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+> > index f58dd564d122..67a8ef4adf6b 100644
+> > --- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+> > +++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+> > @@ -204,6 +204,8 @@ void a5xx_preempt_hw_init(struct msm_gpu *gpu)
+> >  		return;
+> >  
+> >  	for (i = 0; i < gpu->nr_rings; i++) {
+> > +		a5xx_gpu->preempt[i]->data = 0;
+> > +		a5xx_gpu->preempt[i]->info = 0;
 > 
-> On 8/1/2024 1:40 AM, Pierre-Louis Bossart wrote:
->>
->>
->>> +static int q6usb_hw_params(struct snd_pcm_substream *substream,
->>> +			   struct snd_pcm_hw_params *params,
->>> +			   struct snd_soc_dai *dai)
->>> +{
->>> +	struct q6usb_port_data *data = dev_get_drvdata(dai->dev);
->>> +	struct snd_soc_pcm_runtime *rtd = substream->private_data;
->>> +	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
->>> +	struct q6afe_port *q6usb_afe;
->>> +	struct snd_soc_usb_device *sdev;
->>> +	int ret;
->>> +
->>> +	/* No active chip index */
->>> +	if (list_empty(&data->devices))
->>> +		return -EINVAL;
->>> +
->>> +	mutex_lock(&data->mutex);
->>> +	sdev = list_last_entry(&data->devices, struct snd_soc_usb_device, list);
->>> +
->>> +	q6usb_afe = q6afe_port_get_from_id(cpu_dai->dev, USB_RX);
->>> +	if (IS_ERR(q6usb_afe))
->>> +		goto out;
->>> +
->>> +	/* Notify audio DSP about the devices being offloaded */
->>> +	ret = afe_port_send_usb_dev_param(q6usb_afe, sdev->card_idx,
->>> +						sdev->pcm_idx);
->>> +
->>> +out:
->>> +	mutex_unlock(&data->mutex);
->>> +
->>> +	return ret;
->>> +}
->> Humm, multiple questions here
->>
->> a) is this intentional that the params are not used in a hw_params routine?
-> Think this was answered in patch#34.
+> I don't see this bit in the downstream driver. Just curious, do we need
+> to clear both fields to avoid the gpu faults?
 
-yes, but that really begs the question if the format check shouldn't be
-added here.
+Downstream gets away without doing so because it resumes on the same
+ring that it suspended on. On mainline we always do GPU resume on first
+ring. It was enough to zero info field to avoid faults but clearing
+both shouldn't hurt.
 
->> b) if yes, could this be replaced by a .prepare callback
->>
->> c) along the same lines as b), is suspend-resume during playback
->> supported? Usually this is handled with a .prepare callback to restore
->> connections.
+I have tried to replicate faults again with local preemption disabled
+and unmodified mesa and couldn't do so. It only happens when fine-grain
+preemption is used and there was a switch from IB1.
+This made me come up with explanation of what could be happening.
+If preemption switch is initiated on a some ring at checkpoint in IB1,
+CP should save position of that checkpoint in the preemption record and
+set some flag in "info" field which will tell it to continue from that
+checkpoint when switching back.
+When switching back to that ring we program address of its preemption
+record to CP_CONTEXT_SWITCH_RESTORE_ADDR. Apparently this won't remove
+the flag from "info" field because the preemption record is only being
+read from. This leaves preemption record outdated on that ring until
+next switch will override it. This doesn't cause issues on downstream
+because it won't try to restore from that record since it's ignored
+during GPU power-up.
+
+Vladimir
+
 > 
-> I don't see us supporting that throughout any of the QC based DAI drivers, so this probably isn't implemented yet.  In terms of supporting system PM suspend for this USB offload path, we're going to explicitly stop the audio stream from the USB offload driver (qc_audio_offload) before we suspend the usb device. (refer to qc_usb_audio_offload_suspend()
-
-The system suspend-resume during playback is not enabled in all
-platforms indeed, it mostly depends on what userspace does. IIRC this is
-required for Chrome/CRAS and it's supported by aplay.
+> -Akhil
+> >  		a5xx_gpu->preempt[i]->wptr = 0;
+> >  		a5xx_gpu->preempt[i]->rptr = 0;
+> >  		a5xx_gpu->preempt[i]->rbase = gpu->rb[i]->iova;
+> > -- 
+> > 2.45.2
+> > 
 
