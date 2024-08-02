@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-27764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57F619458DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 09:32:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CD6BC9458DF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 09:32:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DB85B1F22C55
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 07:32:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7BB111F21F87
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 07:32:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 921914879B;
-	Fri,  2 Aug 2024 07:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDB291BF32A;
+	Fri,  2 Aug 2024 07:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RI1xX5Wz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iFnIVFql"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6291141760;
-	Fri,  2 Aug 2024 07:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92CFF1BF315;
+	Fri,  2 Aug 2024 07:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722583852; cv=none; b=lD9CPKlndPucBeqbfzIAkWi9gegNZAeiLk9W6mL7+53Rno9dbM7fE/DXYergd0Vlg95AzCXo0/fEguCm3nVTi4HrnUsXZnucL2e36h5sLmp00hKkgybCP2VqNVi4zaxgKczVNihEsdekiylyx1kxQy2jLSuLhtvw/fwhRUDCYhc=
+	t=1722583899; cv=none; b=k9lQ48Ip6UV2TIUorB+kMfWtR+DoC8TDCWob6ZYAqd+SnNV2ioWWuQQkugTvpd8R/UsTnTB2qDecfWrxo29ZMd6u4vRTW50GLstpKiKO76DwFwpRbdUDSnm9U4Hhaszd1TgFufsd+61l8wJR7WRbIde7eTa3pEXYaEWIHiUt9xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722583852; c=relaxed/simple;
-	bh=pe7TWTcmpQ9bqof8EtAiy+x4WhaOXrtpfoRztEhO+Q4=;
+	s=arc-20240116; t=1722583899; c=relaxed/simple;
+	bh=3GIG5TmbBrz8ATjhgyRZ+8+RqMAAlImw//PGJ0HjWvI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Elfl3scmNMgz/bsO+dC/jKuSjjhTUvaSfMh7FI5yPamh5w6kui7NHPVzyuXlcWSAi7YMpGdc5bPAwCbtPSPFoBj7UZn/M4zU7mfHIroo69pFDhz+9LfU78+gT8Yg6um/gcbpCoe8aPY/Iue2TBSjVCi+ZmrPHv4wPJf9RP4jA2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RI1xX5Wz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93525C32782;
-	Fri,  2 Aug 2024 07:30:46 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=rZ0A3ZnyVxU6OKqgUb1eP76zjGgnDQbfWmd3i9DfgYvt4vrnxac5Vxj2ehNy+a2JsFCQ2wdCmM2P3UpPaThGoL/jE3ZRZRbyaR953hxonMbgLdBaJEXt3oHhWdVzkTITfO9FM+pDchpyTFnn8qPezM4M+adgTUCBJg3aU7Z6Ibc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iFnIVFql; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4569FC4AF09;
+	Fri,  2 Aug 2024 07:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722583852;
-	bh=pe7TWTcmpQ9bqof8EtAiy+x4WhaOXrtpfoRztEhO+Q4=;
+	s=k20201202; t=1722583899;
+	bh=3GIG5TmbBrz8ATjhgyRZ+8+RqMAAlImw//PGJ0HjWvI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RI1xX5Wz2YjpzTjMRmbrPCGbJrK5d7fdL+p8YDqHWfKstQ/htzpvXzx0GtQBn+weo
-	 GFfaxSdUKaDX0AeO/vzO7YinJEQ1LhkzDPzUaLnOiUz88NxzYXqBdb4P3OqRvEUIUz
-	 zL3Rv4jeGl8awxO7Fp9zwlBYybkoSItR1uT30u21TEphP/4CVaEJ8SfAoZxsmLR1QZ
-	 qYCcOmLMXHy3blbGiuihF94sbqQiv0MG0T7oIv0GzOT/+UIJ1cKvQ+HYkmts2SGmal
-	 2Z0AamcNgsVKQCEXXk4CSgPENVu35pxmB/SzkwUpQNs4j87nH9NSZG8Xs6dxNcMPAt
-	 8xOCeXWROsVUw==
-Message-ID: <f49ea851-4b06-4e33-8a08-04f2ca8f9808@kernel.org>
-Date: Fri, 2 Aug 2024 09:30:44 +0200
+	b=iFnIVFqlDdetpdg2xg6Fe3gEUcr2VlrtFhLgls7wPaicvYGuzQuWk3q0hCiFy7G+f
+	 cbyqmeNzup5X5fWbYmNb+8YRtkwl8YlEKmSle7r73ze3863wZ0oi9n43WpOzBuVXUc
+	 eNenD83bxOnw/WmaLfi6g4+DMJ8LfT2ckRFjn3xrceVOf3CyR3Cbsup0NXfNoet+Pp
+	 TJlB93v4KhSNAEfVPnsoUnwYPJNEmmHrzsIIMX6GZphvAFfLzSIEsene2+vRORoSN1
+	 Q03+4loTmiFeSEow4HGQBgrJJp/xKNcwaf6czBsNy1LNI3vowSXG59c9AGBYBO2k3L
+	 NigQBiONXA9VQ==
+Message-ID: <88f41d47-5f90-476a-8061-f43c73e01122@kernel.org>
+Date: Fri, 2 Aug 2024 09:31:31 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/10] dt-bindings: clock: qcom,gcc-sm8450: Add SM8475 GCC
- bindings
+Subject: Re: [PATCH 03/10] dt-bindings: clock: qcom,sm8450-dispcc: Add SM8475
+ DISPCC bindings
 To: Danila Tikhonov <danila@jiaxyga.com>, andersson@kernel.org,
  mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
  krzk+dt@kernel.org, conor+dt@kernel.org, p.zabel@pengutronix.de,
@@ -61,7 +61,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux@mainlining.org
 References: <20240731175919.20333-1-danila@jiaxyga.com>
- <20240731175919.20333-2-danila@jiaxyga.com>
+ <20240731175919.20333-4-danila@jiaxyga.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,71 +107,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240731175919.20333-2-danila@jiaxyga.com>
+In-Reply-To: <20240731175919.20333-4-danila@jiaxyga.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 31/07/2024 19:59, Danila Tikhonov wrote:
-> Add SM8475 GCC bindings, which are simply a symlink to the SM8450
+> Add SM8475 DISPCC bindings, which are simply a symlink to the SM8450
 > bindings. Update the documentation with the new compatible.
 > 
 > Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
 > ---
->  .../devicetree/bindings/clock/qcom,gcc-sm8450.yaml        | 8 ++++++--
->  include/dt-bindings/clock/qcom,gcc-sm8450.h               | 2 ++
->  include/dt-bindings/clock/qcom,sm8475-gcc.h               | 1 +
->  3 files changed, 9 insertions(+), 2 deletions(-)
->  create mode 120000 include/dt-bindings/clock/qcom,sm8475-gcc.h
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sm8450.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sm8450.yaml
-> index d848361beeb3..c7d75ee2a23b 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,gcc-sm8450.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sm8450.yaml
-> @@ -13,11 +13,15 @@ description: |
->    Qualcomm global clock control module provides the clocks, resets and power
->    domains on SM8450
->  
-> -  See also:: include/dt-bindings/clock/qcom,gcc-sm8450.h
-> +  See also::
 
-You can use one : (:: -> :). That was a mistake to use double colons.
-
-> +    include/dt-bindings/clock/qcom,gcc-sm8450.h
-> +    include/dt-bindings/clock/qcom,sm8475-gcc.h
->  
->  properties:
->    compatible:
-> -    const: qcom,gcc-sm8450
-> +    enum:
-> +      - qcom,gcc-sm8450
-> +      - qcom,sm8475-gcc
->  
->    clocks:
->      items:
-> diff --git a/include/dt-bindings/clock/qcom,gcc-sm8450.h b/include/dt-bindings/clock/qcom,gcc-sm8450.h
-> index 9679410843a0..5f1f9ab71a22 100644
-> --- a/include/dt-bindings/clock/qcom,gcc-sm8450.h
-> +++ b/include/dt-bindings/clock/qcom,gcc-sm8450.h
-> @@ -194,6 +194,8 @@
->  #define GCC_VIDEO_AXI0_CLK					182
->  #define GCC_VIDEO_AXI1_CLK					183
->  #define GCC_VIDEO_XO_CLK					184
-> +#define GCC_GPLL2						185
-> +#define GCC_GPLL3						186
-
-Are these valid for sm8450?
-
->  
->  /* GCC resets */
->  #define GCC_CAMERA_BCR						0
-> diff --git a/include/dt-bindings/clock/qcom,sm8475-gcc.h b/include/dt-bindings/clock/qcom,sm8475-gcc.h
-> new file mode 120000
-> index 000000000000..daafdd881892
-> --- /dev/null
-> +++ b/include/dt-bindings/clock/qcom,sm8475-gcc.h
-
-If the bindings are the same... then why having separate header? I
-suggest dropping it.
+Same comments as for patch #1.
 
 Best regards,
 Krzysztof
