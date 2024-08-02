@@ -1,63 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-27798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40B0494620D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 18:51:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 649D89462BF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 19:55:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DF12A1F21F66
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 16:51:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF59E2823BF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 17:55:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC4A513635E;
-	Fri,  2 Aug 2024 16:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6027E15C124;
+	Fri,  2 Aug 2024 17:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TYQ1nyix"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="et0HRwr9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ACBA13633D;
-	Fri,  2 Aug 2024 16:51:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0FB31537CB
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Aug 2024 17:55:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722617495; cv=none; b=eh1zLN4CxUQRkZsaI9Cu7vPzTinoob0QXbrNkII8cdH/lCoGBWX87OCO9tvUsu3bkczpJlp5NZZiQ6Olhuy5aHXpccjVe+bJLFDslhKP/SCfcxCaBMgFigmCKhksY9/5wL/nWPJsYqxXxKNvlmMuAYap9Cea1O6wXTDzlfuyQ/I=
+	t=1722621329; cv=none; b=T7FSkl7IrXwwVhFx1ae55x6S6Kmq9gNSq5SWpG527hJ75jfbITKx9xjXg21n/c2zF0qkLc/ca/I90HNMRe4/xJl/UZprv44tyb6mVanLS5am4IsqD8fJ21L4KtqLtz6lo8Uj3pFyXT8BR/fGX/Jqm2vFhwjvUQyWTuCpw4GYQzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722617495; c=relaxed/simple;
-	bh=5S6CP6s9amxeYSZLoxkka5ubEMMyec6E2rfOz2sp6Qc=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=SHW1y3of9VtoW9qvXzQBxQ7xYtSC3ws6qmYaH2XZfLKkU5mgG9d200dU/ufcol9YBFMeJqKcTcdkpl3eUzLhlYUBNx4e2iGp++ZiDuNWsv+cvZWETHYj/kPNbcpUVax3T8kjq8U2CCHnqy7XHofTUuPYQYL6hSzvik/HjLyIp6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TYQ1nyix; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6497C32782;
-	Fri,  2 Aug 2024 16:51:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722617495;
-	bh=5S6CP6s9amxeYSZLoxkka5ubEMMyec6E2rfOz2sp6Qc=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=TYQ1nyixuz4bMlRn+8t/e2ScXXfP30bHOCTuUmCfUUIIFXHcs1VK67dVIAh+T3rUR
-	 zle4vWVHdvsAeTMUDy2Ln72juKUZ5++pnwN+MkeScr7IWOwIxOdu73o7g5TYch3vp8
-	 ON7DriQ+fb5d1jAxdbsr5Cd7ASMHc70J6WUOpoqshYmedqem8fhy26E+WdvyVbqUw5
-	 opRT41cPjK2E1M7ybwO8ZbWK7LKu6brychCFO8/xZEF56Ndlyh0fcFofIfjRs4/pOS
-	 +ApBZsZX+a9G5pn/ZhZmHeXuUA6gZEdD/PPrfRh1H5rcJrq+GhD0YoZUwRNG7fFZv+
-	 KSISE1g7c8IeA==
-Date: Fri, 2 Aug 2024 11:51:33 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH v3 06/13] PCI: qcom-ep: Modify 'global_irq' and
- 'perst_irq' IRQ device names
-Message-ID: <20240802165133.GA153963@bhelgaas>
+	s=arc-20240116; t=1722621329; c=relaxed/simple;
+	bh=BUt+yk47QC8u8sxCCzSSGLY3xmfY6eBtRyfTRA+BW70=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uqk57Qnv8yP5t8gT/DRUYBuqtcoakm7A/YpX5HkLQIJJc7UdXPDOSyE6JFEhZ+V/PKYS1evBBiGRRlnFGKGR3ZqXrXfrH2N5CWctdCEfO+QJHQ3iuRs3lmJfJKh9cc1q81I+zjVSYTE9OZvckfx24GVMfsowsuQ9cCoud7TIAyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=et0HRwr9; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1722621326;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=mSKMynH7mqtKWkD5s3WwP3QMfudW/geCCwMv+N77MHg=;
+	b=et0HRwr9juix77jxhvxhU/qc/9OYLIvxDK71ZNCF/8dAAaiu+n5zpk+HYH4F6ZPzJ56ySJ
+	1L9oa3NvKOmbzgLIJOq4BUKGt2jDX1OiDaxeTs3bofSilX8NmYj61VV9ti+IoV8fnJdkuJ
+	eKn+9OXsccpaA5Ea79qrusvCy3hvQ34=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-491-1KlSJmJiOkCKzIsFwy4Cgg-1; Fri, 02 Aug 2024 13:55:25 -0400
+X-MC-Unique: 1KlSJmJiOkCKzIsFwy4Cgg-1
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6b79d1eb896so115201366d6.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Aug 2024 10:55:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722621325; x=1723226125;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mSKMynH7mqtKWkD5s3WwP3QMfudW/geCCwMv+N77MHg=;
+        b=PyEI5UgXy2feuWkRedup7vuBlnmrdczcMlumTz+rAcivuZpAeTo2kY1C21STQYdOLi
+         69MdxSwfFOY5hrO+GyOJamIR1+6peNaqmRyK868IfCWXoeyV/+bUc3uL27pHcxbavxZb
+         pKHmVDjnpfyCX8j6+Wu0l2JXER6bB1e0mYOzCGNG82hh3ipKma3N0H7R3fnjj9JZisbF
+         VVRVWhN1l9fj02/mMDaRcsE1InGyYv1fgQvPb4j5DW6aIX3/g8qB9rMHG2uB/X++HKu/
+         uGV7YguW4cAg83TPaxOAC9ujRALAUg3Mr47P+eRknuhC0783k4j+Geqw/vH5VbLXNxct
+         9axQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXodKPkYOKcfFqGALqqXwpEYXkeLX5E5RSz5yc1Bxyil5am2O/rqiKLFD0fpOjqEUAnCAPA4xttjljHVmc6qUPM3aUfDBVMtADhhYRcgQ==
+X-Gm-Message-State: AOJu0YzGnD0yZp/MisLaSeaz9ERi5QEV0W4Up77bd7kVx6LuogNyCZ1R
+	bsPDhSAn/ESWzfYXyFmzdBud0WHywer99GpeCMv/cfdo0udF8FhILu5mNVqF54hAW09w8gNMmDP
+	WQr635kQXWmK4m/lS9E5O4dymFQcAIeaoIRhMUv8y9OKD0aN8JsCVZFjUgk0QK5o=
+X-Received: by 2002:a05:6214:4906:b0:6b7:a1aa:994f with SMTP id 6a1803df08f44-6bb984930cbmr43871546d6.45.1722621325077;
+        Fri, 02 Aug 2024 10:55:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGvfmiXBn0WLDUS/+iZqeB7tPbwkJPYVpv9lxcQTRxIly8p6qsOwWEvqQVQyo1Xl6zPYGN0/g==
+X-Received: by 2002:a05:6214:4906:b0:6b7:a1aa:994f with SMTP id 6a1803df08f44-6bb984930cbmr43871396d6.45.1722621324736;
+        Fri, 02 Aug 2024 10:55:24 -0700 (PDT)
+Received: from x1gen2nano ([2600:1700:1ff0:d0e0::33])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bb9c839787sm9000496d6.99.2024.08.02.10.55.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Aug 2024 10:55:24 -0700 (PDT)
+Date: Fri, 2 Aug 2024 12:55:22 -0500
+From: Andrew Halaney <ahalaney@redhat.com>
+To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Cc: Serge Semin <fancer.lancer@gmail.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, Alexei Starovoitov <ast@kernel.org>, bpf@vger.kernel.org, 
+	Daniel Borkmann <daniel@iogearbox.net>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Jesper Dangaard Brouer <hawk@kernel.org>, John Fastabend <john.fastabend@gmail.com>, 
+	Jose Abreu <joabreu@synopsys.com>, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>, 
+	Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH net-next 01/14] net: stmmac: qcom-ethqos: add
+ ethqos_pcs_set_inband()
+Message-ID: <fc77km3ws5ucl7w2oyi3w6gvr6ovkzrt5tlhzh47qyowrak4hg@bqpjm5jgygbx>
+References: <Zqy4wY0Of8noDqxt@shell.armlinux.org.uk>
+ <E1sZpnq-000eGq-U0@rmk-PC.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,79 +97,14 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240802074319.GA57846@thinkpad>
+In-Reply-To: <E1sZpnq-000eGq-U0@rmk-PC.armlinux.org.uk>
 
-On Fri, Aug 02, 2024 at 01:13:19PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Aug 01, 2024 at 12:23:08PM -0500, Bjorn Helgaas wrote:
-> > On Wed, Jul 31, 2024 at 04:20:09PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> > > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > 
-> > > Currently, the IRQ device name for both of these IRQs doesn't have Qcom
-> > > specific prefix and PCIe domain number. This causes 2 issues:
-> > > 
-> > > 1. Pollutes the global IRQ namespace since 'global' is a common name.
-> > > 2. When more than one EP controller instance is present in the SoC, naming
-> > > conflict will occur.
-> > > 
-> > > Hence, add 'qcom_pcie_ep_' prefix and PCIe domain number suffix to the IRQ
-> > > names to uniquely identify the IRQs and also to fix the above mentioned
-> > > issues.
-> > > 
-> > > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > ---
-> > >  drivers/pci/controller/dwc/pcie-qcom-ep.c | 16 ++++++++++++++--
-> > >  1 file changed, 14 insertions(+), 2 deletions(-)
-> > > 
-> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > > index 0bb0a056dd8f..d0a27fa6fdc8 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > > @@ -711,8 +711,15 @@ static irqreturn_t qcom_pcie_ep_perst_irq_thread(int irq, void *data)
-> > >  static int qcom_pcie_ep_enable_irq_resources(struct platform_device *pdev,
-> > >  					     struct qcom_pcie_ep *pcie_ep)
-> > >  {
-> > > +	struct device *dev = pcie_ep->pci.dev;
-> > > +	char *name;
-> > >  	int ret;
-> > >  
-> > > +	name = devm_kasprintf(dev, GFP_KERNEL, "qcom_pcie_ep_global_irq%d",
-> > > +			      pcie_ep->pci.ep.epc->domain_nr);
-> > > +	if (!name)
-> > > +		return -ENOMEM;
-> > 
-> > I assume this is what shows up in /proc/interrupts?
+On Fri, Aug 02, 2024 at 11:46:30AM GMT, Russell King (Oracle) wrote:
+> Add ethqos_pcs_set_inband() to improve readability, and to allow future
+> changes when phylink PCS support is properly merged.
 > 
-> Yes.
-> 
-> > I always wonder
-> > why it doesn't include dev_name().  A few drivers do that, but
-> > apparently it's not universally desirable.  It's sort of annoying
-> > that, e.g., we get a bunch of "aerdrv" interrupts with no clue which
-> > device they relate to.
-> 
-> dev_name() can be big at times. I wouldn't recommend to include it
-> unless there are no other ways to differentiate between IRQs.
-> Luckily PCIe has the domain number that we can use to differentiate
-> these IRQs.
+> Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-/proc/interrupts is 159 characters wide even on my puny 8 CPU laptop,
-so I don't think width is a strong argument, and having to use
-per-device heuristics (instance number like dmarX, idma64.X, nvmeXqY,
-domain number, etc) to find the related device is ... well, a hassle.
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 
-But like I said, obviously devm_request_threaded_irq() *could* have
-been implemented to include dev_name() internally but wasn't, so I
-acknowledge there must be good reasons not to, and I'm fine with this
-patch as-is since it continues the existing practice.
-
-> > >  	pcie_ep->global_irq = platform_get_irq_byname(pdev, "global");
-> > >  	if (pcie_ep->global_irq < 0)
-> > >  		return pcie_ep->global_irq;
-> > > @@ -720,18 +727,23 @@ static int qcom_pcie_ep_enable_irq_resources(struct platform_device *pdev,
-> > >  	ret = devm_request_threaded_irq(&pdev->dev, pcie_ep->global_irq, NULL,
-> > >  					qcom_pcie_ep_global_irq_thread,
-> > >  					IRQF_ONESHOT,
-> > > -					"global_irq", pcie_ep);
-> > > +					name, pcie_ep);
 
