@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-27805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5ABF094638A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 21:02:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBC59946396
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 21:12:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C9183B22392
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 19:02:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E866C1C20F2B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 19:12:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E56D15C13C;
-	Fri,  2 Aug 2024 19:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 811DE1547D8;
+	Fri,  2 Aug 2024 19:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="L0W0XaTb"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="E5yu08UV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11971547EE
-	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Aug 2024 19:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C31F7F6
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Aug 2024 19:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722625353; cv=none; b=nQei5zl5emYI0bfTD291pTg4IepHvmw2uDJVcUq/Oqhg6k1ni3VZ5ZqBGeCI63amfvuxzs01KzUsxirEsjavTiCKWHhNt3PReX2ywH342XmaOtVWHrJF3ymQrzVqcGCFIDyyP3bpoVJtRjp8ij2E0SxUWiDVlLc9gZB9Yq/Mg9I=
+	t=1722625937; cv=none; b=DqEIAlo8q+6cWr9WJ5/bJk7KfOHVxtb1XGTA/YUp9168VVXrPfnW2zEY2GeZw9LWPMLLlsRhxOo4aVDyeGwAo52ZABOSTPCYOLIlAaSgOYm0oCtTrIuFbZHjpsQbnc7woJ1JxxxJDFQydjSWDfhyPAoyRTwJsOWdo9UuUoC2hf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722625353; c=relaxed/simple;
-	bh=XwnlLTMdPliINTV5vAsANgmZhdN+2IjBYhQ9jtQVvcs=;
+	s=arc-20240116; t=1722625937; c=relaxed/simple;
+	bh=JGtSVVreHND+krzlydv1deHKmflrZuoby2HY7g+SoMs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ppSpVvhIi0/mRel7tb5VFDSvjIrDYCE87gkzwJ+AH0enIA5vd4f5BcJ1sYzX972/i2yA4BVlrwkZ5tJLgKebqmXacLoNKToptAFD6kdvgkHbin/hk39EfrsqzjG+pwLjC0LVwFWblDeCfV9UYHLSfkhGQBY8Rz3G22CNLTqF628=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=L0W0XaTb; arc=none smtp.client-ip=170.10.133.124
+	 Content-Type:Content-Disposition:In-Reply-To; b=FYvgKFk+zeKl/yYnWWnEatlnubOcjmnfW9KkNO2oSnY6komjyQIArzHQJ9O6i4Qe5xJWxwhJ8+yBWTezZvq9vQjTJ1BKvsoTsvoG04cGTzkDOTwIci6DxIUI7t0hIMi+TeaL36TRdHatnw7Dm9tLWRwb2ujXupJp/8JvTZ+xciU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=E5yu08UV; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1722625351;
+	s=mimecast20190719; t=1722625934;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=3mGGPNMYW+PwVsxgLN/1XKLLl4dJIQ78l9NLO9EBmCQ=;
-	b=L0W0XaTbkF5quboRCkN0dXqWVRIKkmQ5l4vDRwjWAc+E60PmGEpyno0dbCOBlpv28NPMnd
-	8L1bwoFuod9HvSflCR5dxP2xsuWpUFxBS2RNSOo5bpGrUo/Ef9Mb3wtlqJtN2Iwn5l94nH
-	IdgU1Z0yLao9BCTFcE+R0o/ui4fP8F0=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=MeHceffG2DvzwnKMzj0FH08E1flGznXu0RYbhG1MEgM=;
+	b=E5yu08UVB7OT2cwdVFBkd3KhwDFmSjLLBZUUa6X5ql5VegAFGu1YyrqNcMoyu64h7BKPLy
+	NjYoat68LRKYBplIO9JOfyPPZGwWvr8TVtWHgKzvXJ27pbmSbKStML/rZaOLipw50DiM6Z
+	HX8Fgnd1h2547KoSk2jcOvGMlkwst3s=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-576-ef886IO-Nj68ioYdd9rpXw-1; Fri, 02 Aug 2024 15:02:29 -0400
-X-MC-Unique: ef886IO-Nj68ioYdd9rpXw-1
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7a1d4335cceso677749585a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Aug 2024 12:02:29 -0700 (PDT)
+ us-mta-620-IXtMR2TEOTOOaY9_zJvYAg-1; Fri, 02 Aug 2024 15:12:13 -0400
+X-MC-Unique: IXtMR2TEOTOOaY9_zJvYAg-1
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6b79ab201faso91666276d6.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Aug 2024 12:12:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722625349; x=1723230149;
+        d=1e100.net; s=20230601; t=1722625932; x=1723230732;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3mGGPNMYW+PwVsxgLN/1XKLLl4dJIQ78l9NLO9EBmCQ=;
-        b=rMCrII5eILIz/uX8ViwNIIRJuHvjc2mYP0hfheCzne8FXuof0mecGML9alhHQjyuyN
-         gll/hzWGvvEtNn5isW9UWKUk/jccG85504TGj1JBhrsH2sngDNd8x8VvBUkVDOAeEn00
-         4Hp32fiR26MCOb65ezu7aoxb5FxOh2HLDmzekOKfQzi+hnoZrU8mTkeYN212jro9c7n0
-         +CLpSsbx3qnuP95W55GsLtixsdxneb/jZ2c3WbUAP82YMBSqmsXS1U3RN7pZdmYaJjpT
-         KECGF6N0W6m4io8Gfz8dXcPrtcPwvnx0YAs2LKQD3odP8NBBb6ax4nRdOj09W+SXHxQK
-         apUw==
-X-Forwarded-Encrypted: i=1; AJvYcCUrTAjmCfDY44zIo/JV/s6WmwBHUjTiE5ABMarhnuAxd9sbyAPlBeUJKSKQYqHUT/R4BtgXjc+BYTMlQksy9opsN5UtjA5EDC8Em4RCUA==
-X-Gm-Message-State: AOJu0YxIEQZqdu34yXXuWTz+KbuC35vRuPrwxRANhRyhSIYNp2yd66z1
-	JshXjW5LgJv8L689YHPFeC79JaQgJ6p7WIKNuYinO0S3VNUkbbyA7ZOHtNI7AknjdZemwSVjBWD
-	jFreGog1smqvc+sfC4E/+WJZlAzu/Kk7VVXnnau9hMAzg6TudIegh1saQAw9q9ShFR7HVWZY=
-X-Received: by 2002:a05:620a:3904:b0:7a1:df8e:3266 with SMTP id af79cd13be357-7a34c06899cmr982696285a.16.1722625348944;
-        Fri, 02 Aug 2024 12:02:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFfNmVNiVUXQYiFVSaa9qpl6QZ/E/1LfvB87rHqYLChQThUb1cOPW5N5oeiv7xY8fOXZ6JvXw==
-X-Received: by 2002:a05:620a:3904:b0:7a1:df8e:3266 with SMTP id af79cd13be357-7a34c06899cmr982691085a.16.1722625348564;
-        Fri, 02 Aug 2024 12:02:28 -0700 (PDT)
+        bh=MeHceffG2DvzwnKMzj0FH08E1flGznXu0RYbhG1MEgM=;
+        b=oc5/2/4uGFqFJVblLUlR1YI12LIgJtiFNTV4/ORR4AjjasCAyLuDsmfvb8p5nV8VJd
+         bgsn68p9KW6n1GVuO5Ohb177ogI0bT7DmYSeQERGkjVb7jt5OTg+YxHaqsUa+rJfPI0j
+         r0RSUVN1Ne2bfJc1gz8RK2N72mSqn0XAoDyJDaRpBmzC0T9Y6wTIRtnA/nD5L8NrsskF
+         nocKq36EyIcCM8QVnzJv6DNHzYuBoaCjo3uToOHpNCPG+vDAv7PHcq5+RaYGrHEpoMmS
+         VaNaNYBPnWWkOT+mz3Qquw6yfptb0fiaaRGja0EVTtVYq+YuCeAM+GFN8k66UlwSBSHc
+         niCA==
+X-Forwarded-Encrypted: i=1; AJvYcCXlEfjM+p3vjYoDTYtzxBIs2ebMOVqFX6Pvgb8aYoKLQJ7qNGNfJPwg+x/zzog7DlwlasXj2ZCKyAo85VzogxX9Z4pPKq0DbDcc3r+I2A==
+X-Gm-Message-State: AOJu0YwJJSS1EE3Y5eDKrMKXLgNVyNqosfukH2TkT58uQF7Zwpi/rIBy
+	mnNSnHQQGaG1EiF+wqJ0IFm769xE3BzdRh6t/kJ0uLcfGATOOP4YdtEBVaCYuWiO1iclCORUHDS
+	SaWC7tVSkezw1olCQIPwW3XwMmc/PmjKbJAqdiy6vraYtV7FPi8yCSitMACQbSLM=
+X-Received: by 2002:a05:6214:419e:b0:6b7:a4dc:e24a with SMTP id 6a1803df08f44-6bb984c2dc5mr45628566d6.54.1722625932555;
+        Fri, 02 Aug 2024 12:12:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHRfbbC2Grol7Hz6dSqVP5HlRsLd1BHxqCCywxSF3I2nLeCO3jas/mUewssAd0BLE0wzgqG8Q==
+X-Received: by 2002:a05:6214:419e:b0:6b7:a4dc:e24a with SMTP id 6a1803df08f44-6bb984c2dc5mr45628146d6.54.1722625932128;
+        Fri, 02 Aug 2024 12:12:12 -0700 (PDT)
 Received: from x1gen2nano ([2600:1700:1ff0:d0e0::33])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a34f6e7d6esm111860785a.36.2024.08.02.12.02.27
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bb9c76aceasm9638566d6.6.2024.08.02.12.12.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Aug 2024 12:02:28 -0700 (PDT)
-Date: Fri, 2 Aug 2024 14:02:25 -0500
+        Fri, 02 Aug 2024 12:12:11 -0700 (PDT)
+Date: Fri, 2 Aug 2024 14:12:08 -0500
 From: Andrew Halaney <ahalaney@redhat.com>
-To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+To: Russell King <rmk+kernel@armlinux.org.uk>
 Cc: Serge Semin <fancer.lancer@gmail.com>, 
 	Alexandre Torgue <alexandre.torgue@foss.st.com>, Alexei Starovoitov <ast@kernel.org>, bpf@vger.kernel.org, 
 	Daniel Borkmann <daniel@iogearbox.net>, "David S. Miller" <davem@davemloft.net>, 
@@ -84,11 +84,11 @@ Cc: Serge Semin <fancer.lancer@gmail.com>,
 	linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
 	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>, 
 	Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH net-next 13/14] net: stmmac: remove obsolete pcs methods
- and associated code
-Message-ID: <ij562xfhvgxmvpgh2l6rhsvcpi43yvvkvef4wgpjupwusi6uwy@cpnkopeu7cpc>
+Subject: Re: [PATCH net-next 14/14] net: stmmac: Activate Inband/PCS flag
+ based on the selected iface
+Message-ID: <yma4bknen5jc6om56eorr44uuoqtziqvk4phds6cpkrubrs5dy@esxfxtz22egh>
 References: <Zqy4wY0Of8noDqxt@shell.armlinux.org.uk>
- <E1sZpoq-000eHy-GR@rmk-PC.armlinux.org.uk>
+ <E1sZpov-000eI5-KP@rmk-PC.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -97,30 +97,47 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <E1sZpoq-000eHy-GR@rmk-PC.armlinux.org.uk>
+In-Reply-To: <E1sZpov-000eI5-KP@rmk-PC.armlinux.org.uk>
 
-On Fri, Aug 02, 2024 at 11:47:32AM GMT, Russell King (Oracle) wrote:
-> The pcs_ctrl_ane() method is no longer required as this will be handled
-> by the mac_pcs phylink_pcs instance. Remove these methods, their common
-> implementation, the pcs_link, pcs_duplex and pcs_speed members of
-> struct stmmac_extra_stats, and stmmac_has_mac_phylink_select_pcs().
+On Fri, Aug 02, 2024 at 11:47:37AM GMT, Russell King wrote:
+> From: Serge Semin <fancer.lancer@gmail.com>
 > 
+> The HWFEATURE.PCSSEL flag is set if the PCS block has been synthesized
+> into the DW GMAC controller. It's always done if the controller supports
+> at least one of the SGMII, TBI, RTBI PHY interfaces. If none of these
+> interfaces support was activated during the IP-core synthesize the PCS
+> block won't be activated either and the HWFEATURE.PCSSEL flag won't be
+> set. Based on that the RGMII in-band status detection procedure
+> implemented in the driver hasn't been working for the devices with the
+> RGMII interface support and with none of the SGMII, TBI, RTBI PHY
+> interfaces available in the device.
+> 
+> Fix that just by dropping the dma_cap.pcs flag check from the conditional
+> statement responsible for the In-band/PCS functionality activation. If the
+> RGMII interface is supported by the device then the in-band link status
+> detection will be also supported automatically (it's always embedded into
+> the RGMII RTL code). If the SGMII interface is supported by the device
+> then the PCS block will be supported too (it's unconditionally synthesized
+> into the controller). The later is also correct for the TBI/RTBI PHY
+> interfaces.
+> 
+> Note while at it drop the netdev_dbg() calls since at the moment of the
+> stmmac_check_pcs_mode() invocation the network device isn't registered. So
+> the debug prints will be for the unknown/NULL device.
+> 
+> Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
+> [rmk: fix build errors, only use PCS for SGMII if priv->dma_cap.pcs is set]
 > Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-...
+Russell, did you add in the priv->dma_cap.pcs check with SGMII just
+because it *is* expected to be set unconditionally when SGMII support is
+there?
 
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-> index 3c8ae3753205..799af80024d2 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-> @@ -321,48 +321,6 @@ static int stmmac_ethtool_get_link_ksettings(struct net_device *dev,
->  {
->  	struct stmmac_priv *priv = netdev_priv(dev);
->  
-> -	if (!(priv->plat->flags & STMMAC_FLAG_HAS_INTEGRATED_PCS) &&
+Always fan of less conditionals, so just curious as to your motivation
+since Serge's message makes it seem like SGMII && dma_cap.pcs is a
+redundant check.
 
-This change effectively makes the INTEGRATED_PCS flag useless, I think
-we should remove it entirely.
+Otherwise, looks good to me.
 
 Thanks,
 Andrew
