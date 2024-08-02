@@ -1,96 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-27794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A4DA945F28
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 16:10:38 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7AB29946074
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 17:25:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2490D284339
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 14:10:37 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7BC7AB23EAF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 15:25:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C3A91E3CB8;
-	Fri,  2 Aug 2024 14:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F836136347;
+	Fri,  2 Aug 2024 15:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="broSif41"
+	dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b="ZB2bSwDS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp-fw-6001.amazon.com (smtp-fw-6001.amazon.com [52.95.48.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541A614A0A0;
-	Fri,  2 Aug 2024 14:10:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8C3175D36;
+	Fri,  2 Aug 2024 15:24:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.95.48.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722607833; cv=none; b=ThI1hpaQL5+ggz1LhLYrlDCSwvHFxH/jVSp6WEBZDt+k8T14YS22x5dxYH4KwqIDaKF6FqxH17yelK1xYhis6/SIO+Ys8wPfHuJf/y/pxUBp74dDUh+HRCOcpsVtpsRSzfClL+S4aSie9YneAaM19Uy/O0Q7L1zPg5ODndaWW30=
+	t=1722612284; cv=none; b=MmxkaUbBNx+TlC7q/tC3G9R3s0NVmAvQXSKIVzEcpC5tD64+icNMGgLXqAUkVXjkfXxHUUOe2upLgq7R6DVfm7M/DzCLdzXAJSmaAHC/mTBguPWIlA/ogH3C/qVYswUmr4D0gg5BdQ1WGU78LzvOxBTRw9H5+37PGTRMqhifanc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722607833; c=relaxed/simple;
-	bh=t5TXMfkAFtrA0zYUGHYsxBjB6x511pWd/0k0tqIstK4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AlIKxF55jeNVqDnXSQgqUC1+7z1nlSnN0i7Ki8UIU6paAWpuzSiUpGKkyhzlP+tCdwq8KkqkM7LVgssQe4/WcctpmAUgWBiFPvfaWWIzfxR7fOPkk4fbjRyZaSJBwMPJmimEQl0HXO8cLXkJOSTm+FdIYFH5iDg0i8LP6bXPfh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=broSif41; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA39C32782;
-	Fri,  2 Aug 2024 14:10:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722607833;
-	bh=t5TXMfkAFtrA0zYUGHYsxBjB6x511pWd/0k0tqIstK4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=broSif41v8x6AAdGNq6ymOWqaVU5xZqQoqe70jksXTqk+gsFYAOjFCI4z0oFRjZqK
-	 3FKDJHH9cTiMNafacD0R6DxaDUjY+h9M7X6sSK3CWB0VdOzaOz3BwuzRedSwG/FQRu
-	 wiUB7yx1zwTDhRw6oFWpdR2uWZLRN+mj/NiRKd6gzpcLpY5PrvNCpeokVXnWxxl38k
-	 LhVU1ZLtc9tGxx/eqbBR+Itba7gwsN2O5syfBoxqzWBAsjJYSODAT7FugBqvf38lsu
-	 gSIJdVFdZaob0EYDsfh6K3Ah0RPqZSZLnNMUEdGDPwdy9HfYY1D3qHTbIW77inB3bZ
-	 XIc+Zxd7Wd2AQ==
-Date: Fri, 2 Aug 2024 19:40:27 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: freedreno@lists.freedesktop.org,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	dri-devel@lists.freedesktop.org, quic_jesszhan@quicinc.com,
-	dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] phy: qcom: com-qmp-combo: fix swing and pre-emphasis
- table for sm8350
-Message-ID: <Zqzo08Siy5liaPAd@matsya>
-References: <20240725220608.131426-1-quic_abhinavk@quicinc.com>
+	s=arc-20240116; t=1722612284; c=relaxed/simple;
+	bh=tSOPhpPWSDfuhuQNh/03dUPsZeMbnMz0ai/De9506rg=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=jPWTx7LleT2PdLWL9n7cX3RNsyhFvS/L5qgJYw1Di5/FBgnPr3T+uxJRE89jt9iGGprgJQeDiP6rtEz4Wo7LLlY3iJewHDubEWMqep1xmi8LjkLKmbQwkFTsAJR95upmm9n7w+/wwFAY1fWonSEkzmz0UNDI0RzZMYOwiQ5sHuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b=ZB2bSwDS; arc=none smtp.client-ip=52.95.48.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1722612283; x=1754148283;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=Jl1MLgN/io3EBYNcV6UPk1uVnZispg71Was7orwfQaE=;
+  b=ZB2bSwDSQMCFgSck3j9myS5Kamh39Vinml12NivGK1f78Od2CQG2y21D
+   c0fME7Kb96b9T+J2ulfKHDXFAXABhKTsqyqU9CucaBe6QJlPfOEM2vHWb
+   oEOaZlBagM4y+PcACTLZw/jPQ2CtqjlCL2PqeZyFTaQ7pM/TbNvfk8gXO
+   E=;
+X-IronPort-AV: E=Sophos;i="6.09,258,1716249600"; 
+   d="scan'208";a="414879173"
+Received: from iad12-co-svc-p1-lb1-vlan2.amazon.com (HELO smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.2])
+  by smtp-border-fw-6001.iad6.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Aug 2024 15:24:40 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [10.0.38.20:37986]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.47.88:2525] with esmtp (Farcaster)
+ id 52fc12c4-fc78-4936-82aa-b0c63a035f2a; Fri, 2 Aug 2024 15:24:39 +0000 (UTC)
+X-Farcaster-Flow-ID: 52fc12c4-fc78-4936-82aa-b0c63a035f2a
+Received: from EX19MTAUWC001.ant.amazon.com (10.250.64.174) by
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
+ Fri, 2 Aug 2024 15:24:35 +0000
+Received: from dev-dsk-jorcrous-2c-c0367878.us-west-2.amazon.com
+ (10.189.195.130) by mail-relay.amazon.com (10.250.64.145) with Microsoft SMTP
+ Server id 15.2.1258.34 via Frontend Transport; Fri, 2 Aug 2024 15:24:35 +0000
+Received: by dev-dsk-jorcrous-2c-c0367878.us-west-2.amazon.com (Postfix, from userid 14178300)
+	id 0E1D8A79E; Fri,  2 Aug 2024 15:24:35 +0000 (UTC)
+From: Jordan Crouse <jorcrous@amazon.com>
+To: <linux-media@vger.kernel.org>
+CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab
+	<mchehab@kernel.org>, Robert Foss <rfoss@kernel.org>, Todor Tomov
+	<todor.too@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>
+Subject: [PATCH v1 0/2] media: camss: Fixups for large capture frames
+Date: Fri, 2 Aug 2024 15:24:32 +0000
+Message-ID: <20240802152435.35796-1-jorcrous@amazon.com>
+X-Mailer: git-send-email 2.40.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240725220608.131426-1-quic_abhinavk@quicinc.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-On 25-07-24, 15:06, Abhinav Kumar wrote:
-> Fix the voltage swing and pre-emphasis tables for sm8350 as the current
-> one do not match the hardware docs.
-> 
-> Fixes: ef14aff107bd ("phy: qcom: com-qmp-combo: add SM8350 & SM8450 support")
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> index 31e43638a649..c15b01aa5a48 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> @@ -1946,8 +1946,8 @@ static const struct qmp_phy_cfg sm8350_usb3dpphy_cfg = {
->  
->  	.swing_hbr_rbr		= &qmp_dp_v4_voltage_swing_hbr_rbr,
->  	.pre_emphasis_hbr_rbr	= &qmp_dp_v4_pre_emphasis_hbr_rbr,
-> -	.swing_hbr3_hbr2	= &qmp_dp_v3_voltage_swing_hbr3_hbr2,
-> -	.pre_emphasis_hbr3_hbr2 = &qmp_dp_v4_pre_emphasis_hbr3_hbr2,
-> +	.swing_hbr3_hbr2	= &qmp_dp_v5_voltage_swing_hbr3_hbr2,
-> +	.pre_emphasis_hbr3_hbr2 = &qmp_dp_v5_pre_emphasis_hbr3_hbr2,
+A few small issues discovered while (thus far unsuccessfully) trying to bring
+up a 64MP sensor. The chosen frame limitation of 8192 seems to be somewhat
+arbitrary as there don't appear to be any hardware limits on maximum frame size.
+Double the maximum allowable frame size to accommodate bigger sensors.
 
-This is fine but you need to drop the unused qmp_dp_v4_pre_emphasis_hbr3_hbr2 table...
+Next the larger data sizes end up needing bigger pixel clocks. This exposed a
+bug for 8250 devices where the VFE clocks are shared between two blocks, but
+the CSID block is being initialized second and overwriting the carefully
+selected clock rates from VFE. This was likely not a problem earlier because
+the lowest VFE clock rate that CSID was selecting was good enough for the
+family of sensors that were being used.
 
-It adds a warning, defined but unused!
+
+Jordan Crouse (2):
+  media: camss: Increase the maximum frame size
+  media: camss: Avoid overwriting vfe clock rates for 8250
+
+ .../media/platform/qcom/camss/camss-csid.c    |  8 +++----
+ .../media/platform/qcom/camss/camss-csiphy.c  |  4 ++--
+ .../media/platform/qcom/camss/camss-ispif.c   |  4 ++--
+ drivers/media/platform/qcom/camss/camss-vfe.c |  4 ++--
+ .../media/platform/qcom/camss/camss-video.c   |  6 +++---
+ drivers/media/platform/qcom/camss/camss.c     | 21 +++++++++++++------
+ 6 files changed, 28 insertions(+), 19 deletions(-)
 
 -- 
-~Vinod
+2.40.1
+
 
