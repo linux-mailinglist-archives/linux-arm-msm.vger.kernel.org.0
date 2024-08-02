@@ -1,250 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-27770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8F749459DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 10:27:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 603BD945AD9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 11:22:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 454241F2195A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 08:27:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E7041C2285F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 09:22:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E8CE1C0DE1;
-	Fri,  2 Aug 2024 08:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78FB71DAC67;
+	Fri,  2 Aug 2024 09:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fAIL+Upn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G+Tgt2u7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BD113FF6;
-	Fri,  2 Aug 2024 08:26:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.10
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722587218; cv=fail; b=Q1FcbiW4wtyTJftcuC//tIrg5VM/2Rr4V3ybnI6f0KmX9+GYjPxwJBduz/YURqVbRcK+EYi6W5YK1RghU0gU1g4AYoRaZcP1nTNo9yMIPOcZOFiozJVhik0uj1Av6b9fAGxGq4NY45gvo0bGT8Hqmvx95UwnP4c0Q4MgqwMBVkc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722587218; c=relaxed/simple;
-	bh=xYvxiXaRe6VmcOP5T/OraP2LF1QF5aXHoXyQJkxkALA=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=NnH0TVryU9sW9mvY+grSL286NhACt3tGo2bEOcs/mk8Nyfqn7hwgP4MGYtJAy+WFxNxnVQiqocC2skL7uRCK+v2FuVb8Q8XZlMdX93+h4Nd/0RJvCEApuz4ailxjHfkKmIe6mwye58JilQ6QMDPipuN8mSUhjUjgeGpTPsPYPQc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fAIL+Upn; arc=fail smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1722587217; x=1754123217;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=xYvxiXaRe6VmcOP5T/OraP2LF1QF5aXHoXyQJkxkALA=;
-  b=fAIL+UpnvuZclxUzJ3+JGB62TGQBwxngqRdJvk72feb/moppMbP59aDw
-   R+LxBEkFhlDTqfvyjochqMFT7F8mq/RLvlnoy+1zENvZwiyStWQ43V2To
-   wZuHKY7Zfyxrr/SPtGIw6jJGZgtsN3xBE2LfimJp2nqCiKo5UiYyDUMxg
-   VFvs60M4ji0OLragWGdjr+YbX+XSJ6Vixy1SMxARMPPl12hP+4n7fERJD
-   KbffLoZx3U50xAKpZqO3Sp66vcCw0cu/NTjJUU0I+sXCY/eG/ZfEypJQR
-   A7zu/lVIYXg9pHIYt/riJhIO9TRp26Xyj5pJteCt0G8ca3rGIAx58ET7K
-   Q==;
-X-CSE-ConnectionGUID: vva9ZQNDTXe3Rkcez+vbmg==
-X-CSE-MsgGUID: kYCbKempROW6oJgD9jNzUw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11151"; a="38053719"
-X-IronPort-AV: E=Sophos;i="6.09,257,1716274800"; 
-   d="scan'208";a="38053719"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Aug 2024 01:26:55 -0700
-X-CSE-ConnectionGUID: YzFSaJjQREWZnSkpX2udZw==
-X-CSE-MsgGUID: HyaLYcvpQ+q2nGOhhQdYMA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,257,1716274800"; 
-   d="scan'208";a="92876259"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
-  by orviesa001.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 02 Aug 2024 01:26:55 -0700
-Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Fri, 2 Aug 2024 01:26:54 -0700
-Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
- ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Fri, 2 Aug 2024 01:26:54 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Fri, 2 Aug 2024 01:26:54 -0700
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.42) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 2 Aug 2024 01:26:53 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eMvDyxKXz8aWgEBw7QScDAShK5dW/8SnPnBwXj5jvD+l9qPWMsoNVCTrf//mhzF7QH5mRf481efk3moyxKW7w+J+1NoiGn6GZGH7URvH0xHthZl3KXLHW8LOS8bjiD2rK8tKXkd1EyNrIWzEhYNSyqviA58W0V6FTCSVhx1oxXISCwAM9kfY+Cxe/L/ray+seIqxW6scfhKjQK1YOU9AB20OI53kcX3V360wnkoBHAJQggoAH+ibIgE5bSufn9xP9AVfix5lr3T2xxs0+qmQ9JbeV3S1cdMnEaUZh+RHyeKqFgIk4wkj36f83NauaJwv8S50HCyo2VfEz+nQiG9/6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uqbT47+81ID/+mEUV7gO4Or1gm1l+hhSNBbW9JFIpWM=;
- b=PYwBAOTAThzPULua9/0uuDwdizfKSMNChp/qyFM1kM2HwosDVifXsDQ3zw1lraBa/wehTUbsmGDIWiP2e+Ty1M69zImK38K0P1vnHEOU+4UpY7QDXg5Fb/YHAhtH0boxmiunoIu95QZH5zl85f07v2N7kJNnegzkTfQ2oHn0Lqvffz/kKrC99cewBospq+1cS9ce6CLizuVJoDsSv0X4mSGCFtQKfBJyYPQprferhsXTu1RtAdtpq0QAStMNYeCqcWo0KnRx5gYfo1SNvvbCsK9v6WK/eWL52u4LpdSSFBdwwzXxQwlRhY6bz4EraVO3Ec72WhlwjebMOcmwc81JXg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
- by IA0PR11MB8380.namprd11.prod.outlook.com (2603:10b6:208:485::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.23; Fri, 2 Aug
- 2024 08:26:48 +0000
-Received: from BN9PR11MB5276.namprd11.prod.outlook.com
- ([fe80::b576:d3bd:c8e0:4bc1]) by BN9PR11MB5276.namprd11.prod.outlook.com
- ([fe80::b576:d3bd:c8e0:4bc1%3]) with mapi id 15.20.7828.021; Fri, 2 Aug 2024
- 08:26:48 +0000
-From: "Tian, Kevin" <kevin.tian@intel.com>
-To: Jason Gunthorpe <jgg@nvidia.com>, David Hildenbrand <david@redhat.com>
-CC: Mostafa Saleh <smostafa@google.com>, John Hubbard <jhubbard@nvidia.com>,
-	Elliot Berman <quic_eberman@quicinc.com>, Andrew Morton
-	<akpm@linux-foundation.org>, Shuah Khan <shuah@kernel.org>, Matthew Wilcox
-	<willy@infradead.org>, "maz@kernel.org" <maz@kernel.org>,
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>, "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-kselftest@vger.kernel.org" <linux-kselftest@vger.kernel.org>,
-	"pbonzini@redhat.com" <pbonzini@redhat.com>, Fuad Tabba <tabba@google.com>,
-	"Xu, Yilun" <yilun.xu@intel.com>, "Qiang, Chenyi" <chenyi.qiang@intel.com>
-Subject: RE: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
-Thread-Topic: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
-Thread-Index: AQHawdyTbbj3CTyCxU2oU4wQ5oQq6rHOYY8AgABR7QCAAe6NAIAAEoqAgAAFggCAQyU6EA==
-Date: Fri, 2 Aug 2024 08:26:48 +0000
-Message-ID: <BN9PR11MB5276D7FAC258CFC02F75D0648CB32@BN9PR11MB5276.namprd11.prod.outlook.com>
-References: <20240618-exclusive-gup-v1-0-30472a19c5d1@quicinc.com>
- <7fb8cc2c-916a-43e1-9edf-23ed35e42f51@nvidia.com>
- <14bd145a-039f-4fb9-8598-384d6a051737@redhat.com>
- <ZnQpslcah7dcSS8z@google.com>
- <1ab73f42-9397-4fc7-8e62-2627b945f729@redhat.com>
- <20240620143406.GJ2494510@nvidia.com>
-In-Reply-To: <20240620143406.GJ2494510@nvidia.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BN9PR11MB5276:EE_|IA0PR11MB8380:EE_
-x-ms-office365-filtering-correlation-id: 1f8e64d2-2791-4bc4-8937-08dcb2ccda66
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014|38070700018;
-x-microsoft-antispam-message-info: =?us-ascii?Q?iiEYoFDYAZrZza4g+RuqRyI414K36ZM21dE/zau4tAu8O63swX2nXY7r5ACX?=
- =?us-ascii?Q?q1zsdaG+L3oL8Pvq6bYKry2IrYVC8pgLqeJUNm1b4hBo+bveii2I5sJl4Zfb?=
- =?us-ascii?Q?9Ng0Mt2kcp6yPaqlnx8KewzBvlr1kTU9K/daPLMf53BZSNcN9BbSw4XHdl6M?=
- =?us-ascii?Q?kp3TgWAzDMSBpVRQwX/ecjgdlGogMsOoZcfm3YXGJbLDP4151AWFe4pXbR80?=
- =?us-ascii?Q?iV4saJvZ0Wc0SCdh38eGbuFEa64T3a5KM4aQS1h8QJnl6rDlNHO+JzsWgHcH?=
- =?us-ascii?Q?DPa1QIjuvQnIeXPNDqboxBUlkmt33eg/zTN0/8xqe8HqMS9LitLzCmON+40B?=
- =?us-ascii?Q?rbVUXTa0UDNb4/1EeDOfwOgEIRT/QJGt6y7meSp2lKWT3L5dBFneZxQqBRUU?=
- =?us-ascii?Q?//xnNT8W1P1a5fq5/878hoxpGJfFN2QgMnklmsKj+yC750TB9IXQV1YCSLch?=
- =?us-ascii?Q?M25PNMTKoscsdYPar+vlxLdUR5QJ9Aoi2p0jxrJ3S8tHMmV5vNLmNCtlbQuG?=
- =?us-ascii?Q?JrvfwCoSUDGW+KZ1CJfZuhPazE3wgJEceAZkkWHNoNVXl5/yVVkyRyjKUcr0?=
- =?us-ascii?Q?A+B5VThEmzhxH1BfWe7/90gBPlnv265tw/VBfq9M0lzusLOGwAuNudWwlfih?=
- =?us-ascii?Q?URWxPW48vTCbSJGxbpaQWX9eSBoYV6qJw1SCntCUSO3R55DC/0PBj0v6+xTV?=
- =?us-ascii?Q?gGqSZenFB9ai6nqn6GRXnQDfAyyrlP562cOc0EZdvVdGW8I+xWQqJU2BGgkh?=
- =?us-ascii?Q?X7vRzvoX0hyrPX/eT7teQnZ3xUCJArwhlErXkbw2/mAGXvM4UCcRkapyw+ee?=
- =?us-ascii?Q?YG+BAK+0iFW8B7xPRUiGyEHoSuRc5/9FjD1+g4cgOVSYAWc/S5wf6BQE5gdL?=
- =?us-ascii?Q?PuNlKuZF693tU2Jwp4Pf0lQ3pm2rnBnalDX5VVgA3f0wR5NwG4UUXBQOCF4T?=
- =?us-ascii?Q?GTwGDPq2WspGU+C6RW4e+Y+Zk8XnxAF5VD2Gks6E3ijnQe7fgRdA2xpfjPJF?=
- =?us-ascii?Q?xtCdnufKc+1i18gKTp9wqCRs8PSAIpVcMq6LOUtu12YW2Zlu0P7vDvXxvrIR?=
- =?us-ascii?Q?Ufq2Je/Ax8yvGFTylyY4+O7Ts6TJQ9xvn8gI3kbfBgjX0Wavg2Z2vt+vQrcg?=
- =?us-ascii?Q?/NkiC8wpJYi2hg02OFYmlgXD3QJ3H+RkBhhqppkGu/NxPZ5hzIBJ32YqM0Do?=
- =?us-ascii?Q?T1eXcM5GW6vnqXCTrivcR25RpHfFZNnj5X8rQaQMOMIjTUsPKClCsX3mssD1?=
- =?us-ascii?Q?EVVpYmkQ4+cLfZ0/IVnm1OTBA1fATABKGKZmAGhSlp9z7wZ68gNYdgTrwovM?=
- =?us-ascii?Q?lHI+VDbIUpBeEAsk3TJmjcZE+7M5Coh8c+mjssLMQY6AQRXwdg5Mb5Y10Dlw?=
- =?us-ascii?Q?OOQzHu8=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(38070700018);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?tDAWzJZlksgSBAbb8Jw5h+82jSG4zuSgEoszgfZXFYiYcELZ9SdZVMoS0YCW?=
- =?us-ascii?Q?muWzoC3HghSYyvhnmWnmzRHPY5qNnXZEZd32IlCmsr9BbDea5X8Z1ZtYGyOq?=
- =?us-ascii?Q?4hkpC6JznieSCJluKzX9bOEy736D1ziMJf/SjMkiKm/FMzqS65p+wt0BRuoT?=
- =?us-ascii?Q?+8Y5tCjQtgjBwEHTrorEFmhZVyUrCDAAunGIXLDlXSwDpJ3nwmFmFmthwynH?=
- =?us-ascii?Q?cMBlN3mhFIpt/SVlXYzWuf/qMosrZ63tX1+0xkaFglzaMc6zEHJJeRfBTp93?=
- =?us-ascii?Q?eWMlAzsL7HxJBp61VnEUxKJ34EFcymftapxx4Fcb00I4YjayJc1b0HbSsDS8?=
- =?us-ascii?Q?9laIxPIVVdutnT5JZ1tao/NirAS695jYxLIHiX4Lk5pbG8jYoMrQjHdvOylK?=
- =?us-ascii?Q?Kja42XKLGE9GfZvv1IMSIotgsNScu5TbJyAF9AKeEDXcKJ8325WAI511gUr/?=
- =?us-ascii?Q?U4rEC+bwM8RhTTte7qT6ocfaaEu87wvcsGw74lZmpsVJO3ksvGv53ssdH73/?=
- =?us-ascii?Q?ZikpMR6wnEAhJdOrutB9zywzbb3nN/rK8ad5SF08p8OSdOWiVQn2OwsQDdEn?=
- =?us-ascii?Q?Lo38rrBuRIpFKs4S5I+NHcPzD0XMNstIyAee76LSWKGV6t3CVKI7zzpG9GWl?=
- =?us-ascii?Q?7mrycNsYwysIMyqPIkzd39laspuO2gKrA+w/GpKQUBjIVQjOAdOgfhiG8URM?=
- =?us-ascii?Q?VlH6caHC6OxMjGVXpxUBa8XGIxaNTlHomB0Hq7yffE30C00w0dSJ00z7bwWz?=
- =?us-ascii?Q?NFO/G7ko1OouwwT1NwlzJjqdJQKV+9U4StvxN3NX0QcivLWsnj4XUzjYebZy?=
- =?us-ascii?Q?wpmGbOjF+xG+KD6JDsjIAk5SKmahyWP6CkDWcSjtu3XUaZh0+SW56XQZhWAC?=
- =?us-ascii?Q?OqZwBab9QX44OkmVxCGkWony7Deidtxldsy/x/21/BD3WRD9BuuecmePLBt4?=
- =?us-ascii?Q?n/Vm3yee940JfAOln5YWjWbuEAR9fI8DfFL44vm3Cg5h+kyjhKY1SKOzf5hR?=
- =?us-ascii?Q?//fE1/ZWyDmygP7pMKLe/dWU64V8tKuxdBwO8xCklaSpaP0JAtbIW3EDl5LN?=
- =?us-ascii?Q?B6ioverVV3Wue+6wMW0erxDuZKYIxAe9o9GYxcVOXBaCP4L6LaZV1uA3g3/Z?=
- =?us-ascii?Q?GWmZtM57Y/CxGigyhrntrtDr6uCEHd1DP0gQg6UGfhLnGbecqD5rICBLtOoG?=
- =?us-ascii?Q?TXiHUSLuggYInZ8HQgpPxByAHCPZe5SVIfQEYglp7aodA78QB7fwiSv6rxz5?=
- =?us-ascii?Q?4NEysXpB77gksIlWs0ElSUz6wMBEGY6tR0eWw8c2XzEdTRt98TLztyd4wYJ5?=
- =?us-ascii?Q?bHrkQ7N/fbVv+F4w7oz+rrCkRxa9F+cRL95ySUNHtFS1fhWktE9Yr//rugus?=
- =?us-ascii?Q?jERETvfSXiTHdVVw/76tgAvJOnIWIYCtgaSl5jQTrhMz3UdrCYOG9A9JjzBi?=
- =?us-ascii?Q?r3EjANObFXLiOBkzM/amT0u/RM/pO24Xv7lWFuVY14194q6tUoF48tLT0WZF?=
- =?us-ascii?Q?xhhkmS61bvr5cfVh2EK88t4ESu8Dhq/l74bE0nV1I1Up6E+bx+ef9ZQDq5BE?=
- =?us-ascii?Q?tibsRtWbBD4P+u6TlurYsNbCWdBhqFq8nl6jm1fY?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 915F31DAC61;
+	Fri,  2 Aug 2024 09:22:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1722590569; cv=none; b=kwezrKROPws8MRjxL/vtvRodu0YuE0kPahULyY064TmaSv/XCHa9bu9/q7+ZbOuKbp6wWrR54V893Ald3Kr56/P8sKhs8pvLENH2K4PjpTvy68Vkrdwy/M1mE4L9nnCzw+abj+yOxdIjDMMRwRSzXMoLJjMMnWfZSHRMthY8kEA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1722590569; c=relaxed/simple;
+	bh=Cg/MKCTgd7hojhmxXQb7ju0BBua/MVvhWfRNKo9kc9Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=n8Z/YxxW/dU1J3o3XlJvUlyOtMT/T4rrCBhaXd9jebMdm+oVnA/dC8Ne8Ok6xGYieyfdGrVUe4BTBx1mKW8X4wnjbWRhvxGEIsyD8vnb8j1mtLyecBsKG7cBt1pccHnIQV4k3BXLZ+OseeX+DC/r0/36QNfjYWlUYefEoX28JZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G+Tgt2u7; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-52f042c15e3so2729831e87.0;
+        Fri, 02 Aug 2024 02:22:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722590566; x=1723195366; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Ye5tA42uMBNtvT73KdG8A94PBs19ktzkMoJkqT5xskw=;
+        b=G+Tgt2u724xXWxeV+8GWWw7KJByFn9b90RX4Sm0p2n3Hn1gVOGrDrOkf4zzOTMMjEd
+         hl0MM8GSvSIvKn4D5gQ96ra6B2Wn0SXQi5Bsq9JFJDPekx7UupdoTS461QDeZabDsTx6
+         dp2mXEG2GbWP68w9H4yG7Nd9mzCPObtWGolCgSi6PrXm/1ItZ01J68R5IzqvBVq7vGla
+         DpoHeFylkBOsBOryEExW4Y9GmrqFbCNtSsm5GSqwzB/BHXIcgm07wB9fOQvwfRKbPGLl
+         Lf5R4dQtS9usJ3x0IW2pXpbeAGsDwQ0b2Pg7G6PObGk06/DVB1He517ZNjwtoCWPJbW+
+         ZL8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722590566; x=1723195366;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ye5tA42uMBNtvT73KdG8A94PBs19ktzkMoJkqT5xskw=;
+        b=IL7kFH7bLcUL8rwUIxNaioW+U4RNb0mji1uW8vo+qx7wgJNfk/u8qK/XaazKPUzHQC
+         2jbw+YlYoLxVQQHCeZ6R4MpuxH4fuataERiIXL1eh4WamTf+et1LaOfnRCWAAD9xhGAa
+         nqRiYF8CtmJP7+sSGAfSLiaRuppG5jRf+KAe1iqI+AP/14RMV7puiJ3ICwvSgdyHMPD4
+         nKuXFt3+XJotHNBKyyxtLfTt7kl5ApmBWwOaFhi8WFEHNYWy7trYkH3O3gHZvq7orUOE
+         yv+vwyORROTXxQUwEdbbdyeYVAqGZB8VjWS61plADNg/kZfxUdxH7G7HifmekdsbL2AH
+         GohA==
+X-Forwarded-Encrypted: i=1; AJvYcCUExlCjb4buIFr1G0edXmO8Rg+/ZW27Y2apvZbP+MoAWnOd/MCjNCtkdhy4LG/JalHOBwq46tFelp0brkQwtmSwazNDYEwyu0aiyPefNHEM6xGa7mZRu2QXUF+GJjJhjfe1PZPi5EZazFgYtnZHqh210J6FvsKPqQFYFOWDUgaWmc6xepfY2Q==
+X-Gm-Message-State: AOJu0YwLOTkeqNpgOGzih1vlkYQyiyVxMJyA/4YdOj2ypgS+loG4DsiV
+	mLqcYyIobW4X+z0EU02bQapEcEyrPJHDF0zURh2y5zauynJjEGAI
+X-Google-Smtp-Source: AGHT+IHHynU+MvKkk5v8go0Stm9aPxO3OHJ73yl2a7M0njc/TuGYR9a+LcLadnndQkGuDNy47AS//Q==
+X-Received: by 2002:a05:6512:2206:b0:52f:c16d:5c6a with SMTP id 2adb3069b0e04-530b8d17b54mr1271536e87.16.1722590565143;
+        Fri, 02 Aug 2024 02:22:45 -0700 (PDT)
+Received: from mobilestation ([178.176.56.174])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-530bba29dafsm175361e87.171.2024.08.02.02.22.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Aug 2024 02:22:44 -0700 (PDT)
+Date: Fri, 2 Aug 2024 12:22:41 +0300
+From: Serge Semin <fancer.lancer@gmail.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>, 
+	Bjorn Helgaas <helgaas@kernel.org>, jingoohan1@gmail.com, lpieralisi@kernel.org, kw@linux.com, 
+	robh@kernel.org, bhelgaas@google.com, linux-pci@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, quic_mrana@quicinc.com
+Subject: Re: [PATCH v3 1/2] PCI: dwc: Add dbi_phys_addr and atu_phys_addr to
+ struct dw_pcie
+Message-ID: <rw45lgwf5btlsr64okzk2e4rpd62fdyrou7u2c6lndozxjhdpq@qm5qx4dvw5ci>
+References: <20240724022719.2868490-1-quic_pyarlaga@quicinc.com>
+ <20240724022719.2868490-2-quic_pyarlaga@quicinc.com>
+ <vbq3ma3xanu4budrrt7iwk7bh7evgmlgckpohqksuamf3odbee@mvox7krdugg3>
+ <6d926346-1c24-4aee-85b1-ffb5a0df904b@quicinc.com>
+ <j62ox6yeemxng3swlnzkqpl4mos7zj4khui6rusrm7nqcpts6r@vmoddl4lchlt>
+ <20240802052206.GA4206@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1f8e64d2-2791-4bc4-8937-08dcb2ccda66
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Aug 2024 08:26:48.6885
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: YUgTXdmJiwm0xxsYGPPAn8THIoqzkUXzfUn8JqfVK57b6g0EUaOlDthfawGLNsJ7aOUYjDnebpmQHvk+wDbrUw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR11MB8380
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240802052206.GA4206@thinkpad>
 
-> From: Jason Gunthorpe <jgg@nvidia.com>
-> Sent: Thursday, June 20, 2024 10:34 PM
->=20
-> On Thu, Jun 20, 2024 at 04:14:23PM +0200, David Hildenbrand wrote:
->=20
-> > 1) How would the device be able to grab/access "private memory", if not
-> >    via the user page tables?
->=20
-> The approaches I'm aware of require the secure world to own the IOMMU
-> and generate the IOMMU page tables. So we will not use a GUP approach
-> with VFIO today as the kernel will not have any reason to generate a
-> page table in the first place. Instead we will say "this PCI device
-> translates through the secure world" and walk away.
->=20
-> The page table population would have to be done through the KVM path.
->=20
+On Fri, Aug 02, 2024 at 10:52:06AM +0530, Manivannan Sadhasivam wrote:
+> On Fri, Aug 02, 2024 at 12:59:57AM +0300, Serge Semin wrote:
+> > On Thu, Aug 01, 2024 at 02:29:49PM -0700, Prudhvi Yarlagadda wrote:
+> > > Hi Serge,
+> > > 
+> > > Thanks for the review comment.
+> > > 
+> > > On 8/1/2024 12:25 PM, Serge Semin wrote:
+> > > > On Tue, Jul 23, 2024 at 07:27:18PM -0700, Prudhvi Yarlagadda wrote:
+> > > >> Both DBI and ATU physical base addresses are needed by pcie_qcom.c
+> > > >> driver to program the location of DBI and ATU blocks in Qualcomm
+> > > >> PCIe Controller specific PARF hardware block.
+> > > >>
+> > > >> Signed-off-by: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
+> > > >> Reviewed-by: Mayank Rana <quic_mrana@quicinc.com>
+> > > >> ---
+> > > >>  drivers/pci/controller/dwc/pcie-designware.c | 2 ++
+> > > >>  drivers/pci/controller/dwc/pcie-designware.h | 2 ++
+> > > >>  2 files changed, 4 insertions(+)
+> > > >>
+> > > >> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+> > > >> index 1b5aba1f0c92..bc3a5d6b0177 100644
+> > > >> --- a/drivers/pci/controller/dwc/pcie-designware.c
+> > > >> +++ b/drivers/pci/controller/dwc/pcie-designware.c
+> > > >> @@ -112,6 +112,7 @@ int dw_pcie_get_resources(struct dw_pcie *pci)
+> > > >>  		pci->dbi_base = devm_pci_remap_cfg_resource(pci->dev, res);
+> > > >>  		if (IS_ERR(pci->dbi_base))
+> > > >>  			return PTR_ERR(pci->dbi_base);
+> > > >> +		pci->dbi_phys_addr = res->start;
+> > > >>  	}
+> > > >>  
+> > > >>  	/* DBI2 is mainly useful for the endpoint controller */
+> > > >> @@ -134,6 +135,7 @@ int dw_pcie_get_resources(struct dw_pcie *pci)
+> > > >>  			pci->atu_base = devm_ioremap_resource(pci->dev, res);
+> > > >>  			if (IS_ERR(pci->atu_base))
+> > > >>  				return PTR_ERR(pci->atu_base);
+> > > >> +			pci->atu_phys_addr = res->start;
+> > > >>  		} else {
+> > > >>  			pci->atu_base = pci->dbi_base + DEFAULT_DBI_ATU_OFFSET;
+> > > >>  		}
+> > > >> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> > > >> index 53c4c8f399c8..efc72989330c 100644
+> > > >> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> > > >> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> > > >> @@ -407,8 +407,10 @@ struct dw_pcie_ops {
+> > > >>  struct dw_pcie {
+> > > >>  	struct device		*dev;
+> > > >>  	void __iomem		*dbi_base;
+> > > > 
+> > > >> +	phys_addr_t		dbi_phys_addr;
+> > > >>  	void __iomem		*dbi_base2;
+> > > >>  	void __iomem		*atu_base;
+> > > >> +	phys_addr_t		atu_phys_addr;
+> > > > 
+> > > > What's the point in adding these fields to the generic DW PCIe private
+> > > > data if they are going to be used in the Qcom glue driver only?
+> > > > 
+> > > > What about moving them to the qcom_pcie structure and initializing the
+> > > > fields in some place of the pcie-qcom.c driver?
+> > > > 
+> > > > -Serge(y)
+> > > > 
+> > > 
+> > 
+> > > These fields were in pcie-qcom.c driver in the v1 patch[1] and
+> > > Manivannan suggested to move these fields to 'struct dw_pcie' so that duplication
+> > > of resource fetching code 'platform_get_resource_byname()' can be avoided.
+> > > 
+> > > [1] https://lore.kernel.org/linux-pci/a01404d2-2f4d-4fb8-af9d-3db66d39acf7@quicinc.com/T/#mf9843386d57e9003de983e24e17de4d54314ff73
+> > 
+> > Em, polluting the core driver structure with data not being used by
+> > the core driver but by the glue-code doesn't seem like a better
+> > alternative to additional platform_get_resource_byname() call in the
+> > glue-driver. I would have got back v1 version so to keep the core
+> > driver simpler. Bjorn?
+> > 
+> 
+> IDK how adding two fields which is very related to DWC code *pollutes* it. Since
+> there is already 'dbi_base', adding 'dbi_phys_addr' made sense to me even though
+> only glue drivers are using it. Otherwise, glue drivers have to duplicate the
+> platform_get_resource_byname() code which I find annoying.
 
-Sorry for noting this discussion late. Dave pointed it to me in a related
-thread [1].
+I just explained why it was redundant:
+1. adding the fields expands the core private data size for _all_
+platforms for no reason. (a few bytes but still)
+2. the new fields aren't utilized by the core driver, but still
+defined in the core private data which is first confusing and
+second implicitly encourages the kernel developers to add another
+unused or even weakly-related fields in there.
+3. the new fields utilized in a single glue-driver and there is a small
+chance they will be used in another ones. Another story would have
+been if we had them used in more than one glue-driver...
 
-I had an impression that above approach fits some trusted IO arch (e.g.
-TDX Connect which has a special secure I/O page table format and
-requires sharing it between IOMMU/KVM) but not all.
+So from that perspective I find adding these fields to the driver core
+data less appropriate than duplicating the
+platform_get_resource_byname() call in a _single_ glue driver. It
+seems more reasonable to have them defined and utilized in the code
+that actually needs them, but not in the place that doesn't annoy you.)
 
-e.g. SEV-TIO spec [2] (page 8) describes to have the IOMMU walk the
-existing I/O page tables to get HPA and then verify it through a new
-permission table (RMP) for access control.
+Anyway I read your v1 command and did understand your point in the
+first place. That's why my question was addressed to Bjorn.
 
-That arch may better fit a scheme in which the I/O page tables are
-still managed by VFIO/IOMMUFD and RMP is managed by KVM, with an
-an extension to the MAP_DMA call to accept a [guest_memfd, offset]
-pair to find out the pfn instead of using host virtual address.
+Please also note the resource::start field is of the resource_size_t
+type. So wherever the fields are added, it's better to have them
+defined of that type instead.
 
-looks the Linux MM alignment session [3] did mention "guest_memfd
-will take ownership of the hugepages, and provide interested parties
-(userspace, KVM, iommu) with pages to be used" to support that extension?
+-Serge(y)
 
-[1] https://lore.kernel.org/kvm/272e3dbf-ed4a-43f5-8b5f-56bf6d74930c@redhat=
-.com/
-[2] https://www.amd.com/system/files/documents/sev-tio-whitepaper.pdf
-[3] https://lore.kernel.org/kvm/20240712232937.2861788-1-ackerleytng@google=
-.com/
-
-Thanks
-Kevin
+> 
+> - Mani
+> 
+> -- 
+> மணிவண்ணன் சதாசிவம்
 
