@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-27761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DB5194588C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 09:22:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A08909458CB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 09:30:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0C7051C21310
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 07:22:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 453C81F232D9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 07:30:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81D571BE86D;
-	Fri,  2 Aug 2024 07:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C44F81BF316;
+	Fri,  2 Aug 2024 07:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YxWaTZJx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hh67PEb7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5C8481AA;
-	Fri,  2 Aug 2024 07:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948051BF310;
+	Fri,  2 Aug 2024 07:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722583336; cv=none; b=CEfSZYUtuCBS1CkX3XRGd2QhcRDrmZxe7IjiE9vDEDzI7n1r6A8V9IcL1l0b7hBgy+go5d/zFCXayVYGjoAGiu0O+gv1B2SsD7AEtCl5tsqXHMC0iylOSWGUFK41f/i8IbOTvOIlmV/rNRmhcjY2Iag/EI70pkmA2DBOCOvTnlw=
+	t=1722583743; cv=none; b=Rja+gou4e18to64mX0wJ0M7spITZCU7h874HTw1rkP7t72Q9et79Nsj5RrCVCFmmQRiRPYYACY4zqRnDixJ2dglglFwNOpuHm+pgU3CIG6chFyeiI9g33jdlM04UKa3wENdbFQxFV+jO16ogmOAZqfyE+NCyYFrlhOUWSXVuDXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722583336; c=relaxed/simple;
-	bh=eBqw49UcPYPhf7AEOvF+AlnHBTQLYKg8/l4No1WFkqg=;
+	s=arc-20240116; t=1722583743; c=relaxed/simple;
+	bh=1w+7rrYCa3LRNi+HM2wn8pYcRqkhvqQwbQhxswRVpZ0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fh0Hi10x7eqN+LMGHNR4YPGYXnCKfZNiMSjDISksy92mYIvXH9bd8MTYp8u1qbhsuuXnG9qmpHt4XYE4wZgCjMp5CjJsb3xIv+R013eFGyel4GGM7RZBcdN7TWMcRUdK/uJkeHtsgjvEihNgHZKqsIbhIe8MvYwyLvWQi9zlBzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YxWaTZJx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E142BC32782;
-	Fri,  2 Aug 2024 07:22:11 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=QSwukoD7nHQfUXd6/uzjBKVrlwkWGyED7V6eWGW++rEqLTHxlADiL2zXE2nad5oCK6s5bgK0FtZEohRwmHCKrAsUqKKOswfs5gPsLa6XD4uo+IJ9AvjXGSuGWsn3pC54R3Y24qSuyzGbb7tn52p0wCRsELHpct0zSBoPO6vBXzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hh67PEb7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9EF6C4AF09;
+	Fri,  2 Aug 2024 07:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722583336;
-	bh=eBqw49UcPYPhf7AEOvF+AlnHBTQLYKg8/l4No1WFkqg=;
+	s=k20201202; t=1722583743;
+	bh=1w+7rrYCa3LRNi+HM2wn8pYcRqkhvqQwbQhxswRVpZ0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=YxWaTZJx4sAEpAlVt70i1fPTwngQJ8Mm2lDnlzaUywO26X6HkptSZYKOo8P7izJQg
-	 wXVyd4oSh3vYGDzIgeh38/G0+AG1Af2exdxEYKIIO5WcGuRTlhZaQT3+Bu8QYHRHb5
-	 B9T1UFLuTak83wISZWNYS/YaUH7aUjeuI/4iCf16QDT4o9Ses55rSdwaB61Ps5sQo+
-	 njUPYPquagmzJZ8gLKQOyakLp8fgsTyd2ZS4gzgYn5/5zyMKm+t9Fmjhq/NczkxyyP
-	 DltSM5OX5vEpnpGozsDJ8Fmj+T1Ke3EOSPjFk1xgvTGHqY2UnjXPFIRKMnQBUu26v6
-	 MNVCkrzBlDYIg==
-Message-ID: <20f5fa43-280d-4fde-a36f-c66b1f474f7e@kernel.org>
-Date: Fri, 2 Aug 2024 09:22:11 +0200
+	b=Hh67PEb72N2VVF+qkXferhBwAhLAQzGLOvfL0UoeuLtig+sjoSsd50+KBqF4wEUvq
+	 /4oMF4oUO3cSbu+9Z1yoN7R863aDLzAH5A6NLFncIKCNPQ+IFTMPbuppM+FmuL24bg
+	 LvICqgGmnWO2ABTqTtKbjJyGejU1CB775K7DmyadwnCC3I4kPsonUXBpFEuXAQxHUf
+	 6xLUkauYcIJWtRbrLMMAK32fuyUOBNgq8gZpqydd5Uw/HDLhoC4QvrbisKFJkzguLF
+	 IwcJkZFBV68x5QQHzOa7oY4V5ytWMAJSMFWoGsGimhWmXb+HemstwqF0CNgbvLoMYj
+	 7OeRwlcSQEpdA==
+Message-ID: <c65a6eab-1f76-43ee-9bde-9ab1d5cd2819@kernel.org>
+Date: Fri, 2 Aug 2024 09:28:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,19 +50,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] dt-bindings: interconnect: Add Qualcomm SM4450
-To: Tengfei Fan <quic_tengfan@quicinc.com>, Georgi Djakov
- <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v3 2/8] ASoC: dt-bindings: pm8916-wcd-analog-codec:
+ Document pm8950/pm8953
+To: Adam Skladowski <a39.skl@gmail.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
- Will Deacon <will@kernel.org>
-Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20240801-sm4450_interconnect-v3-0-8e364d0faa99@quicinc.com>
- <20240801-sm4450_interconnect-v3-1-8e364d0faa99@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Stephan Gerhold <stephan@gerhold.net>
+Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20240731-msm8953-msm8976-asoc-v3-0-163f23c3a28d@gmail.com>
+ <20240731-msm8953-msm8976-asoc-v3-2-163f23c3a28d@gmail.com>
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -106,40 +110,35 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240801-sm4450_interconnect-v3-1-8e364d0faa99@quicinc.com>
+In-Reply-To: <20240731-msm8953-msm8976-asoc-v3-2-163f23c3a28d@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 01/08/2024 10:54, Tengfei Fan wrote:
-> The Qualcomm SM4450 SoC has several bus fabrics that could be controlled
-> and tuned dynamically according to the bandwidth demand.
+On 31/07/2024 17:25, Adam Skladowski wrote:
+> Document pm8950 and pm8953 analog audio codecs.
 > 
-> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
 > ---
->  .../bindings/interconnect/qcom,sm4450-rpmh.yaml    | 133 +++++++++++++++++
->  include/dt-bindings/interconnect/qcom,sm4450.h     | 163 +++++++++++++++++++++
->  2 files changed, 296 insertions(+)
+>  .../devicetree/bindings/sound/qcom,pm8916-wcd-analog-codec.yaml     | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 > 
+> diff --git a/Documentation/devicetree/bindings/sound/qcom,pm8916-wcd-analog-codec.yaml b/Documentation/devicetree/bindings/sound/qcom,pm8916-wcd-analog-codec.yaml
+> index 94e7a1860977..8af8bb747abe 100644
+> --- a/Documentation/devicetree/bindings/sound/qcom,pm8916-wcd-analog-codec.yaml
+> +++ b/Documentation/devicetree/bindings/sound/qcom,pm8916-wcd-analog-codec.yaml
+> @@ -14,8 +14,10 @@ description:
+>  
+>  properties:
+>    compatible:
+> -    const: qcom,pm8916-wcd-analog-codec
+> -
+> +    enum:
+> +      - qcom,pm8916-wcd-analog-codec
+> +      - qcom,pm8950-wcd-analog-codec
+> +      - qcom,pm8953-wcd-analog-codec
 
-If there were no changes, why skipping my tag?
+Why dropping new line?
 
-<form letter>
-This is a friendly reminder during the review process.
-
-It looks like you received a tag and forgot to add it.
-
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-If a tag was not added on purpose, please state why and what changed.
-</form letter>
 
 Best regards,
 Krzysztof
