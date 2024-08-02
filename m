@@ -1,126 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-27765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD6BC9458DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 09:32:18 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF4B394591A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 09:43:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7BB111F21F87
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 07:32:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2B5B41C21538
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 07:43:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDB291BF32A;
-	Fri,  2 Aug 2024 07:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CC661BF306;
+	Fri,  2 Aug 2024 07:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iFnIVFql"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ADpT8SDC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92CFF1BF315;
-	Fri,  2 Aug 2024 07:31:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01601BE860
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Aug 2024 07:43:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722583899; cv=none; b=k9lQ48Ip6UV2TIUorB+kMfWtR+DoC8TDCWob6ZYAqd+SnNV2ioWWuQQkugTvpd8R/UsTnTB2qDecfWrxo29ZMd6u4vRTW50GLstpKiKO76DwFwpRbdUDSnm9U4Hhaszd1TgFufsd+61l8wJR7WRbIde7eTa3pEXYaEWIHiUt9xs=
+	t=1722584609; cv=none; b=aBt1QxjtxNhxEegtdpVvDiUUVtcmVqMPjjHK4Ump4KfHlml7ydH7hAu7Il4opG547J/hFqgg+PFdxjIC36xUuHjj7wGZoM+wsOTAe6JGd8ECX8Ucpex5VjeLiZlU9pTrMjyYizYIJz/uwHmSWWruPXAd/OP+DcA6ZIaS/K6V6fU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722583899; c=relaxed/simple;
-	bh=3GIG5TmbBrz8ATjhgyRZ+8+RqMAAlImw//PGJ0HjWvI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rZ0A3ZnyVxU6OKqgUb1eP76zjGgnDQbfWmd3i9DfgYvt4vrnxac5Vxj2ehNy+a2JsFCQ2wdCmM2P3UpPaThGoL/jE3ZRZRbyaR953hxonMbgLdBaJEXt3oHhWdVzkTITfO9FM+pDchpyTFnn8qPezM4M+adgTUCBJg3aU7Z6Ibc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iFnIVFql; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4569FC4AF09;
-	Fri,  2 Aug 2024 07:31:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722583899;
-	bh=3GIG5TmbBrz8ATjhgyRZ+8+RqMAAlImw//PGJ0HjWvI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iFnIVFqlDdetpdg2xg6Fe3gEUcr2VlrtFhLgls7wPaicvYGuzQuWk3q0hCiFy7G+f
-	 cbyqmeNzup5X5fWbYmNb+8YRtkwl8YlEKmSle7r73ze3863wZ0oi9n43WpOzBuVXUc
-	 eNenD83bxOnw/WmaLfi6g4+DMJ8LfT2ckRFjn3xrceVOf3CyR3Cbsup0NXfNoet+Pp
-	 TJlB93v4KhSNAEfVPnsoUnwYPJNEmmHrzsIIMX6GZphvAFfLzSIEsene2+vRORoSN1
-	 Q03+4loTmiFeSEow4HGQBgrJJp/xKNcwaf6czBsNy1LNI3vowSXG59c9AGBYBO2k3L
-	 NigQBiONXA9VQ==
-Message-ID: <88f41d47-5f90-476a-8061-f43c73e01122@kernel.org>
-Date: Fri, 2 Aug 2024 09:31:31 +0200
+	s=arc-20240116; t=1722584609; c=relaxed/simple;
+	bh=guXI55gF86E2Fne4JQyI51aRCrWAiOUf3c9HiCMWwgU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uUjgxbjOoOkYGQ6px7Vwzo/8peSWvsSpSn3IH4BOkDNoFuQkAiDV2THchKXrer8/Z1CU8yR3Q4wVLefMcTkrtvVHGrYprV4R1fgWkyUvFXFmbozPI6KMdeb43q50jzeD4XLzFeYbTpkXoG4OHkORTM/WbQGzHF5Q88fiS0+g560=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ADpT8SDC; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1fd69e44596so21967505ad.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Aug 2024 00:43:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1722584607; x=1723189407; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=cfFV4f3ZJY8hELRtpL4CzVeAVRtbalGeAhd5lHTSqtg=;
+        b=ADpT8SDCLBIbbrTKV4tXAjNXGp5mMtfisOWGvIaa52h1C0nYogri7914W/0QUJzdFc
+         cKXeUwAQdSJwaROvR2PNl/OONh3loH7Okf92KjUgt3oaRev7kovwSpAK+6VGwx7VWG4b
+         ea1Gvwkm0N0u9Qm94ZICE7jQl46jfJjdpy60sLThnAisvdL7T6XB8P3ujL83xqaVsNRE
+         JGuNFG9rFEsgiN8M6X+zbIwInXITJ/eczygxtw8QVVhSXeHOdcCsAJoAgURbYY08jV65
+         +quEQVklg0/zLRcpJjhUfKtDD8+heoO6siCArffVQcvHb93ad/c51vwu+Xk/mr4P0KcK
+         FhWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722584607; x=1723189407;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cfFV4f3ZJY8hELRtpL4CzVeAVRtbalGeAhd5lHTSqtg=;
+        b=aY6qAR6yJFTjii3LMlku5svFp3KzMgpfeffaxf0pHCa4sksdR/BfRgKElk5T3FnaCZ
+         1lZg/GnAbIoy9e8ESCtC/0xSCp9/XmF3cUqK/QKgrz9t807U/XHQl1ExEHhsj4jlUxaC
+         NhaJHi8KBFd+G6LLduLNnw/+nNZQfwEbQsy/0xmUN7KAuoaZWjqfZ3NiiW23ch3WnrXi
+         nn93OFXQf2jg6C1M9r3uPzgKSaYQ0JlTn5eOBZFk0lQDcdUX8RSfiolktL11SYlGPFLj
+         PguKFZBjTNz0MhSiv+5KlLrcjWQAqIHtm5kAr7SvLRmJbA3yh5lYLL+4dv0racLiWBla
+         mNKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXcKkESMVeQ0q46D189jVmaAswq2TuMNg4OZUlCxax4CFjV0+U/7zboPNlxyB7lRH1Av4BhygmKM8BmGGmV@vger.kernel.org
+X-Gm-Message-State: AOJu0YzxPCI27kkeMD7hK85L/dEBR0YN+uOQztAUJdgmB9EUMMlXi/Fp
+	NVX+gxc/imYQ9uE3anIAfhh4a7R8kCSfZ6au7jcuYiu4Pnk+M5U+ARnGB1Wqfg==
+X-Google-Smtp-Source: AGHT+IEunTnPjylhkwVdwv7PF5vhBnFBh+gzhM2Fmc7OHQ79TjhUuzg8HL5NTYnOuj3Qn0/m+c1Lqg==
+X-Received: by 2002:a17:902:650b:b0:1ff:3b0f:d5cd with SMTP id d9443c01a7336-1ff524920a3mr51154115ad.20.1722584606734;
+        Fri, 02 Aug 2024 00:43:26 -0700 (PDT)
+Received: from thinkpad ([120.60.54.222])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff59297c46sm10769725ad.258.2024.08.02.00.43.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Aug 2024 00:43:26 -0700 (PDT)
+Date: Fri, 2 Aug 2024 13:13:19 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH v3 06/13] PCI: qcom-ep: Modify 'global_irq' and
+ 'perst_irq' IRQ device names
+Message-ID: <20240802074319.GA57846@thinkpad>
+References: <20240731-pci-qcom-hotplug-v3-6-a1426afdee3b@linaro.org>
+ <20240801172308.GA109178@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/10] dt-bindings: clock: qcom,sm8450-dispcc: Add SM8475
- DISPCC bindings
-To: Danila Tikhonov <danila@jiaxyga.com>, andersson@kernel.org,
- mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, p.zabel@pengutronix.de,
- vkoul@kernel.org, vladimir.zapolskiy@linaro.org, quic_jkona@quicinc.com,
- dmitry.baryshkov@linaro.org, konradybcio@kernel.org, quic_tdas@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux@mainlining.org
-References: <20240731175919.20333-1-danila@jiaxyga.com>
- <20240731175919.20333-4-danila@jiaxyga.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240731175919.20333-4-danila@jiaxyga.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240801172308.GA109178@bhelgaas>
 
-On 31/07/2024 19:59, Danila Tikhonov wrote:
-> Add SM8475 DISPCC bindings, which are simply a symlink to the SM8450
-> bindings. Update the documentation with the new compatible.
+On Thu, Aug 01, 2024 at 12:23:08PM -0500, Bjorn Helgaas wrote:
+> On Wed, Jul 31, 2024 at 04:20:09PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > 
+> > Currently, the IRQ device name for both of these IRQs doesn't have Qcom
+> > specific prefix and PCIe domain number. This causes 2 issues:
+> > 
+> > 1. Pollutes the global IRQ namespace since 'global' is a common name.
+> > 2. When more than one EP controller instance is present in the SoC, naming
+> > conflict will occur.
+> > 
+> > Hence, add 'qcom_pcie_ep_' prefix and PCIe domain number suffix to the IRQ
+> > names to uniquely identify the IRQs and also to fix the above mentioned
+> > issues.
+> > 
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  drivers/pci/controller/dwc/pcie-qcom-ep.c | 16 ++++++++++++++--
+> >  1 file changed, 14 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > index 0bb0a056dd8f..d0a27fa6fdc8 100644
+> > --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > @@ -711,8 +711,15 @@ static irqreturn_t qcom_pcie_ep_perst_irq_thread(int irq, void *data)
+> >  static int qcom_pcie_ep_enable_irq_resources(struct platform_device *pdev,
+> >  					     struct qcom_pcie_ep *pcie_ep)
+> >  {
+> > +	struct device *dev = pcie_ep->pci.dev;
+> > +	char *name;
+> >  	int ret;
+> >  
+> > +	name = devm_kasprintf(dev, GFP_KERNEL, "qcom_pcie_ep_global_irq%d",
+> > +			      pcie_ep->pci.ep.epc->domain_nr);
+> > +	if (!name)
+> > +		return -ENOMEM;
 > 
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
-> ---
+> I assume this is what shows up in /proc/interrupts?
 
-Same comments as for patch #1.
+Yes.
 
-Best regards,
-Krzysztof
+> I always wonder
+> why it doesn't include dev_name().  A few drivers do that, but
+> apparently it's not universally desirable.  It's sort of annoying
+> that, e.g., we get a bunch of "aerdrv" interrupts with no clue which
+> device they relate to.
+> 
 
+dev_name() can be big at times. I wouldn't recommend to include it unless there
+are no other ways to differentiate between IRQs. Luckily PCIe has the domain
+number that we can use to differentiate these IRQs.
+
+- Mani
+
+> >  	pcie_ep->global_irq = platform_get_irq_byname(pdev, "global");
+> >  	if (pcie_ep->global_irq < 0)
+> >  		return pcie_ep->global_irq;
+> > @@ -720,18 +727,23 @@ static int qcom_pcie_ep_enable_irq_resources(struct platform_device *pdev,
+> >  	ret = devm_request_threaded_irq(&pdev->dev, pcie_ep->global_irq, NULL,
+> >  					qcom_pcie_ep_global_irq_thread,
+> >  					IRQF_ONESHOT,
+> > -					"global_irq", pcie_ep);
+> > +					name, pcie_ep);
+> >  	if (ret) {
+> >  		dev_err(&pdev->dev, "Failed to request Global IRQ\n");
+> >  		return ret;
+> >  	}
+> >  
+> > +	name = devm_kasprintf(dev, GFP_KERNEL, "qcom_pcie_ep_perst_irq%d",
+> > +			      pcie_ep->pci.ep.epc->domain_nr);
+> > +	if (!name)
+> > +		return -ENOMEM;
+> > +
+> >  	pcie_ep->perst_irq = gpiod_to_irq(pcie_ep->reset);
+> >  	irq_set_status_flags(pcie_ep->perst_irq, IRQ_NOAUTOEN);
+> >  	ret = devm_request_threaded_irq(&pdev->dev, pcie_ep->perst_irq, NULL,
+> >  					qcom_pcie_ep_perst_irq_thread,
+> >  					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+> > -					"perst_irq", pcie_ep);
+> > +					name, pcie_ep);
+> >  	if (ret) {
+> >  		dev_err(&pdev->dev, "Failed to request PERST IRQ\n");
+> >  		disable_irq(pcie_ep->global_irq);
+> > 
+> > -- 
+> > 2.25.1
+> > 
+> > 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
