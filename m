@@ -1,154 +1,223 @@
-Return-Path: <linux-arm-msm+bounces-27787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38C8D945CA1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 12:57:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 17EC3945CC9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 13:05:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D74921F221D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 10:57:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F4831F2243E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 11:05:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77BF41E2110;
-	Fri,  2 Aug 2024 10:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C52471DD3B0;
+	Fri,  2 Aug 2024 11:05:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="DtmHklPd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zq/WWwaQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD581DF681;
-	Fri,  2 Aug 2024 10:56:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000771D1F4B
+	for <linux-arm-msm@vger.kernel.org>; Fri,  2 Aug 2024 11:05:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722596188; cv=none; b=NMgttN2Jg0phEv8BGo67dL4UgRU1jI1lm6n0q91ZOqeTFL5rxI0FEJM/lBfBIXdbrUvBCK0ByEkzuIUOKLZS5MjLKwe1Ahojm1WuxWXkuESAj27GEMMmu0hfZcYPGM0KyKtYOIhg3pPC9wwSzcigsmYhknerONq9XSehlFuhvxA=
+	t=1722596747; cv=none; b=X56gtN4yD5DqEXM6gDTXnvcuR0LLTjxvMCEEQr5j34U/vlK3/iYaOaePRYGqvdQpvUh+KeuXqnn4KpjYAIlohJD42CgEO0zWOBQT1mY8fY993iPN1NvOvZNXNXx0xn2zpr05NTuwFFn116Pm2rPRqSQC28270mVZIafWPkQl+Lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722596188; c=relaxed/simple;
-	bh=p0uIwvhdMslJ15HiYSN+8dwJcmTVSEEqrRqA5I6sMKM=;
-	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=UGONY+rdR+JZuN8kdUxihU19KeLukjmxHl52XIv/Z6+3PR0czyZn2E25fpYhF0F9gcvVmRE4odB8ipzRXtYXgvVwJ8j7bSMEkCB5SfphBMouhdtASm4u3Fh7teFg9KEyMeH2ZXYvjx3VqSPfmRypP/jEqBmn4CfiryUbinzIXUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=DtmHklPd; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Date:Sender:Message-Id:Content-Type:
-	Content-Transfer-Encoding:MIME-Version:Subject:Cc:To:From:References:
-	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=2bZWIDKO7QK63SdQEWdaWdYkEx8EK7NXAOA4z7KnCes=; b=DtmHklPdtrhWJGHoRM2rYpDpWc
-	o3pZhqXOfXPwc2mgQ+g9tNH28IcRUfukvqDbvc3JG8OPxrXQ4uAusoGLDNRNuF2xzhzn46mWlkT9v
-	vzAO4K8JRfo2xQ3YEQjakvFUUTSTkgFbq+OgdXsPyg/gn/RB8Oof2ZeD4RrQ+ST4mb6GeETnK+8I+
-	3V0GpKr0t2MxgXEwhpX7Z2JFcztqbJtWeZokbG5d70Z7PM/Klovy6dFpOJjVnCjgbiJF39AEXOfsJ
-	7c7PGXbR+2a9GLerSZJq+ho6X2nqWnQps9M0o1ig9lEIGhEYiSgUNX/OPwhrAgV4uXcoJJTQvP5bc
-	gdUlgoQQ==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:57304 helo=rmk-PC.armlinux.org.uk)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <rmk@armlinux.org.uk>)
-	id 1sZpox-0006GF-2y;
-	Fri, 02 Aug 2024 11:47:41 +0100
-Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1sZpov-000eI5-KP; Fri, 02 Aug 2024 11:47:37 +0100
-In-Reply-To: <Zqy4wY0Of8noDqxt@shell.armlinux.org.uk>
-References: <Zqy4wY0Of8noDqxt@shell.armlinux.org.uk>
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-To: Serge Semin <fancer.lancer@gmail.com>
-Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrew Halaney <ahalaney@redhat.com>,
-	bpf@vger.kernel.org,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH net-next 14/14] net: stmmac: Activate Inband/PCS flag based on
- the selected iface
+	s=arc-20240116; t=1722596747; c=relaxed/simple;
+	bh=7x33FzHLkZMz9gMP7486x/FkZIBSCgqPCbd+1kfig/w=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=m66bpWusD5Qt6WV7YS2IMpUE/XR7DkUgrDpY5d7DmAnLFuqh6fuXT8+qJZyCqepWeiBNjaZdWfQDO9uT5riOCOyILhluCIl36qujllvx75BdWUZEpiD6nTk1Zk9aLEQul+VbxfqtRfxSc5TX3bvEYMuwyUj5s4Nn62wizVvNK7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zq/WWwaQ; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-428085a3ad1so54344205e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Aug 2024 04:05:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1722596744; x=1723201544; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=moJRtCeaBUTel4W4KGQPWwkOGmQte9vTCn0AiSSidok=;
+        b=zq/WWwaQtRNavHiGlX/CorMhE30gaMUKvaLma93UCMQVh5NFX8KWg4uFbmmBarU3LO
+         cxj9PMeDsfT7kmAFDiipgwzs0SUfLEqg9QXKfL7NEItvELGNPh21egfUx031hXzwUUkk
+         7c1Nv/jqT07NsA0ueW2HZCm1zzdAUqXBYPaJFL0fkdhmvLEdZDSpcm3HJuO2vWO+hIYY
+         4qUoqKVY/o4+sub1HfxXTU2xhLvykWBbbd8zr56/oU+cQ5CfB1ULLzDXrkRUHkjzD2YN
+         /MWZrQfxrO+AdqZop1SoZHGXkVYKerXtY4a1Zv6/SdIxz79jD1aoggJJ1zDbIyMsNcD+
+         YUmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722596744; x=1723201544;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=moJRtCeaBUTel4W4KGQPWwkOGmQte9vTCn0AiSSidok=;
+        b=Lr8QolLpSHvfKrbmPtMEiXNq6LG5FothW2L/7s/ZDx7opPcShQQwOK70gEy8uf7eNF
+         DbxLyVn9moXmQRmP3jiI4sjkr0ZP0iibIqOLkCavXe27OpjJfD7xY9IToCXfR0MfmGpY
+         M/9ahh67FidiDDH8rY8FAWeZ04vz8nK+uuvw2DY9ALUOV6aWT7qHg369ezCUc1RtNoaI
+         UHN9WVaQkFVMCVSTy+OcZ4hajVpUlPUgTplP3sZI7yLIDq2XdL0jvzIRemQW1Sk1wdJZ
+         l1wbff72swaObZXZrNq0tBidtXRFW7ZhSfR91K+WACYrWB/l6QfSdgRkfKiJ85VAfzkK
+         tX4g==
+X-Gm-Message-State: AOJu0Yz136EITnqO3/WkgWOn5FwmQnkzGrT87/xtUBXdUvSDSC4Y1Nrm
+	z6Fjw8RlPNREKmYc3lIVJSjfe4PYziBGqIBJGJ3vHB8D70EFRmSLWA6O3w2gI3A=
+X-Google-Smtp-Source: AGHT+IFIx4gifVEu7BCRNgO7MBIqaVGWWLdEsVbyzJzxD28h4WOTtz2X5xHFE+SJzxU/kVKaax59Eg==
+X-Received: by 2002:a05:600c:470a:b0:428:10d7:a4b1 with SMTP id 5b1f17b1804b1-428e6b78d89mr18249025e9.25.1722596743943;
+        Fri, 02 Aug 2024 04:05:43 -0700 (PDT)
+Received: from [127.0.0.1] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-428e6d648a0sm28805855e9.10.2024.08.02.04.05.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Aug 2024 04:05:43 -0700 (PDT)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Date: Fri, 02 Aug 2024 12:05:42 +0100
+Subject: [PATCH v2] arm64: dts: qcom: sc8280xp-x13s: Enable RGB sensor
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1sZpov-000eI5-KP@rmk-PC.armlinux.org.uk>
-Sender: Russell King <rmk@armlinux.org.uk>
-Date: Fri, 02 Aug 2024 11:47:37 +0100
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240802-b4-linux-next-24-07-31-camss-sc8280xp-lenovo-rgb-v2-v2-1-a80a301dba16@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAIW9rGYC/52OQQ6DIBQFr2JY9zfwRSVd9R6NC0BUEgsGLKEx3
+ r3U3qDLmcWbt5NogjWR3KqdBJNstN4VwEtF9CzdZMAOhQlS5LSrGSgOi3WvDM7kDZAD7aBoLZ8
+ xQtQCBc0rLMb55CFMChJCg43Chg6jEpyU5TWY0eaz+ugLzzZuPrzPE4l97a8n6H+9xIBBTVtE3
+ UqqubiXCRn81YeJ9MdxfABe8izg9wAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+X-Mailer: b4 0.15-dev
 
-From: Serge Semin <fancer.lancer@gmail.com>
+Enable the main RGB sensor on the Lenovo x13s a five megapixel 2 lane DPHY
+MIPI sensor connected to cisphy0.
 
-The HWFEATURE.PCSSEL flag is set if the PCS block has been synthesized
-into the DW GMAC controller. It's always done if the controller supports
-at least one of the SGMII, TBI, RTBI PHY interfaces. If none of these
-interfaces support was activated during the IP-core synthesize the PCS
-block won't be activated either and the HWFEATURE.PCSSEL flag won't be
-set. Based on that the RGMII in-band status detection procedure
-implemented in the driver hasn't been working for the devices with the
-RGMII interface support and with none of the SGMII, TBI, RTBI PHY
-interfaces available in the device.
+With the pm8008 patches recently applied to the x13s dtsi we can now also
+enable the RGB sensor. Once done we have all upstream support necessary for
+the RGB sensor on x13s.
 
-Fix that just by dropping the dma_cap.pcs flag check from the conditional
-statement responsible for the In-band/PCS functionality activation. If the
-RGMII interface is supported by the device then the in-band link status
-detection will be also supported automatically (it's always embedded into
-the RGMII RTL code). If the SGMII interface is supported by the device
-then the PCS block will be supported too (it's unconditionally synthesized
-into the controller). The later is also correct for the TBI/RTBI PHY
-interfaces.
-
-Note while at it drop the netdev_dbg() calls since at the moment of the
-stmmac_check_pcs_mode() invocation the network device isn't registered. So
-the debug prints will be for the unknown/NULL device.
-
-Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
-[rmk: fix build errors, only use PCS for SGMII if priv->dma_cap.pcs is set]
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c    | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+The Lenovo x13s has a five megapixel ov5675 sensor as well as a one
+megpixel ov9734 B+W NOIR sensor for low-light face detection login.
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 3e43f2d6d49f..a9b5e2a34b10 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -1133,18 +1133,10 @@ static void stmmac_check_pcs_mode(struct stmmac_priv *priv)
- {
- 	int interface = priv->plat->mac_interface;
+This patch enables the RGB sensor.
+
+A gpio exists in the upstream dts to indicate camera activity which
+currently we don't tie to CAMSS activity yet.
+
+Running
+
+- A Linux distro which ships libcamera > 0.3.0
+- Firefox nightly
+- Setting Firefox about:config:media.webrtc.capture.allow-pipewire = true
+
+It should then be possible to use the on-board MIPI camera for Zoom,
+Hangouts etc.
+
+Changes in v2:
+- Drops useless assigned-clocks entry 
+- Link to v1: https://lore.kernel.org/r/20240801-b4-linux-next-24-07-31-camss-sc8280xp-lenovo-rgb-v2-v1-1-30622c6a0c48@linaro.org
+---
+ .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     | 72 ++++++++++++++++++++++
+ 1 file changed, 72 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index a7c5a3f5926c7..2bdfff2a16cad 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -592,6 +592,62 @@ vreg_l10d: ldo10 {
+ 	};
+ };
  
--	if (priv->dma_cap.pcs) {
--		if ((interface == PHY_INTERFACE_MODE_RGMII) ||
--		    (interface == PHY_INTERFACE_MODE_RGMII_ID) ||
--		    (interface == PHY_INTERFACE_MODE_RGMII_RXID) ||
--		    (interface == PHY_INTERFACE_MODE_RGMII_TXID)) {
--			netdev_dbg(priv->dev, "PCS RGMII support enabled\n");
--			priv->hw->pcs = STMMAC_PCS_RGMII;
--		} else if (interface == PHY_INTERFACE_MODE_SGMII) {
--			netdev_dbg(priv->dev, "PCS SGMII support enabled\n");
--			priv->hw->pcs = STMMAC_PCS_SGMII;
--		}
--	}
-+	if (phy_interface_mode_is_rgmii(interface))
-+		priv->hw->pcs = STMMAC_PCS_RGMII;
-+	else if (priv->dma_cap.pcs && interface == PHY_INTERFACE_MODE_SGMII)
-+		priv->hw->pcs = STMMAC_PCS_SGMII;
- }
++&camcc {
++	status = "okay";
++};
++
++&camss {
++	vdda-phy-supply = <&vreg_l6d>;
++	vdda-pll-supply = <&vreg_l4d>;
++
++	status = "okay";
++
++	ports {
++		/* The port index denotes CSIPHY id i.e. csiphy0 */
++		port@0 {
++			csiphy0_lanes01_ep: endpoint@0 {
++				reg = <0>;
++				clock-lanes = <7>;
++				data-lanes = <0 1>;
++				remote-endpoint = <&ov5675_ep>;
++			};
++		};
++	};
++};
++
++&cci2 {
++	status = "okay";
++};
++
++&cci2_i2c1 {
++	camera@10 {
++		compatible = "ovti,ov5675";
++		reg = <0x10>;
++
++		reset-gpios = <&tlmm 15 GPIO_ACTIVE_LOW>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&cam_rgb_default>;
++
++		clocks = <&camcc CAMCC_MCLK3_CLK>;
++
++		orientation = <0>;	/* Front facing */
++
++		avdd-supply = <&vreg_l6q>;
++		dvdd-supply = <&vreg_l2q>;
++		dovdd-supply = <&vreg_l7q>;
++
++		port {
++			ov5675_ep: endpoint {
++				clock-lanes = <0>;
++				data-lanes = <1 2>;
++				link-frequencies = /bits/ 64 <450000000>;
++				remote-endpoint = <&csiphy0_lanes01_ep>;
++			};
++		};
++
++	};
++};
++
+ &dispcc0 {
+ 	status = "okay";
+ };
+@@ -1436,6 +1492,22 @@ cam_indicator_en: cam-indicator-en-state {
+ 		bias-disable;
+ 	};
  
- /**
++	cam_rgb_default: cam-rgb-default-state {
++		mclk-pins {
++			pins = "gpio17";
++			function = "cam_mclk";
++			drive-strength = <16>;
++			bias-disable;
++		};
++
++		sc-rgb-xshut-n-pins {
++			pins = "gpio15";
++			function = "gpio";
++			drive-strength = <2>;
++			bias-disable;
++		};
++	};
++
+ 	edp_reg_en: edp-reg-en-state {
+ 		pins = "gpio25";
+ 		function = "gpio";
+
+---
+base-commit: cd19ac2f903276b820f5d0d89de0c896c27036ed
+change-id: 20240731-b4-linux-next-24-07-31-camss-sc8280xp-lenovo-rgb-v2-525b250dfb84
+
+Best regards,
 -- 
-2.30.2
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 
