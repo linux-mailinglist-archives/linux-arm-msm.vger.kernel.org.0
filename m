@@ -1,164 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-27797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F04B946077
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 17:26:10 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40B0494620D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 18:51:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C13391C208E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 15:26:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DF12A1F21F66
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Aug 2024 16:51:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62A7E1537C5;
-	Fri,  2 Aug 2024 15:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC4A513635E;
+	Fri,  2 Aug 2024 16:51:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b="gl0fMV/y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TYQ1nyix"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-fw-9106.amazon.com (smtp-fw-9106.amazon.com [207.171.188.206])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1CE1175D29;
-	Fri,  2 Aug 2024 15:24:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=207.171.188.206
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ACBA13633D;
+	Fri,  2 Aug 2024 16:51:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722612290; cv=none; b=B1IaB+xfm8fKTLECLyB677vGGzFdKyDCYltB8PiY7FajmbzOaRe+/v7dgC2fPk0j49WjEuuRiEGtTVsHFubY239qnCxG/eWHKXT3m/mHFCf2EVgNYI9IBFqf/KFIjtsB7P03kiCFEWcybTJjsE282bYUD7hf55dVAPy4Kv4ooo8=
+	t=1722617495; cv=none; b=eh1zLN4CxUQRkZsaI9Cu7vPzTinoob0QXbrNkII8cdH/lCoGBWX87OCO9tvUsu3bkczpJlp5NZZiQ6Olhuy5aHXpccjVe+bJLFDslhKP/SCfcxCaBMgFigmCKhksY9/5wL/nWPJsYqxXxKNvlmMuAYap9Cea1O6wXTDzlfuyQ/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722612290; c=relaxed/simple;
-	bh=M8qcfFelmeMZAh8kqX7LJJxJpym2qszDCS9w9IsDnLU=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g/eY/MM85wej4rjjB+CqYXnE/l+z5NCQcQyegPhcK1oFhY5uwZjHPNhw2LI1YllllNuP4E501kE5kixRiu/5iLGcVZQi/MROIQA7ZBgPfGsUCi1IOcz5hpTHB33z/HVmtDDn0tMgH9T2gXqEQJ6766V1IFEyVciPdU66pZAiTJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b=gl0fMV/y; arc=none smtp.client-ip=207.171.188.206
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1722612289; x=1754148289;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=HlTLf6rMFLh/z3VvfgmI3bnbMSeXF59wzmGFsXVVC5k=;
-  b=gl0fMV/y+waoLRFUMr0mBjcaD1LzCTo433XGVdWMzcot12yIWSO8HvwE
-   CyYH2cHBamxy4+DbqOaSSFRnZ3iDpZywxt3vkjLjg1zZ3Qs8J6le1QU2d
-   i6rZk21HQNM64Ro8zgiC0dcops42urPdAshpHiv7yFAniMxofDpVpBjLu
-   k=;
-X-IronPort-AV: E=Sophos;i="6.09,258,1716249600"; 
-   d="scan'208";a="746702857"
-Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.210])
-  by smtp-border-fw-9106.sea19.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Aug 2024 15:24:47 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [10.0.7.35:26186]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.27.192:2525] with esmtp (Farcaster)
- id 2c37182a-10f2-45eb-8eda-90c6ae2bc19a; Fri, 2 Aug 2024 15:24:46 +0000 (UTC)
-X-Farcaster-Flow-ID: 2c37182a-10f2-45eb-8eda-90c6ae2bc19a
-Received: from EX19EXOUWC002.ant.amazon.com (10.250.64.172) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Fri, 2 Aug 2024 15:24:38 +0000
-Received: from EX19MTAUWA001.ant.amazon.com (10.250.64.204) by
- EX19EXOUWC002.ant.amazon.com (10.250.64.172) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Fri, 2 Aug 2024 15:24:35 +0000
-Received: from dev-dsk-jorcrous-2c-c0367878.us-west-2.amazon.com
- (10.189.195.130) by mail-relay.amazon.com (10.250.64.204) with Microsoft SMTP
- Server id 15.2.1258.34 via Frontend Transport; Fri, 2 Aug 2024 15:24:35 +0000
-Received: by dev-dsk-jorcrous-2c-c0367878.us-west-2.amazon.com (Postfix, from userid 14178300)
-	id 68F76A79F; Fri,  2 Aug 2024 15:24:35 +0000 (UTC)
-From: Jordan Crouse <jorcrous@amazon.com>
-To: <linux-media@vger.kernel.org>
-CC: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab
-	<mchehab@kernel.org>, Robert Foss <rfoss@kernel.org>, Todor Tomov
-	<todor.too@gmail.com>, <linux-arm-msm@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>
-Subject: [PATCH v1 2/2] media: camss: Avoid overwriting vfe clock rates for 8250
-Date: Fri, 2 Aug 2024 15:24:34 +0000
-Message-ID: <20240802152435.35796-3-jorcrous@amazon.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20240802152435.35796-1-jorcrous@amazon.com>
-References: <20240802152435.35796-1-jorcrous@amazon.com>
+	s=arc-20240116; t=1722617495; c=relaxed/simple;
+	bh=5S6CP6s9amxeYSZLoxkka5ubEMMyec6E2rfOz2sp6Qc=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=SHW1y3of9VtoW9qvXzQBxQ7xYtSC3ws6qmYaH2XZfLKkU5mgG9d200dU/ufcol9YBFMeJqKcTcdkpl3eUzLhlYUBNx4e2iGp++ZiDuNWsv+cvZWETHYj/kPNbcpUVax3T8kjq8U2CCHnqy7XHofTUuPYQYL6hSzvik/HjLyIp6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TYQ1nyix; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6497C32782;
+	Fri,  2 Aug 2024 16:51:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722617495;
+	bh=5S6CP6s9amxeYSZLoxkka5ubEMMyec6E2rfOz2sp6Qc=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=TYQ1nyixuz4bMlRn+8t/e2ScXXfP30bHOCTuUmCfUUIIFXHcs1VK67dVIAh+T3rUR
+	 zle4vWVHdvsAeTMUDy2Ln72juKUZ5++pnwN+MkeScr7IWOwIxOdu73o7g5TYch3vp8
+	 ON7DriQ+fb5d1jAxdbsr5Cd7ASMHc70J6WUOpoqshYmedqem8fhy26E+WdvyVbqUw5
+	 opRT41cPjK2E1M7ybwO8ZbWK7LKu6brychCFO8/xZEF56Ndlyh0fcFofIfjRs4/pOS
+	 +ApBZsZX+a9G5pn/ZhZmHeXuUA6gZEdD/PPrfRh1H5rcJrq+GhD0YoZUwRNG7fFZv+
+	 KSISE1g7c8IeA==
+Date: Fri, 2 Aug 2024 11:51:33 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH v3 06/13] PCI: qcom-ep: Modify 'global_irq' and
+ 'perst_irq' IRQ device names
+Message-ID: <20240802165133.GA153963@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240802074319.GA57846@thinkpad>
 
-On sm8250 targets both the csid and vfe subsystems share a number of
-clocks. Commit b4436a18eedb ("media: camss: add support for SM8250 camss")
-reorganized the initialization sequence so that VFE gets initialized first
-but a side effect of that was that the CSID subsystem came in after and
-overwrites the set frequencies on the shared clocks.
+On Fri, Aug 02, 2024 at 01:13:19PM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Aug 01, 2024 at 12:23:08PM -0500, Bjorn Helgaas wrote:
+> > On Wed, Jul 31, 2024 at 04:20:09PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> > > From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > 
+> > > Currently, the IRQ device name for both of these IRQs doesn't have Qcom
+> > > specific prefix and PCIe domain number. This causes 2 issues:
+> > > 
+> > > 1. Pollutes the global IRQ namespace since 'global' is a common name.
+> > > 2. When more than one EP controller instance is present in the SoC, naming
+> > > conflict will occur.
+> > > 
+> > > Hence, add 'qcom_pcie_ep_' prefix and PCIe domain number suffix to the IRQ
+> > > names to uniquely identify the IRQs and also to fix the above mentioned
+> > > issues.
+> > > 
+> > > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > ---
+> > >  drivers/pci/controller/dwc/pcie-qcom-ep.c | 16 ++++++++++++++--
+> > >  1 file changed, 14 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > > index 0bb0a056dd8f..d0a27fa6fdc8 100644
+> > > --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > > +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > > @@ -711,8 +711,15 @@ static irqreturn_t qcom_pcie_ep_perst_irq_thread(int irq, void *data)
+> > >  static int qcom_pcie_ep_enable_irq_resources(struct platform_device *pdev,
+> > >  					     struct qcom_pcie_ep *pcie_ep)
+> > >  {
+> > > +	struct device *dev = pcie_ep->pci.dev;
+> > > +	char *name;
+> > >  	int ret;
+> > >  
+> > > +	name = devm_kasprintf(dev, GFP_KERNEL, "qcom_pcie_ep_global_irq%d",
+> > > +			      pcie_ep->pci.ep.epc->domain_nr);
+> > > +	if (!name)
+> > > +		return -ENOMEM;
+> > 
+> > I assume this is what shows up in /proc/interrupts?
+> 
+> Yes.
+> 
+> > I always wonder
+> > why it doesn't include dev_name().  A few drivers do that, but
+> > apparently it's not universally desirable.  It's sort of annoying
+> > that, e.g., we get a bunch of "aerdrv" interrupts with no clue which
+> > device they relate to.
+> 
+> dev_name() can be big at times. I wouldn't recommend to include it
+> unless there are no other ways to differentiate between IRQs.
+> Luckily PCIe has the domain number that we can use to differentiate
+> these IRQs.
 
-Empty the frequency tables for the shared clocks in the CSID resources so
-they won't overwrite the clock rates that the VFE has already set.
+/proc/interrupts is 159 characters wide even on my puny 8 CPU laptop,
+so I don't think width is a strong argument, and having to use
+per-device heuristics (instance number like dmarX, idma64.X, nvmeXqY,
+domain number, etc) to find the related device is ... well, a hassle.
 
-Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
----
+But like I said, obviously devm_request_threaded_irq() *could* have
+been implemented to include dev_name() internally but wasn't, so I
+acknowledge there must be good reasons not to, and I'm fine with this
+patch as-is since it continues the existing practice.
 
- drivers/media/platform/qcom/camss/camss.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index 51b1d3550421..d78644c3ebe9 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -915,6 +915,15 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
- 	}
- };
- 
-+/*
-+ * Both CSID and VFE use some of the same vfe clocks and both
-+ * should prepare/enable them but only the VFE subsystem should be in charge
-+ * of setting the clock rates.
-+ *
-+ * Set the frequency tables for those clocks in the CSID resources to
-+ * be empty so the csid subsystem doesn't overwrite the clock rates that the
-+ * VFE already set.
-+ */
- static const struct camss_subdev_resources csid_res_8250[] = {
- 	/* CSID0 */
- 	{
-@@ -922,8 +931,8 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 		.clock = { "vfe0_csid", "vfe0_cphy_rx", "vfe0", "vfe0_areg", "vfe0_ahb" },
- 		.clock_rate = { { 400000000 },
- 				{ 400000000 },
--				{ 350000000, 475000000, 576000000, 720000000 },
--				{ 100000000, 200000000, 300000000, 400000000 },
-+				{ 0 },
-+				{ 0 },
- 				{ 0 } },
- 		.reg = { "csid0" },
- 		.interrupt = { "csid0" },
-@@ -939,8 +948,8 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 		.clock = { "vfe1_csid", "vfe1_cphy_rx", "vfe1", "vfe1_areg", "vfe1_ahb" },
- 		.clock_rate = { { 400000000 },
- 				{ 400000000 },
--				{ 350000000, 475000000, 576000000, 720000000 },
--				{ 100000000, 200000000, 300000000, 400000000 },
-+				{ 0 },
-+				{ 0 },
- 				{ 0 } },
- 		.reg = { "csid1" },
- 		.interrupt = { "csid1" },
-@@ -956,7 +965,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 		.clock = { "vfe_lite_csid", "vfe_lite_cphy_rx", "vfe_lite",  "vfe_lite_ahb" },
- 		.clock_rate = { { 400000000 },
- 				{ 400000000 },
--				{ 400000000, 480000000 },
-+				{ 0 },
- 				{ 0 } },
- 		.reg = { "csid2" },
- 		.interrupt = { "csid2" },
-@@ -973,7 +982,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 		.clock = { "vfe_lite_csid", "vfe_lite_cphy_rx", "vfe_lite",  "vfe_lite_ahb" },
- 		.clock_rate = { { 400000000 },
- 				{ 400000000 },
--				{ 400000000, 480000000 },
-+				{ 0 },
- 				{ 0 } },
- 		.reg = { "csid3" },
- 		.interrupt = { "csid3" },
--- 
-2.40.1
-
+> > >  	pcie_ep->global_irq = platform_get_irq_byname(pdev, "global");
+> > >  	if (pcie_ep->global_irq < 0)
+> > >  		return pcie_ep->global_irq;
+> > > @@ -720,18 +727,23 @@ static int qcom_pcie_ep_enable_irq_resources(struct platform_device *pdev,
+> > >  	ret = devm_request_threaded_irq(&pdev->dev, pcie_ep->global_irq, NULL,
+> > >  					qcom_pcie_ep_global_irq_thread,
+> > >  					IRQF_ONESHOT,
+> > > -					"global_irq", pcie_ep);
+> > > +					name, pcie_ep);
 
