@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-27864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5ED0C946F6A
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Aug 2024 16:56:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FE18946F75
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Aug 2024 17:03:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 159D728168C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Aug 2024 14:56:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D555E28165E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Aug 2024 15:03:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B8C757CA6;
-	Sun,  4 Aug 2024 14:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A66EC41A92;
+	Sun,  4 Aug 2024 15:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A2QI6wgt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BePnZuNN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F2954279
-	for <linux-arm-msm@vger.kernel.org>; Sun,  4 Aug 2024 14:56:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FACA934
+	for <linux-arm-msm@vger.kernel.org>; Sun,  4 Aug 2024 15:03:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722783377; cv=none; b=ZFfPDEHpLvLq9s0/pqC7rSGtujJXGqLjPm+nS0q+UeLcWWqUa8Bz+LqqbWK9XlN2uciFdlZlzOiprUJURmtaiJfr/K2PEivHie9a6CG/bSUJpLG7VYEpjeQbSUDhcoeYQOQWgxBuXoUwBMklfw81mAsgPm/hVdn52rOToD9dVMU=
+	t=1722783819; cv=none; b=qXMMlWdCcZkk6O/3xqiV5hoKvMa61ZWchE/W0yLJMucgrJm4FlVEjIhp7yIhrWcASf9QVVbO9MHU6oK+6g8y9wrQL3Vgj/S61S7tTcR4+Ugk2Df+e6pNMJg6hM+nhTvd9yKNpgnhFA5yajJ3YTmeEVw7HbNDfVhVghINOotpXvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722783377; c=relaxed/simple;
-	bh=PdyXjiUDLIKjjivrU2vQsUeG8Y0mroJRcQDpm0nCux0=;
+	s=arc-20240116; t=1722783819; c=relaxed/simple;
+	bh=64fQVaczufE3HS8AgC+4WNqdmfTFZLjyFnUF9JCrBCQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EMQvXr1uweB5OQ/THEO5qGPiX2zfWZNOq5QCLy+x6prhHo5PuZFAxUOiHLWVYBv9P7X4dHez0aavsewEBGX9l8OZc83U0yki2InfgRzCjjxrSVGIb9cfuLgn3MN1ZFJyU2d3mpXtAy17n7QQhRnv6NoiGEAsJftOiDp++n8mztI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=A2QI6wgt; arc=none smtp.client-ip=209.85.167.41
+	 In-Reply-To:Content-Type; b=eRBU0wSwvypo7UqGhzkXu38d8ybSOLMlQzwOuGp3OpT6voK2DcIp+jaH2bBE3Z6EfRIQ+tThz8ROf4jZhWBU7nvmBY4ohKCDuxXGMcXV7R6i4YoHfNbDbHjFMgnu9vJvN4IquhvZSpUfQ5zEI8/qHpxwi54Fu6egkw68cC3XmH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BePnZuNN; arc=none smtp.client-ip=209.85.167.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52f04c29588so15669430e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Aug 2024 07:56:15 -0700 (PDT)
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-530c2e5f4feso1804602e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Aug 2024 08:03:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722783374; x=1723388174; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1722783815; x=1723388615; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=PdyXjiUDLIKjjivrU2vQsUeG8Y0mroJRcQDpm0nCux0=;
-        b=A2QI6wgt1O1BJ3k6jB5Ryf7jAqzV99rStrmOBG+PMF3zCPKfbZsvXVa8aEH6oaTiKX
-         7N3cUeLTZ9Npzcu3q1rfxrwKsSHVzoMAUd2UfySaM4F1h39W0LbTOFcxLoXx9oLUnuDF
-         +vBzx2wFAPfzVHGkEX0cWpTu2H66X/hhhArcHH0QKcZPVXLGmyUQS4YvEFfmcRzxkjmG
-         3ZwfU2dK++BXFTv2I5K9JPunLo9d7KGwAByQYyvntNz6NByH5m41++AaeJF9PTMDf5W9
-         cdnDJhxp7DpwUTrnn82J0Hlpf8ToPYwa8cHREclESH4lx74qEm1+sqExMEgcnn8TP35F
-         gTLw==
+        bh=CEwiM67K6TOyUjPbByvDl5BteCRvkr/bmWWcBlwbZ5M=;
+        b=BePnZuNNulffrLMEFWGE2Hzjy64m4HroHTil2zVLTWaooJpRY3cADWtWhvoJLsoJEZ
+         CP+G9yjX1mbDlQruA3vCyFQNX/gkjSwbeWJwu2/TVfU8ivXNU+fk/mN8XLmReo0gws+m
+         Ok/azfLD2LyvHlwQThVQXoex75GyGpHwxXoZM6kYb3k8d2wjhDlZTY8R8YREfaOHZcHH
+         PkYvLAArE1pDS66c9WXVMiD8FNkFuht9XtFAJFP8Qadouad0QZlKpwQjg+IU2juwlPLz
+         RQCL+61jqATJnbP8cr98Zaoqic/MKcPCumHzpx5X8T8c2ViOCsqxOP3E1i3ItacK54Oy
+         74MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722783374; x=1723388174;
+        d=1e100.net; s=20230601; t=1722783815; x=1723388615;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=PdyXjiUDLIKjjivrU2vQsUeG8Y0mroJRcQDpm0nCux0=;
-        b=OC+eeopTqBYtA6dpX8fH4R8abegX04z7QRphj+Mk96X2NHHSh39/VctdjQT7OBq7ez
-         glNQX/JK7u0kpEL3ZtQUlv6/3Xor57SGym09M5iIRjGQJPxmjmticNiDL7j9y0bLdjnM
-         M+zozzFH9LNN70IW3gHnxgZwiusKucQ+XJYF/sMQxGb5VTqQiBbKgddwblH+SUwa4d6v
-         P8qYBqf+s08fPeIgz26gfDKkfyq1gyyKDwzTT54Ca6PNVcfYkkljV14PFC39l5i23cFr
-         GWs5i9ZCGfVaJH/FXLZu11V2n7tWk1Ump/3YkDFJP8zjYYiom2aoVhib65Tb0+6DH91N
-         EtXw==
-X-Forwarded-Encrypted: i=1; AJvYcCVm85CqCll7CtOrDmSUc1Yp+J4mfxy6oZYAKwUBzDq14NSww09+eZkgS4n1wUuaIGolKg1sahFx2OKbHQqz9GwBeTSLAgddNvrL1mehsw==
-X-Gm-Message-State: AOJu0Yy460ZTN4i5ZCNHf8AuuNzXmkd2QLyojOL5+AbTt+YY4RE21bZD
-	eP2SIpkhr+r5DY28DmHKOrvKiU4XiGTwS2C/4iDtU3WW3uiZPeBtcwBdVYTJ8sg=
-X-Google-Smtp-Source: AGHT+IFnvsY2gNT3v4VfTfnEyM1cetBvZSbppaJeWYX1IpbG5ldTeECknQM8VAOCN3RXHNjCd6B5qw==
-X-Received: by 2002:a05:6512:1051:b0:530:ab86:1e with SMTP id 2adb3069b0e04-530bb39d23amr6215298e87.6.1722783373682;
-        Sun, 04 Aug 2024 07:56:13 -0700 (PDT)
+        bh=CEwiM67K6TOyUjPbByvDl5BteCRvkr/bmWWcBlwbZ5M=;
+        b=LgoBLyVtanAp4ZxS5avU7ksr3tffBEhDcvp/rp4a5Cel3Yjvx/1X5nS+P0AB+Kh8un
+         MaxFGzA+YjHShml8MhmLk+Uu5r9a4TJr2nN9nsiAWneeDYqlQDVAW81D86d0pCPc21Tj
+         rk28oT1mrN64ldRyLjV0N27T2UyBSCejXPL2/7H9+Y0G0zj49ggO+6k5m74WV5Fgutfp
+         kE4ZEP8DNfJQ2OTYW6KMcYCl6X7c59pSFO4FswQ7BwvrkECcCNeExdGuW9byRaAHWnk4
+         ioA3msOwxwq5GEEiTR+2ZdYHWBtoPv7XiY+gvepi/FbvbbiZBViPmbXEMCJfl76aKfeK
+         NLKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWdSTBFezD43NWiIqL51lh2OPQIMcKf9T5WtnRKjlS0O93XY+yvpnlu8rGP5F0vROKe6mIiI75YvKEOErPWIUS2dk8Sj4FTm0igUY9alA==
+X-Gm-Message-State: AOJu0Yx66hWqtxwTDKOZm/k6E5wC6sLExRFInt5stLcULXwltj8U20il
+	Rr+nbGhfYN4j0/33O442H/k4/7tVueAkmhc4U8oYTh1BskCcvQevnGRwj3O8DYQ=
+X-Google-Smtp-Source: AGHT+IGneXt1dFxPw+SaUnLoig2VToT62r4amOZ66tPHFqLmbLdAQjfxHZeozGHFzarvcyNU+kSM4g==
+X-Received: by 2002:a05:6512:b29:b0:52c:e047:5c38 with SMTP id 2adb3069b0e04-530bb36e672mr6513893e87.15.1722783815026;
+        Sun, 04 Aug 2024 08:03:35 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.137])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7dc9d43920sm338060466b.102.2024.08.04.07.56.12
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5b83a03b403sm3745364a12.42.2024.08.04.08.03.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 04 Aug 2024 07:56:13 -0700 (PDT)
-Message-ID: <459b6cf2-7e61-4336-8b46-fa5b8841e9de@linaro.org>
-Date: Sun, 4 Aug 2024 16:56:10 +0200
+        Sun, 04 Aug 2024 08:03:34 -0700 (PDT)
+Message-ID: <b00f98db-92f3-4fb2-b268-0d94e52d28f4@linaro.org>
+Date: Sun, 4 Aug 2024 17:03:32 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,25 +77,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 2/2] dt-bindings: clock: qcom: Drop required-opps in
- required on SM8650 camcc
-To: Jagadeesh Kona <quic_jkona@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Taniya Das <quic_tdas@quicinc.com>,
- Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>,
- Ajit Pandey <quic_ajipan@quicinc.com>, kernel test robot <lkp@intel.com>
-References: <20240801064448.29626-1-quic_jkona@quicinc.com>
- <20240801064448.29626-3-quic_jkona@quicinc.com>
+Subject: Re: [PATCH] ASoC: codecs: lpass-macro: fix missing codec version
+To: Johan Hovold <johan+linaro@kernel.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>
+Cc: Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, alsa-devel@alsa-project.org,
+ linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+ linux-kernel@vger.kernel.org, regressions@lists.linux.dev
+References: <20240729131351.27886-1-johan+linaro@kernel.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -142,15 +133,29 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240801064448.29626-3-quic_jkona@quicinc.com>
+In-Reply-To: <20240729131351.27886-1-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 01/08/2024 08:44, Jagadeesh Kona wrote:
-> On SM8650, the minimum voltage corner supported on MMCX from cmd-db is
-> sufficient for clock controllers to operate and there is no need to specify
-> the required-opps. Hence remove the required-opps property from the list of
-> required properties for SM8650 camcc bindings.
+On 29/07/2024 15:13, Johan Hovold wrote:
+> Recent changes that started checking the codec version broke audio on
+> the Lenovo ThinkPad X13s:
+> 
+> 	wsa_macro 3240000.codec: Unsupported Codec version (0)
+> 	wsa_macro 3240000.codec: probe with driver wsa_macro failed with error -22
+> 	rx_macro 3200000.rxmacro: Unsupported Codec version (0)
+> 	rx_macro 3200000.rxmacro: probe with driver rx_macro failed with error -22
+> 
+> Add the missing codec version to the lookup table so that the codec
+> drivers probe successfully.
+> 
+> Note that I'm just assuming that this is a 2.0 codec based on the fact
+> that this device uses the older register layout.
+> 
+> Fixes: 378918d59181 ("ASoC: codecs: lpass-macro: add helpers to get codec version")
+> Fixes: dbacef05898d ("ASoC: codec: lpass-rx-macro: prepare driver to accomdate new codec versions")
+> Fixes: 727de4fbc546 ("ASoC: codecs: lpass-wsa-macro: Correct support for newer v2.5 version")
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
