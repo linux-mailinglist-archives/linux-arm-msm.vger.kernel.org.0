@@ -1,93 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-27867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03CEB946FD5
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Aug 2024 18:39:19 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BD6694702C
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Aug 2024 19:52:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 34D421C208A7
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Aug 2024 16:39:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4DD5D1C20810
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Aug 2024 17:52:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF86E558BB;
-	Sun,  4 Aug 2024 16:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 023E81384B3;
+	Sun,  4 Aug 2024 17:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RFaw/sNw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nhg/20Vc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BF8A953;
-	Sun,  4 Aug 2024 16:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD71D137930;
+	Sun,  4 Aug 2024 17:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722789553; cv=none; b=r7U4N1aRgiQWgYHuvGf+VTgzxGZFnhC1//r1CNVXxyDCgqTtFkK91f+IGOEo77of6J+5lYtEOGiDUDJdRyJXCr7FjUh8wejAVe9iWXHmHa7cGNmmrAlYc76SG3VeBRfC4SpkM1c+yV3hDE06uzB3BMtT3i+uXnQJAppamp7faRo=
+	t=1722793921; cv=none; b=HxL6y0ZBFgDocvJubB4eg02vmWEl0ul1mt7WOUyjlJEXTzNEdB1RNRzwfZYzfCBofIDbZZutNhhsMI8IX7D9DyiPlDaOB+v5I9ewh7KDrrXzk46jYvVfjmhYT9mJhlTyNi5cc9oXn1MQ3RTtMJZqzG9jj+tuhxA3k2SL81LViY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722789553; c=relaxed/simple;
-	bh=Hciw+IuSyLRYcNUz6qzbx45v8AyWImZRJsAyy0O3TqA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wp2rxdvU80nJDw7L/o39Q3tSh2mf3G6yBJp5bAvMYls13M8P6ywrOLlP7fpBr80eLq+Qhx2RXUpnUboR1ehB7ddqYhYJgQwQ4DbQDEQFKI732gGpX0cKAPxDrDDKFqPK8gnC4vPXxbFo4ZsTBacX5sKTy7VpzCrk+FC+WXyQdrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RFaw/sNw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0EBC32786;
-	Sun,  4 Aug 2024 16:39:12 +0000 (UTC)
+	s=arc-20240116; t=1722793921; c=relaxed/simple;
+	bh=LzsWllR0cNKFmCtgZ+62TJcAW9upQukY3YNbc8VuYSo=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=j1gz2631ghl0+2jNafMVRr/EV/c+Pm+bu27gpECZLWqJggLxvauTQrHPJZYDSrlEYw+aOodRGagtjbIOCDuufU59psxVvL1Y5kLVbkmxloxTirkxyktRt/0qZCJwIyn0yIdMPLbjSi+qhEH55PZ5+CFjvVEcOflfCcTlu0aD0+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nhg/20Vc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF00C32786;
+	Sun,  4 Aug 2024 17:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722789553;
-	bh=Hciw+IuSyLRYcNUz6qzbx45v8AyWImZRJsAyy0O3TqA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RFaw/sNwksusBrHEIeqkxpEnPTdge5Y8zuNsjNcwK7ipNuHMva9X8Xe3Oo+CZbokC
-	 r6x8KVjeLwzQyvAdObmIOSpGndDiHgoyYiDYOMhgIa9vaoye81JBVRvVTmXaCRsbHN
-	 Qzzn0Izp4cMm1LXxacWHG5JVbUaQacPAmtHxglV6QeU6GUMDdKMzlYmjzB5AXU1NNP
-	 Va5Y3rJv1VV60/0qZBOUWOnEC5gVGbsKFLUJqxhq1KWZjP04eVnhbycxrtIfpzNenD
-	 zj+OiuFmg9+4VrdGeqXfFhFArj76/CtXRj0779ctSaWf4pfs1jzjOqFLc0ySoS9rAr
-	 dA/O+IERNT/NA==
-Date: Sun, 4 Aug 2024 22:09:09 +0530
+	s=k20201202; t=1722793921;
+	bh=LzsWllR0cNKFmCtgZ+62TJcAW9upQukY3YNbc8VuYSo=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=Nhg/20VcPr8vXI2iZvSu/LuSE+GTN0uGVgdjV3dvCu+piG84fEBOLDDRxoSz4kyLT
+	 Wj/hSAC1UZVNc7mgMxDBWrdcT24ISci36taphUrFPQidaF80w8rdE6xmvTa9Zx7f8w
+	 Afoh+l8QEmSNdA3IdthBlgJCEk6KyP40upkw4smFz8AXpH9m5hvqidUruUFs3v136r
+	 s6yDTGzvS/a64jjngaf7ywhj9I/Sy4cKA6CLKUNbfnbpaClRhquSMNZWw4NbPS1ECL
+	 LpBNKRdXCgaHGkybZ/RmG8GyrMivz6SGcKkeuOTh3R+E1qBwMrfCswq6bahp3wrkGG
+	 Yu0TgDJq/Yk8g==
 From: Vinod Koul <vkoul@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: kishon@kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
-	dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH v3] phy: qcom: qmp: Add debug prints for register writes
-Message-ID: <Zq-ura3oYbhb8C9a@matsya>
-References: <20240731152548.102987-1-manivannan.sadhasivam@linaro.org>
- <172249532035.256913.2685367794999812971.b4-ty@kernel.org>
- <20240801070026.GB3705@thinkpad>
+To: Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Abel Vesa <abel.vesa@linaro.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ Johan Hovold <johan@kernel.org>
+In-Reply-To: <20240801-x1e80100-phy-qmp-pcie-fix-config-v2-1-cdc0f22b4169@linaro.org>
+References: <20240801-x1e80100-phy-qmp-pcie-fix-config-v2-1-cdc0f22b4169@linaro.org>
+Subject: Re: [PATCH v2] phy: qcom: qmp-pcie: Fix X1E80100 PCIe Gen4 PHY
+ initialisation
+Message-Id: <172279391895.406224.15086845328782715859.b4-ty@kernel.org>
+Date: Sun, 04 Aug 2024 23:21:58 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240801070026.GB3705@thinkpad>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
-On 01-08-24, 12:30, Manivannan Sadhasivam wrote:
-> On Thu, Aug 01, 2024 at 12:25:20PM +0530, Vinod Koul wrote:
-> > 
-> > On Wed, 31 Jul 2024 20:55:48 +0530, Manivannan Sadhasivam wrote:
-> > > These register prints are useful to validate the init sequence against the
-> > > Qcom internal documentation and also to share with the Qcom hw engineers to
-> > > debug issues related to PHY.
-> > > 
-> > > Sample debug prints:
-> > > 
-> > > qcom-qmp-pcie-phy 1c0e000.phy: Writing Reg: QSERDES_V5_COM_SYSCLK_EN_SEL Offset: 0x0094 Val: 0xd9
-> > > qcom-qmp-pcie-phy 1c0e000.phy: Writing Reg: QSERDES_V5_COM_HSCLK_SEL Offset: 0x0158 Val: 0x11
-> > > 
-> > > [...]
-> > 
-> > Applied, thanks!
-> > 
-> > [1/1] phy: qcom: qmp: Add debug prints for register writes
-> >       commit: 4e92d504475ea5841716ad775f412342520a3d26
-> > 
+
+On Thu, 01 Aug 2024 13:40:24 +0300, Abel Vesa wrote:
+> Update the PCIe Gen4 PHY init sequence with the latest based on internal
+> Qualcomm documentation.
 > 
-> Thanks! Bjorn spotted that it is worth making 'char *name' a const. Can you
-> please ammend the commit?
+> 
 
-Send a patch please, I dont like to rebase
+Applied, thanks!
 
+[1/1] phy: qcom: qmp-pcie: Fix X1E80100 PCIe Gen4 PHY initialisation
+      commit: 0e8a0504da59041e775a95db3ebc1a6211423593
+
+Best regards,
 -- 
-~Vinod
+Vinod Koul <vkoul@kernel.org>
+
 
