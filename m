@@ -1,227 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-27933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF6CD947FB4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 18:54:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EFF60947FC3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 18:58:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 26AD7B20F4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 16:53:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 01ED11C20BA5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 16:58:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 921B815E5CE;
-	Mon,  5 Aug 2024 16:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C2A215CD61;
+	Mon,  5 Aug 2024 16:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vo4d6Roh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AKiWMcy6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F1215B96F
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Aug 2024 16:53:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD012AD13;
+	Mon,  5 Aug 2024 16:58:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722876825; cv=none; b=Y2s6HBYgP1BFI5Rxcanqg15UrKTc0X1lOquFPOzDCeqMb0fk6lNQz0R/R7MMmtaSM6NfZ4QWw7ZlGNdk1/tvMFITzpA1XdpN36mJwRKbljdh9PlEVywvUTD+UaDOOr+lx61SaKWpyBQ7BRBYn5IptQCn06wxBTBFF1CEjFmkzC0=
+	t=1722877107; cv=none; b=mD4YJNUfkAiqtZIeHq3Xpv2sw4TNX/tbXQTMbs/DmQmc0T7p+GSFlTX2aQ+R+WD0wjMC2QovKyODP0uoAuLfHE/4TmRRYecQ0xtsEJGd9kQ0Lc5b6sWpEiML8MgjeJ5cHTaM47uQDFv6q7iVXmzhmOGcn0lN8FjEZaeCWH8kaQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722876825; c=relaxed/simple;
-	bh=w6vNmWurLrgr0ymgAaITOvvjUjovCC+cH1KdY6CmBxI=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=M35h9+1TgfSlBNxTXkwegvS905d+/g4FAFUcGVs8nab1N6ZmH0P2VPECAjAuKz8W8cs8xKWT6ZGmGWm8nzKs1L4K4nzsXb0mriCY/s2+elim174ShSelm8WEfc/qTz3rQ3NMPftmfp/OIG3PTPt5UTt4Mtm/5WRPkR3+iLuwD2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vo4d6Roh; arc=none smtp.client-ip=209.85.128.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-65b985bb059so222619347b3.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Aug 2024 09:53:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1722876822; x=1723481622; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=5RINMmanv5d77bAGQFePUMBVazdRsDXA+mtc4C0tc9c=;
-        b=vo4d6RohnTzy+jOLdiTSVecv4XP01FnU872wlQNQuUj791E9mfnIUh/AlaiAvMx68Q
-         wTZ8I+6vGrlo9oELGhxW74XllCfZ5F4Pqi7fOO9GM2aCsM6sUJCIdzrZYRAkK+A2jEMM
-         YIeCPUXB1xv5b/PHJEpYkJnaEiTAZrXiH9M9aCa/xvRbPvayUSsGTT4Vh+adbUlt+HhQ
-         Hnvlc+LfdmXx/GJXoQ5HRqBeejqr4sCJ3rLQhvWa3TW55SswMbj0xQCJWOoI8+iN+aDw
-         agmTupl12GSLnyBvry/qWWpb7GtFHFX56Vh1RHh8gfxgHXwLBN4EuZd+aoXs3XtlGvYN
-         vczQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722876822; x=1723481622;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5RINMmanv5d77bAGQFePUMBVazdRsDXA+mtc4C0tc9c=;
-        b=YHNB9zHkq/fYu0HBUhMzFr9dchYXLgV3q7S19rVDXEsTOwEnixMhCK8YjOUSubi2Uu
-         oqoh+3oc/nudrgytRKkXi+ufmOLgRVl9axoRoY6ZsiaZFvQUcHw2xuyWpMFILZeJup79
-         ljNPsPoypXIfg6yckzKaPCEZDsJzy5zJ9ldR3pVdzfYwznudGIvSrsx6+c/3onGdO4Bg
-         vS0WILIq6WBmiB65Ypq7/yvFA0+SElEEIqHzlsHNAA6Z0J7esPEHfV3MAb6HOuD/LcD/
-         y07NyQmVN04OoJNmk3VP66PdbCvKjetTQ2QlOKDuFGUoTKLPDhdxnNRafkKV9Q4Gib0d
-         Z78A==
-X-Forwarded-Encrypted: i=1; AJvYcCUXALoBKdzo/KtJx/7oH+GFoLb8x8BTyR96E2e47upzd2oVtLEJzJyaSbG50OgxhHmy40X6wY5c4SwACc1kCMEpvdRwWuQtlLWp/0rPCw==
-X-Gm-Message-State: AOJu0Yzof7iOzXtVPtRepypjOTz8EenlJ0cOKdQ1/Xk/g5+iq2Q8kW8X
-	w3sEed9QXSFyv6Wrdsb+uU6A+6hSut3FplC3CBvJK85SfzCoBPlDTjyXZ9jtrH9E6/AlYqCmKB4
-	VPbc6VO8yGXrL4ujNi45oMw==
-X-Google-Smtp-Source: AGHT+IHELS7pYbC3Zr7WBPtJ3Cq214iX6+GHHwXiPeaVsTvMZI0On/kcO/ZamF4rcV5eByN04Yo229KkFlFLUH/VmA==
-X-Received: from ackerleytng-ctop.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:13f8])
- (user=ackerleytng job=sendgmr) by 2002:a05:690c:113:b0:648:3f93:61f2 with
- SMTP id 00721157ae682-689641a414emr4467787b3.6.1722876821677; Mon, 05 Aug
- 2024 09:53:41 -0700 (PDT)
-Date: Mon, 05 Aug 2024 16:53:39 +0000
-In-Reply-To: <20240801090117.3841080-1-tabba@google.com> (message from Fuad
- Tabba on Thu,  1 Aug 2024 10:01:07 +0100)
+	s=arc-20240116; t=1722877107; c=relaxed/simple;
+	bh=e2Si5sut7DmttSWgVcMhrEheTHiHZQD91pGP51D3a5M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PZIenh0+Pq865vQ3N51I3wF5aLh20+HiWPcycBQ6vkovc0TuvcDRRm8Fl1h5OhZ8ste3z0BQAvLITdYSb77vVsLclqPZxzD4EqupzmsySsVFaNgj9T4IKNDpAazKE+uK42NkIXwZ40pNSLRiy7lKWXLtoSJlcnWWFwbhdpjl0Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AKiWMcy6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5CBC32782;
+	Mon,  5 Aug 2024 16:58:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722877105;
+	bh=e2Si5sut7DmttSWgVcMhrEheTHiHZQD91pGP51D3a5M=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=AKiWMcy64InhcLTQ24/G3T0WvujPUfjZH+Q5FuI2TV7wPqhiYTL9nl1rC0j+g187x
+	 lKp6cu542YnVerTt7Ak1cgl6wyZXUYe6wJDy25W9fkhdcVF48o+JFSA0BcPrJ27cM1
+	 UxhzJ4R2yyg62FQ0oFXkCtzA7jiWlztOrBOZBCyjg1DlRG10OFUu/3XvSws1+jUjlq
+	 1G89ndf1U0BUmXbYKWex3pTbNGEJMPtT3yp/JlOd2M2GaKJQG1ybX6YQffJ/aAhBFC
+	 Gb/9qpDT2fEccUAQXAR/q5e/2Rmmx0WJf4UNDHNy5tEN3l1DgrOp15m/RSWLnzau3j
+	 uhp+SzvQtn9Ag==
+Message-ID: <76472034-82ed-4002-a21d-bd84a054d8dd@kernel.org>
+Date: Mon, 5 Aug 2024 18:58:17 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Message-ID: <diqzfrriewrw.fsf@ackerleytng-ctop.c.googlers.com>
-Subject: Re: [RFC PATCH v2 00/10] KVM: Restricted mapping of guest_memfd at
- the host and pKVM/arm64 support
-From: Ackerley Tng <ackerleytng@google.com>
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	tabba@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/8] dt-bindings: PCI: Add binding for qps615
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ cros-qcom-dts-watchers@chromium.org, Bartosz Golaszewski <brgl@bgdev.pl>,
+ Jingoo Han <jingoohan1@gmail.com>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ andersson@kernel.org, quic_vbadigan@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
+ <20240803-qps615-v2-1-9560b7c71369@quicinc.com>
+ <0cdaa0b2-ae50-40a1-abbb-7a6702d54ad5@kernel.org>
+ <027dc9f7-6e0d-e331-8f90-92a3d56350ab@quicinc.com>
+ <132a0367-596b-4ff2-b35c-e81e77f14340@kernel.org>
+ <ZrEAKxktYXFyxWXy@hu-bjorande-lv.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <ZrEAKxktYXFyxWXy@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Fuad Tabba <tabba@google.com> writes:
+On 05/08/2024 18:39, Bjorn Andersson wrote:
+>>>
+>>> In patch1 we are trying to add reference of i2c-adapter, you suggested
+>>> to use i2c-bus for that. we got comments on the driver code not to use
+>>> adapter and instead use i2c client reference. I felt i2c-bus is not
+>>> ideal to represent i2c client device so used this name.
+>>
+>> You did not respond to comment of using i2c-bus, just silently decided
+>> to implement other property.
+>>
+> 
+> I guess you totally ignored my comment when you reviewed the previous
+> version, where I asked him to represent the device on said bus.
 
-> This series adds restricted mmap() support to guest_memfd, as
-> well as support for guest_memfd on pKVM/arm64. It is based on
-> Linux 6.10.
->
-> Main changes since V1 [1]:
->
-> - Decoupled whether guest memory is mappable from KVM memory
-> attributes (SeanC)
->
-> Mappability is now tracked in the guest_mem object, orthogonal to
-> whether userspace wants the memory to be private or shared.
-> Moreover, the memory attributes capability (i.e.,
-> KVM_CAP_MEMORY_ATTRIBUTES) is not enabled for pKVM, since for
-> software-based hypervisors such as pKVM and Gunyah, userspace is
-> informed of the state of the memory via hypervisor exits if
-> needed.
->
-> Even if attributes are enabled, this patch series would still
-> work (modulo bugs), without compromising guest memory nor
-> crashing the system.
->
-> - Use page_mapped() instead of page_mapcount() to check if page
-> is mapped (DavidH)
->
-> - Add a new capability, KVM_CAP_GUEST_MEMFD_MAPPABLE, to query
-> whether guest private memory can be mapped (with aforementioned
-> restrictions)
->
-> - Add a selftest to check whether memory is mappable when the
-> capability is enabled, and not mappable otherwise. Also, test the
-> effect of punching holes in mapped memory. (DavidH)
->
-> By design, guest_memfd cannot be mapped, read, or written by the
-> host. In pKVM, memory shared between a protected guest and the
+Hm, Rob suggested i2c-bus, you as well:
+<<I'd prefer you call it "i2c-adapter" or perhaps "i2c-bus", because
+it's not "the switch controller".>>
 
-I think we should use "cannot be faulted in" to be clear that
-guest_memfd can be mmaped but not faulted in.
+and there was no response to any of these comments.
 
-Would it be better to have all the variables/config macros be something
-about faultability instead of mappability?
+> 
+>> Anyway, why i2c-bus is not suitable here? I am quite surprised...
+>>
+> 
+> I was not aware that i2c-bus was an acceptable solution, sorry for my
+> bad suggestion and guidance here.
 
-> host is shared in-place, unlike the other confidential computing
-> solutions that guest_memfd was originally envisaged for (e.g,
-> TDX). When initializing a guest, as well as when accessing memory
-> shared by the guest with the host, it would be useful to support
-> mapping that memory at the host to avoid copying its contents.
->
-> One of the benefits of guest_memfd is that it prevents a
-> misbehaving host process from crashing the system when attempting
-> to access (deliberately or accidentally) protected guest memory,
-> since this memory isn't mapped to begin with. Without
-> guest_memfd, the hypervisor would still prevent such accesses,
-> but in certain cases the host kernel wouldn't be able to recover,
-> causing the system to crash.
->
-> Support for mmap() in this patch series maintains the invariant
-> that only memory shared with the host, either explicitly by the
-> guest or implicitly before the guest has started running (in
-> order to populate its memory) is allowed to have a valid mapping
-> at the host. At no time should private (as viewed by the
-> hypervisor) guest memory be mapped at the host.
->
-> This patch series is divided into two parts:
->
-> The first part is to the KVM core code. It adds opt-in support
-> for mapping guest memory only as long as it is shared. For that,
-> the host needs to know the mappability status of guest memory.
-> Therefore, the series adds a structure to track whether memory is
-> mappable. This new structure is associated with each guest_memfd
-> object.
->
-> The second part of the series adds guest_memfd support for
-> pKVM/arm64.
->
-> We don't enforce the invariant that only memory shared with the
-> host can be mapped by the host userspace in
-> file_operations::mmap(), but we enforce it in
-> vm_operations_struct:fault(). On vm_operations_struct::fault(),
-> we check whether the page is allowed to be mapped. If not, we
-> deliver a SIGBUS to the current task, as discussed in the Linux
-> MM Alignment Session on this topic [2].
->
-> Currently there's no support for huge pages, which is something
-> we hope to add in the future, and seems to be a hot topic for the
-> upcoming LPC 2024 [3].
->
-> Cheers,
-> /fuad
->
-> [1] https://lore.kernel.org/all/20240222161047.402609-1-tabba@google.com/
->
-> [2] https://lore.kernel.org/all/20240712232937.2861788-1-ackerleytng@google.com/
->
-> [3] https://lpc.events/event/18/sessions/183/#20240919
->
-> Fuad Tabba (10):
->   KVM: Introduce kvm_gmem_get_pfn_locked(), which retains the folio lock
->   KVM: Add restricted support for mapping guestmem by the host
->   KVM: Implement kvm_(read|/write)_guest_page for private memory slots
->   KVM: Add KVM capability to check if guest_memfd can be mapped by the
->     host
->   KVM: selftests: guest_memfd mmap() test when mapping is allowed
->   KVM: arm64: Skip VMA checks for slots without userspace address
->   KVM: arm64: Do not allow changes to private memory slots
->   KVM: arm64: Handle guest_memfd()-backed guest page faults
->   KVM: arm64: arm64 has private memory support when config is enabled
->   KVM: arm64: Enable private memory kconfig for arm64
->
->  arch/arm64/include/asm/kvm_host.h             |   3 +
->  arch/arm64/kvm/Kconfig                        |   1 +
->  arch/arm64/kvm/mmu.c                          | 139 +++++++++-
->  include/linux/kvm_host.h                      |  72 +++++
->  include/uapi/linux/kvm.h                      |   3 +-
->  tools/testing/selftests/kvm/Makefile          |   1 +
->  .../testing/selftests/kvm/guest_memfd_test.c  |  47 +++-
->  virt/kvm/Kconfig                              |   4 +
->  virt/kvm/guest_memfd.c                        | 129 ++++++++-
->  virt/kvm/kvm_main.c                           | 253 ++++++++++++++++--
->  10 files changed, 628 insertions(+), 24 deletions(-)
->
->
-> base-commit: 0c3836482481200ead7b416ca80c68a29cfdaabd
+I think you suggested i2c-bus as well, but regardless what did you agree
+internally, response to Rob was expected.
+
+Best regards,
+Krzysztof
+
 
