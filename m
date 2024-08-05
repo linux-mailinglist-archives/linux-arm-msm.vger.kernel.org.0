@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-27892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 243DB9474B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 07:34:15 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D1D49474EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 07:58:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 84EA5B207E7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 05:34:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 604AB1C20947
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 05:58:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFD781411E9;
-	Mon,  5 Aug 2024 05:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB7B7143C6A;
+	Mon,  5 Aug 2024 05:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="APoVRry9"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ob7Z19Gm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DF2639;
-	Mon,  5 Aug 2024 05:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E97143C4B;
+	Mon,  5 Aug 2024 05:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722836047; cv=none; b=stLIaJkhPdxniD8RgLWjAa32SJmXw9KQGNfUrTz2JBXNqZROBFmkPngke+ryLCI7d4WueMZw7jDO31WZ0Jx4xA1WT23Ihg7flMumJVfJ7IGknr3zYf38JH7jwvyBU/0ew7D2WimH/dfUG7v+nyA7jg8EkfIobxw5Uk50sXB/plA=
+	t=1722837476; cv=none; b=eBewUZqf906AyS1X5LM5bKkFhl6KeknMWv0MehAIzFhpvG8UOTgJwWHAL44qOZbrbHztdDRjLEPZhzfJNS/jPliwXAfqo+inRMARsLUoHYdqY3AiOjIoU5emWsa9k+MkxaaozmROESgu5he6QrOARWsX5+4pKWCmypMe7/oYvL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722836047; c=relaxed/simple;
-	bh=A7AsuFu3J7IuwbUX+xj/MH8QGS0K6jnowqE8lE8E1Ps=;
+	s=arc-20240116; t=1722837476; c=relaxed/simple;
+	bh=qu+yzfCh32NsS+pabuQNKzqmRPtfgtTFOkbIoXQ5gzM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=JjsvS5WAEBKo8hek1Mx8iPJONF9ZzCfsjqnjoCnZWRp+St07Ci/iudS77dgmIbMQhS8uKozviaQkYk2p4xbukfJKFJ4ajQ9w5R9sqDvPWa5n92eXf8HbAF+rpoqTriUIS0eBTSQTHX2RuysLvI64WoKsEudALpIGcEEg3YoomwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=APoVRry9; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=gvI6V/2b7mAjGS134LN7uQ0Nh785o1NUfH0i+lchJJThi6uNkpS47COmDJUFYd7Dx2I9HUkiyo/8MgPUwiTSStntY4SQ4mgkJhPb2SqkitVKBpsl7mnB6pSr1c5Es4CjxDOFMT6slyiOMpl2uGKxqTjJQ7ToYHjitDBqONKqj9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ob7Z19Gm; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4752VmEn014293;
-	Mon, 5 Aug 2024 05:33:57 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4752Vexx023857;
+	Mon, 5 Aug 2024 05:57:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	nofa3nIAq87yCBtgPBTkx+5CILCHMUUE2PiL4HD1bws=; b=APoVRry9hfdIJE7e
-	W4mqLqKNpCoxWU9lLJP7RBfk4UEm3ftrj4Zipvik2LeFmc6hoxeLFh1jHfQuSymU
-	0TZpz5CuCiGexCODoMjiScpM3T9y2z5EFwzGyzX3Uoqn9Moct8q+6usiIGqvZ86L
-	v28TyINTACRGb8biSe9Rey5UVV5PJgqmlXSp0aLYc1KTSpldoNvK7WcgjLbWtNsg
-	stJ63avc8NndgxkzygDExVu8F4BR0xoJsfTo+3BNjStbLYbzeAKOHWm9W2gOc2lB
-	dzbghCCnzEH6BVwsy39xJTVBibEARkuSGAEbK/ntORKFvmoJQa0bVeKdqZlF84tJ
-	L8mzew==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40sdu92tse-1
+	c0m0GUgmMGH4VcXYWgBHUtXWyVZrk/+pijv15cQ1x+w=; b=Ob7Z19GmpYNVu+kN
+	C1c2fA8cYhZPx+syl7/RzXiaU2SiUupz0jtn/Admq86zPSNKaCjsh6tLXxTy26pW
+	SHiJW0JzgGlbUl3HsPzVcq5eaSvW9UEPikPICENhKiScXgs9fU35nPcxI2+15Kx6
+	DPUlLHEM5ir1b4P2xZfSOScDGdREbbEb+mZAp3apXQeDdVyzg7F/0cHvamvq5v9P
+	NHjTyB/nwk2Vp+u+afRkQgVllTjzqlD062GRSUxiOC5RZXz+vIfR7WnlBj+6T1PJ
+	FQrMQNMDfy7G7oDoLrJufDkb/SpMMS/VQ1pgTQaNpPB//uZoic84fxlj75n+TLBP
+	gMvkUQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40sbgru10w-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 05 Aug 2024 05:33:57 +0000 (GMT)
+	Mon, 05 Aug 2024 05:57:45 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4755Xuwd011750
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4755virR000531
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 5 Aug 2024 05:33:56 GMT
+	Mon, 5 Aug 2024 05:57:44 GMT
 Received: from [10.216.50.161] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 4 Aug 2024
- 22:33:50 -0700
-Message-ID: <f469d04f-f539-ed53-055f-5360cddaafdd@quicinc.com>
-Date: Mon, 5 Aug 2024 11:03:46 +0530
+ 22:57:38 -0700
+Message-ID: <7f48f71c-7f57-492c-47df-6aac1d3b794b@quicinc.com>
+Date: Mon, 5 Aug 2024 11:27:35 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,121 +90,145 @@ CC: <andersson@kernel.org>, <quic_vbadigan@quicinc.com>,
  Golaszewski" <bartosz.golaszewski@linaro.org>
 References: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
  <20240803-qps615-v2-1-9560b7c71369@quicinc.com>
- <0cdaa0b2-ae50-40a1-abbb-7a6702d54ad5@kernel.org>
- <027dc9f7-6e0d-e331-8f90-92a3d56350ab@quicinc.com>
- <132a0367-596b-4ff2-b35c-e81e77f14340@kernel.org>
+ <5f65905c-f1e4-4f52-ba7c-10c1a4892e30@kernel.org>
+ <f8985c98-82a5-08c3-7095-c864516b66b9@quicinc.com>
+ <58317fe2-fbea-400e-bd1d-8e64d1311010@kernel.org>
+ <100e27d7-2714-89ca-4a98-fccaa5b07be3@quicinc.com>
+ <c80ae784-c1f3-4046-9d86-d7e57bd93669@kernel.org>
 From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <132a0367-596b-4ff2-b35c-e81e77f14340@kernel.org>
+In-Reply-To: <c80ae784-c1f3-4046-9d86-d7e57bd93669@kernel.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: IJcqCLkE_DeHsbBjYLSaAjchf77swZW1
-X-Proofpoint-GUID: IJcqCLkE_DeHsbBjYLSaAjchf77swZW1
+X-Proofpoint-ORIG-GUID: OAR1W457MC8YipMhCR3X__uupBlBKkR9
+X-Proofpoint-GUID: OAR1W457MC8YipMhCR3X__uupBlBKkR9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-04_14,2024-08-02_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 mlxlogscore=999 suspectscore=0 malwarescore=0
- clxscore=1015 phishscore=0 spamscore=0 bulkscore=0 mlxscore=0
- impostorscore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2407110000 definitions=main-2408050038
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ impostorscore=0 malwarescore=0 suspectscore=0 phishscore=0 mlxscore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0 spamscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408050041
 
 
 
-On 8/5/2024 10:42 AM, Krzysztof Kozlowski wrote:
-> On 05/08/2024 06:02, Krishna Chaitanya Chundru wrote:
+On 8/5/2024 10:58 AM, Krzysztof Kozlowski wrote:
+> On 05/08/2024 07:26, Krishna Chaitanya Chundru wrote:
 >>
 >>
->> On 8/4/2024 2:26 PM, Krzysztof Kozlowski wrote:
->>> On 03/08/2024 05:22, Krishna chaitanya chundru wrote:
->>>> Add binding describing the Qualcomm PCIe switch, QPS615,
->>>> which provides Ethernet MAC integrated to the 3rd downstream port
->>>> and two downstream PCIe ports.
->>>>
->>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->>>> ---
->>>>    .../devicetree/bindings/pci/qcom,qps615.yaml       | 191 +++++++++++++++++++++
->>>>    1 file changed, 191 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,qps615.yaml b/Documentation/devicetree/bindings/pci/qcom,qps615.yaml
->>>> new file mode 100644
->>>> index 000000000000..ea0c953ee56f
->>>> --- /dev/null
->>>> +++ b/Documentation/devicetree/bindings/pci/qcom,qps615.yaml
->>>> @@ -0,0 +1,191 @@
->>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>>> +%YAML 1.2
->>>> +---
->>>> +$id: http://devicetree.org/schemas/pci/qcom,qps615.yaml#
->>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>> +
->>>> +title: Qualcomm QPS615 PCIe switch
->>>> +
->>>> +maintainers:
->>>> +  - Krishna chaitanya chundru <quic_krichai@quicinc.com>
->>>> +
->>>> +description: |
->>>> +  Qualcomm QPS615 PCIe switch has one upstream and three downstream
->>>> +  ports. The 3rd downstream port has integrated endpoint device of
->>>> +  Ethernet MAC. Other two downstream ports are supposed to connect
->>>> +  to external device.
->>>> +
->>>> +  The QPS615 PCIe switch can be configured through I2C interface before
->>>> +  PCIe link is established to change FTS, ASPM related entry delays,
->>>> +  tx amplitude etc for better power efficiency and functionality.
->>>> +
->>>> +properties:
->>>> +  compatible:
->>>> +    enum:
->>>> +      - pci1179,0623
->>>> +
->>>> +  reg:
->>>> +    maxItems: 1
->>>> +
->>>> +  qcom,qps615-controller:
->>>
->>> and now I see that you totally ignored comments. Repeating the same over
->>> and over is a waste of time.
->>>
->>> <form letter>
->>> This is a friendly reminder during the review process.
->>>
->>> It seems my or other reviewer's previous comments were not fully
->>> addressed. Maybe the feedback got lost between the quotes, maybe you
->>> just forgot to apply it. Please go back to the previous discussion and
->>> either implement all requested changes or keep discussing them.
->>>
->>> Thank you.
->>> </form letter>
+>> On 8/5/2024 10:44 AM, Krzysztof Kozlowski wrote:
+>>> On 05/08/2024 06:11, Krishna Chaitanya Chundru wrote:
 >>>
 >>>
->>> Best regards,
->>> Krzysztof
+>>>>>> +
+>>>>>> +  qcom,nfts:
+>>>>>> +    $ref: /schemas/types.yaml#/definitions/uint8
+>>>>>> +    description:
+>>>>>> +      Fast Training Sequence (FTS) is the mechanism that
+>>>>>> +      is used for bit and Symbol lock.
+>>>>>
+>>>>> What are the values? Why this is uint8?
+>>>>>
+>>>> These represents number of fast training sequence and doesn't have
+>>>> any units and the maximum value for this is 0xFF only so we used
+>>>> uint8.
+>>>>> You described the desired Linux feature or behavior, not the actual
+>>>>> hardware. The bindings are about the latter, so instead you need to
+>>>>> rephrase the property and its description to match actual hardware
+>>>>> capabilities/features/configuration etc.
+>>>> ack.
+>>>>>
+>>>>>> +
+>>>>>> +allOf:
+>>>>>> +  - $ref: /schemas/pci/pci-bus-common.yaml#
+>>>>>> +  - if:
+>>>>>> +      properties:
+>>>>>> +        compatible:
+>>>>>> +          contains:
+>>>>>> +            const: pci1179,0623
+>>>>>> +      required:
+>>>>>> +        - compatible
+>>>>>
+>>>>> Why do you have entire if? You do not have multiple variants, drop.
+>>>>>
+>>>> The child nodes also referencing the qcom,qps615.yaml# node, I tried
+>>>> to use this way to say "the below properties are for the required for
+>>>> parent and optional for child".
+>>>
+>>> I don't understand how child device can be exactly the same as parent
+>>> device. How does it look in terms of hardware? Pins and supplies?
+>>>
+>>>>>> +    then:
+>>>>>> +      required:
+>>>>>> +        - vdd18-supply
+>>>>>> +        - vdd09-supply
+>>>>>> +        - vddc-supply
+>>>>>> +        - vddio1-supply
+>>>>>> +        - vddio2-supply
+>>>>>> +        - vddio18-supply
+>>>>>> +        - qcom,qps615-controller
+>>>>>> +        - reset-gpios
+>>>>>> +
+>>>>>> +patternProperties:
+>>>>>> +  "@1?[0-9a-f](,[0-7])?$":
+>>>>>> +    type: object
+>>>>>> +    $ref: qcom,qps615.yaml#
+>>>>>> +    additionalProperties: true
+>>>>>
+>>>>> Nope, drop pattern Properties or explain what is this.
+>>>>>
+>>>> the child nodes represent the downstream ports of the PCIe
+>>>> switch which wants to use same properties that is why
+>>>> I tried to use this pattern properties.
+>>>
+>>> Downstream port is not the same as device. Why downstream port has the
+>>> same supplies? To which pins are they connected?
+>>>
 >>>
 >> Hi Krzysztof,
 >>
->> In patch1 we are trying to add reference of i2c-adapter, you suggested
->> to use i2c-bus for that. we got comments on the driver code not to use
->> adapter and instead use i2c client reference. I felt i2c-bus is not
->> ideal to represent i2c client device so used this name.
+>> Downstream ports dosen't have pins or supplies to power on.
+>>
+>> But there are properties like qcom,l0s-entry-delay-ns,
+>> qcom,l1-entry-delay-ns,  qcom,tx-amplitude-millivolt etc which
+>> applicable for child nodes also. Instead of re-declaring the
+>> these properties again I tried to use pattern properties.
 > 
-> You did not respond to comment of using i2c-bus, just silently decided
-> to implement other property.
+> You could use $defs for them, but I don't understand how does these
+> properties apply for both main device and ports. It seems you are
+> writing binding to match some driver behavior. Let's start from basics -
+> describe the hardware.
 > 
-I should have replied to v1 why we are not using this suggested way,
-next time onwards I will fallow that.
+Hi Krzysztof,
 
-> Anyway, why i2c-bus is not suitable here? I am quite surprised...
->
-It was suggested by bjorn andresson in the offline review, I will check
-this and get back.
+QPS615 has a 3 downstream ports and 1 upstream port as described below
+diagram.
+For this entire switch there are some supplies which we described in the
+dt-binding (vdd18-supply, vdd09-supply etc) and one GPIO which controls
+reset of the switch (reset-gpio). The switch hardware can configure the
+individual ports DSP0, DSP1, DSP2, upstream port and also one integrated
+ethernet endpoint which is connected to DSP2(I didn't mentioned in the
+diagram) through I2C.
+
+The properties other than supplies,i2c client, reset gpio which
+are added will be applicable for all the ports.
+_______________________________________________________________
+|   |i2c|                   QPS615       |Supplies||Resx gpio |
+|   |___|              _________________ |________||__________|
+|      ________________| Upstream port |_____________         |
+|      |               |_______________|            |         |
+|      |                       |                    |         |
+|      |                       |                    |         |
+|  ____|_____              ____|_____            ___|____     |
+|  |DSP 0   |              | DSP 1  |            | DSP 2|     |
+|  |________|              |________|            |______|     |
+|_____________________________________________________________|
 
 - Krishna Chaitanya.
-> 
-> 
 > Best regards,
 > Krzysztof
 > 
