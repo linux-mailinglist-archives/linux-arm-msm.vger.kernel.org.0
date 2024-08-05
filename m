@@ -1,383 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-27929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C6D0947D8B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 17:03:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16F96947DA7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 17:07:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D929FB23655
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 15:03:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 09D761C2106F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 15:07:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 331831662FA;
-	Mon,  5 Aug 2024 15:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C919113C909;
+	Mon,  5 Aug 2024 15:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LEwcof3B"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="TF1Q4GEu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072AF165F1B;
-	Mon,  5 Aug 2024 15:00:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217D113BC0C
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Aug 2024 15:07:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722870023; cv=none; b=OOPXtWL01olO8SXFBdPWvfJvf0sC4H2RN1e/jY9JM9t/yq4B0maGRikpfuzTZD1Dtcjs3GpSmDOAug4n3U2zyKUvYeWGB8FYcm4SPMJiZ3G+LfXLLnFt4RA+WfdgA6sNZExyfuYo1WkIfp0CKAuUpK2gUZMGKJn2HfefLzZjQcM=
+	t=1722870459; cv=none; b=Xegi9LkE4Sf7tfdLVm7VpKOKA9VzETB5Gh/JQ2NrmdZf/t0Vctmgc4TpTRE7uLMEEgEaJwpJOymSzAGH+tCUqKEzvIUg0W/osimLA3+3cUUQJ18MdWL3xXLn7MFiDHNfu7dDzxvGlzhVq20elhu97viqkZZSs0PkWkN4uv0wj2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722870023; c=relaxed/simple;
-	bh=7DHDGqSkQLgNddqVzs6AUi5YEfjN+4d6BibOfTi3Z14=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=H0K6mISix3hLNkm6XneLt+jH5gdMEjW24hlRumW31wC/m26RTxHuVK24DIj9DTR17y7HWNRK/kaBCYMzxlliTvJat2ZTitbbvfuvSClH5LvvhIoxVcVCkpSduFSfgFOnbU2HCE4mjtG2QkK9oADoakw3X8UV9kfEq4gu50b2wfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LEwcof3B; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C99C32782;
-	Mon,  5 Aug 2024 15:00:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722870022;
-	bh=7DHDGqSkQLgNddqVzs6AUi5YEfjN+4d6BibOfTi3Z14=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=LEwcof3BOOiK4lCOzsHJpUt6E5U7Y0fjve0oiSSXad3PrEr/Ze4a6BDx8ahQRbjb2
-	 kf4qL72jjhjURvOvJ9w0LLJ+aoWxwRl7i+wfqZudmiRk1B7lwkkKgQt4oi7QCw86yp
-	 iIaFRx8ZKkx22BnVuK1RGTiYhc4C+ast1A0R7YObrARoWJo2TFhH3mItU4gYrVWN/B
-	 ToPP20recwJV+j5HeKETNNsXS0lY5Ibj4/OgydBPNAwboPggEoY+BAWyA3dWsiQf3L
-	 hBHwc3Cks8nw8ux1vD7MUhac47g7zbY6WLRa4W7IarRkB6VQHnD96hxI0OIqoD58CE
-	 +z7ThG1KHe3hQ==
-Date: Mon, 05 Aug 2024 09:00:21 -0600
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1722870459; c=relaxed/simple;
+	bh=0xb13Rbxh+eEDlGrDAAI13sTfjjWJqfDXdmfsixf78s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rV3/HlUdnHCk8dPe5aBMFQM/+Tg4/I9hGjXt0XXtwXbXSQburzM8F4ZfUV39gL/C6ge0PE8kqtLhgVF6FSDzFd2zE3DA6/TAheH83cFUKpge4hwN1n6qtGZ2xwT0xCmFP7qd+PI0HhRsvbd31bOohZzNlE2+JkvzM29yu/i0Eik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=TF1Q4GEu; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1722870457;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=o4HYh4hoxDN/J50E0Jnd1FVXoMrne/Iur0T/sKC6Q7c=;
+	b=TF1Q4GEuPjdGa+mNgFC4Ca/WeSMRgSZ7D0bH0feXHlt0+3mXCNDU7dQwZUO9Em66n6bjZt
+	M1/RTL7TN6uSgJ4MrjHEZmVDeA74xUhGajIyt2QvuwWs3vwg3pnoMEjqMy5zbUNuSip3yu
+	qysp8B+CeOyCy9UP9G8O/RKb/onyLd8=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-592-zFNk9d9mOJiT3jYEa2TPoA-1; Mon, 05 Aug 2024 11:07:35 -0400
+X-MC-Unique: zFNk9d9mOJiT3jYEa2TPoA-1
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7a1d44099a3so1337737785a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Aug 2024 08:07:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722870455; x=1723475255;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=o4HYh4hoxDN/J50E0Jnd1FVXoMrne/Iur0T/sKC6Q7c=;
+        b=JiDFtIhQp3yx6rZ+azLKSjUJvggWSjss4OAcSNyWgvoHStIm14+ifQ9uDk278kNYas
+         KzJbuiHyfGVqcimjuwVDIlmDfHVPLWpKPutFqpN4h3bkH/tN0DB32L8rh6R8CPURRRGn
+         bjT0d6wkFMHqlwX5D4uD+Qb0ejUDmuR+YYuV7/L4Sm3bCtfPSlBlPE2/XPLeOaHIBJ2q
+         YihmNFs7A33QrYQZ8zqvANKHkUT2vSouDtifU23J6brFyXYFiGk254s/TcM/BcYaVvya
+         gnv5iL6CHyIAJw3naMPaOSosvb/qF3rO+JBB5ZGHaEscWr6yMwD6h9MDc6ZArtFEd1e8
+         BXHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWb8hNg1+gnE1ehq+lFe6ur2UMZhM7gQgGzQJHR/nZALV9D2t+1MlxIZd+Bxu5Uec3icFA4+tdfPtc5em3kNoL7WcvLS4iNsnxWrWv1tA==
+X-Gm-Message-State: AOJu0YzYGZOn9GK/f6WoTTXt9FhpeVMCtPfenI1YKYtxUWUkKnwhge1A
+	yKUV6ycGYAeCZ/ET5IKA05FK8oPshGR4YjVD59dsyM+E02ScITGwxQ/hWrdVgL+rvWy1PnSVZpo
+	vDfGm4VRY1PV/vVfeMGuRbLVz9JnehI2jXvRcpKJe+ttTGtSakXAV0YM0ykgMw9Y=
+X-Received: by 2002:a05:620a:29cb:b0:79d:5b8b:7ad0 with SMTP id af79cd13be357-7a34efca052mr1437715285a.65.1722870455373;
+        Mon, 05 Aug 2024 08:07:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEyKUHpuaat+IlBO9jx6OMHcFHgn9Vn6iJEHthO0hM/eX95XRxJJxYlt4N6aAWmvQ48FL1ypg==
+X-Received: by 2002:a05:620a:29cb:b0:79d:5b8b:7ad0 with SMTP id af79cd13be357-7a34efca052mr1437711685a.65.1722870455002;
+        Mon, 05 Aug 2024 08:07:35 -0700 (PDT)
+Received: from x1gen2nano ([2600:1700:1ff0:d0e0::13])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a34f78adadsm360064485a.123.2024.08.05.08.07.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Aug 2024 08:07:34 -0700 (PDT)
+Date: Mon, 5 Aug 2024 10:07:32 -0500
+From: Andrew Halaney <ahalaney@redhat.com>
+To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+Cc: Serge Semin <fancer.lancer@gmail.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, Alexei Starovoitov <ast@kernel.org>, bpf@vger.kernel.org, 
+	Daniel Borkmann <daniel@iogearbox.net>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Jesper Dangaard Brouer <hawk@kernel.org>, John Fastabend <john.fastabend@gmail.com>, 
+	Jose Abreu <joabreu@synopsys.com>, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>, 
+	Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH net-next 13/14] net: stmmac: remove obsolete pcs methods
+ and associated code
+Message-ID: <hrvupeqc2pgoqa7ecg5rtg657eyxwpe4eg7xl4o3ij4upqxyvt@iwplq3uo72kt>
+References: <Zqy4wY0Of8noDqxt@shell.armlinux.org.uk>
+ <E1sZpoq-000eHy-GR@rmk-PC.armlinux.org.uk>
+ <ij562xfhvgxmvpgh2l6rhsvcpi43yvvkvef4wgpjupwusi6uwy@cpnkopeu7cpc>
+ <Zq0yAjzrpIEhcHBZ@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Marcus Glocker <marcus@nazgul.ch>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Johan Hovold <johan@kernel.org>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, 
- Conor Dooley <conor+dt@kernel.org>, Abel Vesa <abel.vesa@linaro.org>
-In-Reply-To: <o2ysrhejn2xlba6mh4wueh7mgb4l54zvh4tcep3g5wizpaidk6@33mqoj3246zv>
-References: <o2ysrhejn2xlba6mh4wueh7mgb4l54zvh4tcep3g5wizpaidk6@33mqoj3246zv>
-Message-Id: <172286967393.2711086.2608235829254170744.robh@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: Add X1E80100 Samsung Galaxy Book4
- Edge
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zq0yAjzrpIEhcHBZ@shell.armlinux.org.uk>
 
+On Fri, Aug 02, 2024 at 08:22:42PM GMT, Russell King (Oracle) wrote:
+> On Fri, Aug 02, 2024 at 02:02:25PM -0500, Andrew Halaney wrote:
+> > On Fri, Aug 02, 2024 at 11:47:32AM GMT, Russell King (Oracle) wrote:
+> > > The pcs_ctrl_ane() method is no longer required as this will be handled
+> > > by the mac_pcs phylink_pcs instance. Remove these methods, their common
+> > > implementation, the pcs_link, pcs_duplex and pcs_speed members of
+> > > struct stmmac_extra_stats, and stmmac_has_mac_phylink_select_pcs().
+> > >
+> > > Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+> >
+> > ...
+> >
+> > > diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+> > > index 3c8ae3753205..799af80024d2 100644
+> > > --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+> > > +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+> > > @@ -321,48 +321,6 @@ static int stmmac_ethtool_get_link_ksettings(struct net_device *dev,
+> > >  {
+> > >  	struct stmmac_priv *priv = netdev_priv(dev);
+> > >
+> > > -	if (!(priv->plat->flags & STMMAC_FLAG_HAS_INTEGRATED_PCS) &&
+> >
+> > This change effectively makes the INTEGRATED_PCS flag useless, I think
+> > we should remove it entirely.
+>
+> I'm hoping the ethqos folk are going to test this patch series and tell
+> me whether it works for them - specifically Sneh Shah who added
+>
+> 	net: stmmac: dwmac-qcom-ethqos: Add support for 2.5G SGMII
+>
+> which directly configures the PCS bypassing phylink. Specifically,
+> if this in stmmac_check_pcs_mode():
+>
+> 	priv->dma_cap.pcs && interface == PHY_INTERFACE_MODE_SGMII
+>
+> is true for this device, then we may be in for problems. Since
+> priv->dma_cap.pcs comes from hardware, it's impossible to tell
+> unless one has that hardware.
 
-On Sun, 04 Aug 2024 10:10:08 +0200, Marcus Glocker wrote:
-> Hi,
-> 
-> We recently added initial support in OpenBSD for the Samsung Galaxy
-> Book4 Edge by below DTS diff.
-> 
-> - x1e80100-samsung-galaxy-book4-edge.dts:
->   Is a copy of x1e80100-crd.dts, and then modified to our needs.
-> 
-> - x1e80100.dtsi:
->   Includes the UFSHCI peaces, which was basically pulled from
->   sc7180.dtsi.
-> 
-> Main stuff working:
-> 
-> - UFSHCI.
-> - Keyboard.
-> - Touch-pad.
-> - USB (as far tested).
-> 
-> Main stuff not working yet:
-> 
-> - Touch-screen:  Pin 51, which mostly works on the other X1E80100
->   models, is creating an interrupt storm on the Samsung Galaxy Book4
->   Edge.  Probing the other pins didn't showed success yet.  Not sure at
->   this point what the problem is.
-> 
-> Regards,
-> Marcus
-> 
-> 
+Hopefully we get a response there. For what its worth I have a
+access to the sa8775p-ride.dts board in a remote lab and
+dma_cap.pcs is definitely set for this integration of the IP
+on sa8775p. The only upstream described boards are:
 
+    1) sa8775p-ride
+    2) sa8775p-ride-r3
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+The difference is that "r3" is the latest spin of the board, with some
+Aquantia phys attached to the 2 stmmac MACs on the board instead of the
+Marvell 88EA1512 phys on the former. My understanding is that's to
+evaluate 2500 Mbps speeds (the 88EA1512 only goes up to 1000 Mbps).
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
+The "r3" board's Aquantia aqr115c's are capable of 2500 Mbps, but are
+"overclock SGMII". The "r3" describes the phy interface as 2500base-x,
+with no in-band signalling (since the "OCSGMII" is hacked up and doesn't
+really do the in-band signalling you've described in the past). That's
+all based on Bart's commit message adding support for that in:
 
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
+    0ebc581f8a4b7 net: phy: aquantia: add support for aqr115c
 
-  pip3 install dtschema --upgrade
+I think Sneh also had access to a board with the sa8775p in a fixed-link
+configuration doing 2500 Mbps, but that's not described upstream at the
+moment. I believe that was the board that originally motivated the patch
+you highlighted from him.
 
+At the very least Bartosz and I tested this and things didn't break
+noticeably for the 2 boards I listed above... so that's good :)
 
-New warnings running 'make CHECK_DTBS=y qcom/x1e80100-samsung-galaxy-book4-edge.dtb' for o2ysrhejn2xlba6mh4wueh7mgb4l54zvh4tcep3g5wizpaidk6@33mqoj3246zv:
-
-arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dtb: /: compatible: 'oneOf' conditional failed, one must be fixed:
-	['samsung,galaxy-book4-edge', 'qcom,x1e80100'] is too short
-	'samsung,galaxy-book4-edge' is not one of ['qcom,apq8016-sbc', 'schneider,apq8016-hmibsc']
-	'samsung,galaxy-book4-edge' is not one of ['asus,sparrow', 'huawei,sturgeon', 'lg,lenok', 'samsung,matisse-wifi', 'samsung,milletwifi']
-	'samsung,galaxy-book4-edge' is not one of ['asus,nexus7-flo', 'lg,nexus4-mako', 'sony,xperia-yuga', 'qcom,apq8064-cm-qs600', 'qcom,apq8064-ifc6410']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,apq8074-dragonboard']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,apq8060-dragonboard', 'qcom,msm8660-surf']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,apq8084-mtp', 'qcom,apq8084-sbc']
-	'samsung,galaxy-book4-edge' is not one of ['microsoft,dempsey', 'microsoft,makepeace', 'microsoft,moneypenny', 'motorola,falcon', 'samsung,ms013g', 'samsung,s3ve3g']
-	'samsung,galaxy-book4-edge' is not one of ['htc,memul', 'microsoft,superman-lte', 'microsoft,tesla', 'motorola,peregrine', 'samsung,matisselte']
-	'samsung,galaxy-book4-edge' is not one of ['huawei,kiwi', 'longcheer,l9100', 'samsung,a7', 'sony,kanuti-tulip', 'square,apq8039-t2']
-	'samsung,galaxy-book4-edge' is not one of ['sony,kugo-row', 'sony,suzu-row']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,msm8960-cdp', 'samsung,expressatt']
-	'samsung,galaxy-book4-edge' is not one of ['lge,hammerhead', 'samsung,hlte', 'sony,xperia-amami', 'sony,xperia-honami']
-	'samsung,galaxy-book4-edge' is not one of ['fairphone,fp2', 'htc,m8', 'oneplus,bacon', 'samsung,klte', 'sony,xperia-aries', 'sony,xperia-castor', 'sony,xperia-leo']
-	'samsung,galaxy-book4-edge' is not one of ['samsung,kltechn']
-	'samsung,galaxy-book4-edge' is not one of ['acer,a1-724', 'alcatel,idol347', 'asus,z00l', 'gplus,fl8005a', 'huawei,g7', 'lg,c50', 'lg,m216', 'longcheer,l8910', 'longcheer,l8150', 'motorola,harpia', 'motorola,osprey', 'motorola,surnia', 'qcom,msm8916-mtp', 'samsung,a3u-eur', 'samsung,a5u-eur', 'samsung,e5', 'samsung,e7', 'samsung,fortuna3g', 'samsung,gprimeltecan', 'samsung,grandmax', 'samsung,grandprimelte', 'samsung,gt510', 'samsung,gt58', 'samsung,j5', 'samsung,j5x', 'samsung,rossa', 'samsung,serranove', 'thwc,uf896', 'thwc,ufi001c', 'wingtech,wt88047', 'yiming,uz801-v3']
-	'samsung,galaxy-book4-edge' is not one of ['motorola,potter', 'xiaomi,daisy', 'xiaomi,mido', 'xiaomi,tissot', 'xiaomi,vince']
-	'samsung,galaxy-book4-edge' is not one of ['lg,bullhead', 'microsoft,talkman', 'xiaomi,libra']
-	'samsung,galaxy-book4-edge' is not one of ['sony,karin_windy']
-	'samsung,galaxy-book4-edge' is not one of ['huawei,angler', 'microsoft,cityman', 'sony,ivy-row', 'sony,karin-row', 'sony,satsuki-row', 'sony,sumire-row', 'sony,suzuran-row']
-	'samsung,galaxy-book4-edge' is not one of ['arrow,apq8096-db820c', 'inforce,ifc6640']
-	'samsung,galaxy-book4-edge' is not one of ['oneplus,oneplus3', 'oneplus,oneplus3t', 'qcom,msm8996-mtp', 'sony,dora-row', 'sony,kagura-row', 'sony,keyaki-row', 'xiaomi,gemini']
-	'samsung,galaxy-book4-edge' is not one of ['xiaomi,natrium', 'xiaomi,scorpio']
-	'samsung,galaxy-book4-edge' is not one of ['asus,novago-tp370ql', 'fxtec,pro1', 'hp,envy-x2', 'lenovo,miix-630', 'oneplus,cheeseburger', 'oneplus,dumpling', 'qcom,msm8998-mtp', 'sony,xperia-lilac', 'sony,xperia-maple', 'sony,xperia-poplar', 'xiaomi,sagit']
-	'samsung,galaxy-book4-edge' is not one of ['8dev,jalapeno', 'alfa-network,ap120c-ac']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,ipq4019-ap-dk01.1-c1', 'qcom,ipq4019-ap-dk04.1-c3', 'qcom,ipq4019-ap-dk07.1-c1', 'qcom,ipq4019-ap-dk07.1-c2', 'qcom,ipq4019-dk04.1-c1']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,ipq5018-rdp432-c2', 'tplink,archer-ax55-v1']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,ipq5332-ap-mi01.2', 'qcom,ipq5332-ap-mi01.3', 'qcom,ipq5332-ap-mi01.6', 'qcom,ipq5332-ap-mi01.9']
-	'samsung,galaxy-book4-edge' is not one of ['mikrotik,rb3011', 'qcom,ipq8064-ap148']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,ipq8074-hk01', 'qcom,ipq8074-hk10-c1', 'qcom,ipq8074-hk10-c2']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,ipq9574-ap-al02-c2', 'qcom,ipq9574-ap-al02-c6', 'qcom,ipq9574-ap-al02-c7', 'qcom,ipq9574-ap-al02-c8', 'qcom,ipq9574-ap-al02-c9']
-	'swir,mangoh-green-wp8548' was expected
-	'samsung,galaxy-book4-edge' is not one of ['qcom,qrb2210-rb1']
-	'samsung,galaxy-book4-edge' is not one of ['fairphone,fp5', 'qcom,qcm6490-idp', 'qcom,qcs6490-rb3gen2', 'shift,otter']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,qdu1000-idp', 'qcom,qdu1000-x100']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,qru1000-idp']
-	'samsung,galaxy-book4-edge' is not one of ['acer,aspire1', 'qcom,sc7180-idp']
-	'google,coachz-rev1' was expected
-	'google,coachz' was expected
-	'google,coachz-rev1-sku0' was expected
-	'google,coachz-sku0' was expected
-	'google,homestar-rev2' was expected
-	'google,homestar-rev3' was expected
-	'google,homestar' was expected
-	'google,kingoftown-rev0' was expected
-	'google,kingoftown' was expected
-	'google,lazor-rev0' was expected
-	'google,lazor-rev1' was expected
-	'google,lazor-rev3' was expected
-	'google,lazor-rev9' was expected
-	'google,lazor' was expected
-	'google,lazor-rev1-sku2' was expected
-	'google,lazor-rev3-sku2' was expected
-	'google,lazor-rev9-sku2' was expected
-	'google,lazor-sku2' was expected
-	'google,lazor-rev1-sku0' was expected
-	'google,lazor-rev3-sku0' was expected
-	'google,lazor-rev9-sku0' was expected
-	'google,lazor-sku0' was expected
-	'google,lazor-rev4-sku4' was expected
-	'google,lazor-rev9-sku4' was expected
-	'google,lazor-sku4' was expected
-	'google,lazor-rev4-sku5' was expected
-	'google,lazor-rev5-sku5' was expected
-	'google,lazor-rev9-sku6' was expected
-	'google,lazor-sku6' was expected
-	'google,mrbland-rev0-sku0' was expected
-	'google,mrbland-sku1536' was expected
-	'google,mrbland-rev0-sku16' was expected
-	'google,mrbland-sku1024' was expected
-	'google,pazquel-sku5' was expected
-	'google,pazquel-sku1' was expected
-	'google,pazquel-sku6' was expected
-	'google,pazquel-sku0' was expected
-	'google,pazquel-sku22' was expected
-	'google,pazquel-sku21' was expected
-	'google,pompom-rev1' was expected
-	'google,pompom-rev2' was expected
-	'google,pompom' was expected
-	'google,pompom-rev1-sku0' was expected
-	'google,pompom-rev2-sku0' was expected
-	'google,pompom-sku0' was expected
-	'google,quackingstick-sku1537' was expected
-	'google,quackingstick-sku1536' was expected
-	'google,trogdor' was expected
-	'google,trogdor-sku0' was expected
-	'google,wormdingler-rev0-sku16' was expected
-	'google,wormdingler-sku1024' was expected
-	'google,wormdingler-sku1025' was expected
-	'google,wormdingler-rev0-sku0' was expected
-	'google,wormdingler-sku0' was expected
-	'google,wormdingler-sku1' was expected
-	'qcom,sc7280-crd' was expected
-	'google,zoglin' was expected
-	'google,zoglin-sku1536' was expected
-	'qcom,sc7280-idp' was expected
-	'qcom,sc7280-idp2' was expected
-	'google,evoker' was expected
-	'google,evoker-sku512' was expected
-	'google,herobrine' was expected
-	'google,villager-rev0' was expected
-	'google,villager' was expected
-	'google,villager-sku512' was expected
-	'google,zombie' was expected
-	'google,zombie-sku512' was expected
-	'google,zombie-sku2' was expected
-	'google,zombie-sku514' was expected
-	'samsung,galaxy-book4-edge' is not one of ['lenovo,flex-5g', 'microsoft,surface-prox', 'qcom,sc8180x-primus']
-	'samsung,galaxy-book4-edge' is not one of ['lenovo,thinkpad-x13s', 'qcom,sc8280xp-crd', 'qcom,sc8280xp-qrd']
-	'samsung,galaxy-book4-edge' is not one of ['lenovo,tbx605f', 'motorola,ali']
-	'samsung,galaxy-book4-edge' is not one of ['sony,discovery-row', 'sony,kirin-row', 'sony,pioneer-row', 'sony,voyager-row']
-	'samsung,galaxy-book4-edge' is not one of ['inforce,ifc6560']
-	'samsung,galaxy-book4-edge' is not one of ['fairphone,fp3', 'motorola,ocean']
-	'samsung,galaxy-book4-edge' is not one of ['sony,mermaid-row']
-	'samsung,galaxy-book4-edge' is not one of ['xiaomi,lavender']
-	'samsung,galaxy-book4-edge' is not one of ['google,sargo']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,sdx55-mtp', 'qcom,sdx55-telit-fn980-tlb', 'qcom,sdx55-t55']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,sdx65-mtp']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,sdx75-idp']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,ipq6018-cp01', 'qcom,ipq6018-cp01-c1']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,qcs404-evb-1000', 'qcom,qcs404-evb-4000']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,sa8155p-adp']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,sa8295p-adp', 'qcom,sa8540p-ride']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,sa8775p-ride', 'qcom,sa8775p-ride-r3']
-	'samsung,galaxy-book4-edge' is not one of ['google,cheza', 'google,cheza-rev1', 'google,cheza-rev2', 'lenovo,yoga-c630', 'lg,judyln', 'lg,judyp', 'oneplus,enchilada', 'oneplus,fajita', 'qcom,sdm845-mtp', 'shift,axolotl', 'samsung,starqltechn', 'samsung,w737', 'sony,akari-row', 'sony,akatsuki-row', 'sony,apollo-row', 'thundercomm,db845c', 'xiaomi,beryllium', 'xiaomi,beryllium-ebbg', 'xiaomi,polaris']
-	'samsung,galaxy-book4-edge' is not one of ['oneplus,billie2']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,qrb4210-rb2']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,sm4450-qrd']
-	'samsung,galaxy-book4-edge' is not one of ['fxtec,pro1x']
-	'samsung,galaxy-book4-edge' is not one of ['lenovo,j606f']
-	'samsung,galaxy-book4-edge' is not one of ['sony,pdx201', 'xiaomi,laurel-sprout']
-	'samsung,galaxy-book4-edge' is not one of ['sony,pdx213']
-	'samsung,galaxy-book4-edge' is not one of ['sony,pdx225']
-	'samsung,galaxy-book4-edge' is not one of ['xiaomi,curtana', 'xiaomi,joyeuse']
-	'samsung,galaxy-book4-edge' is not one of ['fairphone,fp4']
-	'samsung,galaxy-book4-edge' is not one of ['microsoft,surface-duo', 'qcom,sm8150-hdk', 'qcom,sm8150-mtp', 'sony,bahamut-generic', 'sony,griffin-generic']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,qrb5165-rb5', 'qcom,sm8250-hdk', 'qcom,sm8250-mtp', 'sony,pdx203-generic', 'sony,pdx206-generic', 'xiaomi,elish', 'xiaomi,pipa']
-	'samsung,galaxy-book4-edge' is not one of ['microsoft,surface-duo2', 'qcom,sm8350-hdk', 'qcom,sm8350-mtp', 'sony,pdx214-generic', 'sony,pdx215-generic']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,sm8450-hdk', 'qcom,sm8450-qrd', 'sony,pdx223', 'sony,pdx224']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,sm8550-hdk', 'qcom,sm8550-mtp', 'qcom,sm8550-qrd', 'samsung,q5q', 'sony,pdx234']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,qcs8550-aim300-aiot']
-	'samsung,galaxy-book4-edge' is not one of ['qcom,sm8650-hdk', 'qcom,sm8650-mtp', 'qcom,sm8650-qrd']
-	'samsung,galaxy-book4-edge' is not one of ['asus,vivobook-s15', 'lenovo,yoga-slim7x', 'qcom,x1e80100-crd', 'qcom,x1e80100-qcp']
-	'qcom,apq8016' was expected
-	'qcom,apq8026' was expected
-	'qcom,apq8064' was expected
-	'qcom,apq8074' was expected
-	'qcom,msm8660' was expected
-	'qcom,apq8084' was expected
-	'qcom,msm8226' was expected
-	'qcom,msm8926' was expected
-	'qcom,msm8939' was expected
-	'qcom,msm8956' was expected
-	'qcom,msm8960' was expected
-	'qcom,msm8974' was expected
-	'qcom,msm8974pro' was expected
-	'samsung,klte' was expected
-	'qcom,msm8916' was expected
-	'qcom,msm8953' was expected
-	'qcom,msm8992' was expected
-	'qcom,apq8094' was expected
-	'qcom,msm8994' was expected
-	'qcom,apq8096-sbc' was expected
-	'qcom,msm8996' was expected
-	'qcom,msm8996pro' was expected
-	'qcom,msm8998' was expected
-	'qcom,ipq4018' was expected
-	'qcom,ipq4019' was expected
-	'qcom,ipq5018' was expected
-	'qcom,ipq5332' was expected
-	'qcom,ipq8064' was expected
-	'qcom,ipq8074' was expected
-	'qcom,ipq9574' was expected
-	'swir,wp8548' was expected
-	'qcom,qrb2210' was expected
-	'qcom,qcm6490' was expected
-	'qcom,qdu1000' was expected
-	'qcom,qru1000' was expected
-	'qcom,sc7180' was expected
-	'google,coachz-rev2' was expected
-	'google,coachz-rev2-sku0' was expected
-	'google,homestar-rev23' was expected
-	'google,lazor-rev2' was expected
-	'google,lazor-rev4' was expected
-	'google,lazor-rev2-sku2' was expected
-	'google,lazor-rev4-sku2' was expected
-	'google,lazor-rev2-sku0' was expected
-	'google,lazor-rev4-sku0' was expected
-	'google,lazor-rev9-sku10' was expected
-	'google,lazor-sku10' was expected
-	'google,lazor-rev5-sku4' was expected
-	'google,lazor-rev9-sku15' was expected
-	'google,lazor-sku15' was expected
-	'google,lazor-rev5-sku6' was expected
-	'google,lazor-rev9-sku18' was expected
-	'google,lazor-sku18' was expected
-	'google,mrbland-sku768' was expected
-	'google,pazquel-sku4' was expected
-	'google,pazquel-sku2' was expected
-	'google,pazquel-sku20' was expected
-	'google,hoglin-rev3' was expected
-	'google,hoglin' was expected
-	'google,hoglin-sku1536' was expected
-	'google,senor' was expected
-	'google,piglin' was expected
-	'qcom,sc7280' was expected
-	'google,zombie-sku3' was expected
-	'qcom,sc8180x' was expected
-	'qcom,sc8280xp' was expected
-	'qcom,sdm450' was expected
-	'qcom,sdm630' was expected
-	'qcom,sda660' was expected
-	'qcom,sdm632' was expected
-	'qcom,sdm636' was expected
-	'qcom,sdm660' was expected
-	'qcom,sdm670' was expected
-	'qcom,sdx55' was expected
-	'qcom,sdx65' was expected
-	'qcom,sdx75' was expected
-	'qcom,ipq6018' was expected
-	'qcom,qcs404-evb' was expected
-	'qcom,sa8155p' was expected
-	'qcom,sa8540p' was expected
-	'qcom,sa8775p' was expected
-	'qcom,sdm845' was expected
-	'qcom,sm4250' was expected
-	'qcom,qrb4210' was expected
-	'qcom,sm4450' was expected
-	'qcom,sm6115' was expected
-	'qcom,sm6115p' was expected
-	'qcom,sm6125' was expected
-	'qcom,sm6350' was expected
-	'qcom,sm6375' was expected
-	'qcom,sm7125' was expected
-	'qcom,sm7225' was expected
-	'qcom,sm8150' was expected
-	'qcom,sm8250' was expected
-	'qcom,sm8350' was expected
-	'qcom,sm8450' was expected
-	'qcom,sm8550' was expected
-	'qcom,qcs8550-aim300' was expected
-	'qcom,sm8650' was expected
-	from schema $id: http://devicetree.org/schemas/arm/qcom.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dtb: /: failed to match any schema with compatible: ['samsung,galaxy-book4-edge', 'qcom,x1e80100']
-arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dtb: domain-idle-states: cluster-sleep-0: 'idle-state-name' does not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/power/domain-idle-state.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dtb: domain-idle-states: cluster-sleep-1: 'idle-state-name' does not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/power/domain-idle-state.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dtb: ufshc@1d84000: compatible:0: 'qcom,x1e80100-ufshc' is not one of ['qcom,msm8994-ufshc', 'qcom,msm8996-ufshc', 'qcom,msm8998-ufshc', 'qcom,sa8775p-ufshc', 'qcom,sc7180-ufshc', 'qcom,sc7280-ufshc', 'qcom,sc8180x-ufshc', 'qcom,sc8280xp-ufshc', 'qcom,sdm845-ufshc', 'qcom,sm6115-ufshc', 'qcom,sm6125-ufshc', 'qcom,sm6350-ufshc', 'qcom,sm8150-ufshc', 'qcom,sm8250-ufshc', 'qcom,sm8350-ufshc', 'qcom,sm8450-ufshc', 'qcom,sm8550-ufshc', 'qcom,sm8650-ufshc']
-	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dtb: ufshc@1d84000: Unevaluated properties are not allowed ('compatible' was unexpected)
-	from schema $id: http://devicetree.org/schemas/ufs/qcom,ufs.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dtb: /soc@0/ufshc@1d84000: failed to match any schema with compatible: ['qcom,x1e80100-ufshc', 'qcom,ufshc', 'jedec,ufs-2.0']
-arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dtb: /soc@0/phy@1d87000: failed to match any schema with compatible: ['qcom,x1e80100-qmp-ufs-phy']
-arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dtb: crypto@1d90000: compatible:0: 'qcom,x1e80100-inline-crypto-engine' is not one of ['qcom,sa8775p-inline-crypto-engine', 'qcom,sc7180-inline-crypto-engine', 'qcom,sc7280-inline-crypto-engine', 'qcom,sm8450-inline-crypto-engine', 'qcom,sm8550-inline-crypto-engine', 'qcom,sm8650-inline-crypto-engine']
-	from schema $id: http://devicetree.org/schemas/crypto/qcom,inline-crypto-engine.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dtb: /soc@0/crypto@1d90000: failed to match any schema with compatible: ['qcom,x1e80100-inline-crypto-engine', 'qcom,inline-crypto-engine']
-arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dtb: usb@a2f8800: interrupt-names: ['pwr_event', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-
-
-
-
+Hope that helps,
+Andrew
 
 
