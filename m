@@ -1,125 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-27960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CE5E948246
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 21:26:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A058794824A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 21:27:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D616A283432
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 19:26:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5616B1F21A01
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 19:27:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B534615FA76;
-	Mon,  5 Aug 2024 19:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDA4116B389;
+	Mon,  5 Aug 2024 19:27:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cq1BQfoh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pQ4xXIkX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B054364AB;
-	Mon,  5 Aug 2024 19:25:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE26813D521;
+	Mon,  5 Aug 2024 19:27:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722885961; cv=none; b=d7+RK72GGSpRvi81VyNicCGv+LOxvo5ql8sGDr9arttAjimzO674QWqz48txywuW5zqHYNixCpn+1N51YSypUw/nqh/zyTMwKDqKUeMybmjAiJIkWc5piRKfBLeZb0hfspgz9GO0RMN70TyNq9vKvHNf6ur9ZKa9UYdApkXSf18=
+	t=1722886031; cv=none; b=BOQAtA5GIaL2wxdRsS/ARBRHAJ9BfRHXcywbr/jXKPPj/s2JNsLMeCxCz255nxRFhImpFsBg7WbW+bBHOwyCse9C5Jm/Ggk9w8K8GDPzIMOHWG3oaqlG+2QGqZNFF+hWYQoKx/w8sSYhzWaAewRnJaY6oSUdYcyT0McmSozlH2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722885961; c=relaxed/simple;
-	bh=/HWSY8O7UkcxsXWoYzC2sSwQp9YK0mgh95Vv6HMt6sg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=CG+4xwESEJxhom9F3R142bO+AYuTV/yDcLQjcbDE8JOTLYBh7bMSAsyqPXb+nN2ZciVu4hGxwu7Pwbx855ScLAy1FL3WATmJQ82oCaRxG9F9Y2KcO18GmQWAZmJVTPdLXmymRpNaQ3sb2zL4Ahh9C0M0ZQv0ClUFLfuW+8wNkGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cq1BQfoh; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 475BUvKZ021368;
-	Mon, 5 Aug 2024 19:25:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	05pYew0QZsnoHD2ifGyMy+1KXhPPBHZKe3O6r2x8sQI=; b=cq1BQfohNIBhAIxs
-	Xci6Wlwk8v6ggm0uufQgSxCij98ckOyPRoWD4Mk2Dw7m3R1lF0yN5GgEq4t1Cnv6
-	FFytrxr1lupa5IR/VZ7eQ86BtrOy+e2T0Ae+37/acy8lU0umQlQvRpxSMhWhI+cx
-	L52WRforCrJTP8gq+ovg6gyj0KMKkPK0pIA1N8CYsmD+M38uVHJry4i0Cw4fwzye
-	ZIXuDQn6Nrofnz1gNm6hvAH4ah938zlFqDs5rpRi4WxLsQn9zXuIz24rmj0zdErO
-	7timoqBXZ33wpD/n1N57qUZtpsMWPP/FKj7r3fGVNbihF7gDm0On/xcC0QnNanxd
-	u8lVPA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40scmtw3hs-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 05 Aug 2024 19:25:28 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 475JPRJ9012819
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 5 Aug 2024 19:25:27 GMT
-Received: from [10.71.110.34] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 5 Aug 2024
- 12:25:23 -0700
-Message-ID: <531b68a0-e2e5-4f39-a586-5aaf73bb376c@quicinc.com>
-Date: Mon, 5 Aug 2024 12:25:22 -0700
+	s=arc-20240116; t=1722886031; c=relaxed/simple;
+	bh=90UvNn9K0mZ6VrUXGfzqNLue5sPsRmDgWkhqlksvKHY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=qpA38BFii1b+wgfbA6ui3NrrE5mm8LO5Bt2ea5T6F10Ni+pfpww+kcOraAKz21YQPOc6Uqc5DTLLeUmUevaC+0lJoxEfCeuVmlNTs/EXBGN6k79ZzVa4oAdH2Z2UdqRLzh0DPFdD2jKlWZwPf7DDqGCKAuvcVlLHapBEm+FBvyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pQ4xXIkX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416FAC32782;
+	Mon,  5 Aug 2024 19:27:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722886031;
+	bh=90UvNn9K0mZ6VrUXGfzqNLue5sPsRmDgWkhqlksvKHY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=pQ4xXIkXzdww4DSnoBtUXTP2AgYpid/Rv4LvFJEs1ZEUcUj92JsyVM8l8Zkxyamh7
+	 2K2iF3O3Al/2zB2gQdl5dDk+xKm928QHeqWIYfP8GQzBKTsVHbrb3CmuB5+7YTdqov
+	 UywWvzSaTcdldKe/xGKlr69a1yc8ZfL+PiTORqX6IEc3PdahXNz+rtD68aG5aHosC+
+	 /MclcdPlCuVGZ7v5YQ+E6/68n2lntkyghABGyXE17Was3kh0/lygbpLowac25Hbwk9
+	 pxf7kLQap9nHV7gDJoE6htfXy/cGQOQMFawLvZSyMU8TKS4RslBzhzuGsGZYcPZVXz
+	 FPA+zP0dCDZuQ==
+From: Mark Brown <broonie@kernel.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Johan Hovold <johan+linaro@kernel.org>
+Cc: Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, alsa-devel@alsa-project.org, 
+ linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, regressions@lists.linux.dev
+In-Reply-To: <20240729131351.27886-1-johan+linaro@kernel.org>
+References: <20240729131351.27886-1-johan+linaro@kernel.org>
+Subject: Re: [PATCH] ASoC: codecs: lpass-macro: fix missing codec version
+Message-Id: <172288602778.71820.9069423638402649413.b4-ty@kernel.org>
+Date: Mon, 05 Aug 2024 20:27:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] drm/msm/dpu: don't play tricks with debug macros
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Jeykumar
- Sankaran <jsanka@codeaurora.org>
-References: <20240802-dpu-fix-wb-v2-0-7eac9eb8e895@linaro.org>
- <20240802-dpu-fix-wb-v2-2-7eac9eb8e895@linaro.org>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240802-dpu-fix-wb-v2-2-7eac9eb8e895@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 7Whn8VW-plGTcVijgWVdvo-KfbWe-Exz
-X-Proofpoint-GUID: 7Whn8VW-plGTcVijgWVdvo-KfbWe-Exz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-05_08,2024-08-02_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
- clxscore=1015 malwarescore=0 impostorscore=0 adultscore=0 phishscore=0
- lowpriorityscore=0 priorityscore=1501 suspectscore=0 spamscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408050137
+X-Mailer: b4 0.15-dev-37811
 
-
-
-On 8/2/2024 12:47 PM, Dmitry Baryshkov wrote:
-> DPU debugging macros need to be converted to a proper drm_debug_*
-> macros, however this is a going an intrusive patch, not suitable for a
-> fix. Wire DPU_DEBUG and DPU_DEBUG_DRIVER to always use DRM_DEBUG_DRIVER
-> to make sure that DPU debugging messages always end up in the drm debug
-> messages and are controlled via the usual drm.debug mask.
+On Mon, 29 Jul 2024 15:13:51 +0200, Johan Hovold wrote:
+> Recent changes that started checking the codec version broke audio on
+> the Lenovo ThinkPad X13s:
 > 
-> I don't think that it is a good idea for a generic DPU_DEBUG macro to be
-> tied to DRM_UT_KMS. It is used to report a debug message from driver, so by
-> default it should go to the DRM_UT_DRIVER channel. While refactoring
-> debug macros later on we might end up with particular messages going to
-> ATOMIC or KMS, but DRIVER should be the default.
+> 	wsa_macro 3240000.codec: Unsupported Codec version (0)
+> 	wsa_macro 3240000.codec: probe with driver wsa_macro failed with error -22
+> 	rx_macro 3200000.rxmacro: Unsupported Codec version (0)
+> 	rx_macro 3200000.rxmacro: probe with driver rx_macro failed with error -22
 > 
-> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 14 ++------------
->   1 file changed, 2 insertions(+), 12 deletions(-)
-> 
+> [...]
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[1/1] ASoC: codecs: lpass-macro: fix missing codec version
+      commit: 9a1af1e218779724ff29ca75f2b9397dc3ed11e7
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
