@@ -1,266 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-27877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88886947357
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 04:24:54 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E2FA947364
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 04:34:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E27D31F210DD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 02:24:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A1A181F21335
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 02:34:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A72C47A7C;
-	Mon,  5 Aug 2024 02:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE4D94D8B6;
+	Mon,  5 Aug 2024 02:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="i/eISF9I"
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=lausen.nl header.i=@lausen.nl header.b="K4lRPsur"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from devico.uberspace.de (devico.uberspace.de [185.26.156.185])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E96C812;
-	Mon,  5 Aug 2024 02:24:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.13
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722824688; cv=fail; b=cjogEzetCxONMaKOeZL1khcHV5JB6odAq6otcwcDMoXWE95RO24481FfpZwYRa212/h4nMVFsSgnDEUUilZ2BMhUY7lpO3qttGWHa3MwwVnN/3lSlhYdMkVeC6J73jJIk+i6wk1zOXEgwQRBcoA1Hq8HrZaxNi5ibei6dAeQU/M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722824688; c=relaxed/simple;
-	bh=tQAGNc8rtu969+9tu7VKBtgGX+Hsdcy6BLSPto5m0XM=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=lpcn1T8h8oRC7dfIXIKEaN5FyYyKHDWmGgNpkbTSxqb2xV+zw8CZiA2ZTku9itTiT540BwtUr9w451dwusI0nV8wG5u6KD20Jl9hXMSPllHSRCzDMHqb3dYw0vk1/yQhK1Ng5Ol6KKvkHxgiiatocmVyL0f2TcjDvug7f2Hkg8w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=i/eISF9I; arc=fail smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1722824687; x=1754360687;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=tQAGNc8rtu969+9tu7VKBtgGX+Hsdcy6BLSPto5m0XM=;
-  b=i/eISF9I+YvRAvQBE8SOdjk3DN7P+oDYAOQuHWm2pI3AExOn6xSxdJ9I
-   Ygr4AGcVMOlreODP+BLH1Y5ljat9Bv34oWy6ihmbjYymRO7L3geY513Fu
-   OcMehhYtaase44EnG8DceQHjHcVVJUw98+dgG0e4KWfH9eMqO3N0hQEvj
-   UmBvrsFL1swNzZVmsiGCgUDw917vpPxctbn46BVp7gXYXO3o2bHvUcSlO
-   iO0XqBcmkTzuU6V0rTuKn6LgL/DYWAH/t7oy4xqm6aALB6sprJ8iP8MnZ
-   HJ8qZafMJyJj/0izdR22Tv3CjZJI1/ZFENl6e6c7CPdIAGM267u25Risq
-   w==;
-X-CSE-ConnectionGUID: x7hguafZRsa1DKQxgEbbOw==
-X-CSE-MsgGUID: vxbPMexYQVSLMJ/kLCkWsw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11154"; a="23681679"
-X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; 
-   d="scan'208";a="23681679"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Aug 2024 19:24:46 -0700
-X-CSE-ConnectionGUID: UiNuAGdHS4mFag6MkQ6CdQ==
-X-CSE-MsgGUID: wEwLojrfQpuwmdkGpNd7cw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; 
-   d="scan'208";a="55668033"
-Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
-  by fmviesa007.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 04 Aug 2024 19:24:46 -0700
-Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
- fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Sun, 4 Aug 2024 19:24:45 -0700
-Received: from fmsmsx601.amr.corp.intel.com (10.18.126.81) by
- fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Sun, 4 Aug 2024 19:24:44 -0700
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Sun, 4 Aug 2024 19:24:44 -0700
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (104.47.59.168)
- by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Sun, 4 Aug 2024 19:24:44 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YelCPM8ZHYG7SbVTMxfvixo/JqTOWTl7TxtB7vSh+Bt4x0P1oXoqQHWUZQ86DNHgM5FEvca9X3LNQMSK8pYbtMLyigDZyYjzQ+micvKMC+EPRcbOsaG3MUa07QThMzKU599CxfeusqP6Ydigqdpn531ooEQDP5QjYnH26yblh98/jMRah4ZuIoOOfB0GvBw2OdOlq3agIiQHrgbasL42jtgAIUNlwwgwDoW5pnopj4W6GHS4u59DDOd5YMZRZgV56CaXrgL4XvICsTaNacm9oeJlLVo88okxKBwQ/cBtAGS2lm0IOj8X8NEASXQfRR1tM95hdsxUuWHBK5BKmEEqpQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jJWk6Laa9kfSfXGlHNIjurc/YSMf0dIkj9n+y3aTHtI=;
- b=zUiKrHi2QRMNfQ4mdLo9L/V3Hggw4iCa1UHUqw3EplQp3hCbPJrCYTlieuRMA2K7foEBhMBdMaJDTWfQDq/K9wh2rNzZNeZLtyHXeHQcc0UFoETQS0cPAC7i436Isq6Vux64K9KRtnafHEvecoPeEiToGXAEVtv34phQshNOcbh53CFrObAfbV4t8JUMWJZouwi+ms9DGJVRpOlwzUlQGn4fT+VPB59a7v9dk1QaV9+taHOzeEmTWou2rgJrrSbyWsF2DzTKxPi5PUOtcj0vLQAn0XUlmOSvFgXR0RR7eceewlvAQHesF610XxRfwyr2BP5eKy4gT9Xyei7zZ99t/g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
- by DS7PR11MB7691.namprd11.prod.outlook.com (2603:10b6:8:e4::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.25; Mon, 5 Aug
- 2024 02:24:42 +0000
-Received: from BN9PR11MB5276.namprd11.prod.outlook.com
- ([fe80::b576:d3bd:c8e0:4bc1]) by BN9PR11MB5276.namprd11.prod.outlook.com
- ([fe80::b576:d3bd:c8e0:4bc1%3]) with mapi id 15.20.7828.023; Mon, 5 Aug 2024
- 02:24:42 +0000
-From: "Tian, Kevin" <kevin.tian@intel.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: David Hildenbrand <david@redhat.com>, Mostafa Saleh <smostafa@google.com>,
-	John Hubbard <jhubbard@nvidia.com>, Elliot Berman <quic_eberman@quicinc.com>,
-	Andrew Morton <akpm@linux-foundation.org>, Shuah Khan <shuah@kernel.org>,
-	Matthew Wilcox <willy@infradead.org>, "maz@kernel.org" <maz@kernel.org>,
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>, "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-kselftest@vger.kernel.org" <linux-kselftest@vger.kernel.org>,
-	"pbonzini@redhat.com" <pbonzini@redhat.com>, Fuad Tabba <tabba@google.com>,
-	"Xu, Yilun" <yilun.xu@intel.com>, "Qiang, Chenyi" <chenyi.qiang@intel.com>
-Subject: RE: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
-Thread-Topic: [PATCH RFC 0/5] mm/gup: Introduce exclusive GUP pinning
-Thread-Index: AQHawdyTbbj3CTyCxU2oU4wQ5oQq6rHOYY8AgABR7QCAAe6NAIAAEoqAgAAFggCAQyU6EIAAOWCAgAQfayA=
-Date: Mon, 5 Aug 2024 02:24:42 +0000
-Message-ID: <BN9PR11MB52763711D023C0A50171C2EB8CBE2@BN9PR11MB5276.namprd11.prod.outlook.com>
-References: <20240618-exclusive-gup-v1-0-30472a19c5d1@quicinc.com>
- <7fb8cc2c-916a-43e1-9edf-23ed35e42f51@nvidia.com>
- <14bd145a-039f-4fb9-8598-384d6a051737@redhat.com>
- <ZnQpslcah7dcSS8z@google.com>
- <1ab73f42-9397-4fc7-8e62-2627b945f729@redhat.com>
- <20240620143406.GJ2494510@nvidia.com>
- <BN9PR11MB5276D7FAC258CFC02F75D0648CB32@BN9PR11MB5276.namprd11.prod.outlook.com>
- <20240802112205.GA478300@nvidia.com>
-In-Reply-To: <20240802112205.GA478300@nvidia.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BN9PR11MB5276:EE_|DS7PR11MB7691:EE_
-x-ms-office365-filtering-correlation-id: ff051e5f-90b2-45a2-dc16-08dcb4f5c3c4
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|376014|366016|7416014|38070700018;
-x-microsoft-antispam-message-info: =?us-ascii?Q?uRoXZkb56CxIHnEem2KxN2DJR8Px2ZkREs9V57whFSC973Ijqp7ILBSGauf2?=
- =?us-ascii?Q?MFlWQN3M45PLXfXY17WEMVbzp1mrf7ojlSCJZOOPK/zrd/i8mgE1RpDgJquM?=
- =?us-ascii?Q?O1nx6fjZWFDLVPS903Y9bW4azAxm6Ek+wNKwX03Es7RR+/O/Fz1QmxuqD3Ia?=
- =?us-ascii?Q?Koe2ZM0Kob0MKLrUoAl5tssYfd4Q0Tlt5omxdMVdVqXfDipmz43l12/gLu07?=
- =?us-ascii?Q?+aRAtxDKtTKpeq6Nik4T38zqQ+ElZCMeIqulcI2XJv9lGZrGth8vmDitjAsY?=
- =?us-ascii?Q?iZjesSoR3la5zTvUGTDc5iKI3uxtnW02uwUNtZBIHVu9dJiV9GLWjCZ6YH0E?=
- =?us-ascii?Q?XDivfLFrbTrYGEM1GbXi8o2V2mCIa2dND8y+x4HTDDuw2hPoGRxEod59+le+?=
- =?us-ascii?Q?Xfd8VjEeYcXC1cfxAcfBaVSsbn8YjqDoIwcu9TREtowl+SnKLiuDKMc/fWVG?=
- =?us-ascii?Q?V1bV0IEUy02FnXOMOF/OgTkrI6NW+qDtQqvps3RQ6hVRytO5Lk5FLPQDb/+s?=
- =?us-ascii?Q?TvyThepmrv9RDa6BIPDiTtLQSSrfC4ZWY6Sp0Pkln7H9eGo3gFHo9iut5gqV?=
- =?us-ascii?Q?8ANlpAYGptXZ5NTyu4C5qJ0UZlwxtYSsKzGytub2HG4lc7RPFxsk86n5zXsc?=
- =?us-ascii?Q?lkb9xGIuDjwWWsuhopRcXFRvzCQccDwrfD1uozFEdEfrzhO9ZorBoeNNHRYY?=
- =?us-ascii?Q?U4PctclbtFvg+riH6RG97lxRZ8UrlAypr044Hgdj4drSJBwHDS9x8Q+1+Lbp?=
- =?us-ascii?Q?mIHV62tDAkLhdNhIzm2VecepdCrisi0VSIH57AUEG+H5cHf9l/3CsfH0TQaI?=
- =?us-ascii?Q?4oCLS4sXMQiWFEy9LsaKp1QlwkiHFOyFbXsuTaFoA7JPbo/mlmbuHqH1okzn?=
- =?us-ascii?Q?NaU60G/4V1PFsPFk5DdyXfzLxzyvJljOeboMiHfMVa60HMmCCO6LWhorwuXa?=
- =?us-ascii?Q?Z4p8IQIgLtNFZk7W9DySP1Nt1wzii2PC0AZomBZYlbUXdJDUk+mONrfzoR1/?=
- =?us-ascii?Q?4swDUABATteoaIQhDUzcYhNGScvAOnkBUpGtFC0KHOvDEnbDT2quRizCQ5uC?=
- =?us-ascii?Q?4vJFxEwiI7HcalFO5A4CXikVHOryd/6Y4oDrV5iiaUO6I2QQRhjUHkLpQJlj?=
- =?us-ascii?Q?4uE90nrjlwSvGwugkkUUFCaPzFKilQhc/5rkPWw+E74W44Kw8p2kb3UqBEwp?=
- =?us-ascii?Q?lY4K04we3HAWIgAxH/B3Tk/WHWbp9ugyNUQb0VNxVr03Hpy3OO0ttuErLlle?=
- =?us-ascii?Q?ul9eyxbbJ1NCSLhHbosdYkVoyqKB0eKB7ip3BCVz32nGDesjXQ+aQpy+6Wdn?=
- =?us-ascii?Q?Nnl7viEqzKMESCGZrI67+yb/pZEiNS8FwTeUTxdB9y41ACH3Nvgb/1uVgwUg?=
- =?us-ascii?Q?gs6MspA=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(7416014)(38070700018);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?TUqRvPe6Jtpvq04A24tl4gqvefanyXfWYi9MW43YDDydJZ/ipe4TlCFgalhB?=
- =?us-ascii?Q?SbD/H1DQDtOKlFA8oXXj1eaeyFHme7gbH4i9zM28jM9IBiP56U+6ZXxj5/xS?=
- =?us-ascii?Q?cdbIJzQw+azvuDI1btqZ31x/oeld1hTKKQbFDz6G2TflUSZvK5wo5kmQ1X0q?=
- =?us-ascii?Q?z+ZLs/lkXgBU2z7XGUXdcI6Mn8sgQ7O2MSf/NVJ5z7Xvgmq/Fr0YSMOwMhcN?=
- =?us-ascii?Q?QcFEs3hMwh+rik342Ee8l+WjyaTGG9XsHvhxSXDLoFTKT4qLR0ts49OEtrJY?=
- =?us-ascii?Q?OEcRIE82u5ru2m3mWrjay5vzGYV5VPWTBKZElezRMy1pgejbEavkaARb//3a?=
- =?us-ascii?Q?F1MQyIMdtfg2L4ApL5HkNtDMMHxzjtR1eqWoOcN0zpqP6Lsi0qtfG+Cao1fs?=
- =?us-ascii?Q?PQV44Su2fc05n8fx22Srvur4vuO7/81NpWBM3JrlmXp3RJOs98O5NF4HqURZ?=
- =?us-ascii?Q?ivTFUYJVgTFQd6Ej40HCB8hGhe1cq9G08oU2lK0uzctgYLdH4F9mig0/ioXp?=
- =?us-ascii?Q?UexOG1nLYs37PtwmbHnsCKuch8icOi7twp545C7KFPMHPVftx1gcJIR2+ZVw?=
- =?us-ascii?Q?hsl6n44bnGma0QduoZ51njs/cwWRBLqr05A0IDSTZHG/XmeItT4KFpUKvHdx?=
- =?us-ascii?Q?XM6HEkFprUVFq0JVr5Je8dOxigyVtnLezW+sC8TtHXMybVPZ+ymY37t8WAML?=
- =?us-ascii?Q?eoabtzceXuyLfHvkhpTWIdj+2KcKSyD/kLTyPrLcIIfLud0By4QemwQGX77v?=
- =?us-ascii?Q?HCp3xqWBbPiEFDWYOl+cMSlT2UmyzFz+sP3MMObyIo6U/iw5SVdOk2WcxXxe?=
- =?us-ascii?Q?xxXVy3o2WCEWTJ1Pxe1zJO0mh+HcmuXYroqEnSLbBvdI7qpdKPMfv7NQyQtI?=
- =?us-ascii?Q?wDSp0PrQ3SH/nWY714Q0I+LsyE4OzGsH6rgd7Q6rut/oxRn9hrFjtzI14UAh?=
- =?us-ascii?Q?Kg+lT91n3pgCtJa4gajdC8y1hb+HTtAhPOa9tQtKGElbtlD+tBY9YUdN3jC3?=
- =?us-ascii?Q?1WjDNtnugmnwQuio5zq+oVXYGsxlOVmxTeAFE7C1Dha8IkfTt/lUbNmlzTWo?=
- =?us-ascii?Q?KspmmZU6bJRFKV/deQyM0sC/XQWt9nZHpiQx8+Mc49aJ78rDJltJXKPTu8O4?=
- =?us-ascii?Q?a421a+6sRPzQm6cjGbhPWvnvb42wuzyOF1WOOaAKRLJe9UKJ8Py+DFyhYfQJ?=
- =?us-ascii?Q?MKTQlFcAihVyApDqsZCNuhXyTRsOTujDkKkGxp2Mt2yryhzW17HAaNAvYK1L?=
- =?us-ascii?Q?hEnGTGawkpMjNCofynfCd2KNWvDu49nNjRedz/LlaDzyq4N8rVlpAIE5os3c?=
- =?us-ascii?Q?mQ6Dv64MWeRvjRaiY+a4uSeaoUZxHlG6/rAui3bdZM0Nu+v5ClBs3dxyTEQs?=
- =?us-ascii?Q?9bcQF3bS+kDJu8orM6J4+6ST/hXgHbBgEnbYKFXq5oK+VoEXl4nERgoBMiQM?=
- =?us-ascii?Q?jQj5y6vZjp2F2rID+F2fZvuBLb9sP7HwX06lZnKCm3eDP17XYVMffaNvP0/q?=
- =?us-ascii?Q?MM6E+97ITn6Agycgu1CLighSI5wlx7ssrvKLCHVqnDM9x/pIo7YdPS99CQFS?=
- =?us-ascii?Q?Qfzs40016Q9TFZ4gyIPZcxNRAef/1EEWnOyJXYAw?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1C218E3F
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Aug 2024 02:34:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.26.156.185
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1722825270; cv=none; b=DGAuCBl46N7zgvxAC/3QwmzEMmhDc4bQFQZ7N3eeP8df2Szb02Ox+9+VritZXSAPTl4MS6PbgjA7ZB5Wzh84csNZGL2xUbyulF2e2ZXrKGl86gYb7RiTiyd49o0/Sjrjif0R3JnsjLbzvkhQLqD/CBC48IKArpBQgpZxvGbIiQE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1722825270; c=relaxed/simple;
+	bh=Ammk7pbwhZIn4b/qhjLJz6McLAm2U1Jsq9rfxEJ51Ik=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=DSASaUUXDU5uMb3W/d8ElOanQ4/MV3y40o3Rzp3gOp2O3+pJfSATFNNJGE6dSfeybFvEw6bbZyFtGxaMWviqoc4PBJ32weksZh+x5sFuxhTbubHqNcubchZ2h3/S/c8Ht84r0Qlbm9zddt8ya63nzBapuSd27flV8JaTb3ELUeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lausen.nl; spf=pass smtp.mailfrom=lausen.nl; dkim=fail (0-bit key) header.d=lausen.nl header.i=@lausen.nl header.b=K4lRPsur reason="key not found in DNS"; arc=none smtp.client-ip=185.26.156.185
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lausen.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lausen.nl
+Received: (qmail 11250 invoked by uid 990); 5 Aug 2024 02:27:43 -0000
+Authentication-Results: devico.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+	by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Mon, 05 Aug 2024 04:27:43 +0200
+Message-ID: <57cdac1a-1c4d-4299-8fde-92ae054fc6c0@lausen.nl>
+Date: Sun, 4 Aug 2024 22:27:39 -0400
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ff051e5f-90b2-45a2-dc16-08dcb4f5c3c4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Aug 2024 02:24:42.3909
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 3j50oFSVDZ6CUDCH796J1AALKIR5Ui0WyeWiSwAs3ALUNmQQjZpRyWp7v9dBOWceaq9DQztQQBRnLBJ1vqhowA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR11MB7691
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+From: Leonard Lausen <leonard@lausen.nl>
+Subject: Re: [PATCH v2 1/2] drm/msm/dpu1: don't choke on disabling the
+ writeback connector
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ Jeykumar Sankaran <jsanka@codeaurora.org>, stable@vger.kernel.org
+References: <20240802-dpu-fix-wb-v2-0-7eac9eb8e895@linaro.org>
+ <20240802-dpu-fix-wb-v2-1-7eac9eb8e895@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=leonard@lausen.nl; keydata=
+ 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 Sw==
+In-Reply-To: <20240802-dpu-fix-wb-v2-1-7eac9eb8e895@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Bar: ---
+X-Rspamd-Report: BAYES_HAM(-2.998928) XM_UA_NO_VERSION(0.01) MIME_GOOD(-0.1)
+X-Rspamd-Score: -3.088928
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+	d=lausen.nl; s=uberspace;
+	h=from:to:cc:subject:date;
+	bh=Ammk7pbwhZIn4b/qhjLJz6McLAm2U1Jsq9rfxEJ51Ik=;
+	b=K4lRPsurzOf5+DH8VcDVwQDeFrIIBcwChtPl4rk+OHqwTio585FOtELtOp2zkhs3W9UAKqs/8I
+	sAdAn6cYd8Z9xVR1MhADRDTKYNEoxDfEbzS7LzWRJA+tM7tWG+BHpct6c1qqPtXZBmVLkv9d3k6w
+	Ox2LqMNFK5d8dO6k5UqfJC/UGEOI03zlffVaxaAp+nh0LKaREp9rcfT/3s8vNYxtKwV7bAM7kxvb
+	3v7xfvkbZMGT+OAo5eCxKH667rXdkAEaHYsi72Phjfo3VaWQ3YWa5JRUEIfka1+D17+eQQBuo0Vp
+	pDp0/YWYsto9R0FiIqRuiCpa7Ps+SKyLN+Uz8uoA9mXaozkZZAvGutnJQQaH1wUoB1H7aw5+f5bo
+	rEzkBz4upAsABSJfm+mjcna6zWg2vLeroEFf5/OMAL1phbOi+uQnU1eh5tnnWauUzsIpdR9qq5fq
+	yDMOsU4sMyzeQwYomscBb9NQx3WNrQTfu+4Aa1tWBXfaBvcBUb1AQllzVp+tqqi1SpYRQ+w79E6o
+	SfIOIJS7/hWVCU3jo9D9Fnqxn1ARAcB2rxHU+Nc320Y8OJRUOr6nUiIFI+piG3GnMpUrSR4dcoWm
+	B9NplId6tANUyF4Bc9IMsTSa8mEqB49dlSxdW0VusRxaI9fCjx/ymaJcBj6Xned8/dZriQm0hFV1
+	c=
 
-> From: Jason Gunthorpe <jgg@nvidia.com>
-> Sent: Friday, August 2, 2024 7:22 PM
->=20
-> On Fri, Aug 02, 2024 at 08:26:48AM +0000, Tian, Kevin wrote:
-> > > From: Jason Gunthorpe <jgg@nvidia.com>
-> > > Sent: Thursday, June 20, 2024 10:34 PM
-> > >
-> > > On Thu, Jun 20, 2024 at 04:14:23PM +0200, David Hildenbrand wrote:
-> > >
-> > > > 1) How would the device be able to grab/access "private memory", if
-> not
-> > > >    via the user page tables?
-> > >
-> > > The approaches I'm aware of require the secure world to own the
-> IOMMU
-> > > and generate the IOMMU page tables. So we will not use a GUP approach
-> > > with VFIO today as the kernel will not have any reason to generate a
-> > > page table in the first place. Instead we will say "this PCI device
-> > > translates through the secure world" and walk away.
-> > >
-> > > The page table population would have to be done through the KVM path.
-> >
-> > Sorry for noting this discussion late. Dave pointed it to me in a relat=
-ed
-> > thread [1].
-> >
-> > I had an impression that above approach fits some trusted IO arch (e.g.
-> > TDX Connect which has a special secure I/O page table format and
-> > requires sharing it between IOMMU/KVM) but not all.
-> >
-> > e.g. SEV-TIO spec [2] (page 8) describes to have the IOMMU walk the
-> > existing I/O page tables to get HPA and then verify it through a new
-> > permission table (RMP) for access control.
->=20
-> It is not possible, you cannot have the unsecure world control the
-> IOMMU translation and expect a secure guest.
->=20
-> The unsecure world can attack the guest by scrambling the mappings of
-> its private pages. A RMP does not protect against this.
->=20
-> This is why the secure world controls the CPU's GPA translation
-> exclusively, same reasoning for iommu.
->=20
+Dear Dmitry,
 
-According to [3],
+Thank you for the patch. Unfortunately, the patch triggers a regression with
+respect to DRM CRTC state handling. With the patch applied, suspending and
+resuming a lazor sc7180 with external display connected, looses CRTC state on
+resume and prevents applying a new CRTC state. Without the patch, CRTC state is
+preserved across suspend and resume and it remains possible to change CRTC
+settings after resume. This means the patch regresses the user experience,
+preventing "Night Light" mode to work as expected. I've validated this on
+v6.10.2 vs. v6.10.2 with this patch applied.
 
-"
-  With SNP, when pages are marked as guest-owned in the RMP table,
-  they are assigned to a specific guest/ASID, as well as a specific GFN
-  with in the guest. Any attempts to map it in the RMP table to a different
-  guest/ASID, or a different GFN within a guest/ASID, will result in an RMP
-  nested page fault.
-"
+While the cause for the bug uncovered by this change is likely separate, given
+it's impact, would it be prudent to delay the application of this patch until
+the related bug is identified and fixed? Otherwise we would be fixing a dmesg
+error message "[dpu error]connector not connected 3" that appears to do no harm
+but thereby break more critical user visible behavior.
 
-With that measure in place my impression is that even the CPU's GPA
-translation can be controlled by the unsecure world in SEV-SNP.
+Best regards
+Leonard
 
-[3] https://lore.kernel.org/all/20240501085210.2213060-1-michael.roth@amd.c=
-om/
+On 8/2/24 15:47, Dmitry Baryshkov wrote:
+> During suspend/resume process all connectors are explicitly disabled and
+> then reenabled. However resume fails because of the connector_status check:
+> 
+> [ 1185.831970] [dpu error]connector not connected 3
+> 
+> It doesn't make sense to check for the Writeback connected status (and
+> other drivers don't perform such check), so drop the check.
+> 
+> Fixes: 71174f362d67 ("drm/msm/dpu: move writeback's atomic_check to dpu_writeback.c")
+> Cc: stable@vger.kernel.org
+> Reported-by: Leonard Lausen <leonard@lausen.nl>
+> Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/57
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 3 ---
+>  1 file changed, 3 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+> index 16f144cbc0c9..8ff496082902 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+> @@ -42,9 +42,6 @@ static int dpu_wb_conn_atomic_check(struct drm_connector *connector,
+>  	if (!conn_state || !conn_state->connector) {
+>  		DPU_ERROR("invalid connector state\n");
+>  		return -EINVAL;
+> -	} else if (conn_state->connector->status != connector_status_connected) {
+> -		DPU_ERROR("connector not connected %d\n", conn_state->connector->status);
+> -		return -EINVAL;
+>  	}
+>  
+>  	crtc = conn_state->crtc;
+> 
+
 
