@@ -1,284 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-27953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 869EB9481B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 20:35:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E15F894820F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 21:08:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A92CA1C21F57
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 18:35:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 104321C202D5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 19:08:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 179B31607AB;
-	Mon,  5 Aug 2024 18:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC54B16A397;
+	Mon,  5 Aug 2024 19:08:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TFJbHmIF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HOplSHU9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B22A15AD96;
-	Mon,  5 Aug 2024 18:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE5B2AD13;
+	Mon,  5 Aug 2024 19:08:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722882929; cv=none; b=PXrOK2zNv54H7gm5QGOsEkwpWeJIzPiZ8mg3kdBG4Q17blj/TNusQaNx7XG598sMaSG8IUoOLgWS5B8NbkVWEiWuiwyAUOEaCVri6lk9a39PVj2FOFhF1VeZDTGKFI67kfVI9LQ+n4pFZ2Z/o8ekyXcBzwzqmlJz1pgUOuBbsxw=
+	t=1722884883; cv=none; b=BVXSj9hfoHKUIMTbLrfoiYX08OaMzu95lDftJid+tPtoFZWLm3ow8eZVuVJvYUMvkdwPr7xd215SVdTOdaQTRHDXlXGRiGZznv1so0yI1l89M24+2m39aK2tF1Rseq1AtkopeeXUg1PRgDhOYZ++CZh7dUHyWulzxVt/9aOY3mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722882929; c=relaxed/simple;
-	bh=Dc7xBPtMEVYkTHxbGqssJP61RmrrzdZj7DttRv9ZvEk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=Tn+1OS+BCoPkizcTU1HIzC1NBz1CQ371EiHBLrIfvbNym6VVaFRmiHmzcMetr03v+RxmGqkOxMp9J1OfmgFPSP/5fk24sh5n+yKk7cEZOjYCNTDuTTCYz6ZwDau2zZP6ElvdasYXI4GKw/pVPoVwlQTJmcEdFX64NJ3qmRuBu+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TFJbHmIF; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1722884883; c=relaxed/simple;
+	bh=Nnd3+0bNF5gwDJ3usiJzo0bDZKWUrE3VhKWFRbcifzc=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=McogNsGVKbX0Ic50xPCLweoof2NbmCTV7+UUY3tK4rNRUFCURJLl8hJry2go5ZMfGa8PZf8mL2vXnXUxjWaoaaKHG5vRMGKjoHYBP42s6rB+SUdqvMVr4HDS5EPksuTdfCa09Ku1OQv9yW3nufVf1MKBb/RHYLjxIBdqDSo3MW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HOplSHU9; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 475IVP7L031919;
-	Mon, 5 Aug 2024 18:35:16 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 475C9avS000420;
+	Mon, 5 Aug 2024 19:07:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	VI8SceDSszYjbEPmaGh0xnvBavYMrOtuUVZ9U4i2+FQ=; b=TFJbHmIF42xpNejp
-	uEiFEeP3sPD26D8spggjdCuJyfOu0jlxa8SYzLC2eQTPX7u9wJP4ia5QsXWmEWsS
-	SmmKNHcrLc3pvEN18/ywtJj/pbGLEQCnQNIknjbgAONxWX8/vouT0oJpJsTqrjHI
-	J9gmm9vFySGTdtaWdnKBAEB7N2/wzg46Yv+PGea5o6e+SE79cX8pw5ACket4tJVJ
-	/46l1exQm31wG5TRfMLTxajnaKVpxbaSBGD4aUBEqV4hjewIyCoYwq4gqUdn0GO0
-	QWEzNjfgnFbOoQ2c53f7004mFKM1sJG/EDoM7V2ya+7A1keYJZCyH8BtLkBfygdu
-	XmsY1w==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40tuhvsmeq-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=PmXKmmE8mhxPHJoh9iy5H4c/
+	6TQngI+cxRP2LH5NW30=; b=HOplSHU9F6by8nU1YxrsCSFWmjgcybHcxkKcuNE+
+	rvaZ4Cbr3E/TVrN+hmMLQteE2ITRPIRw5BXld/vAauZ9vffa+83oeDzYyjarBMGf
+	k+bTVAQJyrgGpGtLxPmZYE4fEX+kCwTJ/00/zCIUvPIFHrpwti5HSLzLXWgBrcm0
+	iV1h70fpdbdh+WrvOyL1L+kSQxLf2GZXI8TUaZthrXQ0Gd+Se0I2ERtEqnsshg+t
+	B2/Zf5fLCB0mlUbUzZpdq5xxdTZH97DTVVgZ6ncK9whJ+zdENsKFyHYjIH/9v6my
+	O5OPZS+JO4xhbIqEyr0lQIZ7fjHHI8pdpPvjV0etV2bSPQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40sbvgd2kj-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 05 Aug 2024 18:35:16 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 475IZF4A029446
+	Mon, 05 Aug 2024 19:07:54 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 475J7q52021607
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 5 Aug 2024 18:35:15 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+	Mon, 5 Aug 2024 19:07:52 GMT
+Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 5 Aug 2024 11:35:14 -0700
-From: Elliot Berman <quic_eberman@quicinc.com>
-Date: Mon, 5 Aug 2024 11:34:50 -0700
-Subject: [PATCH RFC 4/4] mm: guest_memfd: Add ability for mmap'ing pages
+ 15.2.1544.9; Mon, 5 Aug 2024 12:07:48 -0700
+Date: Tue, 6 Aug 2024 00:37:44 +0530
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+To: Vladimir Lypak <vladimir.lypak@gmail.com>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Konrad
+ Dybcio" <konrad.dybcio@linaro.org>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie
+	<airlied@gmail.com>, "Daniel Vetter" <daniel@ffwll.ch>,
+        Jordan Crouse
+	<jordan@cosmicpenguin.net>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/4] drm/msm/a5xx: properly clear preemption records on
+ resume
+Message-ID: <20240805190744.vi3553ht6q3mi4s2@hu-akhilpo-hyd.qualcomm.com>
+References: <20240711100038.268803-1-vladimir.lypak@gmail.com>
+ <20240711100038.268803-3-vladimir.lypak@gmail.com>
+ <20240801131610.jtcpo5l2gd34uqbf@hu-akhilpo-hyd.qualcomm.com>
+ <ZqziDJlrhvSnijpw@trashcan>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240805-guest-memfd-lib-v1-4-e5a29a4ff5d7@quicinc.com>
-References: <20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com>
-In-Reply-To: <20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com>
-To: Andrew Morton <akpm@linux-foundation.org>,
-        Paolo Bonzini
-	<pbonzini@redhat.com>,
-        Sean Christopherson <seanjc@google.com>,
-        Fuad Tabba
-	<tabba@google.com>, David Hildenbrand <david@redhat.com>,
-        Patrick Roy
-	<roypat@amazon.co.uk>, <qperret@google.com>,
-        Ackerley Tng
-	<ackerleytng@google.com>
-CC: <linux-coco@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
-        <kvm@vger.kernel.org>, Elliot Berman <quic_eberman@quicinc.com>
-X-Mailer: b4 0.13.0
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ZqziDJlrhvSnijpw@trashcan>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: sfX1xQ5G9G6F0uigExaJMuPsByDlTZno
-X-Proofpoint-GUID: sfX1xQ5G9G6F0uigExaJMuPsByDlTZno
+X-Proofpoint-GUID: J-fGG7FMtbjQU2Ae89ggPEt3ZSwArtS0
+X-Proofpoint-ORIG-GUID: J-fGG7FMtbjQU2Ae89ggPEt3ZSwArtS0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-05_07,2024-08-02_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- priorityscore=1501 spamscore=0 mlxlogscore=999 phishscore=0 clxscore=1015
- suspectscore=0 adultscore=0 mlxscore=0 malwarescore=0 bulkscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408050132
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
+ mlxscore=0 mlxlogscore=999 adultscore=0 malwarescore=0 clxscore=1015
+ phishscore=0 lowpriorityscore=0 impostorscore=0 priorityscore=1501
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408050137
 
-Confidential/protected guest virtual machines want to share some memory
-back with the host Linux. For example, virtqueues allow host and
-protected guest to exchange data. In MMU-only isolation of protected
-guest virtual machines, the transition between "shared" and "private"
-can be done in-place without a trusted hypervisor copying pages.
+On Fri, Aug 02, 2024 at 01:41:32PM +0000, Vladimir Lypak wrote:
+> On Thu, Aug 01, 2024 at 06:46:10PM +0530, Akhil P Oommen wrote:
+> > On Thu, Jul 11, 2024 at 10:00:19AM +0000, Vladimir Lypak wrote:
+> > > Two fields of preempt_record which are used by CP aren't reset on
+> > > resume: "data" and "info". This is the reason behind faults which happen
+> > > when we try to switch to the ring that was active last before suspend.
+> > > In addition those faults can't be recovered from because we use suspend
+> > > and resume to do so (keeping values of those fields again).
+> > > 
+> > > Fixes: b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
+> > > Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+> > > ---
+> > >  drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 2 ++
+> > >  1 file changed, 2 insertions(+)
+> > > 
+> > > diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+> > > index f58dd564d122..67a8ef4adf6b 100644
+> > > --- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+> > > +++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+> > > @@ -204,6 +204,8 @@ void a5xx_preempt_hw_init(struct msm_gpu *gpu)
+> > >  		return;
+> > >  
+> > >  	for (i = 0; i < gpu->nr_rings; i++) {
+> > > +		a5xx_gpu->preempt[i]->data = 0;
+> > > +		a5xx_gpu->preempt[i]->info = 0;
+> > 
+> > I don't see this bit in the downstream driver. Just curious, do we need
+> > to clear both fields to avoid the gpu faults?
+> 
+> Downstream gets away without doing so because it resumes on the same
+> ring that it suspended on. On mainline we always do GPU resume on first
+> ring. It was enough to zero info field to avoid faults but clearing
+> both shouldn't hurt.
+> 
+> I have tried to replicate faults again with local preemption disabled
+> and unmodified mesa and couldn't do so. It only happens when fine-grain
+> preemption is used and there was a switch from IB1.
 
-Add support for this feature and allow Linux to mmap host-accessible
-pages. When the owner provides an ->accessible() callback in the
-struct guest_memfd_operations, guest_memfd allows folios to be mapped
-when the ->accessible() callback returns 0.
+So, I guess gpu is going to rpm suspend while there is pending
+(preempted) submits present in another ringbuffer. Probably the other
+fixes you have in this series make this not necessary during rpm suspend.
+But we can keep as it is harmless and might help during gpu recovery.
 
-To safely make inaccessible:
+> This made me come up with explanation of what could be happening.
+> If preemption switch is initiated on a some ring at checkpoint in IB1,
+> CP should save position of that checkpoint in the preemption record and
+> set some flag in "info" field which will tell it to continue from that
+> checkpoint when switching back.
+> When switching back to that ring we program address of its preemption
+> record to CP_CONTEXT_SWITCH_RESTORE_ADDR. Apparently this won't remove
+> the flag from "info" field because the preemption record is only being
+> read from. This leaves preemption record outdated on that ring until
+> next switch will override it. This doesn't cause issues on downstream
+> because it won't try to restore from that record since it's ignored
+> during GPU power-up.
 
-```
-folio = guest_memfd_grab_folio(inode, index, flags);
-r = guest_memfd_make_inaccessible(inode, folio);
-if (r)
-        goto err;
+I guess it is fine if you never go to rpm suspend without idling all
+RBs!
 
-hypervisor_does_guest_mapping(folio);
+-Akhil
 
-folio_unlock(folio);
-```
-
-hypervisor_does_s2_mapping(folio) should make it so
-ops->accessible(...) on those folios fails.
-
-The folio lock ensures atomicity.
-
-Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
----
- include/linux/guest_memfd.h |  7 ++++
- mm/guest_memfd.c            | 81 ++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 87 insertions(+), 1 deletion(-)
-
-diff --git a/include/linux/guest_memfd.h b/include/linux/guest_memfd.h
-index f9e4a27aed67..edcb4ba60cb0 100644
---- a/include/linux/guest_memfd.h
-+++ b/include/linux/guest_memfd.h
-@@ -16,12 +16,18 @@
-  * @invalidate_end: called after invalidate_begin returns success. Optional.
-  * @prepare: called before a folio is mapped into the guest address space.
-  *           Optional.
-+ * @accessible: called after prepare returns success and before it's mapped
-+ *              into the guest address space. Returns 0 if the folio can be
-+ *              accessed.
-+ *              Optional. If not present, assumes folios are never accessible.
-  * @release: Called when releasing the guest_memfd file. Required.
-  */
- struct guest_memfd_operations {
- 	int (*invalidate_begin)(struct inode *inode, pgoff_t offset, unsigned long nr);
- 	void (*invalidate_end)(struct inode *inode, pgoff_t offset, unsigned long nr);
- 	int (*prepare)(struct inode *inode, pgoff_t offset, struct folio *folio);
-+	int (*accessible)(struct inode *inode, struct folio *folio,
-+			  pgoff_t offset, unsigned long nr);
- 	int (*release)(struct inode *inode);
- };
- 
-@@ -48,5 +54,6 @@ struct file *guest_memfd_alloc(const char *name,
- 			       const struct guest_memfd_operations *ops,
- 			       loff_t size, unsigned long flags);
- bool is_guest_memfd(struct file *file, const struct guest_memfd_operations *ops);
-+int guest_memfd_make_inaccessible(struct file *file, struct folio *folio);
- 
- #endif
-diff --git a/mm/guest_memfd.c b/mm/guest_memfd.c
-index e9d8cab72b28..6b5609932ca5 100644
---- a/mm/guest_memfd.c
-+++ b/mm/guest_memfd.c
-@@ -9,6 +9,8 @@
- #include <linux/pagemap.h>
- #include <linux/set_memory.h>
- 
-+#include "internal.h"
-+
- static inline int guest_memfd_folio_private(struct folio *folio)
- {
- 	unsigned long nr_pages = folio_nr_pages(folio);
-@@ -89,7 +91,7 @@ struct folio *guest_memfd_grab_folio(struct file *file, pgoff_t index, u32 flags
- 			goto out_err;
- 	}
- 
--	if (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP) {
-+	if (!ops->accessible && (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP)) {
- 		r = guest_memfd_folio_private(folio);
- 		if (r)
- 			goto out_err;
-@@ -107,6 +109,82 @@ struct folio *guest_memfd_grab_folio(struct file *file, pgoff_t index, u32 flags
- }
- EXPORT_SYMBOL_GPL(guest_memfd_grab_folio);
- 
-+int guest_memfd_make_inaccessible(struct file *file, struct folio *folio)
-+{
-+	unsigned long gmem_flags = (unsigned long)file->private_data;
-+	unsigned long i;
-+	int r;
-+
-+	unmap_mapping_folio(folio);
-+
-+	/**
-+	 * We can't use the refcount. It might be elevated due to
-+	 * guest/vcpu trying to access same folio as another vcpu
-+	 * or because userspace is trying to access folio for same reason
-+	 *
-+	 * folio_lock serializes the transitions between (in)accessible
-+	 */
-+	if (folio_maybe_dma_pinned(folio))
-+		return -EBUSY;
-+
-+	if (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP) {
-+		r = guest_memfd_folio_private(folio);
-+		if (r)
-+			return r;
-+	}
-+
-+	return 0;
-+}
-+
-+static vm_fault_t gmem_fault(struct vm_fault *vmf)
-+{
-+	struct file *file = vmf->vma->vm_file;
-+	struct inode *inode = file_inode(file);
-+	const struct guest_memfd_operations *ops = inode->i_private;
-+	struct folio *folio;
-+	pgoff_t off;
-+	int r;
-+
-+	folio = guest_memfd_grab_folio(file, vmf->pgoff, GUEST_MEMFD_GRAB_UPTODATE);
-+	if (!folio)
-+		return VM_FAULT_SIGBUS;
-+
-+	off = vmf->pgoff & (folio_nr_pages(folio) - 1);
-+	r = ops->accessible(inode, folio, off, 1);
-+	if (r) {
-+		folio_unlock(folio);
-+		folio_put(folio);
-+		return VM_FAULT_SIGBUS;
-+	}
-+
-+	guest_memfd_folio_clear_private(folio);
-+
-+	vmf->page = folio_page(folio, off);
-+
-+	return VM_FAULT_LOCKED;
-+}
-+
-+static const struct vm_operations_struct gmem_vm_ops = {
-+	.fault = gmem_fault,
-+};
-+
-+static int gmem_mmap(struct file *file, struct vm_area_struct *vma)
-+{
-+	const struct guest_memfd_operations *ops = file_inode(file)->i_private;
-+
-+	if (!ops->accessible)
-+		return -EPERM;
-+
-+	/* No support for private mappings to avoid COW.  */
-+	if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
-+	    (VM_SHARED | VM_MAYSHARE))
-+		return -EINVAL;
-+
-+	file_accessed(file);
-+	vma->vm_ops = &gmem_vm_ops;
-+	return 0;
-+}
-+
- static long gmem_punch_hole(struct file *file, loff_t offset, loff_t len)
- {
- 	struct inode *inode = file_inode(file);
-@@ -220,6 +298,7 @@ static int gmem_release(struct inode *inode, struct file *file)
- static struct file_operations gmem_fops = {
- 	.open = generic_file_open,
- 	.llseek = generic_file_llseek,
-+	.mmap = gmem_mmap,
- 	.release = gmem_release,
- 	.fallocate = gmem_fallocate,
- 	.owner = THIS_MODULE,
-
--- 
-2.34.1
-
+> 
+> Vladimir
+> 
+> > 
+> > -Akhil
+> > >  		a5xx_gpu->preempt[i]->wptr = 0;
+> > >  		a5xx_gpu->preempt[i]->rptr = 0;
+> > >  		a5xx_gpu->preempt[i]->rbase = gpu->rb[i]->iova;
+> > > -- 
+> > > 2.45.2
+> > > 
 
