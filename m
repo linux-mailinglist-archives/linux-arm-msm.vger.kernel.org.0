@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-27939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A314947FFC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 19:08:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B1CE948001
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 19:09:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D35F1C2152C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 17:08:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E8961C22058
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 17:09:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E444A15FA74;
-	Mon,  5 Aug 2024 17:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51610165EEA;
+	Mon,  5 Aug 2024 17:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="MRTo3DYf"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="n7n4PK8a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2177F15EFB9
-	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Aug 2024 17:08:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8DF15F3EC
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Aug 2024 17:08:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722877701; cv=none; b=XUuDYzHVYR79L9vxbTWlwlohdMkObK2vr2IfPJHgRZg+5NdDgRjpgArhi/Z9iSyFDyltxPYp5/nT6Vdrfgxz1knIDWfvsbYGVM2vP3lsG3oOI+ex79ItVUlJAfDPyckrlUnnzOd9E35suPzneG3QEnmqg8NMFSY9UjWO13LfF80=
+	t=1722877703; cv=none; b=XuE7vQFl+bLp6ChFi+uJWeNE6dinlFUvxmtxt5kJM0POfJGVjAJe4oCqt38U28WRz4sLXfnsanjakd5D5dzJeUgn+usJyrXkvuw2hJMt0fexo13ALHWyegHjZTnp7U9DllQlUZtm5TiH+HwQb6j4LjM6I6EiFN2VpBPeQ/4PHcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722877701; c=relaxed/simple;
-	bh=zkyHCANAfQl+HZA9ITq+SlMIlYs6YGHJTXZs1COJCP0=;
+	s=arc-20240116; t=1722877703; c=relaxed/simple;
+	bh=cJ5sbUksDJthcusJo7RLTNPiAn2bVW72d4F6NDHZWEY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Zkm/6+tdWE1P5dfcQKRsErUhu4QYerdUd3ovMN/gXa+cnHC8NNmy1tcvE6Q5/Aj/HfvMa1QsGsALHkCc2mC7vn0oSKsVUQctPAYJP8LyYoc02bwrz93YBtJDXhoB+9nBJlSPjcC0UyGZyvRcDNJJe1eqSRHP0ivpjWp7nkyPvAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=MRTo3DYf; arc=none smtp.client-ip=209.85.128.48
+	 In-Reply-To:To:Cc; b=M4Ar+tlIyIPiKGEXSrF7Wj3sotSL0gjgJ76+odgbqjdYjcn1BzHyVwZxrvzwDhZcmr74rCqtj/Uv6D77Z7MHWhx5CR+BvzORBTebzrUkVcX8Hc7vIcMUn9KlrAqYqhDTZDaoQkw6czeLaEvno++1UdMB65lnw79Hqv9mJfz3BFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=n7n4PK8a; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4257d5fc9b7so98081725e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Aug 2024 10:08:19 -0700 (PDT)
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3684e8220f9so3292444f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Aug 2024 10:08:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1722877698; x=1723482498; darn=vger.kernel.org;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1722877700; x=1723482500; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=a8qXi0AmLbuERLsyqttkRIlZ8eb7lceW7IwVCJnKdis=;
-        b=MRTo3DYfghELWCvOdZIDBqskGlcmX/OwoJxQMHt6bDnhlIZL5dukcFsLgRpHEKlTRD
-         /Ke953qJhX0HrRilXQS0mz+xMBoeOI1T4d5rzZTNAzchz3W+SEqFe2fhJRzhZypVEuxz
-         zU+VUYHXwEMG5VFKhetUc6wC4t8H3CXbwu5rGac2ilGGwTbawYBQ6fJl3P9hJSe9UIuv
-         cFWBgXIGGzFtHrCM3CDG6H/AJMwebb1bKsqVHSkTq33Pfm0jBmTZloSvIMtQuCcTiL/f
-         dh950WCg2PfUR+sf0QBuV5dTtYiqVJ8V6y7D8GYFGxRJmJixWwwmdRTsTKI46n94kL8S
-         ZZQw==
+        bh=EmiEhoS6BgYdmW1ox9MD/8B00pSFSdxMx9lwzx2VbII=;
+        b=n7n4PK8aOkFrLZxofJDOV8Yh4HTpuG4dOKoSB4fGKdN7m/eE7YAK+VRv+SdNjpbNsk
+         PlmutHFywju90gFhR2SXKIvcD91QbaLhOTS/jSORVWcIeTJbSotDTiadUznajZ38KmwS
+         mlSpMVFOvZxOhIZQoq4uaNAiGBgphuunc/T3NGNTA/rngrgZY1SK9PxUQ7WKM42mh+N/
+         iHHB3mmyhQKL4TyxHD9bmO5mgvqGHV8M/Re4mCD47qOCJjPZI/qvrXW7+O0Yo6oaNjDx
+         0G/dR0G6J0xUjbSvtR1BpbxgM3B/vKats0KSTCZHozEEpd5GhNX7EvS8aAgz8hr9kTdy
+         2aAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722877698; x=1723482498;
+        d=1e100.net; s=20230601; t=1722877700; x=1723482500;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=a8qXi0AmLbuERLsyqttkRIlZ8eb7lceW7IwVCJnKdis=;
-        b=eokIr8tg1eVzhUeTlluwrr2as83+Nmcnxj7SPfRoOnaljvgZp0GBnI1LA8IN6VWBfD
-         NwBsK/6R0uirO5bQ1XU+GWvXfv3//k+wk81mfXWSm7bjbRr16LHV/G5yWSYn9wV3PmQi
-         i3x6Uw3jhQ/OrdYIRRyV/KVeKqU3KzofiFHqeymQk0Qot1JHFij4JGXNbHCeoDtKnQHW
-         C/0yNEcPR9cLLv0DaFs9M+7ezCKgpbBwEK+h4GLeniW6czkvATUgZUee23EA/xkFAPhY
-         UJKMTmFuFz2bv23WR86Hg8NvHORF9k6ljVJh052EDH/kgcTWqHih2SC7i50RACzLG1aA
-         dC4g==
-X-Gm-Message-State: AOJu0Yw6Ko/AW+d+uBnFLuE0Z11qW5gGS4a8vZgbk6dpCFLAzObcCLHY
-	bLEcwvDQytn2aSSfJLllypc73ss7bC+w5pzpfVwPxr3YvAqX6ue8mC3VOMqNQhE=
-X-Google-Smtp-Source: AGHT+IGNnjvxPKNqFTpGRneCXiQ9ZfANtwC8Yo0t9+UB+vvcrfHUe+s1PfoKYEVEU99MdqkHe0JlVw==
-X-Received: by 2002:adf:e389:0:b0:367:9d4e:8861 with SMTP id ffacd0b85a97d-36bbc1c7d09mr9650450f8f.57.1722877698373;
-        Mon, 05 Aug 2024 10:08:18 -0700 (PDT)
+        bh=EmiEhoS6BgYdmW1ox9MD/8B00pSFSdxMx9lwzx2VbII=;
+        b=dmBuS6zgiOx3trDgjXrL1AxLMDWR94DGT9VfrjzmVmMQgQ/IyP/G22Dj0XKQsuLfM+
+         fAO9sBm+AZ20UihBh3VWTErsBJ7D0jvSQZnIefe+lz81hlmmHoeQ+eczASDnIF3G4H3r
+         LieZBJ+EPCJZ/8bRXP0Wq9xSHm4i0UEtY9tF7T0/ebxXzI4PgWjy9pF7TcA/yXCM6yag
+         oO9SIRA2R0PHM7puB7aXZ95lY9bXxRlzlkauF7b96hl/pUbpnh6Aik3sD8HNErzOwBi7
+         hWJF/JLsjg44D2n+4WBQIQ6bvxsbK2wCj8t1h4ogUwVudoeLgnZEpe3P75n0C7XMyIG3
+         5U8g==
+X-Gm-Message-State: AOJu0YwhsMc+DSStEFm+MfyTLAwGTIuUopJpLhUHo7Ivj55wq/z54sgv
+	aaBX4rL/Ego2g8ZvZoZm8Mfvh4UN2wK8O1GlBP73/F07nA7yiqSFUfpv/2ZYKajwTaTvy0RhiHo
+	lRQk=
+X-Google-Smtp-Source: AGHT+IHLa6OMuCX4j0DNyE0gPuB42Fu0JyAzr6x+/y2e7m5rbQe6YTRrgFmyb3RKRnKeM6Z+gugKNg==
+X-Received: by 2002:a5d:63c6:0:b0:367:8fee:4434 with SMTP id ffacd0b85a97d-36bbbe58c9amr8643179f8f.16.1722877699771;
+        Mon, 05 Aug 2024 10:08:19 -0700 (PDT)
 Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:1068:b792:523c:3f73])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36bbcf1e97esm10356486f8f.37.2024.08.05.10.08.16
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36bbcf1e97esm10356486f8f.37.2024.08.05.10.08.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Aug 2024 10:08:17 -0700 (PDT)
+        Mon, 05 Aug 2024 10:08:19 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 05 Aug 2024 19:08:04 +0200
-Subject: [PATCH v4 3/6] remoteproc: qcom_q6v5_pas: Add support for SA8775p
- ADSP, CDSP and GPDSP
+Date: Mon, 05 Aug 2024 19:08:05 +0200
+Subject: [PATCH v4 4/6] misc: fastrpc: Add support for cdsp1 remoteproc
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240805-topic-sa8775p-iot-remoteproc-v4-3-86affdc72c04@linaro.org>
+Message-Id: <20240805-topic-sa8775p-iot-remoteproc-v4-4-86affdc72c04@linaro.org>
 References: <20240805-topic-sa8775p-iot-remoteproc-v4-0-86affdc72c04@linaro.org>
 In-Reply-To: <20240805-topic-sa8775p-iot-remoteproc-v4-0-86affdc72c04@linaro.org>
 To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
@@ -97,160 +97,84 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
  Tengfei Fan <quic_tengfan@quicinc.com>, Ling Xu <quic_lxu5@quicinc.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4033;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2201;
  i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=sCnYyInCe8lgzoxKSYmHX0iIoLAhYHzdQ49FJhIALKQ=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBmsQb8Buyxua0eEvFkZkMIzdnMz5Hdp6nEJ2DwB
- TQQb8aCUh6JAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCZrEG/AAKCRARpy6gFHHX
- cjeJEACtfTt0lpBabZYmZj+a5tIm7JrdrtK1Rm0FcuGt8l/MfI5EAy8QPVzp2vngtIpB4BPmdEp
- v1BIurFWPFvSB2wPqlj4ioDBAAYWuBs4g7xWnq7Ud21k0pD873125dg9YyJV8kL5mM2krEk1q7x
- 869EPEhufJW2HaxpDLDEhBGlrlABcQGU7FrhrrQY8bHtJmfSF8+Qq9FsOPZN92CgcGCKGOoYG78
- Bg89/vB1dM8LELe3m3cFwyQvADgoOJav4aqvB0cTc4ZcW8sTe2QX3FLfQkHle44W+VxydlTdedD
- +9EXmEM+Oi8Mx4NGUGawtGMnQ5Y5+LVRs0n1ZkgqyK14g/sLrDd3vLr/ovMhY1rHs7GF5zJtgcI
- h2X7/LU/dDuTJBP3Mt/X8mxOvbW23C/M8HZ7xeYzFcEDV594xClKii7Tg6OSjrs0AFcUtxMaVRO
- 2dIMikWPYGuMEmLPlooZSc5d/DXA6SAeYJVhpPsJIE2ipSoc2IlDI+Pz/SAUdzICEvD4GWanVPh
- jbVmYxEvkHwqD1zJaFt8B+I4DYP0kn56+Kml6TL8hH82sDOtJwdVjqpkofnQBaKP7LHLnfJnAKZ
- +M/R00vUD8SsY9fGiXOwAYdpNBszbuXuqmzUPhGrln1rTlsLJEonXhY8PnMvqhdfWHOd6hLvaMT
- rJMPaE8ZHmL2Y5Q==
+ bh=NlK6VGdZihNVv+SIfwfvMzqrGtF1lODmEAtLAfz+SWo=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBmsQb8DWMHVDLnK8twR3IQVFxqQhEG7VPHptopI
+ b4+AK1o1/uJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCZrEG/AAKCRARpy6gFHHX
+ cuk3D/9G85vhLg6qshc2VEGhoV2sqvQZsgaUpu/zgGu6VPjgM12MQyB4hcsIeNj0ntRnAzuPyXB
+ gdqD5bK5t1XNiL2pQ3Abfz87wa5220/olx8E6a1XMoblikPVxnXj6NbOfOQMBrXV2O9JQ3l2t6M
+ z35zBgMgnCI1p3BoscRNdgWqYh60Kls7QM+UfEfCRn27gRNTu6xppP+9gEAhVjONE386vzx57Kp
+ CESFr4YoesfZJCSYu8MwkqpvS8dWrYiD58O7J9KPurhbpR1nVb3WgNEbXJDGlzxb8SqgfX+ARpy
+ x8irSCRvqKEhzG9GlzFR4VxDvqQF5jZNVIyohDqZyZ6qUV7y3z1yvfEh2RsnEjuMrjGmVlaRQdf
+ UhETa8wT4acdBTPLewfBR6ryr8mnEEI1KV0Be9JprH2lhMWjHCF0gXJ9d9uZT3CXQ/nF77gcu/A
+ alJ6uraOT2SHxirwJwE5S+pNVJuBbgYSSl8U9glARy3DO9Avu+vhb3JMIMJ2L3JeV5E5fmglfu1
+ GZfYXz8RKkpDX8unZKfCsAnKPOeBeJEiFygQG1DezF22O4SV+qG+aPN+XXQ7LIyWzvlIb+d+63d
+ MVYmfTZMOR2If3IuQbj7NDm1bedS2AxJicEtNVGgK4A7c49Wsw8KvRbdGwYqHjXfstMkn06gOI5
+ nPsIWLcyo1hjEFA==
 X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
  fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
-From: Tengfei Fan <quic_tengfan@quicinc.com>
+From: Ling Xu <quic_lxu5@quicinc.com>
 
-Add support for PIL loading on ADSP, CDSP0, CDSP1, GPDSP0 and GPDSP1 on
-SA8775p SoCs.
+The fastrpc supports 4 remoteproc. There are some products which
+support cdsp1 remoteproc. Add changes to support cdsp1 remoteproc.
 
-Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
-Co-developed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
+[Bartosz: ported to mainline]
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/remoteproc/qcom_q6v5_pas.c | 92 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 92 insertions(+)
+ drivers/misc/fastrpc.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 88e7b84f223c..1ec1accddde7 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -829,6 +829,23 @@ static const struct adsp_data adsp_resource_init = {
- 	.ssctl_id = 0x14,
- };
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 5204fda51da3..07bf8532557e 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -27,7 +27,8 @@
+ #define MDSP_DOMAIN_ID (1)
+ #define SDSP_DOMAIN_ID (2)
+ #define CDSP_DOMAIN_ID (3)
+-#define FASTRPC_DEV_MAX		4 /* adsp, mdsp, slpi, cdsp*/
++#define CDSP1_DOMAIN_ID (4)
++#define FASTRPC_DEV_MAX		5 /* adsp, mdsp, slpi, cdsp, cdsp1 */
+ #define FASTRPC_MAX_SESSIONS	14
+ #define FASTRPC_MAX_VMIDS	16
+ #define FASTRPC_ALIGN		128
+@@ -106,7 +107,7 @@
+ #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
  
-+static const struct adsp_data sa8775p_adsp_resource = {
-+	.crash_reason_smem = 423,
-+	.firmware_name = "adsp.mbn",
-+	.pas_id = 1,
-+	.minidump_id = 5,
-+	.auto_boot = true,
-+	.proxy_pd_names = (char*[]){
-+		"lcx",
-+		"lmx",
-+		NULL
-+	},
-+	.load_state = "adsp",
-+	.ssr_name = "lpass",
-+	.sysmon_name = "adsp",
-+	.ssctl_id = 0x14,
-+};
-+
- static const struct adsp_data sdm845_adsp_resource_init = {
- 	.crash_reason_smem = 423,
- 	.firmware_name = "adsp.mdt",
-@@ -942,6 +959,42 @@ static const struct adsp_data cdsp_resource_init = {
- 	.ssctl_id = 0x17,
- };
+ static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
+-						"sdsp", "cdsp"};
++						"sdsp", "cdsp", "cdsp1" };
+ struct fastrpc_phy_page {
+ 	u64 addr;		/* physical address */
+ 	u64 size;		/* size of contiguous region */
+@@ -2286,7 +2287,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+ 		return err;
+ 	}
  
-+static const struct adsp_data sa8775p_cdsp0_resource = {
-+	.crash_reason_smem = 601,
-+	.firmware_name = "cdsp0.mbn",
-+	.pas_id = 18,
-+	.minidump_id = 7,
-+	.auto_boot = true,
-+	.proxy_pd_names = (char*[]){
-+		"cx",
-+		"mxc",
-+		"nsp",
-+		NULL
-+	},
-+	.load_state = "cdsp",
-+	.ssr_name = "cdsp",
-+	.sysmon_name = "cdsp",
-+	.ssctl_id = 0x17,
-+};
-+
-+static const struct adsp_data sa8775p_cdsp1_resource = {
-+	.crash_reason_smem = 633,
-+	.firmware_name = "cdsp1.mbn",
-+	.pas_id = 30,
-+	.minidump_id = 20,
-+	.auto_boot = true,
-+	.proxy_pd_names = (char*[]){
-+		"cx",
-+		"mxc",
-+		"nsp",
-+		NULL
-+	},
-+	.load_state = "nsp",
-+	.ssr_name = "cdsp1",
-+	.sysmon_name = "cdsp1",
-+	.ssctl_id = 0x20,
-+};
-+
- static const struct adsp_data sdm845_cdsp_resource_init = {
- 	.crash_reason_smem = 601,
- 	.firmware_name = "cdsp.mdt",
-@@ -1083,6 +1136,40 @@ static const struct adsp_data sm8350_cdsp_resource = {
- 	.ssctl_id = 0x17,
- };
- 
-+static const struct adsp_data sa8775p_gpdsp0_resource = {
-+	.crash_reason_smem = 640,
-+	.firmware_name = "gpdsp0.mbn",
-+	.pas_id = 39,
-+	.minidump_id = 21,
-+	.auto_boot = true,
-+	.proxy_pd_names = (char*[]){
-+		"cx",
-+		"mxc",
-+		NULL
-+	},
-+	.load_state = "gpdsp0",
-+	.ssr_name = "gpdsp0",
-+	.sysmon_name = "gpdsp0",
-+	.ssctl_id = 0x21,
-+};
-+
-+static const struct adsp_data sa8775p_gpdsp1_resource = {
-+	.crash_reason_smem = 641,
-+	.firmware_name = "gpdsp1.mbn",
-+	.pas_id = 40,
-+	.minidump_id = 22,
-+	.auto_boot = true,
-+	.proxy_pd_names = (char*[]){
-+		"cx",
-+		"mxc",
-+		NULL
-+	},
-+	.load_state = "gpdsp1",
-+	.ssr_name = "gpdsp1",
-+	.sysmon_name = "gpdsp1",
-+	.ssctl_id = 0x22,
-+};
-+
- static const struct adsp_data mpss_resource_init = {
- 	.crash_reason_smem = 421,
- 	.firmware_name = "modem.mdt",
-@@ -1329,6 +1416,11 @@ static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,qcs404-adsp-pas", .data = &adsp_resource_init },
- 	{ .compatible = "qcom,qcs404-cdsp-pas", .data = &cdsp_resource_init },
- 	{ .compatible = "qcom,qcs404-wcss-pas", .data = &wcss_resource_init },
-+	{ .compatible = "qcom,sa8775p-adsp-pas", .data = &sa8775p_adsp_resource},
-+	{ .compatible = "qcom,sa8775p-cdsp0-pas", .data = &sa8775p_cdsp0_resource},
-+	{ .compatible = "qcom,sa8775p-cdsp1-pas", .data = &sa8775p_cdsp1_resource},
-+	{ .compatible = "qcom,sa8775p-gpdsp0-pas", .data = &sa8775p_gpdsp0_resource},
-+	{ .compatible = "qcom,sa8775p-gpdsp1-pas", .data = &sa8775p_gpdsp1_resource},
- 	{ .compatible = "qcom,sc7180-adsp-pas", .data = &sm8250_adsp_resource},
- 	{ .compatible = "qcom,sc7180-mpss-pas", .data = &mpss_resource_init},
- 	{ .compatible = "qcom,sc7280-adsp-pas", .data = &sm8350_adsp_resource},
+-	for (i = 0; i <= CDSP_DOMAIN_ID; i++) {
++	for (i = 0; i < FASTRPC_DEV_MAX; i++) {
+ 		if (!strcmp(domains[i], domain)) {
+ 			domain_id = i;
+ 			break;
+@@ -2344,13 +2345,14 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+ 	case ADSP_DOMAIN_ID:
+ 	case MDSP_DOMAIN_ID:
+ 	case SDSP_DOMAIN_ID:
+-		/* Unsigned PD offloading is only supported on CDSP*/
++		/* Unsigned PD offloading is only supported on CDSP and CDSP1 */
+ 		data->unsigned_support = false;
+ 		err = fastrpc_device_register(rdev, data, secure_dsp, domains[domain_id]);
+ 		if (err)
+ 			goto fdev_error;
+ 		break;
+ 	case CDSP_DOMAIN_ID:
++	case CDSP1_DOMAIN_ID:
+ 		data->unsigned_support = true;
+ 		/* Create both device nodes so that we can allow both Signed and Unsigned PD */
+ 		err = fastrpc_device_register(rdev, data, true, domains[domain_id]);
 
 -- 
 2.43.0
