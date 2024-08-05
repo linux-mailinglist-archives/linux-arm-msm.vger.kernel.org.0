@@ -1,92 +1,608 @@
-Return-Path: <linux-arm-msm+bounces-27949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BEB8948128
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 20:05:29 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id ABEA594816A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 20:10:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8FA2FB22821
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 18:05:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1699AB22C24
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 18:10:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D47E17B419;
-	Mon,  5 Aug 2024 17:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEDAF16BE20;
+	Mon,  5 Aug 2024 18:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YLuqP5jp"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Y0kDcCVV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300EF17B410;
-	Mon,  5 Aug 2024 17:58:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5DC15F3E8
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Aug 2024 18:09:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722880725; cv=none; b=uIhaICrQWnKdLZ1NxNBtM7f/lMGtcjWsOqjeW0NpvTzGjHZmTX0coyXK10d9BhH11aYRiAjGWcZWNOd+vxwVwgTKCrX1fECHTIsdolp79ErCTRliBq/w2ixvgYxJ8EqrTroFScZnSPAshBB+kR2QQYX+7/QMJ77AW8WX8iFHQZI=
+	t=1722881344; cv=none; b=I7v+Cl97c4DSTxqbrv3jPo6xYTXVPabbgg2J3sfG2+i2zpdkKStcD4GNOTmxsBM2tRSVY0MbVPMZQu5jm8+ohBc4uQ0Z5kul/VnJFtUyn68BevnBojU6CrKGN6vmtRGllYgIe4mXDAQFpCyidKhXRoEPZn6FiM1yKh3Teeqn1ZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722880725; c=relaxed/simple;
-	bh=wNM5xS4jJV5PztpbZlRCZTDlDKXDNt8Werqs5lhFUu0=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=vAxpxQgM7yL9aAdDf1IeC3xlcB5QCMCyfmXaHqo7oSEPu3EOovWxNTdzBCXz0I50jOW6ZNbpClUjBMJnx2L/2c40aTApkl4gkQuc2dUCJOMexCSfFO+EIRfQdHSkFsle/3Ng9tzWlZQaumGRWKQAKGcZGrr/Qa3/IUcWPJqXA68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YLuqP5jp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F5EBC32782;
-	Mon,  5 Aug 2024 17:58:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722880724;
-	bh=wNM5xS4jJV5PztpbZlRCZTDlDKXDNt8Werqs5lhFUu0=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=YLuqP5jpZelCN3Laz43uy9YuydC9DuVusXYO/bh2l1f8dLcU9TTwitBw8NNtPpsyI
-	 yjSWCug7SREIxVeUnAZ7D7ch3wNZnSvJT5uFeAwtGegXdS56QyRkDVxmZq27cuuB52
-	 rKibpC8QH05O1HrjloNdAWSsZDt9od6HpiV1ta7iCvKoci7uBGleFqmiwXvUe88rsK
-	 +OnShhuSM6mkfwI1RUzuahvDkPihXX/hiyPwvvHUXw27KZmkB7FCPE8QW2Eemz+hfv
-	 NNLHw7+heLrnaOqoewkxBKS+cQ9a4adXmoxRLEz3w+H8N8+qHMOZiwQNJx1kmRV1M1
-	 bJeXwZLz9zgmA==
-Message-ID: <de8f23c2558644d3698176b6dd9f7e91.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1722881344; c=relaxed/simple;
+	bh=72W6bt4/ei5jg6RllCYvr2y3ILsBqCWVnML3wPsWijo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=H1miHcajaXI7ZRiP3AJjTIyl4xijuV71dXMnLx9NX5I+4hjS/90TgIbKhK1QcaYV02PIRrqLZtnoGDGrt1Dk4v7Xno0DuPqRuiNc/Y90SeiuE8p4nNadBmcgJKhqf9EZysKeRj4QZzyLtATgkkXO2OUJjSyHtoLUT+4kXiaoYlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Y0kDcCVV; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4280ee5f1e3so73981045e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Aug 2024 11:09:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1722881341; x=1723486141; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UeW1unF7m5afaM1gpM1M9uUrUWJD1MlWOk+st+pUC2Y=;
+        b=Y0kDcCVVIn8hYVBnL2G+tZ/pitBYoj2YCNQMhghgRUWN5RX3/i5erjkNORCWiwSTPT
+         zxBoRqiTyl+yAUNHhNZ40oP9e1nkhu30pbU2R9ut3AXs1FyJ36HWrhsUqXj86GsnoWOL
+         lPooHveV3R3zLsApYzNhE9wcz1gurE4bwMNRdQWShJ5SykrNmZvOJoI/K3Zwg9qtxh9F
+         ZbrbbdsadUyLDqX4ECh+OaNVfv4004Ghd1zfilUqPiGAb5ujijHovFrg/+gmAC03RxtQ
+         0eV4l2q3d3kecpXHD4XKN2sTSLeOENu4DIEFCrg/U69iKwBpbfOWpi3qAu2iX5Y3P21Y
+         yJhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722881341; x=1723486141;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UeW1unF7m5afaM1gpM1M9uUrUWJD1MlWOk+st+pUC2Y=;
+        b=J9ejD+mFjQ+jS3/UpIYaL0qOCgHaTw9uuAAm1pvIpX06VpIEU2LJys38hgJg1EZTi4
+         S/8/PbaG9Nnug3WG3d21nrxNpjps7IT2rjwJ70nBI/BgvglZ8u7c3eMhj+HSKF94CpF4
+         G+9fIzH6myUzQYiYzZbnSPp+XlnrP5htSwvd2lmVBNNzeQbyWR/9n1KDk9ztSEJZ36Ms
+         kXh2l6iMwYsvcMV3ooYOcMoQtT9epzUlEY87GqTzF+I6umDG4dN9HQWgn7haFwxxnGta
+         r1O3h/jz4s9mUmeSesx2KqsTeJ6vakR+ETQkuKoFHTPEAQZqNru000zxPWoLQiZXqOS3
+         XMIw==
+X-Forwarded-Encrypted: i=1; AJvYcCV2ojyrdL4rpM8TS68sSkjqJ7WMdkyEyB3tKpWKPIWW+oTzRbRP/RXjN3Ez40vBgL0mI+cu3QjPvyib0boqjmWJWLv7nTgW41OAfk04zA==
+X-Gm-Message-State: AOJu0YwIMCitGP0JRkoikc/zqSMm3fyQq766MLhOrh04+PIVB5lagV4b
+	6pfDPmsKDs79JLOapA0zm+1UxunKp3DJ730pSyZRV9Fa8DZDqr5c3X6mOsUb7LCrl/JVtNn7uZQ
+	jkkvRLGkU9bbI1lIK67kYjeLpqCgcq5ZDKdf1
+X-Google-Smtp-Source: AGHT+IGlam5R4MrwXgwMUf6lewarSbSF7VWV+YK8sh7hmzc23x2T9ooLmMK9oWF10JLy/SYgoH+dt8vKj+pLM91ec4Y=
+X-Received: by 2002:adf:ec03:0:b0:368:714e:5a59 with SMTP id
+ ffacd0b85a97d-36bbc0aeba6mr10390684f8f.11.1722881340314; Mon, 05 Aug 2024
+ 11:09:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+References: <20240801090117.3841080-3-tabba@google.com> <diqzcymmevsm.fsf@ackerleytng-ctop.c.googlers.com>
+In-Reply-To: <diqzcymmevsm.fsf@ackerleytng-ctop.c.googlers.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Mon, 5 Aug 2024 19:08:23 +0100
+Message-ID: <CA+EHjTxXmSBoK+wk+ax4cg=yH_Gn82bEVEyau07ikv3zSbZG5A@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 02/10] KVM: Add restricted support for mapping
+ guestmem by the host
+To: Ackerley Tng <ackerleytng@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <3cca4d67-e420-442d-bb38-4eb0649dcdf4@quicinc.com>
-References: <20240801110040.505860-1-quic_amansing@quicinc.com> <ff92343652a998b97981e63ea5dc301f.sboyd@kernel.org> <3cca4d67-e420-442d-bb38-4eb0649dcdf4@quicinc.com>
-Subject: Re: [PATCH] clk: qcom: ipq9574: Update the alpha PLL type for GPLLs
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: quic_devipriy@quicinc.com
-To: Amandeep Singh <quic_amansing@quicinc.com>, andersson@kernel.org, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, mturquette@baylibre.com
-Date: Mon, 05 Aug 2024 10:58:42 -0700
-User-Agent: alot/0.10
 
-Quoting Amandeep Singh (2024-08-05 02:11:16)
-> On 8/3/2024 6:35 AM, Stephen Boyd wrote:
-> > Quoting Amandeep Singh (2024-08-01 04:00:40)
-> >> From: devi priya <quic_devipriy@quicinc.com>
-> >>
-> >> Update PLL offsets to DEFAULT_EVO to configure MDIO to 800MHz.
-> >=20
-> > Is this fixing a problem? I can't figure out how urgent this patch is
-> > from the one sentence commit text.
->=20
-> The incorrect clock frequency leads to an incorrect MDIO clock. This,
-> in turn, affects the MDIO hardware configurations as the divider is=20
-> calculated from the MDIO clock frequency. If the clock frequency is
-> not as expected, the MDIO register fails due to the generation of an=20
-> incorrect MDIO frequency.
->=20
-> This issue is critical as it results in incorrect MDIO configurations=20
-> and ultimately leads to the MDIO function not working. This results in
-> a complete feature failure affecting all Ethernet PHYs. Specifically,
-> Ethernet will not work on IPQ9574 due to this issue.
->=20
-> Currently, the clock frequency is set to CLK_ALPHA_PLL_TYPE_DEFAULT.=20
-> However, this setting does not yield the expected clock frequency. To=20
-> rectify this, we need to change this to CLK_ALPHA_PLL_TYPE_DEFAULT_EVO.
->=20
-> This modification ensures that the clock frequency aligns with our=20
-> expectations, thereby resolving the MDIO register failure and ensuring=20
-> the proper functioning of the Ethernet on IPQ9574.
+Hi Ackerley,
 
-Wow! Please include these details in the commit text.
+On Mon, 5 Aug 2024 at 18:14, Ackerley Tng <ackerleytng@google.com> wrote:
+>
+> Fuad Tabba <tabba@google.com> writes:
+>
+> > Add support for mmap() and fault() for guest_memfd in the host.
+> > The ability to fault in a guest page is contingent on that page
+> > being shared with the host. To track this, this patch adds a new
+> > xarray to each guest_memfd object, which tracks the mappability
+> > of guest frames.
+> >
+> > The guest_memfd PRIVATE memory attribute is not used for two
+> > reasons. First because it reflects the userspace expectation for
+> > that memory location, and therefore can be toggled by userspace.
+>
+> Thank you for clarifying why the PRIVATE memory attribute cannot be
+> used. I think that having the attributes with guest_memfd is a good
+> idea.
+>
+> Since faultability is a property of the memory contents, shouldn't
+> faultability be stored on the inode rather than the file?
+
+I don't have a strong opinion about this, but by not mappable, this
+means not having a valid mapping in the host, not that the "mmap"
+call in and of itself is not allowed.
+
+>
+> > The second is, although each guest_memfd file has a 1:1 binding
+> > with a KVM instance, the plan is to allow multiple files per
+> > inode, e.g. to allow intra-host migration to a new KVM instance,
+> > without destroying guest_memfd.
+>
+> I think you also alluded to the concept of inodes vs files above.
+>
+> To store the xarray on the inode, we would probably have to make
+> guest_memfd use its own mount so that we can use .evict_inode() from
+> struct address_space_operations to clean up the inode neatly, perhaps
+> the way it was done in guest_memfd v12 [1].
+>
+> This RFC to enable intra-host migration [2] was built with the version
+> of guest_memfd that used its own mount. IIUC, the gmem struct stored on
+> the file is meant to be the binding between struct kvm and the memory
+> contents [3], so the gmem struct won't be transferred and a new gmem
+> struct will be created.
+
+I thought that the gmem object itself is unique, and that even if
+we're transferring it from one inode to another it would still be
+there. If not, then you're right and we need to store this data in the
+inode.
+
+Thanks for pointing me to the RFC. I'll have a look at it and use it
+as a reference when I respin this.
+
+> >
+> > This new feature is gated with a new configuration option,
+> > CONFIG_KVM_PRIVATE_MEM_MAPPABLE.
+> >
+> > Signed-off-by: Fuad Tabba <tabba@google.com>
+> > ---
+> >  include/linux/kvm_host.h |  61 ++++++++++++++++++++
+> >  virt/kvm/Kconfig         |   4 ++
+> >  virt/kvm/guest_memfd.c   | 110 +++++++++++++++++++++++++++++++++++
+> >  virt/kvm/kvm_main.c      | 122 +++++++++++++++++++++++++++++++++++++++
+> >  4 files changed, 297 insertions(+)
+> >
+> > diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> > index 43a157f8171a..ab1344327e57 100644
+> > --- a/include/linux/kvm_host.h
+> > +++ b/include/linux/kvm_host.h
+> > @@ -2452,4 +2452,65 @@ static inline int kvm_gmem_get_pfn_locked(struct=
+ kvm *kvm,
+> >  }
+> >  #endif /* CONFIG_KVM_PRIVATE_MEM */
+> >
+> > +#ifdef CONFIG_KVM_PRIVATE_MEM_MAPPABLE
+> > +bool kvm_gmem_is_mappable(struct kvm *kvm, gfn_t gfn, gfn_t end);
+> > +bool kvm_gmem_is_mapped(struct kvm *kvm, gfn_t start, gfn_t end);
+> > +int kvm_gmem_set_mappable(struct kvm *kvm, gfn_t start, gfn_t end);
+>
+> How will kvm_gmem_is_mapped() and kvm_gmem_set_mappable() be used?
+
+In this patch series I only use __ kvm_gmem_is_mapped(), you're right.
+In later patches (not posted, pkvm specific), I use
+kvm_gmem_is_mapped() in the processing of an unshare call from the
+guest.
+
+> > +int kvm_gmem_clear_mappable(struct kvm *kvm, gfn_t start, gfn_t end);
+> > +int kvm_slot_gmem_toggle_mappable(struct kvm_memory_slot *slot, gfn_t =
+start,
+> > +                               gfn_t end, bool is_mappable);
+> > +int kvm_slot_gmem_set_mappable(struct kvm_memory_slot *slot, gfn_t sta=
+rt,
+> > +                            gfn_t end);
+> > +int kvm_slot_gmem_clear_mappable(struct kvm_memory_slot *slot, gfn_t s=
+tart,
+> > +                              gfn_t end);
+> > +bool kvm_slot_gmem_is_mappable(struct kvm_memory_slot *slot, gfn_t gfn=
+);
+> > +#else
+> > +static inline bool kvm_gmem_is_mappable(struct kvm *kvm, gfn_t gfn, gf=
+n_t end)
+> > +{
+> > +     WARN_ON_ONCE(1);
+> > +     return false;
+> > +}
+> > +static inline bool kvm_gmem_is_mapped(struct kvm *kvm, gfn_t start, gf=
+n_t end)
+> > +{
+> > +     WARN_ON_ONCE(1);
+> > +     return false;
+> > +}
+> > +static inline int kvm_gmem_set_mappable(struct kvm *kvm, gfn_t start, =
+gfn_t end)
+> > +{
+> > +     WARN_ON_ONCE(1);
+> > +     return -EINVAL;
+> > +}
+> > +static inline int kvm_gmem_clear_mappable(struct kvm *kvm, gfn_t start=
+,
+> > +                                       gfn_t end)
+> > +{
+> > +     WARN_ON_ONCE(1);
+> > +     return -EINVAL;
+> > +}
+> > +static inline int kvm_slot_gmem_toggle_mappable(struct kvm_memory_slot=
+ *slot,
+> > +                                             gfn_t start, gfn_t end,
+> > +                                             bool is_mappable)
+> > +{
+> > +     WARN_ON_ONCE(1);
+> > +     return -EINVAL;
+> > +}
+> > +static inline int kvm_slot_gmem_set_mappable(struct kvm_memory_slot *s=
+lot,
+> > +                                          gfn_t start, gfn_t end)
+> > +{
+> > +     WARN_ON_ONCE(1);
+> > +     return -EINVAL;
+> > +}
+> > +static inline int kvm_slot_gmem_clear_mappable(struct kvm_memory_slot =
+*slot,
+> > +                                            gfn_t start, gfn_t end)
+> > +{
+> > +     WARN_ON_ONCE(1);
+> > +     return -EINVAL;
+> > +}
+> > +static inline bool kvm_slot_gmem_is_mappable(struct kvm_memory_slot *s=
+lot,
+> > +                                          gfn_t gfn)
+> > +{
+> > +     WARN_ON_ONCE(1);
+> > +     return false;
+> > +}
+> > +#endif /* CONFIG_KVM_PRIVATE_MEM_MAPPABLE */
+> > +
+> >  #endif
+> > diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
+> > index 29b73eedfe74..a3970c5eca7b 100644
+> > --- a/virt/kvm/Kconfig
+> > +++ b/virt/kvm/Kconfig
+> > @@ -109,3 +109,7 @@ config KVM_GENERIC_PRIVATE_MEM
+> >         select KVM_GENERIC_MEMORY_ATTRIBUTES
+> >         select KVM_PRIVATE_MEM
+> >         bool
+> > +
+> > +config KVM_PRIVATE_MEM_MAPPABLE
+> > +       select KVM_PRIVATE_MEM
+> > +       bool
+> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> > index f3f4334a9ccb..0a1f266a16f9 100644
+> > --- a/virt/kvm/guest_memfd.c
+> > +++ b/virt/kvm/guest_memfd.c
+> > @@ -11,6 +11,9 @@ struct kvm_gmem {
+> >       struct kvm *kvm;
+> >       struct xarray bindings;
+> >       struct list_head entry;
+> > +#ifdef CONFIG_KVM_PRIVATE_MEM_MAPPABLE
+> > +     struct xarray unmappable_gfns;
+> > +#endif
+> >  };
+> >
+> >  static struct folio *kvm_gmem_get_folio(struct inode *inode, pgoff_t i=
+ndex)
+> > @@ -230,6 +233,11 @@ static int kvm_gmem_release(struct inode *inode, s=
+truct file *file)
+> >       mutex_unlock(&kvm->slots_lock);
+> >
+> >       xa_destroy(&gmem->bindings);
+> > +
+> > +#ifdef CONFIG_KVM_PRIVATE_MEM_MAPPABLE
+> > +     xa_destroy(&gmem->unmappable_gfns);
+> > +#endif
+> > +
+> >       kfree(gmem);
+> >
+> >       kvm_put_kvm(kvm);
+> > @@ -248,7 +256,105 @@ static inline struct file *kvm_gmem_get_file(stru=
+ct kvm_memory_slot *slot)
+> >       return get_file_active(&slot->gmem.file);
+> >  }
+> >
+> > +#ifdef CONFIG_KVM_PRIVATE_MEM_MAPPABLE
+> > +int kvm_slot_gmem_toggle_mappable(struct kvm_memory_slot *slot, gfn_t =
+start,
+> > +                               gfn_t end, bool is_mappable)
+> > +{
+> > +     struct kvm_gmem *gmem =3D slot->gmem.file->private_data;
+> > +     void *xval =3D is_mappable ? NULL : xa_mk_value(true);
+>
+> IIUC storing stuff in the xarray takes memory, so if we want to save
+> memory, we should minimize entries in the xarray. For pKVM, do you
+> expect more mappable, or more unmappable gfns?
+>
+> For TDX most of the memory will be private, so we expect fewer mappable
+> gfns, and we'd prefer "entry in xarray =3D=3D mappable".
+
+This is similar to a discussion I've had earlier regarding the PRIVATE
+attribute [*].
+
+I don't have a strong opinion. It's trivial to reverse the polarity.
+But to answer your question, most of the memory in pKVM would be
+private for protected guests, but shared for non-protected guests. So,
+it's not easy to know which would be the more common use case.
+
+Cheers,
+/fuad
+
+[*] https://lore.kernel.org/lkml/20231027182217.3615211-1-seanjc@google.com=
+/T/#:~:text=3Dconsistent%20across%20implementations.-,Yeah%2C%20we%20discus=
+sed%20this%20in%20v12%5B*%5D.%20%20The%20default%20really%20doesn%27t%20mat=
+ter%20for%20memory,-overheads%20or%20performances
+
+
+> > +     void *r;
+> > +
+> > +     r =3D xa_store_range(&gmem->unmappable_gfns, start, end - 1, xval=
+, GFP_KERNEL);
+> > +
+> > +     return xa_err(r);
+> > +}
+> > +
+> > +int kvm_slot_gmem_set_mappable(struct kvm_memory_slot *slot, gfn_t sta=
+rt, gfn_t end)
+> > +{
+> > +     return kvm_slot_gmem_toggle_mappable(slot, start, end, true);
+> > +}
+> > +
+> > +int kvm_slot_gmem_clear_mappable(struct kvm_memory_slot *slot, gfn_t s=
+tart, gfn_t end)
+> > +{
+> > +     return kvm_slot_gmem_toggle_mappable(slot, start, end, false);
+> > +}
+> > +
+> > +bool kvm_slot_gmem_is_mappable(struct kvm_memory_slot *slot, gfn_t gfn=
+)
+> > +{
+> > +     struct kvm_gmem *gmem =3D slot->gmem.file->private_data;
+> > +     unsigned long _gfn =3D gfn;
+> > +
+> > +     return !xa_find(&gmem->unmappable_gfns, &_gfn, ULONG_MAX, XA_PRES=
+ENT);
+> > +}
+> > +
+> > +static bool kvm_gmem_isfaultable(struct vm_fault *vmf)
+> > +{
+> > +     struct kvm_gmem *gmem =3D vmf->vma->vm_file->private_data;
+> > +     struct inode *inode =3D file_inode(vmf->vma->vm_file);
+> > +     pgoff_t pgoff =3D vmf->pgoff;
+> > +     struct kvm_memory_slot *slot;
+> > +     unsigned long index;
+> > +     bool r =3D true;
+> > +
+> > +     filemap_invalidate_lock(inode->i_mapping);
+> > +
+> > +     xa_for_each_range(&gmem->bindings, index, slot, pgoff, pgoff) {
+> > +             pgoff_t base_gfn =3D slot->base_gfn;
+> > +             pgoff_t gfn_pgoff =3D slot->gmem.pgoff;
+> > +             pgoff_t gfn =3D base_gfn + max(gfn_pgoff, pgoff) - gfn_pg=
+off;
+> > +
+> > +             if (!kvm_slot_gmem_is_mappable(slot, gfn)) {
+> > +                     r =3D false;
+> > +                     break;
+> > +             }
+> > +     }
+> > +
+> > +     filemap_invalidate_unlock(inode->i_mapping);
+> > +
+> > +     return r;
+> > +}
+> > +
+> > +static vm_fault_t kvm_gmem_fault(struct vm_fault *vmf)
+> > +{
+> > +     struct folio *folio;
+> > +
+> > +     folio =3D kvm_gmem_get_folio(file_inode(vmf->vma->vm_file), vmf->=
+pgoff);
+> > +     if (!folio)
+> > +             return VM_FAULT_SIGBUS;
+> > +
+> > +     if (!kvm_gmem_isfaultable(vmf)) {
+> > +             folio_unlock(folio);
+> > +             folio_put(folio);
+> > +             return VM_FAULT_SIGBUS;
+> > +     }
+> > +
+> > +     vmf->page =3D folio_file_page(folio, vmf->pgoff);
+> > +     return VM_FAULT_LOCKED;
+> > +}
+> > +
+> > +static const struct vm_operations_struct kvm_gmem_vm_ops =3D {
+> > +     .fault =3D kvm_gmem_fault,
+> > +};
+> > +
+> > +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma=
+)
+> > +{
+> > +     if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=3D
+> > +         (VM_SHARED | VM_MAYSHARE)) {
+> > +             return -EINVAL;
+> > +     }
+> > +
+> > +     file_accessed(file);
+> > +     vm_flags_set(vma, VM_DONTDUMP);
+> > +     vma->vm_ops =3D &kvm_gmem_vm_ops;
+> > +
+> > +     return 0;
+> > +}
+> > +#else
+> > +#define kvm_gmem_mmap NULL
+> > +#endif /* CONFIG_KVM_PRIVATE_MEM_MAPPABLE */
+> > +
+> >  static struct file_operations kvm_gmem_fops =3D {
+> > +     .mmap           =3D kvm_gmem_mmap,
+> >       .open           =3D generic_file_open,
+> >       .release        =3D kvm_gmem_release,
+> >       .fallocate      =3D kvm_gmem_fallocate,
+> > @@ -369,6 +475,10 @@ static int __kvm_gmem_create(struct kvm *kvm, loff=
+_t size, u64 flags)
+> >       xa_init(&gmem->bindings);
+> >       list_add(&gmem->entry, &inode->i_mapping->i_private_list);
+> >
+> > +#ifdef CONFIG_KVM_PRIVATE_MEM_MAPPABLE
+> > +     xa_init(&gmem->unmappable_gfns);
+> > +#endif
+> > +
+> >       fd_install(fd, file);
+> >       return fd;
+> >
+> > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+> > index 1192942aef91..f4b4498d4de6 100644
+> > --- a/virt/kvm/kvm_main.c
+> > +++ b/virt/kvm/kvm_main.c
+> > @@ -3265,6 +3265,128 @@ static int next_segment(unsigned long len, int =
+offset)
+> >               return len;
+> >  }
+> >
+> > +#ifdef CONFIG_KVM_PRIVATE_MEM_MAPPABLE
+> > +static bool __kvm_gmem_is_mappable(struct kvm *kvm, gfn_t start, gfn_t=
+ end)
+> > +{
+> > +     struct kvm_memslot_iter iter;
+> > +
+> > +     lockdep_assert_held(&kvm->slots_lock);
+> > +
+> > +     kvm_for_each_memslot_in_gfn_range(&iter, kvm_memslots(kvm), start=
+, end) {
+> > +             struct kvm_memory_slot *memslot =3D iter.slot;
+> > +             gfn_t gfn_start, gfn_end, i;
+> > +
+> > +             gfn_start =3D max(start, memslot->base_gfn);
+> > +             gfn_end =3D min(end, memslot->base_gfn + memslot->npages)=
+;
+> > +             if (WARN_ON_ONCE(gfn_start >=3D gfn_end))
+> > +                     continue;
+> > +
+> > +             for (i =3D gfn_start; i < gfn_end; i++) {
+> > +                     if (!kvm_slot_gmem_is_mappable(memslot, i))
+> > +                             return false;
+> > +             }
+> > +     }
+> > +
+> > +     return true;
+> > +}
+> > +
+> > +bool kvm_gmem_is_mappable(struct kvm *kvm, gfn_t start, gfn_t end)
+> > +{
+> > +     bool r;
+> > +
+> > +     mutex_lock(&kvm->slots_lock);
+> > +     r =3D __kvm_gmem_is_mappable(kvm, start, end);
+> > +     mutex_unlock(&kvm->slots_lock);
+> > +
+> > +     return r;
+> > +}
+> > +
+> > +static bool __kvm_gmem_is_mapped(struct kvm *kvm, gfn_t start, gfn_t e=
+nd)
+> > +{
+> > +     struct kvm_memslot_iter iter;
+> > +
+> > +     lockdep_assert_held(&kvm->slots_lock);
+> > +
+> > +     kvm_for_each_memslot_in_gfn_range(&iter, kvm_memslots(kvm), start=
+, end) {
+> > +             struct kvm_memory_slot *memslot =3D iter.slot;
+> > +             gfn_t gfn_start, gfn_end, i;
+> > +
+> > +             gfn_start =3D max(start, memslot->base_gfn);
+> > +             gfn_end =3D min(end, memslot->base_gfn + memslot->npages)=
+;
+> > +             if (WARN_ON_ONCE(gfn_start >=3D gfn_end))
+> > +                     continue;
+> > +
+> > +             for (i =3D gfn_start; i < gfn_end; i++) {
+> > +                     struct page *page;
+> > +                     bool is_mapped;
+> > +                     kvm_pfn_t pfn;
+> > +
+> > +                     if (WARN_ON_ONCE(kvm_gmem_get_pfn_locked(kvm, mem=
+slot, i, &pfn, NULL)))
+> > +                             continue;
+> > +
+> > +                     page =3D pfn_to_page(pfn);
+> > +                     is_mapped =3D page_mapped(page) || page_maybe_dma=
+_pinned(page);
+> > +                     unlock_page(page);
+> > +                     put_page(page);
+> > +
+> > +                     if (is_mapped)
+> > +                             return true;
+> > +             }
+> > +     }
+> > +
+> > +     return false;
+> > +}
+> > +
+> > +bool kvm_gmem_is_mapped(struct kvm *kvm, gfn_t start, gfn_t end)
+> > +{
+> > +     bool r;
+> > +
+> > +     mutex_lock(&kvm->slots_lock);
+> > +     r =3D __kvm_gmem_is_mapped(kvm, start, end);
+> > +     mutex_unlock(&kvm->slots_lock);
+> > +
+> > +     return r;
+> > +}
+> > +
+> > +static int kvm_gmem_toggle_mappable(struct kvm *kvm, gfn_t start, gfn_=
+t end,
+> > +                                 bool is_mappable)
+> > +{
+> > +     struct kvm_memslot_iter iter;
+> > +     int r =3D 0;
+> > +
+> > +     mutex_lock(&kvm->slots_lock);
+> > +
+> > +     kvm_for_each_memslot_in_gfn_range(&iter, kvm_memslots(kvm), start=
+, end) {
+> > +             struct kvm_memory_slot *memslot =3D iter.slot;
+> > +             gfn_t gfn_start, gfn_end;
+> > +
+> > +             gfn_start =3D max(start, memslot->base_gfn);
+> > +             gfn_end =3D min(end, memslot->base_gfn + memslot->npages)=
+;
+> > +             if (WARN_ON_ONCE(start >=3D end))
+> > +                     continue;
+> > +
+> > +             r =3D kvm_slot_gmem_toggle_mappable(memslot, gfn_start, g=
+fn_end, is_mappable);
+> > +             if (WARN_ON_ONCE(r))
+> > +                     break;
+> > +     }
+> > +
+> > +     mutex_unlock(&kvm->slots_lock);
+> > +
+> > +     return r;
+> > +}
+> > +
+> > +int kvm_gmem_set_mappable(struct kvm *kvm, gfn_t start, gfn_t end)
+> > +{
+> > +     return kvm_gmem_toggle_mappable(kvm, start, end, true);
+> > +}
+> > +
+> > +int kvm_gmem_clear_mappable(struct kvm *kvm, gfn_t start, gfn_t end)
+> > +{
+> > +     return kvm_gmem_toggle_mappable(kvm, start, end, false);
+> > +}
+> > +
+> > +#endif /* CONFIG_KVM_PRIVATE_MEM_MAPPABLE */
+> > +
+> >  /* Copy @len bytes from guest memory at '(@gfn * PAGE_SIZE) + @offset'=
+ to @data */
+> >  static int __kvm_read_guest_page(struct kvm_memory_slot *slot, gfn_t g=
+fn,
+> >                                void *data, int offset, int len)
+>
+> [1] https://lore.kernel.org/all/20230914015531.1419405-15-seanjc@google.c=
+om/
+> [2] https://lore.kernel.org/all/cover.1691446946.git.ackerleytng@google.c=
+om/T/
+> [3] https://lore.kernel.org/all/ZQOmcc969s90DwNz@google.com/
 
