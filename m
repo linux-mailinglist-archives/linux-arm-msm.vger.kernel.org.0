@@ -1,156 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-27920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 918A99479CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 12:29:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B70779479E4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 12:33:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EB6E7B21AE6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 10:29:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 71766281C5C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 10:33:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2657115958D;
-	Mon,  5 Aug 2024 10:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A27CB1537D9;
+	Mon,  5 Aug 2024 10:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="TrRFl9qs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LzscwnAe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA1D15A84E;
-	Mon,  5 Aug 2024 10:25:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2182213CFAB
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Aug 2024 10:33:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722853557; cv=none; b=LR94Sctyd1pMRcGs8Ep1+xX3F4zuovZT6b3lbOYIHwy7z+yzfC/1Bc/Mexo/iqGQTi1pDym4wTYny7tk4k0APvyP2Rz4SVdX1Uskfnsl9D0edisxsSOGrElvjUAGs/rSli6cAxDmgJfDsWKiRh0lhkCoXCUT8bvZbzjhZqhuvGY=
+	t=1722853994; cv=none; b=Y2m6ztrU4GtLqj2v+t0XigIRiXbJNXeJ0orFDOQshcm4RG6NHg7B+vnV+5FlRK/JwxpIlWR/25/0M82gTDthU+n8/cfLeufoY3DOB07Am38sQQ0/BxYUY7751mMLXRyIlj7rDmDdo418zFYTMhCTBVKyy1BfFUCUQdkINYPpDWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722853557; c=relaxed/simple;
-	bh=bChlo37KtePbk/JIXsBBt2KGiCgH1m93Kf8uViSeDvA=;
-	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=dlRls76EWppfT/FDDWVEi9XsNLujwjP9YWBRzb2HcRWxXiKL8wmeG4EilyDhG99qxLY1GpCcBRNui8NNw1D+CU7y+zv2WIAT2IBjiQkc3g8RBCbXvXXsx8qyxmcF25hJtGD1kU7d9caRvJM9RC0ro3D04BMTlApdtyrH2WhfaCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=TrRFl9qs; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Date:Sender:Message-Id:Content-Type:
-	Content-Transfer-Encoding:MIME-Version:Subject:Cc:To:From:References:
-	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=Z8gY6jZiiMLzyoWt7ctY5h/IUzzdZpexpgOZkbqhuD8=; b=TrRFl9qsHvPDsSkdT7MH5ntAuR
-	/N4NTQPn0pPysHsFWRRjfOgF0b2SJi21zUd/h3C9oHG4WDfqQ+0PPn7s1PlcD6qELAoBy0IvWZ0a+
-	6H1v3VbdQxe+UkK7dGcvq6wWTw6glLRFNH3lwn13Kr8RcThuC6iDDYJ+Co4MQ87+jbavmlg6FaWdi
-	aD3KVU9AhVIA9urpCmC1dXBqypyUFNHWlSruaIwnMU6LapXoqVLjV+870yJNlUPdnanwGn3ePtqp9
-	EuDYt8t+hj/afFyrJO+h+OTSQn43pIn6jF153IXWLxj4/fJcdhsmCB1T1boKxU22qSO7UXFQD6jr2
-	LAy5eXnQ==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:49728 helo=rmk-PC.armlinux.org.uk)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <rmk@armlinux.org.uk>)
-	id 1sauuN-0002fY-1w;
-	Mon, 05 Aug 2024 11:25:43 +0100
-Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1sauuS-000tvz-6E; Mon, 05 Aug 2024 11:25:48 +0100
-In-Reply-To: <ZrCoQZKo74zvKMhT@shell.armlinux.org.uk>
-References: <ZrCoQZKo74zvKMhT@shell.armlinux.org.uk>
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-To: Serge Semin <fancer.lancer@gmail.com>
-Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrew Halaney <ahalaney@redhat.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	bpf@vger.kernel.org,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sneh Shah <quic_snehshah@quicinc.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH RFC net-next v4 14/14] net: stmmac: Activate Inband/PCS flag
- based on the selected iface
+	s=arc-20240116; t=1722853994; c=relaxed/simple;
+	bh=aCg8Y7NDdsxbBmImd9uRerZmF7tRLZUEY04gUZ817ow=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fnTiKcAR3uRPOQii4xOTCwO5WR9KYxet9CoVFiOTWW/MD8dcuAveBRkMKcQzmrvAMDprByhmMnn3/dYelw+ajgAKEiWctaPEgckVdiQFOwAzwg/oiRLGTekG361cCuBhcvaYUrKD+13j9zxBE+Hl2lCcfa1PydJsPyXXsayB6hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LzscwnAe; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-66a048806e6so87667287b3.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Aug 2024 03:33:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1722853991; x=1723458791; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=aCg8Y7NDdsxbBmImd9uRerZmF7tRLZUEY04gUZ817ow=;
+        b=LzscwnAeCjD4FYkC5yo3LvvbRDw+wo9vP077qbgTn6BJHnl/wGemPeZbcXWul3tdgb
+         Zi+cwUTLpe3StbSpVbBOa5cYXi+xqy8+eSFZZS7LOSIJo/jbBNyA/P8wMeU262S5uZc+
+         25uxquCylRTBEmhn+PSL9HIcGbiYTtXTq7tFSLaHBQe0g9GFR1O3mLDv90aKyWG9d8xX
+         ycV0fr1+CU8ArmionVbWTxjPKAMigIasC9eIov63Imjn0+dC1pAqA4mhcRfHpQhCRunu
+         CePEvUpOBQSXyWKCjtCzjl4lGJ5SrSuTKhrtmAZUvJPLssGA8EhPQJ/nV2aeIbJ4unVt
+         Xrcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722853991; x=1723458791;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aCg8Y7NDdsxbBmImd9uRerZmF7tRLZUEY04gUZ817ow=;
+        b=HJTsGXS5oWjpWzFtdGakxW+RWJAUA5b1Yn9M9LzUkayaOZMH+gL+sFeaZ543NkQNxX
+         8Gdxu3QaJGzVBiITWqDlNA4qWjkscDc9e7s3/7XzptYBACQ9r+7D1Bgy2XTAVloSU7cq
+         d4vT0pU7hJWwevwKQIQcDkjuozI41bhSdFNV5RXc8oirJyYbaSpM5MLSRa7Nu0GS4NsU
+         MfxflstskU4WwPO57ba9Bc+7K1DADr4yqQgtwACgc+mwg+CJ2LPgTj4nO1YWvWwEvlC4
+         YjMsYnTgA298Cq8wjpC19UbxloFi2R99965RHLvL46Kb6gguVIARFg3Xj0m6633rMxNd
+         BwdQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVFYMl+pkAXWTGXdnpWnD9rDfW9eDr7fzn7vwTlyEmzKKjUgYOf4r5kRiBX9r43jX3GzUvoLUeJ+7SK+uzXvfFztKTdnc1+pQuRJeR5sA==
+X-Gm-Message-State: AOJu0Yx2ZI/zFsw5jLSVfMpdT1VfA9ZOyDuQM31tWA95TDNqYH1wD9By
+	kela3Vka3R/nbh7oRaFirrYnzZXcO3PrDHcdKxuFYKYOvbjhcO7gyMgE27JcMwGNzkKMRr1hKTw
+	GMl0BdcSMstFlVnQ93mYl880KqDEmrd5YpBEhwFddqAdwfJkN
+X-Google-Smtp-Source: AGHT+IGGEv61lZA9mh+6DUS9SFPSvDLpedgHfe82sAKsqEu8+0Y0OH2Uh3V5PtPQFVyIyuu+NY/A4IbZiEUJ+kCoNoQ=
+X-Received: by 2002:a05:6902:1441:b0:e0b:4e20:b592 with SMTP id
+ 3f1490d57ef6-e0bde21a393mr13367382276.6.1722853991091; Mon, 05 Aug 2024
+ 03:33:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1sauuS-000tvz-6E@rmk-PC.armlinux.org.uk>
-Sender: Russell King <rmk@armlinux.org.uk>
-Date: Mon, 05 Aug 2024 11:25:48 +0100
+References: <20240710061102.1323550-1-quic_varada@quicinc.com>
+ <20240710061102.1323550-6-quic_varada@quicinc.com> <d454e01f-3d6b-4a02-87cf-3d289bc6957c@linaro.org>
+ <ZpeLYG6vegJYZ5Rs@hu-varada-blr.qualcomm.com> <ZqCD3xtkLHbw9BHN@hu-varada-blr.qualcomm.com>
+ <iy3l3ybmvllqxtyqq7fifiokxaaedrs22davveel4ikjoqivdm@dinswoc52qpz>
+In-Reply-To: <iy3l3ybmvllqxtyqq7fifiokxaaedrs22davveel4ikjoqivdm@dinswoc52qpz>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Mon, 5 Aug 2024 12:32:34 +0200
+Message-ID: <CAPDyKFoSK4_gRtOY2_pZhT7AytZ4qpZpRTzg5cOrqJj7A22b6A@mail.gmail.com>
+Subject: Re: [PATCH v6 5/9] pmdomain: qcom: rpmpd: Add IPQ9574 power domains
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Varadarajan Narayanan <quic_varada@quicinc.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org, 
+	mturquette@baylibre.com, sboyd@kernel.org, ilia.lin@kernel.org, 
+	rafael@kernel.org, viresh.kumar@linaro.org, quic_sibis@quicinc.com, 
+	quic_rjendra@quicinc.com, danila@jiaxyga.com, neil.armstrong@linaro.org, 
+	otto.pflueger@abscue.de, abel.vesa@linaro.org, luca@z3ntu.xyz, 
+	geert+renesas@glider.be, stephan.gerhold@kernkonzept.com, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
+	linux-clk@vger.kernel.org, Praveenkumar I <quic_ipkumar@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Serge Semin <fancer.lancer@gmail.com>
+On Wed, 24 Jul 2024 at 19:26, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Wed, Jul 24, 2024 at 10:02:31AM GMT, Varadarajan Narayanan wrote:
+> > On Wed, Jul 17, 2024 at 02:44:08PM +0530, Varadarajan Narayanan wrote:
+> > > On Tue, Jul 16, 2024 at 02:15:12PM +0200, Konrad Dybcio wrote:
+> > > > On 10.07.2024 8:10 AM, Varadarajan Narayanan wrote:
+> > > > > From: Praveenkumar I <quic_ipkumar@quicinc.com>
+> > > > >
+> > > > > Add the APC power domain definitions used in IPQ9574.
+> > > > >
+> > > > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> > > > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> > > > > ---
+> > > >
+> > > > Could you please confirm [1]?
+> > > >
+> > > > Konrad
+> > > >
+> > > > [1] https://lore.kernel.org/linux-arm-msm/57dadb35-5dde-4127-87aa-962613730336@linaro.org/
+> > >
+> > > The author is off for a few days. Will get back to you once he is in.
+> >
+> > Have responded to that query. Please see https://lore.kernel.org/linux-arm-msm/ZqCCpf1FwLWulSgr@hu-varada-blr.qualcomm.com/
+>
+> If it responds to voltage values, please model it as a regulator rather
+> than a power domain.
 
-The HWFEATURE.PCSSEL flag is set if the PCS block has been synthesized
-into the DW GMAC controller. It's always done if the controller supports
-at least one of the SGMII, TBI, RTBI PHY interfaces. If none of these
-interfaces support was activated during the IP-core synthesize the PCS
-block won't be activated either and the HWFEATURE.PCSSEL flag won't be
-set. Based on that the RGMII in-band status detection procedure
-implemented in the driver hasn't been working for the devices with the
-RGMII interface support and with none of the SGMII, TBI, RTBI PHY
-interfaces available in the device.
+Just wanted to give my brief opinion around this too.
 
-Fix that just by dropping the dma_cap.pcs flag check from the conditional
-statement responsible for the In-band/PCS functionality activation. If the
-RGMII interface is supported by the device then the in-band link status
-detection will be also supported automatically (it's always embedded into
-the RGMII RTL code). If the SGMII interface is supported by the device
-then the PCS block will be supported too (it's unconditionally synthesized
-into the controller). The later is also correct for the TBI/RTBI PHY
-interfaces.
+I agree that it seems to make sense to model it as a regulator, but
+that doesn't necessarily mean that we shouldn't model it as a
+power-domain too.
 
-Note while at it drop the netdev_dbg() calls since at the moment of the
-stmmac_check_pcs_mode() invocation the network device isn't registered. So
-the debug prints will be for the unknown/NULL device.
+If it is a power-domain it should be modelled like that - and then the
+power-domain provider should be assigned as the consumer of that
+regulator.
 
-Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
-[rmk: fix build errors, only use PCS for SGMII if priv->dma_cap.pcs is set]
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
----
- .../net/ethernet/stmicro/stmmac/stmmac_main.c    | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
-
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index a57f5028d8aa..4fd9daecef09 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -1133,18 +1133,10 @@ static void stmmac_check_pcs_mode(struct stmmac_priv *priv)
- {
- 	int interface = priv->plat->mac_interface;
- 
--	if (priv->dma_cap.pcs) {
--		if ((interface == PHY_INTERFACE_MODE_RGMII) ||
--		    (interface == PHY_INTERFACE_MODE_RGMII_ID) ||
--		    (interface == PHY_INTERFACE_MODE_RGMII_RXID) ||
--		    (interface == PHY_INTERFACE_MODE_RGMII_TXID)) {
--			netdev_dbg(priv->dev, "PCS RGMII support enabled\n");
--			priv->hw->pcs = STMMAC_PCS_RGMII;
--		} else if (interface == PHY_INTERFACE_MODE_SGMII) {
--			netdev_dbg(priv->dev, "PCS SGMII support enabled\n");
--			priv->hw->pcs = STMMAC_PCS_SGMII;
--		}
--	}
-+	if (phy_interface_mode_is_rgmii(interface))
-+		priv->hw->pcs = STMMAC_PCS_RGMII;
-+	else if (priv->dma_cap.pcs && interface == PHY_INTERFACE_MODE_SGMII)
-+		priv->hw->pcs = STMMAC_PCS_SGMII;
- }
- 
- /**
--- 
-2.30.2
-
+Kind regards
+Uffe
 
