@@ -1,147 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-27945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20AC794802A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 19:18:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9857094802E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 19:19:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ACCD4B2275C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 17:18:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 584462874B6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 17:19:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 876E415DBB9;
-	Mon,  5 Aug 2024 17:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62EC115D5BE;
+	Mon,  5 Aug 2024 17:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gMdR76CX"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vLPgvzmO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503A015E5BD;
-	Mon,  5 Aug 2024 17:18:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D64F15C15E
+	for <linux-arm-msm@vger.kernel.org>; Mon,  5 Aug 2024 17:19:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722878291; cv=none; b=Cqw1nKOIe4XiMdRZspkCwkwGalkkiQ9QtkwXGOKlI059/rTbZgVafGRjKunomcHDIQ9MJJMS5C2AnjClytMJHeQEOKj6obvj3+jL/yx3BKJQzQnB14SHJKKASs0bfRIIk9Do19FUrJuVQi17cxtEeNg4AIUwxee534VEoMQm8ns=
+	t=1722878353; cv=none; b=szo0PKzcWZh5LGnmcW7cewqCmez7Ce6cuWUrOmBDzMQ0LJqDU1ZdwwU5h5kmeaR0Ot6wYDJGeQ809VC0Mx+8A/BYhRqxVKIMMQh6jZbWfbNnR6fxMr0d6h4nk5O3M6Vwlf9QweYSRgNZNTnih4/uvqspbsvmlOTLgDHqei3pu0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722878291; c=relaxed/simple;
-	bh=aqPHFht0h1h6CFOSYiIJSP0+ZfdrDcm2lDd1De0YOso=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AhwX9h0eWUUbQsTsPsTpyln7A939l0lBgj/546r2LxJEeZGQTRVRW3sPiZxz0ef6HC7g63vkYqV9swLzy0vrrfaux5LDUVboF7R1m4qHXZzUMoJibMSVTN/aUS/px5epBlU6D16fmPybDfBd9abzrT9FfzfolEKyh5yEwVx7Fbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gMdR76CX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5EB4C32782;
-	Mon,  5 Aug 2024 17:18:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722878291;
-	bh=aqPHFht0h1h6CFOSYiIJSP0+ZfdrDcm2lDd1De0YOso=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=gMdR76CX7+cLlu146Y2zDfp8XSBcVFb5l1X4ttVGaxMiUJYyVTszI0VwTZUAu82mQ
-	 rTElSXv3SHr+jR7bcWUEyxJLPMVhLh834+rM/qJGC1FLC4SyLt55zriF6oOfMrAdci
-	 NHThQghNd7h/UfGCqZh4XO/jId+aVxImw/Em0t2Y+J35RzLMgtWhgsiz8xxD6ADYee
-	 gQ80z+xlMzGvBKP7IVav4lVgnoWF0xWSIEF9QP95Xc8EyKiP3O4i1lIIVU7cFWEKGg
-	 EW8S0uYe5aZAtwPn8418w6iskmE18rKILx+M7+LGynQebGLow98ZewrBEbn3akdUZn
-	 f5QC9cUAJs+NA==
-Message-ID: <90582c92-ca50-4776-918d-b7486cf942b0@kernel.org>
-Date: Mon, 5 Aug 2024 19:18:04 +0200
+	s=arc-20240116; t=1722878353; c=relaxed/simple;
+	bh=ES2jTZ6KENmqgX9MrpJ4XHBRV9If+8kHjoEZgBp/ydA=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=tDz8YeSwVvw2BcrYiFKP09VNI4Jf88wDZQbMsPgm1PMywGjKq3HhQHtJ0mbJcrz/9ge51jlJFur33qUizBNjP/NlPSzJGsP9a2E4mt7NDka9zgVX/+FQ9x9cMttWVHEgdfiAtFqyFJFSUhXmOYo5wULoCF2oybVB6kOtUbjBx7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vLPgvzmO; arc=none smtp.client-ip=209.85.210.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-70d14fc3317so9395790b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Aug 2024 10:19:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1722878351; x=1723483151; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=87wYYlCyac0o9laXkTcZTzn1Jp4rf7gDwVC55K5UvRQ=;
+        b=vLPgvzmOlOMz9Nft9x0ZdrxMno2qOe1alAfRUJIYklap2bR+Al3IdCaIhn7QwdMcBl
+         aRcjvqh2RoZLv3ffWSTRdNuUo4FQyCcN6lF0cDuFHH2de2XGKbL/6wilE32oJ5N1AZrO
+         3LdGUGDXTmEIQm75YGOoFnZ0IJNdBEy6d9Bl+xwaoCUTX9gPLyJaL72YVoVyr3RECmyq
+         pZat6KnJOI6gpYdlw0BwhXy7aDM4MH7HWiTHbAzh1XIeUBzAkJrFu45PdYupw+TO+Irp
+         Nr5Ch4az0HvRImIErfktHcOEx/iqmIQTAGGlaPZ6cTnzjfkIx8qBQpSFAjX2wsplSTeh
+         zPwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722878351; x=1723483151;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=87wYYlCyac0o9laXkTcZTzn1Jp4rf7gDwVC55K5UvRQ=;
+        b=caOgcXdWdZw7zQENuBEG3EvYT5lCT372QF8rKEO/QBQxxSnYfFDplzdR+q1QuSt580
+         BicCJRNRF9YCkfk1TV4I5bZcDYy5mc7DD3AGYx2/wOv8nfc5okN2Do1NrHE5urOboSkz
+         Qfu5fbbbis+XOTP0aIvLCgy+rhWCMkZgzKiDARnm4K9Zosw9JD9kQy+RaObtjuEoSjWj
+         /S8einYaZcAtnm4eGqESq+0wkKdFhgsimydMleVzm4ZGXpXyk7VDqRkjoXuCoeGeqdEp
+         8dXZsTi3S0SDcwBsmxiHyzPnn4RFZ3oKmSGFlXjMRwTVmhealoQdneBXzg1znUWK5H4Q
+         EAvw==
+X-Forwarded-Encrypted: i=1; AJvYcCWqvWA5vPFXESglwmbCW1FpGzK7SKWzAwQLWjpXlWT6UjdfcKl5NBKU06eUYajGP96Uze4+YQk/Y/b1hgS3WCqdN8ulCjCgNt8NMA+l1g==
+X-Gm-Message-State: AOJu0YzdPMN6i5Hz1C+hC/AG9r2USToIyGOd3KeIhYIHPwm04Mq21Qq3
+	Tepup7ebXkjtxbGwSFwX/fy5X01VRDnBW07ZPv1f6eD+st2hbUAjvw+Tztz7+nLk+OOBZ2VHQm+
+	7PQILYdDjJQXcs+YmrDyFcQ==
+X-Google-Smtp-Source: AGHT+IEwc9XJlOMV7V25PTTSGoXOPbzFTCOo3wZFyrYqy6c/pJtVLczNwFnx8PjBfnZHFHlvbgx6nTmhxBNyQJb1uw==
+X-Received: from ackerleytng-ctop.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:13f8])
+ (user=ackerleytng job=sendgmr) by 2002:a05:6a00:91c8:b0:710:9d5d:f2ad with
+ SMTP id d2e1a72fcca58-7109d5df3bcmr33362b3a.2.1722878350954; Mon, 05 Aug 2024
+ 10:19:10 -0700 (PDT)
+Date: Mon, 05 Aug 2024 17:19:09 +0000
+In-Reply-To: <20240801090117.3841080-5-tabba@google.com> (message from Fuad
+ Tabba on Thu,  1 Aug 2024 10:01:11 +0100)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] dt-bindings: PCI: Add binding for qps615
-To: Bjorn Andersson <quic_bjorande@quicinc.com>,
- Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- cros-qcom-dts-watchers@chromium.org, Bartosz Golaszewski <brgl@bgdev.pl>,
- Jingoo Han <jingoohan1@gmail.com>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- andersson@kernel.org, quic_vbadigan@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
- <20240803-qps615-v2-1-9560b7c71369@quicinc.com>
- <5f65905c-f1e4-4f52-ba7c-10c1a4892e30@kernel.org>
- <f8985c98-82a5-08c3-7095-c864516b66b9@quicinc.com>
- <ZrEGypbL85buXEsO@hu-bjorande-lv.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <ZrEGypbL85buXEsO@hu-bjorande-lv.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Message-ID: <diqza5hqevle.fsf@ackerleytng-ctop.c.googlers.com>
+Subject: Re: [RFC PATCH v2 04/10] KVM: Add KVM capability to check if
+ guest_memfd can be mapped by the host
+From: Ackerley Tng <ackerleytng@google.com>
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	tabba@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 05/08/2024 19:07, Bjorn Andersson wrote:
-> On Mon, Aug 05, 2024 at 09:41:26AM +0530, Krishna Chaitanya Chundru wrote:
->> On 8/4/2024 2:23 PM, Krzysztof Kozlowski wrote:
->>> On 03/08/2024 05:22, Krishna chaitanya chundru wrote:
->>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,qps615.yaml b/Documentation/devicetree/bindings/pci/qcom,qps615.yaml
-> [..]
->>>> +  qps615,axi-clk-freq-hz:
->>>> +    description:
->>>> +      AXI clock which internal bus of the switch.
->>>
->>> No need, use CCF.
->>>
->> ack
-> 
-> This is a clock that's internal to the QPS615, so there's no clock
-> controller involved and hence I don't think CCF is applicable.
+Fuad Tabba <tabba@google.com> writes:
 
-AXI does not sound that internal. DT rarely needs to specify internal
-clock rates. What if you want to define rates for 20 clocks? Even
-clock-frequency is deprecated, so why this would be allowed?
-bus-frequency is allowed for buses, but that's not the case here, I guess?
+> Add the KVM capability KVM_CAP_GUEST_MEMFD_MAPPABLE, which is
+> true if mapping guest memory is supported by the host.
+>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> ---
+>  include/uapi/linux/kvm.h | 3 ++-
+>  virt/kvm/kvm_main.c      | 4 ++++
+>  2 files changed, 6 insertions(+), 1 deletion(-)
+>
+> <snip>
 
-Best regards,
-Krzysztof
+Why do we need a cap for `KVM_CAP_GUEST_MEMFD_MAPPABLE` instead of just
+making guest_memfd mmap-able?
 
+Is this to prevent breaking userspace, because a user might be relying
+on guest_memfd being not mmap-able?
 
