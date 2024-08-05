@@ -1,235 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-27893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D1D49474EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 07:58:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA6949474F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 08:00:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 604AB1C20947
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 05:58:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 957B01F21180
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 06:00:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB7B7143C6A;
-	Mon,  5 Aug 2024 05:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F26A1448EB;
+	Mon,  5 Aug 2024 06:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ob7Z19Gm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="suh/guR3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E97143C4B;
-	Mon,  5 Aug 2024 05:57:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05481422AB;
+	Mon,  5 Aug 2024 06:00:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722837476; cv=none; b=eBewUZqf906AyS1X5LM5bKkFhl6KeknMWv0MehAIzFhpvG8UOTgJwWHAL44qOZbrbHztdDRjLEPZhzfJNS/jPliwXAfqo+inRMARsLUoHYdqY3AiOjIoU5emWsa9k+MkxaaozmROESgu5he6QrOARWsX5+4pKWCmypMe7/oYvL8=
+	t=1722837608; cv=none; b=FPYLbrG5hwoL6zzAfLwwmvAh/JyFRSrNXOEGxkci4aiQ1HjbDhaSSyMpP4J2xh8ChI6D+K/pJeiEVKnaqQXnNdgR1epG4qO3SRZUecTjjLZiktmFjtKsvuZedLqFfx8zSmW+bQ67qBL9XLRX6whMrUQsomRsqPh3W2H3Hy2ORgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722837476; c=relaxed/simple;
-	bh=qu+yzfCh32NsS+pabuQNKzqmRPtfgtTFOkbIoXQ5gzM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=gvI6V/2b7mAjGS134LN7uQ0Nh785o1NUfH0i+lchJJThi6uNkpS47COmDJUFYd7Dx2I9HUkiyo/8MgPUwiTSStntY4SQ4mgkJhPb2SqkitVKBpsl7mnB6pSr1c5Es4CjxDOFMT6slyiOMpl2uGKxqTjJQ7ToYHjitDBqONKqj9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ob7Z19Gm; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4752Vexx023857;
-	Mon, 5 Aug 2024 05:57:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	c0m0GUgmMGH4VcXYWgBHUtXWyVZrk/+pijv15cQ1x+w=; b=Ob7Z19GmpYNVu+kN
-	C1c2fA8cYhZPx+syl7/RzXiaU2SiUupz0jtn/Admq86zPSNKaCjsh6tLXxTy26pW
-	SHiJW0JzgGlbUl3HsPzVcq5eaSvW9UEPikPICENhKiScXgs9fU35nPcxI2+15Kx6
-	DPUlLHEM5ir1b4P2xZfSOScDGdREbbEb+mZAp3apXQeDdVyzg7F/0cHvamvq5v9P
-	NHjTyB/nwk2Vp+u+afRkQgVllTjzqlD062GRSUxiOC5RZXz+vIfR7WnlBj+6T1PJ
-	FQrMQNMDfy7G7oDoLrJufDkb/SpMMS/VQ1pgTQaNpPB//uZoic84fxlj75n+TLBP
-	gMvkUQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40sbgru10w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 05 Aug 2024 05:57:45 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4755virR000531
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 5 Aug 2024 05:57:44 GMT
-Received: from [10.216.50.161] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 4 Aug 2024
- 22:57:38 -0700
-Message-ID: <7f48f71c-7f57-492c-47df-6aac1d3b794b@quicinc.com>
-Date: Mon, 5 Aug 2024 11:27:35 +0530
+	s=arc-20240116; t=1722837608; c=relaxed/simple;
+	bh=FEJF5Z2MyVBZjrdZZfW9XNluKyInOFfsVL8S4c55ThU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DuIiLagU0nuorxubbklD+TzMWwIUOdk+e3Da7hzyJlABZe4X8YDccduwH5gpEgZOLPadiullnL9qaPBw21RoKb0nIiLW7n6dDxx1t6LE2T8cjR2gs9uXvZH1lv4u1RHGUc/ncFuKV42evRYdh+pJsFEcyPdFJKM9rqj9LgiEy8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=suh/guR3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67247C32782;
+	Mon,  5 Aug 2024 05:59:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722837607;
+	bh=FEJF5Z2MyVBZjrdZZfW9XNluKyInOFfsVL8S4c55ThU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=suh/guR3rukB66LCk5ztj4b0+W/SOxDfK0jSjcigQDyhLwz7NQgU52h0/T1PLxtV+
+	 FSXxy+qbPIGA9eMHuu/jrBy5QZB8ddoqhzn3RA+RPiHpmRuv6tFcIjJJJjnNqIYffS
+	 KOgg9XeLACn0vtEMp8r8kHY+MFfV7BVXVq/HiIt9X+SdlrkKJ7cq8hiS3R3bxBdAzT
+	 Aup+/PtdURrBz+j9CwS5POzJH5GLsxQpCPg7i2jM788LmUOv4hcKE5MDhecxzefQpL
+	 WrL8C6gxbUU+0MIRqIBaYioBI9e38d6TKIVhvMwUjJ/WKMuHLHe3JDE9NZFzb5VVDp
+	 3sAPFWbaTMeJQ==
+Message-ID: <689b2c3f-b07a-43d4-9273-60339a1d6a23@kernel.org>
+Date: Mon, 5 Aug 2024 07:59:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v2 1/8] dt-bindings: PCI: Add binding for qps615
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/11] dt-bindings: interconnect: qcom,sm8350: drop DISP
+ nodes
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Jonathan Marek <jonathan@marek.ca>,
+ Robert Foss <rfoss@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Georgi Djakov <djakov@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Mike Tipton <quic_mdtipton@quicinc.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20240804-sm8350-fixes-v1-0-1149dd8399fe@linaro.org>
+ <20240804-sm8350-fixes-v1-6-1149dd8399fe@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Lorenzo Pieralisi
-	<lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?=
-	<kw@linux.com>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas
-	<bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, Jingoo Han <jingoohan1@gmail.com>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>
-CC: <andersson@kernel.org>, <quic_vbadigan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Bartosz
- Golaszewski" <bartosz.golaszewski@linaro.org>
-References: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
- <20240803-qps615-v2-1-9560b7c71369@quicinc.com>
- <5f65905c-f1e4-4f52-ba7c-10c1a4892e30@kernel.org>
- <f8985c98-82a5-08c3-7095-c864516b66b9@quicinc.com>
- <58317fe2-fbea-400e-bd1d-8e64d1311010@kernel.org>
- <100e27d7-2714-89ca-4a98-fccaa5b07be3@quicinc.com>
- <c80ae784-c1f3-4046-9d86-d7e57bd93669@kernel.org>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <c80ae784-c1f3-4046-9d86-d7e57bd93669@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <20240804-sm8350-fixes-v1-6-1149dd8399fe@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: OAR1W457MC8YipMhCR3X__uupBlBKkR9
-X-Proofpoint-GUID: OAR1W457MC8YipMhCR3X__uupBlBKkR9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-04_14,2024-08-02_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- impostorscore=0 malwarescore=0 suspectscore=0 phishscore=0 mlxscore=0
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0 spamscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408050041
 
-
-
-On 8/5/2024 10:58 AM, Krzysztof Kozlowski wrote:
-> On 05/08/2024 07:26, Krishna Chaitanya Chundru wrote:
->>
->>
->> On 8/5/2024 10:44 AM, Krzysztof Kozlowski wrote:
->>> On 05/08/2024 06:11, Krishna Chaitanya Chundru wrote:
->>>
->>>
->>>>>> +
->>>>>> +  qcom,nfts:
->>>>>> +    $ref: /schemas/types.yaml#/definitions/uint8
->>>>>> +    description:
->>>>>> +      Fast Training Sequence (FTS) is the mechanism that
->>>>>> +      is used for bit and Symbol lock.
->>>>>
->>>>> What are the values? Why this is uint8?
->>>>>
->>>> These represents number of fast training sequence and doesn't have
->>>> any units and the maximum value for this is 0xFF only so we used
->>>> uint8.
->>>>> You described the desired Linux feature or behavior, not the actual
->>>>> hardware. The bindings are about the latter, so instead you need to
->>>>> rephrase the property and its description to match actual hardware
->>>>> capabilities/features/configuration etc.
->>>> ack.
->>>>>
->>>>>> +
->>>>>> +allOf:
->>>>>> +  - $ref: /schemas/pci/pci-bus-common.yaml#
->>>>>> +  - if:
->>>>>> +      properties:
->>>>>> +        compatible:
->>>>>> +          contains:
->>>>>> +            const: pci1179,0623
->>>>>> +      required:
->>>>>> +        - compatible
->>>>>
->>>>> Why do you have entire if? You do not have multiple variants, drop.
->>>>>
->>>> The child nodes also referencing the qcom,qps615.yaml# node, I tried
->>>> to use this way to say "the below properties are for the required for
->>>> parent and optional for child".
->>>
->>> I don't understand how child device can be exactly the same as parent
->>> device. How does it look in terms of hardware? Pins and supplies?
->>>
->>>>>> +    then:
->>>>>> +      required:
->>>>>> +        - vdd18-supply
->>>>>> +        - vdd09-supply
->>>>>> +        - vddc-supply
->>>>>> +        - vddio1-supply
->>>>>> +        - vddio2-supply
->>>>>> +        - vddio18-supply
->>>>>> +        - qcom,qps615-controller
->>>>>> +        - reset-gpios
->>>>>> +
->>>>>> +patternProperties:
->>>>>> +  "@1?[0-9a-f](,[0-7])?$":
->>>>>> +    type: object
->>>>>> +    $ref: qcom,qps615.yaml#
->>>>>> +    additionalProperties: true
->>>>>
->>>>> Nope, drop pattern Properties or explain what is this.
->>>>>
->>>> the child nodes represent the downstream ports of the PCIe
->>>> switch which wants to use same properties that is why
->>>> I tried to use this pattern properties.
->>>
->>> Downstream port is not the same as device. Why downstream port has the
->>> same supplies? To which pins are they connected?
->>>
->>>
->> Hi Krzysztof,
->>
->> Downstream ports dosen't have pins or supplies to power on.
->>
->> But there are properties like qcom,l0s-entry-delay-ns,
->> qcom,l1-entry-delay-ns,  qcom,tx-amplitude-millivolt etc which
->> applicable for child nodes also. Instead of re-declaring the
->> these properties again I tried to use pattern properties.
+On 04/08/2024 07:40, Dmitry Baryshkov wrote:
+> Vendor msm-5.x kernels declared duplicate indices for some of display
+> nodes to be used by separate display RSC and BCM voters. As it is not
+> clear how this separate BCM should be modelled upstream and the device
+> trees do not use these indices, drop them for now.
 > 
-> You could use $defs for them, but I don't understand how does these
-> properties apply for both main device and ports. It seems you are
-> writing binding to match some driver behavior. Let's start from basics -
-> describe the hardware.
-> 
-Hi Krzysztof,
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-QPS615 has a 3 downstream ports and 1 upstream port as described below
-diagram.
-For this entire switch there are some supplies which we described in the
-dt-binding (vdd18-supply, vdd09-supply etc) and one GPIO which controls
-reset of the switch (reset-gpio). The switch hardware can configure the
-individual ports DSP0, DSP1, DSP2, upstream port and also one integrated
-ethernet endpoint which is connected to DSP2(I didn't mentioned in the
-diagram) through I2C.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-The properties other than supplies,i2c client, reset gpio which
-are added will be applicable for all the ports.
-_______________________________________________________________
-|   |i2c|                   QPS615       |Supplies||Resx gpio |
-|   |___|              _________________ |________||__________|
-|      ________________| Upstream port |_____________         |
-|      |               |_______________|            |         |
-|      |                       |                    |         |
-|      |                       |                    |         |
-|  ____|_____              ____|_____            ___|____     |
-|  |DSP 0   |              | DSP 1  |            | DSP 2|     |
-|  |________|              |________|            |______|     |
-|_____________________________________________________________|
+Best regards,
+Krzysztof
 
-- Krishna Chaitanya.
-> Best regards,
-> Krzysztof
-> 
 
