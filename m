@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-27927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65A08947D80
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 17:02:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB177947D83
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 17:02:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CA0CDB21B9D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 15:02:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 87C60284BBA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 15:02:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93C7D15EFBD;
-	Mon,  5 Aug 2024 15:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF0BA15F400;
+	Mon,  5 Aug 2024 15:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mMW4bezK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tPB+SZ7W"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6324C15EFA5;
-	Mon,  5 Aug 2024 15:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8920D15F3F3;
+	Mon,  5 Aug 2024 15:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722870017; cv=none; b=BrY0N9zmNQyOb1N40jkV4mEaj/P3LOgW1qY0jZBscOP+z7jNYm72ftEnqDwP8KKBcd05c7WcrH5WkE8jSM01XRaeowsGYESd1otLJNno0RQIkOuK/3nhAGiPin6sx7tYWeooVELqvQ4LNH8uX44trD6pO1MKBjldaSGryN2zS/E=
+	t=1722870018; cv=none; b=ZZrhIsOBnRE6NY8Xx31fOrnEG13uyToXFEKbYuzls0WE0oj8kwgEQIUDPvaflxJiogwFdyFfF8wsPlH77pSO6bZVINKy8vW23Fwak49j67UWUOiPT18tI43VKAow94jUR720LmwV5M4+wscAU7QKg1MOsBFcxvefDNpdWuaV2MQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722870017; c=relaxed/simple;
-	bh=WTJSrdytZtczOAu4LbWjwl1Y2flV6/wovwmFy4Bx0Wk=;
+	s=arc-20240116; t=1722870018; c=relaxed/simple;
+	bh=QMaY66zonE2pj6F2rnx/k9di7OL7zdn/ZAOCrMtqjjk=;
 	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=WezzaWqzl5PQ5KlLbZHl6bwygCBgeyS4uuB5xSAa2ZV5m5qH4/F41sOJNulAKVEsF+Cjar2e0uIpU2CzSyaiyXhfLn9LbO4SvVQJXigKjpAAXIiFzAMQ1v2VnU7iQ7OTm2NVbb821JqXVr9Tz8a3SH/wJFvy8lZFYEItvHe2X/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mMW4bezK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6B0C32782;
-	Mon,  5 Aug 2024 15:00:16 +0000 (UTC)
+	 Message-Id:Subject; b=Ew0AMwCovDm6A0v3AmXePSaOy/wzvQOa1L0VO76+/x6UXrVJ0ry++gNOpx5k776WcTD7K3/duSBjYarHEVw4x3NGyKrJaQOJzBVZo0/6pQn4+nwQZWj4OHUgIOYzUShxFJ2eduQZ5yY3ya/3PqqDpyoFCyi6hOH5IoTi4YuSFM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tPB+SZ7W; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B1BC4AF0E;
+	Mon,  5 Aug 2024 15:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722870017;
-	bh=WTJSrdytZtczOAu4LbWjwl1Y2flV6/wovwmFy4Bx0Wk=;
+	s=k20201202; t=1722870018;
+	bh=QMaY66zonE2pj6F2rnx/k9di7OL7zdn/ZAOCrMtqjjk=;
 	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=mMW4bezKqanqD7Sd7Tr7JRWAez79nOSPB9FO7I4nQnncT+L8XxsN2dCnAQbBIKPvH
-	 aco+9QNqllOW0zusnraUNN/LULkYH9dEBRnLHdgBOu8gkQdKZ5jmlqXzPhOPyUD79i
-	 Q3NIVLnRLH5enRSVX0ZUwZPRSDI424YhMzlEoMW+UmqkkqFb+c6qzlRkf9lTG2U2Vg
-	 hcSfVR/wH3g+QWiRCJIa3jydLc0pd5k2KbaJSGwjkRmI4l3q2QWptgJwNv1A+89Jgo
-	 Zj3KOkNHz4vLGlG/r96mfXVJunFfqdS+oE7VciNyW85IwgoY2c/lhTvCpOYhxUyaHD
-	 IaaogWLpfp1AQ==
-Date: Mon, 05 Aug 2024 09:00:15 -0600
+	b=tPB+SZ7W49QWln/GkG5rDG+UhrTCZmiyGvjhSPPzgOqC6xA47ilxJgDesXzD5zs6K
+	 79c/ytuSGH50LhKSF9NI1p9Y8wWDEICdFq92jK2Zo7QOwqiGTPZNO27lM55sKd/9yl
+	 g8xZ5dIgSiqoQViUK8drs53/75TOtfp2hMbkkBNWT37jewIwwJlJBEi0NHvTAMLyFr
+	 CYlTl9dSdOiWv2oEvXYcNv0eAYQeA/1sl/pt3XpqP/kZbDMTRK5omvuRGEyZ6pLjP0
+	 hLld8RojhtWLc5FL4MfXVEnTqLzFCfo0Xr7uge1QF7t3H7iuxUkh8XrpoaglhskPDj
+	 MxnFcPedxoQUw==
+Date: Mon, 05 Aug 2024 09:00:17 -0600
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,103 +51,51 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
- Bartosz Golaszewski <brgl@bgdev.pl>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Jingoo Han <jingoohan1@gmail.com>, 
- Bjorn Helgaas <bhelgaas@google.com>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, quic_vbadigan@quicinc.com, 
- linux-arm-msm@vger.kernel.org, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
- linux-pci@vger.kernel.org, andersson@kernel.org, devicetree@vger.kernel.org, 
- cros-qcom-dts-watchers@chromium.org, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-In-Reply-To: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
-References: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
-Message-Id: <172286967047.2709959.5792292507196710539.robh@kernel.org>
-Subject: Re: [PATCH v2 0/8] PCI: Enable Power and configure the QPS615 PCIe
- switch
+To: "Lin, Meng-Bo" <linmengbo06890@proton.me>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+ ~postmarketos/upstreaming@lists.sr.ht, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+ Stephan Gerhold <stephan@gerhold.net>, linux-kernel@vger.kernel.org, 
+ Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>, 
+ phone-devel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+In-Reply-To: <20240804065854.42437-1-linmengbo06890@proton.me>
+References: <20240804065854.42437-1-linmengbo06890@proton.me>
+Message-Id: <172286967129.2710260.12547511216605996134.robh@kernel.org>
+Subject: Re: [PATCH v2 0/2] arm64: dts: qcom: msm8916-samsung-j3ltetw: Add
+ initial device tree
 
 
-On Sat, 03 Aug 2024 08:52:46 +0530, Krishna chaitanya chundru wrote:
-> QPS615 is the PCIe switch which has one upstream and three downstream
-> ports. One of the downstream ports is used as endpoint device of Ethernet
-> MAC. Other two downstream ports are supposed to connect to external
-> device. One Host can connect to QPS615 by upstream port.
+On Sun, 04 Aug 2024 06:59:06 +0000, Lin, Meng-Bo wrote:
+> The dts and dtsi add support for msm8916 variant of Samsung Galaxy J3
+> SM-J320YZ smartphone released in 2016.
 > 
-> QPS615 switch power is controlled by the GPIO's. After powering on
-> the switch will immediately participate in the link training. if the
-> host is also ready by that time PCIe link will established.
+> Add a device tree for SM-J320YZ with initial support for:
 > 
-> The QPS615 needs to configured certain parameters like de-emphasis,
-> disable unused port etc before link is established.
+> - GPIO keys
+> - SDHCI (internal and external storage)
+> - USB Device Mode
+> - UART (on USB connector via the SM5703 MUIC)
+> - WCNSS (WiFi/BT)
+> - Regulators
+> - QDSP6 audio
+> - Speaker/earpiece/headphones/microphones via digital/analog codec in
+>   MSM8916/PM8916
+> - WWAN Internet via BAM-DMUX
+> - Touchscreen
+> - Accelerometer
 > 
-> The device tree properties are parsed per node under pci-pci bridge in the
-> devicetree. Each node has unique bdf value in the reg property, driver
-> uses this bdf to differentiate ports, as there are certain i2c writes to
-> select particulat port.
+> There are different variants of J3, with some differences in MUIC, sensor,
+> NFC and touch key I2C buses.
 > 
-> As the controller starts link training before the probe of pwrctl driver,
-> the PCIe link may come up before configuring the switch itself.
-> To avoid this introduce two functions in pci_ops to start_link() &
-> stop_link() which will disable the link training if the PCIe link is
-> not up yet.
-> 
-> Now PCI pwrctl device is the child of the pci-pcie bridge, if we want
-> to enable the suspend resume for pwrctl device there may be issues
-> since pci bridge will try to access some registers in the config which
-> may cause timeouts or Un clocked access as the power can be removed in
-> the suspend of pwrctl driver.
-> 
-> To solve this make PCIe controller as parent to the pci pwr ctrl driver
-> and create devlink between host bridge and pci pwrctl driver so that
-> pci pwrctl driver will go suspend only after all the PCIe devices went
-> to suspend.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
-> Changes in V1:
-> - Fix the code as per the comments given.
-> - Removed D3cold D0 sequence in suspend resume for now as it needs
->   seperate discussion.
-> - change to dt approach for configuring the switch instead of request_firmware() approach
-> - Link to v1: https://lore.kernel.org/linux-pci/20240626-qps615-v1-4-2ade7bd91e02@quicinc.com/T/
-> ---
+> The common parts are shared in msm8916-samsung-j3-common.dtsi to reduce
+> duplication.
 > 
 > ---
-> Krishna chaitanya chundru (8):
->       dt-bindings: PCI: Add binding for qps615
->       dt-bindings: trivial-devices: Add qcom,qps615
->       arm64: dts: qcom: qcs6490-rb3gen2: Add node for qps615
->       PCI: Change the parent to correctly represent pcie hierarchy
->       PCI: Add new start_link() & stop_link function ops
->       PCI: dwc: Add support for new pci function op
->       PCI: qcom: Add support for host_stop_link() & host_start_link()
->       PCI: pwrctl: Add power control driver for qps615
-> 
->  .../devicetree/bindings/pci/qcom,qps615.yaml       | 191 ++++++
->  .../devicetree/bindings/trivial-devices.yaml       |   2 +
->  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts       | 121 ++++
->  arch/arm64/boot/dts/qcom/sc7280.dtsi               |   2 +-
->  drivers/pci/bus.c                                  |   3 +-
->  drivers/pci/controller/dwc/pcie-designware-host.c  |  18 +
->  drivers/pci/controller/dwc/pcie-designware.h       |  16 +
->  drivers/pci/controller/dwc/pcie-qcom.c             |  39 ++
->  drivers/pci/pwrctl/Kconfig                         |   7 +
->  drivers/pci/pwrctl/Makefile                        |   1 +
->  drivers/pci/pwrctl/core.c                          |   9 +-
->  drivers/pci/pwrctl/pci-pwrctl-qps615.c             | 638 +++++++++++++++++++++
->  include/linux/pci.h                                |   2 +
->  13 files changed, 1046 insertions(+), 3 deletions(-)
-> ---
-> base-commit: 1722389b0d863056d78287a120a1d6cadb8d4f7b
-> change-id: 20240727-qps615-e2894a38d36f
-> 
-> Best regards,
-> --
-> Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> v2: Add accelerometer
+> V1: Initial device tree
+> Link: https://lore.kernel.org/r/20240802080701.3643-1-linmengbo06890@proton.me
 > 
 > 
 > 
@@ -167,13 +115,12 @@ make sure dt-schema is up to date:
   pip3 install dtschema --upgrade
 
 
-New warnings running 'make CHECK_DTBS=y qcom/qcs6490-rb3gen2.dtb' for 20240803-qps615-v2-0-9560b7c71369@quicinc.com:
+New warnings running 'make CHECK_DTBS=y qcom/msm8916-samsung-j3ltetw.dtb' for 20240804065854.42437-1-linmengbo06890@proton.me:
 
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts:746.12-753.5: Warning (pci_device_bus_num): /soc@0/pcie@1c08000/pcie@0/pcie@0,0/pcie@1,0: PCI bus number 2 out of range, expected (0 - 0)
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts:755.12-762.5: Warning (pci_device_bus_num): /soc@0/pcie@1c08000/pcie@0/pcie@0,0/pcie@2,0: PCI bus number 2 out of range, expected (0 - 0)
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts:764.12-786.5: Warning (pci_device_bus_num): /soc@0/pcie@1c08000/pcie@0/pcie@0,0/pcie@3,0: PCI bus number 2 out of range, expected (0 - 0)
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts:771.13-777.6: Warning (pci_device_bus_num): /soc@0/pcie@1c08000/pcie@0/pcie@0,0/pcie@3,0/pcie@0,0: PCI bus number 5 out of range, expected (0 - 0)
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts:779.13-785.6: Warning (pci_device_bus_num): /soc@0/pcie@1c08000/pcie@0/pcie@0,0/pcie@3,0/pcie@0,1: PCI bus number 5 out of range, expected (0 - 0)
+arch/arm64/boot/dts/qcom/msm8916-samsung-j3ltetw.dtb: /soc@0/power-manager@b088000: failed to match any schema with compatible: ['qcom,msm8916-acc']
+arch/arm64/boot/dts/qcom/msm8916-samsung-j3ltetw.dtb: /soc@0/power-manager@b098000: failed to match any schema with compatible: ['qcom,msm8916-acc']
+arch/arm64/boot/dts/qcom/msm8916-samsung-j3ltetw.dtb: /soc@0/power-manager@b0a8000: failed to match any schema with compatible: ['qcom,msm8916-acc']
+arch/arm64/boot/dts/qcom/msm8916-samsung-j3ltetw.dtb: /soc@0/power-manager@b0b8000: failed to match any schema with compatible: ['qcom,msm8916-acc']
 
 
 
