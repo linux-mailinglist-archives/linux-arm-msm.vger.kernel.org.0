@@ -1,177 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-27958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E15F894820F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 21:08:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B271A94822E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 21:20:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 104321C202D5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 19:08:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6BDC228428D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Aug 2024 19:20:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC54B16A397;
-	Mon,  5 Aug 2024 19:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABAF915B147;
+	Mon,  5 Aug 2024 19:20:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HOplSHU9"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KAlLBeUA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE5B2AD13;
-	Mon,  5 Aug 2024 19:08:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31563364AB;
+	Mon,  5 Aug 2024 19:20:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722884883; cv=none; b=BVXSj9hfoHKUIMTbLrfoiYX08OaMzu95lDftJid+tPtoFZWLm3ow8eZVuVJvYUMvkdwPr7xd215SVdTOdaQTRHDXlXGRiGZznv1so0yI1l89M24+2m39aK2tF1Rseq1AtkopeeXUg1PRgDhOYZ++CZh7dUHyWulzxVt/9aOY3mk=
+	t=1722885643; cv=none; b=jRNUqvcDBEMjMufByb1xTq9c3J4nyJrgLxPu+dQOILHCrP/3j3Zw7wzMc7DbBvTPR3dNDxMW1pcS8KB4cfLRwkTjYCQ6R2hVYXCOK7YP7toYp8JKsQGfd21IzZLUF3ajhUxPue7/EeZnvPPBI8KCLkYMseKatCDOuNRyi3hfg98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722884883; c=relaxed/simple;
-	bh=Nnd3+0bNF5gwDJ3usiJzo0bDZKWUrE3VhKWFRbcifzc=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=McogNsGVKbX0Ic50xPCLweoof2NbmCTV7+UUY3tK4rNRUFCURJLl8hJry2go5ZMfGa8PZf8mL2vXnXUxjWaoaaKHG5vRMGKjoHYBP42s6rB+SUdqvMVr4HDS5EPksuTdfCa09Ku1OQv9yW3nufVf1MKBb/RHYLjxIBdqDSo3MW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HOplSHU9; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1722885643; c=relaxed/simple;
+	bh=5Q/dMM57O/WlL58xaDML5rvBRpiPgpdbZsYdACrdYog=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=KMw72TX3NRXngbW272/G7itiKnlkPdZoRIEnx6MsAIxCmuSU72b36CG5hB/0/c+IfaB+cTjXGX5HNVcEfAXz9JQpBps95DAaqumuphkKTORzKRykRpdIdoicwAqrFydCxLoZzOdPSDprGXoylEkzqgeZ5WmA3IbF5RRipp76C0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KAlLBeUA; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 475C9avS000420;
-	Mon, 5 Aug 2024 19:07:54 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 475IpCc3025811;
+	Mon, 5 Aug 2024 19:19:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=PmXKmmE8mhxPHJoh9iy5H4c/
-	6TQngI+cxRP2LH5NW30=; b=HOplSHU9F6by8nU1YxrsCSFWmjgcybHcxkKcuNE+
-	rvaZ4Cbr3E/TVrN+hmMLQteE2ITRPIRw5BXld/vAauZ9vffa+83oeDzYyjarBMGf
-	k+bTVAQJyrgGpGtLxPmZYE4fEX+kCwTJ/00/zCIUvPIFHrpwti5HSLzLXWgBrcm0
-	iV1h70fpdbdh+WrvOyL1L+kSQxLf2GZXI8TUaZthrXQ0Gd+Se0I2ERtEqnsshg+t
-	B2/Zf5fLCB0mlUbUzZpdq5xxdTZH97DTVVgZ6ncK9whJ+zdENsKFyHYjIH/9v6my
-	O5OPZS+JO4xhbIqEyr0lQIZ7fjHHI8pdpPvjV0etV2bSPQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40sbvgd2kj-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	NPfzUYIoiBYiXXunPR/6nbDC6ImBsu+pGz+mf7RwU4c=; b=KAlLBeUAfksZSfqK
+	hQfDTRbEsQ7PQmn9F03xAZWyJaE4Wl/aSFkMBpW/AG1UOOlHHMuerPKCHz5/XgqM
+	F6zjqRrU7tsieNcpgNhKtlp4AUEv2+SGOxGiABAnyGcCESuVJr78cKr+3c24qsKe
+	v+rX1rgSQ5tasU3H3Lpa5YnTDuhMXnz7cn+/nXEXuruavtgQOSyoTH9TR4WPs+rP
+	4JmoySwHYXmvpyL70TLO3YANS/lxbqnRqOXjxVBSqTPf/hALh2wVXL8ZafXCTlV1
+	wGXYUm440j26zJx6nQ0D+6MkglA77C73eRy0ytjW/tZZrvGrvJq8u79iRwleHu1t
+	sZ+7Og==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40u4cpg1vv-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 05 Aug 2024 19:07:54 +0000 (GMT)
+	Mon, 05 Aug 2024 19:19:53 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 475J7q52021607
+	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 475JJq8e020650
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 5 Aug 2024 19:07:52 GMT
-Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 5 Aug 2024 12:07:48 -0700
-Date: Tue, 6 Aug 2024 00:37:44 +0530
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-To: Vladimir Lypak <vladimir.lypak@gmail.com>
-CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "Konrad
- Dybcio" <konrad.dybcio@linaro.org>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie
-	<airlied@gmail.com>, "Daniel Vetter" <daniel@ffwll.ch>,
-        Jordan Crouse
-	<jordan@cosmicpenguin.net>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/4] drm/msm/a5xx: properly clear preemption records on
- resume
-Message-ID: <20240805190744.vi3553ht6q3mi4s2@hu-akhilpo-hyd.qualcomm.com>
-References: <20240711100038.268803-1-vladimir.lypak@gmail.com>
- <20240711100038.268803-3-vladimir.lypak@gmail.com>
- <20240801131610.jtcpo5l2gd34uqbf@hu-akhilpo-hyd.qualcomm.com>
- <ZqziDJlrhvSnijpw@trashcan>
+	Mon, 5 Aug 2024 19:19:52 GMT
+Received: from [10.71.110.34] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 5 Aug 2024
+ 12:19:48 -0700
+Message-ID: <800e03d2-01b0-4bde-816a-e45e1acdd039@quicinc.com>
+Date: Mon, 5 Aug 2024 12:19:46 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <ZqziDJlrhvSnijpw@trashcan>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] drm/msm/dpu1: don't choke on disabling the
+ writeback connector
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Jeykumar
+ Sankaran <jsanka@codeaurora.org>, <stable@vger.kernel.org>,
+        Leonard Lausen
+	<leonard@lausen.nl>
+References: <20240802-dpu-fix-wb-v2-0-7eac9eb8e895@linaro.org>
+ <20240802-dpu-fix-wb-v2-1-7eac9eb8e895@linaro.org>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240802-dpu-fix-wb-v2-1-7eac9eb8e895@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: J-fGG7FMtbjQU2Ae89ggPEt3ZSwArtS0
-X-Proofpoint-ORIG-GUID: J-fGG7FMtbjQU2Ae89ggPEt3ZSwArtS0
+X-Proofpoint-ORIG-GUID: L6qHaKwQj3kBFZex2Vm1J6ZRJHKR7svV
+X-Proofpoint-GUID: L6qHaKwQj3kBFZex2Vm1J6ZRJHKR7svV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-05_07,2024-08-02_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- mlxscore=0 mlxlogscore=999 adultscore=0 malwarescore=0 clxscore=1015
- phishscore=0 lowpriorityscore=0 impostorscore=0 priorityscore=1501
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408050137
+ definitions=2024-08-05_08,2024-08-02_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 phishscore=0 malwarescore=0 bulkscore=0 spamscore=0
+ lowpriorityscore=0 mlxscore=0 clxscore=1011 adultscore=0
+ priorityscore=1501 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2408050137
 
-On Fri, Aug 02, 2024 at 01:41:32PM +0000, Vladimir Lypak wrote:
-> On Thu, Aug 01, 2024 at 06:46:10PM +0530, Akhil P Oommen wrote:
-> > On Thu, Jul 11, 2024 at 10:00:19AM +0000, Vladimir Lypak wrote:
-> > > Two fields of preempt_record which are used by CP aren't reset on
-> > > resume: "data" and "info". This is the reason behind faults which happen
-> > > when we try to switch to the ring that was active last before suspend.
-> > > In addition those faults can't be recovered from because we use suspend
-> > > and resume to do so (keeping values of those fields again).
-> > > 
-> > > Fixes: b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
-> > > Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-> > > ---
-> > >  drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 2 ++
-> > >  1 file changed, 2 insertions(+)
-> > > 
-> > > diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-> > > index f58dd564d122..67a8ef4adf6b 100644
-> > > --- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-> > > +++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
-> > > @@ -204,6 +204,8 @@ void a5xx_preempt_hw_init(struct msm_gpu *gpu)
-> > >  		return;
-> > >  
-> > >  	for (i = 0; i < gpu->nr_rings; i++) {
-> > > +		a5xx_gpu->preempt[i]->data = 0;
-> > > +		a5xx_gpu->preempt[i]->info = 0;
-> > 
-> > I don't see this bit in the downstream driver. Just curious, do we need
-> > to clear both fields to avoid the gpu faults?
+
+
+On 8/2/2024 12:47 PM, Dmitry Baryshkov wrote:
+> During suspend/resume process all connectors are explicitly disabled and
+> then reenabled. However resume fails because of the connector_status check:
 > 
-> Downstream gets away without doing so because it resumes on the same
-> ring that it suspended on. On mainline we always do GPU resume on first
-> ring. It was enough to zero info field to avoid faults but clearing
-> both shouldn't hurt.
+> [ 1185.831970] [dpu error]connector not connected 3
 > 
-> I have tried to replicate faults again with local preemption disabled
-> and unmodified mesa and couldn't do so. It only happens when fine-grain
-> preemption is used and there was a switch from IB1.
-
-So, I guess gpu is going to rpm suspend while there is pending
-(preempted) submits present in another ringbuffer. Probably the other
-fixes you have in this series make this not necessary during rpm suspend.
-But we can keep as it is harmless and might help during gpu recovery.
-
-> This made me come up with explanation of what could be happening.
-> If preemption switch is initiated on a some ring at checkpoint in IB1,
-> CP should save position of that checkpoint in the preemption record and
-> set some flag in "info" field which will tell it to continue from that
-> checkpoint when switching back.
-> When switching back to that ring we program address of its preemption
-> record to CP_CONTEXT_SWITCH_RESTORE_ADDR. Apparently this won't remove
-> the flag from "info" field because the preemption record is only being
-> read from. This leaves preemption record outdated on that ring until
-> next switch will override it. This doesn't cause issues on downstream
-> because it won't try to restore from that record since it's ignored
-> during GPU power-up.
-
-I guess it is fine if you never go to rpm suspend without idling all
-RBs!
-
--Akhil
-
+> It doesn't make sense to check for the Writeback connected status (and
+> other drivers don't perform such check), so drop the check.
 > 
-> Vladimir
+> Fixes: 71174f362d67 ("drm/msm/dpu: move writeback's atomic_check to dpu_writeback.c")
+> Cc: stable@vger.kernel.org
+> Reported-by: Leonard Lausen <leonard@lausen.nl>
+> Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/57
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 3 ---
+>   1 file changed, 3 deletions(-)
 > 
-> > 
-> > -Akhil
-> > >  		a5xx_gpu->preempt[i]->wptr = 0;
-> > >  		a5xx_gpu->preempt[i]->rptr = 0;
-> > >  		a5xx_gpu->preempt[i]->rbase = gpu->rb[i]->iova;
-> > > -- 
-> > > 2.45.2
-> > > 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+> index 16f144cbc0c9..8ff496082902 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+> @@ -42,9 +42,6 @@ static int dpu_wb_conn_atomic_check(struct drm_connector *connector,
+>   	if (!conn_state || !conn_state->connector) {
+>   		DPU_ERROR("invalid connector state\n");
+>   		return -EINVAL;
+> -	} else if (conn_state->connector->status != connector_status_connected) {
+> -		DPU_ERROR("connector not connected %d\n", conn_state->connector->status);
+> -		return -EINVAL;
+>   	}
+
+For this issue, do we hit the connector->force = DRM_FORCE_OFF path?
+
+Because otherwise, writeback does not implement .detect() callback today 
+so its always connected.
+
+But if that was the case how come this error is only for writeback. Even 
+DP has the same connected check in atomic_check()
+
+Change seems fine with me because ideally this seems like a no-op to me 
+because writeback connector is assumed to be always connected but the 
+issue is missing some details here.
+
+>   
+>   	crtc = conn_state->crtc;
+> 
 
