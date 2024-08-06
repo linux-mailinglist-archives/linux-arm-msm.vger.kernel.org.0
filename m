@@ -1,217 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-28020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D3E19498A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 21:53:18 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFD159498CA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 22:06:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 695861C2169E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 19:53:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F14131C216FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 20:06:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 808B481AC8;
-	Tue,  6 Aug 2024 19:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D0041547DE;
+	Tue,  6 Aug 2024 20:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MDl3p4rP"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="viv2J3mj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9D118D64E;
-	Tue,  6 Aug 2024 19:53:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC5138DD8
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Aug 2024 20:06:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722973992; cv=none; b=Jl7fXXKfFziZX7IUz2QTzLoSZO+T3h/g3G/eX9Ygk+hSOnuoy3J7E4x1E/PMStd20MLjzG65JNePWMcLfIWpYtx3Q1booBehNrBEBVTGgi7hgF+1gOYvZlqnpHxcbkeSuTgTN3pEammO4131lymZnSggjmj+ZTnFS80bux2JHwc=
+	t=1722974777; cv=none; b=Pk968vHx8BOQJuLPfKsDukghUS3dDjTj2Vo4Q743oRY2Xk+Z6y9O8FxJgPIHT9Vd1u7w1hSBKjH9Ov22LGdLLtFS1Z8VtpDJBLEQNS8iK8V2dslKKOv8iimbZz2VCDwLRsVaTGlpyreBJGEQO8TL3lnMFkCRH66/T+4j1KV34LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722973992; c=relaxed/simple;
-	bh=OQLJiIkny94KECYHJtVp+i8bZZ1zlTH93kKv+2o8Aig=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=PowfxNnI//xHbNT+DNX2HzHZcbhyNMQUbIBKw1qmnYuOg9t5yOD0iTs1023LrHDWy3qGiWtt5kXx2plKYreFtSpR4vFbwFrqtjhDKPGJk4CmXNQyPP459eXSAoqyScx3Ak0wbRtym6V8YAeKb8/UXeCe0xhhd6Mz+YGNmzizVtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MDl3p4rP; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 476H6Pju021361;
-	Tue, 6 Aug 2024 19:52:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	70Lq7orQebnxRFnaTzLwJ4HqQh/eJyGl2eF5/RFh48I=; b=MDl3p4rPzpT7t6iw
-	4Y8C7wRhe+/61+PIUUI+i8pI9ObxhFjvGAmP1rYwJQLkkUetmVMn1+potifLH05r
-	EyMO5QC+7L5sMbDh7WZbc2d8iryifpM20un7z4ND7uCISeNb3r6Xv9GtQFW5TLUY
-	Gv33Igscf2adDMF1BGY7DPW5qBSh6B4ucntiRZknXovtol3qZ0cyGo1GB1JAv1ng
-	Zwq81MA/haqAW1P6V3/QOUl6o0r+dXy/uPk5YaI5fIgHU1gz59IEqL2tyQYICn+/
-	S5yLbNy7K+/nMba+yoZMzrCBOS34bKMk1zOmXfEYgQy4AvGA4qaZiqBoDfHcyg5m
-	iXdIAQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40sbgs0jks-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 Aug 2024 19:52:46 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 476JqjB0008058
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 6 Aug 2024 19:52:45 GMT
-Received: from [10.71.113.127] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 6 Aug 2024
- 12:52:44 -0700
-Message-ID: <b323a813-b02e-488b-86f9-06796f9bbf50@quicinc.com>
-Date: Tue, 6 Aug 2024 12:52:44 -0700
+	s=arc-20240116; t=1722974777; c=relaxed/simple;
+	bh=yQ0Giu6ZLYVh/LdTs+T3ZUjf0YBIJKRB4yekea9RufM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eRWrZEDR6IiGeuqpkbPogSL4G0OzwCp+W+itU0UqxF3b0Z2u5UMhNM+TefFw99hDFAnvnXIbrw0WLTY04pwmGNBuNeAy/CP9AD8G9gkQ9KY+AUTrHBFUIEVP5ApFCqdTpSl0ZlmmZQndPPr6TTa5/Qr4A8SsDv81XD8+1Wer/Sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=viv2J3mj; arc=none smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-52f025ab3a7so1463702e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Aug 2024 13:06:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1722974772; x=1723579572; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qihk0Nf6L1RJUimkyU5cI4Ujv7ORPdsY3hk78Fc0UME=;
+        b=viv2J3mjVRY4K7f6bzPA2MoZVIU7KxEo/mP9ZW5qFQK+qEealwlYiZlkMmEdnStn5s
+         hjDlsQy65dwwsxYXz1wTrgoC6lLSiKbgp5fa4BDQjTVHTJNwVNrnSjX+6emwYQ4qLAy/
+         zjfD0I+dqvXdoLmQXD526J3YWmGWW2fvpM0tM2bhH4m+CKczgx0kF+913V2Q+reELXYG
+         JZ50ZMWFp0ce1BU2O8SorRKt18wOBARRbexO73nHfQNs8MDmeq+SH0DvZtnEUY8yYeSi
+         hiW8unr1+CzKUb3JvIYRnWWWklle+AV7z5brSmtN4xmU+3Ny9XQHgue621aUXNJF88pA
+         F6Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722974772; x=1723579572;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qihk0Nf6L1RJUimkyU5cI4Ujv7ORPdsY3hk78Fc0UME=;
+        b=NC6w2wtmevVJQk/h7cQ4/z7HIJvEV+7YLG4dP+KnZDetvagdQZS3MNt9KFHFfWjWXh
+         ea5QZjuvY5QSbGuSeL8qpIGOA17tgUiXWIB7ImjBz7/peNwGgKjRs+PRycNjW8hDYxGQ
+         Jqt3yokJjpBsij1TqhGoixjotYxQM/y9iYjYNEjtmpI4CyOQMa4NfygEELTXCHgnhXzb
+         Azadp1+4us2ExbUcUBuaG46DRRj0qiGrp8Wu4Qt6gqhuoX8AbVBG8jlUXj9X45TmoHxK
+         fTYxZGGddt6lymJtBm0JVBYTo5xELDSOpJCDODsVrEyNlJ2sDHoRshvjSIzdRguyBvL5
+         2cMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUPccmuCNbzjAuYPzlbwUU391gWGjnGL7suArSVgwhx+6EpzDMbSl0AmQTcbNXwvOXWYjQ7ECb0w3MB4cOeyoLsIMqn3XSI/bgTuZA3WA==
+X-Gm-Message-State: AOJu0YwUfIRQLmPP9b5RAkQyt6kP3BYiNlIzXx2dHysUviytimghuDKW
+	ByQK6kqqgt5k8VFvKErTYYE42wA1iRVpPRWNVYYPDii71jv65N57DzU/50xVI8/u/c2LkXOx5Kb
+	cJVXopjJ2Irp1Uf3/hLHVitoCkNBDZg27O6+O4g==
+X-Google-Smtp-Source: AGHT+IFP7XQq6yFQZWCucBvitOmg1bLISrkcsDvqOEgO7fLkeug1MfJiguAhwxWA1ITFyBJJVj9DcL+Xi7dAcrBSaO0=
+X-Received: by 2002:a05:6512:2389:b0:52f:cce4:51f3 with SMTP id
+ 2adb3069b0e04-530bb3bd8abmr11750075e87.44.1722974772149; Tue, 06 Aug 2024
+ 13:06:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v24 09/34] ASoC: Add SOC USB APIs for adding an USB
- backend
-To: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
-        <broonie@kernel.org>, <lgirdwood@gmail.com>, <krzk+dt@kernel.org>,
-        <Thinh.Nguyen@synopsys.com>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
-        <gregkh@linuxfoundation.org>, <robh@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>
-References: <20240801011730.4797-1-quic_wcheng@quicinc.com>
- <20240801011730.4797-10-quic_wcheng@quicinc.com>
- <09fde4e6-c3be-484d-a7a5-bd653dc42094@linux.intel.com>
- <f761530c-a49b-4dd5-b01c-97d08931e0ab@quicinc.com>
- <acf4de1d-d551-4539-8353-3c85aa3d965c@linux.intel.com>
-Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <acf4de1d-d551-4539-8353-3c85aa3d965c@linux.intel.com>
+References: <20240803-qps615-v2-4-9560b7c71369@quicinc.com> <20240806190702.GA72614@bhelgaas>
+In-Reply-To: <20240806190702.GA72614@bhelgaas>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Tue, 6 Aug 2024 22:06:00 +0200
+Message-ID: <CAMRc=Mc3J_CRHSsU1ZowJxrx6V3Uici6iuJtTfR63Wt3xLrqAg@mail.gmail.com>
+Subject: Re: [PATCH v2 4/8] PCI: Change the parent to correctly represent pcie hierarchy
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Krishna chaitanya chundru <quic_krichai@quicinc.com>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, cros-qcom-dts-watchers@chromium.org, 
+	Jingoo Han <jingoohan1@gmail.com>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, andersson@kernel.org, 
+	quic_vbadigan@quicinc.com, linux-arm-msm@vger.kernel.org, 
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: yYw0m-dlgfRq1_xa_E0JOK1i5VwHIAdk
-X-Proofpoint-GUID: yYw0m-dlgfRq1_xa_E0JOK1i5VwHIAdk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-06_16,2024-08-06_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- impostorscore=0 malwarescore=0 suspectscore=0 phishscore=0 mlxscore=0
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0 spamscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408060140
+Content-Transfer-Encoding: quoted-printable
 
-Hi Pierre,
+On Tue, Aug 6, 2024 at 9:07=E2=80=AFPM Bjorn Helgaas <helgaas@kernel.org> w=
+rote:
+>
+> On Sat, Aug 03, 2024 at 08:52:50AM +0530, Krishna chaitanya chundru wrote=
+:
+> > Currently the pwrctl driver is child of pci-pci bridge driver,
+> > this will cause issue when suspend resume is introduced in the pwr
+> > control driver. If the supply is removed to the endpoint in the
+> > power control driver then the config space access by the
+> > pci-pci bridge driver can cause issues like Timeouts.
+>
+> If "pci-pci bridge driver" refers to portdrv, please use "portdrv" to
+> avoid confusion.
+>
+> Can you be a little more specific about config accesses by the bridge
+> driver?  Generally portdrv wouldn't touch devices below the bridge.
+> It sounds like you've tripped over something here, so you probably
+> have an example of a timeout.
+>
+> s/pcie/PCIe/ in subject, although it'd be nice if the whole subject
+> could be a little more specific.  I don't think pwrctl is directly
+> part of the PCIe hierarchy, so I don't quite understand what you're
+> saying there.
+>
+> > For this reason change the parent to controller from pci-pci bridge.
+> >
+> > Fixes: 4565d2652a37 ("PCI/pwrctl: Add PCI power control core code")
+>
+> Will need an ack from Bartosz, of course, since he added this.  Moved
+> from cc: to to: list to make sure he sees this.
+>
 
-On 8/1/2024 11:26 PM, Pierre-Louis Bossart wrote:
->
-> On 8/1/24 23:43, Wesley Cheng wrote:
->> Hi Pierre,
->>
->> On 8/1/2024 1:02 AM, Pierre-Louis Bossart wrote:
->>>
->>>> +/**
->>>> + * struct snd_soc_usb_device
->>>> + * @card_idx - sound card index associated with USB device
->>>> + * @pcm_idx - PCM device index associated with USB device
->>>> + * @chip_idx - USB sound chip array index
->>>> + * @num_playback - number of playback streams
->>>> + * @num_capture - number of capture streams
->>> so here we have a clear separation between playback and capture...
->> Thanks for the quick review of the series, I know that its a lot of work, so its much appreciated.
->>
->> I guess in the past revisions there was some discussions that highlighted on the fact that, currently, in our QC USB offload implementation we're supporting playback only, and maybe it should be considered to also expand on the capture path.  I went ahead and added some sprinkles of that throughout the SOC USB layer, since its vendor agnostic, and some vendors may potentially have that type of support.  Is it safe to assume that this is the right thinking?  If so, I will go and review some of the spots that may need to consider both playback and capture paths ONLY for soc-usb. (as you highlighted one below)  Else, I can note an assumption somewhere that soc-usb supports playback only and add the capture path when implemented.
-> I don't think it's as simple as playback only or playback+capture. If
-> there is no support for capture, then there is also no support for
-> devices with implicit feedback - which uses the capture path. So you
-> gradually start drawing a jagged boundary of what is supported and what
-> isn't.
->
-> My preference would be to add capture in APIs where we can, with TODOs
-> added to make sure no one us under any illusion that the code is fully
-> tested. But at least some of the basic plumbing will be in place.
->
-> Takashi should chime in on this...
->
->>>> + * @list - list head for SoC USB devices
->>>> + **/
->>>> +struct snd_soc_usb_device {
->>>> +	int card_idx;
->>>> +	int pcm_idx;
->>>> +	int chip_idx;
->>>> +	int num_playback;
->>>> +	int num_capture;
->>>> +	struct list_head list;
->>>> +};
->>>> +
->>>> +/**
->>>> + * struct snd_soc_usb
->>>> + * @list - list head for SND SOC struct list
->>>> + * @component - reference to ASoC component
->>>> + * @num_supported_streams - number of supported concurrent sessions
->>> ... but here we don't. And it's not clear what the working 'sessions'
->>> means in the comment.
->>>
->>>> + * @connection_status_cb - callback to notify connection events
->>>> + * @priv_data - driver data
->>>> + **/
->>>> +struct snd_soc_usb {
->>>> +	struct list_head list;
->>>> +	struct snd_soc_component *component;
->>>> +	unsigned int num_supported_streams;
->>>> +	int (*connection_status_cb)(struct snd_soc_usb *usb,
->>>> +			struct snd_soc_usb_device *sdev, bool connected);
->>>> +	void *priv_data;
->>>> +};
->>>> +/**
->>>> + * snd_soc_usb_allocate_port() - allocate a SOC USB device
->>> USB port?
->> Noted, refer to the last comment.
->>>> + * @component: USB DPCM backend DAI component
->>>> + * @num_streams: number of offloading sessions supported
->>> same comment, is this direction-specific or not?
->> Depending on what you think about my first comment above, I'll also fix or remove the concept of direction entirely.
->>>> + * @data: private data
->>>> + *
->>>> + * Allocate and initialize a SOC USB device.  This will populate parameters that
->>>> + * are used in subsequent sequences.
->>>> + *
->>>> + */
->>>> +struct snd_soc_usb *snd_soc_usb_allocate_port(struct snd_soc_component *component,
->>>> +					      int num_streams, void *data)
->>>> +{
->>>> +	struct snd_soc_usb *usb;
->>>> +
->>>> +	usb = kzalloc(sizeof(*usb), GFP_KERNEL);
->>>> +	if (!usb)
->>>> +		return ERR_PTR(-ENOMEM);
->>>> +
->>>> +	usb->component = component;
->>>> +	usb->priv_data = data;
->>>> +	usb->num_supported_streams = num_streams;
->>>> +
->>>> +	return usb;
->>>> +}
->>>> +EXPORT_SYMBOL_GPL(snd_soc_usb_allocate_port);
->>>> +
->>>> +/**
->>>> + * snd_soc_usb_free_port() - free a SOC USB device
->>>> + * @usb: allocated SOC USB device
->>>> +
->>>> + * Free and remove the SOC USB device from the available list of devices.
->>> Now I am lost again on the device:port relationship. I am sure you've
->>> explained this before but I forget things and the code isn't
->>> self-explanatory.
->>>
->> Ok, I think the problem is that I'm interchanging the port and device terminology, because from the USB perspective its one device connected to a USB port, so its a one-to-one relation.  Removing that mindset, I think the proper term here would still be "port," because in the end SOC USB is always only servicing a port.  If this is the case, do you have any objections using this terminology in the Q6AFE as well as ASoC?  I will use consistent wording throughout SOC USB if so.
-> I am not sure USB uses 'port' at all. If by 'port' you meant 'connector'
-> it's not quite right, USB audio works across hubs.
->
-Remember, this is technically the term used to explain the channel created for ASoC to communicate w/ USB.  If we use a term like "device," USB devices come and go, but this ASoC path won't be unallocated along with the USB device, since it does service/know about all the available USB devices connected to the system. (ie through usb hubs)
+I would drop the Fixes tag altogether. This is a change in
+implementation but it doesn't really fix a bug or regression.
 
-Thanks
+Other than that: please feel free to add
 
-Wesley Cheng
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
+I will also review the pwrctl part of the series shortly.
+
+Bart
+
+> > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > ---
+> >  drivers/pci/bus.c         | 3 ++-
+> >  drivers/pci/pwrctl/core.c | 9 ++++++++-
+> >  2 files changed, 10 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/pci/bus.c b/drivers/pci/bus.c
+> > index 55c853686051..15b42f0f588f 100644
+> > --- a/drivers/pci/bus.c
+> > +++ b/drivers/pci/bus.c
+> > @@ -328,6 +328,7 @@ void __weak pcibios_bus_add_device(struct pci_dev *=
+pdev) { }
+> >   */
+> >  void pci_bus_add_device(struct pci_dev *dev)
+> >  {
+> > +     struct pci_host_bridge *host =3D pci_find_host_bridge(dev->bus);
+> >       struct device_node *dn =3D dev->dev.of_node;
+> >       int retval;
+> >
+> > @@ -352,7 +353,7 @@ void pci_bus_add_device(struct pci_dev *dev)
+> >
+> >       if (dev_of_node(&dev->dev) && pci_is_bridge(dev)) {
+> >               retval =3D of_platform_populate(dev_of_node(&dev->dev), N=
+ULL, NULL,
+> > -                                           &dev->dev);
+> > +                                           host->dev.parent);
+>
+> I'm not sure host->dev.parent is always valid.  There are
+> pci_create_root_bus() callers that supply a NULL parent pointer.
+>
+> >               if (retval)
+> >                       pci_err(dev, "failed to populate child OF nodes (=
+%d)\n",
+> >                               retval);
+> > diff --git a/drivers/pci/pwrctl/core.c b/drivers/pci/pwrctl/core.c
+> > index feca26ad2f6a..4f2ffa0b0a5f 100644
+> > --- a/drivers/pci/pwrctl/core.c
+> > +++ b/drivers/pci/pwrctl/core.c
+> > @@ -11,6 +11,8 @@
+> >  #include <linux/property.h>
+> >  #include <linux/slab.h>
+> >
+> > +#include "../pci.h"
+> > +
+> >  static int pci_pwrctl_notify(struct notifier_block *nb, unsigned long =
+action,
+> >                            void *data)
+> >  {
+> > @@ -64,18 +66,23 @@ static int pci_pwrctl_notify(struct notifier_block =
+*nb, unsigned long action,
+> >   */
+> >  int pci_pwrctl_device_set_ready(struct pci_pwrctl *pwrctl)
+> >  {
+> > +     struct pci_bus *bus;
+> >       int ret;
+> >
+> >       if (!pwrctl->dev)
+> >               return -ENODEV;
+> >
+> > +     bus =3D pci_find_bus(of_get_pci_domain_nr(pwrctl->dev->parent->of=
+_node), 0);
+> > +     if (!bus)
+> > +             return -ENODEV;
+> > +
+> >       pwrctl->nb.notifier_call =3D pci_pwrctl_notify;
+> >       ret =3D bus_register_notifier(&pci_bus_type, &pwrctl->nb);
+> >       if (ret)
+> >               return ret;
+> >
+> >       pci_lock_rescan_remove();
+> > -     pci_rescan_bus(to_pci_dev(pwrctl->dev->parent)->bus);
+> > +     pci_rescan_bus(bus);
+> >       pci_unlock_rescan_remove();
+> >
+> >       return 0;
+> >
+> > --
+> > 2.34.1
+> >
 
