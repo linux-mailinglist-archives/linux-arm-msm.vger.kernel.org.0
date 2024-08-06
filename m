@@ -1,107 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-28011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CF15949515
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 18:02:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A3A59495EF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 18:54:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5728B283224
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 16:02:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 05676281975
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 16:54:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A1F6C144;
-	Tue,  6 Aug 2024 16:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8290381C4;
+	Tue,  6 Aug 2024 16:54:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c0lNCnO7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADFFDF42
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Aug 2024 16:00:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9341918EB0;
+	Tue,  6 Aug 2024 16:54:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722960015; cv=none; b=jj2NKKRHHVxmHoB8I6Tj3stYTIiPjrmq7jtGln5eGtQWIKgdUxWHrcudFDfIibDwMBcNf8fOMYi8/RPmtvX4wliE9cBierFx8xY0xn29uaRt4/NN8Pbp3QaR+BbmGG87wW1/V6itk1v40w6jZJ0RXxub4nQvQdkJubmT1TUOgqU=
+	t=1722963255; cv=none; b=GQM3ccBX1YwqxQ28at5Db2Si/5m2AdaRr7hlqbksjqPfzisG383mGPmn5lQe48Xz6Nf5VEclbz9hu04IW0JaTq4o5351oROuVHURkdKtbrEgAvrVvqAfFNIHWXUNAK5rgPH4FDPzE/tQCv29qSpgzEbV/jgq8dkvd4UmOa/oCGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722960015; c=relaxed/simple;
-	bh=AJHk99JRG5OpJoSoQueFp2kEW1qBz/ld8n7MnXvLs9E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cLDs4tovEJ4yKtlWkj7d+ktLmIawdNeNHdw+a3teEIELENnEZgNdXzZPvU8vLT2iWMzdEEQUpt3TZBQpSAEZqJnI8LUeuDaKTKe0dDS5Blm/L7n8LMWwPxszbit1GyycEQTE2Kl5vLNjRMIh0F2yHuZCl6fozTbc724yrbl5x8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=baylibre.com; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1fc5296e214so7480075ad.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Aug 2024 09:00:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722960013; x=1723564813;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=N0OH1lK0iyrEFjZ+sxfEDU/w6C/qIfjEuNJOJDkGoH0=;
-        b=f3/tgw9H3jUEWjVQNIuEU8eQknI6HT5aAeICnRL/DQvOJwq/6E9vdfX5SeJ2W8d2lx
-         Nyv9dnANhUwSB5Wj/oNIgB3IOiGI5kQVdshAyEzeY3pBL/jDlQSGX7kAK9xA0uneRuUs
-         bRQDhgLZe4ETkxguks1eScb/+n0MEUve0tRxa9dwby+XRokZZKr5LiTkl0XrHnsC5OCu
-         yGfj/lQffDDHo+rDej12XIAXtRCKGlSj9w1bYV1CEi80Q8TUARwbaW3V1fASrfn9MEbv
-         RvgvTKVHdA7CmvPIfLvm3GOng6emcmCqaFHr0IsAwc9rtdadFvGxCw0JJNF/6kPyQvBW
-         O7SQ==
-X-Gm-Message-State: AOJu0YywkZ6jhUy5LQYOixe3WwhDevxa+/JBgDSsaPwWQGxD+3a7/xHa
-	wFKGo6UCIWWrxchj8aPhdigzW87CVLYutFbnsx2wyTqsB4U6QNm7Jns4f/8PMb0=
-X-Google-Smtp-Source: AGHT+IHwXaMUruJCX9M/RHqtmhUbj4EyviX70/VCd+gvNCZm8JC044UbL01+TgvDOTnUpG7G2lRLZQ==
-X-Received: by 2002:a17:902:e54f:b0:1fb:9627:b348 with SMTP id d9443c01a7336-1ff57495ca7mr237971045ad.58.1722960012898;
-        Tue, 06 Aug 2024 09:00:12 -0700 (PDT)
-Received: from localhost ([71.212.170.185])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff5905fec0sm89249425ad.149.2024.08.06.09.00.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Aug 2024 09:00:12 -0700 (PDT)
-From: Kevin Hilman <khilman@kernel.org>
-To: "Rob Herring (Arm)" <robh@kernel.org>, "Rafael J. Wysocki"
- <rafael@kernel.org>, Viresh Kumar <viresh.kumar@linaro.org>, Andrew Lunn
- <andrew@lunn.ch>, Gregory Clement <gregory.clement@bootlin.com>, Sebastian
- Hesselbarth <sebastian.hesselbarth@gmail.com>, Nishanth Menon <nm@ti.com>,
- Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-omap@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 2/6] cpufreq: omap: Drop asm includes
-In-Reply-To: <20240806-dt-api-cleanups-v1-2-459e2c840e7d@kernel.org>
-References: <20240806-dt-api-cleanups-v1-0-459e2c840e7d@kernel.org>
- <20240806-dt-api-cleanups-v1-2-459e2c840e7d@kernel.org>
-Date: Tue, 06 Aug 2024 09:00:12 -0700
-Message-ID: <7h1q313alv.fsf@baylibre.com>
+	s=arc-20240116; t=1722963255; c=relaxed/simple;
+	bh=OGl7OTeP+UuQWbwPEeanYVgWrUqC6QmWTlkqT9FnYbM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kxunJl+ugNV8NRQW/3vw2jF6tUCNH1bVSLhH5Dl05z5rPl44v4qF5zoEw6xls/FgXcFI5lrpcfUIosb70Ma4APZcgJkmqsKNB5Pb9StUXtpil0siWbhOVp+3Qm8Q1SEiwtR3XJs665ZFSLZIkbCvD9wDuK6V0kchlbARMT+Pwjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c0lNCnO7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF6FC32786;
+	Tue,  6 Aug 2024 16:54:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722963255;
+	bh=OGl7OTeP+UuQWbwPEeanYVgWrUqC6QmWTlkqT9FnYbM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=c0lNCnO7RCuLuqrgl1WsgFoXz5nm9aLgAqqu9vfGK/oz8a7ja25K1b5eopZWg+fiF
+	 0PEeECqc5lNyHYOnmjCTfH/QLxu2izJ6f/76zxz8sUOCucAFFw5De57k/B6M3Jpkch
+	 t/Ni/Rvo6w5Pnw8fZTN4yVebCuCBZOn9qGlHUQZ2jMWAN3Z0iT2nJwJ+CDWTbAIflW
+	 T6tsx40T1zdg8sU6DrAk723WM5vFpFCC3bWzZVkjayFGnx1qZDDJjInG5P9jrwH2GQ
+	 34Ax4Me3XZm0y1wl9QzvyjqU8XB1/hJ2+3YJHrTFi5DVHTkz4rQASUL2gqSV2uxrsN
+	 e/XIiEzrFrUJg==
+Date: Tue, 6 Aug 2024 10:54:13 -0600
+From: Rob Herring <robh@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 11/13] dt-bindings: PCI: qcom,pcie-sm8450: Add
+ 'global' interrupt
+Message-ID: <20240806165413.GA1674220-robh@kernel.org>
+References: <20240731-pci-qcom-hotplug-v3-0-a1426afdee3b@linaro.org>
+ <20240731-pci-qcom-hotplug-v3-11-a1426afdee3b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240731-pci-qcom-hotplug-v3-11-a1426afdee3b@linaro.org>
 
-"Rob Herring (Arm)" <robh@kernel.org> writes:
-
-> The omap driver doesn't actually need asm/smp_plat.h, so drop it.
-> asm/cpu.h is not needed either as linux/cpu.h is already included.
->
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-
-Acked-by: Kevin Hilman <khilman@baylibre.com>
-
+On Wed, Jul 31, 2024 at 04:20:14PM +0530, Manivannan Sadhasivam wrote:
+> Qcom PCIe RC controllers are capable of generating 'global' SPI interrupt
+> to the host CPU. This interrupt can be used by the device driver to
+> identify events such as PCIe link specific events, safety events, etc...
+> 
+> Hence, document it in the binding along with the existing MSI interrupts.
+> Though adding a new interrupt will break the ABI, it is required to
+> accurately describe the hardware.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->  drivers/cpufreq/omap-cpufreq.c | 3 ---
->  1 file changed, 3 deletions(-)
->
-> diff --git a/drivers/cpufreq/omap-cpufreq.c b/drivers/cpufreq/omap-cpufreq.c
-> index 3458d5cc9b7f..de8be0a8932d 100644
-> --- a/drivers/cpufreq/omap-cpufreq.c
-> +++ b/drivers/cpufreq/omap-cpufreq.c
-> @@ -28,9 +28,6 @@
->  #include <linux/platform_device.h>
->  #include <linux/regulator/consumer.h>
->  
-> -#include <asm/smp_plat.h>
-> -#include <asm/cpu.h>
-> -
->  /* OPP tolerance in percentage */
->  #define	OPP_TOLERANCE	4
->  
->
-> -- 
-> 2.43.0
+>  Documentation/devicetree/bindings/pci/qcom,pcie-sm8450.yaml | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
+
+Patch 10 should be combined with this. It's one logical change.
+
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 
