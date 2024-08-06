@@ -1,180 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-27979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-27980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EC0D94893C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 08:11:34 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B82C2948C50
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 11:45:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 03DA3285897
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 06:11:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1881EB25529
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 09:45:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA27D1BC08B;
-	Tue,  6 Aug 2024 06:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 857831BDAA0;
+	Tue,  6 Aug 2024 09:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Lt7evMMd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D7vOFL1R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AAA01BA87B;
-	Tue,  6 Aug 2024 06:11:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1F315FA96
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Aug 2024 09:45:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722924691; cv=none; b=i6wAAbT3WNkbl4jcUK3/mSvdlRadcEPWroJEZ57+9IFqvRHsTyI/vYC4yYaEAL9f3brnwwSNSNCZxacvc6McbNwfydz0LFxiEJ5qMJXin30wKl2wY/nQDtsqg3mUONctAGNEQty5yQk1C3SKkZ78vVgfUoft949WES2pbuAzTUY=
+	t=1722937548; cv=none; b=ldTrDwiGEog1zff6aWGToCVWb0H7HEhEmWFcRvdkTGv/YdfLhgta5QDuWns0r9Yw1V2aJJc5A56U8t3+AfYIS8yhA9z4PZuAalcfWAkBjbpkGnbvuTeFYCnvLxvDY8W+utqEW0KTWdfxkZJtt37sJa66aIo1urKzKTOTzgkaG88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722924691; c=relaxed/simple;
-	bh=ggbTg3w5DaB27aS9nuUMEUMa4XGHsO9n/U7ORxnpZxw=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=l6p4rVqwnpgN4HfqE4s+KbtlBBzxz6+eF20VGfKQQQeoM2W8YOYdPUwebU0ldVQ+8mv0AhUWlPXvLifp3v0gVEDSRPEWYUZ4vNolmAWWF+aLaiFBBU4rqOW2PK1dzJJNF1FimEi9XY5OBfhTV21v70prqhp5hCXDJUhCDk8XEm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Lt7evMMd; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4762IcYp011347;
-	Tue, 6 Aug 2024 06:11:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=ZzaHtt/GOQjsAeZkbz9lRv
-	0LUUYBHAWMfnCyEbHdH6A=; b=Lt7evMMdJs4iE6GZxsCwbYCAzojzHXA4DgArTe
-	oZ77M/48pUdDlHAK5o5LpGEmTu5NfGKpRkvR7soWmHZY1x1N6ahoD6FhC3Yl+Foy
-	w63WATnZimycak/QB0yRKuh22Rs2tOPCIo5dO2M2RCupm4diOwRatH59beiSvsb6
-	1njuXPfWu60xdhuRlpp+5ru+iBx64oocFSNvQ2MAm8P+fVfieGeYROQR/xY7J2Jl
-	X68dkzdcEJ2dFLU/32Fz3ReUHF4gWx32hfQcoQlSY7rAl+42Yj6I9JnxlGxBT1g9
-	nsEl9al6kpNoOAz8IYx7GtfVaJM+DXv2vv4KrdJDL9gQ/brQ==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40sbj6pa7d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 Aug 2024 06:11:24 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4766BNX4000692
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 6 Aug 2024 06:11:23 GMT
-Received: from hu-amansing-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 5 Aug 2024 23:11:20 -0700
-From: Amandeep Singh <quic_amansing@quicinc.com>
-To: <andersson@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC: <quic_devipriy@quicinc.com>
-Subject: [PATCH] clk: qcom: ipq9574: Update the alpha PLL type for GPLLs
-Date: Tue, 6 Aug 2024 11:41:05 +0530
-Message-ID: <20240806061105.2849944-1-quic_amansing@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1722937548; c=relaxed/simple;
+	bh=sG15rXXXSPIMMMb+O2lzEs0y6AvRlrpv9K3iytvLjOg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=r1wp7vOLl0VG5D7Ou2bETWF5fMGxBz4qz0YVpnqHyEZsLkPNdj/mXFbzZqzloGKuL4HvdE7WUzepemq9oVg/gUHxqWVAMewWQrlNI3XJA5EbzWBi+s1PYS9UUUDD+NZ68AGjjWYYbJzkWsAslHThgjHnhgIg5pey0Z3y3uqFUHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=D7vOFL1R; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-42803bbf842so3941325e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Aug 2024 02:45:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1722937545; x=1723542345; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=R4fBquWHWaKLLRoqUdtkBAlqZxmnlK2mo4ilabvnbQc=;
+        b=D7vOFL1RjZA1nEYrEiumqq6pW4xeQL6NHo0K27vY1GynNoPk93IKfknhsFGCIwlPQx
+         VV1qDOl0o5CdDG4LUnXgNWzzIeRj4CmH2ZCxkOwK98g1PvuyfGK+zHk9UsD044vKX0Wj
+         1PkzNoTjvzxs01DMtEHGf8MoOGrbH9YcFgjtI0OAzuxa01zWDeX5wDnEWHy56T0m+O/A
+         Po2N94uQcbDRnLlYmk6ryjYma+0fO1AshvCPbDO9P9Y72scJmq6J2VYY3ybfSxZFs4iu
+         plWXgI4z9ccLsei2CDSMKHLoXKIocsHL8ucfUKtctHl2ni3mfn6sjTJwI7XfL9zChyt9
+         cfsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722937545; x=1723542345;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=R4fBquWHWaKLLRoqUdtkBAlqZxmnlK2mo4ilabvnbQc=;
+        b=A8jgd+1Z8u+ygp9C+1JkUcoM5t+RsaAr84sUx+AbBN69cOpO56z2if5Ruvi7F3Oqcl
+         OsGWEdlrWlf0/kL7Flop5HR1Xw43ebdfN8x0F21LuvTu/kBeIKOqV2SfNpM1k97PKzHe
+         EnWzyUtutu0fPtT9XNhO1XE7jromkw+l+oFzAYmA0Gn/Qd5LSegQj+mdgYXtkAUU2OHA
+         uh3EhZE77Q3NXU0TPWscqNsXsC49xE0vnFOKb4o5sf6m+FbP6m8ONwOxNgTxPlIa0xN5
+         xip+L53z6/arz/pjZFcFpDTZI385JTHaOmBGD9SQ2VQUgvAg2jEcLP/dF5X6JAP2hzpR
+         Nzvw==
+X-Gm-Message-State: AOJu0YwAhKhn+5eesBlJHlLzZ0xKSMhpFAJks1P4QLBwLFQoIeOB2+ei
+	lfKm1dQwn2ZKZ/hypLfAin9B68javumrZWCn/hXRIFOlb7CbBBlyfjvcXz8LV+JFek56RkwJYAy
+	B8w8=
+X-Google-Smtp-Source: AGHT+IGIPe+z1e8RuQyOzsZlnu6BsE6b4DF/uP6nkuiCRN/xYnQcCnV14a4Xv2mBXRQ37/DCbEDx/g==
+X-Received: by 2002:a05:600c:35ca:b0:426:545b:ec00 with SMTP id 5b1f17b1804b1-428e6b2f0c5mr132732785e9.19.1722937544607;
+        Tue, 06 Aug 2024 02:45:44 -0700 (PDT)
+Received: from [127.0.0.1] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-428e6e7dd9esm172526605e9.30.2024.08.06.02.45.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Aug 2024 02:45:44 -0700 (PDT)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Date: Tue, 06 Aug 2024 10:45:43 +0100
+Subject: [PATCH v3] arm64: dts: qcom: sc8280xp-x13s: Enable RGB sensor
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: jB5JX98LQZa1NHRqJZtykkPs-vdid3AE
-X-Proofpoint-GUID: jB5JX98LQZa1NHRqJZtykkPs-vdid3AE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-06_04,2024-08-02_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
- priorityscore=1501 adultscore=0 mlxscore=0 lowpriorityscore=0 bulkscore=0
- phishscore=0 mlxlogscore=999 clxscore=1015 malwarescore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2408060043
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240806-b4-linux-next-24-07-31-camss-sc8280xp-lenovo-rgb-v2-v3-1-199767fb193d@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAMbwsWYC/53OQQ7CIBQE0KsY1n7z+aUtceU9jAugtJJUMKCkp
+ undpXWjW5czi3kzs2Sjs4kddzOLNrvkgi+h2u+YuSo/WHBdyYyQBLYVBy1gdP45gbfTA0gAtlB
+ qo24pQTKSJE53GK0POUAcNGSCmmpNNXa9loKV5Xu0vZs29Xwp+erSI8TXdiLztf14Ev/zMgcOF
+ TZEplFohDyVCRXDIcSBrWCmb4T+Q6ggSqKqkHda8eYHWZblDQ0vAFRcAQAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+X-Mailer: b4 0.15-dev
 
-From: devi priya <quic_devipriy@quicinc.com>
+Enable the main RGB sensor on the Lenovo x13s a five megapixel 2 lane DPHY
+MIPI sensor connected to cisphy0.
 
-Update PLL offsets to DEFAULT_EVO to configure MDIO to 800MHz.
+With the pm8008 patches recently applied to the x13s dtsi we can now also
+enable the RGB sensor. Once done we have all upstream support necessary for
+the RGB sensor on x13s.
 
-The incorrect clock frequency leads to an incorrect MDIO clock. This,
-in turn, affects the MDIO hardware configurations as the divider is
-calculated from the MDIO clock frequency. If the clock frequency is
-not as expected, the MDIO register fails due to the generation of an
-incorrect MDIO frequency.
-
-This issue is critical as it results in incorrect MDIO configurations
-and ultimately leads to the MDIO function not working. This results in
-a complete feature failure affecting all Ethernet PHYs. Specifically,
-Ethernet will not work on IPQ9574 due to this issue.
-
-Currently, the clock frequency is set to CLK_ALPHA_PLL_TYPE_DEFAULT.
-However, this setting does not yield the expected clock frequency.
-To rectify this, we need to change this to CLK_ALPHA_PLL_TYPE_DEFAULT_EVO.
-
-This modification ensures that the clock frequency aligns with our
-expectations, thereby resolving the MDIO register failure and ensuring
-the proper functioning of the Ethernet on IPQ9574.
-
-Fixes: d75b82cff488 ("clk: qcom: Add Global Clock Controller driver for IPQ9574")
-Signed-off-by: devi priya <quic_devipriy@quicinc.com>
-Signed-off-by: Amandeep Singh <quic_amansing@quicinc.com>
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 ---
- drivers/clk/qcom/gcc-ipq9574.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+The Lenovo x13s has a five megapixel ov5675 sensor as well as a one
+megpixel ov9734 B+W NOIR sensor for low-light face detection login.
 
-diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq9574.c
-index 80fc94d705a0..645109f75b46 100644
---- a/drivers/clk/qcom/gcc-ipq9574.c
-+++ b/drivers/clk/qcom/gcc-ipq9574.c
-@@ -68,7 +68,7 @@ static const struct clk_parent_data gcc_sleep_clk_data[] = {
+This patch enables the RGB sensor.
+
+A gpio exists in the upstream dts to indicate camera activity which
+currently we don't tie to CAMSS activity yet.
+
+Running
+
+- A Linux distro which ships libcamera > 0.3.0
+- Firefox nightly
+- Setting Firefox about:config:media.webrtc.capture.allow-pipewire = true
+
+It should then be possible to use the on-board MIPI camera for Zoom,
+Hangouts etc.
+
+Changes in v2:
+- Drops useless assigned-clocks entry 
+- Link to v1: https://lore.kernel.org/r/20240801-b4-linux-next-24-07-31-camss-sc8280xp-lenovo-rgb-v2-v1-1-30622c6a0c48@linaro.org
+
+Changes in v3:
+- Incorporate Vlad's review
+- Add Vlad's RB
+- Link to v2: https://lore.kernel.org/r/20240802-b4-linux-next-24-07-31-camss-sc8280xp-lenovo-rgb-v2-v2-1-a80a301dba16@linaro.org
+---
+ .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     | 67 ++++++++++++++++++++++
+ 1 file changed, 67 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index a7c5a3f5926c7..6a28cab971891 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -592,6 +592,57 @@ vreg_l10d: ldo10 {
+ 	};
+ };
  
- static struct clk_alpha_pll gpll0_main = {
- 	.offset = 0x20000,
--	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
-+	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT_EVO],
- 	.clkr = {
- 		.enable_reg = 0x0b000,
- 		.enable_mask = BIT(0),
-@@ -96,7 +96,7 @@ static struct clk_fixed_factor gpll0_out_main_div2 = {
++&camss {
++	vdda-phy-supply = <&vreg_l6d>;
++	vdda-pll-supply = <&vreg_l4d>;
++
++	status = "okay";
++
++	ports {
++		port@0 {
++			csiphy0_lanes01_ep: endpoint@0 {
++				reg = <0>;
++				clock-lanes = <7>;
++				data-lanes = <0 1>;
++				remote-endpoint = <&ov5675_ep>;
++			};
++		};
++	};
++};
++
++&cci2 {
++	status = "okay";
++};
++
++&cci2_i2c1 {
++	camera@10 {
++		compatible = "ovti,ov5675";
++		reg = <0x10>;
++
++		reset-gpios = <&tlmm 15 GPIO_ACTIVE_LOW>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&cam_rgb_default>;
++
++		clocks = <&camcc CAMCC_MCLK3_CLK>;
++
++		orientation = <0>;	/* Front facing */
++
++		avdd-supply = <&vreg_l6q>;
++		dvdd-supply = <&vreg_l2q>;
++		dovdd-supply = <&vreg_l7q>;
++
++		port {
++			ov5675_ep: endpoint {
++				clock-lanes = <0>;
++				data-lanes = <1 2>;
++				link-frequencies = /bits/ 64 <450000000>;
++				remote-endpoint = <&csiphy0_lanes01_ep>;
++			};
++		};
++
++	};
++};
++
+ &dispcc0 {
+ 	status = "okay";
+ };
+@@ -1436,6 +1487,22 @@ cam_indicator_en: cam-indicator-en-state {
+ 		bias-disable;
+ 	};
  
- static struct clk_alpha_pll_postdiv gpll0 = {
- 	.offset = 0x20000,
--	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
-+	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT_EVO],
- 	.width = 4,
- 	.clkr.hw.init = &(const struct clk_init_data) {
- 		.name = "gpll0",
-@@ -110,7 +110,7 @@ static struct clk_alpha_pll_postdiv gpll0 = {
- 
- static struct clk_alpha_pll gpll4_main = {
- 	.offset = 0x22000,
--	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
-+	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT_EVO],
- 	.clkr = {
- 		.enable_reg = 0x0b000,
- 		.enable_mask = BIT(2),
-@@ -125,7 +125,7 @@ static struct clk_alpha_pll gpll4_main = {
- 
- static struct clk_alpha_pll_postdiv gpll4 = {
- 	.offset = 0x22000,
--	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
-+	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT_EVO],
- 	.width = 4,
- 	.clkr.hw.init = &(const struct clk_init_data) {
- 		.name = "gpll4",
-@@ -139,7 +139,7 @@ static struct clk_alpha_pll_postdiv gpll4 = {
- 
- static struct clk_alpha_pll gpll2_main = {
- 	.offset = 0x21000,
--	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
-+	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT_EVO],
- 	.clkr = {
- 		.enable_reg = 0x0b000,
- 		.enable_mask = BIT(1),
-@@ -154,7 +154,7 @@ static struct clk_alpha_pll gpll2_main = {
- 
- static struct clk_alpha_pll_postdiv gpll2 = {
- 	.offset = 0x21000,
--	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
-+	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT_EVO],
- 	.width = 4,
- 	.clkr.hw.init = &(const struct clk_init_data) {
- 		.name = "gpll2",
++	cam_rgb_default: cam-rgb-default-state {
++		mclk-pins {
++			pins = "gpio17";
++			function = "cam_mclk";
++			drive-strength = <16>;
++			bias-disable;
++		};
++
++		sc-rgb-xshut-n-pins {
++			pins = "gpio15";
++			function = "gpio";
++			drive-strength = <2>;
++			bias-disable;
++		};
++	};
++
+ 	edp_reg_en: edp-reg-en-state {
+ 		pins = "gpio25";
+ 		function = "gpio";
+
+---
+base-commit: cd19ac2f903276b820f5d0d89de0c896c27036ed
+change-id: 20240731-b4-linux-next-24-07-31-camss-sc8280xp-lenovo-rgb-v2-525b250dfb84
+
+Best regards,
 -- 
-2.34.1
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 
