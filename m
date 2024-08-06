@@ -1,299 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-28009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB0839494C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 17:48:35 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CF15949515
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 18:02:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DD8121C2196E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 15:48:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5728B283224
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 16:02:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16F322AF15;
-	Tue,  6 Aug 2024 15:48:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b="HHujrAov"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A1F6C144;
+	Tue,  6 Aug 2024 16:00:15 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-fw-33001.amazon.com (smtp-fw-33001.amazon.com [207.171.190.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8271946F;
-	Tue,  6 Aug 2024 15:48:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=207.171.190.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADFFDF42
+	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Aug 2024 16:00:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722959312; cv=none; b=ZGE90lAA3WDxE1anXllGRMXnqHj8GEqI2p0ketGVV2PJK0OBl+qyhG6ZYEag9WCnOmKxq1JNK9gmL3LwIsZXGadRqTZAPL5wVRtH3H/HVQN/vajkND2gVOkk+LnD2MbMtjYxcgnNmcOmibLqN6Rj5uJkKhnybUB4VUtpm0qfHAU=
+	t=1722960015; cv=none; b=jj2NKKRHHVxmHoB8I6Tj3stYTIiPjrmq7jtGln5eGtQWIKgdUxWHrcudFDfIibDwMBcNf8fOMYi8/RPmtvX4wliE9cBierFx8xY0xn29uaRt4/NN8Pbp3QaR+BbmGG87wW1/V6itk1v40w6jZJ0RXxub4nQvQdkJubmT1TUOgqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722959312; c=relaxed/simple;
-	bh=79JKVVzj13bPR9TcVJePyTMWtYc/ZcBwbG0GynFLhKE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ggnY9RtA40Cu3Dl7qwdh3yqTYSxNoI+Ah4hB1fAIJ+yOzMvHTtdvgXsg7iQAjZ+lW8PtC0rmEsLfPHpRmURLvLx+dvcExyyK5oDKO/VF5777EKErdhJbItq/RnIKCZn3afucEASrDWOgydQRIouXN1ddFG0DZpGUmrXd9rC2k7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk; spf=pass smtp.mailfrom=amazon.co.uk; dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b=HHujrAov; arc=none smtp.client-ip=207.171.190.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.co.uk
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.co.uk; i=@amazon.co.uk; q=dns/txt;
-  s=amazon201209; t=1722959310; x=1754495310;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=yc/1mWs6SeF5HnWAzCvUQzyjIjCuiLTryEo53m/a1v4=;
-  b=HHujrAovkv35QNQoE3kSDVDENlpgfrKlg04ay8Gk4LpTS7Tpnd1Ruf0Y
-   kaUR6eLw+tqJ0LGySMBBpJIfEM3DmCdX8hF+iXFuj90AFAtpAnW+3UQPe
-   R3kFow32R8LEWPX73IfO+bvNHa6iBBjm0OQLxCoB29PTOGnEaO/pY0Xdl
-   g=;
-X-IronPort-AV: E=Sophos;i="6.09,268,1716249600"; 
-   d="scan'208";a="360852274"
-Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
-  by smtp-border-fw-33001.sea14.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Aug 2024 15:48:27 +0000
-Received: from EX19MTAEUA001.ant.amazon.com [10.0.17.79:8908]
- by smtpin.naws.eu-west-1.prod.farcaster.email.amazon.dev [10.0.26.94:2525] with esmtp (Farcaster)
- id 114b04b0-66ae-461d-8af3-867b0de2b6ff; Tue, 6 Aug 2024 15:48:26 +0000 (UTC)
-X-Farcaster-Flow-ID: 114b04b0-66ae-461d-8af3-867b0de2b6ff
-Received: from EX19D022EUC002.ant.amazon.com (10.252.51.137) by
- EX19MTAEUA001.ant.amazon.com (10.252.50.50) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Tue, 6 Aug 2024 15:48:25 +0000
-Received: from EX19MTAUEB001.ant.amazon.com (10.252.135.35) by
- EX19D022EUC002.ant.amazon.com (10.252.51.137) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Tue, 6 Aug 2024 15:48:25 +0000
-Received: from [127.0.0.1] (172.19.88.180) by mail-relay.amazon.com
- (10.252.135.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34 via Frontend
- Transport; Tue, 6 Aug 2024 15:48:23 +0000
-Message-ID: <6660faa6-4cea-4ddc-a378-ab9da9139ee9@amazon.co.uk>
-Date: Tue, 6 Aug 2024 16:48:22 +0100
+	s=arc-20240116; t=1722960015; c=relaxed/simple;
+	bh=AJHk99JRG5OpJoSoQueFp2kEW1qBz/ld8n7MnXvLs9E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cLDs4tovEJ4yKtlWkj7d+ktLmIawdNeNHdw+a3teEIELENnEZgNdXzZPvU8vLT2iWMzdEEQUpt3TZBQpSAEZqJnI8LUeuDaKTKe0dDS5Blm/L7n8LMWwPxszbit1GyycEQTE2Kl5vLNjRMIh0F2yHuZCl6fozTbc724yrbl5x8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=baylibre.com; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1fc5296e214so7480075ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Aug 2024 09:00:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722960013; x=1723564813;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=N0OH1lK0iyrEFjZ+sxfEDU/w6C/qIfjEuNJOJDkGoH0=;
+        b=f3/tgw9H3jUEWjVQNIuEU8eQknI6HT5aAeICnRL/DQvOJwq/6E9vdfX5SeJ2W8d2lx
+         Nyv9dnANhUwSB5Wj/oNIgB3IOiGI5kQVdshAyEzeY3pBL/jDlQSGX7kAK9xA0uneRuUs
+         bRQDhgLZe4ETkxguks1eScb/+n0MEUve0tRxa9dwby+XRokZZKr5LiTkl0XrHnsC5OCu
+         yGfj/lQffDDHo+rDej12XIAXtRCKGlSj9w1bYV1CEi80Q8TUARwbaW3V1fASrfn9MEbv
+         RvgvTKVHdA7CmvPIfLvm3GOng6emcmCqaFHr0IsAwc9rtdadFvGxCw0JJNF/6kPyQvBW
+         O7SQ==
+X-Gm-Message-State: AOJu0YywkZ6jhUy5LQYOixe3WwhDevxa+/JBgDSsaPwWQGxD+3a7/xHa
+	wFKGo6UCIWWrxchj8aPhdigzW87CVLYutFbnsx2wyTqsB4U6QNm7Jns4f/8PMb0=
+X-Google-Smtp-Source: AGHT+IHwXaMUruJCX9M/RHqtmhUbj4EyviX70/VCd+gvNCZm8JC044UbL01+TgvDOTnUpG7G2lRLZQ==
+X-Received: by 2002:a17:902:e54f:b0:1fb:9627:b348 with SMTP id d9443c01a7336-1ff57495ca7mr237971045ad.58.1722960012898;
+        Tue, 06 Aug 2024 09:00:12 -0700 (PDT)
+Received: from localhost ([71.212.170.185])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff5905fec0sm89249425ad.149.2024.08.06.09.00.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Aug 2024 09:00:12 -0700 (PDT)
+From: Kevin Hilman <khilman@kernel.org>
+To: "Rob Herring (Arm)" <robh@kernel.org>, "Rafael J. Wysocki"
+ <rafael@kernel.org>, Viresh Kumar <viresh.kumar@linaro.org>, Andrew Lunn
+ <andrew@lunn.ch>, Gregory Clement <gregory.clement@bootlin.com>, Sebastian
+ Hesselbarth <sebastian.hesselbarth@gmail.com>, Nishanth Menon <nm@ti.com>,
+ Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-omap@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 2/6] cpufreq: omap: Drop asm includes
+In-Reply-To: <20240806-dt-api-cleanups-v1-2-459e2c840e7d@kernel.org>
+References: <20240806-dt-api-cleanups-v1-0-459e2c840e7d@kernel.org>
+ <20240806-dt-api-cleanups-v1-2-459e2c840e7d@kernel.org>
+Date: Tue, 06 Aug 2024 09:00:12 -0700
+Message-ID: <7h1q313alv.fsf@baylibre.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 4/4] mm: guest_memfd: Add ability for mmap'ing pages
-To: Elliot Berman <quic_eberman@quicinc.com>, Andrew Morton
-	<akpm@linux-foundation.org>, Paolo Bonzini <pbonzini@redhat.com>, "Sean
- Christopherson" <seanjc@google.com>, Fuad Tabba <tabba@google.com>, "David
- Hildenbrand" <david@redhat.com>, <qperret@google.com>, Ackerley Tng
-	<ackerleytng@google.com>
-CC: <linux-coco@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>, <kvm@vger.kernel.org>,
-	James Gowans <jgowans@amazon.com>, "Kalyazin, Nikita"
-	<kalyazin@amazon.co.uk>, "Manwaring, Derek" <derekmn@amazon.com>, "Cali,
- Marco" <xmarcalx@amazon.co.uk>
-References: <20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com>
- <20240805-guest-memfd-lib-v1-4-e5a29a4ff5d7@quicinc.com>
-From: Patrick Roy <roypat@amazon.co.uk>
-Content-Language: en-US
-Autocrypt: addr=roypat@amazon.co.uk; keydata=
- xjMEY0UgYhYJKwYBBAHaRw8BAQdA7lj+ADr5b96qBcdINFVJSOg8RGtKthL5x77F2ABMh4PN
- NVBhdHJpY2sgUm95IChHaXRodWIga2V5IGFtYXpvbikgPHJveXBhdEBhbWF6b24uY28udWs+
- wpMEExYKADsWIQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbAwULCQgHAgIiAgYVCgkI
- CwIEFgIDAQIeBwIXgAAKCRBVg4tqeAbEAmQKAQC1jMl/KT9pQHEdALF7SA1iJ9tpA5ppl1J9
- AOIP7Nr9SwD/fvIWkq0QDnq69eK7HqW14CA7AToCF6NBqZ8r7ksi+QLOOARjRSBiEgorBgEE
- AZdVAQUBAQdAqoMhGmiXJ3DMGeXrlaDA+v/aF/ah7ARbFV4ukHyz+CkDAQgHwngEGBYKACAW
- IQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbDAAKCRBVg4tqeAbEAtjHAQDkh5jZRIsZ
- 7JMNkPMSCd5PuSy0/Gdx8LGgsxxPMZwePgEAn5Tnh4fVbf00esnoK588bYQgJBioXtuXhtom
- 8hlxFQM=
-In-Reply-To: <20240805-guest-memfd-lib-v1-4-e5a29a4ff5d7@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On Mon, 2024-08-05 at 19:34 +0100, Elliot Berman wrote:
-> Confidential/protected guest virtual machines want to share some memory
-> back with the host Linux. For example, virtqueues allow host and
-> protected guest to exchange data. In MMU-only isolation of protected
-> guest virtual machines, the transition between "shared" and "private"
-> can be done in-place without a trusted hypervisor copying pages.
-> 
-> Add support for this feature and allow Linux to mmap host-accessible
-> pages. When the owner provides an ->accessible() callback in the
-> struct guest_memfd_operations, guest_memfd allows folios to be mapped
-> when the ->accessible() callback returns 0.
+"Rob Herring (Arm)" <robh@kernel.org> writes:
 
-Wouldn't the set of inaccessible folios always match exactly the set of
-folios that have PG_private=1 set? At least guest_memfd instances that
-have GUEST_MEMFD_FLAG_NO_DIRECT_MAP set, having folios without direct
-map entries marked "accessible" sound like it may cause a lot of mayhem
-(as those folios would essentially be secretmem folios, but this time
-without the GUP checks). But even more generally, wouldn't tracking
-accessibility via PG_private be enough?
+> The omap driver doesn't actually need asm/smp_plat.h, so drop it.
+> asm/cpu.h is not needed either as linux/cpu.h is already included.
+>
+> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 
-> To safely make inaccessible:
-> 
-> ```
-> folio = guest_memfd_grab_folio(inode, index, flags);
-> r = guest_memfd_make_inaccessible(inode, folio);
-> if (r)
->         goto err;
-> 
-> hypervisor_does_guest_mapping(folio);
-> 
-> folio_unlock(folio);
-> ```
-> 
-> hypervisor_does_s2_mapping(folio) should make it so
-> ops->accessible(...) on those folios fails.
-> 
-> The folio lock ensures atomicity.
-> 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+Acked-by: Kevin Hilman <khilman@baylibre.com>
+
 > ---
->  include/linux/guest_memfd.h |  7 ++++
->  mm/guest_memfd.c            | 81 ++++++++++++++++++++++++++++++++++++++++++++-
->  2 files changed, 87 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/linux/guest_memfd.h b/include/linux/guest_memfd.h
-> index f9e4a27aed67..edcb4ba60cb0 100644
-> --- a/include/linux/guest_memfd.h
-> +++ b/include/linux/guest_memfd.h
-> @@ -16,12 +16,18 @@
->   * @invalidate_end: called after invalidate_begin returns success. Optional.
->   * @prepare: called before a folio is mapped into the guest address space.
->   *           Optional.
-> + * @accessible: called after prepare returns success and before it's mapped
-> + *              into the guest address space. Returns 0 if the folio can be
-> + *              accessed.
-> + *              Optional. If not present, assumes folios are never accessible.
->   * @release: Called when releasing the guest_memfd file. Required.
->   */
->  struct guest_memfd_operations {
->         int (*invalidate_begin)(struct inode *inode, pgoff_t offset, unsigned long nr);
->         void (*invalidate_end)(struct inode *inode, pgoff_t offset, unsigned long nr);
->         int (*prepare)(struct inode *inode, pgoff_t offset, struct folio *folio);
-> +       int (*accessible)(struct inode *inode, struct folio *folio,
-> +                         pgoff_t offset, unsigned long nr);
->         int (*release)(struct inode *inode);
->  };
-> 
-> @@ -48,5 +54,6 @@ struct file *guest_memfd_alloc(const char *name,
->                                const struct guest_memfd_operations *ops,
->                                loff_t size, unsigned long flags);
->  bool is_guest_memfd(struct file *file, const struct guest_memfd_operations *ops);
-> +int guest_memfd_make_inaccessible(struct file *file, struct folio *folio);
-> 
->  #endif
-> diff --git a/mm/guest_memfd.c b/mm/guest_memfd.c
-> index e9d8cab72b28..6b5609932ca5 100644
-> --- a/mm/guest_memfd.c
-> +++ b/mm/guest_memfd.c
-> @@ -9,6 +9,8 @@
->  #include <linux/pagemap.h>
->  #include <linux/set_memory.h>
-> 
-> +#include "internal.h"
-> +
->  static inline int guest_memfd_folio_private(struct folio *folio)
->  {
->         unsigned long nr_pages = folio_nr_pages(folio);
-> @@ -89,7 +91,7 @@ struct folio *guest_memfd_grab_folio(struct file *file, pgoff_t index, u32 flags
->                         goto out_err;
->         }
-> 
-> -       if (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP) {
-> +       if (!ops->accessible && (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP)) {
->                 r = guest_memfd_folio_private(folio);
->                 if (r)
->                         goto out_err;
-> @@ -107,6 +109,82 @@ struct folio *guest_memfd_grab_folio(struct file *file, pgoff_t index, u32 flags
->  }
->  EXPORT_SYMBOL_GPL(guest_memfd_grab_folio);
-> 
-> +int guest_memfd_make_inaccessible(struct file *file, struct folio *folio)
-> +{
-> +       unsigned long gmem_flags = (unsigned long)file->private_data;
-> +       unsigned long i;
-> +       int r;
-> +
-> +       unmap_mapping_folio(folio);
-> +
-> +       /**
-> +        * We can't use the refcount. It might be elevated due to
-> +        * guest/vcpu trying to access same folio as another vcpu
-> +        * or because userspace is trying to access folio for same reason
-> +        *
-> +        * folio_lock serializes the transitions between (in)accessible
-> +        */
-> +       if (folio_maybe_dma_pinned(folio))
-> +               return -EBUSY;
-> +
-> +       if (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP) {
-> +               r = guest_memfd_folio_private(folio);
-> +               if (r)
-> +                       return r;
-> +       }
-> +
-> +       return 0;
-> +}
-> +
-> +static vm_fault_t gmem_fault(struct vm_fault *vmf)
-> +{
-> +       struct file *file = vmf->vma->vm_file;
-> +       struct inode *inode = file_inode(file);
-> +       const struct guest_memfd_operations *ops = inode->i_private;
-> +       struct folio *folio;
-> +       pgoff_t off;
-> +       int r;
-> +
-> +       folio = guest_memfd_grab_folio(file, vmf->pgoff, GUEST_MEMFD_GRAB_UPTODATE);
-> +       if (!folio)
-> +               return VM_FAULT_SIGBUS;
-> +
-> +       off = vmf->pgoff & (folio_nr_pages(folio) - 1);
-> +       r = ops->accessible(inode, folio, off, 1);
-> +       if (r) {
-
-This made be stumble at first. I know you say ops->accessible returning
-0 means "this is accessible", but if I only look at this if-statement it
-reads as "if the folio is accessible, send a SIGBUS", which is not
-what's actually happening.
-
-> +               folio_unlock(folio);
-> +               folio_put(folio);
-> +               return VM_FAULT_SIGBUS;
-> +       }
-> +
-> +       guest_memfd_folio_clear_private(folio);
-> +
-> +       vmf->page = folio_page(folio, off);
-> +
-> +       return VM_FAULT_LOCKED;
-> +}
-> +
-> +static const struct vm_operations_struct gmem_vm_ops = {
-> +       .fault = gmem_fault,
-> +};
-> +
-> +static int gmem_mmap(struct file *file, struct vm_area_struct *vma)
-> +{
-> +       const struct guest_memfd_operations *ops = file_inode(file)->i_private;
-> +
-> +       if (!ops->accessible)
-> +               return -EPERM;
-> +
-> +       /* No support for private mappings to avoid COW.  */
-> +       if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
-> +           (VM_SHARED | VM_MAYSHARE))
-> +               return -EINVAL;
-> +
-> +       file_accessed(file);
-> +       vma->vm_ops = &gmem_vm_ops;
-> +       return 0;
-> +}
-> +
->  static long gmem_punch_hole(struct file *file, loff_t offset, loff_t len)
->  {
->         struct inode *inode = file_inode(file);
-> @@ -220,6 +298,7 @@ static int gmem_release(struct inode *inode, struct file *file)
->  static struct file_operations gmem_fops = {
->         .open = generic_file_open,
->         .llseek = generic_file_llseek,
-> +       .mmap = gmem_mmap,
->         .release = gmem_release,
->         .fallocate = gmem_fallocate,
->         .owner = THIS_MODULE,
-> 
-> --
-> 2.34.1
-> 
+>  drivers/cpufreq/omap-cpufreq.c | 3 ---
+>  1 file changed, 3 deletions(-)
+>
+> diff --git a/drivers/cpufreq/omap-cpufreq.c b/drivers/cpufreq/omap-cpufreq.c
+> index 3458d5cc9b7f..de8be0a8932d 100644
+> --- a/drivers/cpufreq/omap-cpufreq.c
+> +++ b/drivers/cpufreq/omap-cpufreq.c
+> @@ -28,9 +28,6 @@
+>  #include <linux/platform_device.h>
+>  #include <linux/regulator/consumer.h>
+>  
+> -#include <asm/smp_plat.h>
+> -#include <asm/cpu.h>
+> -
+>  /* OPP tolerance in percentage */
+>  #define	OPP_TOLERANCE	4
+>  
+>
+> -- 
+> 2.43.0
 
