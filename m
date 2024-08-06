@@ -1,147 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-28017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6EC59497DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 20:58:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F32A9497FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 21:07:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 031221C2277F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 18:58:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0E7481F2184E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 19:07:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8586413C90B;
-	Tue,  6 Aug 2024 18:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E53BA13C8F9;
+	Tue,  6 Aug 2024 19:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Gc7Z832/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QC8IPl6j"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868838F77;
-	Tue,  6 Aug 2024 18:58:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EE513B288;
+	Tue,  6 Aug 2024 19:07:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722970692; cv=none; b=NZGA2rtQ1nSkx6/55ShtG225Gxiy6iffuKVN2CHJMaimz6dLHC39ioxNDP0qvzxTyCQwUkWEEuetpmEadFfslWIhrlCmM2OnfbxONMXUjwApRn3VsBnlMD+inigpNGpsTgLAWf2Dtw4R63uSMtSg50ERJUCmjyq0ZOdYcxibZj8=
+	t=1722971225; cv=none; b=D6Gsa7uVFkqFZ5DpFzRPVYHIzHAsdizJgoNVhoW7Cun0NCHPwDBrdaJ8VQ8UN+SNOej6sv+m06EU8SKlncG4a8+IDH6uQJyUHY1gtIY5GTcG2V4nrmyviEXgGcAsQip5+/LDroMG9DWiTKGoW9oiH4aUF31Yt44/oporJxbCSyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722970692; c=relaxed/simple;
-	bh=CxyhdiqFzs0KCYLIqZCch2rfpOd55xLPflf6rfNePOM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=MsXGh0jN2nVpqT77OY7z5Y37InpBBUehO+zj0eikb1yfSuSjWZGieOUHbX0SmieJbRdRBF9qhZdjsqoaR+ITXg+8/y2jtxKbc0g1XGJTFTsY1yVp1Mr9htfIe+ken20sae0oo8x/ktno/WGVyAfKEE7pV8l/UXtq7xBHWKdo4h4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Gc7Z832/; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 476H6Unw013589;
-	Tue, 6 Aug 2024 18:58:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	fNhD6pIC+oLP/zfHBFA5xgjXKbH5MKc03edOBncHJOI=; b=Gc7Z832/QOIKaCIp
-	y4kNKx5pRPhqRhfxeOjQyqgY55L9QM/SnJKD7xX3ymlV//pON+kai/qbCctEZMRL
-	23DkD/80y+ovLhecS6piy97dXq7QsWzaEhdLtyu0qfqZc0zBZxmWjGcEVUS7WJSN
-	h+hTtOi1YxELp6rwDe23tZ0UWpgED5xORreOvmm5xsD4nSogrwEygp7z1+9fKdzm
-	16l4hZx94yaSviYL3q1yZ1kplndR7dOijSpuPabseKNIYZhOP+pR45s3F0Rhwpwg
-	W9+vB6n790mfUPafs/3cLuLcNR5e9AYPF4uA/DaIbNLLRnd5Bq93m8s2UwG7uk9x
-	MkvF3w==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40sa8f0j6u-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 Aug 2024 18:58:05 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 476Iw4no011042
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 6 Aug 2024 18:58:04 GMT
-Received: from [10.110.113.181] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 6 Aug 2024
- 11:58:03 -0700
-Message-ID: <622c0fd6-e4e2-6597-d0a2-ff449d7d2f59@quicinc.com>
-Date: Tue, 6 Aug 2024 11:58:02 -0700
+	s=arc-20240116; t=1722971225; c=relaxed/simple;
+	bh=WVKkU+/2pLfBtVPtjXmuMIcG0wlH5uxeowV0c0yZeJE=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=pfIZRcKnLVQRtsXLYle3RaSKRnjcCJmrchitVil61oIxkDPF/l5CY5MotPILsXjIfl2Abt35JvKyqcYHj1JVqK5thYF5HDiqYrMmKHpZs7LIpIqxrrGC23kUCpToXd0P053FGuolv7n02bTnXh5nurVsMdp5V3nFBK3wOnUzUMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QC8IPl6j; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC27C4AF10;
+	Tue,  6 Aug 2024 19:07:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722971225;
+	bh=WVKkU+/2pLfBtVPtjXmuMIcG0wlH5uxeowV0c0yZeJE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=QC8IPl6jpQTAT4L9Qp2WYsconTnPxPImCeRcw9tLpiGmNL1bhtGBiGX/9QOSRnotq
+	 1gE/Lp08Zn6AlJ6ud0+3Bb90QOkEj7+H+o0Dwr3sEmryl3+ZFzGrLNsBiJ0bUsw8W0
+	 D/WiXEwm327cndUskH0St8fwGWE1gRfDHWwQkU5peeLivHZh1XtgjeAt6YutfwHpNA
+	 rRFq++/MkCzOky8iJK5G7rsEWII8Lm6G9zApQAQ+wAK5feQGPoOXx01wEZ7vvndfQb
+	 8kl+NUc3u+UUmNeCcJM5VD5ZVI+GN1xBs+Uh2l02iipMxNKOD17e+q0ziEQrSxCk0M
+	 PZnbBjuuQSzRA==
+Date: Tue, 6 Aug 2024 14:07:02 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	andersson@kernel.org, quic_vbadigan@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 4/8] PCI: Change the parent to correctly represent
+ pcie hierarchy
+Message-ID: <20240806190702.GA72614@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 0/8] Enable EUD on Qualcomm sm8450 SoC
-Content-Language: en-US
-To: Caleb Connolly <caleb.connolly@linaro.org>,
-        Elson Roy Serrao
-	<quic_eserrao@quicinc.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <gregkh@linuxfoundation.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-usb@vger.kernel.org>
-References: <20240730222439.3469-1-quic_eserrao@quicinc.com>
- <023d4ea8-635d-435f-bae2-87284f70123b@linaro.org>
- <2a17eaca-54af-d1fa-304d-c7e0afd85b33@quicinc.com>
- <32f23133-c494-46c1-a1f7-cabddb6331a8@linaro.org>
-From: Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <32f23133-c494-46c1-a1f7-cabddb6331a8@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: D3ARgBR9vxUPoXwXnrhNoEDelUJZiaYf
-X-Proofpoint-ORIG-GUID: D3ARgBR9vxUPoXwXnrhNoEDelUJZiaYf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-06_15,2024-08-06_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- bulkscore=0 clxscore=1015 adultscore=0 malwarescore=0 mlxlogscore=792
- impostorscore=0 lowpriorityscore=0 suspectscore=0 mlxscore=0 phishscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408060133
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240803-qps615-v2-4-9560b7c71369@quicinc.com>
 
-On 8/1/2024 3:52 AM, Caleb Connolly wrote:
-> Hi Trilok,
+On Sat, Aug 03, 2024 at 08:52:50AM +0530, Krishna chaitanya chundru wrote:
+> Currently the pwrctl driver is child of pci-pci bridge driver,
+> this will cause issue when suspend resume is introduced in the pwr
+> control driver. If the supply is removed to the endpoint in the
+> power control driver then the config space access by the
+> pci-pci bridge driver can cause issues like Timeouts.
+
+If "pci-pci bridge driver" refers to portdrv, please use "portdrv" to
+avoid confusion.
+
+Can you be a little more specific about config accesses by the bridge
+driver?  Generally portdrv wouldn't touch devices below the bridge.
+It sounds like you've tripped over something here, so you probably
+have an example of a timeout.
+
+s/pcie/PCIe/ in subject, although it'd be nice if the whole subject
+could be a little more specific.  I don't think pwrctl is directly
+part of the PCIe hierarchy, so I don't quite understand what you're
+saying there.
+
+> For this reason change the parent to controller from pci-pci bridge.
 > 
-> On 31/07/2024 21:58, Trilok Soni wrote:
->> On 7/31/2024 4:13 AM, Caleb Connolly wrote:
->>>>      2.) Proper routing of USB role switch notifications: EUD hub is physically
->>>>       present in between the USB connector and the USB controller. So the
->>>>       usb role switch notifications originating from the connector should
->>>>       route through EUD. EUD also relies on role switch notifications to
->>>>       communicate with the USB, regarding EUD attach/detach events.
->>>>
->>>> This series aims at implementing the above aspects to enable EUD on
->>>> Qualcomm sm8450 SoC.
->>>
->>> Are there any plans to make this feature available for folks outside of Qualcomm / an NDA?
->>>
->>> There is an openOCD fork on CodeLinaro but it still requires some proprietary library which is only available to folks with a quicinc email as I understand it.
->>>
->>
->> Which codelinaro link are you referring here?
+> Fixes: 4565d2652a37 ("PCI/pwrctl: Add PCI power control core code")
+
+Will need an ack from Bartosz, of course, since he added this.  Moved
+from cc: to to: list to make sure he sees this.
+
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  drivers/pci/bus.c         | 3 ++-
+>  drivers/pci/pwrctl/core.c | 9 ++++++++-
+>  2 files changed, 10 insertions(+), 2 deletions(-)
 > 
-> That would be https://git.codelinaro.org/clo/la/openocd-org/openocd/-/blob/qcom_changes/README_QCOM?ref_type=heads
+> diff --git a/drivers/pci/bus.c b/drivers/pci/bus.c
+> index 55c853686051..15b42f0f588f 100644
+> --- a/drivers/pci/bus.c
+> +++ b/drivers/pci/bus.c
+> @@ -328,6 +328,7 @@ void __weak pcibios_bus_add_device(struct pci_dev *pdev) { }
+>   */
+>  void pci_bus_add_device(struct pci_dev *dev)
+>  {
+> +	struct pci_host_bridge *host = pci_find_host_bridge(dev->bus);
+>  	struct device_node *dn = dev->dev.of_node;
+>  	int retval;
+>  
+> @@ -352,7 +353,7 @@ void pci_bus_add_device(struct pci_dev *dev)
+>  
+>  	if (dev_of_node(&dev->dev) && pci_is_bridge(dev)) {
+>  		retval = of_platform_populate(dev_of_node(&dev->dev), NULL, NULL,
+> -					      &dev->dev);
+> +					      host->dev.parent);
+
+I'm not sure host->dev.parent is always valid.  There are
+pci_create_root_bus() callers that supply a NULL parent pointer.
+
+>  		if (retval)
+>  			pci_err(dev, "failed to populate child OF nodes (%d)\n",
+>  				retval);
+> diff --git a/drivers/pci/pwrctl/core.c b/drivers/pci/pwrctl/core.c
+> index feca26ad2f6a..4f2ffa0b0a5f 100644
+> --- a/drivers/pci/pwrctl/core.c
+> +++ b/drivers/pci/pwrctl/core.c
+> @@ -11,6 +11,8 @@
+>  #include <linux/property.h>
+>  #include <linux/slab.h>
+>  
+> +#include "../pci.h"
+> +
+>  static int pci_pwrctl_notify(struct notifier_block *nb, unsigned long action,
+>  			     void *data)
+>  {
+> @@ -64,18 +66,23 @@ static int pci_pwrctl_notify(struct notifier_block *nb, unsigned long action,
+>   */
+>  int pci_pwrctl_device_set_ready(struct pci_pwrctl *pwrctl)
+>  {
+> +	struct pci_bus *bus;
+>  	int ret;
+>  
+>  	if (!pwrctl->dev)
+>  		return -ENODEV;
+>  
+> +	bus = pci_find_bus(of_get_pci_domain_nr(pwrctl->dev->parent->of_node), 0);
+> +	if (!bus)
+> +		return -ENODEV;
+> +
+>  	pwrctl->nb.notifier_call = pci_pwrctl_notify;
+>  	ret = bus_register_notifier(&pci_bus_type, &pwrctl->nb);
+>  	if (ret)
+>  		return ret;
+>  
+>  	pci_lock_rescan_remove();
+> -	pci_rescan_bus(to_pci_dev(pwrctl->dev->parent)->bus);
+> +	pci_rescan_bus(bus);
+>  	pci_unlock_rescan_remove();
+>  
+>  	return 0;
 > 
-> Which says:
+> -- 
+> 2.34.1
 > 
-> Qualcomm specific tools:
-> - Login to qpm.qualcomm.com
-> - QUTS: 1.64.1.39 (version & above)
-> - Qualcomm Host USB Product Suite - QUD QC only : 1.00.63 (supported version)
-> - EUD QC : 2.1.1 (supported version)
-> 
-> I believe the specific versions of QUD and EUD are only available to Qualcomm engineers and not even to OEMs, though I might be mistaken.
-
-Thanks. So are we okay w/ one of the following option? (trying to understand the need here properly before I relay it internally). 
-
-Options:
-
-(1) Provide EUD library and tools - proprietary w/o any login requirement. 
-(2) Provide open-source EUD library and tools w/o any login requirement. 
-
-Is Option (1) fine to begin with or option 2 is must? 
-
-
--- 
----Trilok Soni
-
 
