@@ -1,140 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-28031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id DAEDB949AFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 00:12:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E612C949B5E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 00:38:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 657D7B209E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 22:12:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 596ADB20A6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 22:38:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E11B7170A0D;
-	Tue,  6 Aug 2024 22:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2624171098;
+	Tue,  6 Aug 2024 22:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V+yfIpi6"
+	dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b="VCyE9X62"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-fw-80008.amazon.com (smtp-fw-80008.amazon.com [99.78.197.219])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6A316FF48
-	for <linux-arm-msm@vger.kernel.org>; Tue,  6 Aug 2024 22:12:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A31777F08;
+	Tue,  6 Aug 2024 22:38:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=99.78.197.219
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722982333; cv=none; b=O0llh9WhBoynSIitIOCp3qUaxqTxQkE+skS7dIMDw0OBihHvQIdU3wjHpZBl6PyKVg1LOCzZzOYKCvswD+MkZ9vEB/TdSm6/eR44mwjKXTc9Jv4MV2K1qxwzbijfydsO1ErZnvGQU/jMyEtToXTSbVg52B5EG3XMH2Vv3xAYhu4=
+	t=1722983911; cv=none; b=KKpO2BQfptfshomOu63uxIvzgY+7+TS4lMsX6Qi9+B+8IzHucXWTBCSCGRURb/hLhy/mNrm6IE75KXNqi4+wd4xr7lGXFcUeocAHIDgPsq5Gi2+ztjJ4aVvKJm8cEExRvgAwOQb2usqRiJY+DtanG88aKKk2OpbOUa54YFOQ540=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722982333; c=relaxed/simple;
-	bh=5aJc4EHpj1vONHQREXTuOWOsMSgpiahd582rZLbutcA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rugqbzPY0uAIFmXZxx6Uo3dIqmMoIuJ+Sk5rqXU328KeRxDmZqWUTrdv2XiWCUVw9d0+ZDt9gn11RtF9CLVzR9qSzcm7k33fm8OtIf42rmkD4tQdnLT5nMQkHH8OK1DPauYsdLwBpKyQFDNXTdOpzxSECoKO9tCmgTYRdZQS8GY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V+yfIpi6; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-52efa98b11eso164347e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Aug 2024 15:12:11 -0700 (PDT)
+	s=arc-20240116; t=1722983911; c=relaxed/simple;
+	bh=aw2hedcbbQ15LOAsTM/yoeU9d3cY/k87+1xCMRhafE0=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KsYeyUdcmX3KgVg/fsOBp60nQj6C7TZBQ9YfssY/QMIkk1bViu0nAJqHicX+82/BrV3mdJN3nIaZNQfIVTvFTwFPF7g4aSQKju46X84Tecv00quLE0mMiGKOn8W9OoHfbGj0rGCse2MsDwif6h6gb3NW8PDyViqs862IKH5HPg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b=VCyE9X62; arc=none smtp.client-ip=99.78.197.219
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722982330; x=1723587130; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NLn7OVhOIMRd/L579K/B7JfPiLgZys/OGn3zlhndMAQ=;
-        b=V+yfIpi6R8wAgJcl6HD/Tf5LAwNYgtsj7AfImnUCCGgec8tlOHvd8C7Xd/IEfyQEpN
-         6wihCA6DMrCPR6IX4IoxrvVF7mA2mcRI11zcNYLU4ozWQuUslaNwiK0V6tHy0jWYmWQC
-         z4gzk1x/dkukNZtcIhX+gwUw2bcme2760Il07cQjAoX80KnuJLQEm5kDQ/TDUONc9F8s
-         ORak852oSMkknDgAG7vJjU8cGRaUoSYLT9HQqvCPCCsoD+YzrIsdhTMC3Gc3yJx7ut1H
-         g/F3yDTzCjwczEeos2/cQyamdpfs+qT02YK88Elz+akgvMHI+OjXbm+erWhqvSoWYcvw
-         Hjsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722982330; x=1723587130;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NLn7OVhOIMRd/L579K/B7JfPiLgZys/OGn3zlhndMAQ=;
-        b=YHDgX2WFyZ9liNKFa9t3rOtX7BMnON/rndfgUgBrRL+LIPOjbR+0IJKFa9So3i3QIC
-         0ov08tG7NFc0tyYM0M3mXU+c4bqJm8Fhc3nk8imKVJVQ7b2AF/zA9XXQl/TWvbotH8v5
-         t33PG5WQAXQVfl9+ktRoFRPb84Wv4Xe1hjvovrX1OSe8pQLk0ioeE+FgsWU4DNG8qAt/
-         cheKgDJ+2JfqR9Gh8Y9y+TSn7Kla/2TLa4m+vSMB8Ii6MWA1LYfeS4hmLF6mDcJPPoJ8
-         lh8XhKsqpiBNAQNvcqcqj8omu89rB7i+1bBdbmftK83jUeqOIT4KQDeh6U0nJzybtfU1
-         6+hg==
-X-Forwarded-Encrypted: i=1; AJvYcCVtk7QUv1FI5icHWBUqHflLWEK+vT240PSvMqVbGLp/JSjXqHnN/kF14XAFA74BPc043FUT1emZfVqE+AV+@vger.kernel.org
-X-Gm-Message-State: AOJu0YzbNeJ5uWF6a3ErH4LtCSrMHpChnybTlrtDbonL0SepqGR6QWP5
-	DG6R8FOINf4mdNqxWR+vmsNlm6jvsqOilQAAkyWYbG6lj7b6Sz79/hH5J2bGpgs=
-X-Google-Smtp-Source: AGHT+IFEx99eut+K85G0Of7/hdM4QziKPyBHUCtX6nuQ2eIenUQKbjMcNELUhhJCJfd3dC7rHeDZYA==
-X-Received: by 2002:a05:6512:39ca:b0:52f:3c:a81 with SMTP id 2adb3069b0e04-530bb36e47dmr5886196e87.3.1722982329983;
-        Tue, 06 Aug 2024 15:12:09 -0700 (PDT)
-Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-530de465863sm3012e87.203.2024.08.06.15.12.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Aug 2024 15:12:09 -0700 (PDT)
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To: Robert Foss <rfoss@kernel.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Todor Tomov <todor.too@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH] media: qcom: camss: fix error path on configuration of power domains
-Date: Wed,  7 Aug 2024 01:12:04 +0300
-Message-ID: <20240806221204.1560258-1-vladimir.zapolskiy@linaro.org>
-X-Mailer: git-send-email 2.45.2
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1722983910; x=1754519910;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=alT17QHgXA3/bEpwdaU1TeEystIV2QUhqeiAIwN2gs0=;
+  b=VCyE9X62RHgFjfYO+Xhw2tYRDVkGuJu9xtU86XLngWCEIIAehsQCxI6y
+   6Y+cNkhpINK+SP9BpzF+K3m8yK2+KEKZ1g9yXm2IfRE8eCGuQiWwLtJ8B
+   awM5dK7UqFb2vuq9rY/zFIlW2JaPvBTw5/S6kqzOQVuwvA/cO/pwUzEU8
+   4=;
+X-IronPort-AV: E=Sophos;i="6.09,268,1716249600"; 
+   d="scan'208";a="113089742"
+Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO smtpout.prod.us-east-1.prod.farcaster.email.amazon.dev) ([10.25.36.214])
+  by smtp-border-fw-80008.pdx80.corp.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Aug 2024 22:38:29 +0000
+Received: from EX19MTAUEC001.ant.amazon.com [10.0.44.209:10650]
+ by smtpin.naws.us-east-1.prod.farcaster.email.amazon.dev [10.0.87.234:2525] with esmtp (Farcaster)
+ id a6747138-ef4c-4899-80c8-33a03505f3b8; Tue, 6 Aug 2024 22:38:28 +0000 (UTC)
+X-Farcaster-Flow-ID: a6747138-ef4c-4899-80c8-33a03505f3b8
+Received: from EX19MTAUEA001.ant.amazon.com (10.252.134.203) by
+ EX19MTAUEC001.ant.amazon.com (10.252.135.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
+ Tue, 6 Aug 2024 22:38:27 +0000
+Received: from dev-dsk-jorcrous-2c-c78924fd.us-west-2.amazon.com
+ (172.23.179.86) by mail-relay.amazon.com (10.252.134.102) with Microsoft SMTP
+ Server id 15.2.1258.34 via Frontend Transport; Tue, 6 Aug 2024 22:38:26 +0000
+Received: by dev-dsk-jorcrous-2c-c78924fd.us-west-2.amazon.com (Postfix, from userid 14178300)
+	id AF5B92EA; Tue,  6 Aug 2024 22:38:26 +0000 (UTC)
+Date: Tue, 6 Aug 2024 22:38:26 +0000
+From: Jordan Crouse <jorcrous@amazon.com>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+CC: <linux-media@vger.kernel.org>, Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+	<linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 2/2] media: camss: Avoid overwriting vfe clock rates
+ for 8250
+Message-ID: <20240806223822.GA24117@amazon.com>
+References: <20240802152435.35796-1-jorcrous@amazon.com>
+ <20240802152435.35796-3-jorcrous@amazon.com>
+ <cc737b05-4476-4ded-9d1c-5924cfbce316@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <cc737b05-4476-4ded-9d1c-5924cfbce316@linaro.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 
-There is a chance to meet runtime issues during configuration of CAMSS
-power domains, because on the error path dev_pm_domain_detach() is
-unexpectedly called with NULL or error pointer.
+On Fri, Aug 02, 2024 at 11:20:17PM +0100, Bryan O'Donoghue wrote:
+> 
+> On 02/08/2024 16:24, Jordan Crouse wrote:
+> >On sm8250 targets both the csid and vfe subsystems share a number of
+> >clocks. Commit b4436a18eedb ("media: camss: add support for SM8250 camss")
+> >reorganized the initialization sequence so that VFE gets initialized first
+> >but a side effect of that was that the CSID subsystem came in after and
+> >overwrites the set frequencies on the shared clocks.
+> >
+> >Empty the frequency tables for the shared clocks in the CSID resources so
+> >they won't overwrite the clock rates that the VFE has already set.
+> >
+> >Signed-off-by: Jordan Crouse <jorcrous@amazon.com>
+> >---
+> >
+> >  drivers/media/platform/qcom/camss/camss.c | 21 +++++++++++++++------
+> >  1 file changed, 15 insertions(+), 6 deletions(-)
+> >
+> >diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> >index 51b1d3550421..d78644c3ebe9 100644
+> >--- a/drivers/media/platform/qcom/camss/camss.c
+> >+++ b/drivers/media/platform/qcom/camss/camss.c
+> >@@ -915,6 +915,15 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
+> >      }
+> >  };
+> >
+> >+/*
+> >+ * Both CSID and VFE use some of the same vfe clocks and both
+> >+ * should prepare/enable them but only the VFE subsystem should be in charge
+> >+ * of setting the clock rates.
+> >+ *
+> >+ * Set the frequency tables for those clocks in the CSID resources to
+> >+ * be empty so the csid subsystem doesn't overwrite the clock rates that the
+> >+ * VFE already set.
+> >+ */
+> >  static const struct camss_subdev_resources csid_res_8250[] = {
+> >      /* CSID0 */
+> >      {
+> >@@ -922,8 +931,8 @@ static const struct camss_subdev_resources csid_res_8250[] = {
+> >              .clock = { "vfe0_csid", "vfe0_cphy_rx", "vfe0", "vfe0_areg", "vfe0_ahb" },
+> >              .clock_rate = { { 400000000 },
+> >                              { 400000000 },
+> >-                             { 350000000, 475000000, 576000000, 720000000 },
+> >-                             { 100000000, 200000000, 300000000, 400000000 },
+> >+                             { 0 },
+> >+                             { 0 },
+> >                              { 0 } },
+> >              .reg = { "csid0" },
+> >              .interrupt = { "csid0" },
+> >@@ -939,8 +948,8 @@ static const struct camss_subdev_resources csid_res_8250[] = {
+> >              .clock = { "vfe1_csid", "vfe1_cphy_rx", "vfe1", "vfe1_areg", "vfe1_ahb" },
+> >              .clock_rate = { { 400000000 },
+> >                              { 400000000 },
+> >-                             { 350000000, 475000000, 576000000, 720000000 },
+> >-                             { 100000000, 200000000, 300000000, 400000000 },
+> >+                             { 0 },
+> >+                             { 0 },
+> >                              { 0 } },
+> >              .reg = { "csid1" },
+> >              .interrupt = { "csid1" },
+> >@@ -956,7 +965,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
+> >              .clock = { "vfe_lite_csid", "vfe_lite_cphy_rx", "vfe_lite",  "vfe_lite_ahb" },
+> >              .clock_rate = { { 400000000 },
+> >                              { 400000000 },
+> >-                             { 400000000, 480000000 },
+> >+                             { 0 },
+> >                              { 0 } },
+> >              .reg = { "csid2" },
+> >              .interrupt = { "csid2" },
+> >@@ -973,7 +982,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
+> >              .clock = { "vfe_lite_csid", "vfe_lite_cphy_rx", "vfe_lite",  "vfe_lite_ahb" },
+> >              .clock_rate = { { 400000000 },
+> >                              { 400000000 },
+> >-                             { 400000000, 480000000 },
+> >+                             { 0 },
+> >                              { 0 } },
+> >              .reg = { "csid3" },
+> >              .interrupt = { "csid3" },
+> 
+> Hi Jordan.
+> 
+> Thanks for your patch. Just looking at the clocks you are zeroing here,
+> I think _probably_ these zeroized clocks can be removed from the CSID
+> set entirely.
+> 
+> Could you investigate that ?
 
-Fixes: 23aa4f0cd327 ("media: qcom: camss: Move VFE power-domain specifics into vfe.c")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
- drivers/media/platform/qcom/camss/camss.c | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+I think that will work. It will cement the need for to VFE always run
+first but we can add documentation warnings about that. It looks like
+we can do this optimization for 845, sm8250 and sm2850xp.
+> 
+> Also please add
+> 
+> Fixes: b4436a18eedb ("media: camss: add support for SM8250 camss") and
+> cc stable@vger.kernel.org
 
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index 51b1d3550421..aa894be1461d 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -2130,10 +2130,8 @@ static int camss_configure_pd(struct camss *camss)
- 	if (camss->res->pd_name) {
- 		camss->genpd = dev_pm_domain_attach_by_name(camss->dev,
- 							    camss->res->pd_name);
--		if (IS_ERR(camss->genpd)) {
--			ret = PTR_ERR(camss->genpd);
--			goto fail_pm;
--		}
-+		if (IS_ERR(camss->genpd))
-+			return PTR_ERR(camss->genpd);
- 	}
- 
- 	if (!camss->genpd) {
-@@ -2143,14 +2141,13 @@ static int camss_configure_pd(struct camss *camss)
- 		 */
- 		camss->genpd = dev_pm_domain_attach_by_id(camss->dev,
- 							  camss->genpd_num - 1);
-+		if (IS_ERR(camss->genpd))
-+			return PTR_ERR(camss->genpd);
- 	}
--	if (IS_ERR_OR_NULL(camss->genpd)) {
--		if (!camss->genpd)
--			ret = -ENODEV;
--		else
--			ret = PTR_ERR(camss->genpd);
--		goto fail_pm;
--	}
-+
-+	if (!camss->genpd)
-+		return -ENODEV;
-+
- 	camss->genpd_link = device_link_add(camss->dev, camss->genpd,
- 					    DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME |
- 					    DL_FLAG_RPM_ACTIVE);
--- 
-2.45.2
+Will do.
 
+Jordan
 
