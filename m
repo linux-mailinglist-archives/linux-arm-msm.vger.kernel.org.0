@@ -1,134 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-28006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2399D949416
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 17:03:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2066D949474
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 17:24:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 551DC1C2133E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 15:03:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 47E881F22487
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Aug 2024 15:24:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 335F81D6DA5;
-	Tue,  6 Aug 2024 15:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B450E2A1D3;
+	Tue,  6 Aug 2024 15:24:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OZ7nkTR/"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PgWJN4FZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090281D54FB;
-	Tue,  6 Aug 2024 15:03:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52D029422;
+	Tue,  6 Aug 2024 15:24:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722956595; cv=none; b=s0DIAN3GjMe20Q9rdo9cQxMox7V/W2SYa/9kGKvYOmqFIUNBlBqF6cp0X6/wxGfeffdSLUDeCxfuTPqdwtgPgAW7GTHg0JrSjdJjmy8OTS4p79SLJh71oH+ybis0gygPGH28TNortaMzbBiSLDIr86K4lLEbsEMtCli3YVg4Xg8=
+	t=1722957878; cv=none; b=sfjtUWUt+/rFQ8EU1fCvAu4s40URQgGybd3PiFyX80jRQ2VqxijQ4XVMWCTjddhK82ri3RhtNewxLTjfFIiEgDFbSvxcKF9k3haHKM6H2hVU/leGuqeaItRs2omUhgqlXdGz9rKIqCe3m/2goyvZCbf7vcTvNQrrhQwhrUT+fgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722956595; c=relaxed/simple;
-	bh=ENTNJkyPlX89nL5MNOvYxxCBQ8yDP7ZF+BIfObGAZJM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wnipkc2V41A769xbRGNRrW+Xb4sXOwVRBUZ85xWfED/X3kZrqu/9FW0FgtDQ85u8+HQzmk4EV4L+JivoZfMjjnLlsQCUeZKYetOnGHjh18omTM8eGWSvTBh46HQR79vbE+G64wJAFpKsePZ91THy+EDbEeuFyozVaSqzsXKTmDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OZ7nkTR/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57FF1C32786;
-	Tue,  6 Aug 2024 15:03:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722956594;
-	bh=ENTNJkyPlX89nL5MNOvYxxCBQ8yDP7ZF+BIfObGAZJM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OZ7nkTR/4S5vElHLQ4hagaQV5113Lj3/gxJf2sgfoCRIhDuvpx2sW4XfwocCTU028
-	 3pS3UkXr2phokFRO6KYCDzqkbG8qUxNNTNnbKtvNOEmEVG5F6WIariMFCqd1WLgrll
-	 6yCTmndIVGf7YK29VqmU9DmfEpTGJmVO8vpjIxqKFoLtPNM4UV/kLOpuv8xChNrPcV
-	 poYnq9PVgo5GOhCc/UyglRYlVtps1SHEdEadmfVcmXDWyeCgVH4zyyyNgcb06U/Iiu
-	 YVaN1EOhJDQMTIjYTGibWNU31fLvkX5SrYmf+2YIZS/N48+yhm1d3u6QQJcxplti2r
-	 l5uaqrKXrnqbw==
-Date: Tue, 6 Aug 2024 09:03:13 -0600
-From: Rob Herring <robh@kernel.org>
-To: Marc Gonzalez <mgonzalez@freebox.fr>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, dri-devel@lists.freedesktop.org,
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	Arnaud Vrac <avrac@freebox.fr>,
-	Pierre-Hugues Husson <phhusson@freebox.fr>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Subject: Re: [PATCH v4 1/2] dt-bindings: display: bridge: add TI TDP158
-Message-ID: <20240806150313.GA1516901-robh@kernel.org>
-References: <20240730-tdp158-v4-0-da69001bdea2@freebox.fr>
- <20240730-tdp158-v4-1-da69001bdea2@freebox.fr>
+	s=arc-20240116; t=1722957878; c=relaxed/simple;
+	bh=cHoGW2bSRG+At92kJxjnX7sq3vyRzPsHjO31vLo1vkI=;
+	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=b7rEHbxd3rfhahvqkevjyyYBIlS3tz2kyBZ42qXPMV10/hkJPQfdtS7A6LQ0WFMWvZpjs0BPSMy7wDFtvn7Wdzs5C5EqlUYDN4i7fCs3jUtajP2Y2FUDn+LWr+3EmzfBBJu365WDVX7yKW0u8ceTQFexDFsvFaLb3UYs66LdENo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PgWJN4FZ; arc=none smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1722957877; x=1754493877;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=cHoGW2bSRG+At92kJxjnX7sq3vyRzPsHjO31vLo1vkI=;
+  b=PgWJN4FZxqZdrZFZPGD8MxklIDW3Kv6cLCXDyQwP7B98u4nb7lu18Ps+
+   bjm/GB89SpxkKBBoDh3P5jbXtNenWk7xVxLJJgJ/X9hIH7gOo4mdO9nc1
+   XjncLp8WVcTnPdRH9SReJLjnXUVgXkmoByzmQcgTAfAd7fMu+Y5RHOg/w
+   ZBQRYhgUrnQxcNanaX7UIHmKkLvQmC9r1KhYcoDWrhcCnFKgESndPtNnz
+   LOdhNF1+qzunl/kWHGUVBqnQKWH3qQUOyNxuwXkUUyoxzyQ3BotPLdWay
+   kJjDxIOzxQmfm0EZA/HH/LmMVmUP6LYd30AMUc656EiVGdCIQKI6+1GAT
+   Q==;
+X-CSE-ConnectionGUID: oLGx2vbwQhWtk6mMboxKXQ==
+X-CSE-MsgGUID: WBXMfaSgT1mGWyIXS2ECmQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11156"; a="23897074"
+X-IronPort-AV: E=Sophos;i="6.09,268,1716274800"; 
+   d="scan'208";a="23897074"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Aug 2024 08:24:36 -0700
+X-CSE-ConnectionGUID: oP9xTk7ZTrW4WS64qv3ivQ==
+X-CSE-MsgGUID: JCS2pyk0T5OFgqyooeC4Mw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,268,1716274800"; 
+   d="scan'208";a="61177807"
+Received: from ijarvine-desk1.ger.corp.intel.com (HELO localhost) ([10.245.244.72])
+  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Aug 2024 08:24:29 -0700
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Tue, 6 Aug 2024 18:24:26 +0300 (EEST)
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+    =?ISO-8859-2?Q?Krzysztof_Wilczy=F1ski?= <kw@linux.com>, 
+    Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+    Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+    Conor Dooley <conor+dt@kernel.org>, 
+    Konrad Dybcio <konrad.dybcio@linaro.org>, 
+    cros-qcom-dts-watchers@chromium.org, Bartosz Golaszewski <brgl@bgdev.pl>, 
+    Jingoo Han <jingoohan1@gmail.com>, 
+    Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+    andersson@kernel.org, quic_vbadigan@quicinc.com, 
+    linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
+    devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
+    Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v2 0/8] PCI: Enable Power and configure the QPS615 PCIe
+ switch
+In-Reply-To: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
+Message-ID: <f2cbdd06-0318-4be1-e8dc-b91ce103b34c@linux.intel.com>
+References: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240730-tdp158-v4-1-da69001bdea2@freebox.fr>
+Content-Type: text/plain; charset=US-ASCII
 
-On Tue, Jul 30, 2024 at 05:01:31PM +0200, Marc Gonzalez wrote:
-> TDP158 is an AC-coupled DVI / HDMI to TMDS level shifting Redriver.
-> It supports DVI 1.0, HDMI 1.4b and 2.0b.
-> It supports 4 TMDS channels, HPD, and a DDC interface.
-> It supports dual power supply rails (1.1V on VDD, 3.3V on VCC)
-> for power reduction. Several methods of power management are
-> implemented to reduce overall power consumption.
-> It supports fixed receiver EQ gain using I2C or pin strap to
-> compensate for different lengths input cable or board traces.
+On Sat, 3 Aug 2024, Krishna chaitanya chundru wrote:
+
+> QPS615 is the PCIe switch which has one upstream and three downstream
+> ports. One of the downstream ports is used as endpoint device of Ethernet
+> MAC. Other two downstream ports are supposed to connect to external
+> device. One Host can connect to QPS615 by upstream port.
 > 
-> Features
+> QPS615 switch power is controlled by the GPIO's. After powering on
+> the switch will immediately participate in the link training. if the
+> host is also ready by that time PCIe link will established. 
 > 
-> - AC-coupled TMDS or DisplayPort dual-mode physical layer input
-> to HDMI 2.0b TMDS physical layer output supporting up to 6Gbps
-> data rate, compatible with HDMI 2.0b electrical parameters
-> - DisplayPort dual-mode standard version 1.1
-> - Programmable fixed receiver equalizer up to 15.5dB
-> - Global or independent high speed lane control, pre-emphasis
-> and transmit swing, and slew rate control
-> - I2C or pin strap programmable
-> - Configurable as a DisplayPort redriver through I2C
-> - Full lane swap on main lanes
-> - Low power consumption (200 mW at 6Gbps, 8 mW in shutdown)
+> The QPS615 needs to configured certain parameters like de-emphasis,
+> disable unused port etc before link is established.
 > 
-> https://www.ti.com/lit/ds/symlink/tdp158.pdf
+> The device tree properties are parsed per node under pci-pci bridge in the
+> devicetree. Each node has unique bdf value in the reg property, driver
+> uses this bdf to differentiate ports, as there are certain i2c writes to
+> select particulat port.
+>  
+> As the controller starts link training before the probe of pwrctl driver,
+> the PCIe link may come up before configuring the switch itself.
+> To avoid this introduce two functions in pci_ops to start_link() &
+> stop_link() which will disable the link training if the PCIe link is
+> not up yet.
+
+???
+
+This paragraph contradicts with itself. First it says link training starts 
+and the link may come up, and then it says opposite, that is, disable the 
+link training if the link is not up yet. So which way it is?
+
+If link can come up, why do you need to disable link training at all? 
+Cannot you just trigger another link training after the configuration has 
+been done so the new configuration is captured? If not, why?
+
+-- 
+ i.
+
+> Now PCI pwrctl device is the child of the pci-pcie bridge, if we want
+> to enable the suspend resume for pwrctl device there may be issues
+> since pci bridge will try to access some registers in the config which
+> may cause timeouts or Un clocked access as the power can be removed in
+> the suspend of pwrctl driver.
 > 
-> Like the TFP410, the TDP158 can be set up in 2 different ways:
-> 1) hard-coding its configuration settings using pin-strapping resistors
-> 2) placing it on an I2C bus, and defer set-up until run-time
+> To solve this make PCIe controller as parent to the pci pwr ctrl driver
+> and create devlink between host bridge and pci pwrctl driver so that
+> pci pwrctl driver will go suspend only after all the PCIe devices went
+> to suspend.
 > 
-> The mode is selected via pin 8 = I2C_EN
-> I2C_EN high = I2C Control Mode
-> I2C_EN low  = Pin Strap Mode
-> 
-> On our board, I2C_EN is pulled high.
-> 
-> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 > ---
->  .../bindings/display/bridge/ti,tdp158.yaml         | 57 ++++++++++++++++++++++
->  1 file changed, 57 insertions(+)
+> Changes in V1:
+> - Fix the code as per the comments given.
+> - Removed D3cold D0 sequence in suspend resume for now as it needs
+>   seperate discussion.
+> - change to dt approach for configuring the switch instead of request_firmware() approach
+> - Link to v1: https://lore.kernel.org/linux-pci/20240626-qps615-v1-4-2ade7bd91e02@quicinc.com/T/
+> ---
 > 
-> diff --git a/Documentation/devicetree/bindings/display/bridge/ti,tdp158.yaml b/Documentation/devicetree/bindings/display/bridge/ti,tdp158.yaml
-> new file mode 100644
-> index 0000000000000..fe3de1534efc1
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/bridge/ti,tdp158.yaml
-> @@ -0,0 +1,57 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-
-For new bindings: GPL-2.0-only OR BSD-2-Clause
-
-With that,
-
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+> ---
+> Krishna chaitanya chundru (8):
+>       dt-bindings: PCI: Add binding for qps615
+>       dt-bindings: trivial-devices: Add qcom,qps615
+>       arm64: dts: qcom: qcs6490-rb3gen2: Add node for qps615
+>       PCI: Change the parent to correctly represent pcie hierarchy
+>       PCI: Add new start_link() & stop_link function ops
+>       PCI: dwc: Add support for new pci function op
+>       PCI: qcom: Add support for host_stop_link() & host_start_link()
+>       PCI: pwrctl: Add power control driver for qps615
+> 
+>  .../devicetree/bindings/pci/qcom,qps615.yaml       | 191 ++++++
+>  .../devicetree/bindings/trivial-devices.yaml       |   2 +
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts       | 121 ++++
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi               |   2 +-
+>  drivers/pci/bus.c                                  |   3 +-
+>  drivers/pci/controller/dwc/pcie-designware-host.c  |  18 +
+>  drivers/pci/controller/dwc/pcie-designware.h       |  16 +
+>  drivers/pci/controller/dwc/pcie-qcom.c             |  39 ++
+>  drivers/pci/pwrctl/Kconfig                         |   7 +
+>  drivers/pci/pwrctl/Makefile                        |   1 +
+>  drivers/pci/pwrctl/core.c                          |   9 +-
+>  drivers/pci/pwrctl/pci-pwrctl-qps615.c             | 638 +++++++++++++++++++++
+>  include/linux/pci.h                                |   2 +
+>  13 files changed, 1046 insertions(+), 3 deletions(-)
+> ---
+> base-commit: 1722389b0d863056d78287a120a1d6cadb8d4f7b
+> change-id: 20240727-qps615-e2894a38d36f
+> 
+> Best regards,
+> 
 
