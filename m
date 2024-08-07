@@ -1,240 +1,790 @@
-Return-Path: <linux-arm-msm+bounces-28050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB5A9949D23
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 02:52:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DB36949D5E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 03:32:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0D2F6B213A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 00:51:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F36D1F23E15
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 01:32:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25CFE17C61;
-	Wed,  7 Aug 2024 00:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B8A81DDE9;
+	Wed,  7 Aug 2024 01:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="cfIJ98Jw"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gjN9W4kG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2051.outbound.protection.outlook.com [40.107.21.51])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0CD7F9;
-	Wed,  7 Aug 2024 00:51:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.21.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722991915; cv=fail; b=HyWafXC/0NF0D9m93tHaYP9C3ke6sygcaMai5vP3F/TaWxsOyqo6g4t9X7qV6aeaBhxnrSDFm9yrn1VF+K+PTMuHjUmINCl9n+cwjvNFwh8N9O2SASma8QrAzIcPXQVqiezQG5s+ZcZtqeFk95JOjh2+lhoIx6EyDdJS9pTcw/8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722991915; c=relaxed/simple;
-	bh=8SGzBo/iBE24yrhM/oJXcFVxocqyStXSjGGmATUattE=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=LNgQ1TnxdZCThuKo8cQXAUjA4JEF0AHrwdCo835cds4Vsxss3Mlx3hlk4QVPg3s+4KpsUvG3kQmLQuNKbkQgGWPmQfiVZF8qVtXFesrIOyYjBNeZvukxLPED0R7XZ5bAV4GyTECldYUn4tVevvjNWECAY62K3V8HIuSon24dGxM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=cfIJ98Jw; arc=fail smtp.client-ip=40.107.21.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YXqASx8VD05QM7epl6vqbhHzccfabDE0P7eqNvMa7Ql5ODP0Ub5i9Wh9FWDVyCos4XB7v+qeQFyFJ60uP0JfMYWdWvptyu9AmMFixSgr/54sHw4UGD9tm5vtmesnVROLrYdlNp8o7Vk9S8g4Q3/Uum5ZKJ4n/LH73GRvC3mReP9dF7UaHPdexBQ+SAQYAVDQHhsPlASocqqenqc5d5lZRuk4vceId2LRdt7nWFmEZsiHKjN79NGY8EDjRPfuB/tnGDtb4DyWcxPdl3Xr+5qpGuODkCQNOk0RlhUCeE9NFM3KxW9H26KNN4Bsix9zMPjbak9Lmu5nFgxNDu2b3+IUBA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8SGzBo/iBE24yrhM/oJXcFVxocqyStXSjGGmATUattE=;
- b=QlCVhvrH41tJhB60W6PMAwMGtwx7LctLl07ZXN1fKJkXIZQjUiZ0gE3uJh3nBItlH/RIc4ZIPEOMeIxyFzdm2iCTagTC4capHtXs73P9akQ4FJpvOzV3684c2NSMzZzqDH79L3r3G3pP3kKHnKb5U7t0VGpDtIOkhCYkBeuNCIPQarRj5GdJ/WhRMPm+ecPO37NgDipz3vB0XS/xCp73wlyXUxG+8OxG/2axGXALYTpOahZH5PKSNZFWAAx3gsTEvExVrwjr8tihurryOLue3xdcRqw/DTQxkdoxw2ZyLZJSprsDPY2cloHDsLti0nWSx/2yhNm77fMAno3zpSf6mw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8SGzBo/iBE24yrhM/oJXcFVxocqyStXSjGGmATUattE=;
- b=cfIJ98JwsCGaWhIdnk7Dw8laXfBJXs1e/UgSfwQNXjRULDTMa/MsVHSgfIDWF/uU+dHq/GxOLIGn1/5myq5RJZsvUgGN3wD9nFc2r37uzPKYmvwUgMNCb78tlmFvIt/e39ceu6A77SCI1jqYLA3L8oTUuixoqbhPMFo1TKNMGRAnMbnZnQZL1EERvBSFczWg61ima7V5WdghcUtXRwnMhoi1Zon0mZ8TUEyAGKkbAWhIZ8OSx/+1gjnapgJYhU33LNedYjK6f9OrHF5wd723/+CJnutJBhzGgjFkGHYfhOazxR6DFOv1CcdJPt7oK3NBkfZOf1BkRbV7MLV0c8g3XA==
-Received: from PAXPR04MB8459.eurprd04.prod.outlook.com (2603:10a6:102:1da::15)
- by AM9PR04MB8923.eurprd04.prod.outlook.com (2603:10a6:20b:40a::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7849.13; Wed, 7 Aug
- 2024 00:51:48 +0000
-Received: from PAXPR04MB8459.eurprd04.prod.outlook.com
- ([fe80::165a:30a2:5835:9630]) by PAXPR04MB8459.eurprd04.prod.outlook.com
- ([fe80::165a:30a2:5835:9630%4]) with mapi id 15.20.7784.020; Wed, 7 Aug 2024
- 00:51:48 +0000
-From: Peng Fan <peng.fan@nxp.com>
-To: Sibi Sankar <quic_sibis@quicinc.com>, Sudeep Holla <sudeep.holla@arm.com>,
-	"ulf.hansson@linaro.org" <ulf.hansson@linaro.org>
-CC: "cristian.marussi@arm.com" <cristian.marussi@arm.com>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"arm-scmi@vger.kernel.org" <arm-scmi@vger.kernel.org>,
-	"linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>, "linux-pm@vger.kernel.org"
-	<linux-pm@vger.kernel.org>, "quic_rgottimu@quicinc.com"
-	<quic_rgottimu@quicinc.com>, "quic_kshivnan@quicinc.com"
-	<quic_kshivnan@quicinc.com>, "johan@kernel.org" <johan@kernel.org>
-Subject: RE: [PATCH] pmdomain: arm: Fix debugfs node creation failure
-Thread-Topic: [PATCH] pmdomain: arm: Fix debugfs node creation failure
-Thread-Index: AQHazT9p6C0PxxkatEO4mequZ+3e2bHmYHMAgAEg5ICAAJwBgIAEhVMAgC6GfDA=
-Date: Wed, 7 Aug 2024 00:51:48 +0000
-Message-ID:
- <PAXPR04MB84596E444B690924998D734C88B82@PAXPR04MB8459.eurprd04.prod.outlook.com>
-References: <20240703110741.2668800-1-quic_sibis@quicinc.com>
- <ZoZ6Pk7NSUNDB74i@bogus> <064274c4-3783-c59e-e293-dd53a8595d8e@quicinc.com>
- <Zofvc31pPU23mjnp@bogus> <48ac18f3-b831-91ab-4993-d82749052d8d@quicinc.com>
-In-Reply-To: <48ac18f3-b831-91ab-4993-d82749052d8d@quicinc.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PAXPR04MB8459:EE_|AM9PR04MB8923:EE_
-x-ms-office365-filtering-correlation-id: 27172eb2-63c4-408a-b64a-08dcb67b1e43
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|1800799024|376014|7416014|38070700018;
-x-microsoft-antispam-message-info:
- =?utf-8?B?QWhLSXdTbitDL1ZwZTRqdjZUWEVjTmdLQkdoK1pWWlJVQWJoUE45d2w1aFg2?=
- =?utf-8?B?Sk81L2x4ZWE2Y204YmZKR0phektDSUNnWG4veThRVHJKTnRaK21RTlY1N0R5?=
- =?utf-8?B?UHhFakhlNXhzaHFweXVPQThsNjIydEdGck9vTHFmYzhGdzAyYmFvUzAvaEYv?=
- =?utf-8?B?RDlacHhCaEF1bXo5c0pmN3NyTzFsbnRtREZxVDQvNUhyNlRHdGExbXV4Mndo?=
- =?utf-8?B?RWNpeWtZbVo0Y3dMc1lid2twVnRQclErY2gzclRNbldOUkdWeGkvTURXWk1j?=
- =?utf-8?B?UlVGNWx5ZGt6eldyb1BOR3ZYdWUvNFNuempBVVpxK1drRG9PVDl2MjMwWU9X?=
- =?utf-8?B?ZXBzVzR0NWc4bEJvTHN4ZUQ4WUd4OHRCZkJTMnJ6eWl6NUFMY0xLbTNXd2pU?=
- =?utf-8?B?MDZiQTRteUxqM25qVEV5ekxsRVMxSnh1cC9JbXRjM3o3cmxKSFh6Y3FQZnlu?=
- =?utf-8?B?U2hWbU1LR3c2dlNiWi9MMGNFWXVmWEFmQVN6SDN1NDFBRk4ySXRsWWVYOXhP?=
- =?utf-8?B?bVpkd1RPR0dqMmtCSWdtbDl0YlFXNlA3OXdpV1JjNkpQRWZINXBBS05tL2tR?=
- =?utf-8?B?VjNwNXd6RDRsUm9JVEhWUlFWNk4zeVRYYUg4OWNqODc5VmljR1BaSXBwYmR3?=
- =?utf-8?B?SzBtdVoxSmZFUjh0MUZzY2t6VzdJNml4VGU5TTV3VGJ6OXVzSmVRdXhIMzZ3?=
- =?utf-8?B?OW90RFRRbGJ0R3Q4bVRKQjVxYWdzREtBY2pIRmVzNnQ0MkFEazN6bDFzTzhs?=
- =?utf-8?B?c0NjVzZvclg0TkRQODE5OGxUNi81S2hiWEZjVXovdWFLMmFzdlQyZFROdzhr?=
- =?utf-8?B?VHZaZ29uMkkxbjlrbTkzVVBQN3FPeC9rVVN2cFJacXZraFRQU0hRRElCY0Ev?=
- =?utf-8?B?U0tXODRNdXV3L0pPSTlZMFFoZTd5NWdXSTM2V2VxK0lOaFJ6djNVc2RSdk5P?=
- =?utf-8?B?ejJrQjJHalA4eHNBdzVQcTd2WFl3L3BoeVFoVUwvV1NpTXlOZitJdHovRnFL?=
- =?utf-8?B?eTZjWEEyK1VPcmIrOFpwbGZDYkdIdFdKbFAvZXFyTU5qK3ptN0tXbHV1aUFL?=
- =?utf-8?B?SXBrVVhadk5kZUlqcmxyb09oS1hxOTN2RUE2S25HQ3M3aXp5M05wMWFSTlZo?=
- =?utf-8?B?MnJqemFRdGVvQjNFOHpTaFVkVW1kRFZTRWtKeUtrcFZ2bDNiV0RsVGU0NHhl?=
- =?utf-8?B?RERUV2JJYzIvNTZYbjBEeVloVjlkZTRCVlJCalV1SExhWnBlZlpCUnkxYk5n?=
- =?utf-8?B?Yk9vRmRQVDZGY0JUb3JwckZqa2lILzV2ZzVudXpKczcvMzFOdi9peWk5eTkx?=
- =?utf-8?B?UTlhY1VyZS82RC81ajZRSFp5Y1orVVRSVmMrc29uK3hvTUZWdTU4ZjdoZm9k?=
- =?utf-8?B?NlBSMjFlY2IxZjJrQjR1MklVZVlYbGMzSnJrdFRmSFZPdzNtMWh6QTZCVVl3?=
- =?utf-8?B?cFNKQ0k3ZHN5MlJ1cW0vZEpsbVhuWXhSbU9wUkJlelZqVzdJTjlaRmFOTXlZ?=
- =?utf-8?B?WFJxOE5FRnhhcGdJeDZSeXV6OW5Rem9KWm80QjM3eERGcWlXRUkraFBFKzFz?=
- =?utf-8?B?RWFwd1RvU2E4cVJSbzRNS1hENzRCN21Wbm1GdlBHN1lCZmIzZjJzSzhDcDcz?=
- =?utf-8?B?cEF5clRRSnlTSmljS2xvUXQwbUNJNXZJMHBabFZtUFZkZXp0L3l5ZU9FQXdI?=
- =?utf-8?B?emZNdjU1VENublpPZkFIYUFaQWZoRFBGa2dCeVFzQk95UnRpU1BDU3VkcTBZ?=
- =?utf-8?B?WTMrQTVEcm95eWg4UEJNa3NXS0tFa3F6WUp1VG9SZXJlYUZaUUFKTkVKaEg1?=
- =?utf-8?Q?uyT6mpxLCH//BTJdIBA2+zvTPv6jEKZ116rWI=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR04MB8459.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014)(38070700018);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?aFNEVzRGYkovQ2dPWkVUcVdBWlNreTBnQkd4L3pRSWx2VEFXcWc4UVdZeU8x?=
- =?utf-8?B?Zm1GSVFibWV1b0ZkT3pQQlpCQXJzaUJ1QU5IL2dGTnpKZy8zNG92TjFxSjhR?=
- =?utf-8?B?a2ZFVGl3UXVGaElvb1ArQkVTaHNmWUNaVEJ4akdEMDNQUmFVa200bUFxTldo?=
- =?utf-8?B?RktmMmxEVkl2VzBiRm1uV28wVno5SzQ1RzVQa1hJa2w2SEJRTGcweHJtc3kx?=
- =?utf-8?B?UHdpNTdqVmhaRlEwZkliQ1BpOVFRY3k2Q3RvK0dZdlpJYWdmSVRNMDVYYXV3?=
- =?utf-8?B?bU9iL0ptaVlOaTdBckRMdmxNMjhHa3NMSk5VZ1JaaGJHVkFIWHB3YWR6THlZ?=
- =?utf-8?B?UXUxSGRXdDhscmFRMHJiRG1TUUFGaUcxMi9YV3Z4VzBQZU5GeVFOb0pvYXFn?=
- =?utf-8?B?eGFJQXdXKzlPeVd5RzVZWkpua3NnZ1V6VDVHLzhWdXZCTzN0UXhzMHoyejFR?=
- =?utf-8?B?Y1FMN3JQMWRnM0RVTVdNbEJrd1h3d3VGaHQ5bWJrQk92blZXME1aeUZITWMx?=
- =?utf-8?B?cy8wc2VkVW11RGo4T0QxK2FEOEF4VXNSU1FiMExBaGdtMGRrK1JUWFNqU3E2?=
- =?utf-8?B?c3NKV2VuTlJPMnZ0ODd1Z0kxTHVjcE8zV1RuSzBDMzZYWmZqSmY4TUNaQ201?=
- =?utf-8?B?VDg3QkswVGx4UUtIc0RidmppaVY0Vm82S3F0SGZmRW56azFmQWo3ekdKTjU2?=
- =?utf-8?B?dk92RG9jZFBhZlNKdHFSSEhxMVdnNFV4SlVUN2VkcjRjcWVJZ2xYRHROTXBo?=
- =?utf-8?B?YjlVeEJUS1crK01YWjB4UHZFcEN5YmJ4MFF6ZFFya04veCtva3d4SFVVVDZn?=
- =?utf-8?B?QXJhSk9qSnFQYXdwTSt2K3gveFNMbHhrNmRGNXFuaCtmZFI2UndBSW1lNlVY?=
- =?utf-8?B?azJHR3FPVnViTC91MjhCMDVsNGlmb0oxUURLUktCdmdmcmMyRFR6dWE0Umdv?=
- =?utf-8?B?WnpZQ0pGRE5aVk5qeFNWb1YyYXFHT1U2UmJQL252TmlVR01xb2NDbTA3dUU4?=
- =?utf-8?B?NFdXOFVzSEptWURsUXI2N2hma3hsN0JxSTExdDJkOEpvenBoU2hmSkF4akJD?=
- =?utf-8?B?UVhGOTY1Z0VWd2xzMU0vQzQvWkdYNmlJM2J4RUNKc0V3dUdwUEE3UGhjYWJD?=
- =?utf-8?B?ejdKTmJBUURlUUxkcTFNaWhtQ0FScElUaFhvd0g3cGJ5WmdnZVhXL3lOakEv?=
- =?utf-8?B?Uzd1cGtLaGpaRVpONEZrTG95Z2VCeGNuelY1RUt6eUs0cmM2a1k5RmhqTUNW?=
- =?utf-8?B?Nm1NNjdRR3dWc2szSHVhSkVDaENwUlo2SnZjRDE0b0FDY0l6TFllbWdyOHRN?=
- =?utf-8?B?Y21CbWJYMllnTjF4RjVCZVdNUG9OV2paUkswZk1mak1qaW9xVGp4eWlrbVZE?=
- =?utf-8?B?dTJTdHFNYUNvN3V4SnNaZUtGYzFrS2w5eDlQcmtLbXRXNWp5SkREeGhPWEdZ?=
- =?utf-8?B?R0gvNVloeW9EWTRkWkdWNlhYckU4Z01mckVDUHlvbHl1cVN5d0RUVFpqVHlJ?=
- =?utf-8?B?WnBMUVdyM0dpODdIaG5ZZ0RKNURzQU0zR1F2MDZxS3JlZVBtSWdnVzdVY2dk?=
- =?utf-8?B?Q0ZWemJxeUFCTjNMUFFNcGF4REVHQUR1d1M2U1dxL0ZuSE9tUzV5bHRzU3BQ?=
- =?utf-8?B?LzJldFVFaXlpOEhWK2FSeHNnbFA1clg4ZWRBWDNaOWRvK0UxeEtFcktzVEpa?=
- =?utf-8?B?RVJSOWQvZmljTlpZcmhSMDBOTDVMSENKcTlxMVdKZmJjaHRSdjRrM1RBT0JD?=
- =?utf-8?B?NW9jbXdFT3RGSEhTdlFRWWtsRExNMjVsNmVMOHB1ZlQvVWlnTDdkOEN5OE41?=
- =?utf-8?B?Mi9WYnB3K294Uzh2aE95NmZFNUF2MU5JR1U4VEtSNGluaUFLVXlPV1Z4YkpP?=
- =?utf-8?B?OVJJcE90Q2tZUDZkODNhREY1RHpxdVJUd3cyWElVYldEeEswTlpFY2hFSVFr?=
- =?utf-8?B?emQxQ3FzMmxSOWNLUGprY2xwcTFRbXNBWEpxeGdpdFFVNGc1YnpjNTl6dlU4?=
- =?utf-8?B?Qk1Cb1pxZ0JwQkhNOFBXRHo3SVEwL0VuSlU3YmdtdzhQNGY4NUNjNmtzSEc5?=
- =?utf-8?B?TG84MEtFQWgrYzN4ZDdZVG1CNys3UHNIcWs2K29CU3FFRityWlFoM0xYZVEv?=
- =?utf-8?Q?Qs04=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4651E892;
+	Wed,  7 Aug 2024 01:32:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1722994364; cv=none; b=tyaIg9nbj+ljU6B+tnEP+Zt/Czo4f/G4LmaHX07a4VIoPjoUUyekK9h32Nb9htFD87yI7loD1FbbIzHqfgIUu6V7AfnjPwZ5I8Ej+Ch4+nsSdPDrcXheuO6X8lufQhnQd5kps2xPoDCuuCUpv8TC/DSJJv2k7NEq5iA2Ei9Sz4U=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1722994364; c=relaxed/simple;
+	bh=t+MJvkwsd6/n+5OPCrSlomKehTX4wdIlEliaa4L2J+E=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=edGuJ4nJhyl5rfTTc91A1BLEIExxfhs9IuYySWv2zD9oAF6mJhFx4glmGNrasdVwta2oAu8oK9KSOyn6r50u+fmxnpyqm79qu/dFim29p1SssA99u3p4IuAGAZXSci+g9Pr0DTKUNPHUDFjQmHtXTrD2qukbTSEeorw1xlnsO/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gjN9W4kG; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 476H6PxK026266;
+	Wed, 7 Aug 2024 01:32:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=zUiGOwGMyOWQDQG6wGRoRuXG
+	dm4BpqxhNKknfHYEikg=; b=gjN9W4kGlrusAZALnHt+moJhDAVd3axWrBgGnVI1
+	T1EVWp4mGgdPAvg6di46XkwLQb3zoxgb7JouXgs033CU0EJXgj9TN3ICFj2zI7+I
+	VFmXspgxbmBHBR72eAf8cZUY+EZaQb8kYNb6hDbMxFLVp5vV2itrGevXcsnSv8Yg
+	1g12dY6cOkdgwtGtp/ILgmTLG048bXQ2cWkLH0zYTZfWZ4CIKKoff+YsgrrGrwRS
+	cr6nP4dpVvCDODfn9MIPGd+pvI3sT6q7NnLK6y1x33SHfp7XgnbRMnQZOUGiwhuh
+	J8ZJyfavJEILB5qpHC3qnrbkb5lMHZ7MemdonnRtrMRuMw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40tuhvwv7s-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 07 Aug 2024 01:32:22 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4771WLgf006459
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 7 Aug 2024 01:32:21 GMT
+Received: from jiegan-gv.ap.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 6 Aug 2024 18:32:16 -0700
+Date: Wed, 7 Aug 2024 09:32:12 +0800
+From: JieGan <quic_jiegan@quicinc.com>
+To: Mike Leach <mike.leach@linaro.org>
+CC: Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose
+	<suzuki.poulose@arm.com>,
+        Alexander Shishkin
+	<alexander.shishkin@linux.intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        James Clark
+	<james.clark@arm.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan
+	<leo.yan@linaro.org>,
+        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang
+	<quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Song Chai
+	<quic_songchai@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v2 1/4] Coresight: Add trace_id function to collect trace
+ ID
+Message-ID: <ZrLOnBqYtoKApK7P@jiegan-gv.ap.qualcomm.com>
+References: <20240705090049.1656986-1-quic_jiegan@quicinc.com>
+ <20240705090049.1656986-2-quic_jiegan@quicinc.com>
+ <CAJ9a7VgpKiRFOJc3ns=6zRHyv-UpXciZFMJgmSQPOm56U6BBgA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR04MB8459.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 27172eb2-63c4-408a-b64a-08dcb67b1e43
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Aug 2024 00:51:48.4421
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: CxJO+fFAkOOwNf/KJG7neSGRAXiLCO3JCNMLVnkYXj5h9XWSL9whM2Tu1FmMSC+5mHY1CKqbiJwqT6fvpb41Xw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB8923
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CAJ9a7VgpKiRFOJc3ns=6zRHyv-UpXciZFMJgmSQPOm56U6BBgA@mail.gmail.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: saftNDOaxGVHb7chw6F5yAjYt0_6ahI6
+X-Proofpoint-GUID: saftNDOaxGVHb7chw6F5yAjYt0_6ahI6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-06_20,2024-08-06_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ priorityscore=1501 spamscore=0 mlxlogscore=999 phishscore=0 clxscore=1015
+ suspectscore=0 adultscore=0 mlxscore=0 malwarescore=0 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408070008
 
-PiBTdWJqZWN0OiBSZTogW1BBVENIXSBwbWRvbWFpbjogYXJtOiBGaXggZGVidWdmcyBub2RlIGNy
-ZWF0aW9uIGZhaWx1cmUNCj4gDQo+IA0KPiANCj4gT24gNy81LzI0IDE4OjM0LCBTdWRlZXAgSG9s
-bGEgd3JvdGU6DQo+ID4gT24gRnJpLCBKdWwgMDUsIDIwMjQgYXQgMDk6MTY6MjlBTSArMDUzMCwg
-U2liaSBTYW5rYXIgd3JvdGU6DQo+ID4+DQo+ID4+IE9uIDcvNC8yNCAxNjowMiwgU3VkZWVwIEhv
-bGxhIHdyb3RlOg0KPiA+Pj4NCj4gPj4+IElmIHRoZXJlIGFyZSAyIHBlcmYgZG9tYWlucyBmb3Ig
-YSBkZXZpY2Ugb3IgZ3JvdXAgb2YgZGV2aWNlcywgdGhlcmUNCj4gPj4+IG11c3QgYmUgc29tZXRo
-aW5nIHVuaXF1ZSBhYm91dCBlYWNoIG9mIHRoZXNlIGRvbWFpbnMuIFdoeQ0KPiBjYW4ndCB0aGUN
-Cj4gPj4+IGZpcm13YXJlIHNwZWNpZnkgdGhlIHVuaXF1ZW5lc3Mgb3IgdGhlIGRpZmZlcmVuY2Ug
-dmlhIHRoZSBuYW1lPw0KPiA+Pj4NCj4gPj4+IFRoZSBleGFtcGxlIGFib3ZlIHNlZW1zIGZpcm13
-YXJlIGlzIGJlaW5nIGp1c3QgbGF6eSB0byB1cGRhdGUgaXQuDQo+ID4+PiBBbHNvIGZvciB0aGUg
-dXNlci9kZXZlbG9wZXIvZGVidWdnZXIsIHRoZSB1bmlxdWUgbmFtZSBtaWdodCBiZQ0KPiBtb3Jl
-DQo+ID4+PiB1c2VmdWwgdGhhbiBqdXN0IHRoaXMgbnVtYmVyLg0KPiA+Pj4NCj4gPj4+IFNvIHBs
-ZWFzZSB1c2UgdGhlIG5hbWUod2UgbXVzdCBub3cgaGF2ZSBleHRlbmRlZCBuYW1lIGlmDQo+IDE2
-Ynl0ZXMgYXJlDQo+ID4+PiBsZXNzKSB0byBwcm92aWRlIHVuaXF1ZSBuYW1lcy4gUGxlYXNlIHN0
-b3Agd29ya2luZyBhcm91bmQgc3VjaA0KPiBzaWxseQ0KPiA+Pj4gZmlybXdhcmUgYnVncyBsaWtl
-IHRoaXMsIGl0IGp1c3QgbWFrZXMgdXNpbmcgZGVidWdmcyBmb3IgYW55dGhpbmcNCj4gdXNlZnVs
-IGhhcmRlci4NCj4gPj4NCj4gPj4gVGhpcyBpcyBqdXN0IG1lYW50IHRvIGFkZHJlc3MgZmlybXdh
-cmUgdGhhdCBhcmUgYWxyZWFkeSBvdXQgaW4gdGhlDQo+IHdpbGQuDQo+ID4+IFRoYXQgYmVpbmcg
-c2FpZCBJIGRvbid0IG5lY2Vzc2FyaWx5IGFncmVlIHdpdGggdGhlIHBhdGNoIGVpdGhlciBzaW5j
-ZQ0KPiA+PiBpdCdzIHBlbmFsaXppbmcgZmlybXdhcmUgdGhhdCBhY3R1YWxseSB1c2VzIGEgcHJv
-cGVyIG5hbWUgYnkNCj4gPj4gYXBwZW5kaW5nIHNvbWV0aGluZyBpbmhlcmVudGx5IGxlc3MgdXNl
-ZnVsIHRvIGl0LiBTaW5jZSwgdGhlIHVzaW5nIG9mDQo+ID4+IGFuIHVuaXF1ZSBkb21haW4gbmFt
-ZSBpc24ndCByZXF1aXJlZCBieSB0aGUgc3BlYywgdGhlIG5lZWQgZm9yIGl0DQo+ID4+IGdvZXMg
-dW5kZXIgdGhlIHJhZGFyIGZvciB2ZW5kb3JzLiBNYW5kYXRpbmcgaXQgbWlnaHQgYmUgdGhlIHJp
-Z2h0DQo+ID4+IHRoaW5nIHRvIGRvIHNpbmNlIHRoZSBrZXJuZWwgc2VlbXMgaW5oZXJlbnRseSBl
-eHBlY3QgdGhhdC4NCj4gPj4NCj4gPg0KPiA+IFdlbGwgSSB3b3VsZCBsb3ZlIGlmIHNwZWMgYXV0
-aG9ycyBjYW4gYWdyZWUgYW5kIG1hbmRhdGUgdGhpcy4gQnV0IHRoaXMNCj4gPiBpcyBvbmUgb2Yg
-dGhvc2UgdGhpbmdzIEkgY2FuJ3QgYXJndWUgYXMgSSBkb24ndCBuZWNlc3NhcmlseSBhZ3JlZSB3
-aXRoDQo+ID4gdGhlIGFyZ3VtZW50LiBUaGVyZSBhcmUgMiBkaXN0aW5jdC91bmlxdWUgZG9tYWlu
-cyBidXQgZmlybXdhcmUNCj4gYXV0aG9ycw0KPiA+IHJhbiBvdXQgb2YgdW5pcXVlIG5hbWVzIGZv
-ciB0aGVtIG9yIGp1c3QgY2FuJ3QgYmUgYm90aGVyZWQgdG8gY2FyZQ0KPiBhYm91dCBpdC4NCj4g
-Pg0KPiA+IFRoZXkgY2FuJ3QgcnVuIG91dCBvZiBjaGFyYWN0ZXJzIGFzIHdlbGwgaW4gYWJvdmUg
-ZXhhbXBsZXMsIGZpcm13YXJlDQo+ID4gY2FuIGFkZCBzb21lIHVzZWxlc3MgZG9tYWluIElEIGlu
-IHRoZSBuYW1lIGlmIHRoZXkgY2FuJ3QgYmUNCj4gYm90aGVyZWQgb3IgY3JlYXRpdmUuDQoNCkFz
-IFNpYmkgcmFpc2VkLCBTcGVjIGRvZXMgbm90IGhhcyByZXN0cmljdGlvbiBvbiBuYW1lLg0KDQpM
-aW51eCBjaG9zZSB0byB1c2UgZ2VucGQgdG8gc3VwcG9ydCBwZXJmIGRvbWFpbiwgYnV0IG5vdyBp
-dCB0dXJucyBvdXQNCnRoYXQgTGludXggaXMgZm9yY2luZyBmaXJtd2FyZSB0byB1c2UgZGlmZmVy
-ZW50IG5hbWUgZm9yIHBvd2VyL3BlcmYNCmRvbWFpbi4gVGhpcyB3aWxsIG5vdCBjb252aW5jZSBm
-aXJtd2FyZSBkZXZlbG9wZXJzLg0KDQpGb3IgZXhhbXBsZSwgZmlybXdhcmUgbWlnaHQgYmUgYXMg
-YmVsb3c6DQoNCnN0cnVjdCBwZF9wZXJmX2RvbWFpbiB7DQoJY2hhciAqbmFtZTsNCgkoaW50ICop
-cG93ZXJfaG9vayhpbnQgaWQpOw0KCShpbnQgKilwZXJmX2hvb2soaW50IGxldmVsKTsNCn07DQoN
-CkZyb20gZmlybXdhcmUgZGV2ZWxvcGVyJ3MgdmlldywgbmFtZSBpcyBzaGFyZWQgZm9yIHBkIGFu
-ZCBwZXJmLg0KVGhlIGZpeCBzaG91bGQgYmUgaW4gbGludXggc2lkZS4NCg0KPiA+DQo+ID4gU28g
-SSBtdXN0IGFkbWl0IEkgY2FuJ3QgYmUgYm90aGVyZWQgYXMgd2VsbCB3aXRoIHRoYXQgaG9uZXN0
-bHkuDQo+IA0KPiBPa2F5LCBJIGd1ZXNzIHRoZSBjb25jbHVzaW9uIGlzIHRoYXQgaWYgdGhlIGZp
-cm13YXJlIHZlbmRvcnMgZG9uJ3QgY2FyZQ0KPiBlbm91Z2ggdG8gcHJvdmlkZSB1bmlxdWUgbmFt
-ZXMsIHRoZXkgZ2V0IHRvIGxpdmUgd2l0aG91dCB0aG9zZQ0KPiBkZWJ1Z2ZzIG5vZGVzLg0KPiAN
-Cj4gRG8gd2UgcmVhbGx5IHdhbnQgdG8gcmVnaXN0ZXIvZXhwb3NlIHNjbWkgcGVyZiBwb3dlci1k
-b21haW5zIHVzZWQgYnkNCj4gdGhlIENQVSBub2Rlcz8gDQoNCkhvdyBhYm91dCBub3QgcmVnaXN0
-ZXIgZGVidWdmcyBmb3IgcGVyZj8NCg0KR2l2ZW4gdGhhdCBzY21pLWNwdWZyZXEgZG9lc24ndCBj
-b25zdW1lIHRoZXNlIHBvd2VyDQo+IGRvbWFpbnMgYW5kIGNhbiBiZSB2b3RlZCB1cG9uIGJ5IGFu
-b3RoZXIgY29uc3VtZXIsIHdvdWxkbid0IHRoaXMNCj4gY2F1c2UgYSBkaXNjb25uZWN0Pw0KDQpZ
-b3UgbWlnaHQgYmUgYWxzbyBpbnRlcmVzdGVkIGluIFsxXSwgd2hpY2ggaXMgYWxzbyBzY21pIGNw
-dWZyZXEgcmVsYXRlZC4NClsxXWh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2FsbC8yMDI0MDcyOTA3
-MDMyNS4yMDY1Mjg2LTEtcGVuZy5mYW5Ab3NzLm54cC5jb20vDQoNClJlZ2FyZHMsDQpQZW5nLg0K
-PiANCj4gLVNpYmkNCj4gDQo+ID4gLS0NCj4gPiBSZWdhcmRzLA0KPiA+IFN1ZGVlcA0KDQo=
+On Tue, Jul 23, 2024 at 11:30:02AM +0100, Mike Leach wrote:
+
+Hi, Mike
+Sorry for the late reply, I checked James' patchset and I have updated
+patches based on James' patchset.
+
+> Hi,
+> 
+> This patch has a number of issues:-
+> 
+> 1) The new dynamic trace ID patchset to use per sink ID maps makes
+> this set unusable. perf supplies a trace ID map for each sink used.
+>  - see https://lists.linaro.org/archives/list/coresight@lists.linaro.org/thread/JEK7M7HRS57XK4B7CVTVFSHFAFBX4SFG/
+> 
+For perf mode, I added a option in trace_id function, to read trace ID via
+perf_sink_id_map.
+
+> 2) See etm4_enable_perf() - in the perf context a locked version of
+> the read trace ID cannot be used - therefore any path that calls
+> etm4_read_alloc_trace_id() (or equivalent for other sources) in perf
+> mode may result in lockdep issues.
+Dropped etm4_read_alloc_trace_id() and etm_read_alloc_trace_id() for perf mode session.
+Add a option for perf mode, here is the sample code:
+
+static int etm4_trace_id(struct coresight_device *csdev,
+                         enum cs_mode mode,
+                         struct coresight_trace_id_map *id_map)
+{
+        int trace_id;
+        struct etmv4_drvdata *drvdata;
+
+        if (csdev == NULL)
+                return -EINVAL;
+
+        drvdata = dev_get_drvdata(csdev->dev.parent);
+        switch (mode) {
+        case CS_MODE_SYSFS:
+                trace_id = etm4_read_alloc_trace_id(drvdata);
+                break;
+        case CS_MODE_PERF:
+                trace_id = coresight_trace_id_read_cpu_id_map(drvdata->cpu, id_map);
+                if (IS_VALID_CS_TRACE_ID(trace_id))
+                        drvdata->trcid = (u8)trace_id;
+                break;
+        default:
+                trace_id = -EINVAL;
+                break;
+        }
+
+        return trace_id;
+}
+
+
+> 
+> 3) on enable: given a cpu  number, the trace ID can be read from the
+> id maps rather than needing a new function in ops
+For perf mode, the trace ID can be directly read from the perf_sink_id_map, but I
+have still encapsulated these codes within trace_id function, is that acceptable?
+
+For sysfs mode, I think we still need the trace_id function to retrieve the
+trace ID of the source or link device(TPDA for TPDM) for enable session.
+
+> 
+> 4) on disable: trace id can be read directly from the source driver
+> data - again removing need for a new trace_id function in ops.
+In perf mode, the source device can be either etm3x or etm4x, we cannot directly read
+from the source driver data unless we know  the exact source type(etm4x
+or etm3x). This is because we need retrieve the driver data based on coreisght_device
+according to the source type in etm_event_stop(). Therefore, I still to use the
+trace_id function to handle this scenario, is that acceptable? Or I can directly call
+coresight_trace_id_read_cpu_id_map() to read the trace ID.
+
+For sysfs mode, I think we still need the trace_id function to retrieving the
+trace ID of the source or link device(TPDA for TPDM) for disable session.
+
+> 
+> Regards
+> 
+> Mike
+
+Thanks,
+Jie
+
+> 
+> 
+> On Fri, 5 Jul 2024 at 10:01, Jie Gan <quic_jiegan@quicinc.com> wrote:
+> >
+> > Add 'trace_id' function pointer in ops. It's responsible for collect the
+> > trace ID of the device.
+> >
+> > Add 'struct cs_sink_data' to store the data used by coresight_enable_path/
+> > coresight_disable_path. The structure will be transmitted to the helper and
+> > sink device.
+> >
+> > Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+> > ---
+> >  drivers/hwtracing/coresight/coresight-core.c  | 53 +++++++++++++++----
+> >  drivers/hwtracing/coresight/coresight-etb10.c |  3 +-
+> >  .../hwtracing/coresight/coresight-etm-perf.c  | 34 ++++++++++--
+> >  .../coresight/coresight-etm3x-core.c          | 14 +++++
+> >  .../coresight/coresight-etm4x-core.c          | 13 +++++
+> >  drivers/hwtracing/coresight/coresight-priv.h  | 12 ++++-
+> >  drivers/hwtracing/coresight/coresight-stm.c   | 13 +++++
+> >  drivers/hwtracing/coresight/coresight-sysfs.c | 24 +++++++--
+> >  .../hwtracing/coresight/coresight-tmc-etf.c   |  3 +-
+> >  .../hwtracing/coresight/coresight-tmc-etr.c   |  6 ++-
+> >  drivers/hwtracing/coresight/coresight-tpda.c  | 13 +++++
+> >  drivers/hwtracing/coresight/coresight-trbe.c  |  4 +-
+> >  drivers/hwtracing/coresight/ultrasoc-smb.c    |  3 +-
+> >  include/linux/coresight.h                     |  4 ++
+> >  14 files changed, 174 insertions(+), 25 deletions(-)
+> >
+> > diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
+> > index 9fc6f6b863e0..f414e66f4cda 100644
+> > --- a/drivers/hwtracing/coresight/coresight-core.c
+> > +++ b/drivers/hwtracing/coresight/coresight-core.c
+> > @@ -297,12 +297,12 @@ static int coresight_enable_helper(struct coresight_device *csdev,
+> >         return helper_ops(csdev)->enable(csdev, mode, data);
+> >  }
+> >
+> > -static void coresight_disable_helper(struct coresight_device *csdev)
+> > +static void coresight_disable_helper(struct coresight_device *csdev, void *data)
+> >  {
+> > -       helper_ops(csdev)->disable(csdev, NULL);
+> > +       helper_ops(csdev)->disable(csdev, data);
+> >  }
+> >
+> > -static void coresight_disable_helpers(struct coresight_device *csdev)
+> > +static void coresight_disable_helpers(struct coresight_device *csdev, void *data)
+> >  {
+> >         int i;
+> >         struct coresight_device *helper;
+> > @@ -310,7 +310,7 @@ static void coresight_disable_helpers(struct coresight_device *csdev)
+> >         for (i = 0; i < csdev->pdata->nr_outconns; ++i) {
+> >                 helper = csdev->pdata->out_conns[i]->dest_dev;
+> >                 if (helper && coresight_is_helper(helper))
+> > -                       coresight_disable_helper(helper);
+> > +                       coresight_disable_helper(helper, data);
+> >         }
+> >  }
+> >
+> > @@ -327,7 +327,7 @@ static void coresight_disable_helpers(struct coresight_device *csdev)
+> >  void coresight_disable_source(struct coresight_device *csdev, void *data)
+> >  {
+> >         source_ops(csdev)->disable(csdev, data);
+> > -       coresight_disable_helpers(csdev);
+> > +       coresight_disable_helpers(csdev, NULL);
+> >  }
+> >  EXPORT_SYMBOL_GPL(coresight_disable_source);
+> >
+> > @@ -337,7 +337,8 @@ EXPORT_SYMBOL_GPL(coresight_disable_source);
+> >   * disabled.
+> >   */
+> >  static void coresight_disable_path_from(struct list_head *path,
+> > -                                       struct coresight_node *nd)
+> > +                                       struct coresight_node *nd,
+> > +                                       void *sink_data)
+> >  {
+> >         u32 type;
+> >         struct coresight_device *csdev, *parent, *child;
+> > @@ -382,13 +383,13 @@ static void coresight_disable_path_from(struct list_head *path,
+> >                 }
+> >
+> >                 /* Disable all helpers adjacent along the path last */
+> > -               coresight_disable_helpers(csdev);
+> > +               coresight_disable_helpers(csdev, sink_data);
+> >         }
+> >  }
+> >
+> > -void coresight_disable_path(struct list_head *path)
+> > +void coresight_disable_path(struct list_head *path, void *sink_data)
+> >  {
+> > -       coresight_disable_path_from(path, NULL);
+> > +       coresight_disable_path_from(path, NULL, sink_data);
+> >  }
+> >  EXPORT_SYMBOL_GPL(coresight_disable_path);
+> >
+> > @@ -468,10 +469,42 @@ int coresight_enable_path(struct list_head *path, enum cs_mode mode,
+> >  out:
+> >         return ret;
+> >  err:
+> > -       coresight_disable_path_from(path, nd);
+> > +       coresight_disable_path_from(path, nd, sink_data);
+> >         goto out;
+> >  }
+> >
+> > +int coresight_read_traceid(struct list_head *path)
+> > +{
+> > +       int trace_id, type;
+> > +       struct coresight_device *csdev;
+> > +       struct coresight_node *nd;
+> > +
+> > +       list_for_each_entry(nd, path, link) {
+> > +               csdev = nd->csdev;
+> > +               type = csdev->type;
+> > +
+> > +               switch(type) {
+> > +                       case CORESIGHT_DEV_TYPE_SOURCE:
+> > +                               if (source_ops(csdev)->trace_id != NULL) {
+> > +                                       trace_id = source_ops(csdev)->trace_id(csdev);
+> > +                                       if (trace_id > 0)
+> > +                                               return trace_id;
+> > +                               }
+> > +                               break;
+> > +                       case CORESIGHT_DEV_TYPE_LINK:
+> > +                               if (link_ops(csdev)->trace_id != NULL) {
+> > +                                       trace_id = link_ops(csdev)->trace_id(csdev);
+> > +                                       if (trace_id > 0)
+> > +                                               return trace_id;
+> > +                               }
+> > +                               break;
+> > +                       default:
+> > +                               break;
+> > +               }
+> > +       }
+> > +       return -EINVAL;
+> > +}
+> > +
+> >  struct coresight_device *coresight_get_sink(struct list_head *path)
+> >  {
+> >         struct coresight_device *csdev;
+> > diff --git a/drivers/hwtracing/coresight/coresight-etb10.c b/drivers/hwtracing/coresight/coresight-etb10.c
+> > index 7edd3f1d0d46..05e620529c14 100644
+> > --- a/drivers/hwtracing/coresight/coresight-etb10.c
+> > +++ b/drivers/hwtracing/coresight/coresight-etb10.c
+> > @@ -173,7 +173,8 @@ static int etb_enable_perf(struct coresight_device *csdev, void *data)
+> >         pid_t pid;
+> >         unsigned long flags;
+> >         struct etb_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+> > -       struct perf_output_handle *handle = data;
+> > +       struct cs_sink_data *sink_data = (struct cs_sink_data *)data;
+> > +       struct perf_output_handle *handle = sink_data->handle;
+> >         struct cs_buffers *buf = etm_perf_sink_config(handle);
+> >
+> >         spin_lock_irqsave(&drvdata->spinlock, flags);
+> > diff --git a/drivers/hwtracing/coresight/coresight-etm-perf.c b/drivers/hwtracing/coresight/coresight-etm-perf.c
+> > index c0c60e6a1703..8b155765b959 100644
+> > --- a/drivers/hwtracing/coresight/coresight-etm-perf.c
+> > +++ b/drivers/hwtracing/coresight/coresight-etm-perf.c
+> > @@ -452,6 +452,7 @@ static void etm_event_start(struct perf_event *event, int flags)
+> >         struct perf_output_handle *handle = &ctxt->handle;
+> >         struct coresight_device *sink, *csdev = per_cpu(csdev_src, cpu);
+> >         struct list_head *path;
+> > +       struct cs_sink_data *sink_data = NULL;
+> >         u64 hw_id;
+> >
+> >         if (!csdev)
+> > @@ -490,9 +491,18 @@ static void etm_event_start(struct perf_event *event, int flags)
+> >         if (WARN_ON_ONCE(!sink))
+> >                 goto fail_end_stop;
+> >
+> > +       sink_data = kzalloc(sizeof(*sink_data), GFP_KERNEL);
+> > +       if (!sink_data)
+> > +               goto fail_end_stop;
+> > +
+> > +       sink_data->sink = sink;
+> > +       sink_data->traceid = coresight_read_traceid(path);
+> > +       sink_data->handle = handle;
+> >         /* Nothing will happen without a path */
+> > -       if (coresight_enable_path(path, CS_MODE_PERF, handle))
+> > +       if (coresight_enable_path(path, CS_MODE_PERF, sink_data)) {
+> > +               kfree(sink_data);
+> >                 goto fail_end_stop;
+> > +       }
+> >
+> >         /* Finally enable the tracer */
+> >         if (source_ops(csdev)->enable(csdev, event, CS_MODE_PERF))
+> > @@ -511,6 +521,7 @@ static void etm_event_start(struct perf_event *event, int flags)
+> >                 perf_report_aux_output_id(event, hw_id);
+> >         }
+> >
+> > +       kfree(sink_data);
+> >  out:
+> >         /* Tell the perf core the event is alive */
+> >         event->hw.state = 0;
+> > @@ -519,7 +530,8 @@ static void etm_event_start(struct perf_event *event, int flags)
+> >         return;
+> >
+> >  fail_disable_path:
+> > -       coresight_disable_path(path);
+> > +       coresight_disable_path(path, sink_data);
+> > +       kfree(sink_data);
+> >  fail_end_stop:
+> >         /*
+> >          * Check if the handle is still associated with the event,
+> > @@ -544,6 +556,7 @@ static void etm_event_stop(struct perf_event *event, int mode)
+> >         struct perf_output_handle *handle = &ctxt->handle;
+> >         struct etm_event_data *event_data;
+> >         struct list_head *path;
+> > +       struct cs_sink_data *sink_data = NULL;
+> >
+> >         /*
+> >          * If we still have access to the event_data via handle,
+> > @@ -588,6 +601,10 @@ static void etm_event_stop(struct perf_event *event, int mode)
+> >         if (!sink)
+> >                 return;
+> >
+> > +       sink_data = kzalloc(sizeof(*sink_data), GFP_KERNEL);
+> > +       if (!sink_data)
+> > +               return;
+> > +
+> >         /* stop tracer */
+> >         coresight_disable_source(csdev, event);
+> >
+> > @@ -601,12 +618,16 @@ static void etm_event_stop(struct perf_event *event, int mode)
+> >          * have to do anything here.
+> >          */
+> >         if (handle->event && (mode & PERF_EF_UPDATE)) {
+> > -               if (WARN_ON_ONCE(handle->event != event))
+> > +               if (WARN_ON_ONCE(handle->event != event)) {
+> > +                       kfree(sink_data);
+> >                         return;
+> > +               }
+> >
+> >                 /* update trace information */
+> > -               if (!sink_ops(sink)->update_buffer)
+> > +               if (!sink_ops(sink)->update_buffer) {
+> > +                       kfree(sink_data);
+> >                         return;
+> > +               }
+> >
+> >                 size = sink_ops(sink)->update_buffer(sink, handle,
+> >                                               event_data->snk_config);
+> > @@ -627,8 +648,11 @@ static void etm_event_stop(struct perf_event *event, int mode)
+> >                         WARN_ON(size);
+> >         }
+> >
+> > +       sink_data->sink = sink;
+> > +       sink_data->traceid = coresight_read_traceid(path);
+> >         /* Disabling the path make its elements available to other sessions */
+> > -       coresight_disable_path(path);
+> > +       coresight_disable_path(path, sink_data);
+> > +       kfree(sink_data);
+> >  }
+> >
+> >  static int etm_event_add(struct perf_event *event, int mode)
+> > diff --git a/drivers/hwtracing/coresight/coresight-etm3x-core.c b/drivers/hwtracing/coresight/coresight-etm3x-core.c
+> > index 8b362605d242..27e973749050 100644
+> > --- a/drivers/hwtracing/coresight/coresight-etm3x-core.c
+> > +++ b/drivers/hwtracing/coresight/coresight-etm3x-core.c
+> > @@ -696,10 +696,24 @@ static void etm_disable(struct coresight_device *csdev,
+> >                 coresight_set_mode(csdev, CS_MODE_DISABLED);
+> >  }
+> >
+> > +static int etm_trace_id(struct coresight_device *csdev)
+> > +{
+> > +       struct etm_drvdata *drvdata;
+> > +
+> > +       if (csdev == NULL)
+> > +               return -EINVAL;
+> > +
+> > +       drvdata = dev_get_drvdata(csdev->dev.parent);
+> > +
+> > +       return etm_read_alloc_trace_id(drvdata);
+> > +}
+> > +
+> > +
+> >  static const struct coresight_ops_source etm_source_ops = {
+> >         .cpu_id         = etm_cpu_id,
+> >         .enable         = etm_enable,
+> >         .disable        = etm_disable,
+> > +       .trace_id       = etm_trace_id,
+> >  };
+> >
+> >  static const struct coresight_ops etm_cs_ops = {
+> > diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> > index bf01f01964cf..8c3e9bfb9a9c 100644
+> > --- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> > +++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+> > @@ -1024,10 +1024,23 @@ static void etm4_disable(struct coresight_device *csdev,
+> >                 coresight_set_mode(csdev, CS_MODE_DISABLED);
+> >  }
+> >
+> > +static int etm4_trace_id(struct coresight_device *csdev)
+> > +{
+> > +       struct etmv4_drvdata *drvdata;
+> > +
+> > +       if (csdev == NULL)
+> > +               return -EINVAL;
+> > +
+> > +       drvdata = dev_get_drvdata(csdev->dev.parent);
+> > +
+> > +       return etm4_read_alloc_trace_id(drvdata);
+> > +}
+> > +
+> >  static const struct coresight_ops_source etm4_source_ops = {
+> >         .cpu_id         = etm4_cpu_id,
+> >         .enable         = etm4_enable,
+> >         .disable        = etm4_disable,
+> > +       .trace_id       = etm4_trace_id,
+> >  };
+> >
+> >  static const struct coresight_ops etm4_cs_ops = {
+> > diff --git a/drivers/hwtracing/coresight/coresight-priv.h b/drivers/hwtracing/coresight/coresight-priv.h
+> > index 61a46d3bdcc8..e2576531f796 100644
+> > --- a/drivers/hwtracing/coresight/coresight-priv.h
+> > +++ b/drivers/hwtracing/coresight/coresight-priv.h
+> > @@ -105,6 +105,15 @@ struct cs_buffers {
+> >         void                    **data_pages;
+> >  };
+> >
+> > +/**
+> > + * struct cs_sink_data - data used by coresight_enable_path/coresight_disable_path
+> > + */
+> > +struct cs_sink_data {
+> > +       struct perf_output_handle       *handle;
+> > +       struct coresight_device         *sink;
+> > +       u32                             traceid;
+> > +};
+> > +
+> >  static inline void coresight_insert_barrier_packet(void *buf)
+> >  {
+> >         if (buf)
+> > @@ -129,9 +138,10 @@ static inline void CS_UNLOCK(void __iomem *addr)
+> >         } while (0);
+> >  }
+> >
+> > -void coresight_disable_path(struct list_head *path);
+> > +void coresight_disable_path(struct list_head *path, void *sink_data);
+> >  int coresight_enable_path(struct list_head *path, enum cs_mode mode,
+> >                           void *sink_data);
+> > +int coresight_read_traceid(struct list_head *path);
+> >  struct coresight_device *coresight_get_sink(struct list_head *path);
+> >  struct coresight_device *coresight_get_sink_by_id(u32 id);
+> >  struct coresight_device *
+> > diff --git a/drivers/hwtracing/coresight/coresight-stm.c b/drivers/hwtracing/coresight/coresight-stm.c
+> > index 117dbb484543..3817743fc0c6 100644
+> > --- a/drivers/hwtracing/coresight/coresight-stm.c
+> > +++ b/drivers/hwtracing/coresight/coresight-stm.c
+> > @@ -280,9 +280,22 @@ static void stm_disable(struct coresight_device *csdev,
+> >         }
+> >  }
+> >
+> > +static int stm_trace_id(struct coresight_device *csdev)
+> > +{
+> > +       struct stm_drvdata *drvdata;
+> > +
+> > +       if (csdev == NULL)
+> > +               return -EINVAL;
+> > +
+> > +       drvdata = dev_get_drvdata(csdev->dev.parent);
+> > +
+> > +       return drvdata->traceid;
+> > +}
+> > +
+> >  static const struct coresight_ops_source stm_source_ops = {
+> >         .enable         = stm_enable,
+> >         .disable        = stm_disable,
+> > +       .trace_id       = stm_trace_id,
+> >  };
+> >
+> >  static const struct coresight_ops stm_cs_ops = {
+> > diff --git a/drivers/hwtracing/coresight/coresight-sysfs.c b/drivers/hwtracing/coresight/coresight-sysfs.c
+> > index 1e67cc7758d7..a95afc890587 100644
+> > --- a/drivers/hwtracing/coresight/coresight-sysfs.c
+> > +++ b/drivers/hwtracing/coresight/coresight-sysfs.c
+> > @@ -167,6 +167,7 @@ int coresight_enable_sysfs(struct coresight_device *csdev)
+> >         int cpu, ret = 0;
+> >         struct coresight_device *sink;
+> >         struct list_head *path;
+> > +       struct cs_sink_data *sink_data;
+> >         enum coresight_dev_subtype_source subtype;
+> >         u32 hash;
+> >
+> > @@ -208,7 +209,14 @@ int coresight_enable_sysfs(struct coresight_device *csdev)
+> >                 goto out;
+> >         }
+> >
+> > -       ret = coresight_enable_path(path, CS_MODE_SYSFS, NULL);
+> > +       sink_data = kzalloc(sizeof(*sink_data), GFP_KERNEL);
+> > +       if (!sink_data) {
+> > +               ret = -ENOMEM;
+> > +               goto out;
+> > +       }
+> > +       sink_data->traceid = coresight_read_traceid(path);
+> > +       sink_data->sink = sink;
+> > +       ret = coresight_enable_path(path, CS_MODE_SYSFS, sink_data);
+> >         if (ret)
+> >                 goto err_path;
+> >
+> > @@ -245,15 +253,17 @@ int coresight_enable_sysfs(struct coresight_device *csdev)
+> >                 break;
+> >         }
+> >
+> > +       kfree(sink_data);
+> >  out:
+> >         mutex_unlock(&coresight_mutex);
+> >         return ret;
+> >
+> >  err_source:
+> > -       coresight_disable_path(path);
+> > +       coresight_disable_path(path, sink_data);
+> >
+> >  err_path:
+> >         coresight_release_path(path);
+> > +       kfree(sink_data);
+> >         goto out;
+> >  }
+> >  EXPORT_SYMBOL_GPL(coresight_enable_sysfs);
+> > @@ -262,6 +272,7 @@ void coresight_disable_sysfs(struct coresight_device *csdev)
+> >  {
+> >         int cpu, ret;
+> >         struct list_head *path = NULL;
+> > +       struct cs_sink_data *sink_data = NULL;
+> >         u32 hash;
+> >
+> >         mutex_lock(&coresight_mutex);
+> > @@ -273,6 +284,10 @@ void coresight_disable_sysfs(struct coresight_device *csdev)
+> >         if (!coresight_disable_source_sysfs(csdev, NULL))
+> >                 goto out;
+> >
+> > +       sink_data = kzalloc(sizeof(*sink_data), GFP_KERNEL);
+> > +       if (!sink_data)
+> > +               goto out;
+> > +
+> >         switch (csdev->subtype.source_subtype) {
+> >         case CORESIGHT_DEV_SUBTYPE_SOURCE_PROC:
+> >                 cpu = source_ops(csdev)->cpu_id(csdev);
+> > @@ -296,8 +311,11 @@ void coresight_disable_sysfs(struct coresight_device *csdev)
+> >                 break;
+> >         }
+> >
+> > -       coresight_disable_path(path);
+> > +       sink_data->sink = coresight_find_activated_sysfs_sink(csdev);
+> > +       sink_data->traceid = coresight_read_traceid(path);
+> > +       coresight_disable_path(path, sink_data);
+> >         coresight_release_path(path);
+> > +       kfree(sink_data);
+> >
+> >  out:
+> >         mutex_unlock(&coresight_mutex);
+> > diff --git a/drivers/hwtracing/coresight/coresight-tmc-etf.c b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+> > index d4f641cd9de6..7dc536eba3e2 100644
+> > --- a/drivers/hwtracing/coresight/coresight-tmc-etf.c
+> > +++ b/drivers/hwtracing/coresight/coresight-tmc-etf.c
+> > @@ -250,7 +250,8 @@ static int tmc_enable_etf_sink_perf(struct coresight_device *csdev, void *data)
+> >         pid_t pid;
+> >         unsigned long flags;
+> >         struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+> > -       struct perf_output_handle *handle = data;
+> > +       struct cs_sink_data *sink_data = (struct cs_sink_data *)data;
+> > +       struct perf_output_handle *handle = sink_data->handle;
+> >         struct cs_buffers *buf = etm_perf_sink_config(handle);
+> >
+> >         spin_lock_irqsave(&drvdata->spinlock, flags);
+> > diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> > index e75428fa1592..0c24520645e2 100644
+> > --- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> > +++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> > @@ -1253,7 +1253,8 @@ static int tmc_enable_etr_sink_sysfs(struct coresight_device *csdev)
+> >  struct etr_buf *tmc_etr_get_buffer(struct coresight_device *csdev,
+> >                                    enum cs_mode mode, void *data)
+> >  {
+> > -       struct perf_output_handle *handle = data;
+> > +       struct cs_sink_data *sink_data = (struct cs_sink_data *)data;
+> > +       struct perf_output_handle *handle = sink_data->handle;
+> >         struct etr_perf_buffer *etr_perf;
+> >
+> >         switch (mode) {
+> > @@ -1647,7 +1648,8 @@ static int tmc_enable_etr_sink_perf(struct coresight_device *csdev, void *data)
+> >         pid_t pid;
+> >         unsigned long flags;
+> >         struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+> > -       struct perf_output_handle *handle = data;
+> > +       struct cs_sink_data *sink_data = (struct cs_sink_data *)data;
+> > +       struct perf_output_handle *handle = sink_data->handle;
+> >         struct etr_perf_buffer *etr_perf = etm_perf_sink_config(handle);
+> >
+> >         spin_lock_irqsave(&drvdata->spinlock, flags);
+> > diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
+> > index bfca103f9f84..20f0ab73159c 100644
+> > --- a/drivers/hwtracing/coresight/coresight-tpda.c
+> > +++ b/drivers/hwtracing/coresight/coresight-tpda.c
+> > @@ -232,9 +232,22 @@ static void tpda_disable(struct coresight_device *csdev,
+> >         dev_dbg(drvdata->dev, "TPDA inport %d disabled\n", in->dest_port);
+> >  }
+> >
+> > +static int tpda_trace_id(struct coresight_device *csdev)
+> > +{
+> > +       struct tpda_drvdata *drvdata;
+> > +
+> > +       if (csdev == NULL)
+> > +               return -EINVAL;
+> > +
+> > +       drvdata = dev_get_drvdata(csdev->dev.parent);
+> > +
+> > +       return drvdata->atid;
+> > +}
+> > +
+> >  static const struct coresight_ops_link tpda_link_ops = {
+> >         .enable         = tpda_enable,
+> >         .disable        = tpda_disable,
+> > +       .trace_id       = tpda_trace_id,
+> >  };
+> >
+> >  static const struct coresight_ops tpda_cs_ops = {
+> > diff --git a/drivers/hwtracing/coresight/coresight-trbe.c b/drivers/hwtracing/coresight/coresight-trbe.c
+> > index 96a32b213669..7f4560b067a8 100644
+> > --- a/drivers/hwtracing/coresight/coresight-trbe.c
+> > +++ b/drivers/hwtracing/coresight/coresight-trbe.c
+> > @@ -21,6 +21,7 @@
+> >
+> >  #include "coresight-self-hosted-trace.h"
+> >  #include "coresight-trbe.h"
+> > +#include "coresight-priv.h"
+> >
+> >  #define PERF_IDX2OFF(idx, buf) ((idx) % ((buf)->nr_pages << PAGE_SHIFT))
+> >
+> > @@ -1012,7 +1013,8 @@ static int arm_trbe_enable(struct coresight_device *csdev, enum cs_mode mode,
+> >  {
+> >         struct trbe_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+> >         struct trbe_cpudata *cpudata = dev_get_drvdata(&csdev->dev);
+> > -       struct perf_output_handle *handle = data;
+> > +       struct cs_sink_data *sink_data = (struct cs_sink_data *)data;
+> > +       struct perf_output_handle *handle = sink_data->handle;
+> >         struct trbe_buf *buf = etm_perf_sink_config(handle);
+> >
+> >         WARN_ON(cpudata->cpu != smp_processor_id());
+> > diff --git a/drivers/hwtracing/coresight/ultrasoc-smb.c b/drivers/hwtracing/coresight/ultrasoc-smb.c
+> > index f9ebf20c91e6..92d8a9fb844e 100644
+> > --- a/drivers/hwtracing/coresight/ultrasoc-smb.c
+> > +++ b/drivers/hwtracing/coresight/ultrasoc-smb.c
+> > @@ -217,7 +217,8 @@ static void smb_enable_sysfs(struct coresight_device *csdev)
+> >  static int smb_enable_perf(struct coresight_device *csdev, void *data)
+> >  {
+> >         struct smb_drv_data *drvdata = dev_get_drvdata(csdev->dev.parent);
+> > -       struct perf_output_handle *handle = data;
+> > +       struct cs_sink_data *sink_data = (struct cs_sink_data *)data;
+> > +       struct perf_output_handle *handle = sink_data->handle;
+> >         struct cs_buffers *buf = etm_perf_sink_config(handle);
+> >         pid_t pid;
+> >
+> > diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+> > index f09ace92176e..fb1c225076a5 100644
+> > --- a/include/linux/coresight.h
+> > +++ b/include/linux/coresight.h
+> > @@ -344,6 +344,7 @@ struct coresight_ops_sink {
+> >   * Operations available for links.
+> >   * @enable:    enables flow between iport and oport.
+> >   * @disable:   disables flow between iport and oport.
+> > + * @trace_id:  Collect the traceid.
+> >   */
+> >  struct coresight_ops_link {
+> >         int (*enable)(struct coresight_device *csdev,
+> > @@ -352,6 +353,7 @@ struct coresight_ops_link {
+> >         void (*disable)(struct coresight_device *csdev,
+> >                         struct coresight_connection *in,
+> >                         struct coresight_connection *out);
+> > +       int (*trace_id)(struct coresight_device *csdev);
+> >  };
+> >
+> >  /**
+> > @@ -361,6 +363,7 @@ struct coresight_ops_link {
+> >   *             is associated to.
+> >   * @enable:    enables tracing for a source.
+> >   * @disable:   disables tracing for a source.
+> > + * @trace_id:  collect the traceid.
+> >   */
+> >  struct coresight_ops_source {
+> >         int (*cpu_id)(struct coresight_device *csdev);
+> > @@ -368,6 +371,7 @@ struct coresight_ops_source {
+> >                       enum cs_mode mode);
+> >         void (*disable)(struct coresight_device *csdev,
+> >                         struct perf_event *event);
+> > +       int (*trace_id)(struct coresight_device *csdev);
+> >  };
+> >
+> >  /**
+> > --
+> > 2.34.1
+> >
+> 
+> 
+> -- 
+> Mike Leach
+> Principal Engineer, ARM Ltd.
+> Manchester Design Centre. UK
+> 
 
