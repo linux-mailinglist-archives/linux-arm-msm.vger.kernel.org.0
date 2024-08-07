@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-28071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D273494A30D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 10:39:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D2EA94A36B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 10:52:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 879A0282F84
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 08:39:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0A5E31F21174
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 08:52:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4420D22334;
-	Wed,  7 Aug 2024 08:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA9663A267;
+	Wed,  7 Aug 2024 08:52:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XG2ZPeWx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qTb4hGkM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE1B1B4C53
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Aug 2024 08:39:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D1B1E495
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Aug 2024 08:52:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723019972; cv=none; b=div55mD+rrndAhNDk4hfbVAQJpGHEw0caljV4iR9qtUEsXhP3GjobFovYen0b1apCxfl34TvPICne/ZwCLf/hN3wa/aOErJRf3LOAxUsuVADUefNSzeHRYfpf20gxagoUkKs2ecuak6xYG5nbrURsRH7g/pzBjF/ODexe7ci0aw=
+	t=1723020738; cv=none; b=ZQUNeItMO7CaJf/KulJHQWfCvSb2J46GNx0tI3gNILjbNOawDI7F9NYclmaWwFsd+gZVmMJlNSINppaJomir+sSJdRALP0sBjLjWogIliNcZmrj9WmgQV4R/8bb5PQtm1L4KDYiTqqLPVQG1F4iNSGLHkhoX8t3ziHV5gg/gWG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723019972; c=relaxed/simple;
-	bh=u44rX1gnqnZbeHCTQ6ywMnMgkJ7Dj5NXQisTB6I2tSw=;
+	s=arc-20240116; t=1723020738; c=relaxed/simple;
+	bh=rMlZ9HpgohB8/wFRZuMYNu5YaQj/bAormLjfa85I+Lk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TirsTpsj+ejSB01kIjjdgnqIlUrFbKK9qg2/7TF99q/VIL0rI3seY0bcfdSHSbpSxMydlG9DqZ9hFxCRAN95iUbrAw9JVlIrE8pbGdTtRDXwxSbJD6Wbx65cPFltkvqfg5MpQ3F4I9eQFg59OK4oypJbIISdiYAj5bPJy4HkQiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XG2ZPeWx; arc=none smtp.client-ip=209.85.218.41
+	 In-Reply-To:Content-Type; b=THF0px18tzOSbQ2ZNpeaI+frQo2Ezv9AT8YJEUDKYzOplaUZcjzqpoYMdot/FRiyEd11c1MnTYQB5rkThBAXoUMZ8Y+hasDFtusAyMpw8MXTcXPoD7c8AvRNnAMzd90KpkyftHuf7N9bvo4RU1VyUjew6tmXF7htqvFWtB1xiKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qTb4hGkM; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a7de4364ca8so187339566b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Aug 2024 01:39:28 -0700 (PDT)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52f015ea784so228802e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Aug 2024 01:52:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723019967; x=1723624767; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1723020735; x=1723625535; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=zDdmfc6d2VpPH3UOuEwKPDDDXn0Kmwkkbmv11nFGwPM=;
-        b=XG2ZPeWx1HNXNDUGzeaZEx/VjhPlnNoEqCe/74ADghhmdOCEcpPtssDpeWFjffUWP2
-         ASsSOPOcA3iD6eCCey1fLJhmSpUzy0m78hFG0TDQcn5Kx8BdmGCWfixAjLd0vpPPjcHR
-         0YQ1f6HLzW9cTdD/zNI9nYo5oLCBf4OsgX+zZFdBUA2ZNq+pTkEt8+LEZWRZggDLZyEh
-         18oOMaIOkJW0Dx5efuk6+hGDlm6jJ3JVWvUCb4oXMRxB0gby+a6VWQSYwG1TAMfAA9Ht
-         IrZZJSCbP87od62ypu3SSA70LRfqW9nktFoQ2Dpi1P36Nv6XfdUdKJipi9PEJmm7ZnqP
-         VdNA==
+        bh=L6nzWD4LC/2kwSUfdaDEIRQUBjJCqhcP8ZdqhvdOUkc=;
+        b=qTb4hGkMfp8WGLZxrxKlZdOst0cAG9JDnUZR1oYCcjp5RuvDu7ALGqer3/ajIRclFe
+         ZxQTdmJILuSXVaBPidydkJ9ZcP2A/3O7uIyBkYtKKPqk4vF1SqCdBzFRGxyenn0/1l5g
+         Pzcb63UMyw9eSEQvA9dLC5MbLToqMrIWx9naGWuW8xrK9nrGLmWFVTOQ9pEy2Ac2BP2L
+         Rr05CgeF3qjRdt8GVayEcbTF3AIlimmJvuZTFCcsCq1V6RNK3Pzth2pxXQiGNGYfyNoc
+         1ieceVkcNOhB+yWWRBIeFZG1+ddup53YhN8AiUeFoP6sK7/469aJ7iVBSbzu77CheT2J
+         /mvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723019967; x=1723624767;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1723020735; x=1723625535;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zDdmfc6d2VpPH3UOuEwKPDDDXn0Kmwkkbmv11nFGwPM=;
-        b=vLqyK2SvzL2TatRFuCrA4aTiZtViaQBUDsVwTXDDslsK3hBJV6Hbidtv7sxdhmhekI
-         KUDvpiw4H5B2BDnP8Gl1BE8m6IiPipVGCYjYG4qspRgSfr7E2U/UvC3wRHh8XbyuMy3N
-         ibQzqAlgLqKq1GjzSDNNb0uxA4eWI/KU0moWJt1byDJ9uE3qX+wGSEEUffrk7TIDe8jB
-         FDm0Z5EHe+l8r4XAIiDIlzcILRlNejzG8b+r5nNpe69qqFZIDT+iNYp+t+bTkgtKQEdF
-         PUghQvi+3ETWw8zCVTYls3Jm4Hlsj2YWnjgQXc/kxyvkbfofxRkTUEQNVQOs0gDjAGqf
-         Ky/Q==
-X-Forwarded-Encrypted: i=1; AJvYcCV9FzST9jO4o9M7yO0MQ7+gKozS0vx71877ByMZP8KkBvKLuew9VA28XJxB8H47BBctW3/YTUNo0GUnIRIgFwmxQoCNOtIhKFtCuzhnXw==
-X-Gm-Message-State: AOJu0Yxm/clyswePJmhkC49nJw05UiwS87/2T/g6u+6vEfT5Qb2Y+OPU
-	N0BMD9tJi0O/s5kNK+aJJ2uVu4x1lmCINWsbJQt+SslXaYhss1bNfEqrxurJkFXHNXP+cBaumSf
-	Zx0c=
-X-Google-Smtp-Source: AGHT+IEFynAVAqDXt5NcAlo39+sYjChH1BxTI5xje6BJ2nYbdpvdQehRJOg8hWYp+IWo0ObqnUkrXQ==
-X-Received: by 2002:a17:907:c290:b0:a7d:e857:1490 with SMTP id a640c23a62f3a-a7de8571d7cmr527655666b.37.1723019967012;
-        Wed, 07 Aug 2024 01:39:27 -0700 (PDT)
-Received: from [192.168.0.25] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7dc9d437d4sm618720366b.132.2024.08.07.01.39.25
+        bh=L6nzWD4LC/2kwSUfdaDEIRQUBjJCqhcP8ZdqhvdOUkc=;
+        b=hAYHWwBRXhsAo83cZdq7dxrc0Xx85TUJ5mO5t+YiBubZSSG++2Fc+BrIuNRJLu1P0m
+         iNE7MhfrhWfx8KPFEWxNvqrPIUwpYDODMOh3icCmYvTMBMdbda2YI8GIoON4IFj2eFBq
+         QurEa/+cB12p+0xD+lzvbpxs7/aTAn8oSnLvvSpsbQKXhfFb8np2HWghzlBnJZo9WGot
+         a93SF526ZPTgNSy9MYVyC/3AyGqkUF16wf0NZt0AS7tXiNwHvq/MTy43tSmaJA5tkzpr
+         MEWM/46EzENkLyKDyqe//GiyHkzcsKYT98OmA05aNKsXYGA6MJU1CciXbtMJTpk6fmRO
+         ccsg==
+X-Forwarded-Encrypted: i=1; AJvYcCVVXgdfefr9XIWDHf/cL2f2k1Hfro60vCxN0pI9uD4zYn6q168dyJRXIHaFn/qgQi4CutqqL/1cYFNqivCuT/XDG5N5yfvfQG8gb13Vwg==
+X-Gm-Message-State: AOJu0YyRaC3kVuIgiNTLSvY5AWJ/6qf3E8h/wePMxuB0qV8wBBRNATVr
+	JuEGd7xeVcnX19+fy4d3ofPmykwBqbtg18xb0GDbDqXfqyGuJa4h8rd7DhBhhY8=
+X-Google-Smtp-Source: AGHT+IFHKwlab4m/ltnYCM+v93PHhmKzU45rQdprv7inoqGN+n68H/nvWo+dzq3VLI7Rh6hK3ePQxQ==
+X-Received: by 2002:a05:6512:3e12:b0:530:baec:3975 with SMTP id 2adb3069b0e04-530bb3656d3mr6639294e87.1.1723020735033;
+        Wed, 07 Aug 2024 01:52:15 -0700 (PDT)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-530de4833fdsm169265e87.304.2024.08.07.01.52.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Aug 2024 01:39:25 -0700 (PDT)
-Message-ID: <c7dac913-c91f-4780-ae81-804b5506f9cb@linaro.org>
-Date: Wed, 7 Aug 2024 09:39:24 +0100
+        Wed, 07 Aug 2024 01:52:14 -0700 (PDT)
+Message-ID: <f8247193-c066-462e-a2cd-488fe8b36ff5@linaro.org>
+Date: Wed, 7 Aug 2024 11:52:13 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +78,8 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] media: qcom: camss: fix error path on configuration of
  power domains
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+Content-Language: en-US
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
  Robert Foss <rfoss@kernel.org>
 Cc: Todor Tomov <todor.too@gmail.com>,
  Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -91,153 +91,165 @@ References: <20240806221204.1560258-1-vladimir.zapolskiy@linaro.org>
  <a2bb7c94-351d-49d2-b1df-961902243116@linaro.org>
  <60408fc6-29c0-40ab-91f6-79b93889e525@linaro.org>
  <2deeeab3-189f-41cd-bee8-3dba197cd0cc@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <2deeeab3-189f-41cd-bee8-3dba197cd0cc@linaro.org>
+ <c7dac913-c91f-4780-ae81-804b5506f9cb@linaro.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <c7dac913-c91f-4780-ae81-804b5506f9cb@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 07/08/2024 00:37, Vladimir Zapolskiy wrote:
-> On 8/7/24 02:30, Bryan O'Donoghue wrote:
->> On 07/08/2024 00:27, Vladimir Zapolskiy wrote:
->>> Hi Bryan.
->>>
->>> On 8/7/24 02:15, Bryan O'Donoghue wrote:
->>>> On 06/08/2024 23:12, Vladimir Zapolskiy wrote:
->>>>> There is a chance to meet runtime issues during configuration of CAMSS
->>>>> power domains, because on the error path dev_pm_domain_detach() is
->>>>> unexpectedly called with NULL or error pointer.
->>>>>
->>>>> Fixes: 23aa4f0cd327 ("media: qcom: camss: Move VFE power-domain
->>>>> specifics into vfe.c")
->>>>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+On 8/7/24 11:39, Bryan O'Donoghue wrote:
+> On 07/08/2024 00:37, Vladimir Zapolskiy wrote:
+>> On 8/7/24 02:30, Bryan O'Donoghue wrote:
+>>> On 07/08/2024 00:27, Vladimir Zapolskiy wrote:
+>>>> Hi Bryan.
 >>>>
->>>> Have you tested this with and without named power domains in your dts ?
->>>> The logic here is complex to support both the legacy non-named case and
->>>> the updated named required case.
+>>>> On 8/7/24 02:15, Bryan O'Donoghue wrote:
+>>>>> On 06/08/2024 23:12, Vladimir Zapolskiy wrote:
+>>>>>> There is a chance to meet runtime issues during configuration of CAMSS
+>>>>>> power domains, because on the error path dev_pm_domain_detach() is
+>>>>>> unexpectedly called with NULL or error pointer.
+>>>>>>
+>>>>>> Fixes: 23aa4f0cd327 ("media: qcom: camss: Move VFE power-domain
+>>>>>> specifics into vfe.c")
+>>>>>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>>>>>
+>>>>> Have you tested this with and without named power domains in your dts ?
+>>>>> The logic here is complex to support both the legacy non-named case and
+>>>>> the updated named required case.
+>>>>
+>>>> The problem and the fix are pretty straightforward, if you notice any
+>>>> issues
+>>>> with it, please let me know.
+>>>>
+>>>> As it's said in the commit description the problem is unrelated to
+>>>> named/not named
+>>>> power domains, I tested the fix only on a platform without
+>>>> "power-domain-names"
+>>>> property in camss device tree node.
+>>>>
+>>>>> Could you also provide a backtrace of a failing camss_configure_pd()
+>>>>> for
+>>>>> the commit log.
+>>>>
+>>>> Sure, I believe anyone can get a backtrace simply by disabling camcc at
+>>>> build time,
+>>>> so that camss power domain supplies disappear:
 >>>
->>> The problem and the fix are pretty straightforward, if you notice any
->>> issues
->>> with it, please let me know.
+>>> Ah OK, that's how, proof positive if its not tested, its not working,
+>>> I've extensively tested both named and non-named pds but, yep never with
+>>> camcc switched off.
 >>>
->>> As it's said in the commit description the problem is unrelated to
->>> named/not named
->>> power domains, I tested the fix only on a platform without
->>> "power-domain-names"
->>> property in camss device tree node.
+>>>>
+>>>> [   13.541205] Unable to handle kernel NULL pointer dereference at
+>>>> virtual address 00000000000001a2
+>>>> [   13.550224] Mem abort info:
+>>>> [   13.553110]   ESR = 0x0000000096000004
+>>>> [   13.556975]   EC = 0x25: DABT (current EL), IL = 32 bits
+>>>> [   13.562438]   SET = 0, FnV = 0
+>>>> [   13.565580]   EA = 0, S1PTW = 0
+>>>> [   13.568813]   FSC = 0x04: level 0 translation fault
+>>>> [   13.573824] Data abort info:
+>>>> [   13.576787]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+>>>> [   13.582424]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+>>>> [   13.587614]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+>>>> [   13.593074] user pgtable: 4k pages, 48-bit VAs, pgdp=000000088a55a000
+>>>> [   13.599693] [00000000000001a2] pgd=0000000000000000,
+>>>> p4d=0000000000000000
+>>>> [   13.606666] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+>>>> [   13.613104] Modules linked in:
+>>>>
+>>>> <snip>
+>>>>
+>>>> [   13.632753] Workqueue: events_unbound deferred_probe_work_func
+>>>> [   13.638776] pstate: 23400009 (nzCv daif +PAN -UAO +TCO +DIT -SSBS
+>>>> BTYPE=--)
+>>>> [   13.645926] pc : dev_pm_domain_detach+0x8/0x48
+>>>> [   13.650521] lr : camss_probe+0x374/0x9c0
+>>>> [   13.654577] sp : ffff800086ec3ab0
+>>>> [   13.657985] x29: ffff800086ec3ab0 x28: ffff8000855079c0 x27:
+>>>> ffff800085507000
+>>>> [   13.665329] x26: ffff000800c4b040 x25: 0000000000000000 x24:
+>>>> ffff00080aa72c20
+>>>> [   13.672659] x23: ffff800083060588 x22: ffff000801397010 x21:
+>>>> ffff800083060588
+>>>> [   13.679989] x20: 00000000ffffff92 x19: ffff00080aa72880 x18:
+>>>> ffffffffffffffff
+>>>> [   13.687318] x17: 6e6570656420676e x16: 69726f6e6769202c x15:
+>>>> 0000000000000000
+>>>> [   13.694648] x14: 000000000000003e x13: 0000000000000000 x12:
+>>>> 0000000000000000
+>>>> [   13.701988] x11: ffff00080b350460 x10: ffff00080b350248 x9 :
+>>>> ffff800081ddcde4
+>>>> [   13.709318] x8 : ffff00080b350270 x7 : 0000000000000001 x6 :
+>>>> 8000003ff0000000
+>>>> [   13.716658] x5 : ffff00080149a300 x4 : ffff000a72592b70 x3 :
+>>>> 0000000000076404
+>>>> [   13.723998] x2 : 0000000000000000 x1 : 0000000000000001 x0 :
+>>>> ffffffffffffff92
+>>>> [   13.731338] Call trace:
+>>>> [   13.733865]  dev_pm_domain_detach+0x8/0x48
+>>>> [   13.738081]  platform_probe+0x70/0xf0
+>>>> [   13.741864]  really_probe+0xc4/0x2a8
+>>>> [   13.745556]  __driver_probe_device+0x80/0x140
+>>>> [   13.750045]  driver_probe_device+0x48/0x170
+>>>> [   13.754355]  __device_attach_driver+0xc0/0x148
+>>>> [   13.758937]  bus_for_each_drv+0x88/0xf0
+>>>> [   13.762894]  __device_attach+0xb0/0x1c0
+>>>> [   13.766852]  device_initial_probe+0x1c/0x30
+>>>> [   13.771165]  bus_probe_device+0xb4/0xc0
+>>>> [   13.775124]  deferred_probe_work_func+0x90/0xd0
+>>>> [   13.779787]  process_one_work+0x164/0x3e0
+>>>> [   13.783920]  worker_thread+0x310/0x420
+>>>> [   13.787777]  kthread+0x120/0x130
+>>>> [   13.791123]  ret_from_fork+0x10/0x20
+>>>> [   13.794821] Code: 828a2cb8 ffff8000 aa1e03e9 d503201f (f9410802)
+>>>> [   13.801088] ---[ end trace 0000000000000000 ]---
 >>>
->>>> Could you also provide a backtrace of a failing camss_configure_pd() 
->>>> for
->>>> the commit log.
+>>> I'd be obliged if you could add to your commit log and verify everything
+>>> works for you with both named and unnamed power-domains.
 >>>
->>> Sure, I believe anyone can get a backtrace simply by disabling camcc at
->>> build time,
->>> so that camss power domain supplies disappear:
 >>
->> Ah OK, that's how, proof positive if its not tested, its not working,
->> I've extensively tested both named and non-named pds but, yep never with
->> camcc switched off.
+>> No objections to resend the change with an updated commit message, since
+>> it raised a question, I can add information about a method how to reproduce
+>> the bug.
 >>
->>>
->>> [   13.541205] Unable to handle kernel NULL pointer dereference at
->>> virtual address 00000000000001a2
->>> [   13.550224] Mem abort info:
->>> [   13.553110]   ESR = 0x0000000096000004
->>> [   13.556975]   EC = 0x25: DABT (current EL), IL = 32 bits
->>> [   13.562438]   SET = 0, FnV = 0
->>> [   13.565580]   EA = 0, S1PTW = 0
->>> [   13.568813]   FSC = 0x04: level 0 translation fault
->>> [   13.573824] Data abort info:
->>> [   13.576787]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
->>> [   13.582424]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
->>> [   13.587614]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
->>> [   13.593074] user pgtable: 4k pages, 48-bit VAs, pgdp=000000088a55a000
->>> [   13.599693] [00000000000001a2] pgd=0000000000000000,
->>> p4d=0000000000000000
->>> [   13.606666] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
->>> [   13.613104] Modules linked in:
->>>
->>> <snip>
->>>
->>> [   13.632753] Workqueue: events_unbound deferred_probe_work_func
->>> [   13.638776] pstate: 23400009 (nzCv daif +PAN -UAO +TCO +DIT -SSBS
->>> BTYPE=--)
->>> [   13.645926] pc : dev_pm_domain_detach+0x8/0x48
->>> [   13.650521] lr : camss_probe+0x374/0x9c0
->>> [   13.654577] sp : ffff800086ec3ab0
->>> [   13.657985] x29: ffff800086ec3ab0 x28: ffff8000855079c0 x27:
->>> ffff800085507000
->>> [   13.665329] x26: ffff000800c4b040 x25: 0000000000000000 x24:
->>> ffff00080aa72c20
->>> [   13.672659] x23: ffff800083060588 x22: ffff000801397010 x21:
->>> ffff800083060588
->>> [   13.679989] x20: 00000000ffffff92 x19: ffff00080aa72880 x18:
->>> ffffffffffffffff
->>> [   13.687318] x17: 6e6570656420676e x16: 69726f6e6769202c x15:
->>> 0000000000000000
->>> [   13.694648] x14: 000000000000003e x13: 0000000000000000 x12:
->>> 0000000000000000
->>> [   13.701988] x11: ffff00080b350460 x10: ffff00080b350248 x9 :
->>> ffff800081ddcde4
->>> [   13.709318] x8 : ffff00080b350270 x7 : 0000000000000001 x6 :
->>> 8000003ff0000000
->>> [   13.716658] x5 : ffff00080149a300 x4 : ffff000a72592b70 x3 :
->>> 0000000000076404
->>> [   13.723998] x2 : 0000000000000000 x1 : 0000000000000001 x0 :
->>> ffffffffffffff92
->>> [   13.731338] Call trace:
->>> [   13.733865]  dev_pm_domain_detach+0x8/0x48
->>> [   13.738081]  platform_probe+0x70/0xf0
->>> [   13.741864]  really_probe+0xc4/0x2a8
->>> [   13.745556]  __driver_probe_device+0x80/0x140
->>> [   13.750045]  driver_probe_device+0x48/0x170
->>> [   13.754355]  __device_attach_driver+0xc0/0x148
->>> [   13.758937]  bus_for_each_drv+0x88/0xf0
->>> [   13.762894]  __device_attach+0xb0/0x1c0
->>> [   13.766852]  device_initial_probe+0x1c/0x30
->>> [   13.771165]  bus_probe_device+0xb4/0xc0
->>> [   13.775124]  deferred_probe_work_func+0x90/0xd0
->>> [   13.779787]  process_one_work+0x164/0x3e0
->>> [   13.783920]  worker_thread+0x310/0x420
->>> [   13.787777]  kthread+0x120/0x130
->>> [   13.791123]  ret_from_fork+0x10/0x20
->>> [   13.794821] Code: 828a2cb8 ffff8000 aa1e03e9 d503201f (f9410802)
->>> [   13.801088] ---[ end trace 0000000000000000 ]---
+>> However I would like to know your opinion about the change itself, are
+>> there
+>> any noticeable issues? Thank you in advance!
 >>
->> I'd be obliged if you could add to your commit log and verify everything
->> works for you with both named and unnamed power-domains.
->>
+>> -- 
+>> Best wishes,
+>> Vladimir
 > 
-> No objections to resend the change with an updated commit message, since
-> it raised a question, I can add information about a method how to reproduce
-> the bug.
+> Why not just
 > 
-> However I would like to know your opinion about the change itself, are 
-> there
-> any noticeable issues? Thank you in advance!
+> diff --git a/drivers/media/platform/qcom/camss/camss.c
+> b/drivers/media/platform/qcom/camss/camss.c
+> index 51b1d3550421a..9990af675190c 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -2162,7 +2162,8 @@ static int camss_configure_pd(struct camss *camss)
+>           return 0;
 > 
-> -- 
-> Best wishes,
-> Vladimir
+>    fail_pm:
+> -       dev_pm_domain_detach(camss->genpd, true);
+> +       if (camss->genpd)
+> +               dev_pm_domain_detach(camss->genpd, true);
+> 
+> 
+> ?
+> 
 
-Why not just
+Because your change is invalid strictly speaking, again you've missed
+an error pointer case, but that's secondary, since it could be improved.
 
-diff --git a/drivers/media/platform/qcom/camss/camss.c 
-b/drivers/media/platform/qcom/camss/camss.c
-index 51b1d3550421a..9990af675190c 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -2162,7 +2162,8 @@ static int camss_configure_pd(struct camss *camss)
-         return 0;
+However your change brings more of unnecessary complexity, because it
+increases both cyclomatic complexity and increases LoC, when my change
+reduces the values in both these metrics.
 
-  fail_pm:
--       dev_pm_domain_detach(camss->genpd, true);
-+       if (camss->genpd)
-+               dev_pm_domain_detach(camss->genpd, true);
+My change makes the code way simpler, hopefully I managed to explain it.
 
-
-?
-
----
-bod
+--
+Best wishes,
+Vladimir
 
