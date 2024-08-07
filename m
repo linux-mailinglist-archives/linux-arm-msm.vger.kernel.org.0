@@ -1,147 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-28090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95EF594A818
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 14:53:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FD0194A838
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 15:05:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C7A1E1C22E2D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 12:53:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8242E1F21A40
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 13:05:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2E1F1E4EED;
-	Wed,  7 Aug 2024 12:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 509FB1D4159;
+	Wed,  7 Aug 2024 13:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kfMG+rQw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QvJD5Da3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8FC1E3CBE;
-	Wed,  7 Aug 2024 12:53:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8357E155C83
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Aug 2024 13:05:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723035202; cv=none; b=hQrp+hz/ltOOGQ0pBwiSv2UW6A5TWG1E9Nd9wPv0v6d+ApBdJd4wwo406Kc9rXBvtsJedwxaGTk8lqpnaRO+8foIK86narDVNKihnzNUbxiut/JL+nLjPS2z1Vg4qhcGtCZH8vse/Ufaw+4q95FbWi8ktEIJdfgZdcW/WLiJxzw=
+	t=1723035914; cv=none; b=VwPNMWNTtYjDRBxlJDXIK3BsXn5jQZy/OmqJE6Ty4qrM/6CSHFyuygq+zrWN7A2gJbNz4gtMTavC26YYRLHFq3KtzdGamvFnpWxXiVTJv5TTxP8/dHsIEMNMUi78yuCng2sDx97BYDUBgc8WAiBKpW1dOe05C+eTRcHrpk2+iss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723035202; c=relaxed/simple;
-	bh=+RAv1xK1O//80d7+SmE4UhJKsNlh/o0paO2Kl5z3daM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=lDj48aiG2EemOsuKU3lGb0H+O7RJ8uMIIRgy1qmqb5K0fKVXM9JsccQhdS9lYFagy+r/OfFnL0GRvBXxNkoHQbtzeG8uXEROYA8NNB4+icWiIZ3mlNc2oeWKEQ0aDv2G1uXPi+As7kg4CQxP0hpgRanP/8TVjWBWKxednUe1kCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kfMG+rQw; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4777p44c007142;
-	Wed, 7 Aug 2024 12:53:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	arEhPJHE9JoYwqT4CBPAFaPEevOFK+BW+jRxwcoZZnA=; b=kfMG+rQw1TDoz2op
-	x7mdewBK/22bi3/OLBICTC0Z54eyc0ybx7rhx4G0tI4bDQsf2QNBwF11n0yHqmLs
-	pFUq+RNxlUavparOjOzOMl8afvr6M/Ifh7ltGIetFHfhyYeI7R2DId+1vsQt/+Vl
-	Y26365+OXCZnTCpVqKSBtGz/OsFMg9px6srbkHDZgyapLbPnN6BWZlQRF5eS5Hbu
-	xxGhadRjz1RSGe958Is9TpfhTxLe86KUEDcrx6zGc0Dh62ILs732gLOQOZEfhoZK
-	UlvtCfGHUSPlEDR9UPwriafMZBl2nnDQGQLu7gz/V6BDFgV9c/32YzvR/xw2mQLg
-	IoCo6w==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40scx6tvme-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 Aug 2024 12:53:17 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 477CrGLT032154
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 7 Aug 2024 12:53:16 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 7 Aug 2024
- 05:53:11 -0700
-Message-ID: <85cc52aa-4593-49f5-9438-1ee3f09d2d71@quicinc.com>
-Date: Wed, 7 Aug 2024 20:53:08 +0800
+	s=arc-20240116; t=1723035914; c=relaxed/simple;
+	bh=j3XI8vHD2Wr1YAg+a1G4G9KW1tFsuqeJR4WD3H+3iqo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=adjQRCMbd1vs2yBtjMeW29FL9bWwQA3mDEs9Z9kuIm+6WjPW0Mkff5+nq65JdSY68OjvGLMWj72Ix71HUDxNpixzQLw/aNcA2aAIjTwzCNAoVyQZl2FMlnBnGtttAB/k8aln0c78iaHN6FFUH0hWDKCItZry7+1plYn8/Yo0Kh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QvJD5Da3; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3686b285969so911574f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Aug 2024 06:05:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723035911; x=1723640711; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=IqzvCh1XrIPWdHgulG/aaHvZSSlW8im3s5TS73eXDAc=;
+        b=QvJD5Da3d7P4P2J38Uo/46XgLyknhp3BQym+7i0W4J9pMtCRxawttfM+Dg7oN8tjNC
+         HkHLdpjk2AvOAOAvHB7MMth7sR4rGuM/yM/gQhBXSsVly6dhCzEbyN94CIUQAzZ4jy5H
+         +HnfDaqw/f5ogI+E4AjVmBmO/DLg5p7KFos/CMU/ZKaJarpfPTJgAG0j5a6Kun4YLVKt
+         2QdyJ451EKoOfCMAcWn0l8r+F3T2J1dNztSYk5nRku68NurhIodfIZP69UY8sauh4NYV
+         iejYSc8Y+iR1t9F6h/WFjsdL+cZG/N3I86q5F5M66UdB33TLOn3i3mAZtw5N0iaeT9zs
+         FQ2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723035911; x=1723640711;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IqzvCh1XrIPWdHgulG/aaHvZSSlW8im3s5TS73eXDAc=;
+        b=ats1FBw6QTocdqZOc3fyhLSDLak1lvAPU/oN5yQUR/5r6jPe+3vgZxHVBBWLAZEcmb
+         856oPMH0JW34Ti3wRyI6eQm1LQb0G3ZEb+KH2QvDK0eqgCEj2hoxEYep3Sd4yj9baccp
+         sHh/SDoiu0uzkXorpAuo8V0wRWZGXESImGiqBVS2XVBtSPBCquaQsqJ7UYB1H7n3geR5
+         5Q68/YmYK/4HlVG//NnkZOn870gindHHcX22ICGI950L6VoUkGC/uunQtrmEmuXmiMSP
+         H+Bo9TbAVpIvKvu4Ep9uEL03aiKIoFEiviwBKIT5E33VU57qcVEYUqcLlta1DCbmUhVr
+         afRQ==
+X-Gm-Message-State: AOJu0YztBGGcUr/GcfW6v07v5Ms1htZkESUV96EqefN2RuY/SCojRaNL
+	4BkWghL24SnVq9eAYiHRicZEX2iv+veSkoC2fxFtyxzmKC2C7PT+
+X-Google-Smtp-Source: AGHT+IFYSC+cb71ngcmTWiNxJCqmthJpZV5JtFOp2Ui1y1hZbBNtHEl4XtnzNoGAv7ECInm65fWhKw==
+X-Received: by 2002:a05:6000:d91:b0:368:504d:c3a4 with SMTP id ffacd0b85a97d-36bbc0cc232mr10754879f8f.17.1723035910421;
+        Wed, 07 Aug 2024 06:05:10 -0700 (PDT)
+Received: from [192.168.0.12] (cpc115152-dals23-2-0-cust532.20-2.cable.virginm.net. [86.12.82.21])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36bbd05980csm16072849f8f.76.2024.08.07.06.05.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Aug 2024 06:05:10 -0700 (PDT)
+From: Connor Abbott <cwabbott0@gmail.com>
+Subject: [PATCH v3 0/4] drm/msm: Further expose UBWC tiling parameters
+Date: Wed, 07 Aug 2024 14:04:55 +0100
+Message-Id: <20240807-msm-tiling-config-v3-0-ef1bc26efb4c@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8550: camss: Add CAMSS block
- definition
-To: Krzysztof Kozlowski <krzk@kernel.org>, <andersson@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <bryan.odonoghue@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        Yongsheng Li
-	<quic_yon@quicinc.com>
-References: <20240807123333.2056518-1-quic_depengs@quicinc.com>
- <1c0ff0fa-73d3-400f-a58d-15fb9b0574d1@kernel.org>
- <c2a3e578-b098-450f-96f6-a3ae321f2b4c@kernel.org>
-Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <c2a3e578-b098-450f-96f6-a3ae321f2b4c@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: bS02NkMoLW7ngBpBjA08ZU9qvxQw9r4X
-X-Proofpoint-GUID: bS02NkMoLW7ngBpBjA08ZU9qvxQw9r4X
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-07_09,2024-08-07_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 bulkscore=0 clxscore=1015 suspectscore=0 phishscore=0
- spamscore=0 adultscore=0 lowpriorityscore=0 mlxscore=0 priorityscore=1501
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408070089
+X-B4-Tracking: v=1; b=H4sIAPdws2YC/23NSwqDMBCA4auUrJuSjJrWrnqP0kXMQwdMUhIJL
+ eLdG4WCC1fDPzDfzCSZiCaR+2km0WRMGHyJ6nwiapC+NxR1aQIManZlnLrk6IQj+p6q4C2W0Vg
+ AsI3uuCLl7h2Nxc9mPl+lB0xTiN/tRebr9q/BgZY5ZVRqKYUUpm6gevRO4nhRwZFVy7AXqiMBi
+ tC1WkIrOyHYbS8sy/IDmM2nLvQAAAA=
+To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, Connor Abbott <cwabbott0@gmail.com>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1723035909; l=3177;
+ i=cwabbott0@gmail.com; s=20240426; h=from:subject:message-id;
+ bh=j3XI8vHD2Wr1YAg+a1G4G9KW1tFsuqeJR4WD3H+3iqo=;
+ b=M4TJ8UIw2w8UbkglWKbOfAL+PSSfkCGIXoLftowPNu5e7YJzMA7finOj7ZEgNsfvEnCy3z3Bu
+ LlcggUJqHGxBo8tnoqCpWd//K8Y53RA2kJ6T3firpUVnX0eEnRZgY8D
+X-Developer-Key: i=cwabbott0@gmail.com; a=ed25519;
+ pk=dkpOeRSXLzVgqhy0Idr3nsBr4ranyERLMnoAgR4cHmY=
 
-Hi Krzysztof,
+After testing, there are more parameters that we're programming which
+affect how UBWC tiles are laid out in memory and therefore affect
+the Mesa implementation of VK_EXT_host_image_copy [1], which includes a
+CPU implementation of tiling and detiling images. In particular we have:
 
-On 8/7/2024 8:43 PM, Krzysztof Kozlowski wrote:
-> On 07/08/2024 14:39, Krzysztof Kozlowski wrote:
->> On 07/08/2024 14:33, Depeng Shao wrote:
->>> Add CAMSS block definition for sm8550.
->>>
->>> This drop contains definitions for the following components on sm8550:
->>
->> 1. Subject: there is no prefix camss. There is no such file, directory
->> or module.
->>
+1. ubwc_mode, which is used to enable level 1 bank swizzling to go back
+   to UBWC 1.0 when the implementation supports UBWC 2.0. a610 sets
+   this.
+2. macrotile_mode, which we previously left as default but according to
+   downstream we shouldn't for a680.
+3. level2_swizzling_dis, which according to downstream has to be set
+   differently for a663.
 
-Thanks for the comment, will remove this.
+I want as much as possible to avoid problems from people trying to
+upstream Mesa/kernel support not knowing what they're doing and blindly
+copying things, so let's make this very explicit that you must set the
+correct parameters in the kernel and then make sure that Mesa always
+gets the right parameters from the "source of truth" in the kernel by
+adding two new UAPI parameters. The Mesa MR has already been updated to
+use this if available.
 
->> 2. You already sent this, so this should be v2 or v3 or vX. Provide
->> changelog under ---.
->>
->> If there is going to be resend, please fix above.
->>
+A secondary goal is to make the adreno settings look more like the MDSS
+settings, by combining ubwc_mode and level2_swizzling_dis into a single
+ubwc_swizzle parameter that matches the MDSS one. This will help with
+creating a single source of truth for all drivers later. The UAPI also
+matches this, and it makes the Mesa tiling and detiling implementation
+simpler/more straightforward.
 
-Sure, I thought it might be a new series, so I didn't add v*, will add 
-v1, and v2 change log in new version series.
+For more information on what all these parameters mean, see the comments
+I've added in the first commit and the giant comment in
+src/freedreno/fdl/fd6_tiled_memcpy.c I've added in [1].
 
->> 3. If this was tested on aim300, I am surprised this being not enabled
->> on aim300.
-> 
+Testing of the Mesa MR both with and without this series is appreciated,
+there are many different SoCs out there with different UBWC
+configurations and I cannot test them all.
 
-It was tested long times ago, but the patches wasn't sent out for 
-reviewing early due to the team's internal schedule.
+[1] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/26578
 
-> One more thing, bindings were not accepted, thus this patch should not
-> go in. There were no new bindings, so I assume patchset is using
-> rejected ones.
-> 
-> It's fine to send it to get some comments, although would be nice to
-> mention to maintainer that this cannot be picked up as is. :(
-> 
+Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+---
+Changes in v3:
+- Further update register XML.
+- Add commit to fix macrotile_mode on a680.
+- Link to v2: https://lore.kernel.org/r/20240703-msm-tiling-config-v2-0-b9da29ab6608@gmail.com
 
-Sure, I will resend the dtsi patch until the bindings are accepted, send 
-this patches because you posted the comments in other series.
+Changes in v2:
+- Move ubwc_config field descriptions to kerneldoc comments on the struct
+- Link to v1: https://lore.kernel.org/r/20240702-msm-tiling-config-v1-0-adaa6a6e4523@gmail.com
 
-https://lore.kernel.org/all/0324e8e8-2ad4-4ce6-9616-3038b8e02ff9@quicinc.com/
+---
+Connor Abbott (4):
+      drm/msm: Update a6xx register XML
+      drm/msm: Expand UBWC config setting
+      drm/msm: Expose expanded UBWC config uapi
+      drm/msm: Fix UBWC macrotile_mode for a680
 
-Thanks,
-Depeng
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c         |    4 +
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c         |   37 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c       |    6 +
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h       |   32 +-
+ drivers/gpu/drm/msm/registers/adreno/a6xx.xml | 1118 ++++++++++++++++++++++++-
+ include/uapi/drm/msm_drm.h                    |    2 +
+ 6 files changed, 1161 insertions(+), 38 deletions(-)
+---
+base-commit: 269b88cb92e62e52718cd44c07b7517265193157
+change-id: 20240701-msm-tiling-config-c5f222f5db1c
+
+Best regards,
+-- 
+Connor Abbott <cwabbott0@gmail.com>
 
 
