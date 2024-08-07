@@ -1,225 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-28106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63C9494ACB0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 17:21:33 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E9D294ACC1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 17:23:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D34651F22E60
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 15:21:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5E753B22DB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 15:22:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 112E312F398;
-	Wed,  7 Aug 2024 15:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABB01127E3A;
+	Wed,  7 Aug 2024 15:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tba5G9VH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GAsphRfe"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE37E85260;
-	Wed,  7 Aug 2024 15:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB4984E04;
+	Wed,  7 Aug 2024 15:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043951; cv=none; b=H12VHqrOcSYX+AKX1RMJzFLB14gayOPHTU/zKCTlr3wH5hl5zg3+aJ1Ya9t7BxpGzJxStTLKdYv8PIpsAn1a1KFUKwrAfrYJaFH0TVPzey/i9K9dog8qOCSr2qTcum5RkTW6Xn46Q/wqI88DGgM6y5YLo9sBflxpwh2RYZXzShI=
+	t=1723044027; cv=none; b=kV9Wj87SFDohqh+1t848y7nI/vkTm6AIVjs6+kMqP9lqEqdcpm2hob+xArHu8Nx70IkY5WZuQd14YOey5W0L4rxAX6uGOQnjpziWVtIzOqiMQntMGb3L66JCBmDPrZy61047bodoM8RCnb+HGnisL3p8RzuICGTZfdjVq12byW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043951; c=relaxed/simple;
-	bh=SPE6Fim3/iZTP8g9bx27PJRqcSTjDSUfrbucJsDcrEU=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=c2w6agOQk8Nv0pj4RxbpI7wUMh9pMikwoP6x9cAluhp9o9y92LfRPKn5Jc4EspRh1Si+ZwUVLJXKMwwLDm89vWYnXttT6vcQV0BZbeH++TF8Ai1wdpXGrPAh9e38ZpDrbBXawsUzcfUhm9y3/S14ESzoipsJPKlju7Bs2DDrJBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tba5G9VH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB7CC32781;
-	Wed,  7 Aug 2024 15:19:09 +0000 (UTC)
+	s=arc-20240116; t=1723044027; c=relaxed/simple;
+	bh=xERSTfQqUvdd2k3tAtUqyYEs/LVRZsmS4yVoWayUT+E=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=ljtqXhMy1CiUv/fv1nm7ckYmeE3C9+iw7i6mcIyff1gjHo72e/n6fHyiG9NQx3+9a+YAZraIR+h8pVHVD3ctRH7ZZ3OnjDXu4VfLoXN1J/hpXxvn81jdwfs8p+2kUkXxZNWHLiyW5q+Gb9uMGc5fWVuascaTK7pSATDRryC8/HE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GAsphRfe; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE2BCC32781;
+	Wed,  7 Aug 2024 15:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723043950;
-	bh=SPE6Fim3/iZTP8g9bx27PJRqcSTjDSUfrbucJsDcrEU=;
-	h=Date:From:To:Cc:Subject:From;
-	b=Tba5G9VHUKd48En9J++DR0cKiGu175i47rvAl2+Pj2n0kDPB/3pVN2V/vP9r2nUIP
-	 ZHWmKBBvBsORM0FMdFlX9qLm9thrGYmJYWUBB5uGluD6b6XZBS03gIvI4sy8QrRZPk
-	 gLV9prQUWxB5x+aQmD6GlHAH1pMCyFzTwLikqysDskFp2wIxONT5FBuGlBW13qFh9V
-	 1sOj9cglhq8FC8jDWYwlINzveoYMFaUxXxmgiZfRxOYO8+tYT/mtcmSMNSrVMyg10H
-	 nJYYigNvl6Cqlx6dtRMd3mueSk8AuDfydnG2HoyWeJwf/R6r4QM32RtMmd3zlINK4f
-	 ni9XGLPod0euQ==
-Date: Wed, 7 Aug 2024 09:19:07 -0600
-From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	linux-hardening@vger.kernel.org
-Subject: [PATCH][next] rpmsg: glink: Avoid -Wflex-array-member-not-at-end
- warnings
-Message-ID: <ZrOQa2gew5yadyt3@cute>
+	s=k20201202; t=1723044027;
+	bh=xERSTfQqUvdd2k3tAtUqyYEs/LVRZsmS4yVoWayUT+E=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=GAsphRfeDUfnMH1Vai3L+59Pwz/5hOlhZEhnZy+82Suaphx0tjjim+AGlEAmMYCPd
+	 Y3X2HhARfVMOiaCGSNUbBGPn9+xxpJbiUhPx9/ENpXhS5XAI4DwQYIFQu1OFpvV3aP
+	 IKtlwiR2xXYrj6+pX6aJjJFYCCaF+smjFYI3M6EoE8Ov/w1HzlvfJsZPUomkJtmnnW
+	 jvFCjYz5BPtoRVAb9a+lZjpNrKp55P6oxsN5dZgGmEw7rbUUZPmb7sSn6U1IzfsKse
+	 YHho8C49xpNHhT3yZBexGxnwtfdWptmblEY1ST+dRHAQ+r/vELsBXhMovmXw+/C7BV
+	 VHzNOJNBio1Rg==
+Date: Wed, 07 Aug 2024 09:20:25 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Richard Acayan <mailingradian@gmail.com>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Daniel Vetter <daniel@ffwll.ch>, devicetree@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Conor Dooley <conor+dt@kernel.org>, 
+ Maxime Ripard <mripard@kernel.org>, Rob Clark <robdclark@gmail.com>, 
+ freedreno@lists.freedesktop.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ linux-kernel@vger.kernel.org, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Thomas Zimmermann <tzimmermann@suse.de>, dri-devel@lists.freedesktop.org, 
+ Sean Paul <sean@poorly.run>
+In-Reply-To: <20240806214452.16406-7-mailingradian@gmail.com>
+References: <20240806214452.16406-7-mailingradian@gmail.com>
+Message-Id: <172304385687.2508167.11953351079557363254.robh@kernel.org>
+Subject: Re: [PATCH v2 0/4] drm/msm/adreno: Add A615 GPU for SDM670 and
+ Pixel 3a
 
--Wflex-array-member-not-at-end was introduced in GCC-14, and we are
-getting ready to enable it, globally.
 
-So, in order to avoid ending up with a flexible-array member in the
-middle of multiple other structs, we use the `__struct_group()`
-helper to create a new tagged `struct glink_msg_hdr`. This structure
-groups together all the members of the flexible `struct glink_msg`
-except the flexible array.
+On Tue, 06 Aug 2024 17:44:54 -0400, Richard Acayan wrote:
+> This adds support for the speed-binned A615 GPU on SDM670.
+> 
+> Changes since v1 (20240730013844.41951-6-mailingradian@gmail.com):
+> - add Acked-by tag (1/4)
+> - add OPPs exclusive to some speed bins (3/4)
+> - enable GMU by default (3/4)
+> 
+> Richard Acayan (4):
+>   dt-bindings: display/msm/gmu: Add SDM670 compatible
+>   drm/msm/adreno: add a615 support
+>   arm64: dts: qcom: sdm670: add gpu
+>   arm64: dts: qcom: sdm670-google-sargo: enable gpu
+> 
+>  .../devicetree/bindings/display/msm/gmu.yaml  |   1 +
+>  .../boot/dts/qcom/sdm670-google-sargo.dts     |   9 +
+>  arch/arm64/boot/dts/qcom/sdm670.dtsi          | 180 ++++++++++++++++++
+>  drivers/gpu/drm/msm/adreno/a6xx_catalog.c     |  27 +++
+>  4 files changed, 217 insertions(+)
+> 
+> --
+> 2.46.0
+> 
+> 
+> 
 
-As a result, the array is effectively separated from the rest of the
-members without modifying the memory layout of the flexible structure.
-We then change the type of the middle struct members currently causing
-trouble from `struct glink_msg` to `struct glink_msg_hdr`.
 
-We also want to ensure that when new members need to be added to the
-flexible structure, they are always included within the newly created
-tagged struct. For this, we use `static_assert()`. This ensures that the
-memory layout for both the flexible structure and the new tagged struct
-is the same after any changes.
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
 
-This approach avoids having to implement `struct glink_msg_hdr` as a
-completely separate structure, thus preventing having to maintain two
-independent but basically identical structures, closing the door to
-potential bugs in the future.
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
 
-We also use `container_of()` whenever we need to retrieve a pointer to
-the flexible structure, through which we can access the flexible-array
-member, if necessary.
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
 
-Additionally, we use the `DEFINE_RAW_FLEX()` helper for an on-stack
-definition of a flexible structure where the size for the flexible-array
-member is known at compile-time.
+  pip3 install dtschema --upgrade
 
-So, with these changes, fix the following warnings:
-drivers/rpmsg/qcom_glink_native.c:51:26: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-drivers/rpmsg/qcom_glink_native.c:459:34: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-drivers/rpmsg/qcom_glink_native.c:846:34: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-drivers/rpmsg/qcom_glink_native.c:968:34: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-drivers/rpmsg/qcom_glink_native.c:1380:34: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
 
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
----
- drivers/rpmsg/qcom_glink_native.c | 42 +++++++++++++++++--------------
- 1 file changed, 23 insertions(+), 19 deletions(-)
+New warnings running 'make CHECK_DTBS=y qcom/sdm670-google-sargo.dtb' for 20240806214452.16406-7-mailingradian@gmail.com:
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 82d460ff4777..ed89b810f262 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -30,11 +30,16 @@
- #define RPM_GLINK_CID_MAX	65536
- 
- struct glink_msg {
--	__le16 cmd;
--	__le16 param1;
--	__le32 param2;
-+	/* New members MUST be added within the __struct_group() macro below. */
-+	__struct_group(glink_msg_hdr, hdr, __packed,
-+		__le16 cmd;
-+		__le16 param1;
-+		__le32 param2;
-+	);
- 	u8 data[];
- } __packed;
-+static_assert(offsetof(struct glink_msg, data) == sizeof(struct glink_msg_hdr),
-+	      "struct member likely outside of __struct_group()");
- 
- /**
-  * struct glink_defer_cmd - deferred incoming control message
-@@ -48,7 +53,7 @@ struct glink_msg {
- struct glink_defer_cmd {
- 	struct list_head node;
- 
--	struct glink_msg msg;
-+	struct glink_msg_hdr msg;
- 	u8 data[];
- };
- 
-@@ -455,12 +460,9 @@ static void qcom_glink_intent_req_abort(struct glink_channel *channel)
- static int qcom_glink_send_open_req(struct qcom_glink *glink,
- 				    struct glink_channel *channel)
- {
--	struct {
--		struct glink_msg msg;
--		u8 name[GLINK_NAME_SIZE];
--	} __packed req;
-+	DEFINE_RAW_FLEX(struct glink_msg, req, data, GLINK_NAME_SIZE);
- 	int name_len = strlen(channel->name) + 1;
--	int req_len = ALIGN(sizeof(req.msg) + name_len, 8);
-+	int req_len = ALIGN(sizeof(*req) + name_len, 8);
- 	int ret;
- 	unsigned long flags;
- 
-@@ -476,12 +478,12 @@ static int qcom_glink_send_open_req(struct qcom_glink *glink,
- 
- 	channel->lcid = ret;
- 
--	req.msg.cmd = cpu_to_le16(GLINK_CMD_OPEN);
--	req.msg.param1 = cpu_to_le16(channel->lcid);
--	req.msg.param2 = cpu_to_le32(name_len);
--	strcpy(req.name, channel->name);
-+	req->cmd = cpu_to_le16(GLINK_CMD_OPEN);
-+	req->param1 = cpu_to_le16(channel->lcid);
-+	req->param2 = cpu_to_le32(name_len);
-+	strcpy(req->data, channel->name);
- 
--	ret = qcom_glink_tx(glink, &req, req_len, NULL, 0, true);
-+	ret = qcom_glink_tx(glink, req, req_len, NULL, 0, true);
- 	if (ret)
- 		goto remove_idr;
- 
-@@ -826,7 +828,9 @@ static int qcom_glink_rx_defer(struct qcom_glink *glink, size_t extra)
- 
- 	INIT_LIST_HEAD(&dcmd->node);
- 
--	qcom_glink_rx_peek(glink, &dcmd->msg, 0, sizeof(dcmd->msg) + extra);
-+	qcom_glink_rx_peek(glink,
-+			   container_of(&dcmd->msg, struct glink_msg, hdr), 0,
-+			   sizeof(dcmd->msg) + extra);
- 
- 	spin_lock(&glink->rx_lock);
- 	list_add_tail(&dcmd->node, &glink->rx_queue);
-@@ -843,7 +847,7 @@ static int qcom_glink_rx_data(struct qcom_glink *glink, size_t avail)
- 	struct glink_core_rx_intent *intent;
- 	struct glink_channel *channel;
- 	struct {
--		struct glink_msg msg;
-+		struct glink_msg_hdr msg;
- 		__le32 chunk_size;
- 		__le32 left_size;
- 	} __packed hdr;
-@@ -965,7 +969,7 @@ static void qcom_glink_handle_intent(struct qcom_glink *glink,
- 	};
- 
- 	struct {
--		struct glink_msg msg;
-+		struct glink_msg_hdr msg;
- 		struct intent_pair intents[];
- 	} __packed * msg;
- 
-@@ -1377,7 +1381,7 @@ static int __qcom_glink_send(struct glink_channel *channel,
- 	struct glink_core_rx_intent *tmp;
- 	int iid = 0;
- 	struct {
--		struct glink_msg msg;
-+		struct glink_msg_hdr msg;
- 		__le32 chunk_size;
- 		__le32 left_size;
- 	} __packed req;
-@@ -1685,7 +1689,7 @@ static void qcom_glink_work(struct work_struct *work)
- 		list_del(&dcmd->node);
- 		spin_unlock_irqrestore(&glink->rx_lock, flags);
- 
--		msg = &dcmd->msg;
-+		msg = container_of(&dcmd->msg, struct glink_msg, hdr);
- 		cmd = le16_to_cpu(msg->cmd);
- 		param1 = le16_to_cpu(msg->param1);
- 		param2 = le32_to_cpu(msg->param2);
--- 
-2.34.1
+arch/arm64/boot/dts/qcom/sdm670-google-sargo.dtb: iommu@5040000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,sdm670-smmu-v2', 'qcom,adreno-smmu', 'qcom,smmu-v2'] is too long
+	['qcom,sdm670-smmu-v2', 'qcom,adreno-smmu', 'qcom,smmu-v2'] is too short
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,msm8996-smmu-v2', 'qcom,msm8998-smmu-v2', 'qcom,sdm630-smmu-v2', 'qcom,sm6375-smmu-v2']
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,qcm2290-smmu-500', 'qcom,qdu1000-smmu-500', 'qcom,sa8775p-smmu-500', 'qcom,sc7180-smmu-500', 'qcom,sc7280-smmu-500', 'qcom,sc8180x-smmu-500', 'qcom,sc8280xp-smmu-500', 'qcom,sdm670-smmu-500', 'qcom,sdm845-smmu-500', 'qcom,sdx55-smmu-500', 'qcom,sdx65-smmu-500', 'qcom,sdx75-smmu-500', 'qcom,sm6115-smmu-500', 'qcom,sm6125-smmu-500', 'qcom,sm6350-smmu-500', 'qcom,sm6375-smmu-500', 'qcom,sm8150-smmu-500', 'qcom,sm8250-smmu-500', 'qcom,sm8350-smmu-500', 'qcom,sm8450-smmu-500', 'qcom,sm8550-smmu-500', 'qcom,sm8650-smmu-500', 'qcom,x1e80100-smmu-500']
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,qcm2290-smmu-500', 'qcom,sc7180-smmu-500', 'qcom,sc7280-smmu-500', 'qcom,sc8180x-smmu-500', 'qcom,sc8280xp-smmu-500', 'qcom,sdm845-smmu-500', 'qcom,sm6115-smmu-500', 'qcom,sm6350-smmu-500', 'qcom,sm6375-smmu-500', 'qcom,sm8150-smmu-500', 'qcom,sm8250-smmu-500', 'qcom,sm8350-smmu-500', 'qcom,sm8450-smmu-500']
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,qcm2290-smmu-500', 'qcom,sa8775p-smmu-500', 'qcom,sc7280-smmu-500', 'qcom,sc8180x-smmu-500', 'qcom,sc8280xp-smmu-500', 'qcom,sm6115-smmu-500', 'qcom,sm6125-smmu-500', 'qcom,sm8150-smmu-500', 'qcom,sm8250-smmu-500', 'qcom,sm8350-smmu-500', 'qcom,sm8450-smmu-500', 'qcom,sm8550-smmu-500', 'qcom,sm8650-smmu-500', 'qcom,x1e80100-smmu-500']
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,sc7280-smmu-500', 'qcom,sm8150-smmu-500', 'qcom,sm8250-smmu-500']
+	'qcom,sdm670-smmu-v2' is not one of ['qcom,msm8996-smmu-v2', 'qcom,sc7180-smmu-v2', 'qcom,sdm630-smmu-v2', 'qcom,sdm845-smmu-v2', 'qcom,sm6350-smmu-v2', 'qcom,sm7150-smmu-v2']
+	'qcom,sdm845-smmu-v2' was expected
+	'marvell,ap806-smmu-500' was expected
+	'qcom,sdm670-smmu-v2' is not one of ['nvidia,tegra186-smmu', 'nvidia,tegra194-smmu', 'nvidia,tegra234-smmu']
+	'arm,mmu-500' was expected
+	'qcom,sdm670-smmu-v2' is not one of ['arm,mmu-400', 'arm,mmu-401']
+	'qcom,sdm670-smmu-v2' is not one of ['arm,smmu-v1', 'arm,smmu-v2', 'arm,mmu-400', 'arm,mmu-401', 'arm,mmu-500', 'cavium,smmu-v2']
+	'qcom,smmu-v2' was expected
+	'qcom,smmu-500' was expected
+	'nvidia,smmu-500' was expected
+	'arm,smmu-v2' was expected
+	'arm,smmu-v1' was expected
+	from schema $id: http://devicetree.org/schemas/iommu/arm,smmu.yaml#
+arch/arm64/boot/dts/qcom/sdm670-google-sargo.dtb: /soc@0/iommu@5040000: failed to match any schema with compatible: ['qcom,sdm670-smmu-v2', 'qcom,adreno-smmu', 'qcom,smmu-v2']
+
+
+
+
 
 
