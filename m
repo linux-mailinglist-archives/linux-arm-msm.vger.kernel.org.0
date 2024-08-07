@@ -1,329 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-28086-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5927C94A7C9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 14:35:57 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F53694A7C3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 14:34:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8A051B22760
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 12:35:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 11E89284CAF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 12:34:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6FD91E4F06;
-	Wed,  7 Aug 2024 12:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C32131E4EEA;
+	Wed,  7 Aug 2024 12:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JqdKIgBM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dlk2wAIh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D4A1E2101;
-	Wed,  7 Aug 2024 12:35:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E3D1E2101
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Aug 2024 12:34:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723034152; cv=none; b=GwRFkRr9YUZA80DO/tvxULykUAvAlk9YuLrDpM3ZV5073PJjboKim0kPCHPrZPRg+MBPj0i/GWfDlxcbGetXgx4bBQWv1v3C8M0nBE0T+4fPI3BlsHWT4JzNTLSbpQgmgqNr72u2MmfF7xV005xx4kvjvMuJ6IB2tLWHVa9udlY=
+	t=1723034086; cv=none; b=uYJ/EqhwGFeG+2TZmI9+CQrdQ6ZCJuFRugVWIgClMbtGx8w7IXb9MtPfrjWiT+XlokZwdrnYLvlNkgawcsLqPdiKlPmpRJP9J0+MHLTlggrIWTdcDXDzUB7gwpwELN20ywm8/+Q15MDlxGD1U59pgTUI+20Vj+ZZuoHOrMvH2O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723034152; c=relaxed/simple;
-	bh=XnakSmJSYzdOC65tVi+UeRuR5JsqvisVupHXus9ob5c=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=F3FPHcJdH37nDg124NBapC3fQUK1KpxEJjdjuUx5H2C8lF0zGCQoOUZ3WWsMlAJ59RgqDM8AQo1rVM/mxxxXEsoz1mFJxEqY7d9Ve42hk+I1aXAfjGzl7FOhMXVCr99DY+bIMvfKd+JfaOPZL2vNv3j1MxNphA3iSyj7VgTwFio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JqdKIgBM; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4775SmUt020305;
-	Wed, 7 Aug 2024 12:35:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=zoJ3DaLKFdn76VyzYgoUBn
-	bpBNojCLHHAe42Ue/3U+I=; b=JqdKIgBMswWiXEgpICdVqBQHyRHtGUN1idWwiv
-	TAC4VEabfBSJPy9F/ruBqIUjfM71oNYdhZFsKV3cXEZsXLTp0GpafRNEBc8F0DNz
-	vQ1EMO9xoQQHm1TmCZCvPr63qxSt7wWbaxD08UnFPyDXg8LSVgEowHBxKkHhiClx
-	jGEEZJz1DHxhxdEqwx5eaqxQv1bMLxkt6r+PMwHTZwrh7YCy6vercHBac9bpHWDL
-	9lPwS6I/UQDW4YtL7yUtXulkqa9g57KnrskE4ckJ55CPR+RVvNr6XiQQSjTh0Jd/
-	Hf43iFqBKkUB726u799Z/k3X3dalv/crrGU/z0361hBOb3iQ==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40v2t714k2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 Aug 2024 12:35:46 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 477CZhoD008740
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 7 Aug 2024 12:35:43 GMT
-Received: from hu-depengs-sha.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 7 Aug 2024 05:35:38 -0700
-From: Depeng Shao <quic_depengs@quicinc.com>
-To: <andersson@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <bryan.odonoghue@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        Depeng Shao
-	<quic_depengs@quicinc.com>,
-        Yongsheng Li <quic_yon@quicinc.com>
-Subject: [PATCH] arm64: dts: qcom: sm8550: camss: Add CAMSS block definition
-Date: Wed, 7 Aug 2024 18:03:33 +0530
-Message-ID: <20240807123333.2056518-1-quic_depengs@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1723034086; c=relaxed/simple;
+	bh=UEqG1Odjh7UfbwFydAB1tQvm0MzYcGOEpZlOqOPrxps=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=cpwK72TcA6Q7hxdZ/EgKtDe5ueMEs6a+QOBtWtYii3nwQEdsr1NBYXeUZ36Faiq9bI1nFCEB9ReYhMYwT1QqbR0ifakIddTJK7kM8zwYw/QokFlS91kh5n+zU1zdFrrtFfXWypYtgh3/xBlL8VHEhEsYAQYJbu8Mw0ae6a8hbJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dlk2wAIh; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-368313809a4so511281f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Aug 2024 05:34:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723034083; x=1723638883; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jn3A6dw+13YgQfD6Kv5Y+2JlSAYHXpU458T7zZRgiqU=;
+        b=Dlk2wAIh2HPxvZ+ICp4fDuA3/C4kV3LV8g2h+TGA19FR+BMbV2y7yUqNvf9YwvYkvG
+         yw4TEtzyxtjNHJVIDDOfMq1rB7NMYZ4iDIv4Q48jfbR2zMl7yyZjRcqn3D6fqJvgPXrM
+         8OyCqCNEg5EneIycnXJl5nRQ1C8I5nteY1YEH9OeAkPsbO/pNIaNttrXLyrxZDdpOkPb
+         QSdgnvVt2BEMO91D3GjvgJ1DoE2J5xaih67ct7NlRLs0OwO2O4vZmtAGHECneFT8Nypj
+         w0XFbk9/qdGzZMnNX+ObtBMqPSc2N0pG4fISTPHB7MAtXziXb/f3W2THlwsinXO2AymY
+         1oaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723034083; x=1723638883;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Jn3A6dw+13YgQfD6Kv5Y+2JlSAYHXpU458T7zZRgiqU=;
+        b=CIK86HcAHgWj7Kk+D2WuZ9hqSqKaVgFAUUGINEVXcIgVte1JBQ38lDcZpl6iNBxBYB
+         tSbjhF+bgFY4WdQUbJbfRXgwR6tfcZf9eWLjM2lvmwroJNPipeY9P3V+wIo1ufgfHWWn
+         e7f7IUJfyhoteDGzu+PdJnnPlTxlECmXUFldMa8fOWg2z9q3j0gKmM73pGzE8GgWfmts
+         9Mod/cRYPrpj/VsUg6XfQCeNJWZX9IzCEKFepKaW7T++8OSO2L9KBBYEXdBLlfi3MNsZ
+         5PusGA15cgGn3rLalzgh3SxadEHeDgauGuPNqm+2dLtLCENuTS32BemazjaDttiO0xJt
+         s1jA==
+X-Gm-Message-State: AOJu0YzLmuHWboqN6zBGyrc5R2GWE+KrTqMZjxvVs6KVRm5NpHmnxbFS
+	bGQXCQJonwURvAzULXN/A4Z3uJg60oyO5HaK1gsEx0lxIKKZQWny
+X-Google-Smtp-Source: AGHT+IGa3/fjyXnZ4344o+/xUNJiPD4/sYgdoWpjpRSWrkpFPUWwDIDrZwelCjYSciNp7q6gKmTovg==
+X-Received: by 2002:a05:6000:1fa3:b0:367:89ae:c204 with SMTP id ffacd0b85a97d-36bf0dad2e0mr1807561f8f.12.1723034082973;
+        Wed, 07 Aug 2024 05:34:42 -0700 (PDT)
+Received: from [192.168.0.12] (cpc115152-dals23-2-0-cust532.20-2.cable.virginm.net. [86.12.82.21])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429059714d5sm27198425e9.13.2024.08.07.05.34.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Aug 2024 05:34:42 -0700 (PDT)
+From: Connor Abbott <cwabbott0@gmail.com>
+Subject: [PATCH v2 0/3] drm/msm: Fixes for devcoredump on a750
+Date: Wed, 07 Aug 2024 13:34:26 +0100
+Message-Id: <20240807-a750-devcoredump-fixes-v2-0-d7483736d26d@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: icuAXYZ0HupTySfM1PJK0g91rD_pHmSh
-X-Proofpoint-ORIG-GUID: icuAXYZ0HupTySfM1PJK0g91rD_pHmSh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-07_08,2024-08-07_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- priorityscore=1501 lowpriorityscore=0 mlxlogscore=979 impostorscore=0
- adultscore=0 bulkscore=0 spamscore=0 malwarescore=0 mlxscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408070088
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANJps2YC/4WNQQ6CMBBFr0Jm7Zi2UkhdcQ/DorQjTCKUtNpoC
+ He3cgGX7/+8/zdIFJkSXKsNImVOHJYC6lSBm+wyErIvDEqoWmhh0LZaoKfsQiT/mle885sSkjb
+ DoHVzGaSFIq+RjqK4t77wxOkZ4uf4yfKX/p3MEgU2wjljSMm69d04W36cXZih3/f9C/JVMQK8A
+ AAA
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+ Connor Abbott <cwabbott0@gmail.com>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1723034082; l=1002;
+ i=cwabbott0@gmail.com; s=20240426; h=from:subject:message-id;
+ bh=UEqG1Odjh7UfbwFydAB1tQvm0MzYcGOEpZlOqOPrxps=;
+ b=1UqRIinFRoGPrikvWkWl2pT5LzP+9op2cS3zHv7GtDp+q+0WwcZt20NbLJFlatkHwthJvHzhy
+ WH2R8tdWvoiAf93P3XDOOwv5ov4650dV/o0gJxeN6tuOtd2ILeYTy4Q
+X-Developer-Key: i=cwabbott0@gmail.com; a=ed25519;
+ pk=dkpOeRSXLzVgqhy0Idr3nsBr4ranyERLMnoAgR4cHmY=
 
-Add CAMSS block definition for sm8550.
+Unfortunately the first time around I made the mistake of not checking
+the devcoredump file closely enough to make sure it had the right
+contents. This makes sure we're actually using the a750 register lists
+on a750.
 
-This drop contains definitions for the following components on sm8550:
-
-VFE * 3
-VFE Lite * 2
-CSID * 3
-CSID Lite * 2
-CSIPHY * 8
-
-Co-developed-by: Yongsheng Li <quic_yon@quicinc.com>
-Signed-off-by: Yongsheng Li <quic_yon@quicinc.com>
-Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
 ---
-This dtsi definition has been developed and validated on a AIM300 AIoT
-board, the description for this board can be found from below link.
-https://lore.kernel.org/lkml/20240618072202.2516025-1-quic_tengfan@quicinc.com/
+Changes in v2:
+- Add last commit fixing an indexed register name
+- Link to v1: https://lore.kernel.org/r/20240509-a750-devcoredump-fixes-v1-0-60cc99e2147d@gmail.com
 
-The driver and bindings change can be found from below link.
-https://lore.kernel.org/all/20240709160656.31146-1-quic_depengs@quicinc.com/
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 199 +++++++++++++++++++++++++++
- 1 file changed, 199 insertions(+)
+Connor Abbott (3):
+      drm/msm: Use a7xx family directly in gpu_state
+      drm/msm: Dump correct dbgahb clusters on a750
+      drm/msm: Fix CP_BV_DRAW_STATE_ADDR name
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 4c9820adcf52..58fc8792953d 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -2747,6 +2747,205 @@ videocc: clock-controller@aaf0000 {
- 			#power-domain-cells = <1>;
- 		};
- 
-+		camss: camss@acb7000 {
-+			compatible = "qcom,sm8550-camss";
-+
-+			reg = <0 0x0acb7000 0 0xd00>,
-+			      <0 0x0acb9000 0 0xd00>,
-+			      <0 0x0acbb000 0 0xd00>,
-+			      <0 0x0acca000 0 0xa00>,
-+			      <0 0x0acce000 0 0xa00>,
-+			      <0 0x0acb6000 0 0x1000>,
-+			      <0 0x0ace4000 0 0x2000>,
-+			      <0 0x0ace6000 0 0x2000>,
-+			      <0 0x0ace8000 0 0x2000>,
-+			      <0 0x0acea000 0 0x2000>,
-+			      <0 0x0acec000 0 0x2000>,
-+			      <0 0x0acee000 0 0x2000>,
-+			      <0 0x0acf0000 0 0x2000>,
-+			      <0 0x0acf2000 0 0x2000>,
-+			      <0 0x0ac62000 0 0xf000>,
-+			      <0 0x0ac71000 0 0xf000>,
-+			      <0 0x0ac80000 0 0xf000>,
-+			      <0 0x0accb000 0 0x1800>,
-+			      <0 0x0accf000 0 0x1800>;
-+			reg-names = "csid0",
-+				    "csid1",
-+				    "csid2",
-+				    "csid_lite0",
-+				    "csid_lite1",
-+				    "csid_top",
-+				    "csiphy0",
-+				    "csiphy1",
-+				    "csiphy2",
-+				    "csiphy3",
-+				    "csiphy4",
-+				    "csiphy5",
-+				    "csiphy6",
-+				    "csiphy7",
-+				    "vfe0",
-+				    "vfe1",
-+				    "vfe2",
-+				    "vfe_lite0",
-+				    "vfe_lite1";
-+
-+			clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
-+				 <&camcc CAM_CC_CPAS_AHB_CLK>,
-+				 <&camcc CAM_CC_CPAS_FAST_AHB_CLK>,
-+				 <&camcc CAM_CC_CPAS_IFE_LITE_CLK>,
-+				 <&camcc CAM_CC_CPAS_IFE_0_CLK>,
-+				 <&camcc CAM_CC_CPAS_IFE_1_CLK>,
-+				 <&camcc CAM_CC_CPAS_IFE_2_CLK>,
-+				 <&camcc CAM_CC_CSID_CLK>,
-+				 <&camcc CAM_CC_CSIPHY0_CLK>,
-+				 <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY1_CLK>,
-+				 <&camcc CAM_CC_CSI1PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY2_CLK>,
-+				 <&camcc CAM_CC_CSI2PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY3_CLK>,
-+				 <&camcc CAM_CC_CSI3PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY4_CLK>,
-+				 <&camcc CAM_CC_CSI4PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY5_CLK>,
-+				 <&camcc CAM_CC_CSI5PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY6_CLK>,
-+				 <&camcc CAM_CC_CSI6PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY7_CLK>,
-+				 <&camcc CAM_CC_CSI7PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSID_CSIPHY_RX_CLK>,
-+				 <&camcc CAM_CC_IFE_0_CLK>,
-+				 <&camcc CAM_CC_IFE_0_FAST_AHB_CLK>,
-+				 <&camcc CAM_CC_IFE_1_CLK>,
-+				 <&camcc CAM_CC_IFE_1_FAST_AHB_CLK>,
-+				 <&camcc CAM_CC_IFE_2_CLK>,
-+				 <&camcc CAM_CC_IFE_2_FAST_AHB_CLK>,
-+				 <&camcc CAM_CC_IFE_LITE_CLK>,
-+				 <&camcc CAM_CC_IFE_LITE_AHB_CLK>,
-+				 <&camcc CAM_CC_IFE_LITE_CPHY_RX_CLK>,
-+				 <&camcc CAM_CC_IFE_LITE_CSID_CLK>,
-+				 <&gcc GCC_CAMERA_HF_AXI_CLK>;
-+
-+			clock-names = "camnoc_axi",
-+				      "cpas_ahb",
-+				      "cpas_fast_ahb_clk",
-+				      "cpas_ife_lite",
-+				      "cpas_vfe0",
-+				      "cpas_vfe1",
-+				      "cpas_vfe2",
-+				      "csid",
-+				      "csiphy0",
-+				      "csiphy0_timer",
-+				      "csiphy1",
-+				      "csiphy1_timer",
-+				      "csiphy2",
-+				      "csiphy2_timer",
-+				      "csiphy3",
-+				      "csiphy3_timer",
-+				      "csiphy4",
-+				      "csiphy4_timer",
-+				      "csiphy5",
-+				      "csiphy5_timer",
-+				      "csiphy6",
-+				      "csiphy6_timer",
-+				      "csiphy7",
-+				      "csiphy7_timer",
-+				      "csiphy_rx",
-+				      "vfe0",
-+				      "vfe0_fast_ahb",
-+				      "vfe1",
-+				      "vfe1_fast_ahb",
-+				      "vfe2",
-+				      "vfe2_fast_ahb",
-+				      "vfe_lite",
-+				      "vfe_lite_ahb",
-+				      "vfe_lite_cphy_rx",
-+				      "vfe_lite_csid",
-+				      "gcc_axi_hf";
-+
-+			interconnects = <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_CAMERA_CFG 0>,
-+					<&mmss_noc MASTER_CAMNOC_HF 0 &mc_virt SLAVE_EBI1 0>,
-+					<&mmss_noc MASTER_CAMNOC_ICP 0 &mc_virt SLAVE_EBI1 0>,
-+					<&mmss_noc MASTER_CAMNOC_SF 0 &mc_virt SLAVE_EBI1 0>;
-+			interconnect-names = "ahb",
-+					     "hf_0_mnoc",
-+					     "icp_mnoc",
-+					     "sf_0_mnoc";
-+
-+			interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 431 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 605 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 376 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 448 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 278 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 277 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 688 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 377 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			interrupt-names = "csid0",
-+					  "csid1",
-+					  "csid2",
-+					  "csid_lite0",
-+					  "csid_lite1",
-+					  "csiphy0",
-+					  "csiphy1",
-+					  "csiphy2",
-+					  "csiphy3",
-+					  "csiphy4",
-+					  "csiphy5",
-+					  "csiphy6",
-+					  "csiphy7",
-+					  "vfe0",
-+					  "vfe1",
-+					  "vfe2",
-+					  "vfe_lite0",
-+					  "vfe_lite1";
-+
-+			iommus = <&apps_smmu 0x800 0x20>;
-+
-+			power-domains = <&camcc CAM_CC_IFE_0_GDSC>,
-+					<&camcc CAM_CC_IFE_1_GDSC>,
-+					<&camcc CAM_CC_IFE_2_GDSC>,
-+					<&camcc CAM_CC_TITAN_TOP_GDSC>;
-+
-+			power-domain-names = "ife0",
-+					     "ife1",
-+					     "ife2",
-+					     "top";
-+
-+			status = "disabled";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+				};
-+
-+				port@3 {
-+					reg = <3>;
-+				};
-+			};
-+		};
-+
- 		camcc: clock-controller@ade0000 {
- 			compatible = "qcom,sm8550-camcc";
- 			reg = <0 0x0ade0000 0 0x20000>;
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        | 46 +++++++++++-----------
+ .../gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h  |  2 +-
+ 2 files changed, 25 insertions(+), 23 deletions(-)
+---
+base-commit: 5acf1f91d74433cbfffd9df962b6e45f5d3ef253
+change-id: 20240509-a750-devcoredump-fixes-e59bb5563b1a
+
+Best regards,
 -- 
-2.34.1
+Connor Abbott <cwabbott0@gmail.com>
 
 
