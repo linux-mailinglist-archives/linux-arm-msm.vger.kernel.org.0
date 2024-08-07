@@ -1,68 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-28080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74AE094A674
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 12:57:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D120C94A68D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 13:04:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F30F81F2142B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 10:57:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0C6341C20C80
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 11:04:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 208131DE841;
-	Wed,  7 Aug 2024 10:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E664F1DF675;
+	Wed,  7 Aug 2024 11:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b="cdbifF88"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Z6xVnjFL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-fw-6001.amazon.com (smtp-fw-6001.amazon.com [52.95.48.154])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4ADB1D1738;
-	Wed,  7 Aug 2024 10:57:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.95.48.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5130D1C9DC9;
+	Wed,  7 Aug 2024 11:04:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723028269; cv=none; b=SFitCgoPaNsUCWY4Vg8mLeOmdHeblA4KH8WwtzcoMJIQYibWso3gjW0Ct+UCJBT/5F84SZqbW+IyrXSNnA7uI4cvRpJ5itqOq5lg5k95khjrouMVj2HW+vOL5kWy7iH7pmrnEvYwn84CAX/zLVKyWufESuKTnNSL0BNzeWbKkFA=
+	t=1723028658; cv=none; b=PvoTgYVFtbSshjKKlPjbHEwngCo3aMrFL1ApBSfztJJOuf36IqQTrPiSX0JqvcLEqXLreVI94ln3BNqBfG9itOWlYQ3+3qO4Dilhq8MpKxUWYPGDyE14lKyUGwqCoz8Az87/B2P6s20rVVY7uJZtyqQX9PzNX+zXRlJBvndoObc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723028269; c=relaxed/simple;
-	bh=ZgH7A2ZO6yKpcNTlE8j6Z+iSswLeJpdXuQNBPE0sIGY=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=HROV/eMtCzexVLyt2Dt2IMD6jYuTblBNLLZGr2Xb+Lq8eG9nvAXvmDGBDS5ne3e1D9TUh686m8a4KLHA344mDCa2SwdS0+WMRrSSJJA4gUsQj0o3cDkTCf1vIaeP9S5CXy/dYzyN/Xs0e07OaH9a5iYTzdUldm4r0aVA9I1+YoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk; spf=pass smtp.mailfrom=amazon.co.uk; dkim=pass (1024-bit key) header.d=amazon.co.uk header.i=@amazon.co.uk header.b=cdbifF88; arc=none smtp.client-ip=52.95.48.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.co.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.co.uk
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.co.uk; i=@amazon.co.uk; q=dns/txt;
-  s=amazon201209; t=1723028267; x=1754564267;
-  h=message-id:date:mime-version:subject:from:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=K1wbAjQgCV2HPVCwJGecBjVjCFk8bfSuThCS0V+F/t0=;
-  b=cdbifF88AYu//le8mJ06ZSJ7WNEWWAS8VPsAK8EmXP5PfXqTxC+Nd/ag
-   6vL9AMJVXgB+m5tnpZqLZ4GZNQDnfypSInDq26PqnSyBi0oBviZrf6g97
-   rIDc/9OXNVqqVGThrHKa10/jvfvN6s6wyqwGp0fw9eklyoHt8MjY6+BDQ
-   s=;
-X-IronPort-AV: E=Sophos;i="6.09,269,1716249600"; 
-   d="scan'208";a="415778407"
-Received: from iad12-co-svc-p1-lb1-vlan2.amazon.com (HELO smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.2])
-  by smtp-border-fw-6001.iad6.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Aug 2024 10:57:43 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [10.0.21.151:46048]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.23.195:2525] with esmtp (Farcaster)
- id dda17874-2d26-4bad-bc3c-f9b1df6447f9; Wed, 7 Aug 2024 10:57:42 +0000 (UTC)
-X-Farcaster-Flow-ID: dda17874-2d26-4bad-bc3c-f9b1df6447f9
-Received: from EX19D003UWB004.ant.amazon.com (10.13.138.24) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Wed, 7 Aug 2024 10:57:42 +0000
-Received: from EX19MTAUWC001.ant.amazon.com (10.250.64.145) by
- EX19D003UWB004.ant.amazon.com (10.13.138.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Wed, 7 Aug 2024 10:57:41 +0000
-Received: from [127.0.0.1] (172.19.88.180) by mail-relay.amazon.com
- (10.250.64.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34 via Frontend
- Transport; Wed, 7 Aug 2024 10:57:38 +0000
-Message-ID: <90886a03-ad62-4e98-bc05-63875faa9ccc@amazon.co.uk>
-Date: Wed, 7 Aug 2024 11:57:35 +0100
+	s=arc-20240116; t=1723028658; c=relaxed/simple;
+	bh=tZE9A7D7Qc4ABjafw02Q7U4Ejv1hoeHBVy7EEIcPMgY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=iRq2Jz+A6reXvi9RLz2nBdnar0ncR+n7PFNjEeH70g9K8MSSPXwYomI6lqjUL/o5LP5ztI/yr1wneni3I11maBO/B7h3HoshE8VA+mMrySQkAQgqhNcggaZTYdqyJ8An+vPmx+ikDmMLyOuhEFNJSWftjNO3gpOoO7wtFE0PUeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Z6xVnjFL; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47789J2J019008;
+	Wed, 7 Aug 2024 11:04:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	5M2BR5QCUJ11BZbRjroJPti0NNlzXAvb/0+of+zkg58=; b=Z6xVnjFLZQK8AbyJ
+	nc9iA87fgjkxxfAzsr2BqNYQmNogyFPW78h2mXL6i5tLuIIkOY4u+UdvEJ/ziG+B
+	hqD30k2jF4Prh5mX7NZdYY0rSP3H4UuH0UpwpSBH0+n5fAUp/yKhKFMfjuE9YMZB
+	jfmmbzWUILJ3Cq4MiiAUPJ5F9qT8c30YeFyqT+Q1NZzT6SQTvZMqIUD4ZDEkSz7d
+	kn7rBZY2RxV682fBAk/1Tu2AL/hoFdjT+3GfvYXx6BGQ7HQ7veoloQrzbpUjrIBX
+	xoqPZKklgVZ+wSFuUZQP9v3AuakKxQs+wwVkLOawxf0zTCGjyxhbPuH2yk9YF5ys
+	sEy70A==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40u4cpne4h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 07 Aug 2024 11:04:13 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 477B4CF8016792
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 7 Aug 2024 11:04:12 GMT
+Received: from [10.233.17.145] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 7 Aug 2024
+ 04:04:07 -0700
+Message-ID: <ace5b3e1-f4a2-4c04-821a-e797d0f55cae@quicinc.com>
+Date: Wed, 7 Aug 2024 19:04:04 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,325 +65,80 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 3/4] mm: guest_memfd: Add option to remove guest
- private memory from direct map
-From: Patrick Roy <roypat@amazon.co.uk>
-To: Elliot Berman <quic_eberman@quicinc.com>
-CC: Andrew Morton <akpm@linux-foundation.org>, Paolo Bonzini
-	<pbonzini@redhat.com>, Sean Christopherson <seanjc@google.com>, Fuad Tabba
-	<tabba@google.com>, David Hildenbrand <david@redhat.com>,
-	<qperret@google.com>, Ackerley Tng <ackerleytng@google.com>,
-	<linux-coco@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>, <kvm@vger.kernel.org>,
-	James Gowans <jgowans@amazon.com>, "Kalyazin, Nikita"
-	<kalyazin@amazon.co.uk>, "Manwaring, Derek" <derekmn@amazon.com>, "Cali,
- Marco" <xmarcalx@amazon.co.uk>
-References: <20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com>
- <20240805-guest-memfd-lib-v1-3-e5a29a4ff5d7@quicinc.com>
- <3fc11402-53e1-4325-a3ee-5ebd616b5b63@amazon.co.uk>
- <20240806104702482-0700.eberman@hu-eberman-lv.qualcomm.com>
- <a43ae745-9907-425f-b09d-a49405d6bc2d@amazon.co.uk>
-Content-Language: en-US
-Autocrypt: addr=roypat@amazon.co.uk; keydata=
- xjMEY0UgYhYJKwYBBAHaRw8BAQdA7lj+ADr5b96qBcdINFVJSOg8RGtKthL5x77F2ABMh4PN
- NVBhdHJpY2sgUm95IChHaXRodWIga2V5IGFtYXpvbikgPHJveXBhdEBhbWF6b24uY28udWs+
- wpMEExYKADsWIQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbAwULCQgHAgIiAgYVCgkI
- CwIEFgIDAQIeBwIXgAAKCRBVg4tqeAbEAmQKAQC1jMl/KT9pQHEdALF7SA1iJ9tpA5ppl1J9
- AOIP7Nr9SwD/fvIWkq0QDnq69eK7HqW14CA7AToCF6NBqZ8r7ksi+QLOOARjRSBiEgorBgEE
- AZdVAQUBAQdAqoMhGmiXJ3DMGeXrlaDA+v/aF/ah7ARbFV4ukHyz+CkDAQgHwngEGBYKACAW
- IQQ5DAcjaM+IvmZPLohVg4tqeAbEAgUCY0UgYgIbDAAKCRBVg4tqeAbEAtjHAQDkh5jZRIsZ
- 7JMNkPMSCd5PuSy0/Gdx8LGgsxxPMZwePgEAn5Tnh4fVbf00esnoK588bYQgJBioXtuXhtom
- 8hlxFQM=
-In-Reply-To: <a43ae745-9907-425f-b09d-a49405d6bc2d@amazon.co.uk>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sa8775p-ride: Add QCS9100
+ compatible
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Tengfei Fan
+	<quic_tengfan@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad
+ Dybcio" <konrad.dybcio@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240806-add_qcs9100_soc_id-v1-0-04d14081f304@quicinc.com>
+ <20240806-add_qcs9100_soc_id-v1-4-04d14081f304@quicinc.com>
+ <90eae361-7d5d-440f-a85d-dfd81b384fe7@kernel.org>
+ <4a350e94-3c95-48e1-9ea8-ced483c1aa45@quicinc.com>
+ <14ec06bd-0c27-4930-8bce-d3f5b68067ed@kernel.org>
+From: Tingwei Zhang <quic_tingweiz@quicinc.com>
+In-Reply-To: <14ec06bd-0c27-4930-8bce-d3f5b68067ed@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Vh9F86zSzFUruli9oGhjnINPSZ6NccLQ
+X-Proofpoint-GUID: Vh9F86zSzFUruli9oGhjnINPSZ6NccLQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-07_08,2024-08-06_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 phishscore=0 malwarescore=0 bulkscore=0 spamscore=0
+ lowpriorityscore=0 mlxscore=0 clxscore=1011 adultscore=0
+ priorityscore=1501 mlxlogscore=619 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2408070077
 
-
-
-On Wed, 2024-08-07 at 07:48 +0100, Patrick Roy wrote:
+On 8/7/2024 5:35 PM, Krzysztof Kozlowski wrote:
+> On 07/08/2024 11:17, Tengfei Fan wrote:
+>>
+>>
+>> On 8/7/2024 3:28 PM, Krzysztof Kozlowski wrote:
+>>> On 06/08/2024 06:19, Tengfei Fan wrote:
+>>>> Add QCS9100 compatible in sa8775p ride and sa8775p ride r3 board DTS.
+>>>> QCS9100 references SA8775p, they share the same SoC DTSI and board DTS.
+>>>>
+>>>
+>>> I don't understand this. You claim here that QCS9100 references SA8775p
+>>> but your diff says other way: SA8775p references QCS9100.
+>>>
+>>> Sorry, that's confusing.
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>>
+>>
+>> I will update the compatible as follows to indicate that QCS9100
+>> references SA8775p.
+>>
+>> compatible = "qcom,sa8775p-ride", "qcom,qcs9100", "qcom,sa8775p";
 > 
+> Is this still correct, though? sa8775p won't come with qcs9100 SoC.
+We have a new board. Hardware is same as sa877p-ride except sa8775p is 
+replaced with qcs9100. We add qcs9100 SoC compatible to sa8775p-ride 
+device tree to indicate this board can support both sa8775p SoC and 
+qcs9100 SoC.
 > 
-> On Tue, 2024-08-06 at 21:13 +0100, Elliot Berman wrote:
->> On Tue, Aug 06, 2024 at 04:39:24PM +0100, Patrick Roy wrote:
->>>
->>> Hi Elliot,
->>>
->>> On Mon, 2024-08-05 at 19:34 +0100, Elliot Berman wrote:
->>>> This patch was reworked from Patrick's patch:
->>>> https://lore.kernel.org/all/20240709132041.3625501-6-roypat@amazon.co.uk/
->>>
->>> yaay :D
->>>
->>>> While guest_memfd is not available to be mapped by userspace, it is
->>>> still accessible through the kernel's direct map. This means that in
->>>> scenarios where guest-private memory is not hardware protected, it can
->>>> be speculatively read and its contents potentially leaked through
->>>> hardware side-channels. Removing guest-private memory from the direct
->>>> map, thus mitigates a large class of speculative execution issues
->>>> [1, Table 1].
->>>>
->>>> Direct map removal do not reuse the `.prepare` machinery, since
->>>> `prepare` can be called multiple time, and it is the responsibility of
->>>> the preparation routine to not "prepare" the same folio twice [2]. Thus,
->>>> instead explicitly check if `filemap_grab_folio` allocated a new folio,
->>>> and remove the returned folio from the direct map only if this was the
->>>> case.
->>>
->>> My patch did this, but you separated the PG_uptodate logic from the
->>> direct map removal, right?
->>>
->>>> The patch uses release_folio instead of free_folio to reinsert pages
->>>> back into the direct map as by the time free_folio is called,
->>>> folio->mapping can already be NULL. This means that a call to
->>>> folio_inode inside free_folio might deference a NULL pointer, leaving no
->>>> way to access the inode which stores the flags that allow determining
->>>> whether the page was removed from the direct map in the first place.
->>>
->>> I thought release_folio was only called for folios with PG_private=1?
->>> You choose PG_private=1 to mean "this folio is in the direct map", so it
->>> gets called for exactly the wrong folios (more on that below, too).
->>>
->>
->> PG_private=1 should be meaning "this folio is not in the direct map".
+> Best regards,
+> Krzysztof
 > 
-> Right. I just checked my patch and it indeed means the same there. No
-> idea what I was on about yesterday. I think I only had Paolo's comment
-> about using folio->private for refcounting sharings in mind, so I
-> thought "to use folio->private, you need PG_private=1, therefore
-> PG_private=1 means shared" (I just checked, and while
-> folio_attach_private causes PG_private=1 to be set, page_set_private
-> does not). Obviously my comments below and especially here on PG_private
-> were nonsense. Sorry about that!
-> 
->>>> [1]: https://download.vusec.net/papers/quarantine_raid23.pdf
->>>>
->>>> Cc: Patrick Roy <roypat@amazon.co.uk>
->>>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
->>>> ---
->>>>  include/linux/guest_memfd.h |  8 ++++++
->>>>  mm/guest_memfd.c            | 65 ++++++++++++++++++++++++++++++++++++++++++++-
->>>>  2 files changed, 72 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/include/linux/guest_memfd.h b/include/linux/guest_memfd.h
->>>> index be56d9d53067..f9e4a27aed67 100644
->>>> --- a/include/linux/guest_memfd.h
->>>> +++ b/include/linux/guest_memfd.h
->>>> @@ -25,6 +25,14 @@ struct guest_memfd_operations {
->>>>         int (*release)(struct inode *inode);
->>>>  };
->>>>
->>>> +/**
->>>> + * @GUEST_MEMFD_FLAG_NO_DIRECT_MAP: When making folios inaccessible by host, also
->>>> + *                                  remove them from the kernel's direct map.
->>>> + */
->>>> +enum {
->>>> +       GUEST_MEMFD_FLAG_NO_DIRECT_MAP          = BIT(0),
->>>> +};
->>>> +
->>>>  /**
->>>>   * @GUEST_MEMFD_GRAB_UPTODATE: Ensure pages are zeroed/up to date.
->>>>   *                             If trusted hyp will do it, can ommit this flag
->>>> diff --git a/mm/guest_memfd.c b/mm/guest_memfd.c
->>>> index 580138b0f9d4..e9d8cab72b28 100644
->>>> --- a/mm/guest_memfd.c
->>>> +++ b/mm/guest_memfd.c
->>>> @@ -7,9 +7,55 @@
->>>>  #include <linux/falloc.h>
->>>>  #include <linux/guest_memfd.h>
->>>>  #include <linux/pagemap.h>
->>>> +#include <linux/set_memory.h>
->>>> +
->>>> +static inline int guest_memfd_folio_private(struct folio *folio)
->>>> +{
->>>> +       unsigned long nr_pages = folio_nr_pages(folio);
->>>> +       unsigned long i;
->>>> +       int r;
->>>> +
->>>> +       for (i = 0; i < nr_pages; i++) {
->>>> +               struct page *page = folio_page(folio, i);
->>>> +
->>>> +               r = set_direct_map_invalid_noflush(page);
->>>> +               if (r < 0)
->>>> +                       goto out_remap;
->>>> +       }
->>>> +
->>>> +       folio_set_private(folio);
->>>
->>> Mh, you've inverted the semantics of PG_private in the context of gmem
->>> here, compared to my patch. For me, PG_private=1 meant "this folio is
->>> back in the direct map". For you it means "this folio is removed from
->>> the direct map".
->>>
->>> Could you elaborate on why you require these different semantics for
->>> PG_private? Actually, I think in this patch series, you could just drop
->>> the PG_private stuff altogether, as the only place you do
->>> folio_test_private is in guest_memfd_clear_private, but iirc calling
->>> set_direct_map_default_noflush on a page that's already in the direct
->>> map is a NOOP anyway.
->>>
->>> On the other hand, as Paolo pointed out in my patches [1], just using a
->>> page flag to track direct map presence for gmem is not enough. We
->>> actually need to keep a refcount in folio->private to keep track of how
->>> many different actors request a folio's direct map presence (in the
->>> specific case in my patch series, it was different pfn_to_gfn_caches for
->>> the kvm-clock structures of different vcpus, which the guest can place
->>> into the same gfn). While this might not be a concern for the the
->>> pKVM/Gunyah case, where the guest dictates memory state, it's required
->>> for the non-CoCo case where KVM/userspace can set arbitrary guest gfns
->>> to shared if it needs/wants to access them for whatever reason. So for
->>> this we'd need to have PG_private=1 mean "direct map entry restored" (as
->>> if PG_private=0, there is no folio->private).
->>>
->>> [1]: https://lore.kernel.org/kvm/20240709132041.3625501-1-roypat@amazon.co.uk/T/#m0608c4b6a069b3953d7ee97f48577d32688a3315
->>>
->>
->> I wonder if we can use the folio refcount itself, assuming we can rely
->> on refcount == 1 means we can do shared->private conversion.
->>
->> In gpc_map_gmem, we convert private->shared. There's no problem here in
->> the non-CoCo case.
->>
->> In gpc_unmap, we *try* to convert back from shared->private. If
->> refcount>2, then the conversion would fail. The last gpc_unmap would be
->> able to successfully convert back to private.
->>
->> Do you see any concerns with this approach?
-> 
-> The gfn_to_pfn_cache does not keep an elevated refcount on the cached
-> page, and instead responds to MMU notifiers to detect whether the cached
-> translation has been invalidated, iirc. So the folio refcount will
-> not reflect the number of gpcs holding that folio.
-> 
->>>> +       return 0;
->>>> +out_remap:
->>>> +       for (; i > 0; i--) {
->>>> +               struct page *page = folio_page(folio, i - 1);
->>>> +
->>>> +               BUG_ON(set_direct_map_default_noflush(page));
->>>> +       }
->>>> +       return r;
->>>> +}
->>>> +
->>>> +static inline void guest_memfd_folio_clear_private(struct folio *folio)
->>>> +{
->>>> +       unsigned long start = (unsigned long)folio_address(folio);
->>>> +       unsigned long nr = folio_nr_pages(folio);
->>>> +       unsigned long i;
->>>> +
->>>> +       if (!folio_test_private(folio))
->>>> +               return;
->>>> +
->>>> +       for (i = 0; i < nr; i++) {
->>>> +               struct page *page = folio_page(folio, i);
->>>> +
->>>> +               BUG_ON(set_direct_map_default_noflush(page));
->>>> +       }
->>>> +       flush_tlb_kernel_range(start, start + folio_size(folio));
->>>> +
->>>> +       folio_clear_private(folio);
->>>> +}
->>>>
->>>>  struct folio *guest_memfd_grab_folio(struct file *file, pgoff_t index, u32 flags)
->>>>  {
->>>> +       unsigned long gmem_flags = (unsigned long)file->private_data;
->>>>         struct inode *inode = file_inode(file);
->>>>         struct guest_memfd_operations *ops = inode->i_private;
->>>>         struct folio *folio;
->>>> @@ -43,6 +89,12 @@ struct folio *guest_memfd_grab_folio(struct file *file, pgoff_t index, u32 flags
->>>>                         goto out_err;
->>>>         }
->>>>
->>>> +       if (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP) {
->>>> +               r = guest_memfd_folio_private(folio);
->>>> +               if (r)
->>>> +                       goto out_err;
->>>> +       }
->>>> +
->>>
->>> How does a caller of guest_memfd_grab_folio know whether a folio needs
->>> to be removed from the direct map? E.g. how can a caller know ahead of
->>> time whether guest_memfd_grab_folio will return a freshly allocated
->>> folio (which thus needs to be removed from the direct map), vs a folio
->>> that already exists and has been removed from the direct map (probably
->>> fine to remove from direct map again), vs a folio that already exists
->>> and is currently re-inserted into the direct map for whatever reason
->>> (must not remove these from the direct map, as other parts of
->>> KVM/userspace probably don't expect the direct map entries to disappear
->>> from underneath them). I couldn't figure this one out for my series,
->>> which is why I went with hooking into the PG_uptodate logic to always
->>> remove direct map entries on freshly allocated folios.
->>>
->>
->> gmem_flags come from the owner. If the caller (in non-CoCo case) wants
 
-Ah, oops, I got it mixed up with the new `flags` parameter. 
+-- 
+Thanks,
+Tingwei
 
->> to restore the direct map right away, it'd have to be a direct
->> operation. As an optimization, we could add option that asks for page in
->> "shared" state. If allocating new page, we can return it right away
->> without removing from direct map. If grabbing existing folio, it would
->> try to do the private->shared conversion.
-
-My concern is more with the implicit shared->private conversion that
-happens on every call to guest_memfd_grab_folio (and thus
-kvm_gmem_get_pfn) when grabbing existing folios. If something else
-marked the folio as shared, then we cannot punch it out of the direct
-map again until that something is done using the folio (when working on
-my RFC, kvm_gmem_get_pfn was indeed called on existing folios that were
-temporarily marked shared, as I was seeing panics because of this). And
-if the folio is currently private, there's nothing to do. So either way,
-guest_memfd_grab_folio shouldn't touch the direct map entry for existing
-folios.
-
->>
->> Thanks for the feedback, it was helpful!
->>
->> - Elliot
->>
->>>>         /*
->>>>          * Ignore accessed, referenced, and dirty flags.  The memory is
->>>>          * unevictable and there is no storage to write back to.
->>>> @@ -213,14 +265,25 @@ static bool gmem_release_folio(struct folio *folio, gfp_t gfp)
->>>>         if (ops->invalidate_end)
->>>>                 ops->invalidate_end(inode, offset, nr);
->>>>
->>>> +       guest_memfd_folio_clear_private(folio);
->>>> +
->>>>         return true;
->>>>  }
->>>>
->>>> +static void gmem_invalidate_folio(struct folio *folio, size_t offset, size_t len)
->>>> +{
->>>> +       /* not yet supported */
->>>> +       BUG_ON(offset || len != folio_size(folio));
->>>> +
->>>> +       BUG_ON(!gmem_release_folio(folio, 0));
->>>> +}
->>>> +
->>>>  static const struct address_space_operations gmem_aops = {
->>>>         .dirty_folio = noop_dirty_folio,
->>>>         .migrate_folio = gmem_migrate_folio,
->>>>         .error_remove_folio = gmem_error_folio,
->>>>         .release_folio = gmem_release_folio,
->>>> +       .invalidate_folio = gmem_invalidate_folio,
->>>>  };
->>>>
->>>>  static inline bool guest_memfd_check_ops(const struct guest_memfd_operations *ops)
->>>> @@ -241,7 +304,7 @@ struct file *guest_memfd_alloc(const char *name,
->>>>         if (!guest_memfd_check_ops(ops))
->>>>                 return ERR_PTR(-EINVAL);
->>>>
->>>> -       if (flags)
->>>> +       if (flags & ~GUEST_MEMFD_FLAG_NO_DIRECT_MAP)
->>>>                 return ERR_PTR(-EINVAL);
->>>>
->>>>         /*
->>>>
->>>> --
->>>> 2.34.1
->>>>
->>>
->>> Best,
->>> Patrick
->>>
 
