@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-28108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40B1294ACE8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 17:30:51 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 084BC94AD7A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 17:59:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B6BBC1F21CB0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 15:30:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A6957B2D378
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 15:37:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A19A823DF;
-	Wed,  7 Aug 2024 15:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 212F112C46D;
+	Wed,  7 Aug 2024 15:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iJqmGS+9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N/3co653"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F722364BC;
-	Wed,  7 Aug 2024 15:30:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4BB85931
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Aug 2024 15:37:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723044644; cv=none; b=q3LQ1Waj/EqkPTBVAqDju9RBx3OpJrgAMfUeV7e5lEFZdtJTXMxHNS9EICbUxOInxdwzZMKI9hcd9BovezAMFdUx8kpTWnAtwzMBQGLzhdRhgvkqWZShP3kvp9FRCkX5fbEqRr1QiYmX2+AcEOZfS3AkiX38gGDrCN+K+5GogDA=
+	t=1723045031; cv=none; b=lDZm1tyt6oXFNPQpa92ZdnDeztrHSeMgpg4+qh6vY5z5PeC1h3Sjh6bBuneIq+l8gpLeUI+Gajt5TzPYcZAkJv6cIJyrQaGYd8/ufBvbh5be2N5ChvLDEpqy5Q7WjWGe7pAvMmrGnuXskjAypsknSjwLuGwClb5QpGXbYMBiJKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723044644; c=relaxed/simple;
-	bh=Ybbpm3l0VgcY8irLKiG7R3KeEt6Y5ckns0lgVAzSTOA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=kbdRwqZ84l+zxRcG6sfheKKHJJd85WnfLfNvDpZISOP8GCqSMp+dHFhdSOv045D3Yecb1enEzj4RSFkQ4S4mgKGgHMEznNA84b3ESrvU0wck2neyrPEOrWX5GOHvvnAES/i84bZyKXAZhw21/5ZtGsA0jgqxY5HLG4IW1VezCCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iJqmGS+9; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4778CcNN017145;
-	Wed, 7 Aug 2024 15:30:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rGK5FhqeP9Ns8MopLkGkiE5QSZITi9c8Z7h7WJQs1pc=; b=iJqmGS+9Bjwj2bvd
-	X7qcEBE5XRrnx44NNVr5zfqJ6DIlXtEyrqPT1hnUQ3BeKWM4aT1fG0cAvUpe4A9L
-	E3s6i6JtOuIwc7nWGFrdMQRfGpUEo/0jQM6nZe9lTsRyPCSBbPjl4fDeRrCaSVHH
-	CoIRr7zxZHS2SX8X75I8VMAYNcJTAC4JgspnNMqX2ReKTgcOW/9YR1XDE9kDjytw
-	LHDofJrJ5Q7DM7x3Po9aCyBWANhMuhvLAXOxsLhH5yDF/SpRCAV8dWPbQX1lhfQP
-	DuOSUdPwOO4rV/VurXSpUwOVIEFuHnHtSAMlkWhPX06DgywoxlASQkBqA80LLR/N
-	/+G4Kw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40sdaeb1pn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 07 Aug 2024 15:30:39 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 477FUcrD029076
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 7 Aug 2024 15:30:38 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 7 Aug 2024
- 08:30:33 -0700
-Message-ID: <13190683-1d69-401d-8c32-adb42e4386ed@quicinc.com>
-Date: Wed, 7 Aug 2024 23:30:30 +0800
+	s=arc-20240116; t=1723045031; c=relaxed/simple;
+	bh=TnQEyb0TlgRVKqCdGgpXS/fUm2oWRGW1oabB34py4bg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=e9uw07W6OeLXe5bA8EWsqnk2B8qqGniIlBy8D9CuAOLrEAZWCXDTDxbWbP8ukrRtnkoU30xza6HHeLLkABrvHvMkBk5mpwINUA/vplFhGKtoXZIC9x/Ei8Vy3XAf/ltWPRFEqwZoa66dkOJs6HaxM8rLFN9vaCWad7gg9VNmQWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N/3co653; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-428e3129851so13496685e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Aug 2024 08:37:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1723045027; x=1723649827; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hbpU8BGJSDy9tSmR37aKx0UzOOARJ4TFknyzCo/3gdo=;
+        b=N/3co653IyjPYikGfIFszGhOtPFqaijB22y+1pXtpm2GURfC2INI4qJiosINxl8u0F
+         iX2xYIxV6P0neRNpopZrGZXD6GQfq4XyH4LzHlFnqNWDH5HVstW/s0BCYdHeAVQGN3VO
+         eWB/7NyjtDL9eFN2jEa1ghIUo+1PHXWa+yyJpqvauPI3AY8q4pk2IV9b8okdgTYvDM1h
+         n3W7v2nf0yPgc6YfNvCifJB8OSMQlsNxKFM7MvS5f7NVifLdnMoScHw2CRWCMDRgtYlQ
+         wAOWPpRQSGFgDN19qIzS1PaaVuWx8sYy9vakNwtftsTkgKrMlhvcR81rs+vftMr6uf72
+         r6Kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723045027; x=1723649827;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hbpU8BGJSDy9tSmR37aKx0UzOOARJ4TFknyzCo/3gdo=;
+        b=qPHNsBbhDePE+GQ6zbW2MMeaQmg3VpP141F5YJU1BJSV995NOkwfDnBcf0OhEmmL74
+         NrNFyNZHPVtBxIUxnBjxwwOBKbvmaPiwqE1/IGYG6Zrgt4qWELUinctNJmcHPR+33YNW
+         UnOuWM/VEH6shNKpM4FCQ8FPtU/NJNLVUPJOqo0Da7iv2YxzP0qzdnnIb8dFrBHe7SCG
+         RL1JrzBCa6UtOvHRNoIrOpGG0uacQFJ0zY/+wH3O6M91LS9J6yUYLuOXMtLi+KD5THy5
+         7JupJA9bWK/ZGYskaQn0RX3doOm9dctKbecepY/MTtT0E7fcRa9mAh4s063YWRBdUlkp
+         rFag==
+X-Forwarded-Encrypted: i=1; AJvYcCUYNCS7Cox5mXUIoPKclxILDwEafBxbrkyxVdxf9stel1JnQoJh83SOxH9PMlzrie6BG2HaPfp6FGK++IquQPPBwLG7w9FAWt8+9GHoMA==
+X-Gm-Message-State: AOJu0Yw4Af2JST+Ib8ajupS+PMiVd90No2p+rnNAQVOcmWhtGXh5bvxk
+	QwD2eqwfMK1llUDQfSjla86xH94vQXpQvnR5Fo72a3u3vpx8w9ikYoTga/73J9Y=
+X-Google-Smtp-Source: AGHT+IEqJQdYKe2aGkUMUTlf/XKpYzvifcfU8LhAtDUz7xW59bDxFNzJvVrYScEyagfTJNRrKgoQHA==
+X-Received: by 2002:a05:600c:3501:b0:427:9922:4526 with SMTP id 5b1f17b1804b1-428e6aebc74mr141633305e9.7.1723045027306;
+        Wed, 07 Aug 2024 08:37:07 -0700 (PDT)
+Received: from [192.168.0.25] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42905971993sm35089695e9.16.2024.08.07.08.37.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Aug 2024 08:37:06 -0700 (PDT)
+Message-ID: <ff12ce12-41d6-4aa5-ab97-222b07146e36@linaro.org>
+Date: Wed, 7 Aug 2024 16:37:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,135 +76,110 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8550: camss: Add CAMSS block
- definition
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Krzysztof Kozlowski
-	<krzk@kernel.org>, <andersson@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        Yongsheng Li
-	<quic_yon@quicinc.com>
-References: <20240807123333.2056518-1-quic_depengs@quicinc.com>
- <1c0ff0fa-73d3-400f-a58d-15fb9b0574d1@kernel.org>
- <c2a3e578-b098-450f-96f6-a3ae321f2b4c@kernel.org>
- <85cc52aa-4593-49f5-9438-1ee3f09d2d71@quicinc.com>
- <336e5679-f04e-47aa-9655-df88fde9de21@linaro.org>
- <0fb55319-0bae-4bb0-bce6-ebdbdd68f765@kernel.org>
- <c3ed2b0a-3f59-4cd1-98e1-96494d15d172@linaro.org>
+Subject: Re: [PATCH 04/13] media: qcom: camss: csiphy: Add an init callback to
+ CSI PHY devices
+To: Depeng Shao <quic_depengs@quicinc.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, rfoss@kernel.org,
+ todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: quic_eberman@quicinc.com, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20240709160656.31146-1-quic_depengs@quicinc.com>
+ <20240709160656.31146-5-quic_depengs@quicinc.com>
+ <6dfc2c79-fc6d-4eed-bf3f-94396130cb4f@linaro.org>
+ <fafda7d5-3853-428a-b0eb-9993fc2d4f56@linaro.org>
+ <4426c0e0-f877-409c-b2d2-a5aac5e8c645@linaro.org>
+ <1226d080-d1fc-4e06-ac81-84e93cb314e0@quicinc.com>
+ <8f935a7d-87b5-479c-a98e-c95671dbe259@linaro.org>
+ <7c03280f-908d-435d-acef-b6bf4f865029@quicinc.com>
 Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <c3ed2b0a-3f59-4cd1-98e1-96494d15d172@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <7c03280f-908d-435d-acef-b6bf4f865029@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: -AAtNakMsy82IIPvKglaep_BnvFfkEGH
-X-Proofpoint-GUID: -AAtNakMsy82IIPvKglaep_BnvFfkEGH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-07_11,2024-08-07_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=999
- spamscore=0 adultscore=0 bulkscore=0 phishscore=0 mlxscore=0
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 impostorscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408070108
 
-Hi Kryysztof, Bryan,
-
-On 8/7/2024 10:58 PM, Bryan O'Donoghue wrote:
-> On 07/08/2024 15:51, Krzysztof Kozlowski wrote:
->> On 07/08/2024 16:17, Bryan O'Donoghue wrote:
->>> On 07/08/2024 13:53, Depeng Shao wrote:
->>>> Hi Krzysztof,
+On 07/08/2024 16:03, Depeng Shao wrote:
+> Hi Bryan,
+> 
+> On 8/7/2024 10:04 PM, Bryan O'Donoghue wrote:
+>> On 07/08/2024 14:08, Depeng Shao wrote:
+>>> Hi Vladimir,
+>>>
+>>> On 8/5/2024 5:26 AM, Vladimir Zapolskiy wrote:
+>>>> Hi Bryan,
 >>>>
->>>> On 8/7/2024 8:43 PM, Krzysztof Kozlowski wrote:
->>>>> On 07/08/2024 14:39, Krzysztof Kozlowski wrote:
->>>>>> On 07/08/2024 14:33, Depeng Shao wrote:
->>>>>>> Add CAMSS block definition for sm8550.
->>>>>>>
->>>>>>> This drop contains definitions for the following components on 
->>>>>>> sm8550:
+>>>> On 8/1/24 11:16, Bryan O'Donoghue wrote:
+>>>>> On 01/08/2024 00:43, Vladimir Zapolskiy wrote:
+>>>>>>> +    ret = csiphy->res->hw_ops->init(csiphy);
 >>>>>>
->>>>>> 1. Subject: there is no prefix camss. There is no such file, 
->>>>>> directory
->>>>>> or module.
->>>>>>
->>>>
->>>> Thanks for the comment, will remove this.
->>>>
->>>>>> 2. You already sent this, so this should be v2 or v3 or vX. Provide
->>>>>> changelog under ---.
->>>>>>
->>>>>> If there is going to be resend, please fix above.
->>>>>>
->>>>
->>>> Sure, I thought it might be a new series, so I didn't add v*, will add
->>>> v1, and v2 change log in new version series.
->>>>
->>>>>> 3. If this was tested on aim300, I am surprised this being not 
->>>>>> enabled
->>>>>> on aim300.
+>>>>>> Here.
 >>>>>
+>>>>> What name would make more sense to you ?
 >>>>
->>>> It was tested long times ago, but the patches wasn't sent out for
->>>> reviewing early due to the team's internal schedule.
->>>>
->>>>> One more thing, bindings were not accepted, thus this patch should not
->>>>> go in. There were no new bindings, so I assume patchset is using
->>>>> rejected ones.
->>>>>
->>>>> It's fine to send it to get some comments, although would be nice to
->>>>> mention to maintainer that this cannot be picked up as is. :(
->>>>>
->>>>
->>>> Sure, I will resend the dtsi patch until the bindings are accepted, 
->>>> send
->>>> this patches because you posted the comments in other series.
->>>>
->>>> https://lore.kernel.org/ 
->>>> all/0324e8e8-2ad4-4ce6-9616-3038b8e02ff9@quicinc.com/
->>>>
->>>> Thanks,
->>>> Depeng
->>>>
+>>>> according to the implementation the .init() call just fills some 
+>>>> data in
+>>>> memory, so I believe this could be handled at build time, if it's done
+>>>> carefully enough...
 >>>>
 >>>
->>> Recommend
+>>> This camss-csiphy-3ph-1-0.c is reused by many platforms, the old 
+>>> platforms have same CSI_COMMON_CTR register offset, their offset are 
+>>> 0x800, but some new platforms may have different CSI_COMMON_CTR 
+>>> register offset, for example, the CSI_COMMON_CTR register offset is 
+>>> 0x1000 in sm8550, then we need to add new file to support the new 
+>>> csiphy HW, e.g., camss-csiphy-3ph-2-0.c, so Bryan asked me to develop 
+>>> the CSIPHY driver based on his changes, then we just need few code to 
+>>> enable new CSIPHY.
 >>>
->>> 1. Send out your yaml and dts in one series
+>>> Regarding the hw_ops->init interface, since it fills HW register 
+>>> configurations and HW register offset, then maybe, it also can be 
+>>> called as HW operation.
 >>>
->>> 2. Driver series can be posted in parallel
+>>> And looks like we can't move it to camss-csiphy.c since it does 
+>>> platform specific operation and it is related to the registers.
+>>>
+>>> Please feel free to share other comments if you don't agree with it. 
+>>> Thanks.
+>>>
+>>>
+>>> Thanks,
+>>> Depeng
 >>
->> The binding should go with the driver. Also usually discussion about
->> driver brings comments, thus changes, to the bindings.
+>> So, I agree the phy init data could be obtained via resource structs 
+>> but, rather than add yet more patches to this series, I'd say we can 
+>> make the move to a separate resource struct pointer at a later date.
 >>
->> Sorry, DTSI and DTS should wait till bindings got accepted to media
->> subsystem.
+>> Lets drop this patch and @Depeng we can then do
+>>
 > 
-> Yes you're right
+>> +    regs->offset = 0x800;
+>>
+>> media: qcom: camss: csiphy-3ph: Use an offset variable to find common 
+>> control regs
+>>
 > 
-> 1. Yaml - bindings
-> 2. dts + driver
-> 3. dtsi
 > 
-> In this case @Depeng remember to
+> Do you mean only drop "[PATCH 04/13] media: qcom: camss: csiphy: Add an 
+> init callback to CSI PHY devices"?
 > 
-> 1. Link back to the older series in your cover letters
-> 2. Suggested by recommended - publish a complete tree somewhere and
->     link to that tree in your cover letters
 > 
-> Its fine IMO to restart the version number of your series when breaking 
-> up into smaller series, so long as you remember to link to the previous 
-> series and explain in the cover letter whats going on.
+> [PATCH 05/13] media: qcom: camss: csiphy-3ph: Move CSIPHY variables to 
+> data field inside csiphy struct
+> Do you mean this is still needed? Just don't move the code from 
+> csiphy_gen2_config_lanes to csiphy_init, right?
 > 
+> 
+> [PATCH 06/13] media: qcom: camss: csiphy-3ph: Use an offset variable to 
+> find common control regs
+> The offset change is also needed, just need to add the offset for 
+> different platform in csiphy_gen2_config_lanes .
+> 
+> Please correct me if my understanding is wrong. Thanks.
 
-Thanks for the guidance, I will follow them, and resend the DTS patch 
-wait till bindings got accepted.
+Correct.
 
-Thanks,
-Depeng
+---
+bod
+
 
