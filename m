@@ -1,74 +1,43 @@
-Return-Path: <linux-arm-msm+bounces-28109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 084BC94AD7A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 17:59:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 007FD94AD58
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 17:49:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A6957B2D378
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 15:37:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1CEABB2CD91
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 15:42:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 212F112C46D;
-	Wed,  7 Aug 2024 15:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EBF1130A7D;
+	Wed,  7 Aug 2024 15:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N/3co653"
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=lausen.nl header.i=@lausen.nl header.b="PvQIOcNq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from devico.uberspace.de (devico.uberspace.de [185.26.156.185])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4BB85931
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Aug 2024 15:37:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25ADA12FF72
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Aug 2024 15:41:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.26.156.185
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723045031; cv=none; b=lDZm1tyt6oXFNPQpa92ZdnDeztrHSeMgpg4+qh6vY5z5PeC1h3Sjh6bBuneIq+l8gpLeUI+Gajt5TzPYcZAkJv6cIJyrQaGYd8/ufBvbh5be2N5ChvLDEpqy5Q7WjWGe7pAvMmrGnuXskjAypsknSjwLuGwClb5QpGXbYMBiJKw=
+	t=1723045293; cv=none; b=jt44MX/rffm3HFz5YEiOhcK/MsSzFt2xfKu39YyiPJYLAnapFtqkzg2Rzw60OWfjwsiDIrStfmUzeNZh9HeayXbRikIUtAkUeCM11D2ZljytVJIDnw0xMmSFxm3Uu3LUooYlRT+ux38pH2arin+/AjXB8RlUhJTYDGB2INQ8oDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723045031; c=relaxed/simple;
-	bh=TnQEyb0TlgRVKqCdGgpXS/fUm2oWRGW1oabB34py4bg=;
+	s=arc-20240116; t=1723045293; c=relaxed/simple;
+	bh=Dm1h2rVViWETRpyaAucj7ynN3gHM14g/8UZq8htTnjk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=e9uw07W6OeLXe5bA8EWsqnk2B8qqGniIlBy8D9CuAOLrEAZWCXDTDxbWbP8ukrRtnkoU30xza6HHeLLkABrvHvMkBk5mpwINUA/vplFhGKtoXZIC9x/Ei8Vy3XAf/ltWPRFEqwZoa66dkOJs6HaxM8rLFN9vaCWad7gg9VNmQWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N/3co653; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-428e3129851so13496685e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Aug 2024 08:37:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723045027; x=1723649827; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hbpU8BGJSDy9tSmR37aKx0UzOOARJ4TFknyzCo/3gdo=;
-        b=N/3co653IyjPYikGfIFszGhOtPFqaijB22y+1pXtpm2GURfC2INI4qJiosINxl8u0F
-         iX2xYIxV6P0neRNpopZrGZXD6GQfq4XyH4LzHlFnqNWDH5HVstW/s0BCYdHeAVQGN3VO
-         eWB/7NyjtDL9eFN2jEa1ghIUo+1PHXWa+yyJpqvauPI3AY8q4pk2IV9b8okdgTYvDM1h
-         n3W7v2nf0yPgc6YfNvCifJB8OSMQlsNxKFM7MvS5f7NVifLdnMoScHw2CRWCMDRgtYlQ
-         wAOWPpRQSGFgDN19qIzS1PaaVuWx8sYy9vakNwtftsTkgKrMlhvcR81rs+vftMr6uf72
-         r6Kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723045027; x=1723649827;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hbpU8BGJSDy9tSmR37aKx0UzOOARJ4TFknyzCo/3gdo=;
-        b=qPHNsBbhDePE+GQ6zbW2MMeaQmg3VpP141F5YJU1BJSV995NOkwfDnBcf0OhEmmL74
-         NrNFyNZHPVtBxIUxnBjxwwOBKbvmaPiwqE1/IGYG6Zrgt4qWELUinctNJmcHPR+33YNW
-         UnOuWM/VEH6shNKpM4FCQ8FPtU/NJNLVUPJOqo0Da7iv2YxzP0qzdnnIb8dFrBHe7SCG
-         RL1JrzBCa6UtOvHRNoIrOpGG0uacQFJ0zY/+wH3O6M91LS9J6yUYLuOXMtLi+KD5THy5
-         7JupJA9bWK/ZGYskaQn0RX3doOm9dctKbecepY/MTtT0E7fcRa9mAh4s063YWRBdUlkp
-         rFag==
-X-Forwarded-Encrypted: i=1; AJvYcCUYNCS7Cox5mXUIoPKclxILDwEafBxbrkyxVdxf9stel1JnQoJh83SOxH9PMlzrie6BG2HaPfp6FGK++IquQPPBwLG7w9FAWt8+9GHoMA==
-X-Gm-Message-State: AOJu0Yw4Af2JST+Ib8ajupS+PMiVd90No2p+rnNAQVOcmWhtGXh5bvxk
-	QwD2eqwfMK1llUDQfSjla86xH94vQXpQvnR5Fo72a3u3vpx8w9ikYoTga/73J9Y=
-X-Google-Smtp-Source: AGHT+IEqJQdYKe2aGkUMUTlf/XKpYzvifcfU8LhAtDUz7xW59bDxFNzJvVrYScEyagfTJNRrKgoQHA==
-X-Received: by 2002:a05:600c:3501:b0:427:9922:4526 with SMTP id 5b1f17b1804b1-428e6aebc74mr141633305e9.7.1723045027306;
-        Wed, 07 Aug 2024 08:37:07 -0700 (PDT)
-Received: from [192.168.0.25] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42905971993sm35089695e9.16.2024.08.07.08.37.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Aug 2024 08:37:06 -0700 (PDT)
-Message-ID: <ff12ce12-41d6-4aa5-ab97-222b07146e36@linaro.org>
-Date: Wed, 7 Aug 2024 16:37:05 +0100
+	 In-Reply-To:Content-Type; b=psMgDJ58jWRJQ0/8Tfo7AgZvE8de0QmmrTpS1SwqpF0a2yG/AVXeBr63p73Rls6ggXUe0vHHWcb2mPMMSJQt8T84zyhj8louf7UANX5v5mW6ju5bff8IR7e2dNyNpycEyOXyL4nwPw3D5vmtDmjeOYYlU1jg3KMZIvufNePGRGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lausen.nl; spf=pass smtp.mailfrom=lausen.nl; dkim=fail (0-bit key) header.d=lausen.nl header.i=@lausen.nl header.b=PvQIOcNq reason="key not found in DNS"; arc=none smtp.client-ip=185.26.156.185
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lausen.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lausen.nl
+Received: (qmail 8920 invoked by uid 990); 7 Aug 2024 15:41:21 -0000
+Authentication-Results: devico.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+	by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Wed, 07 Aug 2024 17:41:21 +0200
+Message-ID: <f0d1da69-d52a-484e-8255-b9639c358a71@lausen.nl>
+Date: Wed, 7 Aug 2024 11:41:18 -0400
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,110 +45,99 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/13] media: qcom: camss: csiphy: Add an init callback to
- CSI PHY devices
-To: Depeng Shao <quic_depengs@quicinc.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, rfoss@kernel.org,
- todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: quic_eberman@quicinc.com, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20240709160656.31146-1-quic_depengs@quicinc.com>
- <20240709160656.31146-5-quic_depengs@quicinc.com>
- <6dfc2c79-fc6d-4eed-bf3f-94396130cb4f@linaro.org>
- <fafda7d5-3853-428a-b0eb-9993fc2d4f56@linaro.org>
- <4426c0e0-f877-409c-b2d2-a5aac5e8c645@linaro.org>
- <1226d080-d1fc-4e06-ac81-84e93cb314e0@quicinc.com>
- <8f935a7d-87b5-479c-a98e-c95671dbe259@linaro.org>
- <7c03280f-908d-435d-acef-b6bf4f865029@quicinc.com>
+Subject: Re: [PATCH v2 1/2] drm/msm/dpu1: don't choke on disabling the
+ writeback connector
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ Jeykumar Sankaran <jsanka@codeaurora.org>, stable@vger.kernel.org
+References: <20240802-dpu-fix-wb-v2-0-7eac9eb8e895@linaro.org>
+ <20240802-dpu-fix-wb-v2-1-7eac9eb8e895@linaro.org>
+ <57cdac1a-1c4d-4299-8fde-92ae054fc6c0@lausen.nl>
+ <61D52432-DD30-4C43-BD5E-1CC9F84DF5B9@linaro.org>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <7c03280f-908d-435d-acef-b6bf4f865029@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Leonard Lausen <leonard@lausen.nl>
+Autocrypt: addr=leonard@lausen.nl; keydata=
+ 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 Sw==
+In-Reply-To: <61D52432-DD30-4C43-BD5E-1CC9F84DF5B9@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Bar: --
+X-Rspamd-Report: BAYES_HAM(-2.860288) XM_UA_NO_VERSION(0.01) MIME_GOOD(-0.1)
+X-Rspamd-Score: -2.950288
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+	d=lausen.nl; s=uberspace;
+	h=from:to:cc:subject:date;
+	bh=Dm1h2rVViWETRpyaAucj7ynN3gHM14g/8UZq8htTnjk=;
+	b=PvQIOcNqVdWPNZufM7HSSmdNoDCElvZIrnkDtbf6OoLs6Sg3CN90hOU8uKJb3jDwTl+6ak6W0G
+	OXFAciVX5Lp4vBSmkAy+ECZBmPPaXf4ZXC3zvBxvUnoCVRVbSsMAoMP9HWrHHoAFHdO4J/gXs64Z
+	xBJCCPD+U5oXyiQ72WcnSraLEC4J1/vQMaEBP6MTYGoUObde4HPfSsrGZXJG3R3Q5TBkUTAwJ/mv
+	3Q02ycC6IF1PW3AR+gAAcoCaVddUaWctw7EG+AXsUcNAXRSeOhDpKzhi6HLzAxqvOdASMLem+KLb
+	U+tOKH3cIsAbZPZX6a5QB8NNs6g03uIYtFvgikOUO825Ov35Vg0XJ8OwAaVos7LgqnbJe4lybJSh
+	HQQT4Iy7x3SQXm3fCgO5foCrl4XXiJkyLiRZfny6zwqEWtCkZW2VOazMWOJ0boLskJV7cSK4DkGD
+	y7zu6mNBAaCQE+XiQSLpBGXcKRIvi6YbpgBsGJBCScbRWx7GaRhSQ/8vyeGR9V56hmJOTF8kd3dO
+	wk0c0+nxnT6qvPfuO7eUVUy+pWahBsyLpWAB6fLP7UoRjlhXEwkqyLM/n1MT8cU3cy843wptWb3B
+	0uL7LdAjK8SBEjzHFOXwqBFU9Ly8Lii9gY6KJhsncYcCb/Ih2nt8AXksHdxmG4BLehB1erYjYvu/
+	g=
 
-On 07/08/2024 16:03, Depeng Shao wrote:
-> Hi Bryan,
-> 
-> On 8/7/2024 10:04 PM, Bryan O'Donoghue wrote:
->> On 07/08/2024 14:08, Depeng Shao wrote:
->>> Hi Vladimir,
->>>
->>> On 8/5/2024 5:26 AM, Vladimir Zapolskiy wrote:
->>>> Hi Bryan,
->>>>
->>>> On 8/1/24 11:16, Bryan O'Donoghue wrote:
->>>>> On 01/08/2024 00:43, Vladimir Zapolskiy wrote:
->>>>>>> +    ret = csiphy->res->hw_ops->init(csiphy);
->>>>>>
->>>>>> Here.
->>>>>
->>>>> What name would make more sense to you ?
->>>>
->>>> according to the implementation the .init() call just fills some 
->>>> data in
->>>> memory, so I believe this could be handled at build time, if it's done
->>>> carefully enough...
->>>>
->>>
->>> This camss-csiphy-3ph-1-0.c is reused by many platforms, the old 
->>> platforms have same CSI_COMMON_CTR register offset, their offset are 
->>> 0x800, but some new platforms may have different CSI_COMMON_CTR 
->>> register offset, for example, the CSI_COMMON_CTR register offset is 
->>> 0x1000 in sm8550, then we need to add new file to support the new 
->>> csiphy HW, e.g., camss-csiphy-3ph-2-0.c, so Bryan asked me to develop 
->>> the CSIPHY driver based on his changes, then we just need few code to 
->>> enable new CSIPHY.
->>>
->>> Regarding the hw_ops->init interface, since it fills HW register 
->>> configurations and HW register offset, then maybe, it also can be 
->>> called as HW operation.
->>>
->>> And looks like we can't move it to camss-csiphy.c since it does 
->>> platform specific operation and it is related to the registers.
->>>
->>> Please feel free to share other comments if you don't agree with it. 
->>> Thanks.
->>>
->>>
->>> Thanks,
->>> Depeng
->>
->> So, I agree the phy init data could be obtained via resource structs 
->> but, rather than add yet more patches to this series, I'd say we can 
->> make the move to a separate resource struct pointer at a later date.
->>
->> Lets drop this patch and @Depeng we can then do
->>
-> 
->> +    regs->offset = 0x800;
->>
->> media: qcom: camss: csiphy-3ph: Use an offset variable to find common 
->> control regs
->>
-> 
-> 
-> Do you mean only drop "[PATCH 04/13] media: qcom: camss: csiphy: Add an 
-> init callback to CSI PHY devices"?
-> 
-> 
-> [PATCH 05/13] media: qcom: camss: csiphy-3ph: Move CSIPHY variables to 
-> data field inside csiphy struct
-> Do you mean this is still needed? Just don't move the code from 
-> csiphy_gen2_config_lanes to csiphy_init, right?
-> 
-> 
-> [PATCH 06/13] media: qcom: camss: csiphy-3ph: Use an offset variable to 
-> find common control regs
-> The offset change is also needed, just need to add the offset for 
-> different platform in csiphy_gen2_config_lanes .
-> 
-> Please correct me if my understanding is wrong. Thanks.
+On 8/7/24 06:44, Dmitry Baryshkov wrote:> Could you please clarify, I was under the impression that currently whole suspend/resume is broken, so it's more than a dmesg message.
 
-Correct.
+71174f362d67 specifically, or v6.9 more broadly regress in that we get "[dpu
+error]connector not connected 3" and "[drm:drm_mode_config_helper_resume]
+*ERROR* Failed to resume (-22)" if suspending and resuming the system while
+external display is connected over USB-C DP. Suspend and resume itself
+still works, and the external display also works after the resume, albeit
+perhaps with a small delay due to the dpu error. This is also mentioned in
+the issue description of https://gitlab.freedesktop.org/drm/msm/-/issues/57.
+So while suspend/resume isn't fully broken, the error is still unexpected and
+I thus bisected and identified 71174f362d67 as the first commit to trigger it.
+While your patch avoids the dpu/drm error, it triggers issue with the CRTC state,
+breaking the CRTC functionality after resume.
 
----
-bod
-
+Might we be facing a race condition here, which is accidentally exposed by
+71174f362d67 but requires a separate fix?
 
