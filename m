@@ -1,68 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-28121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F42E94B22A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 23:29:41 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1CEA94B353
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 01:00:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 357CE1C21199
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 21:29:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 59B1A283AC0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 23:00:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CC7D14B087;
-	Wed,  7 Aug 2024 21:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4575C155A5B;
+	Wed,  7 Aug 2024 23:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YtgaXFTb"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FFVwctQ8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C159E14D2BD;
-	Wed,  7 Aug 2024 21:29:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2F3155352;
+	Wed,  7 Aug 2024 23:00:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723066169; cv=none; b=q/0nIBQgRBWvXYT3oTgdPBQ55R97/rhTxwb/SucJVJKmL4r/Whk5OmlSxirdmmw/A4k8p7RzBpAJu8V1sAExBdvNW4wxbg7SwRmKL9cd1nOPhuePJB54gXWFNixcRW4LFeNCX04ER+q/3LpQd9WxqUeuaRjcjMBsrr1xjWAdFrs=
+	t=1723071629; cv=none; b=ecIefqF0NNxc6zG6xTA86jnG9jHF0fjxaJlydLNC9rpFHLYqKafJLQP9ZKj2mxzasSAQykdjHv3HbxjJP50h/+ZJDF42K4D1+Ish9hhGA87JybOm3hlxsv6453ASBzfcNGTogqoon8NYCy2Aqj8DubvNg5j8e719nd7Q5amgeLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723066169; c=relaxed/simple;
-	bh=UMW8ZjWFYWzUMZlPzvOnD8SvOFmznM3WZ+q+ybh9Mtc=;
+	s=arc-20240116; t=1723071629; c=relaxed/simple;
+	bh=xVWxPxBYRX1Ct5d8y5S5aWZtS9M1p+rAJ47euCUwpKg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jcszDn5JeSZcSJQzdML2NaytVxoYMEh8FOLW1g25mraowkjLvwMn0kkwFx2JgKGNuAcNQVn0eCJA6SADjnZgJZRdlaO0J01z+7d7V48XIMrI5DHExdLlJ0qs14dCr8V70UIGpW+D3lexxbBNIqeMxaMKrw5+P9rl+UGkJOUZF1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YtgaXFTb; arc=none smtp.client-ip=198.175.65.19
+	 Content-Type:Content-Disposition:In-Reply-To; b=mq+TivaLDocBhBOIEctL19NJjwVjgmn/pOZjEPDJViF25YqWdP8qupcbTgfAP357GAUd3+1fcUG0DouwKnH55/DkZLP+PiqP4Bd3S2X24oqIkhiuyccvf9nYYCVa+iizZQSAxSkb4ejjRwUkTS+YL+N2xQCJY4aZhyomc+xafbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FFVwctQ8; arc=none smtp.client-ip=192.198.163.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723066167; x=1754602167;
+  t=1723071628; x=1754607628;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=UMW8ZjWFYWzUMZlPzvOnD8SvOFmznM3WZ+q+ybh9Mtc=;
-  b=YtgaXFTbl2WKlZb85WFjKF7dCXqNxcqcD1YmuPoD9lnAAW25r2RKsKrF
-   TiudTXAsANPKJmneyo5NNqXvmlFUXUvNPdNBB/9cRbVfL6ehlpSYd4Dz4
-   yZoqhtvY3yooV+kQZBw9t8HkdNbAfq6fJ5rkRuNt6SwWPvTpJx/8gwsqk
-   k9NlIlJejVO08XcAz5G95RbYwRm7J+EkYQfGieRgo0295Q8lwzyYA8icN
-   iPUpdYtTrBsXX5i90iHyd7ZzkbYzkUjN3I1Jmsf33f7y2EtKTlwjAlLwG
-   B3ScCezU8UcaXpSlQwFpH8aBHkDGNqBSxNGJp/ywR6Yn9ThWrjg6TC9F3
+  bh=xVWxPxBYRX1Ct5d8y5S5aWZtS9M1p+rAJ47euCUwpKg=;
+  b=FFVwctQ8pInb15EoSWVrqs0Q6PPeo6FQ2tD194810/ITlYI8JhDEoUiO
+   cLX3UmNVDn+8zCI1nOxNC4seDCHKZu7a6JOua/xY2/0m4RgHqPMDlnJ+i
+   t3co4Ku9a0b7MoNQu1PQylxEd8qw3Kg416VwaWB1gyKex5+uqqiGheoJW
+   6kPEiGZ1r3YG7dyouOM0jttvU6j3CHN1lJXphfmqAOSTBj7tCM24qnzKj
+   fiPHWuoHuIp2h4tllTHm5xN+Az6aHcvJJlwVOTgmo9qM503/5GucbVtuA
+   HMuV12FV00QHvm/jwxE0p+TJlaebEN3EXYDEQMIqoLjc6kBFtFBB25mr2
    g==;
-X-CSE-ConnectionGUID: dTAUbYRHTLa579q6pvozWg==
-X-CSE-MsgGUID: 6aLuHtLwR3WYBt1HdLsumw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11157"; a="21021117"
+X-CSE-ConnectionGUID: LRxa6zLHTlqPdCiLoSchKQ==
+X-CSE-MsgGUID: NqOkFLE5Twm6Je4detaTeQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11157"; a="20834987"
 X-IronPort-AV: E=Sophos;i="6.09,271,1716274800"; 
-   d="scan'208";a="21021117"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Aug 2024 14:29:26 -0700
-X-CSE-ConnectionGUID: atX5bEDeRKy13kZkUkgljQ==
-X-CSE-MsgGUID: yWU5z7LdRnifhCVpkR0W5w==
+   d="scan'208";a="20834987"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Aug 2024 16:00:25 -0700
+X-CSE-ConnectionGUID: XQPz50ERQFeoWet59h0gMw==
+X-CSE-MsgGUID: Cbufdx/tRb+8dv9JiGpf0w==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.09,271,1716274800"; 
-   d="scan'208";a="56844713"
+   d="scan'208";a="87674911"
 Received: from unknown (HELO b6bf6c95bbab) ([10.239.97.151])
-  by orviesa010.jf.intel.com with ESMTP; 07 Aug 2024 14:29:22 -0700
+  by orviesa002.jf.intel.com with ESMTP; 07 Aug 2024 16:00:22 -0700
 Received: from kbuild by b6bf6c95bbab with local (Exim 4.96)
 	(envelope-from <lkp@intel.com>)
-	id 1sboDY-0005jd-0B;
-	Wed, 07 Aug 2024 21:29:14 +0000
-Date: Thu, 8 Aug 2024 05:27:46 +0800
+	id 1sbpdi-0005mS-2w;
+	Wed, 07 Aug 2024 23:00:18 +0000
+Date: Thu, 8 Aug 2024 07:00:08 +0800
 From: kernel test robot <lkp@intel.com>
 To: Mao Jinlong <quic_jinlmao@quicinc.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
@@ -74,15 +74,12 @@ To: Mao Jinlong <quic_jinlmao@quicinc.com>,
 	Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzk@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>
-Cc: Paul Gazzillo <paul@pgazz.com>,
-	Necip Fazil Yildiran <fazilyildiran@gmail.com>,
-	oe-kbuild-all@lists.linux.dev,
-	Mao Jinlong <quic_jinlmao@quicinc.com>,
+Cc: oe-kbuild-all@lists.linux.dev, Mao Jinlong <quic_jinlmao@quicinc.com>,
 	linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
 	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org
 Subject: Re: [PATCH v2 2/2] coresight: Add remote etm support
-Message-ID: <202408080511.RIKNKoHh-lkp@intel.com>
+Message-ID: <202408080637.ZZJbuvB3-lkp@intel.com>
 References: <20240807071054.12742-3-quic_jinlmao@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -96,10 +93,10 @@ In-Reply-To: <20240807071054.12742-3-quic_jinlmao@quicinc.com>
 
 Hi Mao,
 
-kernel test robot noticed the following build warnings:
+kernel test robot noticed the following build errors:
 
-[auto build test WARNING on robh/for-next]
-[also build test WARNING on linus/master v6.11-rc2 next-20240807]
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on linus/master v6.11-rc2 next-20240807]
 [If your patch is applied to the wrong git tree, kindly drop us a note.
 And when submitting patch, we suggest to use '--base' as documented in
 https://git-scm.com/docs/git-format-patch#_base_tree_information]
@@ -108,20 +105,35 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Mao-Jinlong/dt-bindings-a
 base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
 patch link:    https://lore.kernel.org/r/20240807071054.12742-3-quic_jinlmao%40quicinc.com
 patch subject: [PATCH v2 2/2] coresight: Add remote etm support
-config: arm-kismet-CONFIG_QCOM_QMI_HELPERS-CONFIG_CORESIGHT_REMOTE_ETM-0-0 (https://download.01.org/0day-ci/archive/20240808/202408080511.RIKNKoHh-lkp@intel.com/config)
-reproduce: (https://download.01.org/0day-ci/archive/20240808/202408080511.RIKNKoHh-lkp@intel.com/reproduce)
+config: arm-allmodconfig (https://download.01.org/0day-ci/archive/20240808/202408080637.ZZJbuvB3-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 14.1.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240808/202408080637.ZZJbuvB3-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202408080511.RIKNKoHh-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202408080637.ZZJbuvB3-lkp@intel.com/
 
-kismet warnings: (new ones prefixed by >>)
->> kismet: WARNING: unmet direct dependencies detected for QCOM_QMI_HELPERS when selected by CORESIGHT_REMOTE_ETM
-   WARNING: unmet direct dependencies detected for QCOM_QMI_HELPERS
-     Depends on [n]: NET [=n]
-     Selected by [y]:
-     - CORESIGHT_REMOTE_ETM [=y] && CORESIGHT [=y]
+All errors (new ones prefixed by >>):
+
+>> drivers/hwtracing/coresight/coresight-remote-etm.c:298:27: error: initialization of 'void (*)(struct platform_device *)' from incompatible pointer type 'int (*)(struct platform_device *)' [-Wincompatible-pointer-types]
+     298 |         .remove         = remote_etm_remove,
+         |                           ^~~~~~~~~~~~~~~~~
+   drivers/hwtracing/coresight/coresight-remote-etm.c:298:27: note: (near initialization for 'remote_etm_driver.<anonymous>.remove')
+
+
+vim +298 drivers/hwtracing/coresight/coresight-remote-etm.c
+
+   295	
+   296	static struct platform_driver remote_etm_driver = {
+   297		.probe          = remote_etm_probe,
+ > 298		.remove         = remote_etm_remove,
+   299		.driver         = {
+   300			.name   = "coresight-remote-etm",
+   301			.of_match_table = remote_etm_match,
+   302		},
+   303	};
+   304	
 
 -- 
 0-DAY CI Kernel Test Service
