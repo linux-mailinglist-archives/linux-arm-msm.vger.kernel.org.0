@@ -1,48 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-28076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 449CA94A470
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 11:36:11 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E03B94A4CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 11:55:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ED83E1F215D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 09:36:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6200F1C2107E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 09:55:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 712FB1D0DC1;
-	Wed,  7 Aug 2024 09:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FB411CCB2B;
+	Wed,  7 Aug 2024 09:55:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SaSJvAIP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j2C8ivaj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417161CB32D;
-	Wed,  7 Aug 2024 09:36:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0A71D1F50
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Aug 2024 09:55:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723023364; cv=none; b=lwpgFlkgMHJng/U75NPynDJ7ZGWd8ZAfkZXRihf4bm111dThAn7FjbO86OWT9mZMS30ivfmjMGFvdutdM5Fn6gpjtCn65gUizRydM5xJQp5otTnTyfT3HyKAwczSRBPt0uYugg/9PfxEEjd+NQKj32MS7sLFpKRvymrD2gMBIG0=
+	t=1723024506; cv=none; b=lG50VjEX7LAjuo8AM7QDI13QDmi9OBSN9310L1IjmgDmFWWvpIytJXM+YWvw9Rtr0Ps4lLx9iK6HKVKhfhZZ3FDomcJIaUwaZiHCAnqqBaTWEF2khtutUQBZagPlWonnbSesHLcw9+68pwfhBzQXDFxLHq2Nr5nYLdLAi3icUdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723023364; c=relaxed/simple;
-	bh=s0BB6Xm95D2yTCnXCwnPwK0Kmd+rCIh8lV2jXnkI5Dg=;
+	s=arc-20240116; t=1723024506; c=relaxed/simple;
+	bh=0x6kDT10XqtuI+DR3Nm7exFXWYYI4D5DAdW64rmjAaI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mdosTXrIxitTiItjtJJ8rnic6iu6BpLFG1Quug0H1hh9yn7HE+YgzSSTdGYXM0b8P19sQuKzQuc54vraPMVNcMn2RZdOVlbGR3X18pwwyEB62QjE4iLBaAmzd72bYTEt1gDZxLgnM1jJ9Eq5vGsPFXdWYx3noJsYjOHrW/t41Pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SaSJvAIP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B837EC32782;
-	Wed,  7 Aug 2024 09:36:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723023363;
-	bh=s0BB6Xm95D2yTCnXCwnPwK0Kmd+rCIh8lV2jXnkI5Dg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=SaSJvAIPgNpQSyl2kQFG5cVaxnCCp5JvIAgTLLJnj5cxnZwhIHxVcyvzFbi0NGp0A
-	 l/NSb0X4P4oMiuQBpX0jSw84ocBYwNtOIwENdvMN67JgUC4JX469wuo/tq+TpyHJzf
-	 uMRYfo4fBgpDEWG6fQNcodzf/mmTD9005WVnuEivhEla62K3q1btlju+FPaOlR9Wr9
-	 1l1S0iae/tZo/YoQullZA5BS1Y5PmbD3VkT9+1GucYputHeZa+uVcMSElqTI+NyagL
-	 uh7DUGIMOZhkIzBPQN96M6BfZQxkek87RQklf0nEBVgRzIk5xE1qpinqjoMtTKVY4W
-	 G7v/uAU7rc3pA==
-Message-ID: <14ec06bd-0c27-4930-8bce-d3f5b68067ed@kernel.org>
-Date: Wed, 7 Aug 2024 11:35:58 +0200
+	 In-Reply-To:Content-Type; b=WnWtAjD5e2f4ZBc8HKvdLLeJBpyMkZmzmgOiIOvXXazFsrkH6XqrWhEYBHRsLBAIJUbptOgqJ8BXENgHfXXwFYlzNSMho7G7k6iY8UolH/rH+t1m2Z5O7rmVFJCf79bwUl1oREREDSRVNwzBxUwwv0yZaasy+fzENQQL85w7/Jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j2C8ivaj; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-428e0d18666so10470705e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Aug 2024 02:55:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1723024503; x=1723629303; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=f/Db4nAXA4XyFniiBDK5f2OcOpm5nMNx8+0JDEjuoZc=;
+        b=j2C8ivajKqdfMTKnJt8zIQBbdKacYxaFxW59TCX8wk3c5fKi/c23Zu2+5IJcaAGTyb
+         fTbQrQyK0Bb+UbWLRwjeWfvgmyKSI7MgviZ+l1si9wA/oYuRTg+YhJYjsf81m5vYXUl8
+         piIBwq4PLhTwK1G/EwlDt5Z9d3mGrJ+GywciyMODCoDNuiZuDwJ6NjIdWVeFEsD0EQj3
+         n8eEwz8+6+YIrXPv2nECako+LRTnJOnvtaRPHaqaQx6xBQRXgPSlfjA6TbwdwxPbfKUw
+         pFAEB3yWc9v4l0N/oK3F7kR94i4lNT6+T6RhNkgSAe2Q24f2BWtovsUnAZPx4R5Ifs2L
+         zjfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723024503; x=1723629303;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=f/Db4nAXA4XyFniiBDK5f2OcOpm5nMNx8+0JDEjuoZc=;
+        b=etdbCq0vyWDr7ThNGl1/JRVyJp/gFGl+zJz/hWETqsaAp4iGaBBcypSgoPwi0R4J6s
+         GJcrNe5bpUm9C25jtkrcSohjxYpJa5dKyVQInHGVQ3+NUvbJM/vgM95giNqRlvCJplkA
+         uDrCfaY/hGmDWp2hFVV3BEMDz0N2+iezhjc6WZqLMQmVB6+PR5IZ0Kt+AZNHkWNnkviw
+         OeKTEWLjBWXEXkmHX9Xf3IJwo4anQmfNAU1PNP2G643GeyTlllXEo/r0nJDNChZpLH6F
+         fPHX00/3tW6MNrM3vDjM8Todi0QW4/I44ZHIfm1xpN9gmvblfDICt/X+es+K1jvT/xy7
+         zI2A==
+X-Forwarded-Encrypted: i=1; AJvYcCW62WimnZ6o9H5yefZo+QhmVQoEKtskbKvB7FHYjTsrCnQ0OovqCdqm6f3/nV1eBiPLyJKNgKe9uATeseB8LjKijyiMP2q+z9+VDUbd1Q==
+X-Gm-Message-State: AOJu0Yxbk4VjiJa49qdKXbRA/mi0CkT6eiyRjNgFZhl1wx+nAXmzAxau
+	65/aNt1/UFAtIxNp8wtdnHicoQSP/dSH5wjJMcOMT1hZj8gU+ILSopKrwBuqfTA=
+X-Google-Smtp-Source: AGHT+IGOjQkHyUTP41CFkCz0CKQG+qM4z0VM4K02HzdXvNnMobYlkgwrN+8lM3Va/S43AQT1Q9TF5Q==
+X-Received: by 2002:a05:600c:1c8a:b0:426:61af:e1d6 with SMTP id 5b1f17b1804b1-428e6b7be7dmr127696185e9.29.1723024502692;
+        Wed, 07 Aug 2024 02:55:02 -0700 (PDT)
+Received: from [192.168.0.25] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4290580c546sm21641555e9.40.2024.08.07.02.55.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Aug 2024 02:55:02 -0700 (PDT)
+Message-ID: <b5f7b947-fa7b-46c3-868d-766b01401bdb@linaro.org>
+Date: Wed, 7 Aug 2024 10:55:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,93 +76,207 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: sa8775p-ride: Add QCS9100
- compatible
-To: Tengfei Fan <quic_tengfan@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240806-add_qcs9100_soc_id-v1-0-04d14081f304@quicinc.com>
- <20240806-add_qcs9100_soc_id-v1-4-04d14081f304@quicinc.com>
- <90eae361-7d5d-440f-a85d-dfd81b384fe7@kernel.org>
- <4a350e94-3c95-48e1-9ea8-ced483c1aa45@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH] media: qcom: camss: fix error path on configuration of
+ power domains
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Robert Foss <rfoss@kernel.org>
+Cc: Todor Tomov <todor.too@gmail.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Hans Verkuil <hverkuil-cisco@xs4all.nl>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20240806221204.1560258-1-vladimir.zapolskiy@linaro.org>
+ <bb8398a7-3661-437e-8173-09117aedab16@linaro.org>
+ <a2bb7c94-351d-49d2-b1df-961902243116@linaro.org>
+ <60408fc6-29c0-40ab-91f6-79b93889e525@linaro.org>
+ <2deeeab3-189f-41cd-bee8-3dba197cd0cc@linaro.org>
+ <c7dac913-c91f-4780-ae81-804b5506f9cb@linaro.org>
+ <f8247193-c066-462e-a2cd-488fe8b36ff5@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <4a350e94-3c95-48e1-9ea8-ced483c1aa45@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <f8247193-c066-462e-a2cd-488fe8b36ff5@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 07/08/2024 11:17, Tengfei Fan wrote:
-> 
-> 
-> On 8/7/2024 3:28 PM, Krzysztof Kozlowski wrote:
->> On 06/08/2024 06:19, Tengfei Fan wrote:
->>> Add QCS9100 compatible in sa8775p ride and sa8775p ride r3 board DTS.
->>> QCS9100 references SA8775p, they share the same SoC DTSI and board DTS.
+On 07/08/2024 09:52, Vladimir Zapolskiy wrote:
+> On 8/7/24 11:39, Bryan O'Donoghue wrote:
+>> On 07/08/2024 00:37, Vladimir Zapolskiy wrote:
+>>> On 8/7/24 02:30, Bryan O'Donoghue wrote:
+>>>> On 07/08/2024 00:27, Vladimir Zapolskiy wrote:
+>>>>> Hi Bryan.
+>>>>>
+>>>>> On 8/7/24 02:15, Bryan O'Donoghue wrote:
+>>>>>> On 06/08/2024 23:12, Vladimir Zapolskiy wrote:
+>>>>>>> There is a chance to meet runtime issues during configuration of 
+>>>>>>> CAMSS
+>>>>>>> power domains, because on the error path dev_pm_domain_detach() is
+>>>>>>> unexpectedly called with NULL or error pointer.
+>>>>>>>
+>>>>>>> Fixes: 23aa4f0cd327 ("media: qcom: camss: Move VFE power-domain
+>>>>>>> specifics into vfe.c")
+>>>>>>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>>>>>>
+>>>>>> Have you tested this with and without named power domains in your 
+>>>>>> dts ?
+>>>>>> The logic here is complex to support both the legacy non-named 
+>>>>>> case and
+>>>>>> the updated named required case.
+>>>>>
+>>>>> The problem and the fix are pretty straightforward, if you notice any
+>>>>> issues
+>>>>> with it, please let me know.
+>>>>>
+>>>>> As it's said in the commit description the problem is unrelated to
+>>>>> named/not named
+>>>>> power domains, I tested the fix only on a platform without
+>>>>> "power-domain-names"
+>>>>> property in camss device tree node.
+>>>>>
+>>>>>> Could you also provide a backtrace of a failing camss_configure_pd()
+>>>>>> for
+>>>>>> the commit log.
+>>>>>
+>>>>> Sure, I believe anyone can get a backtrace simply by disabling 
+>>>>> camcc at
+>>>>> build time,
+>>>>> so that camss power domain supplies disappear:
+>>>>
+>>>> Ah OK, that's how, proof positive if its not tested, its not working,
+>>>> I've extensively tested both named and non-named pds but, yep never 
+>>>> with
+>>>> camcc switched off.
+>>>>
+>>>>>
+>>>>> [   13.541205] Unable to handle kernel NULL pointer dereference at
+>>>>> virtual address 00000000000001a2
+>>>>> [   13.550224] Mem abort info:
+>>>>> [   13.553110]   ESR = 0x0000000096000004
+>>>>> [   13.556975]   EC = 0x25: DABT (current EL), IL = 32 bits
+>>>>> [   13.562438]   SET = 0, FnV = 0
+>>>>> [   13.565580]   EA = 0, S1PTW = 0
+>>>>> [   13.568813]   FSC = 0x04: level 0 translation fault
+>>>>> [   13.573824] Data abort info:
+>>>>> [   13.576787]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+>>>>> [   13.582424]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+>>>>> [   13.587614]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+>>>>> [   13.593074] user pgtable: 4k pages, 48-bit VAs, 
+>>>>> pgdp=000000088a55a000
+>>>>> [   13.599693] [00000000000001a2] pgd=0000000000000000,
+>>>>> p4d=0000000000000000
+>>>>> [   13.606666] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+>>>>> [   13.613104] Modules linked in:
+>>>>>
+>>>>> <snip>
+>>>>>
+>>>>> [   13.632753] Workqueue: events_unbound deferred_probe_work_func
+>>>>> [   13.638776] pstate: 23400009 (nzCv daif +PAN -UAO +TCO +DIT -SSBS
+>>>>> BTYPE=--)
+>>>>> [   13.645926] pc : dev_pm_domain_detach+0x8/0x48
+>>>>> [   13.650521] lr : camss_probe+0x374/0x9c0
+>>>>> [   13.654577] sp : ffff800086ec3ab0
+>>>>> [   13.657985] x29: ffff800086ec3ab0 x28: ffff8000855079c0 x27:
+>>>>> ffff800085507000
+>>>>> [   13.665329] x26: ffff000800c4b040 x25: 0000000000000000 x24:
+>>>>> ffff00080aa72c20
+>>>>> [   13.672659] x23: ffff800083060588 x22: ffff000801397010 x21:
+>>>>> ffff800083060588
+>>>>> [   13.679989] x20: 00000000ffffff92 x19: ffff00080aa72880 x18:
+>>>>> ffffffffffffffff
+>>>>> [   13.687318] x17: 6e6570656420676e x16: 69726f6e6769202c x15:
+>>>>> 0000000000000000
+>>>>> [   13.694648] x14: 000000000000003e x13: 0000000000000000 x12:
+>>>>> 0000000000000000
+>>>>> [   13.701988] x11: ffff00080b350460 x10: ffff00080b350248 x9 :
+>>>>> ffff800081ddcde4
+>>>>> [   13.709318] x8 : ffff00080b350270 x7 : 0000000000000001 x6 :
+>>>>> 8000003ff0000000
+>>>>> [   13.716658] x5 : ffff00080149a300 x4 : ffff000a72592b70 x3 :
+>>>>> 0000000000076404
+>>>>> [   13.723998] x2 : 0000000000000000 x1 : 0000000000000001 x0 :
+>>>>> ffffffffffffff92
+>>>>> [   13.731338] Call trace:
+>>>>> [   13.733865]  dev_pm_domain_detach+0x8/0x48
+>>>>> [   13.738081]  platform_probe+0x70/0xf0
+>>>>> [   13.741864]  really_probe+0xc4/0x2a8
+>>>>> [   13.745556]  __driver_probe_device+0x80/0x140
+>>>>> [   13.750045]  driver_probe_device+0x48/0x170
+>>>>> [   13.754355]  __device_attach_driver+0xc0/0x148
+>>>>> [   13.758937]  bus_for_each_drv+0x88/0xf0
+>>>>> [   13.762894]  __device_attach+0xb0/0x1c0
+>>>>> [   13.766852]  device_initial_probe+0x1c/0x30
+>>>>> [   13.771165]  bus_probe_device+0xb4/0xc0
+>>>>> [   13.775124]  deferred_probe_work_func+0x90/0xd0
+>>>>> [   13.779787]  process_one_work+0x164/0x3e0
+>>>>> [   13.783920]  worker_thread+0x310/0x420
+>>>>> [   13.787777]  kthread+0x120/0x130
+>>>>> [   13.791123]  ret_from_fork+0x10/0x20
+>>>>> [   13.794821] Code: 828a2cb8 ffff8000 aa1e03e9 d503201f (f9410802)
+>>>>> [   13.801088] ---[ end trace 0000000000000000 ]---
+>>>>
+>>>> I'd be obliged if you could add to your commit log and verify 
+>>>> everything
+>>>> works for you with both named and unnamed power-domains.
+>>>>
 >>>
+>>> No objections to resend the change with an updated commit message, since
+>>> it raised a question, I can add information about a method how to 
+>>> reproduce
+>>> the bug.
+>>>
+>>> However I would like to know your opinion about the change itself, are
+>>> there
+>>> any noticeable issues? Thank you in advance!
+>>>
+>>> -- 
+>>> Best wishes,
+>>> Vladimir
 >>
->> I don't understand this. You claim here that QCS9100 references SA8775p
->> but your diff says other way: SA8775p references QCS9100.
+>> Why not just
 >>
->> Sorry, that's confusing.
+>> diff --git a/drivers/media/platform/qcom/camss/camss.c
+>> b/drivers/media/platform/qcom/camss/camss.c
+>> index 51b1d3550421a..9990af675190c 100644
+>> --- a/drivers/media/platform/qcom/camss/camss.c
+>> +++ b/drivers/media/platform/qcom/camss/camss.c
+>> @@ -2162,7 +2162,8 @@ static int camss_configure_pd(struct camss *camss)
+>>           return 0;
 >>
->> Best regards,
->> Krzysztof
+>>    fail_pm:
+>> -       dev_pm_domain_detach(camss->genpd, true);
+>> +       if (camss->genpd)
+>> +               dev_pm_domain_detach(camss->genpd, true);
+>>
+>>
+>> ?
 >>
 > 
-> I will update the compatible as follows to indicate that QCS9100 
-> references SA8775p.
+> Because your change is invalid strictly speaking, again you've missed
+> an error pointer case, but that's secondary, since it could be improved.
 > 
-> compatible = "qcom,sa8775p-ride", "qcom,qcs9100", "qcom,sa8775p";
+> However your change brings more of unnecessary complexity, because it
+> increases both cyclomatic complexity and increases LoC, when my change
+> reduces the values in both these metrics.
+> 
+> My change makes the code way simpler, hopefully I managed to explain it.
 
-Is this still correct, though? sa8775p won't come with qcs9100 SoC.
+Cyclomatic complexity you know, I checked
 
-Best regards,
-Krzysztof
+pmccabe drivers/media/platform/qcom/camss/camss.c
 
+base:
+12	12	37	2088	81	drivers/media/platform/qcom/camss/camss.c(2088): 
+camss_configure_pd
+
+vlad:
+12	12	35	2088	78	drivers/media/platform/qcom/camss/camss.c(2088): 
+camss_configure_pd
+
+bod:
+13	13	38	2088	82	drivers/media/platform/qcom/camss/camss.c(2088): 
+camss_configure_pd
+
+That's convincing enough for me, please add the kernel backtrace on your V2.
+
+---
+bod
 
