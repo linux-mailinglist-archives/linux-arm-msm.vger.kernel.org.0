@@ -1,272 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-28103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DB0B94AB1C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 17:03:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1974894AB48
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 17:05:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E7C2A281805
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 15:03:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 94F781F27A86
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 15:05:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D9DF126F2A;
-	Wed,  7 Aug 2024 15:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C59812C80F;
+	Wed,  7 Aug 2024 15:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qCsOXo3R"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aP9NnCxR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD1E85654;
-	Wed,  7 Aug 2024 15:02:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C2878C67;
+	Wed,  7 Aug 2024 15:04:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723042966; cv=none; b=ch8wKCeva3N56WjZs7hS4ZOc3UBnsiqxTzuDNiuodK3hHlaDkMM+dP6HQJpTxsoR0O+eJQHtY5ooa/7PRtyh38Q6+VWzroGO6WDGVBzUeAapi8ZR3yJPAY6LiSxhvSMVVSwVueBALDipqpFVMQTOs1g9uOhe9Cjv01txZQhxPTk=
+	t=1723043051; cv=none; b=a0zya9PrABJMKsFKM7xJMrgkUop2gapVxDeVNWhxP+izJHsiVOjRBtn04C3FVXtdD0yjv8gxI7Twe3eLkdpt8bYk/Ys+PNgh5ZfWtqDRzAUPR3F4b4Vngw71g+d4eBeSNz/ZVuckPDDCAEg2pM4tGn/AiIVu9kbCr/UTYu+nY8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723042966; c=relaxed/simple;
-	bh=biH+U01nxwxEeqT9f/bCBvINyb2qztxIVE1TeA/3V30=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T09AiMVdqf3Tb/lW1asprs21Xg+W8cAvKnrnJq7fNzq9Se6oWWo+HClCQ8Wo3JP37SxY62Mkw9tcuT2Xlibf+ggYWRdct5sx5b0eYM7os/DvuOKrh0sC52IQEaFQVSe4Ol/p3aoOsmUrIbmWi9z+aypStHS7c216MSLgwBZ5EJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qCsOXo3R; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51AD5C4AF0D;
-	Wed,  7 Aug 2024 15:02:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723042965;
-	bh=biH+U01nxwxEeqT9f/bCBvINyb2qztxIVE1TeA/3V30=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qCsOXo3RdTXUAKRqdO8BnZoDN58uw7xLzcrszatlO8v4nuWDF6xWLYtPrwPlQ59SC
-	 XjufuwlRfaMEr5OI8q0Yv4zkrHbbX7D8DZMxCbzlVMSYOXn3vHTCYz1cL0G2X0XOnt
-	 Yr89p7WalqVKv/Z+ozY1Gw97/XsU4qg7nBM1jsqdGnjqoGPk7KaypYa0kglB583fjf
-	 XRg/VnSsx8cTbBKxBOMBzlt2biL2bKFOzd6cc6K4A6L8B5IZFRJiHLsQ3d2n1nsw8k
-	 /VRP0vHM4eByjflxAAEcybDYfyKpocvHnOF2cFkBAE1sjA1I0aEu61oJyasSbj8zTm
-	 PBRHoeuvtPuCw==
-Date: Wed, 7 Aug 2024 17:02:38 +0200
-From: Lorenzo Pieralisi <lpieralisi@kernel.org>
-To: Elliot Berman <quic_eberman@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-	Melody Olvera <quic_molvera@quicinc.com>,
-	Shivendra Pratap <quic_spratap@quicinc.com>,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v5 3/4] firmware: psci: Read and use vendor reset types
-Message-ID: <ZrOMjomTTWZ91Uzf@lpieralisi>
-References: <20240617-arm-psci-system_reset2-vendor-reboots-v5-0-086950f650c8@quicinc.com>
- <20240617-arm-psci-system_reset2-vendor-reboots-v5-3-086950f650c8@quicinc.com>
+	s=arc-20240116; t=1723043051; c=relaxed/simple;
+	bh=AW4oJxgDMSIGfvbiUjJMohsaTkK3nVI+Ow/6ORgTGqo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=EqhGNsP1FgnyZ2yDv0LjwKGVIX0riX53LjDbfIYgN9rs4fMihg33EzOf76FKzfSUPFbtSQxu4LiqgucABJ7L5MN5WQYGKctiJqNjfer3AHIx0aG3NIWQhQbfeN3spghfWP3FcLjnm1c1CIAs4S59OPbpdKi2Lf/vjqZF97dwBXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aP9NnCxR; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4778DxN5002857;
+	Wed, 7 Aug 2024 15:04:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ROn9BmIOv923LfjYstHIrvLocxc6Z7XaPrBDmX4KWWQ=; b=aP9NnCxRmnimuSqK
+	c0Dgvt3hIyWLhjtqRkNOKaqr86QKIMvnAger9CEfpSxukWwWcq9AJpm2JX72g74x
+	su4GtRuHRmD87Hs2XnLyDuZWaSlq3SFNrcExvyTkorgbw9ar6ICa6jvYTe+Au8T8
+	he/4kBO8fAGYcC4BrDfHB96C2CV6xSYH7bjLX6OCxEMvLSwImS0M4iBmV8pWHjJR
+	2Lm/Ganss4A6/l5lxf2/o/Q+Vn5OTcJGg0GLyAgPQ97Ot4XwVkA3phLF9yegFM1v
+	1kP6C4Holt/31sag5KJ4CyU4UHJ1p8p0Q+B/BrJochut+hhnFi+CQowiWgr6bZdZ
+	/xhqdA==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40sdu9axea-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 07 Aug 2024 15:04:03 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 477F42Kt010601
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 7 Aug 2024 15:04:02 GMT
+Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 7 Aug 2024
+ 08:03:57 -0700
+Message-ID: <7c03280f-908d-435d-acef-b6bf4f865029@quicinc.com>
+Date: Wed, 7 Aug 2024 23:03:55 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240617-arm-psci-system_reset2-vendor-reboots-v5-3-086950f650c8@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/13] media: qcom: camss: csiphy: Add an init callback to
+ CSI PHY devices
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Vladimir Zapolskiy
+	<vladimir.zapolskiy@linaro.org>,
+        <rfoss@kernel.org>, <todor.too@gmail.com>, <mchehab@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>
+CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
+References: <20240709160656.31146-1-quic_depengs@quicinc.com>
+ <20240709160656.31146-5-quic_depengs@quicinc.com>
+ <6dfc2c79-fc6d-4eed-bf3f-94396130cb4f@linaro.org>
+ <fafda7d5-3853-428a-b0eb-9993fc2d4f56@linaro.org>
+ <4426c0e0-f877-409c-b2d2-a5aac5e8c645@linaro.org>
+ <1226d080-d1fc-4e06-ac81-84e93cb314e0@quicinc.com>
+ <8f935a7d-87b5-479c-a98e-c95671dbe259@linaro.org>
+Content-Language: en-US
+From: Depeng Shao <quic_depengs@quicinc.com>
+In-Reply-To: <8f935a7d-87b5-479c-a98e-c95671dbe259@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: NE36SZdm1nl2VGnKMJk62g9sNeGw72lo
+X-Proofpoint-GUID: NE36SZdm1nl2VGnKMJk62g9sNeGw72lo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-07_11,2024-08-07_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 mlxlogscore=709 suspectscore=0 malwarescore=0
+ clxscore=1015 phishscore=0 spamscore=0 bulkscore=0 mlxscore=0
+ impostorscore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2408070106
 
-On Mon, Jun 17, 2024 at 10:18:09AM -0700, Elliot Berman wrote:
-> SoC vendors have different types of resets and are controlled through
-> various registers. For instance, Qualcomm chipsets can reboot to a
-> "download mode" that allows a RAM dump to be collected. Another example
-> is they also support writing a cookie that can be read by bootloader
-> during next boot. PSCI offers a mechanism, SYSTEM_RESET2, for these
-> vendor reset types to be implemented without requiring drivers for every
-> register/cookie.
+Hi Bryan,
+
+On 8/7/2024 10:04 PM, Bryan O'Donoghue wrote:
+> On 07/08/2024 14:08, Depeng Shao wrote:
+>> Hi Vladimir,
+>>
+>> On 8/5/2024 5:26 AM, Vladimir Zapolskiy wrote:
+>>> Hi Bryan,
+>>>
+>>> On 8/1/24 11:16, Bryan O'Donoghue wrote:
+>>>> On 01/08/2024 00:43, Vladimir Zapolskiy wrote:
+>>>>>> +    ret = csiphy->res->hw_ops->init(csiphy);
+>>>>>
+>>>>> Here.
+>>>>
+>>>> What name would make more sense to you ?
+>>>
+>>> according to the implementation the .init() call just fills some data in
+>>> memory, so I believe this could be handled at build time, if it's done
+>>> carefully enough...
+>>>
+>>
+>> This camss-csiphy-3ph-1-0.c is reused by many platforms, the old 
+>> platforms have same CSI_COMMON_CTR register offset, their offset are 
+>> 0x800, but some new platforms may have different CSI_COMMON_CTR 
+>> register offset, for example, the CSI_COMMON_CTR register offset is 
+>> 0x1000 in sm8550, then we need to add new file to support the new 
+>> csiphy HW, e.g., camss-csiphy-3ph-2-0.c, so Bryan asked me to develop 
+>> the CSIPHY driver based on his changes, then we just need few code to 
+>> enable new CSIPHY.
+>>
+>> Regarding the hw_ops->init interface, since it fills HW register 
+>> configurations and HW register offset, then maybe, it also can be 
+>> called as HW operation.
+>>
+>> And looks like we can't move it to camss-csiphy.c since it does 
+>> platform specific operation and it is related to the registers.
+>>
+>> Please feel free to share other comments if you don't agree with it. 
+>> Thanks.
+>>
+>>
+>> Thanks,
+>> Depeng
 > 
-> Add support in PSCI to statically map reboot mode commands from
-> userspace to a vendor reset and cookie value using the device tree.
+> So, I agree the phy init data could be obtained via resource structs 
+> but, rather than add yet more patches to this series, I'd say we can 
+> make the move to a separate resource struct pointer at a later date.
 > 
-> A separate initcall is needed to parse the devicetree, instead of using
-> psci_dt_init because mm isn't sufficiently set up to allocate memory.
+> Lets drop this patch and @Depeng we can then do
 > 
-> Reboot mode framework is close but doesn't quite fit with the
-> design and requirements for PSCI SYSTEM_RESET2. Some of these issues can
-> be solved but doesn't seem reasonable in sum:
->  1. reboot mode registers against the reboot_notifier_list, which is too
->     early to call SYSTEM_RESET2.
 
-Please define "too early" (apologies if it has been explained before).
+> +    regs->offset = 0x800;
+> 
+> media: qcom: camss: csiphy-3ph: Use an offset variable to find common 
+> control regs
+>
 
->     PSCI would need to remember the reset type from the reboot-mode
->     framework callback and use it psci_sys_reset.
->  2. reboot mode assumes only one cookie/parameter is described in the
->     device tree. SYSTEM_RESET2 uses 2: one for the type and one for
->     cookie.
 
-That's surmountable I suppose.
+Do you mean only drop "[PATCH 04/13] media: qcom: camss: csiphy: Add an 
+init callback to CSI PHY devices"?
 
->  3. psci cpuidle driver already registers a driver against the
->     arm,psci-1.0 compatible. Refactoring would be needed to have both a
->     cpuidle and reboot-mode driver.
 
-We could put together a PSCI "parent" driver that creates child platform
-devices for idle and reboot drivers to match (which actually is not
-really pretty but it would make more sense than matching the idle
-driver only to the psci compatible string, which is what current code
-does).
+[PATCH 05/13] media: qcom: camss: csiphy-3ph: Move CSIPHY variables to 
+data field inside csiphy struct
+Do you mean this is still needed? Just don't move the code from 
+csiphy_gen2_config_lanes to csiphy_init, right?
 
-> Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+
+[PATCH 06/13] media: qcom: camss: csiphy-3ph: Use an offset variable to 
+find common control regs
+The offset change is also needed, just need to add the offset for 
+different platform in csiphy_gen2_config_lanes .
+
+Please correct me if my understanding is wrong. Thanks.
+
+> As a bonus that's one less patch for this series which @ 13 patches is 
+> already large.
+> 
 > ---
->  drivers/firmware/psci/psci.c | 92 ++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 92 insertions(+)
-> 
-> diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
-> index d9629ff87861..e672b33b71d1 100644
-> --- a/drivers/firmware/psci/psci.c
-> +++ b/drivers/firmware/psci/psci.c
-> @@ -29,6 +29,8 @@
->  #include <asm/smp_plat.h>
->  #include <asm/suspend.h>
->  
-> +#define REBOOT_PREFIX "mode-"
-> +
->  /*
->   * While a 64-bit OS can make calls with SMC32 calling conventions, for some
->   * calls it is necessary to use SMC64 to pass or return 64-bit values.
-> @@ -79,6 +81,14 @@ struct psci_0_1_function_ids get_psci_0_1_function_ids(void)
->  static u32 psci_cpu_suspend_feature;
->  static bool psci_system_reset2_supported;
->  
-> +struct psci_reset_param {
-> +	const char *mode;
-> +	u32 reset_type;
-> +	u32 cookie;
-> +};
-> +static struct psci_reset_param *psci_reset_params;
-> +static size_t num_psci_reset_params;
-> +
->  static inline bool psci_has_ext_power_state(void)
->  {
->  	return psci_cpu_suspend_feature &
-> @@ -305,9 +315,29 @@ static int get_set_conduit_method(const struct device_node *np)
->  	return 0;
->  }
->  
-> +static void psci_vendor_sys_reset2(unsigned long action, void *data)
-
-'action' is unused and therefore it is not really needed.
-
-> +{
-> +	const char *cmd = data;
-> +	unsigned long ret;
-> +	size_t i;
-> +
-> +	for (i = 0; i < num_psci_reset_params; i++) {
-> +		if (!strcmp(psci_reset_params[i].mode, cmd)) {
-> +			ret = invoke_psci_fn(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2),
-> +					     psci_reset_params[i].reset_type,
-> +					     psci_reset_params[i].cookie, 0);
-> +			pr_err("failed to perform reset \"%s\": %ld\n",
-> +				cmd, (long)ret);
-> +		}
-> +	}
-> +}
-> +
->  static int psci_sys_reset(struct notifier_block *nb, unsigned long action,
->  			  void *data)
->  {
-> +	if (data && num_psci_reset_params)
-
-So, reboot_mode here is basically ignored; if there is a vendor defined
-reset, we fire it off.
-
-I think Mark mentioned his concerns earlier related to REBOOT_* mode and
-reset type (granted, the context was different):
-
-https://lore.kernel.org/all/20200320120105.GA36658@C02TD0UTHF1T.local/
-
-I would like to understand if this is the right thing to do before
-accepting this patchset.
+> bod
 
 Thanks,
-Lorenzo
+Depeng
 
-> +		psci_vendor_sys_reset2(action, data);
-> +
->  	if ((reboot_mode == REBOOT_WARM || reboot_mode == REBOOT_SOFT) &&
->  	    psci_system_reset2_supported) {
->  		/*
-> @@ -748,6 +778,68 @@ static const struct of_device_id psci_of_match[] __initconst = {
->  	{},
->  };
->  
-> +static int __init psci_init_system_reset2_modes(void)
-> +{
-> +	const size_t len = strlen(REBOOT_PREFIX);
-> +	struct psci_reset_param *param;
-> +	struct device_node *psci_np __free(device_node) = NULL;
-> +	struct device_node *np __free(device_node) = NULL;
-> +	struct property *prop;
-> +	size_t count = 0;
-> +	u32 magic[2];
-> +	int num;
-> +
-> +	if (!psci_system_reset2_supported)
-> +		return 0;
-> +
-> +	psci_np = of_find_matching_node(NULL, psci_of_match);
-> +	if (!psci_np)
-> +		return 0;
-> +
-> +	np = of_find_node_by_name(psci_np, "reset-types");
-> +	if (!np)
-> +		return 0;
-> +
-> +	for_each_property_of_node(np, prop) {
-> +		if (strncmp(prop->name, REBOOT_PREFIX, len))
-> +			continue;
-> +		num = of_property_count_elems_of_size(np, prop->name, sizeof(magic[0]));
-> +		if (num != 1 && num != 2)
-> +			continue;
-> +
-> +		count++;
-> +	}
-> +
-> +	param = psci_reset_params = kcalloc(count, sizeof(*psci_reset_params), GFP_KERNEL);
-> +	if (!psci_reset_params)
-> +		return -ENOMEM;
-> +
-> +	for_each_property_of_node(np, prop) {
-> +		if (strncmp(prop->name, REBOOT_PREFIX, len))
-> +			continue;
-> +
-> +		param->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
-> +		if (!param->mode)
-> +			continue;
-> +
-> +		num = of_property_read_variable_u32_array(np, prop->name, magic, 1, 2);
-> +		if (num < 0) {
-> +			pr_warn("Failed to parse vendor reboot mode %s\n", param->mode);
-> +			kfree_const(param->mode);
-> +			continue;
-> +		}
-> +
-> +		/* Force reset type to be in vendor space */
-> +		param->reset_type = PSCI_1_1_RESET_TYPE_VENDOR_START | magic[0];
-> +		param->cookie = num == 2 ? magic[1] : 0;
-> +		param++;
-> +		num_psci_reset_params++;
-> +	}
-> +
-> +	return 0;
-> +}
-> +arch_initcall(psci_init_system_reset2_modes);
-> +
->  int __init psci_dt_init(void)
->  {
->  	struct device_node *np;
-> 
-> -- 
-> 2.34.1
-> 
 
