@@ -1,282 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-28077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E03B94A4CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 11:55:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1B7794A618
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 12:46:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6200F1C2107E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 09:55:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 70AD62854E0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 10:46:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FB411CCB2B;
-	Wed,  7 Aug 2024 09:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBDB11E2880;
+	Wed,  7 Aug 2024 10:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j2C8ivaj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eQEG66Vw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-pl1-f195.google.com (mail-pl1-f195.google.com [209.85.214.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0A71D1F50
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Aug 2024 09:55:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419011C3F0A
+	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Aug 2024 10:44:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723024506; cv=none; b=lG50VjEX7LAjuo8AM7QDI13QDmi9OBSN9310L1IjmgDmFWWvpIytJXM+YWvw9Rtr0Ps4lLx9iK6HKVKhfhZZ3FDomcJIaUwaZiHCAnqqBaTWEF2khtutUQBZagPlWonnbSesHLcw9+68pwfhBzQXDFxLHq2Nr5nYLdLAi3icUdI=
+	t=1723027459; cv=none; b=EGj7lS/zSpwuFpNnB4YnO48GwnnlYw3kevew4fjFw5O9hmf/Mql/FweaMJuhjQ2deHLZtw6okLGEdHq4CMA9zsdxTmfDUi8bnfLjXa8E0+3c+Lq8rJtBGXRstHb3PHozwVcK/WtXHHiChe36JsiticIPRF39DNRglIxxwnzy2ZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723024506; c=relaxed/simple;
-	bh=0x6kDT10XqtuI+DR3Nm7exFXWYYI4D5DAdW64rmjAaI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WnWtAjD5e2f4ZBc8HKvdLLeJBpyMkZmzmgOiIOvXXazFsrkH6XqrWhEYBHRsLBAIJUbptOgqJ8BXENgHfXXwFYlzNSMho7G7k6iY8UolH/rH+t1m2Z5O7rmVFJCf79bwUl1oREREDSRVNwzBxUwwv0yZaasy+fzENQQL85w7/Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j2C8ivaj; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1723027459; c=relaxed/simple;
+	bh=7F2dgW4FuJsClw6RwBczzLtLul8AUYM2EWM8QMsAPjU=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=MI4XLQtEHWtIwFh8sqiYTPOyIBkoemCzI53ekCtfqgQTy9CwnMKyvFx+93LvJZJIEo+HXDG5z+YbwE9W9L2FLwJiJjbetp2EB9BDKYoQTs0njmaCb5lc27T6McE9y1Bijd4DSSWXjpxlu7DWh12U/4AQl5eA4Zk7+xp2m9v19QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eQEG66Vw; arc=none smtp.client-ip=209.85.214.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-428e0d18666so10470705e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Aug 2024 02:55:04 -0700 (PDT)
+Received: by mail-pl1-f195.google.com with SMTP id d9443c01a7336-1fc56fd4de1so5646445ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Aug 2024 03:44:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723024503; x=1723629303; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=f/Db4nAXA4XyFniiBDK5f2OcOpm5nMNx8+0JDEjuoZc=;
-        b=j2C8ivajKqdfMTKnJt8zIQBbdKacYxaFxW59TCX8wk3c5fKi/c23Zu2+5IJcaAGTyb
-         fTbQrQyK0Bb+UbWLRwjeWfvgmyKSI7MgviZ+l1si9wA/oYuRTg+YhJYjsf81m5vYXUl8
-         piIBwq4PLhTwK1G/EwlDt5Z9d3mGrJ+GywciyMODCoDNuiZuDwJ6NjIdWVeFEsD0EQj3
-         n8eEwz8+6+YIrXPv2nECako+LRTnJOnvtaRPHaqaQx6xBQRXgPSlfjA6TbwdwxPbfKUw
-         pFAEB3yWc9v4l0N/oK3F7kR94i4lNT6+T6RhNkgSAe2Q24f2BWtovsUnAZPx4R5Ifs2L
-         zjfg==
+        d=linaro.org; s=google; t=1723027457; x=1723632257; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=F3o02Xw7ezzA14Pd+Lgc2BLB9SvalP82R9YVWF/sDxk=;
+        b=eQEG66Vwf4gwAYtdaF9HPk1L4L+dBqzCKMONQnz8rR1WzM1b8ZZ85xLIh1QuEwRU+l
+         uQ8U+SsAsydm3JgxcPZIshMx1mJa02gO4eZ2GMzHDhHS0ksZxIyDQO7QDWirGi3dGhHb
+         7mTgICeuaHy75sqEGS35/Xa3yQYIyvR8I+cyjSMmDsPJM2OV1aL7wIbzf78RzMevTyls
+         uqOaNNAJBQquMIg0zr1plyUb5UxseIjUeebIsUtEM76TTQ3Fvc37sgWuMEnyIPy+HhDI
+         /YL216wDGRsn6zoIs+XBY2Aq6/EwzJ7wD1zf9c+vGcTEi+eqGa256Dk7QAtpR15WxXkx
+         Ifxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723024503; x=1723629303;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=f/Db4nAXA4XyFniiBDK5f2OcOpm5nMNx8+0JDEjuoZc=;
-        b=etdbCq0vyWDr7ThNGl1/JRVyJp/gFGl+zJz/hWETqsaAp4iGaBBcypSgoPwi0R4J6s
-         GJcrNe5bpUm9C25jtkrcSohjxYpJa5dKyVQInHGVQ3+NUvbJM/vgM95giNqRlvCJplkA
-         uDrCfaY/hGmDWp2hFVV3BEMDz0N2+iezhjc6WZqLMQmVB6+PR5IZ0Kt+AZNHkWNnkviw
-         OeKTEWLjBWXEXkmHX9Xf3IJwo4anQmfNAU1PNP2G643GeyTlllXEo/r0nJDNChZpLH6F
-         fPHX00/3tW6MNrM3vDjM8Todi0QW4/I44ZHIfm1xpN9gmvblfDICt/X+es+K1jvT/xy7
-         zI2A==
-X-Forwarded-Encrypted: i=1; AJvYcCW62WimnZ6o9H5yefZo+QhmVQoEKtskbKvB7FHYjTsrCnQ0OovqCdqm6f3/nV1eBiPLyJKNgKe9uATeseB8LjKijyiMP2q+z9+VDUbd1Q==
-X-Gm-Message-State: AOJu0Yxbk4VjiJa49qdKXbRA/mi0CkT6eiyRjNgFZhl1wx+nAXmzAxau
-	65/aNt1/UFAtIxNp8wtdnHicoQSP/dSH5wjJMcOMT1hZj8gU+ILSopKrwBuqfTA=
-X-Google-Smtp-Source: AGHT+IGOjQkHyUTP41CFkCz0CKQG+qM4z0VM4K02HzdXvNnMobYlkgwrN+8lM3Va/S43AQT1Q9TF5Q==
-X-Received: by 2002:a05:600c:1c8a:b0:426:61af:e1d6 with SMTP id 5b1f17b1804b1-428e6b7be7dmr127696185e9.29.1723024502692;
-        Wed, 07 Aug 2024 02:55:02 -0700 (PDT)
-Received: from [192.168.0.25] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4290580c546sm21641555e9.40.2024.08.07.02.55.01
+        d=1e100.net; s=20230601; t=1723027457; x=1723632257;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=F3o02Xw7ezzA14Pd+Lgc2BLB9SvalP82R9YVWF/sDxk=;
+        b=GD36c6ZojlV3QEqOWibxX618swcNA2jbk/AAjqsr+CkDxlZIt2xTWBKKZeKZiXIPmo
+         CcHojoYmkaBAO702K2xUWRuM+US7MIn5J5uGn85xNFsokhY+HpOifwGvL0uFBNsZAL/M
+         ptg3E4pmhqa+l4Oo/rRsO7F2WT7VKIUE7Yi+N9FEzRdYYePOuRY9cc+aYJKTNI6yTppg
+         1UxAX1D24ZqUdPvNvsMaKQaTLwSyYqNtD0qpoxxoBKk2LzW7SHVRz+3lofrFLqWacwC2
+         mLfxLxWsuAcAFNvAtO5+l9chuGyEZhysDIyT9zQpiEdIMPk66/YaslFwDS32zBK5EVb7
+         IxPw==
+X-Gm-Message-State: AOJu0YxK7spl2oCVhD2pWQLM+2wigQApWsXFDodcnp21xQt+7upFuskE
+	j4FfYgX2uwwYFxLBzG91HChegJrNITrCo9sgne/Nocx0+4UsLIXl196mfNucKojroygED+zrdUK
+	rGzpXbfuYs1k=
+X-Google-Smtp-Source: AGHT+IFoNLrt1GaF+yeaFvmCHadWYdmm/RDr/6D/Md5qSi81mcUQk94i8uHGUfoK6lIe9cztu7TiAg==
+X-Received: by 2002:a17:903:a88:b0:1f9:ad91:f8d0 with SMTP id d9443c01a7336-200853de85cmr23075065ad.8.1723027457532;
+        Wed, 07 Aug 2024 03:44:17 -0700 (PDT)
+Received: from [127.0.0.1] ([182.232.168.81])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff5905e58fsm103268695ad.177.2024.08.07.03.44.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Aug 2024 02:55:02 -0700 (PDT)
-Message-ID: <b5f7b947-fa7b-46c3-868d-766b01401bdb@linaro.org>
-Date: Wed, 7 Aug 2024 10:55:01 +0100
+        Wed, 07 Aug 2024 03:44:17 -0700 (PDT)
+Date: Wed, 07 Aug 2024 17:44:12 +0700
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Leonard Lausen <leonard@lausen.nl>, Rob Clark <robdclark@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+CC: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ Jeykumar Sankaran <jsanka@codeaurora.org>, stable@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_1/2=5D_drm/msm/dpu1=3A_don=27t_c?=
+ =?US-ASCII?Q?hoke_on_disabling_the_writeback_connector?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <57cdac1a-1c4d-4299-8fde-92ae054fc6c0@lausen.nl>
+References: <20240802-dpu-fix-wb-v2-0-7eac9eb8e895@linaro.org> <20240802-dpu-fix-wb-v2-1-7eac9eb8e895@linaro.org> <57cdac1a-1c4d-4299-8fde-92ae054fc6c0@lausen.nl>
+Message-ID: <61D52432-DD30-4C43-BD5E-1CC9F84DF5B9@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: qcom: camss: fix error path on configuration of
- power domains
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Robert Foss <rfoss@kernel.org>
-Cc: Todor Tomov <todor.too@gmail.com>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240806221204.1560258-1-vladimir.zapolskiy@linaro.org>
- <bb8398a7-3661-437e-8173-09117aedab16@linaro.org>
- <a2bb7c94-351d-49d2-b1df-961902243116@linaro.org>
- <60408fc6-29c0-40ab-91f6-79b93889e525@linaro.org>
- <2deeeab3-189f-41cd-bee8-3dba197cd0cc@linaro.org>
- <c7dac913-c91f-4780-ae81-804b5506f9cb@linaro.org>
- <f8247193-c066-462e-a2cd-488fe8b36ff5@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <f8247193-c066-462e-a2cd-488fe8b36ff5@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 07/08/2024 09:52, Vladimir Zapolskiy wrote:
-> On 8/7/24 11:39, Bryan O'Donoghue wrote:
->> On 07/08/2024 00:37, Vladimir Zapolskiy wrote:
->>> On 8/7/24 02:30, Bryan O'Donoghue wrote:
->>>> On 07/08/2024 00:27, Vladimir Zapolskiy wrote:
->>>>> Hi Bryan.
->>>>>
->>>>> On 8/7/24 02:15, Bryan O'Donoghue wrote:
->>>>>> On 06/08/2024 23:12, Vladimir Zapolskiy wrote:
->>>>>>> There is a chance to meet runtime issues during configuration of 
->>>>>>> CAMSS
->>>>>>> power domains, because on the error path dev_pm_domain_detach() is
->>>>>>> unexpectedly called with NULL or error pointer.
->>>>>>>
->>>>>>> Fixes: 23aa4f0cd327 ("media: qcom: camss: Move VFE power-domain
->>>>>>> specifics into vfe.c")
->>>>>>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->>>>>>
->>>>>> Have you tested this with and without named power domains in your 
->>>>>> dts ?
->>>>>> The logic here is complex to support both the legacy non-named 
->>>>>> case and
->>>>>> the updated named required case.
->>>>>
->>>>> The problem and the fix are pretty straightforward, if you notice any
->>>>> issues
->>>>> with it, please let me know.
->>>>>
->>>>> As it's said in the commit description the problem is unrelated to
->>>>> named/not named
->>>>> power domains, I tested the fix only on a platform without
->>>>> "power-domain-names"
->>>>> property in camss device tree node.
->>>>>
->>>>>> Could you also provide a backtrace of a failing camss_configure_pd()
->>>>>> for
->>>>>> the commit log.
->>>>>
->>>>> Sure, I believe anyone can get a backtrace simply by disabling 
->>>>> camcc at
->>>>> build time,
->>>>> so that camss power domain supplies disappear:
->>>>
->>>> Ah OK, that's how, proof positive if its not tested, its not working,
->>>> I've extensively tested both named and non-named pds but, yep never 
->>>> with
->>>> camcc switched off.
->>>>
->>>>>
->>>>> [   13.541205] Unable to handle kernel NULL pointer dereference at
->>>>> virtual address 00000000000001a2
->>>>> [   13.550224] Mem abort info:
->>>>> [   13.553110]   ESR = 0x0000000096000004
->>>>> [   13.556975]   EC = 0x25: DABT (current EL), IL = 32 bits
->>>>> [   13.562438]   SET = 0, FnV = 0
->>>>> [   13.565580]   EA = 0, S1PTW = 0
->>>>> [   13.568813]   FSC = 0x04: level 0 translation fault
->>>>> [   13.573824] Data abort info:
->>>>> [   13.576787]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
->>>>> [   13.582424]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
->>>>> [   13.587614]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
->>>>> [   13.593074] user pgtable: 4k pages, 48-bit VAs, 
->>>>> pgdp=000000088a55a000
->>>>> [   13.599693] [00000000000001a2] pgd=0000000000000000,
->>>>> p4d=0000000000000000
->>>>> [   13.606666] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
->>>>> [   13.613104] Modules linked in:
->>>>>
->>>>> <snip>
->>>>>
->>>>> [   13.632753] Workqueue: events_unbound deferred_probe_work_func
->>>>> [   13.638776] pstate: 23400009 (nzCv daif +PAN -UAO +TCO +DIT -SSBS
->>>>> BTYPE=--)
->>>>> [   13.645926] pc : dev_pm_domain_detach+0x8/0x48
->>>>> [   13.650521] lr : camss_probe+0x374/0x9c0
->>>>> [   13.654577] sp : ffff800086ec3ab0
->>>>> [   13.657985] x29: ffff800086ec3ab0 x28: ffff8000855079c0 x27:
->>>>> ffff800085507000
->>>>> [   13.665329] x26: ffff000800c4b040 x25: 0000000000000000 x24:
->>>>> ffff00080aa72c20
->>>>> [   13.672659] x23: ffff800083060588 x22: ffff000801397010 x21:
->>>>> ffff800083060588
->>>>> [   13.679989] x20: 00000000ffffff92 x19: ffff00080aa72880 x18:
->>>>> ffffffffffffffff
->>>>> [   13.687318] x17: 6e6570656420676e x16: 69726f6e6769202c x15:
->>>>> 0000000000000000
->>>>> [   13.694648] x14: 000000000000003e x13: 0000000000000000 x12:
->>>>> 0000000000000000
->>>>> [   13.701988] x11: ffff00080b350460 x10: ffff00080b350248 x9 :
->>>>> ffff800081ddcde4
->>>>> [   13.709318] x8 : ffff00080b350270 x7 : 0000000000000001 x6 :
->>>>> 8000003ff0000000
->>>>> [   13.716658] x5 : ffff00080149a300 x4 : ffff000a72592b70 x3 :
->>>>> 0000000000076404
->>>>> [   13.723998] x2 : 0000000000000000 x1 : 0000000000000001 x0 :
->>>>> ffffffffffffff92
->>>>> [   13.731338] Call trace:
->>>>> [   13.733865]  dev_pm_domain_detach+0x8/0x48
->>>>> [   13.738081]  platform_probe+0x70/0xf0
->>>>> [   13.741864]  really_probe+0xc4/0x2a8
->>>>> [   13.745556]  __driver_probe_device+0x80/0x140
->>>>> [   13.750045]  driver_probe_device+0x48/0x170
->>>>> [   13.754355]  __device_attach_driver+0xc0/0x148
->>>>> [   13.758937]  bus_for_each_drv+0x88/0xf0
->>>>> [   13.762894]  __device_attach+0xb0/0x1c0
->>>>> [   13.766852]  device_initial_probe+0x1c/0x30
->>>>> [   13.771165]  bus_probe_device+0xb4/0xc0
->>>>> [   13.775124]  deferred_probe_work_func+0x90/0xd0
->>>>> [   13.779787]  process_one_work+0x164/0x3e0
->>>>> [   13.783920]  worker_thread+0x310/0x420
->>>>> [   13.787777]  kthread+0x120/0x130
->>>>> [   13.791123]  ret_from_fork+0x10/0x20
->>>>> [   13.794821] Code: 828a2cb8 ffff8000 aa1e03e9 d503201f (f9410802)
->>>>> [   13.801088] ---[ end trace 0000000000000000 ]---
->>>>
->>>> I'd be obliged if you could add to your commit log and verify 
->>>> everything
->>>> works for you with both named and unnamed power-domains.
->>>>
->>>
->>> No objections to resend the change with an updated commit message, since
->>> it raised a question, I can add information about a method how to 
->>> reproduce
->>> the bug.
->>>
->>> However I would like to know your opinion about the change itself, are
->>> there
->>> any noticeable issues? Thank you in advance!
->>>
->>> -- 
->>> Best wishes,
->>> Vladimir
->>
->> Why not just
->>
->> diff --git a/drivers/media/platform/qcom/camss/camss.c
->> b/drivers/media/platform/qcom/camss/camss.c
->> index 51b1d3550421a..9990af675190c 100644
->> --- a/drivers/media/platform/qcom/camss/camss.c
->> +++ b/drivers/media/platform/qcom/camss/camss.c
->> @@ -2162,7 +2162,8 @@ static int camss_configure_pd(struct camss *camss)
->>           return 0;
->>
->>    fail_pm:
->> -       dev_pm_domain_detach(camss->genpd, true);
->> +       if (camss->genpd)
->> +               dev_pm_domain_detach(camss->genpd, true);
->>
->>
->> ?
->>
-> 
-> Because your change is invalid strictly speaking, again you've missed
-> an error pointer case, but that's secondary, since it could be improved.
-> 
-> However your change brings more of unnecessary complexity, because it
-> increases both cyclomatic complexity and increases LoC, when my change
-> reduces the values in both these metrics.
-> 
-> My change makes the code way simpler, hopefully I managed to explain it.
+On August 5, 2024 9:27:39 AM GMT+07:00, Leonard Lausen <leonard@lausen=2Enl=
+> wrote:
+>Dear Dmitry,
+>
+>Thank you for the patch=2E Unfortunately, the patch triggers a regression=
+ with
+>respect to DRM CRTC state handling=2E With the patch applied, suspending =
+and
+>resuming a lazor sc7180 with external display connected, looses CRTC stat=
+e on
+>resume and prevents applying a new CRTC state=2E Without the patch, CRTC =
+state is
+>preserved across suspend and resume and it remains possible to change CRT=
+C
+>settings after resume=2E This means the patch regresses the user experien=
+ce,
+>preventing "Night Light" mode to work as expected=2E I've validated this =
+on
+>v6=2E10=2E2 vs=2E v6=2E10=2E2 with this patch applied=2E
+>
 
-Cyclomatic complexity you know, I checked
+Could you please clarify, I was under the impression that currently whole =
+suspend/resume is broken, so it's more than a dmesg message=2E
 
-pmccabe drivers/media/platform/qcom/camss/camss.c
+>While the cause for the bug uncovered by this change is likely separate, =
+given
+>it's impact, would it be prudent to delay the application of this patch u=
+ntil
+>the related bug is identified and fixed? Otherwise we would be fixing a d=
+mesg
+>error message "[dpu error]connector not connected 3" that appears to do n=
+o harm
+>but thereby break more critical user visible behavior=2E
+>
+>Best regards
+>Leonard
+>
+>On 8/2/24 15:47, Dmitry Baryshkov wrote:
+>> During suspend/resume process all connectors are explicitly disabled an=
+d
+>> then reenabled=2E However resume fails because of the connector_status =
+check:
+>>=20
+>> [ 1185=2E831970] [dpu error]connector not connected 3
+>>=20
+>> It doesn't make sense to check for the Writeback connected status (and
+>> other drivers don't perform such check), so drop the check=2E
+>>=20
+>> Fixes: 71174f362d67 ("drm/msm/dpu: move writeback's atomic_check to dpu=
+_writeback=2Ec")
+>> Cc: stable@vger=2Ekernel=2Eorg
+>> Reported-by: Leonard Lausen <leonard@lausen=2Enl>
+>> Closes: https://gitlab=2Efreedesktop=2Eorg/drm/msm/-/issues/57
+>> Signed-off-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
+>> ---
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_writeback=2Ec | 3 ---
+>>  1 file changed, 3 deletions(-)
+>>=20
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback=2Ec b/drivers/=
+gpu/drm/msm/disp/dpu1/dpu_writeback=2Ec
+>> index 16f144cbc0c9=2E=2E8ff496082902 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback=2Ec
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback=2Ec
+>> @@ -42,9 +42,6 @@ static int dpu_wb_conn_atomic_check(struct drm_connec=
+tor *connector,
+>>  	if (!conn_state || !conn_state->connector) {
+>>  		DPU_ERROR("invalid connector state\n");
+>>  		return -EINVAL;
+>> -	} else if (conn_state->connector->status !=3D connector_status_connec=
+ted) {
+>> -		DPU_ERROR("connector not connected %d\n", conn_state->connector->sta=
+tus);
+>> -		return -EINVAL;
+>>  	}
+>> =20
+>>  	crtc =3D conn_state->crtc;
+>>=20
+>
 
-base:
-12	12	37	2088	81	drivers/media/platform/qcom/camss/camss.c(2088): 
-camss_configure_pd
 
-vlad:
-12	12	35	2088	78	drivers/media/platform/qcom/camss/camss.c(2088): 
-camss_configure_pd
-
-bod:
-13	13	38	2088	82	drivers/media/platform/qcom/camss/camss.c(2088): 
-camss_configure_pd
-
-That's convincing enough for me, please add the kernel backtrace on your V2.
-
----
-bod
+--=20
+With best wishes
+Dmitry
 
