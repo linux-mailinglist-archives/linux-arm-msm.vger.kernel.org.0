@@ -1,123 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-28085-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D61594A7C7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 14:34:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F51694A7DC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 14:39:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1F8441C226CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 12:34:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4AAD11F23C5B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 12:39:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 236301E4F06;
-	Wed,  7 Aug 2024 12:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D87C1E6732;
+	Wed,  7 Aug 2024 12:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="isjoGqNo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UIoJAty5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E281E2101
-	for <linux-arm-msm@vger.kernel.org>; Wed,  7 Aug 2024 12:34:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33EB01E6725;
+	Wed,  7 Aug 2024 12:39:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723034089; cv=none; b=Mmau4bPdvSOKdN52sk0InbMTAqAzDVRu587WwEllhWt5TRaME3UkUvcDZNsxDMEFzFVtEkVA4Vv7WxrhQzz3cYXCIk4d9HIM1RhQaTvZTdmM+VMaea+lEDn2Shd/DRNQbYgzUrDd6oLsYE2wKv+AIGcuBfWKGEZk0pZmbcxqX20=
+	t=1723034383; cv=none; b=mtEKatywUnSlwPenQ6+H0aZx2av4yAz/HIUXpJ8rP6iV5b0b18W6jUfXfpXgd5ytrwqMxghxriybU9ZJUsCL2B73pUC/FOP8P2GE7e3qk4MQvMroDvZin1V1/QE+CK1ZUe7AseYMOJGk8sDqy9zgSdSJiu+d8BruTNYprN+5/MI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723034089; c=relaxed/simple;
-	bh=8T4wVzkwSHzii8as2XbKY/C9UUv5Tca7yG03x9E+Etk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pmhOwuuZeV5Lk4BaS78GYPlBid53sQddAVeito44IUyvdD5/Cuf64bWpVHaLvBVrmioKNiLAkG/nQ8JBGPA6q1N/h2c7ne7rcvcQY6K7xNLi1fCgsAUroaYxlUKnc24ANmXw1pm/ogOmohip0TCfekhPyrDc3qTns7UKPH5wXas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=isjoGqNo; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4280ca0791bso11935795e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Aug 2024 05:34:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723034086; x=1723638886; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=z1730mRsiiRXYfsgu04nDdv5IB4O4YngwsTVcNbNbzQ=;
-        b=isjoGqNoi6tzMsMQJWWOlv+TbVkrOq9oyZ6MakgnjZJd6Z4W7uXbaE67r5ecl/yEoI
-         M9Hil2gpwxumW4Ap1SqKXK78JhEXp22+pfovrfnEJOT5t9C7n/4rmACuvofm2i6z6ONe
-         lSqgSeXSzc6ZKVbJetjZsfviHaQ40+gPQAjCY/0FrIi8qPT936HuiIuhZTftqzYT9d3d
-         wsxFGfXTm5inX716khAa10XMQFz/QN5uqhqX1u4wlU45hegXMg+ukg81RsjQO3nUSh6Q
-         ggv0Is2ISqCKZmrif31eTmE1IA4zyM2SCOkcDlXXwn6r5sOGkz+5AAZFGEKYUNdXmdgG
-         lyLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723034086; x=1723638886;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=z1730mRsiiRXYfsgu04nDdv5IB4O4YngwsTVcNbNbzQ=;
-        b=lHfoqWFlADGvym/Ndtdo0JEhSMgcj+xPFPqtXUefKeaFNWfo3NA+1KtV5JklDBsF4C
-         3miqqsci4xQRXtkQJnfXCpWu+KKxFCLYm3+MhYdxNCxyuBQJpMnjcNiNwPmuHV9sGvyN
-         sBs2RX53qr6J8Vl2wmfLfW0e4xJETn18GLU765p1Nut/1yRvAoNM3TyK6YLZgX5CfShn
-         zoMcpySgf7H34aUBdr/imltfntweitid6UarkwXl1F2c9cHFaKxfU4IHHBclg2KEAV4R
-         TIzyf2+z6z0z7NG5ztyEwtbT1Euq3UVg6v6hfL90QXXjtzg08GXpA4HDKGRQ6LQgFL9B
-         8VhA==
-X-Gm-Message-State: AOJu0Yy7KsXJzNHd/tCsgxYKJQj4JqTLkFFEUuVBzRnvNjEdyuSegRGt
-	NNow61ErH7Zttr3iQaa9laLWBxPtPGfn1YpMXSfo6z/7m0eWB2YxJ+KzJQdC
-X-Google-Smtp-Source: AGHT+IF7XR2+0mDDMNwFIrcAQU+gpFvdUP+W3EsW21nzOv/ICGcIgNlbSd5CgeP0CZfoDTem3RkDHA==
-X-Received: by 2002:a05:600c:4ec6:b0:426:6960:34b0 with SMTP id 5b1f17b1804b1-428e6afea7fmr122535695e9.14.1723034085507;
-        Wed, 07 Aug 2024 05:34:45 -0700 (PDT)
-Received: from [192.168.0.12] (cpc115152-dals23-2-0-cust532.20-2.cable.virginm.net. [86.12.82.21])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429059714d5sm27198425e9.13.2024.08.07.05.34.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Aug 2024 05:34:45 -0700 (PDT)
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Wed, 07 Aug 2024 13:34:29 +0100
-Subject: [PATCH v2 3/3] drm/msm: Fix CP_BV_DRAW_STATE_ADDR name
+	s=arc-20240116; t=1723034383; c=relaxed/simple;
+	bh=Eqn14IBRJtx73uJB1xT2++xne0vqAkKUAtQPKTkKmTs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pUDUOHvGUE3BYuxH1POqLNtB5VRnbQ9RQUFWhYwhibm5Oaqa/vgCH10kv6FvNUvQlaXB04JG+N4LZoZYRCmYZLTLf0PoYrp04AK83P1NcRQcAfLNm3KZFaA0aYcyWRlwRQfvEfxzTopoQybmE5gKVEMj/dWuOUoi4gjRuF4LBNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UIoJAty5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C60C32782;
+	Wed,  7 Aug 2024 12:39:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723034382;
+	bh=Eqn14IBRJtx73uJB1xT2++xne0vqAkKUAtQPKTkKmTs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=UIoJAty56mbdMDN9d0piijai7GKzzrRt9MLyktqpF5gnU6V52PAv0t5DzONeqZ9qS
+	 b3+6oLsPumsFyh2i11eO6tE9KPyDpt/uvq+CLaExXnDB5mesWG8ZzC0ePFQI7l8Wbj
+	 3SlZIJUjM+jGUY5aIU2XBqBtVa1uUSNeDKTqhAXCJr1BSYcKxnGX31VEQgsoaNForv
+	 EK6xwx0/ljMeBJy2LiHb0f46GbyUH75NBd447KRX74A/q5ALajBQ/lO5Xf1k90fNa0
+	 RqyRVXG4BMCOCCvGCOsybBQ2K0pO7cpUHtMuiUDO3na4FeUUzsGKYBRRyNNMhP0LpD
+	 +xI6zeQdhwO6A==
+Message-ID: <1c0ff0fa-73d3-400f-a58d-15fb9b0574d1@kernel.org>
+Date: Wed, 7 Aug 2024 14:39:36 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sm8550: camss: Add CAMSS block
+ definition
+To: Depeng Shao <quic_depengs@quicinc.com>, andersson@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ bryan.odonoghue@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@quicinc.com,
+ Yongsheng Li <quic_yon@quicinc.com>
+References: <20240807123333.2056518-1-quic_depengs@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240807123333.2056518-1-quic_depengs@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240807-a750-devcoredump-fixes-v2-3-d7483736d26d@gmail.com>
-References: <20240807-a750-devcoredump-fixes-v2-0-d7483736d26d@gmail.com>
-In-Reply-To: <20240807-a750-devcoredump-fixes-v2-0-d7483736d26d@gmail.com>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>
-Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
- Connor Abbott <cwabbott0@gmail.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1723034082; l=1121;
- i=cwabbott0@gmail.com; s=20240426; h=from:subject:message-id;
- bh=8T4wVzkwSHzii8as2XbKY/C9UUv5Tca7yG03x9E+Etk=;
- b=wqIDhuEtX7BuG+jv+vjbRVSIMhMfbRqv//dwO6pXsZU7yoCL6B/Ds++kyG+eycDhzvfmU1tH6
- XiN3OGqFP0nC/FEfH2WvGXWOcXg0C1j09EJ+Y0051f9aU0voy9B3n89
-X-Developer-Key: i=cwabbott0@gmail.com; a=ed25519;
- pk=dkpOeRSXLzVgqhy0Idr3nsBr4ranyERLMnoAgR4cHmY=
 
-This was missed because we weren't using the a750-specific indexed regs.
+On 07/08/2024 14:33, Depeng Shao wrote:
+> Add CAMSS block definition for sm8550.
+> 
+> This drop contains definitions for the following components on sm8550:
 
-Fixes: f3f8207d8aed ("drm/msm: Add devcoredump support for a750")
-Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
----
- drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+1. Subject: there is no prefix camss. There is no such file, directory
+or module.
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h b/drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h
-index 260d66eccfec..9a327d543f27 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h
-@@ -1303,7 +1303,7 @@ static struct a6xx_indexed_registers gen7_9_0_cp_indexed_reg_list[] = {
- 		REG_A6XX_CP_ROQ_DBG_DATA, 0x00800},
- 	{ "CP_UCODE_DBG_DATA", REG_A6XX_CP_SQE_UCODE_DBG_ADDR,
- 		REG_A6XX_CP_SQE_UCODE_DBG_DATA, 0x08000},
--	{ "CP_BV_SQE_STAT_ADDR", REG_A7XX_CP_BV_DRAW_STATE_ADDR,
-+	{ "CP_BV_DRAW_STATE_ADDR", REG_A7XX_CP_BV_DRAW_STATE_ADDR,
- 		REG_A7XX_CP_BV_DRAW_STATE_DATA, 0x00200},
- 	{ "CP_BV_ROQ_DBG_ADDR", REG_A7XX_CP_BV_ROQ_DBG_ADDR,
- 		REG_A7XX_CP_BV_ROQ_DBG_DATA, 0x00800},
+2. You already sent this, so this should be v2 or v3 or vX. Provide
+changelog under ---.
 
--- 
-2.31.1
+If there is going to be resend, please fix above.
+
+3. If this was tested on aim300, I am surprised this being not enabled
+on aim300.
+
+Best regards,
+Krzysztof
 
 
