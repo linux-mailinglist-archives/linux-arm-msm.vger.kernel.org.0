@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C366A94A1A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 09:26:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F3ABB94A1A5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 09:27:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7F7FA285170
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 07:26:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B44C52864F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 07:27:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D9901C7B82;
-	Wed,  7 Aug 2024 07:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 851221C8231;
+	Wed,  7 Aug 2024 07:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="isD7YqVU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ItqR3uwX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB972868D;
-	Wed,  7 Aug 2024 07:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5362F2868D;
+	Wed,  7 Aug 2024 07:26:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723015610; cv=none; b=DY2Fv0xZvIUC4D6oSEgPTSRGBvRR1VAeNY+sM65Mj1LIOASINL+APRKjPHrffeEv2tvQo00DH2euNRfy43rclrmCumtewem+r+uLF5/2RFBdm8wChO2ARWr3lwfz66ANI+ZKh1j2Abj/AFCD5ZLV7qR8U5CHJvYrHMjihisRHHU=
+	t=1723015615; cv=none; b=T6QQcfI/IzcV/WYJzbsoRIWOwwIw2sQGos3Kr6twnIThoa/Cv8+cXuQBsDX/3yRn0seR5RV+1Xb4lqlaFRu6qkLcWIA5zql5JWr5M8rAaN5vgnlyuRZsHpQ3WgMGhYOgv066mEnsllTN5rAYbsJ/WEfa+7m7OcJhZs0YHnZWKY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723015610; c=relaxed/simple;
+	s=arc-20240116; t=1723015615; c=relaxed/simple;
 	bh=z2eKcDTce1i6G5gvKFl2LHxPkWSzOdOhlT7bvXPJ3oI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WEOZNr/JNEbOc/OBcKRxQ8gihuJStbo6pHYsfcMXxUNLhKL8k35ChUewnTXE//7qki4ave0AAu0/Jtej1Eh/3/5JfUPhqu/rboZha272XtnG6olFKvkXFU92cPPxdzsRsChJ0+s0iahGocRR14ioNV7jUnO+N7AfbQjhykyYdmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=isD7YqVU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8597FC32782;
-	Wed,  7 Aug 2024 07:26:46 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=eOGznTXCCBXBD7Eixi+P05vf53MP+WAfCGz3qo+ihVdEbjWFABnMts7a1cLtBDuCIO9PvbbkmXayyymEhTysr7Rf12fCIujfV98iD3IMrdJJ7SlUstlUgrbNxRA0js/RCs7B+L9FZoIpv72VYhOrK1vAtUHqzh2IELkZ0/S9d7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ItqR3uwX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6A9C4AF0B;
+	Wed,  7 Aug 2024 07:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723015610;
+	s=k20201202; t=1723015614;
 	bh=z2eKcDTce1i6G5gvKFl2LHxPkWSzOdOhlT7bvXPJ3oI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=isD7YqVUU5sGrjpKmFGaUe90AuCW2c/niQmcVL+GXVzjybhTPYxcK/gjgVsfiQTIC
-	 lo+9dW6oP/lIx2NDMQqk2Vyqt0ihje3vhg/dy4p9nGBy7zB4rhs5Be13QWn2J9+KHW
-	 O3c4+bfUqbdBSEoV8Jp8eEZyP+WFrOV2lVnEozfxgvfFYQuBD/Nb6/HMZLNRo/O6HK
-	 GmssvlA2ZyyW5LQUxezMys4ObCPwGw2wtx7kiOBoFwIWjqRQoksMxbLiJ2D2L8XNnF
-	 eSc56nB/YoSFK0iQaY1x0UKxrM5XVS89JfRWdiAoJUZ5IQekMMqtkH/PCyzvygvudm
-	 22Yx4JxdPssZA==
-Message-ID: <4c49a2ff-d66a-45e5-a21e-1ca781965843@kernel.org>
-Date: Wed, 7 Aug 2024 09:26:44 +0200
+	b=ItqR3uwXGxw7lu293uYWXp2mGB0DN3rBLKXtW7BVb6uj+2Nfx2SmFmu/hv0s0ZFsE
+	 RVLzsjL9e6eBUIbORm3fPCyuEKbdsgG+7FzTTFEXs1TlOiHb9gPZAjaHux9YqHJJmA
+	 XFNIJSz/r3yiXcPakgTJ7z4IB0ELLDkQF3Rf8QHTApadpvMdGhX6XqXxOGwpY37d/Q
+	 ua1aN8wltwdxi3NvOANSxObe/0hwdEUezJ7H6x6KwrCYu4SK2FhIbxmU9q/vVaP/sm
+	 XAIrb/13tqFVKuysuD/r9JYQHyniPg32bB7Un5EF3qnrNj3nHlwlg60Hmfqzi5nGYo
+	 49+Q32Kev8vNA==
+Message-ID: <d6d3f0ce-e56a-4df6-a6e3-525282a0df17@kernel.org>
+Date: Wed, 7 Aug 2024 09:26:49 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: arm: qcom,ids: add SoC ID for QCS9100
+Subject: Re: [PATCH 2/4] soc: qcom: socinfo: add QCS9100 ID
 To: Tengfei Fan <quic_tengfan@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
@@ -58,7 +58,7 @@ To: Tengfei Fan <quic_tengfan@quicinc.com>,
 Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20240806-add_qcs9100_soc_id-v1-0-04d14081f304@quicinc.com>
- <20240806-add_qcs9100_soc_id-v1-1-04d14081f304@quicinc.com>
+ <20240806-add_qcs9100_soc_id-v1-2-04d14081f304@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,7 +104,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240806-add_qcs9100_soc_id-v1-1-04d14081f304@quicinc.com>
+In-Reply-To: <20240806-add_qcs9100_soc_id-v1-2-04d14081f304@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
