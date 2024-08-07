@@ -1,86 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-28122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1CEA94B353
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 01:00:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C573794B378
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 01:14:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 59B1A283AC0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 23:00:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7E83D1F2252A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 23:14:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4575C155A5B;
-	Wed,  7 Aug 2024 23:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3276155A21;
+	Wed,  7 Aug 2024 23:14:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FFVwctQ8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MeKbRIwU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2F3155352;
-	Wed,  7 Aug 2024 23:00:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4318B1553BC;
+	Wed,  7 Aug 2024 23:14:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723071629; cv=none; b=ecIefqF0NNxc6zG6xTA86jnG9jHF0fjxaJlydLNC9rpFHLYqKafJLQP9ZKj2mxzasSAQykdjHv3HbxjJP50h/+ZJDF42K4D1+Ish9hhGA87JybOm3hlxsv6453ASBzfcNGTogqoon8NYCy2Aqj8DubvNg5j8e719nd7Q5amgeLk=
+	t=1723072484; cv=none; b=LqAYaZ7FSFrlxH38u81VQGbkxu675PawMM+ghAQifmW2CrFnv3EdgkYgznzGQ3K3sc9ghnZh16aWsiGYpPkKeffVbTZ9mYgaIhfo/NQfS0Gpk6WHwatN+KvEmac1VKEWZDzOz4MaVf3m7nwXdCAg4r7fvmtVFFHYUI3nUHRCoFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723071629; c=relaxed/simple;
-	bh=xVWxPxBYRX1Ct5d8y5S5aWZtS9M1p+rAJ47euCUwpKg=;
+	s=arc-20240116; t=1723072484; c=relaxed/simple;
+	bh=rlvbH7U0JcMra9lxPNNeEXVHhjO7TnrdcHTeom1Fcis=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mq+TivaLDocBhBOIEctL19NJjwVjgmn/pOZjEPDJViF25YqWdP8qupcbTgfAP357GAUd3+1fcUG0DouwKnH55/DkZLP+PiqP4Bd3S2X24oqIkhiuyccvf9nYYCVa+iizZQSAxSkb4ejjRwUkTS+YL+N2xQCJY4aZhyomc+xafbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FFVwctQ8; arc=none smtp.client-ip=192.198.163.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723071628; x=1754607628;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=xVWxPxBYRX1Ct5d8y5S5aWZtS9M1p+rAJ47euCUwpKg=;
-  b=FFVwctQ8pInb15EoSWVrqs0Q6PPeo6FQ2tD194810/ITlYI8JhDEoUiO
-   cLX3UmNVDn+8zCI1nOxNC4seDCHKZu7a6JOua/xY2/0m4RgHqPMDlnJ+i
-   t3co4Ku9a0b7MoNQu1PQylxEd8qw3Kg416VwaWB1gyKex5+uqqiGheoJW
-   6kPEiGZ1r3YG7dyouOM0jttvU6j3CHN1lJXphfmqAOSTBj7tCM24qnzKj
-   fiPHWuoHuIp2h4tllTHm5xN+Az6aHcvJJlwVOTgmo9qM503/5GucbVtuA
-   HMuV12FV00QHvm/jwxE0p+TJlaebEN3EXYDEQMIqoLjc6kBFtFBB25mr2
-   g==;
-X-CSE-ConnectionGUID: LRxa6zLHTlqPdCiLoSchKQ==
-X-CSE-MsgGUID: NqOkFLE5Twm6Je4detaTeQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11157"; a="20834987"
-X-IronPort-AV: E=Sophos;i="6.09,271,1716274800"; 
-   d="scan'208";a="20834987"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Aug 2024 16:00:25 -0700
-X-CSE-ConnectionGUID: XQPz50ERQFeoWet59h0gMw==
-X-CSE-MsgGUID: Cbufdx/tRb+8dv9JiGpf0w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,271,1716274800"; 
-   d="scan'208";a="87674911"
-Received: from unknown (HELO b6bf6c95bbab) ([10.239.97.151])
-  by orviesa002.jf.intel.com with ESMTP; 07 Aug 2024 16:00:22 -0700
-Received: from kbuild by b6bf6c95bbab with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1sbpdi-0005mS-2w;
-	Wed, 07 Aug 2024 23:00:18 +0000
-Date: Thu, 8 Aug 2024 07:00:08 +0800
-From: kernel test robot <lkp@intel.com>
-To: Mao Jinlong <quic_jinlmao@quicinc.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@arm.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andy Gross <agross@kernel.org>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=uaVUvBuEcjDZT5JG7ox5gUQe2JnLJAVxXYBrZ0Ke516K5FKUVXBq98O5QFDdJio9qqsM2TWSSJFckVxy4exKipJcVRGFop+tzYwWiOWk0lRPtYKA0vo0fsLq3WC1SveiojVKngFNTMDAirCETke3gY6V5uZjHIV+LblSQCkz7ZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MeKbRIwU; arc=none smtp.client-ip=209.85.161.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-5d5d0535396so237607eaf.1;
+        Wed, 07 Aug 2024 16:14:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723072482; x=1723677282; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=nc+02bBxrPU3z7YbfbXPiG3TdH9ZHpsAB6H/P49aAMI=;
+        b=MeKbRIwUzsIgRJBK/akDoIunU0Ieoog7Dc3Z386RDPDYzIyIDW79UNlOzoSqrX3WVj
+         Jd1XBJ+D/LQG9rggxpb9rGc1Y+k8e4f2dsAQCBUNoAvcewNT/C7XKmtQksHpy1+JNZuz
+         xRSCC/ngOdBmc+SA331InpuL1eYv0ZDMQiwsVTU4QZZJcaYf9x/RQKkoyjxKTgVzdADJ
+         FC917216Gv5DETIT1Bj7Ef/qNZnXZjYQIUujmwH6qJvhPql3JextgQewgxJ+6SLJtwzl
+         kvWat90MJWgpJRbHJyiVGi+/pZmwoi47mTUyQH4lNpltip/Drib87HrCPkJgRBGj2AtK
+         vLaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723072482; x=1723677282;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nc+02bBxrPU3z7YbfbXPiG3TdH9ZHpsAB6H/P49aAMI=;
+        b=jfa7CkhScLCaXWJNUCsaDT6S2LreAzmKWBbja0587oF4u3TELUmkklomM/iPKPl6J7
+         TXS6dzd8Te21yFCKjQ0uxIS38UHGyGI7VYl9Aa5qOF2J//gKwck+E92HgFOGWVOAw1rM
+         ALF+z4pTeFaCtKPxtJXDGSF7QKiNNBMujVUBp8LxlYdh1/fsUQZe1IKf8bigfy/R2qLQ
+         M8/trgko666XXucIy9Rkk6fnqSN7rf/eSHPeubjtxUdmuEdYT3smOF+X4U9plC6TTsn3
+         lVWP0wl7R13CKu0RaifHRk/jzzh6nXME0AqkHveXlUWaHZaYHLxUIkuoRQ0t+mZ2sA0D
+         5NwQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWbmJPEvLsBVW3ieWZeEH4TkQ/g1jURjfUw4F/6vmAMFIHqksnPG+JGGz4NHuxtv/+NTppEGhP+Tamffb/4EdCUvQ8I1VupQM1+V9WHcetohNgWkDCmX7IpWvPlgRW31uHwg8pZPfpAMWu41U1F5oNL/gxsas4RwAj0Yz73wBOsTdYoGqWUVmsaeY/8J6OnZ9Ct8WQxc7EUhQsBO70Yh1V3dQ==
+X-Gm-Message-State: AOJu0YwvSRQDumGsc2/ZScnhkxbaSjd1m20UOtPxh+iwvKCGph5cpyC7
+	Xs3yGJBo86PN6JwL/mcDdvEdNqmo98DmQvfHj6L0IZtRKxhmLw92+R8rLPfK
+X-Google-Smtp-Source: AGHT+IFVKAcqwxIm7XFe0JFRilJfmv0FqcpDOsLEIsUbljBi0ODx1QcAQqBLXH+JSeqngoUP8VkUmQ==
+X-Received: by 2002:a05:6870:8a07:b0:25e:1711:90e3 with SMTP id 586e51a60fabf-2692b61b17cmr175018fac.2.1723072482302;
+        Wed, 07 Aug 2024 16:14:42 -0700 (PDT)
+Received: from localhost ([2607:fea8:52a3:d200:324c:b818:b179:79b])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a3786b5680sm100993885a.100.2024.08.07.16.14.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Aug 2024 16:14:42 -0700 (PDT)
+Date: Wed, 7 Aug 2024 19:14:40 -0400
+From: Richard Acayan <mailingradian@gmail.com>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Todor Tomov <todor.too@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: oe-kbuild-all@lists.linux.dev, Mao Jinlong <quic_jinlmao@quicinc.com>,
-	linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] coresight: Add remote etm support
-Message-ID: <202408080637.ZZJbuvB3-lkp@intel.com>
-References: <20240807071054.12742-3-quic_jinlmao@quicinc.com>
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-i2c@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-media@vger.kernel.org
+Subject: Re: [PATCH 2/4] dt-bindings: media: camss: Add qcom,sdm670-camss
+Message-ID: <ZrP_4NRIfo71wDwo@radian>
+References: <20240806224219.71623-7-mailingradian@gmail.com>
+ <20240806224219.71623-9-mailingradian@gmail.com>
+ <81192a77-ec22-45bd-91d6-4a0ec381a6f3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,53 +92,70 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240807071054.12742-3-quic_jinlmao@quicinc.com>
+In-Reply-To: <81192a77-ec22-45bd-91d6-4a0ec381a6f3@linaro.org>
 
-Hi Mao,
+On Tue, Aug 06, 2024 at 11:57:38PM +0100, Bryan O'Donoghue wrote:
+> On 06/08/2024 23:42, Richard Acayan wrote:
+>> Add the camera subsystem for the Snapdragon 670.
+>> 
+>> Adapted from SC8280XP camera subsystem.
+>
+> Hmm, I'd like a little bit more of a commit log here. sdm670 as found in
+> "spiffy device X" contains N CSIDs, Y VFEs.
+>
+> Its not super important but a description that is device specific would be
+> nice.
 
-kernel test robot noticed the following build errors:
+Ok.
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on linus/master v6.11-rc2 next-20240807]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+>> 
+>> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+>> ---
+>>   .../bindings/media/qcom,sdm670-camss.yaml     | 353 ++++++++++++++++++
+>>   1 file changed, 353 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+>> 
+>> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+>> new file mode 100644
+>> index 000000000000..543fad1b5cd7
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+>> @@ -0,0 +1,353 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-3-Clause)
+>> +
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/media/qcom,sdm670-camss.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm SDM670 Camera Subsystem (CAMSS)
+>> +
+>> +maintainers:
+>> +  - Richard Acayan <mailingradian@gmail.com>
+>> +
+>> +description:
+>> +  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,sdm670-camss
+>> +
+>> +  clocks:
+>> +    maxItems: 33
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: camnoc_axi
+>> +      - const: cpas_ahb
+>> +      - const: cphy_rx_src
+>> +      - const: csi0
+>> +      - const: csi0_src
+>
+> These "_src" clocks should be dropped.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Mao-Jinlong/dt-bindings-arm-Add-qcom-inst-id-for-remote-etm/20240807-151315
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20240807071054.12742-3-quic_jinlmao%40quicinc.com
-patch subject: [PATCH v2 2/2] coresight: Add remote etm support
-config: arm-allmodconfig (https://download.01.org/0day-ci/archive/20240808/202408080637.ZZJbuvB3-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 14.1.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240808/202408080637.ZZJbuvB3-lkp@intel.com/reproduce)
+Hi, this will require dedicated definitions for SDM670 in the driver, as
+SDM845 lists (and requires) the src clocks. It's certainly possible to
+do so, but I'm just not sure if it's what you expected.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202408080637.ZZJbuvB3-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
->> drivers/hwtracing/coresight/coresight-remote-etm.c:298:27: error: initialization of 'void (*)(struct platform_device *)' from incompatible pointer type 'int (*)(struct platform_device *)' [-Wincompatible-pointer-types]
-     298 |         .remove         = remote_etm_remove,
-         |                           ^~~~~~~~~~~~~~~~~
-   drivers/hwtracing/coresight/coresight-remote-etm.c:298:27: note: (near initialization for 'remote_etm_driver.<anonymous>.remove')
-
-
-vim +298 drivers/hwtracing/coresight/coresight-remote-etm.c
-
-   295	
-   296	static struct platform_driver remote_etm_driver = {
-   297		.probe          = remote_etm_probe,
- > 298		.remove         = remote_etm_remove,
-   299		.driver         = {
-   300			.name   = "coresight-remote-etm",
-   301			.of_match_table = remote_etm_match,
-   302		},
-   303	};
-   304	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Or I could send an RFT to drop them from SDM845...
 
