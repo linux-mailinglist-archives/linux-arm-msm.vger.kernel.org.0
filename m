@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A518A949F6E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 07:53:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77669949F70
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 07:54:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5DA85288A87
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 05:53:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 963011C23B9C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Aug 2024 05:54:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E90961917F8;
-	Wed,  7 Aug 2024 05:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD6CA197A97;
+	Wed,  7 Aug 2024 05:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L0Ueeqx7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U0kBYRt8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79A8B646;
-	Wed,  7 Aug 2024 05:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7816191F83;
+	Wed,  7 Aug 2024 05:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723009978; cv=none; b=SHnCHO4XuZlkm3nAM3+PIW1clsGHj+13T/hP5oyEV/DqjPeoAsznulo3V99oudKj1AVfT173ciyNVV2kHfUrtmnA1xHDinurC5hjRWiy6z0Kav0sb5MBoSCXRsCkYgNF29BIDEF69FqNIg/Qa4ZECLBJnCiGVNST4+RlmkE9Dt8=
+	t=1723010089; cv=none; b=nymZfAYq/bUDYoNo/FpXkcq8XAFBRT4/q7tPsoYubiJjKm3fsImx0bqnYOYDtdRmIYTTVC1rFViE4qPqg86K53x+pKtYIoAVRPMsmHrudySgcwzih8kgITmKXR89ou/r28i2cyxMMLd5kj0M6XSLgVkbU6H0BKhdHJ3y3eEXXuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723009978; c=relaxed/simple;
-	bh=zxa8it9ACc1nNWzi1H7KvHyZMX1C87mye13Y5AbFxuI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pZMHdxayaQ7fB/tMgcLHd9TM0+ifT9Bs22bciSQR/gvtMzXb8DSpHU5CG8l2bUZI5eUBB90cF/tOlA0AEDVnwjcAVqnGnaZvXk2ReBzBjFksGSezROmkr56o9au02N70Yw4S2kkqxwFv8JnKsvyCbC4IufpFe43ociPBOtPRQ60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L0Ueeqx7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B1BC32782;
-	Wed,  7 Aug 2024 05:52:53 +0000 (UTC)
+	s=arc-20240116; t=1723010089; c=relaxed/simple;
+	bh=B1tTRh++9s5Skoe1SjAxhOMiI1nPTZ635lCw5SLEVMw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=DMWdEmr1JbXDycFeA7MyioPr6wP/PO/usi6CrM42mvsTVp4yNY/iAPrFOFgNlkP6+iT+Cpz3ppnWZqv7nN1+OMVnJaWspJPVJ4DwF1WOzHKDLex9k+ugAmEA+oHt50GAdO7gH7S+fisUUuVBhF/7HTSVred/ZvVdRaI5OetsmOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U0kBYRt8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B56EC4AF0D;
+	Wed,  7 Aug 2024 05:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723009978;
-	bh=zxa8it9ACc1nNWzi1H7KvHyZMX1C87mye13Y5AbFxuI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=L0Ueeqx7oAFtGBa01rfgAhgzi8PJcIFMwynUxb+XzcHuWYobDk/v6iqh1wdPfRPYv
-	 PEnW2iIdd4P5ifzSfrBZTs0d/EtBDzsqeiTaFPWanncppsiFFV0vtGYpxwSEabeQ6L
-	 B7SXRirSG/zDp0F3JssdHlWMn5RwvWt+skJ/Fn0gCSGl0tOaIrp0YiqMUSHywFlUdl
-	 6XuPs7QiqwBU+9mCZoMqscfoErJJH8Yr2EofXz2UO0+CO4TKFrIVPGdaZsRSlG3Mrl
-	 F7HgFqhru7f4yPY9qaTaJq7hKmNB+/d8QRkrV+9PoLMZrzbMuYXwLZOvBEzlUsu0wQ
-	 Fknm6WzvB+dtA==
-Message-ID: <8bd860af-02dd-44fd-b5fc-dc37ef4b79eb@kernel.org>
-Date: Wed, 7 Aug 2024 07:52:51 +0200
+	s=k20201202; t=1723010089;
+	bh=B1tTRh++9s5Skoe1SjAxhOMiI1nPTZ635lCw5SLEVMw=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=U0kBYRt858mjcoGDBHsKPlhLGaEmhzd/YmnS98VKz2Z+fuX7CuquyDLw6ILOxBZfM
+	 4r0JOfWvh/pQNHlh0bSUeoI0cBiR7T8fFJnC/BSvLeIRQVmYwAPMZcZ9wkNEY2X3cR
+	 ZlvTcnMxXxZk1pzyk+J1Jrg+ySpzLMgBR+q1SJ3ibRD2JW9fiL1/2anAwfUJcAYobl
+	 97XZhVsbbxtVQoCJaBcG+rEWKfcYZxZRIyO9H4ZZwJmyTvSrexxYLXr5pFvly+WboL
+	 lX4R4rs66NNzw698VEnqRQu1U72Q6c6zBOP8DJmsLI3RinQZU8phYcxG6RNnQegzhW
+	 tcFlSTWQNypRA==
+Message-ID: <698c94aa-659f-4efc-a08f-213c282d7b8a@kernel.org>
+Date: Wed, 7 Aug 2024 07:54:41 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: media: camss: Add qcom,sm8550-camss
- binding
-To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, andersson@kernel.org,
- konrad.dybcio@linaro.org
-Cc: inux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
-References: <20240807053400.1916581-1-quic_depengs@quicinc.com>
- <20240807053400.1916581-2-quic_depengs@quicinc.com>
+Subject: Re: [PATCH 1/4] dt-bindings: i2c: qcom-cci: Document SDM670
+ compatible
+To: Richard Acayan <mailingradian@gmail.com>,
+ Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, linux-i2c@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-media@vger.kernel.org
+References: <20240806224219.71623-7-mailingradian@gmail.com>
+ <20240806224219.71623-8-mailingradian@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,22 +110,31 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240807053400.1916581-2-quic_depengs@quicinc.com>
+In-Reply-To: <20240806224219.71623-8-mailingradian@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 07/08/2024 07:33, Depeng Shao wrote:
-> Add bindings for qcom,sm8550-camss in order to support the camera
-> subsystem for sm8550.
+On 07/08/2024 00:42, Richard Acayan wrote:
+> The CCI on the Snapdragon 670 is the interface for controlling camera
+> hardware over I2C. Add the compatible so it can be added to the SDM670
+> device tree.
 > 
-> Co-developed-by: Yongsheng Li <quic_yon@quicinc.com>
-> Signed-off-by: Yongsheng Li <quic_yon@quicinc.com>
-> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
+> index c33ae7b63b84..49fa8304fe4c 100644
+> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
+> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml
+> @@ -27,6 +27,7 @@ properties:
+>            - enum:
+>                - qcom,sc7280-cci
+>                - qcom,sc8280xp-cci
+> +              - qcom,sdm670-cci
 
-Why are you duplicating the bindings? This was already sent and was
-reviewed. Asking us to review the same thing twice is WASTE of time.
-
-NAK.
+This is incomplete change. Read entire binding.
 
 Best regards,
 Krzysztof
