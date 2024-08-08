@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C78CC94BBDF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 13:03:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51F5394BBEE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 13:05:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 63D1DB23620
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 11:03:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E73F728262C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 11:05:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB6E718A940;
-	Thu,  8 Aug 2024 11:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 738A618A95D;
+	Thu,  8 Aug 2024 11:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YlaJqq+o"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p9mSLTdx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822D2187FE4;
-	Thu,  8 Aug 2024 11:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4599B15444E;
+	Thu,  8 Aug 2024 11:05:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723114996; cv=none; b=AbTfavmCUWz00h4GtCmK5SD0oZjKxLYo0Z+bQ7arvdFpCp89T0B7Ocqzpha7WhrJtwFt50PiJVRxr6ciOQSgs7ZXTXInV1cnDg8JBXi8KaGR4ox9BC3E4syYU1eqyXDncl6vmjTOeiE6HVzlXptLWT8IlKQV929NqhyE8/edpe0=
+	t=1723115109; cv=none; b=YTFk6UffZhGHlkxSl57J3i9LnxLvUvYl9sXf7PPyk4POflVqjwG0dE3wk11zCu/vfcIq4d2+uMeKAYWkKPVEAijlu3a879dgpBDJiraHzWkUMXrJYWb96mU41Iln15aFX77+74AETINlmheJk7fSUPPo8lNTROqJfls3A3DEPZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723114996; c=relaxed/simple;
-	bh=SFDPvVYf95/MN/cm6i+bg8LO/YkCJsxyLszpn+IdMAc=;
+	s=arc-20240116; t=1723115109; c=relaxed/simple;
+	bh=/nPTCwz/u6HBDmM35f7Z1qpP8h1WO0HkA6mYOWoe2+8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=T87SRMo7Q2m+NQUF5TQ32vovBpQq2hn0xTujB2u9m+LLWSRXmw4xWqbkB9AUTAolZIZVyobU8aXdJ4vFIgYkhiflguMJnM15SK2uQ6BW7B8HoZvFxqrHE6WyfX8bJk9ai6sIpaGd+8Tw2cRGB3aSzdehX+0NiotydYDBxvYiPAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YlaJqq+o; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D8D6C32782;
-	Thu,  8 Aug 2024 11:03:11 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ahrGPCmhJ39ek9+g+xc4MxmRn+rYVXnnEfIOHqbbfJ9xgpJ+1S29iiOfyOFlHZKc00XPjZdlf2v9O1uOedn6g4O95713m3IFtlq5cIsrHiv/UtH6F674UUR2h6tGKcjdmEqD/f82f+8jbdu+Z5wOeOh47/B4bI77pFVf6S3Pj+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p9mSLTdx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A461BC32782;
+	Thu,  8 Aug 2024 11:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723114996;
-	bh=SFDPvVYf95/MN/cm6i+bg8LO/YkCJsxyLszpn+IdMAc=;
+	s=k20201202; t=1723115108;
+	bh=/nPTCwz/u6HBDmM35f7Z1qpP8h1WO0HkA6mYOWoe2+8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=YlaJqq+oJhrZySTXV2ACMauaqmVf7GOGEUvLZZOb4acgWpZIZODozkepMI5ja3yvI
-	 ysVbnBntaKq7OY4ojMUY9fj/0//+GLYWQOrbCqtyshsdHTIUTmbBnML7VSnJarFYnd
-	 BqV5o3UJKkfA9mmvRiDp/H9w7iSoRjCXvYAk7etad6Llyjp0/MPLuBLHjLOAmZQcpO
-	 gVvexaJRxFE9OCX5V+Yl/uPehFMsKwj6FK0hl+MnQD7yVinzX/XeNjFjEFBoX2LDO8
-	 D5FWROAjdhxqFbwK7j6ifYyeLIqNWCxwxwuVedGpAVSnFr4PaCAMLphCT8kOBPFgBn
-	 LOl1TTgeUPfYQ==
-Message-ID: <b0058c31-d416-48b5-b6da-5bbdf493febd@kernel.org>
-Date: Thu, 8 Aug 2024 13:03:09 +0200
+	b=p9mSLTdxsYoBr0eWoQR2KsYJiyb0U4n+aU3g6gvl9iDvsbLGa81d4tZFJxdr+A/5W
+	 DaYSkZDMYR1mu7xnl1xnu0sXG/0IpPg/qPWwVUJ6b1st07oSYqFxBonnEL6fwvMjmk
+	 a+XxcDfj+QfXmMs7dSYMvfp2zQZrgg7ScxVlY4VAJKsD8pG6XmRdAHif4ZA5CwdReC
+	 BvrojCwNhqFDN2C1qVIVaCSmchvP1iVg5dNJufsu1FN+9xaGpwbdcSIS1wdB65KGjD
+	 OrDQoYsARlT5cL5vyDwsigTW701NC7z2P4m91P4t7NWUa4YbF4SwQncWf/k/Qz8XBV
+	 Fc2ogf0k7Qn1Q==
+Message-ID: <9323127a-e6b5-4835-afa0-4ce0086fd9d1@kernel.org>
+Date: Thu, 8 Aug 2024 13:05:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,22 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] arm64: dts: qcom: sc7280: Update eud compatible
- string
-To: Melody Olvera <quic_molvera@quicinc.com>,
- Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sa8775p-ride: Add QCS9100
+ compatible
+To: Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Tengfei Fan <quic_tengfan@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Trilok Soni <quic_tsoni@quicinc.com>,
- Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
- Elson Serrao <quic_eserrao@quicinc.com>
-Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-usb@vger.kernel.org
-References: <20240807183205.803847-1-quic_molvera@quicinc.com>
- <20240807183205.803847-4-quic_molvera@quicinc.com>
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240806-add_qcs9100_soc_id-v1-0-04d14081f304@quicinc.com>
+ <20240806-add_qcs9100_soc_id-v1-4-04d14081f304@quicinc.com>
+ <90eae361-7d5d-440f-a85d-dfd81b384fe7@kernel.org>
+ <4a350e94-3c95-48e1-9ea8-ced483c1aa45@quicinc.com>
+ <14ec06bd-0c27-4930-8bce-d3f5b68067ed@kernel.org>
+ <ace5b3e1-f4a2-4c04-821a-e797d0f55cae@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,15 +110,41 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240807183205.803847-4-quic_molvera@quicinc.com>
+In-Reply-To: <ace5b3e1-f4a2-4c04-821a-e797d0f55cae@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 07/08/2024 20:32, Melody Olvera wrote:
-> Update eud compatible string to reflect use of non-secure eud.
+On 07/08/2024 13:04, Tingwei Zhang wrote:
+> On 8/7/2024 5:35 PM, Krzysztof Kozlowski wrote:
+>> On 07/08/2024 11:17, Tengfei Fan wrote:
+>>>
+>>>
+>>> On 8/7/2024 3:28 PM, Krzysztof Kozlowski wrote:
+>>>> On 06/08/2024 06:19, Tengfei Fan wrote:
+>>>>> Add QCS9100 compatible in sa8775p ride and sa8775p ride r3 board DTS.
+>>>>> QCS9100 references SA8775p, they share the same SoC DTSI and board DTS.
+>>>>>
+>>>>
+>>>> I don't understand this. You claim here that QCS9100 references SA8775p
+>>>> but your diff says other way: SA8775p references QCS9100.
+>>>>
+>>>> Sorry, that's confusing.
+>>>>
+>>>> Best regards,
+>>>> Krzysztof
+>>>>
+>>>
+>>> I will update the compatible as follows to indicate that QCS9100
+>>> references SA8775p.
+>>>
+>>> compatible = "qcom,sa8775p-ride", "qcom,qcs9100", "qcom,sa8775p";
+>>
+>> Is this still correct, though? sa8775p won't come with qcs9100 SoC.
+> We have a new board. Hardware is same as sa877p-ride except sa8775p is 
+> replaced with qcs9100. We add qcs9100 SoC compatible to sa8775p-ride 
 
-This does not match diff at all. You say here something but do something
-entirely else. Sorry, that's a NAK.
+Does "new board" mean that "old board" disappears? No users to care
+about it? Or just the existing board is being changed (like new revision)?
 
 Best regards,
 Krzysztof
