@@ -1,229 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-28174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 150C794C45C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 20:32:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7723B94C48A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 20:39:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BEB12286563
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 18:32:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A84F31C21435
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 18:39:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4BA013AD13;
-	Thu,  8 Aug 2024 18:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F32B146A83;
+	Thu,  8 Aug 2024 18:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CROxWmNV"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="n7z5RBhe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6C21474A5;
-	Thu,  8 Aug 2024 18:32:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E559479
+	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Aug 2024 18:39:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723141941; cv=none; b=SxbG0vufbmHFjQY/5O77B1zTWgfUoTfIt63MW/MajhV0WD26faoL7YpsObGhZvuciKVT/rGIQdpimVsSOiANnlB1NiPHPGeHNZc++BZ/wvfGt1xjg4pcMYsP5qinyigmcedjHSc0uaep4znPjKfQdi5H+NmbNvkwx9PpaQ8shVg=
+	t=1723142392; cv=none; b=Qe/EKEm8a7KH6eDd5YdbEWyGcmWtW0U+pg0Y5P7i5fxqcNdbDoBYrEREWf/mqlXfbul1K2azdeLe9O/qcjTOsuMqyioLNseSiLMFQnlGSIqOMAXFCrHyhn5h7Wftl4Et/PLetEX8P5QI89HPAn5thSU6rE+1fcst1Q9sMfHRujs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723141941; c=relaxed/simple;
-	bh=9Yt4pnncH6mFyFDA0PhRciskoYS67a0cDghZgw5y9/M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=U/M/1PaZTtB9UfSl6Nv9CGnt4nIqqFeBjy/upb/0f4KG+GqdYzmxKHI2nXzHkKiMqSGDKX28MQ21SYgjCNrMQRlMGXbHXGrywmOO3/CNJPtcH9+FdT1obcCENMlLIp7u/6/vMKarn0H+nyjck5wcqFQ/4i1emHLregonPku4Poc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CROxWmNV; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 478BOGQG020921;
-	Thu, 8 Aug 2024 18:32:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zobjxfHDjVRTy23SW+DYAKRhJIe+GrRQlShULtl4F5E=; b=CROxWmNVPUTqyFck
-	FFX3F1Pz/rftm7ZnPH+ht97Ey3nDMvWocXSYBAF2zoR4VUJvWHO7qsS8MFqIJfMp
-	wqw5KLwQblR65g2Dk2VeHVZPOX7sjChnXBOC89G0Lg+u5CpHcS65c8cGW/aUmM+L
-	S/XwLIc6UFjNYwVoijSxClhf5nckA3OMg2Mc5DtjtcZHF4UkcNUQMQb4fBSN+U2q
-	wYANu7+KrMWdgMn1L09NaK0uGWOmCv4wlkS+/nmCCUmxe6CvsplmFtJm0+YeLrT0
-	R+76F5wZ1Ha1Ujz3owCb7UvliDZA7sVQ9bV96wufIU34PF1UZmV1SyVZPnL0oelB
-	gBWi3g==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40v79jcf85-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 08 Aug 2024 18:32:11 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 478IWAxV008391
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 8 Aug 2024 18:32:10 GMT
-Received: from [10.46.163.151] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 8 Aug 2024
- 11:32:10 -0700
-Message-ID: <81f9a907-8010-4c13-970f-d216dd54b1f1@quicinc.com>
-Date: Thu, 8 Aug 2024 11:30:52 -0700
+	s=arc-20240116; t=1723142392; c=relaxed/simple;
+	bh=RwFJhJLgvF0/ZS2geOC+B9PruxoqhM8ayNYYcVVP5GI=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=ectG1piSLYvCh1UowU3qOVRzeZgw+ImdI2Pr4vxgJ2uaqu77uTULNty2ch9IoOSE+OtmtLm/8is26BWDP+L18WYxl525iojJVZFeU6pkhS93OG5LsK9AH16OZHlGaTaPEyikexS1J+Zpw3Wj9TFbCXHvfJNtgZ8/1syn4+Pb2gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=n7z5RBhe; arc=none smtp.client-ip=209.85.214.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
+Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-1ff24acb60dso14135105ad.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Aug 2024 11:39:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1723142390; x=1723747190; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=rGCKEHWds3nLjc1rwbe/3j/9p13PqyT95btT2PVEHJQ=;
+        b=n7z5RBheyozDL2PIH3VQaVWA1lBvvOfW4pcZEJGePnZpjQCiKrU3NxY3yMS/UrGEPp
+         Zjk8Vs1Smf76VZjamessf27kixf6PkKHcuFPS4TrCso7Z0zCJYmiHouiG3KF5GoO03M4
+         GwC1jgeSbwuOYgcOfa5Z3TCcqN0hLTWOmFgQOn201U8m3MywJ/+jQD6MR1vMH9q0/Pab
+         qanETUxtnylFaEMZr28s89ecx64kSD3mRRSpMF9nhJRu7+Bv0978+CANCs+lN3F8doN3
+         LFG+YXZsNg4Vu4rdW1U/ifhSoY/MQkZi5v8DAcZq4evleLOA76KIbpQ/pMe9h/NnKBmG
+         DCPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723142390; x=1723747190;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rGCKEHWds3nLjc1rwbe/3j/9p13PqyT95btT2PVEHJQ=;
+        b=gDyJ4lF6qT9qEXhDNoh73oke1cpk1skx5Y6siHwDvFvd9f4t71d5pLn7jPMlpeNWLj
+         eosriCabw1WMxDXY0OJNoMwaT79vMe/dNk0GYAjOGXo/66WMPH0h0YdRWOXTnnz32unV
+         gTrQ8yWz696bcIg3FmsFa01HUuGJpSQzvaQ/P4R6UCevOF2PzwLGJWy9CnpJOWZ0Ai0d
+         /etRlkDlF+pVNhczTQ6JcA4uBlDCE6unRzCzNpYkTqGv9YX7ZArfkGrAlmiEPempKbUL
+         xlOK8KXoNoV2sZjNvtxnbjHbprt+3TKnZNWrV7w6Dcj6A2o+LazgqOOHRFWRJam9xjqM
+         tTUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXhJk53/1ocv3Lk0HrmGC8uxLxhbKqFqrSlVchhxlp4oYWL6snL7vG27DmYVLCKjPYOhDOGJ5WRhslNR7v6zQJ9BaBcHzLtckNKCC1ybg==
+X-Gm-Message-State: AOJu0YxR+ZuvBA2xiazrifP0E8jH9mvIhrYC/9GjbtbqzVzYH/WPpVFv
+	IqMsn/pgwxeQzRxwOtoaPzYp7oPRsvSBwRhVg8bg1oxnJHSQwPycX5aJwPXYrOl/J5P+zToJ3P6
+	utaWRlTXHO4OQgu/utYFDvw==
+X-Google-Smtp-Source: AGHT+IFHR6HjyQprVWt7cfvq/+n/27mLEEJUa7fdG1j2U7c3HTuf0p1YaAhdrnA4goWQYkAB/MjKv4gqqjBOaHPwkQ==
+X-Received: from ackerleytng-ctop.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:13f8])
+ (user=ackerleytng job=sendgmr) by 2002:a17:903:1105:b0:1fb:526a:5d60 with
+ SMTP id d9443c01a7336-20096d3b493mr1368265ad.4.1723142389804; Thu, 08 Aug
+ 2024 11:39:49 -0700 (PDT)
+Date: Thu, 08 Aug 2024 18:39:48 +0000
+In-Reply-To: <20240805-guest-memfd-lib-v1-1-e5a29a4ff5d7@quicinc.com> (message
+ from Elliot Berman on Mon, 5 Aug 2024 11:34:47 -0700)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] PCI: dwc: Add dbi_phys_addr and atu_phys_addr to
- struct dw_pcie
-To: Serge Semin <fancer.lancer@gmail.com>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        Bjorn Helgaas <helgaas@kernel.org>
-CC: <jingoohan1@gmail.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <robh@kernel.org>, <bhelgaas@google.com>, <linux-pci@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_mrana@quicinc.com>
-References: <20240724022719.2868490-1-quic_pyarlaga@quicinc.com>
- <20240724022719.2868490-2-quic_pyarlaga@quicinc.com>
- <vbq3ma3xanu4budrrt7iwk7bh7evgmlgckpohqksuamf3odbee@mvox7krdugg3>
- <6d926346-1c24-4aee-85b1-ffb5a0df904b@quicinc.com>
- <j62ox6yeemxng3swlnzkqpl4mos7zj4khui6rusrm7nqcpts6r@vmoddl4lchlt>
- <20240802052206.GA4206@thinkpad>
- <rw45lgwf5btlsr64okzk2e4rpd62fdyrou7u2c6lndozxjhdpq@qm5qx4dvw5ci>
-Content-Language: en-US
-From: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
-In-Reply-To: <rw45lgwf5btlsr64okzk2e4rpd62fdyrou7u2c6lndozxjhdpq@qm5qx4dvw5ci>
+Mime-Version: 1.0
+Message-ID: <diqzttfun9jf.fsf@ackerleytng-ctop.c.googlers.com>
+Subject: Re: [PATCH RFC 1/4] mm: Introduce guest_memfd
+From: Ackerley Tng <ackerleytng@google.com>
+To: Elliot Berman <quic_eberman@quicinc.com>
+Cc: akpm@linux-foundation.org, pbonzini@redhat.com, seanjc@google.com, 
+	tabba@google.com, david@redhat.com, roypat@amazon.co.uk, qperret@google.com, 
+	linux-coco@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-mm@kvack.org, kvm@vger.kernel.org, 
+	quic_eberman@quicinc.com, vannapurve@google.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: a_VDmT9LalIgb6dYp_CWrWMX1LyhsfA9
-X-Proofpoint-ORIG-GUID: a_VDmT9LalIgb6dYp_CWrWMX1LyhsfA9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-08_18,2024-08-07_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 phishscore=0 adultscore=0 malwarescore=0
- lowpriorityscore=0 bulkscore=0 impostorscore=0 mlxlogscore=999
- suspectscore=0 spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2407110000 definitions=main-2408080132
 
+Elliot Berman <quic_eberman@quicinc.com> writes:
 
+> In preparation for adding more features to KVM's guest_memfd, refactor
+> and introduce a library which abstracts some of the core-mm decisions
+> about managing folios associated with the file. The goal of the refactor
+> serves two purposes:
+>
+> Provide an easier way to reason about memory in guest_memfd. With KVM
+> supporting multiple confidentiality models (TDX, SEV-SNP, pKVM, ARM
+> CCA), and coming support for allowing kernel and userspace to access
+> this memory, it seems necessary to create a stronger abstraction between
+> core-mm concerns and hypervisor concerns.
+>
+> Provide a common implementation for other hypervisors (Gunyah) to use.
+>
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> ---
+>  include/linux/guest_memfd.h |  44 +++++++
+>  mm/Kconfig                  |   3 +
+>  mm/Makefile                 |   1 +
+>  mm/guest_memfd.c            | 285 ++++++++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 333 insertions(+)
+>
+> diff --git a/include/linux/guest_memfd.h b/include/linux/guest_memfd.h
+> new file mode 100644
+> index 000000000000..be56d9d53067
+> --- /dev/null
+> +++ b/include/linux/guest_memfd.h
+> @@ -0,0 +1,44 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#ifndef _LINUX_GUEST_MEMFD_H
+> +#define _LINUX_GUEST_MEMFD_H
+> +
+> +#include <linux/fs.h>
+> +
+> +/**
+> + * struct guest_memfd_operations - ops provided by owner to manage folios
+> + * @invalidate_begin: called when folios should be unmapped from guest.
+> + *                    May fail if folios couldn't be unmapped from guest.
+> + *                    Required.
+> + * @invalidate_end: called after invalidate_begin returns success. Optional.
+> + * @prepare: called before a folio is mapped into the guest address space.
+> + *           Optional.
+> + * @release: Called when releasing the guest_memfd file. Required.
+> + */
+> +struct guest_memfd_operations {
+> +	int (*invalidate_begin)(struct inode *inode, pgoff_t offset, unsigned long nr);
+> +	void (*invalidate_end)(struct inode *inode, pgoff_t offset, unsigned long nr);
+> +	int (*prepare)(struct inode *inode, pgoff_t offset, struct folio *folio);
+> +	int (*release)(struct inode *inode);
+> +};
+> +
+> +/**
+> + * @GUEST_MEMFD_GRAB_UPTODATE: Ensure pages are zeroed/up to date.
+> + *                             If trusted hyp will do it, can ommit this flag
+> + * @GUEST_MEMFD_PREPARE: Call the ->prepare() op, if present.
+> + */
+> +enum {
+> +	GUEST_MEMFD_GRAB_UPTODATE	= BIT(0),
+> +	GUEST_MEMFD_PREPARE		= BIT(1),
+> +};
 
-On 8/2/2024 2:22 AM, Serge Semin wrote:
-> On Fri, Aug 02, 2024 at 10:52:06AM +0530, Manivannan Sadhasivam wrote:
->> On Fri, Aug 02, 2024 at 12:59:57AM +0300, Serge Semin wrote:
->>> On Thu, Aug 01, 2024 at 02:29:49PM -0700, Prudhvi Yarlagadda wrote:
->>>> Hi Serge,
->>>>
->>>> Thanks for the review comment.
->>>>
->>>> On 8/1/2024 12:25 PM, Serge Semin wrote:
->>>>> On Tue, Jul 23, 2024 at 07:27:18PM -0700, Prudhvi Yarlagadda wrote:
->>>>>> Both DBI and ATU physical base addresses are needed by pcie_qcom.c
->>>>>> driver to program the location of DBI and ATU blocks in Qualcomm
->>>>>> PCIe Controller specific PARF hardware block.
->>>>>>
->>>>>> Signed-off-by: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
->>>>>> Reviewed-by: Mayank Rana <quic_mrana@quicinc.com>
->>>>>> ---
->>>>>>  drivers/pci/controller/dwc/pcie-designware.c | 2 ++
->>>>>>  drivers/pci/controller/dwc/pcie-designware.h | 2 ++
->>>>>>  2 files changed, 4 insertions(+)
->>>>>>
->>>>>> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
->>>>>> index 1b5aba1f0c92..bc3a5d6b0177 100644
->>>>>> --- a/drivers/pci/controller/dwc/pcie-designware.c
->>>>>> +++ b/drivers/pci/controller/dwc/pcie-designware.c
->>>>>> @@ -112,6 +112,7 @@ int dw_pcie_get_resources(struct dw_pcie *pci)
->>>>>>  		pci->dbi_base = devm_pci_remap_cfg_resource(pci->dev, res);
->>>>>>  		if (IS_ERR(pci->dbi_base))
->>>>>>  			return PTR_ERR(pci->dbi_base);
->>>>>> +		pci->dbi_phys_addr = res->start;
->>>>>>  	}
->>>>>>  
->>>>>>  	/* DBI2 is mainly useful for the endpoint controller */
->>>>>> @@ -134,6 +135,7 @@ int dw_pcie_get_resources(struct dw_pcie *pci)
->>>>>>  			pci->atu_base = devm_ioremap_resource(pci->dev, res);
->>>>>>  			if (IS_ERR(pci->atu_base))
->>>>>>  				return PTR_ERR(pci->atu_base);
->>>>>> +			pci->atu_phys_addr = res->start;
->>>>>>  		} else {
->>>>>>  			pci->atu_base = pci->dbi_base + DEFAULT_DBI_ATU_OFFSET;
->>>>>>  		}
->>>>>> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
->>>>>> index 53c4c8f399c8..efc72989330c 100644
->>>>>> --- a/drivers/pci/controller/dwc/pcie-designware.h
->>>>>> +++ b/drivers/pci/controller/dwc/pcie-designware.h
->>>>>> @@ -407,8 +407,10 @@ struct dw_pcie_ops {
->>>>>>  struct dw_pcie {
->>>>>>  	struct device		*dev;
->>>>>>  	void __iomem		*dbi_base;
->>>>>
->>>>>> +	phys_addr_t		dbi_phys_addr;
->>>>>>  	void __iomem		*dbi_base2;
->>>>>>  	void __iomem		*atu_base;
->>>>>> +	phys_addr_t		atu_phys_addr;
->>>>>
->>>>> What's the point in adding these fields to the generic DW PCIe private
->>>>> data if they are going to be used in the Qcom glue driver only?
->>>>>
->>>>> What about moving them to the qcom_pcie structure and initializing the
->>>>> fields in some place of the pcie-qcom.c driver?
->>>>>
->>>>> -Serge(y)
->>>>>
->>>>
->>>
->>>> These fields were in pcie-qcom.c driver in the v1 patch[1] and
->>>> Manivannan suggested to move these fields to 'struct dw_pcie' so that duplication
->>>> of resource fetching code 'platform_get_resource_byname()' can be avoided.
->>>>
->>>> [1] https://lore.kernel.org/linux-pci/a01404d2-2f4d-4fb8-af9d-3db66d39acf7@quicinc.com/T/#mf9843386d57e9003de983e24e17de4d54314ff73
->>>
->>> Em, polluting the core driver structure with data not being used by
->>> the core driver but by the glue-code doesn't seem like a better
->>> alternative to additional platform_get_resource_byname() call in the
->>> glue-driver. I would have got back v1 version so to keep the core
->>> driver simpler. Bjorn?
->>>
->>
->> IDK how adding two fields which is very related to DWC code *pollutes* it. Since
->> there is already 'dbi_base', adding 'dbi_phys_addr' made sense to me even though
->> only glue drivers are using it. Otherwise, glue drivers have to duplicate the
->> platform_get_resource_byname() code which I find annoying.
-> 
-> I just explained why it was redundant:
-> 1. adding the fields expands the core private data size for _all_
-> platforms for no reason. (a few bytes but still)
-> 2. the new fields aren't utilized by the core driver, but still
-> defined in the core private data which is first confusing and
-> second implicitly encourages the kernel developers to add another
-> unused or even weakly-related fields in there.
-> 3. the new fields utilized in a single glue-driver and there is a small
-> chance they will be used in another ones. Another story would have
-> been if we had them used in more than one glue-driver...
-> 
-> So from that perspective I find adding these fields to the driver core
-> data less appropriate than duplicating the
-> platform_get_resource_byname() call in a _single_ glue driver. It
-> seems more reasonable to have them defined and utilized in the code
-> that actually needs them, but not in the place that doesn't annoy you.)
-> 
-> Anyway I read your v1 command and did understand your point in the
-> first place. That's why my question was addressed to Bjorn.
-> 
-> Please also note the resource::start field is of the resource_size_t
-> type. So wherever the fields are added, it's better to have them
-> defined of that type instead.
-> 
-> -Serge(y)
-> 
+I interpreted the current state of the code after patch [1] to mean that
+the definition of the uptodate flag means "prepared for guest use", so
+the two enum values here are probably actually the same thing.
 
-Hi Bjorn,
+For SEV, this means calling rmp_make_private(), so I guess when the page
+allowed to be faulted in to userspace, rmp_make_shared() would have to
+be called on the page.
 
-Gentle ping for your feedback on the above discussed two approaches.
+Shall we continue to have the uptodate flag mean "prepared for guest
+use" (whether prepared for shared or private use)?
 
-Thanks,
-Prudhvi
->>
->> - Mani
->>
->> -- 
->> மணிவண்ணன் சதாசிவம்
-> 
+Then we can have another enum to request a zeroed page (which will have
+no accompanying page flag)? Or could we remove the zeroing feature,
+since it was meant to be handled by trusted hypervisor or hardware in
+the first place? It was listed as a TODO before being removed in [2].
+
+I like the idea of having flags to control what is done to the page,
+perhaps removing the page from the direct map could be yet another enum.
+
+> +
+> +struct folio *guest_memfd_grab_folio(struct file *file, pgoff_t index, u32 flags);
+> +struct file *guest_memfd_alloc(const char *name,
+> +			       const struct guest_memfd_operations *ops,
+> +			       loff_t size, unsigned long flags);
+> +bool is_guest_memfd(struct file *file, const struct guest_memfd_operations *ops);
+> +
+> +#endif
+
+> <snip>
+
+[1] https://lore.kernel.org/all/20240726185157.72821-15-pbonzini@redhat.com/
+[2] https://lore.kernel.org/all/20240726185157.72821-8-pbonzini@redhat.com/
 
