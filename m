@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-28164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35A9194BF0B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 16:04:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D985694BF10
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 16:05:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC1EB2878EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 14:04:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E24E01C24F61
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 14:05:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2E8418EFD6;
-	Thu,  8 Aug 2024 14:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0A7F18EFF1;
+	Thu,  8 Aug 2024 14:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="p44ZvgS4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mBYaE+Ll"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B924918EFC9;
-	Thu,  8 Aug 2024 14:04:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4413518EFC9;
+	Thu,  8 Aug 2024 14:04:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723125860; cv=none; b=d4NoLDLwzUw5M8rA6eoqsymXW7OUXnlHJ8aS+UWAbEq2Ocntbfg4VgZ1kp/T8pRvNVnedf4yPP793kiUOoMoN6HCOcxW5HfsIrzNWEcNRuC7CZjjBc+s2x5IQtEhP4gY2OWMoDYDWOKhRobEmtRSxqrpKmEcyGDfGC0FT+b6TGU=
+	t=1723125867; cv=none; b=q6zqQMC3Gqp68SLywcHom9byfg4Z38IDe1IMbb36e2KsoZFFZAJFboOVyC1oQcFq5ALk+YaeKl1yDcm/Ub9rWx20DbRrJh79AUKvUEwIfwB+525uECH8XEfvJcNRVtYPy0QHNwMCx4ce2J3iaxJ9bRcKOpUSvmTu43lVW1gWfp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723125860; c=relaxed/simple;
-	bh=zx5SghnMnnNJKI++0+Ng96Jv8/fUXJm6EqOTHdQBdTA=;
+	s=arc-20240116; t=1723125867; c=relaxed/simple;
+	bh=3WH0aRycawtTd+hwuDHZymvMm+tSFS7uVvav4SszNxo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=vGn2Hr0Pb4OAo7kSKOUicz4ufvgHrBssFo5wLEh6e54c8uj6mT7Ns6B6QXzQg5x7+AmwdS4YZk9yVMFrcgZeN/duhySQkzEpHv7Sn/uw4e9aQHscVQiWbTZhiO4QrbUxfJxjIXKR/rOYbpLmO52x7yN8tGYYdr4tIenH2qTjhwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=p44ZvgS4; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:CC; b=gIYeYOTtN+IVporTBx7sGPOofPRNDyoIaYpkN1TCxwfACtshVDxQbPn9eY/NjNCDiYT9+wO3+mkkOJkrefUqJtJ6cgsv1/VX4Q2NiJpNM77bKlE/Zv9MG72cS5nsjnr3f+2TaPIWnwYrWn52Ek/o+1HEfuxcEghDjdqH6LwLPbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mBYaE+Ll; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4784H0YJ010740;
-	Thu, 8 Aug 2024 14:04:10 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 478A1PGt006866;
+	Thu, 8 Aug 2024 14:04:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	CpS+0CYyaBimguTedamF2HosUC4UuyAAIMydMjqpbJM=; b=p44ZvgS4cxQFfIVI
-	/sROryTzOGx30ZVJQ2lDCjdLay1Bwrp4xOMn8W50jKkSH15WS5111SONLj8ZKCRz
-	cttd2HzkmBfEiUzOS/9OMuNNHnWcv71iIHTfmYPqPOsnCgpt/rbViGDqYxqx7xIf
-	qyxMc+N8kTVoLVAvMAPcJJt3D8ec3s+LQ21qiu3D3Z5jT2bszkdWD3SClXzozoj0
-	1CfUsqD/BIYWhfFokTE2lBdnTqp0Rs782iA3wPOAbxj4otZOyh3m6bkpCLcyDNMX
-	NDtmeBCt0CCGnC4e1U3wZzAfjibhe60aJt7BP8hCwj5rffWrMarn5R0nUQxO6niC
-	+9eRcA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40vpuvhech-1
+	nJ8vsy1F4vyNtasevygBxd3nGUZUhHi+Dut76YwdACM=; b=mBYaE+Ll+bLZ4XrS
+	dgK3yXP5DiERaueEBUnJU5WENJ40AknF3yB1Ms+tX2fYoitj1DwnG5J+gvlNYlvx
+	3i0RcMAMpO971Ine/OcUROFaF4jlTcVnaKo5xmnl2n87boV1S/3eirp8D/E7ShLz
+	ZlTXVEmFH+Q67kLb+7bH4mKDY47Bvs/2xSciVNbo22JVOXtvAEIWqYiNaRjvlcmx
+	rZEkiNTu/FwDdC5A/M8rCV+msdJFMFO3pxB3CYGfJhy4/q2vmOM7SHlcv3eDxtgu
+	QnlHdD7zcZMw1Xj86PHR/r44HZkCUfFHUXTa4kRqDNNtvfxVudnmF+3Q5SDjb/ND
+	bLi/yQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40vuwarm82-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 08 Aug 2024 14:04:09 +0000 (GMT)
+	Thu, 08 Aug 2024 14:04:15 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 478E48rs020519
+	by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 478E4D2f023745
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 8 Aug 2024 14:04:08 GMT
+	Thu, 8 Aug 2024 14:04:13 GMT
 Received: from nsssdc-sh01-lnx.ap.qualcomm.com (10.80.80.8) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 8 Aug 2024 07:04:04 -0700
+ 15.2.1544.9; Thu, 8 Aug 2024 07:04:09 -0700
 From: Luo Jie <quic_luoj@quicinc.com>
-Date: Thu, 8 Aug 2024 22:03:13 +0800
-Subject: [PATCH 2/4] clk: qcom: Add common PLL clock controller driver for
- IPQ SoC
+Date: Thu, 8 Aug 2024 22:03:14 +0800
+Subject: [PATCH 3/4] arm64: defconfig: Enable Qualcomm IPQ common PLL clock
+ controller
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240808-qcom_ipq_cmnpll-v1-2-b0631dcbf785@quicinc.com>
+Message-ID: <20240808-qcom_ipq_cmnpll-v1-3-b0631dcbf785@quicinc.com>
 References: <20240808-qcom_ipq_cmnpll-v1-0-b0631dcbf785@quicinc.com>
 In-Reply-To: <20240808-qcom_ipq_cmnpll-v1-0-b0631dcbf785@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -90,323 +90,48 @@ CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
         Luo Jie
 	<quic_luoj@quicinc.com>
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1723125835; l=9424;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1723125835; l=686;
  i=quic_luoj@quicinc.com; s=20240808; h=from:subject:message-id;
- bh=zx5SghnMnnNJKI++0+Ng96Jv8/fUXJm6EqOTHdQBdTA=;
- b=s7kY42Ycm78zTZ+79sjwaEtmucniIK1FRjWp7boQoi3p8QHhOtJsgOZdmwaJT/EIZgnUUIljw
- jCqM8AmIVU1AQkpp3AeiNSW2CUiaEsAOVOnGEURXLj3+uCumTKr10a9
+ bh=3WH0aRycawtTd+hwuDHZymvMm+tSFS7uVvav4SszNxo=;
+ b=kGcKVI1IIqlsnIpJUVp4Wvp5JBSjUnrEDMg00b6augQQQ9OmZ2xKK9W4mBQ3NA8gQJuUhKD4L
+ 3jgYTdjvUF2AafjRuQptnHOG4RIldlCY8I+GJIm2jv2WVymj7tazHrv
 X-Developer-Key: i=quic_luoj@quicinc.com; a=ed25519;
  pk=P81jeEL23FcOkZtXZXeDDiPwIwgAHVZFASJV12w3U6w=
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: lNI8hMuHTtR4O50QBVWYejLIIOlw-F4B
-X-Proofpoint-GUID: lNI8hMuHTtR4O50QBVWYejLIIOlw-F4B
+X-Proofpoint-ORIG-GUID: GXmzUaUR0WRy_t2u9KTmYF4K_Tt7r2ir
+X-Proofpoint-GUID: GXmzUaUR0WRy_t2u9KTmYF4K_Tt7r2ir
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-08_14,2024-08-07_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- spamscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501
- clxscore=1015 bulkscore=0 mlxscore=0 phishscore=0 mlxlogscore=999
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
+ mlxscore=0 phishscore=0 adultscore=0 bulkscore=0 impostorscore=0
+ mlxlogscore=730 suspectscore=0 priorityscore=1501 spamscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2407110000 definitions=main-2408080099
 
-The common PLL clock controller driver supplies clocks to the
-hardware blocks that together make up the Ethernet function
-on Qualcomm IPQ SoCs. The driver is initially supported for
-IPQ9574 SoC.
-
-The common PLL clock controller expects a reference input clock
-from the on-board Wi-Fi block acting as clock source. The input
-reference clock needs to be configured to one of the supported
-clock rates.
-
-The controller supplies a number of fixed-rate output clocks.
-For the IPQ9574, there is one output clock of 353 MHZ to PPE
-(Packet Process Engine) hardware block, three 50 MHZ output
-clocks and an additional 25 MHZ output clock supplied to the
-connected Ethernet devices.
+The common PLL clock controller provides fixed rate output clocks to
+the hardware blocks that enable ethernet function on IPQ platform.
 
 Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
 ---
- drivers/clk/qcom/Kconfig           |  10 ++
- drivers/clk/qcom/Makefile          |   1 +
- drivers/clk/qcom/clk-ipq-cmn-pll.c | 233 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 244 insertions(+)
+ arch/arm64/configs/defconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index cf6ad908327f..8e36cde64134 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -190,6 +190,16 @@ config IPQ_APSS_6018
- 	  Say Y if you want to support CPU frequency scaling on
- 	  ipq based devices.
- 
-+config IPQ_CMN_PLL
-+	tristate "IPQ Common PLL Clock Controller"
-+	depends on IPQ_GCC_9574
-+	help
-+	  Support for common PLL clock controller on IPQ platform. The
-+	  common PLL feeds the reference clocks to the Ethernet devices
-+	  based on IPQ SoC.
-+	  Say Y or M if you want to support common PLL clock on the IPQ
-+	  based devices.
-+
- config IPQ_GCC_4019
- 	tristate "IPQ4019 Global Clock Controller"
- 	help
-diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-index 8a6f0dabd02f..35f656146de7 100644
---- a/drivers/clk/qcom/Makefile
-+++ b/drivers/clk/qcom/Makefile
-@@ -29,6 +29,7 @@ obj-$(CONFIG_CLK_X1E80100_TCSRCC) += tcsrcc-x1e80100.o
- obj-$(CONFIG_CLK_QCM2290_GPUCC) += gpucc-qcm2290.o
- obj-$(CONFIG_IPQ_APSS_PLL) += apss-ipq-pll.o
- obj-$(CONFIG_IPQ_APSS_6018) += apss-ipq6018.o
-+obj-$(CONFIG_IPQ_CMN_PLL) += clk-ipq-cmn-pll.o
- obj-$(CONFIG_IPQ_GCC_4019) += gcc-ipq4019.o
- obj-$(CONFIG_IPQ_GCC_5018) += gcc-ipq5018.o
- obj-$(CONFIG_IPQ_GCC_5332) += gcc-ipq5332.o
-diff --git a/drivers/clk/qcom/clk-ipq-cmn-pll.c b/drivers/clk/qcom/clk-ipq-cmn-pll.c
-new file mode 100644
-index 000000000000..c10c6a7e82e6
---- /dev/null
-+++ b/drivers/clk/qcom/clk-ipq-cmn-pll.c
-@@ -0,0 +1,233 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+/*
-+ * Common PLL block expects the reference clock from on-board Wi-Fi block,
-+ * and supplies the fixed rate clocks as output to the Ethernet hardware
-+ * blocks. The Ethernet related blocks include PPE (packet process engine)
-+ * and the external connected PHY (or switch) chip receiving clocks from
-+ * the common PLL.
-+ *
-+ * On the IPQ9574 SoC, There are three clocks with 50 MHZ, one clock with
-+ * 25 MHZ which are output from the common PLL to Ethernet PHY (or switch),
-+ * and one clock with 353 MHZ to PPE.
-+ *
-+ *               +---------+
-+ *               |   GCC   |
-+ *               +--+---+--+
-+ *           AHB CLK|   |SYS CLK
-+ *                  V   V
-+ *          +-------+---+------+
-+ *          |                  +-------------> eth0-50mhz
-+ * REF CLK  |     IPQ9574      |
-+ * -------->+                  +-------------> eth1-50mhz
-+ *          |  CMN PLL block   |
-+ *          |                  +-------------> eth2-50mhz
-+ *          |                  |
-+ *          +---------+--------+-------------> eth-25mhz
-+ *                    |
-+ *                    V
-+ *                    ppe-353mhz
-+ */
-+
-+#include <linux/clk.h>
-+#include <linux/clk-provider.h>
-+#include <linux/delay.h>
-+#include <linux/io.h>
-+#include <linux/of.h>
-+#include <linux/of_address.h>
-+#include <linux/platform_device.h>
-+#include <linux/slab.h>
-+
-+#define CMN_PLL_REFCLK_SRC_SELECTION		0x28
-+#define CMN_PLL_REFCLK_SRC_DIV			GENMASK(9, 8)
-+
-+#define CMN_PLL_REFCLK_CONFIG			0x784
-+#define CMN_PLL_REFCLK_EXTERNAL			BIT(9)
-+#define CMN_PLL_REFCLK_DIV			GENMASK(8, 4)
-+#define CMN_PLL_REFCLK_INDEX			GENMASK(3, 0)
-+
-+#define CMN_PLL_POWER_ON_AND_RESET		0x780
-+#define CMN_ANA_EN_SW_RSTN			BIT(6)
-+
-+/**
-+ * struct cmn_pll_fixed_clk - Common PLL output clocks information
-+ * @nrates:	Number of elements in rates
-+ * @rates:	Array of clock rates supplied by common PLL
-+ */
-+struct cmn_pll_fixed_clk {
-+	int nrates;
-+	const unsigned long *rates;
-+};
-+
-+/*
-+ * The clock rates are for the output clock ppe-353mhz, eth0-50mhz
-+ * eth1-50mhz, eth2-50mhz and eth-25mhz.
-+ */
-+static const unsigned long ipq9574_rates[] = {
-+	353000000UL, 50000000UL, 50000000UL, 50000000UL, 25000000UL,
-+};
-+
-+static const struct cmn_pll_fixed_clk ipq9574_fixed_clk = {
-+	.nrates = ARRAY_SIZE(ipq9574_rates),
-+	.rates = ipq9574_rates,
-+};
-+
-+static int ipq_cmn_pll_config(struct device *dev, unsigned long parent_rate)
-+{
-+	void __iomem *base;
-+	u32 val;
-+
-+	base = devm_of_iomap(dev, dev->of_node, 0, NULL);
-+	if (IS_ERR(base))
-+		return PTR_ERR(base);
-+
-+	val = readl(base + CMN_PLL_REFCLK_CONFIG);
-+	val &= ~(CMN_PLL_REFCLK_EXTERNAL | CMN_PLL_REFCLK_INDEX);
-+
-+	/*
-+	 * Configure the reference input clock selection as per the given rate.
-+	 * The output clock rates are always of fixed value.
-+	 */
-+	switch (parent_rate) {
-+	case 25000000:
-+		val |= FIELD_PREP(CMN_PLL_REFCLK_INDEX, 3);
-+		break;
-+	case 31250000:
-+		val |= FIELD_PREP(CMN_PLL_REFCLK_INDEX, 4);
-+		break;
-+	case 40000000:
-+		val |= FIELD_PREP(CMN_PLL_REFCLK_INDEX, 6);
-+		break;
-+	case 48000000:
-+		val |= FIELD_PREP(CMN_PLL_REFCLK_INDEX, 7);
-+		break;
-+	case 50000000:
-+		val |= FIELD_PREP(CMN_PLL_REFCLK_INDEX, 8);
-+		break;
-+	case 96000000:
-+		val |= FIELD_PREP(CMN_PLL_REFCLK_INDEX, 7);
-+		val &= ~CMN_PLL_REFCLK_DIV;
-+		val |= FIELD_PREP(CMN_PLL_REFCLK_DIV, 2);
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	writel(val, base + CMN_PLL_REFCLK_CONFIG);
-+
-+	/* Update the source clock rate selection. Only 96 MHZ uses 0. */
-+	val = readl(base + CMN_PLL_REFCLK_SRC_SELECTION);
-+	val &= ~CMN_PLL_REFCLK_SRC_DIV;
-+	if (parent_rate != 96000000)
-+		val |= FIELD_PREP(CMN_PLL_REFCLK_SRC_DIV, 1);
-+
-+	writel(val, base + CMN_PLL_REFCLK_SRC_SELECTION);
-+
-+	/*
-+	 * Reset the common PLL block by asserting/de-asserting for 100 ms
-+	 * each, to ensure the updated configurations take effect.
-+	 */
-+	val = readl(base + CMN_PLL_POWER_ON_AND_RESET);
-+	val &= ~CMN_ANA_EN_SW_RSTN;
-+	writel(val, base);
-+	msleep(100);
-+
-+	val |= CMN_ANA_EN_SW_RSTN;
-+	writel(val, base + CMN_PLL_POWER_ON_AND_RESET);
-+	msleep(100);
-+
-+	return 0;
-+}
-+
-+static int ipq_cmn_pll_clk_register(struct device *dev, const char *parent)
-+{
-+	const struct cmn_pll_fixed_clk *fixed_clk;
-+	struct clk_hw_onecell_data *data;
-+	const char *clk_name;
-+	struct clk_hw *hw;
-+	int index;
-+
-+	fixed_clk = of_device_get_match_data(dev);
-+	if (!fixed_clk)
-+		return -ENODEV;
-+
-+	data = devm_kzalloc(dev, struct_size(data, hws, fixed_clk->nrates),
-+			    GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+
-+	/*
-+	 * Register the fixed rate output clocks with the correct clock names,
-+	 * the number of clocks and clock names are guaranteed by DTS.
-+	 */
-+	for (index = 0; index < fixed_clk->nrates; index++) {
-+		if (of_property_read_string_index(dev->of_node,
-+						  "clock-output-names",
-+						  index, &clk_name))
-+			return -ENODEV;
-+
-+		hw = devm_clk_hw_register_fixed_rate(dev, clk_name, parent, 0,
-+						     fixed_clk->rates[index]);
-+		if (IS_ERR(hw))
-+			return PTR_ERR(hw);
-+
-+		data->hws[index] = hw;
-+	}
-+	data->num = fixed_clk->nrates;
-+
-+	return devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, data);
-+}
-+
-+static int ipq_cmn_pll_clk_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct clk *clk;
-+	int ret;
-+
-+	/*
-+	 * To access the common PLL registers, the GCC AHB & SYSY clocks
-+	 * for common PLL block need to be enabled.
-+	 */
-+	clk = devm_clk_get_enabled(dev, "ahb");
-+	if (IS_ERR(clk))
-+		return dev_err_probe(dev, PTR_ERR(clk),
-+				     "Enable AHB clock failed\n");
-+
-+	clk = devm_clk_get_enabled(dev, "sys");
-+	if (IS_ERR(clk))
-+		return dev_err_probe(dev, PTR_ERR(clk),
-+				     "Enable SYS clock failed\n");
-+
-+	clk = devm_clk_get(dev, "ref");
-+	if (IS_ERR(clk))
-+		return dev_err_probe(dev, PTR_ERR(clk),
-+				     "Get reference clock failed\n");
-+
-+	/* Configure common PLL to apply the reference clock. */
-+	ret = ipq_cmn_pll_config(dev, clk_get_rate(clk));
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Configure common PLL failed\n");
-+
-+	return ipq_cmn_pll_clk_register(dev, __clk_get_name(clk));
-+}
-+
-+static const struct of_device_id ipq_cmn_pll_clk_ids[] = {
-+	{ .compatible = "qcom,ipq9574-cmn-pll", .data = &ipq9574_fixed_clk },
-+	{ }
-+};
-+
-+static struct platform_driver ipq_cmn_pll_clk_driver = {
-+	.probe = ipq_cmn_pll_clk_probe,
-+	.driver = {
-+		.name = "ipq_cmn_pll",
-+		.of_match_table = ipq_cmn_pll_clk_ids,
-+	},
-+};
-+
-+module_platform_driver(ipq_cmn_pll_clk_driver);
-+
-+MODULE_DESCRIPTION("Qualcomm Technologies, Inc. IPQ Common PLL Driver");
-+MODULE_LICENSE("GPL");
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 01dd286ba7ef..1bc7bd86e589 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1300,6 +1300,7 @@ CONFIG_QCOM_CLK_SMD_RPM=y
+ CONFIG_QCOM_CLK_RPMH=y
+ CONFIG_IPQ_APSS_6018=y
+ CONFIG_IPQ_APSS_5018=y
++CONFIG_IPQ_CMN_PLL=m
+ CONFIG_IPQ_GCC_5018=y
+ CONFIG_IPQ_GCC_5332=y
+ CONFIG_IPQ_GCC_6018=y
 
 -- 
 2.34.1
