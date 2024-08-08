@@ -1,198 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-28160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B530D94BE86
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 15:30:08 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 387D894BEFA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 16:02:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6D4C9284E25
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 13:30:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8A6B8B20CCA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 14:02:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 201C918CBF9;
-	Thu,  8 Aug 2024 13:30:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 987C318DF8C;
+	Thu,  8 Aug 2024 14:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i+kvdnHJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UC9/u3Va"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEC118CBE3
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Aug 2024 13:30:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA63863D;
+	Thu,  8 Aug 2024 14:02:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723123806; cv=none; b=ReEh00wAAP8hqADhnnojh+9bO4lzo3Oxo+UgQOU6rLX276gT8TsQ17esMnRuZoIGBrasf4JBkdIfhom1+Az68kc5LjBh5YS5GIdfrzO2/y7WTXIRGiUboHfbE57+6CvITc0lnqV0zcUlcne5ijFO8QRO4AChHkSAlFYU1pJ9y4o=
+	t=1723125754; cv=none; b=DWz8VZPRaOHIW2KtTW7bTPy1hscqTvRqGDfvAS9v/LyMgDVeikrVF3LrCLHxM8dt4+ityUEi/9BnsS7MO/lYeKlDs3doO7U0xXEGJu8U8LECQrOwW8JAXBwR43TxWz4XInYqCMtxgH8Jy6eFZmU2q5dWqDGODpPvRHSMz3q4KQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723123806; c=relaxed/simple;
-	bh=bbmfFVb6t654IpaQqd7GVf4O7Wxk6p1giGtbRBjzz1Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uD+rY4FM+ZRxma2itLy5zTeJP7bz8psizNmFNSSjUUTHDnRo3NMFnjxJtBHyCYP/BTANiniU3k979JKRzowEVqVE1l10vz6QBKnnjJTaFD4z6m3Jsj3sYGKza1WSSr9OPd1P9hmaOwbaGgPihbH5LD7wq18vEDbt91Iw2LhC6rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=i+kvdnHJ; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-2cd2f89825fso801864a91.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Aug 2024 06:30:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723123804; x=1723728604; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=3lZxT14EwwYSSCHgAAJs56j4ybzd0J4lZ2llfSmTpvk=;
-        b=i+kvdnHJlhvp6YgzUSEg/etdWs28tdmfVRQ23wGVWSxJ/fLS+X8l4qfBAiLML3w6/e
-         DJ4vqlYT0lu/xsFatJYrOSnFNL5Vcw3EB296bDOJlotPSZBIHqAbma0eUS/uOHQXGntI
-         122EXSQpNqrPRAW07+DDj6KFDUEQAWfV+hQAevGTEBomnSm6hXLkP01XvEJbVCpRc+r+
-         QSucKAwIRBe33hFy3+0XwoIt2vaitPQTB+dTmlx1c/D7yRm7TpK7dwEjw6mdZgyIUPT/
-         xEQzSHbQ0O6Ezoosyv0OKh10xTDjJhNxz9PkXYWqnMrX/mVtXgWJptMaGMtxLuueIFeT
-         IU5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723123804; x=1723728604;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3lZxT14EwwYSSCHgAAJs56j4ybzd0J4lZ2llfSmTpvk=;
-        b=ppfSIuSeB/M7jOv0UZ3h8RbttiKojrFI/Na1fj7Zdgg2qbJctdji8fJ20tUYPaFuxA
-         5hiW7bNTgZdWOzUreZndZqil6LXIIvhD1bflSsbrUf3ckqO8d6cNXw8LtTtFzLv1+g0R
-         ahvvm7UrZzA2MjzEG7z3U0sW//+PnkQDOYmMwctv+ww5qcaUJG9G4YjzDAVZjQkltJsd
-         65Vl91kaRxqfO0I3+T5dkOr3Lsw4GA+HnzU16iNbnOU02VJLEA/OQB2orx1jMIR2VJV3
-         Y2V6toCCcvodcugFsdursW9XyacA9pzewMs7vofUONW8nf4xWMi84RKrNKpebwgRKAvR
-         WxDA==
-X-Forwarded-Encrypted: i=1; AJvYcCVaOkpGfekrpxY3ZKJVq9XmF9KEh0IVT4xOLPJsE/8dk6tebV7Og0NCsOUbXAuReP1MYQl+dODOb7k6kBFV@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy5BlmJD2qiFgz/yR+lLC5JT/x6PAcWAhzoeLI6bWrhUd0E3t0X
-	cTmGRc7W4FupbX8HlagKxfh0RK7lrc/+XFUpN9MeSpiTbrpexqM03h1FkusY8w==
-X-Google-Smtp-Source: AGHT+IFpAZ/58D+aRL3ZP38sJbvoR7HzeA59k/BtocUQn6vm996btF22ZeJW7vPZa9tDi73gILiEBw==
-X-Received: by 2002:a17:90b:4b92:b0:2c9:6b02:15ca with SMTP id 98e67ed59e1d1-2d1c34723e1mr2164190a91.39.1723123803549;
-        Thu, 08 Aug 2024 06:30:03 -0700 (PDT)
-Received: from thinkpad ([120.60.136.4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d1c9c5d696sm1122630a91.9.2024.08.08.06.29.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Aug 2024 06:30:02 -0700 (PDT)
-Date: Thu, 8 Aug 2024 18:59:53 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-	Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Jingoo Han <jingoohan1@gmail.com>, andersson@kernel.org,
-	quic_vbadigan@quicinc.com, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v2 1/8] dt-bindings: PCI: Add binding for qps615
-Message-ID: <20240808132953.GC18983@thinkpad>
-References: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
- <20240803-qps615-v2-1-9560b7c71369@quicinc.com>
- <5f65905c-f1e4-4f52-ba7c-10c1a4892e30@kernel.org>
- <f8985c98-82a5-08c3-7095-c864516b66b9@quicinc.com>
- <ZrEGypbL85buXEsO@hu-bjorande-lv.qualcomm.com>
- <90582c92-ca50-4776-918d-b7486cf942b0@kernel.org>
- <20240808120109.GA18983@thinkpad>
- <cb69c01b-08d0-40a1-9ea2-215979fb98c8@kernel.org>
- <20240808124121.GB18983@thinkpad>
- <c5bae58c-4200-40d3-94c6-669d2ee131d4@kernel.org>
+	s=arc-20240116; t=1723125754; c=relaxed/simple;
+	bh=GASqwo3D+klUje/Sl3EPzxYl3I0U+kkrag0CW9LeGdY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=qea+1EO0FSlgMrnTagJ2rQwqZYyVriXAswyMV1Y2VH1qAdinqflBSR5h4LwPapx4riMmoJsXaY4Ul8yJzzArOHjVvmroF53mLzkBL+yTOgXKbMyLDZZm26Sydacmy7OjldB4Qjn9qDcpK3d/ZDD4X5/CRKIPFJRbRCogHAi5yds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UC9/u3Va; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 478CDE7s021849;
+	Thu, 8 Aug 2024 14:02:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	jFCWaSWOx0MGXm2eZfsafUENDd6Jr5+lgPU6lfSVOU0=; b=UC9/u3VaW4K/BR1G
+	QCWWV4Rsnz/9Uzyapjrbv4Foquk+4OI/Oa/mXoOhSz4jXOYbZq7m1FLavCxLM7IP
+	JDZIS+4iorBvOEbtV0mnaUxSaZnHwLImxUMrmoYDijXHrtuwNpxXzBqCteuSqeuk
+	pMXf1FnBzuLDMkCUb44k06b6Xqn+IYeNb1Vsc1RQWeQ6LktTSOMHVoYmmCW3dpOL
+	Q2lPQTPZIJ322+RxPgSDqA+LFyludqQ3EYHkoP+sPIdOBrunTYCbUo75afMDRW8G
+	sx/RggOhCy9mAL/v3EBCsz3n5KekvhXHIRzuLX74UaWmBjSK2aHnbrAZfy+xWLRN
+	g5Ctlg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40vmc51ryv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 08 Aug 2024 14:02:26 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 478E2QOR009576
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 8 Aug 2024 14:02:26 GMT
+Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 8 Aug 2024
+ 07:02:20 -0700
+Message-ID: <3241cc15-c920-4c88-ac53-005903baf9e7@quicinc.com>
+Date: Thu, 8 Aug 2024 22:02:18 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/13] media: qcom: camss: csiphy: Add an init callback to
+ CSI PHY devices
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Vladimir Zapolskiy
+	<vladimir.zapolskiy@linaro.org>,
+        <rfoss@kernel.org>, <todor.too@gmail.com>, <mchehab@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>
+CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
+References: <20240709160656.31146-1-quic_depengs@quicinc.com>
+ <20240709160656.31146-5-quic_depengs@quicinc.com>
+ <6dfc2c79-fc6d-4eed-bf3f-94396130cb4f@linaro.org>
+ <fafda7d5-3853-428a-b0eb-9993fc2d4f56@linaro.org>
+ <4426c0e0-f877-409c-b2d2-a5aac5e8c645@linaro.org>
+ <1226d080-d1fc-4e06-ac81-84e93cb314e0@quicinc.com>
+ <8f935a7d-87b5-479c-a98e-c95671dbe259@linaro.org>
+ <7c03280f-908d-435d-acef-b6bf4f865029@quicinc.com>
+ <ff12ce12-41d6-4aa5-ab97-222b07146e36@linaro.org>
+Content-Language: en-US
+From: Depeng Shao <quic_depengs@quicinc.com>
+In-Reply-To: <ff12ce12-41d6-4aa5-ab97-222b07146e36@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <c5bae58c-4200-40d3-94c6-669d2ee131d4@kernel.org>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 70i7xzCDPhXxrhCIzUv5QAuDxDbAINmM
+X-Proofpoint-ORIG-GUID: 70i7xzCDPhXxrhCIzUv5QAuDxDbAINmM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-08_14,2024-08-07_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
+ bulkscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0 spamscore=0
+ clxscore=1015 malwarescore=0 mlxlogscore=778 priorityscore=1501
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408080099
 
-On Thu, Aug 08, 2024 at 03:06:28PM +0200, Krzysztof Kozlowski wrote:
-> On 08/08/2024 14:41, Manivannan Sadhasivam wrote:
-> > On Thu, Aug 08, 2024 at 02:13:01PM +0200, Krzysztof Kozlowski wrote:
-> >> On 08/08/2024 14:01, Manivannan Sadhasivam wrote:
-> >>> On Mon, Aug 05, 2024 at 07:18:04PM +0200, Krzysztof Kozlowski wrote:
-> >>>> On 05/08/2024 19:07, Bjorn Andersson wrote:
-> >>>>> On Mon, Aug 05, 2024 at 09:41:26AM +0530, Krishna Chaitanya Chundru wrote:
-> >>>>>> On 8/4/2024 2:23 PM, Krzysztof Kozlowski wrote:
-> >>>>>>> On 03/08/2024 05:22, Krishna chaitanya chundru wrote:
-> >>>>>>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,qps615.yaml b/Documentation/devicetree/bindings/pci/qcom,qps615.yaml
-> >>>>> [..]
-> >>>>>>>> +  qps615,axi-clk-freq-hz:
-> >>>>>>>> +    description:
-> >>>>>>>> +      AXI clock which internal bus of the switch.
-> >>>>>>>
-> >>>>>>> No need, use CCF.
-> >>>>>>>
-> >>>>>> ack
-> >>>>>
-> >>>>> This is a clock that's internal to the QPS615, so there's no clock
-> >>>>> controller involved and hence I don't think CCF is applicable.
-> >>>>
-> >>>> AXI does not sound that internal.
-> >>>
-> >>> Well, AXI is applicable to whatever entity that implements it. We mostly seen it
-> >>> in ARM SoCs (host), but in this case the PCIe switch also has a microcontroller
-> >>> /processor of some sort, so AXI is indeed relevant for it. The naming actually
-> >>> comes from the switch's i2c register name that is being configured in the driver
-> >>> based on this property value.
-> >>>
-> >>>> DT rarely needs to specify internal
-> >>>> clock rates. What if you want to define rates for 20 clocks? Even
-> >>>> clock-frequency is deprecated, so why this would be allowed?
-> >>>> bus-frequency is allowed for buses, but that's not the case here, I guess?
-> >>>>
-> >>>
-> >>> This clock frequency is for the switch's internal AXI bus that runs at default
-> >>> 200MHz. And this property is used to specify a frequency that is configured over
-> >>> the i2c interface so that the switch's AXI bus can operate in a low frequency
-> >>> there by reducing the power consumption of the switch.
-> >>>
-> >>> It is not strictly needed for the switch operation, but for power optimization.
-> >>> So this property can also be dropped for the initial submission and added later
-> >>> if you prefer.
-> >>
-> >> So if the clock rate can change, why this is static in DTB? Or why this
-> >> is configurable per-board?
-> >>
-> > 
-> > Because, board manufacturers can change the frequency depending on the switch
-> > configuration (enablement of DSP's etc...)
-> > 
-> >> There is a reason why clock-frequency property is not welcomed and you
-> >> are re-implementing it.
-> >>
-> > 
-> > Hmm, I'm not aware that 'clock-frequency' is not encouraged these days. So you
-> > are suggesting to change the rate in the driver itself based on the switch
-> > configuration? If so, what difference does it make?
+Hi Bryan,
+
+On 8/7/2024 11:37 PM, Bryan O'Donoghue wrote:
+> On 07/08/2024 16:03, Depeng Shao wrote:
+>> Hi Bryan,
+>>
+>> On 8/7/2024 10:04 PM, Bryan O'Donoghue wrote:
+>>> On 07/08/2024 14:08, Depeng Shao wrote:
+>>>> Hi Vladimir,
+>>>>
+>>>> On 8/5/2024 5:26 AM, Vladimir Zapolskiy wrote:
+>>>>> Hi Bryan,
+>>>>>
+>>>>> On 8/1/24 11:16, Bryan O'Donoghue wrote:
+>>>>>> On 01/08/2024 00:43, Vladimir Zapolskiy wrote:
+>>>>>>>> +    ret = csiphy->res->hw_ops->init(csiphy);
+>>>>>>>
+>>>>>>> Here.
+>>>>>>
+>>>>>> What name would make more sense to you ?
+>>>>>
+>>>>> according to the implementation the .init() call just fills some 
+>>>>> data in
+>>>>> memory, so I believe this could be handled at build time, if it's done
+>>>>> carefully enough...
+>>>>>
+>>>>
+>>>> This camss-csiphy-3ph-1-0.c is reused by many platforms, the old 
+>>>> platforms have same CSI_COMMON_CTR register offset, their offset are 
+>>>> 0x800, but some new platforms may have different CSI_COMMON_CTR 
+>>>> register offset, for example, the CSI_COMMON_CTR register offset is 
+>>>> 0x1000 in sm8550, then we need to add new file to support the new 
+>>>> csiphy HW, e.g., camss-csiphy-3ph-2-0.c, so Bryan asked me to 
+>>>> develop the CSIPHY driver based on his changes, then we just need 
+>>>> few code to enable new CSIPHY.
+>>>>
+>>>> Regarding the hw_ops->init interface, since it fills HW register 
+>>>> configurations and HW register offset, then maybe, it also can be 
+>>>> called as HW operation.
+>>>>
+>>>> And looks like we can't move it to camss-csiphy.c since it does 
+>>>> platform specific operation and it is related to the registers.
+>>>>
+>>>> Please feel free to share other comments if you don't agree with it. 
+>>>> Thanks.
+>>>>
+>>>>
+>>>> Thanks,
+>>>> Depeng
+>>>
+>>> So, I agree the phy init data could be obtained via resource structs 
+>>> but, rather than add yet more patches to this series, I'd say we can 
+>>> make the move to a separate resource struct pointer at a later date.
+>>>
+>>> Lets drop this patch and @Depeng we can then do
+>>>
+>>
+>>> +    regs->offset = 0x800;
+>>>
+>>> media: qcom: camss: csiphy-3ph: Use an offset variable to find common 
+>>> control regs
+>>>
+>>
+>>
+>> Do you mean only drop "[PATCH 04/13] media: qcom: camss: csiphy: Add 
+>> an init callback to CSI PHY devices"?
+>>
+>>
+>> [PATCH 05/13] media: qcom: camss: csiphy-3ph: Move CSIPHY variables to 
+>> data field inside csiphy struct
+>> Do you mean this is still needed? Just don't move the code from 
+>> csiphy_gen2_config_lanes to csiphy_init, right?
+>>
+>>
+>> [PATCH 06/13] media: qcom: camss: csiphy-3ph: Use an offset variable 
+>> to find common control regs
+>> The offset change is also needed, just need to add the offset for 
+>> different platform in csiphy_gen2_config_lanes .
+>>
+>> Please correct me if my understanding is wrong. Thanks.
 > 
-> Based on the switch, other clocks, votes etc. whatever is reasonable
-> there. In most cases, not sure if this one here as well, devices can
-> operate on different clock frequencies thus specifying fixed frequency
-> in the DTS is simplification and lack of flexibility. It is chosen by
-> people only because it is easier for them but then they come back with
-> ABI issues when it turns out they need to switch to some dynamic control.
+> Correct.
 > 
 
-Atleast in this case, the requirement is to just set the frequency based on
-switch configuration and not change it dynamically.
+I'm updating the code based on above comments, but I meet crash issue if 
+I move the offset assignment to csiphy_gen2_config_lanes, since the 
+csiphy->res->hw_ops->reset(csiphy) is called earlier than 
+csiphy_gen2_config_lanes, so if we don't have the .init interface, we 
+only can move this offset value to `struct csiphy_subdev_resources`, but 
+if we add the offset to `struct csiphy_subdev_resources`, then below two 
+patches are also can be dropped.
 
-Krishna, is it possible to set the freq in driver by detecting the switch
-configuration? I believe the freq is based on number of DSPs enabled?
 
-> > 
-> > And no more *-freq properties are allowed?
-> 
-> bus-frequency is allowed for busses.
-> 
+[PATCH 05/13] media: qcom: camss: csiphy-3ph: Move CSIPHY variables to 
+data field inside csiphy struct
+[PATCH 06/13] media: qcom: camss: csiphy-3ph: Use an offset variable to 
+find common control regs
 
-Okay.
 
-- Mani
+Could you please comment on if I need to add the CSI_COMMON_CTR offset 
+to res directly?
+Or add back the .init interface?
 
--- 
-மணிவண்ணன் சதாசிவம்
+---
+[   43.162439] Unable to handle kernel NULL pointer dereference at 
+virtual address 000000000000000c
+
+[   43.428307] Call trace:
+[   43.430823]  csiphy_reset+0x28/0x60 [qcom_camss]
+[   43.435572]  csiphy_set_power+0x1e8/0x2d4 [qcom_camss]
+[   43.440846]  pipeline_pm_power_one+0x74/0x10c [videodev]
+[   43.446306]  pipeline_pm_power+0x44/0xe0 [videodev]
+[   43.451313]  v4l2_pipeline_pm_get+0x44/0x80 [videodev]
+[   43.456588]  video_open+0x6c/0xc4 [qcom_camss]
+[   43.461158]  v4l2_open+0xb8/0x100 [videodev]
+[   43.465549]  chrdev_open+0x174/0x208
+[   43.469224]  do_dentry_open+0x290/0x4b4
+[   43.473164]  vfs_open+0x30/0xf0
+[   43.476397]  path_openat+0xaec/0xd2c
+[   43.480069]  do_filp_open+0xb4/0x158
+[   43.483739]  do_sys_openat2+0x84/0xe8
+[   43.487500]  __arm64_sys_openat+0x70/0x98
+[   43.491619]  invoke_syscall+0x40/0xf8
+[   43.495383]  el0_svc_common+0xa8/0xd8
+[   43.499143]  do_el0_svc+0x1c/0x28
+[   43.502545]  el0_svc+0x38/0x68
+[   43.505691]  el0t_64_sync_handler+0x90/0xfc
+[   43.509989]  el0t_64_sync+0x190/0x194
+[   43.513751] Code: 52800028 aa0003f3 52827100 5283e801 (b9400e8a)
+[   43.520010] ---[ end trace 0000000000000000 ]---
+Segmentation fault
+
+Thanks,
+Depeng
+
 
