@@ -1,162 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-28137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AE9194B6BB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 08:31:30 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EBA294B70B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 09:06:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B5DD7B23250
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 06:31:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EE331B22D35
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 07:05:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79D9C187870;
-	Thu,  8 Aug 2024 06:31:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B69B218786F;
+	Thu,  8 Aug 2024 07:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EFRtuBlf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QiVmDixD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED15186294
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Aug 2024 06:31:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E570C7464;
+	Thu,  8 Aug 2024 07:05:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723098670; cv=none; b=q+WWLUXVQmS3PQvJmwbzuat1kHFhK5TINR+NoJ+W3axGmSKyrsVsIpyNjR9/1AWRn/ynpbjrF1iAZn3+CVV7nSXqiMSPDKYGeRdkaCqIjK023jpMFlyrNBo1tiQUO3NCq39mkbYj6RFishx+k39HdQctxsD5VDgi5RmU+Zbjwgk=
+	t=1723100752; cv=none; b=XBxwdYAEaqAhEKa6iPIRukYbXGqADX6dkxPsNF/qf0de2XlhVgMVBXNdCop7AQEPfksXBCPX1bYelAWSeLm8mnN6jTrxf33dkAA3dpVY6pZPmTV8pxx2ZW9kg65WTijnI4wVEVBT4TXgLBgxwiEfKbrbnvbT91jMphMQMZqO4p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723098670; c=relaxed/simple;
-	bh=8tcV6h51qTImYpVkN/XYbqQUsKUdeQdzBSWpJGgvF2I=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=OdHhh0v+vT3iYduhW0PSYJaPkqVBZODDGzf0e4rCMqFF1t3Xj8Z2753IvR+gocVW+I/DO4Z5sSQXCsoZJCBHCkGRcUO7L0eM8RWbidQpvqcntIUH4eKolpI1Gq+V1KnCN/xAW/D7/oBhBx3RIL8mKyKNN6z+zB0Tg0uYS+Qvjpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EFRtuBlf; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1fdd6d81812so6493905ad.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Aug 2024 23:31:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723098668; x=1723703468; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uL02WkDHX6MB6U3tlx7TFw4sDSoGDOr7FVNC/xGND0g=;
-        b=EFRtuBlfxR6nc4Hg3OD7yMr7IwCyft5fiUEENZvPoCJeGsEJHr7SbT6taKPblynriB
-         ldBAmtanuIfDs3sKyDeYZmFK5U+DLQ/yjnfYCYfmp6XYMaqP4oYa6SgA4RsrMCoOA1oO
-         uvnQZiMO8ltU5j2XoEhlH0LIe+0jQCHkYnNs3uaTh7Cb2JVPU02SwUOy1lAeASTdRg9X
-         kUGu6RfpHMGAZFrDg9W9GCnxfz0p5HfJCGcmF2Z6GQ6W3SYuT8Nvlo7grFhrqQDpia9L
-         nApdLqIuKrCR3NLax1S0MOkJbuGNngZb2g4k3IuVuqOlF5O1kBEllh6eeZgnfwTAWNgg
-         kAIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723098668; x=1723703468;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uL02WkDHX6MB6U3tlx7TFw4sDSoGDOr7FVNC/xGND0g=;
-        b=LRtGNAQIn7gdAWWH5vF5TwPCW9lf3fATMDciY5kzneY0fTLSMLIceZtzE0Vai3G13b
-         Rd6jsRE5TE5nk/95pxuvQavZN/fjXvcRSBbZKj5cWw0+zwczI4riStEx2wr0J/KUt+FH
-         lVz/0wd5yUUWzWc3/WugxFV+oAFFfnE49IE/QYw0IcR7zmaJJ1B8YKegXVLyFO9gNFk2
-         dIrkM4E0R6+SXRwpksIqMTlCCNKTwdl5GwQPYiJh0twleNlgvKY58u+Wz7n+8CMYF3Vw
-         QJZ3ogPBbe7SmD0ac8+C70qXf1zUI93oM26Ox4+ooNQuZioR7uWwcp9TlHcdKB+KAFPR
-         PZdw==
-X-Forwarded-Encrypted: i=1; AJvYcCWZclSNjBSAz7rGWzHCIxxfxO0GTSqPx1qHtxXj92sCoAWqF4QQSnevSYIEYw/5dY+h2n7t16IOHRlzaEwn6gKuW9XuRW9AGF+tPqiPmg==
-X-Gm-Message-State: AOJu0Ywyy5B2Rf5J1nk92+3RpZRsziU79H1KykvobbuOO3k9s4KpMsTW
-	Na0BXo2ozB1vgI4iBgnkYFW2cLrfdRPbS8Fi+oxRhX+wDLP+s1mNJ0F+C8Wrgw==
-X-Google-Smtp-Source: AGHT+IGQt0i5NhwN7Ci91sWmaz9DV0yumS/TmjkZMx5oG6iE3KgHew5o9t+jkvkw0fUPz38IFnljNw==
-X-Received: by 2002:a17:903:120b:b0:1fc:3daa:52 with SMTP id d9443c01a7336-20095224ad2mr14708325ad.11.1723098668125;
-        Wed, 07 Aug 2024 23:31:08 -0700 (PDT)
-Received: from localhost.localdomain ([120.60.136.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff5929ad84sm116520415ad.270.2024.08.07.23.31.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Aug 2024 23:31:07 -0700 (PDT)
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: lpieralisi@kernel.org,
-	kw@linux.com
-Cc: robh@kernel.org,
-	bhelgaas@google.com,
-	linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH] PCI: qcom-ep: Disable MHI RAM data parity error interrupt for SA8775P SoC
-Date: Thu,  8 Aug 2024 12:00:57 +0530
-Message-Id: <20240808063057.7394-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1723100752; c=relaxed/simple;
+	bh=EzFiZKxPsEQuaNjgeAbYCXjKPTN375hUD2GmtOEBwQQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=lCij4oZ28ZLCC5HIVWpb0CPPdP6+pYlHlEkcVmSqFxQelFkpkwz/u540nq+yRSIPELvcc6LgkEyHkMagdKc5aXIU9w/IhRpxMh9iToJonxqexKbR3nGr57GjAFdcEqlj0Tzxu5i9vNwRZjK8xB7cRBsz9Geew4vJAe2Vxcojgls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QiVmDixD; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 477JU4Ef015806;
+	Thu, 8 Aug 2024 07:05:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Bdfq9xJH01fnZJ8StpOQr+
+	JBpQkW/Z8nW3PQkAdZnGA=; b=QiVmDixDAK3Vtkz/+gUxDGAmgX7QCvjgCHQxbW
+	1xyt8uP7wXdlwLELfxBZk7qgzuK2y4oOzRwin/9pjJvx8Om0AkNGNEu0cZ2ndJ4Z
+	cC47WsBmXBQuNrNBypAw3i9drGtQcL9xHyb8Tw/e32d/jCAUfNf4VtBE2EcYFTM/
+	cgSTKZr0lSwCh012R0c6q70+GNZnwE5FMu5RPdqJ2vj7F/YgUKCMbq8BVckMhgS9
+	iWwwIpSfmspZ5TkNxdIpsZWXQcehN1FToApJ8bUjdsompRGBwZqMoNvSaODM+dn4
+	LXnvzhObC6GHou64PAm2/5gWOOf6D1AyR88yWHDJYi6UjVQQ==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40sc4ycvcj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 08 Aug 2024 07:05:15 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 47875Dwh026314
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 8 Aug 2024 07:05:13 GMT
+Received: from hu-imrashai-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 8 Aug 2024 00:05:09 -0700
+From: Imran Shaik <quic_imrashai@quicinc.com>
+Date: Thu, 8 Aug 2024 12:35:02 +0530
+Subject: [PATCH] clk: qcom: clk-rpmh: Fix overflow in BCM vote
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20240808-clk-rpmh-bcm-vote-fix-v1-1-109bd1d76189@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAB1utGYC/x2MywqAIBAAfyX23IKZB+tXokNuWy090ZAg/Pek4
+ wzMvBDYCwdoixc8RwlyHhmqsgBahmNmlDEzaKWNssoibSv6a1/Q0Y7xvBkneZBqY1hXNTXOQW4
+ vz1n/365P6QP4cHkSZwAAAA==
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, David Dai
+	<daidavid1@codeaurora.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>,
+        "Imran
+ Shaik" <quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Satya Priya Kakitapalli
+	<quic_skakitap@quicinc.com>,
+        Mike Tipton <quic_mdtipton@quicinc.com>, <stable@vger.kernel.org>
+X-Mailer: b4 0.14.1
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Zjc-zyJ8TjWMw63AUym1j8hqzkValrC9
+X-Proofpoint-GUID: Zjc-zyJ8TjWMw63AUym1j8hqzkValrC9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-08_07,2024-08-07_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
+ spamscore=0 clxscore=1011 lowpriorityscore=0 impostorscore=0
+ suspectscore=0 mlxscore=0 malwarescore=0 mlxlogscore=882 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408080049
 
-SA8775P SoC has support for the hardware parity check feature on the MHI
-RAM (entity that holds MHI registers etc...). But due to a hardware bug in
-the parity check logic, the data parity error interrupt is getting
-generated all the time when using MHI. So the hardware team has suggested
-disabling the parity check error to workaround the hardware bug.
+From: Mike Tipton <quic_mdtipton@quicinc.com>
 
-So let's mask the parity error interrupt in PARF_INT_ALL_5_MASK register.
+Valid frequencies may result in BCM votes that exceed the max HW value.
+Set vote ceiling to BCM_TCS_CMD_VOTE_MASK to ensure the votes aren't
+truncated, which can result in lower frequencies than desired.
 
-Fixes: 58d0d3e032b3 ("PCI: qcom-ep: Add support for SA8775P SOC")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Fixes: 04053f4d23a4 ("clk: qcom: clk-rpmh: Add IPA clock support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
+Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
 ---
- drivers/pci/controller/dwc/pcie-qcom-ep.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/clk/qcom/clk-rpmh.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-index 236229f66c80..a9b263f749b6 100644
---- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-@@ -58,6 +58,7 @@
- #define PARF_DEBUG_CNT_AUX_CLK_IN_L1SUB_L2	0xc88
- #define PARF_DEVICE_TYPE			0x1000
- #define PARF_BDF_TO_SID_CFG			0x2c00
-+#define PARF_INT_ALL_5_MASK			0x2dcc
+diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+index bb82abeed88f..233ccd365a37 100644
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -263,6 +263,9 @@ static int clk_rpmh_bcm_send_cmd(struct clk_rpmh *c, bool enable)
+ 		cmd_state = 0;
+ 	}
  
- /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
- #define PARF_INT_ALL_LINK_DOWN			BIT(1)
-@@ -127,6 +128,9 @@
- /* PARF_CFG_BITS register fields */
- #define PARF_CFG_BITS_REQ_EXIT_L1SS_MSI_LTR_EN	BIT(1)
- 
-+/* PARF_INT_ALL_5_MASK fields */
-+#define PARF_INT_ALL_5_MHI_RAM_DATA_PARITY_ERR	BIT(0)
++	if (cmd_state > BCM_TCS_CMD_VOTE_MASK)
++		cmd_state = BCM_TCS_CMD_VOTE_MASK;
 +
- /* ELBI registers */
- #define ELBI_SYS_STTS				0x08
- #define ELBI_CS2_ENABLE				0xa4
-@@ -158,10 +162,12 @@ enum qcom_pcie_ep_link_status {
-  * struct qcom_pcie_ep_cfg - Per SoC config struct
-  * @hdma_support: HDMA support on this SoC
-  * @override_no_snoop: Override NO_SNOOP attribute in TLP to enable cache snooping
-+ * @disable_mhi_ram_parity_check: Disable MHI RAM data parity error check
-  */
- struct qcom_pcie_ep_cfg {
- 	bool hdma_support;
- 	bool override_no_snoop;
-+	bool disable_mhi_ram_parity_check;
- };
- 
- /**
-@@ -480,6 +486,12 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
- 	      PARF_INT_ALL_LINK_UP | PARF_INT_ALL_EDMA;
- 	writel_relaxed(val, pcie_ep->parf + PARF_INT_ALL_MASK);
- 
-+	if (pcie_ep->cfg && pcie_ep->cfg->disable_mhi_ram_parity_check) {
-+		val = readl_relaxed(pcie_ep->parf + PARF_INT_ALL_5_MASK);
-+		val &= ~PARF_INT_ALL_5_MHI_RAM_DATA_PARITY_ERR;
-+		writel_relaxed(val, pcie_ep->parf + PARF_INT_ALL_5_MASK);
-+	}
-+
- 	ret = dw_pcie_ep_init_registers(&pcie_ep->pci.ep);
- 	if (ret) {
- 		dev_err(dev, "Failed to complete initialization: %d\n", ret);
-@@ -901,6 +913,7 @@ static void qcom_pcie_ep_remove(struct platform_device *pdev)
- static const struct qcom_pcie_ep_cfg cfg_1_34_0 = {
- 	.hdma_support = true,
- 	.override_no_snoop = true,
-+	.disable_mhi_ram_parity_check = true,
- };
- 
- static const struct of_device_id qcom_pcie_ep_match[] = {
+ 	if (c->last_sent_aggr_state != cmd_state) {
+ 		cmd.addr = c->res_addr;
+ 		cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
+
+---
+base-commit: 222a3380f92b8791d4eeedf7cd750513ff428adf
+change-id: 20240808-clk-rpmh-bcm-vote-fix-c344e213c9bb
+
+Best regards,
 -- 
-2.25.1
+Imran Shaik <quic_imrashai@quicinc.com>
 
 
