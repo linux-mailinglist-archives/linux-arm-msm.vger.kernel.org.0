@@ -1,142 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-28139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28140-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0A5E94B7D5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 09:28:08 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB87C94B800
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 09:39:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2E5531C21CF6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 07:28:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D1111F21AA0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 07:39:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C361188003;
-	Thu,  8 Aug 2024 07:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9803F145A05;
+	Thu,  8 Aug 2024 07:39:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="obuFWtQm"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TxN9ND4U"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FF97464;
-	Thu,  8 Aug 2024 07:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3507464;
+	Thu,  8 Aug 2024 07:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723102084; cv=none; b=TYH5abx0U8Uy0gtCsGouIEjz2/rk+i5EV2F+x7ICb8c1xeYV9P1CXd2G3nTqBD8ZCwVQH2HtPo41NjhnHs8UHMPiU6uArqoakPIWWk3bhaIBKJY+43P9yZ89n89BguwmQcqQntGaaqqUm9N6pH5CygYwJrPOoCqvn3bEuzfS3ug=
+	t=1723102778; cv=none; b=EKaS4j06KAbDmdMHDZv8p5QUJwiscrPCuonpGzxPhqWKIq8UhPx3gE3dyf+9My/YjYn7yN/3P8YjTmD3KY07daj3Jp6WlAjDU1u4bx9O3RIy8D1tPGKV6c5s5U6xb3zuEpvMoJPjHSJJf4Aukac/KHdZAhcunegu5UujRo4JCLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723102084; c=relaxed/simple;
-	bh=iKFF9cuoPKYMCCFAiUSWMPfk4pgo+XWQPV1zsB3QMyo=;
+	s=arc-20240116; t=1723102778; c=relaxed/simple;
+	bh=0JaITmplsX++4cDReVkvZhDyM9fdYBeRW8cET75NUdw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=PDFjoSmcZdKFijsLJShWHqlD5TrD2FeoGpgYcHkQrZGNpw/gv+IrDn/TX7zTWe/21STx2SdWXBiRLqGAkaDYxf8bNVwdz/ZM6prxvlPOR6P5PZz0NVhqL4DCJ0BPLLq287//L5HbmOCk8zAtM/7jU+BF/HLWIJGAc81wihA8hFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=obuFWtQm; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=BRWtVmGD/V7rdPAsCVowJ7RdntTlwkna+K8By7GStCFLycbLG4rciKKDsGWay8go7eAtDN6m4OmQjbhG3IpsechCOn/MAk2PTd55sZECU0G0Sqiss5o/abgLF2rEkol/rJGa0CwNguglMe63aWu/21bFOmkMbCJnXtInub6Skec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TxN9ND4U; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 477HLYC8007155;
-	Thu, 8 Aug 2024 07:27:34 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 477Icj6C020412;
+	Thu, 8 Aug 2024 07:39:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	05dLjMhMWKbkdONJ2XhA0SRRF3OQ7tGCFSjCCChUPFg=; b=obuFWtQmsB2WLnw3
-	KyPcSbvPAuBk/zYPETbOi9UPML+wR1lWPGCQOWau8wiEuJ7cBg7gMWeAPL7tlrsr
-	XQBdFElEhLxM7lEXUCzKD4rz8P756lWgYuqDKTHHDBHus+H0No7TJ7bHVPGNHjLi
-	lo2tkHBdSJlM8sAkn7u4AUVq8Kj08n4CLBhbCewcxkPbk0W/V2egzHLWvmCieWwj
-	FJyQJQbB+MGwr6p/Wl0y+cJ9yX9aTl271+f7cQrlLXL+Dsc0cLM1UO4yji/W6r8v
-	Ixcr3e8iHtg4nP4Ufpv0lU+YNTEVkgfNdKc6nsUTTPGa9X8DKrPmaBFH2iOeRd+o
-	/XDQLA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40scx6w5r7-1
+	2d+qD9QbIkh/LhY9twFqPwccmJs0i4VuP7i4E69Oh/A=; b=TxN9ND4Uf3AwSy2O
+	EC/D78CPtObL/KmhHbQhRRO4E3rE0RCJXJ/DOnV7a4pRzZewnFa8AnXcKQEv0W9C
+	D5YshYFs5hHjC1/rXsDRXZL96j7y/kH2bgApmmr2TJRY226XjUtwQy9B9qqlFlU2
+	Xpi7F9bzb04SVfrwLz6X+3y3oQMNim0HK2nhuGNX3VL3WRxpyFUAQ1xkStlDYVJA
+	gsroGVHSb0PGTHmeXb0zrHgR0n7y3nrYcv1W58nObyDt/knHhnce8BuSBZpcdCaw
+	Vou4YLez65IeHkgAuCLiu5DlSluaTBdaF0/rtG4tGi3a4ItLW9wisU3IEoEvBldu
+	aG95gA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40scmu53jp-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 08 Aug 2024 07:27:34 +0000 (GMT)
+	Thu, 08 Aug 2024 07:39:32 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4787RXvf028619
+	by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 4787dV9H025346
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 8 Aug 2024 07:27:33 GMT
-Received: from [10.217.216.152] (10.80.80.8) by nalasex01a.na.qualcomm.com
+	Thu, 8 Aug 2024 07:39:31 GMT
+Received: from [10.204.101.50] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 8 Aug 2024
- 00:27:29 -0700
-Message-ID: <b4c58fbd-6d9c-4c1b-a21d-7650a6c4270a@quicinc.com>
-Date: Thu, 8 Aug 2024 12:57:26 +0530
+ 00:39:27 -0700
+Message-ID: <ec678a40-d7eb-61eb-947b-e264cf8bac49@quicinc.com>
+Date: Thu, 8 Aug 2024 13:09:24 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: clk-rpmh: Fix overflow in BCM vote
-To: Imran Shaik <quic_imrashai@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Stephen
- Boyd" <sboyd@kernel.org>,
-        David Dai <daidavid1@codeaurora.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Satya Priya Kakitapalli
-	<quic_skakitap@quicinc.com>,
-        Mike Tipton <quic_mdtipton@quicinc.com>, <stable@vger.kernel.org>
-References: <20240808-clk-rpmh-bcm-vote-fix-v1-1-109bd1d76189@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 1/2] media: venus: hfi_cmds: struct
+ hfi_session_release_buffer_pkt: Replace 1-element array with flexible array
 Content-Language: en-US
-From: Taniya Das <quic_tdas@quicinc.com>
-In-Reply-To: <20240808-clk-rpmh-bcm-vote-fix-v1-1-109bd1d76189@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Kees Cook <kees@kernel.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>
+CC: Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-hardening@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240710230728.work.977-kees@kernel.org>
+ <20240710230914.3156277-1-kees@kernel.org>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <20240710230914.3156277-1-kees@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: i4trENvTsXmF50C2CTfhtJZ0yy4-T06-
-X-Proofpoint-GUID: i4trENvTsXmF50C2CTfhtJZ0yy4-T06-
+X-Proofpoint-ORIG-GUID: YA62WyI3jnZv4guu_lXXpdNWI0OtkzK5
+X-Proofpoint-GUID: YA62WyI3jnZv4guu_lXXpdNWI0OtkzK5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-08_07,2024-08-07_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 bulkscore=0 clxscore=1011 suspectscore=0 phishscore=0
- spamscore=0 adultscore=0 lowpriorityscore=0 mlxscore=0 priorityscore=1501
- mlxlogscore=989 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408080052
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ clxscore=1011 malwarescore=0 impostorscore=0 adultscore=0 phishscore=0
+ lowpriorityscore=0 priorityscore=1501 suspectscore=0 spamscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408080054
 
 
 
-On 8/8/2024 12:35 PM, Imran Shaik wrote:
-> From: Mike Tipton <quic_mdtipton@quicinc.com>
+On 7/11/2024 4:39 AM, Kees Cook wrote:
+> Replace the deprecated[1] use of a 1-element array in
+> struct hfi_session_release_buffer_pkt with a modern flexible array.
 > 
-> Valid frequencies may result in BCM votes that exceed the max HW value.
-> Set vote ceiling to BCM_TCS_CMD_VOTE_MASK to ensure the votes aren't
-> truncated, which can result in lower frequencies than desired.
+> No binary differences are present after this conversion.
 > 
-> Fixes: 04053f4d23a4 ("clk: qcom: clk-rpmh: Add IPA clock support")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
-> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+> Link: https://github.com/KSPP/linux/issues/79 [1]
+> Signed-off-by: Kees Cook <kees@kernel.org>
 > ---
->   drivers/clk/qcom/clk-rpmh.c | 3 +++
->   1 file changed, 3 insertions(+)
+> Cc: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+> Cc: Vikash Garodia <quic_vgarodia@quicinc.com>
+> Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+> Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
+> Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+> Cc: linux-media@vger.kernel.org
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-hardening@vger.kernel.org
+> ---
+>  drivers/media/platform/qcom/venus/hfi_cmds.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-> index bb82abeed88f..233ccd365a37 100644
-> --- a/drivers/clk/qcom/clk-rpmh.c
-> +++ b/drivers/clk/qcom/clk-rpmh.c
-> @@ -263,6 +263,9 @@ static int clk_rpmh_bcm_send_cmd(struct clk_rpmh *c, bool enable)
->   		cmd_state = 0;
->   	}
->   
-> +	if (cmd_state > BCM_TCS_CMD_VOTE_MASK)
-> +		cmd_state = BCM_TCS_CMD_VOTE_MASK;
-> +
->   	if (c->last_sent_aggr_state != cmd_state) {
->   		cmd.addr = c->res_addr;
->   		cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
-> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.h b/drivers/media/platform/qcom/venus/hfi_cmds.h
+> index 20acd412ee7b..42825f07939d 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_cmds.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.h
+> @@ -227,7 +227,7 @@ struct hfi_session_release_buffer_pkt {
+>  	u32 extradata_size;
+>  	u32 response_req;
+>  	u32 num_buffers;
+> -	u32 buffer_info[1];
+> +	u32 buffer_info[];
+>  };
+>  
+>  struct hfi_session_release_resources_pkt {
 
+Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
-Reviewed-by: Taniya Das <quic_tdas@quicinc.com>
-
--- 
-Thanks & Regards,
-Taniya Das.
+Thanks,
+Dikshita
 
