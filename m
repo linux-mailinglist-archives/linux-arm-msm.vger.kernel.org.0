@@ -1,65 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CFE194BD0B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 14:11:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DC5C94BD1C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 14:13:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E62328968F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 12:11:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C9E91F235AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 12:13:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F41C18C925;
-	Thu,  8 Aug 2024 12:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F421218C33F;
+	Thu,  8 Aug 2024 12:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jU/Y+lvJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HCEnbC42"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E73318C900;
-	Thu,  8 Aug 2024 12:11:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20DF18A956;
+	Thu,  8 Aug 2024 12:13:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723119078; cv=none; b=BIwX0qz3PrXkYgCWgaybGU8qu5noB86+bIwtaIEOwqY5lSzQRz6Do+Nw9hU7io6oufIjyyIpYqW81Yx1UEN67Xnnc4Q8TEYuIXkAFQFLu6ntDiJuYHeUi9nV1+1QJt7lj+gBkfEeCf73KzfYg2x+svPHQIGcnoC3HBDPGybdz34=
+	t=1723119190; cv=none; b=AlvwjYAUspkPnKBxtJ9RZ4rLmfU3eQNJevot7yPiIZINRcvc7zVmZLK91flkrFqBEaNFXapnT5zquI3AppCCeJfAMzzgn++Zq485S3gDke0ts5XD/cl7+yWptWoe+iWMeUh39I0D+n8G4E/59SxMf0M66164+8CJCeOKHhBr7co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723119078; c=relaxed/simple;
-	bh=ypoxP7jDf7LjMLCC24x01FzK9fJ/WozB7SR4D4u7jHA=;
+	s=arc-20240116; t=1723119190; c=relaxed/simple;
+	bh=1ZVqgJ9cbN3pBQ6pyKmkFDwV3heRYL14TRbTr20npLo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NqSP0hQOywUMaWE+rJWHAM2qrmbUGcqUr3C52uysxin+lm7fWX6JH56p+fhusvaYKg9/wg0zf/t8XKH+OU2h7q2MAFry1V5ywjpOqx4NlbC9mfl/Q/1I4onqtEDW9N/ZZoDe2HUwldRttSwK+T/vRtELSe4fhGX+t1rLgwDX9oY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jU/Y+lvJ; arc=none smtp.client-ip=192.198.163.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723119076; x=1754655076;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=ypoxP7jDf7LjMLCC24x01FzK9fJ/WozB7SR4D4u7jHA=;
-  b=jU/Y+lvJ2YhlE6TvidaFUp/2r7EBbkDMFTi1wZXzK/qWiK2wmH8ihnd2
-   QSMUXWZo9uWoyrwhQS0Bn8ijADHkFXE+IeWl4AW4n+UqGobMkGu4FVZz6
-   Fp1H64bEZwr5IjArdwNeoAJaoCXzLbkGSzY2QgckA2sobGTKMBfBGHZ9n
-   Irha+KBsw+cR8nxwnmQdg+fT8aL4lm1x/p6j+uM9YLZ9StGFEYAcrcLzw
-   lr29H5ZWp1E2ExZqaIBc/IkIqYt7aq9L86OuQw4UquKfU/WlqMj76m7uR
-   Qd1hfIR+Ux+T1k3KsjR9IYFpRmfJXEMr7KngOiLcuUkSLi6XB1wGEAgfd
-   g==;
-X-CSE-ConnectionGUID: ly/b8TY3TR2xxEe9YpgxEA==
-X-CSE-MsgGUID: /aaj+ctIQEukYHStwkuzuA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11157"; a="20901289"
-X-IronPort-AV: E=Sophos;i="6.09,272,1716274800"; 
-   d="scan'208";a="20901289"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2024 05:11:15 -0700
-X-CSE-ConnectionGUID: TmdFroz0QU6FXsOr/pvTEg==
-X-CSE-MsgGUID: D7BmpyGfTAuI8ysmCatVhQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,272,1716274800"; 
-   d="scan'208";a="62149825"
-Received: from aslawinx-mobl.ger.corp.intel.com (HELO [10.94.8.107]) ([10.94.8.107])
-  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2024 05:11:11 -0700
-Message-ID: <c3b6ac24-6359-4809-83d9-ac62ec64b396@linux.intel.com>
-Date: Thu, 8 Aug 2024 14:11:07 +0200
+	 In-Reply-To:Content-Type; b=JrVJ6F9/EFkyvQovUlLCHblxsTbwWgD3L7ARUqRmylso2PIoxo6LMNInuQQRXgnPFCr2cd4tuH1reY1tAqNlbwyQJxi9dOvR2ZMbDZ+rdglBsAWQWcLr9Xi/muL73A32fq0z48w5wD9upV/JsTE88poOmdFowXAYWzcB1GpOSx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HCEnbC42; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31317C32782;
+	Thu,  8 Aug 2024 12:13:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723119190;
+	bh=1ZVqgJ9cbN3pBQ6pyKmkFDwV3heRYL14TRbTr20npLo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=HCEnbC42iop3o1KuzLxeamRkDT9X9N8k4M0pGMryD88KfzyOGEbRVQzinfJR9T/6M
+	 sd7/3sljiGT4WzE2G+NrwHzLaLo5MuKaRh3OLIknqWYUKBOtXx39dbrszCKjRcK2ql
+	 jLfCGpi8eR/jvDrCzaqobiEdWqXjkYUMSMZ/tUKYR+ZzyqqRggDs7+Zgw9Vtw/pYQ4
+	 r0wiemI5ByKJgtJgVm/SP6LFk1+CHXuyuedokZG0ObCKmP0E92uu3qBg3ZIYYosU/f
+	 pXZ9NqovAgPm9Io8J17f2ZXdd6y3VYMyYFtE/3dcKBnGcRlSlb61OyoZKR1qk2Q3vS
+	 dqo9G1UFsdASg==
+Message-ID: <cb69c01b-08d0-40a1-9ea2-215979fb98c8@kernel.org>
+Date: Thu, 8 Aug 2024 14:13:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,102 +50,126 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v24 23/34] ALSA: usb-audio: Prevent starting of audio
- stream if in use
+Subject: Re: [PATCH v2 1/8] dt-bindings: PCI: Add binding for qps615
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,
+ Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ cros-qcom-dts-watchers@chromium.org, Bartosz Golaszewski <brgl@bgdev.pl>,
+ Jingoo Han <jingoohan1@gmail.com>, andersson@kernel.org,
+ quic_vbadigan@quicinc.com, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
+ <20240803-qps615-v2-1-9560b7c71369@quicinc.com>
+ <5f65905c-f1e4-4f52-ba7c-10c1a4892e30@kernel.org>
+ <f8985c98-82a5-08c3-7095-c864516b66b9@quicinc.com>
+ <ZrEGypbL85buXEsO@hu-bjorande-lv.qualcomm.com>
+ <90582c92-ca50-4776-918d-b7486cf942b0@kernel.org>
+ <20240808120109.GA18983@thinkpad>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
- mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
- corbet@lwn.net, broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
- Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, tiwai@suse.com,
- gregkh@linuxfoundation.org, robh@kernel.org
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
- alsa-devel@alsa-project.org
-References: <20240801011730.4797-1-quic_wcheng@quicinc.com>
- <20240801011730.4797-24-quic_wcheng@quicinc.com>
- <186ae30f-678c-423a-a56f-74510a184f99@linux.intel.com>
- <43e9850c-3e34-4582-aadd-4a6dcbd3ce8d@quicinc.com>
-From: =?UTF-8?Q?Amadeusz_S=C5=82awi=C5=84ski?=
- <amadeuszx.slawinski@linux.intel.com>
-In-Reply-To: <43e9850c-3e34-4582-aadd-4a6dcbd3ce8d@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240808120109.GA18983@thinkpad>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 8/8/2024 3:19 AM, Wesley Cheng wrote:
-> Hi Amadeusz,
-> 
-> On 8/6/2024 7:51 AM, Amadeusz Sławiński wrote:
->> On 8/1/2024 3:17 AM, Wesley Cheng wrote:
->>> With USB audio offloading, an audio session is started from the ASoC
->>> platform sound card and PCM devices.  Likewise, the USB SND path is still
->>> readily available for use, in case the non-offload path is desired.  In
->>> order to prevent the two entities from attempting to use the USB bus,
->>> introduce a flag that determines when either paths are in use.
+On 08/08/2024 14:01, Manivannan Sadhasivam wrote:
+> On Mon, Aug 05, 2024 at 07:18:04PM +0200, Krzysztof Kozlowski wrote:
+>> On 05/08/2024 19:07, Bjorn Andersson wrote:
+>>> On Mon, Aug 05, 2024 at 09:41:26AM +0530, Krishna Chaitanya Chundru wrote:
+>>>> On 8/4/2024 2:23 PM, Krzysztof Kozlowski wrote:
+>>>>> On 03/08/2024 05:22, Krishna chaitanya chundru wrote:
+>>>>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,qps615.yaml b/Documentation/devicetree/bindings/pci/qcom,qps615.yaml
+>>> [..]
+>>>>>> +  qps615,axi-clk-freq-hz:
+>>>>>> +    description:
+>>>>>> +      AXI clock which internal bus of the switch.
+>>>>>
+>>>>> No need, use CCF.
+>>>>>
+>>>> ack
 >>>
+>>> This is a clock that's internal to the QPS615, so there's no clock
+>>> controller involved and hence I don't think CCF is applicable.
 >>
->> How can this happen? Can you provide some example with list of devices and which one should block the other? If I recall correctly devices are already exclusive unless you support substreams which ASoC does not at the moment.
+>> AXI does not sound that internal.
+> 
+> Well, AXI is applicable to whatever entity that implements it. We mostly seen it
+> in ARM SoCs (host), but in this case the PCIe switch also has a microcontroller
+> /processor of some sort, so AXI is indeed relevant for it. The naming actually
+> comes from the switch's i2c register name that is being configured in the driver
+> based on this property value.
+> 
+>> DT rarely needs to specify internal
+>> clock rates. What if you want to define rates for 20 clocks? Even
+>> clock-frequency is deprecated, so why this would be allowed?
+>> bus-frequency is allowed for buses, but that's not the case here, I guess?
 >>
->  From past discussions, I think so far everyone is on board with the idea of having both the USB sound card and PCM devices exist in conjunction w/ the USB offload path, which is going to be done over the ASoC platform card.  So for example,
 > 
+> This clock frequency is for the switch's internal AXI bus that runs at default
+> 200MHz. And this property is used to specify a frequency that is configured over
+> the i2c interface so that the switch's AXI bus can operate in a low frequency
+> there by reducing the power consumption of the switch.
+> 
+> It is not strictly needed for the switch operation, but for power optimization.
+> So this property can also be dropped for the initial submission and added later
+> if you prefer.
 
-Sorry, I must have missed that and examples in documentation could 
-probably be a bit better, it is bit late at patchset 24 that I 
-understood about this now. And is part of a reason why I was confused 
-about kcontrol implementation.
+So if the clock rate can change, why this is static in DTB? Or why this
+is configurable per-board?
 
-> / # cat /proc/asound/cards
->   0 [SM8250MTPWCD938]: sm8250 - SM8250-MTP-WCD9380-WSA8810-VA-D
->                        SM8250-MTP-WCD9380-WSA8810-VA-DMIC
->   1 [C320M          ]: USB-Audio - Plantronics C320-M
->                        Plantronics Plantronics C320-M at usb-xhci-hcd.1.auto-1.2, full speed
-> 
-> This device currently has the following sound cards within the system:
-> 
-> - card#0 - ASoC platform card: handles USB offload, speaker, etc...
-> 
-> - card#1 - USB SND card: card created for interacting with the connected USB device.
-> 
-> So now, with USB offloading in the picture, there are basically two paths that can start attempting to utilize the same USB device endpoints.  Let's keep it simple and assume the device only has one playback substream (which means only one PCM device)
-> 
-> /proc/asound/card1 # cat stream0
-> Plantronics Plantronics C320-M at usb-xhci-hcd.1.auto-1.2, full speed : USB Audio
-> 
-> Playback:
->    Status: Stop
->    Interface 2
->      Altset 1
->      Format: S16_LE
->      Channels: 2
->      Endpoint: 0x01 (1 OUT) (ADAPTIVE)
->      Rates: 8000, 16000, 24000, 32000, 44100, 48000
->      Bits: 16
->      Channel map: FL FR
-> 
-> So the patch here will prevent transfers from happening from both the offload path and directly over the USB SND PCM device, which correlates to the following paths:
-> 
-> - offload: card#0 pcm#0
-> 
-> - USB SND: card#1 pcm#0
+There is a reason why clock-frequency property is not welcomed and you
+are re-implementing it.
 
-Well, it's one way to do that.
+Best regards,
+Krzysztof
 
-Personally I would just reuse USB FEs and when opening one check if it 
-can be offloaded:
-* check if someone disabled Offload on FE
-* check if it is connected to HW that can do Offload at all
-* check if Offload streams are available on backing HW
-* check if audio formats are supported by above HW
-* do any other checks that may be needed
-and then just redirect FE setup to relevant driver doing offload if 
-able, otherwise just go standard path.
-
-
-As I've wrote I must have missed the discussion where it was agreed on 
-and if maintainers agree that it can be done this way, I won't fight it. 
-Even though I would consider my way a lot simpler and user friendly from 
-end user point of view.
-
-Thanks,
-Amadeusz
 
