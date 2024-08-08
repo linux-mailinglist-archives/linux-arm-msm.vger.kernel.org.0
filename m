@@ -1,152 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-28153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC9DA94BCCB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 14:01:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CFE194BD0B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 14:11:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 19B18B2287F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 12:01:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E62328968F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Aug 2024 12:11:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5837218C32B;
-	Thu,  8 Aug 2024 12:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F41C18C925;
+	Thu,  8 Aug 2024 12:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oG4ktlny"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jU/Y+lvJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C011A18B48A
-	for <linux-arm-msm@vger.kernel.org>; Thu,  8 Aug 2024 12:01:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E73318C900;
+	Thu,  8 Aug 2024 12:11:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723118483; cv=none; b=e9Lgi4nhCicEDE3WGZfkX3LDnWKu4MIPS3ELXic819Yi6F4hfoMdhRnBJ9pGsgYaHX6pD9Q0x6YMfRXwvZ88FqRhH0BWuiYtGDUPPMVcx9Y0HMe4e7tnCofbtDATulG2gQVUQNhKMVDYLnB32zG5EaAedGl+LW8kcg2obotYZPk=
+	t=1723119078; cv=none; b=BIwX0qz3PrXkYgCWgaybGU8qu5noB86+bIwtaIEOwqY5lSzQRz6Do+Nw9hU7io6oufIjyyIpYqW81Yx1UEN67Xnnc4Q8TEYuIXkAFQFLu6ntDiJuYHeUi9nV1+1QJt7lj+gBkfEeCf73KzfYg2x+svPHQIGcnoC3HBDPGybdz34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723118483; c=relaxed/simple;
-	bh=v1/ezKij1Xb1/LM0FzxebKnX6GG097BFMwzk7oYzp/o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PjtDsYZk69QUZKwbdafhD0ZUQ1X414QNmEyMo0K3yjnkRHk+vHJDHvRuhMNmDCsvh4pZCrMffY3IhwMAy1jSxAXeag2PZHWb1sUWG8GVYQrerceazag99osOP568gTRWjrFV1KTjlTeHWwvTM/B+YUph3M/10bAa2ay5rL+SO2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oG4ktlny; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1fda7fa60a9so8620485ad.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Aug 2024 05:01:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723118481; x=1723723281; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=x56HaYfAguqXwkXH/W0VkzCpF6NMLJ6hsKX1WsF80Hc=;
-        b=oG4ktlnyivgSythmARtVDS0DcvSmdkuwukckwShy20aF0fGS76+jy5OpA7uJUrvy3e
-         KhpCdWg+kvqulKeRS+twAoDDrSROJmn2/5WiCavoXJRPi6C+RYPH3kdZocKInrIwp0/S
-         clGJ9jZeHMXfCAriAE+sgRdN2+PQJM+NV+/brsYNT+RpoGQh8/isJ9cu/a1k/Pcn2Flf
-         vVR1Yqf8as1rbta0++So2bXS1QGup015HSyXHzYKRDAS6gYs0GrXQ1fnVJ3AqAiy2iV1
-         qTK4bZrmRoBASnuNCzjluyuEHIIyd0WfD6gLyxsZ3orAKczP4jpx1Qe1Rdhp2FZ4kkMf
-         RiFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723118481; x=1723723281;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=x56HaYfAguqXwkXH/W0VkzCpF6NMLJ6hsKX1WsF80Hc=;
-        b=tD5IwmQjHDpbulnNCB5dBRohhnJPDUpVZI8flyPxfP995ZhUjf/Vmr37Tmga8xscoQ
-         eBxJQOQXd/8EB/yeBpGgVXUbyIbX6qW9ppQKYpjKxPpkutUegnNS5Y8FgLlV3Tz5dggy
-         Ae275RN22brBOOq1lQAiHyzUq4tkDMCcgJNH6c00P3K2FT2Re/MiWfCrr+7irHHi572c
-         s+tkaesU7mPguwNg746FOluSddtZ+O+YnzAe3PLEWo9BVdCh7vXJgpEvUmW9ZSBq+96i
-         qNRt4OpIcmujLJNqlSe+kFAPIZHrCygwj4dO95NrQO45zUgf3NGq8wEOHZVOz56L+t45
-         4oOg==
-X-Forwarded-Encrypted: i=1; AJvYcCWG5/P+Kq4jAOvZ2kwfBXnSqNVEDmJ9IV4nu4Ey3uDJcwVP5yN2aB+seyg0vJb7K7Aos763PDTDVcD40ZZyWDlNjFD2FoEVnwtwXw8nMw==
-X-Gm-Message-State: AOJu0YxtYRsp0tQfRv82JkIFoI8wEnMmk6IZb/SFrtSnUkDU1q93qfCo
-	tueWizA0erCfBBJ/D5Z+febXhAHMIZjhR9IZz2FAKcrxEqKj5i15e9BNisf7wQ==
-X-Google-Smtp-Source: AGHT+IHer9Cx3RKHDR+QrEa4bUNXipYY8dzX3QCoI0MnxJJA0/SxKpWCbY7pKxl6gWV8lep00FD9dg==
-X-Received: by 2002:a17:902:f605:b0:1fd:6766:6877 with SMTP id d9443c01a7336-20095224b8dmr25116925ad.2.1723118480848;
-        Thu, 08 Aug 2024 05:01:20 -0700 (PDT)
-Received: from thinkpad ([120.60.136.4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d1b3ad01d4sm3285656a91.23.2024.08.08.05.01.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Aug 2024 05:01:20 -0700 (PDT)
-Date: Thu, 8 Aug 2024 17:31:09 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Jingoo Han <jingoohan1@gmail.com>, andersson@kernel.org,
-	quic_vbadigan@quicinc.com, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v2 1/8] dt-bindings: PCI: Add binding for qps615
-Message-ID: <20240808120109.GA18983@thinkpad>
-References: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
- <20240803-qps615-v2-1-9560b7c71369@quicinc.com>
- <5f65905c-f1e4-4f52-ba7c-10c1a4892e30@kernel.org>
- <f8985c98-82a5-08c3-7095-c864516b66b9@quicinc.com>
- <ZrEGypbL85buXEsO@hu-bjorande-lv.qualcomm.com>
- <90582c92-ca50-4776-918d-b7486cf942b0@kernel.org>
+	s=arc-20240116; t=1723119078; c=relaxed/simple;
+	bh=ypoxP7jDf7LjMLCC24x01FzK9fJ/WozB7SR4D4u7jHA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NqSP0hQOywUMaWE+rJWHAM2qrmbUGcqUr3C52uysxin+lm7fWX6JH56p+fhusvaYKg9/wg0zf/t8XKH+OU2h7q2MAFry1V5ywjpOqx4NlbC9mfl/Q/1I4onqtEDW9N/ZZoDe2HUwldRttSwK+T/vRtELSe4fhGX+t1rLgwDX9oY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jU/Y+lvJ; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1723119076; x=1754655076;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=ypoxP7jDf7LjMLCC24x01FzK9fJ/WozB7SR4D4u7jHA=;
+  b=jU/Y+lvJ2YhlE6TvidaFUp/2r7EBbkDMFTi1wZXzK/qWiK2wmH8ihnd2
+   QSMUXWZo9uWoyrwhQS0Bn8ijADHkFXE+IeWl4AW4n+UqGobMkGu4FVZz6
+   Fp1H64bEZwr5IjArdwNeoAJaoCXzLbkGSzY2QgckA2sobGTKMBfBGHZ9n
+   Irha+KBsw+cR8nxwnmQdg+fT8aL4lm1x/p6j+uM9YLZ9StGFEYAcrcLzw
+   lr29H5ZWp1E2ExZqaIBc/IkIqYt7aq9L86OuQw4UquKfU/WlqMj76m7uR
+   Qd1hfIR+Ux+T1k3KsjR9IYFpRmfJXEMr7KngOiLcuUkSLi6XB1wGEAgfd
+   g==;
+X-CSE-ConnectionGUID: ly/b8TY3TR2xxEe9YpgxEA==
+X-CSE-MsgGUID: /aaj+ctIQEukYHStwkuzuA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11157"; a="20901289"
+X-IronPort-AV: E=Sophos;i="6.09,272,1716274800"; 
+   d="scan'208";a="20901289"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2024 05:11:15 -0700
+X-CSE-ConnectionGUID: TmdFroz0QU6FXsOr/pvTEg==
+X-CSE-MsgGUID: D7BmpyGfTAuI8ysmCatVhQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,272,1716274800"; 
+   d="scan'208";a="62149825"
+Received: from aslawinx-mobl.ger.corp.intel.com (HELO [10.94.8.107]) ([10.94.8.107])
+  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2024 05:11:11 -0700
+Message-ID: <c3b6ac24-6359-4809-83d9-ac62ec64b396@linux.intel.com>
+Date: Thu, 8 Aug 2024 14:11:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v24 23/34] ALSA: usb-audio: Prevent starting of audio
+ stream if in use
+Content-Language: en-US
+To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+ mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+ corbet@lwn.net, broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
+ Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, tiwai@suse.com,
+ gregkh@linuxfoundation.org, robh@kernel.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ alsa-devel@alsa-project.org
+References: <20240801011730.4797-1-quic_wcheng@quicinc.com>
+ <20240801011730.4797-24-quic_wcheng@quicinc.com>
+ <186ae30f-678c-423a-a56f-74510a184f99@linux.intel.com>
+ <43e9850c-3e34-4582-aadd-4a6dcbd3ce8d@quicinc.com>
+From: =?UTF-8?Q?Amadeusz_S=C5=82awi=C5=84ski?=
+ <amadeuszx.slawinski@linux.intel.com>
+In-Reply-To: <43e9850c-3e34-4582-aadd-4a6dcbd3ce8d@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <90582c92-ca50-4776-918d-b7486cf942b0@kernel.org>
 
-On Mon, Aug 05, 2024 at 07:18:04PM +0200, Krzysztof Kozlowski wrote:
-> On 05/08/2024 19:07, Bjorn Andersson wrote:
-> > On Mon, Aug 05, 2024 at 09:41:26AM +0530, Krishna Chaitanya Chundru wrote:
-> >> On 8/4/2024 2:23 PM, Krzysztof Kozlowski wrote:
-> >>> On 03/08/2024 05:22, Krishna chaitanya chundru wrote:
-> >>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,qps615.yaml b/Documentation/devicetree/bindings/pci/qcom,qps615.yaml
-> > [..]
-> >>>> +  qps615,axi-clk-freq-hz:
-> >>>> +    description:
-> >>>> +      AXI clock which internal bus of the switch.
-> >>>
-> >>> No need, use CCF.
-> >>>
-> >> ack
-> > 
-> > This is a clock that's internal to the QPS615, so there's no clock
-> > controller involved and hence I don't think CCF is applicable.
+On 8/8/2024 3:19 AM, Wesley Cheng wrote:
+> Hi Amadeusz,
 > 
-> AXI does not sound that internal.
-
-Well, AXI is applicable to whatever entity that implements it. We mostly seen it
-in ARM SoCs (host), but in this case the PCIe switch also has a microcontroller
-/processor of some sort, so AXI is indeed relevant for it. The naming actually
-comes from the switch's i2c register name that is being configured in the driver
-based on this property value.
-
-> DT rarely needs to specify internal
-> clock rates. What if you want to define rates for 20 clocks? Even
-> clock-frequency is deprecated, so why this would be allowed?
-> bus-frequency is allowed for buses, but that's not the case here, I guess?
+> On 8/6/2024 7:51 AM, Amadeusz Sławiński wrote:
+>> On 8/1/2024 3:17 AM, Wesley Cheng wrote:
+>>> With USB audio offloading, an audio session is started from the ASoC
+>>> platform sound card and PCM devices.  Likewise, the USB SND path is still
+>>> readily available for use, in case the non-offload path is desired.  In
+>>> order to prevent the two entities from attempting to use the USB bus,
+>>> introduce a flag that determines when either paths are in use.
+>>>
+>>
+>> How can this happen? Can you provide some example with list of devices and which one should block the other? If I recall correctly devices are already exclusive unless you support substreams which ASoC does not at the moment.
+>>
+>  From past discussions, I think so far everyone is on board with the idea of having both the USB sound card and PCM devices exist in conjunction w/ the USB offload path, which is going to be done over the ASoC platform card.  So for example,
 > 
 
-This clock frequency is for the switch's internal AXI bus that runs at default
-200MHz. And this property is used to specify a frequency that is configured over
-the i2c interface so that the switch's AXI bus can operate in a low frequency
-there by reducing the power consumption of the switch.
+Sorry, I must have missed that and examples in documentation could 
+probably be a bit better, it is bit late at patchset 24 that I 
+understood about this now. And is part of a reason why I was confused 
+about kcontrol implementation.
 
-It is not strictly needed for the switch operation, but for power optimization.
-So this property can also be dropped for the initial submission and added later
-if you prefer.
+> / # cat /proc/asound/cards
+>   0 [SM8250MTPWCD938]: sm8250 - SM8250-MTP-WCD9380-WSA8810-VA-D
+>                        SM8250-MTP-WCD9380-WSA8810-VA-DMIC
+>   1 [C320M          ]: USB-Audio - Plantronics C320-M
+>                        Plantronics Plantronics C320-M at usb-xhci-hcd.1.auto-1.2, full speed
+> 
+> This device currently has the following sound cards within the system:
+> 
+> - card#0 - ASoC platform card: handles USB offload, speaker, etc...
+> 
+> - card#1 - USB SND card: card created for interacting with the connected USB device.
+> 
+> So now, with USB offloading in the picture, there are basically two paths that can start attempting to utilize the same USB device endpoints.  Let's keep it simple and assume the device only has one playback substream (which means only one PCM device)
+> 
+> /proc/asound/card1 # cat stream0
+> Plantronics Plantronics C320-M at usb-xhci-hcd.1.auto-1.2, full speed : USB Audio
+> 
+> Playback:
+>    Status: Stop
+>    Interface 2
+>      Altset 1
+>      Format: S16_LE
+>      Channels: 2
+>      Endpoint: 0x01 (1 OUT) (ADAPTIVE)
+>      Rates: 8000, 16000, 24000, 32000, 44100, 48000
+>      Bits: 16
+>      Channel map: FL FR
+> 
+> So the patch here will prevent transfers from happening from both the offload path and directly over the USB SND PCM device, which correlates to the following paths:
+> 
+> - offload: card#0 pcm#0
+> 
+> - USB SND: card#1 pcm#0
 
-- Mani
+Well, it's one way to do that.
 
--- 
-மணிவண்ணன் சதாசிவம்
+Personally I would just reuse USB FEs and when opening one check if it 
+can be offloaded:
+* check if someone disabled Offload on FE
+* check if it is connected to HW that can do Offload at all
+* check if Offload streams are available on backing HW
+* check if audio formats are supported by above HW
+* do any other checks that may be needed
+and then just redirect FE setup to relevant driver doing offload if 
+able, otherwise just go standard path.
+
+
+As I've wrote I must have missed the discussion where it was agreed on 
+and if maintainers agree that it can be done this way, I won't fight it. 
+Even though I would consider my way a lot simpler and user friendly from 
+end user point of view.
+
+Thanks,
+Amadeusz
 
