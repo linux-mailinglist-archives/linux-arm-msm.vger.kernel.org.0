@@ -1,142 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-28239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BAB794CE93
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 12:26:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B7DC294CE98
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 12:28:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9D55F1C20D93
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 10:26:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 87E731C203E1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 10:28:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 442BA1922C7;
-	Fri,  9 Aug 2024 10:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E251F1922C9;
+	Fri,  9 Aug 2024 10:28:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="klagKiXi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NewNTG3K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1872C18C906;
-	Fri,  9 Aug 2024 10:26:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2356A18C906
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Aug 2024 10:27:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723199177; cv=none; b=owTst/WofKQwrrsZzAvOt3X2ZIPcrPyCq7fGX/eUEuO3m+FZO63T+5EHQoPZbcyjjNTZ+fOrw1vZg6rR9U47QjsiZhXFkwTSJP5NzyTu9KXg3LMCNoECdzrIoFFtZxeqj+LCRtCkHgfi5ny0kb1LMgI+wSX4T9BCETLo+bSzyF4=
+	t=1723199280; cv=none; b=KH7p0x2IBMv3zFyCm0M9NAGu+d4h6pyKCRtj19biOmQ+QoK345nSwfk3U0n1+uf6ndhxNACYqtLh2nkzaH1ZDOoCwodmDF/Nl7e2S5j/iHAvWoJajejhW8HNSc8LRqDWZctKAtmYPVTyLjsn6EL4KZN4UeezptFhAMpJVmappmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723199177; c=relaxed/simple;
-	bh=926oJmJ29eIBTtXeu5hbF3FORUZRxaqbRCkoIR2SFsI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tpuvuX+Oy3GwJCFu8V6WXx3zXGXtc4JhHlKjpZe3+5p95Qag3NFX8q6gO3LDzOgKNiSPA5E+uk7LnrmMH/SW2xD4LVAPEuwDpueM/g1Oz0fQ0oICZRvwpzPLwvz+P6FsJ4VOKDNO8lLPpMi+aqScbGKgajZd98Mo0z84reI/58E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=klagKiXi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B28C32782;
-	Fri,  9 Aug 2024 10:26:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723199176;
-	bh=926oJmJ29eIBTtXeu5hbF3FORUZRxaqbRCkoIR2SFsI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=klagKiXiCN6zy4VMG9hVg4Eizbyy8wYKmGdhyugcOERRVfiwtj0SEf7qnF+XV4E9R
-	 MOGtJivaogr9SubtPOhvxKM6f4CL3DCHEqaScM10Smyv/MfA86nrX2rtTzKK9tC9Ck
-	 EXlqI3VDKIQw6HLDbNXz8lJA4fH6XGstc27tLymwLVqPEDuO3vIp3TpIgJmigsMcLw
-	 ckui+nRvv5CFLwCnTqv3fOGKxXsyZCM+Ts/Y0HrrBRISraSe2BPuWqndRjoO4a5PEl
-	 gd+9c2XXftC0WKYvInlg/118JZwrWxfiCzkj2DDej6iycN1MGkbLmyp+ILmJmnrpRL
-	 IIFwiq9YxASdA==
-Message-ID: <e10a2f4a-a02d-427a-92ab-6a3612244766@kernel.org>
-Date: Fri, 9 Aug 2024 12:26:10 +0200
+	s=arc-20240116; t=1723199280; c=relaxed/simple;
+	bh=mciDyR6DAV+t2Evh9AfOB6T8709XeXKN989YLH9vaxs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SIXs7sSdDzv12g/xyts+MHPy1A4oYljum+m+kXRVBN+ElY1zRkVMQ92RjmeVkPbuwY5pXuoV0JT+TDrtTdFoLDutqbWkNEZLdeBUqHA8rRWww5Es5gjDCWi7N9wHCCmI2+1JtRyNeVsDlM/MIqLtLVSokxbBUDibTDfuNG/6VT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NewNTG3K; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-530e2235688so2055777e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Aug 2024 03:27:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1723199277; x=1723804077; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Oq5WuounRhDgOPhDOrEXdyNS99LjTUBlFL3IccwVggc=;
+        b=NewNTG3Krd9j1LDsR9r9d7SmqaNP4390FFmBbmQmfIhRmKHCBQXU9SP+ergn4I/K9p
+         K74Lrdh1Qexa4cCaYgtAG9u0Ezi3ZWO1zsJBAnnkUA7dTmWu8ZStG4Zc4L910JUC7DjO
+         Qv6oexoiLIt8bF1DM0cZd7kQWei08Gx7l2ixl7uMg8M/DoTG56X8/ORbYBxOBlTDSklk
+         TvukddLAu6ROfyHkZTv3wjDTNhYQkm6lEVQzn9O2/5rhgD/LbkK+uLnOis2jbUy2oIV4
+         6p/H+IOm1d3tCAZ2rcCysGrZ/hHLDro9dHlAG0mXFyK80pxaXPySGdDDhRX3xYU/MIXz
+         rDXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723199277; x=1723804077;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Oq5WuounRhDgOPhDOrEXdyNS99LjTUBlFL3IccwVggc=;
+        b=tzP7AsYon9KJuBPX9yOIM8qyTJuzuDP5x+hD86Y2Xskf37MVXcqpsnBe7TLQ7JwkAx
+         OAY7zyEAAjArvZVFu2/FSq5eR+KZr53EledkcRt17ZLerDSv2+qhBo1iMJyDSWiLGvRA
+         7UVPyVOCyrJAmUWniX/Z/OMH17GrC5HdBkT2FNql08JomL3hujsa45h0sOUNdIrP2Qo7
+         c1GfMlxaXGAfTuleEefHR9S+q/uX6THBWHIlwqo4F44HZ6l0rqzBubcuLOUMUjM2Jfok
+         CRMg0uKZ58VgAajvqSdVJTI4OFq7taQOvlDeu8SqkwrT/TnECLiVG6HurwqrDtdQqChs
+         QZsw==
+X-Forwarded-Encrypted: i=1; AJvYcCWi09JSA4KFZ3kncFH9dtf+TUrQtscIms7snruj01paoGNXdmh0Xbkzc0ow3iW3cH0tIi+z4lsJvAk5iITSzpEv9hE1jlT31KpoeV1l1g==
+X-Gm-Message-State: AOJu0YwhztcO5NnIijgPUk6dBXwMhTN3z++wb0akd9Mw5TUaY/aV77ki
+	/SVaRC6su3I0IbWekerf9Gzk+C0Nggvm3d28sTbUxIBR3fh5sd2KpkaclM/aNBw=
+X-Google-Smtp-Source: AGHT+IFBNYCFbmOMoK+gCdRJEXf1i9wJyiJOeN25cq8clrsXLyDyrnuY3aNzE7llXL4REgI4fC8Vwg==
+X-Received: by 2002:a05:6512:acc:b0:52e:fd84:cec0 with SMTP id 2adb3069b0e04-530eea5a11emr852782e87.52.1723199276902;
+        Fri, 09 Aug 2024 03:27:56 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff1f:b280:8395:bc08:2fce:1f21])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5bbb2bf869dsm1418437a12.1.2024.08.09.03.27.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Aug 2024 03:27:56 -0700 (PDT)
+Date: Fri, 9 Aug 2024 12:27:51 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Konrad Dybcio <konradybcio@gmail.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <quic_kdybcio@quicinc.com>
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: x1e80100: Add UART2
+Message-ID: <ZrXvJ0Ay-2gFWB13@linaro.org>
+References: <20240809-topic-sl7-v1-0-2090433d8dfc@quicinc.com>
+ <20240809-topic-sl7-v1-3-2090433d8dfc@quicinc.com>
+ <ZrXWPQVXfdL-QLnt@linaro.org>
+ <b9b02bc4-1abd-4a56-bb6e-ac2c59e8f609@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: Add HS PHY IRQs to USB1
- SS[0-2]
-To: Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
- Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc: Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240809-x1e80100-dts-usb-1-ss0-2-add-hs-phy-irqs-v1-1-9e1bc62fa407@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240809-x1e80100-dts-usb-1-ss0-2-add-hs-phy-irqs-v1-1-9e1bc62fa407@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b9b02bc4-1abd-4a56-bb6e-ac2c59e8f609@gmail.com>
 
-On 09/08/2024 12:12, Abel Vesa wrote:
-> Add missing HS PHY IRQs to all 3 USB1 SS instances.
+On Fri, Aug 09, 2024 at 12:24:03PM +0200, Konrad Dybcio wrote:
+> On 9.08.2024 10:41 AM, Stephan Gerhold wrote:
+> > On Fri, Aug 09, 2024 at 03:43:22AM +0200, Konrad Dybcio wrote:
+> >> From: Konrad Dybcio <quic_kdybcio@quicinc.com>
+> >>
+> >> GENI SE2 within QUP0 is used as UART on some devices, describe it.
+> >>
+> >> Signed-off-by: Konrad Dybcio <quic_kdybcio@quicinc.com>
+> >> ---
 > 
-> Fixes: 4af46b7bd66f ("arm64: dts: qcom: x1e80100: Add USB nodes")
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 6 ++++++
->  1 file changed, 6 insertions(+)
+> [...]
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> index 326283822aee..254643650fa7 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> @@ -3871,10 +3871,12 @@ usb_1_ss2: usb@a0f8800 {
->  					       <200000000>;
->  
->  			interrupts-extended = <&intc GIC_SPI 370 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&intc GIC_SPI 363 IRQ_TYPE_LEVEL_HIGH>,
->  					      <&pdc 58 IRQ_TYPE_EDGE_BOTH>,
->  					      <&pdc 57 IRQ_TYPE_EDGE_BOTH>,
->  					      <&pdc 10 IRQ_TYPE_LEVEL_HIGH>;
->  			interrupt-names = "pwr_event",
-> +					  "hs_phy_irq",
+> > 
+> > Can you combine these into a single entry, i.e.
+> > 
+> > 				pins = "gpio8", "gpio9", "gpio10", "gpio11";
+> > 
+> > if they are all the same?
+> 
+> Keeping it as-is gives us
+> 
+> a) better hw description
+> b) an easier ability to add a label and change e.g. the bias
+> 
 
-I think current bindings disagree with this. If there is a binding
-update, please post a link.
+Ok, but it's inconsistent with what we have for qup_uart21_default right
+now. I think you should either change that as well, or follow the same
+pattern. :-)
 
-Best regards,
-Krzysztof
-
+Thanks,
+Stephan
 
