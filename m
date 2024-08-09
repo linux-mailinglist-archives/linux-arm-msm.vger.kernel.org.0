@@ -1,578 +1,393 @@
-Return-Path: <linux-arm-msm+bounces-28241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D157094CF21
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 13:00:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0EF1394CF24
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 13:01:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 014141C20885
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 11:00:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C0FE1F21A03
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 11:01:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 626C6191F94;
-	Fri,  9 Aug 2024 11:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 120251922E3;
+	Fri,  9 Aug 2024 11:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WoOD8p75"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20C3B18B488;
-	Fri,  9 Aug 2024 11:00:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED29B18FC6F
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Aug 2024 11:01:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723201242; cv=none; b=dhokzZW7YxZIJQuCprtIJKZdKyE/mX7rIkkd9oxlPn+WRvs8YUgZFTKzzHIlQlEbX5d7JJG7EBd1LGBA22DhZMJcS8VOgOM4vbpqXCOBIYXxqH6l3ROSnNyBr1GOm97aoYmgBFZ+mHHw7bOXLSaAKq9jckix5ZpgFs1j0A17oFc=
+	t=1723201292; cv=none; b=Wk32+l9L2sWSxaBIkydatrRnbJUK95X+oN0ZAfRMnivXLc9Dk4qG6/3JsBVjrfTDh5mteuCieKCsnTFduxJXuwNFQVR9drya2Kc1MK6di6wxyL1ewDAb0Z1rMh7Xtgo2UGvfjRmQWmJyrRxjFMi5liXp49dnAsOiy518CvgaVwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723201242; c=relaxed/simple;
-	bh=e96X2r2SQTGxQ3lwGoeE+zYNPolTjQCZrlVQsCIjyA8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A3OrWPKanvi7z3Oy7cB3UFpQMaHDr+da0d5R5Kio8HIB9HE/g9JKyH7GBUuq4MEHHaG3MH+mWml9NE2+UIff+UjU1QJv++vd+Zamewpk05TAFuj64c/9spqTL4v88dGscQb72cNOHQq/AKoAkCNgQlAkcBgA7xw5u/eYq4/WahQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5A2E613D5;
-	Fri,  9 Aug 2024 04:01:05 -0700 (PDT)
-Received: from [10.57.69.28] (unknown [10.57.69.28])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CDE413F71E;
-	Fri,  9 Aug 2024 04:00:36 -0700 (PDT)
-Message-ID: <db875eb9-9000-4e05-b955-866acda2f6a6@arm.com>
-Date: Fri, 9 Aug 2024 12:00:35 +0100
+	s=arc-20240116; t=1723201292; c=relaxed/simple;
+	bh=MUOJttNLDDkaf3vn9kxvM207x74kpVe47iGW1tUIkIQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iseWBsR6VU066wO6dXNJ8H1jqIuAuwa6nCGLAfmC/ouN+9mM7NBCRuR3MivC/byG+h1m/4A76jG1Uvu11qngtkr4bk2vfmQt6QgeBoWa99iPJIkAreLIRl58GlDO9Qyx9SWFy/SU6XymdB/+1o2G/fyvkeMT9XSzgFskRXj7sRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WoOD8p75; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-368584f9e36so856644f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Aug 2024 04:01:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1723201288; x=1723806088; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/682q/IgmSx1ugjwpcrW1fYYFoT2Yei89ggcZ5WWfo8=;
+        b=WoOD8p75yvavw9AdQB54DgMP5yWrgyHu3FyY6ulR1EHJ86fu9b4J+TzkI510Vii6Io
+         +927POzYWALqqDv4wHeUyxeF2wPgEGMu3y5fHWVrox84xuHBOIUERhUG1yKitlE52HNW
+         32XcFlujcOEX2+uYqTxSQmZR/mAejrFwNIV+Kfdwbu7My4vpnmQliI1MmUYbyCt1A/zp
+         70JXD2kdp2yjAo5IPQ+OWlPYrV6tbKOmWxUJiGoeSjXkn2UCqMNHqNVG+VMDAYJZyEWR
+         TVg0xBlVS/usCMH+OGJ8Vlsrofe9B92FXAHww14b2KIxwbo8huLp59tQrISqy/uyo1Sk
+         cqmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723201288; x=1723806088;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/682q/IgmSx1ugjwpcrW1fYYFoT2Yei89ggcZ5WWfo8=;
+        b=aqif+f+kh4XzFaj57/lcF8fP7jHFAVyncDiMdx1idTlaQ/DCc+FFKokyPfDNfUUZIW
+         cJN57oMYuOBsG5cf+s+Y5YNgkWeVZ/67phuWo4LzU6lnfoZ2D/RXiNUyRQ6kUGzGVETs
+         StxbVXaV4J8y9KMP6xJu9yxNyNAKss0LuUsYpBYKqr2VlDZsFLMe82xU0Cbyw9+6UgUR
+         iOpmT5O59905SZ5mtGGfZ++BJcXtjkfvtMgbKNPr3QxWY96HGX8rDHtItDyp/1OF5ESc
+         cHnynAsjQ/4ZswFdWsWEntOSYavusmTUe81aqJyOElcIaBusXW9rWet6ZVSVGmDEhcRq
+         f2BA==
+X-Forwarded-Encrypted: i=1; AJvYcCXdawQfZuB9p2yFochMg3lZgn9UTYMwf0yN7uJlsjK0RmK6ApMT23X/sP8H+FIgTvMEy/3JURkIOn0g+2dAKwpqrPHW3p/CcOkDzALoyg==
+X-Gm-Message-State: AOJu0YxVVfsliCDejxO2IQqPzZWBCBIXhloLK9V/eO6KCta+ZlwkcWUr
+	eyeVM1v93oIdeHDkBG+Kh5ps5ix47GRmJAp16Uq4tmK5kPm59SrqNgzWQUBVRrg=
+X-Google-Smtp-Source: AGHT+IEMw0S9h0YIYl4LyxIuHNAP7T9PX2ZjGuz2Ky4aelpGhhnCl3Hs3qzr8diKaTFhAHA9AO9+OA==
+X-Received: by 2002:a5d:5f91:0:b0:367:8a84:7427 with SMTP id ffacd0b85a97d-36d5de93557mr1073255f8f.2.1723201288119;
+        Fri, 09 Aug 2024 04:01:28 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.219.137])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36d340acfdasm1815992f8f.13.2024.08.09.04.01.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Aug 2024 04:01:27 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Banajit Goswami <bgoswami@quicinc.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Jean Delvare <jdelvare@suse.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	alsa-devel@alsa-project.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-hwmon@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3] ASoC: codecs: wsa884x: Implement temperature reading and hwmon
+Date: Fri,  9 Aug 2024 13:01:22 +0200
+Message-ID: <20240809110122.137761-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] coresight: Add source filtering for multi-port
- output
-Content-Language: en-GB
-To: Tao Zhang <quic_taozha@quicinc.com>, Mike Leach <mike.leach@linaro.org>,
- James Clark <james.clark@arm.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>,
- Leo Yan <leo.yan@linux.dev>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240711081750.21792-1-quic_taozha@quicinc.com>
- <20240711081750.21792-3-quic_taozha@quicinc.com>
- <d63cdd7e-69db-4fc4-b98a-d4555a843e05@arm.com>
- <103157b0-976c-4e60-97fa-49eb713b7982@quicinc.com>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <103157b0-976c-4e60-97fa-49eb713b7982@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 09/08/2024 11:21, Tao Zhang wrote:
-> 
-> On 7/11/2024 9:05 PM, Suzuki K Poulose wrote:
->> On 11/07/2024 09:17, Tao Zhang wrote:
->>> In order to enable the output ports of multi-port output devices,
->>
->> This has nothing to do with multi-port. You wanted to pain the picture
->> of a multi-port device, while the reality is different.
->>
->>> such as static replicator, to correspond to designated sources,
->>> a mechanism for filtering data sources is introduced for the
->>> output ports.
->>>
->>> The specified source will be marked like below in the Devicetree.
->>> test-replicator {
->>>      ... ... ... ...
->>>      out-ports {
->>>          ... ... ... ...
->>>          port@0 {
->>>              reg = <0>;
->>>              xxx: endpoint {
->>>                  remote-endpoint = <&xxx>;
->>>                  filter_src = <&xxx>; <-- To specify the source to
->>>              };                           be filtered out here.
->>>          };
->>>
->>>          port@1 {
->>>              reg = <1>;
->>>              yyy: endpoint {
->>>                  remote-endpoint = <&yyy>;
->>>                  filter_src = <&yyy>; <-- To specify the source to
->>>              };                           be filtered out here.
->>>          };
->>>      };
->>> };
->>>
->>> Then driver will find the expected source marked in the Devicetree, and
->>> save it to the coresight path. When the function needs to filter the
->>> source, it could obtain it from coresight path parameter. Finally,
->>> the output port knows which source it corresponds to, and it also knows
->>> which input port it corresponds to.
->>
->> Minor nit: I think the commit description is full of "How" you are 
->> doing something, while it must rather be: "What and Why?"
->>
->> I would prefer something like :
->>
->> Subject: coresight: Add support for trace filtering by source
->>
->> Some replicators have hard coded filtering of "trace" data, based on the
->> source device. This is different from the trace filtering based on
->> TraceID, available in the standard programmable replicators. e.g.,
->> Qualcomm replicators have filtering based on custom trace protocol
->> format and is not programmable.
->>
->> The source device could be connected to the replicator via intermediate
->> components (e.g., a funnel). Thus we need platform information from
->> the firmware tables to decide the source device corresponding to a
->> given output port from the replicator. Given this affects "trace
->> path building" and traversing the path back from the sink to source,
->> add the concept of "filtering by source" to the generic coresight
->> connection.
->>
->>
->>>
->>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>> ---
->>>   drivers/hwtracing/coresight/coresight-core.c  | 125 ++++++++++++++++--
->>>   .../hwtracing/coresight/coresight-platform.c  |  18 +++
->>>   include/linux/coresight.h                     |   5 +
->>>   3 files changed, 135 insertions(+), 13 deletions(-)
->>>
->>> diff --git a/drivers/hwtracing/coresight/coresight-core.c 
->>> b/drivers/hwtracing/coresight/coresight-core.c
->>> index 9fc6f6b863e0..3f02a31b9328 100644
->>> --- a/drivers/hwtracing/coresight/coresight-core.c
->>> +++ b/drivers/hwtracing/coresight/coresight-core.c
->>> @@ -75,15 +75,60 @@ struct coresight_device 
->>> *coresight_get_percpu_sink(int cpu)
->>>   }
->>>   EXPORT_SYMBOL_GPL(coresight_get_percpu_sink);
->>>   +static struct coresight_device *coresight_get_source(struct 
->>> list_head *path)
->>> +{
->>> +    struct coresight_device *csdev;
->>> +
->>> +    if (!path)
->>> +        return NULL;
->>> +
->>> +    csdev = list_first_entry(path, struct coresight_node, link)->csdev;
->>> +    if (csdev->type != CORESIGHT_DEV_TYPE_SOURCE)
->>> +        return NULL;
->>> +
->>> +    return csdev;
->>> +}
->>> +
->>
->> Why is this still here ? Didn't agree to remove this and pass the source
->> directly ?
-> 
-> I would like to discuss with you about passing the "source" directly. 
-> Since the APIs "coresight_enable_path" and
-> 
-> "coresight_disable_path" are called in coresight-etm-perf.c as well. If 
-> passing the "source" to them directly, I need to
-> 
-> modify the code in coresight-etm-perf.c as well. In order to reduce the 
-> modification, how about if I keep using
-> 
-> "coresight_get_source" in "coresight_enable_path" and 
-> "coresight_disable_path" to get "source" for filtering
-> 
-> the source in "coresight_block_source"?
+Read temperature of the speaker and expose it via hwmon interface, which
+will be later used during calibration of speaker protection algorithms.
 
-Yes, please retain the helper. The above comment was based on my
-"bad memory" of disable_path_from() was called with a partial path.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-No need to change the function. Once again, apologies for the confusion.
+---
 
-Suzuki
+Changes in v3:
+1. Replace Kconfig HWMON dependency in favor of
+   IS_REACHABLE(CONFIG_HWMON) which solves Kernel Test Robot warning for
+   !HWMON and HWMON=y && WSA884x=m
 
+Changes in v2:
+1. Add missing dependency on HWMON for y!=m builds (Kernel Test Robot
+   report: undefined reference to
+   `devm_hwmon_device_register_with_info').
+---
+ sound/soc/codecs/wsa884x.c | 201 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 201 insertions(+)
 
-
-> 
-> 
-> Best,
-> 
-> Tao
-> 
->>
->>> +/**
->>> + * coresight_source_filter - checks whether the connection matches 
->>> the source
->>> + * of path if connection is binded to specific source.
->>> + * @trace_source: The source device of the trace path
->>> + * @conn:      The connection of one outport
->>> + *
->>> + * Return zero if the connection doesn't have a source binded or 
->>> source of the
->>> + * path matches the source binds to connection.
->>> + */
->>> +static int coresight_source_filter(struct coresight_device 
->>> *trace_source,
->>> +            struct coresight_connection *conn)
->>
->> This name is a bit confusing. It doesn't tell you, whether it
->> allows the trace or blocks it.
->>
->>> +{
->>> +    int ret = 0;
->>> +
->>> +    if (!conn->filter_src_dev)
->>> +        return ret;
->>
->> This is not the correct check. It must be :
->>
->> if (!conn->filter_src_fwnode)
->>
->> Because, the device could have disappeared (or not appeared yet). 
->> e.g., (TPDM) driver module unloaded/not - loaded.
->>
->>> +
->>> +    if (!trace_source)
->>
->> Is that possible ?
->>
->>> +        return -1;
->>> +
->>> +    if (conn->filter_src_dev == trace_source)
->>> +        ret = 0;
->>> +    else
->>> +        ret = -1;
->>
->> Couldn't this simply be :
->>
->> /*
->>  * Returns true, if the trace path is not possible through @conn
->>  * for trace originating from @src
->>  */
->> static bool coresight_blocks_source(src, conn)
->> {
->>     return conn->filter_src_fwnode &&
->>         (conn->filter_src_dev != src);
->> }
->>
->>> +
->>> +    return ret;
->>> +}
->>> +
->>>   static struct coresight_connection *
->>>   coresight_find_out_connection(struct coresight_device *src_dev,
->>> -                  struct coresight_device *dest_dev)
->>> +                  struct coresight_device *dest_dev,
->>> +                  struct coresight_device *trace_source)
->>
->> Please could you rename :
->>
->>     src_dev => csdev
->>     dest_dev => out_dev
->>     trace_source => trace_src ?
->>
->> Having src_dev and trace_source in the same list is confusing.
->>
->>>   {
->>>       int i;
->>>       struct coresight_connection *conn;
->>>         for (i = 0; i < src_dev->pdata->nr_outconns; i++) {
->>>           conn = src_dev->pdata->out_conns[i];
->>> +        if (coresight_source_filter(trace_source, conn))
->>
->>         if (coresight_blocks_source(trace_source, conn))
->>             continue;
->>
->>> +            continue;
->>>           if (conn->dest_dev == dest_dev)
->>>               return conn;
->>>       }
->>> @@ -251,7 +296,8 @@ static void coresight_disable_sink(struct 
->>> coresight_device *csdev)
->>>     static int coresight_enable_link(struct coresight_device *csdev,
->>>                    struct coresight_device *parent,
->>> -                 struct coresight_device *child)
->>> +                 struct coresight_device *child,
->>> +                 struct coresight_device *trace_source)
->>>   {
->>>       int link_subtype;
->>>       struct coresight_connection *inconn, *outconn;
->>> @@ -259,8 +305,8 @@ static int coresight_enable_link(struct 
->>> coresight_device *csdev,
->>>       if (!parent || !child)
->>>           return -EINVAL;
->>>   -    inconn = coresight_find_out_connection(parent, csdev);
->>> -    outconn = coresight_find_out_connection(csdev, child);
->>> +    inconn = coresight_find_out_connection(parent, csdev, 
->>> trace_source);
->>> +    outconn = coresight_find_out_connection(csdev, child, 
->>> trace_source);
->>>       link_subtype = csdev->subtype.link_subtype;
->>>         if (link_subtype == CORESIGHT_DEV_SUBTYPE_LINK_MERG && 
->>> IS_ERR(inconn))
->>> @@ -273,15 +319,16 @@ static int coresight_enable_link(struct 
->>> coresight_device *csdev,
->>>     static void coresight_disable_link(struct coresight_device *csdev,
->>>                      struct coresight_device *parent,
->>> -                   struct coresight_device *child)
->>> +                   struct coresight_device *child,
->>> +                   struct coresight_device *trace_source)
->>>   {
->>>       struct coresight_connection *inconn, *outconn;
->>>         if (!parent || !child)
->>>           return;
->>>   -    inconn = coresight_find_out_connection(parent, csdev);
->>> -    outconn = coresight_find_out_connection(csdev, child);
->>> +    inconn = coresight_find_out_connection(parent, csdev, 
->>> trace_source);
->>> +    outconn = coresight_find_out_connection(csdev, child, 
->>> trace_source);
->>>         link_ops(csdev)->disable(csdev, inconn, outconn);
->>>   }
->>> @@ -341,6 +388,9 @@ static void coresight_disable_path_from(struct 
->>> list_head *path,
->>>   {
->>>       u32 type;
->>>       struct coresight_device *csdev, *parent, *child;
->>> +    struct coresight_device *source;
->>> +
->>> +    source = coresight_get_source(path);
->>
->> Grr! This must come from the "caller of the 
->> coresight_disable_path_from()", which was my comment. Please go back
->> and double check the comment on previous version.
->>
->>
->>>         if (!nd)
->>>           nd = list_first_entry(path, struct coresight_node, link);
->>> @@ -375,7 +425,7 @@ static void coresight_disable_path_from(struct 
->>> list_head *path,
->>>           case CORESIGHT_DEV_TYPE_LINK:
->>>               parent = list_prev_entry(nd, link)->csdev;
->>>               child = list_next_entry(nd, link)->csdev;
->>> -            coresight_disable_link(csdev, parent, child);
->>> +            coresight_disable_link(csdev, parent, child, source);
->>>               break;
->>>           default:
->>>               break;
->>> @@ -418,6 +468,9 @@ int coresight_enable_path(struct list_head *path, 
->>> enum cs_mode mode,
->>>       u32 type;
->>>       struct coresight_node *nd;
->>>       struct coresight_device *csdev, *parent, *child;
->>> +    struct coresight_device *source;
->>> +
->>> +    source = coresight_get_source(path);
->>>         list_for_each_entry_reverse(nd, path, link) {
->>>           csdev = nd->csdev;
->>> @@ -456,7 +509,7 @@ int coresight_enable_path(struct list_head *path, 
->>> enum cs_mode mode,
->>>           case CORESIGHT_DEV_TYPE_LINK:
->>>               parent = list_prev_entry(nd, link)->csdev;
->>>               child = list_next_entry(nd, link)->csdev;
->>> -            ret = coresight_enable_link(csdev, parent, child);
->>> +            ret = coresight_enable_link(csdev, parent, child, source);
->>>               if (ret)
->>>                   goto err;
->>>               break;
->>> @@ -619,6 +672,7 @@ static void coresight_drop_device(struct 
->>> coresight_device *csdev)
->>>    * @csdev:    The device to start from.
->>>    * @sink:    The final sink we want in this path.
->>>    * @path:    The list to add devices to.
->>> + * @trace_source: The trace source device of the path.
->>>    *
->>>    * The tree of Coresight device is traversed until @sink is found.
->>>    * From there the sink is added to the list along with all the 
->>> devices that led
->>> @@ -627,7 +681,8 @@ static void coresight_drop_device(struct 
->>> coresight_device *csdev)
->>>    */
->>>   static int _coresight_build_path(struct coresight_device *csdev,
->>>                    struct coresight_device *sink,
->>> -                 struct list_head *path)
->>> +                 struct list_head *path,
->>> +                 struct coresight_device *trace_source)
->>>   {
->>>       int i, ret;
->>>       bool found = false;
->>> @@ -639,7 +694,7 @@ static int _coresight_build_path(struct 
->>> coresight_device *csdev,
->>>         if (coresight_is_percpu_source(csdev) && 
->>> coresight_is_percpu_sink(sink) &&
->>>           sink == per_cpu(csdev_sink, 
->>> source_ops(csdev)->cpu_id(csdev))) {
->>> -        if (_coresight_build_path(sink, sink, path) == 0) {
->>> +        if (_coresight_build_path(sink, sink, path, trace_source) == 
->>> 0) {
->>>               found = true;
->>>               goto out;
->>>           }
->>> @@ -650,8 +705,13 @@ static int _coresight_build_path(struct 
->>> coresight_device *csdev,
->>>           struct coresight_device *child_dev;
->>>             child_dev = csdev->pdata->out_conns[i]->dest_dev;
->>> +
->>> +        if (csdev->pdata->out_conns[i]->filter_src_dev
->>> +            && (csdev->pdata->out_conns[i]->filter_src_dev != 
->>> trace_source))
->>> +            continue;
->>> +
->>>           if (child_dev &&
->>> -            _coresight_build_path(child_dev, sink, path) == 0) {
->>> +            _coresight_build_path(child_dev, sink, path, 
->>> trace_source) == 0) {
->>>               found = true;
->>>               break;
->>>           }
->>> @@ -696,7 +756,7 @@ struct list_head *coresight_build_path(struct 
->>> coresight_device *source,
->>>         INIT_LIST_HEAD(path);
->>>   -    rc = _coresight_build_path(source, sink, path);
->>> +    rc = _coresight_build_path(source, sink, path, source);
->>>       if (rc) {
->>>           kfree(path);
->>>           return ERR_PTR(rc);
->>> @@ -957,6 +1017,14 @@ static int coresight_orphan_match(struct device 
->>> *dev, void *data)
->>>               /* This component still has an orphan */
->>>               still_orphan = true;
->>>           }
->>
->>
->>> +        if ((conn->filter_src_fwnode) && dst_csdev
->>> +            && (conn->filter_src_fwnode == dst_csdev->dev.fwnode)) {
->>> +            conn->filter_src_dev = dst_csdev;
->>> +            if (conn->filter_src_dev->type
->>> +                != CORESIGHT_DEV_TYPE_SOURCE)
->>> +                dev_warn(&conn->filter_src_dev->dev,
->>> +                  "Filter source is not a source device\n");
->>> +        }
->>
->> Have you tested your code with the following order :
->>
->> 1) Build everything as module
->> 2) Load the replicator driver.
->> 3) Load the TPDM driver
->>
->> And are you able to get the trace working ? I suspect it doesn't work. 
->> The csdev->orphan must be used to track if there is any missing link
->> with unresolved "filter_src_dev".
->>
->>
->>>       }
->>>         src_csdev->orphan = still_orphan;
->>> @@ -974,6 +1042,30 @@ static int coresight_fixup_orphan_conns(struct 
->>> coresight_device *csdev)
->>>                csdev, coresight_orphan_match);
->>>   }
->>>   +/* reset_filter_src - Reset the filter source if the source is 
->>> being removed */
->>> +static int reset_filter_src(struct coresight_device *trace_source,
->>> +                struct coresight_connection *conn)
->>> +{
->>> +    int i;
->>> +    int ret = -1;
->>> +    struct coresight_device *csdev;
->>> +    struct coresight_connection *output_conn;
->>
->> I don't think this is sufficient. I would rather walk through the 
->> entire coresight bus and fixup the filter_src_dev, rather than 
->> traversing the
->> paths. e.g., one of the devices in the path could have been removed.
->> See coresight_clear_default_sink() for e.g. You should have something
->> similar :
->>
->> coresight_clear_filter_source();
->>
->>
->> Suzuki
->>
->>
->>
->>> +
->>> +    csdev = conn->dest_dev;
->>> +    for (i = 0; i < csdev->pdata->nr_outconns; i++) {
->>> +        output_conn = csdev->pdata->out_conns[i];
->>> +        if (output_conn->filter_src_dev
->>> +            && (output_conn->filter_src_dev == trace_source)) {
->>> +            output_conn->filter_src_dev = NULL;
->>> +            return 0;
->>> +        }
->>> +        ret = reset_filter_src(trace_source, output_conn);
->>> +        if (!ret)
->>> +            return ret;
->>> +    }
->>> +    return ret;
->>> +}
->>> +
->>>   /* coresight_remove_conns - Remove other device's references to 
->>> this device */
->>>   static void coresight_remove_conns(struct coresight_device *csdev)
->>>   {
->>> @@ -986,6 +1078,13 @@ static void coresight_remove_conns(struct 
->>> coresight_device *csdev)
->>>        */
->>
->>
->>>       for (i = 0; i < csdev->pdata->nr_outconns; i++) {
->>>           conn = csdev->pdata->out_conns[i];
->>> +        if (csdev->type == CORESIGHT_DEV_TYPE_SOURCE)
->>> +            reset_filter_src(csdev, conn);
->>> +        if (conn->filter_src_fwnode) {
->>> +            conn->filter_src_dev = NULL;
->>> +            conn->filter_src_fwnode = NULL;
->>> +        }
->>> +
->>>           if (!conn->dest_dev)
->>>               continue;
->>>   diff --git a/drivers/hwtracing/coresight/coresight-platform.c 
->>> b/drivers/hwtracing/coresight/coresight-platform.c
->>> index 64e171eaad82..b3c3e2361d07 100644
->>> --- a/drivers/hwtracing/coresight/coresight-platform.c
->>> +++ b/drivers/hwtracing/coresight/coresight-platform.c
->>> @@ -243,6 +243,24 @@ static int of_coresight_parse_endpoint(struct 
->>> device *dev,
->>>           conn.dest_fwnode = fwnode_handle_get(rdev_fwnode);
->>>           conn.dest_port = rendpoint.port;
->>>   +        /*
->>> +         * Get the firmware node of the filter source through the
->>> +         * reference. This could be used to filter the source in
->>> +         * building path.
->>> +         */
->>> +        conn.filter_src_fwnode =
->>> +            fwnode_find_reference(&ep->fwnode, "filter-src", 0);
->>> +        if (IS_ERR(conn.filter_src_fwnode))
->>> +            conn.filter_src_fwnode = NULL;
->>> +        else {
->>> +            conn.filter_src_dev =
->>> + coresight_find_csdev_by_fwnode(conn.filter_src_fwnode);
->>> +            if (conn.filter_src_dev && (conn.filter_src_dev->type
->>> +                != CORESIGHT_DEV_TYPE_SOURCE))
->>> +                dev_warn(&conn.filter_src_dev->dev,
->>> +                  "Filter source %s is not a source device\n");
->>> +        }
->>> +
->>>           new_conn = coresight_add_out_conn(dev, pdata, &conn);
->>>           if (IS_ERR_VALUE(new_conn)) {
->>>               fwnode_handle_put(conn.dest_fwnode);
->>> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
->>> index f09ace92176e..91a689b4514b 100644
->>> --- a/include/linux/coresight.h
->>> +++ b/include/linux/coresight.h
->>> @@ -172,6 +172,9 @@ struct coresight_desc {
->>>    * @dest_dev:    a @coresight_device representation of the component
->>>           connected to @src_port. NULL until the device is created
->>>    * @link: Representation of the connection as a sysfs link.
->>> + * @filter_src_fwnode: filter source component's fwnode handle.
->>> + * @filter_src_dev: a @coresight_device representation of the 
->>> component that
->>> +        needs to be filtered.
->>>    *
->>>    * The full connection structure looks like this, where in_conns store
->>>    * references to same connection as the source device's out_conns.
->>> @@ -200,6 +203,8 @@ struct coresight_connection {
->>>       struct coresight_device *dest_dev;
->>>       struct coresight_sysfs_link *link;
->>>       struct coresight_device *src_dev;
->>> +    struct fwnode_handle *filter_src_fwnode;
->>> +    struct coresight_device *filter_src_dev;
->>>       atomic_t src_refcnt;
->>>       atomic_t dest_refcnt;
->>>   };
->>
+diff --git a/sound/soc/codecs/wsa884x.c b/sound/soc/codecs/wsa884x.c
+index 8db1380d1f10..86df5152c547 100644
+--- a/sound/soc/codecs/wsa884x.c
++++ b/sound/soc/codecs/wsa884x.c
+@@ -5,11 +5,14 @@
+  */
+ 
+ #include <linux/bitfield.h>
++#include <linux/cleanup.h>
+ #include <linux/device.h>
+ #include <linux/gpio/consumer.h>
++#include <linux/hwmon.h>
+ #include <linux/init.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/regmap.h>
+ #include <linux/regulator/consumer.h>
+@@ -301,8 +304,28 @@
+ #define WSA884X_PA_FSM_MSK1		(WSA884X_DIG_CTRL0_BASE + 0x3b)
+ #define WSA884X_PA_FSM_BYP_CTL		(WSA884X_DIG_CTRL0_BASE + 0x3c)
+ #define WSA884X_PA_FSM_BYP0		(WSA884X_DIG_CTRL0_BASE + 0x3d)
++#define WSA884X_PA_FSM_BYP0_DC_CAL_EN_MASK		0x01
++#define WSA884X_PA_FSM_BYP0_DC_CAL_EN_SHIFT		0
++#define WSA884X_PA_FSM_BYP0_CLK_WD_EN_MASK		0x02
++#define WSA884X_PA_FSM_BYP0_CLK_WD_EN_SHIFT		1
++#define WSA884X_PA_FSM_BYP0_BG_EN_MASK			0x04
++#define WSA884X_PA_FSM_BYP0_BG_EN_SHIFT			2
++#define WSA884X_PA_FSM_BYP0_BOOST_EN_MASK		0x08
++#define WSA884X_PA_FSM_BYP0_BOOST_EN_SHIFT		3
++#define WSA884X_PA_FSM_BYP0_PA_EN_MASK			0x10
++#define WSA884X_PA_FSM_BYP0_PA_EN_SHIFT			4
++#define WSA884X_PA_FSM_BYP0_D_UNMUTE_MASK		0x20
++#define WSA884X_PA_FSM_BYP0_D_UNMUTE_SHIFT		5
++#define WSA884X_PA_FSM_BYP0_SPKR_PROT_EN_MASK		0x40
++#define WSA884X_PA_FSM_BYP0_SPKR_PROT_EN_SHIFT		6
++#define WSA884X_PA_FSM_BYP0_TSADC_EN_MASK		0x80
++#define WSA884X_PA_FSM_BYP0_TSADC_EN_SHIFT		7
+ #define WSA884X_PA_FSM_BYP1		(WSA884X_DIG_CTRL0_BASE + 0x3e)
+ #define WSA884X_TADC_VALUE_CTL		(WSA884X_DIG_CTRL0_BASE + 0x50)
++#define WSA884X_TADC_VALUE_CTL_TEMP_VALUE_RD_EN_MASK	0x01
++#define WSA884X_TADC_VALUE_CTL_TEMP_VALUE_RD_EN_SHIFT	0
++#define WSA884X_TADC_VALUE_CTL_VBAT_VALUE_RD_EN_MASK	0x02
++#define WSA884X_TADC_VALUE_CTL_VBAT_VALUE_RD_EN_SHIFT	1
+ #define WSA884X_TEMP_DETECT_CTL		(WSA884X_DIG_CTRL0_BASE + 0x51)
+ #define WSA884X_TEMP_DIN_MSB		(WSA884X_DIG_CTRL0_BASE + 0x52)
+ #define WSA884X_TEMP_DIN_LSB		(WSA884X_DIG_CTRL0_BASE + 0x53)
+@@ -691,6 +714,17 @@
+ 		SNDRV_PCM_FMTBIT_S24_LE |\
+ 		SNDRV_PCM_FMTBIT_S24_3LE | SNDRV_PCM_FMTBIT_S32_LE)
+ 
++/* Two-point trimming for temperature calibration */
++#define WSA884X_T1_TEMP			-10L
++#define WSA884X_T2_TEMP			150L
++
++/*
++ * Device will report senseless data in many cases, so discard any measurements
++ * outside of valid range.
++ */
++#define WSA884X_LOW_TEMP_THRESHOLD	5
++#define WSA884X_HIGH_TEMP_THRESHOLD	45
++
+ struct wsa884x_priv {
+ 	struct regmap *regmap;
+ 	struct device *dev;
+@@ -706,6 +740,13 @@ struct wsa884x_priv {
+ 	int active_ports;
+ 	int dev_mode;
+ 	bool hw_init;
++	/*
++	 * Protects temperature reading code (related to speaker protection) and
++	 * fields: temperature and pa_on.
++	 */
++	struct mutex sp_lock;
++	unsigned int temperature;
++	bool pa_on;
+ };
+ 
+ enum {
+@@ -1660,6 +1701,10 @@ static int wsa884x_spkr_event(struct snd_soc_dapm_widget *w,
+ 
+ 	switch (event) {
+ 	case SND_SOC_DAPM_POST_PMU:
++		mutex_lock(&wsa884x->sp_lock);
++		wsa884x->pa_on = true;
++		mutex_unlock(&wsa884x->sp_lock);
++
+ 		wsa884x_spkr_post_pmu(component, wsa884x);
+ 
+ 		snd_soc_component_write_field(component, WSA884X_PDM_WD_CTL,
+@@ -1671,6 +1716,10 @@ static int wsa884x_spkr_event(struct snd_soc_dapm_widget *w,
+ 		snd_soc_component_write_field(component, WSA884X_PDM_WD_CTL,
+ 					      WSA884X_PDM_WD_CTL_PDM_WD_EN_MASK,
+ 					      0x0);
++
++		mutex_lock(&wsa884x->sp_lock);
++		wsa884x->pa_on = false;
++		mutex_unlock(&wsa884x->sp_lock);
+ 		break;
+ 	}
+ 
+@@ -1810,6 +1859,144 @@ static struct snd_soc_dai_driver wsa884x_dais[] = {
+ 	},
+ };
+ 
++static int wsa884x_get_temp(struct wsa884x_priv *wsa884x, long *temp)
++{
++	unsigned int d1_msb = 0, d1_lsb = 0, d2_msb = 0, d2_lsb = 0;
++	unsigned int dmeas_msb = 0, dmeas_lsb = 0;
++	int d1, d2, dmeas;
++	unsigned int mask;
++	long val;
++	int ret;
++
++	guard(mutex)(&wsa884x->sp_lock);
++
++	if (wsa884x->pa_on) {
++		/*
++		 * Reading temperature is possible only when Power Amplifier is
++		 * off. Report last cached data.
++		 */
++		*temp = wsa884x->temperature;
++		return 0;
++	}
++
++	ret = pm_runtime_resume_and_get(wsa884x->dev);
++	if (ret < 0)
++		return ret;
++
++	mask = WSA884X_PA_FSM_BYP0_DC_CAL_EN_MASK |
++	       WSA884X_PA_FSM_BYP0_CLK_WD_EN_MASK |
++	       WSA884X_PA_FSM_BYP0_BG_EN_MASK |
++	       WSA884X_PA_FSM_BYP0_D_UNMUTE_MASK |
++	       WSA884X_PA_FSM_BYP0_SPKR_PROT_EN_MASK |
++	       WSA884X_PA_FSM_BYP0_TSADC_EN_MASK;
++	/*
++	 * Here and further do not care about read or update failures.
++	 * For example, before turning on Power Amplifier for the first
++	 * time, reading WSA884X_TEMP_DIN_MSB will always return 0.
++	 * Instead, check if returned value is within reasonable
++	 * thresholds.
++	 */
++	regmap_update_bits(wsa884x->regmap, WSA884X_PA_FSM_BYP0, mask, mask);
++
++	regmap_update_bits(wsa884x->regmap, WSA884X_TADC_VALUE_CTL,
++			   WSA884X_TADC_VALUE_CTL_TEMP_VALUE_RD_EN_MASK,
++			   FIELD_PREP(WSA884X_TADC_VALUE_CTL_TEMP_VALUE_RD_EN_MASK, 0x0));
++
++	regmap_read(wsa884x->regmap, WSA884X_TEMP_DIN_MSB, &dmeas_msb);
++	regmap_read(wsa884x->regmap, WSA884X_TEMP_DIN_LSB, &dmeas_lsb);
++
++	regmap_update_bits(wsa884x->regmap, WSA884X_TADC_VALUE_CTL,
++			   WSA884X_TADC_VALUE_CTL_TEMP_VALUE_RD_EN_MASK,
++			   FIELD_PREP(WSA884X_TADC_VALUE_CTL_TEMP_VALUE_RD_EN_MASK, 0x1));
++
++	regmap_read(wsa884x->regmap, WSA884X_OTP_REG_1, &d1_msb);
++	regmap_read(wsa884x->regmap, WSA884X_OTP_REG_2, &d1_lsb);
++	regmap_read(wsa884x->regmap, WSA884X_OTP_REG_3, &d2_msb);
++	regmap_read(wsa884x->regmap, WSA884X_OTP_REG_4, &d2_lsb);
++
++	regmap_update_bits(wsa884x->regmap, WSA884X_PA_FSM_BYP0, mask, 0x0);
++
++	dmeas = (((dmeas_msb & 0xff) << 0x8) | (dmeas_lsb & 0xff)) >> 0x6;
++	d1 = (((d1_msb & 0xff) << 0x8) | (d1_lsb & 0xff)) >> 0x6;
++	d2 = (((d2_msb & 0xff) << 0x8) | (d2_lsb & 0xff)) >> 0x6;
++
++	if (d1 == d2) {
++		/* Incorrect data in OTP? */
++		ret = -EINVAL;
++		goto out;
++	}
++
++	val = WSA884X_T1_TEMP + (((dmeas - d1) * (WSA884X_T2_TEMP - WSA884X_T1_TEMP))/(d2 - d1));
++
++	dev_dbg(wsa884x->dev, "Measured temp %ld (dmeas=%d, d1=%d, d2=%d)\n",
++		val, dmeas, d1, d2);
++
++	if ((val > WSA884X_LOW_TEMP_THRESHOLD) &&
++	    (val < WSA884X_HIGH_TEMP_THRESHOLD)) {
++		wsa884x->temperature = val;
++		*temp = val;
++		ret = 0;
++	} else {
++		ret = -EAGAIN;
++	}
++
++out:
++	pm_runtime_mark_last_busy(wsa884x->dev);
++	pm_runtime_put_autosuspend(wsa884x->dev);
++
++	return ret;
++}
++
++static umode_t wsa884x_hwmon_is_visible(const void *data,
++					enum hwmon_sensor_types type, u32 attr,
++					int channel)
++{
++	if (type != hwmon_temp)
++		return 0;
++
++	switch (attr) {
++	case hwmon_temp_input:
++		return 0444;
++	default:
++		break;
++	}
++
++	return 0;
++}
++
++static int wsa884x_hwmon_read(struct device *dev,
++			      enum hwmon_sensor_types type,
++			      u32 attr, int channel, long *temp)
++{
++	int ret;
++
++	switch (attr) {
++	case hwmon_temp_input:
++		ret = wsa884x_get_temp(dev_get_drvdata(dev), temp);
++		break;
++	default:
++		ret = -EOPNOTSUPP;
++		break;
++	}
++
++	return ret;
++}
++
++static const struct hwmon_channel_info *const wsa884x_hwmon_info[] = {
++	HWMON_CHANNEL_INFO(temp, HWMON_T_INPUT),
++	NULL
++};
++
++static const struct hwmon_ops wsa884x_hwmon_ops = {
++	.is_visible	= wsa884x_hwmon_is_visible,
++	.read		= wsa884x_hwmon_read,
++};
++
++static const struct hwmon_chip_info wsa884x_hwmon_chip_info = {
++	.ops	= &wsa884x_hwmon_ops,
++	.info	= wsa884x_hwmon_info,
++};
++
+ static void wsa884x_reset_powerdown(void *data)
+ {
+ 	struct wsa884x_priv *wsa884x = data;
+@@ -1866,6 +2053,8 @@ static int wsa884x_probe(struct sdw_slave *pdev,
+ 	if (!wsa884x)
+ 		return -ENOMEM;
+ 
++	mutex_init(&wsa884x->sp_lock);
++
+ 	for (i = 0; i < WSA884X_SUPPLIES_NUM; i++)
+ 		wsa884x->supplies[i].supply = wsa884x_supply_name[i];
+ 
+@@ -1923,6 +2112,18 @@ static int wsa884x_probe(struct sdw_slave *pdev,
+ 	regcache_cache_only(wsa884x->regmap, true);
+ 	wsa884x->hw_init = true;
+ 
++	if (IS_REACHABLE(CONFIG_HWMON)) {
++		struct device *hwmon;
++
++		hwmon = devm_hwmon_device_register_with_info(dev, "wsa884x",
++							     wsa884x,
++							     &wsa884x_hwmon_chip_info,
++							     NULL);
++		if (IS_ERR(hwmon))
++			return dev_err_probe(dev, PTR_ERR(hwmon),
++					     "Failed to register hwmon sensor\n");
++	}
++
+ 	pm_runtime_set_autosuspend_delay(dev, 3000);
+ 	pm_runtime_use_autosuspend(dev);
+ 	pm_runtime_mark_last_busy(dev);
+-- 
+2.43.0
 
 
