@@ -1,259 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-28219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5BCE994CBD6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 10:02:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0536394CC11
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 10:22:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 165322819B0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 08:02:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 28A691C2148E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 08:22:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F16D4C8D1;
-	Fri,  9 Aug 2024 08:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DF2318DF6F;
+	Fri,  9 Aug 2024 08:22:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="aEo6xKLy"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="rhOTNa5H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF2D18C927
-	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Aug 2024 08:02:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710F918DF60
+	for <linux-arm-msm@vger.kernel.org>; Fri,  9 Aug 2024 08:22:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723190573; cv=none; b=KK0b1typKPoNYkApsrXyF+niGqTHj1fZ11K9mwrXtMNlkyWK6Kbm/EqHmqM+JlU88IPlWibPN37Ja5HTSONTKLDf+jpjmq2t7Xqzl4IvmfGzZIZuq5h5eNf9JIUd32VZfQd18zU+UAchby/5MGvHMJfVooe4GPttMNmUtmfeuhg=
+	t=1723191771; cv=none; b=WxUagfpQ7IHi3AvH5BfWvv32sX5BBeBwIfcDkGslkd1FaZsO25nurs9PlLY4a+0eXKtlx1kspR2SyigHYKn2ZhFtp12RfYOuua2GUeLGrRbBWabDBUTUE1A6OClG0lIIPL/8UeN55siVdeMFD9/8eIF+ACB8u+PYHMFUcweHYDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723190573; c=relaxed/simple;
-	bh=MiupinPYtVFVoULAp4AM0FSVF1A0l2X2WcE1JaT1WzI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UZxftesQFs3DO09OaGO4dRBgMdOLXokIhYNmZJAdLQ/ag6V8LZK2piptewtOH5VxvT5MSX9G4QxpFjwR5tDA0k2nT20nD3OigGMHGt+mP6p7f4/61cegA5U+vDtIhiNNdPFSLI5LvtJM4tPGPaT//H2Pj8xDedoz7IiHxllBADw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=aEo6xKLy; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2ef2c56d9dcso19169751fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Aug 2024 01:02:51 -0700 (PDT)
+	s=arc-20240116; t=1723191771; c=relaxed/simple;
+	bh=Ms18h9NjuLZqJPYnLon/Q1xIk7Z7z9uiAC/S/PYy7ZU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=An6xMXzcn14l9DQRy/H6Iad3TWqhFNnse0UHPizH8YrnhiINKrlX897HrRQ62+veJFBPX8ajsaOD4DTR4OrXTW2/qcVGnFq3AB70ccG5g6V+ontwsqEDGhYWngNAZwWZoexJgwScpkoKLWEuWG39SIAIEGtXur+xI+G3mXRZ7yI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=rhOTNa5H; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a7aa212c1c9so249852466b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Aug 2024 01:22:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1723190570; x=1723795370; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=fairphone.com; s=fair; t=1723191767; x=1723796567; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7UOjCAID+UZ2tEQeZhluoBp+qMsVXiycrhYlTzLnVcU=;
-        b=aEo6xKLyl5i7XTCiFHrq0JXA+l7Q3TjVypgjtCbtUc3DtsVayirX/isG8HRY4uYXnv
-         9s5nrJ5n4pNtCqB5RM0ojjXRfueFmwkjoDgRcU6DDX0+IX2CaZm1wGiG6tCuuDCPYG9s
-         ej+920PdWYGV00YflhH9IJcds7JMtxf2oJ2Pc=
+        bh=hvSjJhQsiaOkLBeBDuAHjN93be2CrieZJTO6dIpg/w4=;
+        b=rhOTNa5HYUZirDigL6zKL3xOqTXTV/NtGbnOQm6vUFlCDY10DkWjFUXISpvxkuH6+t
+         bSJ4apzgZKTmup1gy6CRayk2Lyyn2SeTA3cwSMGpKYXO/co5l4Cg+L1gmlQT5j5bLBkr
+         FkoJ9ZRxW9I7myUF3/GOn/XX9YHkkfGoX3cB2T8OTUNmPdtW5oWtfj/wCROD5xKil44K
+         pVRUBNoCdwIo5uZybBjnwJSU2WzWvYHlDOLUpgveiLHn1rXQGnx01wP5rhJZnQx+vnGp
+         oBURuNz9MxhfEZOONNXWrw0RaHl8o6WYLWfxMvRY/iTJxTQwnAKqlPyvhUNTJfHw+6Hl
+         t/ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723190570; x=1723795370;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7UOjCAID+UZ2tEQeZhluoBp+qMsVXiycrhYlTzLnVcU=;
-        b=DhsWCQN27Gfbm94JPR8v4iJaNm7GgjZq3V8WwXFp6jrShLrhdA4pvx1eKDre+zpUw4
-         zBmQJB9kgporH/Io0mSOoWg1sRdStBxhWt28vl2+Y9rqu6+bjuZvMuCmWrjVS8PFeMGn
-         YE6/XJQPb0hRBIIdqCpTK2m9Om482rKuaDUzDy0I3TbKzTbojdS94fizInDOgeiurncK
-         uIE7UeDALo3ljFXOQUKJuVNjgfwE/VBNeSNi47kG9lCz+BmkKxBEQ0ao8QujTjlhu41F
-         MmPqqv2tA9ZrvgnOQtxOfBQWhVGUqbD32kMkD1R6HykQK795n8RtU8Q7wkalGQXjEgLK
-         ZRlg==
-X-Forwarded-Encrypted: i=1; AJvYcCW2H3dWRUcL6zEwOc9xZqNkzUMFiV0kAjmFDknRtwWjAjQ2r27Iu/NXmpjxvRAGww4BX1IWt79U4cjT2+lr9mRvAyRySQacecy5M7/yZQ==
-X-Gm-Message-State: AOJu0YzKjexiQB/y6gv9ffRUk1uq/icwqw03EBibAl1tRUkrtpfbVXkH
-	X6/TaGmS0ZddmxlUxE7YgkG2a8LuFCfKpGwwezn1HVDzvSc9el+t+me3vCeftDZ3VJYhr8t/dgc
-	=
-X-Google-Smtp-Source: AGHT+IGUBXSamnQNyr8kXq4/R5FnvW6rXj3mKcHt7j/3KCMWuAjLUvqrPg0nTGJCcDV1uDCzODCp+Q==
-X-Received: by 2002:a2e:8395:0:b0:2ef:32bb:5375 with SMTP id 38308e7fff4ca-2f1a6c5a3d8mr5944641fa.12.1723190569752;
-        Fri, 09 Aug 2024 01:02:49 -0700 (PDT)
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com. [209.85.167.41])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f192d9aa5asm9690861fa.61.2024.08.09.01.02.48
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20230601; t=1723191767; x=1723796567;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=hvSjJhQsiaOkLBeBDuAHjN93be2CrieZJTO6dIpg/w4=;
+        b=ryJyTlmbgvr63RiRqyFjkY0nf1E5DDd3bV/eHw8RbFQtjJkswopZqn7nnfVQNtqNIv
+         8NCkKm8BXw6pX8WK0y7f7YzZiIPFY/Mbx2F2OryF/rAHf8AmouDIdG6begM6lD8qFKU/
+         J/TY4kMhFj9ORyf5EJP/EvBAnFT9qtJ5P2DoDpO4lyksZVQ4TUzEUd6SEVNyoPWsb9jz
+         /kmzHYuDOlTin4rVKO1uaSf7r/YaWmLc9XP2cbEgBqR7ofz3nW1e5aGChjKKdGkyRAaR
+         RCJsDIMiQ2IX2Li+88Sa32S0bcXoQD0/cdl7jnhLaJrQdL8MNXXXutfkBa5O2LLeTXQn
+         PiIQ==
+X-Forwarded-Encrypted: i=1; AJvYcCURzcUP7qoL4k4L4q1lSXdVA+/zRmZVGavCyK63MjLaPjahkR/5nePK1UuEYBdoHts6+qcYNtdCQ/cxVHZtQmhVaAsp9zitHEYH7y64Sg==
+X-Gm-Message-State: AOJu0Ywu/Rtfhwa7vV2e2w4axdtI0S4XyLhi04Z0jio9v0clCVLDY8kg
+	z28CCzWN8FD6H891ugRCem+0ct5FJ1HQvEo1XYHn82G88t/6ZTU3CDb3XESzl9w=
+X-Google-Smtp-Source: AGHT+IFnmUoOc78x9xnZg4BTUCEu1xBvAZLSD1YT+x9iEix9bA+IJPvu6V3OKL334EWP+pDr+DaUhw==
+X-Received: by 2002:a17:907:c7d2:b0:a7a:8876:4427 with SMTP id a640c23a62f3a-a80aa59b6b6mr65561366b.25.1723191766644;
+        Fri, 09 Aug 2024 01:22:46 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7de2e1b093sm708152166b.148.2024.08.09.01.22.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Aug 2024 01:02:48 -0700 (PDT)
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52f0277daa5so2439364e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Aug 2024 01:02:48 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUDVJOmuUZeD46vi+PxFWS/3fG2i6H0Eff5rGa5FlyqfO+UJp5/VnGvMEaWITr49qRq5Ekq+JOJMyavyDXAziaqA9MhdHDCdWVCOt0E+Q==
-X-Received: by 2002:a05:6512:3e1c:b0:530:adfe:8607 with SMTP id
- 2adb3069b0e04-530ee9f3594mr770871e87.51.1723190567467; Fri, 09 Aug 2024
- 01:02:47 -0700 (PDT)
+        Fri, 09 Aug 2024 01:22:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20240429-fix-cocci-v3-0-3c4865f5a4b0@chromium.org>
- <20240429-fix-cocci-v3-26-3c4865f5a4b0@chromium.org> <20240503112758.763d8d31@sal.lan>
- <c4287024-8012-458d-9829-15ffbceb25cf@moroto.mountain> <CANiDSCsU+jgYkUmHZOC8xPsL2DbgU7_sWrby1bQAXQNnp+g6Bg@mail.gmail.com>
- <fe95e3c3a89de4566a4eb53ca8b26c25@manjaro.org> <CANiDSCswvsTh+0oJmHkYC=-qE8g09bHr44amBsUXkK6j1eCMWA@mail.gmail.com>
- <CAOcJUbwJkbEG6+u==de7CzXDUPGj6J3-p-7E3o+iAzjgSgybSg@mail.gmail.com>
-In-Reply-To: <CAOcJUbwJkbEG6+u==de7CzXDUPGj6J3-p-7E3o+iAzjgSgybSg@mail.gmail.com>
-From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Fri, 9 Aug 2024 10:02:35 +0200
-X-Gmail-Original-Message-ID: <CANiDSCt=HOKwAT2zBg1tTbGbD-U-2K8+hi5WbdCM9ULWJvZ_Lw@mail.gmail.com>
-Message-ID: <CANiDSCt=HOKwAT2zBg1tTbGbD-U-2K8+hi5WbdCM9ULWJvZ_Lw@mail.gmail.com>
-Subject: Re: [PATCH v3 26/26] media: dvb-frontends: tda10048: Make the range
- of z explicit.
-To: Michael Ira Krufky <mkrufky@linuxtv.org>
-Cc: Dragan Simic <dsimic@manjaro.org>, Dan Carpenter <dan.carpenter@linaro.org>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Martin Tuma <martin.tuma@digiteqautomotive.com>, 
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
-	Hugues Fruchet <hugues.fruchet@foss.st.com>, Alain Volmat <alain.volmat@foss.st.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Chen-Yu Tsai <wens@csie.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
-	Sakari Ailus <sakari.ailus@linux.intel.com>, Thierry Reding <thierry.reding@gmail.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, Sowjanya Komatineni <skomatineni@nvidia.com>, 
-	Luca Ceresoli <luca.ceresoli@bootlin.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Hans Verkuil <hverkuil@xs4all.nl>, 
-	Sergey Kozlov <serjk@netup.ru>, Abylay Ospan <aospan@netup.ru>, 
-	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>, Dmitry Osipenko <digetx@gmail.com>, 
-	Benjamin Mugnier <benjamin.mugnier@foss.st.com>, 
-	Sylvain Petinot <sylvain.petinot@foss.st.com>, 
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-media@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, linux-staging@lists.linux.dev, 
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 09 Aug 2024 10:22:45 +0200
+Message-Id: <D3B8I0RHMCRX.27GXO53ITZKEH@fairphone.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>, "Krzysztof
+ Kozlowski" <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2] media: dt-bindings: qcom,sc7280-venus: Allow one
+ IOMMU entry
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Luca Weiss" <luca.weiss@fairphone.com>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Stanimir
+ Varbanov" <stanimir.k.varbanov@gmail.com>, "Vikash Garodia"
+ <quic_vgarodia@quicinc.com>, "Bryan O'Donoghue"
+ <bryan.odonoghue@linaro.org>, "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, "Rob Herring" <robh@kernel.org>,
+ "Krzysztof Kozlowski" <krzk+dt@kernel.org>
+X-Mailer: aerc 0.18.2-0-ge037c095a049
+References: <20240412-sc7280-venus-bindings-v2-1-48ca8c2ec532@fairphone.com>
+ <D1Q6CMZM78VI.ABYGRRV5E61B@fairphone.com>
+ <D2245MXG8CS1.11EGKFJQLYPTI@fairphone.com>
+In-Reply-To: <D2245MXG8CS1.11EGKFJQLYPTI@fairphone.com>
 
-Hi
-
-It does not seem that we will find the datasheet.
-
-Any objection to land the patch as it? It is as incorrect as the
-original code ;)
-
-Regards!
-
-On Mon, 13 May 2024 at 16:26, Michael Ira Krufky <mkrufky@linuxtv.org> wrot=
-e:
+On Mon Jun 17, 2024 at 9:28 AM CEST, Luca Weiss wrote:
+> On Mon Jun 3, 2024 at 8:39 AM CEST, Luca Weiss wrote:
+> > On Fri Apr 12, 2024 at 4:19 PM CEST, Luca Weiss wrote:
+> > > Some SC7280-based boards crash when providing the "secure_non_pixel"
+> > > context bank, so allow only one iommu in the bindings also.
+> >
+> > Hi all,
+> >
+> > This patch is still pending and not having it causes dt validation
+> > warnings for some qcom-sc7280 boards.
 >
-> On Mon, May 13, 2024 at 9:38=E2=80=AFAM Ricardo Ribalda <ribalda@chromium=
-.org> wrote:
-> >
-> > On Fri, 3 May 2024 at 16:08, Dragan Simic <dsimic@manjaro.org> wrote:
-> > >
-> > > Hello Ricardo,
-> > >
-> > > On 2024-05-03 13:56, Ricardo Ribalda wrote:
-> > > > I am trying to get the DS, but
-> > > > https://www.nxp.com/acrobat_download/literature/9397/75015931.pdf i=
-s a
-> > > > dead links now.
-> > > >
-> > > > Anyone have access to the datasheet?
-> > >
-> > > It's kind of available on the link below, but for some strange reason
-> > > the download fails after downloading the first 128 KB or so.
-> > >
-> > > https://web.archive.org/web/20080907185532/https://www.nxp.com/acroba=
-t_download/literature/9397/75015931.pdf\
-> >
-> > Mike, by any chance do you have a copy of the DS?
-> >
-> >
-> > >
-> > >
-> > > > On Fri, 3 May 2024 at 13:55, Dan Carpenter <dan.carpenter@linaro.or=
-g>
-> > > > wrote:
-> > > >>
-> > > >> On Fri, May 03, 2024 at 11:27:58AM +0100, Mauro Carvalho Chehab wr=
-ote:
-> > > >> > Em Mon, 29 Apr 2024 15:05:05 +0000
-> > > >> > Ricardo Ribalda <ribalda@chromium.org> escreveu:
-> > > >> >
-> > > >> > > We do not expect the sample_freq to be over 613MHz.
-> > > >> > >
-> > > >> > > Found by cocci:
-> > > >> > > drivers/media/dvb-frontends/tda10048.c:345:1-7: WARNING: do_di=
-v() does a 64-by-32 division, please consider using div64_u64 instead.
-> > > >> > >
-> > > >> > > Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-> > > >> > > ---
-> > > >> > >  drivers/media/dvb-frontends/tda10048.c | 4 +++-
-> > > >> > >  1 file changed, 3 insertions(+), 1 deletion(-)
-> > > >> > >
-> > > >> > > diff --git a/drivers/media/dvb-frontends/tda10048.c b/drivers/=
-media/dvb-frontends/tda10048.c
-> > > >> > > index 3e725cdcc66b..1886f733dbbf 100644
-> > > >> > > --- a/drivers/media/dvb-frontends/tda10048.c
-> > > >> > > +++ b/drivers/media/dvb-frontends/tda10048.c
-> > > >> > > @@ -328,7 +328,8 @@ static int tda10048_set_wref(struct dvb_fr=
-ontend *fe, u32 sample_freq_hz,
-> > > >> > >                          u32 bw)
-> > > >> > >  {
-> > > >> > >     struct tda10048_state *state =3D fe->demodulator_priv;
-> > > >> > > -   u64 t, z;
-> > > >> > > +   u32 z;
-> > > >> > > +   u64 t;
-> > > >> > >
-> > > >> > >     dprintk(1, "%s()\n", __func__);
-> > > >> > >
-> > > >> > > @@ -341,6 +342,7 @@ static int tda10048_set_wref(struct dvb_fr=
-ontend *fe, u32 sample_freq_hz,
-> > > >> > >     /* t *=3D 2147483648 on 32bit platforms */
-> > > >> > >     t *=3D (2048 * 1024);
-> > > >> > >     t *=3D 1024;
-> > > >> > > +   /* Sample frequency is under 613MHz */
-> > > >> >
-> > > >> > Are you sure about that? Some DVB devices have very high frequen=
-cy
-> > > >> > clocks, specially if they're also used for satellite, so I can't
-> > > >> > be sure by just looking at the driver's code.
-> > > >> >
-> > > >> > Also, we had already a bunch of regressions with "fixes" like th=
-is
-> > > >> > that actually broke frontend drivers.
-> > > >>
-> > > >> This patch preserves the existing behavior. The sample_freq_hz
-> > > >> variable
-> > > >> is a u32 so, in the original code, z couldn't have been more than
-> > > >> U32_MAX even though it was declared as a u64.
-> >
-> >
-> > I agree with Dan, we keep the existing behaviour. So it wont hurt to
-> > merge the code...
-> >
-> > All  that said, if someone has access to the DS, I do not mind reviewin=
-g it.
-> >
-> >
-> > > >>
-> > > >> It's possible that the original code was wrong.  We have seen that=
- in
-> > > >> other places in this patchset.  Adding a note about the datasheet =
-is
-> > > >> also a good idea.
-> > > >>
-> > > >> regards,
-> > > >> dan carpenter
-> > > >>
-> >
-> >
-> >
-> > --
-> > Ricardo Ribalda
-> >
+> Hi Rob,
 >
-> Nice to hear from you!  :-)
->
-> I believe that I may have a copy of it on an old "spinny" hard drive
-> somewhere in one of the ancient desktop computers I have lining my
-> basement walls, lol.  It will take me some time to locate it.  I hope
-> this isn't urgent o:-)
->
-> ...It so happens that the dev box I used when I worked on that driver
-> is up right now, but the datasheet isn't in my home directory.  There
-> are two other drives in the chassis but not connected / powered - I'll
-> give these a look and let you know if I find anything.
->
-> Best,
-> Michael Krufky
+> Could you please pick up this patch? Mauro seems to ignore this patch
+> either on purpose or by accident and I'd like for this dtbs_check
+> failure to finally be fixed.
 
+Hi all,
 
+Another month, another ping.
 
---=20
-Ricardo Ribalda
+Can *anybody* please pick up this patch?
+
+Regards
+Luca
+
+>
+> Regards
+> Luca
+>
+> >
+> > Regards
+> > Luca
+> >
+> > >
+> > > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > > ---
+> > > Reference:
+> > > https://lore.kernel.org/linux-arm-msm/20231201-sc7280-venus-pas-v3-2-=
+bc132dc5fc30@fairphone.com/
+> > > ---
+> > > Changes in v2:
+> > > - Pick up tags
+> > > - Otherwise just a resend, v1 was sent in January
+> > > - Link to v1: https://lore.kernel.org/r/20240129-sc7280-venus-binding=
+s-v1-1-20a9ba194c60@fairphone.com
+> > > ---
+> > >  Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml | 1 +
+> > >  1 file changed, 1 insertion(+)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-venu=
+s.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+> > > index 8f9b6433aeb8..10c334e6b3dc 100644
+> > > --- a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+> > > +++ b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+> > > @@ -43,6 +43,7 @@ properties:
+> > >        - const: vcodec_bus
+> > > =20
+> > >    iommus:
+> > > +    minItems: 1
+> > >      maxItems: 2
+> > > =20
+> > >    interconnects:
+> > >
+> > > ---
+> > > base-commit: 9ed46da14b9b9b2ad4edb3b0c545b6dbe5c00d39
+> > > change-id: 20240129-sc7280-venus-bindings-6e62a99620de
+> > >
+> > > Best regards,
+
 
