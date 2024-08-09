@@ -1,122 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-28256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36B3994D65D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 20:38:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67A7D94D71E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 21:18:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C18A3B21A90
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 18:38:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 164E5283717
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 19:18:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B88A15B98F;
-	Fri,  9 Aug 2024 18:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB3D916726E;
+	Fri,  9 Aug 2024 19:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cDUWftdS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dAvkGH1J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B917115AD9B;
-	Fri,  9 Aug 2024 18:37:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280681649CC;
+	Fri,  9 Aug 2024 19:17:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723228678; cv=none; b=FvoKDk3++srGlvP04Z4kGNnz8jBqCJJNCR4tbJLxeqx+e5+zCKSwmxdhXv7EhouSnfUGi2LwA1O027EWCJmPEQ425mxrTiKWQfENX7snFBSwMgXcJSCNKJ0nZ1/5OI/bgsLc688RmuGdtkdpIfp7educHInnEQPaAwGqtTLLKOc=
+	t=1723231037; cv=none; b=L4rTxtvjitNYnlYI8zS2Bix64str2vA5jXOz8WsqUdbcRnLj7vnik204V58Tjot1lR6njW8XEQ4eF3cN4RHnUo6CFoAWSWsYmfM2P9nzqlgcEE6Knja+YmwZq1ojpj8CIqCvGCoj9qz/jt+h6Y9SsBI4gpOfR/9J3+Et17kz2fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723228678; c=relaxed/simple;
-	bh=Lvd1+b+rzlVHbVA2wsGaQIik0N4Z41fVLeWvp32JF/k=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Ir5DkncwGusEd8ba3BsOx9iW/2rWm91YQl2KODXQybdYG94GbbjKPdkODJam4xFMXWYHW2ilmIVQHE1gfq+gBWoRx9qdQLJ6dzTdTc+kAq2ZZQtZcQobyMJiNOORQYsDQ/u9KNPP17ZczKQfd8OvtC8GdCcDVT/z0ytC/Zo6prE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cDUWftdS; arc=none smtp.client-ip=209.85.160.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-2642cfb2f6aso1615944fac.2;
-        Fri, 09 Aug 2024 11:37:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723228676; x=1723833476; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=23V8N5AdZVNN/gtxnVahpyZ2F/zrIdL7fbh1DnGikW8=;
-        b=cDUWftdSu6cMa1E8Ful5TC4KhDk9QYx2/mS9aE+XnyEHbxzSxp+uiwPgWBPI9CX4QJ
-         dnmjpgO1hZY2bYbZDGmFG8wMx2hyFLY4xT7oERF8BcWgbj+u/3IVfKSgSoRyDDxMinjc
-         Ov/y0RjP9RCsRKdtORHBk72H8hCOiRBfftdt/v4DmC9uPuizXiJv7FwRE3fcPLwmhdxY
-         WdHSxRbXn4PSQdgIouCVGPHXiAjTfJiibPARP08DOVxjBEYzEjKmkKl+r3XV8TuA1RWI
-         0lKHyECosj8smd2puVn9nHba6xVgNs+6S9KQdi3RSVGcuoIMe/n1KvHSZnzsSJPbBIBh
-         paOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723228676; x=1723833476;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=23V8N5AdZVNN/gtxnVahpyZ2F/zrIdL7fbh1DnGikW8=;
-        b=TmgT6PhbWwHernEvXcmBG4ZIHYxwV3f3MtBDYjslOQ3HaTBVPFpuVdGc8U05svfn8X
-         0hJVIXpLuRuXYffcccDPR39LGPjuy9NRR7rSnyVh7j7apTNQnvxyk+LunGY9TcErfKDy
-         GTLKRnIGK9gI4uBNYhPuKDxvFSYFSitRsSVPWewl0NQQmqPdaL9U8kYFcFhFNIidUzh7
-         LXMc00d8CBl2nv2kBLpoTh8XjD9Pt7QKnKAEl7azbZdO3IZ99HkQlKoOiD8eTkg5w+6v
-         L5A+VodKxhZ/dttfukU5p+FNxH288P51jr+87omVqyVGvwyg6mP4HBws40wCEjr836sG
-         7vnQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWlgs3/+dHpxQ1BjbE1F5fKlQ/30V1CP2iEu0FVvIMEavAzB0rnKj1vXnEW18GeA79lWWrlrz6bARG6kXDm/0tefZPIoznphya/QRLJmadQWzvKfI/F3jPNK/24UMSBqBk30rgRQ37XhGY6AA==
-X-Gm-Message-State: AOJu0YzdH1dFz0NK558CPre8pyuCT9Jl9MJCDGPJKxEyVxrJsr06hBmE
-	a0bDu5dxtXCPd83NwT6ODebV7a2SdBChyN5HxvTfmUzhvAQXC5XM
-X-Google-Smtp-Source: AGHT+IENkZRkxsFSj8C+quRCgcAYIlP4KqTdlj4pXZh5I6G6gUctkIHTSWJe6NHYXlgtEeTz+miBOg==
-X-Received: by 2002:a05:6870:8318:b0:254:94a4:35d2 with SMTP id 586e51a60fabf-26c63021a6dmr2759931fac.45.1723228675709;
-        Fri, 09 Aug 2024 11:37:55 -0700 (PDT)
-Received: from localhost ([2a00:79e1:2e00:1301:12e9:d196:a1e9:ab67])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-710e5a4a962sm68841b3a.106.2024.08.09.11.37.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Aug 2024 11:37:54 -0700 (PDT)
-From: Rob Clark <robdclark@gmail.com>
-To: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	Rob Clark <robdclark@chromium.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm: Remove unused pm_state
-Date: Fri,  9 Aug 2024 11:37:52 -0700
-Message-ID: <20240809183752.160634-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.46.0
+	s=arc-20240116; t=1723231037; c=relaxed/simple;
+	bh=F8p5nAhavc5JTeBN/FHWFmJeIJxCLJ/Zg43+zDFj8h4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=lVKOhuSiPc8f/oTaRmM7yyV+v4yDaShzbZc9uMdHoaUK/F7UrFUOW2TjOfZNReKy4Jm/NzCf5QAfmqwJ8Bs3hmr5aRCZqofGx6TWrhEL4fKA4zX6c+VXJQb59x9/hDqDzXtDKciiD7BG0uE0jJ/X/83rrIkbFbHMi0FbKD3PE50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dAvkGH1J; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 479IoOvg005902;
+	Fri, 9 Aug 2024 19:17:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	fHdb6/kU/+bjU4VrSd5g+vginE9bQaQD9x2Gf8GMbN8=; b=dAvkGH1JdcRo8KMo
+	BCoaOEPPTuSp78tECKkfTZ8AY07ti5m0kEcCgcA2gdoEkiuK+n1uThU78CHmeNk8
+	wyPcRqPMWEP8NC+Do0ls1AgaEhvy+/PTM5qnmuooL72BdrAlbD1XCNs2L7+pZ8uR
+	iJLL6Qyy/Hw46MX4bF5zNlNFOXEn7a5m8xP8W2cGgVi8zGgEV8dlLhbN8snawbYI
+	TA4g2SAYFZBF/JZVrhK2tKz2CDGHNIkgEhyjotiCOi9KdxCXV9kNcpT0kVsfr7Sz
+	LDm7iJ2koXMjX319qy/OVxue3pCFJcSMocZirbP9lNGB/TygEEQ/bAEUACXOSULl
+	0ckV8g==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40weqf9qbg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 09 Aug 2024 19:17:07 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id 479JH61w024751
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 9 Aug 2024 19:17:06 GMT
+Received: from [10.110.119.234] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 9 Aug 2024
+ 12:17:05 -0700
+Message-ID: <efa34434-5a8b-4841-8f03-9047c7e49ea1@quicinc.com>
+Date: Fri, 9 Aug 2024 12:16:58 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/msm: Remove unused pm_state
+To: Rob Clark <robdclark@gmail.com>, <dri-devel@lists.freedesktop.org>
+CC: <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        Rob
+ Clark <robdclark@chromium.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20240809183752.160634-1-robdclark@gmail.com>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240809183752.160634-1-robdclark@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: dIy0bnoe6cwaxYoQbgzSNTKI-Xfuh2DZ
+X-Proofpoint-GUID: dIy0bnoe6cwaxYoQbgzSNTKI-Xfuh2DZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-09_16,2024-08-07_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ spamscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0
+ mlxlogscore=893 suspectscore=0 bulkscore=0 priorityscore=1501
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408090139
 
-From: Rob Clark <robdclark@chromium.org>
 
-This was added in commit ec446d09366c ("drm/msm: call
-drm_atomic_helper_suspend() and drm_atomic_helper_resume()"), but unused
-since commit ca8199f13498 ("drm/msm/dpu: ensure device suspend happens
-during PM sleep") which switched to drm_mode_config_helper_suspend()/
-drm_mode_config_helper_resume()..
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_drv.h | 2 --
- 1 file changed, 2 deletions(-)
+On 8/9/2024 11:37 AM, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> This was added in commit ec446d09366c ("drm/msm: call
+> drm_atomic_helper_suspend() and drm_atomic_helper_resume()"), but unused
+> since commit ca8199f13498 ("drm/msm/dpu: ensure device suspend happens
+> during PM sleep") which switched to drm_mode_config_helper_suspend()/
+> drm_mode_config_helper_resume()..
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>   drivers/gpu/drm/msm/msm_drv.h | 2 --
+>   1 file changed, 2 deletions(-)
+> 
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index be016d7b4ef1..c2eb9f14323e 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -215,8 +215,6 @@ struct msm_drm_private {
- 	struct notifier_block vmap_notifier;
- 	struct shrinker *shrinker;
- 
--	struct drm_atomic_state *pm_state;
--
- 	/**
- 	 * hangcheck_period: For hang detection, in ms
- 	 *
--- 
-2.46.0
-
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
