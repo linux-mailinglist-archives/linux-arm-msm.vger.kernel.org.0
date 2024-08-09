@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6619094CA35
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 08:11:48 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E6E894CA3B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 08:12:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 976181C20BB0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 06:11:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 043B81F27850
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 06:12:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B89E16CD1B;
-	Fri,  9 Aug 2024 06:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A651016CD2D;
+	Fri,  9 Aug 2024 06:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FmJiM9Nx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GOoETjnn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0DD717C98;
-	Fri,  9 Aug 2024 06:11:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6ED16CD2A;
+	Fri,  9 Aug 2024 06:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723183865; cv=none; b=KtigcuEz8E+gPWzp9tcpxUhNNHT18HpQeZEBKu1nYpzZkSx8B2z+Sw7qX/o9z2Dn/9Yxy1/7kekH6dBDwB5xP8PCXh+r/aiPxRAtIYvTFF/9cT5W8/zWUUWDY6wNAAo9x8JFQHD8K2Dv/aN8i0HDoLR1oPwZHbgMXYms190ZkJ8=
+	t=1723183894; cv=none; b=bZbpVt6ED2UeHuneDHY82y/Trq5ZvhONY2jNwcTgZ4of38CmIJPY5CDih/zBC3DHmZnNf30p8SHkwIMMIVzC/Yq9fCGYoRg9cdU7raGe5+GakTYTeQc5gE2afR+GdEXEWPG7Y/kW4GOa6JpGWrxWG9ZWlC77/meujkYf1Vh04oU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723183865; c=relaxed/simple;
-	bh=khFgQn+Lk4DWU3gaXvjqX4VWxA08RDqdBq4fmN6gLHI=;
+	s=arc-20240116; t=1723183894; c=relaxed/simple;
+	bh=mTFhgnQEoEqQ12o7EbGd1hXCrWFGbghvCNHRBVPOqdI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=n2s384QRx6ZKmlNBlf0egObT7zNCu2tQZk4jHiOq37xaRwI5ldLrYyH5KpW+g/Mfkb/svRKrMed7L7tqU7Dry0vCDbqYoM/oBwEivZKS+etyuofm24hrEr6i/bJDHHmS0szmzmy3R6FibYd6v9pboZTMkC/etjMGqNGfncunMmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FmJiM9Nx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8563C32782;
-	Fri,  9 Aug 2024 06:10:53 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=tCVYN5o2aH4n6PvazxbAjBFkaS6OL0/7f+/GPFG6d1AqdnFf04qhQ0qypCkZv9RWMJkr33OQMD+d+X6Ki8CeTh/xNnDqWEHKHbfh3ZKJC1BXjO8SQ/UO/DMNvH3G8VX+AU+4VPum1vX5ZG5HI9Pbt+yM40W9JKxvy/ShXxeM9YA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GOoETjnn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C604C32782;
+	Fri,  9 Aug 2024 06:11:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723183864;
-	bh=khFgQn+Lk4DWU3gaXvjqX4VWxA08RDqdBq4fmN6gLHI=;
+	s=k20201202; t=1723183894;
+	bh=mTFhgnQEoEqQ12o7EbGd1hXCrWFGbghvCNHRBVPOqdI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=FmJiM9Nx7XSHzvpYa93Lc2Z2Ysv6sV8cSHMGTG+wNavyLMUT5Dn9gOhwsd/DPG1RR
-	 rLVVV+2vcosCYsoo3Vec7isA/T5udWEatW2cRnKSSlicIIEIvfy/wmn+N70PnB33iX
-	 oslqD4IOmbDlF3f0jnuX8vvx5xRIysH0PjT+oX+wK5Jpqt+Ml8832FULyMzmvxrQT5
-	 LLhPzdi09vvydZkmDYgYDERDmErg2xgxW6uHRnpp3T5mlxKtov+bWb7UvYm1SHYTk1
-	 mQXeNNTV069W5r7owtVUFqtxNvWQeqXRXiOmSBVKn0GDZgJRacDcl1ifermrt5Jmqg
-	 Qr/Gg01w19C6A==
-Message-ID: <b88ddaed-4f7c-4a1a-8f52-43a2acc4ca82@kernel.org>
-Date: Fri, 9 Aug 2024 08:10:51 +0200
+	b=GOoETjnnfn691am1FDswK71GAnoDmvHLLdwSjwproirQK29/jRQxCp+JIucyGkv69
+	 w80AwaXLy9Wh6yPQxdNmH2HfOCu9rosx8qcN7I0Ni++E0EfhB+aaal+H3JoXnlQuT/
+	 iYmsDD5PR6uVspvXWVYFHLuzIvxId9+LUrfDcZLZsI/IMLFufW1+Xy+G9G2pE8Ba2D
+	 AN0hYCSovAxH6ZlGFuzfB/VxJ0Ixtsbilthewfjf1aG1AeoX7FZaRR1o8vxTcVf7st
+	 uPn/hqNY96Ac5OeskAH0Lq5LIFvqLLoGX3Ux2KnxZfIvQMhppewqlPtAM5BLtIvlb5
+	 3MpJ/+vcm1oNA==
+Message-ID: <24050176-b269-4b96-b5de-02716cc3eba5@kernel.org>
+Date: Fri, 9 Aug 2024 08:11:28 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,23 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/11] dt-bindings: soc: qcom: qcom,pmic-glink:
- Document SM7325 compatible
-To: Danila Tikhonov <danila@jiaxyga.com>, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
- konradybcio@kernel.org, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, rafael@kernel.org,
- viresh.kumar@linaro.org, kees@kernel.org, tony.luck@intel.com,
- gpiccoli@igalia.com, ulf.hansson@linaro.org, andre.przywara@arm.com,
- quic_rjendra@quicinc.com, davidwronek@gmail.com, neil.armstrong@linaro.org,
- heiko.stuebner@cherry.de, rafal@milecki.pl, macromorgan@hotmail.com,
- linus.walleij@linaro.org, lpieralisi@kernel.org,
- dmitry.baryshkov@linaro.org, fekz115@gmail.com
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-hardening@vger.kernel.org
-References: <20240808184048.63030-1-danila@jiaxyga.com>
- <20240808184048.63030-6-danila@jiaxyga.com>
+Subject: Re: [PATCH 1/4] dt-bindings: arm: qcom: Add Surface Laptop 7 devices
+To: Konrad Dybcio <konradybcio@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Konrad Dybcio <quic_kdybcio@quicinc.com>
+References: <20240809-topic-sl7-v1-0-2090433d8dfc@quicinc.com>
+ <20240809-topic-sl7-v1-1-2090433d8dfc@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,26 +104,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240808184048.63030-6-danila@jiaxyga.com>
+In-Reply-To: <20240809-topic-sl7-v1-1-2090433d8dfc@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 08/08/2024 20:40, Danila Tikhonov wrote:
-> The SM7325 is the closest SoC to the QCM6490 and is also identical
-> to the SC7280. The SM7325 also requires both UCSI_NO_PARTNER_PDOS &
-> UCSI_DELAY_DEVICE_PDOS quirks.
+On 09/08/2024 03:43, Konrad Dybcio wrote:
+> From: Konrad Dybcio <quic_kdybcio@quicinc.com>
 > 
-> Document the PMIC GLINK firmware interface on the SM7325 Platform
-> by using the QCM6490 bindings as fallback.
+> Document the X1E80100-based Microsoft laptops.
 > 
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> Signed-off-by: Konrad Dybcio <quic_kdybcio@quicinc.com>
 > ---
->  .../devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml        | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
