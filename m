@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28232-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3487894CD0C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 11:13:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AFDB094CD2A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 11:18:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E9CB2281356
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 09:13:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 65F001F219E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 09:18:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C571518FDC9;
-	Fri,  9 Aug 2024 09:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E62AA174EE7;
+	Fri,  9 Aug 2024 09:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ph+gMM/0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nmkfAsw4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9354818F2E8;
-	Fri,  9 Aug 2024 09:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13A616C87C;
+	Fri,  9 Aug 2024 09:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723194817; cv=none; b=HCqtuAAc9ZuycMYTS/v09iwqZMH2xzNrhybj1TZhLgWyo1pyLVM01pY7/OWCF0pTGPNOnt8Vx0TkMAV2kD58LTYhGyYjGHvJI38bFqQMAtIcf5oyrIAgguQqVbGvT7H8MLtYgINH8HocTJ/VKFcPdZJWpcsCZA6tllMc0ygbIEg=
+	t=1723195083; cv=none; b=pCV24WMdNpV88sP3vOIXXr30nb/0Lp7iyvwivyrL3bYx8oRVt1dxzWCR0pGMy29ioaQgwZGpRsGIPWLEpAquAIyhsgLrUPK3KYe2aMwcXbQv6LRqRMoTGelxNJ9kI5cvU4Ci1Xy+MO0kElLWOm3pp/n1atEKlEP1mWtPIqv4NtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723194817; c=relaxed/simple;
-	bh=mFpnnpwV2r8XXhHMMyFUdyOYgupXqsasHls95VA7GWg=;
+	s=arc-20240116; t=1723195083; c=relaxed/simple;
+	bh=TS4sBFXo9aLaO+jf6cLdVdNjXsHptKYmVhaQJcsmw1s=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TLxdLjF0cQunO7ZXkm0LwTVOH6eZQd7fLbienoyzZfKdSZEHdn9Ux6gKkiFtCXIZ5hE5zXGEXueH2JTt3bpqy8fD+1RdxonrMXkWRyUopM2MR4ra0UiwGML75Kmh33ypbNak/Itu7Sy540jlZb7HWPGg7GVkwXys/gScYvLnwUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ph+gMM/0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E15C32782;
-	Fri,  9 Aug 2024 09:13:31 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=nXwRUs/OpBVAkC+GK0Oq2tMVb8bZkjOYTvPalY/jPLwR2LMGisIZQUqzJzgshUUDZI/J5ALWnAmGX3rB+W//ZwRct7SLy+plylLSqEzxmP4bfPTeIb8sXL70/UaB75hyDN5T1COLqMUbPbOq4c/QRicbNg2AXYIZGCVOtOJYkhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nmkfAsw4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF99BC32782;
+	Fri,  9 Aug 2024 09:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723194817;
-	bh=mFpnnpwV2r8XXhHMMyFUdyOYgupXqsasHls95VA7GWg=;
+	s=k20201202; t=1723195083;
+	bh=TS4sBFXo9aLaO+jf6cLdVdNjXsHptKYmVhaQJcsmw1s=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ph+gMM/0W29Qhrhc3XWAUexcDuvS3wXYZQ6HA8TZ9FNWXiBMdHSYYR/WDXiOJWGwH
-	 66rUqWgis9MgVkWlypb/dPZQpfWPjXSDT23IlHTQwWhRdrrRL70Dw/RC7GYry1L0Li
-	 tKuv0MWTX6Yl3a8cXcksvCCPKmtPu7kOvaAsp5Jtm0soKzc6oAABeZoMay0DNrj1mR
-	 VEIerRNp7D7BSOAyy0T7IFFfGlWdBshl5wg8cm4YzAajdQLt/nwJXI8xzao6hvREaT
-	 AS9amvvl40rZPEDITmovgf7/qlAIrS6m7vqqw5/MiHdM3O/LG5CexCEz75Gg0NSPb0
-	 BboyOAVLARZgw==
-Message-ID: <7ab7905d-5f30-4a86-af31-d3649d3587bf@kernel.org>
-Date: Fri, 9 Aug 2024 11:13:29 +0200
+	b=nmkfAsw4kEnGq9L/W9/z0nATzZeuFu2fNv6wLVnDlm4RzNHM0bdOBoFIkGJCwGXnT
+	 vDuWPaflEswUHztuCpyAt6FrzlIgUrsylcyD9B3uYJnFdcFUXtmxzAJIqDnQ8ePL/J
+	 ADYoLKwzSptCXsux0iQrs8iE77tyJKBXHagVRI2BvGFeCJFatQbL8FwPz52e7SSjTV
+	 4Ywgurf0ujbPIRpOLt65IPCWJtz0LlXfDrNGWf/nih0fjMK1c5KDAXdQLPhx1c8hsj
+	 3Uwi5X6lVeHqzTlV+7ZLp8uJUscnWwX1LUujzm1409eBGyN9iUzT/KDOLT69vKtHuw
+	 qzis8Ji3rk3ng==
+Message-ID: <dff78d74-a71a-4b50-b55c-cbeb945d0b06@kernel.org>
+Date: Fri, 9 Aug 2024 11:17:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,24 +50,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] ASoC: dt-bindings: qcom,sm8250: Add generic QCM6490
- sound card
+Subject: Re: [PATCH v2] media: dt-bindings: qcom,sc7280-venus: Allow one IOMMU
+ entry
 To: Luca Weiss <luca.weiss@fairphone.com>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>
 Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240809-fp5-dp-sound-v1-0-d7ba2c24f6b9@fairphone.com>
- <20240809-fp5-dp-sound-v1-1-d7ba2c24f6b9@fairphone.com>
- <e8a24709-de96-4d09-ba00-1e084a656c68@kernel.org>
- <D3B9K69AAWNT.2KIHAZRFNB8NP@fairphone.com>
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20240412-sc7280-venus-bindings-v2-1-48ca8c2ec532@fairphone.com>
+ <D1Q6CMZM78VI.ABYGRRV5E61B@fairphone.com>
+ <D2245MXG8CS1.11EGKFJQLYPTI@fairphone.com>
+ <D3B8I0RHMCRX.27GXO53ITZKEH@fairphone.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,39 +114,39 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <D3B9K69AAWNT.2KIHAZRFNB8NP@fairphone.com>
+In-Reply-To: <D3B8I0RHMCRX.27GXO53ITZKEH@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 09/08/2024 11:12, Luca Weiss wrote:
-> On Fri Aug 9, 2024 at 11:09 AM CEST, Krzysztof Kozlowski wrote:
->> On 09/08/2024 10:33, Luca Weiss wrote:
->>> Document the bindings for the Qualcomm QCM6490 sound card.
+On 09/08/2024 10:22, Luca Weiss wrote:
+> On Mon Jun 17, 2024 at 9:28 AM CEST, Luca Weiss wrote:
+>> On Mon Jun 3, 2024 at 8:39 AM CEST, Luca Weiss wrote:
+>>> On Fri Apr 12, 2024 at 4:19 PM CEST, Luca Weiss wrote:
+>>>> Some SC7280-based boards crash when providing the "secure_non_pixel"
+>>>> context bank, so allow only one iommu in the bindings also.
 >>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
->>>  Documentation/devicetree/bindings/sound/qcom,sm8250.yaml | 1 +
->>>  1 file changed, 1 insertion(+)
+>>> Hi all,
 >>>
->>> diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
->>> index c9076dcd44c1..0a31be6d917f 100644
->>> --- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
->>> +++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
->>> @@ -31,6 +31,7 @@ properties:
->>>            - qcom,apq8096-sndcard
->>>            - qcom,msm8916-qdsp6-sndcard
->>>            - qcom,qcm6490-idp-sndcard
->>> +          - qcom,qcm6490-sndcard
+>>> This patch is still pending and not having it causes dt validation
+>>> warnings for some qcom-sc7280 boards.
 >>
->> I think it would be better to make it a board-compatible and also
->> followed by qcom,qcm6490-idp-sndcard fallback, thus no need for driver
->> changes.
+>> Hi Rob,
+>>
+>> Could you please pick up this patch? Mauro seems to ignore this patch
+>> either on purpose or by accident and I'd like for this dtbs_check
+>> failure to finally be fixed.
 > 
-> Hi Krzysztof,
+> Hi all,
 > 
-> So that we get "fairphone,fp5-sndcard", "qcom,qcm6490-idp-sndcard"?
+> Another month, another ping.
+> 
+> Can *anybody* please pick up this patch?
 
-Yes.
+Still in state "New" on media patchwork:
+https://patchwork.linuxtv.org/project/linux-media/patch/20240412-sc7280-venus-bindings-v2-1-48ca8c2ec532@fairphone.com/
+
+so it won't move. Please ping Rob on #devicetree channel once he comes
+online.
 
 Best regards,
 Krzysztof
