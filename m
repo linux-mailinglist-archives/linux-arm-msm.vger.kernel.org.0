@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93C1794CCF2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 11:09:18 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBFF894CD00
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 11:10:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3B4BA1F21124
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 09:09:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1AF811C2084E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Aug 2024 09:10:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E399518FDD9;
-	Fri,  9 Aug 2024 09:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8930190079;
+	Fri,  9 Aug 2024 09:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KNJ4Qv8i"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tgpT3YlM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6FDBA41;
-	Fri,  9 Aug 2024 09:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C8C16C861;
+	Fri,  9 Aug 2024 09:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723194553; cv=none; b=RGjErrW6w1rxPVJei+zr5mElvjr22mOeJMoaPCOlMLpF4lXEw2N4Sr/T05OUrHR1FgFAi8H1hbyt4ZcWy+v5UBwjg5g3PZy3duF18S6wXrtqGWy4dAt/QkQRP134dJ0/wCTc3ZVtKCHkDwkNMkftb8P+zHuSMJz64m43WXMCHaU=
+	t=1723194652; cv=none; b=r4Ud05Uo8F/KBuRdMPEwkFjof9DKAljwQXeDFfUfab+5dKxC6L0zM5pdwkhRQJXTWPrMpncLfKBp9kKuxmvEAJILgq4fOGLkXiSuyeIxsnMJe8SkRqHw0TAoCy7qCYJTgfo5hsL1PmhtAEjg5OqeaUThBgtWKcRO37VGT4WbnL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723194553; c=relaxed/simple;
-	bh=8F+U+x1mvFtKL4/ZAPGlrPvUP/5LUuIcLNeEnc7No3s=;
+	s=arc-20240116; t=1723194652; c=relaxed/simple;
+	bh=MF6DnJf7RlkwgK2dPBAlcsElsLGqpbCbwaFGF0OXEAc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ye0Tjy/B4Fcmpx5u8GyZfv2pi+VlpcqqX28mr+7qQ8zB0qSlcwdo3JI+1McdtqCt6bvoZWD762eitoAxJ94IJLVWckIVq3quHdvWrQ0rNyABOtSAKexnf7gZ/Rhh7Sg3P8j82JTX8rya/hkpzWF1Uk9IlZhWsACmdgjEKxEAbG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KNJ4Qv8i; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68FAC32782;
-	Fri,  9 Aug 2024 09:09:06 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=NppCeoSTXto/T9x73zndMScZyukNq2t6cmaG/LyD+7j1a1Gsb8TUEW6rYysMAHxTV++QuE9f7MXdWtRXrIIeDnjF8cordCaPSlIEKf4TG4PkQlyR1gdIFNeh9W/v18CVhDPDDnxiP4dDBoNaqnBvo1PM27QoDX7jDRioaX/QEow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tgpT3YlM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584BBC32782;
+	Fri,  9 Aug 2024 09:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723194553;
-	bh=8F+U+x1mvFtKL4/ZAPGlrPvUP/5LUuIcLNeEnc7No3s=;
+	s=k20201202; t=1723194652;
+	bh=MF6DnJf7RlkwgK2dPBAlcsElsLGqpbCbwaFGF0OXEAc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=KNJ4Qv8is7P0Tc27wX2TJEyR+S2Avy1xlpIih6PMXp5pbZf1irVNP2qx/RkIZvdX+
-	 Shpq00WOWo6ZOa1sDUZ6mU1sMwqRRjnAzr6UMB2s5UTAqLK0N79ichMOVpsaZ2h/9/
-	 OIhFTcbU+9pGUauofjnNO13fjFYpztuUznSg7HU7gpd2AUDdwf5MLftHMvQgQpSO+6
-	 a0eLlzAOxUCHYZQE60l1L+7sTkio35/YnQx+TOEOS2uNvhSLeuGpXTytzCG37xUcdk
-	 tgONcWa2ug1ckPKQHPvH/4P+/RfLyq8mKwzstGZ3BLOn2dAqg79K5h6KNwcZLySjbS
-	 GDk94Mfi6k/7w==
-Message-ID: <e8a24709-de96-4d09-ba00-1e084a656c68@kernel.org>
-Date: Fri, 9 Aug 2024 11:09:04 +0200
+	b=tgpT3YlMGB0SaeUS9uq+8H4964Gt26uIgwAs7fRfW0LMOaYVzBuJ/XGF0RGOv+dZh
+	 uBdf7GfXc1CBLHgwI6quIcuGLc5Sj03jMy4IW49dAHlP5ryWOR9r/hxDuAC5eHIXXH
+	 LMjwsE7mB3CGyWp1GvyTF/vxoo/TGsiM4Dx2OKx8R6Lf79avLSBFzIMx8WN3zkTft5
+	 v2ezrcOMT6A54oL7Vxqa9eWLUDTPf/5e+wnS3+1AqYHl/QNOA/icTIvr5KVeuVf/Wd
+	 pXZZYkcoZFS/Zb/mH/yE30JGObbO75ea8yKeHOtz3QrOTyInrVT9GY+tAQpR9FJBkT
+	 cnyu8elBk7oYg==
+Message-ID: <36b7bbb9-7eea-4db2-86a6-80af206c29ad@kernel.org>
+Date: Fri, 9 Aug 2024 11:10:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] ASoC: dt-bindings: qcom,sm8250: Add generic QCM6490
- sound card
+Subject: Re: [PATCH 0/3] Add DisplayPort sound support for Fairphone 5
+ smartphone
 To: Luca Weiss <luca.weiss@fairphone.com>,
  Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
  Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
@@ -65,7 +65,6 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20240809-fp5-dp-sound-v1-0-d7ba2c24f6b9@fairphone.com>
- <20240809-fp5-dp-sound-v1-1-d7ba2c24f6b9@fairphone.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,31 +110,31 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240809-fp5-dp-sound-v1-1-d7ba2c24f6b9@fairphone.com>
+In-Reply-To: <20240809-fp5-dp-sound-v1-0-d7ba2c24f6b9@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 09/08/2024 10:33, Luca Weiss wrote:
-> Document the bindings for the Qualcomm QCM6490 sound card.
+> Add the necessary sound card bits and some dts additions to enable sound
+> over DisplayPort-over-USB-C, e.g. to a connected TV or monitor.
 > 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  Documentation/devicetree/bindings/sound/qcom,sm8250.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> The UCM files can be found here:
+> https://gitlab.com/postmarketOS/pmaports/-/tree/master/device/testing/device-fairphone-fp5/ucm
 > 
-> diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-> index c9076dcd44c1..0a31be6d917f 100644
-> --- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-> +++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-> @@ -31,6 +31,7 @@ properties:
->            - qcom,apq8096-sndcard
->            - qcom,msm8916-qdsp6-sndcard
->            - qcom,qcm6490-idp-sndcard
-> +          - qcom,qcm6490-sndcard
+> Two extra notes:
+> 
+> 1. I don't quite understand whether the sound driver should have
+>    SoC-specific compatible or device-specific compatible. Some earlier
+>    patches by another author for a QCM6490 board and a QCS6490 board use
+>    device-specific compatible - but from what I can tell this is not how
+>    it's generally done for other sound drivers?
 
-I think it would be better to make it a board-compatible and also
-followed by qcom,qcm6490-idp-sndcard fallback, thus no need for driver
-changes.
+We (including me) were/are a bit inconsistent here, but last statement
+was that these should be board-specific compatibles.
+
+Last discussion I recall:
+https://lore.kernel.org/all/baa6543c-5e2e-4f28-a95b-a086b32d1f2d@linaro.org/
+
 
 Best regards,
 Krzysztof
