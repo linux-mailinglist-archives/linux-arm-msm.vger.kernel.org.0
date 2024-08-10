@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9585D94DCF1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Aug 2024 14:47:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59B0D94DCF5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Aug 2024 14:48:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 494021F21B1B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Aug 2024 12:47:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1667F28131F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Aug 2024 12:48:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BABB15853A;
-	Sat, 10 Aug 2024 12:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 014CB15854F;
+	Sat, 10 Aug 2024 12:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gUruoKzB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h4hDE24l"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BF6157E61;
-	Sat, 10 Aug 2024 12:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CF2157E61;
+	Sat, 10 Aug 2024 12:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723294047; cv=none; b=ubjizGsKvyxKAGU5FezaCLviPxlJrbkGf2JFfMcmXMKuw811LfSKYRb0BEwL5iVt+azZxO6evHAyQMC5AgqOUeaOQe6D6zPMBdexEetESOgr3HSWgN01tKpxRNTbjghTTpNFMABvgtPQWI6tj6LVOJOCqNxllMMjzmhXiIe8jGA=
+	t=1723294097; cv=none; b=Gwx7GGHdzQvz80VkSbpL2uewZ2WoBBm/c5rFRnI0q97euvIIwvL6amTgeUXtYwZEsDYLeXleyJbumoAZ4Sxhu/8ZB2JO+roMebX/0EF9dLNxU3ukN0YOK58KoIJs9kX/Hzng3KAYyF4vlHtLSUuILPGGmvw9rghu73Ym6Qn6F7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723294047; c=relaxed/simple;
-	bh=UYNanTe8yKRGFA3LMyPhTHncmqZ6LPNnPkib7v6wSu8=;
+	s=arc-20240116; t=1723294097; c=relaxed/simple;
+	bh=K72N+bvYVGEFOyhe+LWxiFVuR7StmCDF0j76w/W4rEc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=moPjPz/8p7IZBrBF190wJjVGy6zhgEnZHI/7MhZuOrUMwLk93pXebOnxurD8spKvsrU2CDObXawzoxFdb4N2EFTFYJsSVEwjJcKSQs42Iw1HytUIsodxFZwvSzRzTuraxSR6b7Yp8pqciSShMZUpJkMheC+dmwKAdO8YjjyTltY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gUruoKzB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05AC7C32781;
-	Sat, 10 Aug 2024 12:47:20 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=JXv2W2kR7SjDEMzX9FDo6Ib7moKE4w186hKfGlYHXaWD4GDg7le7QdRhtuiUrJyBASSVKMAIx+2rm2w5NmRRNojmm7WaiTT75kBNTS1ntaZ3q7/BbdB/mz4Lu5bGhFZfQHZc63iRRwuPJ6Fa6Dl0o2K3CdIbVrgzEa2rdWKcmEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h4hDE24l; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79BF8C32781;
+	Sat, 10 Aug 2024 12:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723294046;
-	bh=UYNanTe8yKRGFA3LMyPhTHncmqZ6LPNnPkib7v6wSu8=;
+	s=k20201202; t=1723294097;
+	bh=K72N+bvYVGEFOyhe+LWxiFVuR7StmCDF0j76w/W4rEc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=gUruoKzBrlo4Hzycz/JVC0Tp5I137jbLrQGSUDSShikdTfWxdISTSu90/vrOWfueJ
-	 HdADFSlrmREseoVy0w66Acw4ClQOZit8U4griK2pesvrzmpxFPGEmuEYkLclNUP2P7
-	 EAMWfsUEdikrbOCojE11kHGM+im8XGeLYlq/9DLYaJiU7a7lW2BcayyAVUGVhHvItE
-	 FeQBwNMDYf5UF9GmpGYhoNixAzZoE7j8KWlekvaPQTPfxzNL9TjUxDQNo4y9CcSZGX
-	 JegnS+yygbzxA5cCCE/Kr7DgJvqTKQZ71ye1IXNrXlxMdxg4FrsYSfG0dBCJwd+BHA
-	 ytqcNQpjeu1QA==
-Message-ID: <27874bb8-d1e3-445c-bc09-054a2d6af2d1@kernel.org>
-Date: Sat, 10 Aug 2024 14:47:19 +0200
+	b=h4hDE24lXHg4IED/1LeOaUtTI/8mMt1oDKXKffjox/4W2WrG0S7cgwmMea/0dOeNr
+	 imoQTYqDnZoyfnUA6wzP+WTttXZhWAelk+nvft7tGBa5beljU9KbbIgAeOZluk0Lgb
+	 L1iJ0w5cJiMTQ+P1iyx8hWu2U8R+VVYoRObbvDFrEtU1V6ncLgkWo+ZuOZjKuKPMv5
+	 GPBv7q6kCkPKhGAkLiy8c66J68nbWh/sTuZh5YsHR8vRq5zBzDZb4T6PVl6yjGPmPI
+	 kdSRWG+dqbU6CzOmuQ3NqytGOQA3HiSDDVG2DA2vdnNaPkco0QxjPj3qwlu0ROT+Li
+	 KxWDHLAgYCxhw==
+Message-ID: <b37b3c8e-902f-4a62-8a6a-ab9b8cb6cadb@kernel.org>
+Date: Sat, 10 Aug 2024 14:48:10 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: usb: qcom,dwc3: Document X1E80100 MP
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100: Add USB Multiport
  controller
 To: Konrad Dybcio <konradybcio@kernel.org>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -63,7 +63,7 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  Krishna Kurapati <quic_kriskura@quicinc.com>,
  Konrad Dybcio <quic_kdybcio@quicinc.com>
 References: <20240809-topic-h_mp-v1-0-3c5f468566d8@quicinc.com>
- <20240809-topic-h_mp-v1-1-3c5f468566d8@quicinc.com>
+ <20240809-topic-h_mp-v1-2-3c5f468566d8@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,21 +109,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240809-topic-h_mp-v1-1-3c5f468566d8@quicinc.com>
+In-Reply-To: <20240809-topic-h_mp-v1-2-3c5f468566d8@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 09/08/2024 15:18, Konrad Dybcio wrote:
-> From: Konrad Dybcio <quic_kdybcio@quicinc.com>
+> X1E80100 has a multiport controller with 2 HS (eUSB) and 2 SS PHYs
+> attached to it. It's commonly used for USB-A ports and internally
+> routed devices. Configure it to support such functionality.
 > 
-> The X1E80100, just like its predecessors, has a Multiport controller.
-> This time around, 2 HS (eUSB) and 2 SS PHYs are attached.
-> 
-> Document it.
-> 
-> Signed-off-by: Konrad Dybcio <quic_kdybcio@quicinc.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+You have from and SoB mismatch. This was sent some odd way, because both
+b4 and git send-email would produce correct From field.
+
 
 Best regards,
 Krzysztof
