@@ -1,68 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-28267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 292F794DF7F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Aug 2024 03:57:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 995EE94DFC3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Aug 2024 04:47:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BD7351F21673
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Aug 2024 01:57:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CC4331C20AA7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Aug 2024 02:47:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC50E8F47;
-	Sun, 11 Aug 2024 01:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92B5AD51E;
+	Sun, 11 Aug 2024 02:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fvT7gL2B"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jNHk7ZeR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E5179F4;
-	Sun, 11 Aug 2024 01:56:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59DA629;
+	Sun, 11 Aug 2024 02:47:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723341419; cv=none; b=l5DO5oCT82XYrAOyI4nrU/OsgWxA+pSDdttqVpU7pDjSu+lYHm9x86+p0AAyDa/FCeIxdGgokKnX4ylUGqhbUNYPIPqXKX6Qbg5Fw5OIQo9CKDoFhkCUCnEaEDtU4FE2D0ogWHgj7SSEVYuHO2C5lYgL+uD+NjgYGcnyq6V32Z4=
+	t=1723344438; cv=none; b=agLS2UWMTDPQxLsf8VOedAL2p2QTi8QA2+eYKso7MPfCS74I/qZIZJ11vQoA0AKBsRAPcX0Ln5wOjnC7Wpr/Ktmn29PhuwH6viibxDO0K6j7iPEVg2ux9S+8phcUaboMmPD386/f2DPWBWuJI5U3EYtOvecY0VA37uED98kY/Ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723341419; c=relaxed/simple;
-	bh=59PP7CaPhlDP4SUY1u/O8YQ9mjsKRPQfXKJTDBytGhA=;
+	s=arc-20240116; t=1723344438; c=relaxed/simple;
+	bh=2E/PiludrIJ0UrQUTezJNfl+zlTw2eH3E1f8aYq02Mo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EE8Mjq/BNx69/ookf6E6s1wfPQLZfGzwLaZqjdPsw0weLd08PVWcgQdETb+mTCW4F6/kBqiQxE5m6h+PFBqdkLtDPSxCmPXESItqJWt4qiSVnSH+nJ0g4p1R1TOtAmF0yTzi6dl99311yvWEsqk0/foXrVdn7ojdnrkJRk//wHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fvT7gL2B; arc=none smtp.client-ip=198.175.65.11
+	 Content-Type:Content-Disposition:In-Reply-To; b=KJjgP6e29ixIontPv6Kja9VyKibWSQ+mX3bA2GVU2MaS5opnyQLs/YPU8ZOnr4H6gKVNJzZ0oN+pID4LTSlWSfcYumDrmqgRn4yp+ZPFS4Ac+JQDT9Kg7lFXUzFKeXYfcMaa97uNE/86ixscfQDrULcQ/t8m0epq7JzhN8YVMbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jNHk7ZeR; arc=none smtp.client-ip=192.198.163.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723341417; x=1754877417;
+  t=1723344437; x=1754880437;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=59PP7CaPhlDP4SUY1u/O8YQ9mjsKRPQfXKJTDBytGhA=;
-  b=fvT7gL2BF7sMN38+Mm+n6NJG9vWwC2uHwkjaKcvCr8NEXgLcnmgn7fTr
-   nIHEsazUhOpMgOR2BPDX4F+454UBcl2kttf2Z6fGmGiXJpm71QSeEf2mr
-   gcIRraCoZywgRFpD2zuJAr3nOwXrgfchYPRFaEa4vxnPfuMdJSM6Ojxix
-   U0uDUEgZOIsZA/Nztck9MD1QkFFmKdGZZLCG2RALUgHQZ0R0hpXpmF2T3
-   ShLuIUOPcCq9iycfouVmvteD90GiXj6r3kTBuS5JhtNqiB6Ml9V6D3/0l
-   VqRGO86/jkC8QxyI1tP+PEWYbMX7wMky7po5tbQ5/pJwnrqy8ZsJviHYC
-   Q==;
-X-CSE-ConnectionGUID: a0EthqJ/QwOgc15+BcPWtA==
-X-CSE-MsgGUID: /b/AP466RdiB4HqIOrZ5YQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11160"; a="32058934"
+  bh=2E/PiludrIJ0UrQUTezJNfl+zlTw2eH3E1f8aYq02Mo=;
+  b=jNHk7ZeRmQmIGMRVatKSM4f1SnalUbvHQ97jF6WSI3DnjW44HIZDpIq2
+   RKNe9lmqXotvYMwvngTGdNDmgQP6ZT/37FfCnck6fclOuBvdex4dZZ87r
+   hzCHl8mp1GLD3ikned4mvKCitVVW5P837rvhX9Vn2cQ85EWgv87Fdr1kx
+   cyYhTbZLTFVpHlgza7FYDz5IBRV/3JPemJcYuh44HDG6eqY+sOqzHVQcy
+   jHedGp+uiDBOsh5xZ712VtV9mK4NIa6g2b9lBnsAaQe20qz2jJmD6OVvf
+   xCBzmOOWROaaxIs2m6wvWwC2MlxmFR6NVZBUafLCzdU/OXJMZ0j3YWgwO
+   w==;
+X-CSE-ConnectionGUID: 3OX8NRndSqiDSpPMo1NWCQ==
+X-CSE-MsgGUID: sFjycRF7Tj+75EkCyf8Frg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11160"; a="21643362"
 X-IronPort-AV: E=Sophos;i="6.09,280,1716274800"; 
-   d="scan'208";a="32058934"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Aug 2024 18:56:56 -0700
-X-CSE-ConnectionGUID: SdMMT+ARR/6mOsKGnILDUQ==
-X-CSE-MsgGUID: /zYR/EjbSXaY1/KNkoqy8w==
+   d="scan'208";a="21643362"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Aug 2024 19:47:16 -0700
+X-CSE-ConnectionGUID: fH2jAi7mTqGtzQAh14LKUA==
+X-CSE-MsgGUID: WMPuEdyNS8GFwvmP1R1Yvg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.09,280,1716274800"; 
-   d="scan'208";a="57815696"
+   d="scan'208";a="58155448"
 Received: from unknown (HELO b6bf6c95bbab) ([10.239.97.151])
-  by orviesa009.jf.intel.com with ESMTP; 10 Aug 2024 18:56:53 -0700
+  by orviesa006.jf.intel.com with ESMTP; 10 Aug 2024 19:47:13 -0700
 Received: from kbuild by b6bf6c95bbab with local (Exim 4.96)
 	(envelope-from <lkp@intel.com>)
-	id 1scxpC-000AU3-0n;
-	Sun, 11 Aug 2024 01:56:50 +0000
-Date: Sun, 11 Aug 2024 09:56:20 +0800
+	id 1scybu-000AWN-0g;
+	Sun, 11 Aug 2024 02:47:10 +0000
+Date: Sun, 11 Aug 2024 10:47:08 +0800
 From: kernel test robot <lkp@intel.com>
 To: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>,
@@ -79,7 +79,7 @@ Cc: oe-kbuild-all@lists.linux.dev, linux-pci@vger.kernel.org,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Subject: Re: [PATCH v3 05/13] PCI: endpoint: Assign PCI domain number for
  endpoint controllers
-Message-ID: <202408110938.hFwAHjZo-lkp@intel.com>
+Message-ID: <202408111053.0PLHSTeH-lkp@intel.com>
 References: <20240731-pci-qcom-hotplug-v3-5-a1426afdee3b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -101,86 +101,40 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam-via
 base:   8400291e289ee6b2bf9779ff1c83a291501f017b
 patch link:    https://lore.kernel.org/r/20240731-pci-qcom-hotplug-v3-5-a1426afdee3b%40linaro.org
 patch subject: [PATCH v3 05/13] PCI: endpoint: Assign PCI domain number for endpoint controllers
-config: x86_64-randconfig-161-20240810 (https://download.01.org/0day-ci/archive/20240811/202408110938.hFwAHjZo-lkp@intel.com/config)
-compiler: clang version 18.1.5 (https://github.com/llvm/llvm-project 617a15a9eac96088ae5e9134248d8236e34b91b1)
+config: microblaze-randconfig-r072-20240810 (https://download.01.org/0day-ci/archive/20240811/202408111053.0PLHSTeH-lkp@intel.com/config)
+compiler: microblaze-linux-gcc (GCC) 14.1.0
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202408110938.hFwAHjZo-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202408111053.0PLHSTeH-lkp@intel.com/
 
-smatch warnings:
-drivers/pci/endpoint/pci-epc-core.c:914 __pci_epc_create() warn: inconsistent indenting
+New smatch warnings:
+drivers/pci/endpoint/pci-epc-core.c:843 pci_epc_destroy() warn: inconsistent indenting
 
-vim +914 drivers/pci/endpoint/pci-epc-core.c
+Old smatch warnings:
+drivers/pci/endpoint/pci-epc-core.c:908 __pci_epc_create() warn: inconsistent indenting
 
-   870	
-   871	/**
-   872	 * __pci_epc_create() - create a new endpoint controller (EPC) device
-   873	 * @dev: device that is creating the new EPC
-   874	 * @ops: function pointers for performing EPC operations
-   875	 * @owner: the owner of the module that creates the EPC device
-   876	 *
-   877	 * Invoke to create a new EPC device and add it to pci_epc class.
-   878	 */
-   879	struct pci_epc *
-   880	__pci_epc_create(struct device *dev, const struct pci_epc_ops *ops,
-   881			 struct module *owner)
-   882	{
-   883		int ret;
-   884		struct pci_epc *epc;
-   885	
-   886		if (WARN_ON(!dev)) {
-   887			ret = -EINVAL;
-   888			goto err_ret;
-   889		}
-   890	
-   891		epc = kzalloc(sizeof(*epc), GFP_KERNEL);
-   892		if (!epc) {
-   893			ret = -ENOMEM;
-   894			goto err_ret;
-   895		}
-   896	
-   897		mutex_init(&epc->lock);
-   898		mutex_init(&epc->list_lock);
-   899		INIT_LIST_HEAD(&epc->pci_epf);
-   900	
-   901		device_initialize(&epc->dev);
-   902		epc->dev.class = &pci_epc_class;
-   903		epc->dev.parent = dev;
-   904		epc->dev.release = pci_epc_release;
-   905		epc->ops = ops;
-   906	
-   907		#ifdef CONFIG_PCI_DOMAINS_GENERIC
-   908			epc->domain_nr = pci_bus_find_domain_nr(NULL, dev);
-   909		#else
-   910			/*
-   911			 * TODO: If the architecture doesn't support generic PCI
-   912			 * domains, then a custom implementation has to be used.
-   913			 */
- > 914			WARN_ONCE(1, "This architecture doesn't support generic PCI domains\n");
-   915		#endif
-   916	
-   917		ret = dev_set_name(&epc->dev, "%s", dev_name(dev));
-   918		if (ret)
-   919			goto put_dev;
-   920	
-   921		ret = device_add(&epc->dev);
-   922		if (ret)
-   923			goto put_dev;
-   924	
-   925		epc->group = pci_ep_cfs_add_epc_group(dev_name(dev));
-   926	
-   927		return epc;
-   928	
-   929	put_dev:
-   930		put_device(&epc->dev);
-   931	
-   932	err_ret:
-   933		return ERR_PTR(ret);
-   934	}
-   935	EXPORT_SYMBOL_GPL(__pci_epc_create);
-   936	
+vim +843 drivers/pci/endpoint/pci-epc-core.c
+
+   830	
+   831	/**
+   832	 * pci_epc_destroy() - destroy the EPC device
+   833	 * @epc: the EPC device that has to be destroyed
+   834	 *
+   835	 * Invoke to destroy the PCI EPC device
+   836	 */
+   837	void pci_epc_destroy(struct pci_epc *epc)
+   838	{
+   839		pci_ep_cfs_remove_epc_group(epc->group);
+   840		device_unregister(&epc->dev);
+   841	
+   842		#ifdef CONFIG_PCI_DOMAINS_GENERIC
+ > 843			pci_bus_release_domain_nr(NULL, &epc->dev);
+   844		#endif
+   845	}
+   846	EXPORT_SYMBOL_GPL(pci_epc_destroy);
+   847	
 
 -- 
 0-DAY CI Kernel Test Service
