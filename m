@@ -1,87 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-28266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C83F594DF42
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Aug 2024 01:54:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 292F794DF7F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Aug 2024 03:57:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 476991F21B1B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Aug 2024 23:54:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BD7351F21673
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Aug 2024 01:57:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B3C11442ED;
-	Sat, 10 Aug 2024 23:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC50E8F47;
+	Sun, 11 Aug 2024 01:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IiTDnyS1"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fvT7gL2B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4225413D889;
-	Sat, 10 Aug 2024 23:54:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E5179F4;
+	Sun, 11 Aug 2024 01:56:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723334054; cv=none; b=GNVee2FO8ds+7zmBkYVojRo9ydBWXBB+94M85QN4zshGlk7lzpWuHi3J4cM9/TKFaZTB4pznUY0DU+p9X0wThmt86w95uzahJ9C8CQiM01PUozAF4NhfOjw39hfumM2WNXuwUcteRPCRxBkSOeGX5/R3vq/jUIsUfoLWlFLCZm0=
+	t=1723341419; cv=none; b=l5DO5oCT82XYrAOyI4nrU/OsgWxA+pSDdttqVpU7pDjSu+lYHm9x86+p0AAyDa/FCeIxdGgokKnX4ylUGqhbUNYPIPqXKX6Qbg5Fw5OIQo9CKDoFhkCUCnEaEDtU4FE2D0ogWHgj7SSEVYuHO2C5lYgL+uD+NjgYGcnyq6V32Z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723334054; c=relaxed/simple;
-	bh=cdUzVchCaRhLUnErCbZsZUKbLBcgxHpYnYNip9ALhpI=;
+	s=arc-20240116; t=1723341419; c=relaxed/simple;
+	bh=59PP7CaPhlDP4SUY1u/O8YQ9mjsKRPQfXKJTDBytGhA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fUBxSeAtlfgLLlEOLrUvhxFnhZh0HnwvJB2iMeF1oBDaA43Rc8v1hSHZxFjKhB3mc98IVKbVfH2FBBQE+oHotHsfooGm8XkxZe8sohgb7U593t6CpSuIhleibtgazXa6g9xKQAS/dr1pTTfaH1nSoKC20ZBZ62oMdN6EgRhllYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IiTDnyS1; arc=none smtp.client-ip=192.198.163.12
+	 Content-Type:Content-Disposition:In-Reply-To; b=EE8Mjq/BNx69/ookf6E6s1wfPQLZfGzwLaZqjdPsw0weLd08PVWcgQdETb+mTCW4F6/kBqiQxE5m6h+PFBqdkLtDPSxCmPXESItqJWt4qiSVnSH+nJ0g4p1R1TOtAmF0yTzi6dl99311yvWEsqk0/foXrVdn7ojdnrkJRk//wHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fvT7gL2B; arc=none smtp.client-ip=198.175.65.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723334053; x=1754870053;
+  t=1723341417; x=1754877417;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=cdUzVchCaRhLUnErCbZsZUKbLBcgxHpYnYNip9ALhpI=;
-  b=IiTDnyS15D/jSc4DtBXJW46r58u2dNGL3wtT6pNMh1z1B4iVUPSciQXw
-   qZxeyQ2VHtmkqAJB0ZWkQHyGy26KM1Wc0IDIrt5TfOSgKQhXPkMqfvAKv
-   8EznXvYkWmjqVflkg/k5f0k4ZtOKb474oKU+alEBZcYAaamlqUSMwlKG4
-   WfKCGsT/TQAqs4kWbpQhw/cAp8/im0mrwJSrZyYV7f35MxaPWng/CL+ww
-   K8g+MYTLRJl4HsfH7xQOgf3Y47+DlzXVEXm/uPc8QdzCg1FSAbBHunBGg
-   jKONhOPn+WmO5esubqFqlpTMtC8JbKsdFOZUoeYpvkbgAQ8m+cyFveoVZ
+  bh=59PP7CaPhlDP4SUY1u/O8YQ9mjsKRPQfXKJTDBytGhA=;
+  b=fvT7gL2BF7sMN38+Mm+n6NJG9vWwC2uHwkjaKcvCr8NEXgLcnmgn7fTr
+   nIHEsazUhOpMgOR2BPDX4F+454UBcl2kttf2Z6fGmGiXJpm71QSeEf2mr
+   gcIRraCoZywgRFpD2zuJAr3nOwXrgfchYPRFaEa4vxnPfuMdJSM6Ojxix
+   U0uDUEgZOIsZA/Nztck9MD1QkFFmKdGZZLCG2RALUgHQZ0R0hpXpmF2T3
+   ShLuIUOPcCq9iycfouVmvteD90GiXj6r3kTBuS5JhtNqiB6Ml9V6D3/0l
+   VqRGO86/jkC8QxyI1tP+PEWYbMX7wMky7po5tbQ5/pJwnrqy8ZsJviHYC
    Q==;
-X-CSE-ConnectionGUID: 927cxkWtRAOHvyja/Go48A==
-X-CSE-MsgGUID: lQ51+Kf5RQG7viCB2nmnDw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11160"; a="25341576"
+X-CSE-ConnectionGUID: a0EthqJ/QwOgc15+BcPWtA==
+X-CSE-MsgGUID: /b/AP466RdiB4HqIOrZ5YQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11160"; a="32058934"
 X-IronPort-AV: E=Sophos;i="6.09,280,1716274800"; 
-   d="scan'208";a="25341576"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Aug 2024 16:54:13 -0700
-X-CSE-ConnectionGUID: bKTUh9daSDKjYaYFacB/9A==
-X-CSE-MsgGUID: H/ZbzCnHRWWnZV8q+ukxLA==
+   d="scan'208";a="32058934"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Aug 2024 18:56:56 -0700
+X-CSE-ConnectionGUID: SdMMT+ARR/6mOsKGnILDUQ==
+X-CSE-MsgGUID: /zYR/EjbSXaY1/KNkoqy8w==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.09,280,1716274800"; 
-   d="scan'208";a="62566867"
+   d="scan'208";a="57815696"
 Received: from unknown (HELO b6bf6c95bbab) ([10.239.97.151])
-  by fmviesa004.fm.intel.com with ESMTP; 10 Aug 2024 16:54:09 -0700
+  by orviesa009.jf.intel.com with ESMTP; 10 Aug 2024 18:56:53 -0700
 Received: from kbuild by b6bf6c95bbab with local (Exim 4.96)
 	(envelope-from <lkp@intel.com>)
-	id 1scvuQ-000AOl-2S;
-	Sat, 10 Aug 2024 23:54:06 +0000
-Date: Sun, 11 Aug 2024 07:53:45 +0800
+	id 1scxpC-000AU3-0n;
+	Sun, 11 Aug 2024 01:56:50 +0000
+Date: Sun, 11 Aug 2024 09:56:20 +0800
 From: kernel test robot <lkp@intel.com>
-To: Luo Jie <quic_luoj@quicinc.com>, Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+To: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
 	Krzysztof Kozlowski <krzk@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	quic_kkumarcs@quicinc.com, quic_suruchia@quicinc.com,
-	quic_pavir@quicinc.com, quic_linchen@quicinc.com,
-	quic_leiwei@quicinc.com, Luo Jie <quic_luoj@quicinc.com>
-Subject: Re: [PATCH 2/4] clk: qcom: Add common PLL clock controller driver
- for IPQ SoC
-Message-ID: <202408110756.rSXn1ZRu-lkp@intel.com>
-References: <20240808-qcom_ipq_cmnpll-v1-2-b0631dcbf785@quicinc.com>
+Cc: oe-kbuild-all@lists.linux.dev, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH v3 05/13] PCI: endpoint: Assign PCI domain number for
+ endpoint controllers
+Message-ID: <202408110938.hFwAHjZo-lkp@intel.com>
+References: <20240731-pci-qcom-hotplug-v3-5-a1426afdee3b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,105 +89,98 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240808-qcom_ipq_cmnpll-v1-2-b0631dcbf785@quicinc.com>
+In-Reply-To: <20240731-pci-qcom-hotplug-v3-5-a1426afdee3b@linaro.org>
 
-Hi Luo,
+Hi Manivannan,
 
-kernel test robot noticed the following build errors:
+kernel test robot noticed the following build warnings:
 
-[auto build test ERROR on 222a3380f92b8791d4eeedf7cd750513ff428adf]
+[auto build test WARNING on 8400291e289ee6b2bf9779ff1c83a291501f017b]
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Luo-Jie/dt-bindings-clock-qcom-Add-common-PLL-clock-controller-for-IPQ-SoC/20240808-221059
-base:   222a3380f92b8791d4eeedf7cd750513ff428adf
-patch link:    https://lore.kernel.org/r/20240808-qcom_ipq_cmnpll-v1-2-b0631dcbf785%40quicinc.com
-patch subject: [PATCH 2/4] clk: qcom: Add common PLL clock controller driver for IPQ SoC
-config: m68k-allmodconfig (https://download.01.org/0day-ci/archive/20240811/202408110756.rSXn1ZRu-lkp@intel.com/config)
-compiler: m68k-linux-gcc (GCC) 14.1.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240811/202408110756.rSXn1ZRu-lkp@intel.com/reproduce)
+url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam-via-B4-Relay/PCI-qcom-ep-Drop-the-redundant-masking-of-global-IRQ-events/20240802-024847
+base:   8400291e289ee6b2bf9779ff1c83a291501f017b
+patch link:    https://lore.kernel.org/r/20240731-pci-qcom-hotplug-v3-5-a1426afdee3b%40linaro.org
+patch subject: [PATCH v3 05/13] PCI: endpoint: Assign PCI domain number for endpoint controllers
+config: x86_64-randconfig-161-20240810 (https://download.01.org/0day-ci/archive/20240811/202408110938.hFwAHjZo-lkp@intel.com/config)
+compiler: clang version 18.1.5 (https://github.com/llvm/llvm-project 617a15a9eac96088ae5e9134248d8236e34b91b1)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202408110756.rSXn1ZRu-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202408110938.hFwAHjZo-lkp@intel.com/
 
-All errors (new ones prefixed by >>):
+smatch warnings:
+drivers/pci/endpoint/pci-epc-core.c:914 __pci_epc_create() warn: inconsistent indenting
 
-   drivers/clk/qcom/clk-ipq-cmn-pll.c: In function 'ipq_cmn_pll_config':
->> drivers/clk/qcom/clk-ipq-cmn-pll.c:96:24: error: implicit declaration of function 'FIELD_PREP' [-Wimplicit-function-declaration]
-      96 |                 val |= FIELD_PREP(CMN_PLL_REFCLK_INDEX, 3);
-         |                        ^~~~~~~~~~
+vim +914 drivers/pci/endpoint/pci-epc-core.c
 
-
-vim +/FIELD_PREP +96 drivers/clk/qcom/clk-ipq-cmn-pll.c
-
-    77	
-    78	static int ipq_cmn_pll_config(struct device *dev, unsigned long parent_rate)
-    79	{
-    80		void __iomem *base;
-    81		u32 val;
-    82	
-    83		base = devm_of_iomap(dev, dev->of_node, 0, NULL);
-    84		if (IS_ERR(base))
-    85			return PTR_ERR(base);
-    86	
-    87		val = readl(base + CMN_PLL_REFCLK_CONFIG);
-    88		val &= ~(CMN_PLL_REFCLK_EXTERNAL | CMN_PLL_REFCLK_INDEX);
-    89	
-    90		/*
-    91		 * Configure the reference input clock selection as per the given rate.
-    92		 * The output clock rates are always of fixed value.
-    93		 */
-    94		switch (parent_rate) {
-    95		case 25000000:
-  > 96			val |= FIELD_PREP(CMN_PLL_REFCLK_INDEX, 3);
-    97			break;
-    98		case 31250000:
-    99			val |= FIELD_PREP(CMN_PLL_REFCLK_INDEX, 4);
-   100			break;
-   101		case 40000000:
-   102			val |= FIELD_PREP(CMN_PLL_REFCLK_INDEX, 6);
-   103			break;
-   104		case 48000000:
-   105			val |= FIELD_PREP(CMN_PLL_REFCLK_INDEX, 7);
-   106			break;
-   107		case 50000000:
-   108			val |= FIELD_PREP(CMN_PLL_REFCLK_INDEX, 8);
-   109			break;
-   110		case 96000000:
-   111			val |= FIELD_PREP(CMN_PLL_REFCLK_INDEX, 7);
-   112			val &= ~CMN_PLL_REFCLK_DIV;
-   113			val |= FIELD_PREP(CMN_PLL_REFCLK_DIV, 2);
-   114			break;
-   115		default:
-   116			return -EINVAL;
-   117		}
-   118	
-   119		writel(val, base + CMN_PLL_REFCLK_CONFIG);
-   120	
-   121		/* Update the source clock rate selection. Only 96 MHZ uses 0. */
-   122		val = readl(base + CMN_PLL_REFCLK_SRC_SELECTION);
-   123		val &= ~CMN_PLL_REFCLK_SRC_DIV;
-   124		if (parent_rate != 96000000)
-   125			val |= FIELD_PREP(CMN_PLL_REFCLK_SRC_DIV, 1);
-   126	
-   127		writel(val, base + CMN_PLL_REFCLK_SRC_SELECTION);
-   128	
-   129		/*
-   130		 * Reset the common PLL block by asserting/de-asserting for 100 ms
-   131		 * each, to ensure the updated configurations take effect.
-   132		 */
-   133		val = readl(base + CMN_PLL_POWER_ON_AND_RESET);
-   134		val &= ~CMN_ANA_EN_SW_RSTN;
-   135		writel(val, base);
-   136		msleep(100);
-   137	
-   138		val |= CMN_ANA_EN_SW_RSTN;
-   139		writel(val, base + CMN_PLL_POWER_ON_AND_RESET);
-   140		msleep(100);
-   141	
-   142		return 0;
-   143	}
-   144	
+   870	
+   871	/**
+   872	 * __pci_epc_create() - create a new endpoint controller (EPC) device
+   873	 * @dev: device that is creating the new EPC
+   874	 * @ops: function pointers for performing EPC operations
+   875	 * @owner: the owner of the module that creates the EPC device
+   876	 *
+   877	 * Invoke to create a new EPC device and add it to pci_epc class.
+   878	 */
+   879	struct pci_epc *
+   880	__pci_epc_create(struct device *dev, const struct pci_epc_ops *ops,
+   881			 struct module *owner)
+   882	{
+   883		int ret;
+   884		struct pci_epc *epc;
+   885	
+   886		if (WARN_ON(!dev)) {
+   887			ret = -EINVAL;
+   888			goto err_ret;
+   889		}
+   890	
+   891		epc = kzalloc(sizeof(*epc), GFP_KERNEL);
+   892		if (!epc) {
+   893			ret = -ENOMEM;
+   894			goto err_ret;
+   895		}
+   896	
+   897		mutex_init(&epc->lock);
+   898		mutex_init(&epc->list_lock);
+   899		INIT_LIST_HEAD(&epc->pci_epf);
+   900	
+   901		device_initialize(&epc->dev);
+   902		epc->dev.class = &pci_epc_class;
+   903		epc->dev.parent = dev;
+   904		epc->dev.release = pci_epc_release;
+   905		epc->ops = ops;
+   906	
+   907		#ifdef CONFIG_PCI_DOMAINS_GENERIC
+   908			epc->domain_nr = pci_bus_find_domain_nr(NULL, dev);
+   909		#else
+   910			/*
+   911			 * TODO: If the architecture doesn't support generic PCI
+   912			 * domains, then a custom implementation has to be used.
+   913			 */
+ > 914			WARN_ONCE(1, "This architecture doesn't support generic PCI domains\n");
+   915		#endif
+   916	
+   917		ret = dev_set_name(&epc->dev, "%s", dev_name(dev));
+   918		if (ret)
+   919			goto put_dev;
+   920	
+   921		ret = device_add(&epc->dev);
+   922		if (ret)
+   923			goto put_dev;
+   924	
+   925		epc->group = pci_ep_cfs_add_epc_group(dev_name(dev));
+   926	
+   927		return epc;
+   928	
+   929	put_dev:
+   930		put_device(&epc->dev);
+   931	
+   932	err_ret:
+   933		return ERR_PTR(ret);
+   934	}
+   935	EXPORT_SYMBOL_GPL(__pci_epc_create);
+   936	
 
 -- 
 0-DAY CI Kernel Test Service
