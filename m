@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-28277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9038194E55F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 05:07:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 761BD94E562
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 05:07:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 150551F220E6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 03:07:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0457B282911
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 03:07:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 897A513AD1C;
-	Mon, 12 Aug 2024 03:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAED2146D75;
+	Mon, 12 Aug 2024 03:07:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HTOFxaKB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WCfOoReS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4799D55C29;
-	Mon, 12 Aug 2024 03:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B691411C8;
+	Mon, 12 Aug 2024 03:07:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723432059; cv=none; b=aEcDTx2x1qA4F0FL2Ko1rlyKt3Q1PV6wCGlt/6DkUvgNXFANtfDx+PV1wN4AamoCVGJ8ANvIv6NggLdYb0Kq8Z+aPv0xhvaM5NMDk2Mi8IN1VAed1+MRXTOCnHShjp8OElWdfmwIAUUNV+nj1vyEMtxCum54kfhHkWwgNcnHRQQ=
+	t=1723432060; cv=none; b=gye+VRqecawqH7tS8eYyxYoFw/tU5gDRvbC8ZDrtLz5vy71rQe/Nyd1rZO40ItGYvgG9CIOyqtlctv52gUY36hYiV2Didx1kQb/KQEdfzNX8aJzQJJUM2ch30+jlRLik9jn4ZZ7wsAT1FaUZTQ6gl6k7NP9NBuo3DDNLzfcHjv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723432059; c=relaxed/simple;
-	bh=Vbyx9MnjPam0JxqPJwZ8db2HpmveiEfp1O5jxskM+eQ=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=toedqrCW8mCrzusCH3w/0siZRPCFxZ4SDvbtMclzhSwFRf+RRGacYlDKzPvwxmI0r18ZAaY88keGnUGVMY31JxYT3ZfaZbvp4gje3N31ql/9c17oSfH6FUtBlr0YkGnZIUbuXcK2OjDaMNd1F4F0l71jIvKMj5hgxVjQk2fFDMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HTOFxaKB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CD5EC32786;
-	Mon, 12 Aug 2024 03:07:37 +0000 (UTC)
+	s=arc-20240116; t=1723432060; c=relaxed/simple;
+	bh=kRzWib2TzBcclEfDo0uuWGlg63aC6VgDtOKPFlG5b0I=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=aeycXPktqlCMeocTtdT2VPrWj5fpTc2f2Ir7zz2tmocGCOS4rR7D+5mPjBW4+wcIhjCGAcfSbc8+ED/FB5ocZUTTkiz/1Ak4nvimJoibpPfw96Jm6B9+PlTCazpukKtMA+b0V99yIKuKQ1tsrsFcb9SBcaC76IlBmJh0F7hMzk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WCfOoReS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B94C4AF13;
+	Mon, 12 Aug 2024 03:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723432058;
-	bh=Vbyx9MnjPam0JxqPJwZ8db2HpmveiEfp1O5jxskM+eQ=;
-	h=From:Subject:Date:To:Cc:From;
-	b=HTOFxaKBnfHQGL49cpN3wKR/niNDuwDi1fvQ835sA5hshckASERt5fzbr3dgWmKSa
-	 dzj8rK0JOPjAZfEfyo4YSCBjqmcNKNZXo/vpnjwJKVjpyDbzBAo2uKCTyD4rqvSNOd
-	 R2dHi2QESChJ5nwNkUdq/2+uE1PkXB20aqsKhP4e313rpgG8deRCFjDfEt77AEJddR
-	 mjos8ivOu144JBtmAI+/lM9uhz+ZwAAei5plPYX1+rRwzQBstfHi84ZJ9uiFllRK0U
-	 F9DFGAxW41bu1olv4dFNyRvpCWUfJuYjDgZFeHIPa+N3mGVGQCAC4m7OIGuQoLIp56
-	 YXbH7D2bFjOMQ==
+	s=k20201202; t=1723432060;
+	bh=kRzWib2TzBcclEfDo0uuWGlg63aC6VgDtOKPFlG5b0I=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=WCfOoReS9Oarn09dfeLdnudurs5rP0ODcvEE59RuhfL5n5zXBJHYgbiXR5QLEUpLa
+	 TDYlL4IRjty+kojFCYf+GQVhSKqCQFK4oV3zRYdsGiCTOPNCyxknQoa2hb44Egsorf
+	 GXiQsZ3rXkexKAgivCcN4V6yOYMK2p9KDEzwnUrcJ/fnQ0dczItpcgjipBgf1LhaCB
+	 GKKTu4C/lAal0cZoABBYtAEHpcDvMLFebH/C5l5jeImljq/eLWnHr+14c24iqPkAxm
+	 jXStEkdgQoO4E+ChyHaVYxbQQvzlcIrDDPix2TwqQcGwMijk655WyyKlStuUXEPofP
+	 MTEGYZUh4YZ6Q==
 From: Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH v2 0/7] usb: dwc3: qcom: Flatten dwc3 structure
-Date: Sun, 11 Aug 2024 20:11:57 -0700
-Message-Id: <20240811-dwc3-refactor-v2-0-91f370d61ad2@quicinc.com>
+Date: Sun, 11 Aug 2024 20:11:58 -0700
+Subject: [PATCH v2 1/7] dt-bindings: usb: snps,dwc3: Split core description
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,9 +52,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAH59uWYC/x2NywqDQAxFf0WybmAeINpfKS4yY6wBGUvGqiD+e
- 0OX53AP94LKKlzh2VygvEuVtRiERwN5pvJmlNEYggvRO9/ieOSIyhPlbVXso+eYXEdd6sGaRJU
- xKZU8W1W+y2LyY3M5/yev4b5/L6UfRHQAAAA=
+Message-Id: <20240811-dwc3-refactor-v2-1-91f370d61ad2@quicinc.com>
+References: <20240811-dwc3-refactor-v2-0-91f370d61ad2@quicinc.com>
+In-Reply-To: <20240811-dwc3-refactor-v2-0-91f370d61ad2@quicinc.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Conor Dooley <conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>, 
@@ -68,92 +68,888 @@ Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  Bjorn Andersson <quic_bjorande@quicinc.com>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3517;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=29235;
  i=quic_bjorande@quicinc.com; h=from:subject:message-id;
- bh=Vbyx9MnjPam0JxqPJwZ8db2HpmveiEfp1O5jxskM+eQ=;
- b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBmuX2Al05IcGSxyEplF7w6kJrsLwL4S8aNIq1q6
- 8UOcQa6WUSJAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCZrl9gBUcYW5kZXJzc29u
- QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcVyZA/+MmwBfszDnluPaqyzFR9SHUjyUNJ1J4XwrUP48+J
- pL9ZxZh3sOY2Uw6iBjRqfXQkiDGfyyHVnKQcpsh6SWqFxcBdpQ7F+i+1zCaJ4uVXZSM9Eu3Km4Y
- F+bpq7Bq3kpWpCzjS3SPPjGKKGWynZwXScchfqpJw8Zj8sCHgqkTuuV3tMc3MLFSllhPANg7/BL
- vI/FPtUZ487MiAI4bky0kQlHxE2hDoblbzm4NSqPGwd9F1ZRNlrd0bJA4ZmRnX6upmWy8+fMu4Q
- Sr6KK7GBDV8TTVoeg+vRdrA1Ea+khQnlXBsH8HeMhBXGwztD0Bg50ZchrLD2clfkg5LH2JUCez0
- wNZOZwHeGeiGnGE1AqVc3rfwroOkM0i5oBgnrTwr5bMGKbXSEvfsgcrfDjCcQ9UdE/rbp54ja+E
- aqmmJhDUr1S00OuOgrYhmg+Hko/XnrxYwRchl3NCNHaj9bhdw1+fDfecnjASSgYUECGUxrXCgAF
- xtUU6XQx+ninWAUKzBDlyH/o8v989H7LUW6wacs9VgZEmfZoK8WPiL2dvTxnzdmciXALj+57LNr
- Mc3ucYmj0RMQ+oFfjza2OdLyt4bNLYi8Qj1vPVgA0LaKLxbvyPD4G7A2QwPzyhZKnXW5D0L917T
- O/zRlNUpmimF9FNBP35vFPMvzdDE6HYTiYT0sL3cjgAw=
+ bh=BTv4cSvvq4+loN+cwFLtN9IUde0sXrdkXxBGIsSB6is=;
+ b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBmuX2Abl/EOS71rX606RC20QN+95/9ASN4IPk4g
+ z9agbV79deJAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCZrl9gBUcYW5kZXJzc29u
+ QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcWRmhAAyImssYWtABLTMBj18MVp1LVSHO8r2NPiVVcPgkl
+ pVwL9PO720lGWKzU4VGAN3DRjILlfqkFLb4wwQglEL/5Tcqas1QOmeE+y6xMsxtZuJfg5838kXc
+ 1mMbQEGpNYZY8bDEHxQQhXg8fANjWLAsOg0W/E1H2OePfBK1APs9jyTJhRV3X+2wwLQ8nyummDk
+ zoe9c9yVSLnEvQCngSMXWAKZn1fXohPlPjSFO20X+gUdF3upSvm1Y30GSNTq0BSBJMWUshctLXu
+ sWaxzRGI9tdXsbCdt691jyB3A+P9T1i9me4VVhBDy7fbqfBy//eB//Q/GMLR4bdknctpnniqFp7
+ ufeIviurt6Gy37JIGVjBQ5nf68mgGapIU/Ww0YGYuvKXcQGjOOuHzd6kUYDe2umwA08VTjpxjza
+ w8qOFQZO1ejaiR7YnmB/MqIkfF8WTGe2vptRAt6Btd2E5apyoDgj0+0elyymqa8SRSLHJaioLOX
+ UdeCKRtKI3PHUTPmX0+l9YH06f5/rMFozOe91M9tCgLiYqDllg2wHYF1sm2wQOXbLmFQh+wiwvO
+ QZ1hqiPZnZ9Y7bf1PigMHOW3nMU52B3ZS5R535fwgOMUAol0qSdQ4vGJ1QZHkNOGSubZ1qurnT5
+ Hj3lr9qEjAxzjL/kZtWMa7YeOZCgCVkbeYQgwb6QHabQ=
 X-Developer-Key: i=quic_bjorande@quicinc.com; a=openpgp;
  fpr=05DE03CC5F35EA4F0966D5250B1F393F0D99ADC5
 
-The USB IP-block found in most Qualcomm platforms is modelled in the
-Linux kernel as 3 different independent device drivers, but as shown by
-the already existing layering violations in the Qualcomm glue driver
-they can not be operated independently.
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-With the current implementation, the glue driver registers the core and
-has no way to know when this is done. As a result, e.g. the suspend
-callbacks needs to guard against NULL pointer dereferences when trying
-to peek into the struct dwc3 found in the drvdata of the child.
+The Synopsys DWC3 core is found either as a standard block or integrated
+with vendor glue logic. So far the latter has been described as two
+separate IP blocks in DeviceTree, but the two parts are not separate.
 
-Missing from the upstream Qualcomm USB support is handling of role
-switching, in which the glue needs to be notified upon DRD mode changes.
-Several attempts has been made through the years to register callbacks
-etc, but they always fall short when it comes to handling of the core's
-probe deferral on resources etc.
+In the case where the core is integrated together with vendor glue,
+resources such as clock and resets are often customized by the vendor,
+such that the standard properties doesn't make sense.
 
-Furhtermore, the DeviceTree binding is a direct representation of the
-Linux driver model, and doesn't necessarily describe "the USB IP-block".
+Split the snps,dwc3 binding in a description of the core properties and
+the standard "glue" properties, in order to allow vendor bindings to
+inherit the core properties.
 
-This series therefor attempts to flatten the driver split, and operate
-the glue and core out of the same platform_device instance. And in order
-to do this, the DeviceTree representation of the IP block is flattened.
-
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 ---
-Changes in v2:
-- Rewrite after ACPI removal, multiport support and interrupt fixes
-- Completely changed strategy for DeviceTree binding, as previous idea
-  of using snps,dwc3 as a generic fallback required unreasonable changes
-  to that binding.
-- Abandoned idea of supporting both flattened and unflattened device
-  model in the one driver. As Johan pointed out, it will leave the race
-  condition holes and will make the code harder to understand.
-  Furthermore, the role switching logic that we intend to introduce
-  following this would have depended on the user updating their
-  DeviceTree blobs.
-- Per above, introduced the dynamic DeviceTree rewrite
-- Link to v1: https://lore.kernel.org/all/20231016-dwc3-refactor-v1-0-ab4a84165470@quicinc.com/
+ .../devicetree/bindings/usb/snps,dwc3-common.yaml  | 417 +++++++++++++++++++++
+ .../devicetree/bindings/usb/snps,dwc3.yaml         | 391 +------------------
+ 2 files changed, 418 insertions(+), 390 deletions(-)
 
----
-Bjorn Andersson (7):
-      dt-bindings: usb: snps,dwc3: Split core description
-      dt-bindings: usb: Introduce qcom,snps-dwc3
-      of: dynamic: Don't discard children upon node attach
-      usb: dwc3: core: Expose core driver as library
-      usb: dwc3: qcom: Don't reply on drvdata during probe
-      usb: dwc3: qcom: Transition to flattened model
-      arm64: dts: qcom: sc8280x: Flatten the USB nodes
+diff --git a/Documentation/devicetree/bindings/usb/snps,dwc3-common.yaml b/Documentation/devicetree/bindings/usb/snps,dwc3-common.yaml
+new file mode 100644
+index 000000000000..65e7900f904a
+--- /dev/null
++++ b/Documentation/devicetree/bindings/usb/snps,dwc3-common.yaml
+@@ -0,0 +1,417 @@
++# SPDX-License-Identifier: GPL-2.0
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/usb/snps,dwc3-common.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Synopsys DesignWare USB3 Controller common properties
++
++select: false
++
++maintainers:
++  - Felipe Balbi <balbi@kernel.org>
++
++description:
++  Defines the properties of the DWC3 core as being embedded in either an
++  vendor-specific implementation or as a standalone component.
++
++allOf:
++  - $ref: usb-drd.yaml#
++  - if:
++      properties:
++        dr_mode:
++          const: peripheral
++
++      required:
++        - dr_mode
++    then:
++      $ref: usb.yaml#
++    else:
++      $ref: usb-xhci.yaml#
++
++properties:
++  extcon:
++    maxItems: 1
++    deprecated: true
++
++  usb-phy:
++    minItems: 1
++    items:
++      - description: USB2/HS PHY
++      - description: USB3/SS PHY
++
++  phys:
++    minItems: 1
++    maxItems: 19
++
++  phy-names:
++    minItems: 1
++    maxItems: 19
++    oneOf:
++      - items:
++          enum: [ usb2-phy, usb3-phy ]
++      - items:
++          pattern: "^usb(2-([0-9]|1[0-4])|3-[0-3])$"
++
++  snps,usb2-lpm-disable:
++    description: Indicate if we don't want to enable USB2 HW LPM for host
++      mode.
++    type: boolean
++
++  snps,usb3_lpm_capable:
++    description: Determines if platform is USB3 LPM capable
++    type: boolean
++
++  snps,usb2-gadget-lpm-disable:
++    description: Indicate if we don't want to enable USB2 HW LPM for gadget
++      mode.
++    type: boolean
++
++  snps,dis-start-transfer-quirk:
++    description:
++      When set, disable isoc START TRANSFER command failure SW work-around
++      for DWC_usb31 version 1.70a-ea06 and prior.
++    type: boolean
++
++  snps,disable_scramble_quirk:
++    description:
++      True when SW should disable data scrambling. Only really useful for FPGA
++      builds.
++    type: boolean
++
++  snps,has-lpm-erratum:
++    description: True when DWC3 was configured with LPM Erratum enabled
++    type: boolean
++
++  snps,lpm-nyet-threshold:
++    description: LPM NYET threshold
++    $ref: /schemas/types.yaml#/definitions/uint8
++
++  snps,u2exit_lfps_quirk:
++    description: Set if we want to enable u2exit lfps quirk
++    type: boolean
++
++  snps,u2ss_inp3_quirk:
++    description: Set if we enable P3 OK for U2/SS Inactive quirk
++    type: boolean
++
++  snps,req_p1p2p3_quirk:
++    description:
++      When set, the core will always request for P1/P2/P3 transition sequence.
++    type: boolean
++
++  snps,del_p1p2p3_quirk:
++    description:
++      When set core will delay P1/P2/P3 until a certain amount of 8B10B errors
++      occur.
++    type: boolean
++
++  snps,del_phy_power_chg_quirk:
++    description: When set core will delay PHY power change from P0 to P1/P2/P3.
++    type: boolean
++
++  snps,lfps_filter_quirk:
++    description: When set core will filter LFPS reception.
++    type: boolean
++
++  snps,rx_detect_poll_quirk:
++    description:
++      when set core will disable a 400us delay to start Polling LFPS after
++      RX.Detect.
++    type: boolean
++
++  snps,tx_de_emphasis_quirk:
++    description: When set core will set Tx de-emphasis value
++    type: boolean
++
++  snps,tx_de_emphasis:
++    description:
++      The value driven to the PHY is controlled by the LTSSM during USB3
++      Compliance mode.
++    $ref: /schemas/types.yaml#/definitions/uint8
++    enum:
++      - 0 # -6dB de-emphasis
++      - 1 # -3.5dB de-emphasis
++      - 2 # No de-emphasis
++
++  snps,dis_u3_susphy_quirk:
++    description: When set core will disable USB3 suspend phy
++    type: boolean
++
++  snps,dis_u2_susphy_quirk:
++    description: When set core will disable USB2 suspend phy
++    type: boolean
++
++  snps,dis_enblslpm_quirk:
++    description:
++      When set clears the enblslpm in GUSB2PHYCFG, disabling the suspend signal
++      to the PHY.
++    type: boolean
++
++  snps,dis-u1-entry-quirk:
++    description: Set if link entering into U1 needs to be disabled
++    type: boolean
++
++  snps,dis-u2-entry-quirk:
++    description: Set if link entering into U2 needs to be disabled
++    type: boolean
++
++  snps,dis_rxdet_inp3_quirk:
++    description:
++      When set core will disable receiver detection in PHY P3 power state.
++    type: boolean
++
++  snps,dis-u2-freeclk-exists-quirk:
++    description:
++      When set, clear the u2_freeclk_exists in GUSB2PHYCFG, specify that USB2
++      PHY doesn't provide a free-running PHY clock.
++    type: boolean
++
++  snps,dis-del-phy-power-chg-quirk:
++    description:
++      When set core will change PHY power from P0 to P1/P2/P3 without delay.
++    type: boolean
++
++  snps,dis-tx-ipgap-linecheck-quirk:
++    description: When set, disable u2mac linestate check during HS transmit
++    type: boolean
++
++  snps,parkmode-disable-ss-quirk:
++    description:
++      When set, all SuperSpeed bus instances in park mode are disabled.
++    type: boolean
++
++  snps,parkmode-disable-hs-quirk:
++    description:
++      When set, all HighSpeed bus instances in park mode are disabled.
++    type: boolean
++
++  snps,dis_metastability_quirk:
++    description:
++      When set, disable metastability workaround. CAUTION! Use only if you are
++      absolutely sure of it.
++    type: boolean
++
++  snps,dis-split-quirk:
++    description:
++      When set, change the way URBs are handled by the driver. Needed to
++      avoid -EPROTO errors with usbhid on some devices (Hikey 970).
++    type: boolean
++
++  snps,gfladj-refclk-lpm-sel-quirk:
++    description:
++      When set, run the SOF/ITP counter based on ref_clk.
++    type: boolean
++
++  snps,resume-hs-terminations:
++    description:
++      Fix the issue of HS terminations CRC error on resume by enabling this
++      quirk. When set, all the termsel, xcvrsel, opmode becomes 0 during end
++      of resume. This option is to support certain legacy ULPI PHYs.
++    type: boolean
++
++  snps,ulpi-ext-vbus-drv:
++    description:
++      Some ULPI USB PHY does not support internal VBUS supply, and driving
++      the CPEN pin, requires the configuration of the ulpi DRVVBUSEXTERNAL
++      bit. When set, the xhci host will configure the USB2 PHY drives VBUS
++      with an external supply.
++    type: boolean
++
++  snps,is-utmi-l1-suspend:
++    description:
++      True when DWC3 asserts output signal utmi_l1_suspend_n, false when
++      asserts utmi_sleep_n.
++    type: boolean
++
++  snps,hird-threshold:
++    description: HIRD threshold
++    $ref: /schemas/types.yaml#/definitions/uint8
++
++  snps,hsphy_interface:
++    description:
++      High-Speed PHY interface selection between UTMI+ and ULPI when the
++      DWC_USB3_HSPHY_INTERFACE has value 3.
++    $ref: /schemas/types.yaml#/definitions/string
++    enum: [utmi, ulpi]
++
++  snps,quirk-frame-length-adjustment:
++    description:
++      Value for GFLADJ_30MHZ field of GFLADJ register for post-silicon frame
++      length adjustment when the fladj_30mhz_sdbnd signal is invalid or
++      incorrect.
++    $ref: /schemas/types.yaml#/definitions/uint32
++    minimum: 0
++    maximum: 0x3f
++
++  snps,ref-clock-period-ns:
++    description:
++      Value for REFCLKPER field of GUCTL register for reference clock period in
++      nanoseconds, when the hardware set default does not match the actual
++      clock.
++
++      This binding is deprecated. Instead, provide an appropriate reference clock.
++    minimum: 8
++    maximum: 62
++    deprecated: true
++
++  snps,rx-thr-num-pkt:
++    description:
++      USB RX packet threshold count. In host mode, this field specifies
++      the space that must be available in the RX FIFO before the core can
++      start the corresponding USB RX transaction (burst).
++      In device mode, this field specifies the space that must be
++      available in the RX FIFO before the core can send ERDY for a
++      flow-controlled endpoint. It is only used for SuperSpeed.
++      The valid values for this field are from 1 to 15. (DWC3 SuperSpeed
++      USB 3.0 Controller Databook)
++    $ref: /schemas/types.yaml#/definitions/uint8
++    minimum: 1
++    maximum: 15
++
++  snps,rx-max-burst:
++    description:
++      Max USB RX burst size. In host mode, this field specifies the
++      Maximum Bulk IN burst the DWC_usb3 core can perform. When the system
++      bus is slower than the USB, RX FIFO can overrun during a long burst.
++      You can program a smaller value to this field to limit the RX burst
++      size that the core can perform. It only applies to SS Bulk,
++      Isochronous, and Interrupt IN endpoints in the host mode.
++      In device mode, this field specifies the NUMP value that is sent in
++      ERDY for an OUT endpoint.
++      The valid values for this field are from 1 to 16. (DWC3 SuperSpeed
++      USB 3.0 Controller Databook)
++    $ref: /schemas/types.yaml#/definitions/uint8
++    minimum: 1
++    maximum: 16
++
++  snps,tx-thr-num-pkt:
++    description:
++      USB TX packet threshold count. This field specifies the number of
++      packets that must be in the TXFIFO before the core can start
++      transmission for the corresponding USB transaction (burst).
++      This count is valid in both host and device modes. It is only used
++      for SuperSpeed operation.
++      Valid values are from 1 to 15. (DWC3 SuperSpeed USB 3.0 Controller
++      Databook)
++    $ref: /schemas/types.yaml#/definitions/uint8
++    minimum: 1
++    maximum: 15
++
++  snps,tx-max-burst:
++    description:
++      Max USB TX burst size. When the system bus is slower than the USB,
++      TX FIFO can underrun during a long burst. Program a smaller value
++      to this field to limit the TX burst size that the core can execute.
++      In Host mode, it only applies to SS Bulk, Isochronous, and Interrupt
++      OUT endpoints. This value is not used in device mode.
++      Valid values are from 1 to 16. (DWC3 SuperSpeed USB 3.0 Controller
++      Databook)
++    $ref: /schemas/types.yaml#/definitions/uint8
++    minimum: 1
++    maximum: 16
++
++  snps,rx-thr-num-pkt-prd:
++    description:
++      Periodic ESS RX packet threshold count (host mode only). Set this and
++      snps,rx-max-burst-prd to a valid, non-zero value 1-16 (DWC_usb31
++      programming guide section 1.2.4) to enable periodic ESS RX threshold.
++    $ref: /schemas/types.yaml#/definitions/uint8
++    minimum: 1
++    maximum: 16
++
++  snps,rx-max-burst-prd:
++    description:
++      Max periodic ESS RX burst size (host mode only). Set this and
++      snps,rx-thr-num-pkt-prd to a valid, non-zero value 1-16 (DWC_usb31
++      programming guide section 1.2.4) to enable periodic ESS RX threshold.
++    $ref: /schemas/types.yaml#/definitions/uint8
++    minimum: 1
++    maximum: 16
++
++  snps,tx-thr-num-pkt-prd:
++    description:
++      Periodic ESS TX packet threshold count (host mode only). Set this and
++      snps,tx-max-burst-prd to a valid, non-zero value 1-16 (DWC_usb31
++      programming guide section 1.2.3) to enable periodic ESS TX threshold.
++    $ref: /schemas/types.yaml#/definitions/uint8
++    minimum: 1
++    maximum: 16
++
++  snps,tx-max-burst-prd:
++    description:
++      Max periodic ESS TX burst size (host mode only). Set this and
++      snps,tx-thr-num-pkt-prd to a valid, non-zero value 1-16 (DWC_usb31
++      programming guide section 1.2.3) to enable periodic ESS TX threshold.
++    $ref: /schemas/types.yaml#/definitions/uint8
++    minimum: 1
++    maximum: 16
++
++  tx-fifo-resize:
++    description: Determines if the TX fifos can be dynamically resized depending
++      on the number of IN endpoints used and if bursting is supported.  This
++      may help improve bandwidth on platforms with higher system latencies, as
++      increased fifo space allows for the controller to prefetch data into its
++      internal memory.
++    type: boolean
++
++  tx-fifo-max-num:
++    description: Specifies the max number of packets the txfifo resizing logic
++      can account for when higher endpoint bursting is used. (bMaxBurst > 6) The
++      higher the number, the more fifo space the txfifo resizing logic will
++      allocate for that endpoint.
++    $ref: /schemas/types.yaml#/definitions/uint8
++    minimum: 3
++
++  snps,incr-burst-type-adjustment:
++    description:
++      Value for INCR burst type of GSBUSCFG0 register, undefined length INCR
++      burst type enable and INCRx type. A single value means INCRX burst mode
++      enabled. If more than one value specified, undefined length INCR burst
++      type will be enabled with burst lengths utilized up to the maximum
++      of the values passed in this property.
++    $ref: /schemas/types.yaml#/definitions/uint32-array
++    minItems: 1
++    maxItems: 8
++    uniqueItems: true
++    items:
++      enum: [1, 4, 8, 16, 32, 64, 128, 256]
++
++  num-hc-interrupters:
++    maximum: 8
++    default: 1
++
++  port:
++    $ref: /schemas/graph.yaml#/properties/port
++    description:
++      This port is used with the 'usb-role-switch' property  to connect the
++      dwc3 to type C connector.
++
++  ports:
++    $ref: /schemas/graph.yaml#/properties/ports
++    description:
++      Those ports should be used with any connector to the data bus of this
++      controller using the OF graph bindings specified if the "usb-role-switch"
++      property is used.
++
++    properties:
++      port@0:
++        $ref: /schemas/graph.yaml#/properties/port
++        description: High Speed (HS) data bus.
++
++      port@1:
++        $ref: /schemas/graph.yaml#/properties/port
++        description: Super Speed (SS) data bus.
++
++  wakeup-source:
++    $ref: /schemas/types.yaml#/definitions/flag
++    description:
++      Enable USB remote wakeup.
++
++required:
++  - compatible
++  - reg
++
++additionalProperties: true
++...
++
+diff --git a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
+index 1cd0ca90127d..4380bb6fa2f0 100644
+--- a/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
++++ b/Documentation/devicetree/bindings/usb/snps,dwc3.yaml
+@@ -15,18 +15,7 @@ description:
+   compatible string.
+ 
+ allOf:
+-  - $ref: usb-drd.yaml#
+-  - if:
+-      properties:
+-        dr_mode:
+-          const: peripheral
+-
+-      required:
+-        - dr_mode
+-    then:
+-      $ref: usb.yaml#
+-    else:
+-      $ref: usb-xhci.yaml#
++  - $ref: snps,dwc3-common.yaml#
+ 
+ properties:
+   compatible:
+@@ -70,32 +59,9 @@ properties:
+ 
+   dma-coherent: true
+ 
+-  extcon:
+-    maxItems: 1
+-    deprecated: true
+-
+   iommus:
+     maxItems: 1
+ 
+-  usb-phy:
+-    minItems: 1
+-    items:
+-      - description: USB2/HS PHY
+-      - description: USB3/SS PHY
+-
+-  phys:
+-    minItems: 1
+-    maxItems: 19
+-
+-  phy-names:
+-    minItems: 1
+-    maxItems: 19
+-    oneOf:
+-      - items:
+-          enum: [ usb2-phy, usb3-phy ]
+-      - items:
+-          pattern: "^usb(2-([0-9]|1[0-4])|3-[0-3])$"
+-
+   power-domains:
+     description:
+       The DWC3 has 2 power-domains. The power management unit (PMU) and
+@@ -109,361 +75,6 @@ properties:
+   resets:
+     minItems: 1
+ 
+-  snps,usb2-lpm-disable:
+-    description: Indicate if we don't want to enable USB2 HW LPM for host
+-      mode.
+-    type: boolean
+-
+-  snps,usb3_lpm_capable:
+-    description: Determines if platform is USB3 LPM capable
+-    type: boolean
+-
+-  snps,usb2-gadget-lpm-disable:
+-    description: Indicate if we don't want to enable USB2 HW LPM for gadget
+-      mode.
+-    type: boolean
+-
+-  snps,dis-start-transfer-quirk:
+-    description:
+-      When set, disable isoc START TRANSFER command failure SW work-around
+-      for DWC_usb31 version 1.70a-ea06 and prior.
+-    type: boolean
+-
+-  snps,disable_scramble_quirk:
+-    description:
+-      True when SW should disable data scrambling. Only really useful for FPGA
+-      builds.
+-    type: boolean
+-
+-  snps,has-lpm-erratum:
+-    description: True when DWC3 was configured with LPM Erratum enabled
+-    type: boolean
+-
+-  snps,lpm-nyet-threshold:
+-    description: LPM NYET threshold
+-    $ref: /schemas/types.yaml#/definitions/uint8
+-
+-  snps,u2exit_lfps_quirk:
+-    description: Set if we want to enable u2exit lfps quirk
+-    type: boolean
+-
+-  snps,u2ss_inp3_quirk:
+-    description: Set if we enable P3 OK for U2/SS Inactive quirk
+-    type: boolean
+-
+-  snps,req_p1p2p3_quirk:
+-    description:
+-      When set, the core will always request for P1/P2/P3 transition sequence.
+-    type: boolean
+-
+-  snps,del_p1p2p3_quirk:
+-    description:
+-      When set core will delay P1/P2/P3 until a certain amount of 8B10B errors
+-      occur.
+-    type: boolean
+-
+-  snps,del_phy_power_chg_quirk:
+-    description: When set core will delay PHY power change from P0 to P1/P2/P3.
+-    type: boolean
+-
+-  snps,lfps_filter_quirk:
+-    description: When set core will filter LFPS reception.
+-    type: boolean
+-
+-  snps,rx_detect_poll_quirk:
+-    description:
+-      when set core will disable a 400us delay to start Polling LFPS after
+-      RX.Detect.
+-    type: boolean
+-
+-  snps,tx_de_emphasis_quirk:
+-    description: When set core will set Tx de-emphasis value
+-    type: boolean
+-
+-  snps,tx_de_emphasis:
+-    description:
+-      The value driven to the PHY is controlled by the LTSSM during USB3
+-      Compliance mode.
+-    $ref: /schemas/types.yaml#/definitions/uint8
+-    enum:
+-      - 0 # -6dB de-emphasis
+-      - 1 # -3.5dB de-emphasis
+-      - 2 # No de-emphasis
+-
+-  snps,dis_u3_susphy_quirk:
+-    description: When set core will disable USB3 suspend phy
+-    type: boolean
+-
+-  snps,dis_u2_susphy_quirk:
+-    description: When set core will disable USB2 suspend phy
+-    type: boolean
+-
+-  snps,dis_enblslpm_quirk:
+-    description:
+-      When set clears the enblslpm in GUSB2PHYCFG, disabling the suspend signal
+-      to the PHY.
+-    type: boolean
+-
+-  snps,dis-u1-entry-quirk:
+-    description: Set if link entering into U1 needs to be disabled
+-    type: boolean
+-
+-  snps,dis-u2-entry-quirk:
+-    description: Set if link entering into U2 needs to be disabled
+-    type: boolean
+-
+-  snps,dis_rxdet_inp3_quirk:
+-    description:
+-      When set core will disable receiver detection in PHY P3 power state.
+-    type: boolean
+-
+-  snps,dis-u2-freeclk-exists-quirk:
+-    description:
+-      When set, clear the u2_freeclk_exists in GUSB2PHYCFG, specify that USB2
+-      PHY doesn't provide a free-running PHY clock.
+-    type: boolean
+-
+-  snps,dis-del-phy-power-chg-quirk:
+-    description:
+-      When set core will change PHY power from P0 to P1/P2/P3 without delay.
+-    type: boolean
+-
+-  snps,dis-tx-ipgap-linecheck-quirk:
+-    description: When set, disable u2mac linestate check during HS transmit
+-    type: boolean
+-
+-  snps,parkmode-disable-ss-quirk:
+-    description:
+-      When set, all SuperSpeed bus instances in park mode are disabled.
+-    type: boolean
+-
+-  snps,parkmode-disable-hs-quirk:
+-    description:
+-      When set, all HighSpeed bus instances in park mode are disabled.
+-    type: boolean
+-
+-  snps,dis_metastability_quirk:
+-    description:
+-      When set, disable metastability workaround. CAUTION! Use only if you are
+-      absolutely sure of it.
+-    type: boolean
+-
+-  snps,dis-split-quirk:
+-    description:
+-      When set, change the way URBs are handled by the driver. Needed to
+-      avoid -EPROTO errors with usbhid on some devices (Hikey 970).
+-    type: boolean
+-
+-  snps,gfladj-refclk-lpm-sel-quirk:
+-    description:
+-      When set, run the SOF/ITP counter based on ref_clk.
+-    type: boolean
+-
+-  snps,resume-hs-terminations:
+-    description:
+-      Fix the issue of HS terminations CRC error on resume by enabling this
+-      quirk. When set, all the termsel, xcvrsel, opmode becomes 0 during end
+-      of resume. This option is to support certain legacy ULPI PHYs.
+-    type: boolean
+-
+-  snps,ulpi-ext-vbus-drv:
+-    description:
+-      Some ULPI USB PHY does not support internal VBUS supply, and driving
+-      the CPEN pin, requires the configuration of the ulpi DRVVBUSEXTERNAL
+-      bit. When set, the xhci host will configure the USB2 PHY drives VBUS
+-      with an external supply.
+-    type: boolean
+-
+-  snps,is-utmi-l1-suspend:
+-    description:
+-      True when DWC3 asserts output signal utmi_l1_suspend_n, false when
+-      asserts utmi_sleep_n.
+-    type: boolean
+-
+-  snps,hird-threshold:
+-    description: HIRD threshold
+-    $ref: /schemas/types.yaml#/definitions/uint8
+-
+-  snps,hsphy_interface:
+-    description:
+-      High-Speed PHY interface selection between UTMI+ and ULPI when the
+-      DWC_USB3_HSPHY_INTERFACE has value 3.
+-    $ref: /schemas/types.yaml#/definitions/string
+-    enum: [utmi, ulpi]
+-
+-  snps,quirk-frame-length-adjustment:
+-    description:
+-      Value for GFLADJ_30MHZ field of GFLADJ register for post-silicon frame
+-      length adjustment when the fladj_30mhz_sdbnd signal is invalid or
+-      incorrect.
+-    $ref: /schemas/types.yaml#/definitions/uint32
+-    minimum: 0
+-    maximum: 0x3f
+-
+-  snps,ref-clock-period-ns:
+-    description:
+-      Value for REFCLKPER field of GUCTL register for reference clock period in
+-      nanoseconds, when the hardware set default does not match the actual
+-      clock.
+-
+-      This binding is deprecated. Instead, provide an appropriate reference clock.
+-    minimum: 8
+-    maximum: 62
+-    deprecated: true
+-
+-  snps,rx-thr-num-pkt:
+-    description:
+-      USB RX packet threshold count. In host mode, this field specifies
+-      the space that must be available in the RX FIFO before the core can
+-      start the corresponding USB RX transaction (burst).
+-      In device mode, this field specifies the space that must be
+-      available in the RX FIFO before the core can send ERDY for a
+-      flow-controlled endpoint. It is only used for SuperSpeed.
+-      The valid values for this field are from 1 to 15. (DWC3 SuperSpeed
+-      USB 3.0 Controller Databook)
+-    $ref: /schemas/types.yaml#/definitions/uint8
+-    minimum: 1
+-    maximum: 15
+-
+-  snps,rx-max-burst:
+-    description:
+-      Max USB RX burst size. In host mode, this field specifies the
+-      Maximum Bulk IN burst the DWC_usb3 core can perform. When the system
+-      bus is slower than the USB, RX FIFO can overrun during a long burst.
+-      You can program a smaller value to this field to limit the RX burst
+-      size that the core can perform. It only applies to SS Bulk,
+-      Isochronous, and Interrupt IN endpoints in the host mode.
+-      In device mode, this field specifies the NUMP value that is sent in
+-      ERDY for an OUT endpoint.
+-      The valid values for this field are from 1 to 16. (DWC3 SuperSpeed
+-      USB 3.0 Controller Databook)
+-    $ref: /schemas/types.yaml#/definitions/uint8
+-    minimum: 1
+-    maximum: 16
+-
+-  snps,tx-thr-num-pkt:
+-    description:
+-      USB TX packet threshold count. This field specifies the number of
+-      packets that must be in the TXFIFO before the core can start
+-      transmission for the corresponding USB transaction (burst).
+-      This count is valid in both host and device modes. It is only used
+-      for SuperSpeed operation.
+-      Valid values are from 1 to 15. (DWC3 SuperSpeed USB 3.0 Controller
+-      Databook)
+-    $ref: /schemas/types.yaml#/definitions/uint8
+-    minimum: 1
+-    maximum: 15
+-
+-  snps,tx-max-burst:
+-    description:
+-      Max USB TX burst size. When the system bus is slower than the USB,
+-      TX FIFO can underrun during a long burst. Program a smaller value
+-      to this field to limit the TX burst size that the core can execute.
+-      In Host mode, it only applies to SS Bulk, Isochronous, and Interrupt
+-      OUT endpoints. This value is not used in device mode.
+-      Valid values are from 1 to 16. (DWC3 SuperSpeed USB 3.0 Controller
+-      Databook)
+-    $ref: /schemas/types.yaml#/definitions/uint8
+-    minimum: 1
+-    maximum: 16
+-
+-  snps,rx-thr-num-pkt-prd:
+-    description:
+-      Periodic ESS RX packet threshold count (host mode only). Set this and
+-      snps,rx-max-burst-prd to a valid, non-zero value 1-16 (DWC_usb31
+-      programming guide section 1.2.4) to enable periodic ESS RX threshold.
+-    $ref: /schemas/types.yaml#/definitions/uint8
+-    minimum: 1
+-    maximum: 16
+-
+-  snps,rx-max-burst-prd:
+-    description:
+-      Max periodic ESS RX burst size (host mode only). Set this and
+-      snps,rx-thr-num-pkt-prd to a valid, non-zero value 1-16 (DWC_usb31
+-      programming guide section 1.2.4) to enable periodic ESS RX threshold.
+-    $ref: /schemas/types.yaml#/definitions/uint8
+-    minimum: 1
+-    maximum: 16
+-
+-  snps,tx-thr-num-pkt-prd:
+-    description:
+-      Periodic ESS TX packet threshold count (host mode only). Set this and
+-      snps,tx-max-burst-prd to a valid, non-zero value 1-16 (DWC_usb31
+-      programming guide section 1.2.3) to enable periodic ESS TX threshold.
+-    $ref: /schemas/types.yaml#/definitions/uint8
+-    minimum: 1
+-    maximum: 16
+-
+-  snps,tx-max-burst-prd:
+-    description:
+-      Max periodic ESS TX burst size (host mode only). Set this and
+-      snps,tx-thr-num-pkt-prd to a valid, non-zero value 1-16 (DWC_usb31
+-      programming guide section 1.2.3) to enable periodic ESS TX threshold.
+-    $ref: /schemas/types.yaml#/definitions/uint8
+-    minimum: 1
+-    maximum: 16
+-
+-  tx-fifo-resize:
+-    description: Determines if the TX fifos can be dynamically resized depending
+-      on the number of IN endpoints used and if bursting is supported.  This
+-      may help improve bandwidth on platforms with higher system latencies, as
+-      increased fifo space allows for the controller to prefetch data into its
+-      internal memory.
+-    type: boolean
+-
+-  tx-fifo-max-num:
+-    description: Specifies the max number of packets the txfifo resizing logic
+-      can account for when higher endpoint bursting is used. (bMaxBurst > 6) The
+-      higher the number, the more fifo space the txfifo resizing logic will
+-      allocate for that endpoint.
+-    $ref: /schemas/types.yaml#/definitions/uint8
+-    minimum: 3
+-
+-  snps,incr-burst-type-adjustment:
+-    description:
+-      Value for INCR burst type of GSBUSCFG0 register, undefined length INCR
+-      burst type enable and INCRx type. A single value means INCRX burst mode
+-      enabled. If more than one value specified, undefined length INCR burst
+-      type will be enabled with burst lengths utilized up to the maximum
+-      of the values passed in this property.
+-    $ref: /schemas/types.yaml#/definitions/uint32-array
+-    minItems: 1
+-    maxItems: 8
+-    uniqueItems: true
+-    items:
+-      enum: [1, 4, 8, 16, 32, 64, 128, 256]
+-
+-  num-hc-interrupters:
+-    maximum: 8
+-    default: 1
+-
+-  port:
+-    $ref: /schemas/graph.yaml#/properties/port
+-    description:
+-      This port is used with the 'usb-role-switch' property  to connect the
+-      dwc3 to type C connector.
+-
+-  ports:
+-    $ref: /schemas/graph.yaml#/properties/ports
+-    description:
+-      Those ports should be used with any connector to the data bus of this
+-      controller using the OF graph bindings specified if the "usb-role-switch"
+-      property is used.
+-
+-    properties:
+-      port@0:
+-        $ref: /schemas/graph.yaml#/properties/port
+-        description: High Speed (HS) data bus.
+-
+-      port@1:
+-        $ref: /schemas/graph.yaml#/properties/port
+-        description: Super Speed (SS) data bus.
+-
+-  wakeup-source:
+-    $ref: /schemas/types.yaml#/definitions/flag
+-    description:
+-      Enable USB remote wakeup.
+-
+ unevaluatedProperties: false
+ 
+ required:
 
- .../devicetree/bindings/usb/qcom,dwc3.yaml         |  13 +-
- .../devicetree/bindings/usb/qcom,snps-dwc3.yaml    | 608 +++++++++++++++++++++
- .../devicetree/bindings/usb/snps,dwc3-common.yaml  | 417 ++++++++++++++
- .../devicetree/bindings/usb/snps,dwc3.yaml         | 391 +------------
- arch/arm64/boot/dts/qcom/sa8295p-adp.dts           |  12 +-
- arch/arm64/boot/dts/qcom/sa8540p-ride.dts          |   5 +-
- arch/arm64/boot/dts/qcom/sc8280xp-crd.dts          |  12 +-
- .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     |  11 +-
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi             | 138 +++--
- drivers/of/dynamic.c                               |   1 -
- drivers/usb/dwc3/core.c                            | 169 ++++--
- drivers/usb/dwc3/core.h                            |   3 +
- drivers/usb/dwc3/dwc3-qcom.c                       | 323 ++++++++---
- 13 files changed, 1483 insertions(+), 620 deletions(-)
----
-base-commit: 864b1099d16fc7e332c3ad7823058c65f890486c
-change-id: 20231016-dwc3-refactor-931e3b08a8b9
-
-Best regards,
 -- 
-Bjorn Andersson <quic_bjorande@quicinc.com>
+2.45.2
 
 
