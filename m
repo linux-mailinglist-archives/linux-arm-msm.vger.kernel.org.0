@@ -1,59 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-28285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D01C94E5C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 06:29:22 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 285FF94E5C3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 06:31:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0A30A281800
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 04:29:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AE09BB21214
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 04:31:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3228413E02D;
-	Mon, 12 Aug 2024 04:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 973DA13633B;
+	Mon, 12 Aug 2024 04:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NKyoJiM4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UxMNyTDl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610F133C7;
-	Mon, 12 Aug 2024 04:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF9B37B;
+	Mon, 12 Aug 2024 04:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723436958; cv=none; b=aXczvzAoXBu0VzdUidvox+xO62ohYN+MuyTDm1+WubYZub6s9JjkFMBfWdI9F3nqCfvKC5H03CAK44hzzQQ/epmzEi8PGnCzehJ73r5M+qXbTrYDM4/fLuNrH9oKV3PtP2+MzFIZG+B8AwLO8dPnGOBH9VOk1Melq64Rsy5KK5c=
+	t=1723437075; cv=none; b=D3PEtZ8Fd/XPgCQur/ebJIb0IbPCpPvmZgGAWxFR54g4byn2G+hSK1JCwFyg3MyQDdKa7Z/WsxjSNooI1ugA69uIpw/uz7lC7e2xbV1ZJEZM8CratO7eRIpzRfQ7ZE9/4zNvnVVv6IIPUFKMBU7fp3kLxYnr80SYm+ZLDo9aSj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723436958; c=relaxed/simple;
-	bh=2IH3vs5vfdoTfuI7fwaFWDiJ6u84pkj3MfXxTxsoavU=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=BBXFu1W1YhzBytaTvnf6A91WXSch6E98yVmNQiKMqzuBFJ8JErno+uL1s3Dm+lKrfcrRai+XCmjJCjJJdPCOEU9Pgxgh2Evw05jVJfNqPCRVh1cUVKSDPVXH1/37eD7y8K3IiF/S6lFukWrKPpxUd7QV2nK/0SSMePwnOu8lJtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NKyoJiM4; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1723437075; c=relaxed/simple;
+	bh=4EXmUsFo8b2xhR1P7lQQvnCd0Xtbmq9kHad9mhdzlz8=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=aSaAVuMK9ShjbCTEOq/oiBmWMrmpwDRwwOcLD6eE4xD3QWR7DAgU6r8G5/OAXcjJ13sRCAIix6UJKfmtp52KElLj5U7dE5FnqNTTYU7ZabdzQDuQl0l9D2hqziluLxxyUr5Ki3zK0ROo6jl4hM3lAzU1zK/b9mG9AcVqU7ePs7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UxMNyTDl; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47C2Zpqg026990;
-	Mon, 12 Aug 2024 04:29:06 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47C2ZuqM014292;
+	Mon, 12 Aug 2024 04:31:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=98ObzfEly/d4Nr2Nilamu/
-	lbiOrA4bHdu/SU/01hHw4=; b=NKyoJiM4gPGqq3fMSOBNqaS50+VQLL6vqGpJ2T
-	RDcbHfJ/zWDGQqJBvOwzCBl+eCYQAN6ZiNRAB7XAe+1dLdIqRBbLPv8BKhmA42oJ
-	CLZTC8m1YclmoecF1VcsIEu5dFPQ8Mf977eECmHPYaA8Sr/+Y75irZ5vt3LQ0ULQ
-	vJ61w4IKL+W1x+6J7CJGIAQWZPinl2x8F+kFqtr/wvzJrBsOuOD8N4WjRDR8Eh3I
-	+gsiTq60VxkfjiliWvo43XRdQQiPdHTEAhR/1/I3h4657WptCUzSMco3NWcGpk98
-	CVibbpwUdNHQx4cex2F/9slwkrniq7P0UgBJzyv78QiqJTDQ==
+	:mime-version:subject:to; s=qcppdkim1; bh=IeGrfFSUKNXY/SQdHsLOXN
+	+RZ1hfsllv4M0nMVD7vZM=; b=UxMNyTDlSZ908fHolb2WlitweTUxGYgeiLoMVz
+	prxtXr+S1kBvBuMjUxbgbmRVq7A7+cd4Y6S7U5ZQlipzci8JhyQBARB9oEquc6gO
+	hgT1OFBXtlSEA+ieV2gyYmSP2xgYi1i2IUoEEX8X0qNfBSxEHetydxill0grb2Yr
+	F6eknD9lc9PS8B37REp2XumK6tdxI/fo36Rjw1A/G6mgmUBR9gCI9x+Bf1Uzxgfd
+	7eDhGXViHxI4MJ6RPUaQlFGtSL60YUlFTVZBHv1EFDRYhAszgK/ci6owzNqYyTnZ
+	+9wBtjbaRbGARLR0aq5eS9H7nN9//6ZbUujxPoaJV8iG/CpA==
 Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x1d4at7s-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x18xtu9b-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 12 Aug 2024 04:29:06 +0000 (GMT)
+	Mon, 12 Aug 2024 04:31:05 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47C4T522017483
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47C4V3YL020811
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 12 Aug 2024 04:29:05 GMT
+	Mon, 12 Aug 2024 04:31:03 GMT
 Received: from jiegan-gv.qualcomm.com (10.80.80.8) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 11 Aug 2024 21:29:01 -0700
+ 15.2.1544.9; Sun, 11 Aug 2024 21:31:00 -0700
 From: Jie Gan <quic_jiegan@quicinc.com>
 To: Suzuki K Poulose <suzuki.poulose@arm.com>,
         Alexander Shishkin
@@ -65,12 +65,12 @@ CC: Jinlong Mao <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
         Yuanfang Zhang
 	<quic_yuanfang@quicinc.com>,
         Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni
-	<quic_tsoni@quicinc.com>,
-        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>
-Subject: [PATCH v1 RESEND] Coresight: Set correct cs_mode for dummy source to fix disable issue
-Date: Mon, 12 Aug 2024 12:28:44 +0800
-Message-ID: <20240812042844.2890115-1-quic_jiegan@quicinc.com>
+        Song Chai
+	<quic_songchai@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH v2 RESEND] Coresight: Set correct cs_mode for TPDM to fix disable issue
+Date: Mon, 12 Aug 2024 12:30:43 +0800
+Message-ID: <20240812043043.2890694-1-quic_jiegan@quicinc.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -84,53 +84,56 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: uIxFwSbxAE1rUL_PdyCLOA8U3Lkluy0P
-X-Proofpoint-GUID: uIxFwSbxAE1rUL_PdyCLOA8U3Lkluy0P
+X-Proofpoint-GUID: eBUZWovCI_mdj7PdZ2BQX_x5oBlsHJx9
+X-Proofpoint-ORIG-GUID: eBUZWovCI_mdj7PdZ2BQX_x5oBlsHJx9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-11_25,2024-08-07_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- adultscore=0 phishscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999
- malwarescore=0 bulkscore=0 priorityscore=1501 clxscore=1015
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408120032
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
+ suspectscore=0 phishscore=0 malwarescore=0 mlxscore=0 spamscore=0
+ lowpriorityscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408120033
 
 The coresight_disable_source_sysfs function should verify the
 mode of the coresight device before disabling the source.
-However, the mode for the dummy source device is always set to
+
+However, the mode for the TPDM device is always set to
 CS_MODE_DISABLED, resulting in the check consistently failing.
-As a result, dummy source cannot be properly disabled.
+As a result, TPDM cannot be properly disabled.
 
 Configure CS_MODE_SYSFS/CS_MODE_PERF during the enablement.
 Configure CS_MODE_DISABLED during the disablement.
 
-Fixes: 9d3ba0b6c056 ("Coresight: Add coresight dummy driver")
+Fixes: b3c71626a933 ("Coresight: Add coresight TPDM source driver")
 Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
 ---
- drivers/hwtracing/coresight/coresight-dummy.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hwtracing/coresight/coresight-tpdm.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/hwtracing/coresight/coresight-dummy.c b/drivers/hwtracing/coresight/coresight-dummy.c
-index ac70c0b491be..dab389a5507c 100644
---- a/drivers/hwtracing/coresight/coresight-dummy.c
-+++ b/drivers/hwtracing/coresight/coresight-dummy.c
-@@ -23,6 +23,9 @@ DEFINE_CORESIGHT_DEVLIST(sink_devs, "dummy_sink");
- static int dummy_source_enable(struct coresight_device *csdev,
- 			       struct perf_event *event, enum cs_mode mode)
- {
-+	if (!coresight_take_mode(csdev, mode))
-+		return -EBUSY;
-+
- 	dev_dbg(csdev->dev.parent, "Dummy source enabled\n");
+diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+index a9708ab0d488..90a5105f6199 100644
+--- a/drivers/hwtracing/coresight/coresight-tpdm.c
++++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+@@ -449,6 +449,11 @@ static int tpdm_enable(struct coresight_device *csdev, struct perf_event *event,
+ 		return -EBUSY;
+ 	}
  
- 	return 0;
-@@ -31,6 +34,7 @@ static int dummy_source_enable(struct coresight_device *csdev,
- static void dummy_source_disable(struct coresight_device *csdev,
- 				 struct perf_event *event)
- {
++	if (!coresight_take_mode(csdev, mode)) {
++		spin_unlock(&drvdata->spinlock);
++		return -EBUSY;
++	}
++
+ 	__tpdm_enable(drvdata);
+ 	drvdata->enable = true;
+ 	spin_unlock(&drvdata->spinlock);
+@@ -506,6 +511,7 @@ static void tpdm_disable(struct coresight_device *csdev,
+ 	}
+ 
+ 	__tpdm_disable(drvdata);
 +	coresight_set_mode(csdev, CS_MODE_DISABLED);
- 	dev_dbg(csdev->dev.parent, "Dummy source disabled\n");
- }
+ 	drvdata->enable = false;
+ 	spin_unlock(&drvdata->spinlock);
  
 -- 
 2.34.1
