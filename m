@@ -1,75 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-28304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0106D94EBD8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 13:32:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92D4A94ECC3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 14:20:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB4FD2811CB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 11:32:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 493631F2121A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 12:20:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43647175D2B;
-	Mon, 12 Aug 2024 11:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DC72170A36;
+	Mon, 12 Aug 2024 12:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dS781GUs"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cMbjAZL/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898D917108B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Aug 2024 11:32:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD1D1E488;
+	Mon, 12 Aug 2024 12:20:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723462336; cv=none; b=jUle1p9wKy9ddzMHA79Og2rDlQWoyXDJFbQFjg73zY+zJ9t8Ypi0Chqlt4A+i4bNgFskb/DxGr1ysbPVLpP+4P1QZrxiWuTEwcnkzC7kCsCqlgHPBdXsapnNTS8j8lS4o4TVfAg35iwfMQu9pt5C8fuVVmOmGChlxDqHPA4dV5I=
+	t=1723465253; cv=none; b=I+tt9s5u/GvTMBD4Yckf0zKko4Pu2Q1ZCUiW6eh/xS3BZUVzokitAv6HhsNa/X5+mLaUFEM8EZHbBp8VBju88WiMsEt8KNX7uLEFmV9XonzD1wo5nvhjrHZkua7vV8RzUhNtx9y5B/9QDH2f0hHgHr8CbwWWJf6gnUyqbtu6dP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723462336; c=relaxed/simple;
-	bh=Sn9icOhMEkpoF0A6tI3yE7WA9lul1v5onDCX2r2+Qrk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Vd3x7fv1owoI222U++tvaU2YZuMgk2nl8FbVviOUtxQhoywoRZEAujN/8rGTjLM+H5SWyWNLMVMXcu9WW/uWIySFQ1F4VRKFLNJufObVXdGHnUVMNh2r5wParehX+pNytgKDvRfu9vpXLDTYelP1U4w5je7hsxeu6JicAm2VzbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dS781GUs; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-428178fc07eso28872845e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Aug 2024 04:32:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723462333; x=1724067133; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pcyTK/oFMaR/LKJwL+lhFRbctKc9N7kd/DA0SliDqNw=;
-        b=dS781GUsOJpq/5SPqVVB60Ti90hTdYQZEfWn90Ul/xJzZp0drpkmPJf30f5VEKKphU
-         aSle2ZnKdc9DLiP3XgICnWzzh2u/9ceeRvR4pHs05A9Tk7uigBhn9cVjMza+fgNGHcZb
-         wNy+yY9uIheV/5u0It4vqdzx+zVBCwYIXWdj32wvTs02MMxkpXB0VB/8jNhpmm9wnkOX
-         q9roSdAkYntSq7X9JZhupgJiZmS4ol8fSX1d1PoXY3PkwkdRLIafH2eHFOsvKkkY7sGv
-         DoOZVkSEX9lJHtzMDIinS1ukDLu+jcgmig5z1K43om4tENRPcU7pS+PpAUcfZ634yCvG
-         umVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723462333; x=1724067133;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pcyTK/oFMaR/LKJwL+lhFRbctKc9N7kd/DA0SliDqNw=;
-        b=rM7TrA5noe3hAU5Fn/Mgpl9sLojDOpfxxm/lYDg9AtIBblMip/oENvMzgP0jeTrt5N
-         vMeDUy2e46vgvpLQ6MnTULQBXkuSfmwPAwnNqc3nb2F3vVFUESWVrDlg/nPl7UdmmHHs
-         ToKPEs3u3aG7H92axg9nrusLjgMQShpqols0qQDyQyAreldpOm25Dq0rtT5uG2NegNtu
-         HT5zUVRMKzx1xNzm/O3zV2KTqgMtiSg8vfiUkC8ovuuF3X6h/Z9wMVh4FWStTE7Hxa95
-         n2ohes0uQHkUGZVrwwTgqBB93SweeBYjX0AZW5nRMDFZBvwxPKgH/57lhZu1eGoCJ3GD
-         c89Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWWOPRcR12u9CESmjj2JpRlQiHETIArtzdrL9H6uTwyq9FWwaw7FBgOmvqoZionYnZ3RapLLeL33Lfjub/a@vger.kernel.org
-X-Gm-Message-State: AOJu0YzP/uwdyr9Tc1mRA1PxvXJrlFuwPoFA5fCkM15LWBsi3II0ULou
-	+K+GM8QNY1v6IdVU2LC70WMoF/LwlRTPHtTkXYhWajB+gkq8KKkWJRNEqRNd4AJfTamOYKFK3Zm
-	JuQA=
-X-Google-Smtp-Source: AGHT+IFKMt3nGJr3TmBQHVfbwLzP7ID+7QLqJpZ8Bb1C7l06gp6nyMd4PGALNfePozuyllzfm0jwZg==
-X-Received: by 2002:a5d:4ad1:0:b0:362:8ec2:53d6 with SMTP id ffacd0b85a97d-36d61cd3550mr8292553f8f.61.1723462332792;
-        Mon, 12 Aug 2024 04:32:12 -0700 (PDT)
-Received: from [192.168.0.25] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36e4c937b6esm7261016f8f.32.2024.08.12.04.32.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Aug 2024 04:32:12 -0700 (PDT)
-Message-ID: <e7476a09-4e11-4171-89ed-61b41c9f5cc9@linaro.org>
-Date: Mon, 12 Aug 2024 12:32:10 +0100
+	s=arc-20240116; t=1723465253; c=relaxed/simple;
+	bh=1YupIR/WrFatl2Xt2QU3NY9HGthGZzzdM1AN2OFbVoY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=rcf2Vi/DFToxRUG26saPhJX50MQSrdvH6g2v1lD4/juO7vU0JEFsKKgmCJB6bK5Uj4lyzPXs/mFsg1ef61p9o27Lk/joidl22nJ6GqRgJkQzGY7jeUwOduOyBdhX4DLOvO2L3nRPJbjucWaM5xnmxlZXIaBfqddq1mZisa4F1Zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cMbjAZL/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47CBGirj013406;
+	Mon, 12 Aug 2024 12:20:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	qWPtKDhp4eEtFiuCOfIQxpQ/ou+Qfq27kgkQVcx5ZkI=; b=cMbjAZL/yhVHT5Ui
+	x8Hup7xL1YOojbz8FmcwV2ct2GZgqnrHbB43uMEtHC7r644c7LgJRhncPs1yR12Q
+	9X3saVd5bh82b0L3OfaiurJGi/l+ol7x88PAWUbFe+Ot90I1MvoGrxCMP9xiIwrg
+	B6r2xxsT8ecCUB45UInvJNZFcTV73UWiyX02tjvUnN3PnzHlpNGbOIpd+hCvE2ra
+	ZapPvY84SrHDlg8LwX80vfSF1cJ41lNtULO5q2szhJ1gEPoZI8q8Uuiqq+DjZ3/h
+	iF7bbSqOXa8F4m/sNdOkdl++lzfmbgvvdH9xkxYgmJc7WV8PKeyONDWLHHwlt7YY
+	7R57/g==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x17y43ay-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Aug 2024 12:20:47 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47CCKkbg025121
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Aug 2024 12:20:46 GMT
+Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 12 Aug
+ 2024 05:20:41 -0700
+Message-ID: <8b2ce0a5-ac79-462f-aed1-48de90973a66@quicinc.com>
+Date: Mon, 12 Aug 2024 20:20:38 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,13 +67,14 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 04/13] media: qcom: camss: csiphy: Add an init callback to
  CSI PHY devices
-To: Depeng Shao <quic_depengs@quicinc.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, rfoss@kernel.org,
- todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: quic_eberman@quicinc.com, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Vladimir Zapolskiy
+	<vladimir.zapolskiy@linaro.org>,
+        <rfoss@kernel.org>, <todor.too@gmail.com>, <mchehab@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>
+CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
 References: <20240709160656.31146-1-quic_depengs@quicinc.com>
  <20240709160656.31146-5-quic_depengs@quicinc.com>
  <6dfc2c79-fc6d-4eed-bf3f-94396130cb4f@linaro.org>
@@ -96,38 +85,41 @@ References: <20240709160656.31146-1-quic_depengs@quicinc.com>
  <7c03280f-908d-435d-acef-b6bf4f865029@quicinc.com>
  <ff12ce12-41d6-4aa5-ab97-222b07146e36@linaro.org>
  <3241cc15-c920-4c88-ac53-005903baf9e7@quicinc.com>
+ <e7476a09-4e11-4171-89ed-61b41c9f5cc9@linaro.org>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <3241cc15-c920-4c88-ac53-005903baf9e7@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Depeng Shao <quic_depengs@quicinc.com>
+In-Reply-To: <e7476a09-4e11-4171-89ed-61b41c9f5cc9@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: aAMEPhFpRKYy2-ETS2FBa9e58br64j89
+X-Proofpoint-ORIG-GUID: aAMEPhFpRKYy2-ETS2FBa9e58br64j89
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-12_02,2024-08-12_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ bulkscore=0 adultscore=0 impostorscore=0 spamscore=0 mlxlogscore=838
+ suspectscore=0 phishscore=0 clxscore=1015 mlxscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408120092
 
-On 08/08/2024 15:02, Depeng Shao wrote:
-> I'm updating the code based on above comments, but I meet crash issue if 
-> I move the offset assignment to csiphy_gen2_config_lanes, since the 
-> csiphy->res->hw_ops->reset(csiphy) is called earlier than 
-> csiphy_gen2_config_lanes, so if we don't have the .init interface, we 
-> only can move this offset value to `struct csiphy_subdev_resources`, but 
-> if we add the offset to `struct csiphy_subdev_resources`, then below two 
-> patches are also can be dropped.
-> 
-> 
-> [PATCH 05/13] media: qcom: camss: csiphy-3ph: Move CSIPHY variables to 
-> data field inside csiphy struct
-> [PATCH 06/13] media: qcom: camss: csiphy-3ph: Use an offset variable to 
-> find common control regs
-> 
-> 
-> Could you please comment on if I need to add the CSI_COMMON_CTR offset 
-> to res directly?
-> Or add back the .init interface?
+Hi Bryan,
 
-Ah, I hadn't recalled why the .init was added -> because sequencing.
+On 8/12/2024 7:32 PM, Bryan O'Donoghue wrote:
+> 
+> Ah, I hadn't recalled why the .init was added -> because sequencing.
+> 
+> Lets retain the patch but expand the commit log to explain why the init 
+> is being added, instead of jumping through hoops to restructure to get 
+> rid of it.
+> 
 
-Lets retain the patch but expand the commit log to explain why the init 
-is being added, instead of jumping through hoops to restructure to get 
-rid of it.
+Thanks for the confirmation. I will retain the patch and add more commit 
+log.
 
----
-bod
+Thanks,
+Depeng
 
