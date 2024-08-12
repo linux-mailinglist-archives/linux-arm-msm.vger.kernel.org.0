@@ -1,126 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-28300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C53F194E7B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 09:25:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E384994E98C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 11:18:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6FA061F23A5D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 07:25:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9FF53283F59
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 09:18:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C96111607B8;
-	Mon, 12 Aug 2024 07:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19F6716D324;
+	Mon, 12 Aug 2024 09:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="DSL2YLOf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GbqRh4b6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2033115B0E2;
-	Mon, 12 Aug 2024 07:24:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCA220323;
+	Mon, 12 Aug 2024 09:18:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723447485; cv=none; b=pmDwv/FtbfDfgiUe6N39RX1ZX5uWMMwOPxPPILrBMENtQ2LougQT0Dgt6cjpB9c8KtU3OTgQjRyk2nRD1AKw8pqUdOMOlHqj5Q7D5/7ey+TYoL5LnL+80ldx3PSe3hsuu3P8CvsvxHqxLCo0QeyXgT2Kjptc0FZgmwYOMXk2Gf4=
+	t=1723454304; cv=none; b=ODuAlWnd1TgMNXW0DPtCKz5XyUZZssQ+4YNfrqpvRoBCEkQpJ/XarzfpBKfndSMMEH9ta2yn+a2LQSOL3cFBlEwuqeRTIaY541cIotDTdHtOXzYj2KiUmkCPQi9mFYNqfUrUyshA24dkAxuSL7LavwoVfh2ytlbb/RShwFC70hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723447485; c=relaxed/simple;
-	bh=M4WD08AFJfwxIMKP9dD+34UuQOtKj8NZVES++ZlP7r8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=dNaAmHvY0vUxnH0PF+w8qg2UuDC5WGOA04lglx9sGjjgdkNNAcd29vvi37X5YibfPKpps3UXh/pdq8j3TqGsymqvuqLK/pUyYlJKgMmRtm+C3FVgnJRsUoI65nwx6ETisHFAqd7e14xaiacNeBhD10BNA/lg4AM6ylL/pvuBfmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=DSL2YLOf; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723447484; x=1754983484;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=M4WD08AFJfwxIMKP9dD+34UuQOtKj8NZVES++ZlP7r8=;
-  b=DSL2YLOf62XpwOMeibz9FN1+mUA+53bL5Ap5tj05g5//CDdoOTMpIasf
-   yjJzrvgoFzKQAiLd25S+RNLi/NXtFIgbb8tm3JusfV6cAXsGgnoAppSWG
-   ozukNA7ZB9XJA9RPE8gaZ+sg1BVsw2vxce4YIhSaK3oSay3dQhlfV3E64
-   Bjf+JUU1aOU0sxLWfmRV2xW0tDzsoOiK79ikN0LIqeGTZPpFZSr1nWAB5
-   DfGBkbjUz6/lgTc9em1wHojNFTyTmzgi80mURZHmB/+dvARcofeGN43mX
-   /s9JKsOFfETw8y35d6gJ0JaX05C8VFNRUYxyraE6nt/6hg7QgUkBkX/nH
-   Q==;
-X-CSE-ConnectionGUID: 5Qff7fbeQP+Ax/aDxB1KSA==
-X-CSE-MsgGUID: ZHztckBBS/+LzC1BTAYCrQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11161"; a="32691592"
-X-IronPort-AV: E=Sophos;i="6.09,282,1716274800"; 
-   d="scan'208";a="32691592"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Aug 2024 00:24:44 -0700
-X-CSE-ConnectionGUID: LhQxLe41QF2DxBJXFNM/Ww==
-X-CSE-MsgGUID: x1X5zubTSTiooV29cneh8g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,282,1716274800"; 
-   d="scan'208";a="62829623"
-Received: from allen-box.sh.intel.com ([10.239.159.127])
-  by fmviesa004.fm.intel.com with ESMTP; 12 Aug 2024 00:24:39 -0700
-From: Lu Baolu <baolu.lu@linux.intel.com>
-To: Dmitry Osipenko <digetx@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Kevin Tian <kevin.tian@intel.com>
-Cc: linux-media@vger.kernel.org,
-	linux-tegra@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	iommu@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 2/2] media: venus: firmware: Use iommu_paging_domain_alloc()
-Date: Mon, 12 Aug 2024 15:21:05 +0800
-Message-Id: <20240812072105.9578-2-baolu.lu@linux.intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240812072105.9578-1-baolu.lu@linux.intel.com>
-References: <20240812072105.9578-1-baolu.lu@linux.intel.com>
+	s=arc-20240116; t=1723454304; c=relaxed/simple;
+	bh=waG2umAU2bULr6PEMnWoGimBLt6Km0H8zfsaKJVPGYg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=QHtW8PO14Z9dOwARW0xejWfloX+EF1x5HwwSJ/TgB75hverk4fBU6MW8MVSna+WVa0uUGQDT8sOs8FBVemyX8Ji87raAvFBDL9XmSE578x4ueBDKW+Az0bcEjBvZZ2sDAAIIJzRCBcz41Iw1biSb6MvhV82A/LnK1NhDexh2nCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GbqRh4b6; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47C2ZnmN019486;
+	Mon, 12 Aug 2024 09:18:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	k5Lz/MHwLGfnPyX3bPixTLVVYd1Wkht7f3w49V7ey2o=; b=GbqRh4b67lTmVuvR
+	lOSzf6amH+LZWU7AfWhKRZdmSRD1fzN2qprcMNboiZepqdM9/5yyMcA1Y8bcOJ1O
+	Zhpa1HaJOsIwx6yf6uA6472BiHSh6SPSBQIO5QpKzoN1ubnOaK23guv3CH4MCR/m
+	foY1nywVq3Z6whHmxTokskpXtL2zLq1h/FTaNG3qmVZ6RFLeQjrmzojCcXmGZ5Pi
+	jedIhmXXYZL9ISgTG/qw7jwLmtDyL4Lj2LkYghklb0ITsfwB9iPs2eT/FLjSn7RX
+	HFln6RNuuZ2hIl0RWa4CaAwKI3xO9wFkSuouqfD8SxqiqKJR2yqOvi1ijyNm6StM
+	QCp1ew==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x18nbfjh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Aug 2024 09:18:07 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47C9I66b031122
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Aug 2024 09:18:06 GMT
+Received: from [10.239.132.245] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 12 Aug
+ 2024 02:18:03 -0700
+Message-ID: <f2b4555e-5c31-45a2-a6d0-da2689748c41@quicinc.com>
+Date: Mon, 12 Aug 2024 17:18:01 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] iommu/arm-smmu-qcom: remove runtime pm enabling for
+ TBU driver
+To: <robdclark@gmail.com>, <will@kernel.org>, <robin.murphy@arm.com>,
+        <joro@8bytes.org>
+CC: <iommu@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <quic_c_gdjako@quicinc.com>, <dmitry.baryshkov@linaro.org>
+References: <1722335443-30080-1-git-send-email-quic_zhenhuah@quicinc.com>
+Content-Language: en-US
+From: Zhenhua Huang <quic_zhenhuah@quicinc.com>
+In-Reply-To: <1722335443-30080-1-git-send-email-quic_zhenhuah@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: wXsXGHPgfypCwq2EHzgj_n3W7rmOrZb_
+X-Proofpoint-ORIG-GUID: wXsXGHPgfypCwq2EHzgj_n3W7rmOrZb_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-11_25,2024-08-07_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
+ lowpriorityscore=0 clxscore=1011 malwarescore=0 suspectscore=0
+ adultscore=0 spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
+ mlxlogscore=978 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408120069
 
-An iommu domain is allocated in venus_firmware_init() and is attached to
-core->fw.dev in the same function. Use iommu_paging_domain_alloc() to
-make it explicit.
+Gentle reminder for review :)
 
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/20240610085555.88197-10-baolu.lu@linux.intel.com
----
- drivers/media/platform/qcom/venus/firmware.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
-index fe7da2b30482..66a18830e66d 100644
---- a/drivers/media/platform/qcom/venus/firmware.c
-+++ b/drivers/media/platform/qcom/venus/firmware.c
-@@ -316,10 +316,10 @@ int venus_firmware_init(struct venus_core *core)
- 
- 	core->fw.dev = &pdev->dev;
- 
--	iommu_dom = iommu_domain_alloc(&platform_bus_type);
--	if (!iommu_dom) {
-+	iommu_dom = iommu_paging_domain_alloc(core->fw.dev);
-+	if (IS_ERR(iommu_dom)) {
- 		dev_err(core->fw.dev, "Failed to allocate iommu domain\n");
--		ret = -ENOMEM;
-+		ret = PTR_ERR(iommu_dom);
- 		goto err_unregister;
- 	}
- 
--- 
-2.34.1
-
+On 2024/7/30 18:30, Zhenhua Huang wrote:
+> TBU driver has no runtime pm support now, adding pm_runtime_enable()
+> seems to be useless. Remove it.
+> 
+> Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
+> ---
+>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 6 ------
+>   1 file changed, 6 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index 36c6b36ad4ff..aff2fe1fda13 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -566,7 +566,6 @@ static struct acpi_platform_list qcom_acpi_platlist[] = {
+>   
+>   static int qcom_smmu_tbu_probe(struct platform_device *pdev)
+>   {
+> -	struct device *dev = &pdev->dev;
+>   	int ret;
+>   
+>   	if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM_DEBUG)) {
+> @@ -575,11 +574,6 @@ static int qcom_smmu_tbu_probe(struct platform_device *pdev)
+>   			return ret;
+>   	}
+>   
+> -	if (dev->pm_domain) {
+> -		pm_runtime_set_active(dev);
+> -		pm_runtime_enable(dev);
+> -	}
+> -
+>   	return 0;
+>   }
+>   
 
