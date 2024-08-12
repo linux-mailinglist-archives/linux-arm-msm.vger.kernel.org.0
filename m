@@ -1,96 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-28336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA1B294F666
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 20:13:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF3EB94F68D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 20:21:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 71FD62828E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 18:13:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4F6701F253EE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 18:21:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B7A0190057;
-	Mon, 12 Aug 2024 18:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDFDB18E043;
+	Mon, 12 Aug 2024 18:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gm94uMtc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="M80I8SF8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC1218F2DD;
-	Mon, 12 Aug 2024 18:12:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0CE18787B;
+	Mon, 12 Aug 2024 18:20:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723486364; cv=none; b=sPhdDuUQeiK3DJuGkMqY4J2nhoMssTwzUqIgRwtc8bNEQj0mfJMQvC5GhFlTP0SYCBO8wEKL9o4GsBdhyUPztjELLXza5Sbg2XKkHJcb0C3erNrCjgsPZjQRJYu43CfuSI172NKs2wVqzgky0wWw5BGoHiWnB9T/gHmBAa/X6qE=
+	t=1723486841; cv=none; b=RWxwSBmV0Qa+Jt9HWhkN8GxfzID7Kpzd9WtWPb8sK5h0Lh70xPEbIkzTHIoKc/qkPNH/3vAFIMhOVeg5e7Y0iLKvqsaMlk7JH9Pt4AlfukImi/POWo59dAaF2OsZfXMFBGIGA4z5hi1ufvAJDo41ArOYXvj8Xk0W7RrsbtznepY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723486364; c=relaxed/simple;
-	bh=g0XHzIpUs5eYiW9UQlfz0vWRfgRQzN1dVhSEmnmVHow=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bCdwzVNDKySf5qv4wzT5RMbIrfGqB7BTtg36l+oS/u0jWYSO2GA08+fEnwBuRSvH2k4+9RvV7ZELVCrSxzw90QDA+pLYgIN9r6YcaP9Dd63bKdJUutU+ZHxQsH4fwuU49j3nundB0JBz1vNppgyqyBFmjxEhFvZuER7L7LB8Hjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gm94uMtc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73BCAC4AF12;
-	Mon, 12 Aug 2024 18:12:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723486363;
-	bh=g0XHzIpUs5eYiW9UQlfz0vWRfgRQzN1dVhSEmnmVHow=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gm94uMtcYmIt+6LMyxQ9EVa9yh4TAeRVzZzmN2OC86TNUXCFKPudnG0pgR2aSq/7i
-	 RVQfFDkMD3Dp+JpaasLwCFt7yCWw6MSOvROhRH7AZeSqg1DdWIQQBfnM2A9x8XrfNj
-	 KMcHi9JLd1jKSch5n6s1e2c5Stoxk6ll5Z5Tp4E6p5qWJvkF/qZ8RgNG7EBGd+7QFK
-	 2rPUtsQlK/zmtP6f97EW/3DHqZ6kEvp1Q96TjZI8tCy3f4Ii1s70bOyNdp833LBO81
-	 PykyBxc2T6di+OkYMnej605xtlXkDhsfWs5rncwC4JAbjb7mcPRhNG39m9S3tl+can
-	 9EmIL0jLfTZsQ==
-Date: Mon, 12 Aug 2024 11:12:43 -0700
-From: Kees Cook <kees@kernel.org>
-To: Amit Vadhavana <av2082000@gmail.com>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-	ricardo@marliere.net, linux-kernel-mentees@lists.linux.dev,
-	skhan@linuxfoundation.org, vkoul@kernel.org,
-	olivierdautricourt@gmail.com, sr@denx.de,
-	ludovic.desroches@microchip.com, florian.fainelli@broadcom.com,
-	bcm-kernel-feedback-list@broadcom.com, rjui@broadcom.com,
-	sbranden@broadcom.com, wangzhou1@hisilicon.com, haijie1@huawei.com,
-	fenghua.yu@intel.com, dave.jiang@intel.com, zhoubinbin@loongson.cn,
-	sean.wang@mediatek.com, matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com, afaerber@suse.de,
-	manivannan.sadhasivam@linaro.org, Basavaraj.Natikar@amd.com,
-	linus.walleij@linaro.org, ldewangan@nvidia.com,
-	jonathanh@nvidia.com, thierry.reding@gmail.com,
-	laurent.pinchart@ideasonboard.com, michal.simek@amd.com,
-	Frank.Li@nxp.com, n.shubin@yadro.com, yajun.deng@linux.dev,
-	quic_jjohnson@quicinc.com, lizetao1@huawei.com, pliem@maxlinear.com,
-	u.kleine-koenig@pengutronix.de, konrad.dybcio@linaro.org,
-	gustavoars@kernel.org, bryan.odonoghue@linaro.org,
-	linux@treblig.org, dan.carpenter@linaro.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rpi-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org,
-	linux-actions@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-tegra@vger.kernel.org
-Subject: Re: [PATCH] dmaengine: Fix spelling mistakes
-Message-ID: <202408121112.480CE2FAF@keescook>
-References: <20240810184333.34859-1-av2082000@gmail.com>
+	s=arc-20240116; t=1723486841; c=relaxed/simple;
+	bh=ruBxSpaL1zzjfeZ+3uWG5MP0BpemDpvtz6RSGDEOrPY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=CdbfyC4UOLnHPdXGJ2JSdlJ91I7QE/LcAckQ5TjqT8ATluK42CDVfUaPqM5bT7hOLvkx+d9IF20/juSF3Ud+OwbV9vlgS8ImacFk56kJXPvWhvTeC/53Whb17rrr3Zkb3FDRHutEPAp4xZ/IglqJsdISzddvKQR4L8/I4BA5dNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=M80I8SF8; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47CDSbqR017504;
+	Mon, 12 Aug 2024 18:16:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	9Nfz751ACTLyecrv87bbUTwqsi6Lp/AjbSXzAYjq7/o=; b=M80I8SF8/nOImR79
+	IPyyEQcbiyhDOvMSishoFSeblQ/6NRZJVMuhir8x4oOKuTSAn2MIxE1z+mFepJRj
+	NiIFSBivBSIvAmFagHS1zl/BXjDacbVC03NlSwBm/J1bOc0x24pnQ9habYAvyf4q
+	ND8MXOAPIdYTXLYHTBOgM1YqSBtAOmMsXMj0xb7j3vKG35EqYbbrsbMq5Ggslzky
+	NEzJ7tydbstkAzqgVWMvviQbCrbze5leUCr16xm8y9H/RFycaoCdnRVYIGMEkihg
+	RmQ5Cek9IeztYxNTRw7CmBk60zZeVeQWIR6MbP+/AZ1adVNw2FU6SxsPZDKolRa/
+	Mc2M6w==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x1d4d1t1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Aug 2024 18:16:20 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47CIGJ8n005714
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Aug 2024 18:16:19 GMT
+Received: from [10.216.3.204] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 12 Aug
+ 2024 11:16:12 -0700
+Message-ID: <28c8bc92-4a55-8a07-1ece-333316d78410@quicinc.com>
+Date: Mon, 12 Aug 2024 23:46:08 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240810184333.34859-1-av2082000@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v5 3/4] firmware: psci: Read and use vendor reset types
+To: Elliot Berman <quic_eberman@quicinc.com>,
+        Lorenzo Pieralisi
+	<lpieralisi@kernel.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Andy Yan
+	<andy.yan@rock-chips.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Bartosz
+ Golaszewski" <bartosz.golaszewski@linaro.org>,
+        Satya Durga Srinivasu Prabhala
+	<quic_satyap@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        Florian Fainelli
+	<florian.fainelli@broadcom.com>,
+        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_spratap@qucinc.com>
+References: <20240617-arm-psci-system_reset2-vendor-reboots-v5-0-086950f650c8@quicinc.com>
+ <20240617-arm-psci-system_reset2-vendor-reboots-v5-3-086950f650c8@quicinc.com>
+ <ZrOMjomTTWZ91Uzf@lpieralisi>
+ <20240807103245593-0700.eberman@hu-eberman-lv.qualcomm.com>
+ <ZrYZ/i1QFhfmv0zi@lpieralisi>
+ <20240809090339647-0700.eberman@hu-eberman-lv.qualcomm.com>
+Content-Language: en-US
+From: Shivendra Pratap <quic_spratap@quicinc.com>
+In-Reply-To: <20240809090339647-0700.eberman@hu-eberman-lv.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ollusWuQeFA-k-mEjm9dK-3rv8W2pqPr
+X-Proofpoint-GUID: ollusWuQeFA-k-mEjm9dK-3rv8W2pqPr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-12_12,2024-08-12_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
+ adultscore=0 phishscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999
+ malwarescore=0 bulkscore=0 priorityscore=1501 clxscore=1011
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408120135
 
-On Sun, Aug 11, 2024 at 12:13:33AM +0530, Amit Vadhavana wrote:
-> Corrected spelling mistakes in the DMA engine to improve readability
-> and clarity without altering functionality.
+
+
+On 8/9/2024 10:28 PM, Elliot Berman wrote:
+> On Fri, Aug 09, 2024 at 03:30:38PM +0200, Lorenzo Pieralisi wrote:
+>> On Wed, Aug 07, 2024 at 11:10:50AM -0700, Elliot Berman wrote:
+>>
+>> [...]
+>>
+>>>>> +static void psci_vendor_sys_reset2(unsigned long action, void *data)
+>>>>
+>>>> 'action' is unused and therefore it is not really needed.
+>>>>
+>>>>> +{
+>>>>> +	const char *cmd = data;
+>>>>> +	unsigned long ret;
+>>>>> +	size_t i;
+>>>>> +
+>>>>> +	for (i = 0; i < num_psci_reset_params; i++) {
+>>>>> +		if (!strcmp(psci_reset_params[i].mode, cmd)) {
+>>>>> +			ret = invoke_psci_fn(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2),
+>>>>> +					     psci_reset_params[i].reset_type,
+>>>>> +					     psci_reset_params[i].cookie, 0);
+>>>>> +			pr_err("failed to perform reset \"%s\": %ld\n",
+>>>>> +				cmd, (long)ret);
+>>>>> +		}
+>>>>> +	}
+>>>>> +}
+>>>>> +
+>>>>>  static int psci_sys_reset(struct notifier_block *nb, unsigned long action,
+>>>>>  			  void *data)
+>>>>>  {
+>>>>> +	if (data && num_psci_reset_params)
+>>>>
+>>>> So, reboot_mode here is basically ignored; if there is a vendor defined
+>>>> reset, we fire it off.
+>>>>
+>>>> I think Mark mentioned his concerns earlier related to REBOOT_* mode and
+>>>> reset type (granted, the context was different):
+>>>>
+>>>> https://lore.kernel.org/all/20200320120105.GA36658@C02TD0UTHF1T.local/
+>>>>
+>>>> I would like to understand if this is the right thing to do before
+>>>> accepting this patchset.
+>>>>
+>>>
+>>> I don't have any concerns to move this part below checking reboot_mode.
+>>> Or, I could add reboot_mode == REBOOT_COLD check.
+>>
+>> The question is how can we map vendor specific reboot magic to Linux
+>> reboot modes sensibly in generic PSCI code - that's by definition
+>> vendor specific.
+>>
 > 
-> Signed-off-by: Amit Vadhavana <av2082000@gmail.com>
+> I don't think it's a reasonable thing to do. "reboot bootloader" or
+> "reboot edl" don't make sense to the Linux reboot modes.
+> 
+> I believe the Linux reboot modes enum is oriented to perspective of
+> Linux itself and the vendor resets are oriented towards behavior of the
+> SoC.
+> 
+> Thanks,
+> Elliot
+> 
 
-With a quick skim on my part, these all seems correct. Thanks!
+Agree.
 
-Reviewed-by: Kees Cook <kees@kernel.org>
+from perspective of linux reboot modes, kernel's current implementation in reset path is like:
+__
+#1 If reboot_mode is WARM/SOFT and PSCI_SYSRESET2 is supported 
+    Call PSCI - SYSTEM_RESET2 - ARCH RESET
+#2 ELSE
+    Call PSCI - SYSTEM_RESET COLD RESET
+___
 
--- 
-Kees Cook
+ARM SPECS for PSCI SYSTEM_RESET2
+This function extends SYSTEM_RESET. It provides:
+• ARCH RESET: set Bit[31] to 0               = > This is already in place in condition #1.
+• vendor-specific resets: set Bit[31] to 1.  = > current patchset adds this part before kernel's reboot_mode reset at #0.
+
+
+In current patchset, we see a condition added at #0-psci_vendor_reset2 being called before kernel’s current reboot_mode condition and it can take any action only if all below conditions are satisfied.
+- PSCI SYSTEM_RESET2 is supported.
+- psci dt node defines an entry "bootloader" as a reboot-modes.
+- User issues reboot with a command say - (reboot bootloader).
+- If vendor reset fails, default reboot mode will execute as is.
+
+Don't see if we will skip or break the kernel reboot_mode flow with this patch. 
+Also if user issues reboot <cmd> and <cmd> is supported on SOC vendor reset psci node, should cmd take precedence over kernel reboot mode enum? may be yes? 
+
 
