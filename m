@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-28330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B6E794F156
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 17:09:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 612B494F15B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 17:10:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1DC8B1F229C6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 15:09:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2084A2822BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 15:10:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 412CF184538;
-	Mon, 12 Aug 2024 15:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE4BA18629C;
+	Mon, 12 Aug 2024 15:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J3lVdB02"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="En8kdE5p"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E3F184522;
-	Mon, 12 Aug 2024 15:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938C3186287;
+	Mon, 12 Aug 2024 15:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723475377; cv=none; b=jLf1FLiLcAftSAgRwjwYfETpgJXj2ybQE9DaeWPjZNZ46H4U8QVoDtlqf95P3yIvpY3YgRGKXD1jGqbHZg4b2wyxOLc5fgESX61+xEXRUWLwm5FuiENJai4EQyA5kdtE2neqm59l/oEEuutl/SYRoW3cHgUjxDXg6rZOvfbTcaI=
+	t=1723475378; cv=none; b=Dcg55KPV2cLySCCKFxpkzwx9jXM2G3it9ncLxq4JBni0fMB0SnjQBX0BD9yUfuIRdZ53OxY4b7uKkGfWuK1bLVLQcPs9Ghk83uOdgNAit5zvHa/0fm11b8AjCcAZAIKKeLagFmgGgBFz4KKnjqwFT8pEQmCiXcEjzOfycgWXQEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723475377; c=relaxed/simple;
-	bh=1kn+z+7q1wqdtmh9jhZK4uR69KYAI+zlgxdG0wzM5t8=;
+	s=arc-20240116; t=1723475378; c=relaxed/simple;
+	bh=0zeN1e7pfq9rhQqsjIKeuo9qUTg4rSG2IX8OKPQGTkw=;
 	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=hJhT/wn/nrlvALEqVlrjwRyS6qx4/ArfwqJSkTftOE/HzK2Hdp+D2XSacOkDx9w/MVdO3aWWqhowElm2Y2JgRzUm6YRpuYWis1M3wdaCP1lBmc+HnXED0htVDVwDElAcfg/AT1umAx7YgB/Wuo5WGdB8Rz9xWl0lZ31lZsrDj2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J3lVdB02; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ADA2C32782;
-	Mon, 12 Aug 2024 15:09:36 +0000 (UTC)
+	 Message-Id:Subject; b=gBLOZm4ToZ57V7Dx4+mhnXqq2Si422yMQdcTtT1tYO8KsCk5xX6K97p/9/s7LAF7YFeYsbzVwa4nrTJ8aGYlzuS8stl4+SaidffzXPoD43iVfUAvW207BrukAasXnG7GtyePJGKSKwfsGtv0ZykMFLE5AoASxCYzgYJSiJdvViY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=En8kdE5p; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229D5C4AF0F;
+	Mon, 12 Aug 2024 15:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723475376;
-	bh=1kn+z+7q1wqdtmh9jhZK4uR69KYAI+zlgxdG0wzM5t8=;
+	s=k20201202; t=1723475378;
+	bh=0zeN1e7pfq9rhQqsjIKeuo9qUTg4rSG2IX8OKPQGTkw=;
 	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=J3lVdB02cWIw6yUSBBVFDD+VhQetYXljueChfbOWpbqVQzbTgwWzqjNSmJKocc+OM
-	 58hFATKCgslm9D97NFjjduOSg17c1G+bpuqm2ll7RbHJBxtAjYM/h9GKEQ5S9YAVi8
-	 6/VBFBrgu8PUoVxO6nq7mtNLurpHVeGz5GgKMuHQRKZN4Q3JwWQQz0A7NV1DsRZ6Mi
-	 9nbdpuhvBtj4phXGqJ48LJZwKRbhAEjXkEpfnTzm2sVVN9etDmkwcti5vNXzmz514v
-	 0IPAAAhJiI0z0cZ6ZHLU7aFvpoJbDaYWtGc1qM0f1Z3BWl7IRhIgIMksYZteuSi3c7
-	 Xi/LSWVu5EHUQ==
-Date: Mon, 12 Aug 2024 09:09:35 -0600
+	b=En8kdE5p7zbw1MqKsSN5FCM25qmPKazxE3GtxuIcBTmsuB7Ovz9DGfyJK8x1OsUsl
+	 asdNpwuX02bcF+46+dXO2dSZceIJ65foCD58kgwHUZ7ozSaGsIT9BazC1ORNOI4m+o
+	 G5E1QwG+RUINRpxbxt4Ijy60/0pZNQ9Q8k4tQa7XupzMPSAmVrIXq/4aaQItDVBbBe
+	 uZgAGuUIUWHp9+Lc/o/zPmuMiwn139J8yTiRtG9QK4wKKAdfgOilz8mgQn/uA2o2Pz
+	 ZioKS7SmfA8jmKEozE6itdS20QeF/j9q1ZyJi/D6yQDNmDJmAhlrD884iP1rhF+7Mb
+	 iOwwW8JEVto+g==
+Date: Mon, 12 Aug 2024 09:09:36 -0600
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,121 +51,48 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Danila Tikhonov <danila@jiaxyga.com>
-Cc: neil.armstrong@linaro.org, ulf.hansson@linaro.org, 
- linux-hardening@vger.kernel.org, dmitry.baryshkov@linaro.org, 
- linux-kernel@vger.kernel.org, kees@kernel.org, krzk+dt@kernel.org, 
- heiko.stuebner@cherry.de, devicetree@vger.kernel.org, 
- macromorgan@hotmail.com, linux-pm@vger.kernel.org, viresh.kumar@linaro.org, 
- lpieralisi@kernel.org, quic_rjendra@quicinc.com, kuba@kernel.org, 
- linux-arm-msm@vger.kernel.org, pabeni@redhat.com, fekz115@gmail.com, 
- linux@mainlining.org, andre.przywara@arm.com, conor+dt@kernel.org, 
- konradybcio@kernel.org, gpiccoli@igalia.com, andersson@kernel.org, 
- rafael@kernel.org, netdev@vger.kernel.org, rafal@milecki.pl, 
- tony.luck@intel.com, davidwronek@gmail.com, linus.walleij@linaro.org, 
- edumazet@google.com, davem@davemloft.net
-In-Reply-To: <20240808184048.63030-1-danila@jiaxyga.com>
-References: <20240808184048.63030-1-danila@jiaxyga.com>
-Message-Id: <172347513874.603162.8901170126444753598.robh@kernel.org>
-Subject: Re: [PATCH v2 00/11] Add Nothing Phone (1) support
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-kernel@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
+ devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ Konrad Dybcio <quic_kdybcio@quicinc.com>, linux-arm-msm@vger.kernel.org, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>
+In-Reply-To: <20240809-topic-sl7-v1-0-2090433d8dfc@quicinc.com>
+References: <20240809-topic-sl7-v1-0-2090433d8dfc@quicinc.com>
+Message-Id: <172347514203.603234.10533034377904329406.robh@kernel.org>
+Subject: Re: [PATCH 0/4] X1E Surface Laptop 7 support
 
 
-On Thu, 08 Aug 2024 21:40:14 +0300, Danila Tikhonov wrote:
-> This series of patches adds support for the Nothing Phone (1), identified
-> as nothing,spacewar. The Nothing Phone (1) is built on the Qualcomm
-> Snapdragon 778G+ (SM7325-AE, also known as yupik).
+On Fri, 09 Aug 2024 03:43:19 +0200, Konrad Dybcio wrote:
+> This series brings support for X Elite-based Surface Laptop 7 devices.
 > 
-> SM7325 is identical to SC7280 just as SM7125 is identical to SC7180, so
-> SM7325 devicetree imports SC7280 devicetree as a base.
+> See patch 4 for a more detailed status explanation
 > 
-> All of these patches are essential for the integration of the Nothing
-> Phone (1) into the kernel. The inclusion of SoC IDs is particularly
-> important, as I encounter crash dumps if the device tree lacks msm and
-> board id information.
+> Signed-off-by: Konrad Dybcio <quic_kdybcio@quicinc.com>
+> ---
+> Konrad Dybcio (4):
+>       dt-bindings: arm: qcom: Add Surface Laptop 7 devices
+>       firmware: qcom: scm: Allow QSEECOM on Surface Laptop 7 models
+>       arm64: dts: qcom: x1e80100: Add UART2
+>       arm64: dts: qcom: Add support for X1-based Surface Laptop 7 devices
 > 
-> Changes in v2:
-> - Add Krzysztof's R-b tag (patches no. 1, 2, 10)
-> - Add Dmitry's R-b tag (patches no. 3, 4, 8)
-> - Document SM7325 as fallback to QCM6490 (patch no. 5)
-> - Drop patch no. 6 from v1
-> - Document PN553 NFC IC as fallback to nxp-nci-i2c (patch no. 6)
-> - Add Krzysztof's A-b tag (patches no. 7, 9)
-> - Switch nl.nothing.tech/nothing.tech in commit msg (patch no. 9)
-> - Add fallback compatibility for NFC (patch no. 10)
-> - Fix interrupt type for NFC (patch no. 10)
-> Note: Rob's A-b tag (patch no. 5) was not added because the patch was
-> fixed. Please look at it again.
-> - Link to v1:
-> https://lore.kernel.org/all/20240729201843.142918-1-danila@jiaxyga.com/
+>  Documentation/devicetree/bindings/arm/qcom.yaml    |   2 +
+>  arch/arm64/boot/dts/qcom/Makefile                  |   2 +
+>  .../boot/dts/qcom/x1e80100-microsoft-romulus.dtsi  | 818 +++++++++++++++++++++
+>  .../boot/dts/qcom/x1e80100-microsoft-romulus13.dts |  13 +
+>  .../boot/dts/qcom/x1e80100-microsoft-romulus15.dts |  13 +
+>  arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi       |   8 +
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi             |  52 ++
+>  drivers/firmware/qcom/qcom_scm.c                   |   2 +
+>  8 files changed, 910 insertions(+)
+> ---
+> base-commit: 1e391b34f6aa043c7afa40a2103163a0ef06d179
+> change-id: 20240809-topic-sl7-db3eef0ada6d
 > 
-> To: Rob Herring <robh@kernel.org>
-> To: Krzysztof Kozlowski <krzk+dt@kernel.org>
-> To: Conor Dooley <conor+dt@kernel.org>
-> To: Bjorn Andersson <andersson@kernel.org>
-> To: Konrad Dybcio <konradybcio@kernel.org>
-> To: "David S. Miller" <davem@davemloft.net>
-> To: Eric Dumazet <edumazet@google.com>
-> To: Jakub Kicinski <kuba@kernel.org>
-> To: Paolo Abeni <pabeni@redhat.com>
-> To: "Rafael J. Wysocki" <rafael@kernel.org>
-> To: Viresh Kumar <viresh.kumar@linaro.org>
-> To: Kees Cook <kees@kernel.org>
-> To: Tony Luck <tony.luck@intel.com>
-> To: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-> To: Ulf Hansson <ulf.hansson@linaro.org>
-> To: Andre Przywara <andre.przywara@arm.com>
-> To: Rajendra Nayak <quic_rjendra@quicinc.com>
-> To: David Wronek <davidwronek@gmail.com>
-> To: Neil Armstrong <neil.armstrong@linaro.org>
-> To: Heiko Stuebner <heiko.stuebner@cherry.de>
-> To: "Rafał Miłecki" <rafal@milecki.pl>
-> To: Chris Morgan <macromorgan@hotmail.com>
-> To: Linus Walleij <linus.walleij@linaro.org>
-> To: Lorenzo Pieralisi <lpieralisi@kernel.org>
-> To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> To: Eugene Lepshy <fekz115@gmail.com>
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: netdev@vger.kernel.org
-> Cc: linux-pm@vger.kernel.org
-> Cc: linux-hardening@vger.kernel.org
-> Cc: linux@mainlining.org
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
-> 
-> Danila Tikhonov (9):
->   dt-bindings: arm: qcom,ids: Add IDs for SM7325 family
->   soc: qcom: socinfo: Add Soc IDs for SM7325 family
->   cpufreq: Add SM7325 to cpufreq-dt-platdev blocklist
->   soc: qcom: pd_mapper: Add SM7325 compatible
->   dt-bindings: soc: qcom: qcom,pmic-glink: Document SM7325 compatible
->   dt-bindings: nfc: nxp,nci: Document PN553 compatible
->   dt-bindings: arm: cpus: Add qcom kryo670 compatible
->   dt-bindings: vendor-prefixes: Add Nothing Technology Limited
->   dt-bindings: arm: qcom: Add SM7325 Nothing Phone 1
-> 
-> Eugene Lepshy (2):
->   arm64: dts: qcom: Add SM7325 device tree
->   arm64: dts: qcom: sm7325: Add device-tree for Nothing Phone 1
-> 
->  .../devicetree/bindings/arm/cpus.yaml         |    1 +
->  .../devicetree/bindings/arm/qcom.yaml         |    6 +
->  .../devicetree/bindings/net/nfc/nxp,nci.yaml  |    1 +
->  .../bindings/soc/qcom/qcom,pmic-glink.yaml    |    5 +
->  .../devicetree/bindings/vendor-prefixes.yaml  |    2 +
->  arch/arm64/boot/dts/qcom/Makefile             |    1 +
->  .../boot/dts/qcom/sm7325-nothing-spacewar.dts | 1263 +++++++++++++++++
->  arch/arm64/boot/dts/qcom/sm7325.dtsi          |   17 +
->  drivers/cpufreq/cpufreq-dt-platdev.c          |    1 +
->  drivers/soc/qcom/qcom_pd_mapper.c             |    1 +
->  drivers/soc/qcom/socinfo.c                    |    2 +
->  include/dt-bindings/arm/qcom,ids.h            |    2 +
->  12 files changed, 1302 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sm7325.dtsi
-> 
+> Best regards,
 > --
-> 2.45.2
+> Konrad Dybcio <quic_kdybcio@quicinc.com>
+> 
 > 
 > 
 
@@ -184,22 +111,24 @@ make sure dt-schema is up to date:
   pip3 install dtschema --upgrade
 
 
-New warnings running 'make CHECK_DTBS=y qcom/sm7325-nothing-spacewar.dtb' for 20240808184048.63030-1-danila@jiaxyga.com:
+New warnings running 'make CHECK_DTBS=y qcom/x1e80100-microsoft-romulus13.dtb qcom/x1e80100-microsoft-romulus15.dtb' for 20240809-topic-sl7-v1-0-2090433d8dfc@quicinc.com:
 
-arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: /: qcom,board-id: False schema does not allow [[65547, 0]]
-	from schema $id: http://devicetree.org/schemas/arm/qcom.yaml#
-arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: /: qcom,msm-id: False schema does not allow [[475, 65536]]
-	from schema $id: http://devicetree.org/schemas/arm/qcom.yaml#
-arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: pcie@1c08000: interrupts: [[0, 307, 4], [0, 308, 4], [0, 309, 4], [0, 312, 4], [0, 313, 4], [0, 314, 4], [0, 374, 4], [0, 375, 4]] is too long
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sc7280.yaml#
-arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: pcie@1c08000: interrupt-names:0: 'msi' was expected
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sc7280.yaml#
-arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: pcie@1c08000: interrupt-names: ['msi0', 'msi1', 'msi2', 'msi3', 'msi4', 'msi5', 'msi6', 'msi7'] is too long
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sc7280.yaml#
-arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: usb@8cf8800: interrupt-names: ['pwr_event', 'hs_phy_irq', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus15.dtb: domain-idle-states: cluster-sleep-0: 'idle-state-name' does not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/power/domain-idle-state.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus15.dtb: domain-idle-states: cluster-sleep-1: 'idle-state-name' does not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/power/domain-idle-state.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus13.dtb: domain-idle-states: cluster-sleep-0: 'idle-state-name' does not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/power/domain-idle-state.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus13.dtb: domain-idle-states: cluster-sleep-1: 'idle-state-name' does not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/power/domain-idle-state.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus15.dtb: pci@1bf8000: Unevaluated properties are not allowed ('vddpe-3v3-supply' was unexpected)
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus13.dtb: pci@1bf8000: Unevaluated properties are not allowed ('vddpe-3v3-supply' was unexpected)
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus15.dtb: usb@a2f8800: interrupt-names: ['pwr_event', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
 	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dtb: video-codec@aa00000: iommus: [[68, 8576, 32]] is too short
-	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-venus.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus13.dtb: usb@a2f8800: interrupt-names: ['pwr_event', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
 
 
 
