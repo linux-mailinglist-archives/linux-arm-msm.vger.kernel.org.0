@@ -1,83 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-28308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07C5694EE15
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 15:26:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7B3994EE4B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 15:34:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B7E5D282EDC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 13:26:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 613E01F213A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 13:34:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D09BA17C9F6;
-	Mon, 12 Aug 2024 13:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D87B717D35C;
+	Mon, 12 Aug 2024 13:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SdrCveZz"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="i2rBjxwk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2E817C23D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Aug 2024 13:25:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF8217C9F1;
+	Mon, 12 Aug 2024 13:33:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723469148; cv=none; b=DBxPAVqigsDuzasOzcA5QI2hR5o+nG/uteUzMOA2MInx4qy1WTvYepavkMeRxHOVfokgIhA6PQ3mLDcPCoBZlKNZypordJ8hZ71mfdxN8dZ0bRos/BhrkF77M639fmGLtbrLXvAalPv9OP2x1k4FsSSQIezvMwp6/lag4WvBF+A=
+	t=1723469632; cv=none; b=WLwgGupQty6tkFsDoOTtUHHuuepVkfJ+2v4d38XBVvYVGHhOioMhRRRq4mSCQ05i4WY4FvrAtkuKyazewUKy/i2Azi68l1zAYDA9+B0FCrRDhd+DdOFdgE/7orA116piJ8N22yxC0WjbDaaGP3SBxeXtfowz8OeUuzK0a7Dk1nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723469148; c=relaxed/simple;
-	bh=V9W1mHBG7nCjOakKrNvlHdCSu7XhfjXNoktXt/lNYZQ=;
+	s=arc-20240116; t=1723469632; c=relaxed/simple;
+	bh=svcb61qn8AxKiXVDKBeXBAH0VVejCzMPT1CCJAMUGFI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jdr5aX4QAZaKDsqXlhVtNjpsYymn6qBttraxlXT2yCcQvJZRJtB5ByD4+ogouePlZUFa2Ahrd65IsmPHZWFsXEaOesEU3Fin5nE4/dD4IfBLl//6cqVO4LGNcNW+Lu73rPx2UDwiUvwbi8s2O0UiIfpUHFSaOlVLuGzkvTC5BQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SdrCveZz; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1fd657c9199so255605ad.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Aug 2024 06:25:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1723469145; x=1724073945; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lmYajX4gMaVGigJxbQG+9M3259675dZnYWJeb/SxvFA=;
-        b=SdrCveZz8kcTv7g6nPUZzG9HVj0VCgqPC2B/1JWwOMIXIw+yGIn2Ua3JybTDt5ZO0d
-         Gq6f18I9Jc/9D/C83jhFBXpv6G+Ot0FQga/LcyDy7ofFv6vvJw55hkPijgGk7vpM/8NB
-         fwk/QOsXrmnM+pyHoVFQd6OBY97L4MvDtEapss+MVA7HQuzPfJP7p5xh40fthn3nN1/n
-         4UeGQb7ozk9be29jsRv/E99xO170axB3SJvZsRauWqUmM6xHjWoyiHK34/BKpTCH7ZqS
-         3oyX/zz81eyxRHDnZjubV4vjblTQo43qN92zDnM6o1vgqTJ8JHd31Ne/8JVrGWWi7yMV
-         YnAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723469145; x=1724073945;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lmYajX4gMaVGigJxbQG+9M3259675dZnYWJeb/SxvFA=;
-        b=aM7O5z9kYawmO+2sTmFkC13ZSF87mG1iX6lcLBsKrtOXxolmjjsRM2zMGQbUMXFt2/
-         D8di/Koxma2j5hldMGBOB0KpbJrYCEljPr597UlVpycAOJ2KyHawPNdgcrlX9WGXAN1v
-         rIT0iZto2II9CxmzkGyTdJOibv/WttXHkVbORdncwoZlJ1xY7cRi3DOQ1GEdIRiwI2MR
-         3zk1D7U8WXBWZSu7TRVOQ7pis/77+/tgsiZicyfu+iTdMPP4u7H7bsBf559izFYNikDY
-         iqdTRZlpUfjG/UiKBjwPqPWfYTdbArMfjwvmgg5AD6cDb9/eNa4py+jwgH8dx4RKr9mu
-         1kTw==
-X-Forwarded-Encrypted: i=1; AJvYcCUy7dC9ELb66nEnU8fT4uJKZ3jcQOjC6F/OLTi6s8UtO9zk0dpBdEGt0QnSKO1Ie7GmZo820Y/xD0in3LnhwSFfHvC8XNGcFwNjfaSfnw==
-X-Gm-Message-State: AOJu0Yx3h0fvW5iXtT+B0xBgiNKoju6yLstre3QKJxRFzh1pO0ZsMYnz
-	p8JwNFTNqKzAxqp/aE/JXiOjWhy+/npfasjvqy7t/Ae/njPS6kiu7afB9faU1Q==
-X-Google-Smtp-Source: AGHT+IHb6qeSJStNs0pVR+CmYkttDl20c4Sd0X9v5RgYO5YZwdbSZX0vov7dB1RIgvFULpIown2sxA==
-X-Received: by 2002:a17:902:db04:b0:1fb:3e93:79cf with SMTP id d9443c01a7336-200bd27550bmr4027905ad.13.1723469145000;
-        Mon, 12 Aug 2024 06:25:45 -0700 (PDT)
-Received: from google.com (202.141.197.35.bc.googleusercontent.com. [35.197.141.202])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-710e5a89e22sm4085935b3a.170.2024.08.12.06.25.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Aug 2024 06:25:44 -0700 (PDT)
-Date: Mon, 12 Aug 2024 13:25:36 +0000
-From: Pranjal Shrivastava <praan@google.com>
-To: Zhenhua Huang <quic_zhenhuah@quicinc.com>
-Cc: robdclark@gmail.com, will@kernel.org, robin.murphy@arm.com,
-	joro@8bytes.org, iommu@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, quic_c_gdjako@quicinc.com,
-	dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH 1/1] iommu/arm-smmu-qcom: remove runtime pm enabling for
- TBU driver
-Message-ID: <ZroNUGkKuC1L7Qfr@google.com>
-References: <1722335443-30080-1-git-send-email-quic_zhenhuah@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=iF+HMtbUj8lMSw9xAmZQyldsEKp6Yu5FlnCXLrVCNbZtDl8gG38UF3EBq3kJ2mnwtrqgcVeox0Id7kwDW5VCo2W6vjgEFJttRnSd7v/p1zad6s56NB13lIpUX47QMWIgWUp5EDj3JB89c2HgkxdTfYn8RtW43RMXHIp7s78kc3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=i2rBjxwk; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1723469631; x=1755005631;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=svcb61qn8AxKiXVDKBeXBAH0VVejCzMPT1CCJAMUGFI=;
+  b=i2rBjxwkIKMPuel9doBjdIcZbIWCNeGIgsTtIdvIpeghUk8F3jL2wnSB
+   genB9BPgImDqNcKmM3RURHAMCBeZxHljtT3icr/fdSTtFCO5+8FjwW1D8
+   7K6e+CZ46orAL2o9WBzs/tTPn+KyzC9PWP3dOSdyPAM7V6SclvCuurMBx
+   AxyJfvxbPBCxd5RWvk8bQczA0dx5ZA5SxQ3usQTKK00U0oDyqwnoscqYF
+   6VY5YJeKKQQPXClKP3QVTHl3u6Tbrz+JUkGZiccDG5gsFZPuAT44ziNAM
+   iR4QnFzHGF4asV9moRic/QL+HhXK84AodbdECUF492Avbwj54HrJhlTQ9
+   g==;
+X-CSE-ConnectionGUID: xja2chZJRbKeGykZCH51+w==
+X-CSE-MsgGUID: qb6Dd3MRSSqZq6MU0Ify7Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11162"; a="12963955"
+X-IronPort-AV: E=Sophos;i="6.09,283,1716274800"; 
+   d="scan'208";a="12963955"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Aug 2024 06:33:50 -0700
+X-CSE-ConnectionGUID: zCoNAwmISMu73RPe9ooqcQ==
+X-CSE-MsgGUID: 6xzCFAvQRWu5p+ijHJzn7g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,283,1716274800"; 
+   d="scan'208";a="63197764"
+Received: from unknown (HELO b6bf6c95bbab) ([10.239.97.151])
+  by orviesa004.jf.intel.com with ESMTP; 12 Aug 2024 06:33:47 -0700
+Received: from kbuild by b6bf6c95bbab with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1sdVB9-000Bpv-2w;
+	Mon, 12 Aug 2024 13:33:43 +0000
+Date: Mon, 12 Aug 2024 21:33:15 +0800
+From: kernel test robot <lkp@intel.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Saravana Kannan <saravanak@google.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 6/7] usb: dwc3: qcom: Transition to flattened model
+Message-ID: <202408122114.xvZqrjZ7-lkp@intel.com>
+References: <20240811-dwc3-refactor-v2-6-91f370d61ad2@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,53 +88,41 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1722335443-30080-1-git-send-email-quic_zhenhuah@quicinc.com>
+In-Reply-To: <20240811-dwc3-refactor-v2-6-91f370d61ad2@quicinc.com>
 
-On Tue, Jul 30, 2024 at 06:30:43PM +0800, Zhenhua Huang wrote:
-> TBU driver has no runtime pm support now, adding pm_runtime_enable()
-> seems to be useless. Remove it.
-> 
-> Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
-> ---
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 6 ------
->  1 file changed, 6 deletions(-)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 36c6b36ad4ff..aff2fe1fda13 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -566,7 +566,6 @@ static struct acpi_platform_list qcom_acpi_platlist[] = {
->  
->  static int qcom_smmu_tbu_probe(struct platform_device *pdev)
->  {
-> -	struct device *dev = &pdev->dev;
->  	int ret;
->  
->  	if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM_DEBUG)) {
-> @@ -575,11 +574,6 @@ static int qcom_smmu_tbu_probe(struct platform_device *pdev)
->  			return ret;
->  	}
->  
-> -	if (dev->pm_domain) {
-> -		pm_runtime_set_active(dev);
-> -		pm_runtime_enable(dev);
+Hi Bjorn,
 
-I assumed that this was required to avoid the TBU from being powered
-down? If so, then I think we shall move it under the
-previous if condition, i.e. CONFIG_ARM_SMMU_QCOM_DEBUG?
+kernel test robot noticed the following build errors:
 
-If not, we can remove it give that the TBU would be powered ON as needed
+[auto build test ERROR on 864b1099d16fc7e332c3ad7823058c65f890486c]
 
-> -	}
-> -
->  	return 0;
->  }
->  
-> -- 
-> 2.7.4
-> 
-> 
+url:    https://github.com/intel-lab-lkp/linux/commits/Bjorn-Andersson/dt-bindings-usb-snps-dwc3-Split-core-description/20240812-111102
+base:   864b1099d16fc7e332c3ad7823058c65f890486c
+patch link:    https://lore.kernel.org/r/20240811-dwc3-refactor-v2-6-91f370d61ad2%40quicinc.com
+patch subject: [PATCH v2 6/7] usb: dwc3: qcom: Transition to flattened model
+config: i386-buildonly-randconfig-002-20240812 (https://download.01.org/0day-ci/archive/20240812/202408122114.xvZqrjZ7-lkp@intel.com/config)
+compiler: clang version 18.1.5 (https://github.com/llvm/llvm-project 617a15a9eac96088ae5e9134248d8236e34b91b1)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240812/202408122114.xvZqrjZ7-lkp@intel.com/reproduce)
 
-Thanks,
-Pranjal
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202408122114.xvZqrjZ7-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> drivers/usb/dwc3/dwc3-qcom.c:28:10: fatal error: 'glue.h' file not found
+      28 | #include "glue.h"
+         |          ^~~~~~~~
+   1 error generated.
+
+
+vim +28 drivers/usb/dwc3/dwc3-qcom.c
+
+  > 28	#include "glue.h"
+    29	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
