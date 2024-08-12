@@ -1,185 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-28311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F51294EF03
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 15:57:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C697D94EFD9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 16:42:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 76177B2089B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 13:57:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 558241F2363B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 14:42:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADA9517BB18;
-	Mon, 12 Aug 2024 13:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE417183CB9;
+	Mon, 12 Aug 2024 14:41:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="1EhFuv2A"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YyMXLI8c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577A817C7C9
-	for <linux-arm-msm@vger.kernel.org>; Mon, 12 Aug 2024 13:56:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA316153BF6;
+	Mon, 12 Aug 2024 14:41:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723470982; cv=none; b=Nl+rk3Ebagh87xChajbkE7HxaJHWA+Ll4pzSySbWQiQxJKCdskLPqMpQseHmTsCzlRR5kr+EkU/h7ZzYls7YLPRcTC80VvUfgsZSvZjuPfcqn6Rfvhe3II9qfbtHQODvKqtcm4WlwydcLDVX/hj5P8a55b596+Nz8Xe3Doc/yhM=
+	t=1723473719; cv=none; b=hlEwU7NTIlUmpkYpkDZ1DmividLDb0DjtpE5BHXOWWqrW0Do+qwlOI1AuMEZUleEociSvgu68ns4MAg6UcK0QtQsXZSmzRm75/CHOXcC1tA9VSjxFdHKlQ/0M1xEj8dd9tqutrDNxW9rpTzZ0iyxsIEgosyguG8Ggvmc0/hfbew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723470982; c=relaxed/simple;
-	bh=j2Ltfi0OLr30R/S0+3m3HzBIPuKmssjD9Wb4HCJzRkc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S+qhjkXXquRXofoLfEqCKmWmY67P45wjck57Ib1VcqZHRZ90VkMhcISc1nvjgcc4bw3M7Adu1JigpnN6v/FUe2Ml0qjjbvE6opt6LjzzJPgyrX35ZDXw1L+t9ZO6sckH3YKRdZg5ph/R+mCTf6B3hO4i4bjjxi6Mb3ONMllbRWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=1EhFuv2A; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-36ba3b06186so2375565f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Aug 2024 06:56:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1723470978; x=1724075778; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=S8pPBKCtj1qMblogWbM7RgQzND2CLqVTOWooV2IgGeU=;
-        b=1EhFuv2AqZbYzufjt/Q57oKXW7nxv17WEiw89Wc+KkIgZ6hyzt/l5uO/bMgAjFrys4
-         +7TJdEul+N2kGsrCjCY08+bXtvknG4mXXoCDxnHzl5gpHy80/b5DECgGSP2XvmlUWE0C
-         tZjoXmKSS2jCv/H6ppJY1SZW/WjaUYB+HxCQslRMEpa3nPIJwj8oQOwprkXbMBq4MUMt
-         xMAMoOd98f8t77a2UrvZsyeULqV+Ww9UhoqMAUdoiHi0yoLCU0IJA0vo9Z3p1h7bKCCj
-         GK7veecBpCBxi/jHRrQ6OFsxaonyDrOfD8Iua5W4DZv54qKcHkSi0YsfUOHfMcm9TSWp
-         VfRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723470978; x=1724075778;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=S8pPBKCtj1qMblogWbM7RgQzND2CLqVTOWooV2IgGeU=;
-        b=YPk7r1HYMcTUknJivqd/qyURivkS1HahrLhFf/L1rBt/4TE1WccvJt1bZhLTTcxLZq
-         pnfkByQOM+KZqO5F0daBrn2lusgljEeRJ9Ao3nD+Mlka8rJzalpUUvbW4rvEZMgU4KfG
-         0rkyP7ymoY2wbfBDXre27tUQZovVe6hYRqlunOTLRmzJXYTrAHLcUu60XD4lec7znkwB
-         6EX8LdQKxqFRD8Ja8F2T09+WgqYa/BlTaf1PeE/mfOb8TWd2UT0DTPMSoX5dl/v9JUAO
-         lE/ijJV1jXdL9KZGl2gKvUsdTG7svj9GMckyiaxd0CS/YInbaYPn3yhkm3Tav7Bp5ELK
-         yeLA==
-X-Gm-Message-State: AOJu0YzUJLx5ty9+8hTRRk39A5UWqSShdKM19M8gi71BhNFWOcQJrHiq
-	Fb4ExhgK0S4aPGU7klTUOIsWiSnym/enukc9075nfn8OFxPDo77hU2I0aERtkqU=
-X-Google-Smtp-Source: AGHT+IGUCDDDJmPdkUeF51lGMXmc2B54eXkWDGs+ePmSEkQ87f4+LylylfieyVoH9qavVmYIfup6/A==
-X-Received: by 2002:a5d:52c8:0:b0:368:460a:961d with SMTP id ffacd0b85a97d-3716ccd6f24mr267787f8f.3.1723470978233;
-        Mon, 12 Aug 2024 06:56:18 -0700 (PDT)
-Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36e4f0a66e8sm7602815f8f.114.2024.08.12.06.56.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Aug 2024 06:56:17 -0700 (PDT)
-Message-ID: <0b2279f3-1591-4297-aae3-2b3b915b4a2b@freebox.fr>
-Date: Mon, 12 Aug 2024 15:56:17 +0200
+	s=arc-20240116; t=1723473719; c=relaxed/simple;
+	bh=Rxk0JemXBcDYNJv7+6e+dLXJY3M+IfoeWCRugwCIijg=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=F18YhcCBGN+ar/lAMjjHbtO5+lcnF4drO7Gb/Xy/4pvcgr/QeVnPEw1yjQhmzgFCVdzcGP5b8N5CSiXWc0m014fhG2kHkXJALdCwiFnlba4DN8mw8jqF4FQSoysPGdULG3navczB/QelEK4/9Tjhd+GaM7RcGzu1ZpOeUNo7fKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YyMXLI8c; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47CDSfOK017593;
+	Mon, 12 Aug 2024 14:41:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=PznSfg8G5Zl3dKjBGewZSK
+	RCZczsR7cBsxyEfY+nzhw=; b=YyMXLI8c9dKvKeCVgB/uASK28H/x6II3/1Gv4R
+	pthKtV1FkO3+QBXCLwnz+iiXv2aOjqtply31b9wLabbYL8Pq3s76rWTDD2D2gAnm
+	sGY6ZGYyI1IhjXHmXPLaGyDWftJ1ED+OV53KGN1w7v4zP/FLea9cfdwSKKbj7vnm
+	iwYZ40cCmJpJJtdNqBeVGTN6pcvxtDMWh53Ccy/Mu44M0VvUiz/2YhBh2IWSjn0T
+	KmUfqHRX9VWsuaZr49Ni9okSyYskhZGIN2vmxwdMtZxNzrXvDVpemAA1/B+Edj9M
+	wY4h3xokOjrEvVNYnX4wVAPow5P3lyILT0R1ZzrEEWigiOnQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x1d4cf3d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Aug 2024 14:41:52 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47CEfpd7002563
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Aug 2024 14:41:51 GMT
+Received: from hu-depengs-sha.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 12 Aug 2024 07:41:46 -0700
+From: Depeng Shao <quic_depengs@quicinc.com>
+To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, <quic_depengs@quicinc.com>
+Subject: [PATCH v4 00/13] media: qcom: camss: Add sm8550 support
+Date: Mon, 12 Aug 2024 20:11:18 +0530
+Message-ID: <20240812144131.369378-1-quic_depengs@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 0/6] HDMI TX support in msm8998
-To: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, Arnaud Vrac <avrac@freebox.fr>,
- Pierre-Hugues Husson <phhusson@freebox.fr>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>,
- Conor Dooley <conor.dooley@microchip.com>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, David Airlie <airlied@gmail.com>,
- Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>
-References: <20240724-hdmi-tx-v7-0-e44a20553464@freebox.fr>
-Content-Language: en-US
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <20240724-hdmi-tx-v7-0-e44a20553464@freebox.fr>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: xDLE2TrfLFBygQ4T4SYGflcYWYAYxoyS
+X-Proofpoint-GUID: xDLE2TrfLFBygQ4T4SYGflcYWYAYxoyS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-12_04,2024-08-12_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
+ adultscore=0 phishscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999
+ malwarescore=0 bulkscore=0 priorityscore=1501 clxscore=1015
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408120109
 
-Hello Rob, Abhinav, Dmitry,
+v4:
+- Update dt-bindings based on comments - Krzysztof, bod, Vladimir
+- Move common code into csid core and vfe core driver - bod
+- Remove *_relaxed in the csid and vfe drivers - Krzysztof
+- Reorganize patches in logical junks, make sure that new added
+structures have users in current patch - Krzysztof
+- Remove notify function  and add new functions in camss for buf done
+and reg update - bod
+- Remove custom code to get csid base - bod
+- Remove ISR function in vfe780 driver since it is never fired - bod
+- Move csid_top_base to camss structure since we only have one csid
+top block, and just need to get base once for csid top
+- Add Vladimir's RB
+- Remove prerequisite-patch-id in the cover letter since the changes
+have been merged
+- Add dtsi patch link for reference - Krzysztof
+https://lore.kernel.org/all/20240807123333.2056518-1-quic_depengs@quicinc.com/
+- Link to v3: https://lore.kernel.org/all/20240709160656.31146-1-quic_depengs@quicinc.com/
 
-This series might be ready this time?
-Are all the patches supposed to go through
-https://gitlab.freedesktop.org/drm/msm.git ?
+v3:
+- Rebased the change based on below change which will be merged firstly.
+"Move camss version related defs in to resources"
+Link: https://lore.kernel.org/all/20240522154659.510-1-quic_grosikop@quicinc.com/
+- Rebased the change based on Bryan's csiphy optimization change and add
+these changes into this series, so that the new csiphy-3ph driver don't
+need to add duplicate code. This has got Bryan's permission to add his
+patches into this series.
+- Refactor some changes based on the comments to move the random code to
+patches where they are used.
+- Remove the vfe780 irq function since it isn't doing the actual work.
+- Add dt-binding for sm8550 camss driver.
+Link to V2: https://lore.kernel.org/all/20240320141136.26827-1-quic_depengs@quicinc.com/
 
-(Probably not... patches 5 & 6 are probably
-supposed to go through Bjorn's tree?)
+v2:
+- Update some commit messages
+Link to V1: https://lore.kernel.org/all/20240320134227.16587-1-quic_depengs@quicinc.com/
 
-Regards
+v1:
+SM8550 is a Qualcomm flagship SoC. This series adds support to
+bring up the CSIPHY, CSID, VFE/RDI interfaces in SM8550.
+
+SM8550 provides
+
+- 3 x VFE, 3 RDI per VFE
+- 2 x VFE Lite, 4 RDI per VFE
+- 3 x CSID
+- 2 x CSID Lite
+- 8 x CSI PHY
+
+---
+Bryan O'Donoghue (6):
+  media: qcom: camss: csiphy-3ph: Fix trivial indentation fault in
+    defines
+  media: qcom: camss: csiphy-3ph: Remove redundant PHY init sequence
+    control loop
+  media: qcom: camss: csiphy-3ph: Rename struct
+  media: qcom: camss: csiphy: Add an init callback to CSI PHY devices
+  media: qcom: camss: csiphy-3ph: Move CSIPHY variables to data field
+    inside csiphy struct
+  media: qcom: camss: csiphy-3ph: Use an offset variable to find common
+    control regs
+
+Depeng Shao (7):
+  dt-bindings: media: camss: Add qcom,sm8550-camss binding
+  media: qcom: camss: csid: Move common code into csid core
+  media: qcom: camss: vfe: Move common code into vfe core
+  media: qcom: camss: Add sm8550 compatible
+  media: qcom: camss: csiphy-3ph: Add Gen2 v2.1.2 two-phase MIPI CSI-2
+    DPHY support
+  media: qcom: camss: Add CSID Gen3 support for sm8550
+  media: qcom: camss: Add support for VFE hardware version Titan 780
+
+ .../bindings/media/qcom,sm8550-camss.yaml     | 517 ++++++++++++
+ drivers/media/platform/qcom/camss/Makefile    |   2 +
+ .../platform/qcom/camss/camss-csid-4-1.c      |  19 -
+ .../platform/qcom/camss/camss-csid-4-7.c      |  42 -
+ .../platform/qcom/camss/camss-csid-gen2.c     |  60 --
+ .../platform/qcom/camss/camss-csid-gen3.c     | 339 ++++++++
+ .../platform/qcom/camss/camss-csid-gen3.h     |  26 +
+ .../media/platform/qcom/camss/camss-csid.c    | 123 ++-
+ .../media/platform/qcom/camss/camss-csid.h    |  31 +
+ .../qcom/camss/camss-csiphy-2ph-1-0.c         |   6 +
+ .../qcom/camss/camss-csiphy-3ph-1-0.c         | 796 ++++++++++--------
+ .../media/platform/qcom/camss/camss-csiphy.c  |   4 +
+ .../media/platform/qcom/camss/camss-csiphy.h  |   2 +
+ .../media/platform/qcom/camss/camss-vfe-17x.c | 112 +--
+ .../media/platform/qcom/camss/camss-vfe-4-1.c |   9 -
+ .../media/platform/qcom/camss/camss-vfe-4-7.c |  11 -
+ .../media/platform/qcom/camss/camss-vfe-4-8.c |  11 -
+ .../media/platform/qcom/camss/camss-vfe-480.c | 258 +-----
+ .../media/platform/qcom/camss/camss-vfe-780.c | 148 ++++
+ drivers/media/platform/qcom/camss/camss-vfe.c | 301 ++++++-
+ drivers/media/platform/qcom/camss/camss-vfe.h |  59 +-
+ drivers/media/platform/qcom/camss/camss.c     | 365 ++++++++
+ drivers/media/platform/qcom/camss/camss.h     |   5 +
+ 23 files changed, 2379 insertions(+), 867 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sm8550-camss.yaml
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-gen3.c
+ create mode 100644 drivers/media/platform/qcom/camss/camss-csid-gen3.h
+ create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-780.c
 
 
-On 24/07/2024 17:01, Marc Gonzalez wrote:
-
-> DT bits required for HDMI TX support in qcom APQ8098 (MSM8998 cousin)
-> 
-> ---
-> Changes in v7:
-> - prefix the labels hdmi: and hdmi_phy: with mdss_ (Konrad)
-> - DID NOT MODIFY patch 3, based on conversation between Conor & Dmitry
-> - tested 40+40 boots with/without maxcpus=1 => no iommu panic witnessed
-> - Collect tags from Konrad & Dmitry (hopefully b4 did the right thing)
-> - Link to v6: https://lore.kernel.org/r/20240715-hdmi-tx-v6-0-d27f029627ad@freebox.fr
-> 
-> Changes in v6:
-> - Fold HDMI PHY driver submission into this series
->   => [PATCH v2] drm/msm: add msm8998 hdmi phy/pll support
->   => Link to v2: https://lore.kernel.org/all/20240704-hdmi-phy-v2-1-a7f5af202cb5@freebox.fr/
->      - Rebase onto v6.10
->      - Move drivers/gpu/drm/msm/hdmi/hdmi.xml.h to drivers/gpu/drm/msm/registers/display/hdmi.xml
->      - Add copyright attribution
->      - Remove all dead/debug/temporary code
->   => Link to v1: https://lore.kernel.org/all/63337d63-67ef-4499-8a24-5f6e9285c36b@freebox.fr/
-> - split HDMI PHY driver patch in 2 parts (PHY & TX)
-> - Use same regulator names as msm8996 (Dmitry)
-> - Remove printk statements
-> - Add Vinod's Ack on patch 1
-> - Expand commit message on patch 4 = HDMI PHY driver
-> - Link to v5: https://lore.kernel.org/r/20240627-hdmi-tx-v5-0-355d5c1fbc3c@freebox.fr
-> 
-> Changes in v5:
-> - Fix property & property-names for TX pinctrl in DTSI (Konrad)
-> - NOT CHANGED: clock trees for TX & PHY based on Dmitry & Jeffrey's remarks
-> - Link to v4: https://lore.kernel.org/r/20240613-hdmi-tx-v4-0-4af17e468699@freebox.fr
-> 
-> Changes in v4:
-> - Collect tags since v3
-> - Reword patch 1 subject (Vinod)
-> - Link to v3: https://lore.kernel.org/r/20240606-hdmi-tx-v3-0-9d7feb6d3647@freebox.fr
-> 
-> Changes in v3
-> - Address Rob's comments on patch 2:
->   - 'maxItems: 5' for clocks in the 8996 if/then schema
->   - match the order of 8996 for the clock-names in common
-> 
-> ---
-> Arnaud Vrac (2):
->       drm/msm: add msm8998 hdmi phy/pll support
->       arm64: dts: qcom: add HDMI nodes for msm8998
-> 
-> Marc Gonzalez (4):
->       dt-bindings: phy: add qcom,hdmi-phy-8998
->       dt-bindings: display/msm: hdmi: add qcom,hdmi-tx-8998
->       drm/msm/hdmi: add "qcom,hdmi-tx-8998" compatible
->       arm64: dts: qcom: msm8998: add HDMI GPIOs
-> 
->  .../devicetree/bindings/display/msm/hdmi.yaml      |  28 +-
->  .../devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml |   1 +
->  arch/arm64/boot/dts/qcom/msm8998.dtsi              | 128 +++-
->  drivers/gpu/drm/msm/Makefile                       |   1 +
->  drivers/gpu/drm/msm/hdmi/hdmi.c                    |   1 +
->  drivers/gpu/drm/msm/hdmi/hdmi.h                    |   8 +
->  drivers/gpu/drm/msm/hdmi/hdmi_phy.c                |   5 +
->  drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c           | 779 +++++++++++++++++++++
->  drivers/gpu/drm/msm/registers/display/hdmi.xml     |  89 +++
->  9 files changed, 1037 insertions(+), 3 deletions(-)
-> ---
-> base-commit: 003a26f5074bfe024603cf76f8fd486a5344f307
-> change-id: 20240606-hdmi-tx-00ee8e7ddbac
-
+base-commit: 7c626ce4bae1ac14f60076d00eafe71af30450ba
+-- 
+2.34.1
 
 
