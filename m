@@ -1,125 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-28305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92D4A94ECC3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 14:20:58 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85E5394ECD1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 14:22:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 493631F2121A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 12:20:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F2232B22721
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Aug 2024 12:22:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DC72170A36;
-	Mon, 12 Aug 2024 12:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C87F617ADE5;
+	Mon, 12 Aug 2024 12:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cMbjAZL/"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TE1NfAln"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD1D1E488;
-	Mon, 12 Aug 2024 12:20:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D80817A59C;
+	Mon, 12 Aug 2024 12:22:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723465253; cv=none; b=I+tt9s5u/GvTMBD4Yckf0zKko4Pu2Q1ZCUiW6eh/xS3BZUVzokitAv6HhsNa/X5+mLaUFEM8EZHbBp8VBju88WiMsEt8KNX7uLEFmV9XonzD1wo5nvhjrHZkua7vV8RzUhNtx9y5B/9QDH2f0hHgHr8CbwWWJf6gnUyqbtu6dP0=
+	t=1723465327; cv=none; b=S6gJu2HXcs16zIRw3cTZtP9Dqs6fy1UOQdvw+bcZqLoRVngED+wh98zo1JhmlbnQkORPCwnuEadcvZYphpi52Nlj+gDZ+HwB6bXovi/4cmYL8EGEk4nFUov9WbAyfrGjyGWRgf3FZhTtId7TL1AOwZ4AeAnMabZTHyQFz904EHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723465253; c=relaxed/simple;
-	bh=1YupIR/WrFatl2Xt2QU3NY9HGthGZzzdM1AN2OFbVoY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=rcf2Vi/DFToxRUG26saPhJX50MQSrdvH6g2v1lD4/juO7vU0JEFsKKgmCJB6bK5Uj4lyzPXs/mFsg1ef61p9o27Lk/joidl22nJ6GqRgJkQzGY7jeUwOduOyBdhX4DLOvO2L3nRPJbjucWaM5xnmxlZXIaBfqddq1mZisa4F1Zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cMbjAZL/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47CBGirj013406;
-	Mon, 12 Aug 2024 12:20:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qWPtKDhp4eEtFiuCOfIQxpQ/ou+Qfq27kgkQVcx5ZkI=; b=cMbjAZL/yhVHT5Ui
-	x8Hup7xL1YOojbz8FmcwV2ct2GZgqnrHbB43uMEtHC7r644c7LgJRhncPs1yR12Q
-	9X3saVd5bh82b0L3OfaiurJGi/l+ol7x88PAWUbFe+Ot90I1MvoGrxCMP9xiIwrg
-	B6r2xxsT8ecCUB45UInvJNZFcTV73UWiyX02tjvUnN3PnzHlpNGbOIpd+hCvE2ra
-	ZapPvY84SrHDlg8LwX80vfSF1cJ41lNtULO5q2szhJ1gEPoZI8q8Uuiqq+DjZ3/h
-	iF7bbSqOXa8F4m/sNdOkdl++lzfmbgvvdH9xkxYgmJc7WV8PKeyONDWLHHwlt7YY
-	7R57/g==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x17y43ay-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 12 Aug 2024 12:20:47 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47CCKkbg025121
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 12 Aug 2024 12:20:46 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 12 Aug
- 2024 05:20:41 -0700
-Message-ID: <8b2ce0a5-ac79-462f-aed1-48de90973a66@quicinc.com>
-Date: Mon, 12 Aug 2024 20:20:38 +0800
+	s=arc-20240116; t=1723465327; c=relaxed/simple;
+	bh=fQTaTJa3Vns6xQDbErgbezBPiTJXGAQdCWOhK/XdmjQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D7SqnhnfePrzkUpy05SmS7CqN27gQRPeHAoSJ6CcHKnbCrhr25+YbwXPxwZulD+dIvrSHTZZNAnArGinUBzfuueTFKhhhR36MrYTYLdzKtPoaFp4VQDuas50FryqTyE5PnE+fET9KZdvC8JFNCWiZDELNi/YmDl9O3+ZkCC416k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TE1NfAln; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1723465327; x=1755001327;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=fQTaTJa3Vns6xQDbErgbezBPiTJXGAQdCWOhK/XdmjQ=;
+  b=TE1NfAlnxLHS8xM+mcK3cYx+Mj8Aq+F+g39rl8QvRJt7oRQfSJkIDcIQ
+   MZcemXFkNsDT+BuwYnn442oxXYyQzFWjGBKMy4ejC9XlrLlmOyIHLIFlT
+   EjKQeNXuJHzPv01OVKLKMykr0Z26w5ih5vg8s4sEoQGcXJzCm21yyVmjE
+   wjGm2MJby821sJl37IStKnAfgd1G33vws8v+mnlT3nQsGNJBoXOAHeGsL
+   O2HAbZCxsTnExHwdj4RO2UCAypjhJ1lBtOoFsq0LfnbloEuegm1y5eOkB
+   Pw7Q8nLcBCQS1e+6EbBx1foqweizpBTeZyvPugHxAe0T6XXISIGq2TaFn
+   Q==;
+X-CSE-ConnectionGUID: Hg5r73c8RhanDkOnUYxg6w==
+X-CSE-MsgGUID: hEV8kfeDTEum0x+08BSM4A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11162"; a="44088258"
+X-IronPort-AV: E=Sophos;i="6.09,282,1716274800"; 
+   d="scan'208";a="44088258"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Aug 2024 05:22:06 -0700
+X-CSE-ConnectionGUID: IeZuDjrlTpyLCyyp5nX4zg==
+X-CSE-MsgGUID: aJlPSRTESu2lPOrr9THy7w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,282,1716274800"; 
+   d="scan'208";a="58326917"
+Received: from unknown (HELO b6bf6c95bbab) ([10.239.97.151])
+  by fmviesa010.fm.intel.com with ESMTP; 12 Aug 2024 05:22:00 -0700
+Received: from kbuild by b6bf6c95bbab with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1sdU3i-000BkB-12;
+	Mon, 12 Aug 2024 12:21:58 +0000
+Date: Mon, 12 Aug 2024 20:21:54 +0800
+From: kernel test robot <lkp@intel.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Saravana Kannan <saravanak@google.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: oe-kbuild-all@lists.linux.dev, linux-usb@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 4/7] usb: dwc3: core: Expose core driver as library
+Message-ID: <202408122011.adSQGOUp-lkp@intel.com>
+References: <20240811-dwc3-refactor-v2-4-91f370d61ad2@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/13] media: qcom: camss: csiphy: Add an init callback to
- CSI PHY devices
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vladimir Zapolskiy
-	<vladimir.zapolskiy@linaro.org>,
-        <rfoss@kernel.org>, <todor.too@gmail.com>, <mchehab@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>
-CC: <quic_eberman@quicinc.com>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <20240709160656.31146-1-quic_depengs@quicinc.com>
- <20240709160656.31146-5-quic_depengs@quicinc.com>
- <6dfc2c79-fc6d-4eed-bf3f-94396130cb4f@linaro.org>
- <fafda7d5-3853-428a-b0eb-9993fc2d4f56@linaro.org>
- <4426c0e0-f877-409c-b2d2-a5aac5e8c645@linaro.org>
- <1226d080-d1fc-4e06-ac81-84e93cb314e0@quicinc.com>
- <8f935a7d-87b5-479c-a98e-c95671dbe259@linaro.org>
- <7c03280f-908d-435d-acef-b6bf4f865029@quicinc.com>
- <ff12ce12-41d6-4aa5-ab97-222b07146e36@linaro.org>
- <3241cc15-c920-4c88-ac53-005903baf9e7@quicinc.com>
- <e7476a09-4e11-4171-89ed-61b41c9f5cc9@linaro.org>
-Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <e7476a09-4e11-4171-89ed-61b41c9f5cc9@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: aAMEPhFpRKYy2-ETS2FBa9e58br64j89
-X-Proofpoint-ORIG-GUID: aAMEPhFpRKYy2-ETS2FBa9e58br64j89
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-12_02,2024-08-12_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- bulkscore=0 adultscore=0 impostorscore=0 spamscore=0 mlxlogscore=838
- suspectscore=0 phishscore=0 clxscore=1015 mlxscore=0 malwarescore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408120092
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240811-dwc3-refactor-v2-4-91f370d61ad2@quicinc.com>
 
-Hi Bryan,
+Hi Bjorn,
 
-On 8/12/2024 7:32 PM, Bryan O'Donoghue wrote:
-> 
-> Ah, I hadn't recalled why the .init was added -> because sequencing.
-> 
-> Lets retain the patch but expand the commit log to explain why the init 
-> is being added, instead of jumping through hoops to restructure to get 
-> rid of it.
-> 
+kernel test robot noticed the following build errors:
 
-Thanks for the confirmation. I will retain the patch and add more commit 
-log.
+[auto build test ERROR on 864b1099d16fc7e332c3ad7823058c65f890486c]
 
-Thanks,
-Depeng
+url:    https://github.com/intel-lab-lkp/linux/commits/Bjorn-Andersson/dt-bindings-usb-snps-dwc3-Split-core-description/20240812-111102
+base:   864b1099d16fc7e332c3ad7823058c65f890486c
+patch link:    https://lore.kernel.org/r/20240811-dwc3-refactor-v2-4-91f370d61ad2%40quicinc.com
+patch subject: [PATCH v2 4/7] usb: dwc3: core: Expose core driver as library
+config: i386-buildonly-randconfig-005-20240812 (https://download.01.org/0day-ci/archive/20240812/202408122011.adSQGOUp-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240812/202408122011.adSQGOUp-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202408122011.adSQGOUp-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> drivers/usb/dwc3/core.c:39:10: fatal error: glue.h: No such file or directory
+      39 | #include "glue.h"
+         |          ^~~~~~~~
+   compilation terminated.
+
+
+vim +39 drivers/usb/dwc3/core.c
+
+    36	
+    37	#include "core.h"
+    38	#include "gadget.h"
+  > 39	#include "glue.h"
+    40	#include "io.h"
+    41	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
