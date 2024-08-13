@@ -1,173 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-28374-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2E979504A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 14:13:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FE5F9504DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 14:24:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5D8211F24AC8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 12:13:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C25081C20A1B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 12:24:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECCD81991D8;
-	Tue, 13 Aug 2024 12:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38A6F19925B;
+	Tue, 13 Aug 2024 12:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HTWuLgt2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VIWR6hhf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87BE187348;
-	Tue, 13 Aug 2024 12:13:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88BD19925A;
+	Tue, 13 Aug 2024 12:24:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723551206; cv=none; b=Qj/69f98U9RjbYQK82FlnQNJcMNI00RvV7RJaV24fImGgedbgsrZPmmd0ZGHO9IEhMIH8aB/OK7UcdSVgx1p0oH1K5uTrQPNlR4dNbNGT+5xmGdjxliR3rlXbfcX50xXH8oIOuRyagM3SUoYwPCS0V9+t4tDZy+YPx/9uL8+MOw=
+	t=1723551849; cv=none; b=XFn30efYp7hdcPaooNNZ9UMIScznl6HVMjr/OqVwtt13goAGvgu4SWnuLekgnqMeOm9TmlMQb15aPBoOWiRC83ThLrdWaZXcPFfUVqzkfcBxjkOUcjHXjY8m4YKr4ItjrJWrj43/Vr9yII2qtl8D/ewGmkSg9udjNw/Y0HPUZYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723551206; c=relaxed/simple;
-	bh=kIIgzNfbPPOeGVzqpET5xjIMVCHKwtwP40zzL2GwutI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dF+tCBvyuff26GQS6bMn26AKu0pzZ2ZjUiv3qYRU61CNl22SFiTbzMlL3ZYB4+fwFNlz3TF0Z5q9TFQJvpUzFfAoOGe7bGt9oH8QWnljsd1B//gY4Bb89H+KVbnfoN0lereQVJ340UiW8TkHYfL5aHdM/fEehEQhLli/QNjDc9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HTWuLgt2; arc=none smtp.client-ip=198.175.65.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723551205; x=1755087205;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=kIIgzNfbPPOeGVzqpET5xjIMVCHKwtwP40zzL2GwutI=;
-  b=HTWuLgt21CuvWjQwidL5CnOOcinycqDcZyetg2rujCp91JIGH0XL80oh
-   DzGAWtMuDpho9yNVkB6JeU5DR54pxlKqRl2gwfovdRoImfXdOE/YxpFNB
-   z/EghsvcFzpbML5ZYjeZ61ws/CgZFUlPLBMcIBnYVYPMQImq61PD8fuA7
-   aCmEzxlAi9fyINOL1S3sWqXpm3qvlzoJyjJdCnp+dayk2nYp3/dVkZTN3
-   U+uG8mi3c84ig46X2UYvummQP6I3u/fV7dxuHZcKnQ5MDzlCSqrfPRWXN
-   5OaqUsTJfWYxEwk388nd3d3JwAxs0lgDHEoiBydte+LnPjVcpJcH0tZC9
-   A==;
-X-CSE-ConnectionGUID: 44w/EPhDQQSnLNF3gBH7cg==
-X-CSE-MsgGUID: EgZrJX2+TwieVJrV5ES0xA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11162"; a="21682779"
-X-IronPort-AV: E=Sophos;i="6.09,285,1716274800"; 
-   d="scan'208";a="21682779"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2024 05:13:12 -0700
-X-CSE-ConnectionGUID: lGY95YNjTQ+6J6x1sGUetw==
-X-CSE-MsgGUID: rQdXfg7pS2OG+6k4DkMosw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,285,1716274800"; 
-   d="scan'208";a="89451014"
-Received: from fdefranc-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.246.234])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2024 05:13:07 -0700
-From: Jani Nikula <jani.nikula@intel.com>
-To: linux-kernel@vger.kernel.org
-Cc: intel-xe@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	akinobu.mita@gmail.com,
-	akpm@linux-foundation.org,
-	lucas.demarchi@intel.com,
-	rodrigo.vivi@intel.com,
-	thomas.hellstrom@linux.intel.com,
-	robdclark@gmail.com,
-	quic_abhinavk@quicinc.com,
-	dmitry.baryshkov@linaro.org,
-	jani.nikula@intel.com
-Subject: [PATCH 3/3] drm/xe: clean up fault injection usage
-Date: Tue, 13 Aug 2024 15:12:37 +0300
-Message-Id: <20240813121237.2382534-3-jani.nikula@intel.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240813121237.2382534-1-jani.nikula@intel.com>
-References: <20240813121237.2382534-1-jani.nikula@intel.com>
+	s=arc-20240116; t=1723551849; c=relaxed/simple;
+	bh=1ZDxptwVrneNxu4p5SwrDiUdmUGr3CxbvQsLYPw5+Tg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=G+e72f6H5pG3FJNXwisXX6OLiQoLuaGQh5yGJstSQVJ/oAlUjYRKeuYou6fH2w9VcpjSfWVWZM634DFdDTY6OS7T9KWxiiQXafrxwgXgVy+F49RHZHWZUv28riLA51JJ836jpsHLdIOoKrBt3XG+g0JdHRc6lyGooF8bVs6SuWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VIWR6hhf; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47DCC9Wq008197;
+	Tue, 13 Aug 2024 12:23:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	hZj+vhJGdhHYsx/eUIiC0gHPR7bA9/LNX09lcGIyuvU=; b=VIWR6hhf6O4PnSLG
+	tySLUgG1PimLKg58LpMtdQEJv1icH8wui6Hrufykd2sqzJjsFeI/8KBhpS3x9CMZ
+	QX8IMmugRI29ode0FG7229HW+g5CG6K4KNwpkbBXDZXwxo8thOMtNWUqS1tqbQuK
+	7eOP6/0if3GDqX0QKiNagg9Mjxbyu9+cgby9rSHnU0HZfPN4Q7h9B4Ow0GV2f3Q3
+	wIUZSnDt8vL9vM2Dig/cyZgsGJiC/CGiKguUi1trioIS+hCZQUroIuqUyUBLGrxk
+	O3vnnVLaWVDOTqUv52QGeARtd9w14HRseSXYOfaYQEEatBU7fWI5cf83Sjk5WGcu
+	G/42xg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x15e7p8r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 Aug 2024 12:23:58 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47DCNwSK031917
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 Aug 2024 12:23:58 GMT
+Received: from [10.216.47.3] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 13 Aug
+ 2024 05:23:53 -0700
+Message-ID: <efb17431-82a6-bcc9-cade-896d0dca958e@quicinc.com>
+Date: Tue, 13 Aug 2024 17:53:50 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 1/2] PM: domains: add device managed version of
+ dev_pm_domain_attach|detach_list()
+Content-Language: en-US
+To: Ulf Hansson <ulf.hansson@linaro.org>
+CC: "Rafael J. Wysocki" <rafael@kernel.org>, Pavel Machek <pavel@ucw.cz>,
+        "Len
+ Brown" <len.brown@intel.com>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        Stanimir Varbanov
+	<stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio"
+	<konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Bryan
+ O'Donoghue <bryan.odonoghue@linaro.org>,
+        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <1723014947-15571-1-git-send-email-quic_dikshita@quicinc.com>
+ <1723014947-15571-2-git-send-email-quic_dikshita@quicinc.com>
+ <CAPDyKFpUMmveKQ2Pi33VwcvG9tsMQHEcAg88icf7v9mzzm+k4Q@mail.gmail.com>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <CAPDyKFpUMmveKQ2Pi33VwcvG9tsMQHEcAg88icf7v9mzzm+k4Q@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: aiNbY4KiByPubnaFkBrASBjcMuFkfl35
+X-Proofpoint-ORIG-GUID: aiNbY4KiByPubnaFkBrASBjcMuFkfl35
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-13_04,2024-08-13_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
+ phishscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999
+ clxscore=1015 spamscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408130089
 
-With the proper stubs in place in linux/fault-inject.h, we can remove a
-bunch of conditional compilation for CONFIG_FAULT_INJECTION=n.
 
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Akinobu Mita <akinobu.mita@gmail.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
----
- drivers/gpu/drm/xe/xe_debugfs.c |  7 +------
- drivers/gpu/drm/xe/xe_gt.h      | 10 ++--------
- 2 files changed, 3 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_debugfs.c b/drivers/gpu/drm/xe/xe_debugfs.c
-index 1011e5d281fa..b381bfb634f7 100644
---- a/drivers/gpu/drm/xe/xe_debugfs.c
-+++ b/drivers/gpu/drm/xe/xe_debugfs.c
-@@ -6,6 +6,7 @@
- #include "xe_debugfs.h"
- 
- #include <linux/debugfs.h>
-+#include <linux/fault-inject.h>
- #include <linux/string_helpers.h>
- 
- #include <drm/drm_debugfs.h>
-@@ -26,10 +27,7 @@
- #include "xe_vm.h"
- #endif
- 
--#ifdef CONFIG_FAULT_INJECTION
--#include <linux/fault-inject.h> /* XXX: fault-inject.h is broken */
- DECLARE_FAULT_ATTR(gt_reset_failure);
--#endif
- 
- static struct xe_device *node_to_xe(struct drm_info_node *node)
- {
-@@ -214,8 +212,5 @@ void xe_debugfs_register(struct xe_device *xe)
- 	for_each_gt(gt, xe, id)
- 		xe_gt_debugfs_register(gt);
- 
--#ifdef CONFIG_FAULT_INJECTION
- 	fault_create_debugfs_attr("fail_gt_reset", root, &gt_reset_failure);
--#endif
--
- }
-diff --git a/drivers/gpu/drm/xe/xe_gt.h b/drivers/gpu/drm/xe/xe_gt.h
-index 8b1a5027dcf2..ee138e9768a2 100644
---- a/drivers/gpu/drm/xe/xe_gt.h
-+++ b/drivers/gpu/drm/xe/xe_gt.h
-@@ -6,6 +6,8 @@
- #ifndef _XE_GT_H_
- #define _XE_GT_H_
- 
-+#include <linux/fault-inject.h>
-+
- #include <drm/drm_util.h>
- 
- #include "xe_device.h"
-@@ -19,19 +21,11 @@
- 
- #define CCS_MASK(gt) (((gt)->info.engine_mask & XE_HW_ENGINE_CCS_MASK) >> XE_HW_ENGINE_CCS0)
- 
--#ifdef CONFIG_FAULT_INJECTION
--#include <linux/fault-inject.h> /* XXX: fault-inject.h is broken */
- extern struct fault_attr gt_reset_failure;
- static inline bool xe_fault_inject_gt_reset(void)
- {
- 	return should_fail(&gt_reset_failure, 1);
- }
--#else
--static inline bool xe_fault_inject_gt_reset(void)
--{
--	return false;
--}
--#endif
- 
- struct xe_gt *xe_gt_alloc(struct xe_tile *tile);
- int xe_gt_init_hwconfig(struct xe_gt *gt);
--- 
-2.39.2
+On 8/13/2024 4:22 PM, Ulf Hansson wrote:
+> On Wed, 7 Aug 2024 at 09:16, Dikshita Agarwal <quic_dikshita@quicinc.com> wrote:
+>>
+>> Add the devres-enabled version of dev_pm_domain_attach|detach_list.
+>> If client drivers use devm_pm_domain_attach_list() to attach the
+>> PM domains, devm_pm_domain_detach_list() will be invoked implicitly
+>> during remove phase.
+>>
+>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>> ---
+>>  drivers/base/power/common.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
+>>  include/linux/pm_domain.h   | 13 +++++++++++++
+>>  2 files changed, 57 insertions(+)
+>>
+>> diff --git a/drivers/base/power/common.c b/drivers/base/power/common.c
+>> index 327d168..729d6c2 100644
+>> --- a/drivers/base/power/common.c
+>> +++ b/drivers/base/power/common.c
+>> @@ -277,6 +277,50 @@ int dev_pm_domain_attach_list(struct device *dev,
+>>  EXPORT_SYMBOL_GPL(dev_pm_domain_attach_list);
+>>
+>>  /**
+>> + * devm_pm_domain_detach_list - devres-enabled version of dev_pm_domain_detach_list.
+>> + * @_list: The list of PM domains to detach.
+>> + *
+>> + * This function reverse the actions from devm_pm_domain_attach_list().
+>> + * it will be invoked during the remove phase from drivers implicitly if driver
+>> + * uses devm_pm_domain_attach_list() to attach the PM domains.
+>> + */
+>> +void devm_pm_domain_detach_list(void *_list)
+>> +{
+>> +       struct dev_pm_domain_list *list = _list;
+>> +
+>> +       dev_pm_domain_detach_list(list);
+>> +}
+>> +EXPORT_SYMBOL_GPL(devm_pm_domain_detach_list);
+> 
+> I think this function should be internal and hence made static -
+> unless there is a good reason to export it?
+Yeah, it should be static and no need of exporting it.
+Will make the changes.
+> 
+>> +
+>> +/**
+>> + * devm_pm_domain_attach_list - devres-enabled version of dev_pm_domain_attach_list
+>> + * @dev: The device used to lookup the PM domains for.
+>> + * @data: The data used for attaching to the PM domains.
+>> + * @list: An out-parameter with an allocated list of attached PM domains.
+>> + *
+>> + * NOTE: this will also handle calling devm_pm_domain_detach_list() for
+>> + * you during remove phase.
+>> + *
+>> + * Returns the number of attached PM domains or a negative error code in case of
+>> + * a failure.
+>> + */
+>> +int devm_pm_domain_attach_list(struct device *dev,
+>> +                              const struct dev_pm_domain_attach_data *data,
+>> +                              struct dev_pm_domain_list **list)
+>> +{
+>> +       int ret, num_pds = 0;
+> 
+> There is no need to initialize num_pds to 0 here, as the below calls
+> take care of it.
+> 
+Right, will be fixed in next revision.
+>> +
+>> +       num_pds = dev_pm_domain_attach_list(dev, data, list);
+>> +
+> 
+> We should add a check if num_pds is zero here, as in that case there
+> is no reason to add a devres callback for it.
+> 
+Sure, will add the below check.
+if (!num_pds)
+    return 0;
 
+Thanks,
+Dikshita
+>> +       ret = devm_add_action_or_reset(dev, devm_pm_domain_detach_list, *list);
+>> +       if (ret)
+>> +               return ret;
+>> +
+>> +       return num_pds;
+>> +}
+>> +EXPORT_SYMBOL_GPL(devm_pm_domain_attach_list);
+> 
+> [...]
+> 
+> Kind regards
+> Uffe
 
