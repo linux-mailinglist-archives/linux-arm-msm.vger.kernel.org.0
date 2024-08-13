@@ -1,169 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-28367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69137950307
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 12:56:25 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 718AA950374
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 13:19:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2A49528748B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 10:56:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E6EB6B20A89
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 11:19:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1113C19D063;
-	Tue, 13 Aug 2024 10:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 411C5195F3A;
+	Tue, 13 Aug 2024 11:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sEdlSNcA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NVH+15j0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA9F19CD06
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 10:53:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9A72233A;
+	Tue, 13 Aug 2024 11:19:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723546413; cv=none; b=L8yDQlzdWsEFOLGdsiIqcykqLg/MPFzhLdWGmrNrSxJ5YhNR6L8z3+xJzefrfUhqn2ucnSjJ9ebxmGfFRaBqQMWyILmzlL5LnHJVsq/Bo3hyIZc5h8JtwkmRRsdaU4BFKHHNGfowfVh22b/2eD3xlYLFPEsJlp9tzJ4bUbVTnTE=
+	t=1723547953; cv=none; b=c3+E2MKSj91ntUVVoyCzOCVCF9x15od3hVtOZXdW1nDfqd3KhoMhO8XnhKkmbEYuaAwgzuz0oh5fSN9u95ZKvixagyzLJ+MoZa9jxqyNtGQZryHxxyYZQlRu5DcSOz5VW5fBOlgPFHuB0dXWWKnXfXUW2+4aggSMBBkf1ZwUW6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723546413; c=relaxed/simple;
-	bh=q8pNAgjw9/3tHHnWRFEJHbq63k2GtWgWLWiFMw3DnYg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Nvksb3kydbtbD9GJMStGpPObYMtnBcFUMWNLpBnBT3KlNaXpt3A9PegqKKPZ0JK8gOcMj1kAUpgBqX9WQk83/Bs5Dd3Qup9dNE/2oYZ9KpQrV0LFYN2vfl1aCrelpJLhKQeZpbkKde7jIuWTSkPSkoolx71+JTwsznQfsmavyWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sEdlSNcA; arc=none smtp.client-ip=209.85.219.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e05e4c3228bso5142293276.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 03:53:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723546410; x=1724151210; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z/XDKrkkMHvWOyw5p4QJtIumEMqEgD/xVT5SgNZelBg=;
-        b=sEdlSNcA8pSYeZNy35Z2d1R7MRMOAVlMv4/gVXeJX1wtken5bplBAjFKLj7tKdfAWC
-         /koFQ1lBpwnPUFM/0ACdAQ8+qi77W+Ww1FS0PYzDigSLy53renVmyyerIu7JwgtIRgrx
-         4/q2xO80uPNHstpCiSzsUh9j7IsvbYDwsnymmJ+wEGTpVJdOlYgqRZwCZNLk8ObU97v1
-         Axvh0XhbtKmKhoOjaONO5bwEkV/3scoW4QOMnLm6J4OdnvtfN9ZGdn8HWTa6O3txUzDa
-         iU++OLVw8k97JY6mxTEMWxT4ucEIdop3BA0kNIyD8bCFYuLZFUN0PhGp4VexqTuCtMCL
-         xYXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723546410; x=1724151210;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Z/XDKrkkMHvWOyw5p4QJtIumEMqEgD/xVT5SgNZelBg=;
-        b=LpNc4yqqiv2gtSQTGcdtP8EtxNI1T6kGXokBawMm/TqGMTaL+lxF+8nt38lTdsPOPg
-         qRl61VzlnVhYlEW6m3YfFEgk3y86jcVnXWeCIurp8I9fQE4iLifK/23RSWbPVEciZzSj
-         oqx2HakyXGKsKnkDheySffB0EBCm+PqWWHiqh7l41WdlPDxV2IM4QmRDprX3elyrIcXT
-         RwII3cdYmcKrJslLOnYchR+EgqZHZk0guE0WW9hqfHDM53K5A3FEixaCshzJddz4V3tq
-         YQXxEtYWvZQRFVsyMO+C6QykjcJXuGEyzeAMb4jnXfjXGf+yjfaPqDZq58D6s2FmkTkw
-         eBlg==
-X-Forwarded-Encrypted: i=1; AJvYcCVp+PNhFpD1OfTN4SHIRxLaaawqZqP2klYJo3NlRslAdNBU3ESsCvWzp8xxUOxBUr5oPvxqJWLemMBVZga6lgGYGN4S5eZyEJIXJ/bzaQ==
-X-Gm-Message-State: AOJu0YyIp5VrG9JNlpLeYoQffdVpvMgh8slqz8qgXgN4s6HW5Fkkqluo
-	bKs8EPdTLZ6gyfly3hIwAVNbjbiGhVHBIybJkJwnlKgYIV+55ZfQ52RTmFwC3L6vEYXEulxiicR
-	HirkkqhadRmRwrdvU+sdG4GjUhZEOY37JHEgcnQ==
-X-Google-Smtp-Source: AGHT+IFItO0D7OclX/S5B/e5ClqeA9JU/P3uqhBqfY7zfqkekKMs8wX80GxMDY1wDSzUbaTJC9QhhNMbySj25mpFIPs=
-X-Received: by 2002:a05:6902:13cf:b0:e0e:cd17:6130 with SMTP id
- 3f1490d57ef6-e113d07894cmr3177420276.37.1723546409963; Tue, 13 Aug 2024
- 03:53:29 -0700 (PDT)
+	s=arc-20240116; t=1723547953; c=relaxed/simple;
+	bh=nTgO3/WVPFWHGcAmsl+De5efQqjEbiiftIZhGCBwWRg=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=EK22C7hQ4iIejrpi3LhdPgvA0qtGJn5HMhaFM6ZpHFoEPsq2MzoxX1hP2s2Y3Td8fWOKIw1GejPAwpmLljQr3dB9xbv1ZzCT6vrPPviJ3zG/Oi+n9VRioS4N71sAvpwAEyk7cc2iiy4tboOCrmyZXxaw04J90nzUGB5CUaN56ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NVH+15j0; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47DA8MKq001849;
+	Tue, 13 Aug 2024 11:19:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:message-id:mime-version:subject:to; s=
+	qcppdkim1; bh=fFw6PPSGVYmhEQJSF6OKOrAlimKMXFRHZpCVw2iITe8=; b=NV
+	H+15j03avPvrcYn3x/pcaEZGTojJMjnfuvncgFUEBinfc0Q6/995zRewqVmZK4vO
+	PSWKJHJaSZoQlkUxJArH9XYQUHwpiebU406cz0zQS8kuKPg/+7jLT0t8RPl/cLpC
+	A+3utI8k1ImBRSkle7nZ8o81OmJHUgtp5XQ3IJB/snd6eTS/12q9+rsqjCPUy7Ik
+	DLYGO7HmoYgAaULL4BVG3j+nJ+3q4tG09pMY8CP/0ZMFoi5udYu71EoQxbGIhMR1
+	hkhNOt9USFeVPKsnSp+iVLV9w62x7yuMGFs8wAs+2EDvTUWp5Aib6ML64uPPQtxX
+	Q0dm5MRk8XsI7YsQ5MDw==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x167yaum-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 Aug 2024 11:19:08 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47DBJ8RT028931
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 Aug 2024 11:19:08 GMT
+Received: from hu-faisalh-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 13 Aug 2024 04:19:05 -0700
+From: Faisal Hassan <quic_faisalh@quicinc.com>
+To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Faisal Hassan <quic_faisalh@quicinc.com>, <stable@vger.kernel.org>
+Subject: [PATCH] usb: dwc3: qcom: fix NULL pointer dereference on dwc3_qcom_read_usb2_speed
+Date: Tue, 13 Aug 2024 16:48:47 +0530
+Message-ID: <20240813111847.31062-1-quic_faisalh@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <1723014947-15571-1-git-send-email-quic_dikshita@quicinc.com> <1723014947-15571-2-git-send-email-quic_dikshita@quicinc.com>
-In-Reply-To: <1723014947-15571-2-git-send-email-quic_dikshita@quicinc.com>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Tue, 13 Aug 2024 12:52:53 +0200
-Message-ID: <CAPDyKFpUMmveKQ2Pi33VwcvG9tsMQHEcAg88icf7v9mzzm+k4Q@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] PM: domains: add device managed version of dev_pm_domain_attach|detach_list()
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: y-FJDqH8_uq8u3h1-4qV15wclXb_Nl4B
+X-Proofpoint-ORIG-GUID: y-FJDqH8_uq8u3h1-4qV15wclXb_Nl4B
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-13_03,2024-08-13_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1011
+ suspectscore=0 mlxlogscore=773 impostorscore=0 malwarescore=0 spamscore=0
+ mlxscore=0 priorityscore=1501 phishscore=0 adultscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408130081
 
-On Wed, 7 Aug 2024 at 09:16, Dikshita Agarwal <quic_dikshita@quicinc.com> wrote:
->
-> Add the devres-enabled version of dev_pm_domain_attach|detach_list.
-> If client drivers use devm_pm_domain_attach_list() to attach the
-> PM domains, devm_pm_domain_detach_list() will be invoked implicitly
-> during remove phase.
->
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> ---
->  drivers/base/power/common.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
->  include/linux/pm_domain.h   | 13 +++++++++++++
->  2 files changed, 57 insertions(+)
->
-> diff --git a/drivers/base/power/common.c b/drivers/base/power/common.c
-> index 327d168..729d6c2 100644
-> --- a/drivers/base/power/common.c
-> +++ b/drivers/base/power/common.c
-> @@ -277,6 +277,50 @@ int dev_pm_domain_attach_list(struct device *dev,
->  EXPORT_SYMBOL_GPL(dev_pm_domain_attach_list);
->
->  /**
-> + * devm_pm_domain_detach_list - devres-enabled version of dev_pm_domain_detach_list.
-> + * @_list: The list of PM domains to detach.
-> + *
-> + * This function reverse the actions from devm_pm_domain_attach_list().
-> + * it will be invoked during the remove phase from drivers implicitly if driver
-> + * uses devm_pm_domain_attach_list() to attach the PM domains.
-> + */
-> +void devm_pm_domain_detach_list(void *_list)
-> +{
-> +       struct dev_pm_domain_list *list = _list;
-> +
-> +       dev_pm_domain_detach_list(list);
-> +}
-> +EXPORT_SYMBOL_GPL(devm_pm_domain_detach_list);
+Null pointer dereference occurs when accessing 'hcd' to detect speed
+from dwc3_qcom_suspend after the xhci-hcd is unbound.
+To avoid this issue, ensure to check for NULL in dwc3_qcom_read_usb2_speed.
 
-I think this function should be internal and hence made static -
-unless there is a good reason to export it?
+echo xhci-hcd.0.auto > /sys/bus/platform/drivers/xhci-hcd/unbind
+  xhci_plat_remove() -> usb_put_hcd() -> hcd_release() -> kfree(hcd)
 
-> +
-> +/**
-> + * devm_pm_domain_attach_list - devres-enabled version of dev_pm_domain_attach_list
-> + * @dev: The device used to lookup the PM domains for.
-> + * @data: The data used for attaching to the PM domains.
-> + * @list: An out-parameter with an allocated list of attached PM domains.
-> + *
-> + * NOTE: this will also handle calling devm_pm_domain_detach_list() for
-> + * you during remove phase.
-> + *
-> + * Returns the number of attached PM domains or a negative error code in case of
-> + * a failure.
-> + */
-> +int devm_pm_domain_attach_list(struct device *dev,
-> +                              const struct dev_pm_domain_attach_data *data,
-> +                              struct dev_pm_domain_list **list)
-> +{
-> +       int ret, num_pds = 0;
+  Unable to handle kernel NULL pointer dereference at virtual address
+  0000000000000060
+  Call trace:
+   dwc3_qcom_suspend.part.0+0x17c/0x2d0 [dwc3_qcom]
+   dwc3_qcom_runtime_suspend+0x2c/0x40 [dwc3_qcom]
+   pm_generic_runtime_suspend+0x30/0x44
+   __rpm_callback+0x4c/0x190
+   rpm_callback+0x6c/0x80
+   rpm_suspend+0x10c/0x620
+   pm_runtime_work+0xc8/0xe0
+   process_one_work+0x1e4/0x4f4
+   worker_thread+0x64/0x43c
+   kthread+0xec/0x100
+   ret_from_fork+0x10/0x20
 
-There is no need to initialize num_pds to 0 here, as the below calls
-take care of it.
+Fixes: c5f14abeb52b ("usb: dwc3: qcom: fix peripheral and OTG suspend")
+Cc: stable@vger.kernel.org
+Signed-off-by: Faisal Hassan <quic_faisalh@quicinc.com>
+---
+ drivers/usb/dwc3/dwc3-qcom.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-> +
-> +       num_pds = dev_pm_domain_attach_list(dev, data, list);
-> +
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index 88fb6706a18d..0c7846478655 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -319,13 +319,15 @@ static bool dwc3_qcom_is_host(struct dwc3_qcom *qcom)
+ static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom, int port_index)
+ {
+ 	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+-	struct usb_device *udev;
++	struct usb_device __maybe_unused *udev;
+ 	struct usb_hcd __maybe_unused *hcd;
+ 
+ 	/*
+ 	 * FIXME: Fix this layering violation.
+ 	 */
+ 	hcd = platform_get_drvdata(dwc->xhci);
++	if (!hcd)
++		return USB_SPEED_UNKNOWN;
+ 
+ #ifdef CONFIG_USB
+ 	udev = usb_hub_find_child(hcd->self.root_hub, port_index + 1);
+-- 
+2.17.1
 
-We should add a check if num_pds is zero here, as in that case there
-is no reason to add a devres callback for it.
-
-> +       ret = devm_add_action_or_reset(dev, devm_pm_domain_detach_list, *list);
-> +       if (ret)
-> +               return ret;
-> +
-> +       return num_pds;
-> +}
-> +EXPORT_SYMBOL_GPL(devm_pm_domain_attach_list);
-
-[...]
-
-Kind regards
-Uffe
 
