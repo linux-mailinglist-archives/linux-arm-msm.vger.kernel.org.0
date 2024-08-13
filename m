@@ -1,128 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-28366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E538695015E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 11:41:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 69137950307
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 12:56:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7602728102A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 09:41:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2A49528748B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 10:56:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 584FA17C7C2;
-	Tue, 13 Aug 2024 09:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1113C19D063;
+	Tue, 13 Aug 2024 10:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DRSe25bh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sEdlSNcA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1D28BF3;
-	Tue, 13 Aug 2024 09:41:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA9F19CD06
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 10:53:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723542074; cv=none; b=hYBOVhs8YLT51afYg2ZhjfpkP9HuriEtGOje77vOspvBs+QQsdM2qr7f2jpofc8n8USKJliqc+3Xv/ke8X35BeF3k610FgqrA6jiDuPHN9cd5DizTIW2In9BLgb6hD7NxhxhLAF7b39olpeIHfIkyqBU+7njgQ73sss6iPTjeFc=
+	t=1723546413; cv=none; b=L8yDQlzdWsEFOLGdsiIqcykqLg/MPFzhLdWGmrNrSxJ5YhNR6L8z3+xJzefrfUhqn2ucnSjJ9ebxmGfFRaBqQMWyILmzlL5LnHJVsq/Bo3hyIZc5h8JtwkmRRsdaU4BFKHHNGfowfVh22b/2eD3xlYLFPEsJlp9tzJ4bUbVTnTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723542074; c=relaxed/simple;
-	bh=/oZw4Yxm6i7OL1L0+QXuV+1b8dq/MqL5MzzWd2POf24=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=J7tt3gCW6ez71fyt8aG3RDcZO7gVH5qrxUW4mVth3W6Lczw3lr6owuw48HCDu5n7OdO2D2LagW55M3Ccj8SxP8UEA4brmwW4STTEn8aDIf8TlIvgf9gFoeHbV0Sw3vMT9vhOZATvz1L5IrXSoQT9p6X2GnM2cWN3G6DWPmi4cf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DRSe25bh; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47D3k6Je002439;
-	Tue, 13 Aug 2024 09:41:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=t8eOWGf5URxoYcSQDTm+IE
-	RCd4K6UU5bZ7PZ2y92kSo=; b=DRSe25bhPhk7PnLLcKh+GbaQGSQJ9T71UQcYqd
-	tOzM12VsLUuM8iqfUHrqqFXH2KDtNYwIuMeV5INpTRi19yFrK+p/wIjbBK6doMw/
-	EdSjiUiOmtAQyHTgGS04PSTDlXHhe5rzAfLaaLWZdmHdCubDLdCE7dnTemYanqRg
-	zpAFU0LgWv5wnmsQD5TJpCApFwDOIso2Z7zXcufRKadPWpEvA1wCJYQGD1vDU7Xk
-	+Q+67zwl8XQ2nWrEJ8hNqzUwrcrg6aDloqDwtz3mgOV/6F3GX6xSLe1BNTFD2Obb
-	f71PLjwjs5ocg5Pg27ohfNfVA4M3OHRQp3x/SnriaL3mNzKg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x167y00p-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 Aug 2024 09:41:06 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47D9f6WI030306
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 Aug 2024 09:41:06 GMT
-Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 13 Aug 2024 02:41:01 -0700
-From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>,
-        "Imran
- Shaik" <quic_imrashai@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Satya Priya Kakitapalli
-	<quic_skakitap@quicinc.com>,
-        kernel test robot <lkp@intel.com>,
-        Dan Carpenter
-	<dan.carpenter@linaro.org>
-Subject: [PATCH] clk: qcom: clk-alpha-pll: Replace divide operator with comparison
-Date: Tue, 13 Aug 2024 15:10:35 +0530
-Message-ID: <20240813094035.974317-1-quic_skakitap@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1723546413; c=relaxed/simple;
+	bh=q8pNAgjw9/3tHHnWRFEJHbq63k2GtWgWLWiFMw3DnYg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Nvksb3kydbtbD9GJMStGpPObYMtnBcFUMWNLpBnBT3KlNaXpt3A9PegqKKPZ0JK8gOcMj1kAUpgBqX9WQk83/Bs5Dd3Qup9dNE/2oYZ9KpQrV0LFYN2vfl1aCrelpJLhKQeZpbkKde7jIuWTSkPSkoolx71+JTwsznQfsmavyWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sEdlSNcA; arc=none smtp.client-ip=209.85.219.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e05e4c3228bso5142293276.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 03:53:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1723546410; x=1724151210; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z/XDKrkkMHvWOyw5p4QJtIumEMqEgD/xVT5SgNZelBg=;
+        b=sEdlSNcA8pSYeZNy35Z2d1R7MRMOAVlMv4/gVXeJX1wtken5bplBAjFKLj7tKdfAWC
+         /koFQ1lBpwnPUFM/0ACdAQ8+qi77W+Ww1FS0PYzDigSLy53renVmyyerIu7JwgtIRgrx
+         4/q2xO80uPNHstpCiSzsUh9j7IsvbYDwsnymmJ+wEGTpVJdOlYgqRZwCZNLk8ObU97v1
+         Axvh0XhbtKmKhoOjaONO5bwEkV/3scoW4QOMnLm6J4OdnvtfN9ZGdn8HWTa6O3txUzDa
+         iU++OLVw8k97JY6mxTEMWxT4ucEIdop3BA0kNIyD8bCFYuLZFUN0PhGp4VexqTuCtMCL
+         xYXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723546410; x=1724151210;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Z/XDKrkkMHvWOyw5p4QJtIumEMqEgD/xVT5SgNZelBg=;
+        b=LpNc4yqqiv2gtSQTGcdtP8EtxNI1T6kGXokBawMm/TqGMTaL+lxF+8nt38lTdsPOPg
+         qRl61VzlnVhYlEW6m3YfFEgk3y86jcVnXWeCIurp8I9fQE4iLifK/23RSWbPVEciZzSj
+         oqx2HakyXGKsKnkDheySffB0EBCm+PqWWHiqh7l41WdlPDxV2IM4QmRDprX3elyrIcXT
+         RwII3cdYmcKrJslLOnYchR+EgqZHZk0guE0WW9hqfHDM53K5A3FEixaCshzJddz4V3tq
+         YQXxEtYWvZQRFVsyMO+C6QykjcJXuGEyzeAMb4jnXfjXGf+yjfaPqDZq58D6s2FmkTkw
+         eBlg==
+X-Forwarded-Encrypted: i=1; AJvYcCVp+PNhFpD1OfTN4SHIRxLaaawqZqP2klYJo3NlRslAdNBU3ESsCvWzp8xxUOxBUr5oPvxqJWLemMBVZga6lgGYGN4S5eZyEJIXJ/bzaQ==
+X-Gm-Message-State: AOJu0YyIp5VrG9JNlpLeYoQffdVpvMgh8slqz8qgXgN4s6HW5Fkkqluo
+	bKs8EPdTLZ6gyfly3hIwAVNbjbiGhVHBIybJkJwnlKgYIV+55ZfQ52RTmFwC3L6vEYXEulxiicR
+	HirkkqhadRmRwrdvU+sdG4GjUhZEOY37JHEgcnQ==
+X-Google-Smtp-Source: AGHT+IFItO0D7OclX/S5B/e5ClqeA9JU/P3uqhBqfY7zfqkekKMs8wX80GxMDY1wDSzUbaTJC9QhhNMbySj25mpFIPs=
+X-Received: by 2002:a05:6902:13cf:b0:e0e:cd17:6130 with SMTP id
+ 3f1490d57ef6-e113d07894cmr3177420276.37.1723546409963; Tue, 13 Aug 2024
+ 03:53:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _dTJIzTVYMgzH9abpiNg-uPKSiAsI5zD
-X-Proofpoint-ORIG-GUID: _dTJIzTVYMgzH9abpiNg-uPKSiAsI5zD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-13_02,2024-08-13_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1011
- suspectscore=0 mlxlogscore=988 impostorscore=0 malwarescore=0 spamscore=0
- mlxscore=0 priorityscore=1501 phishscore=0 adultscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2408130069
+References: <1723014947-15571-1-git-send-email-quic_dikshita@quicinc.com> <1723014947-15571-2-git-send-email-quic_dikshita@quicinc.com>
+In-Reply-To: <1723014947-15571-2-git-send-email-quic_dikshita@quicinc.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Tue, 13 Aug 2024 12:52:53 +0200
+Message-ID: <CAPDyKFpUMmveKQ2Pi33VwcvG9tsMQHEcAg88icf7v9mzzm+k4Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] PM: domains: add device managed version of dev_pm_domain_attach|detach_list()
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-In zonda_pll_adjust_l_val() replace the divide operator with comparison
-operator since comparisons are faster than divisions.
+On Wed, 7 Aug 2024 at 09:16, Dikshita Agarwal <quic_dikshita@quicinc.com> wrote:
+>
+> Add the devres-enabled version of dev_pm_domain_attach|detach_list.
+> If client drivers use devm_pm_domain_attach_list() to attach the
+> PM domains, devm_pm_domain_detach_list() will be invoked implicitly
+> during remove phase.
+>
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> ---
+>  drivers/base/power/common.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
+>  include/linux/pm_domain.h   | 13 +++++++++++++
+>  2 files changed, 57 insertions(+)
+>
+> diff --git a/drivers/base/power/common.c b/drivers/base/power/common.c
+> index 327d168..729d6c2 100644
+> --- a/drivers/base/power/common.c
+> +++ b/drivers/base/power/common.c
+> @@ -277,6 +277,50 @@ int dev_pm_domain_attach_list(struct device *dev,
+>  EXPORT_SYMBOL_GPL(dev_pm_domain_attach_list);
+>
+>  /**
+> + * devm_pm_domain_detach_list - devres-enabled version of dev_pm_domain_detach_list.
+> + * @_list: The list of PM domains to detach.
+> + *
+> + * This function reverse the actions from devm_pm_domain_attach_list().
+> + * it will be invoked during the remove phase from drivers implicitly if driver
+> + * uses devm_pm_domain_attach_list() to attach the PM domains.
+> + */
+> +void devm_pm_domain_detach_list(void *_list)
+> +{
+> +       struct dev_pm_domain_list *list = _list;
+> +
+> +       dev_pm_domain_detach_list(list);
+> +}
+> +EXPORT_SYMBOL_GPL(devm_pm_domain_detach_list);
 
-Fixes: f4973130d255 ("clk: qcom: clk-alpha-pll: Update set_rate for Zonda PLL")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202408110724.8pqbpDiD-lkp@intel.com/
-Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
----
- drivers/clk/qcom/clk-alpha-pll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I think this function should be internal and hence made static -
+unless there is a good reason to export it?
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index 2f620ccb41cb..fd8a82bb3690 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -2126,7 +2126,7 @@ static void zonda_pll_adjust_l_val(unsigned long rate, unsigned long prate, u32
- 	remainder = do_div(quotient, prate);
- 	*l = quotient;
- 
--	if ((remainder * 2) / prate)
-+	if ((remainder * 2) >= prate)
- 		*l = *l + 1;
- }
- 
--- 
-2.25.1
+> +
+> +/**
+> + * devm_pm_domain_attach_list - devres-enabled version of dev_pm_domain_attach_list
+> + * @dev: The device used to lookup the PM domains for.
+> + * @data: The data used for attaching to the PM domains.
+> + * @list: An out-parameter with an allocated list of attached PM domains.
+> + *
+> + * NOTE: this will also handle calling devm_pm_domain_detach_list() for
+> + * you during remove phase.
+> + *
+> + * Returns the number of attached PM domains or a negative error code in case of
+> + * a failure.
+> + */
+> +int devm_pm_domain_attach_list(struct device *dev,
+> +                              const struct dev_pm_domain_attach_data *data,
+> +                              struct dev_pm_domain_list **list)
+> +{
+> +       int ret, num_pds = 0;
 
+There is no need to initialize num_pds to 0 here, as the below calls
+take care of it.
+
+> +
+> +       num_pds = dev_pm_domain_attach_list(dev, data, list);
+> +
+
+We should add a check if num_pds is zero here, as in that case there
+is no reason to add a devres callback for it.
+
+> +       ret = devm_add_action_or_reset(dev, devm_pm_domain_detach_list, *list);
+> +       if (ret)
+> +               return ret;
+> +
+> +       return num_pds;
+> +}
+> +EXPORT_SYMBOL_GPL(devm_pm_domain_attach_list);
+
+[...]
+
+Kind regards
+Uffe
 
