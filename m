@@ -1,127 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-28426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3576D950DAE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 22:12:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E8B6950DC8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 22:25:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6685D1C223BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 20:12:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CB20B1C2226C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 20:25:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A1FC1A4F30;
-	Tue, 13 Aug 2024 20:12:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b="cZp0fMT2"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEB241A4F2C;
+	Tue, 13 Aug 2024 20:25:00 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72D4A953
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 20:12:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FB8187F;
+	Tue, 13 Aug 2024 20:24:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723579936; cv=none; b=dnATv4uYMVCJeJ6YjFknGODl3lFyYDrgJ7Zd/ndYVTO45gdfsUnhBEJDet+iI5UQb+bxfAp4evyx9TvtjGAFeMUme/Tq0FtX4xW5Hg5XZLJgYAjjuKONjcwrQFC3Lmi07yt4DkTjHEw+tFi42wOXGny5Rf2fkPHZDkRoSBOvlPk=
+	t=1723580700; cv=none; b=rON8gHJgZ/zmlivCfgYucYq8Fmi9OOlNTjD18bx1KXAVEX+5MvpY+h+KL7QS2E5XcQTGh01breKc0af4H6cXwU4VnMRygz+YdbNwjY5+pZGedUTvpsiPyL2RJEXsTRlq0gsgZxBqpgQ0+k0qOkDAq6w/KomMv4tmSjL+eElD8K8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723579936; c=relaxed/simple;
-	bh=c/Nd47l6PNwU0M/Usiki4I2g5L1xvxlzkij/f/or1VI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oJp1FDzJsUNo9I8cevu9vlm3QbnZ1KzoW2SjfAnq1Q37nWMqxtmb+L3GwsfDGmuI5AsKZNt9ejO9lJL36bwHTn2IE92HaAMVhZ9BJ00R/phGVg+vjWiFjmw5RREMRf9ogKgmLq37dCbB/AE5/8azS5SrA5hgX2ZTbj/35O5mAKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org; spf=pass smtp.mailfrom=kali.org; dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b=cZp0fMT2; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kali.org
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5a1c49632deso6510965a12.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 13:12:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google; t=1723579932; x=1724184732; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZZkqFEKfgA62MBE94ncqpNAE1sXGUAg2WiZjdurlqhc=;
-        b=cZp0fMT2ze3TeWLeQAxJcw75FbNicODqd/Mo0ji8IvRN6iNKvcSedTIg1LZiCjJGw+
-         rQBiJyMRCk4lpLH6gaMRT65TrMXwQCtgWrBPZbWKAXoiJxtpYusSh/wql863jR7Ao+kA
-         4FPws4QgndvPHaGdcui6LDJXIuhvZPeaTTuzNNpNpq6EbGyDr/gMzOUFVSSz9h3lvhLr
-         4f5MfCC0SYkFa/n0HcZK9JNvBe0HnTNvJFrDWGkb1P5p0HVWAdSuDyxzWru9+hwEX+kb
-         H5Q6H6uyntVpIxPOcW1tq7FSAQHsVkYOJTBFprBFfmVwn230L6EJ5EohIgSnAoKqmGAo
-         UdNw==
+	s=arc-20240116; t=1723580700; c=relaxed/simple;
+	bh=wIlDKCsXJeboUMZrJ2Sm5A0TPgoxDqbV7n7P7xIrOt8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IPnM902kR7A/oQ8A8kLp6xJmo8M8W+9oI52by+pBv53ptWbFBV9uJL8+eurpkJDmJgKC6s/7u2nKOqc7W4IdWQ967iDp7WWywtaT0yuohiInBkbMBPp2EDk7l9ov5Asz0svzIsGZ9WV+hGLgzUQ1m9YXNgIkpiNTWpn5y+CAo7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1fc491f9b55so42692315ad.3;
+        Tue, 13 Aug 2024 13:24:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723579932; x=1724184732;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZZkqFEKfgA62MBE94ncqpNAE1sXGUAg2WiZjdurlqhc=;
-        b=Qf1ksbzaMVkmAA3Pojp8kVH6jYZIY5Aam83nVK5AtvWeo2ffgqLaNzA0Ny3jHrzLy2
-         vur8YKoS06gUOReztQdHzigmRv+BeYUDNGfDxjhh4hja/7jBtZZ+tE/RCG0Ml8vg0JpF
-         ZnXtf08oXzWKCcGZVJcxMmDl6RUJ32NZIy2WbRTTio5+RYOnXQoYrDdjpUkWppt9z5ET
-         EQvwSUVRzpoPgFu+W+CIgkzPLucSNdDN5g1A6Fw6opGPo1YOrqT2ZFsgsRuignLy4DvE
-         D54ouSGATtFlm/+IbgbZSdNGLKJUHt5WeI62bPnCSC/GALS06vv+0uFH7B049JyY0bqY
-         +7sw==
-X-Forwarded-Encrypted: i=1; AJvYcCXapsAvG064J0OzByFL2AlhudCDPF5P91PWDjTNgLm3/Xd+ZgnRiw1LpOsW3IGkBr2SznWI6VwFYUsjgOqaOZ7mIqibLc3z2Ra8Wku1jA==
-X-Gm-Message-State: AOJu0YxTSKsbEykKej0safPYDRu9GIRLRjzN1j94CfsHhcM1bYPhwuiL
-	Ec/D6hwj7XGU8zkl+huCwbxt+Z0xs0wzUJKmvwtMXVu1qN8yBB+rI1vDEyGQWdx2Eh1e3llwRsc
-	f6ahet04aU9393ABbWpkt+sfoxkNyMNxrQXXAMw==
-X-Google-Smtp-Source: AGHT+IGlG/zcS96JKH5rJkRdWHJI2dNwey+vY6gYo7ofXGnhVUsUxmEUw9uBzFyOrKjBRG7R8jS9okIudWzJ2OCWgig=
-X-Received: by 2002:a05:6402:270a:b0:5a1:bda1:3e23 with SMTP id
- 4fb4d7f45d1cf-5bea1c76667mr467488a12.14.1723579931923; Tue, 13 Aug 2024
- 13:12:11 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1723580699; x=1724185499;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=quenUURw5ynby1W81kTijG5HkfqC+NVKxViDT2ifuPM=;
+        b=jiaiee+SftN2qhu1/g9pwB7LCaQo4Cl24WmxOz6hb+lhsVH+tzK0/6jOR11/Qi9pGx
+         9MC53OtNvvZge/9V5vvJnb9TIyUspCLTT1aBbfkrx22YuN9PG3snabQQrhkBcR5WbzAB
+         YlCvVNBjm0T7aAdtDRXFq1b2elBpTYqfdzjDjxdRNaYXFRGgtP0KBu9963KB04Vn6dAG
+         ntJ4+uUjjja5zEd+rcrt5MA9ssjm0P2juCClVtXIYs93jTlkzRDMUrOqicDWZ8VUHyii
+         Io0IH1x8zPzmdwzOGHZdVWGXTqZUa5bmnd+UiZJjuAhFtobCwAyhvaFXWy5yoY9lH5xm
+         msOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWfGta0Vnn/QCFRAN1VC7j28tzsDvZMbfzqCu3JSgVNgpbeRNHJvsD0KKQJOHJ3C2vxYjhZeWJDVCiYMHVCfm5OYBkPITWd1Iw4h1Sfa1jzQlMfs8vGEr9g4qfOXVMeAh1wLLDJWAvpJcc7T16PDjbhTBUdGDUbTZvcSYsy3oGPGMOOU3KyJA==
+X-Gm-Message-State: AOJu0Yz+7zY48+bfbWX49dkjq86Sp0DRM4zMlnB8Y16Cc5KRchiI1QTC
+	Rp02td8C1FKqCGgX9qIJbTK+TN1sUimKZxq9j1HU7XlHd4eK3HLP
+X-Google-Smtp-Source: AGHT+IHjC5oISJgD63ifwG0y1Rsh5mWlxcPUysXZovkhKV60+/TBUDV6LteGjCltHKwtSHuxIFnv6w==
+X-Received: by 2002:a17:903:2305:b0:1fb:6d12:2c1c with SMTP id d9443c01a7336-201d63b3e4dmr10758675ad.19.1723580698764;
+        Tue, 13 Aug 2024 13:24:58 -0700 (PDT)
+Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-201d7c01f75sm967545ad.200.2024.08.13.13.24.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Aug 2024 13:24:58 -0700 (PDT)
+Date: Wed, 14 Aug 2024 05:24:56 +0900
+From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: lpieralisi@kernel.org, robh@kernel.org, bhelgaas@google.com,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] PCI: qcom: Use OPP only if the platform supports it
+Message-ID: <20240813202456.GB1922056@rocinante>
+References: <20240722131128.32470-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240813190639.154983-1-brgl@bgdev.pl>
-In-Reply-To: <20240813190639.154983-1-brgl@bgdev.pl>
-From: Steev Klimaszewski <steev@kali.org>
-Date: Tue, 13 Aug 2024 15:11:59 -0500
-Message-ID: <CAKXuJqhuusKMgVj7k7DEEBCSW6VjRhiyqoD6usaoSnawMxODaQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] arm64: dts: qcom: sc8280xp: enable WLAN and Bluetooth
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240722131128.32470-1-manivannan.sadhasivam@linaro.org>
 
-Hi Bartosz,
+Hello,
 
-On Tue, Aug 13, 2024 at 2:07=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl>=
- wrote:
->
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
-> This enables WLAN and Bluetooth on two boards using the sc8280xp SoC.
-> For the sc8280xp-crd we add the PMU, wifi and bluetooth nodes with the
-> correctly modelled wiring between them. For the X13s, we rework existing
-> nodes so that they align with the new DT bindings contract.
->
-> Bartosz Golaszewski (2):
->   arm64: dts: qcom: sc8280xp-crd: enable bluetooth
->   arm64: dts: qcom: sc8280xp-x13s: model the PMU of the on-board wcn6855
->
-> Konrad Dybcio (1):
->   arm64: dts: qcom: sc8280xp-crd: enable wifi
->
->  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     | 169 ++++++++++++++++++
->  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  98 ++++++++--
->  2 files changed, 255 insertions(+), 12 deletions(-)
->
-> --
-> 2.43.0
->
->
-What does this patchset depend on?  I'm assuming I'm missing something
-in my config as I've tried to test this patchset and I end up with the
-wifi and bluetooth being deferred on my Thinkpad X13s
+> With commit 5b6272e0efd5 ("PCI: qcom: Add OPP support to scale
+> performance"), OPP was used to control the interconnect and power domains
+> if the platform supported OPP. Also to maintain the backward compatibility
+> with platforms not supporting OPP but just ICC, the above mentioned commit
+> assumed that if ICC was not available on the platform, it would resort to
+> OPP.
+> 
+> Unfortunately, some old platforms don't support either ICC or OPP. So on
+> those platforms, resorting to OPP in the absence of ICC throws below errors
+> from OPP core during suspend and resume:
+> 
+> qcom-pcie 1c08000.pcie: dev_pm_opp_set_opp: device opp doesn't exist
+> qcom-pcie 1c08000.pcie: _find_key: OPP table not found (-19)
+> 
+> Also, it doesn't make sense to invoke the OPP APIs when OPP is not
+> supported by the platform at all. So let's use a flag to identify whether
+> OPP is supported by the platform or not and use it to control invoking the
+> OPP APIs.
 
-[   18.655330] pci 0006:01:00.0: deferred probe pending: pci: wait for
-supplier /wcn6855-pmu/regulators/ldo9
-[   18.655347] serial serial0-0: deferred probe pending: serial: wait
-for supplier /wcn6855-pmu/regulators/ldo9
-steev@finn:~$ sudo cat /sys/kernel/debug/devices_deferred
-0006:01:00.0    pci: wait for supplier /wcn6855-pmu/regulators/ldo9
-serial0-0    serial: wait for supplier /wcn6855-pmu/regulators/ldo9
+Applied to controller/qcom, thank you!
+
+[1/1] PCI: qcom: Use OPP only if the platform supports it
+      https://git.kernel.org/pci/pci/c/d0fa8ca89100
+
+	Krzysztof
 
