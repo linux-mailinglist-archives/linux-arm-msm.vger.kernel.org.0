@@ -1,117 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-28420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89D8F950CFD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 21:15:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF4AA950D28
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 21:33:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2EB801F25598
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 19:15:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 80C33284B69
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 19:33:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 905C61A254F;
-	Tue, 13 Aug 2024 19:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A31FE4779D;
+	Tue, 13 Aug 2024 19:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="u2qUM5LN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aBqLSCEm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716EA1A3BD8
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 19:15:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691AA1DDF4;
+	Tue, 13 Aug 2024 19:33:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723576522; cv=none; b=IheiF9FjTbsSOV3AsrCMWB8v7HWwgs4LEdr4WJmThxSlGOZboY8kAtuzgwlhkwvP/FXXQupyjcMrv0SIdvWmH+EK9THG0PDxEbT7k2m59gCTtzQOOe9pA57Z1sRFixSYMKKV0/w3J5xboUqMyYAIgS/v5oLU3AqxPw5+4zlHzQw=
+	t=1723577597; cv=none; b=hiXqT8Qm8ihHyVkZonHsWmF7KLoVpiIag2pVwAPUO7Jc4BPKFmQCLI+6VPXQPLqdP+0LCZdhsnm3hwq574YqrMZ6hU4xJ+IXTCI4j7Z/aP/bEuGqOk8SHcFPvhUm7uYh+aUs1GVtsJfJ6uck7zrLfMS+n8kb7k54goYtVWWF6uQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723576522; c=relaxed/simple;
-	bh=U4Xyoz84NINmS5YaWTDoCODzk2mYuYN1PlkFZg6Da9o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YDzMxWvhQGmkl2aVd4vktUIGL4+zB0ESaJ9LfJ2wQ/Em+tIW+SlmPr9pYOsIZUvuH5F9IXamVr30YbpwrjlgL0NIQTd/tZAaTKA/m90QNApK5corhuauZIEshmqJTxS2qTt7OfZLMTQLZqzWsrF/Uni5y98/xKjirkzceTMoW6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=u2qUM5LN; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1fc692abba4so49985685ad.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 12:15:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1723576520; x=1724181320; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=U4Xyoz84NINmS5YaWTDoCODzk2mYuYN1PlkFZg6Da9o=;
-        b=u2qUM5LNzTRDS65lVfrgve2nGnWnCpaCIKNX1X1oyF+GjldBkVZn+H0wzpJFgCum8S
-         B3TE5+mm4onsKwhkN2IY2qMorv8n1kAk9vGjy8xBbrZiz6QAPnDOIx35of9AJH1j43uV
-         eSjqZLTyn08ZOBvL/7mhDEFf3r7iXSsQgSsVwiqPhZB23Btf2yWlNZIHyiX4d0iRHk5Q
-         vnMKjYP20YR/SFL1DpqxSfde9VHfbwWXQpSwWGSdkn8fkJCXU0qY7PdUZEfLtaRf60Rc
-         P+QVesUPwEr0+ZP/BVwzjD9Kvmz+8uc4J8+zuZOFQnCGxXbpByFnW7DTuhjULfV2r4W8
-         OeNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723576520; x=1724181320;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=U4Xyoz84NINmS5YaWTDoCODzk2mYuYN1PlkFZg6Da9o=;
-        b=HIG2TmeLwv4L5C4HRQSn9txWzFAcusnKM3I9L19w8woj2Xu/XJeGH0m56tmByLMqEa
-         F3ubgvDhXag5SEFlWoB7HMLCr3RFUcvWMvYzyKGVj+wBRSi4pNZZxmxxcPWJYgRcgX7m
-         SXoYsBSCRudYQMD13Qfqs3I8fIAUQc9opHaC7cepO/cWgLOnVsRGEmS8H3GVQbgOC+Mt
-         JmxCWvYCUv+8hnw9Sl/xl+hZtRMBvDBmeyJIWJh9UvlAkuSQvBzEicm5ryNaS8FhX8Sw
-         EjgbIA/HC79p6HIUvNyeG/YkOmHA9XneOeME0A96U/C1mqwU39vcfk7HJCbP2ZbInu9X
-         NEfQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUSgASitl1+tVxSECXujjKofUZBr8sceQSx5rc5phsDXa4s8gzz8xuWLtVMMM6suuACob1ipPS5JL6AgAN4r4tEJqLD3gvO2O4+buCoYg==
-X-Gm-Message-State: AOJu0YxVOAImVUyGl+QJDpXMT650J5Q0ZQ8yG77ds16cPdJHyrDUkvwq
-	22T2quTakodIwkxS8xAXucfTidKXxEY5FXcp67VKv5tkuDN8USf/VabM658tPLpskRVN9yIe5cA
-	kOE+ZKZuoefzaCuqQyLfwWvwDr18dc/FyUhcdcA==
-X-Google-Smtp-Source: AGHT+IGLVONXb2C6YyhnguQvraZmtCfSPGP62p2pX40XsG5b0xAUk+IJq2D5zMhwvCt/35J4267uGhv5ZbOf+n8Ce4E=
-X-Received: by 2002:a17:902:db10:b0:1fd:8eaf:eaa0 with SMTP id
- d9443c01a7336-201d645c66emr6228805ad.38.1723576519642; Tue, 13 Aug 2024
- 12:15:19 -0700 (PDT)
+	s=arc-20240116; t=1723577597; c=relaxed/simple;
+	bh=0ZUUmkuphhv7Zn3xARGNWRNCqnW09TZsMn+lG/Ct23w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ChZJcDOKA6RYa4w+Y0yYyUcaJB/zPD7tiJ0lBRKgAf0tPmY51MST8rWNVOlub4nlxZ2+VV0WbKMeUbqhG+zSPyLCBwXzjMhDezZ6h5Bm+Hq0ZHqYWFehyedKkGBdvr4r4618O8efGJXAeq9xla3nV/oLwTq3k8/Mmw/SLaDXAj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aBqLSCEm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E65BC32782;
+	Tue, 13 Aug 2024 19:33:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723577597;
+	bh=0ZUUmkuphhv7Zn3xARGNWRNCqnW09TZsMn+lG/Ct23w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=aBqLSCEmFcVZGcGVexKglivaMACeswDHBXwIG1ca/s9szXYP+VoNPl00uYiCRtQ+9
+	 9LPECB1obZbUd80mwinjtzsSC/7jzyJNkoR2EoBkOTfIzlg1BF14m07WhBJCbkFbCv
+	 bl6QV+grlYW7dxoape0aQcuvttHLcO42Ua8rws+bmXEHYDqalGtNDdJ6NoeLtjZhRg
+	 1YK/X5KBxmVJn0NlVShV92zhB444WtdssGkIz0jjfFOhnG9xzcvUXID0uTdNX0KU9D
+	 VLnW/rgDV9TStqG6/XTavY92MfZWG/pYbtL6BM4qjzBeGk1BpQ4FZiyI2FEdaIN0cf
+	 kvkLBdzt9U5CA==
+Date: Tue, 13 Aug 2024 13:33:15 -0600
+From: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Danila Tikhonov <danila@jiaxyga.com>, krzk+dt@kernel.org,
+	conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, rafael@kernel.org, viresh.kumar@linaro.org,
+	kees@kernel.org, tony.luck@intel.com, gpiccoli@igalia.com,
+	ulf.hansson@linaro.org, andre.przywara@arm.com,
+	quic_rjendra@quicinc.com, davidwronek@gmail.com,
+	neil.armstrong@linaro.org, heiko.stuebner@cherry.de,
+	rafal@milecki.pl, macromorgan@hotmail.com, linus.walleij@linaro.org,
+	lpieralisi@kernel.org, dmitry.baryshkov@linaro.org,
+	fekz115@gmail.com, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	netdev@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-hardening@vger.kernel.org
+Subject: Re: [PATCH v2 06/11] dt-bindings: nfc: nxp,nci: Document PN553
+ compatible
+Message-ID: <20240813193315.GA1614564-robh@kernel.org>
+References: <20240808184048.63030-1-danila@jiaxyga.com>
+ <20240808184048.63030-7-danila@jiaxyga.com>
+ <493466e6-d83b-4d91-93a5-233d6da1fdd8@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240803-qps615-v2-0-9560b7c71369@quicinc.com> <20240803-qps615-v2-4-9560b7c71369@quicinc.com>
-In-Reply-To: <20240803-qps615-v2-4-9560b7c71369@quicinc.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 13 Aug 2024 21:15:06 +0200
-Message-ID: <CAMRc=MeWFs+M+2kpotRqmcbPgXx8xCWEa-DqatGxWUAcixQb2g@mail.gmail.com>
-Subject: Re: [PATCH v2 4/8] PCI: Change the parent to correctly represent pcie hierarchy
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, cros-qcom-dts-watchers@chromium.org, 
-	Jingoo Han <jingoohan1@gmail.com>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, andersson@kernel.org, 
-	quic_vbadigan@quicinc.com, linux-arm-msm@vger.kernel.org, 
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <493466e6-d83b-4d91-93a5-233d6da1fdd8@kernel.org>
 
-On Sat, Aug 3, 2024 at 5:23=E2=80=AFAM Krishna chaitanya chundru
-<quic_krichai@quicinc.com> wrote:
->
-> Currently the pwrctl driver is child of pci-pci bridge driver,
-> this will cause issue when suspend resume is introduced in the pwr
-> control driver. If the supply is removed to the endpoint in the
-> power control driver then the config space access by the
-> pci-pci bridge driver can cause issues like Timeouts.
->
-> For this reason change the parent to controller from pci-pci bridge.
->
-> Fixes: 4565d2652a37 ("PCI/pwrctl: Add PCI power control core code")
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
+On Fri, Aug 09, 2024 at 07:39:53AM +0200, Krzysztof Kozlowski wrote:
+> On 08/08/2024 20:40, Danila Tikhonov wrote:
+> > The PN553 is another NFC chip from NXP, document the compatible in the
+> > bindings.
+> > 
+> > Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> > ---
+> >  Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml b/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
+> > index 6924aff0b2c5..364b36151180 100644
+> > --- a/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
+> > +++ b/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
+> > @@ -17,6 +17,7 @@ properties:
+> >            - enum:
+> >                - nxp,nq310
+> >                - nxp,pn547
+> > +              - nxp,pn553
+> 
+> Keep the list ordered.
 
-Tested-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Looks ordered to me. n before p...
 
-Bjorn,
-
-I think this should go into v6.11 as it does indeed better represent
-the underlying logic.
-
-Bart
+Rob
 
