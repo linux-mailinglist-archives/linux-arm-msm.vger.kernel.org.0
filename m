@@ -1,127 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-28425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFFBF950D8A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 22:05:19 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3576D950DAE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 22:12:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E2F6C1C211C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 20:05:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6685D1C223BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 20:12:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD4A31A3BC8;
-	Tue, 13 Aug 2024 20:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A1FC1A4F30;
+	Tue, 13 Aug 2024 20:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WWWHSvnI"
+	dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b="cZp0fMT2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53037A953;
-	Tue, 13 Aug 2024 20:05:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72D4A953
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 20:12:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723579513; cv=none; b=YsX46KFEP4NzRQQq+S8amMZKbnSWlAJsRDsvLPnSCCjqxqMVrU6ltv0tkO2EXEE54L6eUXp1Th9J7L1rMbiaUUD/5DFKRNPwFVHAWljbiQK2M4+e4GKXhcDF4Zf8FzXSETJQcOyxXkNPt60K2Et6fJsZJmQv+lSSNSRptCO8bGA=
+	t=1723579936; cv=none; b=dnATv4uYMVCJeJ6YjFknGODl3lFyYDrgJ7Zd/ndYVTO45gdfsUnhBEJDet+iI5UQb+bxfAp4evyx9TvtjGAFeMUme/Tq0FtX4xW5Hg5XZLJgYAjjuKONjcwrQFC3Lmi07yt4DkTjHEw+tFi42wOXGny5Rf2fkPHZDkRoSBOvlPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723579513; c=relaxed/simple;
-	bh=kIy1yq0X5WjGMSdd+FDorAYstfMBeDZ9v9rwsLZoH/E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=aBAdUfTdph604ylWcPRyy0WQ3urA0UrsQ1gvKPaDENBuU0x/kj7IXb2wiREfahzlo6cSyo67LkG2mFU1nIgHdjobUeWvA+S0sy6KaABXuKGHy9smcY0dTliOvvhMTVAnMHcilt46K7CGlDw3FGU7q5s6DTLLwQJJo/dPy7oHvNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WWWHSvnI; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47DCjrdP017459;
-	Tue, 13 Aug 2024 20:05:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kIy1yq0X5WjGMSdd+FDorAYstfMBeDZ9v9rwsLZoH/E=; b=WWWHSvnIoJTWbMP7
-	LKsN5mIAIrGd6AVM6psREMMhaCl7H+oOdu4SiEKb6dlMsfYpqv7r00zBpQqXWi+/
-	UyDfzbvKR6d/HYXU2fXi89oF8JVXgWl3R19KENffeqxpIweIxx+YSW8WvlKeRlt7
-	qSmQqtyAbxK131SBBTYAVHseMXqmh6W5gnY5luUJwj2Le7m5PPM3X4vfc7Fyoqn8
-	joVrTsVbR0/f2218zGIO5YQV+cUN1wW5B/SfkjD8uNk8Sg6UZpG4SsHsE596FXAw
-	AbHK2EdPxYHQAqI6ojpKoLg3IdKchQD6+zm6iWFMMvQREttDYUb9nJDkyOCwIPiG
-	gAfFOw==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x1d4h0b0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 Aug 2024 20:05:07 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47DK55UT016756
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 13 Aug 2024 20:05:05 GMT
-Received: from [10.71.108.157] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 13 Aug
- 2024 13:05:05 -0700
-Message-ID: <42659c55-8e99-4a66-88d9-357fbb8d7a2d@quicinc.com>
-Date: Tue, 13 Aug 2024 13:05:05 -0700
+	s=arc-20240116; t=1723579936; c=relaxed/simple;
+	bh=c/Nd47l6PNwU0M/Usiki4I2g5L1xvxlzkij/f/or1VI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oJp1FDzJsUNo9I8cevu9vlm3QbnZ1KzoW2SjfAnq1Q37nWMqxtmb+L3GwsfDGmuI5AsKZNt9ejO9lJL36bwHTn2IE92HaAMVhZ9BJ00R/phGVg+vjWiFjmw5RREMRf9ogKgmLq37dCbB/AE5/8azS5SrA5hgX2ZTbj/35O5mAKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org; spf=pass smtp.mailfrom=kali.org; dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b=cZp0fMT2; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kali.org
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5a1c49632deso6510965a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 13:12:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google; t=1723579932; x=1724184732; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZZkqFEKfgA62MBE94ncqpNAE1sXGUAg2WiZjdurlqhc=;
+        b=cZp0fMT2ze3TeWLeQAxJcw75FbNicODqd/Mo0ji8IvRN6iNKvcSedTIg1LZiCjJGw+
+         rQBiJyMRCk4lpLH6gaMRT65TrMXwQCtgWrBPZbWKAXoiJxtpYusSh/wql863jR7Ao+kA
+         4FPws4QgndvPHaGdcui6LDJXIuhvZPeaTTuzNNpNpq6EbGyDr/gMzOUFVSSz9h3lvhLr
+         4f5MfCC0SYkFa/n0HcZK9JNvBe0HnTNvJFrDWGkb1P5p0HVWAdSuDyxzWru9+hwEX+kb
+         H5Q6H6uyntVpIxPOcW1tq7FSAQHsVkYOJTBFprBFfmVwn230L6EJ5EohIgSnAoKqmGAo
+         UdNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723579932; x=1724184732;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZZkqFEKfgA62MBE94ncqpNAE1sXGUAg2WiZjdurlqhc=;
+        b=Qf1ksbzaMVkmAA3Pojp8kVH6jYZIY5Aam83nVK5AtvWeo2ffgqLaNzA0Ny3jHrzLy2
+         vur8YKoS06gUOReztQdHzigmRv+BeYUDNGfDxjhh4hja/7jBtZZ+tE/RCG0Ml8vg0JpF
+         ZnXtf08oXzWKCcGZVJcxMmDl6RUJ32NZIy2WbRTTio5+RYOnXQoYrDdjpUkWppt9z5ET
+         EQvwSUVRzpoPgFu+W+CIgkzPLucSNdDN5g1A6Fw6opGPo1YOrqT2ZFsgsRuignLy4DvE
+         D54ouSGATtFlm/+IbgbZSdNGLKJUHt5WeI62bPnCSC/GALS06vv+0uFH7B049JyY0bqY
+         +7sw==
+X-Forwarded-Encrypted: i=1; AJvYcCXapsAvG064J0OzByFL2AlhudCDPF5P91PWDjTNgLm3/Xd+ZgnRiw1LpOsW3IGkBr2SznWI6VwFYUsjgOqaOZ7mIqibLc3z2Ra8Wku1jA==
+X-Gm-Message-State: AOJu0YxTSKsbEykKej0safPYDRu9GIRLRjzN1j94CfsHhcM1bYPhwuiL
+	Ec/D6hwj7XGU8zkl+huCwbxt+Z0xs0wzUJKmvwtMXVu1qN8yBB+rI1vDEyGQWdx2Eh1e3llwRsc
+	f6ahet04aU9393ABbWpkt+sfoxkNyMNxrQXXAMw==
+X-Google-Smtp-Source: AGHT+IGlG/zcS96JKH5rJkRdWHJI2dNwey+vY6gYo7ofXGnhVUsUxmEUw9uBzFyOrKjBRG7R8jS9okIudWzJ2OCWgig=
+X-Received: by 2002:a05:6402:270a:b0:5a1:bda1:3e23 with SMTP id
+ 4fb4d7f45d1cf-5bea1c76667mr467488a12.14.1723579931923; Tue, 13 Aug 2024
+ 13:12:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] arm64: dts: qcom: sc7280: Update eud compatible
- string
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Souradeep Chowdhury
-	<quic_schowdhu@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad
- Dybcio" <konradybcio@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Trilok Soni
-	<quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala
-	<quic_satyap@quicinc.com>,
-        Elson Serrao <quic_eserrao@quicinc.com>
-CC: <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>
-References: <20240807183205.803847-1-quic_molvera@quicinc.com>
- <20240807183205.803847-4-quic_molvera@quicinc.com>
- <b0058c31-d416-48b5-b6da-5bbdf493febd@kernel.org>
-Content-Language: en-US
-From: Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <b0058c31-d416-48b5-b6da-5bbdf493febd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ogWRv5ZzUClThfSDj4czyh09JrRZ1rYb
-X-Proofpoint-GUID: ogWRv5ZzUClThfSDj4czyh09JrRZ1rYb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-13_10,2024-08-13_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- adultscore=0 phishscore=0 suspectscore=0 mlxscore=0 mlxlogscore=662
- malwarescore=0 bulkscore=0 priorityscore=1501 clxscore=1015
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408130145
+References: <20240813190639.154983-1-brgl@bgdev.pl>
+In-Reply-To: <20240813190639.154983-1-brgl@bgdev.pl>
+From: Steev Klimaszewski <steev@kali.org>
+Date: Tue, 13 Aug 2024 15:11:59 -0500
+Message-ID: <CAKXuJqhuusKMgVj7k7DEEBCSW6VjRhiyqoD6usaoSnawMxODaQ@mail.gmail.com>
+Subject: Re: [PATCH 0/3] arm64: dts: qcom: sc8280xp: enable WLAN and Bluetooth
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi Bartosz,
 
-
-On 8/8/2024 4:03 AM, Krzysztof Kozlowski wrote:
-> On 07/08/2024 20:32, Melody Olvera wrote:
->> Update eud compatible string to reflect use of non-secure eud.
-> This does not match diff at all. You say here something but do something
-> entirely else. Sorry, that's a NAK.
-
-Will drop this patch.
-
-> Best regards,
-> Krzysztof
+On Tue, Aug 13, 2024 at 2:07=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl>=
+ wrote:
 >
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
+> This enables WLAN and Bluetooth on two boards using the sc8280xp SoC.
+> For the sc8280xp-crd we add the PMU, wifi and bluetooth nodes with the
+> correctly modelled wiring between them. For the X13s, we rework existing
+> nodes so that they align with the new DT bindings contract.
+>
+> Bartosz Golaszewski (2):
+>   arm64: dts: qcom: sc8280xp-crd: enable bluetooth
+>   arm64: dts: qcom: sc8280xp-x13s: model the PMU of the on-board wcn6855
+>
+> Konrad Dybcio (1):
+>   arm64: dts: qcom: sc8280xp-crd: enable wifi
+>
+>  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     | 169 ++++++++++++++++++
+>  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    |  98 ++++++++--
+>  2 files changed, 255 insertions(+), 12 deletions(-)
+>
+> --
+> 2.43.0
+>
+>
+What does this patchset depend on?  I'm assuming I'm missing something
+in my config as I've tried to test this patchset and I end up with the
+wifi and bluetooth being deferred on my Thinkpad X13s
 
+[   18.655330] pci 0006:01:00.0: deferred probe pending: pci: wait for
+supplier /wcn6855-pmu/regulators/ldo9
+[   18.655347] serial serial0-0: deferred probe pending: serial: wait
+for supplier /wcn6855-pmu/regulators/ldo9
+steev@finn:~$ sudo cat /sys/kernel/debug/devices_deferred
+0006:01:00.0    pci: wait for supplier /wcn6855-pmu/regulators/ldo9
+serial0-0    serial: wait for supplier /wcn6855-pmu/regulators/ldo9
 
