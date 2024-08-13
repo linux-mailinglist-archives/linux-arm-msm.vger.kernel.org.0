@@ -1,73 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-28423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F476950D76
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 22:01:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 73BC1950D82
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 22:04:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9F165B2222E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 20:01:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0FF02B26024
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 20:04:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A150D1A2C14;
-	Tue, 13 Aug 2024 20:01:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9789F1A4F11;
+	Tue, 13 Aug 2024 20:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hEbU9YwA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VljHwBeh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C985EA953
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 20:01:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA7E1A3BAC;
+	Tue, 13 Aug 2024 20:04:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723579312; cv=none; b=k3RsnTuqaw3ZoAPJWW1x4fitW1kG/t7UARy8GL6wHHt4rhKdXEw9D38vHhffVNn3Eng87YHk877iqYCxSqkSrrA4hm0plgU+tlgz+BiTc1DOOQz2/wys2vzIKKnkXnIgsClBAjmWBuRd/59JBKDf7Bb6Epprijv5w8QGcfdk2XY=
+	t=1723579445; cv=none; b=gt1HoHdM1nbBuHHXlrwcTF4lhASzRvdm8cuJ1vjTXmqV02rSCuoePW8fQRI4RszdLW9UjzL9yCjcTojX+naJF0fy+5hXc2m4cO7LLxsPwm0xvgVJyQgZu2hwPQ/FCikFB+LSW3pJSeHcvkjRko5F4/fCDxW/nLAf7Jw35tNH8gQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723579312; c=relaxed/simple;
-	bh=S4mnivLfaC6CBnZ9vA9MBqgg+x+E3rHUM2iJioJ/fN8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q+Or18WjVYOqmu37xV28Tztu29Nx3sLkiYfYMk6IdY3bdGY404xjW2uyItGBA/gSxUAxS9+BOOc9c8li6pDrc9PBy6tv/Ipe0Xt6NFnV6DRhgNk+nBSQH86HifaaaJ+oc55Vfr5Op0orTuASUomGCACwEufWPy0+Z/bgrwfxH1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hEbU9YwA; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-530ad984f2dso576597e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 13:01:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723579309; x=1724184109; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=05yxfIPzb+vpmSjZ9OYifCLd7i3CDlpKM0BKHiz5UCQ=;
-        b=hEbU9YwAuUKEftUXuV5Hih/D4iujHrKgJD7aCOnvUZVpV+M1VNa1uI/kLLCb+8eqcs
-         RGfSExHXxDzFpu+wrLtZqJpDN5TAyF5nTJ73wRAeX8ioBL3b2c1DeozK2pbdtHs9oV/Y
-         HcO7zUp+POE/9/xJQznPmMSVoQ1XTsSQDzF+71B2lFUu+/b2tjdVRUBSiwpz8IA8QWxo
-         nckSm2rpk3DMxCsW9hrzZWghB2RYdVlfvdb+ZAEF8sPPkX8XlyI+ktMxtsfGejxaObNq
-         z+yjn5u5JfOjYgLxD9d9xEOLr54mUJpTFwKLmDkVqcrOcSiHDgiewsBJr3xh2PVfh9M5
-         tgFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723579309; x=1724184109;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=05yxfIPzb+vpmSjZ9OYifCLd7i3CDlpKM0BKHiz5UCQ=;
-        b=MgS0dyvby+4KOznbEif5Ktm9Al+BzdBmkD2bsTF9qT4NyxkLzGMPfdYh9MvRjQSJOa
-         MrH08EEz4fPj3u7qhCYaMuwLw711CjtHfR5cttqFdsAznozKMoCKWAokPn70rm3OsNUt
-         OX1jeuoADRSyWtQ+ZrQOFrfWjmyRwg48zuMgs3XaYDqaaWC4EcAmeREx60l6oAPpe5f5
-         RUPf5I38sebaKU+ZqTEeQHUnMAPu2LJNZsNPlkqlF6ZHXfA8sRZlGOxNMgolieN3VueA
-         NM9Wu6YYIb2QW+F1+CRUrPvlJMQyMpEP1+qOp9o75GlfM8DcwYCMB58aAoXxAK7L67Q8
-         vmfg==
-X-Gm-Message-State: AOJu0YwMX16Ec7fHbYCgsYYhAzJ/DEQLeeUBnGWCiGXgAxTZn7r0Ll+M
-	M/I+j++QaaRinlMyic4ATUBm7qAqAuP6qV1nX4OQgiN60DO0jX5f7rauCHoNKOo=
-X-Google-Smtp-Source: AGHT+IEy2HUeh4eHrPS74gTyv0LL8fkr5nwO3fJw8lDbNGJBQEugQTA2bj4xmGTeJyDShLmEXgiiAw==
-X-Received: by 2002:a05:6512:3c84:b0:52c:ce28:82bf with SMTP id 2adb3069b0e04-532edbb2d5amr162410e87.5.1723579308586;
-        Tue, 13 Aug 2024 13:01:48 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53200f4220asm1053557e87.261.2024.08.13.13.01.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Aug 2024 13:01:48 -0700 (PDT)
-Message-ID: <4d314b61-7483-4ceb-ac72-10dbd7e4522a@linaro.org>
-Date: Tue, 13 Aug 2024 23:01:47 +0300
+	s=arc-20240116; t=1723579445; c=relaxed/simple;
+	bh=+Npvfp8NSzv6+BWy9xk5foyIWDSG9LTmA1VnFOsrxew=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=gvHJSv/+LdbVREDcr7FXHDPjUKb6DxZ4KdiN5ICDw/SxeHyboOmk2dV3tbykk1Edrlq0ndS0LTOF3+rd1LCU+pWuvZmxjRAmB2cFEAj2pdm4EpaAO9idg2mRUwWYe6QFPB/goaTDdS12ow5R23bHMyrPU8Khjj3fDGS4R4EYwL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VljHwBeh; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47DCGalM005644;
+	Tue, 13 Aug 2024 20:03:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Al0COlWtxPvz9k7iEu0xiRFveGatmDKFzjD4MOn3VBc=; b=VljHwBeh+p8Wh4VN
+	BxhCgnSt6Tjb4LI9LsQZejNJtZySOPDBJ8hY6S1pTwnoMewwlDba/DyQ4CO03ihp
+	91FTqe6kx47JA1w0GyR+9Bt8Cr/c9+kYMojC584BLXfGUtCHbxasP64H2Fgdgio6
+	LbA+ZRcSoDML+gFzD1p2zpec7j/7rrFq5Uuy/LhRcfGpEr4QTK6KXH4ChMDPny2J
+	H4lcEQ9+6JdO5aeEw8zt0bzsV0jFc05iDRPUQvfX7WmPs4GPgEzhh9RsHtxzVycy
+	xTI8BpUQHJYPgv+zglym/GpO6AOQEnAnE0MxTSrWc9xDCviMeP5QBtxHwAgYOE06
+	J3unGw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x18y12dd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 Aug 2024 20:03:59 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47DK3vWG009675
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 13 Aug 2024 20:03:57 GMT
+Received: from [10.71.108.157] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 13 Aug
+ 2024 13:03:57 -0700
+Message-ID: <46d0627d-877b-41f3-83f6-4c33b562f460@quicinc.com>
+Date: Tue, 13 Aug 2024 13:03:56 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,70 +65,93 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: clk-alpha-pll: Replace divide operator with
- comparison
+Subject: Re: [PATCH v1 1/3] dt-bindings: soc: qcom: eud: Update compatible
+ strings for eud
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Souradeep Chowdhury
+	<quic_schowdhu@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Trilok Soni
+	<quic_tsoni@quicinc.com>,
+        Satya Durga Srinivasu Prabhala
+	<quic_satyap@quicinc.com>,
+        Elson Serrao <quic_eserrao@quicinc.com>
+CC: <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>
+References: <20240807183205.803847-1-quic_molvera@quicinc.com>
+ <20240807183205.803847-2-quic_molvera@quicinc.com>
+ <dfb1ac84-f011-45ea-9fb1-b8c6bc36cabc@kernel.org>
 Content-Language: en-US
-To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
- Jagadeesh Kona <quic_jkona@quicinc.com>, kernel test robot <lkp@intel.com>,
- Dan Carpenter <dan.carpenter@linaro.org>
-References: <20240813094035.974317-1-quic_skakitap@quicinc.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20240813094035.974317-1-quic_skakitap@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Melody Olvera <quic_molvera@quicinc.com>
+In-Reply-To: <dfb1ac84-f011-45ea-9fb1-b8c6bc36cabc@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 4hqBSQeGN_q9JJfpmTe-YaTcStwpTx-e
+X-Proofpoint-ORIG-GUID: 4hqBSQeGN_q9JJfpmTe-YaTcStwpTx-e
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-13_10,2024-08-13_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=957
+ suspectscore=0 phishscore=0 malwarescore=0 mlxscore=0 spamscore=0
+ lowpriorityscore=0 impostorscore=0 clxscore=1011 priorityscore=1501
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408130144
 
-On 8/13/24 12:40, Satya Priya Kakitapalli wrote:
-> In zonda_pll_adjust_l_val() replace the divide operator with comparison
-> operator since comparisons are faster than divisions.
-> 
-> Fixes: f4973130d255 ("clk: qcom: clk-alpha-pll: Update set_rate for Zonda PLL")
 
-Apparently the change is not a fix, therefore I believe the Fixes tag
-shall be removed.
 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-> Closes: https://lore.kernel.org/r/202408110724.8pqbpDiD-lkp@intel.com/
-> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-> ---
->   drivers/clk/qcom/clk-alpha-pll.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-> index 2f620ccb41cb..fd8a82bb3690 100644
-> --- a/drivers/clk/qcom/clk-alpha-pll.c
-> +++ b/drivers/clk/qcom/clk-alpha-pll.c
-> @@ -2126,7 +2126,7 @@ static void zonda_pll_adjust_l_val(unsigned long rate, unsigned long prate, u32
->   	remainder = do_div(quotient, prate);
->   	*l = quotient;
+On 8/8/2024 4:00 AM, Krzysztof Kozlowski wrote:
+> On 07/08/2024 20:32, Melody Olvera wrote:
+>> The EUD can more accurately be divided into two types; a secure type
+>> which requires that certain registers be updated via scm call and a
+>> nonsecure type which must access registers nonsecurely. Thus, change
+>> the compatible strings to reflect secure and nonsecure eud usage.
+>>
+>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>> ---
+>>   Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml | 6 +++---
+>>   1 file changed, 3 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>> index f2c5ec7e6437..476f92768610 100644
+>> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>> @@ -17,8 +17,8 @@ properties:
+>>     compatible:
+>>       items:
+>>         - enum:
+>> -          - qcom,sc7280-eud
+>> -      - const: qcom,eud
+>> +          - qcom,secure-eud
+>> +          - qcom,eud
+> Commit msg did not explain me why DT bindings rules are avoided here and
+> you drop existing SoC specific compatible.
+>
+> This really does not look like having any sense at all, I cannot come up
+> with logic behind dropping existing users. You could deprecate it, but
+> then why exactly this device should have exception from generic bindings
+> rule?
 
-Since it's not a fix, but a simplification, you may wish to remove
-an unnecessary 'quotient' local variable:
+Understood. I won't drop this compatible string. Is alright to add the 
+additional compatible as is?
 
-remainder = do_div(rate, prate);
+Thanks,
+Melody
+>
+> Best regards,
+> Krzysztof
+>
 
->   
-> -	if ((remainder * 2) / prate)
-> +	if ((remainder * 2) >= prate)
->   		*l = *l + 1;
-
-*l = rate + (u32)(remainder * 2 >= prate);
-
-I hope the assignment above is quite clear...
-
->   }
->   
-
-With the review comments above implemented, feel free to add to v2
-
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-
---
-Best wishes,
-Vladimir
 
