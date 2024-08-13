@@ -1,211 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-28387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87FD3950514
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 14:34:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4882795051A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 14:34:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AD0551C21A3C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 12:34:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F20FF1F21692
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 12:34:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7452B19DFAE;
-	Tue, 13 Aug 2024 12:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53439199EA8;
+	Tue, 13 Aug 2024 12:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="advjup4V"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Cfe31hxg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9906619DF4F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 12:31:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA6319AD6A;
+	Tue, 13 Aug 2024 12:32:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723552299; cv=none; b=hEiSnrTk4IerqjFtasTEU4tqPJranpJ5jR/dBt+gT/vSxLq3FvYthY2NNstl5b8sWnBzcwwsQbld4OqU3E1JT5c48ADToq9JbQRLSl2a9iKqpFCnNYs9o+nMXIVNe1Q3UQkR29jkZ/dHM8G0uhIFQe0TP/Wm52Z2LHcqWGwP2G4=
+	t=1723552376; cv=none; b=ACeZxcWUxAWKBx0CVa6RPd16MLNgJq3xsIowJ+gHXT27Kytpw121wyQoyUJnAxLWTWO73n+seJBkQutZ2hPYp06j5A4o0WSlXSVZrRMm/CsX8kHyu/xhsDjE0Cg7I7rgJw3cQiR0Xs8o00FHyRNYd1ujNovVcVC7NhXjt+ugZsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723552299; c=relaxed/simple;
-	bh=+CaEvMFtp6+vW8dd+4vdYR7UCy2/V+0eTuF+Ay8On5w=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=U4geYZqU9sbrjg2S3HVDxr0863yCCYrWDwQpQD9B1+JrhgWOkMRCItiwnFCjQfRQ8WsvFnOULXOrJjfwiZQru1WlyrbbVdlmO9rwHp+iV/He/lX/tHY2jtg3+smR369QHYxARpYGG2tIla2SSJaUb6O7+qjiqm9w56uJ9GrsCXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=advjup4V; arc=none smtp.client-ip=209.85.210.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-7092dd03223so1440757a34.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 05:31:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1723552297; x=1724157097; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GH6hs7TBxxS/YEw6+1SJGhyHiJvtnJuQXXY87tDn62g=;
-        b=advjup4VBND4CuAVj8l9GuqzmubjR+lgB6UfV/S5B0v5UudhjHRGF7s6n0wQUa8we0
-         OaOjX4GMaqAZb07kFx1EhJF82JQmo1M6WhEzKfu2EMqrn9GMmJqfx2/5yow0b7qct6L5
-         Od5IOWWUHXWK0AjLTaC55JGDUjuN1bDo3Q5tQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723552297; x=1724157097;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GH6hs7TBxxS/YEw6+1SJGhyHiJvtnJuQXXY87tDn62g=;
-        b=mPji63pawGRP3sGpfxRxApUMD3AY/zHCFWXXPXl7o6NVbVbmGqYRJpvadSJWC45vNQ
-         +sjjWKd53eK1UhVw9F2PKVqkoHpXCAFD/eoEEMf3RoVPTofigC7REUOL7VP75FOagL+D
-         obMc8CoXoxgGWvhQHPMiYIs5+GgAljanbwGKheFQGw1tbXV7bCYlaD1FV/Niowr32KZy
-         rm6BvwlApG8H98LGPzTuP5C5n0YUB6K/NTJ2FdyBk8oOj2wZAQPwvJ7vs68lIkKf38/M
-         lgk15xI34HErxOApIV20LqWkfnYc27ZCEl5EL8rUtmbEUC+d7BSjxeNJEQFnjxwRRvLn
-         KJzQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXVibOvQKD7ueqc9uafh7fxNo/coQrxqXYcMJBJNA3oG9GkLS7NP6OEi4jMS1uHn8CsQ/SvmeYpPe+918y5as+1UsG0XyrwmpIUQ251DA==
-X-Gm-Message-State: AOJu0YwmjcwCERknymjBWNgsCN5Jg3g9d+ay8DwDbmg+uXSShtudLRV0
-	MgRYOFG/xBKsPqfWCCvpCAcq5EAcdNRx9D7+MW6+9xqt6Q5C5QmLjJEPI3Y9LA==
-X-Google-Smtp-Source: AGHT+IHogC7GOQUcmfObrPNW1iILSP+KxRxv47DDOynRgsgLm33kY19LjuOqUoeUX6BYwlxMP62DDA==
-X-Received: by 2002:a05:6358:7e47:b0:1ac:66ef:a369 with SMTP id e5c5f4694b2df-1b19d2eb1e2mr402285655d.21.1723552296539;
-        Tue, 13 Aug 2024 05:31:36 -0700 (PDT)
-Received: from denia.c.googlers.com (123.178.145.34.bc.googleusercontent.com. [34.145.178.123])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a4c7d66093sm337126685a.12.2024.08.13.05.31.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Aug 2024 05:31:35 -0700 (PDT)
-From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Tue, 13 Aug 2024 12:31:30 +0000
-Subject: [PATCH v6 10/10] media: venus: Convert one-element-arrays to
- flex-arrays
+	s=arc-20240116; t=1723552376; c=relaxed/simple;
+	bh=rWHptO4ILHYisfbYtoMmHf0mrhvaSphbwM91ej5HbZQ=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=Xbp5PyLMqkSdT/LCu1hl7DElB/1EkrxZ31ARRNow0n5aKbQbW6Mln4yLPr3Rn7PRM0I6edrtTEt+RG2Vq75ORMRueWf+B9kbBqVMzAzGXkBFHpB05ISfXr6Cq+NrbeG1c7vuIU21leppIm0Loot994iKffaK3rFa38P/ft/0Mi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Cfe31hxg; arc=none smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1723552374; x=1755088374;
+  h=message-id:subject:from:to:cc:date:in-reply-to:
+   references:content-transfer-encoding:mime-version;
+  bh=rWHptO4ILHYisfbYtoMmHf0mrhvaSphbwM91ej5HbZQ=;
+  b=Cfe31hxg13gZcjEzGql60e/2C3es2y+jJjOMwWXJ1KbMmSspwarlhmNH
+   SLGjp6UM2PHMMNv/1HES0Jt/fo1w1PkUwseNpaXxMuSUOSaBGRihQm98Y
+   3WQmP21ZjjeFtIK/UzlHcFd3zdXbcF4xcIgLey7zq4+EiKBQkK27JutoD
+   zrqs5MXe6suK9DS8aBXdjaAC08CpzmML0p8adhQZKnRXG37fm8O1ClFmA
+   NelY87zCorG3vcyzqsxwTEy4LsoICu3qY2rE3xSHrk6WTQmQv1E5UfUUM
+   QlUNYr4n6wDleHE6mYvCfUykWDo8zZzMmKpDwzBM4cNAQPJyCJW4zBqBe
+   Q==;
+X-CSE-ConnectionGUID: YP5CZnvgRASvHRIftp3Q0A==
+X-CSE-MsgGUID: KkAxKstURmyVNtIl3I9T0g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11162"; a="24621085"
+X-IronPort-AV: E=Sophos;i="6.09,285,1716274800"; 
+   d="scan'208";a="24621085"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2024 05:32:53 -0700
+X-CSE-ConnectionGUID: iQ7gEKo4RKywxnOMFR2hRw==
+X-CSE-MsgGUID: 18rTvv8zQSmVQl8wMppmHw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,285,1716274800"; 
+   d="scan'208";a="59218495"
+Received: from pgcooper-mobl3.ger.corp.intel.com (HELO [10.245.244.169]) ([10.245.244.169])
+  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2024 05:32:50 -0700
+Message-ID: <cc50eeb7cf3e6a89e66920f498b24a3ef8fa7746.camel@linux.intel.com>
+Subject: Re: [PATCH 3/3] drm/xe: clean up fault injection usage
+From: Thomas =?ISO-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>
+To: Jani Nikula <jani.nikula@intel.com>, linux-kernel@vger.kernel.org
+Cc: intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+ dri-devel@lists.freedesktop.org, akinobu.mita@gmail.com, 
+ akpm@linux-foundation.org, lucas.demarchi@intel.com,
+ rodrigo.vivi@intel.com,  robdclark@gmail.com, quic_abhinavk@quicinc.com,
+ dmitry.baryshkov@linaro.org
+Date: Tue, 13 Aug 2024 14:32:47 +0200
+In-Reply-To: <20240813121237.2382534-3-jani.nikula@intel.com>
+References: <20240813121237.2382534-1-jani.nikula@intel.com>
+	 <20240813121237.2382534-3-jani.nikula@intel.com>
+Autocrypt: addr=thomas.hellstrom@linux.intel.com; prefer-encrypt=mutual;
+ keydata=mDMEZaWU6xYJKwYBBAHaRw8BAQdAj/We1UBCIrAm9H5t5Z7+elYJowdlhiYE8zUXgxcFz360SFRob21hcyBIZWxsc3Ryw7ZtIChJbnRlbCBMaW51eCBlbWFpbCkgPHRob21hcy5oZWxsc3Ryb21AbGludXguaW50ZWwuY29tPoiTBBMWCgA7FiEEbJFDO8NaBua8diGTuBaTVQrGBr8FAmWllOsCGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQuBaTVQrGBr/yQAD/Z1B+Kzy2JTuIy9LsKfC9FJmt1K/4qgaVeZMIKCAxf2UBAJhmZ5jmkDIf6YghfINZlYq6ixyWnOkWMuSLmELwOsgPuDgEZaWU6xIKKwYBBAGXVQEFAQEHQF9v/LNGegctctMWGHvmV/6oKOWWf/vd4MeqoSYTxVBTAwEIB4h4BBgWCgAgFiEEbJFDO8NaBua8diGTuBaTVQrGBr8FAmWllOsCGwwACgkQuBaTVQrGBr/P2QD9Gts6Ee91w3SzOelNjsus/DcCTBb3fRugJoqcfxjKU0gBAKIFVMvVUGbhlEi6EFTZmBZ0QIZEIzOOVfkaIgWelFEH
+Organization: Intel Sweden AB, Registration Number: 556189-6027
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240813-cocci-flexarray-v6-10-de903fd8d988@chromium.org>
-References: <20240813-cocci-flexarray-v6-0-de903fd8d988@chromium.org>
-In-Reply-To: <20240813-cocci-flexarray-v6-0-de903fd8d988@chromium.org>
-To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
- Vikash Garodia <quic_vgarodia@quicinc.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: Hans Verkuil <hverkuil-cisco@xs4all.nl>, linux-media@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Ricardo Ribalda <ribalda@chromium.org>
-X-Mailer: b4 0.13.0
 
-This structures are not used, and have a single element array at the end
-of them.
+On Tue, 2024-08-13 at 15:12 +0300, Jani Nikula wrote:
+> With the proper stubs in place in linux/fault-inject.h, we can remove
+> a
+> bunch of conditional compilation for CONFIG_FAULT_INJECTION=3Dn.
+>=20
+> Cc: Andrew Morton <akpm@linux-foundation.org>
+> Cc: Akinobu Mita <akinobu.mita@gmail.com>
+> Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+> Cc: Thomas Hellstr=C3=B6m <thomas.hellstrom@linux.intel.com>
+> Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+> Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 
-This fix the following cocci warnings:
-drivers/media/platform/qcom/venus/hfi_helper.h:764:5-15: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-drivers/media/platform/qcom/venus/hfi_helper.h:1041:5-15: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-drivers/media/platform/qcom/venus/hfi_helper.h:1088:39-51: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-drivers/media/platform/qcom/venus/hfi_helper.h:1093:5-22: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-drivers/media/platform/qcom/venus/hfi_helper.h:1144:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-drivers/media/platform/qcom/venus/hfi_helper.h:1239:4-8: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-drivers/media/platform/qcom/venus/hfi_helper.h:1272:4-13: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-drivers/media/platform/qcom/venus/hfi_cmds.h:85:5-16: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-drivers/media/platform/qcom/venus/hfi_cmds.h:180:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
-drivers/media/platform/qcom/venus/hfi_cmds.h:189:5-9: WARNING use flexible-array member instead (https://www.kernel.org/doc/html/latest/process/deprecated.html#zero-length-and-one-element-arrays)
+Reviewed-by: Thomas Hellstr=C3=B6m <thomas.hellstrom@linux.intel.com>
 
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
----
- drivers/media/platform/qcom/venus/hfi_cmds.h   |  6 +++---
- drivers/media/platform/qcom/venus/hfi_helper.h | 14 +++++++-------
- 2 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.h b/drivers/media/platform/qcom/venus/hfi_cmds.h
-index 63b93a34f609..1cd1b5e2d056 100644
---- a/drivers/media/platform/qcom/venus/hfi_cmds.h
-+++ b/drivers/media/platform/qcom/venus/hfi_cmds.h
-@@ -82,7 +82,7 @@ struct hfi_sys_set_buffers_pkt {
- 	u32 buffer_type;
- 	u32 buffer_size;
- 	u32 num_buffers;
--	u32 buffer_addr[1];
-+	u32 buffer_addr[];
- };
- 
- struct hfi_sys_ping_pkt {
-@@ -177,7 +177,7 @@ struct hfi_session_empty_buffer_uncompressed_plane1_pkt {
- 	u32 filled_len;
- 	u32 offset;
- 	u32 packet_buffer2;
--	u32 data[1];
-+	u32 data;
- };
- 
- struct hfi_session_empty_buffer_uncompressed_plane2_pkt {
-@@ -186,7 +186,7 @@ struct hfi_session_empty_buffer_uncompressed_plane2_pkt {
- 	u32 filled_len;
- 	u32 offset;
- 	u32 packet_buffer3;
--	u32 data[1];
-+	u32 data;
- };
- 
- struct hfi_session_fill_buffer_pkt {
-diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-index 755aabcd8048..f44059f19505 100644
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -761,7 +761,7 @@ struct hfi_multi_stream_3x {
- 
- struct hfi_multi_view_format {
- 	u32 views;
--	u32 view_order[1];
-+	u32 view_order[];
- };
- 
- #define HFI_MULTI_SLICE_OFF			0x1
-@@ -1038,7 +1038,7 @@ struct hfi_codec_supported {
- 
- struct hfi_properties_supported {
- 	u32 num_properties;
--	u32 properties[1];
-+	u32 properties[];
- };
- 
- struct hfi_max_sessions_supported {
-@@ -1085,12 +1085,12 @@ struct hfi_resource_ocmem_requirement {
- 
- struct hfi_resource_ocmem_requirement_info {
- 	u32 num_entries;
--	struct hfi_resource_ocmem_requirement requirements[1];
-+	struct hfi_resource_ocmem_requirement requirements[];
- };
- 
- struct hfi_property_sys_image_version_info_type {
- 	u32 string_size;
--	u8  str_image_version[1];
-+	u8  str_image_version[];
- };
- 
- struct hfi_codec_mask_supported {
-@@ -1141,7 +1141,7 @@ struct hfi_extradata_header {
- 	u32 port_index;
- 	u32 type;
- 	u32 data_size;
--	u8 data[1];
-+	u8 data[];
- };
- 
- struct hfi_batch_info {
-@@ -1236,7 +1236,7 @@ static inline void hfi_bufreq_set_count_min_host(struct hfi_buffer_requirements
- 
- struct hfi_data_payload {
- 	u32 size;
--	u8 data[1];
-+	u8 data[];
- };
- 
- struct hfi_enable_picture {
-@@ -1269,7 +1269,7 @@ struct hfi_buffer_alloc_mode_supported {
- 
- struct hfi_mb_error_map {
- 	u32 error_map_size;
--	u8 error_map[1];
-+	u8 error_map[];
- };
- 
- struct hfi_metadata_pass_through {
-
--- 
-2.46.0.76.ge559c4bf1a-goog
+> ---
+> =C2=A0drivers/gpu/drm/xe/xe_debugfs.c |=C2=A0 7 +------
+> =C2=A0drivers/gpu/drm/xe/xe_gt.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 10 ++---=
+-----
+> =C2=A02 files changed, 3 insertions(+), 14 deletions(-)
+>=20
+> diff --git a/drivers/gpu/drm/xe/xe_debugfs.c
+> b/drivers/gpu/drm/xe/xe_debugfs.c
+> index 1011e5d281fa..b381bfb634f7 100644
+> --- a/drivers/gpu/drm/xe/xe_debugfs.c
+> +++ b/drivers/gpu/drm/xe/xe_debugfs.c
+> @@ -6,6 +6,7 @@
+> =C2=A0#include "xe_debugfs.h"
+> =C2=A0
+> =C2=A0#include <linux/debugfs.h>
+> +#include <linux/fault-inject.h>
+> =C2=A0#include <linux/string_helpers.h>
+> =C2=A0
+> =C2=A0#include <drm/drm_debugfs.h>
+> @@ -26,10 +27,7 @@
+> =C2=A0#include "xe_vm.h"
+> =C2=A0#endif
+> =C2=A0
+> -#ifdef CONFIG_FAULT_INJECTION
+> -#include <linux/fault-inject.h> /* XXX: fault-inject.h is broken */
+> =C2=A0DECLARE_FAULT_ATTR(gt_reset_failure);
+> -#endif
+> =C2=A0
+> =C2=A0static struct xe_device *node_to_xe(struct drm_info_node *node)
+> =C2=A0{
+> @@ -214,8 +212,5 @@ void xe_debugfs_register(struct xe_device *xe)
+> =C2=A0	for_each_gt(gt, xe, id)
+> =C2=A0		xe_gt_debugfs_register(gt);
+> =C2=A0
+> -#ifdef CONFIG_FAULT_INJECTION
+> =C2=A0	fault_create_debugfs_attr("fail_gt_reset", root,
+> &gt_reset_failure);
+> -#endif
+> -
+> =C2=A0}
+> diff --git a/drivers/gpu/drm/xe/xe_gt.h b/drivers/gpu/drm/xe/xe_gt.h
+> index 8b1a5027dcf2..ee138e9768a2 100644
+> --- a/drivers/gpu/drm/xe/xe_gt.h
+> +++ b/drivers/gpu/drm/xe/xe_gt.h
+> @@ -6,6 +6,8 @@
+> =C2=A0#ifndef _XE_GT_H_
+> =C2=A0#define _XE_GT_H_
+> =C2=A0
+> +#include <linux/fault-inject.h>
+> +
+> =C2=A0#include <drm/drm_util.h>
+> =C2=A0
+> =C2=A0#include "xe_device.h"
+> @@ -19,19 +21,11 @@
+> =C2=A0
+> =C2=A0#define CCS_MASK(gt) (((gt)->info.engine_mask &
+> XE_HW_ENGINE_CCS_MASK) >> XE_HW_ENGINE_CCS0)
+> =C2=A0
+> -#ifdef CONFIG_FAULT_INJECTION
+> -#include <linux/fault-inject.h> /* XXX: fault-inject.h is broken */
+> =C2=A0extern struct fault_attr gt_reset_failure;
+> =C2=A0static inline bool xe_fault_inject_gt_reset(void)
+> =C2=A0{
+> =C2=A0	return should_fail(&gt_reset_failure, 1);
+> =C2=A0}
+> -#else
+> -static inline bool xe_fault_inject_gt_reset(void)
+> -{
+> -	return false;
+> -}
+> -#endif
+> =C2=A0
+> =C2=A0struct xe_gt *xe_gt_alloc(struct xe_tile *tile);
+> =C2=A0int xe_gt_init_hwconfig(struct xe_gt *gt);
 
 
