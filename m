@@ -1,177 +1,325 @@
-Return-Path: <linux-arm-msm+bounces-28388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4882795051A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 14:34:54 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D03CB950524
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 14:36:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F20FF1F21692
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 12:34:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2B98AB29571
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Aug 2024 12:36:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53439199EA8;
-	Tue, 13 Aug 2024 12:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DD9219939D;
+	Tue, 13 Aug 2024 12:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Cfe31hxg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wMWeaEa6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA6319AD6A;
-	Tue, 13 Aug 2024 12:32:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B281990AD
+	for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 12:35:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723552376; cv=none; b=ACeZxcWUxAWKBx0CVa6RPd16MLNgJq3xsIowJ+gHXT27Kytpw121wyQoyUJnAxLWTWO73n+seJBkQutZ2hPYp06j5A4o0WSlXSVZrRMm/CsX8kHyu/xhsDjE0Cg7I7rgJw3cQiR0Xs8o00FHyRNYd1ujNovVcVC7NhXjt+ugZsE=
+	t=1723552521; cv=none; b=PjfeSa9uE6/eCiplvOmBXCi5itvZP3FJ+OmXuqTd7AIqUHscak99p1iOc8AFYUUy1wY2vwRnV+iZhRiaCaaMaZLueVgbivTIFKL/epv0oMAZkzpZI+gyXoibxFpEFNHzJ3wwBkuFvAg1zjaZ5gS4wAcnACUKOKjNzAWdcUKF6Pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723552376; c=relaxed/simple;
-	bh=rWHptO4ILHYisfbYtoMmHf0mrhvaSphbwM91ej5HbZQ=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Xbp5PyLMqkSdT/LCu1hl7DElB/1EkrxZ31ARRNow0n5aKbQbW6Mln4yLPr3Rn7PRM0I6edrtTEt+RG2Vq75ORMRueWf+B9kbBqVMzAzGXkBFHpB05ISfXr6Cq+NrbeG1c7vuIU21leppIm0Loot994iKffaK3rFa38P/ft/0Mi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Cfe31hxg; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723552374; x=1755088374;
-  h=message-id:subject:from:to:cc:date:in-reply-to:
-   references:content-transfer-encoding:mime-version;
-  bh=rWHptO4ILHYisfbYtoMmHf0mrhvaSphbwM91ej5HbZQ=;
-  b=Cfe31hxg13gZcjEzGql60e/2C3es2y+jJjOMwWXJ1KbMmSspwarlhmNH
-   SLGjp6UM2PHMMNv/1HES0Jt/fo1w1PkUwseNpaXxMuSUOSaBGRihQm98Y
-   3WQmP21ZjjeFtIK/UzlHcFd3zdXbcF4xcIgLey7zq4+EiKBQkK27JutoD
-   zrqs5MXe6suK9DS8aBXdjaAC08CpzmML0p8adhQZKnRXG37fm8O1ClFmA
-   NelY87zCorG3vcyzqsxwTEy4LsoICu3qY2rE3xSHrk6WTQmQv1E5UfUUM
-   QlUNYr4n6wDleHE6mYvCfUykWDo8zZzMmKpDwzBM4cNAQPJyCJW4zBqBe
-   Q==;
-X-CSE-ConnectionGUID: YP5CZnvgRASvHRIftp3Q0A==
-X-CSE-MsgGUID: KkAxKstURmyVNtIl3I9T0g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11162"; a="24621085"
-X-IronPort-AV: E=Sophos;i="6.09,285,1716274800"; 
-   d="scan'208";a="24621085"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2024 05:32:53 -0700
-X-CSE-ConnectionGUID: iQ7gEKo4RKywxnOMFR2hRw==
-X-CSE-MsgGUID: 18rTvv8zQSmVQl8wMppmHw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,285,1716274800"; 
-   d="scan'208";a="59218495"
-Received: from pgcooper-mobl3.ger.corp.intel.com (HELO [10.245.244.169]) ([10.245.244.169])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2024 05:32:50 -0700
-Message-ID: <cc50eeb7cf3e6a89e66920f498b24a3ef8fa7746.camel@linux.intel.com>
-Subject: Re: [PATCH 3/3] drm/xe: clean up fault injection usage
-From: Thomas =?ISO-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>
-To: Jani Nikula <jani.nikula@intel.com>, linux-kernel@vger.kernel.org
-Cc: intel-xe@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, akinobu.mita@gmail.com, 
- akpm@linux-foundation.org, lucas.demarchi@intel.com,
- rodrigo.vivi@intel.com,  robdclark@gmail.com, quic_abhinavk@quicinc.com,
- dmitry.baryshkov@linaro.org
-Date: Tue, 13 Aug 2024 14:32:47 +0200
-In-Reply-To: <20240813121237.2382534-3-jani.nikula@intel.com>
-References: <20240813121237.2382534-1-jani.nikula@intel.com>
-	 <20240813121237.2382534-3-jani.nikula@intel.com>
-Autocrypt: addr=thomas.hellstrom@linux.intel.com; prefer-encrypt=mutual;
- keydata=mDMEZaWU6xYJKwYBBAHaRw8BAQdAj/We1UBCIrAm9H5t5Z7+elYJowdlhiYE8zUXgxcFz360SFRob21hcyBIZWxsc3Ryw7ZtIChJbnRlbCBMaW51eCBlbWFpbCkgPHRob21hcy5oZWxsc3Ryb21AbGludXguaW50ZWwuY29tPoiTBBMWCgA7FiEEbJFDO8NaBua8diGTuBaTVQrGBr8FAmWllOsCGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQuBaTVQrGBr/yQAD/Z1B+Kzy2JTuIy9LsKfC9FJmt1K/4qgaVeZMIKCAxf2UBAJhmZ5jmkDIf6YghfINZlYq6ixyWnOkWMuSLmELwOsgPuDgEZaWU6xIKKwYBBAGXVQEFAQEHQF9v/LNGegctctMWGHvmV/6oKOWWf/vd4MeqoSYTxVBTAwEIB4h4BBgWCgAgFiEEbJFDO8NaBua8diGTuBaTVQrGBr8FAmWllOsCGwwACgkQuBaTVQrGBr/P2QD9Gts6Ee91w3SzOelNjsus/DcCTBb3fRugJoqcfxjKU0gBAKIFVMvVUGbhlEi6EFTZmBZ0QIZEIzOOVfkaIgWelFEH
-Organization: Intel Sweden AB, Registration Number: 556189-6027
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
+	s=arc-20240116; t=1723552521; c=relaxed/simple;
+	bh=wmRroHD5OUg6Qf3agbFJLQGvx/qPAQPCOGwk3gK11LQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tA7VfnDqtSLkQOFfTz9QJ+OaPh43NQQKndy+9FjOHFa1pPgM1bZXMmk0j3ASi2+ML3pRaqgxnxnvDiYeSo+k3jqdTev7PX7waakKc7xDVry2SsojL0N55RNnfXgFmtiFWbRhyJtZ+5qqH7KecYk4ljdP1H37xD9BZ+4LaQNd7w0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wMWeaEa6; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-368f92df172so2738414f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 05:35:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1723552518; x=1724157318; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4XBmrpzh2TYDockOD1rtD5XC0eW7zgp6RoYkY7KL+LA=;
+        b=wMWeaEa69pxs+2IALh0dIEP6tWG5RxqEm6qwlAhaDNb53iulQBAuiMJyqbmC5voIpV
+         DXdY1ngFK8cLg9qhYdb4ehwjwGCi35My3WRmzhS9ZsNNPk2vT2T9hG7zlhbXNi5W9LBu
+         1GK5gdyATIbgy+JhIazmEa+EIMrFJ9VUIYKf211w/s8ipauFSUkZTbjK5W1bqb0NIIQU
+         YB3NkWTRyOafSkqfsJvnSq2mXbw69BURWy4P9AijWi85vPCxBsevq0nPhrBOwTlAl7Rz
+         qLTbQ1mPBeKncmliyKWMvMx2Q2MYNCq9bSEES1Ql0GPNoUkbDQfEBRBcCFcQxvGVACC8
+         e6Tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723552518; x=1724157318;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4XBmrpzh2TYDockOD1rtD5XC0eW7zgp6RoYkY7KL+LA=;
+        b=TSSehf0c1outJANKLovWfo5rrdqI+SXkIBp4bCyYVxkIaWxEeughfwiePZoQ4iC15O
+         RpjVw9bTesnf35UGy4teI0uzIpBUUv+M9Uhfkt03/vmAVaobzsypxnHIfTRzT/I1bZnC
+         /tFRcYO+8SBpPWV2m9eZNgkeyCHd50rcJVGtGbmTDvmI2uQ3w20I+qsx5n7uRwD8QCUi
+         uYw8ZLvsmVuzefsc5yNgZMe/4q+0QCFWWZvaaWQklvjqS7bhHIDumOsXyZQ28DPaf5qB
+         aobpz7iGIjvuV/I2L6zFH3fp6O0iJhu0FvpqpWeRgEPQ34fec1lWq9HyTUEh2xGE5JIR
+         GiaQ==
+X-Gm-Message-State: AOJu0YzNb+FRFWoU9idW053eMrxZ8oh9Ui/JxCWK9BTXleCAnbHSifWk
+	+mm6Hag4kgwYTJOhw9QNDYNjpmK+il/ASoREos/l4Bkwnsw9EvJrTflWNWN6oRw=
+X-Google-Smtp-Source: AGHT+IGo9esmOx/2Y4zteN5Z+67pxwJRzYVdBv5A9mVSlWCUku9O9x2DwsN2IM6SYDDbLve9RXqLiA==
+X-Received: by 2002:adf:9b97:0:b0:362:4ce:2171 with SMTP id ffacd0b85a97d-3716cd25d65mr2050267f8f.52.1723552517534;
+        Tue, 13 Aug 2024 05:35:17 -0700 (PDT)
+Received: from [192.168.0.25] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36e4cfeef22sm10160372f8f.52.2024.08.13.05.35.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Aug 2024 05:35:17 -0700 (PDT)
+Message-ID: <69de592e-a3df-4fb3-ad0c-c8a44ae3efeb@linaro.org>
+Date: Tue, 13 Aug 2024 13:35:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 00/13] media: qcom: camss: Add sm8550 support
+To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240812144131.369378-1-quic_depengs@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, 2024-08-13 at 15:12 +0300, Jani Nikula wrote:
-> With the proper stubs in place in linux/fault-inject.h, we can remove
-> a
-> bunch of conditional compilation for CONFIG_FAULT_INJECTION=3Dn.
->=20
-> Cc: Andrew Morton <akpm@linux-foundation.org>
-> Cc: Akinobu Mita <akinobu.mita@gmail.com>
-> Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-> Cc: Thomas Hellstr=C3=B6m <thomas.hellstrom@linux.intel.com>
-> Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-> Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-
-Reviewed-by: Thomas Hellstr=C3=B6m <thomas.hellstrom@linux.intel.com>
-
-
+On 12/08/2024 15:41, Depeng Shao wrote:
+> v4:
+> - Update dt-bindings based on comments - Krzysztof, bod, Vladimir
+> - Move common code into csid core and vfe core driver - bod
+> - Remove *_relaxed in the csid and vfe drivers - Krzysztof
+> - Reorganize patches in logical junks, make sure that new added
+> structures have users in current patch - Krzysztof
+> - Remove notify function  and add new functions in camss for buf done
+> and reg update - bod
+> - Remove custom code to get csid base - bod
+> - Remove ISR function in vfe780 driver since it is never fired - bod
+> - Move csid_top_base to camss structure since we only have one csid
+> top block, and just need to get base once for csid top
+> - Add Vladimir's RB
+> - Remove prerequisite-patch-id in the cover letter since the changes
+> have been merged
+> - Add dtsi patch link for reference - Krzysztof
+> https://lore.kernel.org/all/20240807123333.2056518-1-quic_depengs@quicinc.com/
+> - Link to v3: https://lore.kernel.org/all/20240709160656.31146-1-quic_depengs@quicinc.com/
+> 
+> v3:
+> - Rebased the change based on below change which will be merged firstly.
+> "Move camss version related defs in to resources"
+> Link: https://lore.kernel.org/all/20240522154659.510-1-quic_grosikop@quicinc.com/
+> - Rebased the change based on Bryan's csiphy optimization change and add
+> these changes into this series, so that the new csiphy-3ph driver don't
+> need to add duplicate code. This has got Bryan's permission to add his
+> patches into this series.
+> - Refactor some changes based on the comments to move the random code to
+> patches where they are used.
+> - Remove the vfe780 irq function since it isn't doing the actual work.
+> - Add dt-binding for sm8550 camss driver.
+> Link to V2: https://lore.kernel.org/all/20240320141136.26827-1-quic_depengs@quicinc.com/
+> 
+> v2:
+> - Update some commit messages
+> Link to V1: https://lore.kernel.org/all/20240320134227.16587-1-quic_depengs@quicinc.com/
+> 
+> v1:
+> SM8550 is a Qualcomm flagship SoC. This series adds support to
+> bring up the CSIPHY, CSID, VFE/RDI interfaces in SM8550.
+> 
+> SM8550 provides
+> 
+> - 3 x VFE, 3 RDI per VFE
+> - 2 x VFE Lite, 4 RDI per VFE
+> - 3 x CSID
+> - 2 x CSID Lite
+> - 8 x CSI PHY
+> 
 > ---
-> =C2=A0drivers/gpu/drm/xe/xe_debugfs.c |=C2=A0 7 +------
-> =C2=A0drivers/gpu/drm/xe/xe_gt.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 10 ++---=
------
-> =C2=A02 files changed, 3 insertions(+), 14 deletions(-)
->=20
-> diff --git a/drivers/gpu/drm/xe/xe_debugfs.c
-> b/drivers/gpu/drm/xe/xe_debugfs.c
-> index 1011e5d281fa..b381bfb634f7 100644
-> --- a/drivers/gpu/drm/xe/xe_debugfs.c
-> +++ b/drivers/gpu/drm/xe/xe_debugfs.c
-> @@ -6,6 +6,7 @@
-> =C2=A0#include "xe_debugfs.h"
-> =C2=A0
-> =C2=A0#include <linux/debugfs.h>
-> +#include <linux/fault-inject.h>
-> =C2=A0#include <linux/string_helpers.h>
-> =C2=A0
-> =C2=A0#include <drm/drm_debugfs.h>
-> @@ -26,10 +27,7 @@
-> =C2=A0#include "xe_vm.h"
-> =C2=A0#endif
-> =C2=A0
-> -#ifdef CONFIG_FAULT_INJECTION
-> -#include <linux/fault-inject.h> /* XXX: fault-inject.h is broken */
-> =C2=A0DECLARE_FAULT_ATTR(gt_reset_failure);
-> -#endif
-> =C2=A0
-> =C2=A0static struct xe_device *node_to_xe(struct drm_info_node *node)
-> =C2=A0{
-> @@ -214,8 +212,5 @@ void xe_debugfs_register(struct xe_device *xe)
-> =C2=A0	for_each_gt(gt, xe, id)
-> =C2=A0		xe_gt_debugfs_register(gt);
-> =C2=A0
-> -#ifdef CONFIG_FAULT_INJECTION
-> =C2=A0	fault_create_debugfs_attr("fail_gt_reset", root,
-> &gt_reset_failure);
-> -#endif
-> -
-> =C2=A0}
-> diff --git a/drivers/gpu/drm/xe/xe_gt.h b/drivers/gpu/drm/xe/xe_gt.h
-> index 8b1a5027dcf2..ee138e9768a2 100644
-> --- a/drivers/gpu/drm/xe/xe_gt.h
-> +++ b/drivers/gpu/drm/xe/xe_gt.h
-> @@ -6,6 +6,8 @@
-> =C2=A0#ifndef _XE_GT_H_
-> =C2=A0#define _XE_GT_H_
-> =C2=A0
-> +#include <linux/fault-inject.h>
-> +
-> =C2=A0#include <drm/drm_util.h>
-> =C2=A0
-> =C2=A0#include "xe_device.h"
-> @@ -19,19 +21,11 @@
-> =C2=A0
-> =C2=A0#define CCS_MASK(gt) (((gt)->info.engine_mask &
-> XE_HW_ENGINE_CCS_MASK) >> XE_HW_ENGINE_CCS0)
-> =C2=A0
-> -#ifdef CONFIG_FAULT_INJECTION
-> -#include <linux/fault-inject.h> /* XXX: fault-inject.h is broken */
-> =C2=A0extern struct fault_attr gt_reset_failure;
-> =C2=A0static inline bool xe_fault_inject_gt_reset(void)
-> =C2=A0{
-> =C2=A0	return should_fail(&gt_reset_failure, 1);
-> =C2=A0}
-> -#else
-> -static inline bool xe_fault_inject_gt_reset(void)
-> -{
-> -	return false;
-> -}
-> -#endif
-> =C2=A0
-> =C2=A0struct xe_gt *xe_gt_alloc(struct xe_tile *tile);
-> =C2=A0int xe_gt_init_hwconfig(struct xe_gt *gt);
 
+@Depeng.
+
+Can you please fix the following checkpatch splats.
+
+scripts/checkpatch.pl --strict *.patch
+
+total: 0 errors, 0 warnings, 0 checks, 20 lines checked
+
+0001-media-qcom-camss-csiphy-3ph-Fix-trivial-indentation-.patch has no 
+obvious style problems and is ready for submission.
+total: 0 errors, 0 warnings, 0 checks, 589 lines checked
+
+0002-media-qcom-camss-csiphy-3ph-Remove-redundant-PHY-ini.patch has no 
+obvious style problems and is ready for submission.
+total: 0 errors, 0 warnings, 0 checks, 40 lines checked
+
+0003-media-qcom-camss-csiphy-3ph-Rename-struct.patch has no obvious 
+style problems and is ready for submission.
+total: 0 errors, 0 warnings, 0 checks, 49 lines checked
+
+0004-media-qcom-camss-csiphy-Add-an-init-callback-to-CSI-.patch has no 
+obvious style problems and is ready for submission.
+total: 0 errors, 0 warnings, 0 checks, 82 lines checked
+
+0005-media-qcom-camss-csiphy-3ph-Move-CSIPHY-variables-to.patch has no 
+obvious style problems and is ready for submission.
+CHECK: Macro argument 'offset' may be better as '(offset)' to avoid 
+precedence issues
+#33: FILE: drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c:45:
++#define CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(offset, n)	(offset + 0x4 * (n))
+
+CHECK: Macro argument 'offset' may be better as '(offset)' to avoid 
+precedence issues
+#38: FILE: drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c:49:
++#define CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(offset, n)	((offset + 0xb0) + 
+0x4 * (n))
+
+total: 0 errors, 0 warnings, 2 checks, 157 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+       mechanically convert to the typical style using --fix or 
+--fix-inplace.
+
+0006-media-qcom-camss-csiphy-3ph-Use-an-offset-variable-t.patch has 
+style problems, please review.
+
+NOTE: If any of the errors are false positives, please report
+       them to the maintainer, see CHECKPATCH in MAINTAINERS.
+WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+#19:
+new file mode 100644
+
+total: 0 errors, 1 warnings, 0 checks, 517 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+       mechanically convert to the typical style using --fix or 
+--fix-inplace.
+
+0007-dt-bindings-media-camss-Add-qcom-sm8550-camss-bindin.patch has 
+style problems, please review.
+
+NOTE: If any of the errors are false positives, please report
+       them to the maintainer, see CHECKPATCH in MAINTAINERS.
+CHECK: Alignment should match open parenthesis
+#255: FILE: drivers/media/platform/qcom/camss/camss-csid.c:616:
++	dev_info(csid->camss->dev, "CSID:%d HW Version = %u.%u.%u\n",
++		csid->id, hw_gen, hw_rev, hw_step);
+
+total: 0 errors, 0 warnings, 1 checks, 289 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+       mechanically convert to the typical style using --fix or 
+--fix-inplace.
+
+0008-media-qcom-camss-csid-Move-common-code-into-csid-cor.patch has 
+style problems, please review.
+
+NOTE: If any of the errors are false positives, please report
+       them to the maintainer, see CHECKPATCH in MAINTAINERS.
+CHECK: braces {} should be used on all arms of this statement
+#677: FILE: drivers/media/platform/qcom/camss/camss-vfe.c:470:
++	if (output->buf[index]) {
+[...]
++	} else
+[...]
+
+CHECK: Unbalanced braces around else statement
+#682: FILE: drivers/media/platform/qcom/camss/camss-vfe.c:475:
++	} else
+
+CHECK: Alignment should match open parenthesis
+#775: FILE: drivers/media/platform/qcom/camss/camss-vfe.c:568:
++	if (output->state == VFE_OUTPUT_ON &&
++		output->gen2.active_num < 2) {
+
+total: 0 errors, 0 warnings, 3 checks, 885 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+       mechanically convert to the typical style using --fix or 
+--fix-inplace.
+
+0009-media-qcom-camss-vfe-Move-common-code-into-vfe-core.patch has style 
+problems, please review.
+
+NOTE: If any of the errors are false positives, please report
+       them to the maintainer, see CHECKPATCH in MAINTAINERS.
+total: 0 errors, 0 warnings, 0 checks, 67 lines checked
+
+0010-media-qcom-camss-Add-sm8550-compatible.patch has no obvious style 
+problems and is ready for submission.
+0010-media-qcom-camss-Add-sm8550-compatible.patch:6: drvier ==> driver
+total: 0 errors, 0 warnings, 0 checks, 253 lines checked
+
+0011-media-qcom-camss-csiphy-3ph-Add-Gen2-v2.1.2-two-phas.patch has no 
+obvious style problems and is ready for submission.
+WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+#42:
+new file mode 100644
+
+CHECK: Please use a blank line after function/struct/union/enum declarations
+#146: FILE: drivers/media/platform/qcom/camss/camss-csid-gen3.c:100:
++}
++#define REG_UPDATE_RDI			reg_update_rdi
+
+CHECK: Alignment should match open parenthesis
+#337: FILE: drivers/media/platform/qcom/camss/camss-csid-gen3.c:291:
++			writel(BIT(BUF_DONE_IRQ_STATUS_RDI_OFFSET + i),
++						csid->base + CSID_BUF_DONE_IRQ_CLEAR);
+
+CHECK: Alignment should match open parenthesis
+#340: FILE: drivers/media/platform/qcom/camss/camss-csid-gen3.c:294:
++			writel(BIT(BUF_DONE_IRQ_STATUS_RDI_OFFSET + i),
++						csid->base + CSID_BUF_DONE_IRQ_MASK);
+
+CHECK: Please don't use multiple blank lines
+#412: FILE: drivers/media/platform/qcom/camss/camss-csid-gen3.h:21:
++
++
+
+CHECK: Unnecessary parentheses around camss->vfe[hw_id]
+#643: FILE: drivers/media/platform/qcom/camss/camss.c:1854:
++		vfe = &(camss->vfe[hw_id]);
+
+total: 0 errors, 1 warnings, 5 checks, 607 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+       mechanically convert to the typical style using --fix or 
+--fix-inplace.
+
+0012-media-qcom-camss-Add-CSID-Gen3-support-for-sm8550.patch has style 
+problems, please review.
+
+NOTE: If any of the errors are false positives, please report
+       them to the maintainer, see CHECKPATCH in MAINTAINERS.
+WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+#37:
+new file mode 100644
+
+CHECK: Alignment should match open parenthesis
+#219: FILE: drivers/media/platform/qcom/camss/camss-vfe.c:684:
++		time = wait_for_completion_timeout(&vfe->reset_complete,
++			msecs_to_jiffies(VFE_RESET_TIMEOUT_MS));
+
+CHECK: Unnecessary parentheses around camss->csid[hw_id]
+#415: FILE: drivers/media/platform/qcom/camss/camss.c:1973:
++		csid = &(camss->csid[hw_id]);
+
+total: 0 errors, 1 warnings, 2 checks, 388 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+       mechanically convert to the typical style using --fix or 
+--fix-inplace.
+
+0013-media-qcom-camss-Add-support-for-VFE-hardware-versio.patch has 
+style problems, please review.
+
+NOTE: If any of the errors are false positives, please report
+       them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+---
+bod
 
