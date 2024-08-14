@@ -1,140 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-28536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86F499520DA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 19:15:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C31A9520F7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 19:21:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 15D991F24192
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 17:15:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C2782B21103
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 17:20:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B14751BBBF4;
-	Wed, 14 Aug 2024 17:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FE331BBBDA;
+	Wed, 14 Aug 2024 17:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ExQuJv/y"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="owe/A3ZV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FAB1B9B3E;
-	Wed, 14 Aug 2024 17:15:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F99F1B9B2D;
+	Wed, 14 Aug 2024 17:20:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723655738; cv=none; b=k0WsmNJTwpLRNlwO+mayX8Qk4vFxCxAQARWeGVQbAFlNpHIfflTcomT45MRsh4N4GWzQ2trf2sOhdG6YuL4eNRQ7/ZQcd1SyM75NNZsOMROCYZrg6SScDN5165v7UdU0g58/U22Wjoxa/y48G5hNrWz9LwKEq7iLdsqHgeUNfJ4=
+	t=1723656053; cv=none; b=Iqr3ynDDEl+oI6im+TqF6XlBsmzp1LIRJ4AiJdLvxu7l4c/mYW+pOiQolJdRTOgHijX1lnNwMA8bS9wgkE9AXVvEj79rRQlFkfwCNHws1hLEDOGb6Lq0eNsCzyZTGYWusUDZbdJ4I/R4PBhbO9HUaT5F/8Gp2EAY1PXyt7P9Znk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723655738; c=relaxed/simple;
-	bh=21hMRAcosiv6UlvSwLZ77NGpT9rAb7GgO23AOPjl6vM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=q+6P3QTtrv9n6ngzr/rZqiCAxK3u1rBQGIRMn9zFifhmoOhCErlG3vAfewBsVlDeGLizBCf1hpTBIuyk89tzzjNgsPVk+w5H9I+bZ8n2gLmh2tatv/bQGsnZR7MGr1tpEHyifhaIWwY7dEbXJQbIBu1/rjYIBo/0FAw7VNuRDrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ExQuJv/y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 2C746C4AF09;
-	Wed, 14 Aug 2024 17:15:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723655738;
-	bh=21hMRAcosiv6UlvSwLZ77NGpT9rAb7GgO23AOPjl6vM=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=ExQuJv/ynGMi4Li+TPoRhEzxKx70dUYHap+vA53rkC4yyhsn91wl15uEGQD6oijSr
-	 17730j/yGcm5NNRj3E2lctGjjkkqh+68lgUxYN2iWwC/J5HDOJufszG8QbFQcckleb
-	 CAUqWcBlO8+j9M3tuxLlvSp0zA2oMp70fyNSMWhknV9Hl9oS/zrQFuJtnE3f13URFN
-	 0HK/JHRGdn4qckaVhOCK/06WymZIC1XIkkrfIc3r6tExT8w3wDrNaljNizzCiumt3I
-	 UReIz9MG+snrSluN/LwLljyZZ8ioiawiV2Bpxrn6mosAvYKoyPS+NhH0dCf7iN/Cmi
-	 ydopWBfEb6dsg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 214A0C531DD;
-	Wed, 14 Aug 2024 17:15:38 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
-Date: Wed, 14 Aug 2024 22:45:36 +0530
-Subject: [PATCH 3/3] ufs: qcom: Add UFSHCD_QUIRK_BROKEN_SDBS_CAP for SM8550
- SoC
+	s=arc-20240116; t=1723656053; c=relaxed/simple;
+	bh=smuak+zqjyB1uSWmMRGThmE3BA9R58lXtjJBjh3OZVE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=HgXRwwzY4syKDlhl46puuC1dIbrfLT+xHU9B7h8Tx/cgc6H2x1EQHJjhLOi2FWUUn09nFmzIF7FfvLTNHeufEassvMh1aR+BAQmxl7aKXcHCoyetJPIcpGb7l71kS97QMUj1gDYdrd73eX6jIOpSKnTHjdbMSFVTiBA/pEc/yMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=owe/A3ZV; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47EADMr7026876;
+	Wed, 14 Aug 2024 17:20:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	xRGpGeGkdYD2yIn+lOnT/kFxW5i6tGEXWoAkx9Y3rLk=; b=owe/A3ZVYisipyZ6
+	CGUy2B/c9dQcTpg5jzKmlOgwNAlA8V6BZQiUcqVJJOyuoNgmqe3o99WB3Cn05GWf
+	rokvHpRc7GvB1wfWC/5HMfoK6/d5+z+Gd5hBDXyUiKNWWONshvSkic0PRxyIgECX
+	V7fSGxgzXkAxgCWLLbAc0lmlBArAiucf+k0jFEpV08VmJadNGRulnqZrLV8d+cje
+	Qm8RdB5tOfykSvhWqPzUVJ6THfMvLsTygwjWaCL0zJyFbZgGPM3zhDpzShrDlem6
+	dYeunkkc43t0YB5mIkMYEmLvzcCURLqKboc3jBD03NOAU0dRbKkif3THqM9Ph50X
+	Hrq8JA==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x18y433m-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Aug 2024 17:20:46 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47EHKjt9015895
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Aug 2024 17:20:45 GMT
+Received: from [10.71.108.157] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 14 Aug
+ 2024 10:20:44 -0700
+Message-ID: <09bc73fc-65bd-41b5-90fa-14cb0ff79e77@quicinc.com>
+Date: Wed, 14 Aug 2024 10:20:45 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/3] dt-bindings: soc: qcom: eud: Update compatible
+ strings for eud
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Souradeep Chowdhury
+	<quic_schowdhu@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Trilok Soni
+	<quic_tsoni@quicinc.com>,
+        Satya Durga Srinivasu Prabhala
+	<quic_satyap@quicinc.com>,
+        Elson Serrao <quic_eserrao@quicinc.com>
+CC: <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>
+References: <20240807183205.803847-1-quic_molvera@quicinc.com>
+ <20240807183205.803847-2-quic_molvera@quicinc.com>
+ <dfb1ac84-f011-45ea-9fb1-b8c6bc36cabc@kernel.org>
+ <46d0627d-877b-41f3-83f6-4c33b562f460@quicinc.com>
+ <0ebb1ca3-722d-422f-9f71-fcc61c3470b0@kernel.org>
+Content-Language: en-US
+From: Melody Olvera <quic_molvera@quicinc.com>
+In-Reply-To: <0ebb1ca3-722d-422f-9f71-fcc61c3470b0@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240814-ufs-bug-fix-v1-3-5eb49d5f7571@linaro.org>
-References: <20240814-ufs-bug-fix-v1-0-5eb49d5f7571@linaro.org>
-In-Reply-To: <20240814-ufs-bug-fix-v1-0-5eb49d5f7571@linaro.org>
-To: Alim Akhtar <alim.akhtar@samsung.com>, 
- Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
- "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Kyoungrul Kim <k831.kim@samsung.com>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1960;
- i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
- bh=tifq6GOjcopPL6cLTuL63f6pon2nnqW5vXlh4Zf80OY=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBmvOY3a7gkLi2VXbeUSPBQzUF/mhbLHVjzPz/dL
- G5CfvIi/dmJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZrzmNwAKCRBVnxHm/pHO
- 9TGXB/9FfmWLoUKrlGEkbnbfPTE0oIH5VWXQrjhKPLgfEbLIXFnoPnIlzWy7xRg5fmNWXw59vUG
- x6cJh/XE29qcDlD1nik03+T4BP3rvailoHF6KiZhz6RdLgjyM/Zvrm5v4lX6Hd1+fX/sXo9yF+p
- XOCUDZQQq91QzS85LvEFRwyih9uDlX1tb22HvbGQkZfM61388t5f/Zcbh3dgO4e2mzzT0dWBnL2
- idV8CjLdhIz36ukGFbuARXLdAGsecnNG4Db6gbaPcrqSZ0Vau4udPnAaOWg1vbfU72wrtsDodo4
- OooygvFfvdYywZTZrvygzxbKtTbXtHUfSPT7ZyNTSdnZTdZS
-X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@linaro.org/default with auth_id=185
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reply-To: manivannan.sadhasivam@linaro.org
-
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-SM8550 SoC supports the UFSHCI 3.0 spec, but it reports a bogus value of
-1 in the reserved 'Legacy Queue & Single Doorbell Support (SDBS)' field of
-the Controller Capabilities register. This field is supposed to read 0 as
-per the spec.
-
-But starting with commit 0c60eb0cc320 ("scsi: ufs: core: Check LSDBS cap
-when !mcq"), ufshcd driver is now relying on the SDBS field to decide when
-to use the legacy doorbell mode if MCQ is not supported. And this ends up
-breaking UFS on SM8550:
-
-ufshcd-qcom 1d84000.ufs: ufshcd_init: failed to initialize (legacy doorbell mode not supported)
-ufshcd-qcom 1d84000.ufs: error -EINVAL: Initialization failed with error -22
-
-So use the UFSHCD_QUIRK_BROKEN_SDBS_CAP quirk for SM8550 SoC so that the
-ufshcd driver could use legacy doorbell mode correctly.
-
-Fixes: 674f8bfb1848 ("ufs: qcom: Add UFSHCD_QUIRK_BROKEN_SDBS_CAP for SM8550 SoC")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/ufs/host/ufs-qcom.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 810e637047d0..391b814c318e 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -857,6 +857,9 @@ static void ufs_qcom_advertise_quirks(struct ufs_hba *hba)
- 
- 	if (host->hw_ver.major > 0x3)
- 		hba->quirks |= UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
-+
-+	if (of_device_is_compatible(hba->dev->of_node, "qcom,sm8550-ufshc"))
-+		hba->quirks |= UFSHCD_QUIRK_BROKEN_SDBS_CAP;
- }
- 
- static void ufs_qcom_set_phy_gear(struct ufs_qcom_host *host)
-@@ -1847,7 +1850,8 @@ static void ufs_qcom_remove(struct platform_device *pdev)
- }
- 
- static const struct of_device_id ufs_qcom_of_match[] __maybe_unused = {
--	{ .compatible = "qcom,ufshc"},
-+	{ .compatible = "qcom,ufshc" },
-+	{ .compatible = "qcom,sm8550-ufshc" },
- 	{},
- };
- MODULE_DEVICE_TABLE(of, ufs_qcom_of_match);
-
--- 
-2.25.1
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: jvUOOiqhtBKs0QxiF-nyMuRz6b4avE9p
+X-Proofpoint-ORIG-GUID: jvUOOiqhtBKs0QxiF-nyMuRz6b4avE9p
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-14_13,2024-08-13_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=934
+ suspectscore=0 phishscore=0 malwarescore=0 mlxscore=0 spamscore=0
+ lowpriorityscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408140118
 
 
+
+On 8/13/2024 11:15 PM, Krzysztof Kozlowski wrote:
+> On 13/08/2024 22:03, Melody Olvera wrote:
+>>
+>> On 8/8/2024 4:00 AM, Krzysztof Kozlowski wrote:
+>>> On 07/08/2024 20:32, Melody Olvera wrote:
+>>>> The EUD can more accurately be divided into two types; a secure type
+>>>> which requires that certain registers be updated via scm call and a
+>>>> nonsecure type which must access registers nonsecurely. Thus, change
+>>>> the compatible strings to reflect secure and nonsecure eud usage.
+>>>>
+>>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>>>> ---
+>>>>    Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml | 6 +++---
+>>>>    1 file changed, 3 insertions(+), 3 deletions(-)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>>>> index f2c5ec7e6437..476f92768610 100644
+>>>> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>>>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>>>> @@ -17,8 +17,8 @@ properties:
+>>>>      compatible:
+>>>>        items:
+>>>>          - enum:
+>>>> -          - qcom,sc7280-eud
+>>>> -      - const: qcom,eud
+>>>> +          - qcom,secure-eud
+>>>> +          - qcom,eud
+>>> Commit msg did not explain me why DT bindings rules are avoided here and
+>>> you drop existing SoC specific compatible.
+>>>
+>>> This really does not look like having any sense at all, I cannot come up
+>>> with logic behind dropping existing users. You could deprecate it, but
+>>> then why exactly this device should have exception from generic bindings
+>>> rule?
+>> Understood. I won't drop this compatible string. Is alright to add the
+>> additional compatible as is?
+> You always need SoC specific compatible.
+
+Got it. Will change to SoC specific then.
+
+
+Thanks,
+Melody
 
