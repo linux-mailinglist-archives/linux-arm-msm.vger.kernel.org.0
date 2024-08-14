@@ -1,124 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-28467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D95795178A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 11:21:40 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 040E39517B5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 11:29:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 389CE1F23A0A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 09:21:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5B838B255D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 09:29:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C783A14900E;
-	Wed, 14 Aug 2024 09:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5C8E145A0B;
+	Wed, 14 Aug 2024 09:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JRjvPLh5"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="lGtwgmId"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6F6146A8A;
-	Wed, 14 Aug 2024 09:21:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597D8145327
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 09:28:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723627271; cv=none; b=BwGZoCd0oJjCRlFMOBSgaNGNeel/PdgNPEVha1sIsyB6uL3oIZFZ5aBJQWLKIImT/u5pIstkMQr10jlxcx27pDeGC00YE3SBmDNjReKsXm5wUyXRFNrYNbwzogef8YCjp+EnwlRs8leDOe0ay8g3wHmyKGsAYyf6xQCS6bI/JVk=
+	t=1723627697; cv=none; b=sin9dmHfXPGRNQwGTvimhKLVi4XgjnB2h2q0fCwrJ70QrgmrAKhafKfF2Rr7WolfXgzsZ0wYxowIZv75dr9ibCctznHT78xvotttToRwegsdqo33oE/SMhvRlJPscVcSQ0O7kzLpIc2ccwRHj7vrtPp9yVHkfNauX4PS0tR5fP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723627271; c=relaxed/simple;
-	bh=wj88B6BBi8tG04+C5SWDMso/uHUJfPvBpn1JpU98qQI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=L5cBA/XQhrtPLSuMhjekz8fwgin6mdk06gphJ66w73UdSp40LwUp5MhPKS7kanf9RJZbe/K7q2LHPyj3tn/vaIa1jKPl6flOxBzGIv19ab/CIYJn5l+fy7Pe+1wf/eGBy8RX6KLCGyrSyDfvgUZLKwjfkVHXokSkscNRLUgyLCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JRjvPLh5; arc=none smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723627269; x=1755163269;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=wj88B6BBi8tG04+C5SWDMso/uHUJfPvBpn1JpU98qQI=;
-  b=JRjvPLh5PVvg0WmFEUiIK7nEES0sc3caL281T3nyD8uLeQpvHUsHJSQM
-   Lnj1zkjzyRvGqcFX3jU2OtHl3IyCc1ifsWVJPmN8CCJ5x2u61VzJdZjX/
-   WN2Pea7wuPRB87CMZGZPogKdZSZxwFs7b54YDp8VZZkUnD98BR1jUQDhw
-   GxJ0RAwbGmnIFDDMdojeCx90nyCadkKSv0bzEP9WUmJa7XtAq+45fBooS
-   h/TJHhMebE1szuJa8yiIACAMZUemC+vHNeMKrlZfowkYirS0vDCRWrdPH
-   uWeO092ECqEouUL4Xh5ha5phsvuT2TckSutTTPxrjrLv2FXNb46tiJ7wQ
-   g==;
-X-CSE-ConnectionGUID: kVvTUd/4Q9212FpsPgb7Og==
-X-CSE-MsgGUID: rR44qeteSzKXBudqIv/ihQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11163"; a="39282578"
-X-IronPort-AV: E=Sophos;i="6.09,288,1716274800"; 
-   d="scan'208";a="39282578"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2024 02:21:08 -0700
-X-CSE-ConnectionGUID: C5GMpR9eT82uHlsNZHJFaQ==
-X-CSE-MsgGUID: MS7yrPWQTkWJMZoDPeQKUQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,288,1716274800"; 
-   d="scan'208";a="58655845"
-Received: from slindbla-desk.ger.corp.intel.com (HELO [10.245.246.67]) ([10.245.246.67])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2024 02:21:03 -0700
-Message-ID: <74d413f3-45ab-405d-8dff-122785ae7da5@linux.intel.com>
-Date: Wed, 14 Aug 2024 11:20:59 +0200
+	s=arc-20240116; t=1723627697; c=relaxed/simple;
+	bh=KdxsryBtMUzqo1RV5EZOLXiAQ9j8G3+iome+hahtQgU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=nghMNXc02PWpbNlu1kJTuJa6d8nfAmDbyCq30l70aIsHX18DSvnm77rtogLNr3N7H551LT9nyFoeDdsOjTIti6ffG8GyzKyMdfGiUOaSbu0Hubw50O8zoK2ODv1p0WPJRLxiqraaXqW/S64KvbGrUkexEWg/8gY+X01dnQ7vdP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=lGtwgmId; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-52efc60a6e6so8563434e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 02:28:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1723627694; x=1724232494; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=W3P9Jq6VrXIYga285qB+T9g1aGPyBny+fQnSPL8FQbI=;
+        b=lGtwgmId0QJyB3jd826bOukdBQqZwK2/zvtgGWvs4TU+VZHPSYalQt0bTMWZlcbciy
+         u9x3zdC/t4nvb/Dk0ZYd78kgwWmByFlNR+HDpTEiod+XwE/k6ZHeZ5PDY5Axgkv6b3uu
+         YQpOku44Hpm6F6kdnAx5zfFAX5JlagUN3lvzjoiwTYEeV941s6w/iFPqWjphKbJzcm6u
+         A4BT5+MWiP+VtYOFbiq+Mv89NcOmzCJ93eZeZ2U7lRgpYPvR4ZVDW5DgUglaou9ZI2F2
+         ssBMYpAh4XnqMcyTsVVxS0QusB5Vn+30hxBnWowr4YbKYdTVzEJIu45Og3lOsZjBGxBa
+         jMEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723627694; x=1724232494;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=W3P9Jq6VrXIYga285qB+T9g1aGPyBny+fQnSPL8FQbI=;
+        b=bMc2IUb1RuEEE49IbKj3V3SvT9Ls9EYF6B2e0eyV1KAg1XFHVL2L5+3CfJwe5+oKZ0
+         4ngI0bD8Cjppxix1Nd/5eynEVS3BWIRjGGdnrAXLDT/kVWLKC0y7TwuV4Zz6a4qp+P/c
+         xcm8tR6HeiY5gzHuEpzPpR794SitkNIVmz+iyDvb322LyGmwbWLK2LEqbuy3nHUyvefj
+         65o9zz9tLOfcDmmeFPR/NIBla2QJDJxXeBTeiOnAjc9qwzZCyAhTx5HloblgJ54Zyk8H
+         lmzDTtiWUXiDOjwnEMko4EM+FbYFtojGLbSHvNsxQudKOdi4IJbT+SDBv6JY7ZgMjgO7
+         n1kA==
+X-Gm-Message-State: AOJu0YwtW/E+I0xJx9tDwOpoqCQFPwy9APTEqoc6FYy3S7GenFajtKOe
+	NZ7gEBgrTNVuEdsA0XBjJgOW9W3fe0I6xGy/j+2axBHP4Gwcvz0BVcsmUwGnKQKbOV851yIsNsM
+	LW1chrlDF/+GzluP37ATYj0+1B8zo2hPWyv5LAQ==
+X-Google-Smtp-Source: AGHT+IFe05bN9bAq9xy+58l7ncXMDFx1z/bJrarVfwaEv3r5G9ew4J8l/Ct5njAjkzJrtDklkvisuQOYqwkGO+3QFcI=
+X-Received: by 2002:a05:6512:3da8:b0:52c:dc25:d706 with SMTP id
+ 2adb3069b0e04-532edbbd3bemr1391778e87.52.1723627694266; Wed, 14 Aug 2024
+ 02:28:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v24 09/34] ASoC: Add SOC USB APIs for adding an USB
- backend
-To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
- mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
- corbet@lwn.net, broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
- Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, tiwai@suse.com,
- gregkh@linuxfoundation.org, robh@kernel.org
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
- alsa-devel@alsa-project.org
-References: <20240801011730.4797-1-quic_wcheng@quicinc.com>
- <20240801011730.4797-10-quic_wcheng@quicinc.com>
- <09fde4e6-c3be-484d-a7a5-bd653dc42094@linux.intel.com>
- <f761530c-a49b-4dd5-b01c-97d08931e0ab@quicinc.com>
- <acf4de1d-d551-4539-8353-3c85aa3d965c@linux.intel.com>
- <6855763c-0230-4535-a603-343059de5202@quicinc.com>
-Content-Language: en-US
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <6855763c-0230-4535-a603-343059de5202@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20240731-tzmem-efivars-fix-v2-0-f0e84071ec07@linaro.org>
+In-Reply-To: <20240731-tzmem-efivars-fix-v2-0-f0e84071ec07@linaro.org>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 14 Aug 2024 11:28:03 +0200
+Message-ID: <CAMRc=MeS++NAyVn3+9mGpiUypMcX24EyonQPD9NV7tdTf7Ytng@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] firmware: qcom: fix an efivars regression in qseecom
+To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Elliot Berman <quic_eberman@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>, 
+	Amirreza Zarrabi <quic_azarrabi@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Johan Hovold <johan+linaro@kernel.org>, 
+	Maximilian Luz <luzmaximilian@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, Jul 31, 2024 at 9:45=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl>=
+ wrote:
+>
+> The first patch address the regression with efivars using the qseecom
+> driver reported by Johan Hovold. The second patch removed dead code that
+> was left over during the conversion of the qseecom driver to using
+> tzmeme.
+>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+> Changes in v2:
+> - Update the kerneldoc for qcom_tzmem_to_phys()
+> - Link to v1: https://lore.kernel.org/r/20240730-tzmem-efivars-fix-v1-0-b=
+b78884810b5@linaro.org
+>
+> ---
+> Bartosz Golaszewski (2):
+>       firmware: qcom: tzmem: fix virtual-to-physical address conversion
+>       firmware: qcom: qseecom: remove unused functions
+>
+>  drivers/firmware/qcom/qcom_tzmem.c         | 32 +++++++++++++--------
+>  include/linux/firmware/qcom/qcom_qseecom.h | 45 ------------------------=
+------
+>  2 files changed, 21 insertions(+), 56 deletions(-)
+> ---
+> base-commit: 931a3b3bccc96e7708c82b30b2b5fa82dfd04890
+> change-id: 20240730-tzmem-efivars-fix-d9635d39cbf2
+>
+> Best regards,
+> --
+> Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>
 
->>>>> + * @list - list head for SoC USB devices
->>>>> + **/
->>>>> +struct snd_soc_usb_device {
->>>>> +	int card_idx;
->>>>> +	int pcm_idx;
->>>>> +	int chip_idx;
->>>>> +	int num_playback;
->>>>> +	int num_capture;
->>>>> +	struct list_head list;
->>>>> +};
->>>>> +
->>>>> +/**
->>>>> + * struct snd_soc_usb
->>>>> + * @list - list head for SND SOC struct list
->>>>> + * @component - reference to ASoC component
->>>>> + * @num_supported_streams - number of supported concurrent sessions
->>>> ... but here we don't. And it's not clear what the working 'sessions'
->>>> means in the comment.
-> 
-> After taking a look at this "num_supported_streams" naming a bit more, I wanted to check with you to see adds to the complexity of the terminology being used across soc-usb.
-> 
-> The intention of this is to define how many concurrent USB devices the USB backend can support.  So for example, if the audio DSP did support multiple USB devices at the same time, this would denote that.  This is where I wanted to make sure the terminology was right....  So in this case, to me, it makes more sense if num_supported_streams --> num_supported_devices, because it determines how many USB devices the ASoC USB backend DAI can manage/support.  This adds a bit to the reason why I think using the term "port" for explaining the SOC USB context is reasonable.
+It's been two weeks. Can this be picked up into v6.11?
 
-IIRC the USB specs define a hierarchy of device/interface/endpoint
-concepts. For streaming the only thing that really matters is the number
-of data endpoints, isn't it? If you have two devices with a single
-endpoint each or one device with two endpoints it should be the same
-complexity at the DSP level?
-
-
+Bart
 
