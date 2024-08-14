@@ -1,134 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-28562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6893C952541
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 00:09:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A081B952553
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 00:14:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 243CC283603
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 22:09:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4A41D1F23139
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 22:14:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0C3E1494B9;
-	Wed, 14 Aug 2024 22:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 413E4149C46;
+	Wed, 14 Aug 2024 22:14:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IUj0pH/h"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="lzy5PnsV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD8660B96;
-	Wed, 14 Aug 2024 22:09:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CF61494B9
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 22:14:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723673364; cv=none; b=SS19g5dQRsiJ4SMT3tk8xDlaTkphcCNthpsG0YCQ+jogUhRViilC2sUO9ymCA6NZ8EvT8lvB/ERvTZWpkPs/Kn+2ye/LKTVgIK0UIemwne6TDjSn5b+ATM2J46hWj/vFbDP1RI7ec0KCpt5Ni4tCnbdAK/Oj9w1NZQ2fxhGiJH8=
+	t=1723673659; cv=none; b=CNanGZ0EaYqgYyezUFCfgCrnlStPzu+KAQTzleNWt2bqD65Eq8KbWK2lZ+6+iBz6GTKmpOFuuOL0NAsxys4i8p19VRQeI7A76xDYIyjdLCWehx43xMb7A100n04SD4BSVl/EirRaG019e2PKbL0z+lhAVLIQOSPBJZTbjstvY9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723673364; c=relaxed/simple;
-	bh=joRzg/EV/Eg+5FrgAQqj8T32FaTk/sCtinF8S64xJvU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=RwE/B3VbHl9o6gcuhWnjLi50wax2Pmf8RX/LQbvpJzHFsCPxVWmuYNPZm+g7r0yuOWyqGask+hh0JYdTscR+jAmZhEp2WN0M5H2yt4RZSH1BicppJiKVX3E/uJkxqOSM/qA7UEKSKTivXwfKszmh9K6e7eMHoXBXZvztLqKOaYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IUj0pH/h; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47EArDDv027591;
-	Wed, 14 Aug 2024 22:09:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0SgI2w+z1vEHF10CPobuLWVlnnNE3pSKGSiAjVHETLk=; b=IUj0pH/h+3vuFvGi
-	R2tgpoJdNPib2OgXLaHM4XbcrEtdvlZtauBrb8T+m/fsPDBR3IY+bK9uB11y6QDr
-	lzjeslDzIgw1dRLfHDmJC+qC3n4/W1DSuUrQYra42kl1wJh8kBbf07rFW/tdbHEQ
-	/UhFRVbZVgdgYfJmA04jAML1g1Dl2eCXltyVNEikkWE/qsch5Snh6BYIN7vJQE+W
-	DOWUGZnsz0V+npPpMVENAYB2vj0y7USaXW/lLnCY7clnBB42Sk9hEnJLRL0NBXAo
-	i+eZwuM/iOmIy8wBJu+VE0YfcQVx9J08RZhtwGYcm7mtjfSm1TsHJql/aVa3Pvhn
-	Q1HCWA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x3etcjct-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Aug 2024 22:09:17 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47EM9Gaf012864
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Aug 2024 22:09:16 GMT
-Received: from [10.110.78.201] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 14 Aug
- 2024 15:09:15 -0700
-Message-ID: <f8caa9aa-7fc4-4d42-9011-21ca40eb106d@quicinc.com>
-Date: Wed, 14 Aug 2024 15:09:15 -0700
+	s=arc-20240116; t=1723673659; c=relaxed/simple;
+	bh=SNRkXhDmCbbOK8av0t3Uel7gPdjevNHKKfFt/NX9R7w=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=mUGgqdm//lXkh3HVhN2E0SvsaVsqhU1Q/hIbTthNBW0fP+z6VuapG7qufWr/y+GzWihgDH9LNmnPz+JQOm8cDzL6H5JFh1VgTkVTA2Y7zYxVjK8VwDDZnN6CoW2XQuBldkmpABdWJk9tT30hE2lD0Qvw86xKJkz6BGjcTd8J4MQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=lzy5PnsV; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-200aa78d35aso3236475ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 15:14:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1723673654; x=1724278454; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9dZakyOosNQEb8ThSHDuM5A07F0pWfsm3wFIDax/xIA=;
+        b=lzy5PnsV22gqWFae0DcyKokPGhdFwt12GnOAr1Rrxb4Y9gDAdyAe5smfHTNCQ+md4q
+         upEZuvfBiOD2HzbS7rbAXCzwjKwP5wqAZ/4O9NEAZwZRijQZHjxK7DN9ABfLCnodD8jE
+         8CdjFbPY+5178V5o8Z8/f/BokCjRL/K2dNbgE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723673654; x=1724278454;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9dZakyOosNQEb8ThSHDuM5A07F0pWfsm3wFIDax/xIA=;
+        b=j7uVoMj2eKPriF7yt44h5K2R7hAPdvELT5bZKSO0DuukMXbc9d4Ix/Ctha5Yhjn0jq
+         /U/7PsP1VoxENmPtayAFsVix7diZaGeXlkdMOeYm84OS8fj3yosu3p+f9QU3vwteJGUd
+         k2jXSXzbQur5QYZf/u1NkxlnAN/5rFg9VlfoQhRmLJBN5Xw6OU2ZHiBGL/taf6/z3H77
+         m+spxA69v7yWIck6Qk6eCwk+J21xdj00+SXU/Ut0Gx0WA/ZNaHJYzZWH7JArwH9F+v9O
+         RL8tPF/5i5mSNQVgXXUKbTMl/ZbGTXdEAB0aMddcJmtgWJqaDmUcdYNowTmp0k/8C/CH
+         YEww==
+X-Forwarded-Encrypted: i=1; AJvYcCWwLWbN8QdofFL7FKNlt8DGbA2JM1OCVN2nFig9hGO8XCTBH5swDpPWnxTroFfMqsfZ3VJjQTXZQOZdqlTljgRuD1D8/X42F6OyPPZZYw==
+X-Gm-Message-State: AOJu0YzdBQCTV27IStzeW2uvNNFfycYMtSP2Bd21qh4DS+XIgii/vNS1
+	dPVI/2HI4WW7455QNrhmRI1k8087BlPxlq8cixAa7eIAf/tyRL/TOeXXSTi7Pg==
+X-Google-Smtp-Source: AGHT+IHVQcqP4dstKT0IkJfBwrz7BgpmEzWgQOguFtF6ilWFMEfyEMuHWGaFU1rJVz0Q2BKXR6oqnQ==
+X-Received: by 2002:a17:902:db07:b0:1fb:8c35:602f with SMTP id d9443c01a7336-201d639c9c4mr57253855ad.6.1723673654526;
+        Wed, 14 Aug 2024 15:14:14 -0700 (PDT)
+Received: from zipper.pdx.corp.google.com ([2a00:79e0:2e13:6:aab8:3da7:4601:820d])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-201f0375725sm1046595ad.132.2024.08.14.15.14.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Aug 2024 15:14:12 -0700 (PDT)
+From: Fritz Koenig <frkoenig@chromium.org>
+Subject: [PATCH v3 0/2] media: venus: Add hierarchical h.264 controls
+Date: Wed, 14 Aug 2024 15:14:03 -0700
+Message-Id: <20240814-submit-v3-0-f7d05e3e8560@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/3] dt-bindings: soc: qcom: eud: Update compatible
- strings for eud
-To: Konrad Dybcio <konradybcio@gmail.com>,
-        Melody Olvera
-	<quic_molvera@quicinc.com>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        "Krzysztof Kozlowski" <krzk@kernel.org>,
-        Souradeep Chowdhury
-	<quic_schowdhu@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>, Rob
- Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor
- Dooley <conor+dt@kernel.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        "Satya Durga Srinivasu Prabhala"
-	<quic_satyap@quicinc.com>,
-        Elson Serrao <quic_eserrao@quicinc.com>
-CC: <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>
-References: <20240807183205.803847-1-quic_molvera@quicinc.com>
- <20240807183205.803847-2-quic_molvera@quicinc.com>
- <dfb1ac84-f011-45ea-9fb1-b8c6bc36cabc@kernel.org>
- <46d0627d-877b-41f3-83f6-4c33b562f460@quicinc.com>
- <0ebb1ca3-722d-422f-9f71-fcc61c3470b0@kernel.org>
- <2b118a49-2229-4346-ab21-0aa5377d7a4e@kernel.org>
- <8bb412f8-4fe1-40ca-8414-bb77c66899ae@quicinc.com>
- <0eca6755-a2ec-404f-b98c-ee6c9f6fb55f@gmail.com>
-Content-Language: en-US
-From: Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <0eca6755-a2ec-404f-b98c-ee6c9f6fb55f@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: bDH0nTmkWRQEmd3FpdSPVJBC5KZPgFc9
-X-Proofpoint-ORIG-GUID: bDH0nTmkWRQEmd3FpdSPVJBC5KZPgFc9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-14_18,2024-08-13_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- suspectscore=0 impostorscore=0 phishscore=0 clxscore=1011 mlxlogscore=386
- lowpriorityscore=0 priorityscore=1501 spamscore=0 adultscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2408140153
+X-B4-Tracking: v=1; b=H4sIACssvWYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDC0MT3eLSpNzMEl0DUwsLg0QDcxNjc3MloOKCotS0zAqwQdGxtbUA3pp
+ I/FgAAAA=
+To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
+ Vikash Garodia <quic_vgarodia@quicinc.com>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: Nathan Hebert <nhebert@chromium.org>, linux-media@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Fritz Koenig <frkoenig@chromium.org>
+X-Mailer: b4 0.13.0
 
-On 8/14/2024 1:25 PM, Konrad Dybcio wrote:
->> Unfortunately, no. We considered several options, but none guarantee that we will avoid
->> a crash if we try non-securely. The secure call also won't give a specific error if it fails either
->> (for security reasons) so we can't know if a secure access failed because it's supposed to be
->> accessed non-securely or for another reason; hence this approach. If there's
->> another way to achieve this functionality that might be better, I'm all ears.
-> Can we read some fuse values and decide based on that?
+v3:
+- dropped reordering patch
+- updated cover letter
 
-In most of the cases, these fuse values are not allowed to be read
-from the Linux, so that will be another problem. Melody can check
-if there is any fuse values around here and possible to read them
-through Linux. 
+v2:
+- cover letter
+- testing methodology
+- Signed-off-by
 
+V4L2 has support for encoding with hierarchical frames using the
+V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING* controls. This allows for
+specifing frame references needed for temporal scalability. Encoding a
+single stream with a single layer allows for the layer to be dropped and
+the stream to be decoded without artifacts.
+
+ChromeOS is planning to use this feature for the L1T2 web standard[1].
+This allows video conferencing apps to encode once for a clients with
+different performance/bandwidth capabilities. As the application is a
+real time encoder only P frame support is added.
+
+The ChromeOS test framework ("tast") was used to verify that no
+regressions are present. This was done on SC7180 ("trogdor"). These
+patches were also run on SC7280, but not with as an extensive test set.
+
+Verification of the added controls was done with a bitstream analyser to
+make sure that reference frame management is correct.
+
+[1]: https://www.w3.org/TR/webrtc-svc/#L1T2*
+
+Signed-off-by: Fritz Koenig <frkoenig@chromium.org>
+---
+Fritz Koenig (2):
+      media: venus: Helper function for dynamically updating bitrate
+      media: venus: Enable h.264 hierarchical coding
+
+ drivers/media/platform/qcom/venus/core.h       |   4 +
+ drivers/media/platform/qcom/venus/venc.c       |  85 +++++++++++------
+ drivers/media/platform/qcom/venus/venc_ctrls.c | 126 ++++++++++++++++++++++---
+ 3 files changed, 171 insertions(+), 44 deletions(-)
+---
+base-commit: d07b43284ab356daf7ec5ae1858a16c1c7b6adab
+change-id: 20240814-submit-05880a074377
+
+Best regards,
 -- 
----Trilok Soni
+Fritz Koenig <frkoenig@chromium.org>
 
 
