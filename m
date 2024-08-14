@@ -1,74 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36E1B9516CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 10:42:41 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DA4995171B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 10:56:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6950E1C221BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 08:42:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AF07CB277D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 08:56:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91D4214373B;
-	Wed, 14 Aug 2024 08:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6BA6143898;
+	Wed, 14 Aug 2024 08:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CEJk4MK3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OuDctkVO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED2D1422AB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 08:42:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA96F55E53;
+	Wed, 14 Aug 2024 08:56:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723624947; cv=none; b=PopveISFe6A4De21Wwb/Nay0095VvK9rm6bZAS4NlPbq9l7+NqDEatlXcw/Ku20oKtS/JAg+JNyHJ0TBZa5W8H56QqMbU9N6J0r0B6TpsLlI/kAlZe1cLc0JQZIdKPwGmq/tsO7mPtyHdQgQXPkLQRDsawzpssJDAjHFZm0pVD8=
+	t=1723625767; cv=none; b=Z/uNoOnhzOooMSFcBMQLOLCP8VwchDB34AQCTq/op1wK9CFZWiIIxY6i2c5Ti59KlsdY8sAZd639PwGXvNwskBq48RFqEViZa/tmGORQ1YdGW610sJIvSfGyuZKhvefAfUN4wOyHmZhwlLagsNTGZzhONFP4INfKaAdcTUsEgMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723624947; c=relaxed/simple;
-	bh=1QfKCLMRnNPzmvyKlrpuDS58cibY7JPKGSrw1Fiy1Nw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OGUMl2k4Fh9/XLTqQfgiPAKMN82rK4dlt+p4aUuSZICsuZV2vqR3YU34MBdVnd2hsvXee3mKYtgHPWJHiwdsmewCQEPdD1rKUdI8Xddv45Zr5NRJ203mCSo2GM8i9/ZMOCM4phnuNktAML3yH224ZnF3zKfe6WKIIEOLfTzTzKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CEJk4MK3; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-368313809a4so353901f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 01:42:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723624944; x=1724229744; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3AyfZexU22I2sH9aPnSL5GuTFz1W/ENho/AlFGBB7a0=;
-        b=CEJk4MK3CZS+YK43bn+qrW6bbbUDjcX0xgjwbHGYz26i98fKa85krHbezelrZOgBLH
-         ojcDcZlfTczn4BIdleq77AwHW64cyymaAVGFXZLhQvJs4yn3j1s+9+kespzKAD9oJfFO
-         ADRxIAPJJVTT/+NMbNDLUfnD/72mw9VfhV6tAfEk8F1luMBam7CkdmBGYImcHkxdHzmC
-         01MJ45AI00gcqQINIJEXfiPab71A13Ra9RRffq0vuNOwynlpeGK+/BBI6NiYN3xaEsqo
-         rRTjq++kcgPPKVqOiJBz7+CC64nY18bt2TiMv3nP3pz3VsXUf0tii0t2+pI/39g8IOKP
-         UOlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723624944; x=1724229744;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3AyfZexU22I2sH9aPnSL5GuTFz1W/ENho/AlFGBB7a0=;
-        b=QIkcPyDX4iqHaWU/qLZ0NgfA0EtVfEAnGwSMI3P7iZwgVAD5mJvhv7NQ6BsdnZwaEC
-         cfw8HR55T2XN4GizSPqubf9tpxOQCkFDtxym6tclOzhK01cSUp+yjD+AYwhcTVgOPOVi
-         ghxzg4cdUqLaDQwmprcbKvjVyRi8CUSe5w6NgCUTcSBbbtQbUxywAj8S5+WNjxrPOqc1
-         jdHND2VpDNdE9MVY07iEQlyBNiVi/225TPsiWjWRMuakO9bq0XuYy7BXC6jZEgLkWGq+
-         dybK44j7NpuBlTzVy4t0XOhKFWq8diM50khJcUtX8PG0CCJqJ5dqsCFvr+M48jCuw1Dq
-         pcSw==
-X-Forwarded-Encrypted: i=1; AJvYcCW9UJDFmc6364UJGo1uEnWGAXpY5xJWU1Li4kpc2RTM7g2ci2AS/n7D3bhmjwzJ28guuQbZ8ubiTL4aq3dxnahKprUZIeg/b02KYflhpA==
-X-Gm-Message-State: AOJu0YwgcZ0LG5Pbns4dxVkOc/Kqs2UvF9Qj9SkGCZ2H9dsD1KKEJC6F
-	gpt+49VIGplSzwIpRkuoRv7lTxxGXGhkKlDrXVQkJuuWadG0/IZIzRlqhA45Pus=
-X-Google-Smtp-Source: AGHT+IGQisfWqgtdPNDL3251nLqNoB/iLdOa4Y+g5fQHv6/ZcTIQfBAbps6K9TvAvJILM4MqhlIIFw==
-X-Received: by 2002:a05:6000:2a3:b0:366:e9f7:4e73 with SMTP id ffacd0b85a97d-3716e3ead69mr5763290f8f.5.1723624943698;
-        Wed, 14 Aug 2024 01:42:23 -0700 (PDT)
-Received: from [192.168.0.25] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37179646104sm962415f8f.113.2024.08.14.01.42.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Aug 2024 01:42:23 -0700 (PDT)
-Message-ID: <ede0cc89-35ad-454c-bcae-5a77dc3bafa9@linaro.org>
-Date: Wed, 14 Aug 2024 09:42:22 +0100
+	s=arc-20240116; t=1723625767; c=relaxed/simple;
+	bh=LFcfzgmgj0fjvud0HifLiNgJxiVjTidXJrqLYts5pv8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=keJjVxAZaOv5ZWfacWZP4d++1/pVkAWG3g6fZemq4w6HUyUqII0SsL9ibTzYFBZ+5r4Ct83Qhi9WacGzj0ufzwLnpOcrnmVNCpcijNI0BwvjR4Q50YIbxeNrfn6siUMxvFRqMOA22ZDH2TKf8lGLkJ3ci9fQBvM/LIU/0a9Hq/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OuDctkVO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A075C4AF0D;
+	Wed, 14 Aug 2024 08:56:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723625767;
+	bh=LFcfzgmgj0fjvud0HifLiNgJxiVjTidXJrqLYts5pv8=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=OuDctkVO0tk35Wx8LumTgNlxPvQkGYgHGHpzuOLIn9syLF2sc8ziE7+x1e5wiHUmR
+	 rZxIoSV3EfnZnMXJnLxkogDSkA6t1pLD2GmLjhuI5YNeI/H0r2zEKxJlXfX1MVdmmn
+	 AeOzNeFFbP4E7EXBXuWlO1TLV9ZNmmcVv9LS0dKYja+fbn7co0xTJlGHCrTky9Dcsq
+	 Xem4PTP3Ui33IiQr0ktjqwQ1bOATGMmH2fEdmLX4GYGzsKl7j3jeOWPwF7B0IYd8wg
+	 kOOetvaEhOPdP4O6/CJ25gdrTgsDE6FJTGTUDgCUMuyCcHQAJlW7lzsq8d7Xyet0fT
+	 PzCekjWLGmEIg==
+Message-ID: <3fd0fa88-eee0-45f8-bd8b-f5b2bc15c25a@kernel.org>
+Date: Wed, 14 Aug 2024 10:56:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,84 +50,99 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] media: qcom: camss: fix error path on configuration of
- power domains
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Robert Foss <rfoss@kernel.org>
-Cc: Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org,
- "stable@vger.kernel.org" <stable@vger.kernel.org>
-References: <20240813210342.1765944-1-vladimir.zapolskiy@linaro.org>
+Subject: Re: [PATCH 1/3] dt-bindings: arm: qcom: document QCS8275/QCS8300 SoC
+ and reference board
+To: Jingyi Wang <quic_jingyw@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com,
+ quic_tengfan@quicinc.com
+References: <20240814072806.4107079-1-quic_jingyw@quicinc.com>
+ <20240814072806.4107079-2-quic_jingyw@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240813210342.1765944-1-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <20240814072806.4107079-2-quic_jingyw@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 13/08/2024 22:03, Vladimir Zapolskiy wrote:
-> There is a chance to meet runtime issues during configuration of CAMSS
-> power domains, because on the error path dev_pm_domain_detach() is
-> unexpectedly called with NULL or error pointer.
+On 14/08/2024 09:28, Jingyi Wang wrote:
+> Document the QCS8275/QCS8300 SoC and its reference board QCS8300 RIDE.
+> QCS8300 is an Industrial Safe SoC, while QCS8275 is the Industrial
+> Non-Safe version which can share the same SoC dtsi and board DTS.
 > 
-> One of the simplest ways to reproduce the problem is to probe CAMSS
-> driver before registration of CAMSS power domains, for instance if
-> a platform CAMCC driver is simply not built.
-> 
-> Warning backtrace example:
-> 
->      Unable to handle kernel NULL pointer dereference at virtual address 00000000000001a2
-> 
->      <snip>
-> 
->      pc : dev_pm_domain_detach+0x8/0x48
->      lr : camss_probe+0x374/0x9c0
-> 
->      <snip>
-> 
->      Call trace:
->       dev_pm_domain_detach+0x8/0x48
->       platform_probe+0x70/0xf0
->       really_probe+0xc4/0x2a8
->       __driver_probe_device+0x80/0x140
->       driver_probe_device+0x48/0x170
->       __device_attach_driver+0xc0/0x148
->       bus_for_each_drv+0x88/0xf0
->       __device_attach+0xb0/0x1c0
->       device_initial_probe+0x1c/0x30
->       bus_probe_device+0xb4/0xc0
->       deferred_probe_work_func+0x90/0xd0
->       process_one_work+0x164/0x3e0
->       worker_thread+0x310/0x420
->       kthread+0x120/0x130
->       ret_from_fork+0x10/0x20
-> 
-> Fixes: 23aa4f0cd327 ("media: qcom: camss: Move VFE power-domain specifics into vfe.c")
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
 > ---
-> The first version of the patch and discussion is found over here:
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
->    https://lore.kernel.org/all/20240806221204.1560258-1-vladimir.zapolskiy@linaro.org/
-> 
-> Changes from v1 to v2:
-> * added an encountered runtime warning to the commit message per ask from Bryan.
-> 
-> I tested this fix in both cases of set and unset "power-domain-names"
-> property in camss device tree node, and I didn't find any negative side
-> effects of the fix.
-> 
->   drivers/media/platform/qcom/camss/camss.c | 19 ++++++++-----------
->   1 file changed, 8 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 51b1d3550421..aa894be1461d 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index f08e13b61172..3952e1579767 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -42,6 +42,8 @@ description: |
+>          msm8996
+>          msm8998
+>          qcs404
+> +        qcs8275
+> +        qcs8300
+>          qcs8550
+>          qcm2290
+>          qcm6490
+> @@ -884,6 +886,12 @@ properties:
+>            - const: qcom,qcs404-evb
+>            - const: qcom,qcs404
+>  
+> +      - items:
+> +          - enum:
+> +              - qcom,qcs8300-ride
 
-+ stable@vger.kernel.org
+This is not used. You miss DTS patch. Look how people upstream things:
+such binding *never* goes separate from the DTS.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Best regards,
+Krzysztof
 
 
