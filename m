@@ -1,180 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-28450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 083A19513F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 07:35:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 600BF95141A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 08:00:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AA835284EF4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 05:35:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8408C1C22E22
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 06:00:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B2C4502B1;
-	Wed, 14 Aug 2024 05:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF05C5FBBA;
+	Wed, 14 Aug 2024 06:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aYbxL442"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G1TxCe7h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D5542A90;
-	Wed, 14 Aug 2024 05:35:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B993BBCB;
+	Wed, 14 Aug 2024 06:00:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723613715; cv=none; b=PwHq/HUnF6q16Qb3gvBH3IY4ZZdaONfgyb7WAf0YTYlf+t6kXS9DLYT/8vm49A+6vdoQLjhnCGUD431wRyaUfm6tpRbxedavWaL+9cmvm3jcDIyE2x5/rUFMC6O6sf6XMXfFhPcx1R4d2dyDMmysm5m6VnUk4B71BjBL+zoxJ8w=
+	t=1723615240; cv=none; b=ZMNsFncHxS22u1otyK/BUt3thKhzQu96a4pWjD6Pbu+dxP60y1KuAenbG/lc4AMDmR+y+Q3lr9lNE/jXIbdtYzPc+ZT+IGy5n4N+kqsYonL9TJanNn94cVNUk+5Xeoo0hMJO/+c7Beyj91xACv6Gic7s4hUjMTL4AY6rqcJlBwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723613715; c=relaxed/simple;
-	bh=9IKpXMGwe4dCJjZKsmbAa/wqCA0aKzkzGbM2fSVdjz8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=rRFq2khARugx8HsNQkun0zOHxLGwQm8zN7m0k6rYAp3wEI9G8QSin1TVyWw0JQtjWCMADfxGAf4UghV/eJo6mcGFMZwra2JKpjKFjVfCWAcA/EQj69kzm69gxF9VmFH9Le3XlgHjtZKyUWG5A4zhG6Kd1krpLa/Me648gUZl3cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aYbxL442; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47DNFTxK031225;
-	Wed, 14 Aug 2024 05:35:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	98fCPF9GKy9gMo9iUX9FZDLf6m48HTIb41hYJkt76kg=; b=aYbxL442nQz1DbaW
-	i9AFohgfc9T1YzqoUy0BimEEZnS81RWmS4YM6lIjCVM1DJqjaBHXAdNFoLsbXuUi
-	9ZvY1QAKqa+T2pqGKtJlQRcsLVN1f8mHCGR/UIbdF5lUHodnVm4yQL8Tf2PsHqbq
-	ofMtFM6hOXzGZj8RU/mY8W80foG2zLJ3YkQFmOhNCO6Ekl1ATSU/TuxEY0x0lcgQ
-	wwXY5n8MiBp1SEZAnApO6+VCDOoRqisakpy5rpV2aPBct3Jd8x/Gc4pCOXgDuB33
-	JlBUgp22iLNH99xI3P5exQuia2ChXSldf3vrB68qdrVOQd+Pp4So6yTJu5oamBi4
-	eAJd0g==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41082wj3m9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Aug 2024 05:35:09 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47E5Z85v002677
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Aug 2024 05:35:08 GMT
-Received: from [10.218.35.239] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 13 Aug
- 2024 22:35:05 -0700
-Message-ID: <ec3a918a-df09-9245-318e-422f517ccf68@quicinc.com>
-Date: Wed, 14 Aug 2024 11:05:02 +0530
+	s=arc-20240116; t=1723615240; c=relaxed/simple;
+	bh=vPB9aaa+NH2aM+GbnFplcTW145Xj1DSko+ugGJ+uzAk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=B2hbwF/NaINVEnMnpc2Au6Ew85XtYoZDpsk6vkiDmTEk3HQYU+D+j/w6Ky3mDnTk2wwu/T28zFiX8vB8ixe3Og1+I/LNZ7kWXrwmajtsj+dncOGR477K3YcDuvLyIOHk8ZI8UQKrqp+Uzm/ndgZj5zQ+Z8lv4/bKD6ZAyabTEaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G1TxCe7h; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4769C32786;
+	Wed, 14 Aug 2024 06:00:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723615239;
+	bh=vPB9aaa+NH2aM+GbnFplcTW145Xj1DSko+ugGJ+uzAk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=G1TxCe7hKST2UA30Ng0QNrkNwG8SNfQRQwh3lYDsaZafbeuAIel1K7C6Eh2xqVwP0
+	 oFK2MjNq9V0wawxJ0hvN+K3d0h7g6S11JjmPVsI1lBExBYTImOqIFfLQWcNOPidYo3
+	 1shipepfsAGLk8BKPjIxEr/BVjHDlT4xfpgQM5Dt9n+n77IgM7BNkPd9I/05KdWHXS
+	 xqg6f6i9BV44TCaLhE6oNMMz6HaoIrHYuTvCIK7WlYE6kN/JGv9he9bo8TI5Rh46et
+	 UcNaJEFfixi1pXOU61bw/rH7ddkOCaUGL6haYPrv6eS/CzMARCkEGTPag7mN5tyPea
+	 LRb7fvLg3M0+g==
+Message-ID: <662e1236-84cb-4090-8fc8-dd77943726c9@kernel.org>
+Date: Wed, 14 Aug 2024 08:00:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.1
-Subject: Re: [PATCH] usb: dwc3: qcom: fix NULL pointer dereference on
- dwc3_qcom_read_usb2_speed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 06/11] dt-bindings: nfc: nxp,nci: Document PN553
+ compatible
+To: Rob Herring <robh@kernel.org>
+Cc: Danila Tikhonov <danila@jiaxyga.com>, krzk+dt@kernel.org,
+ conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+ davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ pabeni@redhat.com, rafael@kernel.org, viresh.kumar@linaro.org,
+ kees@kernel.org, tony.luck@intel.com, gpiccoli@igalia.com,
+ ulf.hansson@linaro.org, andre.przywara@arm.com, quic_rjendra@quicinc.com,
+ davidwronek@gmail.com, neil.armstrong@linaro.org, heiko.stuebner@cherry.de,
+ rafal@milecki.pl, macromorgan@hotmail.com, linus.walleij@linaro.org,
+ lpieralisi@kernel.org, dmitry.baryshkov@linaro.org, fekz115@gmail.com,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-hardening@vger.kernel.org
+References: <20240808184048.63030-1-danila@jiaxyga.com>
+ <20240808184048.63030-7-danila@jiaxyga.com>
+ <493466e6-d83b-4d91-93a5-233d6da1fdd8@kernel.org>
+ <20240813193315.GA1614564-robh@kernel.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Faisal Hassan
-	<quic_faisalh@quicinc.com>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "stable@vger.kernel.org" <stable@vger.kernel.org>
-References: <20240813111847.31062-1-quic_faisalh@quicinc.com>
- <20240814001739.ml6czxo6ok67pihz@synopsys.com>
-From: Prashanth K <quic_prashk@quicinc.com>
-In-Reply-To: <20240814001739.ml6czxo6ok67pihz@synopsys.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240813193315.GA1614564-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: YE-wrZ7Lb0xL5ug-bgfrTgAvqoxURtjk
-X-Proofpoint-GUID: YE-wrZ7Lb0xL5ug-bgfrTgAvqoxURtjk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-14_04,2024-08-13_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 bulkscore=0 mlxlogscore=850 clxscore=1011 mlxscore=0
- spamscore=0 priorityscore=1501 suspectscore=0 phishscore=0 adultscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408140037
 
+On 13/08/2024 21:33, Rob Herring wrote:
+> On Fri, Aug 09, 2024 at 07:39:53AM +0200, Krzysztof Kozlowski wrote:
+>> On 08/08/2024 20:40, Danila Tikhonov wrote:
+>>> The PN553 is another NFC chip from NXP, document the compatible in the
+>>> bindings.
+>>>
+>>> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+>>> ---
+>>>  Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml | 1 +
+>>>  1 file changed, 1 insertion(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml b/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
+>>> index 6924aff0b2c5..364b36151180 100644
+>>> --- a/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
+>>> +++ b/Documentation/devicetree/bindings/net/nfc/nxp,nci.yaml
+>>> @@ -17,6 +17,7 @@ properties:
+>>>            - enum:
+>>>                - nxp,nq310
+>>>                - nxp,pn547
+>>> +              - nxp,pn553
+>>
+>> Keep the list ordered.
+> 
+> Looks ordered to me. n before p...
 
+Now it is... I think I misread 5->3.
 
-On 14-08-24 05:47 am, Thinh Nguyen wrote:
-> On Tue, Aug 13, 2024, Faisal Hassan wrote:
->> Null pointer dereference occurs when accessing 'hcd' to detect speed
->> from dwc3_qcom_suspend after the xhci-hcd is unbound.
->> To avoid this issue, ensure to check for NULL in dwc3_qcom_read_usb2_speed.
->>
->> echo xhci-hcd.0.auto > /sys/bus/platform/drivers/xhci-hcd/unbind
->>    xhci_plat_remove() -> usb_put_hcd() -> hcd_release() -> kfree(hcd)
->>
->>    Unable to handle kernel NULL pointer dereference at virtual address
->>    0000000000000060
->>    Call trace:
->>     dwc3_qcom_suspend.part.0+0x17c/0x2d0 [dwc3_qcom]
->>     dwc3_qcom_runtime_suspend+0x2c/0x40 [dwc3_qcom]
->>     pm_generic_runtime_suspend+0x30/0x44
->>     __rpm_callback+0x4c/0x190
->>     rpm_callback+0x6c/0x80
->>     rpm_suspend+0x10c/0x620
->>     pm_runtime_work+0xc8/0xe0
->>     process_one_work+0x1e4/0x4f4
->>     worker_thread+0x64/0x43c
->>     kthread+0xec/0x100
->>     ret_from_fork+0x10/0x20
->>
->> Fixes: c5f14abeb52b ("usb: dwc3: qcom: fix peripheral and OTG suspend")
->> Cc: stable@vger.kernel.org
->> Signed-off-by: Faisal Hassan <quic_faisalh@quicinc.com>
->> ---
->>   drivers/usb/dwc3/dwc3-qcom.c | 4 +++-
->>   1 file changed, 3 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
->> index 88fb6706a18d..0c7846478655 100644
->> --- a/drivers/usb/dwc3/dwc3-qcom.c
->> +++ b/drivers/usb/dwc3/dwc3-qcom.c
->> @@ -319,13 +319,15 @@ static bool dwc3_qcom_is_host(struct dwc3_qcom *qcom)
->>   static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom, int port_index)
->>   {
->>   	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> 
-> What if dwc is not available?
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Thats unlikely, dwc3_qcom_suspend() -> dwc3_qcom_is_host() checks for 
-dwc, calls dwc3_qcom_read_usb2_speed() only if dwc is valid. But adding 
-an extra check shouldn't cause harm.
-> 
->> -	struct usb_device *udev;
->> +	struct usb_device __maybe_unused *udev;
-> 
-> This is odd.... Is there a scenario where you don't want to set
-> CONFIG_USB if dwc3_qcom is in use?
-> 
-AFAIK this function is used to get the speeds of each ports, so that 
-wakeup interrupts (dp/dm/ss irqs) can be configured accordingly before 
-going to suspend, which is done during host mode only. So there 
-shouldn't be any scenarios where CONFIG_USB isnt set when this is called.
->>   	struct usb_hcd __maybe_unused *hcd;
->>   
->>   	/*
->>   	 * FIXME: Fix this layering violation.
->>   	 */
->>   	hcd = platform_get_drvdata(dwc->xhci);
->> +	if (!hcd)
->> +		return USB_SPEED_UNKNOWN;
->>   
->>   #ifdef CONFIG_USB
-> 
-> Perhaps this #ifdef shouldn't only be checking this. But that's for
-> another patch >>   	udev = usb_hub_find_child(hcd->self.root_hub, port_index + 1);
->> -- 
->> 2.17.1
->>
-> 
-> BR,
-> Thinh
-Thanks,
-Prashanth K
+Best regards,
+Krzysztof
+
 
