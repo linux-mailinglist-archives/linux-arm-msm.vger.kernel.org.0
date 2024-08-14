@@ -1,43 +1,43 @@
-Return-Path: <linux-arm-msm+bounces-28502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7FB78951C67
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 16:00:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C557951C6C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 16:00:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 06DE6B243BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 14:00:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4D1731C20E3B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 14:00:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92BF71B1514;
-	Wed, 14 Aug 2024 14:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 668351B29CB;
+	Wed, 14 Aug 2024 14:00:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ns.iliad.fr (ns.iliad.fr [212.27.33.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A675E1ABECE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68931B1507;
 	Wed, 14 Aug 2024 14:00:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.33.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723644021; cv=none; b=lt/WRkgIktlqVK8iHMh3slmox1S5Hgl35SgWginBipxqyILWzkVT4L8Gz7FRViguUdm22t4yac2pjhzzOnh7BxyVqB1hO59Gab9bBEFIy0lcC0XcmW+35i+plglH5RzmhnBsks5UObrMZun8cAmpOM34SWSVeAzvO2HY3W/1/Vw=
+	t=1723644022; cv=none; b=N2tkXywI2HQFZdZa9cKFBub1OguWZ1+q2av/WzIOFlLOaNRK1Fuj7L9q1TcGS3EAE5xi+kRRNhmfMV/JMURJ2sFdoj9ujtnJE25vpcMQl3mqDCPV3B+wsw+fliT4y/Jw4PcmkvMW/f37LVoc+OndKmPLUY6SuhZ6U9+M+d/atz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723644021; c=relaxed/simple;
-	bh=QcdrQflkqdM2QB3XA57RYn9/8XtctAhkT4I5lXhNgx8=;
+	s=arc-20240116; t=1723644022; c=relaxed/simple;
+	bh=RRdWvaaJjh2EukHMWmy8agmys/TF3UAfdsl3eILq5HQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=CDEG6IDHdIIs4D61XKuwVUqP3V/QXiXj9jxXU44wuSWNAFnIKuweBekXf+EyZXNaxWcEx95gByYrGayEQUe8qq4NRXesU6wC9L+3xYs5B0qnq27Gf/IrW7HGcxwW35vO7Qu7UwJvaBK9rqDLGXZmF9MWfRCu9cA5glcviN//FPY=
+	 In-Reply-To:To:Cc; b=qwad2Wh4PE3q3s8Xce6XZ4Z8SXSuWT29q50tVVVVNJ+CwHG88U2xE1CLfg8RSObVtqYaJ8i/lBQufmaJ8HOaJW7UYjiy/WQ1Ff64Y3k1MZmYYsB7TXCzgc4DITEsycKtxsuESAlppBxFtOkYJIxzYC2qEVintGks6lYxvXSmTns=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=srs.iliad.fr; arc=none smtp.client-ip=212.27.33.1
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=srs.iliad.fr
 Received: from ns.iliad.fr (localhost [127.0.0.1])
-	by ns.iliad.fr (Postfix) with ESMTP id D8CC220998;
+	by ns.iliad.fr (Postfix) with ESMTP id DE9D42099D;
 	Wed, 14 Aug 2024 16:00:09 +0200 (CEST)
 Received: from [127.0.1.1] (freebox.vlq16.iliad.fr [213.36.7.13])
-	by ns.iliad.fr (Postfix) with ESMTP id C755720989;
+	by ns.iliad.fr (Postfix) with ESMTP id CE1972098C;
 	Wed, 14 Aug 2024 16:00:09 +0200 (CEST)
 From: Marc Gonzalez <mgonzalez@freebox.fr>
-Date: Wed, 14 Aug 2024 15:59:55 +0200
-Subject: [PATCH 1/2] dt-bindings: arm-smmu: Add qcom,last-ctx-bank-reserved
+Date: Wed, 14 Aug 2024 15:59:56 +0200
+Subject: [PATCH 2/2] iommu/arm-smmu-qcom: hide last context bank from linux
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -46,7 +46,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240814-smmu-v1-1-3d6c27027d5b@freebox.fr>
+Message-Id: <20240814-smmu-v1-2-3d6c27027d5b@freebox.fr>
 References: <20240814-smmu-v1-0-3d6c27027d5b@freebox.fr>
 In-Reply-To: <20240814-smmu-v1-0-3d6c27027d5b@freebox.fr>
 To: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>, 
@@ -78,28 +78,29 @@ and here:
 It is likely that FW reserves the last context bank for its own use,
 thus a simple work-around would be: DON'T USE IT in Linux.
 
+If we decrease the number of context banks, last one will be "hidden".
+
 Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
 ---
- Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-index 280b4e49f2191..f9b23aef351b0 100644
---- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-+++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
-@@ -204,6 +204,12 @@ properties:
-       access to SMMU configuration registers. In this case non-secure aliases of
-       secure registers have to be used during SMMU configuration.
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index 7e65189ca7b8c..e2e1fd9e2452b 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -282,6 +282,11 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
+ 	u32 smr;
+ 	int i;
  
-+  qcom,last-ctx-bank-reserved:
-+    type: boolean
-+    description:
-+      FW reserves the last context bank of this SMMU for its own use.
-+      If Linux tries to use it, Linux gets nuked.
++	if (of_property_read_bool(smmu->dev->of_node, "qcom,last-ctx-bank-reserved")) {
++		dev_warn(smmu->dev, "hiding last ctx bank from linux");
++		--smmu->num_context_banks;
++	}
 +
-   stream-match-mask:
-     $ref: /schemas/types.yaml#/definitions/uint32
-     description: |
+ 	/*
+ 	 * Some platforms support more than the Arm SMMU architected maximum of
+ 	 * 128 stream matching groups. For unknown reasons, the additional
 
 -- 
 2.34.1
