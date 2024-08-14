@@ -1,160 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-28537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C31A9520F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 19:21:01 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94E489520FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 19:23:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C2782B21103
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 17:20:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C53CB1C20B39
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 17:23:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FE331BBBDA;
-	Wed, 14 Aug 2024 17:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C349D1BBBDA;
+	Wed, 14 Aug 2024 17:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="owe/A3ZV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D2snk5Th"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F99F1B9B2D;
-	Wed, 14 Aug 2024 17:20:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD991B9B2D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 17:22:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723656053; cv=none; b=Iqr3ynDDEl+oI6im+TqF6XlBsmzp1LIRJ4AiJdLvxu7l4c/mYW+pOiQolJdRTOgHijX1lnNwMA8bS9wgkE9AXVvEj79rRQlFkfwCNHws1hLEDOGb6Lq0eNsCzyZTGYWusUDZbdJ4I/R4PBhbO9HUaT5F/8Gp2EAY1PXyt7P9Znk=
+	t=1723656177; cv=none; b=DMNFbHsbw7TK3ggB1/vNBRkMgNMgFEZPOVlXXemdEEEixX9wUtjPefsxtVSmGD4ewOtX9XTIExPM26RrouWniK59sE+rhgycypsy66qHZJmHpbA3j5X9VdoweiA7Mlhu3GzjJQ9DDYLX18+hYyJO/H2isMC0ut2yS5oxGYazYIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723656053; c=relaxed/simple;
-	bh=smuak+zqjyB1uSWmMRGThmE3BA9R58lXtjJBjh3OZVE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=HgXRwwzY4syKDlhl46puuC1dIbrfLT+xHU9B7h8Tx/cgc6H2x1EQHJjhLOi2FWUUn09nFmzIF7FfvLTNHeufEassvMh1aR+BAQmxl7aKXcHCoyetJPIcpGb7l71kS97QMUj1gDYdrd73eX6jIOpSKnTHjdbMSFVTiBA/pEc/yMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=owe/A3ZV; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47EADMr7026876;
-	Wed, 14 Aug 2024 17:20:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xRGpGeGkdYD2yIn+lOnT/kFxW5i6tGEXWoAkx9Y3rLk=; b=owe/A3ZVYisipyZ6
-	CGUy2B/c9dQcTpg5jzKmlOgwNAlA8V6BZQiUcqVJJOyuoNgmqe3o99WB3Cn05GWf
-	rokvHpRc7GvB1wfWC/5HMfoK6/d5+z+Gd5hBDXyUiKNWWONshvSkic0PRxyIgECX
-	V7fSGxgzXkAxgCWLLbAc0lmlBArAiucf+k0jFEpV08VmJadNGRulnqZrLV8d+cje
-	Qm8RdB5tOfykSvhWqPzUVJ6THfMvLsTygwjWaCL0zJyFbZgGPM3zhDpzShrDlem6
-	dYeunkkc43t0YB5mIkMYEmLvzcCURLqKboc3jBD03NOAU0dRbKkif3THqM9Ph50X
-	Hrq8JA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x18y433m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Aug 2024 17:20:46 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47EHKjt9015895
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Aug 2024 17:20:45 GMT
-Received: from [10.71.108.157] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 14 Aug
- 2024 10:20:44 -0700
-Message-ID: <09bc73fc-65bd-41b5-90fa-14cb0ff79e77@quicinc.com>
-Date: Wed, 14 Aug 2024 10:20:45 -0700
+	s=arc-20240116; t=1723656177; c=relaxed/simple;
+	bh=f1RmKlqVd2mEVwfc2Sh+M2IKkmy1k3LlwnHEvoWTbqM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Y5swqQ9Nk9MwUS8kbADuQ36gYYLwpDYcRqS4+CtSDyHz7B68ZPiHxxvzGeHbbiM7SnBVVeEakwe04vRkd5PZsG2mOepueSKrg0KJaqzQ+jGxKGPjaSqCFflZgBnn3ONHKnxA2Zx8yq2TbctZt0zBtS95YdmOciP3BXk9bbwj4Uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=D2snk5Th; arc=none smtp.client-ip=209.85.222.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-821eab936d6so18634241.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 10:22:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1723656175; x=1724260975; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=1orJ6nO6ZqFwQLaPKdFYgCrAZEOYItqQBupC7tbBRhE=;
+        b=D2snk5ThFVcd65AiKML2/U2T0VeLLX97SXy7BLD3PC1rKRlOjehSp18iJgG+5snpli
+         BP52rAfUtmHiHcwnDSPsnO5LrDsGpj995mrMssn4/ztd66/YGAv898sy3UKwpCl/SeNJ
+         nV9rhj8y/t8jmPyXXjs/e3e6XMFmxNU2ztRVKr4CgVDCYAWe3y7R3WcvFjhlcwCGPI2z
+         pudjwMoK5gMF7lWNsNMHDVwfXUIjfnSSgWcqslaA/gU7ulcJGyz122hLnN+EkfVhcChC
+         wT29XSSUycG1KrNG6VOqfFTvt2OMreE1pCbnn78o6JMPMRRjWTBH2Zll76F+Iw1lxxuA
+         vODQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723656175; x=1724260975;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1orJ6nO6ZqFwQLaPKdFYgCrAZEOYItqQBupC7tbBRhE=;
+        b=EbVx11Z6++tzFH7cJ691t4Jo+EiccskQ/fNwlDfeF6lhjhc/W+DbB2e43hXm6BzYyH
+         7QEbnVvjBT37CX8OhChUYDgSuUCLOdR4WOv12UYjYZZfziWdJI5BcGIDllg1tvbg+d0t
+         RkAV9bbRe8eTYjqXYkYktGgMuBZRaPlx5kudnsLp5YjksCVeSZnWN9j62NNzjjrePnsk
+         Ru/MNncpwHBaO52V9VJRqfF0pnz9hK4wtVGCu2sCEQsj9KDSPTQNWc2+HHxRYsg5vZZh
+         mCfHRbgMZ7cgDYGcgU+Bepfe7zA/sGXJIs1hMz34NVak0A9PLaDNOkGneE0CYnGKc8IQ
+         J1cQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXrQ9vpvFXFV05DCtrJy2gmIXfz32QBueFvnLsLwNBNjM0G17kfouqKcfUsD0c7SKs7LrERwzIGfy6QDjfKBQ+zG/xtRk5z78lYK0e8fw==
+X-Gm-Message-State: AOJu0Yx5sUGq3LRINc/ijQ85VBFw8ur7FUnTNAA0/FOZGk4cs/bzyR2Z
+	gV9bOw9ed8PrS00a+oSkaJQr1NHyMISXZa72G6M7+YnRGWqjo7MCikE3q6sYJbaSPXAd73v/ibM
+	rz82WdG/RPzb35pHelwG+CNR7evJsLO1iSYNNvQ==
+X-Google-Smtp-Source: AGHT+IG3b3VoA49ASMXUxYJgavmQR8JbYzZCSLToVi6Teklw6eT/Mpr/6/Fk5ShHKZ00PpJjOdB9b0Ong6gjAsG5qt8=
+X-Received: by 2002:a05:6122:3c89:b0:4f5:f65:26be with SMTP id
+ 71dfb90a1353d-4fad17773b8mr5087403e0c.0.1723656174948; Wed, 14 Aug 2024
+ 10:22:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/3] dt-bindings: soc: qcom: eud: Update compatible
- strings for eud
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Souradeep Chowdhury
-	<quic_schowdhu@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad
- Dybcio" <konradybcio@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Trilok Soni
-	<quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala
-	<quic_satyap@quicinc.com>,
-        Elson Serrao <quic_eserrao@quicinc.com>
-CC: <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>
-References: <20240807183205.803847-1-quic_molvera@quicinc.com>
- <20240807183205.803847-2-quic_molvera@quicinc.com>
- <dfb1ac84-f011-45ea-9fb1-b8c6bc36cabc@kernel.org>
- <46d0627d-877b-41f3-83f6-4c33b562f460@quicinc.com>
- <0ebb1ca3-722d-422f-9f71-fcc61c3470b0@kernel.org>
-Content-Language: en-US
-From: Melody Olvera <quic_molvera@quicinc.com>
-In-Reply-To: <0ebb1ca3-722d-422f-9f71-fcc61c3470b0@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: jvUOOiqhtBKs0QxiF-nyMuRz6b4avE9p
-X-Proofpoint-ORIG-GUID: jvUOOiqhtBKs0QxiF-nyMuRz6b4avE9p
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-14_13,2024-08-13_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=934
- suspectscore=0 phishscore=0 malwarescore=0 mlxscore=0 spamscore=0
- lowpriorityscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408140118
+References: <20240814-ufs-bug-fix-v1-0-5eb49d5f7571@linaro.org>
+In-Reply-To: <20240814-ufs-bug-fix-v1-0-5eb49d5f7571@linaro.org>
+From: Amit Pundir <amit.pundir@linaro.org>
+Date: Wed, 14 Aug 2024 22:52:19 +0530
+Message-ID: <CAMi1Hd04z56++7cj+w4=fyi2ov42OO6mAnDbkw5CehJw+fJ8ww@mail.gmail.com>
+Subject: Re: [PATCH 0/3] ufs: qcom: Fix probe failure on SM8550 SoC due to
+ broken SDBS field
+To: manivannan.sadhasivam@linaro.org
+Cc: Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>, 
+	Bart Van Assche <bvanassche@acm.org>, 
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
+	"Martin K. Petersen" <martin.petersen@oracle.com>, linux-scsi@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Kyoungrul Kim <k831.kim@samsung.com>
+Content-Type: text/plain; charset="UTF-8"
 
+On Wed, 14 Aug 2024 at 22:45, Manivannan Sadhasivam via B4 Relay
+<devnull+manivannan.sadhasivam.linaro.org@kernel.org> wrote:
+>
+> Hi,
+>
+> This series fixes the probe failure on the Qcom SM8550 SoC due to the broken
+> SDBS field in the host controller capabilities register.
+>
+> Please consider this series for v6.11 as it fixes a regression.
 
+Thank you Mani. This series fixes the UFS regression reported on
+SM8550-HDK with v6.11-rc2.
 
-On 8/13/2024 11:15 PM, Krzysztof Kozlowski wrote:
-> On 13/08/2024 22:03, Melody Olvera wrote:
->>
->> On 8/8/2024 4:00 AM, Krzysztof Kozlowski wrote:
->>> On 07/08/2024 20:32, Melody Olvera wrote:
->>>> The EUD can more accurately be divided into two types; a secure type
->>>> which requires that certain registers be updated via scm call and a
->>>> nonsecure type which must access registers nonsecurely. Thus, change
->>>> the compatible strings to reflect secure and nonsecure eud usage.
->>>>
->>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
->>>> ---
->>>>    Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml | 6 +++---
->>>>    1 file changed, 3 insertions(+), 3 deletions(-)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
->>>> index f2c5ec7e6437..476f92768610 100644
->>>> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
->>>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
->>>> @@ -17,8 +17,8 @@ properties:
->>>>      compatible:
->>>>        items:
->>>>          - enum:
->>>> -          - qcom,sc7280-eud
->>>> -      - const: qcom,eud
->>>> +          - qcom,secure-eud
->>>> +          - qcom,eud
->>> Commit msg did not explain me why DT bindings rules are avoided here and
->>> you drop existing SoC specific compatible.
->>>
->>> This really does not look like having any sense at all, I cannot come up
->>> with logic behind dropping existing users. You could deprecate it, but
->>> then why exactly this device should have exception from generic bindings
->>> rule?
->> Understood. I won't drop this compatible string. Is alright to add the
->> additional compatible as is?
-> You always need SoC specific compatible.
+Tested-by: Amit Pundir <amit.pundir@linaro.org>
 
-Got it. Will change to SoC specific then.
-
-
-Thanks,
-Melody
+>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+> Manivannan Sadhasivam (3):
+>       ufs: core: Rename LSDB to SDBS to reflect the UFSHCI 4.0 spec
+>       ufs: core: Add a quirk for handling broken SDBS field in controller capabilities register
+>       ufs: qcom: Add UFSHCD_QUIRK_BROKEN_SDBS_CAP for SM8550 SoC
+>
+>  drivers/ufs/core/ufshcd.c   | 9 +++++----
+>  drivers/ufs/host/ufs-qcom.c | 6 +++++-
+>  include/ufs/ufshcd.h        | 9 ++++++++-
+>  include/ufs/ufshci.h        | 2 +-
+>  4 files changed, 19 insertions(+), 7 deletions(-)
+> ---
+> base-commit: 7c626ce4bae1ac14f60076d00eafe71af30450ba
+> change-id: 20240814-ufs-bug-fix-4427fb01b860
+>
+> Best regards,
+> --
+> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>
+>
+>
 
