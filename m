@@ -1,149 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-28454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C81A09514D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 08:57:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 02A40951583
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 09:29:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7D86D2837FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 06:57:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9FB1D28A1F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 07:29:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6B9E7FBA2;
-	Wed, 14 Aug 2024 06:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11DB013BC0C;
+	Wed, 14 Aug 2024 07:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PebwvEop"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="etfzT6gL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492EB374F6;
-	Wed, 14 Aug 2024 06:57:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707E613AA27;
+	Wed, 14 Aug 2024 07:28:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723618665; cv=none; b=B3TBmIHb9ZHOaV6FfBM+/deiuZkTagn6QPmrno/fs0GSbePBQ7JKV+JMwsA2Y5XsLXuUHsdtoCOtBm255jVmV9lzbcKtYMwc1F1vv5jQ1oo8cYmBUuEXQXvXPNNqXDIb1Nh3ahP04QCp/PbRUx8L+ShSrrMDYjndKaRcqkkuwQA=
+	t=1723620517; cv=none; b=Fsqg2vztqIoj44ATpAt05dyHcE9t6ggOUAkMrSal/9BZg5CjRr0Yw+zsosH+ZAz7W4wP0Od+CqvRksOC6tP6swOSSs3yffnAIHTuOQ2nDjTDcY74ibAL79VLTybQ8rFi5jCE/SYYjySrC9utAkdveSM3Q81a7HZ1PrJqW9tQNBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723618665; c=relaxed/simple;
-	bh=KbjC+8/jzw6Q9BrnTVAM/narvymSlwbeb8erjHMmhvY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=riFa4AFefGHJ4XBFpQ1RFKwCVzwGf0fyTMhszf1xPX9ZC5nvB1AVov5Lax3RzqLeMty9u4wg0bxsKWxeQnQy3QCYhejbMfyTx1dYuF08nCKj4tJgX0HFOsA0qgCXcbuRVQIMcUHx8/bK6K7uSrugSn6l2F+bwP5BrRFpsdO/Wcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PebwvEop; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723618664; x=1755154664;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=KbjC+8/jzw6Q9BrnTVAM/narvymSlwbeb8erjHMmhvY=;
-  b=PebwvEopFPubn4zZ2ZyanWzhJKsmdkKNJXtilpwlu4ACSuHiFtjvYsZq
-   qWnCtnUTgzr/96kanPKxs9XJI4Ng4JNre27F/XvOp1V8pBKjbqU0CGsoU
-   FOoOsY0l5nM+62LGNXRsBJwC8hOjzgjVg+0mU0JntJ5XsZTsGiwtAcSds
-   1gIz5TzWfw+BWMt7J8Oae4+Ez+gExDMjK/ufG0t7q79KhQBxcnixzxGhx
-   CWp23M0En3Qr8+LikyEikcQXHGdeVDhu0sGC5tLNdQMUua3NWTI371XlQ
-   Eqws7lK951+56hAu8cjB/QxEBYc8XcFvLUwOLb4jk3VTBjCGHAHejJIx2
-   A==;
-X-CSE-ConnectionGUID: XSmA39yeRomrMVTczTwmpw==
-X-CSE-MsgGUID: Xe2AVseNS8KL/yRoITr0RQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11163"; a="25616268"
-X-IronPort-AV: E=Sophos;i="6.09,288,1716274800"; 
-   d="scan'208";a="25616268"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2024 23:57:43 -0700
-X-CSE-ConnectionGUID: IfreNJmLQJ6Fmwazs/raPw==
-X-CSE-MsgGUID: 4eGjZP04TA6E/T/EX9iWgw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,288,1716274800"; 
-   d="scan'208";a="59022609"
-Received: from fdefranc-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.246.65])
-  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2024 23:57:37 -0700
-From: Jani Nikula <jani.nikula@intel.com>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: linux-kernel@vger.kernel.org, intel-xe@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- akinobu.mita@gmail.com, lucas.demarchi@intel.com, rodrigo.vivi@intel.com,
- thomas.hellstrom@linux.intel.com, robdclark@gmail.com,
- quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH 1/3] fault-inject: improve build for
- CONFIG_FAULT_INJECTION=n
-In-Reply-To: <20240813192450.9aff86552e06a48924b7bbc1@linux-foundation.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <20240813121237.2382534-1-jani.nikula@intel.com>
- <20240813192450.9aff86552e06a48924b7bbc1@linux-foundation.org>
-Date: Wed, 14 Aug 2024 09:57:31 +0300
-Message-ID: <87cymbzj50.fsf@intel.com>
+	s=arc-20240116; t=1723620517; c=relaxed/simple;
+	bh=xypQVDQnu8LFNed9fT7ASMCIdcgOxKSt6yGlspSMaq4=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=j4RdlvDUrhTH/w84sGAVUcbJkaUS2kg5dCVT6hnWNwstjd2/kyFyUehOMygXgH9rtAivlRXigyjaJTQUWwbAooNhNLBZqFqKIH4ERS44qFKJEMdiGDEMimPvkgR12sCG1OR3RKz9ZES5bilusEAphlvyxxuYF3eGP36cFkrPmrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=etfzT6gL; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47DNGPY0001557;
+	Wed, 14 Aug 2024 07:28:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=xhfPutqjdHvVO0RTAnZHQ6
+	KJttjnCbMtr1zURQtK7OY=; b=etfzT6gLkDMxzBlOOYKcmSVlfm+ZH74CgqJh+B
+	Bcg1IENS/rkOJULNvltUeH7HN1MUZJ8Lxrc+ZkwQ6/WiEoAXoWIjPafCniWgxvIy
+	T46HtJp6o7Gnaera+P6f+ws8ScPW6wAc18dvnjmHdWPV2oICOMPzfw3NkEUHkWex
+	/Llfx3QnCMJVVoQeBk9EcJAnbE6LB43iR2V2dZq1Os4wUfxCLMwpgH1JsNW+kyHp
+	c8O2aDZRal1XvJJgW4UaNImkblBBsf6wrc+CMwo1nF3UkElF8k7CYipWZy4PgUDh
+	dOjhAu8TBC7q03mCYxdKlMwyPcv+VltlA3ACAe9xe+cwo67w==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 410437ugnc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Aug 2024 07:28:31 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47E7SU0I012879
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Aug 2024 07:28:30 GMT
+Received: from jingyw-gv.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 14 Aug 2024 00:28:27 -0700
+From: Jingyi Wang <quic_jingyw@quicinc.com>
+To: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
+        <quic_tengfan@quicinc.com>
+CC: <quic_jingyw@quicinc.com>
+Subject: [PATCH 0/3] soc: qcom: socinfo: Add QCS8275/QCS8300 SoC ID
+Date: Wed, 14 Aug 2024 15:28:03 +0800
+Message-ID: <20240814072806.4107079-1-quic_jingyw@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: eZEE5nlZV0efuzZnBt9ox19HectoIhgr
+X-Proofpoint-GUID: eZEE5nlZV0efuzZnBt9ox19HectoIhgr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-14_04,2024-08-13_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1011
+ mlxlogscore=556 malwarescore=0 lowpriorityscore=0 phishscore=0 spamscore=0
+ bulkscore=0 suspectscore=0 adultscore=0 mlxscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408140051
 
-On Tue, 13 Aug 2024, Andrew Morton <akpm@linux-foundation.org> wrote:
-> On Tue, 13 Aug 2024 15:12:35 +0300 Jani Nikula <jani.nikula@intel.com> wrote:
->
->> The fault-inject.h users across the kernel need to add a lot of #ifdef
->> CONFIG_FAULT_INJECTION to cater for shortcomings in the header. Make
->> fault-inject.h self-contained for CONFIG_FAULT_INJECTION=n, and add
->> stubs for DECLARE_FAULT_ATTR(), setup_fault_attr(), should_fail_ex(),
->> and should_fail() to allow removal of conditional compilation.
->> 
->> --- a/include/linux/fault-inject.h
->> +++ b/include/linux/fault-inject.h
->>  
->> -#include <linux/types.h>
->> -#include <linux/debugfs.h>
->
-> Removing a nested include exposes all those sites which were
-> erroneously depending upon that nested include.  Here's what I have
-> found so far, there will be more.
+Add support for socinfo for qualcomm QCS8275/QCS8300 SoC. QCS8300
+is an Industrial Safe version SoC while QCS8275 is an Industrial
+Non-Safe version.
 
-Right. I didn't hit them with the configs I tried... though I wonder why
-not, especially lib/fault-inject.c puzzles me.
+Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
+---
+Jingyi Wang (3):
+  dt-bindings: arm: qcom: document QCS8275/QCS8300 SoC and reference
+    board
+  dt-bindings: arm: qcom,ids: add SoC ID for QCS8275/QCS8300
+  soc: qcom: socinfo: add QCS8275/QCS8300 SoC ID
 
-How do you want to proceed? Arguably uncovering and fixing those places
-is good, but that's kind of an unintended consequence here.
-
-BR,
-Jani.
-
-
->
-> --- a/mm/failslab.c~fault-inject-improve-build-for-config_fault_injection=n-fix
-> +++ a/mm/failslab.c
-> @@ -1,6 +1,7 @@
->  // SPDX-License-Identifier: GPL-2.0
->  #include <linux/fault-inject.h>
->  #include <linux/error-injection.h>
-> +#include <linux/debugfs.h>
->  #include <linux/slab.h>
->  #include <linux/mm.h>
->  #include "slab.h"
-> --- a/lib/fault-inject.c~fault-inject-improve-build-for-config_fault_injection=n-fix
-> +++ a/lib/fault-inject.c
-> @@ -2,6 +2,7 @@
->  #include <linux/kernel.h>
->  #include <linux/init.h>
->  #include <linux/random.h>
-> +#include <linux/debugfs.h>
->  #include <linux/sched.h>
->  #include <linux/stat.h>
->  #include <linux/types.h>
-> --- a/kernel/futex/core.c~fault-inject-improve-build-for-config_fault_injection=n-fix
-> +++ a/kernel/futex/core.c
-> @@ -34,6 +34,7 @@
->  #include <linux/compat.h>
->  #include <linux/jhash.h>
->  #include <linux/pagemap.h>
-> +#include <linux/debugfs.h>
->  #include <linux/plist.h>
->  #include <linux/memblock.h>
->  #include <linux/fault-inject.h>
-> _
->
+ Documentation/devicetree/bindings/arm/qcom.yaml | 8 ++++++++
+ drivers/soc/qcom/socinfo.c                      | 2 ++
+ include/dt-bindings/arm/qcom,ids.h              | 2 ++
+ 3 files changed, 12 insertions(+)
 
 -- 
-Jani Nikula, Intel
+base-commit: 320eb81df4f6c1a1814fd02ebb4ba41eb80a3c7e
+2.25.1
+
 
