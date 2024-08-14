@@ -1,124 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-28468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 040E39517B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 11:29:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0BA12951890
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 12:21:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5B838B255D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 09:29:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BBD58286836
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 10:21:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5C8E145A0B;
-	Wed, 14 Aug 2024 09:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89C021AE02E;
+	Wed, 14 Aug 2024 10:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="lGtwgmId"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SYAxHTLF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597D8145327
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 09:28:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0A51AD9FB;
+	Wed, 14 Aug 2024 10:20:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723627697; cv=none; b=sin9dmHfXPGRNQwGTvimhKLVi4XgjnB2h2q0fCwrJ70QrgmrAKhafKfF2Rr7WolfXgzsZ0wYxowIZv75dr9ibCctznHT78xvotttToRwegsdqo33oE/SMhvRlJPscVcSQ0O7kzLpIc2ccwRHj7vrtPp9yVHkfNauX4PS0tR5fP0=
+	t=1723630847; cv=none; b=tXmY5M6INTL3VFnFWgkiFzFL/IOvW7pf0Iac8cE8Ft7qQ7RTHHSUNzKboxhJX4l2xUN5zre0YfbWuqdy6un4psU0E14oVJmCI1Efy/0yUnjdKFo9IZn3GVItOcCwJSIpJtCix8SZaFdMLVfukU4e+mTavS0Z7+8vvJTvihGjDTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723627697; c=relaxed/simple;
-	bh=KdxsryBtMUzqo1RV5EZOLXiAQ9j8G3+iome+hahtQgU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nghMNXc02PWpbNlu1kJTuJa6d8nfAmDbyCq30l70aIsHX18DSvnm77rtogLNr3N7H551LT9nyFoeDdsOjTIti6ffG8GyzKyMdfGiUOaSbu0Hubw50O8zoK2ODv1p0WPJRLxiqraaXqW/S64KvbGrUkexEWg/8gY+X01dnQ7vdP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=lGtwgmId; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-52efc60a6e6so8563434e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 02:28:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1723627694; x=1724232494; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W3P9Jq6VrXIYga285qB+T9g1aGPyBny+fQnSPL8FQbI=;
-        b=lGtwgmId0QJyB3jd826bOukdBQqZwK2/zvtgGWvs4TU+VZHPSYalQt0bTMWZlcbciy
-         u9x3zdC/t4nvb/Dk0ZYd78kgwWmByFlNR+HDpTEiod+XwE/k6ZHeZ5PDY5Axgkv6b3uu
-         YQpOku44Hpm6F6kdnAx5zfFAX5JlagUN3lvzjoiwTYEeV941s6w/iFPqWjphKbJzcm6u
-         A4BT5+MWiP+VtYOFbiq+Mv89NcOmzCJ93eZeZ2U7lRgpYPvR4ZVDW5DgUglaou9ZI2F2
-         ssBMYpAh4XnqMcyTsVVxS0QusB5Vn+30hxBnWowr4YbKYdTVzEJIu45Og3lOsZjBGxBa
-         jMEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723627694; x=1724232494;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=W3P9Jq6VrXIYga285qB+T9g1aGPyBny+fQnSPL8FQbI=;
-        b=bMc2IUb1RuEEE49IbKj3V3SvT9Ls9EYF6B2e0eyV1KAg1XFHVL2L5+3CfJwe5+oKZ0
-         4ngI0bD8Cjppxix1Nd/5eynEVS3BWIRjGGdnrAXLDT/kVWLKC0y7TwuV4Zz6a4qp+P/c
-         xcm8tR6HeiY5gzHuEpzPpR794SitkNIVmz+iyDvb322LyGmwbWLK2LEqbuy3nHUyvefj
-         65o9zz9tLOfcDmmeFPR/NIBla2QJDJxXeBTeiOnAjc9qwzZCyAhTx5HloblgJ54Zyk8H
-         lmzDTtiWUXiDOjwnEMko4EM+FbYFtojGLbSHvNsxQudKOdi4IJbT+SDBv6JY7ZgMjgO7
-         n1kA==
-X-Gm-Message-State: AOJu0YwtW/E+I0xJx9tDwOpoqCQFPwy9APTEqoc6FYy3S7GenFajtKOe
-	NZ7gEBgrTNVuEdsA0XBjJgOW9W3fe0I6xGy/j+2axBHP4Gwcvz0BVcsmUwGnKQKbOV851yIsNsM
-	LW1chrlDF/+GzluP37ATYj0+1B8zo2hPWyv5LAQ==
-X-Google-Smtp-Source: AGHT+IFe05bN9bAq9xy+58l7ncXMDFx1z/bJrarVfwaEv3r5G9ew4J8l/Ct5njAjkzJrtDklkvisuQOYqwkGO+3QFcI=
-X-Received: by 2002:a05:6512:3da8:b0:52c:dc25:d706 with SMTP id
- 2adb3069b0e04-532edbbd3bemr1391778e87.52.1723627694266; Wed, 14 Aug 2024
- 02:28:14 -0700 (PDT)
+	s=arc-20240116; t=1723630847; c=relaxed/simple;
+	bh=PCipO6aO89n17fEmsijtEDXMLHYcvzFyvE8dyg23yXA=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=F5A0EdPdmqPwTbFASn2E/eSfhdmMBG5NQu7D7CMbE+44lfXBW1W/OabqHwtd5UsK4lhuXH1tlL/pRww/T0O9R/Ah5fG9ElmMEUNuNWSMRLhDeLzNl3xZex2skg5emAj4Dcfvl9s+CSIQ+74To5t5ryv6EJJ5nbX2d6gVQt9fsLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SYAxHTLF; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47DNFjNR027666;
+	Wed, 14 Aug 2024 10:20:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=eKK5V0RLxyU0dvvI/xvmLQ
+	qda/gVganrDWsGYytc0CI=; b=SYAxHTLFzYFcc4Qxk6yxAREDts6opRAqrxKx+l
+	xSKTZkbnwi0DNcpnv7VHXbvL9VAcMCb/b7Bc5NwDu8dSWMue4LADjIc10cWWYbx7
+	3apVcnn2GcvM2y1xynwGtjJIZDHc89XJpu4TbxMQYQFrkxWefRJDYrD/zBeyg5DA
+	a4hdXogw+E0IKa6b0fUtkhZ0OYXi4fvGPLud9soif1VdaHU9et5y1WoK1J9ByzC+
+	Fk4SxdCe9Y4+Ck8B7wlFIHjwQeNwtkWJ6bvPHjuLh4JsQQmZuY+9k7FshxWDCubz
+	9fsb9oub/MaL/iFI6T4D9faw0Amp88W/WCz4F3lcXL3C6yDQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x3etaq9k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Aug 2024 10:20:39 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47EAKbQO012768
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Aug 2024 10:20:37 GMT
+Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 14 Aug 2024 03:20:33 -0700
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>,
+        "Imran
+ Shaik" <quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Satya Priya Kakitapalli
+	<quic_skakitap@quicinc.com>,
+        kernel test robot <lkp@intel.com>,
+        Dan Carpenter
+	<dan.carpenter@linaro.org>,
+        Vladimir Zapolskiy
+	<vladimir.zapolskiy@linaro.org>
+Subject: [PATCH V2] clk: qcom: clk-alpha-pll: Simplify the zonda_pll_adjust_l_val()
+Date: Wed, 14 Aug 2024 15:50:05 +0530
+Message-ID: <20240814102005.33493-1-quic_skakitap@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240731-tzmem-efivars-fix-v2-0-f0e84071ec07@linaro.org>
-In-Reply-To: <20240731-tzmem-efivars-fix-v2-0-f0e84071ec07@linaro.org>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 14 Aug 2024 11:28:03 +0200
-Message-ID: <CAMRc=MeS++NAyVn3+9mGpiUypMcX24EyonQPD9NV7tdTf7Ytng@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] firmware: qcom: fix an efivars regression in qseecom
-To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Elliot Berman <quic_eberman@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>, 
-	Amirreza Zarrabi <quic_azarrabi@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Johan Hovold <johan+linaro@kernel.org>, 
-	Maximilian Luz <luzmaximilian@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: q7uaszz1a1vs4v7urqS4Cx1RFmKTGskL
+X-Proofpoint-ORIG-GUID: q7uaszz1a1vs4v7urqS4Cx1RFmKTGskL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-14_07,2024-08-13_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ suspectscore=0 impostorscore=0 phishscore=0 clxscore=1011 mlxlogscore=999
+ lowpriorityscore=0 priorityscore=1501 spamscore=0 adultscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408140072
 
-On Wed, Jul 31, 2024 at 9:45=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl>=
- wrote:
->
-> The first patch address the regression with efivars using the qseecom
-> driver reported by Johan Hovold. The second patch removed dead code that
-> was left over during the conversion of the qseecom driver to using
-> tzmeme.
->
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
-> Changes in v2:
-> - Update the kerneldoc for qcom_tzmem_to_phys()
-> - Link to v1: https://lore.kernel.org/r/20240730-tzmem-efivars-fix-v1-0-b=
-b78884810b5@linaro.org
->
-> ---
-> Bartosz Golaszewski (2):
->       firmware: qcom: tzmem: fix virtual-to-physical address conversion
->       firmware: qcom: qseecom: remove unused functions
->
->  drivers/firmware/qcom/qcom_tzmem.c         | 32 +++++++++++++--------
->  include/linux/firmware/qcom/qcom_qseecom.h | 45 ------------------------=
-------
->  2 files changed, 21 insertions(+), 56 deletions(-)
-> ---
-> base-commit: 931a3b3bccc96e7708c82b30b2b5fa82dfd04890
-> change-id: 20240730-tzmem-efivars-fix-d9635d39cbf2
->
-> Best regards,
-> --
-> Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->
+In zonda_pll_adjust_l_val() replace the divide operator with comparison
+operator since comparisons are faster than divisions. Also, simplify the
+logic and remove the unnecessary 'quotient' local variable.
 
-It's been two weeks. Can this be picked up into v6.11?
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202408110724.8pqbpDiD-lkp@intel.com/
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+---
+Changes in V2:
+ - Simplify the logic and remove unnecessary quotient variable.
+ - Remove Fixes tag as this is just a simplification.
 
-Bart
+ drivers/clk/qcom/clk-alpha-pll.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index 2f620ccb41cb..4ce3347beb39 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -2120,14 +2120,11 @@ static void clk_zonda_pll_disable(struct clk_hw *hw)
+ 
+ static void zonda_pll_adjust_l_val(unsigned long rate, unsigned long prate, u32 *l)
+ {
+-	u64 remainder, quotient;
++	u64 remainder;
+ 
+-	quotient = rate;
+-	remainder = do_div(quotient, prate);
+-	*l = quotient;
++	remainder = do_div(rate, prate);
+ 
+-	if ((remainder * 2) / prate)
+-		*l = *l + 1;
++	*l = rate + (u32)(remainder * 2 >= prate);
+ }
+ 
+ static int clk_zonda_pll_set_rate(struct clk_hw *hw, unsigned long rate,
+-- 
+2.25.1
+
 
