@@ -1,126 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-28516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A041951E7D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 17:24:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1857951EEA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 17:45:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 053E31F222CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 15:24:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2E98A1F23B27
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 15:45:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2A651B3F26;
-	Wed, 14 Aug 2024 15:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 251891B86CC;
+	Wed, 14 Aug 2024 15:45:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vNAzQKQk"
+	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="KjfGOq4W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644691B3F0E;
-	Wed, 14 Aug 2024 15:24:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FE81B86C5;
+	Wed, 14 Aug 2024 15:45:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.132.182.106
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723649087; cv=none; b=GdEiTdWGeDY+aaxpluqQ+htDznUv71tLX3jRr98i19sicUq1A2b19khyze7iy8Aik4GpU8ZKRuIqJEf4k+wG9sVjZ/q6vc9hCR25d28ytwOQwC2Dfh+qssty2xabZIA37LW9lVV7BEFQw5WEALsmz1QEuCHJ3NKnxx/zr4ZkiSI=
+	t=1723650319; cv=none; b=JUI2DrEmxKKerxfHd0IACJ8cDoffuIsVY7SlGoi2kCvnVZ/cvK5euLOVxJR6bEgrJ4LoZH3AAV7v2E5wc4I3kakd7nag7b0mEHdtq4gKQPaS9lqMRx3eJvcOdUez5mEDGDgVDpqDU88Lb9qJrXhnuSc385uRIIcyF+RbCg2TeRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723649087; c=relaxed/simple;
-	bh=Cmpt700VNNEqH7CQ15CAKefFW0scRjyJ7Wr9SRMpBbA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jTq661fTO/241ZSTGiZW9F8c85Gp+7i1gKom4LJ3eHhkurCGeBWRMf6elQvWe5GPVpBziJtIQPB3ziHjyB+gU3KXlakL3oqigmt323ywGRtkQ1kUPaEaR1psAyWZvBV6uOSirbOuM5lh/2z0+GkWQ1Moyu/kTBuSGWbpU4zuz/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vNAzQKQk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89860C116B1;
-	Wed, 14 Aug 2024 15:24:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723649086;
-	bh=Cmpt700VNNEqH7CQ15CAKefFW0scRjyJ7Wr9SRMpBbA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=vNAzQKQkdZLIgzm2HlvpMSz8MXQg3GWw1HaAw+E/7XJwURoJFV5EDgxtE4zVYMRYD
-	 OkdqshM180yG2Qnsn7hJuPVF0+sT75G9z8K+AgosJHRphvA3Q8DPkJ3UeJ9P/XykRQ
-	 kqkHFYF5zPFNB143wjpa2bR5ONRC2q0x/AnGjcXAxH8kB/xUOoiwBNntcGv0K0QY8/
-	 +V2XHCTJsuGXVNNe6mvu9OpJwnQsCqQMdoknilffLb4mqxO6Cqy8gxQp3JJXrbn5ww
-	 cvAS7BR+fqb+HOkjSxFERtgIEBt+6ZxFpGAJkcnXXe+MgEglVRGS8MvY/lDXj6V/36
-	 m7aDYVL2d7ybg==
-Date: Wed, 14 Aug 2024 08:29:03 -0700
-From: Bjorn Andersson <andersson@kernel.org>
-To: Marc Gonzalez <mgonzalez@freebox.fr>
-Cc: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, iommu@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	Konrad Dybcio <konradybcio@kernel.org>, Arnaud Vrac <avrac@freebox.fr>, 
-	Pierre-Hugues Husson <phhusson@freebox.fr>, Marijn Suijten <marijn.suijten@somainline.org>
-Subject: Re: [PATCH 2/2] iommu/arm-smmu-qcom: hide last context bank from
- linux
-Message-ID: <a7j3lz62bp6pceuq472muioinjzfgw2mec5pv256zfr7yjsn3p@ok6nfsbsabig>
-References: <20240814-smmu-v1-0-3d6c27027d5b@freebox.fr>
- <20240814-smmu-v1-2-3d6c27027d5b@freebox.fr>
+	s=arc-20240116; t=1723650319; c=relaxed/simple;
+	bh=VOK51rQInaRB+8P56heJmMpjr/oOkpHVbtHNs07n7Vo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=HKpxbEVjr/DHWQOEDlkOlgeEVOsqDRF7FERc4by2H1Jz1MzOs2jcBNNyDc8GVQAlNiOkpK1ULlwbFMkq9JeeIgoisC9753mfb7g3H605PDJlEHgZx7IkxhQZ/8qWbEFDVuWzqVeZkuJPwRerTEmMJ316m46ArwsvgQ5aLoW4fSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=KjfGOq4W; arc=none smtp.client-ip=185.132.182.106
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
+Received: from pps.filterd (m0241204.ppops.net [127.0.0.1])
+	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47EDPrk8020431;
+	Wed, 14 Aug 2024 17:44:53 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=selector1; bh=
+	qjfOVlwnl6c9puil2K/fu2bDwoc6uOtbnIO/ocPkwzo=; b=KjfGOq4WatLlU4BD
+	H+YEdfM++/JpfcC3zpVH/esTjZ78ngfSRbdGRbFMCSIc9DAgv4F0T5hcJst5ctiA
+	/j34KpULjvu9DnZ7VcjOkakNGvLAk0AHN+yQplXWW4Axe2HGSUoahj+JxJpAwess
+	juCI4NYgGyABtXVE9zH4oXC1TsMIuPsgRHeyWr6SO9qdNqsYeJg2zjhhtk5sDLQJ
+	PKTS4s4ZquGopr68j+urrc25DX79yC/tJAUZacNDOooDPVVPeuTMqAXgrq2jitNR
+	HVIkZN3SyFPnIFXaFeNEzZbNcUByyvNHv2JC8fE/2cHQHBwSFF2OcEyPrM6MKVIj
+	dimr7g==
+Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
+	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 40x18mqpxb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Aug 2024 17:44:53 +0200 (MEST)
+Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
+	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id E719340045;
+	Wed, 14 Aug 2024 17:44:47 +0200 (CEST)
+Received: from Webmail-eu.st.com (shfdag1node1.st.com [10.75.129.69])
+	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id 5423627E282;
+	Wed, 14 Aug 2024 17:43:55 +0200 (CEST)
+Received: from [10.48.87.62] (10.48.87.62) by SHFDAG1NODE1.st.com
+ (10.75.129.69) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.37; Wed, 14 Aug
+ 2024 17:43:54 +0200
+Message-ID: <1ed80a6d-3453-43bc-a008-b4ad21d6d639@foss.st.com>
+Date: Wed, 14 Aug 2024 17:43:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240814-smmu-v1-2-3d6c27027d5b@freebox.fr>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/11] usb: dwc3: st: use scoped device node handling to
+ simplify error paths
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Thinh Nguyen
+	<Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam
+	<festevam@gmail.com>,
+        Michal Simek <michal.simek@amd.com>
+CC: <linux-arm-kernel@lists.infradead.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <imx@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20240814-b4-cleanup-h-of-node-put-usb-v1-0-95481b9682bc@linaro.org>
+ <20240814-b4-cleanup-h-of-node-put-usb-v1-1-95481b9682bc@linaro.org>
+Content-Language: en-US
+From: Patrice CHOTARD <patrice.chotard@foss.st.com>
+In-Reply-To: <20240814-b4-cleanup-h-of-node-put-usb-v1-1-95481b9682bc@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SHFCAS1NODE1.st.com (10.75.129.72) To SHFDAG1NODE1.st.com
+ (10.75.129.69)
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-14_11,2024-08-13_02,2024-05-17_01
 
-On Wed, Aug 14, 2024 at 03:59:56PM GMT, Marc Gonzalez wrote:
-> On qcom msm8998, writing to the last context bank of lpass_q6_smmu
-> (base address 0x05100000) produces a system freeze & reboot.
-> 
-> Specifically, here:
-> 
-> 	qsmmu->bypass_cbndx = smmu->num_context_banks - 1;
-> 	arm_smmu_cb_write(smmu, qsmmu->bypass_cbndx, ARM_SMMU_CB_SCTLR, 0);
-> 
-> and here:
-> 
-> 	arm_smmu_write_context_bank(smmu, i);
-> 	arm_smmu_cb_write(smmu, i, ARM_SMMU_CB_FSR, ARM_SMMU_CB_FSR_FAULT);
-> 
-> It is likely that FW reserves the last context bank for its own use,
-> thus a simple work-around would be: DON'T USE IT in Linux.
-> 
-> If we decrease the number of context banks, last one will be "hidden".
-> 
 
-I asked you to write something like "the hardware/hypervisor reports 12
-context banks for the lpass smmu on msm8998, but only 11 are
-accessible...override the number of context banks"
 
-It also seems, as the different SMMUs in this platform behave
-differently it might be worth giving them further specific compatibles,
-in which case we could just check if it's the qcom,msm8998-lpass-smmu,
-instead of inventing a property for this quirk.
-
-Regards,
-Bjorn
-
-> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+On 8/14/24 12:35, Krzysztof Kozlowski wrote:
+> Obtain the device node reference with scoped/cleanup.h to reduce error
+> handling and make the code a bit simpler.  Scoped/cleanup.h coding style
+> expects variable declaration with initialization, so the
+> of_get_compatible_child() call has to be moved earlier, before any goto
+> jumps happen.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
 > ---
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 5 +++++
->  1 file changed, 5 insertions(+)
 > 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 7e65189ca7b8c..e2e1fd9e2452b 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -282,6 +282,11 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
->  	u32 smr;
->  	int i;
+> This depends on my earlier fix:
+> https://lore.kernel.org/all/20240814093957.37940-2-krzysztof.kozlowski@linaro.org/
+> ---
+>  drivers/usb/dwc3/dwc3-st.c | 25 +++++++++++--------------
+>  1 file changed, 11 insertions(+), 14 deletions(-)
+> 
+> diff --git a/drivers/usb/dwc3/dwc3-st.c b/drivers/usb/dwc3/dwc3-st.c
+> index c8c7cd0c1796..98f43d7082d7 100644
+> --- a/drivers/usb/dwc3/dwc3-st.c
+> +++ b/drivers/usb/dwc3/dwc3-st.c
+> @@ -14,6 +14,7 @@
+>   * Inspired by dwc3-omap.c and dwc3-exynos.c.
+>   */
 >  
-> +	if (of_property_read_bool(smmu->dev->of_node, "qcom,last-ctx-bank-reserved")) {
-> +		dev_warn(smmu->dev, "hiding last ctx bank from linux");
-> +		--smmu->num_context_banks;
+> +#include <linux/cleanup.h>
+>  #include <linux/delay.h>
+>  #include <linux/interrupt.h>
+>  #include <linux/io.h>
+> @@ -197,7 +198,7 @@ static int st_dwc3_probe(struct platform_device *pdev)
+>  	struct st_dwc3 *dwc3_data;
+>  	struct resource *res;
+>  	struct device *dev = &pdev->dev;
+> -	struct device_node *node = dev->of_node, *child;
+> +	struct device_node *node = dev->of_node;
+>  	struct platform_device *child_pdev;
+>  	struct regmap *regmap;
+>  	int ret;
+> @@ -227,6 +228,13 @@ static int st_dwc3_probe(struct platform_device *pdev)
+>  	dev_vdbg(&pdev->dev, "glue-logic addr 0x%pK, syscfg-reg offset 0x%x\n",
+>  		 dwc3_data->glue_base, dwc3_data->syscfg_reg_off);
+>  
+> +	struct device_node *child __free(device_node) = of_get_compatible_child(node,
+> +										"snps,dwc3");
+> +	if (!child) {
+> +		dev_err(&pdev->dev, "failed to find dwc3 core node\n");
+> +		return -ENODEV;
 > +	}
 > +
+>  	dwc3_data->rstc_pwrdn =
+>  		devm_reset_control_get_exclusive(dev, "powerdown");
+>  	if (IS_ERR(dwc3_data->rstc_pwrdn)) {
+> @@ -248,18 +256,11 @@ static int st_dwc3_probe(struct platform_device *pdev)
+>  	/* Manage SoftReset */
+>  	reset_control_deassert(dwc3_data->rstc_rst);
+>  
+> -	child = of_get_compatible_child(node, "snps,dwc3");
+> -	if (!child) {
+> -		dev_err(&pdev->dev, "failed to find dwc3 core node\n");
+> -		ret = -ENODEV;
+> -		goto err_node_put;
+> -	}
+> -
+>  	/* Allocate and initialize the core */
+>  	ret = of_platform_populate(node, NULL, NULL, dev);
+>  	if (ret) {
+>  		dev_err(dev, "failed to add dwc3 core\n");
+> -		goto err_node_put;
+> +		goto undo_softreset;
+>  	}
+>  
+>  	child_pdev = of_find_device_by_node(child);
+> @@ -270,7 +271,6 @@ static int st_dwc3_probe(struct platform_device *pdev)
+>  	}
+>  
+>  	dwc3_data->dr_mode = usb_get_dr_mode(&child_pdev->dev);
+> -	of_node_put(child);
+>  	platform_device_put(child_pdev);
+>  
 >  	/*
->  	 * Some platforms support more than the Arm SMMU architected maximum of
->  	 * 128 stream matching groups. For unknown reasons, the additional
+> @@ -282,8 +282,7 @@ static int st_dwc3_probe(struct platform_device *pdev)
+>  	ret = st_dwc3_drd_init(dwc3_data);
+>  	if (ret) {
+>  		dev_err(dev, "drd initialisation failed\n");
+> -		of_platform_depopulate(dev);
+> -		goto undo_softreset;
+> +		goto depopulate;
+>  	}
+>  
+>  	/* ST glue logic init */
+> @@ -294,8 +293,6 @@ static int st_dwc3_probe(struct platform_device *pdev)
+>  
+>  depopulate:
+>  	of_platform_depopulate(dev);
+> -err_node_put:
+> -	of_node_put(child);
+>  undo_softreset:
+>  	reset_control_assert(dwc3_data->rstc_rst);
+>  undo_powerdown:
 > 
-> -- 
-> 2.34.1
-> 
+
+
+Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
+
+Thanks
+Patrice
 
