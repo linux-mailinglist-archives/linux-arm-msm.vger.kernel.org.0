@@ -1,63 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-28484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7285B9519AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 13:12:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C93C69519B5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 13:14:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E8B011F2410E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 11:12:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4AB401F23EFE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 11:14:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4A971AE86A;
-	Wed, 14 Aug 2024 11:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC16D1AE875;
+	Wed, 14 Aug 2024 11:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Kn/9MsqP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B9YTtQPm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135B01AE851;
-	Wed, 14 Aug 2024 11:12:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6EC11442F7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 11:14:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723633943; cv=none; b=pfEIIf5hwcD12cOIgpBIiPi6Y7FUBtcdoR9KNImzrBJ0k1V1K8ix0g1jNkklhoDOa+DLrFQe4b1oQChiRnWGfWnT7uiPPvrhLNIUVAU7Xxc8Sy3WOzG0VB54OYdGQJrL/cSPSeV0JA3SaguxMv+BExD+Vf6+sexFXsiFKSPSa38=
+	t=1723634048; cv=none; b=ByacXeqqUYJtgz5Moi++tQj/uO494P+7Qk7CybnURUUInsUYkt3oaS/fb+M2kZD8naLJByYxn+yPPBFUABvLpcdwpcl6SKBqmQL/x2dEyYBX36haCj4F+4iR6Q3Y3+qcODnzrkDVEcR/6FKWmeY6zixxHtj5mcFaR+kpBUYrA5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723633943; c=relaxed/simple;
-	bh=w8FGOf6XoIorTPA0onCSDNz0YqeAb5+N618grpFo2H4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=URPCm27k2A+oqtbUxzaOpcgQMcXtva0ORC2BTx6aMCM39v3Wd0hXB3kOa7OGEHgZ++nr/6marocjMywDJHqkYCMAA0wxtBPNRw8b6zAcHGp+MWaCDPf9w+78qPq/BsbJqN1Aqd5BjHTyP/yIBo4Xkdt7AffOsWUxeFEyNr+KpvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Kn/9MsqP; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47EB5k2J031804;
-	Wed, 14 Aug 2024 11:12:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	UtlVxWbaUSDeOBQ6P4YT+7imLbtS4jYLDQtPJRL0bEs=; b=Kn/9MsqPZAq9S0Cc
-	LImMK64clfApyJtqyMp7/lva+N6IMCx/+EFquo+iVNH0Hhph396fm9Ye1GeIuf82
-	LOh958o1z3vzTelnRV1PBYD1tQ3xI1tBlLrVXInYZ29qX+awIPJ+fr7gJD2hajao
-	jE5TCsxQeB0Z0xCwMhPILxAKWfWYDt2+gi0UHIfxpqkDp0JnquDNmAz3Xg4TAMHo
-	ZCq0wOE5U+4P3dxPjbrggk4DTjyxxS5DRE1yJxMLi27bZLUs1SFzjFW0S5FmF+pS
-	/uGeIdgna+F0f7n64A69G/nOxZoXDa7Jyf0xSwKrCPcXh7+NsU3IPeQSsx50kCup
-	mgdAYQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41082wk08n-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Aug 2024 11:12:19 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47EBCIcp005745
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Aug 2024 11:12:18 GMT
-Received: from [10.218.38.222] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 14 Aug
- 2024 04:12:15 -0700
-Message-ID: <48651728-a4bb-4bef-81d7-6100a6c2a1fe@quicinc.com>
-Date: Wed, 14 Aug 2024 16:42:12 +0530
+	s=arc-20240116; t=1723634048; c=relaxed/simple;
+	bh=RggHuIZDd6WVDBAucwtTmOmivCbDEe9AtLSsK8mXyUc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fnnf0fapQev/mN/ofDwNBkVAdHRA0MY1l3svL8nFyNAH1EU/GGFi4yL0SS3bLZS3E4GtJsiaLvzn6duhvC/ATOeNVqY2u6jbQ/OG4wWuqeNXWliueXJM9PxMCYBYaZ4VGZA0+XSkJdzmqYF93KgApm/DEuq64fn1UuAt7dBFZkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=B9YTtQPm; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2f166ec1265so12167651fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 04:14:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1723634044; x=1724238844; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xrVgbFZMbbfKJ3/ZbHNAKbZ6yoyuBwhW77d/MH2ONkA=;
+        b=B9YTtQPmSBBgEY1MpFl/MQPvbrBNkmaNeMs975XdHW9K++VWWyLaEjwRVMAiIxc+3b
+         cs55lbBzZRfKI5fFaiIA4WkNO2duS2PHdnZbTklL/StTZlj6dc/E25NzdmqHPaZyv0ci
+         xDnKmnkTPblh7vYJA7ZxyA8Qv1sFrVlQMQtpNRBcBRjV14FOv+YRxhyy0C9sVcaUKrIV
+         LI1B2uuX86tNjlu37SCKd3asqTzKAs2xuPSavvuBrAS0G/zzXyOuswgAD0uJNI+ZNbv0
+         +Ey6vOqEF6Pef7CsqbI8BO+mA2OF5F2wcxKCluCNKVOeDhMIV2/peyv6tYuhYapgs/5P
+         D1Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723634044; x=1724238844;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xrVgbFZMbbfKJ3/ZbHNAKbZ6yoyuBwhW77d/MH2ONkA=;
+        b=BWk4mTbmZo2BbVKyWN9+fBwAedmSVLIBxR6sN6rsyY6i7+MmuP9IinnnKCGad3A5Aj
+         Mb9e5AVrzvgiy/ET7FNAiEVmA879mXzvscqGzDMfomGEFiEo6xFOVuuDqWEhRh5KZOM3
+         6hmCZnlvKub/33N/RElp0hEH8pU01sWsPyUZ6+lwkRTC4I16ZkvoxyIxAE6sMI25x7fu
+         uC+Y4vHDStWRNZ/D8SZ6tPnBDLDbFBD2v2Ru515G++Mq+N7xnI7sdgRP0vv6Sz+x0/PD
+         inLMlgZ0kxmn3qfmEHfqV9uogPLTRe87R5dwyMz7OOvjoBNV/oBk0SP0wjI9hjUXMHD5
+         DXEg==
+X-Gm-Message-State: AOJu0YwoNK3lFmPV4W2xjKUKy5BVSLWRdHe3c56VgFxLmRWSRW6UkxDs
+	9lEMN7i0dyg4qnj+Grqhuab1KhXSreLbsf/qPZnYg8Icj5DS44WUmDSGLNjYmTI=
+X-Google-Smtp-Source: AGHT+IHvZeevGy2+QhS5oWsfxgztW5ACZdopfU6Qa4NOc+xHWQgZxgZAVWDSyZzyGhH9WG0gjbDUSA==
+X-Received: by 2002:a05:6512:280c:b0:52e:ccf5:7c40 with SMTP id 2adb3069b0e04-532edbd06b3mr890263e87.9.1723634043404;
+        Wed, 14 Aug 2024 04:14:03 -0700 (PDT)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53200f42475sm1239152e87.283.2024.08.14.04.14.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Aug 2024 04:14:03 -0700 (PDT)
+Message-ID: <4b745c1a-33d9-472a-97af-153a2a7c8721@linaro.org>
+Date: Wed, 14 Aug 2024 14:13:49 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,131 +75,528 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] usb: dwc3: qcom: fix NULL pointer dereference on
- dwc3_qcom_read_usb2_speed
-To: Prashanth K <quic_prashk@quicinc.com>,
-        Thinh Nguyen
-	<Thinh.Nguyen@synopsys.com>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "stable@vger.kernel.org" <stable@vger.kernel.org>
-References: <20240813111847.31062-1-quic_faisalh@quicinc.com>
- <20240814001739.ml6czxo6ok67pihz@synopsys.com>
- <ec3a918a-df09-9245-318e-422f517ccf68@quicinc.com>
+Subject: Re: [PATCH 13/13] media: qcom: camss: Add support for VFE hardware
+ version Titan 780
+To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-14-quic_depengs@quicinc.com>
 Content-Language: en-US
-From: Faisal Hassan <quic_faisalh@quicinc.com>
-In-Reply-To: <ec3a918a-df09-9245-318e-422f517ccf68@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: F7p3xsx2rAk5bAra8m9sgzB7zj2kD7Fm
-X-Proofpoint-GUID: F7p3xsx2rAk5bAra8m9sgzB7zj2kD7Fm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-14_08,2024-08-13_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 bulkscore=0 mlxlogscore=961 clxscore=1015 mlxscore=0
- spamscore=0 priorityscore=1501 suspectscore=0 phishscore=0 adultscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408140078
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20240812144131.369378-14-quic_depengs@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi Depeng,
 
+please find a few review comments, all asked changes are non-functional.
 
-On 8/14/2024 11:05 AM, Prashanth K wrote:
+On 8/12/24 17:41, Depeng Shao wrote:
+> Add support for VFE found on SM8550 (Titan 780). This implementation is
+> based on the titan 480 implementation. It supports the normal and lite
+> VFE.
 > 
+> Co-developed-by: Yongsheng Li <quic_yon@quicinc.com>
+> Signed-off-by: Yongsheng Li <quic_yon@quicinc.com>
+> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+> ---
+>   drivers/media/platform/qcom/camss/Makefile    |   1 +
+>   .../media/platform/qcom/camss/camss-vfe-780.c | 148 ++++++++++++++++++
+>   drivers/media/platform/qcom/camss/camss-vfe.c |  33 ++--
+>   drivers/media/platform/qcom/camss/camss-vfe.h |   1 +
+>   drivers/media/platform/qcom/camss/camss.c     | 132 ++++++++++++++++
+>   drivers/media/platform/qcom/camss/camss.h     |   2 +
+>   6 files changed, 304 insertions(+), 13 deletions(-)
+>   create mode 100644 drivers/media/platform/qcom/camss/camss-vfe-780.c
 > 
-> On 14-08-24 05:47 am, Thinh Nguyen wrote:
->> On Tue, Aug 13, 2024, Faisal Hassan wrote:
->>> Null pointer dereference occurs when accessing 'hcd' to detect speed
->>> from dwc3_qcom_suspend after the xhci-hcd is unbound.
->>> To avoid this issue, ensure to check for NULL in
->>> dwc3_qcom_read_usb2_speed.
->>>
->>> echo xhci-hcd.0.auto > /sys/bus/platform/drivers/xhci-hcd/unbind
->>>    xhci_plat_remove() -> usb_put_hcd() -> hcd_release() -> kfree(hcd)
->>>
->>>    Unable to handle kernel NULL pointer dereference at virtual address
->>>    0000000000000060
->>>    Call trace:
->>>     dwc3_qcom_suspend.part.0+0x17c/0x2d0 [dwc3_qcom]
->>>     dwc3_qcom_runtime_suspend+0x2c/0x40 [dwc3_qcom]
->>>     pm_generic_runtime_suspend+0x30/0x44
->>>     __rpm_callback+0x4c/0x190
->>>     rpm_callback+0x6c/0x80
->>>     rpm_suspend+0x10c/0x620
->>>     pm_runtime_work+0xc8/0xe0
->>>     process_one_work+0x1e4/0x4f4
->>>     worker_thread+0x64/0x43c
->>>     kthread+0xec/0x100
->>>     ret_from_fork+0x10/0x20
->>>
->>> Fixes: c5f14abeb52b ("usb: dwc3: qcom: fix peripheral and OTG suspend")
->>> Cc: stable@vger.kernel.org
->>> Signed-off-by: Faisal Hassan <quic_faisalh@quicinc.com>
->>> ---
->>>   drivers/usb/dwc3/dwc3-qcom.c | 4 +++-
->>>   1 file changed, 3 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
->>> index 88fb6706a18d..0c7846478655 100644
->>> --- a/drivers/usb/dwc3/dwc3-qcom.c
->>> +++ b/drivers/usb/dwc3/dwc3-qcom.c
->>> @@ -319,13 +319,15 @@ static bool dwc3_qcom_is_host(struct dwc3_qcom
->>> *qcom)
->>>   static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct
->>> dwc3_qcom *qcom, int port_index)
->>>   {
->>>       struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
->>
->> What if dwc is not available?
-> 
-> Thats unlikely, dwc3_qcom_suspend() -> dwc3_qcom_is_host() checks for
-> dwc, calls dwc3_qcom_read_usb2_speed() only if dwc is valid. But adding
-> an extra check shouldn't cause harm.
+> diff --git a/drivers/media/platform/qcom/camss/Makefile b/drivers/media/platform/qcom/camss/Makefile
+> index c336e4c1a399..a83b7a8dcef7 100644
+> --- a/drivers/media/platform/qcom/camss/Makefile
+> +++ b/drivers/media/platform/qcom/camss/Makefile
+> @@ -17,6 +17,7 @@ qcom-camss-objs += \
+>   		camss-vfe-4-8.o \
+>   		camss-vfe-17x.o \
+>   		camss-vfe-480.o \
+> +		camss-vfe-780.o \
+>   		camss-vfe-gen1.o \
+>   		camss-vfe.o \
+>   		camss-video.o \
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-780.c b/drivers/media/platform/qcom/camss/camss-vfe-780.c
+> new file mode 100644
+> index 000000000000..e1c4d25cdc40
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-780.c
+> @@ -0,0 +1,148 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * camss-vfe-780.c
 
-Thanks Thinh and Prashanth for reviewing the patch.
-Since the caller is validating 'dwc', I think there is no need to recheck.
+I understand that a file name copied from a previous file and updated,
+let's just remove it, it serves no purpose, but adds this unnecessary
+work on every next copy.
 
->>
->>> -    struct usb_device *udev;
->>> +    struct usb_device __maybe_unused *udev;
->>
->> This is odd.... Is there a scenario where you don't want to set
->> CONFIG_USB if dwc3_qcom is in use?
->>
-> AFAIK this function is used to get the speeds of each ports, so that
-> wakeup interrupts (dp/dm/ss irqs) can be configured accordingly before
-> going to suspend, which is done during host mode only. So there
-> shouldn't be any scenarios where CONFIG_USB isnt set when this is called.
+> + *
+> + * Qualcomm MSM Camera Subsystem - VFE (Video Front End) Module v780 (SM8550)
+> + *
+> + * Copyright (c) 2024 Qualcomm Technologies, Inc.
+> + */
+> +
+> +#include <linux/interrupt.h>
+> +#include <linux/io.h>
+> +#include <linux/iopoll.h>
+> +
+> +#include "camss.h"
+> +#include "camss-vfe.h"
+> +
+> +#define BUS_REG_BASE			(vfe_is_lite(vfe) ? 0x200 : 0xC00)
+> +
+> +#define VFE_BUS_WM_CGC_OVERRIDE		(BUS_REG_BASE + 0x08)
+> +#define		WM_CGC_OVERRIDE_ALL		(0x7FFFFFF)
+> +
+> +#define VFE_BUS_WM_TEST_BUS_CTRL	(BUS_REG_BASE + 0xDC)
+> +
+> +#define VFE_BUS_WM_CFG(n)		(BUS_REG_BASE + 0x200 + (n) * 0x100)
+> +#define		WM_CFG_EN			BIT(0)
+> +#define		WM_VIR_FRM_EN			BIT(1)
+> +#define		WM_CFG_MODE			BIT(16)
+> +#define VFE_BUS_WM_IMAGE_ADDR(n)	(BUS_REG_BASE + 0x204 + (n) * 0x100)
+> +#define VFE_BUS_WM_FRAME_INCR(n)	(BUS_REG_BASE + 0x208 + (n) * 0x100)
+> +#define VFE_BUS_WM_IMAGE_CFG_0(n)	(BUS_REG_BASE + 0x20c + (n) * 0x100)
+> +#define		WM_IMAGE_CFG_0_DEFAULT_WIDTH	(0xFFFF)
+> +#define VFE_BUS_WM_IMAGE_CFG_1(n)	(BUS_REG_BASE + 0x210 + (n) * 0x100)
+> +#define VFE_BUS_WM_IMAGE_CFG_2(n)	(BUS_REG_BASE + 0x214 + (n) * 0x100)
+> +#define		WM_IMAGE_CFG_2_DEFAULT_STRIDE	(0xFFFF)
+> +#define VFE_BUS_WM_PACKER_CFG(n)	(BUS_REG_BASE + 0x218 + (n) * 0x100)
+> +#define VFE_BUS_WM_HEADER_ADDR(n)	(BUS_REG_BASE + 0x220 + (n) * 0x100)
+> +#define VFE_BUS_WM_HEADER_INCR(n)	(BUS_REG_BASE + 0x224 + (n) * 0x100)
+> +#define VFE_BUS_WM_HEADER_CFG(n)	(BUS_REG_BASE + 0x228 + (n) * 0x100)
 
-From history I see CONFIG_USB was added to fix build issues for gadget
-only configuration. So configuration without CONFIG_USB also exists.
+Three VFE_BUS_WM_HEADER_* macra above are not used, please remove.
 
->>>       struct usb_hcd __maybe_unused *hcd;
->>>         /*
->>>        * FIXME: Fix this layering violation.
->>>        */
->>>       hcd = platform_get_drvdata(dwc->xhci);
->>> +    if (!hcd)
->>> +        return USB_SPEED_UNKNOWN;
->>>     #ifdef CONFIG_USB
->>
->> Perhaps this #ifdef shouldn't only be checking this. But that's for
->> another patch >>       udev = usb_hub_find_child(hcd->self.root_hub,
->> port_index + 1);
->>> -- 
->>> 2.17.1
->>>
->>
->> BR,
->> Thinh
-> Thanks,
-> Prashanth K
-Thanks,
-Faisal
+> +
+> +#define VFE_BUS_WM_IRQ_SUBSAMPLE_PERIOD(n)	(BUS_REG_BASE + 0x230 + (n) * 0x100)
+> +#define VFE_BUS_WM_IRQ_SUBSAMPLE_PATTERN(n)	(BUS_REG_BASE + 0x234 + (n) * 0x100)
+> +#define VFE_BUS_WM_FRAMEDROP_PERIOD(n)		(BUS_REG_BASE + 0x238 + (n) * 0x100)
+> +#define VFE_BUS_WM_FRAMEDROP_PATTERN(n)		(BUS_REG_BASE + 0x23c + (n) * 0x100)
+> +
+> +#define VFE_BUS_WM_MMU_PREFETCH_CFG(n)		(BUS_REG_BASE + 0x260 + (n) * 0x100)
+> +#define VFE_BUS_WM_MMU_PREFETCH_MAX_OFFSET(n)	(BUS_REG_BASE + 0x264 + (n) * 0x100)
+> +#define VFE_BUS_WM_SYSTEM_CACHE_CFG(n)		(BUS_REG_BASE + 0x268 + (n) * 0x100)
+
+Good to know that there is such a register, but it's not used,
+please remove the macro.
+
+> +
+> +/* for titan 780, each bus client is hardcoded to a specific path */
+> +#define RDI_WM(n)			((vfe_is_lite(vfe) ? 0x0 : 0x17) + (n))
+> +
+> +static void vfe_wm_start(struct vfe_device *vfe, u8 wm, struct vfe_line *line)
+> +{
+> +	struct v4l2_pix_format_mplane *pix =
+> +		&line->video_out.active_fmt.fmt.pix_mp;
+> +
+> +	wm = RDI_WM(wm); /* map to actual WM used (from wm=RDI index) */
+
+Please move the comment on its own line.
+
+> +
+> +	/* no clock gating at bus input */
+> +	writel(WM_CGC_OVERRIDE_ALL, vfe->base + VFE_BUS_WM_CGC_OVERRIDE);
+> +
+> +	writel(0x0, vfe->base + VFE_BUS_WM_TEST_BUS_CTRL);
+> +
+> +	writel(ALIGN(pix->plane_fmt[0].bytesperline, 16) * pix->height >> 8,
+> +	       vfe->base + VFE_BUS_WM_FRAME_INCR(wm));
+> +	writel((WM_IMAGE_CFG_0_DEFAULT_WIDTH & 0xFFFF),
+> +	       vfe->base + VFE_BUS_WM_IMAGE_CFG_0(wm));
+> +	writel(WM_IMAGE_CFG_2_DEFAULT_STRIDE,
+> +	       vfe->base + VFE_BUS_WM_IMAGE_CFG_2(wm));
+> +	writel(0, vfe->base + VFE_BUS_WM_PACKER_CFG(wm));
+> +
+> +	/* no dropped frames, one irq per frame */
+> +	writel(0, vfe->base + VFE_BUS_WM_FRAMEDROP_PERIOD(wm));
+> +	writel(1, vfe->base + VFE_BUS_WM_FRAMEDROP_PATTERN(wm));
+> +	writel(0, vfe->base + VFE_BUS_WM_IRQ_SUBSAMPLE_PERIOD(wm));
+> +	writel(1, vfe->base + VFE_BUS_WM_IRQ_SUBSAMPLE_PATTERN(wm));
+> +
+> +	writel(1, vfe->base + VFE_BUS_WM_MMU_PREFETCH_CFG(wm));
+> +	writel(0xFFFFFFFF, vfe->base + VFE_BUS_WM_MMU_PREFETCH_MAX_OFFSET(wm));
+> +
+> +	writel(WM_CFG_EN | WM_CFG_MODE, vfe->base + VFE_BUS_WM_CFG(wm));
+> +}
+> +
+> +static void vfe_wm_stop(struct vfe_device *vfe, u8 wm)
+> +{
+> +	wm = RDI_WM(wm); /* map to actual WM used (from wm=RDI index) */
+
+Please move the comment on its own line or remove it as obvious one.
+
+> +	writel(0, vfe->base + VFE_BUS_WM_CFG(wm));
+> +}
+> +
+> +static void vfe_wm_update(struct vfe_device *vfe, u8 wm, u32 addr,
+> +			  struct vfe_line *line)
+> +{
+> +	wm = RDI_WM(wm); /* map to actual WM used (from wm=RDI index) */
+
+Please move the comment on its own line or remove it as obvious one.
+
+> +	writel((addr >> 8) & 0xFFFFFFFF, vfe->base + VFE_BUS_WM_IMAGE_ADDR(wm));
+> +
+> +	dev_dbg(vfe->camss->dev, "%s wm:%d, image buf addr:0x%x\n",
+> +		__func__, wm, addr);
+
+There will be no confusion in runtime about a source of the debug
+message, please remove that __func__ information.
+
+> +}
+> +
+> +static void vfe_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
+> +{
+> +	int port_id = line_id;
+> +
+> +	/* RUP(register update) registers has beem moved to CSID in Titan 780.
+
+Huh, it's unusual to see a network subsystem style comment formatting here.
+
+There is a typo, s/beem/been/
+
+> +	 * Notify the event of trigger RUP.
+> +	 */
+
+I suppose it would be good enough to remove the comment completely as
+an obvious one.
+
+> +	camss_reg_update(vfe->camss, vfe->id, port_id, false);
+> +}
+> +
+> +static inline void vfe_reg_update_clear(struct vfe_device *vfe,
+> +					enum vfe_line_id line_id)
+> +{
+> +	int port_id = line_id;
+> +
+> +	/* RUP(register update) registers has beem moved to CSID in Titan 780.
+> +	 * Notify the event of trigger RUP clear.
+> +	 */
+
+Same as above.
+
+> +	camss_reg_update(vfe->camss, vfe->id, port_id, true);
+> +}
+> +
+> +static const struct camss_video_ops vfe_video_ops_780 = {
+> +	.queue_buffer = vfe_queue_buffer_v2,
+> +	.flush_buffers = vfe_flush_buffers,
+> +};
+> +
+> +static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
+> +{
+> +	vfe->video_ops = vfe_video_ops_780;
+> +}
+> +
+> +const struct vfe_hw_ops vfe_ops_780 = {
+> +	.enable_irq = NULL,
+> +	.global_reset = NULL,
+> +	.hw_version = vfe_hw_version,
+> +	.isr = NULL,
+> +	.pm_domain_off = vfe_pm_domain_off,
+> +	.pm_domain_on = vfe_pm_domain_on,
+> +	.subdev_init = vfe_subdev_init,
+> +	.vfe_disable = vfe_disable,
+> +	.vfe_enable = vfe_enable_v2,
+> +	.vfe_halt = NULL,
+> +	.vfe_wm_start = vfe_wm_start,
+> +	.vfe_wm_stop = vfe_wm_stop,
+> +	.vfe_buf_done = vfe_buf_done,
+> +	.vfe_wm_update = vfe_wm_update,
+> +	.reg_update = vfe_reg_update,
+> +	.reg_update_clear = vfe_reg_update_clear,
+> +};
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+> index 71bd55e854bb..507fc7785ac8 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> @@ -343,6 +343,7 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
+>   	case CAMSS_845:
+>   	case CAMSS_8250:
+>   	case CAMSS_8280XP:
+> +	case CAMSS_8550:
+>   		switch (sink_code) {
+>   		case MEDIA_BUS_FMT_YUYV8_1X16:
+>   		{
+> @@ -674,15 +675,17 @@ int vfe_reset(struct vfe_device *vfe)
+>   {
+>   	unsigned long time;
+>   
+> -	reinit_completion(&vfe->reset_complete);
+> +	if (vfe->res->hw_ops->global_reset) {
+> +		reinit_completion(&vfe->reset_complete);
+>   
+> -	vfe->res->hw_ops->global_reset(vfe);
+> +		vfe->res->hw_ops->global_reset(vfe);
+>   
+> -	time = wait_for_completion_timeout(&vfe->reset_complete,
+> -		msecs_to_jiffies(VFE_RESET_TIMEOUT_MS));
+> -	if (!time) {
+> -		dev_err(vfe->camss->dev, "VFE reset timeout\n");
+> -		return -EIO;
+> +		time = wait_for_completion_timeout(&vfe->reset_complete,
+> +			msecs_to_jiffies(VFE_RESET_TIMEOUT_MS));
+> +		if (!time) {
+> +			dev_err(vfe->camss->dev, "VFE reset timeout\n");
+> +			return -EIO;
+> +		}
+
+This goes to some other preceding change, since it's unrelated to Titan 780
+support, but the latter depends on it.
+
+>   	}
+>   
+>   	return 0;
+> @@ -1120,7 +1123,8 @@ void vfe_put(struct vfe_device *vfe)
+>   	} else if (vfe->power_count == 1) {
+>   		if (vfe->was_streaming) {
+>   			vfe->was_streaming = 0;
+> -			vfe->res->hw_ops->vfe_halt(vfe);
+> +			if (vfe->res->hw_ops->vfe_halt)
+> +				vfe->res->hw_ops->vfe_halt(vfe);
+
+This goes to some other change, since it's unrelated to Titan 780 support.
+
+>   		}
+>   		camss_disable_clocks(vfe->nclocks, vfe->clock);
+>   		pm_runtime_put_sync(vfe->camss->dev);
+> @@ -1807,11 +1811,13 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
+>   	vfe->irq = ret;
+>   	snprintf(vfe->irq_name, sizeof(vfe->irq_name), "%s_%s%d",
+>   		 dev_name(dev), MSM_VFE_NAME, id);
+> -	ret = devm_request_irq(dev, vfe->irq, vfe->res->hw_ops->isr,
+> -			       IRQF_TRIGGER_RISING, vfe->irq_name, vfe);
+> -	if (ret < 0) {
+> -		dev_err(dev, "request_irq failed: %d\n", ret);
+> -		return ret;
+> +	if (vfe->res->hw_ops->isr) {
+> +		ret = devm_request_irq(dev, vfe->irq, vfe->res->hw_ops->isr,
+> +				       IRQF_TRIGGER_RISING, vfe->irq_name, vfe);
+> +		if (ret < 0) {
+> +			dev_err(dev, "request_irq failed: %d\n", ret);
+> +			return ret;
+> +		}
+
+This change shall be done in a seperate preceding commit, since it's
+unrelated to Titan 780 support.
+
+>   	}
+>   
+>   	/* Clocks */
+> @@ -1963,6 +1969,7 @@ static int vfe_bpl_align(struct vfe_device *vfe)
+>   	case CAMSS_845:
+>   	case CAMSS_8250:
+>   	case CAMSS_8280XP:
+> +	case CAMSS_8550:
+>   		ret = 16;
+>   		break;
+>   	default:
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
+> index fcbf4f609129..9dec5bc0d1b1 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.h
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.h
+> @@ -243,6 +243,7 @@ extern const struct vfe_hw_ops vfe_ops_4_7;
+>   extern const struct vfe_hw_ops vfe_ops_4_8;
+>   extern const struct vfe_hw_ops vfe_ops_170;
+>   extern const struct vfe_hw_ops vfe_ops_480;
+> +extern const struct vfe_hw_ops vfe_ops_780;
+>   
+>   int vfe_get(struct vfe_device *vfe);
+>   void vfe_put(struct vfe_device *vfe);
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+> index 7ee102948dc4..92a0fa02e415 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -1666,6 +1666,125 @@ static const struct camss_subdev_resources csid_res_8550[] = {
+>   	}
+>   };
+>   
+> +static const struct camss_subdev_resources vfe_res_8550[] = {
+> +	/* VFE0 */
+> +	{
+> +		.regulators = {},
+> +		.clock = { "gcc_axi_hf", "cpas_ahb", "cpas_fast_ahb_clk", "vfe0_fast_ahb",
+> +			   "vfe0", "cpas_vfe0", "camnoc_axi" },
+> +		.clock_rate = { { 0, 0, 0, 0, 0 },
+> +				{ 0, 0, 0, 0, 80000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 },
+> +				{ 466000000, 594000000, 675000000, 785000000, 785000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 } },
+> +		.reg = { "vfe0" },
+> +		.interrupt = { "vfe0" },
+> +		.vfe = {
+> +			.line_num = 3,
+> +			.is_lite = false,
+> +			.has_pd = true,
+> +			.pd_name = "ife0",
+> +			.hw_ops = &vfe_ops_780,
+> +			.formats_rdi = &vfe_formats_rdi_845,
+> +			.formats_pix = &vfe_formats_pix_845
+> +		}
+> +	},
+> +	/* VFE1 */
+> +	{
+> +		.regulators = {},
+> +		.clock = { "gcc_axi_hf", "cpas_ahb", "cpas_fast_ahb_clk", "vfe1_fast_ahb",
+> +			   "vfe1", "cpas_vfe1", "camnoc_axi" },
+> +		.clock_rate = {	{ 0, 0, 0, 0, 0 },
+> +				{ 0, 0, 0, 0, 80000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 },
+> +				{ 466000000, 594000000, 675000000, 785000000, 785000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 } },
+> +		.reg = { "vfe1" },
+> +		.interrupt = { "vfe1" },
+> +		.vfe = {
+> +			.line_num = 3,
+> +			.is_lite = false,
+> +			.has_pd = true,
+> +			.pd_name = "ife1",
+> +			.hw_ops = &vfe_ops_780,
+> +			.formats_rdi = &vfe_formats_rdi_845,
+> +			.formats_pix = &vfe_formats_pix_845
+> +		}
+> +	},
+> +	/* VFE2 */
+> +	{
+> +		.regulators = {},
+> +		.clock = { "gcc_axi_hf", "cpas_ahb", "cpas_fast_ahb_clk", "vfe2_fast_ahb",
+> +			   "vfe2", "cpas_vfe2", "camnoc_axi" },
+> +		.clock_rate = {	{ 0, 0, 0, 0, 0 },
+> +				{ 0, 0, 0, 0, 80000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 },
+> +				{ 466000000, 594000000, 675000000, 785000000, 785000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 } },
+> +		.reg = { "vfe2" },
+> +		.interrupt = { "vfe2" },
+> +		.vfe = {
+> +			.line_num = 3,
+> +			.is_lite = false,
+> +			.has_pd = true,
+> +			.pd_name = "ife2",
+> +			.hw_ops = &vfe_ops_780,
+> +			.formats_rdi = &vfe_formats_rdi_845,
+> +			.formats_pix = &vfe_formats_pix_845
+> +		}
+> +	},
+> +	/* VFE3 lite */
+> +	{
+> +		.regulators = {},
+> +		.clock = { "gcc_axi_hf", "cpas_ahb", "cpas_fast_ahb_clk", "vfe_lite_ahb",
+> +			   "vfe_lite", "cpas_ife_lite", "camnoc_axi" },
+> +		.clock_rate = {	{ 0, 0, 0, 0, 0 },
+> +				{ 0, 0, 0, 0, 80000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 },
+> +				{ 400000000, 480000000, 480000000, 480000000, 480000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 } },
+> +		.reg = { "vfe_lite0" },
+> +		.interrupt = { "vfe_lite0" },
+> +		.vfe = {
+> +			.line_num = 4,
+> +			.is_lite = true,
+> +			.hw_ops = &vfe_ops_780,
+> +			.formats_rdi = &vfe_formats_rdi_845,
+> +			.formats_pix = &vfe_formats_pix_845
+> +		}
+> +	},
+> +	/* VFE4 lite */
+> +	{
+> +		.regulators = {},
+> +		.clock = { "gcc_axi_hf", "cpas_ahb", "cpas_fast_ahb_clk", "vfe_lite_ahb",
+> +			   "vfe_lite", "cpas_ife_lite", "camnoc_axi" },
+> +		.clock_rate = {	{ 0, 0, 0, 0, 0 },
+> +				{ 0, 0, 0, 0, 80000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 },
+> +				{ 400000000, 480000000, 480000000, 480000000, 480000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 },
+> +				{ 300000000, 300000000, 400000000, 400000000, 400000000 } },
+> +		.reg = { "vfe_lite1" },
+> +		.interrupt = { "vfe_lite1" },
+> +		.vfe = {
+> +			.line_num = 4,
+> +			.is_lite = true,
+> +			.hw_ops = &vfe_ops_780,
+> +			.formats_rdi = &vfe_formats_rdi_845,
+> +			.formats_pix = &vfe_formats_pix_845
+> +		}
+> +	},
+> +};
+> +
+>   static const struct resources_icc icc_res_sm8550[] = {
+>   	{
+>   		.name = "ahb",
+> @@ -1846,6 +1965,17 @@ void camss_pm_domain_off(struct camss *camss, int id)
+>   	}
+>   }
+>   
+> +void camss_reg_update(struct camss *camss, int hw_id, int port_id, bool is_clear)
+
+Please let it be just a declarative 'clear' instead of questioning 'is_clear'.
+
+> +{
+> +	struct csid_device *csid;
+> +
+> +	if (hw_id < camss->res->csid_num) {
+> +		csid = &(camss->csid[hw_id]);
+> +
+> +		csid->res->hw_ops->reg_update(csid, port_id, is_clear);
+> +	}
+> +}
+> +
+
+Please add the new exported function camss_reg_update() in a separate
+preceding commit.
+
+>   void camss_buf_done(struct camss *camss, int hw_id, int port_id)
+>   {
+>   	struct vfe_device *vfe;
+> @@ -2668,10 +2798,12 @@ static const struct camss_resources sm8550_resources = {
+>   	.pd_name = "top",
+>   	.csiphy_res = csiphy_res_8550,
+>   	.csid_res = csid_res_8550,
+> +	.vfe_res = vfe_res_8550,
+>   	.icc_res = icc_res_sm8550,
+>   	.icc_path_num = ARRAY_SIZE(icc_res_sm8550),
+>   	.csiphy_num = ARRAY_SIZE(csiphy_res_8550),
+>   	.csid_num = ARRAY_SIZE(csid_res_8550),
+> +	.vfe_num = ARRAY_SIZE(vfe_res_8550),
+>   	.link_entities = camss_link_entities
+>   };
+>   
+> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
+> index d6b6558a82b9..697846e70e78 100644
+> --- a/drivers/media/platform/qcom/camss/camss.h
+> +++ b/drivers/media/platform/qcom/camss/camss.h
+> @@ -157,5 +157,7 @@ int camss_vfe_get(struct camss *camss, int id);
+>   void camss_vfe_put(struct camss *camss, int id);
+>   void camss_delete(struct camss *camss);
+>   void camss_buf_done(struct camss *camss, int hw_id, int port_id);
+> +void camss_reg_update(struct camss *camss, int hw_id,
+> +		      int port_id, bool is_clear);
+>   
+>   #endif /* QC_MSM_CAMSS_H */
+
+Thank you for the efforts to get support of Titan 780 in the upstream.
+
+--
+Best wishes,
+Vladimir
 
