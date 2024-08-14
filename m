@@ -1,114 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-28447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F67B951250
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 04:25:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4002951389
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 06:41:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C4FBBB241DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 02:24:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0C9A11C22FA2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 04:41:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4CFA17C64;
-	Wed, 14 Aug 2024 02:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE1854D8BA;
+	Wed, 14 Aug 2024 04:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="d/Uotrwe"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="cJrS1Fe0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D8F33FE;
-	Wed, 14 Aug 2024 02:24:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479ED481C0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 04:41:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723602292; cv=none; b=JN4O+TmiM8L8XOhXwryCeXPhV+P97kZIGpON+tOycNvL53yC8KXuxJEuUwj2wfLBCi/K+5SsABxRbbvljzTa9uZTvGqM7CCWqnh5iXR0YLk9M75roZgOZHQgsaMrVred6pVPutiHk43qPZ4/tIxg/3giFGGVvRTni7zM4lyCAOA=
+	t=1723610505; cv=none; b=UaJy2sNpZvPR06VrmMXRqSM/rsKxBcGHSOJlxDCxP7//rCX8ScYCTpsiP7F2y/tQP5Lipl3D8+Wv25Tq5cZ/hTrv4mHW4Xi5t/nXcO/JjRnJb8KNK6/ZtELB5O9ha86ZBxwyylBqz7A5Kwe/Ww4KsM97eQI+zLqNrg+AiqONmbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723602292; c=relaxed/simple;
-	bh=XNe50K+rCudFjQYRv5L/yVRqiEKXGVEUTSUUuxQwDbk=;
-	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=GMeVk5SqzQgI04WQbKFB+yXrRJaAv+rBtWCKeBbhb8+iEgcJ/PtTKUUKEGg/hN9gNSvMBxzqaXw7Lz2LqAgQjF4T+9BwN634FCn8Q3WdMZcog6X6oiGsfySt2BDr3hoR/GO5rvlBZC9rH2NSV11OQ3cyNE1b2rzYnPr+QajB1eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=d/Uotrwe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728B1C32782;
-	Wed, 14 Aug 2024 02:24:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
-	s=korg; t=1723602291;
-	bh=XNe50K+rCudFjQYRv5L/yVRqiEKXGVEUTSUUuxQwDbk=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=d/UotrweKieWQJMVqNd65dlj1ziTa+YKfYSjfpJ5Ff+GjhK9fax7aj8z3Q/w8dAm9
-	 tB7a3lLTI0tZ7kvhqYLAG2QgSso/PO3eIJ0zP0pZhH2siTj+8V7t0CGAdDrt5EFBQ2
-	 zJXoJ+rpG3glti1ufvD37kChpjAFWImUuo71uuT4=
-Date: Tue, 13 Aug 2024 19:24:50 -0700
-From: Andrew Morton <akpm@linux-foundation.org>
-To: Jani Nikula <jani.nikula@intel.com>
-Cc: linux-kernel@vger.kernel.org, intel-xe@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- akinobu.mita@gmail.com, lucas.demarchi@intel.com, rodrigo.vivi@intel.com,
- thomas.hellstrom@linux.intel.com, robdclark@gmail.com,
- quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH 1/3] fault-inject: improve build for
- CONFIG_FAULT_INJECTION=n
-Message-Id: <20240813192450.9aff86552e06a48924b7bbc1@linux-foundation.org>
-In-Reply-To: <20240813121237.2382534-1-jani.nikula@intel.com>
-References: <20240813121237.2382534-1-jani.nikula@intel.com>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1723610505; c=relaxed/simple;
+	bh=WQNyqMcKW44XCLFC2YkMyCMhspS3EgYL/ooMD/x42bY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RmaRvfSxeRIepiO78qgIyGXBhPTIirHVDVGSTdiFaKsf8mr+JdsVmwE5dCL/0/KS2q6/XtGCJVLbxLdXGW11/sMJjf2nPMA6XBbXMlZJKEQ6EVHQm2oGGOJT6tnalA8CXR0pedUcQo3XdJ89Wdil7q7ir6yjHXb9z/wP/VZqIis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=cJrS1Fe0; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2cb6662ba3aso369952a91.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Aug 2024 21:41:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1723610503; x=1724215303; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=9yGZSHVjYQ9aqijE7e309njoaIKkre7O560JhEdqjQM=;
+        b=cJrS1Fe0q8VK6QBOQQSHurPTOYUkppHBhKv7D5/pyceAw7dkNnKT0jRvIgBmh0qPaX
+         bxLWsdLY8018r//baebOA1dFDmSVoBj/IcyJEn3Bc5MjvQGw5qz859m9ClHk+3PQVUwY
+         nFIW3gZm8GfXU0ejfPup6sCmb8SZQz233r9IE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723610503; x=1724215303;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9yGZSHVjYQ9aqijE7e309njoaIKkre7O560JhEdqjQM=;
+        b=Z8oBvo6lYtvSAvXrcSHiX+OD+DwnqDQb6XSi5PdlciNiOPP0LHC7zmNipbghs/5lgD
+         EeJC0n1bTuAc2fXAuiB0XGMiVvxXNF1EjhBcJos8IURZ9rhXujKG0mLBf+prKU/dZ2Oe
+         sVyXDiK4xx8fZCrLSRmnZa26Kv8Gj4yhXV8cR6G5N7KpEH1vCQzSsLskh8f+/av8a+v8
+         yo5EMmnFTyO9ePOjPfXasEOxnlRmASzFIr0D/LTp+szBeE3KBNKXtGVg8aFFzHbPm/CG
+         MQY9q+dq63UgYxl03u3vPki4ZNMQEsIjIYzQsqIUKP0Hpl7JIrTV763EziulC8Ssd3QK
+         QMxw==
+X-Forwarded-Encrypted: i=1; AJvYcCUmxoKa9DRM9gSnmPiE/G1NtGx7k6tYLI3YuhBXGliG+rylEWLsOLW63f4GL6wWu8foFWYLT53rPoOQPEBwWHUyiUr/6DIbKR4Fi4shBA==
+X-Gm-Message-State: AOJu0YyHZ7E+Gm46qAiqafMfvvvh+gv4voc8UCdEKrtmNHDWKga/rCWO
+	s8DjAucX0IvYBQawrL9Qn1vRs/EEGtb6ibM5scn+zlMVQTRclPRkurTY75wbaQ==
+X-Google-Smtp-Source: AGHT+IELuLGAsaW5mcR7wJyDZYVwjV0ICWG7mOIH3D74CpzZArxQD4ZWE91i91RO0YWRvGanjh+bAg==
+X-Received: by 2002:a17:90a:9f85:b0:2c9:90fa:b9f8 with SMTP id 98e67ed59e1d1-2d3acbf458cmr1484709a91.10.1723610503359;
+        Tue, 13 Aug 2024 21:41:43 -0700 (PDT)
+Received: from google.com ([2401:fa00:8f:203:1432:35df:53f:489f])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d3ac7dd3f0sm511322a91.18.2024.08.13.21.41.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Aug 2024 21:41:42 -0700 (PDT)
+Date: Wed, 14 Aug 2024 13:41:38 +0900
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
+To: Ricardo Ribalda <ribalda@chromium.org>
+Cc: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 10/10] media: venus: Convert one-element-arrays to
+ flex-arrays
+Message-ID: <20240814044138.GA8686@google.com>
+References: <20240813-cocci-flexarray-v6-0-de903fd8d988@chromium.org>
+ <20240813-cocci-flexarray-v6-10-de903fd8d988@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240813-cocci-flexarray-v6-10-de903fd8d988@chromium.org>
 
-On Tue, 13 Aug 2024 15:12:35 +0300 Jani Nikula <jani.nikula@intel.com> wrote:
-
-> The fault-inject.h users across the kernel need to add a lot of #ifdef
-> CONFIG_FAULT_INJECTION to cater for shortcomings in the header. Make
-> fault-inject.h self-contained for CONFIG_FAULT_INJECTION=n, and add
-> stubs for DECLARE_FAULT_ATTR(), setup_fault_attr(), should_fail_ex(),
-> and should_fail() to allow removal of conditional compilation.
+On (24/08/13 12:31), Ricardo Ribalda wrote:
 > 
-> --- a/include/linux/fault-inject.h
-> +++ b/include/linux/fault-inject.h
->  
-> -#include <linux/types.h>
-> -#include <linux/debugfs.h>
+> This structures are not used
+> 
 
-Removing a nested include exposes all those sites which were
-erroneously depending upon that nested include.  Here's what I have
-found so far, there will be more.
-
---- a/mm/failslab.c~fault-inject-improve-build-for-config_fault_injection=n-fix
-+++ a/mm/failslab.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <linux/fault-inject.h>
- #include <linux/error-injection.h>
-+#include <linux/debugfs.h>
- #include <linux/slab.h>
- #include <linux/mm.h>
- #include "slab.h"
---- a/lib/fault-inject.c~fault-inject-improve-build-for-config_fault_injection=n-fix
-+++ a/lib/fault-inject.c
-@@ -2,6 +2,7 @@
- #include <linux/kernel.h>
- #include <linux/init.h>
- #include <linux/random.h>
-+#include <linux/debugfs.h>
- #include <linux/sched.h>
- #include <linux/stat.h>
- #include <linux/types.h>
---- a/kernel/futex/core.c~fault-inject-improve-build-for-config_fault_injection=n-fix
-+++ a/kernel/futex/core.c
-@@ -34,6 +34,7 @@
- #include <linux/compat.h>
- #include <linux/jhash.h>
- #include <linux/pagemap.h>
-+#include <linux/debugfs.h>
- #include <linux/plist.h>
- #include <linux/memblock.h>
- #include <linux/fault-inject.h>
-_
-
+Why not just delete them?
 
