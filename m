@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-28460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A089951696
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 10:30:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4819C95169A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 10:31:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A7E261F23678
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 08:30:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 04AE42863CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 08:31:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAFDB13634A;
-	Wed, 14 Aug 2024 08:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0210481C0;
+	Wed, 14 Aug 2024 08:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BABB7KkZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Sf77wpav"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249E124B4A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 08:30:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3020928DA5
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 08:31:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723624244; cv=none; b=alqdgtBEkWyA9P1pbJdbitXWNHRfbEv98Zj4Vp43SI2tOcETkkUgaFcoFyfXdeD4heKOvPbVpZ45/nk6fmvwSK5ujUwl58RwF38USnbYl/aLodMu2ShOpOJhNB4Q0mnHSLyCBrPT5NxHI2QOylVhn29gLGd2Jy/k1qbfHDzh2+g=
+	t=1723624271; cv=none; b=OKnKLC4NQpaMVmnKA2ujCpvgx3U+o/pJWG1mdlO9cSJmeN0hbZm4febSD+IK/07Zc9o9bSgc3twPH765oZgNe0j461cJhexgXe58wiFUy11D9HlR0G5f/twNVSmhQoFaWCcE6f9aGsZXhvoGR2PzVAh679qHaewPLHuLdz4ovlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723624244; c=relaxed/simple;
-	bh=1INm8gwkSqcs/W0J2vHqll2aNXyo+Eh6o9uUu0kjbIM=;
+	s=arc-20240116; t=1723624271; c=relaxed/simple;
+	bh=WM4wGLw+bCnNhcdXmhghAEKcwd5gTCQsqiAP10ujOKw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=qUsORtW6zWL59OaHsKZSOF3cBBizzHKobN/ibYd24emQ7i2dET4fFxILgXIgLyuO9NsPECZk6JTu5J6Cdzzt03KLXTBnt5phoWrh6M/+B6dqlRTEN8PEt8njd4qYuZ5UM2Suzq6uXlz+l+9krdbjjCJ8uP1mzO7sy4rUilfKf4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BABB7KkZ; arc=none smtp.client-ip=209.85.167.42
+	 In-Reply-To:Content-Type; b=lPIfgqxYZDEt7HOXRfTglngjZL/VOQwu8EhmElW0S0nzh4TY6K7x3GoS/rk3wfkzaCt9NSR8AbPQD3XqSbYQ2wC85OXTjg++43jyXqSXrNqHp1ElK6a/5obCbqFxgEIQDR4Hh3Wsew4TWzi1mGhojvcG4sWGYSImQnba0COJgZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Sf77wpav; arc=none smtp.client-ip=209.85.208.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5320d8155b4so3927820e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 01:30:42 -0700 (PDT)
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2ef2d96164aso69983121fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 01:31:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723624241; x=1724229041; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1723624268; x=1724229068; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:to:subject:user-agent:mime-version:date:message-id:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=UMgipy3VwvyCG5PHkuxC9oP/US1a/KtkJqjlrnNFBFQ=;
-        b=BABB7KkZZRIgS1F4pso8SKWejhpR/bVH0ZFZXxNMrIi5R28XB+6nDltfZGonUXSc4O
-         9BUyiTHHTS5wmRFPYycW9JA1FFYJ/qUhHa4zgGHMprGRGoVquEbp9YGJVn4eUocWO3LH
-         0myi0tDWGIsAVqV3ELZYVMCeUzwW6jDEw0u2bt7iJvGsmflaaL0BEvuAEkRvudNyyW2q
-         oikPOtgQUbM18xrLYrY47veMoqO5tAn+DLK56brtL9OldnKzpWRmZY9RCew6cd0mbugg
-         PEsUNSvnn/pUXaPqIOxpxjKWj4KBagCzQNAISQ7FRcqJcZKT7a6wrCxMM8bsnRTMUdmn
-         vcYg==
+        bh=5gwQzCwBy7vN2/2RxMQ1HqIkB84Cqquw56cycMRPu0E=;
+        b=Sf77wpav0iXojGKkcNcbRPAHJzjGxwacZ6dcjKd0lS6dm/GJUzEVbC36tLIFB/r/ay
+         awU7QsArvv3eCB0zWoES/mTOMYLhg/RuGNlFMwDKg2GW+KbgLoh3Xkrl6hfFaYMD9cSG
+         BLambWR0TVs6HvaSBmvRn44O409PrXQDTigcOBckk+JxDcjsdyJDBgoubNV9KGZaSnYW
+         x2nbIhn6BYIWeUNhvv6lPXP+aDTFxw3lvvmbd8ndWtiMvcV8UUDTP5TvQl0lnnCnmY9x
+         JUj1zYjHD9MRoOXyiWpO4dcOeGFoOQEDuOnt3KTKPlz2wmbRvx0dB62PK8vA/sROdh8f
+         2eYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723624241; x=1724229041;
+        d=1e100.net; s=20230601; t=1723624268; x=1724229068;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UMgipy3VwvyCG5PHkuxC9oP/US1a/KtkJqjlrnNFBFQ=;
-        b=HCDb8/ESYojpEqC14LUASsOUAIO3m06472Pbl6R7RTUu5u9Cuf1EzRd4Se3issXjp7
-         7mZDTlxIUvbw9L1QCk4ftW/18mToXB6X0FUD3AhS3naGPkj8E4xWaxAVXePzVRcWq28M
-         S5vY17Y2t1ntcdXQMiLRxvLjaYKei2wtJEJTYFMXTJf0HolWZkqjTuubtRVexPlAExTo
-         A/NYrRuur6+b64A5uA0JAAnNunop+U3nnGmA/t8/yxKJCETKkS8bNv/BE3eJiY2vj2ws
-         rpO6QhOKp9Ej5WuRxET038kfsJ4Lx7o3mNLvk/UQJgtuJCdXxTxGsd1vsboqyc8m75QJ
-         avcQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVyHs05ebEPl3BdXmQhMgX1rJP6koIKUPLnEa8X5qU9amIIrNOLept74dPoclB9dWukZISq0JhqgBwru58zyXjIYeC/FGdbJHNm8Gh4uA==
-X-Gm-Message-State: AOJu0YzfQjc5kgJyurxoBnswz4NZExpl7LUVgnQ0PgxUVAYFngEkEFvh
-	Z/gSNHKYDiDlaYBP0s7UkIeHeqhRulUNN+7/1k63iKy70s2ECPek+RHqjVLDq08=
-X-Google-Smtp-Source: AGHT+IHoPF5CG8fkC0yFG7NzrIuqSyh/tGCm27v5YMRV0WGZ8VnkjHsth0kvxOODfbnPBiXoo0A58g==
-X-Received: by 2002:a05:6512:12c8:b0:52c:e1cd:39be with SMTP id 2adb3069b0e04-532eda5eed4mr1215698e87.8.1723624240959;
-        Wed, 14 Aug 2024 01:30:40 -0700 (PDT)
+        bh=5gwQzCwBy7vN2/2RxMQ1HqIkB84Cqquw56cycMRPu0E=;
+        b=MN/FxIYd+LqyE2lPV1IPXoCwPxASXHJKL0qCPZAwqTnqttYC5WAf8rzQPoZ5j1mdqC
+         Afxuexk8jv99SyephEVBoWtmv1qBgyVuVORuoZolX8AJznGTs/tp/PCKYHzS9Tv9vIq+
+         mJr1C7/8eX3TAvp8RGm+WJSeoHX6Gd++IRmHYQAvrSLD4gkpRkThj2jOxbsd695neC5Z
+         Y+stav6rAx8gDM+wvv+nxDV7YFiw5kl229x6YmSIxCh9TnPq/P2jnO+hOoPOJR2/5ykl
+         veBRgDtGjICMDpJi9MXFmLxKZ8HbMvdlxg//n/Fvh+v3SJbp5jxDhZJaXXJX4354r1AA
+         30wg==
+X-Forwarded-Encrypted: i=1; AJvYcCW4mur0tojhufpkonhG3oi7tfpsCnc8orWvEU/28idZYSOjSfhyb3dJRqwHnclIP5YyabuOU5CXaHPOjZYo@vger.kernel.org
+X-Gm-Message-State: AOJu0YyKj80z6j/p4pABPLqVuC/AncIOfGZwF8q6hjMGVHTBnpVgHSku
+	fBZdHWDgwgBExPvyn5IUNn/kJVEtcfmJ8u9zXmQQerLjRYkgN9QKNimYxEm9hO0=
+X-Google-Smtp-Source: AGHT+IF6QwpbeJz7sN4rejcITBP96MMp53BWoiX+ED7Mk7W84b6OrlnrFjb3C+iqG3cwrNXSoLTWOg==
+X-Received: by 2002:a05:651c:50b:b0:2ef:295b:4946 with SMTP id 38308e7fff4ca-2f3aa1b3ba3mr13953301fa.4.1723624268052;
+        Wed, 14 Aug 2024 01:31:08 -0700 (PDT)
 Received: from [192.168.0.25] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ded720eesm12446695e9.33.2024.08.14.01.30.40
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ded58266sm12718605e9.42.2024.08.14.01.31.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Aug 2024 01:30:40 -0700 (PDT)
-Message-ID: <1942b9f4-297a-404e-89fb-0e03400b0985@linaro.org>
-Date: Wed, 14 Aug 2024 09:30:39 +0100
+        Wed, 14 Aug 2024 01:31:07 -0700 (PDT)
+Message-ID: <487eb44a-be4b-4434-bf12-e3b679ddc42b@linaro.org>
+Date: Wed, 14 Aug 2024 09:31:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,7 +76,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: sdm670: add camss and cci
+Subject: Re: [PATCH v2 4/5] arm64: dts: qcom: sdm670: add camcc
 To: Richard Acayan <mailingradian@gmail.com>,
  Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>,
  Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -88,49 +88,43 @@ To: Richard Acayan <mailingradian@gmail.com>,
  linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
  linux-media@vger.kernel.org
 References: <20240813230037.84004-8-mailingradian@gmail.com>
- <20240813230037.84004-13-mailingradian@gmail.com>
+ <20240813230037.84004-12-mailingradian@gmail.com>
 Content-Language: en-US
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240813230037.84004-13-mailingradian@gmail.com>
+In-Reply-To: <20240813230037.84004-12-mailingradian@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 14/08/2024 00:00, Richard Acayan wrote:
-> Add the camera subsystem and CCI used to interface with cameras on the
-> Snapdragon 670.
+> The camera clock controller on SDM670 controls the clocks that drive the
+> camera subsystem. The clocks are the same as on SDM845. Add the camera
+> clock controller for SDM670.
 > 
 > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 > ---
-
-> +			clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
-> +				 <&camcc CAM_CC_SOC_AHB_CLK>,
-> +				 <&camcc CAM_CC_SLOW_AHB_CLK_SRC>,
-> +				 <&camcc CAM_CC_CPAS_AHB_CLK>,
-> +				 <&camcc CAM_CC_CCI_CLK>,
-> +				 <&camcc CAM_CC_CCI_CLK_SRC>;
-> +			clock-names = "camnoc_axi",
-> +				      "soc_ahb",
-> +				      "slow_ahb_src",
-> +				      "cpas_ahb",
-> +				      "cci",
-> +				      "cci_src";
-
-These "_src" clocks should be dropped, per similar comment on &camss{}; 
-in the previous.
-
+>   arch/arm64/boot/dts/qcom/sdm670.dtsi | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+> index 187c6698835d..ba93cef33dbb 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+> @@ -1400,6 +1400,16 @@ spmi_bus: spmi@c440000 {
+>   			#interrupt-cells = <4>;
+>   		};
+>   
+> +		camcc: clock-controller@ad00000 {
+> +			compatible = "qcom,sdm845-camcc";
+> +			reg = <0 0x0ad00000 0 0x10000>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>;
+> +			clock-names = "bi_tcxo";
+> +			#clock-cells = <1>;
+> +			#reset-cells = <1>;
+> +			#power-domain-cells = <1>;
+> +		};
 > +
-> +			assigned-clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
-> +					  <&camcc CAM_CC_CCI_CLK>;
-> +			assigned-clock-rates = <80000000>, <37500000>;
-
-Do you need to assign the CAMNOC_AXI_CLK here ? More usual to specify it 
-in drivers/media/platform/qcom/camss/camss.c for your SoC
-
-grep camnoc_axi drivers/media/platform/qcom/camss/* | wc -l
-26
-
-Other than that looks fine. Will wait your v3 before R/B.
-
----
-bod
+>   		mdss: display-subsystem@ae00000 {
+>   			compatible = "qcom,sdm670-mdss";
+>   			reg = <0 0x0ae00000 0 0x1000>;
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
