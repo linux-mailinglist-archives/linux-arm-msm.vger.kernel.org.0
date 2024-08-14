@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-28509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09CD4951E03
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 17:04:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 061E5951E06
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 17:05:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7EB611F21297
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 15:04:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1C90D1C21D6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 15:05:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F6C91B4C56;
-	Wed, 14 Aug 2024 15:04:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9F961B5828;
+	Wed, 14 Aug 2024 15:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kNYfndFp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="orDNm7Ao"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006231B3F3E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 15:04:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14011B580B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 15:04:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723647864; cv=none; b=estJFFllnA7KGKkG9YbdIDhkDdPOQw3dwfYkLMRaP9XnyrPA5djQeJkcbH1n9ahVzNiaOzhOfG92PheMClizQyaycETp5QTUDthde8hCIehWRn/g7WZ/sQjwk1l9zBNR8QYPdMzImxloKEfWND/TkMzhF8szsO+ScXTvAIpf1No=
+	t=1723647867; cv=none; b=QjfoVQ65jWowECHqiEDDnmCiWxj3uTx5ng4C+seifinO1Ku6Uarmp8ceyWEPIlO3Pxbz8YSGPisMkEufurLnXU3ypFuYV6iFnDlMfLRMKD7P1pTftr8ky9lhPkNBA8SUJJ3bUdQ/OiaWi+uWUjjEuFQQ+JXu8rVqJGYTf4R3YW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723647864; c=relaxed/simple;
-	bh=MNChZLpbj/MWNGgnwsRcQZFxOn02r/u5ky3hmD/OW5o=;
+	s=arc-20240116; t=1723647867; c=relaxed/simple;
+	bh=HKFKyZib5VKnJdUuDJakQAsIhOr5X3HZ7uhakSIt1BE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=l16OlK3k1/g2nmaShf67iAIWYbxMMXWIx1P8BIO7IU99y11/IqvzA6CnOjrwToDhsRf+QImFPbRejlT671V5E/0KsuFQZiuQMc+jcBTSM8qv5SGe4wdhJMaPiOgrnWH+9zFBml6R5xCgXqgs4d/BTnGY2Flr2GG/oXgNGbcKaa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kNYfndFp; arc=none smtp.client-ip=209.85.128.46
+	 In-Reply-To:To:Cc; b=p5ZIPv9cr/M6P4/5yLu9pere8ghxwrMu8P4xIF6W2LmmtNWY7k6Us+fDcv7CVU8VJ7XXrZ6IHSl1N/4vrQ3QAGj6nQmOdn9Pt+0eozPSec1KcqIeW8UMEN3fMZZyl1lTaX6qhXeDUJquMohfa16mKz49aT4Q0kUZuGpJJBkbz8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=orDNm7Ao; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-428243f928cso46993355e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 08:04:21 -0700 (PDT)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52efa16aad9so8699157e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 08:04:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723647860; x=1724252660; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1723647863; x=1724252663; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dEeIEqLVY1ZOACq24mYbeXb9wBOy2fSNM9DcJntAJ74=;
-        b=kNYfndFplcqaoU0uQe8HW/45LKEDHMEukIBG0zICkmQejdgyyLvHmzUOfo/atPpVDo
-         EpwTmijGxf5Dwn7he0KSkSWqsiy7+l++gyfNpwlSJWBQRUdLYgketgpYWbkfilknB7Iw
-         8BHu8SjhzZo0e73lNAtTQ1rDoTdJQfGDXpA/cqmctFOl67H5LHyGJpuD0zMv9jE2Gabg
-         eD8kcbYnAyg1McBt2lMHhq1+s12Tcg+AlUjjQQw7/KSGB1tjAIFrpmmbQzuV0SvJtjQt
-         taG2jfOTC0AQAMudcKC1mwi5vpUyf7TTesjt14tNSO2F/kxYQNNS0OfmQNV8ZNzz/WPn
-         FE1g==
+        bh=ql92g3IlSel/JMsJTBmGL12yP4qS4j4UtrmTRytGT1s=;
+        b=orDNm7AoFP7TzEYZEMbQ98x7rfuzflilFXbLB6r46d1feAFzpArl8m16zfVU5FPA15
+         cZg/vrgj/fp3bVPG6dvJwXrzHHSYzIGCzaIrYooEEuR5SsdbuekwvCPwcWf8lChYw4IV
+         7M9FmYcgwXZKq2q9MlAZB+7yyC9HeLKuBPAnc3VBlLMhGwTKLKpB7zNu6xdtfK0fAjHS
+         ux8B/sKDZTzEkOraGkGSAe/3amkAern+B6LCKVJAA+qC1N1roYWoQEpfnOcniJEv4Xwu
+         2bAMmwhxOhxpEgdWDR/PWN1Rs83k9vNDZXBn0RBEwf7aT6gvon2tcdkYVkKe8DWVKalD
+         DMMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723647860; x=1724252660;
+        d=1e100.net; s=20230601; t=1723647863; x=1724252663;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dEeIEqLVY1ZOACq24mYbeXb9wBOy2fSNM9DcJntAJ74=;
-        b=YLABH9JEuX4zebh01x4wDkJJxTcps3h7EO/VOa2iaqPDkuqiYMPM+rGQJ2+S69UTPH
-         RiKeJhZ0g69v8rzHmZYEo0UfcQOKs45NmaHowYAcOA9Df55TDreOrdW414GsrqhnW9bH
-         FdYJeRIaZ/qQt9/G46CSJzH2Efki0IZEY/MP55eaaGO0vvHl0sXp+KCybCzPchXmt4hl
-         jqLjfgjiItGPBuKVcCHbGcehMOAL8JBuGzfv5PE8GqZIkAoCyfkbHG5WkMV/TU88pAhK
-         kSnQBePV3OrOC4D/09PpKCdpaCsJhKv0FxLcRt4Qxoki8+qVe4YS6xuYh9BSiXHAZLHn
-         ZwJA==
-X-Forwarded-Encrypted: i=1; AJvYcCU7q0CLv+Mn58vAz+anWFM2F4TXx7DVZdLNEwfiW0ajMueEk9FtqZtM8ljzHIdS6Det16t4nJr1WN/JWyx2YOQMVxJc+CJ1efblqwoiiw==
-X-Gm-Message-State: AOJu0Yxu1GptYCLcNJfSfG5D2EOWfPJuQSwQcMq5nT1wrU9OfVgmsh6+
-	OQQlw3HkiyfxGTXqqrdf5X0Kl0i8Pz2ZDUlhe2ok39u4syAgChsmrWlRRkR9Iww=
-X-Google-Smtp-Source: AGHT+IFT+r/UF1JH6FSsBdVJjL7VZm2U3O/9DdLtdnvhN4tdlKULjzOhZLrhWci1h9xgCzKbbXSdTQ==
-X-Received: by 2002:a05:600c:45d4:b0:426:641f:25e2 with SMTP id 5b1f17b1804b1-429dd25fa5emr22233205e9.25.1723647860210;
-        Wed, 14 Aug 2024 08:04:20 -0700 (PDT)
+        bh=ql92g3IlSel/JMsJTBmGL12yP4qS4j4UtrmTRytGT1s=;
+        b=YCybJTPEXqCjXmYKSRITv1LpR8dFL40vvUlWHrmRnxpNGMeLoSynTP1SsqbvLXQfa4
+         m6mL+TCCfjEnidmbnM3tzg5SFj4r17OUQBEPRDji3NHqei1x+daDgHDxM9ywmq+QLPcr
+         1uRy53FjNpT5wyo6ePQzxISyjQeHIMT/UfCvpC7W247SXlYpxtacSMluxGJnawPcm5Rh
+         CU3RcrQX8saNhqrpJr+QAf8sO+4tAi/8SahnFrR7gF0P2xZIYoxxZsyNUP7rNqaWsto4
+         l4KOIKln78GnWj3IhJksk4TGNQOHgeXNsuNg1P+DytvePItRPGQDx6ZnJ5fROtkf7Wyz
+         phng==
+X-Forwarded-Encrypted: i=1; AJvYcCUL5gexbHCwfYdEV5CB4JjyWx1/OewV1JK8zMI7iKbp7lVaLqrE80rwXU31lAgg2wS/8mIEAiNvJc7yLsmf/qN76T/tqblu1wFZovEoxQ==
+X-Gm-Message-State: AOJu0Yyh9REKoqkVq/XK7HTREua3lXtkLFCEXCp78RMHAQX08oF4h0Q4
+	Lf7S7GxW6cOF5MutRW/XLIofXKvLtn1xYpwZWUlJRfRMG+K808H/McJsWwckqB8=
+X-Google-Smtp-Source: AGHT+IGu3DwjbZr/7noh9P2H71pz2ZOViSHbSyH2U0t4pwvKJvHyX+AJnV0p3bUqSkfSvtJejl7obw==
+X-Received: by 2002:a05:6512:239b:b0:52e:fa5f:b6b1 with SMTP id 2adb3069b0e04-532edbd598fmr1593960e87.60.1723647862671;
+        Wed, 14 Aug 2024 08:04:22 -0700 (PDT)
 Received: from [127.0.1.1] ([178.197.215.209])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ded7cfbasm22313425e9.45.2024.08.14.08.04.18
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ded7cfbasm22313425e9.45.2024.08.14.08.04.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Aug 2024 08:04:19 -0700 (PDT)
+        Wed, 14 Aug 2024 08:04:22 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 14 Aug 2024 17:04:06 +0200
-Subject: [PATCH 2/7] regulator: bd96801: Use scoped device node handling to
+Date: Wed, 14 Aug 2024 17:04:07 +0200
+Subject: [PATCH 3/7] regulator: max8997: Use scoped device node handling to
  simplify error paths
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240814-cleanup-h-of-node-put-regulator-v1-2-87151088b883@linaro.org>
+Message-Id: <20240814-cleanup-h-of-node-put-regulator-v1-3-87151088b883@linaro.org>
 References: <20240814-cleanup-h-of-node-put-regulator-v1-0-87151088b883@linaro.org>
 In-Reply-To: <20240814-cleanup-h-of-node-put-regulator-v1-0-87151088b883@linaro.org>
 To: Matti Vaittinen <mazziesaccount@gmail.com>, 
@@ -91,94 +91,83 @@ Cc: linux-kernel@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2266;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2267;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=MNChZLpbj/MWNGgnwsRcQZFxOn02r/u5ky3hmD/OW5o=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmvMdoruzUKLXQwbjGAbagYQRMvAI3PsR0rLQ3V
- 3/d6GTLP6uJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZrzHaAAKCRDBN2bmhouD
- 15VjD/915tQj7Qr/6BMFohsF8gAVyxOqUm4K+gtazmjt00iFyD/Orfef6dj8ZvNjvrJrWRq0W6+
- pXjE8qpNUNa3Wtgo1JPy609NgdDYqcR6/3EBi4BBlVji++M7tWPG8JemQgwc15rdWMtB6Ej5oRR
- DoRO21/y2QoVbOuEVt5K4oYn8lg2O5nPVWJzm0s7WsrbIw79DqJtci8BU2nhPlcV2rhlm+YLWb9
- Xxbr8HfPE9lqPCO8iz0Smvz1f9I8gr7DBJjOJ6a6Dfc7TVqyXLBKi2bZBtYq7b25f4OtgR/6KNP
- 7lHQ+3ZT1uKR5aZ80FYXj43Ll2njZERAWhYqVgkdqjE2Rcxnf9mKckvPYGWAe+e+J2kKY8SwUyt
- L/oPBj6Dyh5PB+bwMVtnLjPYdFKFRjQyW+KUHTcrznWlxtndQX9DO/Cdrbyou4pskzambf/W3fw
- 9oE4f8Y3tT6tN/IEraEh6FcVLI4fGays5v52k8T9k+cN5Wn8jTY7OHGeXZnJCWTsM7+z5RhkG90
- gWRIcBmRA3lPQ8WxbBbf/UFT9szAjyaOqDffANjGHs9xlq/l5pV7iLsusIm0ngvcEe8tzJMpat/
- npiHx9Q1S1L9u4zZTdkec/mDGVOYm2xjr63eWgQZ/39CNwG5b+dpRTgbmh8W6mrxj23NAbZtGuX
- wtbSUQR6cYuCv7A==
+ bh=HKFKyZib5VKnJdUuDJakQAsIhOr5X3HZ7uhakSIt1BE=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmvMdp9nwqP+7IBK1IA/FESYOQpVx8C/ZOu7nHN
+ dyB7jnGN/iJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZrzHaQAKCRDBN2bmhouD
+ 19D8D/9qJRD6vc6koDrB7DKkh+SqxKz5mPXuv81NfvAKp+tFZIxwGsSE38f242goqHEvg0UqrX9
+ dawZdUvXXPprvW8yQUvzaosVLYsXRc6VmfshmGrpqBOk1m7yHeJLDFbwYAvAxMbQSTjub+eHBnN
+ R8a14Pkkize/+HCavGbDnRoeJskMzDuMt3Vpdic7fxO7D55FQ1aAT2NLQpMt3rOpCxnc+QNF84g
+ PFN22YiJ/B2BWzAydXgdiNxzseufjng+ISc0XK5QCxtC9L9F0gNZnFZ7+iRLRu3rZgRGSJmFYfw
+ QlC5J0Iwpm+sxUTvElWmuSTx/LXZhWZ0xVCPWhD92bnWtjRTKG+cPiVf1aKNTycw88Wq1a8dSv9
+ PuPlf2Y3RIPsJgfNmgYoy/SarvcQ6DD5hm9lzdz9qRxq4ymiYnDQRj6sF7N0TFXHCnU3UDMyAs3
+ t6UaPf5u1/NlLJCcIGwl1GFQnZVvVBESEkXWMWKTDNExWPgxXaM+/1kA56qZF+XzWvG6EEewhVL
+ rT1bbgSgbq9UYwRaK3nj1lbQSF64DQqb5o0l5trm4M8Zvwj8zqtICo1+qGYnC1qWdB9aKaiH26S
+ LGa+pzCVV7KA/5n8YKfdMYFDfROyoBI8vLci1zwaovbUlNk67VJYY41rGvFg5znsw5ne6eSX6/b
+ 4rvA8VGg995OeZg==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Obtain the device node reference with scoped/cleanup.h and use scoped
-for_each_child_of_node_scoped() to reduce error handling and make the
-code a bit simpler.  Add also brackets {} over outer for loop for code
-readability.
+Obtain the device node reference with scoped/cleanup.h to reduce error
+handling and make the code a bit simpler.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/regulator/bd96801-regulator.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ drivers/regulator/max8997-regulator.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/regulator/bd96801-regulator.c b/drivers/regulator/bd96801-regulator.c
-index ec5b1a6b19e8..9876cc05867e 100644
---- a/drivers/regulator/bd96801-regulator.c
-+++ b/drivers/regulator/bd96801-regulator.c
-@@ -34,6 +34,7 @@
-  * conflict in your downstream driver ;)
-  */
+diff --git a/drivers/regulator/max8997-regulator.c b/drivers/regulator/max8997-regulator.c
+index cdbfb4561dd8..e77621b6466c 100644
+--- a/drivers/regulator/max8997-regulator.c
++++ b/drivers/regulator/max8997-regulator.c
+@@ -8,6 +8,7 @@
+ // This driver is based on max8998.c
  
+ #include <linux/bug.h>
 +#include <linux/cleanup.h>
- #include <linux/delay.h>
  #include <linux/err.h>
- #include <linux/interrupt.h>
-@@ -453,15 +454,14 @@ static int bd96801_walk_regulator_dt(struct device *dev, struct regmap *regmap,
- 				     int num)
+ #include <linux/gpio/consumer.h>
+ #include <linux/slab.h>
+@@ -876,7 +877,7 @@ static int max8997_pmic_dt_parse_pdata(struct platform_device *pdev,
+ 					struct max8997_platform_data *pdata)
  {
- 	int i, ret;
--	struct device_node *np;
--	struct device_node *nproot = dev->parent->of_node;
+ 	struct max8997_dev *iodev = dev_get_drvdata(pdev->dev.parent);
+-	struct device_node *pmic_np, *regulators_np, *reg_np;
++	struct device_node *pmic_np, *reg_np;
+ 	struct max8997_regulator_data *rdata;
+ 	unsigned int i, dvs_voltage_nr = 1;
  
--	nproot = of_get_child_by_name(nproot, "regulators");
-+	struct device_node *nproot __free(device_node) =
-+		of_get_child_by_name(dev->parent->of_node, "regulators");
- 	if (!nproot) {
- 		dev_err(dev, "failed to find regulators node\n");
+@@ -886,7 +887,8 @@ static int max8997_pmic_dt_parse_pdata(struct platform_device *pdev,
  		return -ENODEV;
  	}
--	for_each_child_of_node(nproot, np)
-+	for_each_child_of_node_scoped(nproot, np) {
- 		for (i = 0; i < num; i++) {
- 			if (!of_node_name_eq(np, data[i].desc.of_match))
- 				continue;
-@@ -476,11 +476,9 @@ static int bd96801_walk_regulator_dt(struct device *dev, struct regmap *regmap,
- 				dev_err(dev,
- 					"Initializing voltages for %s failed\n",
- 					data[i].desc.name);
--				of_node_put(np);
--				of_node_put(nproot);
--
- 				return ret;
- 			}
-+
- 			if (of_property_read_bool(np, "rohm,keep-on-stby")) {
- 				ret = regmap_set_bits(regmap,
- 						      BD96801_ALWAYS_ON_REG,
-@@ -489,14 +487,11 @@ static int bd96801_walk_regulator_dt(struct device *dev, struct regmap *regmap,
- 					dev_err(dev,
- 						"failed to set %s on-at-stby\n",
- 						data[i].desc.name);
--					of_node_put(np);
--					of_node_put(nproot);
--
- 					return ret;
- 				}
- 			}
- 		}
--	of_node_put(nproot);
-+	}
  
- 	return 0;
- }
+-	regulators_np = of_get_child_by_name(pmic_np, "regulators");
++	struct device_node *regulators_np __free(device_node) = of_get_child_by_name(pmic_np,
++										     "regulators");
+ 	if (!regulators_np) {
+ 		dev_err(&pdev->dev, "could not find regulators sub-node\n");
+ 		return -EINVAL;
+@@ -898,10 +900,8 @@ static int max8997_pmic_dt_parse_pdata(struct platform_device *pdev,
+ 	rdata = devm_kcalloc(&pdev->dev,
+ 			     pdata->num_regulators, sizeof(*rdata),
+ 			     GFP_KERNEL);
+-	if (!rdata) {
+-		of_node_put(regulators_np);
++	if (!rdata)
+ 		return -ENOMEM;
+-	}
+ 
+ 	pdata->regulators = rdata;
+ 	for_each_child_of_node(regulators_np, reg_np) {
+@@ -922,7 +922,6 @@ static int max8997_pmic_dt_parse_pdata(struct platform_device *pdev,
+ 		rdata->reg_node = reg_np;
+ 		rdata++;
+ 	}
+-	of_node_put(regulators_np);
+ 
+ 	pdata->buck1_gpiodvs = of_property_read_bool(pmic_np, "max8997,pmic-buck1-uses-gpio-dvs");
+ 	pdata->buck2_gpiodvs = of_property_read_bool(pmic_np, "max8997,pmic-buck2-uses-gpio-dvs");
 
 -- 
 2.43.0
