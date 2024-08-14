@@ -1,74 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-28541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0B5795213E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 19:33:23 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3C1F95214E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 19:34:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1C863B22791
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 17:33:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5F4601F23834
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 17:34:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F40A1BC065;
-	Wed, 14 Aug 2024 17:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F8BE1BDABF;
+	Wed, 14 Aug 2024 17:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="e0HUBpcp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="enix922Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73401BB693
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 17:33:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C991BBBF5;
+	Wed, 14 Aug 2024 17:33:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723656795; cv=none; b=DTq4E8hTFqUsVLAuhdVYVkWBWblw2FrtRYvIYgbDRYpnct6bCQkt7GKfjSFaEjTYUEFMQ1yjQulTJqignLOnmp9HDfV0M3r7EHEPF6lg6zBWTQf/EzB1N6TII6gRNePRSmiNvXR3iNBS7UjnpBLFu/yP/VDYAaqJ+S/ii05+ji8=
+	t=1723656821; cv=none; b=hSlm54uQ24N+sFvICXBQL/BW7AF3hSD5PIrqik1awjhrCPX7b+VFUg/xARu7HOr17U2FzVjvFDgq0aGIdNKUfmAzyq4LNDwtrNa9kgIWw21fYOgWSsM2T26zxiX4NpEaT/XRXOfOx/mgPNT6DlmWY/1MJGd1w6KPJPy0Paex+K8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723656795; c=relaxed/simple;
-	bh=xHPn6y4xO+5SYBhOLhdA2juhFMoy6KgLmbab3AbXS8M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GvEVvF8tSbv+XHIcZH5EftweJjKXIri1AEi1GpRzhOfUO2RXPE7FRLBdJaj+pIRhg2vH4llduc7RID33/C4M3Z65NgLo3q3n/WGxkoTg+9mJAgGWdt6bq9ZfMez+H+T/I3TgSD7d5I+tdEzcabzVe8eQ/V+ONdMCUBBmPNEEOQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=e0HUBpcp; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-42819654737so334435e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 10:33:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1723656791; x=1724261591; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VsViqlXuad7EqaJTSukZTNrLwUDaFtbQLR6eV58xusI=;
-        b=e0HUBpcp+yhRqfLOCRHjiRR7XzpVnGVdeo0I6txc+VrNkct+5c+07uDcVO0J1HRXQE
-         3z04C77CWru46CNtoVWtCCtBxErwreNNCE1P7IdUaWPHXtLkfqENJnt8V28+Qz9ArEZ/
-         xvP8K2R7H+jLS1Yv9z4dVRS3aYeK6c1mphEhhw1qqKAXkCZnadZlm4zlj0E+RCLch86A
-         PqBpj1j2GeVixq9nwg5LcXz8CTABWs+8DkfkhTQOx5BeHygGIhYgm+nA0/KwCtLiKtQz
-         Fo0PfxepKwpHvaVCw2Pkf82UMd4RTV93BHyzwcxif626YEtZDKrllAtVVyy7jXvmS7zT
-         Unyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723656791; x=1724261591;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VsViqlXuad7EqaJTSukZTNrLwUDaFtbQLR6eV58xusI=;
-        b=p00C/Vcn6ee/a9z37EqqSK+ELe7o9IU3DzupRhb8Pr10l4AVWcDlemYOaZd52gjFYQ
-         UhMCFKwE8gpFEFOmAgjYgkEohJZHQN3cRjJUsUpa5makl225cMqRCVweHNXGYP0X7qwM
-         dS14oJyAOOwIAov5FpoN/eU8Ci7z1nOGCq6kxajwPxguK4b8oqmS+cOlaGgugzL0UCo0
-         iwww7Dz3kLlDF0RuDMhykNFtYHfRLNfJh8aZM62jaNtzGJ1kPkZeKJxe83AyAHDGzNZK
-         EWCETlDEYmVtZNlLVfCTbFe1GicyodC80PIh/6ayD0OdbbLR3/pfGUlWIa+sC+6tGHJv
-         HSgg==
-X-Forwarded-Encrypted: i=1; AJvYcCXtRcUs38uU12VtlnN68ssYyo9DFFvgQ8wI8Nk1RSSDlNiR1qlXHiHkMJrrEP7uoA2Pn5aL+nm6Yiqait6RiXI6f7vkj5iQm5sd+Vm+Qw==
-X-Gm-Message-State: AOJu0Yy6hXaF+4rHwU24p768ry3I/OFoZLtwZGORmxkDIteKS2CYTgWy
-	9aI6DRJoC0bwADYFpdOmXl+bzFVwdv5y/nFT2G9jOYU7OCWrmEf4o9eDmQK75Ik=
-X-Google-Smtp-Source: AGHT+IGjd27AWWYXM6KKfwqDHwnfvaRFqeEGxklZ34WgUw5nl1yiZggtjfE6mMr+RwZoA8oB3FddQA==
-X-Received: by 2002:a05:600c:42c8:b0:429:e6bb:a436 with SMTP id 5b1f17b1804b1-429e6bbb75fmr428945e9.9.1723656790860;
-        Wed, 14 Aug 2024 10:33:10 -0700 (PDT)
-Received: from ?IPV6:2a01:cb08:108b:e400:1437:6ff2:646:a3e5? (2a01cb08108be40014376ff20646a3e5.ipv6.abo.wanadoo.fr. [2a01:cb08:108b:e400:1437:6ff2:646:a3e5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36e4c937bb9sm13456330f8f.34.2024.08.14.10.33.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Aug 2024 10:33:10 -0700 (PDT)
-Message-ID: <dfd80103-391a-4777-8944-296ba31a11dd@freebox.fr>
-Date: Wed, 14 Aug 2024 19:33:09 +0200
+	s=arc-20240116; t=1723656821; c=relaxed/simple;
+	bh=qW313UBQGR3gEXNLUX8gvtIdZKYgGqiIZ9ytYY4uhGw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Pelyji0FqMotNw7wylmjTReBTmFRN2jd0e/C7x0bwMg3dad+RusZGvxAjraorjvh7W8hUKaS8Pa6paG6TkRdE6pB0vCZn8hLPC/ZsjwU/gtinP9EJ/FKkdTlcIXVq9bK4AfjQYarOhNncls2BHVI36omCIe8mfnL1qxwnOoBxgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=enix922Y; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47EAIOaQ027669;
+	Wed, 14 Aug 2024 17:33:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	0CSchhOZBCnI007wjWG8xfaij950P5dZODlWFqceWqo=; b=enix922YMp2OpEPE
+	T0/HmoBawNQgV4Taf6a4WL/8rpmLI44juk6Ng68UyUwXMFitA0CMQ9n2AW/kt3Ky
+	XdTqcYlMNToqHU0H/wQgkKSP2gZ2vIPZs1PUa3imFzpCGsGX8/h6BTT+0W8DQVLh
+	Ww2CHpPxgqg633CdiJMjOR5+abaOC+gqPKTYzWoEDWziKXkOh6qUDuyM9uGwu30C
+	TYt5NwR35XROEiY8vCKjJw2t7aAkWxf7EETiA8AtGr5n14zxnlAfjddOXK84gW0W
+	Bf2lztbV2ABW/oik/wFhjF1DedmrIxN4c6qyfPyxRmcLS7Y8vf0ndSB6iA8rtZ1p
+	NuQMVA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x3etbx4q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Aug 2024 17:33:35 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47EHXYD2009140
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Aug 2024 17:33:34 GMT
+Received: from [10.71.108.157] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 14 Aug
+ 2024 10:33:33 -0700
+Message-ID: <8bb412f8-4fe1-40ca-8414-bb77c66899ae@quicinc.com>
+Date: Wed, 14 Aug 2024 10:33:33 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,145 +65,108 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] iommu/arm-smmu-qcom: hide last context bank from
- linux
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>,
- Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, iommu@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- Konrad Dybcio <konradybcio@kernel.org>, Arnaud Vrac <avrac@freebox.fr>,
- Pierre-Hugues Husson <phhusson@freebox.fr>,
- Marijn Suijten <marijn.suijten@somainline.org>
-References: <20240814-smmu-v1-0-3d6c27027d5b@freebox.fr>
- <20240814-smmu-v1-2-3d6c27027d5b@freebox.fr>
- <a7j3lz62bp6pceuq472muioinjzfgw2mec5pv256zfr7yjsn3p@ok6nfsbsabig>
+Subject: Re: [PATCH v1 1/3] dt-bindings: soc: qcom: eud: Update compatible
+ strings for eud
+To: Konrad Dybcio <konradybcio@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk@kernel.org>,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Trilok Soni
+	<quic_tsoni@quicinc.com>,
+        Satya Durga Srinivasu Prabhala
+	<quic_satyap@quicinc.com>,
+        Elson Serrao <quic_eserrao@quicinc.com>
+CC: <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>
+References: <20240807183205.803847-1-quic_molvera@quicinc.com>
+ <20240807183205.803847-2-quic_molvera@quicinc.com>
+ <dfb1ac84-f011-45ea-9fb1-b8c6bc36cabc@kernel.org>
+ <46d0627d-877b-41f3-83f6-4c33b562f460@quicinc.com>
+ <0ebb1ca3-722d-422f-9f71-fcc61c3470b0@kernel.org>
+ <2b118a49-2229-4346-ab21-0aa5377d7a4e@kernel.org>
 Content-Language: en-US
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <a7j3lz62bp6pceuq472muioinjzfgw2mec5pv256zfr7yjsn3p@ok6nfsbsabig>
-Content-Type: text/plain; charset=UTF-8
+From: Melody Olvera <quic_molvera@quicinc.com>
+In-Reply-To: <2b118a49-2229-4346-ab21-0aa5377d7a4e@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-
-On 14/08/2024 17:29, Bjorn Andersson wrote:
-> On Wed, Aug 14, 2024 at 03:59:56PM GMT, Marc Gonzalez wrote:
->> On qcom msm8998, writing to the last context bank of lpass_q6_smmu
->> (base address 0x05100000) produces a system freeze & reboot.
->>
->> Specifically, here:
->>
->> 	qsmmu->bypass_cbndx = smmu->num_context_banks - 1;
->> 	arm_smmu_cb_write(smmu, qsmmu->bypass_cbndx, ARM_SMMU_CB_SCTLR, 0);
->>
->> and here:
->>
->> 	arm_smmu_write_context_bank(smmu, i);
->> 	arm_smmu_cb_write(smmu, i, ARM_SMMU_CB_FSR, ARM_SMMU_CB_FSR_FAULT);
->>
->> It is likely that FW reserves the last context bank for its own use,
->> thus a simple work-around would be: DON'T USE IT in Linux.
->>
->> If we decrease the number of context banks, last one will be "hidden".
-> 
-> I asked you to write something like "the hardware/hypervisor reports 12
-> context banks for the lpass smmu on msm8998, but only 11 are
-> accessible...override the number of context banks"
-
-I don't understand how the exact number of context banks is relevant?
-It's just that the FW reserves one for itself, which happens to be the last,
-probably because some FW dev thought that was a good idea.
-
-Also, I don't like the phrasing "override the number of context banks"
-because while this is indeed what is done in the code, the *intent*
-is to "lie" to Linux about the existence of the last context bank.
-
-> It also seems, as the different SMMUs in this platform behave
-> differently it might be worth giving them further specific compatibles,
-> in which case we could just check if it's the qcom,msm8998-lpass-smmu,
-> instead of inventing a property for this quirk.
-
-Wouldn't that be too specific?
-
-Angelo's patches were even more generic than mine, as he supported
-a list of context banks not-to-be-used-by-linux.
-
-Do you say the LPASS SMMU behaves differently because it's (currently,
-to the best of my knowledge) the only SMMU where a context bank
-(the last) is not available to Linux?
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: nxuzAiGod5w_q4PCUjqp3vfgpmeOsAhf
+X-Proofpoint-ORIG-GUID: nxuzAiGod5w_q4PCUjqp3vfgpmeOsAhf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-14_13,2024-08-13_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ suspectscore=0 impostorscore=0 phishscore=0 clxscore=1015 mlxlogscore=775
+ lowpriorityscore=0 priorityscore=1501 spamscore=0 adultscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408140120
 
 
-For easy future reference, here are the reports for the 5 SMMUs enabled on my system.
 
-[    0.137343] arm-smmu 1680000.iommu: probing hardware configuration...
-[    0.137354] arm-smmu 1680000.iommu: SMMUv2 with:
-[    0.137381] arm-smmu 1680000.iommu: 	stage 1 translation
-[    0.137390] arm-smmu 1680000.iommu: 	address translation ops
-[    0.137399] arm-smmu 1680000.iommu: 	non-coherent table walk
-[    0.137406] arm-smmu 1680000.iommu: 	(IDR0.CTTW overridden by FW configuration)
-[    0.137417] arm-smmu 1680000.iommu: 	stream matching with 16 register groups
-[    0.137447] arm-smmu 1680000.iommu: 	6 context banks (0 stage-2 only)
-[    0.137733] arm-smmu 1680000.iommu: 	Supported page sizes: 0x63315000
-[    0.137743] arm-smmu 1680000.iommu: 	Stage-1: 36-bit VA -> 36-bit IPA
-[    0.137833] arm-smmu 1680000.iommu: 	preserved 0 boot mappings
+On 8/14/2024 3:30 AM, Konrad Dybcio wrote:
+> On 14.08.2024 8:15 AM, Krzysztof Kozlowski wrote:
+>> On 13/08/2024 22:03, Melody Olvera wrote:
+>>>
+>>> On 8/8/2024 4:00 AM, Krzysztof Kozlowski wrote:
+>>>> On 07/08/2024 20:32, Melody Olvera wrote:
+>>>>> The EUD can more accurately be divided into two types; a secure type
+>>>>> which requires that certain registers be updated via scm call and a
+>>>>> nonsecure type which must access registers nonsecurely. Thus, change
+>>>>> the compatible strings to reflect secure and nonsecure eud usage.
+>>>>>
+>>>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>>>>> ---
+>>>>>    Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml | 6 +++---
+>>>>>    1 file changed, 3 insertions(+), 3 deletions(-)
+>>>>>
+>>>>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>>>>> index f2c5ec7e6437..476f92768610 100644
+>>>>> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>>>>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>>>>> @@ -17,8 +17,8 @@ properties:
+>>>>>      compatible:
+>>>>>        items:
+>>>>>          - enum:
+>>>>> -          - qcom,sc7280-eud
+>>>>> -      - const: qcom,eud
+>>>>> +          - qcom,secure-eud
+>>>>> +          - qcom,eud
+>>>> Commit msg did not explain me why DT bindings rules are avoided here and
+>>>> you drop existing SoC specific compatible.
+>>>>
+>>>> This really does not look like having any sense at all, I cannot come up
+>>>> with logic behind dropping existing users. You could deprecate it, but
+>>>> then why exactly this device should have exception from generic bindings
+>>>> rule?
+>>> Understood. I won't drop this compatible string. Is alright to add the
+>>> additional compatible as is?
+>> You always need SoC specific compatible.
+> Melody, is there any way to discover (that won't crash the board if we
+> guess wrong) whether secure accessors are needed?
+>
 
+Unfortunately, no. We considered several options, but none guarantee 
+that we will avoid
+a crash if we try non-securely. The secure call also won't give a 
+specific error if it fails either
+(for security reasons) so we can't know if a secure access failed 
+because it's supposed to be
+accessed non-securely or for another reason; hence this approach. If there's
+another way to achieve this functionality that might be better, I'm all 
+ears.
 
-[    0.138963] arm-smmu 16c0000.iommu: probing hardware configuration...
-[    0.138974] arm-smmu 16c0000.iommu: SMMUv2 with:
-[    0.138994] arm-smmu 16c0000.iommu: 	stage 1 translation
-[    0.139003] arm-smmu 16c0000.iommu: 	address translation ops
-[    0.139011] arm-smmu 16c0000.iommu: 	non-coherent table walk
-[    0.139019] arm-smmu 16c0000.iommu: 	(IDR0.CTTW overridden by FW configuration)
-[    0.139030] arm-smmu 16c0000.iommu: 	stream matching with 14 register groups
-[    0.139058] arm-smmu 16c0000.iommu: 	10 context banks (0 stage-2 only)
-[    0.139255] arm-smmu 16c0000.iommu: 	Supported page sizes: 0x63315000
-[    0.139265] arm-smmu 16c0000.iommu: 	Stage-1: 36-bit VA -> 36-bit IPA
-[    0.139341] arm-smmu 16c0000.iommu: 	preserved 0 boot mappings
-
-
-[    2.424369] arm-smmu 5040000.iommu: probing hardware configuration...
-[    2.428581] arm-smmu 5040000.iommu: SMMUv2 with:
-[    2.434914] arm-smmu 5040000.iommu: 	stage 1 translation
-[    2.439584] arm-smmu 5040000.iommu: 	address translation ops
-[    2.444881] arm-smmu 5040000.iommu: 	non-coherent table walk
-[    2.450522] arm-smmu 5040000.iommu: 	(IDR0.CTTW overridden by FW configuration)
-[    2.456175] arm-smmu 5040000.iommu: 	stream matching with 3 register groups
-[    2.463216] arm-smmu 5040000.iommu: 	3 context banks (0 stage-2 only)
-[    2.483555] arm-smmu 5040000.iommu: 	Supported page sizes: 0x63315000
-[    2.490455] arm-smmu 5040000.iommu: 	Stage-1: 48-bit VA -> 36-bit IPA
-[    2.497171] arm-smmu 5040000.iommu: 	preserved 0 boot mappings
-
-
-[    2.546101] arm-smmu 5100000.iommu: probing hardware configuration...
-[    2.552439] arm-smmu 5100000.iommu: SMMUv2 with:
-[    2.558945] arm-smmu 5100000.iommu: 	stage 1 translation
-[    2.563627] arm-smmu 5100000.iommu: 	address translation ops
-[    2.568923] arm-smmu 5100000.iommu: 	non-coherent table walk
-[    2.574566] arm-smmu 5100000.iommu: 	(IDR0.CTTW overridden by FW configuration)
-[    2.580220] arm-smmu 5100000.iommu: 	stream matching with 12 register groups
-[    2.587263] arm-smmu 5100000.iommu: 	13 context banks (0 stage-2 only)
-[    2.594544] arm-smmu 5100000.iommu: hiding last ctx bank from linux
-[    2.614447] arm-smmu 5100000.iommu: 	Supported page sizes: 0x63315000
-[    2.621358] arm-smmu 5100000.iommu: 	Stage-1: 36-bit VA -> 36-bit IPA
-[    2.627772] arm-smmu 5100000.iommu: 	preserved 0 boot mappings
-
-
-[    2.806781] arm-smmu cd00000.iommu: probing hardware configuration...
-[    2.813029] arm-smmu cd00000.iommu: SMMUv2 with:
-[    2.819627] arm-smmu cd00000.iommu: 	stage 1 translation
-[    2.824304] arm-smmu cd00000.iommu: 	address translation ops
-[    2.829601] arm-smmu cd00000.iommu: 	non-coherent table walk
-[    2.835243] arm-smmu cd00000.iommu: 	(IDR0.CTTW overridden by FW configuration)
-[    2.840897] arm-smmu cd00000.iommu: 	stream matching with 54 register groups
-[    2.847954] arm-smmu cd00000.iommu: 	17 context banks (0 stage-2 only)
-[    2.869307] arm-smmu cd00000.iommu: 	Supported page sizes: 0x63315000
-[    2.875785] arm-smmu cd00000.iommu: 	Stage-1: 32-bit VA -> 36-bit IPA
-[    2.882205] arm-smmu cd00000.iommu: 	preserved 0 boot mappings
-
-
-[   24.525457] arm-smmu 16c0000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1900
-[   24.525604] arm-smmu 16c0000.iommu: FSYNR0 = 00000001 [S1CBNDX=0 PLVL=1]
-[   24.721874] arm-smmu 16c0000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1900
-[   24.722033] arm-smmu 16c0000.iommu: FSYNR0 = 00000001 [S1CBNDX=0 PLVL=1]
-
+Thanks,
+Melody
 
