@@ -1,174 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-28550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22B8C952343
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 22:20:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C16E1952355
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 22:26:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CE549285421
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 20:19:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 82FC9281934
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 20:26:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EABB51C9EBC;
-	Wed, 14 Aug 2024 20:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 609CB1C3794;
+	Wed, 14 Aug 2024 20:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qvg0l7ga"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L/0296B2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DF81C9DCC
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 20:18:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A850139CE3;
+	Wed, 14 Aug 2024 20:25:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723666696; cv=none; b=V4MrQOuQVVbDgWb3wwIUjlp+DLAZpXV/7tEQCqMxYFMUU9PxUrqiqoJb3IgFly6pN658BrdRA/f9uLkNSo6OFSC2sGQFSwlv2Xy0znbNsaKRM9xtNVNnkJ/IsAJZKQkxbhyYU5aQMAnw50fSAL9d5leAlodlY9BTkvyTM852iSA=
+	t=1723667159; cv=none; b=NcS5r8fI9NTst3/D4uN2KngDmgv3Q6M0zLEF99Qg6xwmIfFNozDSCX36AHISK6qe1dZi5Er3H3CoPkpDx6PG0kooQ2QdbVxaj7z2NZ2zD19iuqYD6pv5cPPknc5Yp3ZICL2YlCbvBO+zuN/L7j3LXawf9567iUe6WTJp39QYqKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723666696; c=relaxed/simple;
-	bh=qjB1r7xWZkiqepaZBKt71uec8dzopsPxrHTPtf78T+A=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mpbFeSoh5ftKqA7ojO3N4i+LyKaBehKVsPKh7xCZRw3HKVEhEAzQt9uq7en/KkRYsGto7KA1tpB9I3gguYoNB3u6nEypKgWj8BIqGzSZ9aiQXwq0H1GpFfoKSFSMJuhRWwuh/YSmrhGy+U/3h6jK857gzhR5QO8v17ImPoEhZlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qvg0l7ga; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-428e3129851so1041925e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 13:18:14 -0700 (PDT)
+	s=arc-20240116; t=1723667159; c=relaxed/simple;
+	bh=5THrZT91Dka8vE3WCfMHCQnwH9ElY7cqZ5CXLdQYm9g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HNojS4oN5npURYpdzH6EWcyJwwXX3UC29dyuqOuDg00VkeW8KXnpr9W2xFO7M9+QA2uopE2EJK1Iq+6/hO8uubWA4S5EUKkGnyYXQMfCoAgcIyO77v7tJfPmo+g//2exmwnOP4jMyDm6MY7JX64GAxWylxk/4ijF43qs+dvyzwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L/0296B2; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a7a9185e1c0so31989866b.1;
+        Wed, 14 Aug 2024 13:25:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723666693; x=1724271493; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KkMza/iQJ0QUiOTZWS7zmA9N7fZVP+GD4cxhszqTjVw=;
-        b=qvg0l7gah/aSSQEQzeV0Tz0yB01+9NpwgychFuBe7kAcnohwfSW/fYIrtyrWm9O0rb
-         ELEY7i7fOzIKw5BEtQClnV+jeOwSaDZql+rWuzHnhdaJujphJHauLSlwPkRMVHMYXhKT
-         h/4v+RH3HGcn702MFjF2Ffc8BWxsN6ed5XKAzSc73VGyMebg1WiimMG+YEaPn5KthmMS
-         dsys4P8UJvaAWVEk5ZJbVgO7LwVukwTeumbUYHKzlunzuZ+7NNampu0rG5S8my/I+XzH
-         /5XibjPV85C8+PK7BJ2NO6B8URQAUU5ZpPiAGICbv7nIpD7i+wy1rn++UlOc7eaDqgQy
-         uLEA==
+        d=gmail.com; s=20230601; t=1723667156; x=1724271956; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=e+7imTotiuh7U0ostSpwsXZ2DttMOuddO+8MDxDc62k=;
+        b=L/0296B2VWjpQcZwLzW33xfUyn1dv8oIBHaMFNs4yAc+iasvdGFBYR4A1Nj7mN40pC
+         EANw0xhyCVcgQoI8T8wy/xe9E2gjv4J8oSlompFrdL186M+omhIFSVX8j73uSBeZ1i+d
+         DDpXczm88dA+M4Jn4L60hA3mV4IIrhTBcw2ZQV9LYo/k6cr3mvLhoJPTE+WGsXNnh+Gf
+         fTiqj/uUUlkC7KjvpEP/0NNLKlB2HBxYgnmDfphyCMABlHpX4ldgL2IYgtAJ6Kx6UVQh
+         vq3zkefJNB3AsUpaoGQJoUogxY+CmwjubH+NTTJEPrlDo6OA4uv3drrhq2KgZA+MvjY2
+         fSFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723666693; x=1724271493;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KkMza/iQJ0QUiOTZWS7zmA9N7fZVP+GD4cxhszqTjVw=;
-        b=doBOUyCtxy/OEX7dfDDEU7OMVJDhxCko/UCRbXnP9WESQecnzQYUOOIAGVg3e9/t+o
-         Czp16zoIudlRk7eezKsK9TzpVpex146XKJtmzIZNzuikMv0gYUTahbbaO7UQfw9fZdvu
-         BVwnzjIVgwJMwPJZIydfHoyh2pxPQk1+z5LcRHXUmwbvSb8EKcpvM+WipVFLdwpC9mEx
-         l1pwNS71HOA2LcBshoqMa7jIX2FO3MIR9Gy6nPoZbp9tegZQ4qNVILrl6o5wUlBY6oWF
-         //jWth58mcWdk0jnfy4Uvd7BEanMLz6Ia6+cPfRLXIeycOphapAcklbEJIdlSOtuRwGP
-         QmEQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWgOAqDYz7SjFkltRhrCD+ujRi/5wbnBLSgk/8pZww3XM9Yzj0bzk55dsB2YXO46YWMVhMBhJ9v6MH2MEyAFqnqYy8uS7b0MSWMnjzjsg==
-X-Gm-Message-State: AOJu0YwM6v8M9mvGXmrEdHNKYYcEwk1oy+6g1EuOiM2GUCfzItulCpfU
-	OQqfo9p7CqVXbajAMNNlaywonvgT34OEWzL540sQCJSb5r9bGKR0j63Fq+XCi4U=
-X-Google-Smtp-Source: AGHT+IGnTWLywH9MaoyhJRh9e6rqTQpuA5DArTXIC0CU3PtawcT4ViUxduJrjccfNP+6pW3j7swlVg==
-X-Received: by 2002:adf:e702:0:b0:369:ba89:a577 with SMTP id ffacd0b85a97d-371777b1bd1mr2864629f8f.34.1723666693157;
-        Wed, 14 Aug 2024 13:18:13 -0700 (PDT)
-Received: from [127.0.1.1] ([178.197.215.209])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36e4ebd3631sm13623519f8f.110.2024.08.14.13.18.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Aug 2024 13:18:12 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 14 Aug 2024 22:17:53 +0200
-Subject: [PATCH 7/7] thermal: sun8i: Use scoped device node handling to
- simplify error paths
+        d=1e100.net; s=20230601; t=1723667156; x=1724271956;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=e+7imTotiuh7U0ostSpwsXZ2DttMOuddO+8MDxDc62k=;
+        b=O1a7j41YRtxEqFAWFWmwd51gg84ZzWvQC1COaqhg8j1Vxbq5i/1gqeFQz04UAg1C3C
+         zf7dc1r5Vz4XNdy0KssV6adyQijr2lLK8+0T7fTdl71PvyokRsIOxCpO616Ia5iRUaEz
+         7PveLLoN98f1qyDr4NObTNHZQ94bqDFSFk8g8agQGNu1cb2p5fH0Y2sQxL/x8Tgk4mGh
+         hEasDhjOQu5u5k4D1o0vDIaAhiNpIhLtTib45fTdvihiCvoGh6Mfl+6X27MItTuSCNy3
+         2qyeW7LhKsxkDcyJrQ4pMAsqTnaj36YKWjJyjGIMAoxICtJ2oJPCIKsOTA8uZLvyE9CK
+         iWTg==
+X-Forwarded-Encrypted: i=1; AJvYcCUG6sE6LmT9JnbDf+A6QWcaTC++iKQNCOE4umnKMGKAuHg0agubqKeNvcOSIg7tUrlZDjOu4Zt/Vtnb+Ok1w5wOAFP8t8Yzd2pyYC2LB0egdePxmvB6xgBvr6YR+saQgkW4/osfS3H1G/di7jzD++F7rjzYYleWO3NnpJX5QCREOmYAv+Y1uLJirCph/0de4YhJp047D4FhrA7IbeeTWHNotMY=
+X-Gm-Message-State: AOJu0YyE1IMwWp0lvRa9yDrmt9HWtUcSHVINNaS75GHXF2XraiMueW6y
+	JBSoVejqXI7vNiCYnJoV1SJxy8E3MgWzkl47SGkOjM1jCFqsXX8w
+X-Google-Smtp-Source: AGHT+IH+SZrWskCFaBKMcil9L0FX4p7V/d1rSz8qFi4Xab5CoLt/Ip1kZb8rju6bwMrlzWibwGzJAA==
+X-Received: by 2002:a17:906:4fc7:b0:a7a:a5ae:11bd with SMTP id a640c23a62f3a-a83670723e6mr288279266b.67.1723667155199;
+        Wed, 14 Aug 2024 13:25:55 -0700 (PDT)
+Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a80f3fa784fsm214857666b.61.2024.08.14.13.25.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Aug 2024 13:25:54 -0700 (PDT)
+Message-ID: <0eca6755-a2ec-404f-b98c-ee6c9f6fb55f@gmail.com>
+Date: Wed, 14 Aug 2024 22:25:50 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240814-b4-cleanup-h-of-node-put-thermal-v1-7-7a1381e1627e@linaro.org>
-References: <20240814-b4-cleanup-h-of-node-put-thermal-v1-0-7a1381e1627e@linaro.org>
-In-Reply-To: <20240814-b4-cleanup-h-of-node-put-thermal-v1-0-7a1381e1627e@linaro.org>
-To: "Rafael J. Wysocki" <rafael@kernel.org>, 
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
- Lukasz Luba <lukasz.luba@arm.com>, Amit Kucheria <amitk@kernel.org>, 
- Thara Gopinath <thara.gopinath@gmail.com>, 
- Thierry Reding <thierry.reding@gmail.com>, 
- Jonathan Hunter <jonathanh@nvidia.com>, 
- Vasily Khoruzhick <anarsoul@gmail.com>, Yangtao Li <tiny.windzz@gmail.com>, 
- Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Samuel Holland <samuel@sholland.org>
-Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1690;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=qjB1r7xWZkiqepaZBKt71uec8dzopsPxrHTPtf78T+A=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmvRD1tu+OfU0AIMkIy7rwyVDG9h4CyZBJq2lx9
- T9f0OzUoMWJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZr0Q9QAKCRDBN2bmhouD
- 1+c6D/9L71ii7X8SXP+hER4rvtyMdzBnxiA9V6HcUp4+DoljLDog0tR7F9bq8L6vfBfgJrUClwB
- l1BVN5h89/Nq0ZXHFkTZysFdiBmTrSUJiaCbHRhA8EEEGmxZVyARP6yTAOxy5nSIP3RapG0kZPa
- sCn1XVWO6zFIg3hYsZga906bNygVn+vaw1eSkNWmdj1IyNlvXGoyncGt4gGBHszuA3V7NUwplXL
- xUFYvwGZoE6MDswhKkYs2Mzd/2444ochaXS8mooZDTpOefionTRgovxfXlcAoi+qGsdmEPe3WPG
- uumzRLm4iwQ4aUkhVSygpRVh9eK0Qt+adknlmqWQROyiW7i1rdhF5jkzVwONHNolQDQjUhp+qfV
- WAXfmTI1sx2pPmSgEtrnmvJCz7z+6qxfDxXqnzcMluf2pZjn6GMyh6zcmimIDnlfRgi+lf84E12
- IMmZ7UEX7spYVxwaTsWizJd10bPP8LPk3tQiwBy7LrZ27d8NLlrb7LJbPp4ukO4P4jPCRrr1s1R
- E0D0QDeC9mZNZrhwTx+GSfood/gTRLj55h3tz78QkMXT9jMkWPnF8MYMXWbWpDbez5q+Ibb/L1x
- FomdxaFfQIkSN3Q6NRtv78555UJxK6REVC8guvyyfhFFFu5fI/+AnnVGddvsx8vv9gUrEVgoAr/
- 8szxukJ5Iy1aydg==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/3] dt-bindings: soc: qcom: eud: Update compatible
+ strings for eud
+To: Melody Olvera <quic_molvera@quicinc.com>,
+ Konrad Dybcio <konradybcio@kernel.org>, Krzysztof Kozlowski
+ <krzk@kernel.org>, Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Trilok Soni <quic_tsoni@quicinc.com>,
+ Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+ Elson Serrao <quic_eserrao@quicinc.com>
+Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-usb@vger.kernel.org
+References: <20240807183205.803847-1-quic_molvera@quicinc.com>
+ <20240807183205.803847-2-quic_molvera@quicinc.com>
+ <dfb1ac84-f011-45ea-9fb1-b8c6bc36cabc@kernel.org>
+ <46d0627d-877b-41f3-83f6-4c33b562f460@quicinc.com>
+ <0ebb1ca3-722d-422f-9f71-fcc61c3470b0@kernel.org>
+ <2b118a49-2229-4346-ab21-0aa5377d7a4e@kernel.org>
+ <8bb412f8-4fe1-40ca-8414-bb77c66899ae@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konradybcio@gmail.com>
+In-Reply-To: <8bb412f8-4fe1-40ca-8414-bb77c66899ae@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Obtain the device node reference with scoped/cleanup.h to reduce error
-handling and make the code a bit simpler.
+On 14.08.2024 7:33 PM, Melody Olvera wrote:
+> 
+> 
+> On 8/14/2024 3:30 AM, Konrad Dybcio wrote:
+>> On 14.08.2024 8:15 AM, Krzysztof Kozlowski wrote:
+>>> On 13/08/2024 22:03, Melody Olvera wrote:
+>>>>
+>>>> On 8/8/2024 4:00 AM, Krzysztof Kozlowski wrote:
+>>>>> On 07/08/2024 20:32, Melody Olvera wrote:
+>>>>>> The EUD can more accurately be divided into two types; a secure type
+>>>>>> which requires that certain registers be updated via scm call and a
+>>>>>> nonsecure type which must access registers nonsecurely. Thus, change
+>>>>>> the compatible strings to reflect secure and nonsecure eud usage.
+>>>>>>
+>>>>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>>>>>> ---
+>>>>>>    Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml | 6 +++---
+>>>>>>    1 file changed, 3 insertions(+), 3 deletions(-)
+>>>>>>
+>>>>>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>>>>>> index f2c5ec7e6437..476f92768610 100644
+>>>>>> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>>>>>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>>>>>> @@ -17,8 +17,8 @@ properties:
+>>>>>>      compatible:
+>>>>>>        items:
+>>>>>>          - enum:
+>>>>>> -          - qcom,sc7280-eud
+>>>>>> -      - const: qcom,eud
+>>>>>> +          - qcom,secure-eud
+>>>>>> +          - qcom,eud
+>>>>> Commit msg did not explain me why DT bindings rules are avoided here and
+>>>>> you drop existing SoC specific compatible.
+>>>>>
+>>>>> This really does not look like having any sense at all, I cannot come up
+>>>>> with logic behind dropping existing users. You could deprecate it, but
+>>>>> then why exactly this device should have exception from generic bindings
+>>>>> rule?
+>>>> Understood. I won't drop this compatible string. Is alright to add the
+>>>> additional compatible as is?
+>>> You always need SoC specific compatible.
+>> Melody, is there any way to discover (that won't crash the board if we
+>> guess wrong) whether secure accessors are needed?
+>>
+> 
+> Unfortunately, no. We considered several options, but none guarantee that we will avoid
+> a crash if we try non-securely. The secure call also won't give a specific error if it fails either
+> (for security reasons) so we can't know if a secure access failed because it's supposed to be
+> accessed non-securely or for another reason; hence this approach. If there's
+> another way to achieve this functionality that might be better, I'm all ears.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/thermal/sun8i_thermal.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+Can we read some fuse values and decide based on that?
 
-diff --git a/drivers/thermal/sun8i_thermal.c b/drivers/thermal/sun8i_thermal.c
-index 3203d8bd13a8..22674790629a 100644
---- a/drivers/thermal/sun8i_thermal.c
-+++ b/drivers/thermal/sun8i_thermal.c
-@@ -9,6 +9,7 @@
-  */
- 
- #include <linux/bitmap.h>
-+#include <linux/cleanup.h>
- #include <linux/clk.h>
- #include <linux/device.h>
- #include <linux/interrupt.h>
-@@ -348,19 +349,18 @@ static void sun8i_ths_reset_control_assert(void *data)
- 
- static struct regmap *sun8i_ths_get_sram_regmap(struct device_node *node)
- {
--	struct device_node *sram_node;
- 	struct platform_device *sram_pdev;
- 	struct regmap *regmap = NULL;
- 
--	sram_node = of_parse_phandle(node, "allwinner,sram", 0);
-+	struct device_node *sram_node __free(device_node) =
-+		of_parse_phandle(node, "allwinner,sram", 0);
- 	if (!sram_node)
- 		return ERR_PTR(-ENODEV);
- 
- 	sram_pdev = of_find_device_by_node(sram_node);
- 	if (!sram_pdev) {
- 		/* platform device might not be probed yet */
--		regmap = ERR_PTR(-EPROBE_DEFER);
--		goto out_put_node;
-+		return ERR_PTR(-EPROBE_DEFER);
- 	}
- 
- 	/* If no regmap is found then the other device driver is at fault */
-@@ -369,8 +369,7 @@ static struct regmap *sun8i_ths_get_sram_regmap(struct device_node *node)
- 		regmap = ERR_PTR(-EINVAL);
- 
- 	platform_device_put(sram_pdev);
--out_put_node:
--	of_node_put(sram_node);
-+
- 	return regmap;
- }
- 
-
--- 
-2.43.0
-
+Konrad
 
