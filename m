@@ -1,63 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-28569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28570-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6EA3952643
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 01:38:30 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12692952655
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 01:53:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 10EF41C21625
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 23:38:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 74AF3B22D1C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 23:53:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DCE71448D8;
-	Wed, 14 Aug 2024 23:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6289D14B976;
+	Wed, 14 Aug 2024 23:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Dz0945fL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="U7qAc2E3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C288014F100;
-	Wed, 14 Aug 2024 23:38:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADB239FE5
+	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 23:53:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723678706; cv=none; b=jvAWX/WZjda7yWXuDjD3aEADVLQUzUx/frbDQ4vJ5WcdeenXezbaMAuYW5Dl7a7ErsogAGYOQzPj3jz/OcARUvexvOltTNboHd0Xno+Tt3c/MJ7TnOA3CN1u8aFu3UmMgQJnbE1ZylOGSBaeL/eFGQo1Ibv3L3/lETTBLKU8CRQ=
+	t=1723679602; cv=none; b=TQzwf9LmkiPZEqDwdNqjG2GmJu83uyuNjl8adPEoqhfAVJhjS6AGm3aMbEA58s9Al8wtlKNmxgVOiO3Ih7zD4vE5QkuMunIIi5LNnWU+kwUAGT4w2rMplPH5mYsJ5m2D3IrXBu3G+67d2WTgnUGiRwHevYpjtpUrSsPWYUO1DRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723678706; c=relaxed/simple;
-	bh=X+uNf6QBacK7A1SgElpXUmSHJKVqGuB/zzAeavelho4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=BpuGQMSLuiT321MUJIRKwNQpoOjwuQlw4mPQeJrg/Ia/IAYFKQrx7Ct85eeBmIN8v7wpBQsLexJBRinGArLvi3sK+1hwzxBFXp0/f9t2deCbmzvTtL9aJsSZ8OCnWnx3Z1QqwEyQ3h3ART4w0BXI0nnh0SF7++I3+9U75/xyDMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Dz0945fL; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47ENX68k026141;
-	Wed, 14 Aug 2024 23:38:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3SuX4NbGIm3CicMr0EOOf3ER4u0+E3FHahtNk7oLMLQ=; b=Dz0945fLlkdJpwQg
-	kLxizqFIX7tPUX5Z/fqc/Mm6TnsFdiCM8JOs6gAYVzISNIORsqOmfKxvFzyW40C/
-	/B3lTs2pc1YZBI3gdT3zE3RIJ8IF7iHgZxZU3m+srMzI+CDEc+m15rT11E6wP3Pp
-	WPwbMcXX4kDpqv6q5m97T1s47NeWnaSLHPVA1IBICKos6anHmci8BI8dAEW5HG6H
-	l5ylN0L1N6ttsNLi0LOl7/rxc2VEShtQ2UG0dch9JQIflmFtIH0/Fg7cS3PbX7zG
-	mAsFNs+AFXnLhUQoISvARMaXslV3xwHX9d7w540zzWeMY8OLk4HRIVSG9kz4VhqE
-	kE1gcQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x18y4uyx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Aug 2024 23:38:15 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47ENcEUX026723
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Aug 2024 23:38:14 GMT
-Received: from [10.134.71.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 14 Aug
- 2024 16:38:14 -0700
-Message-ID: <524c6799-1056-49da-a888-12b6f8e37e25@quicinc.com>
-Date: Wed, 14 Aug 2024 16:38:06 -0700
+	s=arc-20240116; t=1723679602; c=relaxed/simple;
+	bh=oWcr9yvSj89hwLY1f4OI1N0YsmHkbUrc/8uMmyWpRAo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YxunHPiNwFUX2+c5l0nha7oOikwykfq+h7sPeILGgfWe5c9lg2V6YucxfeisQHJNjn9X5tDHeliPjpyQ4JhCQdQrYG8dIV+Rxo9taRH28XW559+CGMAcPSnOcvBjVIx7hhYFzCb/PMGBJ3Ssy6QViQpH7qlunoFIBzKoe7xAzdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=U7qAc2E3; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42808071810so2083855e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 16:53:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1723679599; x=1724284399; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/EGN+b4/f+L1J4PwtsVMenONq33iywKxH0fU8rJy0js=;
+        b=U7qAc2E3dcQ70B+h3jUnQhy+qHCqU2llTkXF2+Cg+HoiJgT30sc054eniEPWtMziqX
+         8Sw6SIjj5bGVNlOB2lf2Cto67EUaJWF2/2xpx9C9loQ0WlUt8iuXJLoE9Qy3897Oe2pK
+         gnA01EvT07PZqYWbnthAlgJ8zxmQ+r7FvfncUIbwFf9uPGLyh7E7KaWN4yRHfHMlP+m9
+         yS6BqqhQ97MDupXals/rhRCHN/RQIshgfjerFwxiXtxVpqUsfbq0PaLdX2OUjhJI09dG
+         GoC1sLTQTkOO/nJbQ8XhDdryqD+rcwySYdBuxbuEC046yHX1fy0FyPAY180dwRMupu9P
+         p+Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723679599; x=1724284399;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/EGN+b4/f+L1J4PwtsVMenONq33iywKxH0fU8rJy0js=;
+        b=KtlMJISGhKgsx5S7ctVh8mJZrSsVD46ZCFH5ZYUwXNwQ8XturgDUZT69nMud0n8m6e
+         Vzgg2nTVdmqzeXsq2un2Vf9BccRk/8QAg56h9ft97Xc3Wva4OWGc5+se/hjkEMBvrQeY
+         EFGL3JbN7NXCCuwMjdPCIXLCmFzmN6tXSaaN7TmIDwHexqX0n2KabJeoBUH8xWsGdQDS
+         /OdbWtY8kT+AO/bkuIZMJy3qI1sGaHlXJX360q0JASbUXDBk0J1u6vnbKkmN+6TjUSjk
+         LdorjwnYy2qdSY60gnnpZjfPP75MJ7qCY3UK0DorVr7fUnSfI3nVFjBJCYon9FI8omR5
+         Jo8A==
+X-Gm-Message-State: AOJu0YydAh6A06VsC53C2QBpBTptXeyzp6aIcu9uA8R2JJ86rSEDRX5g
+	+Hb1UiEDYTfmWFz+SYFl9GNrqUe+7pwHwyNN/zGwbeCyhzDUUKM72VVXO2hV+6k=
+X-Google-Smtp-Source: AGHT+IHnR9FXVZqaGbdhBGxRE1L18EtaOWa7lw8oftSVGi5gyStVTja4iv7pJGXAgPHIo7eMHDjlDQ==
+X-Received: by 2002:a05:600c:138f:b0:426:6eac:8314 with SMTP id 5b1f17b1804b1-429dd22f4c1mr30463375e9.1.1723679598842;
+        Wed, 14 Aug 2024 16:53:18 -0700 (PDT)
+Received: from [192.168.0.25] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429e7e1c46fsm3963855e9.39.2024.08.14.16.53.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Aug 2024 16:53:18 -0700 (PDT)
+Message-ID: <8c504081-b0e4-4a64-9e21-e7d040a0aa6c@linaro.org>
+Date: Thu, 15 Aug 2024 00:53:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,53 +75,83 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] drm/msm: clean up fault injection usage
-To: Jani Nikula <jani.nikula@intel.com>, <linux-kernel@vger.kernel.org>
-CC: <intel-xe@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <akinobu.mita@gmail.com>,
-        <akpm@linux-foundation.org>, <lucas.demarchi@intel.com>,
-        <rodrigo.vivi@intel.com>, <thomas.hellstrom@linux.intel.com>,
-        <robdclark@gmail.com>, <dmitry.baryshkov@linaro.org>
-References: <20240813121237.2382534-1-jani.nikula@intel.com>
- <20240813121237.2382534-2-jani.nikula@intel.com>
+Subject: Re: [PATCH 08/13] media: qcom: camss: csid: Move common code into
+ csid core
+To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-9-quic_depengs@quicinc.com>
 Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240813121237.2382534-2-jani.nikula@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240812144131.369378-9-quic_depengs@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 57f0nh7_NZ4STpljdyMhwAVDcmwTsuYu
-X-Proofpoint-ORIG-GUID: 57f0nh7_NZ4STpljdyMhwAVDcmwTsuYu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-14_19,2024-08-13_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=713
- suspectscore=0 phishscore=0 malwarescore=0 mlxscore=0 spamscore=0
- lowpriorityscore=0 impostorscore=0 clxscore=1011 priorityscore=1501
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408140165
 
-
-
-On 8/13/2024 5:12 AM, Jani Nikula wrote:
-> With the proper stubs in place in linux/fault-inject.h, we can remove a
-> bunch of conditional compilation for CONFIG_FAULT_INJECTION=n.
+On 12/08/2024 15:41, Depeng Shao wrote:
+> The get hw version and src pad code functions can be common code in csid
+> core file, then the csid driver of different hw version can reuse them,
+> rather than adding duplicate code in csid driver for each version.
 > 
-> Cc: Andrew Morton <akpm@linux-foundation.org>
-> Cc: Akinobu Mita <akinobu.mita@gmail.com>
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+> Suggested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/msm_debugfs.c | 2 --
->   drivers/gpu/drm/msm/msm_drv.c     | 2 --
->   drivers/gpu/drm/msm/msm_drv.h     | 4 ----
->   3 files changed, 8 deletions(-)
+>   .../platform/qcom/camss/camss-csid-4-1.c      | 19 -----
+>   .../platform/qcom/camss/camss-csid-4-7.c      | 42 ----------
+>   .../platform/qcom/camss/camss-csid-gen2.c     | 60 ---------------
+>   .../media/platform/qcom/camss/camss-csid.c    | 77 +++++++++++++++++++
+>   .../media/platform/qcom/camss/camss-csid.h    | 21 +++++
+>   5 files changed, 98 insertions(+), 121 deletions(-)
 > 
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid-4-1.c b/drivers/media/platform/qcom/camss/camss-csid-4-1.c
+> index c95861420502..6998e1c52895 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid-4-1.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid-4-1.c
+> @@ -17,7 +17,6 @@
+>   #include "camss-csid-gen1.h"
+>   #include "camss.h"
+>   
+> -#define CAMSS_CSID_HW_VERSION		0x0
+>   #define CAMSS_CSID_CORE_CTRL_0		0x004
+>   #define CAMSS_CSID_CORE_CTRL_1		0x008
+>   #define CAMSS_CSID_RST_CMD		0x00c
+> @@ -139,15 +138,6 @@ static int csid_configure_testgen_pattern(struct csid_device *csid, s32 val)
+>   	return 0;
+>   }
+>   
+> -static u32 csid_hw_version(struct csid_device *csid)
+> -{
+> -	u32 hw_version = readl_relaxed(csid->base + CAMSS_CSID_HW_VERSION);
+> -
+> -	dev_dbg(csid->camss->dev, "CSID HW Version = 0x%08x\n", hw_version);
+> -
+> -	return hw_version;
+> -}
+>   
+> -static u32 csid_hw_version(struct csid_device *csid)
+> -{
+> -	u32 hw_version = readl_relaxed(csid->base + CAMSS_CSID_HW_VERSION);
+> -
+> -	dev_dbg(csid->camss->dev, "CSID HW Version = 0x%08x\n", hw_version);
+> -
+> -	return hw_version;
+> -}
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Is it also the case with csid-4-1 and csid-47 that the HW version is in 
+the format x.x.x - because you're removing this printout which just 
+prints the register in favour of a later function that decodes that 
+register into three parts.
+
+Suggest having a csid_hw_version_gen1() for these two and a 
+csid_hw_version_gen2() which does the x.x.x print instead.
+
+=> camss-csid-4-1.c and camss-csid-4-7.c will have hw_version = 
+csid_hw_version_gen1()
+
+=> camss-csid-gen2, camss-csid-790 will have hw_version = hw_version_gen2()
+
+---
+bod
 
