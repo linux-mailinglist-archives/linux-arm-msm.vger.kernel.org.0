@@ -1,74 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BBEA3951899
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 12:24:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93E6A9518D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 12:30:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EAA1C1C21405
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 10:24:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3D64B1F22238
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 10:30:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33B171AD9EE;
-	Wed, 14 Aug 2024 10:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C6B11AE044;
+	Wed, 14 Aug 2024 10:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cSMV0iYo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MjLOT/ol"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664481AD9C6;
-	Wed, 14 Aug 2024 10:24:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6F81AE038;
+	Wed, 14 Aug 2024 10:30:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723631077; cv=none; b=A8cLDeEJCm6n+kZv4VnQjHHPeq+r0XGiX0oqURhWKf0KQor//qevhIPHLJxXQe7CGA4YwpMlaSyHB8uKraTU1udyklmAFgarC3TVRAqv/6ybm5FZ755AQwgU5Sm8+n+IRBK43/0jBTrhZ+1PAukYEzpiHCPblAZK5ne9nJVsyv0=
+	t=1723631410; cv=none; b=ZLyjdtL/3pt90LYE71trYjSNm750Cx2ZwIoAsLJYiObvlVq6L+JzMeVPU7AUjbPFVu6Yu2uiTKWYNuKa1CwhpR7OW5vFtxp94qV78k8p3uyEmJv7j3Dfpc0gG7lyOFODF34GVDxNXpVwfAbGU/vaaNOMlLqg4vYh7HYHJV8ScV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723631077; c=relaxed/simple;
-	bh=F+fWOeFe8egGaghMJ7hHNwSuutzsrA20teroFHUZR1I=;
+	s=arc-20240116; t=1723631410; c=relaxed/simple;
+	bh=K6G/iVkagitlkBAW0XnQFiBIC8Njt7zMbRnHDyYHvUQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Nin0KOsQb9cLHX1Y1d+llDizIFaTwAYkdIHDfUc5iBL9oKu5ZjCqqsuWbvkE9FWH2Njp8o5K4gK3pHCSL0AKVmP6PNqpf/lNucqJc8Yg1cZxx8d0kHEtZGfOus91p4wuB/V/c0JmtFxnMoihFFzjKgTtOWIq1f8Yns6h+8OjcKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cSMV0iYo; arc=none smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5bb477e3a6dso6317022a12.0;
-        Wed, 14 Aug 2024 03:24:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723631074; x=1724235874; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GXV7UGdGyeZbDUA6+j8Vfo3psbnrsrWfJEuEHnyCD6c=;
-        b=cSMV0iYo9OCIIYOm4V+ZkwMGBVCJrz8dSPDEOXee2nPojEJlmzCLtTOrqzihjCNuGd
-         3j3CQXyYoufsrXy6JOdBp2EmZ+uYFiQrjhPvbN/kM3SourwMxmyMtesO+OgO7qrxWDVM
-         9/xRImJjb1DmCz7ZhqklfTiB/z+iJNfOHCmgHOqMKjGJY+3beTjA2cOudn/aEniG02JH
-         uUpLuaOFmg7px6H+XZam3sxIT32glmtTu6rGxJJVn0TaF7bARuOJRGPZS1gSzo2JyeJU
-         bFqoHwcnLYavHDb2r2FmXLrFros6EGG+T3o7rbUXo3gk6iMGLIJBf5bra1+Dtn5fwUN6
-         KeDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723631074; x=1724235874;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GXV7UGdGyeZbDUA6+j8Vfo3psbnrsrWfJEuEHnyCD6c=;
-        b=jmK90hKRCbbwGoy1Zzb85D1vdQkHKOZPjUeVJshidGLB9HDrppGL/bjs8nr/C3cARW
-         TARh3AZxJNOZgzDKmOGO3iKQVFZXg8BnR8YaVbIPzSd9sJNbArvqAtSfItrXtvlupZFk
-         mxpxpzfSY4bOZSxprEzqLdCtvv4dx5Rt6KDHdrBjDwDF1LFrR0a2kdYbFl8lQQ1zN+GL
-         jg4RyAvBT6pV0Ljf7IWeAaVS7TN2O88NSndFFU78FypxnhaOmCSJk/hb2pA6tSJroMqJ
-         sJjODzxAbAzE+3cIoSENfugpZWBJnqf3hrke56ttG3Owjmb/hfdjfm3kZZTQ0y/QLVV0
-         JxWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX36AUkydIGo7rZhfmBvnQC7vXgPzuXyTB/fqWcoYsGHS4ZAuU3hODZxaqt9g/9gouenOzUkbUhgDxr4Fiu6ZUpxgx2jdor+E9QiWYHpFAGFwAI3J/MHd01T/dHH7ReWk2oseiUi1TGiTjdEwhplkRMOQUN3/KlRweDWGbFOZAtmPJndVcsaU5r45j5t6wYOOoiNFqaTS+nxT7BL25haGnTWtQ=
-X-Gm-Message-State: AOJu0YxENEYh4GIl6ozrmr4Gk7gZAXhZmlRL2glcMJ8nQD7b0N20t7kY
-	bQCxyZzcror6qRHVEonZOeOdPdxNwdiXInzD3gkhLejzAe1aqbDa
-X-Google-Smtp-Source: AGHT+IHT8ikFBVHM/L8p7WeFJXeQpsp3MAxrag9rNzUpJWagZmc9oFeAj89CTDT921aOs9rTwLTbaQ==
-X-Received: by 2002:a05:6402:2186:b0:5b6:d509:6e4f with SMTP id 4fb4d7f45d1cf-5bea1cad57dmr1806913a12.24.1723631073065;
-        Wed, 14 Aug 2024 03:24:33 -0700 (PDT)
-Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5be99b0766fsm1231424a12.18.2024.08.14.03.24.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Aug 2024 03:24:32 -0700 (PDT)
-Message-ID: <3077d600-c570-407a-87eb-6926a67636f9@gmail.com>
-Date: Wed, 14 Aug 2024 12:24:29 +0200
+	 In-Reply-To:Content-Type; b=QamOAmrvoAji/ASX2JKrCM11HTOaC0UydA9yaBBiLDm2i5ngKrqeXoqudRqzz6mHnjw4dtI4zPMt4WuHLXJX7Oq4f84qt8jpI9VNoUYRLvJKWG2crO/pmenEVxXsNerQXOehtBCBWrrqdHIP/M+5oJCCWRduu9IFe0iu/LWVmss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MjLOT/ol; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6341CC4AF0E;
+	Wed, 14 Aug 2024 10:30:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723631409;
+	bh=K6G/iVkagitlkBAW0XnQFiBIC8Njt7zMbRnHDyYHvUQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=MjLOT/olQjjNrZ+8agrDv2BJZ19s9teYUeSjYjm8BBAOKtr57qk7/vLb/3NL2TNrt
+	 JgF1Lz8EBaHOKikZc3SnaIqPRgsPtgWS74FJoOxhqc1evCdJ0Qo2A2H8uMHMEAMWSi
+	 gfb4UgilueqsU+UfeCSjIRscXOggWsMMr0of33rmQ5LUaZGopEThu2Kw9Vr84eH+d9
+	 CSy20MK2LZ5V1KcxlJ8+VZEyL0N3KMqCaSaS+s7bxkc0t9XqtZZ8lN0F+Mjz3IG94p
+	 ublPVW9Farfa4s9+aulpBThqC/prcmT6frRkrX6QHuWQ5CH4QNxNnSJBfZH8AnkZw6
+	 m4lPcYk8n0DSw==
+Message-ID: <2b118a49-2229-4346-ab21-0aa5377d7a4e@kernel.org>
+Date: Wed, 14 Aug 2024 12:30:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,58 +50,75 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100: Add USB Multiport
- controller
-To: Song Xue <quic_songxue@quicinc.com>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+Subject: Re: [PATCH v1 1/3] dt-bindings: soc: qcom: eud: Update compatible
+ strings for eud
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Melody Olvera <quic_molvera@quicinc.com>,
+ Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Trilok Soni <quic_tsoni@quicinc.com>,
+ Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+ Elson Serrao <quic_eserrao@quicinc.com>
+Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Krishna Kurapati <quic_kriskura@quicinc.com>,
- Konrad Dybcio <quic_kdybcio@quicinc.com>
-References: <20240809-topic-h_mp-v1-0-3c5f468566d8@quicinc.com>
- <20240809-topic-h_mp-v1-2-3c5f468566d8@quicinc.com>
- <21fffb71-d559-4973-8028-d9c9b9f67001@quicinc.com>
+ linux-usb@vger.kernel.org
+References: <20240807183205.803847-1-quic_molvera@quicinc.com>
+ <20240807183205.803847-2-quic_molvera@quicinc.com>
+ <dfb1ac84-f011-45ea-9fb1-b8c6bc36cabc@kernel.org>
+ <46d0627d-877b-41f3-83f6-4c33b562f460@quicinc.com>
+ <0ebb1ca3-722d-422f-9f71-fcc61c3470b0@kernel.org>
 Content-Language: en-US
-From: Konrad Dybcio <konradybcio@gmail.com>
-In-Reply-To: <21fffb71-d559-4973-8028-d9c9b9f67001@quicinc.com>
+From: Konrad Dybcio <konradybcio@kernel.org>
+In-Reply-To: <0ebb1ca3-722d-422f-9f71-fcc61c3470b0@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 14.08.2024 12:08 PM, Song Xue wrote:
-> 
-> On 8/9/2024 9:18 PM, Konrad Dybcio wrote:
->> X1E80100 has a multiport controller with 2 HS (eUSB) and 2 SS PHYs
->> attached to it. It's commonly used for USB-A ports and internally
->> routed devices. Configure it to support such functionality.
+On 14.08.2024 8:15 AM, Krzysztof Kozlowski wrote:
+> On 13/08/2024 22:03, Melody Olvera wrote:
 >>
->> Signed-off-by: Konrad Dybcio<konrad.dybcio@linaro.org>
->> ---
-
-[...]
-
->> +
->> +                phys = <&usb_mp_hsphy0>, <&usb_mp_qmpphy0>,
->> +                       <&usb_mp_hsphy1>, <&usb_mp_qmpphy1>;
->> +                phy-names = "usb2-0", "usb3-0",
->> +                        "usb2-1", "usb3-1";
->> +                dr_mode = "host";
+>>
+>> On 8/8/2024 4:00 AM, Krzysztof Kozlowski wrote:
+>>> On 07/08/2024 20:32, Melody Olvera wrote:
+>>>> The EUD can more accurately be divided into two types; a secure type
+>>>> which requires that certain registers be updated via scm call and a
+>>>> nonsecure type which must access registers nonsecurely. Thus, change
+>>>> the compatible strings to reflect secure and nonsecure eud usage.
+>>>>
+>>>> Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+>>>> ---
+>>>>   Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml | 6 +++---
+>>>>   1 file changed, 3 insertions(+), 3 deletions(-)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>>>> index f2c5ec7e6437..476f92768610 100644
+>>>> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>>>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+>>>> @@ -17,8 +17,8 @@ properties:
+>>>>     compatible:
+>>>>       items:
+>>>>         - enum:
+>>>> -          - qcom,sc7280-eud
+>>>> -      - const: qcom,eud
+>>>> +          - qcom,secure-eud
+>>>> +          - qcom,eud
+>>> Commit msg did not explain me why DT bindings rules are avoided here and
+>>> you drop existing SoC specific compatible.
+>>>
+>>> This really does not look like having any sense at all, I cannot come up
+>>> with logic behind dropping existing users. You could deprecate it, but
+>>> then why exactly this device should have exception from generic bindings
+>>> rule?
+>>
+>> Understood. I won't drop this compatible string. Is alright to add the 
+>> additional compatible as is?
 > 
-> Why do we add the dr_mode definition in dtsi file rather than in corresponding board dts file?  Could we follow the node "usb_1_ss1_dwc3"  in x1e80100-crd.dtsi?
+> You always need SoC specific compatible.
 
-That is because the MP controller is host-only and it doesn't make sense
-to ensure the OS of that in each board file separately. That's also how
-it's done on other platforms with a MP controller description.
-
-> 
-> BTW, how do we verify the function of  multiport controller？From my test on x1e80100-crd,  the eusb6 which is from usb_mp_hsphy1 attaches the third-party repeater, do we need a new repeater node/driver to verify the function of eusb6?
-
-I have a X1E Surface Laptop 7 with a USB-A port with a NXP PTN3222 in
-front of it. Tested with a smoke test, with both SS and HS USB-A devices.
+Melody, is there any way to discover (that won't crash the board if we
+guess wrong) whether secure accessors are needed?
 
 Konrad
 
