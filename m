@@ -1,99 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-28532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35D4095209C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 19:01:09 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B99259520D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 19:15:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D38461F26B49
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 17:01:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 54CFCB2475F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Aug 2024 17:15:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A8D11B14F9;
-	Wed, 14 Aug 2024 17:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 899351BB6B6;
+	Wed, 14 Aug 2024 17:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b9Luck5R"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HZjypFem"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB92733D8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 17:00:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2991B3F25;
+	Wed, 14 Aug 2024 17:15:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723654857; cv=none; b=TDchrgDuc0/MC1XOw2OUz1BJw4X5phMrZHtaQAt4ZCRNj/KbciGaueXsEH2H+Iu5Z6oiC3woHhhx52SlrLBvqs6YQLVYj89DChlHSvcPb7tQ+nQXwnT/sb5z2mpBsIfZ0L7fgrNxhD1sfcJnMCrBrqSYTlhMKqtSMHALN3bmP0I=
+	t=1723655738; cv=none; b=H6X5t3oFSMLhoSHI9yUr9cRyIVL9YTBHYnM+mY7chqkF/cab3nTfh8hbgayiQ8sVL0KJhVEBwQMmKyc/v/LZn6/By0SB1FdBZFko5uiX79L7zcbKsq4ilRWkICl2ryt5vWGpjOJUSZDbd6s4DfTm84+cm+q7qN7ecIyvFBU3Pnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723654857; c=relaxed/simple;
-	bh=tMNKunLk5goW/y3VPPeJTH5gdtVob2YOFilXLryVWNQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OabL7sRRKJWstqCJTYiUhmRw7nPwpbhW2aCyanKGFXwVUPRmfkJcYV8+a5oQH16bee/79NRJXr6w9gnqRkXlYql8JPepuaFmuyOzz1m7e1s1KzCe63lgdiDmHiJzHcjy45FBKoC4a/aXCHNlQCTy5AT3siy2PU3njUqKzz3pmEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=b9Luck5R; arc=none smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6512866fa87so1427157b3.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Aug 2024 10:00:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723654854; x=1724259654; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=tMNKunLk5goW/y3VPPeJTH5gdtVob2YOFilXLryVWNQ=;
-        b=b9Luck5RziTh8umvRJBV0/E+N89tPC8wwd+54j+PDPLcNtf5JPYUS/70lMh3DAN9IP
-         gx3THKW/znXwd65L+R7MkkYra7f2LZaIhWZUgnT5jC6lPLmGhDBL5hcrsSvkyZulNO0H
-         DVkyARHjy0qCk7AGeFuYKwUG8UJ2VzhQtO+MLeie/rTPZ6uvjSeo1YDGDWu/N/AewJ0G
-         jWHLVX9rdSN2UUiAkRNAlRnV3/azOrLQotqn5PoFZbvwwRI8ZK9YYQbXR6djL9mPENnj
-         nHNMLACmaBaMhZWKDXA89pUbptIAmD4NhH/h8/7oHhICvYK348MV51hcL8SolRbHH2OA
-         FPQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723654854; x=1724259654;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tMNKunLk5goW/y3VPPeJTH5gdtVob2YOFilXLryVWNQ=;
-        b=M6PGLN7sev/H37fa17vey1+pICVII5GqjlttquFJySYlzP7mUZw8owIzT9wYRZIcxa
-         iwAYOI8kogaWZLpz6lKfQsSgPdf4cgO/T2A5Paw33bZ7TddCPp1xoSJQWPBDqUjk7V9c
-         SYoJFlJLviEFXkWxspZP5Kyc1qUTCCxEI/PNeQQ/GQur7NZiCMf7lh4I58wmL/ddbPZN
-         Xw3hCTn5EWihvYH/2Z5pdmAjakyzdMfq9U8MlXLLQvfZhBmanIAjgTCitAWF3+reKWPk
-         k76ISaLXq9KYEK2+rlZW7sMYOIKOXYBCsxidZcr2frjGGvwAsujWKorYX1w0jW1l+Yby
-         1SQA==
-X-Forwarded-Encrypted: i=1; AJvYcCXLEPb8atC/axAqkZXf00QCyGFoduG/OgH46OGLDGJuEcjwrQVfq9A9T9G9Y1jBSKluvN/fCYQYjXMzMO8iNgs41CjXKMOlcVnE8gkoog==
-X-Gm-Message-State: AOJu0YxyC2sz2rnGWdifeiBoEQVoldK+Hq/MdeG5FoiAmkPPSnUO7T3E
-	LrFjqV5EmxsMCmmJhMs8NIt3N3xRt8eyzm1XJbqL7G4Mr4MgozoSBAfDhO49Vn63VkiRZyR0SrX
-	2a4x8EcAeW4jI4yJiQrM0IAcvyybxoNJdXELJpg==
-X-Google-Smtp-Source: AGHT+IFOk3VYqWbTKciKOosTCRuiEV6h3yG1e9kqTFin1Q7BiOL3QiVjeZp7p4oYQKYKWFnzBhvwTS75twwWuDvHaNo=
-X-Received: by 2002:a05:690c:3103:b0:62f:67b4:790c with SMTP id
- 00721157ae682-6ac97b10984mr33941527b3.14.1723654854591; Wed, 14 Aug 2024
- 10:00:54 -0700 (PDT)
+	s=arc-20240116; t=1723655738; c=relaxed/simple;
+	bh=sXb5Xiro8MMMUjfccTn033XzuQ3HAuq5W9g4P6QXTk8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=NYaekdvTx6exbDhvtDnbmJA0spWNLNVe478OgfrKd51Dz1To4THzWV9sjrnag+5X2nQAXsDlQs28AYhJn9WkgdIZvt2gS+zTNGdVZnJBmMCgoe16RHnLbzcn+FSGUe1BNPZxuhWwtTLlvXJ/DnYzhErPguq4HBtk50aHnh4tYrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HZjypFem; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id DF52DC116B1;
+	Wed, 14 Aug 2024 17:15:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723655737;
+	bh=sXb5Xiro8MMMUjfccTn033XzuQ3HAuq5W9g4P6QXTk8=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=HZjypFemT5Z5YmJZjyhzlu50fcggdiSH2vtETae0qYhf463slYMEbaXkj45sxHQwm
+	 UTXOf2Iak+TNUDc6hqC7JsluJ0XGhdsusPqaxIQ+Hm4JTNDTVc3/twwJw0hl7LK292
+	 VEZKXUijhpjfQ1eFeac9llMc//tWIKKs4yXWgOSNAsi/+CwRFHPYXmSCchJ/i4k71e
+	 7/I5AOtHXiSIkciRqRZFf7pwlrKdIBxxSMi9MBdRtWHxuXjKqSvxqIcTXaxb4QE0pA
+	 +wjjAX/kllSuNS8nIukdFHLZGIwjXeS0Qa1LjNeBNUneI/D0G4n+jVVjl4KJ7rcN4h
+	 YxhRrYb4ftzRg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7346C3DA4A;
+	Wed, 14 Aug 2024 17:15:37 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
+Subject: [PATCH 0/3] ufs: qcom: Fix probe failure on SM8550 SoC due to
+ broken SDBS field
+Date: Wed, 14 Aug 2024 22:45:33 +0530
+Message-Id: <20240814-ufs-bug-fix-v1-0-5eb49d5f7571@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240813190639.154983-1-brgl@bgdev.pl> <172365034673.2714461.1759726822181293291.robh@kernel.org>
-In-Reply-To: <172365034673.2714461.1759726822181293291.robh@kernel.org>
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Date: Wed, 14 Aug 2024 19:00:41 +0200
-Message-ID: <CACMJSesrLxbgSFBOtdNsvkYv+3ytNPrws6h_DM+xFmjiw3yUzQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] arm64: dts: qcom: sc8280xp: enable WLAN and Bluetooth
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
-	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADXmvGYC/x2MQQqAIBAAvyJ7bkFFSvpKdMhabS8WihGIf086z
+ sBMhUyJKcMsKiR6OPMVO6hBwH5uMRDy0Rm01EZaZbD4jK4E9PyiMXryTipnRwm9uBN1/d+WtbU
+ P2w4f2l0AAAA=
+To: Alim Akhtar <alim.akhtar@samsung.com>, 
+ Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
+ "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, Kyoungrul Kim <k831.kim@samsung.com>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=956;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=sXb5Xiro8MMMUjfccTn033XzuQ3HAuq5W9g4P6QXTk8=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBmvOY3Y4kE4h7MJI+1mE7wM5BWinEHEnY30bAO1
+ JR4NLH8tHuJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZrzmNwAKCRBVnxHm/pHO
+ 9VfjB/kBuingfo75GYcDWtJsbTxQ8j/onH8QYvbibmGzRHAml3/DzbaPypmohIdpNgaHW73xZXt
+ ZQmAqMKbEB5zFYVNKV+u34ZfOUMhQYk8EdZ2PiUyZ3zl6pDjWfnaiV8mGP8BIwzA4p+6dVVl2af
+ Vg35XadJNM5UE4RhmL5mktH8zH8OZUiE554CUeNUFyzQaqsobt57t4Lixj3qPYhTHKalt3YhRpN
+ LLppR5EwxVNNKaCJKq/Y+aCyTlXMnBp0MPXD0UcxCm/kDnjCMuP/b6uQ72CWxTWkLzPXZPFPK6o
+ vnN8PCVsZozTjeWA6ynB+gj3JfqACyYow4yp31RStcBiWH1N
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@linaro.org/default with auth_id=185
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reply-To: manivannan.sadhasivam@linaro.org
 
-On Wed, 14 Aug 2024 at 17:48, Rob Herring (Arm) <robh@kernel.org> wrote:
->
-> My bot found new DTB warnings on the .dts files added or changed in this
-> series.
->
-> Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-> are fixed by another series. Ultimately, it is up to the platform
-> maintainer whether these warnings are acceptable or not. No need to reply
-> unless the platform maintainer has comments.
->
+Hi,
 
-Bindings were sent separately.
+This series fixes the probe failure on the Qcom SM8550 SoC due to the broken
+SDBS field in the host controller capabilities register.
 
-Bart
+Please consider this series for v6.11 as it fixes a regression.
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Manivannan Sadhasivam (3):
+      ufs: core: Rename LSDB to SDBS to reflect the UFSHCI 4.0 spec
+      ufs: core: Add a quirk for handling broken SDBS field in controller capabilities register
+      ufs: qcom: Add UFSHCD_QUIRK_BROKEN_SDBS_CAP for SM8550 SoC
+
+ drivers/ufs/core/ufshcd.c   | 9 +++++----
+ drivers/ufs/host/ufs-qcom.c | 6 +++++-
+ include/ufs/ufshcd.h        | 9 ++++++++-
+ include/ufs/ufshci.h        | 2 +-
+ 4 files changed, 19 insertions(+), 7 deletions(-)
+---
+base-commit: 7c626ce4bae1ac14f60076d00eafe71af30450ba
+change-id: 20240814-ufs-bug-fix-4427fb01b860
+
+Best regards,
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+
 
