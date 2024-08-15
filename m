@@ -1,139 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-28667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91133953A06
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 20:29:57 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3453953A97
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 21:08:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 46A802885C1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 18:29:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7CA1028854A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 19:08:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBBEB13C906;
-	Thu, 15 Aug 2024 18:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6BF9770ED;
+	Thu, 15 Aug 2024 19:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UosvM8nW"
+	dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b="EhpxBra6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp-fw-80009.amazon.com (smtp-fw-80009.amazon.com [99.78.197.220])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4F57E575;
-	Thu, 15 Aug 2024 18:28:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C91770FB;
+	Thu, 15 Aug 2024 19:08:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=99.78.197.220
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723746499; cv=none; b=PUEOr8SJbct3Swgr+m7GGcoLTtH999MSe9JDyNC1KxFPF4eqZMbE1vxlumLNUj4r3sdNwK3jTYi+njBb/bUhpqyjZIiYb2oZodBGj56dK/hK1NOFaPe98vr3JrpeYziXaAOlqDQ7Bz3jw3s3gFyDvrxMGg7lHB79lxkc4W7cJco=
+	t=1723748891; cv=none; b=WVmusEdelpGGQFZS+lcWF63l9B4P4KnNG/IZ1I/sZM2ajdiCCx+PxJRejtghMMAQfi1nMfFQlkkUGOF/0ra2kXsC7DbJnwd3dRVV91DAto6Sl+8Ti/afsC6qFC9hWT6Wn5dCaVo9UUqHOc3E9L6ADa8oBnJL6xE38crMBzTyvcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723746499; c=relaxed/simple;
-	bh=diYV9osNdJvqoDbHuYA8YOJY5C7lrvFht85iaxRDS8k=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=YRVrSLkgq9ayQJrh3Tbw/GQxQPMYk+2cgcdGvDFtvegCv5BO2DAPljDRTc20bcplWAgLuSF752xNmiM6vR1yGqfxAW45z+o0bltKEMeAhtkq2ysEigfxmhYdS3gjedfOilF+68MqZRgbchpm0iUBDnVWqHFEzBrqzMLkCFZYY5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UosvM8nW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20992C32786;
-	Thu, 15 Aug 2024 18:28:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723746499;
-	bh=diYV9osNdJvqoDbHuYA8YOJY5C7lrvFht85iaxRDS8k=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=UosvM8nWhkr6Dxq7W5TIu3l2czw+5/EfTJGOETZwUwF6UH4L6tkpSAFWP/WvVyXM5
-	 suHdUhrR2u9Psm/PwcAACqQw2YaXsRUhG/gsfoujnRc1r6BExDrtw+NKY2Uz78FGog
-	 8T81yLP9DGu9/4eAnxUgPwQwbPUqLEShLFrDi6fZj/vT8uTupzDMV9/R5IczDOkKdo
-	 tOmNJyxZupXD3H1Mg2QU5LjKR6IrFOqcmb0zTdIQ4TEQsayeb1ZSfr0lOCuRK+Lcwq
-	 e+bvmeVr3EkvD2omQANRuyShOl0ZixXeukF8r9MvF+jTswqyw81gBO7S7a8XzVBHKE
-	 bQb1NrcVCjk3A==
-Date: Thu, 15 Aug 2024 12:28:18 -0600
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1723748891; c=relaxed/simple;
+	bh=tEGEgIcRKXDTkmdRvTVw2CvUW7+3ffACZCr/9mvjZqo=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=MfLmPVBKtiGH6ZTtx0b04HN+IlFlRv+jGhX1lQamDc7Bq3mZYvdA659fh0gvLQpqwBZ8VCEsUI7lwTzg6DnwXLIyT8+oqomdxCgqU7c3th9T9Q86tHDUnfKX6+cdRbDdgKwwDscLQu4LqusfGsc9lQjU0y/ONY9vFPrXVRbSf90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b=EhpxBra6; arc=none smtp.client-ip=99.78.197.220
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1723748890; x=1755284890;
+  h=message-id:date:mime-version:subject:from:to:cc:
+   references:in-reply-to:content-transfer-encoding;
+  bh=tEGEgIcRKXDTkmdRvTVw2CvUW7+3ffACZCr/9mvjZqo=;
+  b=EhpxBra6vw31bbYRBZ2ZgRjliKc0sS7PH0jjNW7n3BoOuEo9VjA28r0z
+   N7xeEfoPOiCk4dndAit/tUD7s4zc1Hm6JseK2IFT9bf2bOzVB4RKivhqs
+   0/iS2Nn4XhdPGKNiFSgohT3At1nfrXKPetHl1BHQ9PLlcm/6nLtm78Z9s
+   Q=;
+X-IronPort-AV: E=Sophos;i="6.10,149,1719878400"; 
+   d="scan'208";a="115649481"
+Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.210])
+  by smtp-border-fw-80009.pdx80.corp.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Aug 2024 19:08:09 +0000
+Received: from EX19MTAUWC001.ant.amazon.com [10.0.21.151:21068]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.24.187:2525] with esmtp (Farcaster)
+ id 7c28823e-4999-43b1-ba3b-b0e1f64f96e0; Thu, 15 Aug 2024 19:08:09 +0000 (UTC)
+X-Farcaster-Flow-ID: 7c28823e-4999-43b1-ba3b-b0e1f64f96e0
+Received: from EX19D003UWC002.ant.amazon.com (10.13.138.169) by
+ EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
+ Thu, 15 Aug 2024 19:08:07 +0000
+Received: from [192.168.11.28] (10.106.101.5) by EX19D003UWC002.ant.amazon.com
+ (10.13.138.169) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34; Thu, 15 Aug 2024
+ 19:08:06 +0000
+Message-ID: <3ea89d7f-fc29-4c80-a123-94673e526ca5@amazon.com>
+Date: Thu, 15 Aug 2024 12:08:05 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Marcus Glocker <marcus@nazgul.ch>
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
- Abel Vesa <abel.vesa@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-In-Reply-To: <v2iah5yrne4u6uzrnzg36tvtxzqrpiez6io2gyyfrht2x42umw@5ribqndiavxv>
-References: <v2iah5yrne4u6uzrnzg36tvtxzqrpiez6io2gyyfrht2x42umw@5ribqndiavxv>
-Message-Id: <172374583455.2827038.7584455596512370219.robh@kernel.org>
-Subject: Re: [PATCH v3 0/6] Add initial DTS for Samsung Galaxy Book4 Edge
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 3/4] mm: guest_memfd: Add option to remove guest
+ private memory from direct map
+From: "Manwaring, Derek" <derekmn@amazon.com>
+To: David Hildenbrand <david@redhat.com>, Elliot Berman
+	<quic_eberman@quicinc.com>, Andrew Morton <akpm@linux-foundation.org>, "Paolo
+ Bonzini" <pbonzini@redhat.com>, Sean Christopherson <seanjc@google.com>,
+	"Fuad Tabba" <tabba@google.com>, Patrick Roy <roypat@amazon.co.uk>,
+	<qperret@google.com>, Ackerley Tng <ackerleytng@google.com>
+CC: <linux-coco@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>, <kvm@vger.kernel.org>,
+	Alexander Graf <graf@amazon.de>, Moritz Lipp <mlipp@amazon.at>, "Claudio
+ Canella" <canellac@amazon.at>
+References: <20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com>
+ <20240805-guest-memfd-lib-v1-3-e5a29a4ff5d7@quicinc.com>
+ <c55fc93d-270b-4b11-9b38-b54f350ea6c9@redhat.com>
+ <396fb134-f43e-4263-99a8-cfcef82bfd99@amazon.com>
+Content-Language: en-US
+In-Reply-To: <396fb134-f43e-4263-99a8-cfcef82bfd99@amazon.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: EX19D039UWB001.ant.amazon.com (10.13.138.119) To
+ EX19D003UWC002.ant.amazon.com (10.13.138.169)
 
+On 2024-08-07 17:16-0700 Derek Manwaring wrote:
+> All that said, we're also dependent on hardware not being subject to
+> L1TF-style issues for the currently proposed non-CoCo method to be
+> effective. We're simply clearing the Present bit while the physmap PTE
+> still points to the guest physical page.
 
-On Thu, 15 Aug 2024 12:36:40 +0200, Marcus Glocker wrote:
-> This DTS adds initial support for the Samsung Galaxy Book4 Edge laptop.
-> Keyboard, Touch-pad, and UFS are working.  The Touch-screen needs further
-> investigation, and is therefore disabled for now.
-> 
-> Changed from v2:
-> - Squash Makefile patch to new DTS file patch.
-> 
-> Changed from v1:
-> - Provide the patch in the expected format.
-> - Added missing bindings.
-> - Removed sound node.
-> - Changed regulator syntax to be consistent.
-> - Changed touchscreen node comment, and removed false pin definition.
-> - Rename ufshc@ to ufs@.
-> 
-> Marcus Glocker (6):
->   dt-bindings: crypto: Add X1E80100 Crypto Engine
->   dt-bindings: phy: Add X1E80100 UFS
->   dt-bindings: ufs: Add X1E80100 UFS
->   arm64: dts: qcom: Add UFS node
->   dt-bindings: arm: Add Samsung Galaxy Book4 Edge
->   arm64: dts: qcom: Add Samsung Galaxy Book4 Edge DTS
-> 
->  .../devicetree/bindings/arm/qcom.yaml         |   1 +
->  .../crypto/qcom,inline-crypto-engine.yaml     |   1 +
->  .../phy/qcom,sc8280xp-qmp-ufs-phy.yaml        |   2 +
->  .../devicetree/bindings/ufs/qcom,ufs.yaml     |   2 +
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../x1e80100-samsung-galaxy-book4-edge.dts    | 959 ++++++++++++++++++
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi        |  71 ++
->  7 files changed, 1037 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dts
-> 
-> --
-> 2.39.2
-> 
-> 
-> 
+I was wrong here. The set_direct_map_invalid_noflush implementation
+moves through __change_page_attr and pfn_pte, eventually arriving at
+flip_protnone_guard where the PFN is inverted & thus no longer valid for
+pages marked not present. So we do benefit from that prior work's extra
+protection against L1TF.
 
+Thank you for finding this, Patrick.
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y qcom/x1e80100-samsung-galaxy-book4-edge.dtb' for v2iah5yrne4u6uzrnzg36tvtxzqrpiez6io2gyyfrht2x42umw@5ribqndiavxv:
-
-arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dtb: domain-idle-states: cluster-sleep-0: 'idle-state-name' does not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/power/domain-idle-state.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dtb: domain-idle-states: cluster-sleep-1: 'idle-state-name' does not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/power/domain-idle-state.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dtb: phy@1d87000: clocks: [[2, 0], [52, 242]] is too short
-	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-ufs-phy.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dtb: phy@1d87000: 'vdda-phy-max-microamp', 'vdda-pll-max-microamp' do not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-ufs-phy.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dtb: usb@a2f8800: interrupt-names: ['pwr_event', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-
-
-
-
-
+Derek
 
