@@ -1,70 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-28679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71A61953BAF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 22:43:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9D63953BB5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 22:43:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A242E1C21120
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 20:43:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 70DA01F253BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 20:43:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A8F715688C;
-	Thu, 15 Aug 2024 20:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D346F156F4A;
+	Thu, 15 Aug 2024 20:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mtf7ilcc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Foea1jlz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6474F156871;
-	Thu, 15 Aug 2024 20:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9813156F3B;
+	Thu, 15 Aug 2024 20:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723754469; cv=none; b=lnDZFo2F6VsMHKuPY1gV92V3IitC5xeRnFHqCoRNcod6m8+DdkEjq6XKAsrsoIgTWh7o2JhY5sk41JabT9NetS7KXLJRefut/RSudAp4TNo0MM41ukxenFFmDkqgqJduE/dkbEuYNjwKN+ff0Gj0oMUH6YQGA+1tJ1L+GVoLmZg=
+	t=1723754470; cv=none; b=LAXMcHQcG9qw/3N80lGTUcrpIqqKC8ALM6aRlmhQy+XBsfJTX+ebE6sxxwlGhFwJAnq3jKZqWbtVsvNxfVuKsQpXBovGU4WZ6aeJCYznGiOaZiNK5Hj+mzBT62/L/LbUB8/zVdhwjwmKCl7nEtLrEVu59sQTlAZzXVxgsLq4IIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723754469; c=relaxed/simple;
-	bh=RY07me97Hp+XVsJNPJ663Spiww09CKfyJsL5b8mH5Ss=;
+	s=arc-20240116; t=1723754470; c=relaxed/simple;
+	bh=TK6lbymrIrAaAD0r9MG8bxB6OwdLFFQpg4ukBBVT0+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DNcQLtDqpK+nZq+R2Em3evwo/l2zuLdXhAWpftUW/NgXTPs6hJXIxdBfU1THdUOmked95Ws011iKWjCgtNT3WajnXq/AJvkKIBJ3LmytNSF+OGucoOvMlXWOGWRkDGktofTxfmkOyhUqd7Sz26nNY5DoAi3850pxZ2ZM0q/YuLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mtf7ilcc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90EFEC4AF0E;
-	Thu, 15 Aug 2024 20:41:07 +0000 (UTC)
+	 MIME-Version:Content-Type; b=DVAU1F7us3PAAaDrqKi/8M761rHeIxAMK0kCnNkLshgn3Pt0Ao+b90oUbBCTyB0+rfqzBRzrtOwq4cuSY7BPEW43MuK7KwLrdm8+OwR+5BkK2eO9tVk6pkY/NzYGwPNNlMtgbb0AqRLsD2LbPpETBXU4O/TsHGV9qZ3iTCcgEj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Foea1jlz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3989CC4AF19;
+	Thu, 15 Aug 2024 20:41:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723754468;
-	bh=RY07me97Hp+XVsJNPJ663Spiww09CKfyJsL5b8mH5Ss=;
+	s=k20201202; t=1723754470;
+	bh=TK6lbymrIrAaAD0r9MG8bxB6OwdLFFQpg4ukBBVT0+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mtf7ilccyPcDBkGrY+Q4vofYyx2Yh6PL7k8Jdj5iJ0/Gof/YI0Fhhh9DUyZa8SUhx
-	 BgV+DLh5LRE9emD7O1X3HxDAkmp+qaZeZsvi7+v2uBMFjFTU0u0WVuBqqzw19BFfLY
-	 EyaWomAHzVKPaa9jfDG0J6HrbYDRs6/4t+wm90iNs/firh4KIlE7pMejrCgITxY27o
-	 7vgMM7R3y3m4IuroKLhaxPXG+Hfrzk+YVheKLF5dg1KMQSFwjh50JC4hDOjrZl+3C/
-	 N7tt4rZlkk3Rw+Mc5oa6PDnxLNT0iKRSUXyA0hwmBS3RhvlITZRcfOoil2Mnej2DU8
-	 N1xYL+3zuKomA==
+	b=Foea1jlzF2HL7MHuUs25TQcPs9NSgPRTRm48OISVyWK60hB3o1EuswbnWLTcmia9K
+	 TyOw2uWbgdKDaZ5BA+G9WdmWaDakvhZ6TErkbsgdxO9Tv7fbTwZvimi43niVCJh9Kd
+	 tBws7Ws2VDIYdz5hnqYNwI96F+fjPIqd9iabVjs6H2K/8L7WxKV3tbR0I4EJqe0nxx
+	 O8k32/aFcIuoHYytNr+uNRDJRwjvdJhY+xmLmVRw0jOTCMZL4x1P3y+was2Us17WJh
+	 3Hi1RzmEUkW0+f0hPFrKGiuXH0AbBtbJesC+KXHsNGLuv00w2ViCnPqN7Fys2s87re
+	 Pl7IHKmqrhDEg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
+To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Andy Gross <agross@kernel.org>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	linux-clk@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: (subset) [PATCH v2 0/5] soc: qcom: fix rpm_requests module probing
-Date: Thu, 15 Aug 2024 15:40:25 -0500
-Message-ID: <172375444814.1011236.18008353969050229050.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] arm64: dts: qcom: disable GPU on x1e80100 by default
+Date: Thu, 15 Aug 2024 15:40:26 -0500
+Message-ID: <172375444811.1011236.13289783244778155957.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240729-fix-smd-rpm-v2-0-0776408a94c5@linaro.org>
-References: <20240729-fix-smd-rpm-v2-0-0776408a94c5@linaro.org>
+In-Reply-To: <20240715-x1e8-zap-name-v3-1-e7a5258c3c2e@linaro.org>
+References: <20240715-x1e8-zap-name-v3-1-e7a5258c3c2e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,25 +67,23 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 29 Jul 2024 22:52:13 +0300, Dmitry Baryshkov wrote:
-> The GLINK RPMSG channels get modalias based on the compatible string
-> rather than the channel type, however the smd-rpm module uses rpmsg ID
-> instead. Thus if the smd-rpm is built as a module, it doesn't get
-> automatically loaded. Add generic compatible to such devices and fix
-> module's ID table.
+On Mon, 15 Jul 2024 22:17:44 +0300, Dmitry Baryshkov wrote:
+> The GPU on X1E80100 requires ZAP 'shader' file to be useful. Since the
+> file is signed by the OEM keys and might be not available by default,
+> disable the GPU node and drop the firmware name from the x1e80100.dtsi
+> file. Devices not being fused to use OEM keys can specify generic
+> location at `qcom/x1e80100/gen70500_zap.mbn` while enabling the GPU.
 > 
-> Module loading worked before the commit bcabe1e09135 ("soc: qcom:
-> smd-rpm: Match rpmsg channel instead of compatible"), because the driver
-> listed all compatible strings, but the mentioned commit changed ID
-> table. Revert the offending commit and add generic compatible strings
-> instead.
+> The CRD and QCP were lucky enough to work with the default settings, so
+> reenable the GPU on those platforms and provide correct firmware-name
+> (including the SoC subdir).
 > 
 > [...]
 
 Applied, thanks!
 
-[5/5] arm64: dts: qcom: add generic compat string to RPM glink channels
-      commit: 0b7d94e9d15d90aa55468b3c7681558ad66c7279
+[1/1] arm64: dts: qcom: disable GPU on x1e80100 by default
+      commit: 1f7574a1f9a892dd79e0dfc03f38573e9c399ec2
 
 Best regards,
 -- 
