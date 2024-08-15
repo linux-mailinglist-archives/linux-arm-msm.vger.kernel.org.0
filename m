@@ -1,62 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-28673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF3CD953B95
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 22:41:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EFAF3953B98
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 22:41:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1BEEC1C212DE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 20:41:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AE1F21F25601
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 20:41:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 899FD14D6ED;
-	Thu, 15 Aug 2024 20:40:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C68871509B3;
+	Thu, 15 Aug 2024 20:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GUTowMx0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k7tbsdYD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3BB14D2B3;
-	Thu, 15 Aug 2024 20:40:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB5814F9EB;
+	Thu, 15 Aug 2024 20:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723754459; cv=none; b=lMLte2AQt7vxw3KiYD2+maoqpd/e3yBADIey5rz/SVXPJz+fJ4SJ49TKvrQWV0Mv0gCzsWnRrCjlrrZI+MmllX8qSUGRf6t50OSdQfCBelRT5HjWA3sIsrVwS0d8XbuK3E424ZKziRO8uJegXLBi3/+gkOcvdqM0xOlHdk39gkM=
+	t=1723754460; cv=none; b=lHnWi6dH8+JWAVXXHuXfpWzmeFfHo2iZSUBii3YMe/zi2noy5EQBVrNaEz8C2rgcIiwCWXRegjOu2Mbs9AQZhcnnnKkdoBuKDqnMx6CmrlvbXooCiaoRiDLZupb09TnMbUNSeUi2OmKYcrple8LLXLlx6l3rzs/5q19pwY0a4c8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723754459; c=relaxed/simple;
-	bh=59yHYCAH3ZjE/4ilK/R6Pyrv7GeApxy6xKMhnYSDAn4=;
+	s=arc-20240116; t=1723754460; c=relaxed/simple;
+	bh=GewyCBGEXW1cdKt5N5+wiW/5d9f9OmiiAC8uFF1eC2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DcxkiSxv8tQ6cH3QCTzx8MraRklNIv1OHMCToWjU2EU1f6XPZO50IQAh9Bt53D7fe9MCAUTsSrQuwUFOSXM1RDPcpeA1HvW9H/ZVl6mqfj0B8ZcbAz19N+8VtCR0bfRjP7KNdp7CSe48bTGi5XBCrn36GuDEfamaAUlRfCIZcVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GUTowMx0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7842EC4AF18;
-	Thu, 15 Aug 2024 20:40:58 +0000 (UTC)
+	 MIME-Version:Content-Type; b=dI0uC/q3kg5/JqtO8XvJ42ZwbXJxBseIV/DlELOYuH/2dCqLXy06bHtnCVxyb6ThBR5fQ38RaNDnggZqQWsvrBWm4W+dO6hkr2da0ao2EabQIjG8zzBd9aMxLg5bsxUd9mH/BavatboS8hdqUI4ZVdgK4a/btjJGyL14l0wOmhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k7tbsdYD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7608CC4AF09;
+	Thu, 15 Aug 2024 20:40:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723754459;
-	bh=59yHYCAH3ZjE/4ilK/R6Pyrv7GeApxy6xKMhnYSDAn4=;
+	s=k20201202; t=1723754460;
+	bh=GewyCBGEXW1cdKt5N5+wiW/5d9f9OmiiAC8uFF1eC2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GUTowMx0vAMeM4KyIvAxmdxUwktcdezx3G4ovy++M8yW6KB0N0jyxf3bx6DFSfjzU
-	 d4q+BO1cvnEadzIUFd/+xzIJEp/vA9s0SlpNCrroAK9Jwtfs5ty26IfqmEzWvHZ1UK
-	 XPbcy2GEZabCLrp2K1uf3j1sf4TezFzfdRmbuMnKx61FXOMyteMcnt5TPQTvLVG7NQ
-	 hQ8jHmZDKP/gbNpp4thHfgvJY2DSn8rQ6vCd+pX34qvvenvf4Mu/fWAFdTrnyW2v48
-	 /v5R4pdYiGyZP1oX89SuiCjYeEZD5miF3piv9KCIkbg9NALDqmUP2ieaNOtJiE7abQ
-	 jWXHsO8mAEWPg==
+	b=k7tbsdYDyihVK44EYKxgIcnsNAXIa5iZE6M2QPG1fcl+SfjxAhjIsRxrgOZyZL7h5
+	 q3qZWU8IvRlW2QV9VIFlXIrSWftWluRethZ3UuiLlzIJjnTB3gStCQTfQim3Ax7JQm
+	 bf4CwZjW9MtGxS6G+zKDXfhZvq9fHCnh39waBn1iFolfdRqv0htHDpTovhnyWjSWt0
+	 XpTKoMDvi1GFGJ0zGrb6QYxZLup78MIZoCva9Cee8+XnWgCRiW+fXd4Yrw1WP3gAKC
+	 PtwdwYGRM0o2Gm9iV5YxJIahS9LtNd9epIMLCcsl7FwZs6I9qB0E3d44PQyBEHLGU5
+	 FnEkQm+WQuBIA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+To: Elliot Berman <quic_eberman@quicinc.com>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	Amirreza Zarrabi <quic_azarrabi@quicinc.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
 	Bartosz Golaszewski <brgl@bgdev.pl>
 Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: add CPU idle states
-Date: Thu, 15 Aug 2024 15:40:19 -0500
-Message-ID: <172375444830.1011236.14902438767700632258.b4-ty@kernel.org>
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Maximilian Luz <luzmaximilian@gmail.com>
+Subject: Re: [PATCH v2 0/2] firmware: qcom: fix an efivars regression in qseecom
+Date: Thu, 15 Aug 2024 15:40:20 -0500
+Message-ID: <172375444819.1011236.16107983269982714423.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240807-sa8775p-idle-states-v1-1-f2b5fcdfa0b0@linaro.org>
-References: <20240807-sa8775p-idle-states-v1-1-f2b5fcdfa0b0@linaro.org>
+In-Reply-To: <20240731-tzmem-efivars-fix-v2-0-f0e84071ec07@linaro.org>
+References: <20240731-tzmem-efivars-fix-v2-0-f0e84071ec07@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,15 +68,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 07 Aug 2024 15:31:43 +0200, Bartosz Golaszewski wrote:
-> Add CPU idle-state nodes and power-domains to the .dtsi for SA8775P.
+On Wed, 31 Jul 2024 09:44:55 +0200, Bartosz Golaszewski wrote:
+> The first patch address the regression with efivars using the qseecom
+> driver reported by Johan Hovold. The second patch removed dead code that
+> was left over during the conversion of the qseecom driver to using
+> tzmeme.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sa8775p: add CPU idle states
-      commit: 4f79d0deae37c298bbce5142937080ff5cc61a25
+[1/2] firmware: qcom: tzmem: fix virtual-to-physical address conversion
+      commit: 1c753d001a259d0278fe318a1ed3c8aa5f3ea09e
+[2/2] firmware: qcom: qseecom: remove unused functions
+      commit: 924fc22c282edbf93869b150d9e1b47e0b10485e
 
 Best regards,
 -- 
