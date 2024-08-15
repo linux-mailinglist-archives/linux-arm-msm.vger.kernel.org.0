@@ -1,60 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-28705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 393F0953C0C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 22:49:36 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E90F0953C0F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 22:49:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E93DB28736A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 20:49:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7464DB26D8E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 20:49:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA99C172BA9;
-	Thu, 15 Aug 2024 20:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 282261741DC;
+	Thu, 15 Aug 2024 20:41:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="opvpgsWI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h2owGvP2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F8817279E;
-	Thu, 15 Aug 2024 20:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14471741D0;
+	Thu, 15 Aug 2024 20:41:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723754501; cv=none; b=Yrs4MXZMZv0Kf9erodPaTT+bwWCOeoIORKshCazAcKwWJorTjk1OtXqiDv0POE5CMcKyuSvZ2hXDlF0RYgwgDR9OJIxe6Ppl17PL3z7WsWNV14L+SN5eb94e2Nuq9O3yDyqaRs05m8810fiuo38gOO7Kbv6C0GUfKayQ/IIoXmU=
+	t=1723754503; cv=none; b=BXDXz5+y7Z2xgE86saUYA9I6rewrRjwhA5/BeQWKEUX4VsvqBQjUl6bmCFuYNCBbQrE/P/3LNenl6IGZOWIAFUM3Dqp+nZuRtpj5RNl9DXSmoGd0KDhO8bceCrwhxwx0GuTayOFe3XkSfFaYpChibbyRWWx39fy6F0alHznlqeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723754501; c=relaxed/simple;
-	bh=plFYLz3qZ5uLAJRk/eDPWBD6atb5l+TeDeRvVftkjcY=;
+	s=arc-20240116; t=1723754503; c=relaxed/simple;
+	bh=NZ2V1WtsDziTIoL1ct/qhjfiqhmcFfVQMHmeqZP9t+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n5B+aN4Gk7RrHSkjO83unzld9xlEvH4hT2wM8lvQT0IOa8VEFDM94K4C3KbHeqBBDKFeSAnZqPtsYe6zKm9/xioP3IAI2C7c1fL3vmQPcCzOHfMypl7bg9ShTrgMEdwWOvQpkjPWmx+RdS1rGMHEmCLov2oI6W2kodaXBC7FROg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=opvpgsWI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6A0C4AF09;
-	Thu, 15 Aug 2024 20:41:40 +0000 (UTC)
+	 MIME-Version:Content-Type; b=khjjd1hkVptSdaqOGWaslmzLQbY9d48Ya4R/8yigfpQk87bLaQ00PmE+C3jAVduCc+5uiMk+n9TpjCyDbAsJomt3oseoGC/OE+nFVzxO0WWlDQAuMziAk0vfJi5pIdjVB80JACbjH0ZGAc7sJ6Ty34xi1v0TV51fax0MeZAiT5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h2owGvP2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC12DC32786;
+	Thu, 15 Aug 2024 20:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723754501;
-	bh=plFYLz3qZ5uLAJRk/eDPWBD6atb5l+TeDeRvVftkjcY=;
+	s=k20201202; t=1723754502;
+	bh=NZ2V1WtsDziTIoL1ct/qhjfiqhmcFfVQMHmeqZP9t+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=opvpgsWIrD2pfTFZEdc20ydJcHxbapac3u9+BsRVHB/6QyhLbCnP2V6X2INqadxun
-	 8wKFJ3EJvMZ+OtJUrxpry9kwqVoyrwQ0cIAiy9yc8pCDsUYMfNaQOEt8FMUmRgabRX
-	 s480TMIs8YMkSmQOqVu6i0WMFUizIy0XL+gIptPOUtRQPTbmBU4EToea/bMwJKHWPP
-	 dGxIcKVvkLFJcNPB/Doh/2/DH6ov3ZoBqBa8rM0BuxYP0RSlcKHGagB8fVT8TgVidQ
-	 /Q9OwK6E6HvYvIVNWTfN1x1AY5ioSzaqYnA8Uknw4JNWbTTugGhzZwU/KtaH/aRfRb
-	 ku1LLVIYQKHJQ==
+	b=h2owGvP2VkKH53A7RnPt60O8eTfKVZxXjhHnHKy/1INbK8spfukxcACa3jIvQK9Tm
+	 jAFzOVVlfXK1eHZ/Nf8Rh331AxUsEaU1WzFVSK5Mh0C/wB2yloul0VSIh8rIFrU5J3
+	 NSPuZa5vd1/S9dhe++4r7LIX0oqqjUp4JvN7VJLPiYg6SCo6b+iJoLa7DIB1e3ezUw
+	 dBWLUt3iremhquoBAhQe/W2BGYa2zdHnQORNY93xyiRGhd76uMc4mRzxWkG1sm1Udg
+	 pbl3tlGtrtHiBBaTe2Q++m3924MSQte1YnZH/Z4//4QMbLots0gN/68ANONZFxw1/7
+	 9Y6xkI6lyHNvw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: Re: [PATCH 0/2] soc: qcom: pd_mapper: Add X1E80100 and older platforms
-Date: Thu, 15 Aug 2024 15:40:51 -0500
-Message-ID: <172375444805.1011236.7812815658652492158.b4-ty@kernel.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: Loic Poulain <loic.poulain@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-i2c@vger.kernel.org
+Subject: Re: (subset) [PATCH v2 0/4] arm64: dts: qcom: add description of CCI controllers for sm8550 and sm8650
+Date: Thu, 15 Aug 2024 15:40:52 -0500
+Message-ID: <172375444797.1011236.744701243478190815.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240708-x1e80100-pd-mapper-v1-0-854386af4cf5@linaro.org>
-References: <20240708-x1e80100-pd-mapper-v1-0-854386af4cf5@linaro.org>
+In-Reply-To: <20240612215835.1149199-1-vladimir.zapolskiy@linaro.org>
+References: <20240612215835.1149199-1-vladimir.zapolskiy@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,19 +71,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 08 Jul 2024 18:22:08 +0200, Stephan Gerhold wrote:
-> Add X1E80100 to the in-kernel pd-mapper to avoid having to run the
-> userspace daemon for charging and audio functionality. Also add entries for
-> some missing older platforms without protection domains.
+On Thu, 13 Jun 2024 00:58:31 +0300, Vladimir Zapolskiy wrote:
+> The changeset adds description of camera control interface controllers found
+> on Qualcomm SM8550 and SM8650 SoCs.
 > 
+> Previous version of the change is found as a single patch for SM8650 SoC:
 > 
+>     https://lore.kernel.org/all/20240410074951.447898-1-vladimir.zapolskiy@linaro.org/
+> 
+> [...]
 
 Applied, thanks!
 
-[1/2] soc: qcom: pd_mapper: Add X1E80100
-      commit: bd6db1f1486eedb8460647b3fbe9b5ae8fd09207
-[2/2] soc: qcom: pd_mapper: Add more older platforms without domains
-      commit: ed2c37520893427dfb8b615fcc6263af796a0ab1
+[3/4] arm64: dts: qcom: sm8550: add description of CCI controllers
+      commit: 4f33e6432f0859a19bb119248d0a8d20c29b9213
+[4/4] arm64: dts: qcom: sm8650: add description of CCI controllers
+      commit: 9e2ebc5817c94badf0ea716cad85f16ae05ff120
 
 Best regards,
 -- 
