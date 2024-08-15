@@ -1,64 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-28677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D851953BA6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 22:42:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB317953BAA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 22:42:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DC44AB239AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 20:42:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B7992841F0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 20:42:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A6B9155315;
-	Thu, 15 Aug 2024 20:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4720155A53;
+	Thu, 15 Aug 2024 20:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CfikZjxH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RyV/ygaH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D52E154C1D;
-	Thu, 15 Aug 2024 20:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4976155757;
+	Thu, 15 Aug 2024 20:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723754465; cv=none; b=kyg/vShoXzaBe0KLsCP+FvUmI0/Tpt4quf9lOEzdcj+UXIjxBJK5oKKn68qGXf1EQQKZoRoXdivDyyG0UuWjONepT7RYPkRlEHfKehd//pColFQIFYtGAWMATWdLAYrt9yI0UygiGitBTcxgWocaoQrqy7EOOoEQ+a3Mp/Q7iEo=
+	t=1723754467; cv=none; b=tnFvemv930pLwZAsFNaDlzAvCkyHO9baHC/YnqcBYWb+C/YphFPPo487Ed/JmItX2sWPj+/tqUOFc4DqxCCCuX+vLZmlEzETozbZYLx0p0BlRI+HUwdh+rxD49yyOBYtByxtZiGqHpsVfpqNtc1LwGx3j17UayQEJDXppZTHtNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723754465; c=relaxed/simple;
-	bh=MZ3VtNm+s9BKqAlpg0aWMlgqWVE8wcurrnQztja4myU=;
+	s=arc-20240116; t=1723754467; c=relaxed/simple;
+	bh=4KDaCGbSNqiZk9DvkwczOryM/7JAKZJoBwRV7J2iOQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GktUICjt/0F6LXG+msaxjg2npKinDnHXoBuWrkcx7MjGy6lxAIxqi33rdCggQxoKvD4qDJwO2EO3t1GbohlluXlhkCPhdECVf/57IsNqGXT58D6FXZ9gXIGSAb9qiW/YsyHK1JbW+Jm63TMh+WAsctgUBDm5ouWIaEdxHCfR8V4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CfikZjxH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B6EC4AF54;
-	Thu, 15 Aug 2024 20:41:03 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Oucv1yqp+5geZHklIO/7zjS5Yej1lspGa78BjtCABZwrGKwKFg604mNh62ngcgQDO2WXNI0R2QbSP/TjJE8+fZTqCBBsNXyFVEkfyrKu7KO8eFiExBSDWWzr4zXEAfFNYsDa+B69UPg9PC9aHO8ugbPs7N6Lx13lxXKa95TtJZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RyV/ygaH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E154C4AF16;
+	Thu, 15 Aug 2024 20:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723754464;
-	bh=MZ3VtNm+s9BKqAlpg0aWMlgqWVE8wcurrnQztja4myU=;
+	s=k20201202; t=1723754467;
+	bh=4KDaCGbSNqiZk9DvkwczOryM/7JAKZJoBwRV7J2iOQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CfikZjxHUd5LSHxr+pH5ewcEWwsFmnzpI7zArxBYfQtoKFDPOapsA6iuqlsZnbas/
-	 NjCXq8rONLeIj283IKA/WKjM+3+dl4G2lwoXRPZ8t5e45XnkVTRHJ7oCDFHmcPuoey
-	 vM1tAhrvSkvMgb3QgcSmEbhc6dunKHjLnuth0Aw1qW4pc8Zx6QbkhRE+Y8lORD2Aoa
-	 01yObkgV/Z2K3kt2urxLQgKD1+LwThSNOpXFKCVHm2IMRH4pNeDB8l0GDz8+BW4n8D
-	 n535q4xgqmq0AsG8nXXQ8v5vQ8W1QHERYrRRcFMye91k+M5AjJMuRIFRv48CgJUIKG
-	 zFYXiZ552FD/w==
+	b=RyV/ygaHxqLeDKcNLkST1W9hvqTOSm9jmWb3eevfspe1avEkHl0izyJ/ICLHIVGDr
+	 FXcCSpbOUgj6QYs00c9z2hzGjnrKDlIaNGApf8FoqWmeGX69wyjuwRFDA7SHmWAp5i
+	 PB2bmFUxh8LWTRR+aYlMDcib/q6klTC9QumA0GS9r1AHZakRoVGEbGyyArjtg9wEiR
+	 1i0ViY52R1Ms2F55YvTBoRU4J8fcRbJ4Qh9Rms1BdJL+saZ+vQ7hIz67b2eg3PEKT5
+	 givQyozG7FOX+qn8LZ/kn0sCCgDhmGal23HuhaZLEIpUvzumV7ptgJqEfb3jbgDgHM
+	 xjD86fiQAawGA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: konradybcio@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	buddyjojo06@outlook.com,
-	david@mainlining.org,
-	Danila Tikhonov <danila@jiaxyga.com>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Robert Foss <rfoss@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Georgi Djakov <djakov@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Mike Tipton <quic_mdtipton@quicinc.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux@mainlining.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm7125-xiaomi-common: Add reset-gpios for ufs_mem_hc
-Date: Thu, 15 Aug 2024 15:40:23 -0500
-Message-ID: <172375444820.1011236.1936159567573716820.b4-ty@kernel.org>
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-pm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	stable@vger.kernel.org
+Subject: Re: (subset) [PATCH 00/11] arm64: qcom: set of fixes for SM8350 platform
+Date: Thu, 15 Aug 2024 15:40:24 -0500
+Message-ID: <172375444824.1011236.1594911619896752687.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240731182412.27966-1-danila@jiaxyga.com>
-References: <20240731182412.27966-1-danila@jiaxyga.com>
+In-Reply-To: <20240804-sm8350-fixes-v1-0-1149dd8399fe@linaro.org>
+References: <20240804-sm8350-fixes-v1-0-1149dd8399fe@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,21 +87,15 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 31 Jul 2024 21:24:12 +0300, Danila Tikhonov wrote:
-> The SC7180/SM7125 SoCs have a special pin for UFS reset. Generally, this
-> pin is the same for all devices on the same SoC because it is hardcoded
-> in the pinctrl driver. Therefore, it might seem appropriate to add this
-> pin configuration in sc7180.dtsi. However, this pin is defined in the
-> device-specific DTS files instead of the SoC-level DTS files in all
-> Qualcomm DTS. To maintain consistency with this approach, we will follow
-> the same style.
+On Sun, 04 Aug 2024 08:40:04 +0300, Dmitry Baryshkov wrote:
+> A set of fixes that target stability of the SM8350 platform.
 > 
-> [...]
+> 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sm7125-xiaomi-common: Add reset-gpios for ufs_mem_hc
-      commit: 0bdadbf5c6fa4b42b33b3fb5595aaf34c5f4390b
+[11/11] arm64: defconfig: build CONFIG_REGULATOR_QCOM_REFGEN as module
+        commit: 115c14ee54aae1d61d2405f9b31f67c1e8947f4e
 
 Best regards,
 -- 
