@@ -1,111 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-28633-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28634-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58E179530CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 15:46:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3ACD953109
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 15:49:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0DD051F24FCA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 13:46:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1BAF81C23CAD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 13:49:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59F3319DF60;
-	Thu, 15 Aug 2024 13:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD36319E7F6;
+	Thu, 15 Aug 2024 13:49:30 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0C5F7DA9E;
-	Thu, 15 Aug 2024 13:46:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from szxga03-in.huawei.com (szxga03-in.huawei.com [45.249.212.189])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B011494C5;
+	Thu, 15 Aug 2024 13:49:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729590; cv=none; b=gkwCtm1qDnIgYFi1LAeDESUeZUyt5tZdoPfALZa1Z/k6qS5h0Q5zjfWVx2JQkxfTPZvRRcExbG2jkzOxIwqq7U4TK5u5YrbRKXvDuSZdMvhCmxZ3Gmji+sBrVlreNChDeLUUA46D82cFT1FI6f7lKX53IC6aGkpPXBocIDnbbx8=
+	t=1723729770; cv=none; b=FH+4LG9pEg0So+hPyYbCFsqV1B1LY8a6FvqZNB7OEMknOZkb5ks1X2qdU5LF9LC+mLIjDFz9fPKQBQu5Z+taTKTcZYFqqNYJJNNH4568lk1tuaRWTFsnK2ULE9LqPBo58HyUCY4qFZ28MeBKw35c+GXBq90/KRBQAzyvlha7g1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729590; c=relaxed/simple;
-	bh=xpa67Wr74Im2iD+qPPKLdhggzJuep5WPCdoIlQ89s5w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d6GJSHPtnjZ3jHvpbu0RL/gBE3ODpsm2d1ceGbSSF3aJvxyj2D46Yxa+IYyAV/QyrG4NcBCsBBFEq42e9B9zVhnK7GOJ/Z8CiWDqS9QqmNPQ2Y4oz7UP8GBUMZpFPGwISGv83EvkF3MyMrPg8XpeLu298Uk8xyQz6odjWndZmns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 34EF914BF;
-	Thu, 15 Aug 2024 06:46:54 -0700 (PDT)
-Received: from bogus (e107155-lin.cambridge.arm.com [10.1.196.87])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A72063F6A8;
-	Thu, 15 Aug 2024 06:46:26 -0700 (PDT)
-Date: Thu, 15 Aug 2024 14:46:24 +0100
-From: Sudeep Holla <sudeep.holla@arm.com>
-To: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Sibi Sankar <quic_sibis@quicinc.com>, cristian.marussi@arm.com,
-	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org, quic_rgottimu@quicinc.com,
-	quic_kshivnan@quicinc.com, johan@kernel.org,
-	Sudeep Holla <sudeep.holla@arm.com>, Peng Fan <peng.fan@nxp.com>
-Subject: Re: [PATCH] pmdomain: arm: Fix debugfs node creation failure
-Message-ID: <Zr4GsOndEEMI-6ap@bogus>
-References: <20240703110741.2668800-1-quic_sibis@quicinc.com>
- <ZoZ6Pk7NSUNDB74i@bogus>
- <064274c4-3783-c59e-e293-dd53a8595d8e@quicinc.com>
- <Zofvc31pPU23mjnp@bogus>
- <CAPDyKFrESupeNS4BO8TPHPGpXFLsNqLPrUEw3xzr8oh8FsLHeA@mail.gmail.com>
- <Zryxrdodn2Y2xsej@bogus>
- <CAPDyKFqmV7yvMdLjGhDHJN4CFiUun3FXprEk7uGFV_qmn9vA8Q@mail.gmail.com>
+	s=arc-20240116; t=1723729770; c=relaxed/simple;
+	bh=TCpjlsm4xqeK0L2uxXsv6Gm044Qcen8eAGQR3XuiNRg=;
+	h=CC:Subject:To:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=jGEH27V5hWCq+OKwzU6tsDb8sjobYSszR0zY9He9W8P0XEeEukHkMDRRlBSK2C/Tvlb+w3fcuN2OqHqhLF+VIzOLx1xUOHrpc6J59oAKizQQWMnh6LGu2wcKIialI5Pu9tHNOyjSr1wJ7HA9JIjsFYdQc3SN3RGH5C71BOinsnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.163.174])
+	by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4Wl5vz5Dx6zQpvK;
+	Thu, 15 Aug 2024 21:44:47 +0800 (CST)
+Received: from kwepemd200014.china.huawei.com (unknown [7.221.188.8])
+	by mail.maildlp.com (Postfix) with ESMTPS id 5A4621400E3;
+	Thu, 15 Aug 2024 21:49:23 +0800 (CST)
+Received: from [10.67.121.177] (10.67.121.177) by
+ kwepemd200014.china.huawei.com (7.221.188.8) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.34; Thu, 15 Aug 2024 21:49:22 +0800
+CC: Shuai Xue <xueshuai@linux.alibaba.com>, Jing Zhang
+	<renyu.zj@linux.alibaba.com>, Will Deacon <will@kernel.org>, Mark Rutland
+	<mark.rutland@arm.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Yicong
+ Yang <yangyicong@hisilicon.com>, Jonathan Cameron
+	<Jonathan.Cameron@huawei.com>, Jonathan Corbet <corbet@lwn.net>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+	<quic_vbadigan@quicinc.com>, <quic_nitegupt@quicinc.com>,
+	<quic_skananth@quicinc.com>, <quic_ramkri@quicinc.com>,
+	<quic_parass@quicinc.com>, <quic_mrana@quicinc.com>
+Subject: Re: [PATCH 3/4] perf/dwc_pcie: Always register for PCIe bus notifier
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+References: <20240731-dwc_pmu_fix-v1-0-ca47d153e5b2@quicinc.com>
+ <20240731-dwc_pmu_fix-v1-3-ca47d153e5b2@quicinc.com>
+From: Yicong Yang <yangyicong@huawei.com>
+Message-ID: <55303289-bb41-4e67-9912-4cf4335244ca@huawei.com>
+Date: Thu, 15 Aug 2024 21:49:21 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPDyKFqmV7yvMdLjGhDHJN4CFiUun3FXprEk7uGFV_qmn9vA8Q@mail.gmail.com>
+In-Reply-To: <20240731-dwc_pmu_fix-v1-3-ca47d153e5b2@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
+ kwepemd200014.china.huawei.com (7.221.188.8)
 
-On Thu, Aug 15, 2024 at 12:46:15PM +0200, Ulf Hansson wrote:
-> On Wed, 14 Aug 2024 at 15:31, Sudeep Holla <sudeep.holla@arm.com> wrote:
-> >
-> > On Wed, Aug 14, 2024 at 02:38:24PM +0200, Ulf Hansson wrote:
-> > >
-> > > Sudeep, while I understand your point and I agree with it, it's really
-> > > a simple fix that $subject patch is proposing. As the unique name
-> > > isn't mandated by the SCMI spec, it looks to me that we should make a
-> > > fix for it on the Linux side.
-> > >
-> >
-> > Yes, I did come to the conclusion that this is inevitable but hadn't
-> > thought much on the exact solution. This email and you merging the original
-> > patch made me think a bit quickly now 😉
+On 2024/7/31 12:23, Krishna chaitanya chundru wrote:
+> When the PCIe devices are discovered late, the driver can't find
+> the PCIe devices and returns in the init without registering with
+> the bus notifier. Due to that the devices which are discovered late
+> the driver can't register for this.
 > 
-> Alright, great!
+> Register for bus notifier even if the device is not found in init.
 > 
-> >
-> > > I have therefore decided to queue up $subject patch for fixes. Please
-> > > let me know if you have any other proposals/objections moving forward.
-> >
-> > The original patch may not work well with the use case Peng presented.
-> > As the name and id may also match in their case, I was wondering if we
-> > need to add some prefix like perf- or something to avoid the potential
-> > clash across power and perf genpds ? I may be missing something still as
-> > it is hard to visualise all possible case that can happen with variety
-> > of platform and their firmware.
-> >
-> > In short, happy to have some fix for the issue in some form whichever
-> > works for wider set of platforms.
+> Fixes: af9597adc2f1 ("drivers/perf: add DesignWare PCIe PMU driver")
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  drivers/perf/dwc_pcie_pmu.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
 > 
-> Okay, so I have dropped the $subject patch from my fixes branch for
-> now, to allow us and Sibi to come up with an improved approach.
+> diff --git a/drivers/perf/dwc_pcie_pmu.c b/drivers/perf/dwc_pcie_pmu.c
+> index c115348b8d53..aa1010b44bcb 100644
+> --- a/drivers/perf/dwc_pcie_pmu.c
+> +++ b/drivers/perf/dwc_pcie_pmu.c
+> @@ -741,8 +741,6 @@ static int __init dwc_pcie_pmu_init(void)
+>  
+>  		found = true;
+>  	}
+> -	if (!found)
+> -		return -ENODEV;
+>  
+>  	ret = cpuhp_setup_state_multi(CPUHP_AP_ONLINE_DYN,
+>  				      "perf/dwc_pcie_pmu:online",
+> @@ -753,9 +751,11 @@ static int __init dwc_pcie_pmu_init(void)
+>  
+>  	dwc_pcie_pmu_hp_state = ret;
+>  
+> -	ret = platform_driver_register(&dwc_pcie_pmu_driver);
+> -	if (ret)
+> -		goto platform_driver_register_err;
+> +	if (!found) {
+> +		ret = platform_driver_register(&dwc_pcie_pmu_driver);
+> +		if (ret)
+> +			goto platform_driver_register_err;
+> +	}
 > 
-> That said, it looks to me that the proper fix needs to involve
-> pm_genpd_init() in some way, as this problem with unique device naming
-> isn't really limited to SCMI. Normally we use an "ida" to get a unique
-> index that we tag on to the device's name, but maybe there is a better
-> strategy here!?
 
-Yes using "ida" for unique index might work here as well AFAIU. It can be
-one of the possible solution for sure.
+This doesn't match the commit.
 
--- 
-Regards,
-Sudeep
+If any device is found at this stage, we cannot use them since you don't
+register a driver.
+
+>  	ret = bus_register_notifier(&pci_bus_type, &dwc_pcie_pmu_nb);
+>  	if (ret)
+> 
 
