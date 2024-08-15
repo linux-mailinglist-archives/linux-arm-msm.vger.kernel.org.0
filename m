@@ -1,87 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-28596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28603-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0674C952AE3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 10:53:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79ACB952B78
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 12:03:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 503B1B21295
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 08:53:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7AB86282A4A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 10:03:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E39C31B580D;
-	Thu, 15 Aug 2024 08:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 220721D1755;
+	Thu, 15 Aug 2024 08:57:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="A4xYLb0B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from gollum.nazgul.ch (gollum.nazgul.ch [81.221.21.253])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5689317A5A6;
-	Thu, 15 Aug 2024 08:21:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.221.21.253
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3991C9EC6;
+	Thu, 15 Aug 2024 08:57:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723710093; cv=none; b=Sw7nxZb51nBWQDY0Flg24IrW/VaqfPQARmwA3o20NZAguegA2GVdJWFViKWG57Q0ZRDkIv7u0WeYYAC7ECUVUNx5YGDxN4x5xA1pMwsqCSsF0elPgP0Lm7eD1K7+JubnQphBzE9uqli+y91U6D4MSOtYLJirge7laYVBTA8oP4k=
+	t=1723712279; cv=none; b=ddyxB5VdLkUBIOnP+8vu5weYhNGpGf6A21IWeQ0yhtsqhEmMEU1e/5MmeUdfSiU1IxzhLzp+E0E1UcREpxGtlM6SQl2pqgMppiK/BYFcvndj7XLEYsjF1qoizDpApaFv08qkmsHE/Y+MECcqd/XE4VBi2tgCzV3urCCKnDuEHAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723710093; c=relaxed/simple;
-	bh=/pPh8qR30Wcev5n42INP+3QFr5gaNEiRhrEWoeofknw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZCi/actTlBxkx6+td6uiOMPnmwNTtk8x6grJY5okyBy8eYuU3OVHRZGN4HGPVBzj7+rnFt0/Z2v2At+GxgfpYOTC2c6fyakiOaeIvDPZiWh24zV9Ec4hSgHbDC+FtfoD48wm391EEvZosqH9e2vcga3XVvQzzmcZX+lfZaWTnFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nazgul.ch; spf=pass smtp.mailfrom=nazgul.ch; arc=none smtp.client-ip=81.221.21.253
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nazgul.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nazgul.ch
-Received: from localhost (gollum.nazgul.ch [local])
-	by gollum.nazgul.ch (OpenSMTPD) with ESMTPA id 15f898b3;
-	Thu, 15 Aug 2024 10:21:27 +0200 (CEST)
-Date: Thu, 15 Aug 2024 10:21:27 +0200
-From: Marcus Glocker <marcus@nazgul.ch>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>
-Subject: Re: [PATCH v2 7/7] arm64: dts: qcom: Add Samsung Galaxy Book4 Edge
- Makefile
-Message-ID: <fvav32kau7odwdlyeeeq4vodaalyiodysswcjozjhlxdbtepu7@gr5oj32eh6nq>
-References: <qv5pz4gnmy5xbxxjoqqyyvn4gep5xn3jafcof5merqxxllczwy@oaw3recv3tp5>
- <mtyjmbhqv5otvxhxyyvkxg6tubmtkeouwibmsmywmjdamnqnus@mow2w5trrmok>
- <Zr2sIAhB1i7akCCc@linaro.org>
+	s=arc-20240116; t=1723712279; c=relaxed/simple;
+	bh=7l6wGQ98HpBbyXQeXaA1zEMxmFdw15AbADVhA9ODIsI=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=NGOXjZF8SqTqCyZJVWSD/4E8GWfO5939idU95HrutPiQWnu6l9sNtSIIxi5RQFasEBU++aqTR3c/H/H/5WH1Fjlfj1uG9d5JpoZz5iHmldo9RtUmQGfW0ZCyCzvwktDi1HJmwRhSmjqWwiI+5EsZQBnK4mLkOjd7OLQPrNLwI34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=A4xYLb0B; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47EN9r1t027657;
+	Thu, 15 Aug 2024 08:57:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:in-reply-to:message-id
+	:mime-version:references:subject:to; s=qcppdkim1; bh=m7Xggm7ZIW4
+	WehkFh4oxlkRKXpkz8aAItTBbl9RctsA=; b=A4xYLb0BOKKQ84FcGw6wikF53nO
+	tGe5pzJrP6uQM2cWWRgosonBTd/q154ziowEeq5JB7LYJUSaTWKmsT9Cr54l/OzS
+	S67/RWQeMcfwkwqyZlyAdKvayd3kcAURoUOS8OIZMOjWMC1n4zdwCwR0bpaN+5jI
+	h7oZrM6t+doQCGgoZNxGW8AENCqKQM/vlTxXJM8LCMaHcYWoAfA6tOHpl6TCnYXv
+	nYDZ5kja85rWZvy7Edvf/DuxFINqDKHVIog+pi+mVhEZlp4F3Fe+E9/flJdAVy/J
+	2H3Nv9uVy0wSVVXS2B4Ropuq0uuRyCgtd6SwVMAvahdW751rOPY5aoDZHQw==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40x3etdq3v-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 15 Aug 2024 08:57:32 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 47F8u85x028275;
+	Thu, 15 Aug 2024 08:57:29 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 40xkmhenmp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 15 Aug 2024 08:57:29 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 47F8vSVu029647;
+	Thu, 15 Aug 2024 08:57:28 GMT
+Received: from hu-devc-blr-u22-a.qualcomm.com (hu-mdalam-blr.qualcomm.com [10.131.36.157])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 47F8vSEm029640
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 15 Aug 2024 08:57:28 +0000
+Received: by hu-devc-blr-u22-a.qualcomm.com (Postfix, from userid 466583)
+	id 8F6CB411DA; Thu, 15 Aug 2024 14:27:27 +0530 (+0530)
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+To: vkoul@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+        andersson@kernel.org, konradybcio@kernel.org, thara.gopinath@gmail.com,
+        herbert@gondor.apana.org.au, davem@davemloft.net,
+        gustavoars@kernel.org, u.kleine-koenig@pengutronix.de, kees@kernel.org,
+        agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-crypto@vger.kernel.org
+Cc: quic_srichara@quicinc.com, quic_varada@quicinc.com,
+        quic_mdalam@quicinc.com, quic_utiwari@quicinc.com
+Subject: [PATCH v2 01/16] dt-bindings: dma: qcom,bam: Add bam pipe lock
+Date: Thu, 15 Aug 2024 14:27:10 +0530
+Message-Id: <20240815085725.2740390-2-quic_mdalam@quicinc.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240815085725.2740390-1-quic_mdalam@quicinc.com>
+References: <20240815085725.2740390-1-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zr2sIAhB1i7akCCc@linaro.org>
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: dPzDTXje2zgTCvSf6rea3MW84dL_nyi4
+X-Proofpoint-ORIG-GUID: dPzDTXje2zgTCvSf6rea3MW84dL_nyi4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-15_01,2024-08-13_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ suspectscore=0 impostorscore=0 phishscore=0 clxscore=1015 mlxlogscore=999
+ lowpriorityscore=0 priorityscore=1501 spamscore=0 adultscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408150064
 
-On Thu, Aug 15, 2024 at 10:20:00AM +0300, Abel Vesa wrote:
+BAM having pipe locking mechanism. The Lock and Un-Lock bit
+should be set on CMD descriptor only. Upon encountering a
+descriptor with Lock bit set, the BAM will lock all other
+pipes not related to the current pipe group, and keep
+handling the current pipe only until it sees the Un-Lock
+set.
 
-> On 24-08-14 23:14:51, Marcus Glocker wrote:
-> > Add the new Samsung Galaxy Book4 Edge to the Makefile to compile the
-> > DTB file.
-> > 
-> > Signed-off-by: Marcus Glocker <marcus@nazgul.ch>
-> 
-> This should be squashed into patch 6.
+Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+---
 
-OK, I'll submit a v3 patch.
+Change in [v2]
+
+* Added initial support for dt-binding
+
+Change in [v1]
+
+* This patch was not included in [v1]
+
+ Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+index 3ad0d9b1fbc5..91cc2942aa62 100644
+--- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
++++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+@@ -77,6 +77,12 @@ properties:
+       Indicates that the bam is powered up by a remote processor but must be
+       initialized by the local processor.
  
-> > ---
-> >  arch/arm64/boot/dts/qcom/Makefile | 1 +
-> >  1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> > index 0e5c810304fb..77a48a5780ed 100644
-> > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > @@ -265,3 +265,4 @@ dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-asus-vivobook-s15.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-crd.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-lenovo-yoga-slim7x.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-qcp.dtb
-> > +dtb-$(CONFIG_ARCH_QCOM)	+= x1e80100-samsung-galaxy-book4-edge.dtb
-> > -- 
-> > 2.39.2
-> > 
++  qcom,bam_pipe_lock:
++    type: boolean
++    description:
++      Indicates that the bam pipe needs locking or not based on client driver
++      sending the LOCK or UNLOK bit set on command descriptor.
++
+   reg:
+     maxItems: 1
+ 
+@@ -92,6 +98,8 @@ anyOf:
+       - qcom,powered-remotely
+   - required:
+       - qcom,controlled-remotely
++  - required:
++      - qcom,bam_pipe_lock
+   - required:
+       - clocks
+       - clock-names
+-- 
+2.34.1
+
 
