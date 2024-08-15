@@ -1,140 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-28632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28633-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFC1495309F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 15:45:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58E179530CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 15:46:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9700C2887E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 13:45:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0DD051F24FCA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 13:46:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 493CA1A7072;
-	Thu, 15 Aug 2024 13:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59F3319DF60;
+	Thu, 15 Aug 2024 13:46:30 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03CB1A705B;
-	Thu, 15 Aug 2024 13:44:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.190
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0C5F7DA9E;
+	Thu, 15 Aug 2024 13:46:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729479; cv=none; b=FS9FtyzBiX8GET/qfz+C3JKLkFJ5pJMhconHtMlNIr9UL3CGCPPz2cK0cz2Sw38wnEecUNFVsFgIN4jCErH/vZVwGvZ/hUfPRYI0cBSB4yq76wi6Z59WPNKE2OFG4ZouJLEgopMrng8/sPBCUhoMHjFAEfCWoTLOjtFJ4OESb0E=
+	t=1723729590; cv=none; b=gkwCtm1qDnIgYFi1LAeDESUeZUyt5tZdoPfALZa1Z/k6qS5h0Q5zjfWVx2JQkxfTPZvRRcExbG2jkzOxIwqq7U4TK5u5YrbRKXvDuSZdMvhCmxZ3Gmji+sBrVlreNChDeLUUA46D82cFT1FI6f7lKX53IC6aGkpPXBocIDnbbx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729479; c=relaxed/simple;
-	bh=uVmWifW0HS3c4Banhr20uIDh6Blz7xySuRYRmhk0SEc=;
-	h=CC:Subject:To:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=FabKJNPxgsi8EsUJJW7YA8b8sRECYUxCVU7bf7eDBhNtIQsWK2VZ7VvPN957cCgWDobg17fznendtneZFssMkraCB5eiEuK0Vg8321ihRAzCtVPU2WLmKbSwE71oxEtXaTh42lcXnONfmEKCmFAu8VTkXVuI+1gBxkA0lqOqzFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.190
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.88.214])
-	by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4Wl5pQ4FlHz20lh4;
-	Thu, 15 Aug 2024 21:39:58 +0800 (CST)
-Received: from kwepemd200014.china.huawei.com (unknown [7.221.188.8])
-	by mail.maildlp.com (Postfix) with ESMTPS id C23271A016C;
-	Thu, 15 Aug 2024 21:44:33 +0800 (CST)
-Received: from [10.67.121.177] (10.67.121.177) by
- kwepemd200014.china.huawei.com (7.221.188.8) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.34; Thu, 15 Aug 2024 21:44:32 +0800
-CC: Shuai Xue <xueshuai@linux.alibaba.com>, Jing Zhang
-	<renyu.zj@linux.alibaba.com>, Will Deacon <will@kernel.org>, Mark Rutland
-	<mark.rutland@arm.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Yicong
- Yang <yangyicong@hisilicon.com>, Jonathan Cameron
-	<Jonathan.Cameron@huawei.com>, Jonathan Corbet <corbet@lwn.net>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-	<quic_vbadigan@quicinc.com>, <quic_nitegupt@quicinc.com>,
-	<quic_skananth@quicinc.com>, <quic_ramkri@quicinc.com>,
-	<quic_parass@quicinc.com>, <quic_mrana@quicinc.com>
-Subject: Re: [PATCH 2/4] Documentation: dwc_pcie_pmu: Update bdf to sbdf
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-References: <20240731-dwc_pmu_fix-v1-0-ca47d153e5b2@quicinc.com>
- <20240731-dwc_pmu_fix-v1-2-ca47d153e5b2@quicinc.com>
-From: Yicong Yang <yangyicong@huawei.com>
-Message-ID: <9a6bf90e-ce7f-8a20-93a1-63a75f312392@huawei.com>
-Date: Thu, 15 Aug 2024 21:44:32 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.1
+	s=arc-20240116; t=1723729590; c=relaxed/simple;
+	bh=xpa67Wr74Im2iD+qPPKLdhggzJuep5WPCdoIlQ89s5w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d6GJSHPtnjZ3jHvpbu0RL/gBE3ODpsm2d1ceGbSSF3aJvxyj2D46Yxa+IYyAV/QyrG4NcBCsBBFEq42e9B9zVhnK7GOJ/Z8CiWDqS9QqmNPQ2Y4oz7UP8GBUMZpFPGwISGv83EvkF3MyMrPg8XpeLu298Uk8xyQz6odjWndZmns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 34EF914BF;
+	Thu, 15 Aug 2024 06:46:54 -0700 (PDT)
+Received: from bogus (e107155-lin.cambridge.arm.com [10.1.196.87])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A72063F6A8;
+	Thu, 15 Aug 2024 06:46:26 -0700 (PDT)
+Date: Thu, 15 Aug 2024 14:46:24 +0100
+From: Sudeep Holla <sudeep.holla@arm.com>
+To: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>, cristian.marussi@arm.com,
+	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org, quic_rgottimu@quicinc.com,
+	quic_kshivnan@quicinc.com, johan@kernel.org,
+	Sudeep Holla <sudeep.holla@arm.com>, Peng Fan <peng.fan@nxp.com>
+Subject: Re: [PATCH] pmdomain: arm: Fix debugfs node creation failure
+Message-ID: <Zr4GsOndEEMI-6ap@bogus>
+References: <20240703110741.2668800-1-quic_sibis@quicinc.com>
+ <ZoZ6Pk7NSUNDB74i@bogus>
+ <064274c4-3783-c59e-e293-dd53a8595d8e@quicinc.com>
+ <Zofvc31pPU23mjnp@bogus>
+ <CAPDyKFrESupeNS4BO8TPHPGpXFLsNqLPrUEw3xzr8oh8FsLHeA@mail.gmail.com>
+ <Zryxrdodn2Y2xsej@bogus>
+ <CAPDyKFqmV7yvMdLjGhDHJN4CFiUun3FXprEk7uGFV_qmn9vA8Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20240731-dwc_pmu_fix-v1-2-ca47d153e5b2@quicinc.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
- kwepemd200014.china.huawei.com (7.221.188.8)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPDyKFqmV7yvMdLjGhDHJN4CFiUun3FXprEk7uGFV_qmn9vA8Q@mail.gmail.com>
 
-On 2024/7/31 12:23, Krishna chaitanya chundru wrote:
-> Update document to reflect the driver change to use sbdf instead
-> of bdf alone.
+On Thu, Aug 15, 2024 at 12:46:15PM +0200, Ulf Hansson wrote:
+> On Wed, 14 Aug 2024 at 15:31, Sudeep Holla <sudeep.holla@arm.com> wrote:
+> >
+> > On Wed, Aug 14, 2024 at 02:38:24PM +0200, Ulf Hansson wrote:
+> > >
+> > > Sudeep, while I understand your point and I agree with it, it's really
+> > > a simple fix that $subject patch is proposing. As the unique name
+> > > isn't mandated by the SCMI spec, it looks to me that we should make a
+> > > fix for it on the Linux side.
+> > >
+> >
+> > Yes, I did come to the conclusion that this is inevitable but hadn't
+> > thought much on the exact solution. This email and you merging the original
+> > patch made me think a bit quickly now 😉
 > 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> Alright, great!
+> 
+> >
+> > > I have therefore decided to queue up $subject patch for fixes. Please
+> > > let me know if you have any other proposals/objections moving forward.
+> >
+> > The original patch may not work well with the use case Peng presented.
+> > As the name and id may also match in their case, I was wondering if we
+> > need to add some prefix like perf- or something to avoid the potential
+> > clash across power and perf genpds ? I may be missing something still as
+> > it is hard to visualise all possible case that can happen with variety
+> > of platform and their firmware.
+> >
+> > In short, happy to have some fix for the issue in some form whichever
+> > works for wider set of platforms.
+> 
+> Okay, so I have dropped the $subject patch from my fixes branch for
+> now, to allow us and Sibi to come up with an improved approach.
+> 
+> That said, it looks to me that the proper fix needs to involve
+> pm_genpd_init() in some way, as this problem with unique device naming
+> isn't really limited to SCMI. Normally we use an "ida" to get a unique
+> index that we tag on to the device's name, but maybe there is a better
+> strategy here!?
 
-Reviewed-by: Yicong Yang <yangyicong@hisilicon.com>
+Yes using "ida" for unique index might work here as well AFAIU. It can be
+one of the possible solution for sure.
 
-> ---
->  Documentation/admin-guide/perf/dwc_pcie_pmu.rst | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/Documentation/admin-guide/perf/dwc_pcie_pmu.rst b/Documentation/admin-guide/perf/dwc_pcie_pmu.rst
-> index d47cd229d710..39b8e1fdd0cd 100644
-> --- a/Documentation/admin-guide/perf/dwc_pcie_pmu.rst
-> +++ b/Documentation/admin-guide/perf/dwc_pcie_pmu.rst
-> @@ -46,16 +46,16 @@ Some of the events only exist for specific configurations.
->  DesignWare Cores (DWC) PCIe PMU Driver
->  =======================================
->  
-> -This driver adds PMU devices for each PCIe Root Port named based on the BDF of
-> +This driver adds PMU devices for each PCIe Root Port named based on the SBDF of
->  the Root Port. For example,
->  
-> -    30:03.0 PCI bridge: Device 1ded:8000 (rev 01)
-> +    0001:30:03.0 PCI bridge: Device 1ded:8000 (rev 01)
->  
-> -the PMU device name for this Root Port is dwc_rootport_3018.
-> +the PMU device name for this Root Port is dwc_rootport_13018.
->  
->  The DWC PCIe PMU driver registers a perf PMU driver, which provides
->  description of available events and configuration options in sysfs, see
-> -/sys/bus/event_source/devices/dwc_rootport_{bdf}.
-> +/sys/bus/event_source/devices/dwc_rootport_{sbdf}.
->  
->  The "format" directory describes format of the config fields of the
->  perf_event_attr structure. The "events" directory provides configuration
-> @@ -66,16 +66,16 @@ The "perf list" command shall list the available events from sysfs, e.g.::
->  
->      $# perf list | grep dwc_rootport
->      <...>
-> -    dwc_rootport_3018/Rx_PCIe_TLP_Data_Payload/        [Kernel PMU event]
-> +    dwc_rootport_13018/Rx_PCIe_TLP_Data_Payload/        [Kernel PMU event]
->      <...>
-> -    dwc_rootport_3018/rx_memory_read,lane=?/               [Kernel PMU event]
-> +    dwc_rootport_13018/rx_memory_read,lane=?/               [Kernel PMU event]
->  
->  Time Based Analysis Event Usage
->  -------------------------------
->  
->  Example usage of counting PCIe RX TLP data payload (Units of bytes)::
->  
-> -    $# perf stat -a -e dwc_rootport_3018/Rx_PCIe_TLP_Data_Payload/
-> +    $# perf stat -a -e dwc_rootport_13018/Rx_PCIe_TLP_Data_Payload/
->  
->  The average RX/TX bandwidth can be calculated using the following formula:
->  
-> @@ -88,7 +88,7 @@ Lane Event Usage
->  Each lane has the same event set and to avoid generating a list of hundreds
->  of events, the user need to specify the lane ID explicitly, e.g.::
->  
-> -    $# perf stat -a -e dwc_rootport_3018/rx_memory_read,lane=4/
-> +    $# perf stat -a -e dwc_rootport_13018/rx_memory_read,lane=4/
->  
->  The driver does not support sampling, therefore "perf record" will not
->  work. Per-task (without "-a") perf sessions are not supported.
-> 
+-- 
+Regards,
+Sudeep
 
