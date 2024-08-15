@@ -1,181 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-28627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76B04952ECE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 15:09:13 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0AC73952EF1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 15:18:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D7D64B27C8F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 13:09:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2F8E81C23CA3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 13:18:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDB5A19DF9A;
-	Thu, 15 Aug 2024 13:09:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A4FF19DF97;
+	Thu, 15 Aug 2024 13:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qieAn9XT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z8+1/vgq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE54619DF60
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 13:09:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A2A17C984
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 13:18:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723727343; cv=none; b=g/CAlplJDiRHJMu7qT6A8om9olwa3feiwRkSDQxiLqier1Yk6zczUYLFOHX6Y6OhPqAcFChn1uGJuuSUuggIuXrt973/74Q6ot69lUn1giT5MXCugd/RZHv8N8kTEbWqwE5X8CyqZS9SS8WAXB4IRXaSclWlVlNm/scFREe3cvI=
+	t=1723727908; cv=none; b=M2Au2017lORjXBzh4pXZ1z2B0QybowRlm/QpQ+kMNsthIse9sKLNw6796yXy6V6iqSK0S9sc3uZY0f5inMBlRz14cxyVlW8Pd3P/ObrrnaRMvRCqYg8C7BKMT+4Lqe9ZlMMW+xsVz6AXFBLM+HAFRLfDBHyHUx53jd3bLIfuGM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723727343; c=relaxed/simple;
-	bh=ZNiq2dS7G8t+fkB7QAgvHsxKjUH2MxNcZXjk9gsTVRc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bECpuqIaFOCCouFHhY4rPxDRsLQS1d3SvtGYJvhmtTl2SOTE7tOoSSbeCj0Ay48m0GsX6OU9nbo//KrQKr5A+2s1G/kjFiwxJyqvIItOf06ZXVv3NectEwE8hGJqJkV0mWb5Evo3Tbxp36n6m/JU7x1XJglZUIg6vD7J2V95hzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qieAn9XT; arc=none smtp.client-ip=209.85.167.41
+	s=arc-20240116; t=1723727908; c=relaxed/simple;
+	bh=9QzxkGKPHGI6MZIx5pSqqR5HuH/5Fo/m92L6t1rw1yo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UN+Dn1/iSYQttnWNFtPisZNZrROhYPNhF/LTQjK2YQ6WvwLdvDsvo/CiyyEnOnhcJXntsJAKRCX3SuJkj+EIT2ny+qIbtfrKhuYUU4NwK+KVZ4sKxYBijs2NpNVJC9f5mCwEgLQxaBHPUb61KLVLahFDwCCShbfSgzXFV49JpUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Z8+1/vgq; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-53212e0aa92so980833e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 06:09:01 -0700 (PDT)
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5a10bb7bcd0so1295739a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 06:18:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723727340; x=1724332140; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TNY1eM+k8dVypAWpZEMkyA4Ex7FP/CU7h/TDaorYfbM=;
-        b=qieAn9XTOcFXLy1q6ngbr8ohGiyMYSkbbgYITEVXOjgodlaX70MEymEn/xwYRhEKtC
-         7nnvEBibVEMeIzW3anm0ti3i7mr28qu30gHUZhSfhJIJ3tvQpJfCeC9xHJUrcOPIGL0z
-         sOjCyltVwivnlhKZzVXQbhga9dRWMukWZAH1IZxg/PFqaJVIbGUNYuXtpyy25Jjds9h0
-         zXC54Q+/4mz1oydMbtXvtELsdo9Ex1LLphiQ1BsClC7lJrM0NOSF6yRc0GBXsPbUKyc8
-         N3sxOcuAPNb6b6VPpy5RWlfz4lGGOSD9eJLoyneUjs4nO6D2D2cC30JOPUb3g1Xl69Qv
-         Vm1A==
+        d=linaro.org; s=google; t=1723727905; x=1724332705; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=6Pam5Ci+C4rFF08wOghK1K2f2OhCc/g5cnbX0w9Mc4I=;
+        b=Z8+1/vgq+SvqxoGZ3iOc7E5lNxrTdGmflBaEhrDtq8qrocBq9S751xBZ+J/oTqn90d
+         zTdGhDVCWNbNHQR7s8AJmwdwH87jJ0WUsdga2Gt0MoCpGkmoNz4jFJP9vAVJus1G6Hi9
+         kC71mWhk4l3PS15aFs53Eo23Tb5rKtVCknNlX36BU21e8Gy8Hukl7Co/pB4PQ9Tn2Xma
+         wJ0quQgzhfzs1V2urxGxrTcgsGCoYH7OL7YUdA7A5gTMg28b1LN0Fe2jkf/ZpWotjFLA
+         q41Ev1Uzhse7tBNa0+tUj2gQNoGYAhEWBETCCoM44M7cGkWcGLzfw/knTmjIiZscG8K4
+         UPsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723727340; x=1724332140;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TNY1eM+k8dVypAWpZEMkyA4Ex7FP/CU7h/TDaorYfbM=;
-        b=WvJNqsEQGCnTVUw5cbDcDF8UwL/zwoPnELTMBwzQyc77BJXBJmo1Pg4bNTmu2BrDyc
-         J1PB2YIPWQLds0LAMoMkdH0atlcsj7XyKqumVz5yGY9W0RXnx7mwUKVbAN6YHC8f8VG9
-         cmkCR+ywB36pIDEmimUpaRKKH9i/1EJuIvt0L5iK8KpR0seBhjN2yZxESyaIU6YIZqVT
-         VCSoTjHEDJ16zhfMetwRK5cudkaK/kqXAXcC1BhL4tHLcEePV5PYm/aj+OOUhNkqQBCA
-         bMmazpc4M6x733lzrD6bBf7mf6tUNN0UJqkdunD6Ed/exDdA5LE7ohvGTnQ7U9yLtpaN
-         y7Bw==
-X-Forwarded-Encrypted: i=1; AJvYcCU4Z6TYxYf2ArRQ5ssKZwM2iri6WS5XjdTdS7YASlUDz18oUG8crcIoAEuWd+LdwK4+RgTtM9/IeCB03n/saMIDevC5yseMb25rVO21MA==
-X-Gm-Message-State: AOJu0YyJ4lF/HzoKE9pAsWxrZWlS4rL5CrdnPvpAbBZZjMxzoIOroyXY
-	7I3xyfjNJ6sGBM/qvd/CN02NcGqrw5cFZO2eENNohZgpLzOBOCTb33ztne6sdYruTNqqwLVKh/z
-	Vxfw=
-X-Google-Smtp-Source: AGHT+IE+mnCIG8BYgBw5oHWVA2VHQioa6RNCWwiCufSDfkzDIzHQOepsTOsLlr6E2Nlerb9pp9JkZg==
-X-Received: by 2002:a05:6512:1292:b0:530:e228:7799 with SMTP id 2adb3069b0e04-532edbcaab6mr3519137e87.58.1723727339644;
-        Thu, 15 Aug 2024 06:08:59 -0700 (PDT)
-Received: from ?IPV6:2a02:8109:aa0d:be00::e7e1? ([2a02:8109:aa0d:be00::e7e1])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a838396dfddsm99761266b.214.2024.08.15.06.08.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Aug 2024 06:08:59 -0700 (PDT)
-Message-ID: <f341e9e9-3da6-4029-9892-90e6ec856544@linaro.org>
-Date: Thu, 15 Aug 2024 15:08:57 +0200
+        d=1e100.net; s=20230601; t=1723727905; x=1724332705;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6Pam5Ci+C4rFF08wOghK1K2f2OhCc/g5cnbX0w9Mc4I=;
+        b=lnzhyapi41dy6mUR19Vj3BhWKLjCFNsZa4/Py9ZrU5Z08NpOYeLG3l9XlgJFyHFmCq
+         B2vexZ9lePQ6lv6wM5n5YjqHpV/TmtnMDSdH0oyJQHKvS+RpdW6fgktnjohdzOnKQ+kk
+         qDmeNlxua/ewwCt15mo/IzLtoNDz6j7StPd4/x8Qctjtjsfk5qWpvCFFBDf37psWkeqI
+         y1hgrzQu6+ZYkObWjzlkFssca2vyFic5gDuNrJUEE1B3PpzOMRpz2kQQU7GcuAzQo53x
+         /Ollt54FHYNdBt5FzFFQyG7I1nvR6/oHneYnAs8TO6sSGcbDgwz0pkhGFU/4/CQOSy0X
+         0EOA==
+X-Forwarded-Encrypted: i=1; AJvYcCUsVucz9A39+YMNrnE8Xhbp4x1LDMBmntUztN0ZjsoLHEeOkftdX45HA5yhH/Aym4We91GjZc7vnwpgBECO/H2SkYEKtbvobJt51JAa4A==
+X-Gm-Message-State: AOJu0YycyXU1h47jFbhRepD0uGLPvP+4Feo6pB6hwEWJpSjkUQhN40Nl
+	PEJvYTUenTUw03y3kD5dFEDSkrJMcG7E0l0M5j/0GHw2c94GbNt8chsOZV3EZ/w=
+X-Google-Smtp-Source: AGHT+IHM8+Udq7m54PDM2N1th3MFrrcrJsKXCwIA/ehjKz4VTI2MNH9h0V4lGOkyJ6MlTp8/EauXtw==
+X-Received: by 2002:a17:907:7e95:b0:a77:db36:1ccf with SMTP id a640c23a62f3a-a83670913a4mr460177666b.42.1723727904580;
+        Thu, 15 Aug 2024 06:18:24 -0700 (PDT)
+Received: from linaro.org ([82.79.186.176])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a838396cdbesm101056866b.200.2024.08.15.06.18.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Aug 2024 06:18:24 -0700 (PDT)
+Date: Thu, 15 Aug 2024 16:18:22 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Marcus Glocker <marcus@nazgul.ch>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Subject: Re: [PATCH v3 4/6] arm64: dts: qcom: Add UFS node
+Message-ID: <Zr4AHoPpAXJM6AC+@linaro.org>
+References: <v2iah5yrne4u6uzrnzg36tvtxzqrpiez6io2gyyfrht2x42umw@5ribqndiavxv>
+ <ejeph4wspggkmvhl7qmpvw5jlojyvma7epqd67i6vk5p6fncrk@de56nvgi6vzi>
+ <Zr3cuxv4EdxMQa9C@linaro.org>
+ <kt5mrxse7dirsjgu3ldv4rzasgbmykluul7ie26zlavhlmfz4r@bo4fd4ybt7bx>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/16] Add cmd descriptor support
-To: Md Sadre Alam <quic_mdalam@quicinc.com>, vkoul@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- andersson@kernel.org, konradybcio@kernel.org, thara.gopinath@gmail.com,
- herbert@gondor.apana.org.au, davem@davemloft.net, gustavoars@kernel.org,
- u.kleine-koenig@pengutronix.de, kees@kernel.org, agross@kernel.org,
- linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-crypto@vger.kernel.org
-Cc: quic_srichara@quicinc.com, quic_varada@quicinc.com,
- quic_utiwari@quicinc.com
-References: <20240815085725.2740390-1-quic_mdalam@quicinc.com>
-Content-Language: en-US
-From: Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20240815085725.2740390-1-quic_mdalam@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <kt5mrxse7dirsjgu3ldv4rzasgbmykluul7ie26zlavhlmfz4r@bo4fd4ybt7bx>
 
-Hi,
+On 24-08-15 13:54:01, Marcus Glocker wrote:
+> On Thu, Aug 15, 2024 at 01:47:23PM +0300, Abel Vesa wrote:
+> 
+> > On 24-08-15 12:42:29, Marcus Glocker wrote:
+> > > Add the UFS Host Controller node.  This was basically copied from the
+> > > arch/arm64/boot/dts/qcom/sc7180.dtsi file.
+> > > 
+> > > Signed-off-by: Marcus Glocker <marcus@nazgul.ch>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 71 ++++++++++++++++++++++++++
+> > >  1 file changed, 71 insertions(+)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > > index 7bca5fcd7d52..235e20e4b51f 100644
+> > > --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > > @@ -2878,6 +2878,77 @@ mmss_noc: interconnect@1780000 {
+> > >  			#interconnect-cells = <2>;
+> > >  		};
+> > >  
+> > > +		ufs_mem_hc: ufs@1d84000 {
+> > > +			compatible = "qcom,x1e80100-ufshc", "qcom,ufshc",
+> > > +				     "jedec,ufs-2.0";
+> > > +			reg = <0 0x01d84000 0 0x3000>;
+> > > +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+> > > +			phys = <&ufs_mem_phy>;
+> > > +			phy-names = "ufsphy";
+> > > +			lanes-per-direction = <1>;
+> > > +			#reset-cells = <1>;
+> > > +			resets = <&gcc GCC_UFS_PHY_BCR>;
+> > > +			reset-names = "rst";
+> > > +
+> > > +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
+> > > +
+> > > +			iommus = <&apps_smmu 0xa0 0x0>;
+> > > +
+> > > +			clock-names = "core_clk",
+> > > +				      "bus_aggr_clk",
+> > > +				      "iface_clk",
+> > > +				      "core_clk_unipro",
+> > > +				      "ref_clk",
+> > > +				      "tx_lane0_sync_clk",
+> > > +				      "rx_lane0_sync_clk";
+> > > +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
+> > > +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+> > > +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
+> > > +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+> > > +				 <&rpmhcc RPMH_CXO_CLK>,
+> > > +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+> > > +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>;
+> > > +			freq-table-hz = <50000000 200000000>,
+> > > +					<0 0>,
+> > > +					<0 0>,
+> > > +					<37500000 150000000>,
+> > > +					<0 0>,
+> > > +					<0 0>,
+> > > +					<0 0>;
+> > > +
+> > > +			interconnects = <&aggre1_noc MASTER_UFS_MEM QCOM_ICC_TAG_ALWAYS
+> > > +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+> > > +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+> > > +					 &config_noc SLAVE_UFS_MEM_CFG QCOM_ICC_TAG_ALWAYS>;
+> > > +			interconnect-names = "ufs-ddr", "cpu-ufs";
+> > > +
+> > > +			qcom,ice = <&ice>;
+> > > +
+> > > +			status = "disabled";
+> > > +		};
+> > > +
+> > > +		ufs_mem_phy: phy@1d87000 {
+> > > +			compatible = "qcom,x1e80100-qmp-ufs-phy";
+> > 
+> > Can't find any phy patch that adds this compatible to the driver.
+> 
+> That might well be, since this is pretty new hardware.  But the goal
+> of this submission is only to describe the hardware, not to add
+> immediate support to the OS drivers.  Whether the drivers will make use
+> of it, is a different story, and up to the people who maintain the
+> respective drivers.
+> 
+> Getting the right DTB in, at least opens the possibility to continue
+> development in the driver area to further support this new hardware.
+> 
+> But I won't touch your drivers, not my goal.
 
-A note for future patches, please scope your cover letter subject:
+Presumably, you do have the UFS working on your Book4 laptop, right?
 
-"dmaengine: qcom: bam_dma: add cmd descriptor support"
+If so, I would expect you do have the PHY working as well and therefore
+a patch that adds the X Elite compatible, right?
 
-On 15/08/2024 10:57, Md Sadre Alam wrote:
-> This series of patches will add command descriptor
-> support to read/write crypto engine register via
-> BAM/DMA
 > 
-> We need this support because if there is multiple EE's
-> (Execution Environment) accessing the same CE then there
-> will be race condition. To avoid this race condition
-> BAM HW hsving LOC/UNLOCK feature on BAM pipes and this
-> LOCK/UNLOCK will be set via command descriptor only.
-> 
-> Since each EE's having their dedicated BAM pipe, BAM allows
-> Locking and Unlocking on BAM pipe. So if one EE's requesting
-> for CE5 access then that EE's first has to LOCK the BAM pipe
-> while setting LOCK bit on command descriptor and then access
-> it. After finishing the request EE's has to UNLOCK the BAM pipe
-> so in this way we race condition will not happen.
-> 
-> tested with "tcrypt.ko" and "kcapi" tool.
-> 
-> Need help to test these all the patches on msm platform
-
-DT changes here are only for a few IPQ platforms, please explain in the 
-cover letter if this is some IPQ specific feature which doesn't exist on 
-other platforms, or if you're only enabling it on IPQ.
-
-Some broad strokes testing instructions (at the very least) and 
-requirements (testing on what hardware?) aren't made obvious at all here.
-
-Kind regards,
-> 
-> v2:
->   * Addressed all the comments from v1
->   * Added the dt-binding
->   * Added locking/unlocking mechanism in bam driver
-> 
-> v1:
->   * https://lore.kernel.org/lkml/20231214114239.2635325-1-quic_mdalam@quicinc.com/
->   * Initial set of patches for cmd descriptor support
-> 
-> Md Sadre Alam (16):
->    dt-bindings: dma: qcom,bam: Add bam pipe lock
->    dmaengine: qcom: bam_dma: add bam_pipe_lock dt property
->    dmaengine: qcom: bam_dma: add LOCK & UNLOCK flag support
->    crypto: qce - Add support for crypto address read
->    crypto: qce - Add bam dma support for crypto register r/w
->    crypto: qce - Convert register r/w for skcipher via BAM/DMA
->    crypto: qce - Convert register r/w for sha via BAM/DMA
->    crypto: qce - Convert register r/w for aead via BAM/DMA
->    crypto: qce - Add LOCK and UNLOCK flag support
->    crypto: qce - Add support for lock aquire,lock release api.
->    crypto: qce - Add support for lock/unlock in skcipher
->    crypto: qce - Add support for lock/unlock in sha
->    crypto: qce - Add support for lock/unlock in aead
->    arm64: dts: qcom: ipq9574: enable bam pipe locking/unlocking
->    arm64: dts: qcom: ipq8074: enable bam pipe locking/unlocking
->    arm64: dts: qcom: ipq6018: enable bam pipe locking/unlocking
-> 
->   .../devicetree/bindings/dma/qcom,bam-dma.yaml |   8 +
->   arch/arm64/boot/dts/qcom/ipq6018.dtsi         |   1 +
->   arch/arm64/boot/dts/qcom/ipq8074.dtsi         |   1 +
->   arch/arm64/boot/dts/qcom/ipq9574.dtsi         |   1 +
->   drivers/crypto/qce/aead.c                     |   4 +
->   drivers/crypto/qce/common.c                   | 142 +++++++----
->   drivers/crypto/qce/core.c                     |  13 +-
->   drivers/crypto/qce/core.h                     |  12 +
->   drivers/crypto/qce/dma.c                      | 232 ++++++++++++++++++
->   drivers/crypto/qce/dma.h                      |  26 +-
->   drivers/crypto/qce/sha.c                      |   4 +
->   drivers/crypto/qce/skcipher.c                 |   4 +
->   drivers/dma/qcom/bam_dma.c                    |  14 +-
->   include/linux/dmaengine.h                     |   6 +
->   14 files changed, 424 insertions(+), 44 deletions(-)
-> 
-
--- 
-// Caleb (they/them)
+> > > +			reg = <0 0x01d87000 0 0x1000>;
+> > > +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> > > +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
+> > > +			clock-names = "ref",
+> > > +				      "ref_aux",
+> > > +				      "qref";
+> > > +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
+> > > +			resets = <&ufs_mem_hc 0>;
+> > > +			reset-names = "ufsphy";
+> > > +			#phy-cells = <0>;
+> > > +			status = "disabled";
+> > > +		};
+> > > +
+> > > +		ice: crypto@1d90000 {
+> > > +			compatible = "qcom,x1e80100-inline-crypto-engine",
+> > > +				     "qcom,inline-crypto-engine";
+> > > +			reg = <0 0x01d90000 0 0x8000>;
+> > > +			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+> > > +		};
+> > > +
+> > >  		pcie6a: pci@1bf8000 {
+> > >  			device_type = "pci";
+> > >  			compatible = "qcom,pcie-x1e80100";
+> > > -- 
+> > > 2.39.2
+> > > 
 
