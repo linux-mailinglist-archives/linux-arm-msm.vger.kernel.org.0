@@ -1,71 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-28704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D3F7953C0A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 22:49:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 393F0953C0C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 22:49:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CAEECB26C2C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 20:49:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E93DB28736A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 20:49:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEB5117166E;
-	Thu, 15 Aug 2024 20:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA99C172BA9;
+	Thu, 15 Aug 2024 20:41:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WwtYg+Fr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="opvpgsWI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9A1171098;
-	Thu, 15 Aug 2024 20:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F8817279E;
+	Thu, 15 Aug 2024 20:41:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723754500; cv=none; b=OruA8uIf/opIGk8hlM+IouyfzdUpeqr+nchat2SlP96T2i8Xbobm9NYQ8k7RDvOfqt2R6yEnwo26gfN0IepA4NwVDwIhzya38ESyb8C1XYD+CDcU4ddZTNjT6mNwUtyfrUEbigAbg9TvJBRAYKNf7wOY7gLVloxXDS7E9ZHNv1I=
+	t=1723754501; cv=none; b=Yrs4MXZMZv0Kf9erodPaTT+bwWCOeoIORKshCazAcKwWJorTjk1OtXqiDv0POE5CMcKyuSvZ2hXDlF0RYgwgDR9OJIxe6Ppl17PL3z7WsWNV14L+SN5eb94e2Nuq9O3yDyqaRs05m8810fiuo38gOO7Kbv6C0GUfKayQ/IIoXmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723754500; c=relaxed/simple;
-	bh=99puEiYfn5q/7K01azkENGMe1+O/ZL9Ew0Yw9gh+GPY=;
+	s=arc-20240116; t=1723754501; c=relaxed/simple;
+	bh=plFYLz3qZ5uLAJRk/eDPWBD6atb5l+TeDeRvVftkjcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o8RGdD5qUBprLW9fpYpXRD8WoX9VBkFc1Whf7YbZDsjcDp/21vI1LtwVbBDi813m9Qi4PweECHhpQbEV8A/EviL+ylUrbkCUCSCmYpOzYpxUe6qQA4KlXuOUMBkMbt7LWwcTFmPpx5uIah9lrWr1RrPxKqr0Wx6AFn3InR7X1GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WwtYg+Fr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CCBC4AF14;
-	Thu, 15 Aug 2024 20:41:39 +0000 (UTC)
+	 MIME-Version:Content-Type; b=n5B+aN4Gk7RrHSkjO83unzld9xlEvH4hT2wM8lvQT0IOa8VEFDM94K4C3KbHeqBBDKFeSAnZqPtsYe6zKm9/xioP3IAI2C7c1fL3vmQPcCzOHfMypl7bg9ShTrgMEdwWOvQpkjPWmx+RdS1rGMHEmCLov2oI6W2kodaXBC7FROg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=opvpgsWI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6A0C4AF09;
+	Thu, 15 Aug 2024 20:41:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723754500;
-	bh=99puEiYfn5q/7K01azkENGMe1+O/ZL9Ew0Yw9gh+GPY=;
+	s=k20201202; t=1723754501;
+	bh=plFYLz3qZ5uLAJRk/eDPWBD6atb5l+TeDeRvVftkjcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WwtYg+FrmwJ1+DtOJDq3tvnd71xwf0r16EnhnCSqlvCBkpyEBVsN+xmdEnv50Ngcw
-	 5Bufav1hT6I9bQiDJdtOlhPvGAmjix33qvhrIW15J+dmsdT9owDmux31NiGYIgwTgF
-	 ZwYKnK+14wvp/+vVpgmJ0lvnHMw3xS4Rvy49W/I1yRPowy9jASbPXLVsWM506/+n1k
-	 ayYE29z+4koutxE/Fj3Cirsy8mLBwkQel9Xkbf0nXvjRKI+fDEzNWcK5T80LN96PYX
-	 /7Zi8tbsz+y9vy+9x1elt2otYPZyTFAqly+bpg93Nrq7N/aLTEqlzxGyJCIJJFcOqo
-	 Fx5naxR4U4nAg==
+	b=opvpgsWIrD2pfTFZEdc20ydJcHxbapac3u9+BsRVHB/6QyhLbCnP2V6X2INqadxun
+	 8wKFJ3EJvMZ+OtJUrxpry9kwqVoyrwQ0cIAiy9yc8pCDsUYMfNaQOEt8FMUmRgabRX
+	 s480TMIs8YMkSmQOqVu6i0WMFUizIy0XL+gIptPOUtRQPTbmBU4EToea/bMwJKHWPP
+	 dGxIcKVvkLFJcNPB/Doh/2/DH6ov3ZoBqBa8rM0BuxYP0RSlcKHGagB8fVT8TgVidQ
+	 /Q9OwK6E6HvYvIVNWTfN1x1AY5ioSzaqYnA8Uknw4JNWbTTugGhzZwU/KtaH/aRfRb
+	 ku1LLVIYQKHJQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Banajit Goswami <bgoswami@quicinc.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	srinivas.kandagatla@linaro.org
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	alsa-devel@alsa-project.org,
-	linux-sound@vger.kernel.org,
-	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Manikantan R <quic_manrav@quicinc.com>
-Subject: Re: (subset) [PATCH v2 0/6] ASoC: codecs: wsa88xx: add support for static port mapping.
-Date: Thu, 15 Aug 2024 15:40:50 -0500
-Message-ID: <172375444802.1011236.13810877795338662540.b4-ty@kernel.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH 0/2] soc: qcom: pd_mapper: Add X1E80100 and older platforms
+Date: Thu, 15 Aug 2024 15:40:51 -0500
+Message-ID: <172375444805.1011236.7812815658652492158.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240626-port-map-v2-0-6cc1c5608cdd@linaro.org>
-References: <20240626-port-map-v2-0-6cc1c5608cdd@linaro.org>
+In-Reply-To: <20240708-x1e80100-pd-mapper-v1-0-854386af4cf5@linaro.org>
+References: <20240708-x1e80100-pd-mapper-v1-0-854386af4cf5@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,26 +65,19 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 27 Jun 2024 15:44:37 +0100, srinivas.kandagatla@linaro.org wrote:
-> Existing way of allocating soundwire master ports on Qualcommm platforms is
-> dynamic, and in linear order starting from 1 to MAX_PORTS.
-> This will work as long as soundwire device ports are 1:1 mapped
-> linearly. However on most Qcom SoCs like SM8550, SM8650, x1e80100, these
-> are NOT mapped in that order.
+On Mon, 08 Jul 2024 18:22:08 +0200, Stephan Gerhold wrote:
+> Add X1E80100 to the in-kernel pd-mapper to avoid having to run the
+> userspace daemon for charging and audio functionality. Also add entries for
+> some missing older platforms without protection domains.
 > 
-> The result of this is that only one speaker among the pair of speakers
-> is always silent, With recent changes for WSA codec to support codec
-> versions and along with these patches we are able to get all speakers
-> working on these SoCs.
 > 
-> [...]
 
 Applied, thanks!
 
-[5/6] arm64: dts: x1e80100-crd: fix wsa soundwire port mapping
-      commit: d374fafd8972895eba01ebd69c993cc7d80c084b
-[6/6] arm64: dts: x1e80100-qcp: fix wsa soundwire port mapping
-      commit: 6e229f9118438af09b4ac6a96313c32f33027e5a
+[1/2] soc: qcom: pd_mapper: Add X1E80100
+      commit: bd6db1f1486eedb8460647b3fbe9b5ae8fd09207
+[2/2] soc: qcom: pd_mapper: Add more older platforms without domains
+      commit: ed2c37520893427dfb8b615fcc6263af796a0ab1
 
 Best regards,
 -- 
