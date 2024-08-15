@@ -1,190 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-28651-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1697E9538AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 18:59:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BDC8B9538BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 19:06:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A844CB22A26
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 16:59:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6746C2842F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 17:06:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26DD31BA88F;
-	Thu, 15 Aug 2024 16:59:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 997231BB69D;
+	Thu, 15 Aug 2024 17:05:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="he8xmXuV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from gollum.nazgul.ch (gollum.nazgul.ch [81.221.21.253])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6322A8D0;
-	Thu, 15 Aug 2024 16:59:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.221.21.253
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7901B1517
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 17:05:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723741173; cv=none; b=G8Xp5ITPxQ/iS2qyGAzFRmdJ46lYDqWuQ8lhLzISyOlpdBFUXWwL1ulC5zEu6qIddm0OL/Yqbv9BNea/2l+jk+LG+rifQKUOm/ZdXblrPovnBtH9nw0mxI5NNl/VrFhsZPPLLhc3/CHAqQt3ynmqIwRC33AfZeOMKlr9TNiafQA=
+	t=1723741551; cv=none; b=S2S1vGgsmP3ljtM7aMntZtuZxuTvkeSrKjxcuVpA0elR2/do5cDo97Aqsu224UBGBGsuPhimikIWYjkckCMPT2SxiVe7mAMqNUPsn37TlZnuFSYk59mfCpIErisJdoFRiYGJCgI1zjl/aUQLhCZKL8QnhM+NJCyOLF9CDPA/nf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723741173; c=relaxed/simple;
-	bh=on6i+i2WSTP0p94a05unth8gSFCNITMCJ7fy8bQbogg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oTyOiJWQNJr5Ey3mO6e49IiPNlPLbAkHiP2RHb4Th5+2Eg57JzDYWB/eFhRvMmcEfcq7fGcTYUW/6GZ3m2Dn4ilhsboHdmFezeIt5y8fuyoIEcn7r2ThXIWZQXofM/9Jmi6qXYerBQLu2mInUXYZRbSvhGt4G9475HAKdXRb1C0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nazgul.ch; spf=pass smtp.mailfrom=nazgul.ch; arc=none smtp.client-ip=81.221.21.253
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nazgul.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nazgul.ch
-Received: from localhost (gollum.nazgul.ch [local])
-	by gollum.nazgul.ch (OpenSMTPD) with ESMTPA id 27f318bc;
-	Thu, 15 Aug 2024 18:59:25 +0200 (CEST)
-Date: Thu, 15 Aug 2024 18:59:25 +0200
-From: Marcus Glocker <marcus@nazgul.ch>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>
-Subject: Re: [PATCH v3 4/6] arm64: dts: qcom: Add UFS node
-Message-ID: <zyhqlafrhfytjfcwf6jmhc233sikezskls54sgfchfvylqt5gj@fklz4yyrhobo>
-References: <v2iah5yrne4u6uzrnzg36tvtxzqrpiez6io2gyyfrht2x42umw@5ribqndiavxv>
- <ejeph4wspggkmvhl7qmpvw5jlojyvma7epqd67i6vk5p6fncrk@de56nvgi6vzi>
- <Zr3cuxv4EdxMQa9C@linaro.org>
- <kt5mrxse7dirsjgu3ldv4rzasgbmykluul7ie26zlavhlmfz4r@bo4fd4ybt7bx>
- <Zr4AHoPpAXJM6AC+@linaro.org>
+	s=arc-20240116; t=1723741551; c=relaxed/simple;
+	bh=yNAYnrrthvnc92LbkHZu+Lb3N7bb93tsqL1JSAKbnBo=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=qsmNN79e68NUH6ue9BRZlXW0Js/kBQG+i8C+Euilhc8hn9lazUZ+/qJijVG3tNH1zEz/pCp+fU0rsQgvNc+ViaZdE99ffc9V3W592JHU2Hhaz3N6PpnQL1fo4RTithSsdl+JoGcyJbbde2cPL3nGK7eIt+7kxw7y4C3blUEf3DU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=he8xmXuV; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-42809d6e719so7895155e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 10:05:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1723741547; x=1724346347; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CepgmEounTUrl6P6kxWZPU5dwK4CK5Hpa6rPc4gSVuY=;
+        b=he8xmXuVPcd600KNHYRN7dzf7rMyh5OeiR7u9SDClChXNqcsUVn3lNF9WzjaB5qEcm
+         e9xa6kPGHTzLGdRWMWltIS9RDX6xulENrPTxSVRf/O3p+BjL/iiYxZ5epyY7Yp9E0uwi
+         vp7hwlfTJQ5wh5EZkNGLsTlw5/a99fyYc0k8scYDakQPm8uEMOKLY3RIHb9GmFtBahzt
+         O52bQDPh49htPWdp6NeejCkdLdT9faERXqKv0Yubl/mWigAF3ZkE7gLs9X2pnu3IlFpD
+         be41vBLVR4zKQtl8cMABmImBxhfSbgDppSm1DApxdzZ3Zx2u6wdRjHxqUkKYzqMIK8Vx
+         Rghg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723741547; x=1724346347;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CepgmEounTUrl6P6kxWZPU5dwK4CK5Hpa6rPc4gSVuY=;
+        b=I3ZnQ/7/fBSJCbyP4I2LSPioZOt3JAGcz9KAJ4PN4DlAg0qePz8VLewCcsYJYVTQ8O
+         nnrASnNpjBjVh2L9s+cFgsszjMsd24GNZcmPZ52QSZrSs9sGY4Td6Kw7Dha6tWEu6+IN
+         wS4A2orTw7pjsfBnA8Ug5wc4NETqr4oJt2WOP4VAatLiE93FLuXeJKar63ZJdPwo8CRg
+         PY+iOpLsvJBnYUSoYNAR0pDJYuLbxCU67sTDK0kbiPlyHp26cERR6n0+epN+mvQ7XqiA
+         rhAY9WnK4DxtnboY2ayTiETs49RbiW0MNmcMvO1atoW31TwS9fWh9X86+gtFq4sUAENT
+         fsxA==
+X-Forwarded-Encrypted: i=1; AJvYcCWKp0bhaflerP7MkvznLy13wjcGcTm1Z9ZijRBgQkV02YcEaoRekuv/WTK0TL4RG6VEBV6fE3D4M6oyztFBfBHeOA+ibwQZvGizNx7V6w==
+X-Gm-Message-State: AOJu0YwMLYjKqR3XEiY/ZOLSscWOVZBGZXz+keP5Fp3DIT6HeXiyZxci
+	vtUUArbx6jOlpCcxWABAWExrt5gfqNbEq6zD51ssZ/qBS0nF+L+MbcFzkpM9fA0=
+X-Google-Smtp-Source: AGHT+IGQEWGD2uTt4JOylXLFOS6tTAzZOetE/pp1JGV9+vPDEgebW+ZIc3n8HhA+45q5YWGxxcf3FQ==
+X-Received: by 2002:a05:600c:3547:b0:426:647b:1bfa with SMTP id 5b1f17b1804b1-429ed780642mr127135e9.8.1723741546729;
+        Thu, 15 Aug 2024 10:05:46 -0700 (PDT)
+Received: from localhost.localdomain ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ed7841a1sm89765e9.29.2024.08.15.10.05.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Aug 2024 10:05:46 -0700 (PDT)
+From: srinivas.kandagatla@linaro.org
+To: andersson@kernel.org
+Cc: konrad.dybcio@linaro.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	amit.pundir@linaro.org,
+	dmitry.baryshkov@linaro.org,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: sm8250: move lpass codec macros to use clks directly
+Date: Thu, 15 Aug 2024 18:05:42 +0100
+Message-Id: <20240815170542.20754-1-srinivas.kandagatla@linaro.org>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zr4AHoPpAXJM6AC+@linaro.org>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Aug 15, 2024 at 04:18:22PM +0300, Abel Vesa wrote:
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-> On 24-08-15 13:54:01, Marcus Glocker wrote:
-> > On Thu, Aug 15, 2024 at 01:47:23PM +0300, Abel Vesa wrote:
-> > 
-> > > On 24-08-15 12:42:29, Marcus Glocker wrote:
-> > > > Add the UFS Host Controller node.  This was basically copied from the
-> > > > arch/arm64/boot/dts/qcom/sc7180.dtsi file.
-> > > > 
-> > > > Signed-off-by: Marcus Glocker <marcus@nazgul.ch>
-> > > > ---
-> > > >  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 71 ++++++++++++++++++++++++++
-> > > >  1 file changed, 71 insertions(+)
-> > > > 
-> > > > diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > > > index 7bca5fcd7d52..235e20e4b51f 100644
-> > > > --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > > > +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > > > @@ -2878,6 +2878,77 @@ mmss_noc: interconnect@1780000 {
-> > > >  			#interconnect-cells = <2>;
-> > > >  		};
-> > > >  
-> > > > +		ufs_mem_hc: ufs@1d84000 {
-> > > > +			compatible = "qcom,x1e80100-ufshc", "qcom,ufshc",
-> > > > +				     "jedec,ufs-2.0";
-> > > > +			reg = <0 0x01d84000 0 0x3000>;
-> > > > +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
-> > > > +			phys = <&ufs_mem_phy>;
-> > > > +			phy-names = "ufsphy";
-> > > > +			lanes-per-direction = <1>;
-> > > > +			#reset-cells = <1>;
-> > > > +			resets = <&gcc GCC_UFS_PHY_BCR>;
-> > > > +			reset-names = "rst";
-> > > > +
-> > > > +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
-> > > > +
-> > > > +			iommus = <&apps_smmu 0xa0 0x0>;
-> > > > +
-> > > > +			clock-names = "core_clk",
-> > > > +				      "bus_aggr_clk",
-> > > > +				      "iface_clk",
-> > > > +				      "core_clk_unipro",
-> > > > +				      "ref_clk",
-> > > > +				      "tx_lane0_sync_clk",
-> > > > +				      "rx_lane0_sync_clk";
-> > > > +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
-> > > > +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-> > > > +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
-> > > > +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
-> > > > +				 <&rpmhcc RPMH_CXO_CLK>,
-> > > > +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
-> > > > +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>;
-> > > > +			freq-table-hz = <50000000 200000000>,
-> > > > +					<0 0>,
-> > > > +					<0 0>,
-> > > > +					<37500000 150000000>,
-> > > > +					<0 0>,
-> > > > +					<0 0>,
-> > > > +					<0 0>;
-> > > > +
-> > > > +			interconnects = <&aggre1_noc MASTER_UFS_MEM QCOM_ICC_TAG_ALWAYS
-> > > > +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
-> > > > +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
-> > > > +					 &config_noc SLAVE_UFS_MEM_CFG QCOM_ICC_TAG_ALWAYS>;
-> > > > +			interconnect-names = "ufs-ddr", "cpu-ufs";
-> > > > +
-> > > > +			qcom,ice = <&ice>;
-> > > > +
-> > > > +			status = "disabled";
-> > > > +		};
-> > > > +
-> > > > +		ufs_mem_phy: phy@1d87000 {
-> > > > +			compatible = "qcom,x1e80100-qmp-ufs-phy";
-> > > 
-> > > Can't find any phy patch that adds this compatible to the driver.
-> > 
-> > That might well be, since this is pretty new hardware.  But the goal
-> > of this submission is only to describe the hardware, not to add
-> > immediate support to the OS drivers.  Whether the drivers will make use
-> > of it, is a different story, and up to the people who maintain the
-> > respective drivers.
-> > 
-> > Getting the right DTB in, at least opens the possibility to continue
-> > development in the driver area to further support this new hardware.
-> > 
-> > But I won't touch your drivers, not my goal.
-> 
-> Presumably, you do have the UFS working on your Book4 laptop, right?
+Move lpass codecs va and wsa macros to use the clks directly from
+AFE clock controller instead of going via gfm mux like other codec macros
+and SoCs.
 
-That's right, but ...
+This makes it more align with the other SoCs and codec macros in this SoC
+which take AFE clocks directly. This will also avoid an extra clk mux layer,
+provides consistency and avoids the buggy mux driver which will be removed.
+
+This should also fix RB5 audio.
+
+Remove the gfm mux drivers for both audiocc and aoncc.
+
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+---
+DT bindings changes to fix the incorrect number of clocks is available
+at
+https://mailman.alsa-project.org/hyperkitty/list/alsa-devel@alsa-project.org/thread/BWBTJHLNBQIMPUQNR274CPYXRBIBAYP5/
+CHECK_DTBS=y might fail without this bindings change patch.
+
+
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 31 ++++------------------------
+ 1 file changed, 4 insertions(+), 27 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 9d6c97d1fd9d..630f4eff20bf 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -8,8 +8,6 @@
+ #include <dt-bindings/clock/qcom,gcc-sm8250.h>
+ #include <dt-bindings/clock/qcom,gpucc-sm8250.h>
+ #include <dt-bindings/clock/qcom,rpmh.h>
+-#include <dt-bindings/clock/qcom,sm8250-lpass-aoncc.h>
+-#include <dt-bindings/clock/qcom,sm8250-lpass-audiocc.h>
+ #include <dt-bindings/dma/qcom-gpi.h>
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/interconnect/qcom,osm-l3.h>
+@@ -2633,14 +2631,13 @@ tcsr: syscon@1fc0000 {
+ 		wsamacro: codec@3240000 {
+ 			compatible = "qcom,sm8250-lpass-wsa-macro";
+ 			reg = <0 0x03240000 0 0x1000>;
+-			clocks = <&audiocc LPASS_CDC_WSA_MCLK>,
+-				 <&audiocc LPASS_CDC_WSA_NPL>,
++			clocks = <&q6afecc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
++				 <&q6afecc LPASS_CLK_ID_TX_CORE_NPL_MCLK  LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+ 				 <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+ 				 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+-				 <&aoncc LPASS_CDC_VA_MCLK>,
+ 				 <&vamacro>;
  
-> If so, I would expect you do have the PHY working as well and therefore
-> a patch that adds the X Elite compatible, right?
+-			clock-names = "mclk", "npl", "macro", "dcodec", "va", "fsgen";
++			clock-names = "mclk", "npl", "macro", "dcodec", "fsgen";
+ 
+ 			#clock-cells = <0>;
+ 			clock-output-names = "mclk";
+@@ -2674,20 +2671,10 @@ swr0: soundwire@3250000 {
+ 			status = "disabled";
+ 		};
+ 
+-		audiocc: clock-controller@3300000 {
+-			compatible = "qcom,sm8250-lpass-audiocc";
+-			reg = <0 0x03300000 0 0x30000>;
+-			#clock-cells = <1>;
+-			clocks = <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+-				<&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+-				<&q6afecc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+-			clock-names = "core", "audio", "bus";
+-		};
+-
+ 		vamacro: codec@3370000 {
+ 			compatible = "qcom,sm8250-lpass-va-macro";
+ 			reg = <0 0x03370000 0 0x1000>;
+-			clocks = <&aoncc LPASS_CDC_VA_MCLK>,
++			clocks = <&q6afecc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+ 				<&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+ 				<&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+ 
+@@ -2792,16 +2779,6 @@ swr2: soundwire@3230000 {
+ 			#size-cells = <0>;
+ 		};
+ 
+-		aoncc: clock-controller@3380000 {
+-			compatible = "qcom,sm8250-lpass-aoncc";
+-			reg = <0 0x03380000 0 0x40000>;
+-			#clock-cells = <1>;
+-			clocks = <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+-				<&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+-				<&q6afecc LPASS_CLK_ID_TX_CORE_NPL_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
+-			clock-names = "core", "audio", "bus";
+-		};
+-
+ 		lpass_tlmm: pinctrl@33c0000 {
+ 			compatible = "qcom,sm8250-lpass-lpi-pinctrl";
+ 			reg = <0 0x033c0000 0x0 0x20000>,
+-- 
+2.25.1
 
-... I'm not using Linux on that laptop but OpenBSD.  Hence, my UFS
-driver patch will be useless for you.  If one of your developers gets
-his hand on that laptop, enabling UFS based on that DTB should be
-fairly straight forward.
-
-The reason why we are interested to get new DTS' in your tree, is
-because we're using the Linux DTS tree as a base, and then patch over
-it as of our requirements.  The less patches we need to apply, the
-easier the maintenance is.
-
-> > > > +			reg = <0 0x01d87000 0 0x1000>;
-> > > > +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> > > > +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
-> > > > +			clock-names = "ref",
-> > > > +				      "ref_aux",
-> > > > +				      "qref";
-> > > > +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
-> > > > +			resets = <&ufs_mem_hc 0>;
-> > > > +			reset-names = "ufsphy";
-> > > > +			#phy-cells = <0>;
-> > > > +			status = "disabled";
-> > > > +		};
-> > > > +
-> > > > +		ice: crypto@1d90000 {
-> > > > +			compatible = "qcom,x1e80100-inline-crypto-engine",
-> > > > +				     "qcom,inline-crypto-engine";
-> > > > +			reg = <0 0x01d90000 0 0x8000>;
-> > > > +			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-> > > > +		};
-> > > > +
-> > > >  		pcie6a: pci@1bf8000 {
-> > > >  			device_type = "pci";
-> > > >  			compatible = "qcom,pcie-x1e80100";
-> > > > -- 
-> > > > 2.39.2
-> > > > 
 
