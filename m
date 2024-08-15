@@ -1,104 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-28714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AA2B953D05
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 23:58:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9EA6953D65
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 00:44:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BAD01288451
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 21:58:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8D3E31F23467
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 22:44:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43C4A154458;
-	Thu, 15 Aug 2024 21:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D363D1552E3;
+	Thu, 15 Aug 2024 22:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VIrCfx/l"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bAiS1evz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F353153BED
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 21:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B5915E88;
+	Thu, 15 Aug 2024 22:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723759110; cv=none; b=mK/Ynih7hJMrOq0JXU4zLk82iRvCzuazH8n3ImKDAuPq2R0OnNGa7KwuPK4YP3pscquB5tGgNj9ja2tVFsmxtkqR9N82tRbewzYi1tkCV62PZqNXjShhc4/+rphDQVcEw3rsu02PG7dT1PHOHmusRNu5IPMJpbzqqyp0ATAunhQ=
+	t=1723761878; cv=none; b=WewMX0I7Qc1xR6nZn397Wttw2wtF5+3pGy5fB1qgoIMoVG9dSwv7gmfSthqGj+AIwxe9O0WVsV8gP5q8tZUuh6Gng7riTruzNI3bQxA5U6ufkDh5lqquIUATUQ9wwSGPl7Q7eaNX9RBflzxJvyW03Ri5HX5JSMIuIacOc1suzAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723759110; c=relaxed/simple;
-	bh=0/x7GSCycSUhHwbfSrgpSMj8kPWl5MeZjdh8qGbaMfE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Njziika77bvmmordFNXnQD3j0In01AFTMl3vOfqrLJu2OkxvVJyPUG9Sz0VjfhdOxdiNmVHXt/511lId2hsUNAP95+R3RVssVUBuXhpP+/9ridMxlk4JAj/GbQVz2cLe7h+HLGYDVrc3ypmEBafRFgCWYVwS4XNHnQvxTNDriJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VIrCfx/l; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B49C32786;
-	Thu, 15 Aug 2024 21:58:29 +0000 (UTC)
+	s=arc-20240116; t=1723761878; c=relaxed/simple;
+	bh=VQVwGklaI3ZSA24hRUS3BioayMkSZq8f6rSuQ+wiwm4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=A74Jc5XDfAkYx8Mg17KX0lM5gFTzhxLLm344x9oBmg0toNN0aDLDdmQ3EqTklJDynbW+OiMTSbJX8Ea5Ad2Re7GTJ08XoHsMzGgiUWOsK49BORn1lNkUBaCMA86HVZhl6W4UcQDSI7JYVrLynAgXnx3GqeOANoGcQnLdco2wVeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bAiS1evz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9291C32786;
+	Thu, 15 Aug 2024 22:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723759109;
-	bh=0/x7GSCycSUhHwbfSrgpSMj8kPWl5MeZjdh8qGbaMfE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VIrCfx/l9nbdJl+0eRjgKBlyL3R8wCuWmZ/Mo8d5ndWUL+yCnB6/vbpicZSZC1CMX
-	 Q8XEn6G6rCvtI1+1RemdrXZYkpVqQyW/moRsE9hZY59bhrZdzgEnsiSTYSNest0AOY
-	 BZFph3IPDkY3Vb9Iqr0Cj+HUnWtmHJQTAv0PpLYQptEGHnStU1dzNRGvYuC1EB2AUp
-	 CQkoTtBAle96PO0gQuPcn17Rp8+AG4dEHepOV8X3Cd1SDHod65cWjNqKoRy21L61Ny
-	 6mRtg/EYSBgh2TeJ93PEkzutgHP+03E0HAoCd7qqcL+oooTijn84yQ97Wdx0DBAyMd
-	 ZDazsQL2K1P8w==
-Date: Thu, 15 Aug 2024 16:58:27 -0500
+	s=k20201202; t=1723761878;
+	bh=VQVwGklaI3ZSA24hRUS3BioayMkSZq8f6rSuQ+wiwm4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=bAiS1evzyrbktfGk54uagHfLPIPhysQriDybBBU6lw5kJ9ScGMo9+MiJStry8jcDp
+	 NmW9NOkV0IF5umkkuqO5lKi8BVCXD7t93P2jR2Wfad41I0tqBhuARa9lLgVQIXcM7z
+	 Kts8mo5+nX6CDoiMoIJ0NSzZFnKk/lY5/bEkIE2lQHiTsd5gkSpcAsQIBUOwibm4j2
+	 F34SOcTUzFoRqp91S8zDRFg+Se2uj6RkIi9U/8QFLegpfyn6TcQW6WtgvcUwCr6eM6
+	 fA6hvZSooj8Y4rFBcAcVlxa1jN/ZH8IEVYynDf7f0toNZRlMkYjqzR7dvhhWxdeiw4
+	 QBampIF7y8Eug==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Richard Acayan <mailingradian@gmail.com>, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] firmware: qcom: tzmem: disable sdm670 platform
-Message-ID: <lkfpaovkvkdqrbx5u4rf5nanodymedowyhg2d5wgo5sdrbhupr@i322n4yjgllf>
-References: <20240730013834.41840-2-mailingradian@gmail.com>
- <CAMRc=MfPjc=QN729tiN3vxvyO_ECeqqODmjqjoea9E5Z1++TJw@mail.gmail.com>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Robert Foss <rfoss@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Georgi Djakov <djakov@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Mike Tipton <quic_mdtipton@quicinc.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-pm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	stable@vger.kernel.org
+Subject: Re: (subset) [PATCH 00/11] arm64: qcom: set of fixes for SM8350 platform
+Date: Thu, 15 Aug 2024 17:44:32 -0500
+Message-ID: <172376187142.1033860.796127870290361446.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240804-sm8350-fixes-v1-0-1149dd8399fe@linaro.org>
+References: <20240804-sm8350-fixes-v1-0-1149dd8399fe@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=MfPjc=QN729tiN3vxvyO_ECeqqODmjqjoea9E5Z1++TJw@mail.gmail.com>
 
-On Tue, Jul 30, 2024 at 12:27:44PM GMT, Bartosz Golaszewski wrote:
-> On Tue, Jul 30, 2024 at 3:38 AM Richard Acayan <mailingradian@gmail.com> wrote:
-> >
-> > The Pixel 3a returns 4291821499 (-3145797 or 0xFFCFFFBB) when attempting
-> > to load the GPU firmware if tzmem is allowed. Disable it on SDM670 so
-> > the GPU can successfully probe.
-> >
-> > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> > ---
-> >  drivers/firmware/qcom/qcom_tzmem.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
-> > index 17948cfc82e7..5767ef210036 100644
-> > --- a/drivers/firmware/qcom/qcom_tzmem.c
-> > +++ b/drivers/firmware/qcom/qcom_tzmem.c
-> > @@ -78,6 +78,7 @@ static bool qcom_tzmem_using_shm_bridge;
-> >  /* List of machines that are known to not support SHM bridge correctly. */
-> >  static const char *const qcom_tzmem_blacklist[] = {
-> >         "qcom,sc8180x",
-> > +       "qcom,sdm670", /* failure in GPU firmware loading */
-> >         "qcom,sdm845", /* reset in rmtfs memory assignment */
-> >         "qcom,sm8150", /* reset in rmtfs memory assignment */
-> >         NULL
-> > --
-> > 2.45.2
-> >
-> >
+
+On Sun, 04 Aug 2024 08:40:04 +0300, Dmitry Baryshkov wrote:
+> A set of fixes that target stability of the SM8350 platform.
 > 
-> Ugh... As the list is growing post mainline merge I'm wondering
-> whether we should make the generic allocator the default in defconfig
-> and SHM Bridge an opt-in option?
 > 
 
-Can you confirm that we still need this, and the other entries in this
-list?
+Applied, thanks!
 
-Thanks,
-Bjorn
+[09/11] arm64: dts: qcom: sm8350: add MDSS registers interconnect
+        commit: 5e1cf9f1f397a3d24dc6b06eda069be954504a16
+[10/11] arm64: dts: qcom: sm8350: add refgen regulator
+        commit: 08822cf3de00f1b9edb01b995d926595e48a54eb
+
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
