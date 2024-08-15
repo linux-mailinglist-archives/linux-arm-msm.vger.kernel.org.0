@@ -1,69 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-28594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87D229529F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 09:32:06 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5AF809529FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 09:33:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 32E021F228C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 07:32:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E929DB22EEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 07:33:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 262F517AE1B;
-	Thu, 15 Aug 2024 07:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25B2515E5D4;
+	Thu, 15 Aug 2024 07:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="WH1s4APv"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="H3Ygra5j"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7CD199234
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 07:31:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9601176FB4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 07:33:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723707068; cv=none; b=aBZXM5tQI8E23fdpw0k20C81ZofoVlwOukOnvz9HCc2M7IlpjZ1c2WxKmBr3B2+mjujZFjFJVGmuOB/rg5jyLzteHOLF7dE61PjhNZTrzXM5nDDy7SwTwvzrHpZQVYe1UQ+z6TnBUo/7gzW0bLJEdT/gSjOvcVeRI1i8cBu4YxA=
+	t=1723707201; cv=none; b=lBcVLPPQ4y4Bcq/UW8t7Jf2WglXJhJOsiabWTuE/IbODOKHBxfzv8aeaYgrveuB1nUK+zq0yOf3v9OBDtLP2yyGrtwFcB4FzzEdmQI6p676Vd/fc0qvJVHYZnu4QfNdgJRwqbOfwvN2TR6j4Ec09pm98oMYsXdX4bQRntEYL0ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723707068; c=relaxed/simple;
-	bh=4PE6mZrr8H7PR8eBnAu+UMXSqK7YbiUSYrQYtoLYBqs=;
+	s=arc-20240116; t=1723707201; c=relaxed/simple;
+	bh=LCZqNlothIJ7iUi0FaViXUQV8VMf+8pHOfULUFoQPlg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ow/9g+iqdKNM9Pz3l3nt/i3fy6sUxX7IikVz7S6qZpgTk24tbQRWX7p8j5p2B8UqbaTtgMR03iun8vKGpfsRTi1rKXhaIGc8kGCFusCIn2Z/17dhaxizwd3j9Z4EAA0fctcWLavgvJjKiIzj6emjVVhyMR65B74PC1kDMWpwL4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=WH1s4APv; arc=none smtp.client-ip=209.85.210.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=oRMy8p32ICpaqaacj2vLSw3UjPa45ZjD0Ee7j48mqhg7CGjDOOLpqf9xr9ec51vVJuxRBpG0RFn5Rom+tpxxcm8iCHI8Jbuq3lM843jEw7zHOg1UqAVdjLkeEgU6w0mlOo1ZxqaYQvs6kA44PtLOPg8u24jk0NlLDDw+2Iv1FmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=H3Ygra5j; arc=none smtp.client-ip=209.85.210.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-70d1cbbeeaeso531157b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 00:31:06 -0700 (PDT)
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-712603f7ba5so497729b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 00:33:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1723707066; x=1724311866; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1723707199; x=1724311999; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=K/0W+4K7PrRjUu9VD4koOfW7NXqyGwydvnf3SEGRUt4=;
-        b=WH1s4APveZR5KVVNv/1TAYXGHvxlyaZfFMrIEMtbsEMDA/0j3FSbxs4yAYbrBli1/n
-         JInNHnFR+7+LxbNk+739zg6YmNd+dxtPLFvNek6LP/1VCaqXbVX+uENW0moUw9WXyrP5
-         +AmG2U6N0CU8D0rZG6N8dh+57sqBSYpCBgVCg=
+        bh=mSVgOh4W3trTwpBrRTkuN1lvc7J54SJDhoOOLbBw+iU=;
+        b=H3Ygra5j6izjFuKBbcoHy/HiVK8e12hsJniFGdD3G3ndnf8qF5w5XCQErswkq0woi0
+         Waj2qJpPLUP8s/gX/YOCaSA9PGFH/46AQsmhUYEzFFl13H+tXjpVYp/RIso9Cj6c/QZB
+         smfKh6oOd36hGUc+fPq3A3cFlM0qfU7vgpeaU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723707066; x=1724311866;
+        d=1e100.net; s=20230601; t=1723707199; x=1724311999;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=K/0W+4K7PrRjUu9VD4koOfW7NXqyGwydvnf3SEGRUt4=;
-        b=Sg+Svpp4LoHDufafM6i6jLUZjCr3S6ksnb0Ql+52wqkGKzuwDEXNPoNYl9KB5kDivA
-         xxjvgwbBcOHRIpmVqRUv9IYB/3YzwPcfBnRwBUipobUQVKWR99IF/+8u0FzDGMhTW3Vj
-         6apkuH/IOq3Jl2cCRoboaRloznEHGQL33biZWTjCedMs4p8VDXPSpRrSXzc/4JNyZz+p
-         5zW3iQ+D0qj5+rtJ6lKX0px05bDhhQP9sjMJ0gv2dT/SWcZmUeRZgKBXY5pn9CU8FnuJ
-         rGw8r/8m1FjImE+v3N97uc29zGa6yfiMzBkKsKO58v9NhUNA9i8Z4Py/FmK347LJPjv8
-         P1Zw==
-X-Forwarded-Encrypted: i=1; AJvYcCURv8DV+5RZoT/GzVy1Wyf0GkIWupo2fH4Qb9ILNgqtvd0YuYDQXNUkPRfLMqkEd+rFYrc7XQem1ayTNZarNlt/jW/6A+8x4aa+taAoxw==
-X-Gm-Message-State: AOJu0YzPCnIeKSSD34pSzZfukDQXigE0XMG0kKJp6bioUycrmMCDwpLV
-	2gyunV1IGYg3JepzR/925cFQIwGazIIHSI2CSDhUMJezZAW6YpJdYKWlAZ4MFw==
-X-Google-Smtp-Source: AGHT+IGej8YvuGdBMRMsXjNlbIbtoIi0LLSQzAkjZWVd/ikaWZkP42kYpFajA9fEuF1NPTDRfj3RWQ==
-X-Received: by 2002:a05:6a20:d706:b0:1c6:fc7d:5546 with SMTP id adf61e73a8af0-1c8eaf59d37mr7069297637.37.1723707065853;
-        Thu, 15 Aug 2024 00:31:05 -0700 (PDT)
+        bh=mSVgOh4W3trTwpBrRTkuN1lvc7J54SJDhoOOLbBw+iU=;
+        b=Xcx0e//rsbct2Mb8/TAhMZEd2yY8K5fi+VzsCErnJb6A0NMbtXKuT4/UvDSTlPUngn
+         4weRaKv61o6Co1wQV09UF+ZQJCEl5bqJw28woM/WwSrBf2PypURYFmFd8R8Urzki7j1R
+         ufATpwGER9WXPosv0lg9hqOjJ9qxUzCfbeF5aks8wrNIiOHQpqY1VnOeeeBsEPweA6Qr
+         ZJl/Bj+qR37MjmsoLJ0gZsbtrkGIJhzBljiw6nJQTR+NED3Fr+OZvwe7V097z4KLQXCz
+         PuQXbJYsPc4ExmfGCK+NGlcVZAAA6t00ZoKkYPbfGT2j05OlBbsB6yAlxfLT6ox71FDx
+         vRhw==
+X-Forwarded-Encrypted: i=1; AJvYcCX27Dd00IhDSBB/xCc1m5bteFZszlSqYadUs5ajAmoQDpMVD0nKtrBWnu8atLZU0xEJbb9ft3Wuv6HnbCvYZpC3ebuKTsnt7SMYNRbWVg==
+X-Gm-Message-State: AOJu0Yy2/T03zc0D8nC7dCo43ekFyLvj1HZitnYCiRDHBKlJAAuRYnG7
+	Mf7oRUjCJ3ZV2qpaqorQhVV9mA+wTTPfIpIosRntg9HT5EH5a01tsk60gGjUNQ==
+X-Google-Smtp-Source: AGHT+IE+v6e+Df7tQx88UbXmfy+wlQroZUtqBIcjWsCC3V2G6r5uCEDNzWqCeTXlE1H5mKvT4LnM9w==
+X-Received: by 2002:a05:6a00:1394:b0:705:a13b:e740 with SMTP id d2e1a72fcca58-712673abaf0mr5999238b3a.19.1723707199046;
+        Thu, 15 Aug 2024 00:33:19 -0700 (PDT)
 Received: from google.com ([2401:fa00:1:10:745d:58f7:b3cd:901f])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7127af188a4sm559611b3a.164.2024.08.15.00.31.02
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7127aef544csm563951b3a.121.2024.08.15.00.33.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 00:31:05 -0700 (PDT)
-Date: Thu, 15 Aug 2024 15:31:00 +0800
+        Thu, 15 Aug 2024 00:33:18 -0700 (PDT)
+Date: Thu, 15 Aug 2024 15:33:14 +0800
 From: Chen-Yu Tsai <wenst@chromium.org>
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
@@ -80,11 +80,11 @@ Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
 	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
 	linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
 	linux-sunxi@lists.linux.dev
-Subject: Re: [PATCH 6/7] thermal: tegra: Simplify with scoped for each OF
- child loop
-Message-ID: <20240815073100.GF350960@google.com>
+Subject: Re: [PATCH 7/7] thermal: sun8i: Use scoped device node handling to
+ simplify error paths
+Message-ID: <20240815073314.GG350960@google.com>
 References: <20240814-b4-cleanup-h-of-node-put-thermal-v1-0-7a1381e1627e@linaro.org>
- <20240814-b4-cleanup-h-of-node-put-thermal-v1-6-7a1381e1627e@linaro.org>
+ <20240814-b4-cleanup-h-of-node-put-thermal-v1-7-7a1381e1627e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,49 +93,64 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240814-b4-cleanup-h-of-node-put-thermal-v1-6-7a1381e1627e@linaro.org>
+In-Reply-To: <20240814-b4-cleanup-h-of-node-put-thermal-v1-7-7a1381e1627e@linaro.org>
 
-On Wed, Aug 14, 2024 at 10:17:52PM +0200, Krzysztof Kozlowski wrote:
-> Use scoped for_each_child_of_node_scoped() when iterating over device
-> nodes to make code a bit simpler.
+On Wed, Aug 14, 2024 at 10:17:53PM +0200, Krzysztof Kozlowski wrote:
+> Obtain the device node reference with scoped/cleanup.h to reduce error
+> handling and make the code a bit simpler.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
 
 > ---
->  drivers/thermal/tegra/soctherm.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
+>  drivers/thermal/sun8i_thermal.c | 11 +++++------
+>  1 file changed, 5 insertions(+), 6 deletions(-)
 > 
-> diff --git a/drivers/thermal/tegra/soctherm.c b/drivers/thermal/tegra/soctherm.c
-> index a023c948afbd..ff4eedb553fb 100644
-> --- a/drivers/thermal/tegra/soctherm.c
-> +++ b/drivers/thermal/tegra/soctherm.c
-> @@ -1651,7 +1651,7 @@ static void soctherm_init_hw_throt_cdev(struct platform_device *pdev)
->  {
->  	struct device *dev = &pdev->dev;
->  	struct tegra_soctherm *ts = dev_get_drvdata(dev);
-> -	struct device_node *np_stc, *np_stcc;
-> +	struct device_node *np_stc;
->  	const char *name;
->  	int i;
+> diff --git a/drivers/thermal/sun8i_thermal.c b/drivers/thermal/sun8i_thermal.c
+> index 3203d8bd13a8..22674790629a 100644
+> --- a/drivers/thermal/sun8i_thermal.c
+> +++ b/drivers/thermal/sun8i_thermal.c
+> @@ -9,6 +9,7 @@
+>   */
 >  
-> @@ -1668,7 +1668,7 @@ static void soctherm_init_hw_throt_cdev(struct platform_device *pdev)
->  		return;
+>  #include <linux/bitmap.h>
+> +#include <linux/cleanup.h>
+>  #include <linux/clk.h>
+>  #include <linux/device.h>
+>  #include <linux/interrupt.h>
+> @@ -348,19 +349,18 @@ static void sun8i_ths_reset_control_assert(void *data)
+>  
+>  static struct regmap *sun8i_ths_get_sram_regmap(struct device_node *node)
+>  {
+> -	struct device_node *sram_node;
+>  	struct platform_device *sram_pdev;
+>  	struct regmap *regmap = NULL;
+>  
+> -	sram_node = of_parse_phandle(node, "allwinner,sram", 0);
+> +	struct device_node *sram_node __free(device_node) =
+> +		of_parse_phandle(node, "allwinner,sram", 0);
+>  	if (!sram_node)
+>  		return ERR_PTR(-ENODEV);
+>  
+>  	sram_pdev = of_find_device_by_node(sram_node);
+>  	if (!sram_pdev) {
+>  		/* platform device might not be probed yet */
+> -		regmap = ERR_PTR(-EPROBE_DEFER);
+> -		goto out_put_node;
+> +		return ERR_PTR(-EPROBE_DEFER);
 >  	}
 >  
-> -	for_each_child_of_node(np_stc, np_stcc) {
-> +	for_each_child_of_node_scoped(np_stc, np_stcc) {
->  		struct soctherm_throt_cfg *stc;
->  		struct thermal_cooling_device *tcd;
->  		int err;
-> @@ -1683,7 +1683,6 @@ static void soctherm_init_hw_throt_cdev(struct platform_device *pdev)
+>  	/* If no regmap is found then the other device driver is at fault */
+> @@ -369,8 +369,7 @@ static struct regmap *sun8i_ths_get_sram_regmap(struct device_node *node)
+>  		regmap = ERR_PTR(-EINVAL);
 >  
->  		if (stc->init) {
->  			dev_err(dev, "throttle-cfg: %s: redefined!\n", name);
-> -			of_node_put(np_stcc);
->  			break;
->  		}
+>  	platform_device_put(sram_pdev);
+> -out_put_node:
+> -	of_node_put(sram_node);
+> +
+>  	return regmap;
+>  }
 >  
 > 
 > -- 
