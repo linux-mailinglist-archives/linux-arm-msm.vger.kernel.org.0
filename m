@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-28643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFEEC9536D3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 17:15:03 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1948A95377D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 17:43:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3CD751F217AA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 15:15:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 99AC3B25A9B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 15:43:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40DBD1AE05A;
-	Thu, 15 Aug 2024 15:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCC3A1AE05A;
+	Thu, 15 Aug 2024 15:43:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l1HctDxS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b9HMzwuU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9371AD9FB;
-	Thu, 15 Aug 2024 15:14:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0391AD3F7;
+	Thu, 15 Aug 2024 15:43:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723734873; cv=none; b=P8fEAp8jEICGfKuAIya/ZdzxCFZwhzW/W0Slb6bfdEp2dVOdBT9AXWCWdLuLRbECeVRDKQtQgJ7vsS624z2tZ0C1SiFp1Kd9jGioA4GZd0M6saqbiKZGnSSSwEHGWowxrNYKIifiUiImg3fzQXySAiN4k/x/edOJdDwnZo2DlAI=
+	t=1723736597; cv=none; b=DheTcl6+U+K8dWOl1neWrIBEIJozMwmE5372qLSLIa6dgH8GDwBoT+IGon+iHKuV4wr2NCxAf9NdlSq+jZ6oTeymzm28IcuFKJZgb6nl76m4F1O8EK+OjigSXSucqq3CQTP9fvy6JHImQNIrjO+JHYS91qGVFGkgawOTqspRPLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723734873; c=relaxed/simple;
-	bh=TkWtmJo2fyPQMKHJo/JF+zkTx72wfVFZQ/qGKU2GSPQ=;
+	s=arc-20240116; t=1723736597; c=relaxed/simple;
+	bh=tBcHQi3i5KC4GbpIUxL7ctt8uCWrcYcOXO6IpVSWLr0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=elZdXcb2cRRHLG0hFQBCHPw5SayVHtxd6alC9IPHc4PzfKrGW+F11y408yT2g1AOMQdmw7v9gw6PxpcUn7lak6jq2kUd+M1Nl3feosHYUIkFSvdLLMq4mqamsZJxtFxrQpwlXTXo2bwkSPCYSrfHEMzDCtJeoMHO/lGZRuENIhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l1HctDxS; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=Dibc5BPYUfJCpAUfBvR1N4r+KPiWT/AIgGEnCmUf/saHG12NROCvB+YgxxOwxu8zAYtmnJhY2BRM4q//iw5n3wTbs3R7g8owBOY6rEvTLL4VSMMQFKRayJXnedvxrH9nNs+F4Iubp4mN9BJl5eS3egpXeB3f4eIQ6nfr/InQwZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b9HMzwuU; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47FCjSAk031804;
-	Thu, 15 Aug 2024 15:14:26 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47F7GjGx027121;
+	Thu, 15 Aug 2024 15:43:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	c+/DOzcyuJw1k9kuxuY2A+UIms2BUMZSIVaO5veBMvI=; b=l1HctDxSbKiEnTUB
-	eB2iy5ii5UGcb4oY0+2kIHknMYQ0BAuF/ptUvggSh1pTkuXahB+2q/H/j+2K9rha
-	OAKFVQjWKPIQAjBO8Fr4XQfOnnMtsKQGJIyMYP9Tq2VPuhdOQAy1Om1DayD06MPC
-	NkavV5549jxbGBw6lvj8m74lrn91VLIe+zRWfYZLesgx2HF8v+5iYNZKb5tqUN/M
-	58/+d2xaEGZmn7UEM2ifmMigYyPUN/vjAA/OMu98pgYLI7mJrh37QNSec3C+w9jV
-	bnsx0Ek6DOo3bNzUjAC/PkQnlvbcIMGgT2nXigbuvSzI9wg/+c8ukVGv06VehLh0
-	1I+eIA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41082wpqfx-1
+	Cc5I816aayP0mBk0qxI4DbcgcOavj8/4JMXIypN4nOM=; b=b9HMzwuUBChD3jXQ
+	Dxv888teONxnPTj9jKz48fhmnK+UurW3UBh1XdWARlsIUEChOaVCTGowNEuzSUiC
+	xadUvrfIv0ffcLcsfbhDc4Z34vLQoXjWujFIOfEcUIX2egqh4+jIjbJYbqaU8exz
+	rKJPC1N+TOUNRm2xTFUzQzLNZRyZkf546ImqZqfGOSAgW2QSPtJXe5aOouRvXG+s
+	DHcXxZCfGfMHpf0KA9voAJAP83JJkR55TLZyCLYxFWC7/h1LnOG7laOLqGoCfG57
+	f2pzh3mshTBy+TMs0v6B7UAgkp9h6zH+TbHSh2snINaoZ4mY6+Fvu1UL4L6gVKsW
+	HlfYBQ==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 411d5696n8-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 15 Aug 2024 15:14:26 +0000 (GMT)
+	Thu, 15 Aug 2024 15:43:11 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47FFEPh6022662
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47FFhA9e009900
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 15 Aug 2024 15:14:25 GMT
+	Thu, 15 Aug 2024 15:43:10 GMT
 Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 15 Aug
- 2024 08:14:20 -0700
-Message-ID: <ff261ab4-b59d-48a1-9ede-3c691842d913@quicinc.com>
-Date: Thu, 15 Aug 2024 23:14:18 +0800
+ 2024 08:43:04 -0700
+Message-ID: <5ecbcd10-d9b7-4134-9666-6df790527b1f@quicinc.com>
+Date: Thu, 15 Aug 2024 23:43:02 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,196 +65,70 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/13] media: qcom: camss: Add CSID Gen3 support for
- sm8550
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
+Subject: Re: [PATCH 13/13] media: qcom: camss: Add support for VFE hardware
+ version Titan 780
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>
 CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <kernel@quicinc.com>, Yongsheng Li <quic_yon@quicinc.com>
 References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-13-quic_depengs@quicinc.com>
- <44efa3ba-f60d-4a17-a8a1-fa7d49aa3234@linaro.org>
+ <20240812144131.369378-14-quic_depengs@quicinc.com>
+ <4b745c1a-33d9-472a-97af-153a2a7c8721@linaro.org>
+ <2de0b7a8-b879-49e9-9656-ec86f29ce559@quicinc.com>
+ <b0787142-0f85-4616-9895-72e33f21c2da@linaro.org>
+ <82200889-a98d-4815-bc31-f81b15d02513@quicinc.com>
+ <7130beef-7787-42a1-85c8-f27574241ba7@linaro.org>
 Content-Language: en-US
 From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <44efa3ba-f60d-4a17-a8a1-fa7d49aa3234@linaro.org>
+In-Reply-To: <7130beef-7787-42a1-85c8-f27574241ba7@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: QOGntYjSHWE_S-goQXBhmHqBlKuTmwFP
-X-Proofpoint-GUID: QOGntYjSHWE_S-goQXBhmHqBlKuTmwFP
+X-Proofpoint-GUID: SOKR9LGmzhsvDDb1iqN5A6exNM_nnP1n
+X-Proofpoint-ORIG-GUID: SOKR9LGmzhsvDDb1iqN5A6exNM_nnP1n
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-15_08,2024-08-15_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 bulkscore=0 mlxlogscore=999 clxscore=1015 mlxscore=0
- spamscore=0 priorityscore=1501 suspectscore=0 phishscore=0 adultscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408150110
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ malwarescore=0 impostorscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0
+ suspectscore=0 bulkscore=0 clxscore=1015 phishscore=0 priorityscore=1501
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408150114
 
-Hi Bryan,
+Hi Vladimir,
 
-
->> ---
->>   drivers/media/platform/qcom/camss/Makefile    |   1 +
->>   .../platform/qcom/camss/camss-csid-gen3.c     | 339 ++++++++++++++++++
->>   .../platform/qcom/camss/camss-csid-gen3.h     |  26 ++
+>>
+>> Thanks for the confirmation, even though I add the rup_update and
+>> buf_done function in later commits, it is still called in platform
+>> specific code(camss-vfe-780.c), so I will keep as it is done today.
 > 
+> let it be so.
 > 
-> So this "gen2" and "gen3" stuff would make sense if we had a number of 
-> SoCs based on gen2 and gen3 which were controlled from the upper-level 
-> gen2.c and gen3.c.
-> 
-> What you're submitting here is csid-780 so the file should be named 
-> csid-780.
-> 
-> When we add 680 or 880 then it makes sense to try to encapsulate a class 
-> of generation into one file - potentially.
-> 
-> I'd guess that was the intent behind gen2.c.
-> 
-> TL;DR please name your file csid-xxx.c
-
-Sure, I will use csid-780.c
-
->> +
->> +    writel(val, csid->base + CSID_CSI2_RX_CFG0);
->> +
->> +    val = 1 << CSI2_RX_CFG1_ECC_CORRECTION_EN;
->> +    if (vc > 3)
->> +        val |= 1 << CSI2_RX_CFG1_VC_MODE;
-> 
-> So again these are needless bit-shifts.
-> 
-> #define CSI2_RX_CFG1_PACKET_ECC_CORRECTION_EN BIT(0)
-> 
-> val = CSI2_RX_CFG1_PACKET_ECC_CORRECTION_EN;
+> I have another ask about it, please move new camss_reg_update() out from
+> camss.c into camss-csid.c, and camss_buf_done() from camss.c into camss- 
+> vfe.c
 > 
 
-You posted same comments in v3 series, I also replied it.
-https://lore.kernel.org/all/eeaf4f4e-5200-4b13-b38f-3f3385fc2a2b@quicinc.com/
+The cross direct call has been removed by below commit, so it looks 
+strange if I add the cross direct call.
 
-Some of register bits which just need to be configured to 0 or 1, then 
-can use BIT(X), but some register bits need to configure a specific 
-value, e.g.,  CSID_RDI_CFG0 bits[22:26] need to configure a vc vaule, 
-bits[16:21] need to configure a dt value, then we can't use BIT(x) to 
-handle this.
+media: qcom: camss: Decouple VFE from CSID
+https://lore.kernel.org/lkml/20240522154659.510-9-quic_grosikop@quicinc.com/
 
+I use the v4l2_subdev_notify to do the cross communication in v1 and v2 
+series, but Bryan said, "The subdev notify is I think not the right fit 
+for this purpose within our driver.".
+Then I add an internal notify interface in camss structure, but Bryan 
+suggested to use direct call, so I add these functions directly in camss.c
 
->> +
->> +static void csid_subdev_reg_update(struct csid_device *csid, int 
->> port_id, bool is_clear)
->> +{
->> +    if (is_clear) {
->> +        csid->reg_update &= ~REG_UPDATE_RDI(csid, port_id);
->> +    } else {
->> +        csid->reg_update |= REG_UPDATE_RDI(csid, port_id);
->> +        writel(csid->reg_update, csid->base + CSID_REG_UPDATE_CMD);
->> +    }
->> +}
-> 
-> Right so this function should
-> 
-> 1. Write the register
-> 2. Wait on a completion
->     See camss-vfe-480.c::vfe_isr_reg_update()
-> 3. Have that completion fire in the CSID ISR
-> 4. Or timeout
-> 5. Returning either 0 for success or -ETIMEDOUT
-> 
-> to the calling function so that we can be sure the RUP interrupt has 
-> fired and completed - or we have appropriately timed out and captured 
-> the failure.
-> 
-> Also - in camss-vfe-480.c the ISR clears the RUP which one assumes is 
-> still the required logical flow with the RUP now residing in CSID.
-> 
-
-Sure, I forget to add this, will add them in next series.
-
-
->>       case MSM_CSID_PAD_SRC:
->> -        if (csid->testgen_mode->cur.val == 0) {
->> +        if (!csid->testgen_mode || csid->testgen_mode->cur.val == 0) {
-> 
-> See my comments on adding new guards to core functionality.
-> 
-> Is this sm8550 specific or generic ?
-> 
-
-It is sm8550 specific, since we don't have testgen mode in sm8550 csid, 
-so need to add some guards, the guards are added for similar reason.
-
->>               /* Test generator is disabled, */
->>               /* keep pad formats in sync */
->>               u32 code = fmt->code;
->> @@ -1042,6 +1042,7 @@ static int csid_init_formats(struct v4l2_subdev 
->> *sd, struct v4l2_subdev_fh *fh)
->>   static int csid_set_test_pattern(struct csid_device *csid, s32 value)
->>   {
->>       struct csid_testgen_config *tg = &csid->testgen;
->> +    const struct csid_hw_ops *hw_ops = csid->res->hw_ops;
->>       /* If CSID is linked to CSIPHY, do not allow to enable test 
->> generator */
->>       if (value && media_pad_remote_pad_first(&csid- 
->> >pads[MSM_CSID_PAD_SINK]))
->> @@ -1049,7 +1050,10 @@ static int csid_set_test_pattern(struct 
->> csid_device *csid, s32 value)
->>       tg->enabled = !!value;
->> -    return csid->res->hw_ops->configure_testgen_pattern(csid, value);
->> +    if (hw_ops->configure_testgen_pattern)
->> +        return -EOPNOTSUPP;
->> +    else
->> +        return hw_ops->configure_testgen_pattern(csid, value);
-> 
-> If you just add a dummy configure_testgen_pattern we can get rid of this 
-> branching stuff.
-> 
-
-Do you mean add dummy function in csid-780/gen3.c? How about the other 
-ops in vfe_ops_780, add dummy function or use NULL? We need to guards if 
-we set it as NULL.
-
-static int csid_configure_testgen_pattern(struct csid_device *csid, s32 val)
-{
-	return 0;
-}
-
->>   }
->>   /*
->> @@ -1121,6 +1125,19 @@ int msm_csid_subdev_init(struct camss *camss, 
->> struct csid_device *csid,
->>           csid->base = devm_platform_ioremap_resource_byname(pdev, 
->> res->reg[0]);
->>           if (IS_ERR(csid->base))
->>               return PTR_ERR(csid->base);
->> +
->> +        /* CSID "top" is a new function in new version HW,
->> +         * CSID can connect to VFE & SFE(Sensor Front End).
->> +         * this connection is controlled by CSID "top" registers.
->> +         * There is only one CSID "top" region for all CSIDs.
->> +         */
->> +        if (!csid_is_lite(csid) && res->reg[1] && !camss- 
->> >csid_top_base) {
->> +            camss->csid_top_base =
->> +                devm_platform_ioremap_resource_byname(pdev, res- 
->> >reg[1]);
-> 
-> That's a complex clause.
-> 
-> Let me send you a patch to do it a different way.
-> 
-
-I was also thinking to addd it in camss level, then I thought it is in 
-csid block, so I moved it to csid, but it is also fine to add it in 
-camss. Can I add your patch into this series? Just like the csiphy patches.
-
+https://lore.kernel.org/all/236cfe43-8321-4168-8630-fb9528f581bd@linaro.org/
 
 Thanks,
 Depeng
-
 
