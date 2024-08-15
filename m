@@ -1,70 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-28716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CDCCE953D6B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 00:44:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 138AE953D70
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 00:45:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 548FB287ACC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 22:44:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF3981F237FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 22:45:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44594155A3C;
-	Thu, 15 Aug 2024 22:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49FF1156C5F;
+	Thu, 15 Aug 2024 22:44:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X6Ma05/0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EmTzdKA9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09171155749;
-	Thu, 15 Aug 2024 22:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2E7156972;
+	Thu, 15 Aug 2024 22:44:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723761880; cv=none; b=JzUYOuy3kQEYPjPYlqMQMIb+ywc2RDJuoFFBBvA3/yZuUx+BwBkVnNNHA3Aei6wrvCxfz4/Tc9tP1D86iNsWEjfAdUSwb3HbxnGgY87i3GOtZonhUZvNSIAzJC5H6T53CvcXA4BwGrfgVyB72IuQ56fikiJ2rP2O2khE49wlTHE=
+	t=1723761881; cv=none; b=edWPEHEzxogZzeHAbU2PgOXN82xPFA9Jzz+lZQnuxPVLknxD4scgdLoG/KZ+ThXhQQm3agltm0M4Ff11vpHxoUvScNvK7DYdt+a5+plybKSDuJNkKOhdfd9it/b6Ta1f8dTKUX7xaKp6fHAbUHbTvtjhqO/WOmyKZSZsb1xPOBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723761880; c=relaxed/simple;
-	bh=3Qx0tBWdBqRWRwLbebYPtrr68pJ2nhyDUpN/fjSrIL8=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BZAJHxkw70eWVxKMcFSEg7uXGvhIePPkjcxiuzbh8ouX27Db6S9idN6Qv5c5lJmR2LgT41xjWB7M3ra5Pw7r4VKO9SGsCr16NqwGxajC8C2C6zI8uxi8C9+BMHGXwlB3w5sNi9grBBGewW9Yz/wsoop2EqRaJX1YhRKmWSm2kTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X6Ma05/0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E00C4AF16;
-	Thu, 15 Aug 2024 22:44:38 +0000 (UTC)
+	s=arc-20240116; t=1723761881; c=relaxed/simple;
+	bh=6BX6LlM+/9YRhdRC9rGB0dA+8/tDU6laaRcniMah7T0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=bx97Y1VyKMHsEGCcreFUZOySVdQMLVzSxqMUT+Yb2DGZ5DCq3OR1L1dffM6WGakg4vMgU1J+ghOq/r8gekKbABDOYfdZWrPWmpmWm6Mu30QdP/vrNHfaZVTXx+Y/uWvBPMJaTkOlg9JymSOmCQ1I8lV96qySOlArxG7F679+1NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EmTzdKA9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47F1C4AF14;
+	Thu, 15 Aug 2024 22:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723761879;
-	bh=3Qx0tBWdBqRWRwLbebYPtrr68pJ2nhyDUpN/fjSrIL8=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=X6Ma05/0xbp8Je9T1ekSJuRx4fa40M0ha/JXxbrJxElnXd8232v/2yQx795UiXbon
-	 bnjqm9JnRw8eCKIUY6i9wVMVVE67hkFdkdOPNX7M4T6/q4Eci54gDPx2mPDtcJhmzY
-	 UVpKxl+PqbKVa6R6o+yotwI5X2SdxwfojqlvaETmxKXqw5NiS0YH1zJztotV5AiT5V
-	 oDtKggyPi74SUHF9RiwIeKJ6nH3TabuSUVbNOH7P19eF1rvGCWXLTVfsaYH3lgCnmK
-	 b9AFF8pMQ2EQcX0hQdexdwiifPGhsusCq7vfwJ2GjWMkGaNmBp1B6/m5bfqqh2sEA4
-	 iKLEpcsqWy1Fw==
+	s=k20201202; t=1723761880;
+	bh=6BX6LlM+/9YRhdRC9rGB0dA+8/tDU6laaRcniMah7T0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=EmTzdKA9wfjdJyBQ4GigJAWQKBS4852jcrci7u6KvcNKwqckmRB8MoRjCdGCCgZeU
+	 QmUbygWfiuLTjLn6vimjeHsStkdtVdyejHBDKt1elpfOpl0RSsjjNbk8+Qi/I/l9vx
+	 KqiOl+dG4OR7rEGS1WgWJetBC/nNj+dF9glE8DtPWzMpcfpTQUR8/nwj92VezjQ4Sk
+	 8NsdN6MKp+N5H1M4A7TTJaex4Bb3p8Q+mhgPiCBqZB4ddmW2EIkhxw35ZHia5ocEG0
+	 cyPvU/orKzthnxmtrGq1lszkbEEtB4St0hJOg+Eet83qqbTE1t49lqop1X1MPWrEY/
+	 uXGdoGmVEQGvQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: mturquette@baylibre.com,
-	sboyd@kernel.org,
-	robh@kernel.org,
+To: srinivas.kandagatla@linaro.org
+Cc: robh@kernel.org,
 	krzk+dt@kernel.org,
 	conor+dt@kernel.org,
-	gregkh@linuxfoundation.org,
-	djakov@kernel.org,
-	quic_wcheng@quicinc.com,
-	quic_kathirav@quicinc.com,
 	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-usb@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Varadarajan Narayanan <quic_varada@quicinc.com>
-Subject: Re: (subset) [PATCH v6 0/5] Add interconnect driver for IPQ5332 SoC
-Date: Thu, 15 Aug 2024 17:44:33 -0500
-Message-ID: <172376187137.1033860.17130088505061446205.b4-ty@kernel.org>
+	amit.pundir@linaro.org,
+	dmitry.baryshkov@linaro.org,
+	Konrad Dybcio <konradybcio@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sm8250: move lpass codec macros to use clks directly
+Date: Thu, 15 Aug 2024 17:44:34 -0500
+Message-ID: <172376187134.1033860.18374130175521613821.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730054817.1915652-1-quic_varada@quicinc.com>
-References: <20240730054817.1915652-1-quic_varada@quicinc.com>
+In-Reply-To: <20240815170542.20754-1-srinivas.kandagatla@linaro.org>
+References: <20240815170542.20754-1-srinivas.kandagatla@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,21 +68,21 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 30 Jul 2024 11:18:12 +0530, Varadarajan Narayanan wrote:
-> Enable icc-clk based interconnect driver for IPQ5332. This is
-> similar to IPQ9574's icc-clk based driver.
+On Thu, 15 Aug 2024 18:05:42 +0100, srinivas.kandagatla@linaro.org wrote:
+> Move lpass codecs va and wsa macros to use the clks directly from
+> AFE clock controller instead of going via gfm mux like other codec macros
+> and SoCs.
 > 
-> dt_bindings_check and dtbs_check passed.
-> 
-> Ensured that icc_sync_state is called and relevant clocks are
-> disabled.
+> This makes it more align with the other SoCs and codec macros in this SoC
+> which take AFE clocks directly. This will also avoid an extra clk mux layer,
+> provides consistency and avoids the buggy mux driver which will be removed.
 > 
 > [...]
 
 Applied, thanks!
 
-[5/5] arm64: dts: qcom: ipq5332: Add icc provider ability to gcc
-      commit: 8312d0f20f835a58d89edb1d55bf9a0f2aeceafa
+[1/1] arm64: dts: qcom: sm8250: move lpass codec macros to use clks directly
+      commit: be7399872f79201c6ed7e97fb10e335b4cc87ea9
 
 Best regards,
 -- 
