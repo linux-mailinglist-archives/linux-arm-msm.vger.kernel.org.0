@@ -1,65 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-28698-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28699-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4427953BF2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 22:47:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9596B953BF7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 22:48:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6E5051F2521F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 20:47:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4CA701F26635
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 20:48:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E277516C680;
-	Thu, 15 Aug 2024 20:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0526116D311;
+	Thu, 15 Aug 2024 20:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lkyz3b97"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BZS/5E9v"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B752F16C436;
-	Thu, 15 Aug 2024 20:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF61316CD0D;
+	Thu, 15 Aug 2024 20:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723754492; cv=none; b=UWqFLy8nmT+2JExpFOVNpF0FzXqgRklILk9kN6Pd/gr2cjOZqw6TBkafIqVqfZnpDAnxosys5E5H94Qg1gqZP0oRyIR1XglSHG+QSOYpgCdFLAAYZiriBtGSgJQuh3vFxuwApBdhSlHnnQFWS18U3haWnF+Dhrc1JpX2L25HJME=
+	t=1723754493; cv=none; b=pKjXFQDCEAPMJoKCPBxzU8lXhKWt1GGGDo2Z8GcMxY2GksnUE4Mt2v0QzafKraSBska7yY4W5V4EG7tYlScLhUyqCfSKQHx1bal0tHWuJ1OFmwA9LiVPjcW1vqEq0vshIBn8QrTNDmeO/Rba1vSnURWqwpTZ8VXyMiAjI065WyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723754492; c=relaxed/simple;
-	bh=6Yg4VOErxRIGVx9jYWkfRugfnVRJzKJ2bdstjdWe+E0=;
+	s=arc-20240116; t=1723754493; c=relaxed/simple;
+	bh=Fo84PgKbAolGzhQZHxrz8TjQTPL8PV3DulP4FyRfYCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Els5TyGyJNamPIId4nMe4cc+fUsh7GEkQYh5Ech52UOWpxuCp+GBVDt+WIhj930czGW2nkGIHwwMUx17+MJruYWDWsyIAm0l6xej4QXk/UCYQWCjvBgasbn7wXC5V6KaTfKgRXV2lPbTNEhWMTdyyC67pqQfKYDadHCXmY8udYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lkyz3b97; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA0EC4AF13;
-	Thu, 15 Aug 2024 20:41:31 +0000 (UTC)
+	 MIME-Version:Content-Type; b=IKyOWdQgiSOi2KTipJ2Ti3PO8P2eRsKUlg53RWKok+fU0UF7UpxHSBz4O/0oXjji9WUiDSrF3wJ/LGtd02ii7G43tm8NXEAPXv/2KCRju7zIUveadg9WSSniqup0NJYP/td0zhXRh968KXWYrk63ooOVgNQjE9UYXzpaV5RRTG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BZS/5E9v; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F96C4AF10;
+	Thu, 15 Aug 2024 20:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723754492;
-	bh=6Yg4VOErxRIGVx9jYWkfRugfnVRJzKJ2bdstjdWe+E0=;
+	s=k20201202; t=1723754493;
+	bh=Fo84PgKbAolGzhQZHxrz8TjQTPL8PV3DulP4FyRfYCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkyz3b972bBBJjN2ltd7Mu/7vaL/TkfrW65Qn5UlEm23wA3KKaab72FLpG9z+ZV2i
-	 EoIhhOlVJrBV5bBLPURt4Z0R3oZW4IPDCaEnVK+iWYENtiOmzqpyf7lveG8GgUMFiS
-	 FOUbGuuqDQGEPRLjCYcfWRPFdP2AcFcSzHp8D97eVZmtotAqZE7IN2XOnEOdvxnxO8
-	 PMTSwjrKl2QU0WPq3Ki1OTWeF88G89ySUl3SGlJgtN865cg5EeUkCCeNtfQwsVtqqQ
-	 xBPbDm5OAuwYWQyWkgAkLz4PumJzK3zi6aNGfkaxECxSvKswPYt63rOS+jaX5ojGpU
-	 a6gK2j5VCN4kA==
+	b=BZS/5E9vuHW0OXaEkMCWVbByVmjPVEQNNICJ2EB0VGbhWFUm/LN/WheLduzhZ3kPA
+	 rDlkV5NZpbw8yVuhq21qCKklOwGbgmqRK5fuXDE+gRofoITTnBvaM0cGA0wP03PlMB
+	 gKcSRR5Rwz3tpIFlJYNy8T/r28Ar2ioewa7oCfcuGjv33r80EWTWuKfvrYLJlft9fv
+	 YrivAtnX28aM3v708Mk5yIL5rNVciru5Li2kJZEtDG9lCulNFPFGU6NQ85+HE4l7W8
+	 4A9TE+11pyu5KB8aL8yuD2HKiRfrEyjkbFsw3YpQCW1eyFXnoiAxoKd4Pz5p5etsVn
+	 gsifWd3uXVpUg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+To: Sibi Sankar <quic_sibis@quicinc.com>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	Tengfei Fan <quic_tengfan@quicinc.com>
-Cc: kernel@quicinc.com,
+	Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+Cc: Murali Nalajala <quic_mnalajal@quicinc.com>,
 	linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH 0/2] arm64: qcom: Add BWMON support for SA8775p
-Date: Thu, 15 Aug 2024 15:40:44 -0500
-Message-ID: <172375444818.1011236.2343478351738195267.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	kernel@quicinc.com,
+	stable@vger.kernel.org,
+	Elliot Berman <quic_eberman@quicinc.com>
+Subject: Re: [PATCH v2] firmware: qcom_scm: Mark get_wq_ctx() as atomic call
+Date: Thu, 15 Aug 2024 15:40:45 -0500
+Message-ID: <172375444792.1011236.7773567649654210206.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730-add_sa8775p_bwmon-v1-0-f4f878da29ae@quicinc.com>
-References: <20240730-add_sa8775p_bwmon-v1-0-f4f878da29ae@quicinc.com>
+In-Reply-To: <20240814223244.40081-1-quic_uchalich@quicinc.com>
+References: <20240814223244.40081-1-quic_uchalich@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,16 +67,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 30 Jul 2024 15:16:09 +0800, Tengfei Fan wrote:
-> Add CPU and LLCC BWMON nodes and their corresponding OPP tables for
-> SA8775p SoC.
+On Wed, 14 Aug 2024 15:32:44 -0700, Unnathi Chalicheemala wrote:
+> Currently get_wq_ctx() is wrongly configured as a standard call. When two
+> SMC calls are in sleep and one SMC wakes up, it calls get_wq_ctx() to
+> resume the corresponding sleeping thread. But if get_wq_ctx() is
+> interrupted, goes to sleep and another SMC call is waiting to be allocated
+> a waitq context, it leads to a deadlock.
 > 
+> To avoid this get_wq_ctx() must be an atomic call and can't be a standard
+> SMC call. Hence mark get_wq_ctx() as a fast call.
 > 
+> [...]
 
 Applied, thanks!
 
-[2/2] arm64: dts: qcom: sa8775p: Add CPU and LLCC BWMON
-      commit: 1dd1a6d2b1851f8908643343c4e714af2e48352d
+[1/1] firmware: qcom_scm: Mark get_wq_ctx() as atomic call
+      commit: 9960085a3a82c58d3323c1c20b991db6045063b0
 
 Best regards,
 -- 
