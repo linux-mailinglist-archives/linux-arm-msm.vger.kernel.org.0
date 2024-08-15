@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-28670-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 851C2953AAA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 21:11:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5AF4F953B8D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 22:41:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B64C81C225A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 19:11:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05EB31F25A64
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 20:41:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32B5D81AC1;
-	Thu, 15 Aug 2024 19:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02DDB149E17;
+	Thu, 15 Aug 2024 20:40:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UOHdiyBt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KaT7rdeK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000CA7E110;
-	Thu, 15 Aug 2024 19:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3408149DFC;
+	Thu, 15 Aug 2024 20:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723749081; cv=none; b=vCNn5o29MlW4W8KSVBkwhJU9YwAcjYz2/7OxEtj7skDnUjQ+np6idIZI4T37lGM87ejO81/PuT/b2mgRWiLbsfjBFK2fEXCzIfEIqBLhHeMFJVnn22ntQLPcOo5isZBIpfzVpy/c08gekmh/qByKjKTb/p5S+O38v2Sg+XmVsCs=
+	t=1723754457; cv=none; b=QEgu2MsmRxVAOtE8DIXB2N3HtICj+eJZkCsGRHY32mnNwetU+Z/qd2q0GGskxPCVlHGZkWsqKxLuTlerCdSlJi0ttZ/gthz7jLBhS+mi4/vp6x7ok/SpPjTNRBcsh/mImBtNDVT8avtd/4TaW/MSZN0n6YVhydwlEBkaHB1byic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723749081; c=relaxed/simple;
-	bh=92vX60iqYAh7PcbjNcrQqaG2doDOIb7T48bvLsUa0es=;
+	s=arc-20240116; t=1723754457; c=relaxed/simple;
+	bh=d3sfWeHxva1JfLaQJzj6iXdO0zdjlM4Noz+FAhMcASs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=INAJn1OKe7pkRLm111PvrMcQqMoxPvFWhBj1rYYBMNrIvnmEH9v9xl+x9Yci0oAO+plYI667+Q6mbmGUWGM72MIE7g/NAi3cB13k2bstiOe+qcmqTmZDPMFbD/YKW26XieSlkJS+wBhvSH/98mXCX7O5ikeq6QqaGHYaSyLt5lA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UOHdiyBt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96149C4AF0D;
-	Thu, 15 Aug 2024 19:11:19 +0000 (UTC)
+	 MIME-Version:Content-Type; b=f0OwaMulOeplcLf6TTdLfp5RJvDvzziKU19TfcTozy0S9fSnI9aIxksykBiADKUwuSrvl6Mv1F9/vOt5QmK7ROdM+U2rVKHZxN7lh9cJ03MOlvgEI+JIuJPubC+JwxKPDhvTqW7Pq8XrLa8yyBllN862mBTGAfw/4xIzmPtL0TA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KaT7rdeK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F3FCC4AF0B;
+	Thu, 15 Aug 2024 20:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723749080;
-	bh=92vX60iqYAh7PcbjNcrQqaG2doDOIb7T48bvLsUa0es=;
+	s=k20201202; t=1723754457;
+	bh=d3sfWeHxva1JfLaQJzj6iXdO0zdjlM4Noz+FAhMcASs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UOHdiyBtBjL78lF+LspGrJO+g4uj5hXlvI5A0Ik7hOfQgYvKq4s1ruTipCavK/2fg
-	 hMXF7H+BejJi9sNQkqyZqi6PNspk/hjzNAwNiTbn4pektqsGKsRr0bNp67H6xnDoTN
-	 Ybnyqv6LdCB+EmHn1M137f8eqclJL0oQqpV0PSyNyx3iuugEOQeEqNbFBgdJQDdE6+
-	 2dXAEP92JuC6O8mDJJZ+kEmjyKsIxtoep+A+KevKJorlfBCZC6P+Syo5shZM/JSJ5b
-	 4Y4svYibD4q8NR5Qz3//toPVVJ3Zi2HP1aUdc4jWK8UDDYYa7w+gH8S7qWo8YSpwbQ
-	 SYQk4Ps22ZbIA==
+	b=KaT7rdeKNU9E6hil0Er8AfjXXsE3x7pr6RCfK49eUY0QZEVaDkfhC3RDGba2llv8h
+	 hCeONfKvRTwOB4NdH6lo8ANZUBeYHBz9OmcXCkuae+aJgjC41arLOGHk7sUQFBSMir
+	 t875nA+2f/YRVXyJtfmmcFY3If3LKsm6hoNwkeNzcAzpdvIw5H5iwpUSlqX6Axp9FP
+	 HxXd37dhQTEKS7dC6aBpMbCsAlxS3D5H2z7lViRDTCQjliI9bO9iE1qPZ1qL16bU1I
+	 6YafNVv7XeDh/j+1OFBJHnQkGcZ5yEIyaQpxYFD/uJOKnrKSRywqope3R+O9atCfbu
+	 0PhIbO4dq0+MQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: mathieu.poirier@linaro.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	konrad.dybcio@linaro.org,
-	manivannan.sadhasivam@linaro.org,
-	Naina Mehta <quic_nainmeht@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org,
-	devicetree@vger.kernel.org,
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v4 0/5] Add MPSS remoteproc support for SDX75
-Date: Thu, 15 Aug 2024 12:15:32 -0700
-Message-ID: <172374932841.1370237.8680270462656640056.b4-ty@kernel.org>
+Subject: Re: [PATCH] clk: qcom: gcc-x1e80100: Fix USB 0 and 1 PHY GDSC pwrsts flags
+Date: Thu, 15 Aug 2024 15:40:17 -0500
+Message-ID: <172375444790.1011236.4126358525646189263.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240709064924.325478-1-quic_nainmeht@quicinc.com>
-References: <20240709064924.325478-1-quic_nainmeht@quicinc.com>
+In-Reply-To: <20240801-x1e80100-clk-gcc-fix-usb-phy-gdscs-pwrsts-v1-1-8df016768a0f@linaro.org>
+References: <20240801-x1e80100-clk-gcc-fix-usb-phy-gdscs-pwrsts-v1-1-8df016768a0f@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,22 +69,20 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 09 Jul 2024 12:19:19 +0530, Naina Mehta wrote:
-> Add modem support to SDX75 using the PAS remoteproc driver.
-> Also, add qlink_logging memory region and split MPSS DSM
-> region into 2 separate regions.
+On Thu, 01 Aug 2024 13:21:07 +0300, Abel Vesa wrote:
+> Allowing these GDSCs to collapse makes the QMP combo PHYs lose their
+> configuration on machine suspend. Currently, the QMP combo PHY driver
+> doesn't reinitialise the HW on resume. Under such conditions, the USB
+> SuperSpeed support is broken. To avoid this, mark the pwrsts flags with
+> RET_ON. This is in line with USB 2 PHY GDSC config.
 > 
-> These patches were co-authored by Rohit Agarwal while at
-> Qualcomm.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/5] dt-bindings: remoteproc: qcom,sm8550-pas: document the SDX75 PAS
-      commit: 888583bd3543da10c4bcb90c78825168fa8e7b90
-[2/5] remoteproc: qcom: pas: Add SDX75 remoteproc support
-      commit: 76064d8f4cd608e18cef74e810a934ce6da81b4c
+[1/1] clk: qcom: gcc-x1e80100: Fix USB 0 and 1 PHY GDSC pwrsts flags
+      commit: f4c16a7cdbd2edecdb854f2ce0ef07c6263c5379
 
 Best regards,
 -- 
