@@ -1,97 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-28635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A249F95313C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 15:51:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2D0E953401
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 16:22:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D34051C25595
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 13:51:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5B7DB1F28037
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 14:22:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B973F19E7F6;
-	Thu, 15 Aug 2024 13:51:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DD8D1A01AE;
+	Thu, 15 Aug 2024 14:21:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GAycxkgW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0361494C5;
-	Thu, 15 Aug 2024 13:51:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.255
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE28B1E526;
+	Thu, 15 Aug 2024 14:21:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729913; cv=none; b=lUbBEBe4Am4R8YZYLpC2wgG7Ip5MJmQ/fQ5ynduJev5pJ2t+fDiqnWClGd/EvVhZx3e7mgcMjCEEZbfmdQXzCeVmmRF43QLpc8SAcdk3WFm+smXMTNzMqY6h/+n840u42LJ8jWiXfBsh6T0wGXFtIVzkzQzP+dbBKoUTwjgwNfQ=
+	t=1723731693; cv=none; b=NoO7wRCpdW14qJuMd6vc6mVDdayg2JYYTb8TMLBbIT9/Zw1ijnWS/3f887fjwI/3yHIfWi1CW0wGWKq9M4f1ro2QR7fpmdRu1kSp0kqLoTQTigGOTc0CvvBQjnkpihczhkvWPbWT07CQrF2J/mO6mUl7R+d+cOHpeNiCDxMVc9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729913; c=relaxed/simple;
-	bh=nFgQxnPUbSSy7jytrvmUlsKG60yuqwDcrmHRHV47t4g=;
-	h=CC:Subject:To:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=bXBmGwKDRpbux+wDZz+Bm95qFEzEm+PdGydJ5FoOzRt64oPrI0kE+LAHmFUJrPQn62koBPSzLcPXBM9+Q5wZK7+Tg0f4nUExQ1/RolXS5PpMY47JmUFh7ePUwDHG6IE0mZKL0/16voXyCx2IcrthozlMnDyUfxZ0s/GJbI5FYA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.255
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.163.252])
-	by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4Wl63S5tbsz1T7Pv;
-	Thu, 15 Aug 2024 21:51:16 +0800 (CST)
-Received: from kwepemd200014.china.huawei.com (unknown [7.221.188.8])
-	by mail.maildlp.com (Postfix) with ESMTPS id 0D1C71800A1;
-	Thu, 15 Aug 2024 21:51:48 +0800 (CST)
-Received: from [10.67.121.177] (10.67.121.177) by
- kwepemd200014.china.huawei.com (7.221.188.8) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.34; Thu, 15 Aug 2024 21:51:47 +0800
-CC: Shuai Xue <xueshuai@linux.alibaba.com>, Jing Zhang
-	<renyu.zj@linux.alibaba.com>, Will Deacon <will@kernel.org>, Mark Rutland
-	<mark.rutland@arm.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Yicong
- Yang <yangyicong@hisilicon.com>, Jonathan Cameron
-	<Jonathan.Cameron@huawei.com>, Jonathan Corbet <corbet@lwn.net>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-	<quic_vbadigan@quicinc.com>, <quic_nitegupt@quicinc.com>,
-	<quic_skananth@quicinc.com>, <quic_ramkri@quicinc.com>,
-	<quic_parass@quicinc.com>, <quic_mrana@quicinc.com>
-Subject: Re: [PATCH 4/4] perf/dwc_pcie: Add support for QCOM vendor devices
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-References: <20240731-dwc_pmu_fix-v1-0-ca47d153e5b2@quicinc.com>
- <20240731-dwc_pmu_fix-v1-4-ca47d153e5b2@quicinc.com>
-From: Yicong Yang <yangyicong@huawei.com>
-Message-ID: <0d285b10-f77d-71d0-2ff1-79e400976af8@huawei.com>
-Date: Thu, 15 Aug 2024 21:51:46 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.1
+	s=arc-20240116; t=1723731693; c=relaxed/simple;
+	bh=O3yVi/sK5TWhIzw4ZEtvqC2DBM92N/LguKZYwN+a+lw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=sldawOuY9JA3Gdyw0JMaZKJlFvX5FOTsg/F8/LaUUv8sG8k+H9yhGQ36sNsCiqLiCco+T98sLcAECgMwEjWnkAu/Zh38NUpSxLZQr6Mtq2OBzMGeam/GZ60WYiqQs+eU+e0DgpFoHUIH87l6nTsfBcUX84MILpkqdle1lxw7PiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GAycxkgW; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47F11aJL017856;
+	Thu, 15 Aug 2024 14:21:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	0Zi1ZQwKAx27nhCCtHmlLY589bvE5yH0KBvcMqQmfKM=; b=GAycxkgWwoogA71P
+	Fo2E7Fnd1hkqms5SyNQOE6o+y0YiDCI5mKinyDWP9CO+sXba5X9zvi1vFHRFBo79
+	sPQLdaKwQSebLj1Dsj/MEBOn9SrE3c1okgduJiVetYIcwsSkt/+Z09fdH5YeBJtJ
+	mPvGa/K/bfMyFrsn7qAfU0gRq8UjG2fqd9JM6hpl5ElsorLA1KrS6W2GPn3iQ0al
+	r30Co44fyd6AghChyOcoL49inJyo3QPUGDKIGL4fIHq8H4BDsCrVgK8RUxfBt7JX
+	BeIxsJgzky/Xtj0AEmHpUv0IFnNLZjuUSVpCfbn5Ta+xdFGSWIHZ3hZkaG05hwMy
+	ReODnA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 410kywmrdg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 15 Aug 2024 14:21:26 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47FELPdj016026
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 15 Aug 2024 14:21:25 GMT
+Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 15 Aug
+ 2024 07:21:19 -0700
+Message-ID: <eb77972c-9c9a-48f9-b850-21e6c2df005a@quicinc.com>
+Date: Thu, 15 Aug 2024 22:21:17 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20240731-dwc_pmu_fix-v1-4-ca47d153e5b2@quicinc.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- kwepemd200014.china.huawei.com (7.221.188.8)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 13/13] media: qcom: camss: Add support for VFE hardware
+ version Titan 780
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, Yongsheng Li <quic_yon@quicinc.com>
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-14-quic_depengs@quicinc.com>
+ <6ddaa41b-86cf-44e5-a671-fd70f266642b@linaro.org>
+Content-Language: en-US
+From: Depeng Shao <quic_depengs@quicinc.com>
+In-Reply-To: <6ddaa41b-86cf-44e5-a671-fd70f266642b@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: j8zi87lWZbdzyTixcagW6qF7844CcQZW
+X-Proofpoint-GUID: j8zi87lWZbdzyTixcagW6qF7844CcQZW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-15_07,2024-08-15_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
+ impostorscore=0 mlxscore=0 phishscore=0 malwarescore=0 clxscore=1015
+ mlxlogscore=999 priorityscore=1501 bulkscore=0 lowpriorityscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408150104
 
-On 2024/7/31 12:23, Krishna chaitanya chundru wrote:
-> Update the vendor table with QCOM PCIe vendorid.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Hi Bryan,
 
-Reviewed-by: Yicong Yang <yangyicong@hisilicon.com>
+On 8/15/2024 8:25 AM, Bryan O'Donoghue wrote:
+> On 12/08/2024 15:41, Depeng Shao wrote:
+>> +void camss_reg_update(struct camss *camss, int hw_id, int port_id, 
+>> bool is_clear)
+>> +{
+>> +    struct csid_device *csid;
+>> +
+>> +    if (hw_id < camss->res->csid_num) {
+>> +        csid = &(camss->csid[hw_id]);
+>> +
+>> +        csid->res->hw_ops->reg_update(csid, port_id, is_clear);
+>> +    }
+>> +}
+> 
+> The naming here doesn't make the action clear
+> 
+> hw_ops->rup_update(csid, port, clear);
+> 
+> "is_clear" is not required since the type is a bool the "is" is implied 
+> in the the logical state so just "clear" will do.
+> 
+> But re: my previous comment on having the ISR do the clear as is done in 
+> the VFE 480, I don't think this is_clear parameter is warranted.
+> 
+> We want the calling function to request the rup_update() for the 
+> rup_update() function to wait on completion and the ISR() to do the 
+> clear once the RUP interrupt has been raised.
+> 
+> At least I think that's how it should work - could you please experiment 
+> with your code for the flow - as it appears to match the VFE 480 logic.
+> 
 
-> ---
->  drivers/perf/dwc_pcie_pmu.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/perf/dwc_pcie_pmu.c b/drivers/perf/dwc_pcie_pmu.c
-> index aa1010b44bcb..ea73ae5c45c5 100644
-> --- a/drivers/perf/dwc_pcie_pmu.c
-> +++ b/drivers/perf/dwc_pcie_pmu.c
-> @@ -107,6 +107,7 @@ struct dwc_pcie_vendor_id {
->  
->  static const struct dwc_pcie_vendor_id dwc_pcie_vendor_ids[] = {
->  	{.vendor_id = PCI_VENDOR_ID_ALIBABA },
-> +	{.vendor_id = PCI_VENDOR_ID_QCOM },
->  	{} /* terminator */
->  };
->  
-> 
+Thanks for catching this, I forget to add the rup irq, so this logic is 
+also missed. I have tried it just now, the logic works good, will add it 
+in next version patch.
+
+Thanks,
+Depeng
+
 
