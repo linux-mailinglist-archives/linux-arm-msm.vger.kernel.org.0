@@ -1,134 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-28622-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8A7F952CF5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 12:55:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93A13952CFF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 12:56:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2835B1C21DAE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 10:55:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B884E1C20401
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 10:56:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 988431BB6B4;
-	Thu, 15 Aug 2024 10:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B79DE1BD03D;
+	Thu, 15 Aug 2024 10:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FEvMBtTA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AC0JdNfy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7201BB6A3
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 10:46:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE24C1BCA11
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 10:47:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723718814; cv=none; b=BW2zeWPV1IsWNI1+T4J0PlysvupnBmc0SnfG6CDVX++DzFIYUVqBF/1kWJCSPuvwJAxRfVUaA5kK6XqQsvxJJ9C4A/IOVpSu1dJxtGVkFK+wDx2BB/psgysbpN0HOl4JlR8mOP70QCaDpsmwDZnlYmMvVOXKDRw3zF1anHXAedw=
+	t=1723718850; cv=none; b=T4/7bgoQ6S1LBDmklgHO3PGOYASwrz0tqLgbdpvSbzwzYQeMNQiyK1S0AqZQ0sqDJIXcjcFutvxtrmqfBAd04S+jTVtEARWDuTvJhpzWrlG/jXCtOf5wF/SvZbVWmcGKrOYffe1rkTvMJiSPfdESCSH7SMzWtnIJpesjnpOndV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723718814; c=relaxed/simple;
-	bh=aNnphcw6ovD9CeIcwCw8owAs63PXvt0AN73nKw8befo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TaYTGPu8sLpYGS3ICD4ghdrM3KXlb+TYXsNK/qG/8H5bgNVXRc4rq4LNDCBK/pHvA1AiBaG15Ieu8e27TzXtQNxRzmYqaV/VapmaNVkbFlxrMCRJcxtZi6oBx5aQgTCJMvm9fuZS1bf/zJ5+bVzO1MZNPbeDWKsE2xEOfMdAgKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FEvMBtTA; arc=none smtp.client-ip=209.85.219.182
+	s=arc-20240116; t=1723718850; c=relaxed/simple;
+	bh=6tGzmiTzEPMRyKJk0PGvlaJdsO9+QLBrYLK+b36RDG4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wf+ZPvQOMJZyMtG+0K35ooNUkCyukaOzpYuxI5gJ/m/oK+KoOARnvwkwZZGIFDflOzBCnYRKOtDRwLQ7h9wbVC1nddq7mIZxa8ST0Gbj5nbiLQowk7tTxleBrRlXcGXJ4qOSZ/8jSq25VAMrRtdtgH4Nac/NIPKFLXtYmhg2IU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AC0JdNfy; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-e115eb44752so817038276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 03:46:52 -0700 (PDT)
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2f040733086so7954511fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 03:47:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723718812; x=1724323612; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aNnphcw6ovD9CeIcwCw8owAs63PXvt0AN73nKw8befo=;
-        b=FEvMBtTAj2WR00DOQPl/fee+0EdzvdAlbZbg1/Q+qsnn9Xpte2GnA3Z8SXuJN1kh5e
-         bd239GTGerwNVk+todb+42JM5YuXgBvnHTBO54aZIzuQLDWtSIvlJwFv3LnV3DGF1lj/
-         YE0932OnjHaBGqSymR4EywhuZjiIiQyQaxJnYURzaWyJllJ4W5IEp7+E5NiO+OiyFl2i
-         zBj5ReB+HP/VO+d0qQs4qPWWlulSiq7FsheyQNPEOTEMHRIXrLZnQ6J3AXhSZGdWIgx5
-         pBNw0Xqe7Byg3bAzElPRzAnHkf4ygkiWxEmlhoebF8cb3ytY55HzWijbc6oaoGLIx/l7
-         onFQ==
+        d=linaro.org; s=google; t=1723718846; x=1724323646; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xFiBa+U9hFlCzSJ6jAO6RRxbfDnmoUHchd4gNuf1fR0=;
+        b=AC0JdNfysm7QLop8eLtmUM9be0fBWrj+5i0eGDY41c6besVtOenu6hv7N537snTW26
+         lAJ5A9rRqf+IdBDVEjk/6fXY5Vjlo0ING9NWD0AgBQEgMUaqFRq5hTatv4dz+zUR822B
+         uttVva25bLKgjxGIbkYP37Gvjdz8VizJ8xT+ZKJdSnaKEiV34Q84WuvPAZlhIbWVxCyY
+         CyTXU7UHqSXONX9lCgqnuAXOnwLFQr7eIG58T/clNsC2IA7oFxMDUCjLMjDwevoNL1l7
+         6rae/sWckiwq0xmdq1wwmgiHApaNWwcge6Us0bxu/5E5UVu7EnYyak2uJVc4HoEjf00E
+         uErA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723718812; x=1724323612;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aNnphcw6ovD9CeIcwCw8owAs63PXvt0AN73nKw8befo=;
-        b=ShXiOrzmYDSdJVoyO5zgYY3YhFRzAObOzlooEx5XOJLKBSRy94Mxpw2SKllpL1QWzT
-         tU2qPYPghdQZ0XvZxnLLpStJP53oImlb1x2y6TbdKH20XGAU4UnvnFPnMwuAIo7TjEPI
-         VnZIHaBrUFqt11JZpkK+uoafjrwB/ZBBW41Hf5fdWXSNVUmjUiwzRkM5KjA/a3Vj5T7n
-         eFqE/lpT3Z7u19RLx8m0vPpo/H0Os9piRYs5/HH+VksV+xfgcNc1DrJdPM8ELFLuTTog
-         kJ1j7Wu0tvIHvaR4X7/yrIg0ngvjExzSLdJoNk5Sf0WuKiK3sWQFdnQZzVnAvVChZ9qU
-         lbbg==
-X-Forwarded-Encrypted: i=1; AJvYcCUP+axHUupvOO7CvW5tt39ExCzWj3bH/q/BubvByU/63mxm5OEQsOev39cqSxTnxSDHfU65o8YkaebRYhJ3FewwqcUmO0OxdyTz5dMq5g==
-X-Gm-Message-State: AOJu0YyTjgOZoi17CKmPTpYNWDjzJZIhFjtEgS9ouxQ+Htww0RnDZDI0
-	CfhTuxnt5DGj0q8SbEqUUL77ApNgsCakUwS1ToxK04KaWI8bGW8miqhHNf0ZNwS+qp2YNb9ReDj
-	1+7kwLNg2QgPWzuhftFD9GBVSwSJN+CQOBKPl5w==
-X-Google-Smtp-Source: AGHT+IHR5za73VDRCro7qpXpLbNTcfYm0rbfqguQzgbn4WLGm+KGmWjJsguvyGGakAyVo03nrwztDauA9VWHNATK0nQ=
-X-Received: by 2002:a05:6902:2291:b0:e08:7bf9:4d65 with SMTP id
- 3f1490d57ef6-e1155aae058mr6488901276.24.1723718811912; Thu, 15 Aug 2024
- 03:46:51 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1723718846; x=1724323646;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xFiBa+U9hFlCzSJ6jAO6RRxbfDnmoUHchd4gNuf1fR0=;
+        b=Apc147p9IaTZaQB8UdUlU9TYt82/FwYzjQ4l9d4GN15dVwOwOSCfnLiDldpbrqPsej
+         SXS35nxJJI1s0OBO+zhxS786ubBFZTTQXY9O/+2gQHnkXHpV5wFVrFElkXl1CKk8cyfK
+         +xgYpf4RgbDeRAa5szrId5lS2cI4mPjCrhlSM2BfItsBa7lDWvYmrO9Z4oMFHkpXJ3wT
+         ZObvKOCcqy1pOGmS85F6dUgYDj/z4Th9RIF9dVAAi0GnsBfkbXAakhTU9jmyzqHl1Zz3
+         DqhYm/uGp4Qphqd6yQmfqkAdziLApcmmqfXSPjuCIqoOOwdcqyoXPrB0C5EKOHZTEBes
+         /99A==
+X-Forwarded-Encrypted: i=1; AJvYcCXuxTvPRTbQtjUCLcERV/KbiZpwjEULw8xU/Vipll4QOFTVLTIbHIfDU7O3XNg6iRvv/q9/PRT9CIEv40aQQMkWB8gwhb1xvAcypCGJUQ==
+X-Gm-Message-State: AOJu0YyHfBBAmxZXUXVPPTN5FQKA976MvsHUFYuoOEkCBEceVPBh5dO5
+	sBhUASrv39AkFm6bfbV5PwFg2sz8RUnvauZj2J6o/hvAL1wiHswzv1vv3r/3mvA=
+X-Google-Smtp-Source: AGHT+IFhIREb9DDHPxPjjEWsOsR0T8cVRKEasMD22RcTYJZf7Fjoq4Bq9TP7VGvZC1uKvZYxPNDGdA==
+X-Received: by 2002:a2e:3210:0:b0:2ee:7bcd:a52 with SMTP id 38308e7fff4ca-2f3aa1f9d0dmr31464881fa.46.1723718845647;
+        Thu, 15 Aug 2024 03:47:25 -0700 (PDT)
+Received: from linaro.org ([82.79.186.176])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5bebbbe29c3sm753708a12.14.2024.08.15.03.47.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Aug 2024 03:47:25 -0700 (PDT)
+Date: Thu, 15 Aug 2024 13:47:23 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Marcus Glocker <marcus@nazgul.ch>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Subject: Re: [PATCH v3 4/6] arm64: dts: qcom: Add UFS node
+Message-ID: <Zr3cuxv4EdxMQa9C@linaro.org>
+References: <v2iah5yrne4u6uzrnzg36tvtxzqrpiez6io2gyyfrht2x42umw@5ribqndiavxv>
+ <ejeph4wspggkmvhl7qmpvw5jlojyvma7epqd67i6vk5p6fncrk@de56nvgi6vzi>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240703110741.2668800-1-quic_sibis@quicinc.com>
- <ZoZ6Pk7NSUNDB74i@bogus> <064274c4-3783-c59e-e293-dd53a8595d8e@quicinc.com>
- <Zofvc31pPU23mjnp@bogus> <CAPDyKFrESupeNS4BO8TPHPGpXFLsNqLPrUEw3xzr8oh8FsLHeA@mail.gmail.com>
- <Zryxrdodn2Y2xsej@bogus>
-In-Reply-To: <Zryxrdodn2Y2xsej@bogus>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Thu, 15 Aug 2024 12:46:15 +0200
-Message-ID: <CAPDyKFqmV7yvMdLjGhDHJN4CFiUun3FXprEk7uGFV_qmn9vA8Q@mail.gmail.com>
-Subject: Re: [PATCH] pmdomain: arm: Fix debugfs node creation failure
-To: Sudeep Holla <sudeep.holla@arm.com>, Sibi Sankar <quic_sibis@quicinc.com>
-Cc: cristian.marussi@arm.com, linux-kernel@vger.kernel.org, 
-	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
-	quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, johan@kernel.org, 
-	Peng Fan <peng.fan@nxp.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ejeph4wspggkmvhl7qmpvw5jlojyvma7epqd67i6vk5p6fncrk@de56nvgi6vzi>
 
-On Wed, 14 Aug 2024 at 15:31, Sudeep Holla <sudeep.holla@arm.com> wrote:
->
-> On Wed, Aug 14, 2024 at 02:38:24PM +0200, Ulf Hansson wrote:
-> >
-> > Sudeep, while I understand your point and I agree with it, it's really
-> > a simple fix that $subject patch is proposing. As the unique name
-> > isn't mandated by the SCMI spec, it looks to me that we should make a
-> > fix for it on the Linux side.
-> >
->
-> Yes, I did come to the conclusion that this is inevitable but hadn't
-> thought much on the exact solution. This email and you merging the origin=
-al
-> patch made me think a bit quickly now =F0=9F=98=89
+On 24-08-15 12:42:29, Marcus Glocker wrote:
+> Add the UFS Host Controller node.  This was basically copied from the
+> arch/arm64/boot/dts/qcom/sc7180.dtsi file.
+> 
+> Signed-off-by: Marcus Glocker <marcus@nazgul.ch>
+> ---
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 71 ++++++++++++++++++++++++++
+>  1 file changed, 71 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> index 7bca5fcd7d52..235e20e4b51f 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> @@ -2878,6 +2878,77 @@ mmss_noc: interconnect@1780000 {
+>  			#interconnect-cells = <2>;
+>  		};
+>  
+> +		ufs_mem_hc: ufs@1d84000 {
+> +			compatible = "qcom,x1e80100-ufshc", "qcom,ufshc",
+> +				     "jedec,ufs-2.0";
+> +			reg = <0 0x01d84000 0 0x3000>;
+> +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+> +			phys = <&ufs_mem_phy>;
+> +			phy-names = "ufsphy";
+> +			lanes-per-direction = <1>;
+> +			#reset-cells = <1>;
+> +			resets = <&gcc GCC_UFS_PHY_BCR>;
+> +			reset-names = "rst";
+> +
+> +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
+> +
+> +			iommus = <&apps_smmu 0xa0 0x0>;
+> +
+> +			clock-names = "core_clk",
+> +				      "bus_aggr_clk",
+> +				      "iface_clk",
+> +				      "core_clk_unipro",
+> +				      "ref_clk",
+> +				      "tx_lane0_sync_clk",
+> +				      "rx_lane0_sync_clk";
+> +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+> +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
+> +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+> +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>;
+> +			freq-table-hz = <50000000 200000000>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<37500000 150000000>,
+> +					<0 0>,
+> +					<0 0>,
+> +					<0 0>;
+> +
+> +			interconnects = <&aggre1_noc MASTER_UFS_MEM QCOM_ICC_TAG_ALWAYS
+> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+> +					 &config_noc SLAVE_UFS_MEM_CFG QCOM_ICC_TAG_ALWAYS>;
+> +			interconnect-names = "ufs-ddr", "cpu-ufs";
+> +
+> +			qcom,ice = <&ice>;
+> +
+> +			status = "disabled";
+> +		};
+> +
+> +		ufs_mem_phy: phy@1d87000 {
+> +			compatible = "qcom,x1e80100-qmp-ufs-phy";
 
-Alright, great!
+Can't find any phy patch that adds this compatible to the driver.
 
->
-> > I have therefore decided to queue up $subject patch for fixes. Please
-> > let me know if you have any other proposals/objections moving forward.
->
-> The original patch may not work well with the use case Peng presented.
-> As the name and id may also match in their case, I was wondering if we
-> need to add some prefix like perf- or something to avoid the potential
-> clash across power and perf genpds ? I may be missing something still as
-> it is hard to visualise all possible case that can happen with variety
-> of platform and their firmware.
->
-> In short, happy to have some fix for the issue in some form whichever
-> works for wider set of platforms.
-
-Okay, so I have dropped the $subject patch from my fixes branch for
-now, to allow us and Sibi to come up with an improved approach.
-
-That said, it looks to me that the proper fix needs to involve
-pm_genpd_init() in some way, as this problem with unique device naming
-isn't really limited to SCMI. Normally we use an "ida" to get a unique
-index that we tag on to the device's name, but maybe there is a better
-strategy here!?
-
-Kind regards
-Uffe
+> +			reg = <0 0x01d87000 0 0x1000>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
+> +			clock-names = "ref",
+> +				      "ref_aux",
+> +				      "qref";
+> +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
+> +			resets = <&ufs_mem_hc 0>;
+> +			reset-names = "ufsphy";
+> +			#phy-cells = <0>;
+> +			status = "disabled";
+> +		};
+> +
+> +		ice: crypto@1d90000 {
+> +			compatible = "qcom,x1e80100-inline-crypto-engine",
+> +				     "qcom,inline-crypto-engine";
+> +			reg = <0 0x01d90000 0 0x8000>;
+> +			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+> +		};
+> +
+>  		pcie6a: pci@1bf8000 {
+>  			device_type = "pci";
+>  			compatible = "qcom,pcie-x1e80100";
+> -- 
+> 2.39.2
+> 
 
