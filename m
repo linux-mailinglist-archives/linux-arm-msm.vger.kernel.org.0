@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-28659-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 063789539EF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 20:27:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3BB1C9539F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 20:27:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 28D761C20A0C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 18:27:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6C1D61C228A0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 18:27:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E243253E24;
-	Thu, 15 Aug 2024 18:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F8AB6BFC7;
+	Thu, 15 Aug 2024 18:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B+TUUtnE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L4WCpYVR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B21B481A3;
-	Thu, 15 Aug 2024 18:27:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE9E4AEE9;
+	Thu, 15 Aug 2024 18:27:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723746459; cv=none; b=EqJvZfOTx8Cb6voFXf0INNtGzfuF9lldWrpJYjYDObr2yXjBPLbT9QNW9ADLAmbK5zCo8fBpJquwTnLA7VQj7dwcvC05WLzDkwlvd8UBVyZXSj4niJnfp6ouSv1j/75gv1roM34uP7t5qJ5WUtQl6MYqlOdqWaZOEOzNNTsQV3g=
+	t=1723746461; cv=none; b=IWAalmWzXEhc0duuBuZHlbTyadH6+GJpXIfuTQntjsVrvRFp95fZc6lBXbY/oOBdrG0GxCbq299CfE5XBhC8dHYW1Q+TUYjnHJiFR9sJVFU8PULfN6tm3TV24v/Lv8bG21QUAgryXBQNtCDRimHejfyYQo1Awp/+jouCuwYx4Gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723746459; c=relaxed/simple;
-	bh=cRwN/x/kiyImoIrMMN+pY8aaRgOsi9x3TvEygQRibF4=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Zj/6nIT+4ILCe92llJa8uyaUmjchGHU3dOY2tgIrxJzx3aTpxboXx2NFh6S7gDmZjgVj0HL/vgscbpbCFJmtPunfqsY+1vDAWl1LnypSLVsJFttQ+imGVyGWBVjEI7uVQVOksDNA0PKVtyIymG/Ywkx5bMS7GpIaUiZKy6he5KM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B+TUUtnE; arc=none smtp.client-ip=209.85.167.48
+	s=arc-20240116; t=1723746461; c=relaxed/simple;
+	bh=5UQUbB4gp80E1aCA4nhyaMM7cChO8qWJiCOBtxcnjyU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=tvZahHSglfU24SihfDJ4P/AQkGkggRzg+57q3f+2m43KMOpJqlgmBP9OaF1xLSLyvddCHIjY0toVATMUoVyXcaRTHYcvfSbYGRHjnhx2lwkIIXZyDBY1BSZXYR8OsW9OSJhOJI7eABuJiX9R3Ij9p6cdpRCNGQFS8+czEcTtdn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L4WCpYVR; arc=none smtp.client-ip=209.85.208.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-53212e0aa92so1314405e87.0;
-        Thu, 15 Aug 2024 11:27:37 -0700 (PDT)
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2f029e9c9cfso18225141fa.2;
+        Thu, 15 Aug 2024 11:27:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723746456; x=1724351256; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=eDeRwV2Ek/u3WsfSOVcYKLDPmJx4mXCOUe+RX2CIgaA=;
-        b=B+TUUtnEOgaHuQk1hjllTEcql77PtSNDMAtRPuIfwcepn62bfU2HZwqAMLA5UuhriR
-         XcxxPJ1IG4YQm+8lLT4dTvApe+d3E84cvcLJEP8qcPp/AZI4YikAE4b9g5v2DT5P5ib6
-         AU4/UtcM9RHKWgxDz0piO7ZfPIth6K3GLvJ/gbKqUU5aFOH67ZmtF1oXZFpy6WEv4f6L
-         hOLGn8NXmoMVrvVn+q0iF/gsb1YcpwMwgQirNL1K9+rwlK96Q5chG4n5yIm8GELCTar9
-         dieb6Kaq08BgsB0DYmIN7EaqFb73Ujm9Fo7jK1/b1K4oIvwZk4ks+1bWRcqQS4UjjekS
-         i4kQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723746456; x=1724351256;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20230601; t=1723746457; x=1724351257; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=eDeRwV2Ek/u3WsfSOVcYKLDPmJx4mXCOUe+RX2CIgaA=;
-        b=nkKGHjt2nJHyymLs58+hlUG9V+AKzpgaaQoTm2Pktd2z3QX2MJqCK4DxdK1gy5OS8h
-         0Q2oit8y/CESXzw64/Q6G5c1zL24ukWwOOmrZuZn3AybB8xhzdbgT3JxlijhuByxCb0v
-         TdeBYDP6w7/nFj7DK6hqCLRU1AWWC+K87rOLRCy65p8fvTck/VX1wMCPhLg+UXvQQjPI
-         JJ2FCqbpcN1L+t+2ydOE528sIw1nr+Ugeiklhmo//auUnitZqF5t298Ybvu0aFosZF97
-         0TDpCovUVuhXARqPuQm/OCgxPYYNIPgm+r08Y84EN2zSlUQhVi+fIv01llc3Wdzxo7IR
-         iR+g==
-X-Forwarded-Encrypted: i=1; AJvYcCUbDI6dsjPQwL/6BJrfvPH1vx/B8GNdQdtjDEHxJtokDih/9gN4/Q+c0Qkehx+usrFtHEW/m0tM24e5VIM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxCxA0cNX9LiCC77Ll0Tr5zS67ejPHcNDvOS/hMKoX9QdAHWxBP
-	6dDZ0qahmKQFSIF4RUMMPEkpqkjCzecGzYnWtvbBC+kyUcY3ftwiHzy5wFXc
-X-Google-Smtp-Source: AGHT+IE/pleE3fWtGlNcvdyFzC9AQ+6sLINiWW6BRFJveiUm4Fyav+aIWWLCA+PGt4J8+auruWaGQQ==
-X-Received: by 2002:a05:6512:3d8f:b0:52c:c9bb:2ba4 with SMTP id 2adb3069b0e04-5331c6db15bmr189065e87.46.1723746455626;
-        Thu, 15 Aug 2024 11:27:35 -0700 (PDT)
+        bh=kfyNitr7n9IBeiytQhNaMqBxtLdQ27gFGfEYrZl43AU=;
+        b=L4WCpYVRizaxMpxPxcnA5nWujdnLNVVIz2WMgwuLK/lXhHfbaQRZd1/ds9o5nfWnkB
+         BXKDtr9xaJbj1ZZZUf5oIvCOexYGhchFDA9HBU60JSiB6+Rg6vT++ba5HrL2RiTRmggz
+         aQLtfrr9Pszn7SWPt/USCJJ+g2jEzgbpV63rqiZ1lr3AzNbmDLbHxjNA2KhK/NLiv1Nz
+         aCfn7YevWCLIx7BIBN8++8It9ZgRzlyvl1m/IqOuI/umCVYno6QTbbp7+PK9nQ6m0yq/
+         7kNsAhKSVYx2DUxrL6pV6Aw1Bg0VRzv6LMgGnn2quLtrDMEv4JN4d5u7aqzaH/e2ysku
+         n6bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723746457; x=1724351257;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kfyNitr7n9IBeiytQhNaMqBxtLdQ27gFGfEYrZl43AU=;
+        b=wz9zI6QkI9pnP59bWhDWIPCXWG+jtpkB504dElV2q0dzevOPJqrUAJ3jBwLGwJoogm
+         ktaSnneKt9QFV+0+JAGYf/iwTosP/c7X1HnemjGRPAPqsjf1QvOnoGy2vb3uq171Jx5T
+         lurdhw+QlBARS16C+uCfnDNJckwfDRzBFtgcwJ32gWNayQAn0aSawGiZEeYKn7AnX77v
+         fsVFDJQ/3lUXUPHvRyNDDV1xld4FnVzQvJi6axOsqI0SSmrSY8BZHAIkonb0/n82enr7
+         R56Jp/xnec9o/Pj/FBZPkUMx731+Cr1RN1jjBU5UcXxxMnP3ymxXxUMVXqt5PwrqQQ0I
+         C43A==
+X-Forwarded-Encrypted: i=1; AJvYcCVbiDdPl4N341p3N/3rjxg+xduezEgzNJtAOTfntaRD3uL0soFhwgVAUZWQCiFPheqwoZCNLnZtvAq1z9tQ+hc7HKOb+Ch/DQTOn0AQ
+X-Gm-Message-State: AOJu0YxBNZH5Rbx4Vjiwq1uKDyDKlCkauwS+IKRwRhZspuiYTm+8z0QT
+	CvoQD/GkAEOEByVfUP1Sv8tVv3ERNWtu8eS/YGpFmWz7RmLPjI1T
+X-Google-Smtp-Source: AGHT+IFBVz0TzJtS4M+sYECsv1VIhUSvNMY2XP3x5/1iARu7qmeuI+rqZuBoqE29ZD802zvcHsRFxg==
+X-Received: by 2002:a2e:9053:0:b0:2ef:2e98:9718 with SMTP id 38308e7fff4ca-2f3be583963mr4671051fa.15.1723746457166;
+        Thu, 15 Aug 2024 11:27:37 -0700 (PDT)
 Received: from [192.168.1.13] (host-79-35-172-29.retail.telecomitalia.it. [79.35.172.29])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8383947187sm133814366b.166.2024.08.15.11.27.34
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8383947187sm133814366b.166.2024.08.15.11.27.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 11:27:35 -0700 (PDT)
+        Thu, 15 Aug 2024 11:27:36 -0700 (PDT)
 From: Antonino Maniscalco <antomani103@gmail.com>
-Subject: [PATCH 0/7] Preemption support for A7XX
-Date: Thu, 15 Aug 2024 20:26:10 +0200
-Message-Id: <20240815-preemption-a750-t-v1-0-7bda26c34037@gmail.com>
+Date: Thu, 15 Aug 2024 20:26:11 +0200
+Subject: [PATCH 1/7] drm/msm: Fix bv_fence being used as bv_rptr
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,9 +78,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAEJIvmYC/x2MQQqAIBAAvxJ7bsHMyPpKdLDaag+VqEQQ/r2l4
- 8DMvBApMEXoixcC3Rz5OgWqsoB5d+dGyIswaKWNslWDPhAdPomGrm0UJlxnos5ZY6a6A+nEWPn
- 5n8OY8wd+ySwjYwAAAA==
+Message-Id: <20240815-preemption-a750-t-v1-1-7bda26c34037@gmail.com>
+References: <20240815-preemption-a750-t-v1-0-7bda26c34037@gmail.com>
+In-Reply-To: <20240815-preemption-a750-t-v1-0-7bda26c34037@gmail.com>
 To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, 
@@ -90,63 +91,54 @@ To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
  Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Antonino Maniscalco <antomani103@gmail.com>, 
- Sharat Masetty <smasetty@codeaurora.org>
+ Antonino Maniscalco <antomani103@gmail.com>
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1723746454; l=2060;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1723746454; l=1437;
  i=antomani103@gmail.com; s=20240815; h=from:subject:message-id;
- bh=cRwN/x/kiyImoIrMMN+pY8aaRgOsi9x3TvEygQRibF4=;
- b=QUSsONzmPFUjFZRdDJx4QCCkCC6gVtRN6Ob110oWVt/N3lvDxOq5kPfsqhi7+YtSYcoLNZS2G
- 7DUighCkJoJAwixUOEGuNHE9KsBFUIkIng1l+EHHuMXS0RISoj7FiGE
+ bh=5UQUbB4gp80E1aCA4nhyaMM7cChO8qWJiCOBtxcnjyU=;
+ b=WStWfdviZV2WJZlLrsE28/bmfEOARulhUrSCokZ1bsiJf3LoqdAH8EezgpQo+F4dfCNvp1rag
+ EzGAwabZffKAK0pipd9g5pUbKWt31CzLyz3RML+2SXrAEHDR2OM2fKI
 X-Developer-Key: i=antomani103@gmail.com; a=ed25519;
  pk=0zicFb38tVla+iHRo4kWpOMsmtUrpGBEa7LkFF81lyY=
 
-This series implements preemption for A7XX targets, which allows the GPU to
-switch to an higher priority ring when work is pushed to it, reducing latency
-for high priority submissions.
+The bv_fence field of rbmemptrs was being used incorrectly as the BV
+rptr shadow pointer in some places.
 
-This series enables L1 preemption with skip_save_restore which requires
-the following userspace patches to function:
-
-https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/30544
-
-A flag is added to `msm_gem_submit` to only allow submissions from compatible
-userspace to be preempted, therefore maintaining compatibility.
-
-Some commits from this series are based on a previous series to enable
-preemption on A6XX targets:
-
-https://lkml.kernel.org/1520489185-21828-1-git-send-email-smasetty@codeaurora.org
+Add a bv_rptr field and change the code to use that instead.
 
 Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
 ---
-Antonino Maniscalco (7):
-      drm/msm: Fix bv_fence being used as bv_rptr
-      drm/msm: Add submitqueue setup and close
-      drm/msm: Add a `preempt_record_size` field
-      drm/msm/A6xx: Implement preemption for A7XX targets
-      drm/msm/A6xx: Add traces for preemption
-      drm/msm/A6XX: Add a flag to allow preemption to submitqueue_create
-      drm/msm/A6xx: Enable preemption for A7xx targets
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
+ drivers/gpu/drm/msm/msm_ringbuffer.h  | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
- drivers/gpu/drm/msm/Makefile              |   1 +
- drivers/gpu/drm/msm/adreno/a6xx_catalog.c |   3 +
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 339 ++++++++++++++++++++++-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h     | 168 ++++++++++++
- drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 441 ++++++++++++++++++++++++++++++
- drivers/gpu/drm/msm/adreno/adreno_gpu.h   |   1 +
- drivers/gpu/drm/msm/msm_gpu.h             |   7 +
- drivers/gpu/drm/msm/msm_gpu_trace.h       |  28 ++
- drivers/gpu/drm/msm/msm_ringbuffer.h      |   8 +
- drivers/gpu/drm/msm/msm_submitqueue.c     |  10 +
- include/uapi/drm/msm_drm.h                |   5 +-
- 11 files changed, 995 insertions(+), 16 deletions(-)
----
-base-commit: 7c626ce4bae1ac14f60076d00eafe71af30450ba
-change-id: 20240815-preemption-a750-t-fcee9a844b39
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index bcaec86ac67a..32a4faa93d7f 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1132,7 +1132,7 @@ static int hw_init(struct msm_gpu *gpu)
+ 	/* ..which means "always" on A7xx, also for BV shadow */
+ 	if (adreno_is_a7xx(adreno_gpu)) {
+ 		gpu_write64(gpu, REG_A7XX_CP_BV_RB_RPTR_ADDR,
+-			    rbmemptr(gpu->rb[0], bv_fence));
++			    rbmemptr(gpu->rb[0], bv_rptr));
+ 	}
+ 
+ 	/* Always come up on rb 0 */
+diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
+index 0d6beb8cd39a..40791b2ade46 100644
+--- a/drivers/gpu/drm/msm/msm_ringbuffer.h
++++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
+@@ -31,6 +31,7 @@ struct msm_rbmemptrs {
+ 	volatile uint32_t rptr;
+ 	volatile uint32_t fence;
+ 	/* Introduced on A7xx */
++	volatile uint32_t bv_rptr;
+ 	volatile uint32_t bv_fence;
+ 
+ 	volatile struct msm_gpu_submit_stats stats[MSM_GPU_SUBMIT_STATS_COUNT];
 
-Best regards,
 -- 
-Antonino Maniscalco <antomani103@gmail.com>
+2.46.0
 
 
