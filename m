@@ -1,147 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-28592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAD3B9529DC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 09:27:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EC5499529E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 09:29:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AD2452844AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 07:27:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ABE8328110E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 07:29:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03CC717ADE3;
-	Thu, 15 Aug 2024 07:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFBA017AE11;
+	Thu, 15 Aug 2024 07:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DkmNQfmp"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Ak1x0BR4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5D017AE0A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 07:27:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEB1179954
+	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 07:29:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723706845; cv=none; b=ShHF7D6VR4CsHAQfsYJaHjGOazLFMI3Gj9UloBmRSEOdiZ2zsM2Cjj0Jmhrrvmo2CGOWbY0UHgriJFI985Bp8NZy2aH7q6b3bl4fj2YM8jqOp0LkB9UbNvHoIJrzGIBc1xpn4dUf3rjmG6RypY07hnXCv+JAcDzkv0KJbxToR84=
+	t=1723706986; cv=none; b=F79q+/+4yCvWKSkXyRqnRP7lNQauvpWqxNKuu9wjQ7Yxcaz+pQDqtnRrK5rREasFYMzQXWacps8PFugz05ac2sk7ivKwCnzxNmhcyPFjyzTDVnEhwvpQcZzOUnonUVJ/61NaAgagxpoJWinBDX+qNYM9DEVaVTASZDRhK/zSgn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723706845; c=relaxed/simple;
-	bh=6QJJn5b6f0l+ilD2qxo5fUbwkkKew80w/ezKJNlfOTI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RO9OdAKhCI7Us8+hJnaXxbxNM3/hS2AJGFT7C861wWdZBC6egV0IQCReQxKtFoaECoc0k+tz6TTGj7N4zCkXFrjw+KDI+Xe3MkgV8UxcnkiGRxaOj7Cv8XrVsLNVNmJShAIKyhNdvQyp4nofD0WqVKbpXNZgMmAecdpsXmYBPH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=DkmNQfmp; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-369c609d0c7so416858f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 00:27:23 -0700 (PDT)
+	s=arc-20240116; t=1723706986; c=relaxed/simple;
+	bh=hPX1celK2r4ELG+EKPXeAClu4f8aV/KAzwDNQ2P/imE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bchs2jS898rQpv0Btm0+kKKoghUqIrre9iijcsVtQeOJY0amrafj2kQCTo+0nY7IHb6pU60v5+cWM0behppe67/pG9CVKxr0itZdn9qUrP8aS3jgf0F8H0X6hU+Tp9A5/5LG8O9nTLUQ2zO8bQwZXR+kyicDcELp1XbvkSUuJjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Ak1x0BR4; arc=none smtp.client-ip=209.85.167.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-3db130a872fso384046b6e.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 00:29:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1723706842; x=1724311642; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pXJzm0D10WfLU9z0++7Jp9e2VIC6jCXOZwkG9G3TV6A=;
-        b=DkmNQfmpgDCoUQso1mwsL/DOZtbqd1+yE/zguR8YqK+7Fi9QlJg7pTqrHwbWNg+eYd
-         PG1qTAKwwVUJjf/jQ1PZAYbzUF18HLFaGzohZdBE0ZnspP2llW9FA1YSHbZyNsi95upK
-         DxKssm9P2y7YK50dawbFBr1qR5hDGZZ3iIGLNK6TufSNsP6xlaJVfLGE9I9daYgPPkss
-         bhUSnjAHQub3NEf27cj86+4gqxhJwqnn4tX0YSpuncRulzieYg37zz8xqUXMPKSX6GIO
-         dfAdokbMKJMnghRlEMaoMHLAPMqkNkd/jIal9b0S4A5XTBnI5Li0PeTG8mLu4Uki1Ekg
-         cJiw==
+        d=chromium.org; s=google; t=1723706984; x=1724311784; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=EwP1Gv/Yx/xpl+pnVih7/w3vpScHL1lhIFF+Jyhxw7M=;
+        b=Ak1x0BR4TtlYd5wFix/qt3t0aDEzhwxVLrirTJtyNmYzslnKpF+wdwpy9oXIe41w+6
+         3/s6pKqsbl0c/SMYvRm2fPsiuQfWzl10JappVmN7TOTeUsfLRBUQo0XAJ3u9/qN/o5tv
+         Hm9HjZ6ZGSj8myiJb+rktiFvw+Mq3U0S1pAnI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723706842; x=1724311642;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pXJzm0D10WfLU9z0++7Jp9e2VIC6jCXOZwkG9G3TV6A=;
-        b=m2bFjBch6UEqBgNo/c70V/H4ZxQ1GZpWX+kOV0pHeT4EwSbWqqLeS5XBv2LbBBbF+/
-         wWs66AOvmPq+yoqtCufYXcMahnJi4drrpgMH6fULopC9oaZfNowOzA2h1gsH256ZoPrQ
-         jSZAdjqGj/lIu/feqLNzHZxqnAp5xKBbn6e5S2zgX2LxwgFxxOjpLaqTG9iPIPkGtY4A
-         o7HwrIRX/SZ8cIz3M2RXlNdSk/AhnqcqlQCop3/Vy+4VriFswj+v2YeSzzHWqGYa+vVM
-         v0mi9IvJg9rQ6TuNervEYKq//0ILgLmidsFvZXy4ZZE3ipf32iyLfTpTpoif1i9XfC9y
-         6E3g==
-X-Forwarded-Encrypted: i=1; AJvYcCWlQuUuXR2WFHSQ2uwsQx5EfPcN/hc1ELPTMqs/ywyI9d2i/+BZMJyWZy71mPjtTjFmGOgF+SeDLAXMy/3e5dywuvZxG6neqY4hu36Ywg==
-X-Gm-Message-State: AOJu0Yy080/ToAM/EUUkjNVWEAkdOVA5ap5bNeUAKJUfrwwWojO922nC
-	XNv2Xju1LBQkbL+H5tIvgkvHzvWI0zWLrKRp9E5TKea/lMGxNwLvYRSw4tFbZFqjkSZ0ndURBHN
-	Nxs/oe/S3X6n7V3Rwzbvi9ltEmmFVBg1zbjM2
-X-Google-Smtp-Source: AGHT+IH6naSRz220SzN8RarZSndGjV+CeULQ4qqyqInU1++JS55z0LhTf5shflkfmNPy3v60d0PC6kZ+l6KMyILMVYE=
-X-Received: by 2002:adf:f283:0:b0:368:3b5c:7a5d with SMTP id
- ffacd0b85a97d-3717775c4c3mr4945906f8f.20.1723706842239; Thu, 15 Aug 2024
- 00:27:22 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1723706984; x=1724311784;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EwP1Gv/Yx/xpl+pnVih7/w3vpScHL1lhIFF+Jyhxw7M=;
+        b=qNvSNzxVcMJn8/1e4Fveq4E3SRn0aYBefBup+Xm7FLx+VeupMC1+mJl33IvVNGP7ny
+         ucgCQtGYQqm2izzr8v3Hzn62ar2LWji8Ic8fGFsdre3zyZSDHvy3s3yEgYsW9R6xvBSs
+         itvg82pnuDfVCNdQg4n0wPsWl8M7RjTHctaR76ku4SDlAGL4+jLvPVSI1Bn1lhsj9RVs
+         lvYI//Kvv0Pisodp8K2YSpb3ZCMYctIx576MYOWDBo9zJGJF0Hm8FY36/DGm2RJwplTu
+         YuWmfYtTU7grWBKt1A0xoRXxGYH6+BFy2Rhj2xbEo1xPRcLEhkFcxRFaRABFe7nfQZxL
+         rFKg==
+X-Forwarded-Encrypted: i=1; AJvYcCVJM2qYTJasPAtJEnPnKH8vg1M1snNlCk+P9NWfH6nLDEXe9V49edxxSznxFUTVcMLqKsTS0ehjy5DdxQk5c7GAAo+RUdlfaqfM1DgqHQ==
+X-Gm-Message-State: AOJu0Ywqs6+rq4ICjqSXHabEy5Q6j1HRKHRmrGnsbOMqExomQegsOQ5a
+	xAHfd7yUDZI4QCbKdfuWLIGEdZQmkL7CT6bSYmhQmZ0pfDvVBoJ4ee17rB4r0A==
+X-Google-Smtp-Source: AGHT+IGmv5LKc/rdRpi8Ra9/RsIMunAWATmlN37PMZ/4ZdYVF8yC6fAOhJyK+4vfrUac1BNWQewwDg==
+X-Received: by 2002:a05:6808:1821:b0:3da:aae9:717b with SMTP id 5614622812f47-3dd299929c7mr6326564b6e.45.1723706984412;
+        Thu, 15 Aug 2024 00:29:44 -0700 (PDT)
+Received: from google.com ([2401:fa00:1:10:745d:58f7:b3cd:901f])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7c6b61a6d98sm524661a12.11.2024.08.15.00.29.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Aug 2024 00:29:43 -0700 (PDT)
+Date: Thu, 15 Aug 2024 15:29:38 +0800
+From: Chen-Yu Tsai <wenst@chromium.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+	Amit Kucheria <amitk@kernel.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Vasily Khoruzhick <anarsoul@gmail.com>,
+	Yangtao Li <tiny.windzz@gmail.com>, Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-sunxi@lists.linux.dev
+Subject: Re: [PATCH 5/7] thermal: qcom-spmi-adc-tm5: Simplify with scoped for
+ each OF child loop
+Message-ID: <20240815072938.GE350960@google.com>
+References: <20240814-b4-cleanup-h-of-node-put-thermal-v1-0-7a1381e1627e@linaro.org>
+ <20240814-b4-cleanup-h-of-node-put-thermal-v1-5-7a1381e1627e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240801090117.3841080-1-tabba@google.com> <20240801090117.3841080-10-tabba@google.com>
- <910085c1-c29c-4828-853c-70760b458086@amazon.co.uk>
-In-Reply-To: <910085c1-c29c-4828-853c-70760b458086@amazon.co.uk>
-From: Fuad Tabba <tabba@google.com>
-Date: Thu, 15 Aug 2024 08:26:45 +0100
-Message-ID: <CA+EHjTztRO0x4yMGjm9amshaQ3sThuWePVnF0QUGzFR=M_Kjyw@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 09/10] KVM: arm64: arm64 has private memory support
- when config is enabled
-To: Patrick Roy <roypat@amazon.co.uk>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
-	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
-	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com, 
-	jhubbard@nvidia.com, fvdl@google.com, hughd@google.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240814-b4-cleanup-h-of-node-put-thermal-v1-5-7a1381e1627e@linaro.org>
 
-Hi Patrick,
+On Wed, Aug 14, 2024 at 10:17:51PM +0200, Krzysztof Kozlowski wrote:
+> Use scoped for_each_available_child_of_node_scoped() when iterating over
+> device nodes to make code a bit simpler.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-On Thu, 15 Aug 2024 at 07:27, Patrick Roy <roypat@amazon.co.uk> wrote:
->
-> Hi Fuad,
->
-> On Thu, 2024-08-01 at 10:01 +0100, Fuad Tabba wrote:
-> > Implement kvm_arch_has_private_mem() in arm64, making it
-> > dependent on the configuration option.
-> >
-> > Signed-off-by: Fuad Tabba <tabba@google.com>
-> > ---
-> >  arch/arm64/include/asm/kvm_host.h | 3 +++
-> >  1 file changed, 3 insertions(+)
-> >
-> > diff --git a/arch/arm64/include/asm/kvm_host.h b/arch/arm64/include/asm/kvm_host.h
-> > index 36b8e97bf49e..8f7d78ee9557 100644
-> > --- a/arch/arm64/include/asm/kvm_host.h
-> > +++ b/arch/arm64/include/asm/kvm_host.h
-> > @@ -1414,4 +1414,7 @@ bool kvm_arm_vcpu_stopped(struct kvm_vcpu *vcpu);
-> >                 (pa + pi + pa3) == 1;                                   \
-> >         })
-> >
-> > +#define kvm_arch_has_private_mem(kvm)                                  \
-> > +       (IS_ENABLED(CONFIG_KVM_PRIVATE_MEM) && is_protected_kvm_enabled())
-> > +
->
-> Would it make sense to have some ARM equivalent of
-> KVM_X86_SW_PROTECTED_VM here? Both for easier testing of guest_memfd on
-> ARM, as well as for future non-coco usecases.
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
 
-I don't really have a strong opinion about this. I thought that
-if/when that were to happen, it would be trivial to modify this macro.
-
-Cheers,
-/fuad
-
-> >  #endif /* __ARM64_KVM_HOST_H__ */
-> > --
-> > 2.46.0.rc1.232.g9752f9e123-goog
-> >
->
-> Best,
-> Patrick
+> ---
+>  drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+> index 7c9f4023babc..19cdb98c310e 100644
+> --- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+> @@ -938,7 +938,6 @@ static const struct adc_tm5_data adc_tm5_gen2_data_pmic = {
+>  static int adc_tm5_get_dt_data(struct adc_tm5_chip *adc_tm, struct device_node *node)
+>  {
+>  	struct adc_tm5_channel *channels;
+> -	struct device_node *child;
+>  	u32 value;
+>  	int ret;
+>  	struct device *dev = adc_tm->dev;
+> @@ -982,12 +981,10 @@ static int adc_tm5_get_dt_data(struct adc_tm5_chip *adc_tm, struct device_node *
+>  		adc_tm->avg_samples = VADC_DEF_AVG_SAMPLES;
+>  	}
+>  
+> -	for_each_available_child_of_node(node, child) {
+> +	for_each_available_child_of_node_scoped(node, child) {
+>  		ret = adc_tm5_get_dt_channel_data(adc_tm, channels, child);
+> -		if (ret) {
+> -			of_node_put(child);
+> +		if (ret)
+>  			return ret;
+> -		}
+>  
+>  		channels++;
+>  	}
+> 
+> -- 
+> 2.43.0
+> 
 
