@@ -1,243 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-28630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28631-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C67F952F91
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 15:34:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4DDE953035
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 15:40:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 13F5B289FA2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 13:34:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3F1541F26782
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 13:40:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB9B31AAE2A;
-	Thu, 15 Aug 2024 13:33:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KnWKJ/I1"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F462187348;
+	Thu, 15 Aug 2024 13:40:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB091A255C;
-	Thu, 15 Aug 2024 13:33:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8E01714A8;
+	Thu, 15 Aug 2024 13:40:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728819; cv=none; b=X1GZf4ZxrrlXTSkqevpqPjv/bYjH0lFUmjmSa52MmWNf4W0h8rZ4eQowKmy1IUN6/42YaDFG835ynWMfDnDwICRDqHOtRZeknzw9ras1+vGv0tpRZKPKA9DLkywxDUn0rhAxcbC3Wr8InMtVPV7gYeTTaQeaRHynZcDuTuESstY=
+	t=1723729220; cv=none; b=pLgfCFrSStxsiaDp+kvX4GPGMUjo1RozxbHV9RCmU5+2onvs3kV/cAj9JjMBa+gp1VZt5HsmjUvnV9CoCbT0okPnZiRAWBlMwCuZYqUPLTymdP4yT5pCpq1C/SSoi0uzoYnFoioAFutuc0cEzA9vYAp46jCe55EBDKsdkAcAI0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728819; c=relaxed/simple;
-	bh=xDjhfqPS2o+oDH5/ecesXAuXbEw+HvBzT0vWf2cTHBc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Okxv7SdJZvd9gNn6gx20kgVdZqC37NxJ68+gDkviWUA7Ihc2zCiQ5n+gQSv9jhggNtyd0NNyhfXhmUZHxPiMtKsjn96RQzoxE7RD4zWySDjpOMlxZnPvxEZ4+32LLT+cflbK/jCXg7RREJbSZijYmnHWrRSgKCybRqymdwfA/xU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KnWKJ/I1; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47F1xZ0L021528;
-	Thu, 15 Aug 2024 13:33:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wjQ+waepsqWG6bfx0jN0N0x2uwvT5aJvn8iAsKyZlU8=; b=KnWKJ/I11DuhR3+6
-	yhXrsKpB4iW8pnqrGlYxp++QJ+hTv8kbF8PJm+8b1zvCWW2rm4mwoM/s4dSOudnN
-	hoJY3vlnpwqGb/F5iWYwbB1GZtE0ACCIju+yAkDdbZ7JR2Tj/fAzHG5/fnQzRqeR
-	P6x7UaQJj7co3JcAZ5GeIiupMecgJnJa0CserpcY3bzCQhXyK38dpOYXcLxXHqrk
-	ElRZ5zDTCFNPTJyrRg3oUaG/hQCgFqUq0w0092EL4p5hK9tuEytV3N+C3sMUKW5W
-	iPD1Nb5EqjENYMNEKRJWPjsPyTTFQBY5u8Z9+LmRuu1vR9cCBVgfeAYFYNFw0HY2
-	iWmh4g==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 410m294pdu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 15 Aug 2024 13:33:20 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47FDXKEZ022352
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 15 Aug 2024 13:33:20 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 15 Aug
- 2024 06:33:14 -0700
-Message-ID: <8e38308a-4198-420e-ac4d-718299033eb5@quicinc.com>
-Date: Thu, 15 Aug 2024 21:33:12 +0800
+	s=arc-20240116; t=1723729220; c=relaxed/simple;
+	bh=LsEF9SwjjRfvqRTvgOKr/Mldazy9d/zwtcPOdxn7FGQ=;
+	h=CC:Subject:To:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=S3QSAuNeppFnbMUF3/BvXWjJeQt2uMw6TV8wxDzVCvNS20FXqIocKvnenxcKep/Vsx+A4a7N1YgOogOqvX+dVABnUubfKeSA80nLeyl8IXGqKBxwH5vE/Xxw5BuSfKUAITigkLIVkDR8+bNTSMbiSJYb2tPkToVuqXquVyAHVw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.163.252])
+	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4Wl5p66BKLzyPsT;
+	Thu, 15 Aug 2024 21:39:42 +0800 (CST)
+Received: from kwepemd200014.china.huawei.com (unknown [7.221.188.8])
+	by mail.maildlp.com (Postfix) with ESMTPS id 5B0701800A4;
+	Thu, 15 Aug 2024 21:40:14 +0800 (CST)
+Received: from [10.67.121.177] (10.67.121.177) by
+ kwepemd200014.china.huawei.com (7.221.188.8) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.34; Thu, 15 Aug 2024 21:40:13 +0800
+CC: Shuai Xue <xueshuai@linux.alibaba.com>, Jing Zhang
+	<renyu.zj@linux.alibaba.com>, Will Deacon <will@kernel.org>, Mark Rutland
+	<mark.rutland@arm.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Yicong
+ Yang <yangyicong@hisilicon.com>, Jonathan Cameron
+	<Jonathan.Cameron@huawei.com>, Jonathan Corbet <corbet@lwn.net>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+	<quic_vbadigan@quicinc.com>, <quic_nitegupt@quicinc.com>,
+	<quic_skananth@quicinc.com>, <quic_ramkri@quicinc.com>,
+	<quic_parass@quicinc.com>, <quic_mrana@quicinc.com>
+Subject: Re: [PATCH 1/4] perf/dwc_pcie: Fix registration issue in multi PCIe
+ controller instances
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+References: <20240731-dwc_pmu_fix-v1-0-ca47d153e5b2@quicinc.com>
+ <20240731-dwc_pmu_fix-v1-1-ca47d153e5b2@quicinc.com>
+From: Yicong Yang <yangyicong@huawei.com>
+Message-ID: <3dcb4074-9958-b454-7456-9dcc455dd736@huawei.com>
+Date: Thu, 15 Aug 2024 21:40:12 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/13] media: qcom: camss: Add support for VFE hardware
- version Titan 780
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>, Yongsheng Li <quic_yon@quicinc.com>
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-14-quic_depengs@quicinc.com>
- <b78f23ca-eb6e-45cf-9e42-86c906ff901f@linaro.org>
-Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <b78f23ca-eb6e-45cf-9e42-86c906ff901f@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: DzLclLzsHct6KgLxh1EBQI6QEFU8lPf3
-X-Proofpoint-ORIG-GUID: DzLclLzsHct6KgLxh1EBQI6QEFU8lPf3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-15_06,2024-08-15_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
- spamscore=0 priorityscore=1501 mlxscore=0 bulkscore=0 adultscore=0
- impostorscore=0 phishscore=0 malwarescore=0 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408150098
+In-Reply-To: <20240731-dwc_pmu_fix-v1-1-ca47d153e5b2@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
+ kwepemd200014.china.huawei.com (7.221.188.8)
 
-Hi Bryan,
-
-On 8/15/2024 12:23 AM, Bryan O'Donoghue wrote:
-
->> @@ -674,15 +675,17 @@ int vfe_reset(struct vfe_device *vfe)
->>   {
->>       unsigned long time;
->> -    reinit_completion(&vfe->reset_complete);
->> +    if (vfe->res->hw_ops->global_reset) {
->> +        reinit_completion(&vfe->reset_complete);
->> -    vfe->res->hw_ops->global_reset(vfe);
->> +        vfe->res->hw_ops->global_reset(vfe);
->> -    time = wait_for_completion_timeout(&vfe->reset_complete,
->> -        msecs_to_jiffies(VFE_RESET_TIMEOUT_MS));
->> -    if (!time) {
->> -        dev_err(vfe->camss->dev, "VFE reset timeout\n");
->> -        return -EIO;
->> +        time = wait_for_completion_timeout(&vfe->reset_complete,
->> +            msecs_to_jiffies(VFE_RESET_TIMEOUT_MS));
->> +        if (!time) {
->> +            dev_err(vfe->camss->dev, "VFE reset timeout\n");
->> +            return -EIO;
->> +        }
+On 2024/7/31 12:23, Krishna chaitanya chundru wrote:
+> When there are multiple of instances of PCIe controllers, registration
+> to perf driver fails with this error.
+> sysfs: cannot create duplicate filename '/devices/platform/dwc_pcie_pmu.0'
+> CPU: 0 PID: 166 Comm: modprobe Not tainted 6.10.0-rc2-next-20240607-dirty
+> Hardware name: Qualcomm SA8775P Ride (DT)
+> Call trace:
+>  dump_backtrace.part.8+0x98/0xf0
+>  show_stack+0x14/0x1c
+>  dump_stack_lvl+0x74/0x88
+>  dump_stack+0x14/0x1c
+>  sysfs_warn_dup+0x60/0x78
+>  sysfs_create_dir_ns+0xe8/0x100
+>  kobject_add_internal+0x94/0x224
+>  kobject_add+0xa8/0x118
+>  device_add+0x298/0x7b4
+>  platform_device_add+0x1a0/0x228
+>  platform_device_register_full+0x11c/0x148
+>  dwc_pcie_register_dev+0x74/0xf0 [dwc_pcie_pmu]
+>  dwc_pcie_pmu_init+0x7c/0x1000 [dwc_pcie_pmu]
+>  do_one_initcall+0x58/0x1c0
+>  do_init_module+0x58/0x208
+>  load_module+0x1804/0x188c
+>  __do_sys_init_module+0x18c/0x1f0
+>  __arm64_sys_init_module+0x14/0x1c
+>  invoke_syscall+0x40/0xf8
+>  el0_svc_common.constprop.1+0x70/0xf4
+>  do_el0_svc+0x18/0x20
+>  el0_svc+0x28/0xb0
+>  el0t_64_sync_handler+0x9c/0xc0
+>  el0t_64_sync+0x160/0x164
+> kobject: kobject_add_internal failed for dwc_pcie_pmu.0 with -EEXIST,
+> don't try to register things with the same name in the same directory.
 > 
-> Per my comment on the CSID - this feels like a fix you are introducing 
-> here in the guise of a silicon add.
+> This is because of having same bdf value for devices under two different
+> controllers.
 > 
-> Please break it up.
+> Update the logic to use sbdf which is a unique number in case of
+> multi instance also.
 > 
-> If you have a number of fixes to core functionality they need to be
-> 
-> 1. Granular and individual
-> 2. Indivdually scrutable with their own patch and descritption
-> 3. git cherry-pickable
-> 4. Have a Fixes tag
-> 5. And be cc'd to stable@vger.kernel.org
-> 
-> Can't accept either the fixes or the silicon add if the two live mixed 
-> up in one patch.
-> 
+> Fixes: af9597adc2f1 ("drivers/perf: add DesignWare PCIe PMU driver")
 
-This isn't a bug fix, adding a null pointer checking just because vfe780 
-doesn't have enable_irq/global_reset/isr/vfe_halt hw_ops, so adding the 
-null checking for these hw_ops in this patch and adding them in one patch.
-The original code doesn't have any bug.
+Did you run into this on a QCOM platform with Patch 4/4 since there's
+multiple PCIe domains?
 
-
-
->> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/ 
->> media/platform/qcom/camss/camss-vfe.h
->> index fcbf4f609129..9dec5bc0d1b1 100644
->> --- a/drivers/media/platform/qcom/camss/camss-vfe.h
->> +++ b/drivers/media/platform/qcom/camss/camss-vfe.h
->> @@ -243,6 +243,7 @@ extern const struct vfe_hw_ops vfe_ops_4_7;
->>   extern const struct vfe_hw_ops vfe_ops_4_8;
->>   extern const struct vfe_hw_ops vfe_ops_170;
->>   extern const struct vfe_hw_ops vfe_ops_480;
->> +extern const struct vfe_hw_ops vfe_ops_780;
->>   int vfe_get(struct vfe_device *vfe);
->>   void vfe_put(struct vfe_device *vfe);
->> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/ 
->> media/platform/qcom/camss/camss.c
->> index 7ee102948dc4..92a0fa02e415 100644
->> --- a/drivers/media/platform/qcom/camss/camss.c
->> +++ b/drivers/media/platform/qcom/camss/camss.c
->> @@ -1666,6 +1666,125 @@ static const struct camss_subdev_resources 
->> csid_res_8550[] = {
->>       }
->>   };
->> +static const struct camss_subdev_resources vfe_res_8550[] = {
->> +    /* VFE0 */
->> +    {
->> +        .regulators = {},
->> +        .clock = { "gcc_axi_hf", "cpas_ahb", "cpas_fast_ahb_clk", 
->> "vfe0_fast_ahb",
->> +               "vfe0", "cpas_vfe0", "camnoc_axi" },
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  drivers/perf/dwc_pcie_pmu.c | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
 > 
-> Should the camnoc AXI clock go here or in the CSID ?
+> diff --git a/drivers/perf/dwc_pcie_pmu.c b/drivers/perf/dwc_pcie_pmu.c
+> index c5e328f23841..c115348b8d53 100644
+> --- a/drivers/perf/dwc_pcie_pmu.c
+> +++ b/drivers/perf/dwc_pcie_pmu.c
+> @@ -556,10 +556,10 @@ static int dwc_pcie_register_dev(struct pci_dev *pdev)
+>  {
+>  	struct platform_device *plat_dev;
+>  	struct dwc_pcie_dev_info *dev_info;
+> -	u32 bdf;
+> +	u32 sbdf;
+>  
+> -	bdf = PCI_DEVID(pdev->bus->number, pdev->devfn);
+> -	plat_dev = platform_device_register_data(NULL, "dwc_pcie_pmu", bdf,
+> +	sbdf = (pci_domain_nr(pdev->bus) << 16) | PCI_DEVID(pdev->bus->number, pdev->devfn);
+> +	plat_dev = platform_device_register_data(NULL, "dwc_pcie_pmu", sbdf,
+>  						 pdev, sizeof(*pdev));
+>  
+>  	if (IS_ERR(plat_dev))
+> @@ -611,15 +611,15 @@ static int dwc_pcie_pmu_probe(struct platform_device *plat_dev)
+>  	struct pci_dev *pdev = plat_dev->dev.platform_data;
+>  	struct dwc_pcie_pmu *pcie_pmu;
+>  	char *name;
+> -	u32 bdf, val;
+> +	u32 sbdf, val;
+>  	u16 vsec;
+>  	int ret;
+>  
+>  	vsec = pci_find_vsec_capability(pdev, pdev->vendor,
+>  					DWC_PCIE_VSEC_RAS_DES_ID);
+>  	pci_read_config_dword(pdev, vsec + PCI_VNDR_HEADER, &val);
+> -	bdf = PCI_DEVID(pdev->bus->number, pdev->devfn);
+> -	name = devm_kasprintf(&plat_dev->dev, GFP_KERNEL, "dwc_rootport_%x", bdf);
+> +	sbdf = (pci_domain_nr(pdev->bus) << 16) | PCI_DEVID(pdev->bus->number, pdev->devfn);
+
+sbdf is also registerd as the id of the platform device in platform_device_register_data() above,
+can we use it directly here without encoding it again?
+
+Thanks.
+
+> +	name = devm_kasprintf(&plat_dev->dev, GFP_KERNEL, "dwc_rootport_%x", sbdf);
+>  	if (!name)
+>  		return -ENOMEM;
+>  
+> @@ -650,7 +650,7 @@ static int dwc_pcie_pmu_probe(struct platform_device *plat_dev)
+>  	ret = cpuhp_state_add_instance(dwc_pcie_pmu_hp_state,
+>  				       &pcie_pmu->cpuhp_node);
+>  	if (ret) {
+> -		pci_err(pdev, "Error %d registering hotplug @%x\n", ret, bdf);
+> +		pci_err(pdev, "Error %d registering hotplug @%x\n", ret, sbdf);
+>  		return ret;
+>  	}
+>  
+> @@ -663,7 +663,7 @@ static int dwc_pcie_pmu_probe(struct platform_device *plat_dev)
+>  
+>  	ret = perf_pmu_register(&pcie_pmu->pmu, name, -1);
+>  	if (ret) {
+> -		pci_err(pdev, "Error %d registering PMU @%x\n", ret, bdf);
+> +		pci_err(pdev, "Error %d registering PMU @%x\n", ret, sbdf);
+>  		return ret;
+>  	}
+>  	ret = devm_add_action_or_reset(&plat_dev->dev, dwc_pcie_unregister_pmu,
 > 
-
-camnoc is responsible for ddr writing, so it is needed for the WM in vfe.
-
-
->> +    /* VFE4 lite */
->> +    {
->> +        .regulators = {},
->> +        .clock = { "gcc_axi_hf", "cpas_ahb", "cpas_fast_ahb_clk", 
->> "vfe_lite_ahb",
->> +               "vfe_lite", "cpas_ife_lite", "camnoc_axi" },
->> +        .clock_rate = {    { 0, 0, 0, 0, 0 },
->> +                { 0, 0, 0, 0, 80000000 },
->> +                { 300000000, 300000000, 400000000, 400000000, 
->> 400000000 },
->> +                { 300000000, 300000000, 400000000, 400000000, 
->> 400000000 },
-> 
-> I realise you're specifying all of the operating points here but the 
-> clock only needs to appear once i.e.
-> 
-> 1 x 300 MHz
-> 1 x 400 MHz
-> 1 x 480 MHz
-> 
-> etc.
-> 
-
-Sure, will update in next series.
-
->> +                { 400000000, 480000000, 480000000, 480000000, 
->> 480000000 },
->> +                { 300000000, 300000000, 400000000, 400000000, 
->> 400000000 },
->> +                { 300000000, 300000000, 400000000, 400000000, 
->> 400000000 } },
->> +        .reg = { "vfe_lite1" },
->> +        .interrupt = { "vfe_lite1" },
->> +        .vfe = {
->> +            .line_num = 4,
->> +            .is_lite = true,
->> +            .hw_ops = &vfe_ops_780,
->> +            .formats_rdi = &vfe_formats_rdi_845,
->> +            .formats_pix = &vfe_formats_pix_845
->> +        }
->> +    },
->> +};
-
->> +void camss_reg_update(struct camss *camss, int hw_id, int port_id, 
->> bool is_clear)
->> +{
->> +    struct csid_device *csid;
->> +
->> +    if (hw_id < camss->res->csid_num) {
-> 
-> Does this cause do anything ? Is it just defensive programming ? Can the 
-> hw_id index exceed the number of CSIDs defined and if so why ?
-> 
-> Smells wrong.
-> 
-
-It is just a defensive programming, just like some null pointer checking.
-
-
-Thanks,
-Depeng
 
