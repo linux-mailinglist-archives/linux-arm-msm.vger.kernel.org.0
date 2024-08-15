@@ -1,107 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-28668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28669-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3453953A97
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 21:08:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 51714953AA6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 21:11:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7CA1028854A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 19:08:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0BE97283508
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 19:11:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6BF9770ED;
-	Thu, 15 Aug 2024 19:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 203B97710F;
+	Thu, 15 Aug 2024 19:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b="EhpxBra6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LGgMfrlE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-fw-80009.amazon.com (smtp-fw-80009.amazon.com [99.78.197.220])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C91770FB;
-	Thu, 15 Aug 2024 19:08:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=99.78.197.220
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EEC5644E;
+	Thu, 15 Aug 2024 19:11:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723748891; cv=none; b=WVmusEdelpGGQFZS+lcWF63l9B4P4KnNG/IZ1I/sZM2ajdiCCx+PxJRejtghMMAQfi1nMfFQlkkUGOF/0ra2kXsC7DbJnwd3dRVV91DAto6Sl+8Ti/afsC6qFC9hWT6Wn5dCaVo9UUqHOc3E9L6ADa8oBnJL6xE38crMBzTyvcQ=
+	t=1723749080; cv=none; b=XFQHA+9Q/CgBF1KQj/6nmEos91c0TKbCKTP+47P3ZHqpi4DovlttCoEQZNO8PvnX8lbqsb6cNFcTv453ssjqIeiiYZU5kOEz1vtt0GC4qHSxIrtX+sqIJw+GX+ksgq6UBXSbVNl8TuPDK/86myYSVaaDzmV3xhqVC9YSvwwsNp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723748891; c=relaxed/simple;
-	bh=tEGEgIcRKXDTkmdRvTVw2CvUW7+3ffACZCr/9mvjZqo=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=MfLmPVBKtiGH6ZTtx0b04HN+IlFlRv+jGhX1lQamDc7Bq3mZYvdA659fh0gvLQpqwBZ8VCEsUI7lwTzg6DnwXLIyT8+oqomdxCgqU7c3th9T9Q86tHDUnfKX6+cdRbDdgKwwDscLQu4LqusfGsc9lQjU0y/ONY9vFPrXVRbSf90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b=EhpxBra6; arc=none smtp.client-ip=99.78.197.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1723748890; x=1755284890;
-  h=message-id:date:mime-version:subject:from:to:cc:
-   references:in-reply-to:content-transfer-encoding;
-  bh=tEGEgIcRKXDTkmdRvTVw2CvUW7+3ffACZCr/9mvjZqo=;
-  b=EhpxBra6vw31bbYRBZ2ZgRjliKc0sS7PH0jjNW7n3BoOuEo9VjA28r0z
-   N7xeEfoPOiCk4dndAit/tUD7s4zc1Hm6JseK2IFT9bf2bOzVB4RKivhqs
-   0/iS2Nn4XhdPGKNiFSgohT3At1nfrXKPetHl1BHQ9PLlcm/6nLtm78Z9s
-   Q=;
-X-IronPort-AV: E=Sophos;i="6.10,149,1719878400"; 
-   d="scan'208";a="115649481"
-Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.210])
-  by smtp-border-fw-80009.pdx80.corp.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Aug 2024 19:08:09 +0000
-Received: from EX19MTAUWC001.ant.amazon.com [10.0.21.151:21068]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.24.187:2525] with esmtp (Farcaster)
- id 7c28823e-4999-43b1-ba3b-b0e1f64f96e0; Thu, 15 Aug 2024 19:08:09 +0000 (UTC)
-X-Farcaster-Flow-ID: 7c28823e-4999-43b1-ba3b-b0e1f64f96e0
-Received: from EX19D003UWC002.ant.amazon.com (10.13.138.169) by
- EX19MTAUWC001.ant.amazon.com (10.250.64.174) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Thu, 15 Aug 2024 19:08:07 +0000
-Received: from [192.168.11.28] (10.106.101.5) by EX19D003UWC002.ant.amazon.com
- (10.13.138.169) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34; Thu, 15 Aug 2024
- 19:08:06 +0000
-Message-ID: <3ea89d7f-fc29-4c80-a123-94673e526ca5@amazon.com>
-Date: Thu, 15 Aug 2024 12:08:05 -0700
+	s=arc-20240116; t=1723749080; c=relaxed/simple;
+	bh=ftamXaAZqJ/z5Ku33xTqxr2h+dFFbkRdhF/bKzRT2/o=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=O8RPbPMn2rpllXQHi+SlphZ5+molT0D3MdCK6GuKpK+Y/IenPFJOTJKUfCH554dnXtZ1Gd7sSBMR4Qxb9xPVlP/BTd6GN5TPgXrnBnqJj/UNyF8Js5zQ3l6hV+xJTAhTmYkrSBNBqVGredWywSjWi4YdjbKsncy8U0X6QVgAU7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LGgMfrlE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D924DC4AF09;
+	Thu, 15 Aug 2024 19:11:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723749079;
+	bh=ftamXaAZqJ/z5Ku33xTqxr2h+dFFbkRdhF/bKzRT2/o=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=LGgMfrlEuo7Xux1unmJiWmVQTnSOcGDXahAd2BhLjChqRNjAFdlqjgyIq00Y6Vz2G
+	 nH+kuPJNBk2JOysWieztstngslD5G8quWyC8F2CKc2mY1xoab+imvOQ3nLvq7Wzlhk
+	 KLDlGih6Ly0IW7KoWtQKac9rgXT+nb/c1tx5sVlgJ8gwah+dQK/oHBNvgOBpVBWq7N
+	 R4Vz9CITgyydtXiWVw9nOXb5aTUMpClYJBi2macZxCvfu4Hk4Im8kEFgsKd5UYqwYy
+	 WorQBDYDwFbTuwiM55BGCrbZfD6ioAGz3OaRvKMz3+BpLhjTDyP2Y5ZEtLHOrVcsOT
+	 1gpfE8waUh75g==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Amol Maheshwari <amahesh@qti.qualcomm.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Tengfei Fan <quic_tengfan@quicinc.com>,
+	Ling Xu <quic_lxu5@quicinc.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: (subset) [PATCH v4 0/6] arm64: qcom: sa8775p: enable remoteprocs - ADSP, CDSP and GPDSP
+Date: Thu, 15 Aug 2024 12:15:31 -0700
+Message-ID: <172374932843.1370237.187138601087557561.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240805-topic-sa8775p-iot-remoteproc-v4-0-86affdc72c04@linaro.org>
+References: <20240805-topic-sa8775p-iot-remoteproc-v4-0-86affdc72c04@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 3/4] mm: guest_memfd: Add option to remove guest
- private memory from direct map
-From: "Manwaring, Derek" <derekmn@amazon.com>
-To: David Hildenbrand <david@redhat.com>, Elliot Berman
-	<quic_eberman@quicinc.com>, Andrew Morton <akpm@linux-foundation.org>, "Paolo
- Bonzini" <pbonzini@redhat.com>, Sean Christopherson <seanjc@google.com>,
-	"Fuad Tabba" <tabba@google.com>, Patrick Roy <roypat@amazon.co.uk>,
-	<qperret@google.com>, Ackerley Tng <ackerleytng@google.com>
-CC: <linux-coco@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>, <kvm@vger.kernel.org>,
-	Alexander Graf <graf@amazon.de>, Moritz Lipp <mlipp@amazon.at>, "Claudio
- Canella" <canellac@amazon.at>
-References: <20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com>
- <20240805-guest-memfd-lib-v1-3-e5a29a4ff5d7@quicinc.com>
- <c55fc93d-270b-4b11-9b38-b54f350ea6c9@redhat.com>
- <396fb134-f43e-4263-99a8-cfcef82bfd99@amazon.com>
-Content-Language: en-US
-In-Reply-To: <396fb134-f43e-4263-99a8-cfcef82bfd99@amazon.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: EX19D039UWB001.ant.amazon.com (10.13.138.119) To
- EX19D003UWC002.ant.amazon.com (10.13.138.169)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On 2024-08-07 17:16-0700 Derek Manwaring wrote:
-> All that said, we're also dependent on hardware not being subject to
-> L1TF-style issues for the currently proposed non-CoCo method to be
-> effective. We're simply clearing the Present bit while the physmap PTE
-> still points to the guest physical page.
 
-I was wrong here. The set_direct_map_invalid_noflush implementation
-moves through __change_page_attr and pfn_pte, eventually arriving at
-flip_protnone_guard where the PFN is inverted & thus no longer valid for
-pages marked not present. So we do benefit from that prior work's extra
-protection against L1TF.
+On Mon, 05 Aug 2024 19:08:01 +0200, Bartosz Golaszewski wrote:
+> Add DT bindings, relevant DT defines, DTS nodes and driver changes
+> required to enable the remoteprocs on sa8775p.
+> 
+> To: Bjorn Andersson <andersson@kernel.org>
+> To: Mathieu Poirier <mathieu.poirier@linaro.org>
+> To: Rob Herring <robh@kernel.org>
+> To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+> To: Conor Dooley <conor+dt@kernel.org>
+> To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> To: Jassi Brar <jassisinghbrar@gmail.com>
+> To: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-remoteproc@vger.kernel.org
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> [...]
 
-Thank you for finding this, Patrick.
+Applied, thanks!
 
-Derek
+[3/6] remoteproc: qcom_q6v5_pas: Add support for SA8775p ADSP, CDSP and GPDSP
+      commit: 9091225ba28c0106d3cd041c7abf5551a94bb524
+
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
