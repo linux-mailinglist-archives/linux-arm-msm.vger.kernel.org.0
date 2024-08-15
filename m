@@ -1,150 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-28711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE15D953C9B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 23:31:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A03F1953CFC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 23:56:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AACCC287407
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 21:31:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5C9C4286F8B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Aug 2024 21:56:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4A8014F9D9;
-	Thu, 15 Aug 2024 21:31:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A7841547C0;
+	Thu, 15 Aug 2024 21:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="T2u84iGk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eTjuq+HA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB19D14B960
-	for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 21:31:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06B1154433;
+	Thu, 15 Aug 2024 21:56:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723757470; cv=none; b=iOnrMmmrGixoucTFHwzwun8jT9S+L6gwJ2UhvrypcdZVFeiRTh/jb06HS5tJuTlaXwK0KQa71MYLUubKuiQ6BHjAZxO+1y88bQMK05vUfD8xq5sBXiW/r3xRqEipU0TICLJhcX+UzUf4/zSQpTgQattqZkf4EAkXYLFRdca0DMM=
+	t=1723758994; cv=none; b=TyD4u+YxwJrPcEoFyehlkBrd6Ik9gCqK/9V3KDD+XyDP6Nrn96EpOByT+ZoOedqSs/zyqFqcI0tjS5q3EGfCIWgglzvi/uZ2h830NUfjKU4LyikL1IhDGrd1NJG/Xl2lmeCai73mmZjm+2PJ7slpwQD/QvnOgw1NTzB/Bt/7k+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723757470; c=relaxed/simple;
-	bh=bBhD2UVKdIi/pLUo9qeSoZ/3rVNP5+ExM5I1cdnBsSw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dRb6c0WatJCO8qhdjx0hSO1LkzqO6jHISJ4NZwg6mMprFvE0yXSQlInd4Bqdc3+oN2LIq3R8F6WzCcDIwa4ndZooY+L0rIGU91lIaE9U6/MW1w4j/jwk3zAoWt3ulu54L/IqYoeHK6WKY6vgHZdQBFXqFTTtem18GXiSTzoJ49Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=T2u84iGk; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2ef2c0f35f2so1367261fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 14:31:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723757467; x=1724362267; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aj3ozXYdzeekQq7OfG9J9RbzOXbJtbjXaVZN/oAjRbU=;
-        b=T2u84iGkowlz/SwNVxNYKFsjD/Sx/5r0rsqOlhSMeBQMjkPnha1oGnk7z9SXTSxwMy
-         T/cCUdJmr9kCEIYXet0OkAQwqbspYxfhp4Rwa6287XNJNAPiUZfw6czYjbMUREKfGjkQ
-         oHDA1kmRmWaBL/dqS22KEIymi8ovPZlMuep66oLsOOLHExRh7OTaRfJpymvKhpVCiZAZ
-         FnbbbsdAE3ty5HYtKc9MF27zBq2vXGeGjaawJMqsbOwJ7qbVQAPZ8U8teM1OifmGJgiD
-         XK8xs5Xr+Eu2O2gjWc5zLqeluqpbfFXJpoOUolzTnFlYciAcM+coq2NCmZNk5hTu7D9q
-         AWhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723757467; x=1724362267;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aj3ozXYdzeekQq7OfG9J9RbzOXbJtbjXaVZN/oAjRbU=;
-        b=GVFv1QQCBmn55EFGCcRGbf2Iezs6ZlODfjtyLFvap3K0C0e4PnV6rA3iK60o6bGs0c
-         uHGMeeNc0PzYuMugenVuHpMFvqreaG7i/TJkUWJifIRzOY/U3CS/Xql9CqsXluszlDkn
-         zLpqketaPYOk/Jv3Odslg3VqYkY1fK9bnJiffKyrhcDLy9KmRTDmvbf4oBMUEVL3E927
-         pOGoQBMym8FN0WXUfuKhtge5E9gyzNjzCXHyUFTviUqHqJ+ZoPbyEx/yo0yhZoTt9Dx4
-         D+LwEODNm2CVg2sohtpeey4V6EK60PzwmUXJX1h0+SgM002pamX6YEOpklN+Ot4S7bHi
-         FG+A==
-X-Gm-Message-State: AOJu0Yx7jx8Ua24pt5ZW2Xk5ztEpdp271RqotDX6j5oBBMW8UNmRo7vQ
-	tY3QCJdWtQD6zhTDx6KyyjwezxhaBsXu8X+hToykNsPhi/WqJxjM0tjnLgmfPQQ=
-X-Google-Smtp-Source: AGHT+IHtyuhBpS1ajBq71Vtt7+Xvd1FZ6TXLAEnoHPJ7SGlONaTy9h3p1wttBpPuhwPk8SEcEyX1XQ==
-X-Received: by 2002:a05:651c:19a9:b0:2ef:23af:f1f2 with SMTP id 38308e7fff4ca-2f3be78709cmr3161651fa.9.1723757466681;
-        Thu, 15 Aug 2024 14:31:06 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f3b774b2adsm3268241fa.133.2024.08.15.14.31.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Aug 2024 14:31:06 -0700 (PDT)
-Message-ID: <56211603-de02-4b8f-a7c6-a4d80ace4e2f@linaro.org>
-Date: Fri, 16 Aug 2024 00:31:05 +0300
+	s=arc-20240116; t=1723758994; c=relaxed/simple;
+	bh=G74goXtz5dRNC7xoM58aKVjwD1023KnU05HNokO8g1g=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=eGuG0IdMLu6tIwrkAg6l7pHLVPUVTxQwsF7NWX2Hvr3O1mfF4tDjsdE2O+7//hI3mamMd2kj2agQTvfHtDyq/S3MfrPUCLIHXxGmfpaHV0Nv0R1dVD/mi2wj3kOfz3ir5asMKOMTkcvhxiHNRaNC8bIoaE6rblKeO2eCK7R22dM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eTjuq+HA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC95C32786;
+	Thu, 15 Aug 2024 21:56:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723758993;
+	bh=G74goXtz5dRNC7xoM58aKVjwD1023KnU05HNokO8g1g=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=eTjuq+HAIkpjRp03T4XVv+/q5tB2OnTImljEzZ9N9sjufz1ynmeu3gqAf7jNAbO5N
+	 XHYx3P34r50PKKVtoXtAmTEQN7teNsDWivnMlr9a7DDKRYi+9qgTubo7dRvja/bOBJ
+	 9MMIZw79eFVVxKusgSeyP/IlFKxXB36HDQSogeh/CnphXPEUe5le5MDoZo2g26/3QA
+	 8Q61cbsGS3MbwDcsOkLUqBG5ZqO6fNlMBLb+UGvAC0OWYEsLOm4xb0nhkgHE8debic
+	 x5oN0w3tyWD5HHi0ACdxVq7iqX6lsrCl8hRQI/OV7irlnpNEjZNt3L8+OMzhBkOru7
+	 KpUhDcfO8RWUQ==
+From: Bjorn Andersson <andersson@kernel.org>
+To: robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	konradybcio@kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	rafael@kernel.org,
+	viresh.kumar@linaro.org,
+	kees@kernel.org,
+	tony.luck@intel.com,
+	gpiccoli@igalia.com,
+	ulf.hansson@linaro.org,
+	andre.przywara@arm.com,
+	quic_rjendra@quicinc.com,
+	davidwronek@gmail.com,
+	neil.armstrong@linaro.org,
+	heiko.stuebner@cherry.de,
+	rafal@milecki.pl,
+	macromorgan@hotmail.com,
+	linus.walleij@linaro.org,
+	lpieralisi@kernel.org,
+	dmitry.baryshkov@linaro.org,
+	fekz115@gmail.com,
+	Danila Tikhonov <danila@jiaxyga.com>
+Cc: devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	netdev@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-hardening@vger.kernel.org,
+	linux@mainlining.org
+Subject: Re: (subset) [PATCH v2 00/11] Add Nothing Phone (1) support
+Date: Thu, 15 Aug 2024 16:56:27 -0500
+Message-ID: <172375898302.1019907.3760470354082742789.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240808184048.63030-1-danila@jiaxyga.com>
+References: <20240808184048.63030-1-danila@jiaxyga.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/13] media: qcom: camss: Add support for VFE hardware
- version Titan 780
-Content-Language: en-US
-To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-14-quic_depengs@quicinc.com>
- <4b745c1a-33d9-472a-97af-153a2a7c8721@linaro.org>
- <2de0b7a8-b879-49e9-9656-ec86f29ce559@quicinc.com>
- <b0787142-0f85-4616-9895-72e33f21c2da@linaro.org>
- <82200889-a98d-4815-bc31-f81b15d02513@quicinc.com>
- <7130beef-7787-42a1-85c8-f27574241ba7@linaro.org>
- <5ecbcd10-d9b7-4134-9666-6df790527b1f@quicinc.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <5ecbcd10-d9b7-4134-9666-6df790527b1f@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Depeng.
 
-On 8/15/24 18:43, Depeng Shao wrote:
-> Hi Vladimir,
+On Thu, 08 Aug 2024 21:40:14 +0300, Danila Tikhonov wrote:
+> This series of patches adds support for the Nothing Phone (1), identified
+> as nothing,spacewar. The Nothing Phone (1) is built on the Qualcomm
+> Snapdragon 778G+ (SM7325-AE, also known as yupik).
 > 
->>>
->>> Thanks for the confirmation, even though I add the rup_update and
->>> buf_done function in later commits, it is still called in platform
->>> specific code(camss-vfe-780.c), so I will keep as it is done today.
->>
->> let it be so.
->>
->> I have another ask about it, please move new camss_reg_update() out from
->> camss.c into camss-csid.c, and camss_buf_done() from camss.c into camss-
->> vfe.c
->>
+> SM7325 is identical to SC7280 just as SM7125 is identical to SC7180, so
+> SM7325 devicetree imports SC7280 devicetree as a base.
 > 
-> The cross direct call has been removed by below commit, so it looks
-> strange if I add the cross direct call.
-> 
-> media: qcom: camss: Decouple VFE from CSID
-> https://lore.kernel.org/lkml/20240522154659.510-9-quic_grosikop@quicinc.com/
+> [...]
 
-This I don't understand, please elaborate. I don't ask for a "cross direct
-call", but you do introduce a CSID specific function in the generic camss.c
-and another VFE specific function in the same camss.c
+Applied, thanks!
 
-What I ask is just move the current versions of camss_buf_done() and
-camss_reg_update() out from camss.c to the files, which are related to the
-sub-IP blocks, and of course move the function declarations from camss.h
-into camss-vfe.h and camss-csid.h respectively.
+[01/11] dt-bindings: arm: qcom,ids: Add IDs for SM7325 family
+        commit: c580e7bfc0cd140b8d3cf73183e08ca8b23326db
+[02/11] soc: qcom: socinfo: Add Soc IDs for SM7325 family
+        commit: 31150c9e87b4a8fe8e726a6f50ac0933f5075532
+[04/11] soc: qcom: pd_mapper: Add SM7325 compatible
+        commit: 79b26c110545530fa2945050a2ffbb3c4e270228
+[05/11] dt-bindings: soc: qcom: qcom,pmic-glink: Document SM7325 compatible
+        commit: e6b666de995e993bcda883ff045164f090e5506d
 
-If possible there shall be no CSID or VFE specific specific code in camss.c,
-and that fact is that it's possible.
-
-> I use the v4l2_subdev_notify to do the cross communication in v1 and v2
-> series, but Bryan said, "The subdev notify is I think not the right fit
-> for this purpose within our driver.".
-
-As far as I see all of that is irrelevant.
-
-> Then I add an internal notify interface in camss structure, but Bryan
-> suggested to use direct call, so I add these functions directly in camss.c
-> 
-> https://lore.kernel.org/all/236cfe43-8321-4168-8630-fb9528f581bd@linaro.org/
-> 
-
---
-Best wishes,
-Vladimir
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
