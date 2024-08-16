@@ -1,170 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-28830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE43D955035
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 19:45:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82AA295503B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 19:48:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1A76DB261BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 17:45:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 161B5285679
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 17:48:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA9201C3788;
-	Fri, 16 Aug 2024 17:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03CAE1AD9F9;
+	Fri, 16 Aug 2024 17:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="B4Hn31V8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JTXoVOUz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1898D1C3791
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 17:45:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 324034AEE5;
+	Fri, 16 Aug 2024 17:48:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723830304; cv=none; b=JmSXXnKCi0QRE2JWg0BDT/7D9zlDhzDb/Im6gUsfumNhpo2Z4JANGaj7uNe3Rv/oa6Jyx9hBSv6CX+KHmpikmmi8Np4sFFO9zr8I/4XBN98smFfZGeCJ42nBhsxZcJTUmHGzriaGFOvuU11rLw+reT6dWAa1XPHB5NwZpUYAYko=
+	t=1723830485; cv=none; b=DCUB1kKcVhOSdPliZ3Z4KLdiBVExZgKzw7wiD8NPqI9OwQYk3RSCb9pKE06vpv/EYboDr7Tr2Vu6jRDoO+SM9E4fBMOmKOyzDhEULpBRnA8lYUNtX4BLlCvUZ4tCRjl74HwIvlcKr9C1nWqsWMrGx3CP+Hxv5gjqJleCQaWbErc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723830304; c=relaxed/simple;
-	bh=5Q1HgjloIR0MpwBSSkUVVWkbj04/nU+bFDjCRNPuhA0=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=LSUdguZxffByRpqdebhiIxnyHBAWvQhCg/9vbGCpLAJCjASV61BBeJHU6rVb5STxqJIVp40xhp1mshAk762+5XWVqskB1RODHWu2LcFFY5UTGEHABoAHUYzeaFko8Iv08C4bh2bwBgyvL7apVaikcj8HPUz6ghRXV1QpgamzlMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=B4Hn31V8; arc=none smtp.client-ip=209.85.128.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6b41e02c255so4423707b3.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 10:45:02 -0700 (PDT)
+	s=arc-20240116; t=1723830485; c=relaxed/simple;
+	bh=EF2j3bp/cvHEgQWOblGJSGOssVd0X9riXzA0JLKpxtk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qxupHgLtgOLS+qsL9UgC8AmGykP0blyOiNy2OV1ggpVCzuV9Z9WfMtAhLMrz5MkWXB0LIBenLhpAjBbOexEDFWA9r5gtMYlhnZW+2VjSvIZaedM1cFV541JHWa1mQuGnLVHBd4Ag3upH5YlsWvQgItp7YNsYO0H/vafk+wpOczQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JTXoVOUz; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2eeb1ba0481so31898791fa.2;
+        Fri, 16 Aug 2024 10:48:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1723830302; x=1724435102; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vLqQ0W+kiaSmHiEqBrEtQ8fcmXJFfIb+9LXgj3vFom8=;
-        b=B4Hn31V87GZQ/zp1/MHdTkicOLR7IZGJSCJkrKOj7/TzObmKcJ4pN6NoWKeYc+B5Zb
-         butWqSxkfVPYHYAJTfjayFp93a69P5MMpBZJcbiNLJ2pOEg6j1qhq/uM0enFDwStlYcY
-         R6Q6Z8mlufuitY/pnfNDZayp+4mRQTFePKl1ivPFWh0DtjtDig170CC9HPCT0WDyxwv8
-         jHotshxkXQyOAeQ5or9+L7BbNIR+RBlrG3e7AZvTGX7wVDic9k6cud9Rkf1q0j5CRInJ
-         Klz7bJKGoWW2Lm6w1JVY+vyqzuuHHEcYb+8FWV8+GZnBzLDWAdcnyAJyoWD4c0XDnZ1J
-         Fy4A==
+        d=gmail.com; s=20230601; t=1723830482; x=1724435282; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=riGddCBVcMqSZhpZl90A7CFiqL1QqGXrr5oPhf+7eSE=;
+        b=JTXoVOUzhIV+QtBYP42/lKwRp8UEZYQvd0Ih9T9spNuZNeaQQhwiRFCahzxmqDDXeF
+         8LAgXff71ZzDQ5sbhaDPcfMWVCoQu1PcfDSkv2SGHtKpBlhQAD4uGq4hK4wkywa2pFeh
+         J33uQUolUUjNyMqu7e1sJyMIsI+FWhZ+ZdhXKV79nmCXqafcpqekOH2oCqeKp07TbKB/
+         vW4gU1e/HhfCkDoFOAASxU1lzHRxdZAMs3/OCUxfzjrydFeSK1ik0kfaLsjOdgB9Ljqp
+         RgCmECmAQoUtaTLqB1LEf2EBxpK0etf72mrr12kv3UIy/gMivkLiGt3FAl4YOXe1iRIT
+         v0bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723830302; x=1724435102;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vLqQ0W+kiaSmHiEqBrEtQ8fcmXJFfIb+9LXgj3vFom8=;
-        b=xQM6Sj9U2AbTysRDYVvmZpXlm3Fp/2OXgPZ8mnnUuw8W2l79XoVAFXpD74bUdK+6sg
-         sGMjJnEF7jsuDQOGtqcCwe9RkNLAYfQfLkOHQgXwApymfA6I7C2TfWYZ+ztU8ESPvSDg
-         k/V0P/2YkZfZHsq4jY6W1WlmXV7sy6TJSq/nt5gZt9uXjlrLIbn5FNg9yT8QyfwWn5yC
-         AFNEdcUuapuZyHL/vXqYRpaLRy/lEtXW6P7yk79pNTEGvX+ZDNTQXwfC2eY3J3bYk3qp
-         4KOVIPXpULJQwz182jlq7lPYsMMW5U3a3UxsAzJzqYJFcKYf/y8Ls4v0S/lpVa14Cxc5
-         AUwg==
-X-Forwarded-Encrypted: i=1; AJvYcCUS1vhQfvsFSBEhi4MmIBX1grujdt29RRxhKx659svu8h3y4EIOZ1TGDD4nTKyIBnAMJ0aiJBo88fy0eolWYetlKcArWmih8Dyt8Ns9EA==
-X-Gm-Message-State: AOJu0YwFsxU0ZZDPjfqLMAgYV6bw2wjs4jJ+L665HA0GAB5RdtURhD18
-	6MtULmPfJ3rra5KEwG6fIA3hs97h6937mHiJQGxQZmAm1DdfA766kpmh6HeR0/ONiOmCDFZ8LnI
-	lFAsNx9Yzz2iCKBXnigWCcg==
-X-Google-Smtp-Source: AGHT+IEi4/I6TDzoHhlZG83qsUH/gsU5TYse1nTv7CQbUM47gB6I7o2YM+wF22moMbfN4T1ecnVRfVCm4hd5c3ZkMQ==
-X-Received: from ackerleytng-ctop.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:13f8])
- (user=ackerleytng job=sendgmr) by 2002:a05:690c:688d:b0:699:d8dc:668d with
- SMTP id 00721157ae682-6b1bb2899d5mr1670697b3.5.1723830302029; Fri, 16 Aug
- 2024 10:45:02 -0700 (PDT)
-Date: Fri, 16 Aug 2024 17:45:00 +0000
-In-Reply-To: <aa3b5be8-2c8a-4fe8-8676-a40a9886c715@redhat.com>
+        d=1e100.net; s=20230601; t=1723830482; x=1724435282;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=riGddCBVcMqSZhpZl90A7CFiqL1QqGXrr5oPhf+7eSE=;
+        b=nNiJF48kjTsEXXEfbeTaKLbsrcVRGXcGzysJLHUsRXVbD0EMedgYHE6bPbHDB1LGrj
+         VCOo3W5xFPZEmzzUdrIazXyoakniC2txUN2Bm11oAG2hGrS79J4+haHaqydGD1lSySBU
+         O1Sam0ydqXVY9o5hnzW+ZJFLt938ImJNXaic/KOeYllurc35uDEuHrxSkeRLAgXXB/bQ
+         2BgJpA67IllLpZWEad4B72zKkE+iMZCxWSyA2KMADcRqOfG0aLCr8h2GVE3bgA8qEi2D
+         X0/WadPrCjh0LzGnoV7YAQIpwjokS60xsX+egqIttOd2GbtLd5YoO9Xa2+/9s7Uof0Dp
+         qnWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWg6Zr1TZqCuvJNYqIp3KlyNS7xfO1WUtbkbt0TB0DYhxwsF/WRoZiaBU7Q0zce9xeWIo/VS3PZ/1ZrUYs622jD9HWqT5RnoYi9llKFyZj6WCEUL8nUtFkWdsYKcVWcJn4n5PqKKYA5gw1esA==
+X-Gm-Message-State: AOJu0YxGQ1YjAsAWVbEvHmQ9YZdUNwYR6XLscS0iAh8l9NgJXys2763y
+	a+fVVeJR17WA3duWf8chUpSQVq7KSmO0ER/rGPucJqZOdzlgNztAlp7L1L0aVPUHTAJGLiV2fEU
+	L3sqg/Vg6HN7ljU4s0crp4UePVAI=
+X-Google-Smtp-Source: AGHT+IHZcHSyJ6Txw10o7YcCIzKf1ZlMMY3wB8pM2a/ajfH8agQCa9ezf0fW4JTyRoX4ydmf7qdRDClG5I7cxWTXrmY=
+X-Received: by 2002:a2e:9084:0:b0:2ef:2d58:ec24 with SMTP id
+ 38308e7fff4ca-2f3be5899a2mr23608561fa.17.1723830481402; Fri, 16 Aug 2024
+ 10:48:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com>
- <20240805-guest-memfd-lib-v1-4-e5a29a4ff5d7@quicinc.com> <4cdd93ba-9019-4c12-a0e6-07b430980278@redhat.com>
- <CA+EHjTxNNinn7EzV_o1X1d0kwhEwrbj_O7H8WgDtEy2CwURZFQ@mail.gmail.com> <aa3b5be8-2c8a-4fe8-8676-a40a9886c715@redhat.com>
-Message-ID: <diqzjzggmkf7.fsf@ackerleytng-ctop.c.googlers.com>
-Subject: Re: [PATCH RFC 4/4] mm: guest_memfd: Add ability for mmap'ing pages
-From: Ackerley Tng <ackerleytng@google.com>
-To: David Hildenbrand <david@redhat.com>, Fuad Tabba <tabba@google.com>
-Cc: Elliot Berman <quic_eberman@quicinc.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Paolo Bonzini <pbonzini@redhat.com>, Sean Christopherson <seanjc@google.com>, 
-	Patrick Roy <roypat@amazon.co.uk>, qperret@google.com, linux-coco@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-mm@kvack.org, kvm@vger.kernel.org
+MIME-Version: 1.0
+References: <20240815-preemption-a750-t-v1-0-7bda26c34037@gmail.com>
+In-Reply-To: <20240815-preemption-a750-t-v1-0-7bda26c34037@gmail.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Fri, 16 Aug 2024 10:47:48 -0700
+Message-ID: <CAF6AEGsiu2OBbwQJO5nS55CAQtCvKebc59-mu2h0BDiu4C2gxg@mail.gmail.com>
+Subject: Re: [PATCH 0/7] Preemption support for A7XX
+To: Antonino Maniscalco <antomani103@gmail.com>
+Cc: Sean Paul <sean@poorly.run>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, Sharat Masetty <smasetty@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-David Hildenbrand <david@redhat.com> writes:
-
-> On 15.08.24 09:24, Fuad Tabba wrote:
->> Hi David,
+On Thu, Aug 15, 2024 at 11:27=E2=80=AFAM Antonino Maniscalco
+<antomani103@gmail.com> wrote:
 >
-> Hi!
+> This series implements preemption for A7XX targets, which allows the GPU =
+to
+> switch to an higher priority ring when work is pushed to it, reducing lat=
+ency
+> for high priority submissions.
 >
->> 
->> On Tue, 6 Aug 2024 at 14:51, David Hildenbrand <david@redhat.com> wrote:
->>>
->>>>
->>>> -     if (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP) {
->>>> +     if (!ops->accessible && (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP)) {
->>>>                r = guest_memfd_folio_private(folio);
->>>>                if (r)
->>>>                        goto out_err;
->>>> @@ -107,6 +109,82 @@ struct folio *guest_memfd_grab_folio(struct file *file, pgoff_t index, u32 flags
->>>>    }
->>>>    EXPORT_SYMBOL_GPL(guest_memfd_grab_folio);
->>>>
->>>> +int guest_memfd_make_inaccessible(struct file *file, struct folio *folio)
->>>> +{
->>>> +     unsigned long gmem_flags = (unsigned long)file->private_data;
->>>> +     unsigned long i;
->>>> +     int r;
->>>> +
->>>> +     unmap_mapping_folio(folio);
->>>> +
->>>> +     /**
->>>> +      * We can't use the refcount. It might be elevated due to
->>>> +      * guest/vcpu trying to access same folio as another vcpu
->>>> +      * or because userspace is trying to access folio for same reason
->>>
->>> As discussed, that's insufficient. We really have to drive the refcount
->>> to 1 -- the single reference we expect.
->>>
->>> What is the exact problem you are running into here? Who can just grab a
->>> reference and maybe do nasty things with it?
->> 
->> I was wondering, why do we need to check the refcount? Isn't it enough
->> to check for page_mapped() || page_maybe_dma_pinned(), while holding
->> the folio lock?
-
-Thank you Fuad for asking!
-
+> This series enables L1 preemption with skip_save_restore which requires
+> the following userspace patches to function:
 >
-> (folio_mapped() + folio_maybe_dma_pinned())
+> https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/30544
 >
-> Not everything goes trough FOLL_PIN. vmsplice() is an example, or just 
-> some very simple read/write through /proc/pid/mem. Further, some 
-> O_DIRECT implementations still don't use FOLL_PIN.
+> A flag is added to `msm_gem_submit` to only allow submissions from compat=
+ible
+> userspace to be preempted, therefore maintaining compatibility.
+
+I guess this last para is from an earlier iteration of this series?
+Looks like instead you are making this a submitqueue flag (which is an
+approach that I prefer)
+
+BR,
+-R
+
+> Some commits from this series are based on a previous series to enable
+> preemption on A6XX targets:
 >
-> So if you see an additional folio reference, as soon as you mapped that 
-> thing to user space, you have to assume that it could be someone 
-> reading/writing that memory in possibly sane context. (vmsplice() should 
-> be using FOLL_PIN|FOLL_LONGTERM, but that's a longer discussion)
+> https://lkml.kernel.org/1520489185-21828-1-git-send-email-smasetty@codeau=
+rora.org
 >
-
-Thanks David for the clarification, this example is very helpful!
-
-IIUC folio_lock() isn't a prerequisite for taking a refcount on the
-folio.
-
-Even if we are able to figure out a "safe" refcount, and check that the
-current refcount == "safe" refcount before removing from direct map,
-what's stopping some other part of the kernel from taking a refcount
-just after the check happens and causing trouble with the folio's
-removal from direct map?
-
-> (noting that also folio_maybe_dma_pinned() can have false positives in 
-> some cases due to speculative references or *many* references).
-
-Are false positives (speculative references) okay since it's better to
-be safe than remove from direct map prematurely?
-
+> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
+> ---
+> Antonino Maniscalco (7):
+>       drm/msm: Fix bv_fence being used as bv_rptr
+>       drm/msm: Add submitqueue setup and close
+>       drm/msm: Add a `preempt_record_size` field
+>       drm/msm/A6xx: Implement preemption for A7XX targets
+>       drm/msm/A6xx: Add traces for preemption
+>       drm/msm/A6XX: Add a flag to allow preemption to submitqueue_create
+>       drm/msm/A6xx: Enable preemption for A7xx targets
 >
-> -- 
-> Cheers,
+>  drivers/gpu/drm/msm/Makefile              |   1 +
+>  drivers/gpu/drm/msm/adreno/a6xx_catalog.c |   3 +
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 339 ++++++++++++++++++++++-
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h     | 168 ++++++++++++
+>  drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 441 ++++++++++++++++++++++++=
+++++++
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h   |   1 +
+>  drivers/gpu/drm/msm/msm_gpu.h             |   7 +
+>  drivers/gpu/drm/msm/msm_gpu_trace.h       |  28 ++
+>  drivers/gpu/drm/msm/msm_ringbuffer.h      |   8 +
+>  drivers/gpu/drm/msm/msm_submitqueue.c     |  10 +
+>  include/uapi/drm/msm_drm.h                |   5 +-
+>  11 files changed, 995 insertions(+), 16 deletions(-)
+> ---
+> base-commit: 7c626ce4bae1ac14f60076d00eafe71af30450ba
+> change-id: 20240815-preemption-a750-t-fcee9a844b39
 >
-> David / dhildenb
+> Best regards,
+> --
+> Antonino Maniscalco <antomani103@gmail.com>
+>
 
