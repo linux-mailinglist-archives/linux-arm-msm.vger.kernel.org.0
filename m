@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28755-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 796B9954294
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 09:20:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C75969542A0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 09:21:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 05DD328F54A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 07:19:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6EAFA1F237C0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 07:21:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4239683CA3;
-	Fri, 16 Aug 2024 07:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39C5586AE3;
+	Fri, 16 Aug 2024 07:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EpRkOqhi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OwMsmJKv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143CE6BB4B;
-	Fri, 16 Aug 2024 07:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7BD20E3;
+	Fri, 16 Aug 2024 07:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723792795; cv=none; b=ThR0S/FAGd9n1SdC8MxaRYEvDZsGnUExWHD3x/k+mmdKr+j6jL9J1WL9eoAf/xpxfU4tg//DM3vu4hbLrUK367euihXEKMzOPMFcSAMU+0w12Ph/Zghp9/D3+ud5XX1032ITUOTIbGEonsmnl1ylFlzHehblcP+qsXnshLY4vMw=
+	t=1723792871; cv=none; b=nMSbbDTHXzhkzX5H7lIdgZ3OEAVg/PWiSwsf14/0uZh1DJ+2he9qd8hTokl7zlXRUhI5ASDchwNncMjNJPAjemciJ/zGX2QU9G6TKUFOaTVwrJfo9RyPt4JNm1qD+b8yxU0CRXFbxFet6mbxXkMx9nYNbhDlbQwwY/ihtmpPK3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723792795; c=relaxed/simple;
-	bh=zgidBTve9KoJU0+q1W5qPUCW1LJqMTwASb4EhZ/yRgM=;
+	s=arc-20240116; t=1723792871; c=relaxed/simple;
+	bh=J310qZ2qpxZZq8Rr1H8C1GtLOu1i0+pf8yBnzK7S7/E=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ux3lKzF+J1IBBr8Gd1Q2GIg3qK6/t2PgSWk6+pSdTT7XXVeZjgI1MQBfAPic0V3Y1QPi4zIC/Bp3KNQTAv2bz08o/C4Yvn3NheVF563f2u3oqxs2NAI4wxFY0TDUA7ZWPMNmYDVHFCaRhMD8XTGcsM3FKZeVaBVor/Gfqv2Wj7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EpRkOqhi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667F0C32782;
-	Fri, 16 Aug 2024 07:19:50 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=GtrTbqxsm9+t0lSHExo6i5OeVqvpTx7T9k3n6J/yBw+bVQQlc1kfD4MR+44i0bVEexB21M1s+Nu2BKEASaZYdWrcNBr4lnucJSVKazHRKT5zjTbFEwvtOqKiAY8+J4R9QeSwKz77yAD3tSG+OJo7PmFHUdgk9Yu1uNRwW22gWCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OwMsmJKv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F74C4AF0B;
+	Fri, 16 Aug 2024 07:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723792794;
-	bh=zgidBTve9KoJU0+q1W5qPUCW1LJqMTwASb4EhZ/yRgM=;
+	s=k20201202; t=1723792870;
+	bh=J310qZ2qpxZZq8Rr1H8C1GtLOu1i0+pf8yBnzK7S7/E=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=EpRkOqhinUEZhD722B6UJyvhZJq/09VZVRFDboawCfsZAGtnwfyURo0U+aaQU6ygZ
-	 3y6vW1AeaL8TAjmAxiGXEV/9jZ0J7mBi6ehg0leaZ6dLvNvRAcvl0yu6bdvqUhyz72
-	 bPaF1URFwnMJgWGJxxPXZnX7BKypdrI6YPQh5CRVDc3QqCaeAPtwqD2ovSs6GjzuUo
-	 mNYk/sjaxNrUUYQU9X5JbV16pyV+hNzwiL6u6zQOde7jXFNq6mIZ5lF0kGSmn7aWfR
-	 0x6cPvvNZOBLWupfd0lQRMPHMQ4WIx6l2sYi4mwqYXCf6f1VquU49rwbfzoEFDFypF
-	 OxSQN0Hss+LnA==
-Message-ID: <1c39c220-1cc6-4909-bcb0-8b643a7c9c92@kernel.org>
-Date: Fri, 16 Aug 2024 09:19:47 +0200
+	b=OwMsmJKv0wYSwJoZsCpawaT0zLh3r4UOrIMhsVrLdCxS4p2lt2zjeTiO7NPeUT2nz
+	 mP3fKCmlAd1FGAh+A/RIUkCCZOIHTa3n5s/FTIVhU7dOHqzQ79prUenFgT1zjxDoDm
+	 vAbsNEQ6tVgobwK8wmQj96wymmf1RFfmLYyoKaFs19ombwCIaw/G52FTntuxLKp9TP
+	 TWu1OT/rZmI8WmEUzZf1yvIvrmoTq88eHr71yGCPwsHH/h0zle38gFatXuxaM/dYJA
+	 vLSZNlYdDQifErYZ1fja6VidX2YBrJUj8mH+wIYYxoDGsfwxYKZpznKoI6QTbpLZQV
+	 78w1voo5M6ORQ==
+Message-ID: <70214a1a-82b9-4839-b95b-b75abf467eca@kernel.org>
+Date: Fri, 16 Aug 2024 09:21:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/6] arm64: dts: qcom: Add Samsung Galaxy Book4 Edge
- DTS
+Subject: Re: [PATCH v3 4/6] arm64: dts: qcom: Add UFS node
 To: Marcus Glocker <marcus@nazgul.ch>, Bjorn Andersson
  <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
@@ -60,7 +59,7 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
  Johan Hovold <johan@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
 References: <v2iah5yrne4u6uzrnzg36tvtxzqrpiez6io2gyyfrht2x42umw@5ribqndiavxv>
- <ndshdkgfwsjfxtxulefaavksechrzr4kxnjjjskcjnfmea4qhj@od2nffuwhxgj>
+ <ejeph4wspggkmvhl7qmpvw5jlojyvma7epqd67i6vk5p6fncrk@de56nvgi6vzi>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,25 +105,34 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <ndshdkgfwsjfxtxulefaavksechrzr4kxnjjjskcjnfmea4qhj@od2nffuwhxgj>
+In-Reply-To: <ejeph4wspggkmvhl7qmpvw5jlojyvma7epqd67i6vk5p6fncrk@de56nvgi6vzi>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/08/2024 12:45, Marcus Glocker wrote:
-> Add the initial DTS file for the Samsung Galaxy Book4 Edge laptop.
-> This was a copy of the arch/arm64/boot/dts/qcom/x1e80100-crd.dts file and
-> adapted to our needs.
+On 15/08/2024 12:42, Marcus Glocker wrote:
+> Add the UFS Host Controller node.  This was basically copied from the
+> arch/arm64/boot/dts/qcom/sc7180.dtsi file.
 > 
 > Signed-off-by: Marcus Glocker <marcus@nazgul.ch>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../x1e80100-samsung-galaxy-book4-edge.dts    | 959 ++++++++++++++++++
->  2 files changed, 960 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-samsung-galaxy-book4-edge.dts
-> 
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> +
+> +		ufs_mem_phy: phy@1d87000 {
+> +			compatible = "qcom,x1e80100-qmp-ufs-phy";
+> +			reg = <0 0x01d87000 0 0x1000>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
+> +			clock-names = "ref",
+> +				      "ref_aux",
+> +				      "qref";
+
+One does not match the other.
+
+It does not look like you tested the DTS against bindings. Please run
+`make dtbs_check W=1` (see
+Documentation/devicetree/bindings/writing-schema.rst or
+https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+for instructions).
 
 Best regards,
 Krzysztof
