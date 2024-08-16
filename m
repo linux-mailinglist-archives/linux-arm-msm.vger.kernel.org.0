@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BD989542A4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 09:22:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C08FD9542B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 09:24:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 65EDAB215CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 07:21:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE93A1C22A25
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 07:24:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E075984A27;
-	Fri, 16 Aug 2024 07:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A910512C465;
+	Fri, 16 Aug 2024 07:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZagQOzTF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QdMr69Hk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33B6F9DF;
-	Fri, 16 Aug 2024 07:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7966E13A256;
+	Fri, 16 Aug 2024 07:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723792916; cv=none; b=foIrGLQNJdY0ee8Z9mrcaW57gDMu4Fl3Mj8kYbhZKnrHewahzP25+xJlF3ARgPa5PmP/OLw3itvDHeEgjj8JaqG5Tp74ozNcNpmTLRsgEDgkTFz/Tff2bonwhL0vEJE2EuvVjKvn97TFSv22e4Pa/gq4mIiytP0u3xpWJJdMlMs=
+	t=1723793043; cv=none; b=GqzCyrHSpUw5B3GpMbEV5q/W10jZncodB6R6ire4Cjb/d1mpNgrC2uVYBGvKruGPVJDKusP82A8HpCXhR610SPXGarP659TsD+rvWWBaKfrveaQAmNalE4b8F49IwXb/UzmSesGN6vVWyQLCUgk3o51arRgA4Kmgg5ZCGPdxIfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723792916; c=relaxed/simple;
-	bh=lu9tF1g5DlBBrMWiW108JICw+kGga608qwFQk1uz094=;
+	s=arc-20240116; t=1723793043; c=relaxed/simple;
+	bh=JqtSMRSsdYme+dtzMkAIDZdEVbaaiUpD9pO5ki0H7Fs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RXb8nk1LcBRhfdM6Wwsb0Fo4ODpTzzI2Lk37lftdcm++E18h3aCgJxh4rNlvntEo2BJW7JuMx5nCXaBGVJYPbS1/I4s2MbX845SsFGu5Pc2FtV7TwuY2KOGeuJzNvOukmFbcruLvg9JYycd5n76IMhJ6kmOfMYjz7+1HMEoKbZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZagQOzTF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718AEC32782;
-	Fri, 16 Aug 2024 07:21:52 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=GJx3L4haQiG/j6EoXSKaebkKaA3ZXxGWFkRHx2p+tx5vdMtEBg9ti72smS76n7HBWYC3OL4E1SoecaTAunIeseiHuaElEPwMmtdtJg6Qy7TdfCkXjOBxWK62ZkV3B+O8CB6PeCn5b1335/+nwFne0KKDIg0FxFBR8F460rQPI0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QdMr69Hk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36EFDC4AF09;
+	Fri, 16 Aug 2024 07:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723792916;
-	bh=lu9tF1g5DlBBrMWiW108JICw+kGga608qwFQk1uz094=;
+	s=k20201202; t=1723793043;
+	bh=JqtSMRSsdYme+dtzMkAIDZdEVbaaiUpD9pO5ki0H7Fs=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ZagQOzTF+c588xF2FOQHLg3JYvdxSf662trs9hglVbu0ulqYU00GR7TASs88ynk4s
-	 81HdqAI6j7VvfonMmQAbOzNViScRCOf3cM36nRtmbWvReHtw75BOrrKVOEXO8ne0jy
-	 BLNgFB5u5nnocMuredqV1NogzI2JjffqcboeB21fPRxShwc5B1ExvJK33qUm3NMjyS
-	 61gLYOqB80M2v7VF7YDmJii48fCjEm33W1GYusBDcyeh+mmuKtTDRkTlIKjWkjAwjO
-	 jFiwPJyHXAmN2G5qW0j4SD18gu7wgnmGxorMiZNBIJlc9k7ET/lgYVU3ObDXkx5ofj
-	 Pzb+PN+3VN4TA==
-Message-ID: <078da022-c1af-4194-8bda-b88649d9b87f@kernel.org>
-Date: Fri, 16 Aug 2024 09:21:49 +0200
+	b=QdMr69Hk7hYwDETmvj1TISvnTrE44wram3fQ/DzCTSZ5YMxPOujjGj1zxd+uXmEUr
+	 KuRVyOyAxD88tuqk+n9n5lnPE4B0RyyhBJS9RZN9guKg/9kBkBl2zrSQzEeFQv9Kgy
+	 qra0kMkFKixfHt4644em/RCepINPh1Tx5JngtGuY67Q1Uvrsb+hWuqBrlqsBsvbkPv
+	 9i1vbKtMzP48jW25jOynTNDzzYETyncYJKGjT4bV36q5c3XeeToMFC1jgdFSvWgah8
+	 Ps/qnk5raKtJdlouhX3GBgs01TlHSt4RpiG9QnRN4EdPSpIF4wITmdD8rMFe+dkvly
+	 4GEDAoiUNxnJA==
+Message-ID: <27487f8c-2cd4-414d-b9f9-e538fb6ef227@kernel.org>
+Date: Fri, 16 Aug 2024 09:23:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/6] arm64: dts: qcom: Add Samsung Galaxy Book4 Edge
- DTS
-To: Marcus Glocker <marcus@nazgul.ch>, Bjorn Andersson
- <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
- Johan Hovold <johan@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-References: <v2iah5yrne4u6uzrnzg36tvtxzqrpiez6io2gyyfrht2x42umw@5ribqndiavxv>
- <ndshdkgfwsjfxtxulefaavksechrzr4kxnjjjskcjnfmea4qhj@od2nffuwhxgj>
+Subject: Re: [PATCH] ASoC: dt-bindings: qcom,lpass-wsa-macro: correct clocks
+ on SM8250
+To: srinivas.kandagatla@linaro.org, broonie@kernel.org
+Cc: perex@perex.cz, tiwai@suse.com, alsa-devel@alsa-project.org,
+ linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+ linux-kernel@vger.kernel.org, amit.pundir@linaro.org,
+ dmitry.baryshkov@linaro.org, devicetree@vger.kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org
+References: <20240815165320.18836-1-srinivas.kandagatla@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,43 +104,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <ndshdkgfwsjfxtxulefaavksechrzr4kxnjjjskcjnfmea4qhj@od2nffuwhxgj>
+In-Reply-To: <20240815165320.18836-1-srinivas.kandagatla@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/08/2024 12:45, Marcus Glocker wrote:
-> Add the initial DTS file for the Samsung Galaxy Book4 Edge laptop.
-> This was a copy of the arch/arm64/boot/dts/qcom/x1e80100-crd.dts file and
-> adapted to our needs.
+On 15/08/2024 18:53, srinivas.kandagatla@linaro.org wrote:
+> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > 
-> Signed-off-by: Marcus Glocker <marcus@nazgul.ch>
+> we seems to have ended up with duplicate clocks for frame-sync on sm8250,
+> it has both va and fsgen which are exactly same things. Remove the redundant
+> va clock and make it align with other SoCs.
+> 
+> Codec driver does not even handle va clock, so remove this from the
+> bindings and examples to avoid any confusion.
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-...
 
-> +&ufs_mem_hc {
-> +	status = "okay";
-> +
-> +	vcc-supply = <&vreg_l9b_2p9>;
-> +	vcc-max-microamp = <600000>;
-> +	vccq2-supply = <&vreg_l4b_1p8>;
-> +	vccq2-max-microamp = <600000>;
-> +};
-> +
-> +&ufs_mem_phy {
-> +	status = "okay";
-> +
-> +	vdda-phy-supply = <&vreg_l2c_0p8>;
-> +	vdda-phy-max-microamp = <62900>;
-
-Drop
-
-> +	vdda-pll-supply = <&vreg_l12b_1p2>;
-> +	vdda-pll-max-microamp = <18300>;
-
-Drop
-
-Tests would tell you these are not valid/accepted.
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
