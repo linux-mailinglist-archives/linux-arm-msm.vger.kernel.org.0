@@ -1,266 +1,274 @@
-Return-Path: <linux-arm-msm+bounces-28832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 394B3955086
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 20:08:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A958B9550CB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 20:26:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5C7FE1C232AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 18:08:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B1951F239D8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 18:26:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF6331C379F;
-	Fri, 16 Aug 2024 18:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F16E51C37B3;
+	Fri, 16 Aug 2024 18:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="V0sj8M1d"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JbYLMWcJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191DC1482F4
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 18:08:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3901C3796;
+	Fri, 16 Aug 2024 18:26:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723831726; cv=none; b=Y1bn6gxQpiHrgSx5nTrIcIHZ0OHDh00xkO9y+a7lTl10hXEMLz2sdDwSsw+Ey7lwxP6fSKDM8snAYTbiyORDlDexZSQXKxUG25nCh4ovYXmUSaDxuKetw5zq+LBVCu62zajmMXdLWtKYPESC/3PWH9SsQRZbXEgStKBfBhqIDSw=
+	t=1723832787; cv=none; b=YLf3RdTPWQDLz/vmevD1wS4OXFBkDifEUSTA8i1taNDqHO7RxTzKwQRR2z6SKbGMiQ2TCjgaYZc1IlzOVTi4lWDZOj1EFKt9A30z25vZwV1mIx6+2XiFEGt1U5Ow/ErqLco5u8soU689L9hHvR8Se8I6Y30pYnhgEDt7tagQp1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723831726; c=relaxed/simple;
-	bh=pAGWq6N60Tml4Ne9hgnN3aaua/i7PK/bq3RmX5CZ7O0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VBnFKWvKKOYwuiO6MuW0oeg4QAUlVWmXoBNG2FfMunDGPDx51++BrZHrWYkxbf9REvtNDCKqPOJ882pcrSmxzensdDum9H6jF5YhPqBN22Qb/hsGP2YpsMMrq1ntxCKzdrYpKzuKddBsC77ZasAQP/P70tEU2nwGkbOJibsCkKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=V0sj8M1d; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1723831724;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=7LvZHajAoereLQ/n3rjWTKD/n9Ae1jh7vyVQTrCVhi0=;
-	b=V0sj8M1dUmwaF5O9BvDKHg9Boao8FtNlZZFWyPRdaITlv7gGqtpNF7RR5fz0KZ89dbP+eb
-	0EHijDeGSphop924OAJBapyWfcV7bu+NG+A0ZTtgTInraPNoAfLkOKW4krkX+17mMuMOkz
-	uFskvVmFN6jXmwH+ah13zoGOYBgx9Kw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-416-XLMYf0htOLGZUrrtWd6kog-1; Fri, 16 Aug 2024 14:08:42 -0400
-X-MC-Unique: XLMYf0htOLGZUrrtWd6kog-1
-Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-4281d0d1c57so16938865e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 11:08:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723831721; x=1724436521;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=7LvZHajAoereLQ/n3rjWTKD/n9Ae1jh7vyVQTrCVhi0=;
-        b=susxrKT+lYAVCUAIYLoMyG2I6yb51zHTZLlZ8vccPwF5mjSjf8/QQgHaZvuBMFCFob
-         S5zvUVBWpX31Soyol3BR5aJQhyUQqoUpWoHx3duTKZLA6jwYvrscLUTgVZ3sDRdJPk5f
-         bKSI/uRQ5aNwn/5sKQHPiJJ90/bw6pE61lhlP/Rk1VvoU1unYE+QZB8sVRiEeAYVMdR5
-         UyZWORarPU19i82UtpJxH76bhzMCIKl8g/y+tiPwJd7H+JZ1fKimbnbATx5D4aE35u93
-         p6ltDz1h4FlGqh5Hv/dEp/9CNzrKefyYc3bf+fvYZ/SpSxb+ouiSeulNxuXPHtcl+t1K
-         fCVw==
-X-Forwarded-Encrypted: i=1; AJvYcCUVBOeK5y45tF29q1fZn9sSYvx+s8cjZ7cDrvZ4aJj83OWbP+fV98PQbhTH3f+o6krKGTTLRTzi9jmEw5JK0GT4IqPz9vUUu6d0AzcKtA==
-X-Gm-Message-State: AOJu0YyTZb9Wuv5Ehm1uWkhOUd59UZBXur5MxXUyA+hN9H0qd9nEZzx5
-	JMMO2309BGlekiXmvnShKH3pLQ5xAG+s1UOgZLx0M6drPWraSsvS7GUtjaaaMRPdtBhnJ7zp9BW
-	j3VvB9dZsJ0ZRFF6Z/42DmFaNag4ifEsJ+p7i3OyjDX6U9KuhS/XbvaSmeA/Y34w=
-X-Received: by 2002:a05:600c:45c3:b0:426:6eb6:1374 with SMTP id 5b1f17b1804b1-429e223b9d3mr60729925e9.0.1723831721046;
-        Fri, 16 Aug 2024 11:08:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGaR7laP3i8PcoK1VQRgylTTtn4SNtF7osOBDTb0u6r4W+A4x3wD2fW6732plT6G8pqs5qaHA==
-X-Received: by 2002:a05:600c:45c3:b0:426:6eb6:1374 with SMTP id 5b1f17b1804b1-429e223b9d3mr60729615e9.0.1723831720535;
-        Fri, 16 Aug 2024 11:08:40 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c721:b900:4f34:b2b7:739d:a650? (p200300cbc721b9004f34b2b7739da650.dip0.t-ipconnect.de. [2003:cb:c721:b900:4f34:b2b7:739d:a650])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ded299a9sm81171405e9.18.2024.08.16.11.08.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Aug 2024 11:08:40 -0700 (PDT)
-Message-ID: <94c5d735-821c-40ba-ae85-1881c6f4445d@redhat.com>
-Date: Fri, 16 Aug 2024 20:08:38 +0200
+	s=arc-20240116; t=1723832787; c=relaxed/simple;
+	bh=DPeLOYOagAKnh5ZukpveM96prGndAPIjdk5ydkkOY0o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=iOebxSnHh+n6J0O55yokWg/BnvRO58MB5qej+bSiHEcEjALAHPqTHbO0qgn588AZ+0vujZbTwrfPZjSAoJfvPj6Bj6o4NZSNngEPO8lltPosyqd0/ocTQzy13Ys09UOwX+uwvhf+2bC3qW49tHoCFzme1Fg2rSbcLKK/Xc4Be8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JbYLMWcJ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47GA5lxd028282;
+	Fri, 16 Aug 2024 18:22:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	AAO4g3kLHhH442QaXQyYQqWtZBVUSZQd+XlfgrdodQw=; b=JbYLMWcJ/lblCd5v
+	yHxezmaqrpWdHKsGAyLqJE0W4rUrTz6WvwrRvFVQXY7Jk89ddEjbzB0pe/qvBviF
+	i0Ku/Bh2FNocCRrRK28nshgO5uruSofzLvKJa6mk3AlOYIu/0qPobP0jtiLffn5F
+	Bd59t73QfGUMRb79mVxY3Hth4aMYejly5MJmAnYP04xkH5bY9JQz0CABTTm84ndg
+	5hOkAqB/c38+wkHT5GKcYCHrXU11pdom8b1LEFjvs0uvKPXP/r8D1Fx8YCqEJ0Zi
+	6UybW7knGzfsEntSbeY14JhaEtRWFS1ALO0G96+YBGJag6MO+64U5x1MXjH1Ggyw
+	tZ041Q==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 411s5pjnvu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Aug 2024 18:22:05 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47GIM4as022144
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Aug 2024 18:22:04 GMT
+Received: from [10.216.61.113] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 16 Aug
+ 2024 11:21:57 -0700
+Message-ID: <5bf5c208-f90c-19b1-7006-694d3cd2351a@quicinc.com>
+Date: Fri, 16 Aug 2024 23:51:53 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 4/4] mm: guest_memfd: Add ability for mmap'ing pages
-To: Ackerley Tng <ackerleytng@google.com>, Fuad Tabba <tabba@google.com>
-Cc: Elliot Berman <quic_eberman@quicinc.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Sean Christopherson
- <seanjc@google.com>, Patrick Roy <roypat@amazon.co.uk>, qperret@google.com,
- linux-coco@lists.linux.dev, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, kvm@vger.kernel.org
-References: <20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com>
- <20240805-guest-memfd-lib-v1-4-e5a29a4ff5d7@quicinc.com>
- <4cdd93ba-9019-4c12-a0e6-07b430980278@redhat.com>
- <CA+EHjTxNNinn7EzV_o1X1d0kwhEwrbj_O7H8WgDtEy2CwURZFQ@mail.gmail.com>
- <aa3b5be8-2c8a-4fe8-8676-a40a9886c715@redhat.com>
- <diqzjzggmkf7.fsf@ackerleytng-ctop.c.googlers.com>
-From: David Hildenbrand <david@redhat.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v5 3/4] firmware: psci: Read and use vendor reset types
 Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <diqzjzggmkf7.fsf@ackerleytng-ctop.c.googlers.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: Elliot Berman <quic_eberman@quicinc.com>,
+        Lorenzo Pieralisi
+	<lpieralisi@kernel.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Andy Yan
+	<andy.yan@rock-chips.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        "Bartosz
+ Golaszewski" <bartosz.golaszewski@linaro.org>,
+        Satya Durga Srinivasu Prabhala
+	<quic_satyap@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        Florian Fainelli
+	<florian.fainelli@broadcom.com>,
+        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_spratap@qucinc.com>
+References: <20240617-arm-psci-system_reset2-vendor-reboots-v5-0-086950f650c8@quicinc.com>
+ <20240617-arm-psci-system_reset2-vendor-reboots-v5-3-086950f650c8@quicinc.com>
+ <ZrOMjomTTWZ91Uzf@lpieralisi>
+ <20240807103245593-0700.eberman@hu-eberman-lv.qualcomm.com>
+ <ZrYZ/i1QFhfmv0zi@lpieralisi>
+ <20240809090339647-0700.eberman@hu-eberman-lv.qualcomm.com>
+ <28c8bc92-4a55-8a07-1ece-333316d78410@quicinc.com>
+ <Zr4Td7PiKhKl3Et3@lpieralisi>
+ <20240815100749641-0700.eberman@hu-eberman-lv.qualcomm.com>
+From: Shivendra Pratap <quic_spratap@quicinc.com>
+In-Reply-To: <20240815100749641-0700.eberman@hu-eberman-lv.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: k339WUc2558CtmYnKtpnI043KslKmbsq
+X-Proofpoint-ORIG-GUID: k339WUc2558CtmYnKtpnI043KslKmbsq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-16_13,2024-08-16_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
+ mlxlogscore=999 suspectscore=0 lowpriorityscore=0 clxscore=1015
+ bulkscore=0 phishscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408160129
 
-On 16.08.24 19:45, Ackerley Tng wrote:
-> 
-> David Hildenbrand <david@redhat.com> writes:
-> 
->> On 15.08.24 09:24, Fuad Tabba wrote:
->>> Hi David,
->>
->> Hi!
->>
+
+
+On 8/15/2024 11:35 PM, Elliot Berman wrote:
+> On Thu, Aug 15, 2024 at 04:40:55PM +0200, Lorenzo Pieralisi wrote:
+>> On Mon, Aug 12, 2024 at 11:46:08PM +0530, Shivendra Pratap wrote:
 >>>
->>> On Tue, 6 Aug 2024 at 14:51, David Hildenbrand <david@redhat.com> wrote:
->>>>
->>>>>
->>>>> -     if (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP) {
->>>>> +     if (!ops->accessible && (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP)) {
->>>>>                 r = guest_memfd_folio_private(folio);
->>>>>                 if (r)
->>>>>                         goto out_err;
->>>>> @@ -107,6 +109,82 @@ struct folio *guest_memfd_grab_folio(struct file *file, pgoff_t index, u32 flags
->>>>>     }
->>>>>     EXPORT_SYMBOL_GPL(guest_memfd_grab_folio);
->>>>>
->>>>> +int guest_memfd_make_inaccessible(struct file *file, struct folio *folio)
->>>>> +{
->>>>> +     unsigned long gmem_flags = (unsigned long)file->private_data;
->>>>> +     unsigned long i;
->>>>> +     int r;
->>>>> +
->>>>> +     unmap_mapping_folio(folio);
->>>>> +
->>>>> +     /**
->>>>> +      * We can't use the refcount. It might be elevated due to
->>>>> +      * guest/vcpu trying to access same folio as another vcpu
->>>>> +      * or because userspace is trying to access folio for same reason
->>>>
->>>> As discussed, that's insufficient. We really have to drive the refcount
->>>> to 1 -- the single reference we expect.
->>>>
->>>> What is the exact problem you are running into here? Who can just grab a
->>>> reference and maybe do nasty things with it?
 >>>
->>> I was wondering, why do we need to check the refcount? Isn't it enough
->>> to check for page_mapped() || page_maybe_dma_pinned(), while holding
->>> the folio lock?
-> 
-> Thank you Fuad for asking!
-> 
+>>> On 8/9/2024 10:28 PM, Elliot Berman wrote:
+>>>> On Fri, Aug 09, 2024 at 03:30:38PM +0200, Lorenzo Pieralisi wrote:
+>>>>> On Wed, Aug 07, 2024 at 11:10:50AM -0700, Elliot Berman wrote:
+>>>>>
+>>>>> [...]
+>>>>>
+>>>>>>>> +static void psci_vendor_sys_reset2(unsigned long action, void *data)
+>>>>>>>
+>>>>>>> 'action' is unused and therefore it is not really needed.
+>>>>>>>
+>>>>>>>> +{
+>>>>>>>> +	const char *cmd = data;
+>>>>>>>> +	unsigned long ret;
+>>>>>>>> +	size_t i;
+>>>>>>>> +
+>>>>>>>> +	for (i = 0; i < num_psci_reset_params; i++) {
+>>>>>>>> +		if (!strcmp(psci_reset_params[i].mode, cmd)) {
+>>>>>>>> +			ret = invoke_psci_fn(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2),
+>>>>>>>> +					     psci_reset_params[i].reset_type,
+>>>>>>>> +					     psci_reset_params[i].cookie, 0);
+>>>>>>>> +			pr_err("failed to perform reset \"%s\": %ld\n",
+>>>>>>>> +				cmd, (long)ret);
+>>>>>>>> +		}
+>>>>>>>> +	}
+>>>>>>>> +}
+>>>>>>>> +
+>>>>>>>>  static int psci_sys_reset(struct notifier_block *nb, unsigned long action,
+>>>>>>>>  			  void *data)
+>>>>>>>>  {
+>>>>>>>> +	if (data && num_psci_reset_params)
+>>>>>>>
+>>>>>>> So, reboot_mode here is basically ignored; if there is a vendor defined
+>>>>>>> reset, we fire it off.
+>>>>>>>
+>>>>>>> I think Mark mentioned his concerns earlier related to REBOOT_* mode and
+>>>>>>> reset type (granted, the context was different):
+>>>>>>>
+>>>>>>> https://lore.kernel.org/all/20200320120105.GA36658@C02TD0UTHF1T.local/
+>>>>>>>
+>>>>>>> I would like to understand if this is the right thing to do before
+>>>>>>> accepting this patchset.
+>>>>>>>
+>>>>>>
+>>>>>> I don't have any concerns to move this part below checking reboot_mode.
+>>>>>> Or, I could add reboot_mode == REBOOT_COLD check.
+>>>>>
+>>>>> The question is how can we map vendor specific reboot magic to Linux
+>>>>> reboot modes sensibly in generic PSCI code - that's by definition
+>>>>> vendor specific.
+>>>>>
+>>>>
+>>>> I don't think it's a reasonable thing to do. "reboot bootloader" or
+>>>> "reboot edl" don't make sense to the Linux reboot modes.
+>>>>
+>>>> I believe the Linux reboot modes enum is oriented to perspective of
+>>>> Linux itself and the vendor resets are oriented towards behavior of the
+>>>> SoC.
+>>>>
+>>>> Thanks,
+>>>> Elliot
+>>>>
+>>>
+>>> Agree.
+>>>
+>>> from perspective of linux reboot modes, kernel's current
+>>> implementation in reset path is like:
+>>>
+>>> __
+>>> #1 If reboot_mode is WARM/SOFT and PSCI_SYSRESET2 is supported 
+>>>     Call PSCI - SYSTEM_RESET2 - ARCH RESET
+>>> #2 ELSE
+>>>     Call PSCI - SYSTEM_RESET COLD RESET
+>>> ___
+>>>
+>>> ARM SPECS for PSCI SYSTEM_RESET2
+>>> This function extends SYSTEM_RESET. It provides:
+>>> • ARCH RESET: set Bit[31] to 0               = > This is already in place in condition #1.
+>>> • vendor-specific resets: set Bit[31] to 1.  = > current patchset adds this part before kernel's reboot_mode reset at #0.
+>>>
+>>>
+>>> In current patchset, we see a condition added at
+>>> #0-psci_vendor_reset2 being called before kernel’s current
+>>> reboot_mode condition and it can take any action only if all below
+>>> conditions are satisfied.
+>>> - PSCI SYSTEM_RESET2 is supported.
+>>> - psci dt node defines an entry "bootloader" as a reboot-modes.
+>>> - User issues reboot with a command say - (reboot bootloader).
+>>> - If vendor reset fails, default reboot mode will execute as is.
+>>>
+>>> Don't see if we will skip or break the kernel reboot_mode flow with
+>>> this patch.  Also if user issues reboot <cmd> and <cmd> is supported
+>>> on SOC vendor reset psci node, should cmd take precedence over
+>>> kernel reboot mode enum? may be yes? 
+>>>
 >>
->> (folio_mapped() + folio_maybe_dma_pinned())
+>> Please wrap lines when replying.
+sure. will try to take care.
 >>
->> Not everything goes trough FOLL_PIN. vmsplice() is an example, or just
->> some very simple read/write through /proc/pid/mem. Further, some
->> O_DIRECT implementations still don't use FOLL_PIN.
+>> I don't think it is a matter of precedence. reboot_mode and the reboot
+>> command passed to the reboot() syscall are there for different (?)
+>> reasons.
 >>
->> So if you see an additional folio reference, as soon as you mapped that
->> thing to user space, you have to assume that it could be someone
->> reading/writing that memory in possibly sane context. (vmsplice() should
->> be using FOLL_PIN|FOLL_LONGTERM, but that's a longer discussion)
->>
-> 
-> Thanks David for the clarification, this example is very helpful!
-> 
-> IIUC folio_lock() isn't a prerequisite for taking a refcount on the
-> folio.
+>> What I am asking is whether it is always safe to execute a PSCI vendor
+>> reset irrispective of the reboot_mode value.
+Valid point, but it depends on how we configure reboot mode and vendor reset.
+If the configuration is conflicting in DT, then reboot_mode and vendor reset
+may conflict and show non-predictable results.
+For instance, on qcs6490, we have have nvmem-reboot-mode driver
+which supports "reboot mode bootloader" function via its current DT as the PMIC
+registers are accessible for write on this soc. If we enable nvmem-reboot-mode
+and then configure vendor_reset2(mode-bootloader) to perform a different
+function on reboot, they will conflict and may result in a non-predictable
+behavior. The developer or soc vendor has to take care of this in any
+case so this may be a invalid scenario?
 
-Right, to do folio_lock() you only have to guarantee that the folio 
-cannot get freed concurrently. So you piggyback on another reference 
-(you hold indirectly).
+May be vendor_reset2 gives more flexibility here on how a soc vendor may 
+implement reboot modes and other vendor reset types. In case soc vendor
+wants to keep some reboot mode register as open access, they can still
+use reboot_mode driver and then others reboot/reset modes can be configured
+via vendor_reset2.
 
-> 
-> Even if we are able to figure out a "safe" refcount, and check that the
-> current refcount == "safe" refcount before removing from direct map,
-> what's stopping some other part of the kernel from taking a refcount
-> just after the check happens and causing trouble with the folio's
-> removal from direct map?
-
-Once the page was unmapped from user space, and there were no additional 
-references (e.g., GUP, whatever), any new references can only be 
-(should, unless BUG :) ) temporary speculative references that should 
-not try accessing page content, and that should back off if the folio is 
-not deemed interesting or cannot be locked. (e.g., page 
-migration/compaction/offlining).
-
-Of course, there are some corner cases (kgdb, hibernation, /proc/kcore), 
-but most of these can be dealt with in one way or the other (make these 
-back off and not read/write page content, similar to how we handled it 
-for secretmem).
-
-These (kgdb, /proc/kcore) might not even take a folio reference, they 
-just "access stuff" and we only have to teach them to "not access that".
+For instance, on qcs6490, we can use nvmem-reboot-mode driver for 
+"reboot mode bootloader" and use the current patch-vendor_reset2 for
+"reboot mode edl". This can be configured via DT. Now even if we
+enable both current-patch-vendor_reset2(reboot mode bootloader) 
+and nvmem-reboot-mode (mode-bootloader) at same time on this soc,
+they are harmless to each other and work as desired as both(DT entries)
+align with each other and the PMIC registers are accessible to kernel. The
+same thing can conflict, if we enable both drivers at same time and configure
+them with conflicting parameters in DT for (reboot mode bootloader).
 
 > 
->> (noting that also folio_maybe_dma_pinned() can have false positives in
->> some cases due to speculative references or *many* references).
+> The only way I see it to be unsafe is we need some other driver using
+> the reboot_mode to configure something and then the PSCI vendor reset
+> being incompatible with whatever that other driver did. I don't see that
+> happens today, so it is up to us to decide what the policy ought to be.
+> The PSCI spec doesn't help us here because the reboot_mode enum is
+> totally a Linux construct. In my opinion, firmware should be able to
+> deal with whatever the driver did or (less ideal) the driver need to be
+> aware of the PSCI vendor resets. Thus, it would be always safe to
+> execute a PSCI vendor reset regardless of the reboot_mode value.
 > 
-> Are false positives (speculative references) okay since it's better to
-> be safe than remove from direct map prematurely?
-
-folio_maybe_dma_pinned() is primarily used in fork context. Copying more 
-(if the folio maybe pinned and, therefore, must not get COW-shared with 
-other processes and must instead create a private page copy) is the 
-"better safe than sorry". So false positives (that happen rarely) are 
-tolerable.
-
-Regading the directmap, it would -- just like with additional references 
--- detect that the page cannot currently be removed from the direct map. 
-It's similarly "better safe than sorry", but here means that we likely 
-must retry if we cannot easily fallback to something else like for the 
-fork+COW case.
-
--- 
-Cheers,
-
-David / dhildenb
-
+> Thanks,
+> Elliot
+> 
 
