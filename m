@@ -1,188 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-28834-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 295BD955141
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 21:12:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A70E955183
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 21:32:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7C4FFB22A69
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 19:12:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C4AC61F22B13
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 19:32:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 099221C460B;
-	Fri, 16 Aug 2024 19:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 597DA1C3F3B;
+	Fri, 16 Aug 2024 19:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SdWcYZJZ"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="e7Zht0cG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFFE1C3F25;
-	Fri, 16 Aug 2024 19:12:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62FE80045
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 19:32:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723835544; cv=none; b=tu1LN6grxpGYuJ+TQQ7ApbAZsuSlumCvAscTM6/Q5nPoYb6yu3Z0H/6g2uguV9yjrIuLNcpuZSvayKIh3wpoFfdiFe0P1XESvM5C51rT1NGM9iZZ2JofsseUzYGX9BcsBdZWWq+F/UObhOfgJ3KUY+g0LQCqnsRxKiGUIv9pDvE=
+	t=1723836745; cv=none; b=Q4uKCL2pkJbM8C0u0ON9LKY55m8TXGlvJY0Vr+fPniV8RhFbJsq3BOkYuWwPz3yr2vuF19wZjMt+brucl957u3/SQHoZdiACySwQoXvZNkLawRqs8gmGkCyyuhcpJ9dgQrziFAQuKa+5lE1ctOnK0E250kGi05X4ZAR6L3cYmhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723835544; c=relaxed/simple;
-	bh=yHqCmAUyZzww13O+Qa0EgW2aJCxMZVqksQq6+a9X2cA=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=KmFgOGj6cSoGPlRbiRwjiA+PYKCI4ms0F0D1lmqoha5OBEh0KefULyG2RDiPxgr8cveTfgPwLQsFQPEasxMc3GotsTCDVYfkltiJjV/LubtKvZx+T6vmF2aMDmdK/h0iEpi5iVl1Bq2Kg+7y7MTDAuejhBVZuL+pzw2vKGeCcJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SdWcYZJZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB2DC4AF12;
-	Fri, 16 Aug 2024 19:12:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723835544;
-	bh=yHqCmAUyZzww13O+Qa0EgW2aJCxMZVqksQq6+a9X2cA=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=SdWcYZJZ0ntMgbvL5K08ActS1yPWgsp6AOKJY5Ve+ka4icuPJRUWRLUDCOPwHKx3U
-	 wXNBCiK7n1EFFrEDF5K+AtLM5e4yjT155wLSHoOi/D3L8izNPARmHFZIQ7vZ0ts+8/
-	 x8OT/Ww8HM2SCGxHwMmyJnMqFf7nFqpM2bTgcZYdMBnXNQAwecLlIIUvDHDHYFy7Ti
-	 Hf6OUACcrkGXu8t8bcFcYY699LU4vhDX+BWPlsZlZo3hpNKi3gN/VKeWlO1RRb1Z95
-	 KckwHpLdisrCxfUXUsQR9Gi25hLRHJd30nwjLfdRHEmHV/V6Dwlwd8LNmyty+X2vaS
-	 YCOFEAg8IQrUg==
-Date: Fri, 16 Aug 2024 14:12:22 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-	bhelgaas@google.com, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Vidya Sagar <vidyas@nvidia.com>, Jon Hunter <jonathanh@nvidia.com>
-Subject: Re: [PATCH] PCI: qcom-ep: Move controller cleanups to
- qcom_pcie_perst_deassert()
-Message-ID: <20240816191222.GA69867@bhelgaas>
+	s=arc-20240116; t=1723836745; c=relaxed/simple;
+	bh=86dlDXREh6vxZqDbqVtKgn5EHSRPBEymw0B57y/Pp8Y=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=PklE8jALPpJoFb/1SdCG6rLTEZpv6ymHoekk2/0cRcDyvaVxv3Rl8jpzeNffgHwwSl9dKBed2epmTTEKkTAL4RGEH+APeZyVl/x8uUJ5opb94jOXYx6fnwWxbB7eArPTRM2XtjlZ0JOQb5eH7gxBFlECDdbgEihislRxyjIm/cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=e7Zht0cG; arc=none smtp.client-ip=209.85.128.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--seanjc.bounces.google.com
+Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-6acf8ac7569so44734577b3.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 12:32:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1723836742; x=1724441542; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cbbwALysxAKAZiiwWFvsXslN5HMdm8PtgVwiZZNny5A=;
+        b=e7Zht0cGuK+xwX00PIpA0paEeO+JQtsPCcT9Opms6ZpGlwIlJOD6bHfeNNpTTnKXML
+         aNau1KcWZuHDFLy0SLAoKBh9Y32fPCmEyBuQXzXokcaIm5XSr2elnKm+Hj4UdY+rJWgF
+         2ys+vTYqbLS2Y1CBE/XqgOa7wYKBoOUUy8EaFfKTB6XVBoUL0W4Hfgf7358O42oPammm
+         7I+X2hM52zDHbdOtwABqhOOJEvocmQgZDQvnvySZnxKXgQWjbIBi6Kn71r0Ag9cmihfq
+         ihQxwIA6L77gadAyXTbf46ZtpyeiLa+C78SHgLsSEf41aw3PVJryAGe/hW7iYLuZnQXy
+         A2WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723836742; x=1724441542;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cbbwALysxAKAZiiwWFvsXslN5HMdm8PtgVwiZZNny5A=;
+        b=dfZdu8Q6SsGRTBxd5Yodp4G8BvUJ1+/ANKVjqvp9s1KuTJD00m7pHgvldFw5gpwmrn
+         J2lgVLRWVi7X5zNQR/tTskv2787LQ6pGqt/5ZXWLEqsuHK5CxzJP0ZC6X6idatCBZk/q
+         eEYTzPDQdpH0iA4sT+LDd/q2AwWeGmu/m3PfQTW2VKpN3U66MaY8IG9p8daQbYA/JKxh
+         XPwpdu/OJI3nyiP7CnkvFsbSc9ArDl/QW87oc+4Ol7UXhI/iorp1WlXypumu6fjInojL
+         8RNKHU6E8XsBZe4fCYfaKlvxErQVUbditvgt8YiVPlysWwrd0+ssyHTAZpIbHXZyMO5y
+         +XdA==
+X-Forwarded-Encrypted: i=1; AJvYcCUOudlxARR8LSf4/FH7iEJiFQx/1iLH0a8tVzZqXZbK/KeBCurGBF/328W6ZfHBO1Biu/LYHL7trsarRW1qvjk9oa/liGJP+NOY6gK6ew==
+X-Gm-Message-State: AOJu0YzKD9jp4cs3wcaN2vLopji/aOEWtM8NeTGOKohmUzz0/ZACnpai
+	oePbl95YQfgsC+0/HvbcTmVVxYgdvLSm9/P8JpcBhqp6lZ3YWfKRvZKwtfW/Xo9MYl9ZSKnJ+xL
+	3OQ==
+X-Google-Smtp-Source: AGHT+IHxI7a6saXi7ISTiFHJHCquHUevVm+Bv9GxPJERDYGDgVOOouWrzQkYJOULpNklx+j3O4vhJAjBF+M=
+X-Received: from zagreus.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
+ (user=seanjc job=sendgmr) by 2002:a05:690c:368a:b0:697:9aae:1490 with SMTP id
+ 00721157ae682-6b1b6cb8bc2mr1076867b3.1.1723836741860; Fri, 16 Aug 2024
+ 12:32:21 -0700 (PDT)
+Date: Fri, 16 Aug 2024 12:32:20 -0700
+In-Reply-To: <20240801090117.3841080-4-tabba@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240816050029.GA2331@thinkpad>
+Mime-Version: 1.0
+References: <20240801090117.3841080-1-tabba@google.com> <20240801090117.3841080-4-tabba@google.com>
+Message-ID: <Zr-pRIWKOvN5px0P@google.com>
+Subject: Re: [RFC PATCH v2 03/10] KVM: Implement kvm_(read|/write)_guest_page
+ for private memory slots
+From: Sean Christopherson <seanjc@google.com>
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, viro@zeniv.linux.org.uk, brauner@kernel.org, 
+	willy@infradead.org, akpm@linux-foundation.org, xiaoyao.li@intel.com, 
+	yilun.xu@intel.com, chao.p.peng@linux.intel.com, jarkko@kernel.org, 
+	amoorthy@google.com, dmatlack@google.com, yu.c.zhang@linux.intel.com, 
+	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz, 
+	vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com
+Content-Type: text/plain; charset="us-ascii"
 
-On Fri, Aug 16, 2024 at 10:30:29AM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Aug 15, 2024 at 05:47:17PM -0500, Bjorn Helgaas wrote:
-> > [+cc Vidya, Jon since tegra194 does similar things]
-> > 
-> > On Mon, Jul 29, 2024 at 05:52:45PM +0530, Manivannan Sadhasivam wrote:
-> > > Currently, the endpoint cleanup function dw_pcie_ep_cleanup() and EPF
-> > > deinit notify function pci_epc_deinit_notify() are called during the
-> > > execution of qcom_pcie_perst_assert() i.e., when the host has asserted
-> > > PERST#. But quickly after this step, refclk will also be disabled by the
-> > > host.
-> > > 
-> > > All of the Qcom endpoint SoCs supported as of now depend on the refclk from
-> > > the host for keeping the controller operational. Due to this limitation,
-> > > any access to the hardware registers in the absence of refclk will result
-> > > in a whole endpoint crash. Unfortunately, most of the controller cleanups
-> > > require accessing the hardware registers (like eDMA cleanup performed in
-> > > dw_pcie_ep_cleanup(), powering down MHI EPF etc...). So these cleanup
-> > > functions are currently causing the crash in the endpoint SoC once host
-> > > asserts PERST#.
-> > > 
-> > > One way to address this issue is by generating the refclk in the endpoint
-> > > itself and not depending on the host. But that is not always possible as
-> > > some of the endpoint designs do require the endpoint to consume refclk from
-> > > the host (as I was told by the Qcom engineers).
-> > > 
-> > > So let's fix this crash by moving the controller cleanups to the start of
-> > > the qcom_pcie_perst_deassert() function. qcom_pcie_perst_deassert() is
-> > > called whenever the host has deasserted PERST# and it is guaranteed that
-> > > the refclk would be active at this point. So at the start of this function,
-> > > the controller cleanup can be performed. Once finished, rest of the code
-> > > execution for PERST# deassert can continue as usual.
-> > 
-> > What makes this v6.11 material?  Does it fix a problem we added in
-> > v6.11-rc1?
+On Thu, Aug 01, 2024, Fuad Tabba wrote:
+> Make __kvm_read_guest_page/__kvm_write_guest_page capable of
+> accessing guest memory if no userspace address is available.
+> Moreover, check that the memory being accessed is shared with the
+> host before attempting the access.
 > 
-> No, this is not a 6.11 material, but the rest of the patches I
-> shared offline.
+> KVM at the host might need to access shared memory that is not
+> mapped in the host userspace but is in fact shared with the host,
+> e.g., when accounting for stolen time. This allows the access
+> without relying on the slot's userspace_addr being set.
 
-For reference, the patches you shared offline are:
+Why?  As evidenced by the amount of code below, special casing guest_memfd isn't
+trivial, and taking kvm->slots_lock is likely a complete non-starter.  In the
+happy case, uaccess is about as fast as can be, and has no inherent scaling issues.
 
-  PCI: qcom: Use OPP only if the platform supports it
-  PCI: qcom-ep: Do not enable resources during probe()
-  PCI: qcom-ep: Disable MHI RAM data parity error interrupt for SA8775P SoC
-  PCI: qcom-ep: Move controller cleanups to qcom_pcie_perst_deassert()
-
-> > Is there a Fixes: commit?
+> This does not circumvent protection, since the access is only
+> attempted if the memory is mappable by the host, which implies
+> shareability.
 > 
-> Hmm, the controller addition commit could be the valid fixes tag.
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> ---
+>  virt/kvm/kvm_main.c | 127 ++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 111 insertions(+), 16 deletions(-)
 > 
-> > This patch essentially does this:
-> > 
-> >   qcom_pcie_perst_assert
-> > -   pci_epc_deinit_notify
-> > -   dw_pcie_ep_cleanup
-> >     qcom_pcie_disable_resources
-> > 
-> >   qcom_pcie_perst_deassert
-> > +   if (pcie_ep->cleanup_pending)
-> > +     pci_epc_deinit_notify(pci->ep.epc);
-> > +     dw_pcie_ep_cleanup(&pci->ep);
-> >     dw_pcie_ep_init_registers
-> >     pci_epc_init_notify
-> > 
-> > Maybe it makes sense to call both pci_epc_deinit_notify() and
-> > pci_epc_init_notify() from the PERST# deassert function, but it makes
-> > me question whether we really need both.
-> 
-> There is really no need to call pci_epc_deinit_notify() during the first
-> deassert (i.e., during the ep boot) because there are no cleanups to be done.
-> It is only needed during a successive PERST# assert + deassert.
-> 
-> > pcie-tegra194.c has a similar structure:
-> > 
-> >   pex_ep_event_pex_rst_assert
-> >     pci_epc_deinit_notify
-> >     dw_pcie_ep_cleanup
-> > 
-> >   pex_ep_event_pex_rst_deassert
-> >     dw_pcie_ep_init_registers
-> >     pci_epc_init_notify
-> > 
-> > Is there a reason to make them different, or could/should a similar
-> > change be made to tegra?
-> 
-> Design wise both drivers are similar, so it could apply. I didn't
-> spin a patch because if testing of tegra driver gets delayed (I've
-> seen this before), then I do not want to stall merging the whole
-> series. 
+> diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+> index f4b4498d4de6..ec6255c7325e 100644
+> --- a/virt/kvm/kvm_main.c
+> +++ b/virt/kvm/kvm_main.c
+> @@ -3385,20 +3385,108 @@ int kvm_gmem_clear_mappable(struct kvm *kvm, gfn_t start, gfn_t end)
+>  	return kvm_gmem_toggle_mappable(kvm, start, end, false);
+>  }
+>  
+> +static int __kvm_read_private_guest_page(struct kvm *kvm,
 
-It can and should be separate patches, one per driver.  But I don't
-want to end up with the drivers being needlessly different.
+The changelog says this is for accessing memory that is shared, but this says
+"private".
 
-> For Qcom it is important to get this merged asap to avoid
-> the crash.
-
-If this is not v6.11 material, there's time to work this out.
-
-> > > +	if (pcie_ep->cleanup_pending) {
-> > 
-> > Do we really need this flag?  I assume the cleanup functions could
-> > tell whether any previous setup was done?
-> 
-> Not so. Some cleanup functions may trigger a warning if attempted to do it
-> before 'setup'. I think dw_edma_remove() that is part of dw_pcie_ep_cleanup()
-> does that IIRC.
-
-It looks safe to me:
-
-  dw_pcie_ep_cleanup
-    dw_pcie_edma_remove
-      dw_edma_remove(chip = &pci->edma)       # struct dw_pcie *pci
-        dev = chip->dev
-        dw = chip->dw
-        if (!dw)
-          return -ENODEV
-
-but if not, it could probably be made safe by adding a NULL pointer
-check and/or a "chip->dw = NULL" at the right spot.
-
-We hardly have any cleanup functions affected by "cleanup_pending", so
-I think we can decide that they should be safe before 'setup' and just
-make it so.
-
-Bjorn
+> +					 struct kvm_memory_slot *slot,
+> +					 gfn_t gfn, void *data, int offset,
+> +					 int len)
 
