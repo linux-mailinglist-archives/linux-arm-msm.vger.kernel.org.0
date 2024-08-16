@@ -1,141 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-28766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0539E954331
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 09:47:47 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16F11954355
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 09:52:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 33B5E1C25246
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 07:47:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7B7FAB2A7D0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 07:52:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D3EE144D1E;
-	Fri, 16 Aug 2024 07:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B01071422D4;
+	Fri, 16 Aug 2024 07:46:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KGjlAhWc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B2E1448EB;
-	Fri, 16 Aug 2024 07:42:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.255
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A22613DBBC;
+	Fri, 16 Aug 2024 07:46:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723794129; cv=none; b=oLCLVtlUhQ0lNUSYKhtCEO+0zNQgJI8kKDgekJLb7DCLSk9rAojLOM2WyB45AUWT0gf+P5bJxEvT34PFY5x91mLcS0Iu7IGdtJQcLUf6BRoxnuPJlJj0bCRU6AhfIfrpXvGOkM4aSJ1SFb/84H0wHevVOYbf7KJvnVCychqq06k=
+	t=1723794372; cv=none; b=tDBzsNng7xTqxjtKVXHWVM53D+ob0lnXq6ht85QH1l5Y1zJdQJLn6b9MQCyAS+zaptd4rGReZJpBAKhEuNn02ZkxpZwe2qMBO9UjvIpPOB0X9ESZlYs9CaIhXeO2wslWKiwV6gYV7PFQRkGsnZX9ffnhzKz7C947pqv5ascA5ZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723794129; c=relaxed/simple;
-	bh=71714VbQ+BlxKUx9p0xPBiDs9trNBypsFVhfzoyUX7M=;
-	h=CC:Subject:To:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=W6OB4I8JFx2XCOoku85PmTFrwVikaP6RPvMk2seO7cv5c0Nf9rNiIdy+REdn7AIED5EvKlMiD8EW07bdxCC7e6//MaQ2GQX2wRq+aJtjHiJWdLCni0J6xatUujhTNwTbjbPsqEfJ63PzXsbgU481dqL7cAB4coAw0EDk8w1Xv4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.255
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.163.48])
-	by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4WlYpL2ddlz1T7Rm;
-	Fri, 16 Aug 2024 15:41:30 +0800 (CST)
-Received: from kwepemd200014.china.huawei.com (unknown [7.221.188.8])
-	by mail.maildlp.com (Postfix) with ESMTPS id 8AB7518006C;
-	Fri, 16 Aug 2024 15:42:02 +0800 (CST)
-Received: from [10.67.121.177] (10.67.121.177) by
- kwepemd200014.china.huawei.com (7.221.188.8) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.34; Fri, 16 Aug 2024 15:42:01 +0800
-CC: <yangyicong@hisilicon.com>, Shuai Xue <xueshuai@linux.alibaba.com>, Jing
- Zhang <renyu.zj@linux.alibaba.com>, Will Deacon <will@kernel.org>, Mark
- Rutland <mark.rutland@arm.com>, Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>, Jonathan Corbet
-	<corbet@lwn.net>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<linux-doc@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
-	<quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
-	<quic_ramkri@quicinc.com>, <quic_parass@quicinc.com>,
-	<quic_mrana@quicinc.com>
-Subject: Re: [PATCH 3/4] perf/dwc_pcie: Always register for PCIe bus notifier
-To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-References: <20240731-dwc_pmu_fix-v1-0-ca47d153e5b2@quicinc.com>
- <20240731-dwc_pmu_fix-v1-3-ca47d153e5b2@quicinc.com>
- <55303289-bb41-4e67-9912-4cf4335244ca@huawei.com>
- <2d882c88-fd56-c512-0dcc-8825ba920b51@quicinc.com>
-From: Yicong Yang <yangyicong@huawei.com>
-Message-ID: <82a28788-eed8-6cff-c2ee-fb4b421ae53c@huawei.com>
-Date: Fri, 16 Aug 2024 15:42:01 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.1
+	s=arc-20240116; t=1723794372; c=relaxed/simple;
+	bh=961HR25fBK6+U+34IivlTuUdOrvdw5kInN6SiWfWruI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=hZcVbTqyEckVddnlGB4bNQ5nN3fdxqObGO2ef57JDycB4Wns54/7XTydoW4DJvBwCl1qONt4BNv7YVsBYlJQcKwHwDVeEX2lmF8qYVZhmPkYRo7HexGyhDo92btUA+PyoHP4jMHYJd5s2qHjWI4GhY+EqH8DiTAA95FeSeQgaB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KGjlAhWc; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47FLTJSM020572;
+	Fri, 16 Aug 2024 07:46:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	i7/Oc25XBlXJTMUNL+LN07bCOIRiR0fvFcEP4h10F+w=; b=KGjlAhWc5CIlvVUh
+	XuTeXr9KgoR1D58k4p8kjaWpJVzqARjPcRo10p0xPnVD25xd9Z5nGUHAXbH05ws8
+	9G0FZir12r/v0m6MWWdnv4WhYBKmHD242wEwMfth2VAqj7bYAFGa96XY+3wXRori
+	83FLHLulp9/JguFQueuy7zeqcRBTA9wfyXJ3HzVujA5zsvO8yKfXoJRe9D39emla
+	PP0u9XytCPypm9/5WvIFhESq0XUnAFmo48NbHlE7tRaT5PZyYIPcOiDNpAj+J7UQ
+	HlTtuqo07b23EWmueoTrWxYPYq3FlaHrdwFKQdIGBMZwKM5WREFulTHXmhQsyI5n
+	r7+HoA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4112r3v2xd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Aug 2024 07:46:03 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47G7k2qf019214
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Aug 2024 07:46:02 GMT
+Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 16 Aug
+ 2024 00:45:54 -0700
+Message-ID: <aa12fd2e-4869-4909-a04f-6bf24f76ed51@quicinc.com>
+Date: Fri, 16 Aug 2024 15:45:52 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <2d882c88-fd56-c512-0dcc-8825ba920b51@quicinc.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- kwepemd200014.china.huawei.com (7.221.188.8)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
+ binding
+To: Krzysztof Kozlowski <krzk@kernel.org>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, Yongsheng Li <quic_yon@quicinc.com>
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-8-quic_depengs@quicinc.com>
+ <cb905d5e-6d70-4395-894c-55b3542e2ebe@kernel.org>
+Content-Language: en-US
+From: Depeng Shao <quic_depengs@quicinc.com>
+In-Reply-To: <cb905d5e-6d70-4395-894c-55b3542e2ebe@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: nz1EZt51V966XEKronGAHqNzJZJ9mJDL
+X-Proofpoint-ORIG-GUID: nz1EZt51V966XEKronGAHqNzJZJ9mJDL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-15_18,2024-08-15_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 mlxscore=0 suspectscore=0
+ clxscore=1015 priorityscore=1501 malwarescore=0 impostorscore=0
+ mlxlogscore=938 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2408160055
 
-On 2024/8/16 11:51, Krishna Chaitanya Chundru wrote:
+Hi Krzysztof,
+
+On 8/16/2024 3:01 PM, Krzysztof Kozlowski wrote:
+
+>> +required:
+>> +  - compatible
+>> +  - clocks
+>> +  - clock-names
+>> +  - interconnects
+>> +  - interconnect-names
+>> +  - interrupts
+>> +  - interrupt-names
+>> +  - iommus
+>> +  - power-domains
+>> +  - power-domain-names
+>> +  - reg
+>> +  - reg-names
+>> +  - vdda-phy-supply
+>> +  - vdda-pll-supply
 > 
+> Order is still not as expected. I already commented on this - keep the
+> same order as in "properties:" block.
 > 
-> On 8/15/2024 7:19 PM, Yicong Yang wrote:
->> On 2024/7/31 12:23, Krishna chaitanya chundru wrote:
->>> When the PCIe devices are discovered late, the driver can't find
->>> the PCIe devices and returns in the init without registering with
->>> the bus notifier. Due to that the devices which are discovered late
->>> the driver can't register for this.
->>>
->>> Register for bus notifier even if the device is not found in init.
->>>
->>> Fixes: af9597adc2f1 ("drivers/perf: add DesignWare PCIe PMU driver")
->>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->>> ---
->>>   drivers/perf/dwc_pcie_pmu.c | 10 +++++-----
->>>   1 file changed, 5 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/drivers/perf/dwc_pcie_pmu.c b/drivers/perf/dwc_pcie_pmu.c
->>> index c115348b8d53..aa1010b44bcb 100644
->>> --- a/drivers/perf/dwc_pcie_pmu.c
->>> +++ b/drivers/perf/dwc_pcie_pmu.c
->>> @@ -741,8 +741,6 @@ static int __init dwc_pcie_pmu_init(void)
->>>             found = true;
->>>       }
->>> -    if (!found)
->>> -        return -ENODEV;
->>>         ret = cpuhp_setup_state_multi(CPUHP_AP_ONLINE_DYN,
->>>                         "perf/dwc_pcie_pmu:online",
->>> @@ -753,9 +751,11 @@ static int __init dwc_pcie_pmu_init(void)
->>>         dwc_pcie_pmu_hp_state = ret;
->>>   -    ret = platform_driver_register(&dwc_pcie_pmu_driver);
->>> -    if (ret)
->>> -        goto platform_driver_register_err;
->>> +    if (!found) {
->>> +        ret = platform_driver_register(&dwc_pcie_pmu_driver);
->>> +        if (ret)
->>> +            goto platform_driver_register_err;
->>> +    }
->>>
->>
->> This doesn't match the commit.
->> > If any device is found at this stage, we cannot use them since you don't
->> register a driver.
->>
-> If the device is not found then only we are skipping platform driver
-> register otherwise driver will be registering with the platform driver.
+> With the order fixed:
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
 
-think about the case that devices already discovered before module init.
-without the change here we'll register both the platform devices and driver
-but with the change here we'll only register the platform devices without
-the related driver to probe them.
+Thanks for catching this, the order was correct in my local build, then 
+Vladimir posted a new comment, so I updated it again and forgot to 
+update the required item, I will correct the order in next version series.
 
-Try to register the driver and notifier unconditionally will solve the issue.
-It'll probe the device and register the PMU if later device is added by
-the bus notifier.
+Vladimir: "I would suggest to put 'compatible', 'reg' and 'reg-names' 
+properties as the first ones. 'clock-names' should follow 'clocks' 
+property in the list."
 
-Thanks.
-
-> - Krishna Chaitanya.
->>>       ret = bus_register_notifier(&pci_bus_type, &dwc_pcie_pmu_nb);
->>>       if (ret)
->>>
-> 
-> .
+Thanks,
+Depeng
 
