@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-28740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7F9B9541C5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 08:34:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB3BF9541C7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 08:34:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0E683B235C5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 06:34:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CFE0D1C21AF3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 06:34:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ADC984E0D;
-	Fri, 16 Aug 2024 06:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF5A0127E37;
+	Fri, 16 Aug 2024 06:33:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VJmp1LE/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dEUIuof4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282CF85270;
-	Fri, 16 Aug 2024 06:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FA58615A;
+	Fri, 16 Aug 2024 06:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723790016; cv=none; b=JRFKDjyiBUYMLtx0KWcFcok0J98Ttynhakn1LAf+UcTLMhVt3I4MWoCjsSzonDd/BuE38FdIKZf3E8U097M/pHdfiYaIvPgHiw03xqa3q1X6p1IAoxiA1l/gFuB7WRptmxHSDZezU7uza7yNh8QNUNbALL7yxflY/jOVHmo9Zt0=
+	t=1723790018; cv=none; b=rE40E4Dq4thcPOiASlVgLeaefQ6ophyrTyq+nJkpEE8wa34cgvTfO8jasB4gBm50CF+aS79iIMfuRtR7A62QWMjJ1hB5OwxJYS+W0U0tLyU/tbZxFmV+3HWn0ODaSPVJ4MjvqJrYNEuX1ASyuEghc6QoaxjLun6tJ2wMLCbHXf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723790016; c=relaxed/simple;
-	bh=Ck6QsDq8BE9yFPJWS5tPvlKJQsWfuWkWzVTGt5EndWY=;
+	s=arc-20240116; t=1723790018; c=relaxed/simple;
+	bh=pG8JeLVd2o3uOe3snnepoNWAygu0esW9kiLzjldjZRs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=CKo6WOIei1PjQo3UPJ2uJUjrzVyjc/rqQxtylBjtjWhDbgrK3uMbOED+/VY333dczqm7c0nvB8gh6z+oh2C/JvWfUqUokaIkGYex5v2lx1mMJBXVTjEjFWK+VNwOZKJY5qKCjfpvrSBjwqXqG5kZKPhJDrruUnvXdukhmL7XxPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VJmp1LE/; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:CC; b=CocqURUeY/p8tY4SeA+ktVPKYQ70QqSwdwAlIkqVGUFBob7eWu/i75rXk7QFhiJpK572QpJ3rArinORXS2YpwmGhZextgUm0FLtL0xZ10rtYBI3bQenMJIHgUQfm+x7toXz2Zl8RSP3PyEFaMYJ29lo7ziSI/cBn2k/FcGEJ06o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dEUIuof4; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47FKvC5N025458;
-	Fri, 16 Aug 2024 06:33:29 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47FF1lr0021524;
+	Fri, 16 Aug 2024 06:33:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qpNm0rC9ioMyBSN6yep8agqTQwzpEvuWRsxni/IUyjs=; b=VJmp1LE/X2H5f3Cc
-	ZFtYk9EUmrrCC0NMKirYPWPzrRd3Y9J5EwEM3FYgq/WMklmpdBYVtsesUixrEPuu
-	ONj0xLU85PvxKyuN6eaREubE3hO4w4JpctJ9Qhk5FLLlL407k30yb+xQMMak45G9
-	+Z2SdBUoNfmLH3Os9qFohJ1oupcxkAPDr9rc6eWMnwGUaXcznIqDgZHTYhi4TlZb
-	oVVqs5/WeWZMNw8dX57HaREU1A9KG+wLVzzKGXgIlwu+5fIsFb4B2uOQCiVxjnr3
-	SJiTL6cr9WeNNZqiJriBiUqnNotDBcPlVEnlKjS+E1jo2D/t+MInYCo6dzAkMWge
-	8trlfA==
+	bkK9qt1P1T4LwFPqmCXmbfpvFzTIfz9urgZ1ydNyIww=; b=dEUIuof481nlm6cS
+	7XrVXdC4lzOh15FqcnQkbEauviYXj73D0Qf4l47HVV1pasVzM2PLQ5owWDDolq8Y
+	ZQifFOFiRN1xI/Aere33uL7STcgfx5s4u4eOnDxjWmn4vmVz+BnMtj2/X0XdHswe
+	kckz04wVBwuTPZ44ZNlDvSZPpjoQ081imL4AK2Q3/UGb5lJZ9KkiAkDOF7VRHOxh
+	sAkY+t8MWIzc+J0gVLxoNj9ipQEBRQQ6yNe1Xs9US3VUgszZ6PdosD2wLx+2aqh1
+	rhP7yZZ4TENa6v2sViUOeySJz9R/5SXcB333zEhoBqLCh/p8Khrv11H2+GBerFyk
+	lqupeQ==
 Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 411s5pgwm1-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 410m296k9u-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Aug 2024 06:33:29 +0000 (GMT)
+	Fri, 16 Aug 2024 06:33:32 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47G6XRUQ010158
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47G6XW0Y010209
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Aug 2024 06:33:27 GMT
+	Fri, 16 Aug 2024 06:33:32 GMT
 Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 15 Aug 2024 23:33:23 -0700
+ 15.2.1544.9; Thu, 15 Aug 2024 23:33:27 -0700
 From: Taniya Das <quic_tdas@quicinc.com>
-Date: Fri, 16 Aug 2024 12:01:44 +0530
-Subject: [PATCH v4 2/8] clk: qcom: Add support for Video clock controller
- on SA8775P
+Date: Fri, 16 Aug 2024 12:01:45 +0530
+Subject: [PATCH v4 3/8] dt-bindings: clock: qcom: Add SA8775P camera clock
+ controller
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240816-sa8775p-mm-v3-v1-2-77d53c3c0cef@quicinc.com>
+Message-ID: <20240816-sa8775p-mm-v3-v1-3-77d53c3c0cef@quicinc.com>
 References: <20240816-sa8775p-mm-v3-v1-0-77d53c3c0cef@quicinc.com>
 In-Reply-To: <20240816-sa8775p-mm-v3-v1-0-77d53c3c0cef@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -92,642 +92,208 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Rqj9IPowVRV8m-G-ysh8RRIwx8XmL_yS
-X-Proofpoint-ORIG-GUID: Rqj9IPowVRV8m-G-ysh8RRIwx8XmL_yS
+X-Proofpoint-GUID: NPVnOdzCYsfuGVSYw9w8lYwmyae_7iHq
+X-Proofpoint-ORIG-GUID: NPVnOdzCYsfuGVSYw9w8lYwmyae_7iHq
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-15_18,2024-08-15_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
- mlxlogscore=999 suspectscore=0 lowpriorityscore=0 clxscore=1015
- bulkscore=0 phishscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
+ spamscore=0 priorityscore=1501 mlxscore=0 bulkscore=0 adultscore=0
+ impostorscore=0 phishscore=0 malwarescore=0 mlxlogscore=999
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2407110000 definitions=main-2408160045
 
-Add support for Video Clock Controller for SA8775P platform.
+Add device tree bindings for the camera clock controller
+on Qualcomm SA8775P platform.
 
 Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 ---
- drivers/clk/qcom/Kconfig           |  11 +
- drivers/clk/qcom/Makefile          |   1 +
- drivers/clk/qcom/videocc-sa8775p.c | 576 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 588 insertions(+)
+ .../bindings/clock/qcom,sa8775p-camcc.yaml         |  62 ++++++++++++
+ include/dt-bindings/clock/qcom,sa8775p-camcc.h     | 108 +++++++++++++++++++++
+ 2 files changed, 170 insertions(+)
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 11ae28430dad..7d6983a29772 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -1160,6 +1160,17 @@ config SM_TCSRCC_8650
- 	  Support for the TCSR clock controller on SM8650 devices.
- 	  Say Y if you want to use peripheral devices such as SD/UFS.
- 
-+config SA_VIDEOCC_8775P
-+	tristate "SA8775P Video Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
-+	select SA_GCC_8775P
-+	select QCOM_GDSC
-+	help
-+	  Support for the video clock controller on Qualcomm Technologies, Inc.
-+	  SA8775P devices.
-+	  Say Y if you want to support video devices and functionality such as
-+	  video encode/decode.
-+
- config SM_VIDEOCC_7150
- 	tristate "SM7150 Video Clock Controller"
- 	depends on ARM64 || COMPILE_TEST
-diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-index 0de5fce6113a..8b13b385b830 100644
---- a/drivers/clk/qcom/Makefile
-+++ b/drivers/clk/qcom/Makefile
-@@ -82,6 +82,7 @@ obj-$(CONFIG_SC_DISPCC_7280) += dispcc-sc7280.o
- obj-$(CONFIG_SC_DISPCC_8280XP) += dispcc-sc8280xp.o
- obj-$(CONFIG_SA_GCC_8775P) += gcc-sa8775p.o
- obj-$(CONFIG_SA_GPUCC_8775P) += gpucc-sa8775p.o
-+obj-$(CONFIG_SA_VIDEOCC_8775P) += videocc-sa8775p.o
- obj-$(CONFIG_SC_GCC_7180) += gcc-sc7180.o
- obj-$(CONFIG_SC_GCC_7280) += gcc-sc7280.o
- obj-$(CONFIG_SC_GCC_8180X) += gcc-sc8180x.o
-diff --git a/drivers/clk/qcom/videocc-sa8775p.c b/drivers/clk/qcom/videocc-sa8775p.c
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml
 new file mode 100644
-index 000000000000..bf5de411fd5d
+index 000000000000..36a60d8f5ae3
 --- /dev/null
-+++ b/drivers/clk/qcom/videocc-sa8775p.c
-@@ -0,0 +1,576 @@
-+// SPDX-License-Identifier: GPL-2.0-only
++++ b/Documentation/devicetree/bindings/clock/qcom,sa8775p-camcc.yaml
+@@ -0,0 +1,62 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,sa8775p-camcc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Camera Clock & Reset Controller on SA8775P
++
++maintainers:
++  - Taniya Das <quic_tdas@quicinc.com>
++
++description: |
++  Qualcomm camera clock control module provides the clocks, resets and power
++  domains on SA8775p.
++
++  See also: include/dt-bindings/clock/qcom,sa8775p-camcc.h
++
++properties:
++  compatible:
++    enum:
++      - qcom,sa8775p-camcc
++
++  clocks:
++    items:
++      - description: Camera AHB clock from GCC
++      - description: Board XO source
++      - description: Board active XO source
++      - description: Sleep clock source
++
++  power-domains:
++    maxItems: 1
++    description: MMCX power domain
++
++required:
++  - compatible
++  - clocks
++  - power-domains
++  - '#power-domain-cells'
++
++allOf:
++  - $ref: qcom,gcc.yaml#
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    #include <dt-bindings/power/qcom-rpmpd.h>
++    #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
++    clock-controller@ade0000 {
++      compatible = "qcom,sa8775p-camcc";
++      reg = <0x0ade0000 0x20000>;
++      clocks = <&gcc GCC_CAMERA_AHB_CLK>,
++               <&rpmhcc RPMH_CXO_CLK>,
++               <&rpmhcc RPMH_CXO_CLK_A>,
++               <&sleep_clk>;
++      power-domains = <&rpmhpd SA8775P_MMCX>;
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++    };
++...
+diff --git a/include/dt-bindings/clock/qcom,sa8775p-camcc.h b/include/dt-bindings/clock/qcom,sa8775p-camcc.h
+new file mode 100644
+index 000000000000..38531acd699f
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,sa8775p-camcc.h
+@@ -0,0 +1,108 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
 +/*
 + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
 + */
 +
-+#include <linux/clk-provider.h>
-+#include <linux/module.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/regmap.h>
++#ifndef _DT_BINDINGS_CLK_QCOM_SA8775P_CAM_CC_H
++#define _DT_BINDINGS_CLK_QCOM_SA8775P_CAM_CC_H
 +
-+#include <dt-bindings/clock/qcom,sa8775p-videocc.h>
++/* CAM_CC clocks */
++#define CAM_CC_CAMNOC_AXI_CLK					0
++#define CAM_CC_CAMNOC_AXI_CLK_SRC				1
++#define CAM_CC_CAMNOC_DCD_XO_CLK				2
++#define CAM_CC_CAMNOC_XO_CLK					3
++#define CAM_CC_CCI_0_CLK					4
++#define CAM_CC_CCI_0_CLK_SRC					5
++#define CAM_CC_CCI_1_CLK					6
++#define CAM_CC_CCI_1_CLK_SRC					7
++#define CAM_CC_CCI_2_CLK					8
++#define CAM_CC_CCI_2_CLK_SRC					9
++#define CAM_CC_CCI_3_CLK					10
++#define CAM_CC_CCI_3_CLK_SRC					11
++#define CAM_CC_CORE_AHB_CLK					12
++#define CAM_CC_CPAS_AHB_CLK					13
++#define CAM_CC_CPAS_FAST_AHB_CLK				14
++#define CAM_CC_CPAS_IFE_0_CLK					15
++#define CAM_CC_CPAS_IFE_1_CLK					16
++#define CAM_CC_CPAS_IFE_LITE_CLK				17
++#define CAM_CC_CPAS_IPE_CLK					18
++#define CAM_CC_CPAS_SFE_LITE_0_CLK				19
++#define CAM_CC_CPAS_SFE_LITE_1_CLK				20
++#define CAM_CC_CPHY_RX_CLK_SRC					21
++#define CAM_CC_CSI0PHYTIMER_CLK					22
++#define CAM_CC_CSI0PHYTIMER_CLK_SRC				23
++#define CAM_CC_CSI1PHYTIMER_CLK					24
++#define CAM_CC_CSI1PHYTIMER_CLK_SRC				25
++#define CAM_CC_CSI2PHYTIMER_CLK					26
++#define CAM_CC_CSI2PHYTIMER_CLK_SRC				27
++#define CAM_CC_CSI3PHYTIMER_CLK					28
++#define CAM_CC_CSI3PHYTIMER_CLK_SRC				29
++#define CAM_CC_CSID_CLK						30
++#define CAM_CC_CSID_CLK_SRC					31
++#define CAM_CC_CSID_CSIPHY_RX_CLK				32
++#define CAM_CC_CSIPHY0_CLK					33
++#define CAM_CC_CSIPHY1_CLK					34
++#define CAM_CC_CSIPHY2_CLK					35
++#define CAM_CC_CSIPHY3_CLK					36
++#define CAM_CC_FAST_AHB_CLK_SRC					37
++#define CAM_CC_GDSC_CLK						38
++#define CAM_CC_ICP_AHB_CLK					39
++#define CAM_CC_ICP_CLK						40
++#define CAM_CC_ICP_CLK_SRC					41
++#define CAM_CC_IFE_0_CLK					42
++#define CAM_CC_IFE_0_CLK_SRC					43
++#define CAM_CC_IFE_0_FAST_AHB_CLK				44
++#define CAM_CC_IFE_1_CLK					45
++#define CAM_CC_IFE_1_CLK_SRC					46
++#define CAM_CC_IFE_1_FAST_AHB_CLK				47
++#define CAM_CC_IFE_LITE_AHB_CLK					48
++#define CAM_CC_IFE_LITE_CLK					49
++#define CAM_CC_IFE_LITE_CLK_SRC					50
++#define CAM_CC_IFE_LITE_CPHY_RX_CLK				51
++#define CAM_CC_IFE_LITE_CSID_CLK				52
++#define CAM_CC_IFE_LITE_CSID_CLK_SRC				53
++#define CAM_CC_IPE_AHB_CLK					54
++#define CAM_CC_IPE_CLK						55
++#define CAM_CC_IPE_CLK_SRC					56
++#define CAM_CC_IPE_FAST_AHB_CLK					57
++#define CAM_CC_MCLK0_CLK					58
++#define CAM_CC_MCLK0_CLK_SRC					59
++#define CAM_CC_MCLK1_CLK					60
++#define CAM_CC_MCLK1_CLK_SRC					61
++#define CAM_CC_MCLK2_CLK					62
++#define CAM_CC_MCLK2_CLK_SRC					63
++#define CAM_CC_MCLK3_CLK					64
++#define CAM_CC_MCLK3_CLK_SRC					65
++#define CAM_CC_PLL0						66
++#define CAM_CC_PLL0_OUT_EVEN					67
++#define CAM_CC_PLL0_OUT_ODD					68
++#define CAM_CC_PLL2						69
++#define CAM_CC_PLL3						70
++#define CAM_CC_PLL3_OUT_EVEN					71
++#define CAM_CC_PLL4						72
++#define CAM_CC_PLL4_OUT_EVEN					73
++#define CAM_CC_PLL5						74
++#define CAM_CC_PLL5_OUT_EVEN					75
++#define CAM_CC_SFE_LITE_0_CLK					76
++#define CAM_CC_SFE_LITE_0_FAST_AHB_CLK				77
++#define CAM_CC_SFE_LITE_1_CLK					78
++#define CAM_CC_SFE_LITE_1_FAST_AHB_CLK				79
++#define CAM_CC_SLEEP_CLK					80
++#define CAM_CC_SLEEP_CLK_SRC					81
++#define CAM_CC_SLOW_AHB_CLK_SRC					82
++#define CAM_CC_SM_OBS_CLK					83
++#define CAM_CC_XO_CLK_SRC					84
++#define CAM_CC_QDSS_DEBUG_XO_CLK				85
 +
-+#include "clk-alpha-pll.h"
-+#include "clk-branch.h"
-+#include "clk-pll.h"
-+#include "clk-rcg.h"
-+#include "clk-regmap.h"
-+#include "clk-regmap-divider.h"
-+#include "clk-regmap-mux.h"
-+#include "common.h"
-+#include "gdsc.h"
-+#include "reset.h"
++/* CAM_CC power domains */
++#define CAM_CC_TITAN_TOP_GDSC					0
 +
-+enum {
-+	DT_IFACE,
-+	DT_BI_TCXO,
-+	DT_BI_TCXO_AO,
-+	DT_SLEEP_CLK,
-+};
++/* CAM_CC resets */
++#define CAM_CC_ICP_BCR						0
++#define CAM_CC_IFE_0_BCR					1
++#define CAM_CC_IFE_1_BCR					2
++#define CAM_CC_IPE_0_BCR					3
++#define CAM_CC_SFE_LITE_0_BCR					4
++#define CAM_CC_SFE_LITE_1_BCR					5
 +
-+enum {
-+	P_BI_TCXO,
-+	P_BI_TCXO_AO,
-+	P_SLEEP_CLK,
-+	P_VIDEO_PLL0_OUT_MAIN,
-+	P_VIDEO_PLL1_OUT_MAIN,
-+};
-+
-+static const struct pll_vco lucid_evo_vco[] = {
-+	{ 249600000, 2020000000, 0 },
-+};
-+
-+static const struct alpha_pll_config video_pll0_config = {
-+	.l = 0x39,
-+	.alpha = 0x3000,
-+	.config_ctl_val = 0x20485699,
-+	.config_ctl_hi_val = 0x00182261,
-+	.config_ctl_hi1_val = 0x32aa299c,
-+	.user_ctl_val = 0x00000000,
-+	.user_ctl_hi_val = 0x00400805,
-+};
-+
-+static struct clk_alpha_pll video_pll0 = {
-+	.offset = 0x0,
-+	.vco_table = lucid_evo_vco,
-+	.num_vco = ARRAY_SIZE(lucid_evo_vco),
-+	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
-+	.clkr = {
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "video_pll0",
-+			.parent_data = &(const struct clk_parent_data) {
-+				.index = DT_BI_TCXO,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_alpha_pll_lucid_evo_ops,
-+		},
-+	},
-+};
-+
-+static const struct alpha_pll_config video_pll1_config = {
-+	.l = 0x39,
-+	.alpha = 0x3000,
-+	.config_ctl_val = 0x20485699,
-+	.config_ctl_hi_val = 0x00182261,
-+	.config_ctl_hi1_val = 0x32aa299c,
-+	.user_ctl_val = 0x00000000,
-+	.user_ctl_hi_val = 0x00400805,
-+};
-+
-+static struct clk_alpha_pll video_pll1 = {
-+	.offset = 0x1000,
-+	.vco_table = lucid_evo_vco,
-+	.num_vco = ARRAY_SIZE(lucid_evo_vco),
-+	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
-+	.clkr = {
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "video_pll1",
-+			.parent_data = &(const struct clk_parent_data) {
-+				.index = DT_BI_TCXO,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_alpha_pll_lucid_evo_ops,
-+		},
-+	},
-+};
-+
-+static const struct parent_map video_cc_parent_map_0_ao[] = {
-+	{ P_BI_TCXO_AO, 0 },
-+};
-+
-+static const struct clk_parent_data video_cc_parent_data_0_ao[] = {
-+	{ .index = DT_BI_TCXO_AO },
-+};
-+
-+static const struct parent_map video_cc_parent_map_1[] = {
-+	{ P_BI_TCXO, 0 },
-+	{ P_VIDEO_PLL0_OUT_MAIN, 1 },
-+};
-+
-+static const struct clk_parent_data video_cc_parent_data_1[] = {
-+	{ .index = DT_BI_TCXO },
-+	{ .hw = &video_pll0.clkr.hw },
-+};
-+
-+static const struct parent_map video_cc_parent_map_2[] = {
-+	{ P_BI_TCXO, 0 },
-+	{ P_VIDEO_PLL1_OUT_MAIN, 1 },
-+};
-+
-+static const struct clk_parent_data video_cc_parent_data_2[] = {
-+	{ .index = DT_BI_TCXO },
-+	{ .hw = &video_pll1.clkr.hw },
-+};
-+
-+static const struct parent_map video_cc_parent_map_3[] = {
-+	{ P_SLEEP_CLK, 0 },
-+};
-+
-+static const struct clk_parent_data video_cc_parent_data_3[] = {
-+	{ .index = DT_SLEEP_CLK },
-+};
-+
-+static const struct freq_tbl ftbl_video_cc_ahb_clk_src[] = {
-+	F(19200000, P_BI_TCXO_AO, 1, 0, 0),
-+	{ }
-+};
-+
-+static struct clk_rcg2 video_cc_ahb_clk_src = {
-+	.cmd_rcgr = 0x8030,
-+	.mnd_width = 0,
-+	.hid_width = 5,
-+	.parent_map = video_cc_parent_map_0_ao,
-+	.freq_tbl = ftbl_video_cc_ahb_clk_src,
-+	.clkr.hw.init = &(const struct clk_init_data) {
-+		.name = "video_cc_ahb_clk_src",
-+		.parent_data = video_cc_parent_data_0_ao,
-+		.num_parents = ARRAY_SIZE(video_cc_parent_data_0_ao),
-+		.flags = CLK_SET_RATE_PARENT,
-+		.ops = &clk_rcg2_shared_ops,
-+	},
-+};
-+
-+static const struct freq_tbl ftbl_video_cc_mvs0_clk_src[] = {
-+	F(1098000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
-+	F(1332000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
-+	F(1599000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
-+	F(1680000000, P_VIDEO_PLL0_OUT_MAIN, 1, 0, 0),
-+	{ }
-+};
-+
-+static struct clk_rcg2 video_cc_mvs0_clk_src = {
-+	.cmd_rcgr = 0x8000,
-+	.mnd_width = 0,
-+	.hid_width = 5,
-+	.parent_map = video_cc_parent_map_1,
-+	.freq_tbl = ftbl_video_cc_mvs0_clk_src,
-+	.clkr.hw.init = &(const struct clk_init_data) {
-+		.name = "video_cc_mvs0_clk_src",
-+		.parent_data = video_cc_parent_data_1,
-+		.num_parents = ARRAY_SIZE(video_cc_parent_data_1),
-+		.flags = CLK_SET_RATE_PARENT,
-+		.ops = &clk_rcg2_shared_ops,
-+	},
-+};
-+
-+static const struct freq_tbl ftbl_video_cc_mvs1_clk_src[] = {
-+	F(1098000000, P_VIDEO_PLL1_OUT_MAIN, 1, 0, 0),
-+	F(1332000000, P_VIDEO_PLL1_OUT_MAIN, 1, 0, 0),
-+	F(1600000000, P_VIDEO_PLL1_OUT_MAIN, 1, 0, 0),
-+	F(1800000000, P_VIDEO_PLL1_OUT_MAIN, 1, 0, 0),
-+	{ }
-+};
-+
-+static struct clk_rcg2 video_cc_mvs1_clk_src = {
-+	.cmd_rcgr = 0x8018,
-+	.mnd_width = 0,
-+	.hid_width = 5,
-+	.parent_map = video_cc_parent_map_2,
-+	.freq_tbl = ftbl_video_cc_mvs1_clk_src,
-+	.clkr.hw.init = &(const struct clk_init_data) {
-+		.name = "video_cc_mvs1_clk_src",
-+		.parent_data = video_cc_parent_data_2,
-+		.num_parents = ARRAY_SIZE(video_cc_parent_data_2),
-+		.flags = CLK_SET_RATE_PARENT,
-+		.ops = &clk_rcg2_shared_ops,
-+	},
-+};
-+
-+static const struct freq_tbl ftbl_video_cc_sleep_clk_src[] = {
-+	F(32000, P_SLEEP_CLK, 1, 0, 0),
-+	{ }
-+};
-+
-+static struct clk_rcg2 video_cc_sleep_clk_src = {
-+	.cmd_rcgr = 0x812c,
-+	.mnd_width = 0,
-+	.hid_width = 5,
-+	.parent_map = video_cc_parent_map_3,
-+	.freq_tbl = ftbl_video_cc_sleep_clk_src,
-+	.clkr.hw.init = &(const struct clk_init_data) {
-+		.name = "video_cc_sleep_clk_src",
-+		.parent_data = video_cc_parent_data_3,
-+		.num_parents = ARRAY_SIZE(video_cc_parent_data_3),
-+		.flags = CLK_SET_RATE_PARENT,
-+		.ops = &clk_rcg2_shared_ops,
-+	},
-+};
-+
-+static struct clk_rcg2 video_cc_xo_clk_src = {
-+	.cmd_rcgr = 0x8110,
-+	.mnd_width = 0,
-+	.hid_width = 5,
-+	.parent_map = video_cc_parent_map_0_ao,
-+	.freq_tbl = ftbl_video_cc_ahb_clk_src,
-+	.clkr.hw.init = &(const struct clk_init_data) {
-+		.name = "video_cc_xo_clk_src",
-+		.parent_data = video_cc_parent_data_0_ao,
-+		.num_parents = ARRAY_SIZE(video_cc_parent_data_0_ao),
-+		.flags = CLK_SET_RATE_PARENT,
-+		.ops = &clk_rcg2_shared_ops,
-+	},
-+};
-+
-+static struct clk_regmap_div video_cc_mvs0_div_clk_src = {
-+	.reg = 0x80b8,
-+	.shift = 0,
-+	.width = 4,
-+	.clkr.hw.init = &(const struct clk_init_data) {
-+		.name = "video_cc_mvs0_div_clk_src",
-+		.parent_hws = (const struct clk_hw*[]) {
-+			&video_cc_mvs0_clk_src.clkr.hw,
-+		},
-+		.num_parents = 1,
-+		.flags = CLK_SET_RATE_PARENT,
-+		.ops = &clk_regmap_div_ro_ops,
-+	},
-+};
-+
-+static struct clk_regmap_div video_cc_mvs0c_div2_div_clk_src = {
-+	.reg = 0x806c,
-+	.shift = 0,
-+	.width = 4,
-+	.clkr.hw.init = &(const struct clk_init_data) {
-+		.name = "video_cc_mvs0c_div2_div_clk_src",
-+		.parent_hws = (const struct clk_hw*[]) {
-+			&video_cc_mvs0_clk_src.clkr.hw,
-+		},
-+		.num_parents = 1,
-+		.flags = CLK_SET_RATE_PARENT,
-+		.ops = &clk_regmap_div_ro_ops,
-+	},
-+};
-+
-+static struct clk_regmap_div video_cc_mvs1_div_clk_src = {
-+	.reg = 0x80dc,
-+	.shift = 0,
-+	.width = 4,
-+	.clkr.hw.init = &(const struct clk_init_data) {
-+		.name = "video_cc_mvs1_div_clk_src",
-+		.parent_hws = (const struct clk_hw*[]) {
-+			&video_cc_mvs1_clk_src.clkr.hw,
-+		},
-+		.num_parents = 1,
-+		.flags = CLK_SET_RATE_PARENT,
-+		.ops = &clk_regmap_div_ro_ops,
-+	},
-+};
-+
-+static struct clk_regmap_div video_cc_mvs1c_div2_div_clk_src = {
-+	.reg = 0x8094,
-+	.shift = 0,
-+	.width = 4,
-+	.clkr.hw.init = &(const struct clk_init_data) {
-+		.name = "video_cc_mvs1c_div2_div_clk_src",
-+		.parent_hws = (const struct clk_hw*[]) {
-+			&video_cc_mvs1_clk_src.clkr.hw,
-+		},
-+		.num_parents = 1,
-+		.flags = CLK_SET_RATE_PARENT,
-+		.ops = &clk_regmap_div_ro_ops,
-+	},
-+};
-+
-+static struct clk_regmap_div video_cc_sm_div_clk_src = {
-+	.reg = 0x8108,
-+	.shift = 0,
-+	.width = 4,
-+	.clkr.hw.init = &(const struct clk_init_data) {
-+		.name = "video_cc_sm_div_clk_src",
-+		.ops = &clk_regmap_div_ro_ops,
-+	},
-+};
-+
-+static struct clk_branch video_cc_mvs0_clk = {
-+	.halt_reg = 0x80b0,
-+	.halt_check = BRANCH_HALT_VOTED,
-+	.hwcg_reg = 0x80b0,
-+	.hwcg_bit = 1,
-+	.clkr = {
-+		.enable_reg = 0x80b0,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "video_cc_mvs0_clk",
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&video_cc_mvs0_div_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch video_cc_mvs0c_clk = {
-+	.halt_reg = 0x8064,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x8064,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "video_cc_mvs0c_clk",
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&video_cc_mvs0c_div2_div_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch video_cc_mvs1_clk = {
-+	.halt_reg = 0x80d4,
-+	.halt_check = BRANCH_HALT_VOTED,
-+	.hwcg_reg = 0x80d4,
-+	.hwcg_bit = 1,
-+	.clkr = {
-+		.enable_reg = 0x80d4,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "video_cc_mvs1_clk",
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&video_cc_mvs1_div_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch video_cc_mvs1c_clk = {
-+	.halt_reg = 0x808c,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x808c,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "video_cc_mvs1c_clk",
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&video_cc_mvs1c_div2_div_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch video_cc_pll_lock_monitor_clk = {
-+	.halt_reg = 0x9000,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x9000,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "video_cc_pll_lock_monitor_clk",
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&video_cc_xo_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch video_cc_sm_obs_clk = {
-+	.halt_reg = 0x810c,
-+	.halt_check = BRANCH_HALT_SKIP,
-+	.clkr = {
-+		.enable_reg = 0x810c,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "video_cc_sm_obs_clk",
-+			.parent_hws = (const struct clk_hw*[]) {
-+				&video_cc_sm_div_clk_src.clkr.hw,
-+			},
-+			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct gdsc video_cc_mvs0c_gdsc = {
-+	.gdscr = 0x804c,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0x6,
-+	.pd = {
-+		.name = "video_cc_mvs0c_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
-+};
-+
-+static struct gdsc video_cc_mvs0_gdsc = {
-+	.gdscr = 0x809c,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0x6,
-+	.pd = {
-+		.name = "video_cc_mvs0_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &video_cc_mvs0c_gdsc.pd,
-+	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR | HW_CTRL_TRIGGER,
-+};
-+
-+static struct gdsc video_cc_mvs1c_gdsc = {
-+	.gdscr = 0x8074,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0x6,
-+	.pd = {
-+		.name = "video_cc_mvs1c_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
-+};
-+
-+static struct gdsc video_cc_mvs1_gdsc = {
-+	.gdscr = 0x80c0,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0x6,
-+	.pd = {
-+		.name = "video_cc_mvs1_gdsc",
-+	},
-+	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &video_cc_mvs1c_gdsc.pd,
-+	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR | HW_CTRL_TRIGGER,
-+};
-+
-+static struct clk_regmap *video_cc_sa8775p_clocks[] = {
-+	[VIDEO_CC_AHB_CLK_SRC] = &video_cc_ahb_clk_src.clkr,
-+	[VIDEO_CC_MVS0_CLK] = &video_cc_mvs0_clk.clkr,
-+	[VIDEO_CC_MVS0_CLK_SRC] = &video_cc_mvs0_clk_src.clkr,
-+	[VIDEO_CC_MVS0_DIV_CLK_SRC] = &video_cc_mvs0_div_clk_src.clkr,
-+	[VIDEO_CC_MVS0C_CLK] = &video_cc_mvs0c_clk.clkr,
-+	[VIDEO_CC_MVS0C_DIV2_DIV_CLK_SRC] = &video_cc_mvs0c_div2_div_clk_src.clkr,
-+	[VIDEO_CC_MVS1_CLK] = &video_cc_mvs1_clk.clkr,
-+	[VIDEO_CC_MVS1_CLK_SRC] = &video_cc_mvs1_clk_src.clkr,
-+	[VIDEO_CC_MVS1_DIV_CLK_SRC] = &video_cc_mvs1_div_clk_src.clkr,
-+	[VIDEO_CC_MVS1C_CLK] = &video_cc_mvs1c_clk.clkr,
-+	[VIDEO_CC_MVS1C_DIV2_DIV_CLK_SRC] = &video_cc_mvs1c_div2_div_clk_src.clkr,
-+	[VIDEO_CC_PLL_LOCK_MONITOR_CLK] = &video_cc_pll_lock_monitor_clk.clkr,
-+	[VIDEO_CC_SLEEP_CLK_SRC] = &video_cc_sleep_clk_src.clkr,
-+	[VIDEO_CC_SM_DIV_CLK_SRC] = &video_cc_sm_div_clk_src.clkr,
-+	[VIDEO_CC_SM_OBS_CLK] = &video_cc_sm_obs_clk.clkr,
-+	[VIDEO_CC_XO_CLK_SRC] = &video_cc_xo_clk_src.clkr,
-+	[VIDEO_PLL0] = &video_pll0.clkr,
-+	[VIDEO_PLL1] = &video_pll1.clkr,
-+};
-+
-+static struct gdsc *video_cc_sa8775p_gdscs[] = {
-+	[VIDEO_CC_MVS0_GDSC] = &video_cc_mvs0_gdsc,
-+	[VIDEO_CC_MVS0C_GDSC] = &video_cc_mvs0c_gdsc,
-+	[VIDEO_CC_MVS1_GDSC] = &video_cc_mvs1_gdsc,
-+	[VIDEO_CC_MVS1C_GDSC] = &video_cc_mvs1c_gdsc,
-+};
-+
-+static const struct qcom_reset_map video_cc_sa8775p_resets[] = {
-+	[VIDEO_CC_INTERFACE_BCR] = { 0x80e8 },
-+	[VIDEO_CC_MVS0_BCR] = { 0x8098 },
-+	[VIDEO_CC_MVS0C_CLK_ARES] = { 0x8064, 2 },
-+	[VIDEO_CC_MVS0C_BCR] = { 0x8048 },
-+	[VIDEO_CC_MVS1_BCR] = { 0x80bc },
-+	[VIDEO_CC_MVS1C_CLK_ARES] = { 0x808c, 2 },
-+	[VIDEO_CC_MVS1C_BCR] = { 0x8070 },
-+};
-+
-+static const struct regmap_config video_cc_sa8775p_regmap_config = {
-+	.reg_bits = 32,
-+	.reg_stride = 4,
-+	.val_bits = 32,
-+	.max_register = 0xb000,
-+	.fast_io = true,
-+};
-+
-+static struct qcom_cc_desc video_cc_sa8775p_desc = {
-+	.config = &video_cc_sa8775p_regmap_config,
-+	.clks = video_cc_sa8775p_clocks,
-+	.num_clks = ARRAY_SIZE(video_cc_sa8775p_clocks),
-+	.resets = video_cc_sa8775p_resets,
-+	.num_resets = ARRAY_SIZE(video_cc_sa8775p_resets),
-+	.gdscs = video_cc_sa8775p_gdscs,
-+	.num_gdscs = ARRAY_SIZE(video_cc_sa8775p_gdscs),
-+};
-+
-+static const struct of_device_id video_cc_sa8775p_match_table[] = {
-+	{ .compatible = "qcom,sa8775p-videocc" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, video_cc_sa8775p_match_table);
-+
-+static int video_cc_sa8775p_probe(struct platform_device *pdev)
-+{
-+	struct regmap *regmap;
-+	int ret;
-+
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret)
-+		return ret;
-+
-+	ret = pm_runtime_resume_and_get(&pdev->dev);
-+	if (ret)
-+		return ret;
-+
-+	regmap = qcom_cc_map(pdev, &video_cc_sa8775p_desc);
-+	if (IS_ERR(regmap)) {
-+		pm_runtime_put(&pdev->dev);
-+		return PTR_ERR(regmap);
-+	}
-+
-+	clk_lucid_evo_pll_configure(&video_pll0, regmap, &video_pll0_config);
-+	clk_lucid_evo_pll_configure(&video_pll1, regmap, &video_pll1_config);
-+
-+	/* Keep some clocks always enabled */
-+	qcom_branch_set_clk_en(regmap, 0x80ec); /* VIDEO_CC_AHB_CLK */
-+	qcom_branch_set_clk_en(regmap, 0x8144); /* VIDEO_CC_SLEEP_CLK */
-+	qcom_branch_set_clk_en(regmap, 0x8128); /* VIDEO_CC_XO_CLK */
-+
-+	ret = qcom_cc_really_probe(&pdev->dev, &video_cc_sa8775p_desc, regmap);
-+
-+	pm_runtime_put(&pdev->dev);
-+
-+	return ret;
-+}
-+
-+static struct platform_driver video_cc_sa8775p_driver = {
-+	.probe = video_cc_sa8775p_probe,
-+	.driver = {
-+		.name = "videocc-sa8775p",
-+		.of_match_table = video_cc_sa8775p_match_table,
-+	},
-+};
-+
-+module_platform_driver(video_cc_sa8775p_driver);
-+
-+MODULE_DESCRIPTION("QTI VIDEOCC SA8775P Driver");
-+MODULE_LICENSE("GPL");
++#endif
 
 -- 
 2.45.2
