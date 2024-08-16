@@ -1,171 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-28734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47C0795413D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 07:38:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EFAF9541A7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 08:25:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C19551F23318
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 05:38:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3187E283B14
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 06:25:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C8717E76F;
-	Fri, 16 Aug 2024 05:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF04D84A3F;
+	Fri, 16 Aug 2024 06:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="APT3IreW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mX9uY6AA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1FB777107
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 05:38:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2BD84A2B;
+	Fri, 16 Aug 2024 06:25:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723786684; cv=none; b=s34P/DLim7AsoVl5ZyeI5BAwJPiCW8np+T+7KU0LqlA90aIklND3ex5WyVlB4QWYa3TV9UE28JulBWCfvWGcumH2xjCmJFGhiRsu3ArT+1Md20SDl9NYCZAg6dbs8VHa/RgxA0kr4TP7oHgZZabeCGqccVmo3IsmXidSUpc+GCU=
+	t=1723789513; cv=none; b=XkaCOHRPKfA+BInZi+XJ7Q4HGXJ35YoM7R4TUvq8NALifWv/ujP3lt25PTqKZJGman2AzxnxaYkUtIBtNw4HgWYz7N8rdQfimhZCZwRtSmNwxhWqnm9iVy6iEkVUfrRq/FuuXkR8nteANsdjflcgM+xjz87B/Jv9b5ZnsJsJ+aE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723786684; c=relaxed/simple;
-	bh=UgTBPgKfAzIf8f96qHCArmk1pvypK4P/mS4CEvRVAMs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dPH7p1SO/51PsEkJyg8i9UJ6TrqR+1BqaNbOsAEAksHEg5Ehobr3jjwMBySZ2lWPUHxsoxajQFym8zYnJguZq/ZTvFZCRVTVbN1oMxcxcLPAg6JX2IyUFPJJest6p0vyQ2xVSTSy9t6ai+kYCn0N7Mcv531QbXdFAGPVUUOmalw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=APT3IreW; arc=none smtp.client-ip=209.85.210.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-710ce81bf7dso1318715b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 22:38:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723786681; x=1724391481; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=q7prgwpKi60S0wtUNCPg0YfxubP3Ut6CQZnpYvPh+ks=;
-        b=APT3IreWCwtODVF0LbtZYj4eCNTQEcTkbnGhiLSTYfmuA7SkTyeYvVNpzqM9/vaVYJ
-         1/jkDa0jRAMubecLYh0QcLe02zTs9jbm66VOzw7BY9kxN8ufgvVWwStZ7jqb//y69qcu
-         iCKbNz2LsBVbDTMScdV+zwsZRZuCi8H+4mDg0sPOYcMxF0tpXoLgBFH/wAYtiPyDD9Yd
-         Qb9e7ErKuKs2GE0QzGRb2cI3v804BeZ+RIS9pgYNO04akgomCEsFRvsze2wAd4bEI/MB
-         QIDpDf2AXq6/psPGTED20jdRL8hnO9cGZBrAaZI03QqUaYsmX9rh1ItfzxSCMikEWA1e
-         U8ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723786681; x=1724391481;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q7prgwpKi60S0wtUNCPg0YfxubP3Ut6CQZnpYvPh+ks=;
-        b=YzFclBQcQ1Acfd5UfA7ywJcmofpDycUmdgJWfDAlWk9k8jhmrv37lJzfpksI+3Bp7w
-         +ofCSF+XjihoWwuYp7XAoa72nyUu/UYfvY2WYS/DBOI0viLEcVqJ7+SnJYI1eOcBX+Wn
-         bKC6yHnYdLCG6SuDVya79IBRGT/J6M7K1zqMQRrho+EdoYbEidSfC6Bog+C12oZR5ODJ
-         iz5wVR2saR5g9bDv4LBsmYn7kIcTUKeZw3AjGcVvd63cjCgMXgvnSX+jpneuL/00Pq4A
-         6vmN8bifJi+yab3f1RIVnZOKWU2IFpgik3914XV3gelWWzagTxnP822dKoCO7ZAsQGMD
-         z/gQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUbvWFAaQ3a/D2FIZckcQo4Xk+dHom07/erdvdavDbxj1xNv8nj0qHN/LsIl2AadseMjY9j7Tp89Yuf06dZo0w78nUVbe4vIoHtBceJxQ==
-X-Gm-Message-State: AOJu0Yy06TJOi9tJwwg9+K/MP33AMcYx8x+yBPXpoKsGc8wiUWJ5HWYc
-	mg2G9mg4jqqBcEQBzzYM2lAAk6wFfJTqdr1htiRNnnPdQSGB6pHEi/IFlx+fnw==
-X-Google-Smtp-Source: AGHT+IFULWviVp2cPDtwKAzOpa5+1vMIGu4a/EkkBQIRTeHiqzksixG0eY81MV7KEKUeTVXyMLwl7w==
-X-Received: by 2002:a05:6a00:194e:b0:70b:2a:15cd with SMTP id d2e1a72fcca58-713c4bac60cmr1915613b3a.0.1723786681112;
-        Thu, 15 Aug 2024 22:38:01 -0700 (PDT)
-Received: from thinkpad ([36.255.17.34])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7127af3d13fsm1885217b3a.218.2024.08.15.22.37.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 22:38:00 -0700 (PDT)
-Date: Fri, 16 Aug 2024 11:07:57 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-	bhelgaas@google.com, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] PCI: qcom-ep: Do not enable resources during probe()
-Message-ID: <20240816053757.GF2331@thinkpad>
-References: <20240727090604.24646-1-manivannan.sadhasivam@linaro.org>
- <20240815181557.GA53448@bhelgaas>
+	s=arc-20240116; t=1723789513; c=relaxed/simple;
+	bh=j24GEDJCnKKDhHy6+RSpTUWeG0bpq/+BqdmeI6YLZn4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ts8eyjIRPzo+CCgQ6dK6atplTZJdqL6RUMOcChmOIPVw3IIJrgOBvrO0YFsTDhyIuNRcs20g4Cjpo8V/JdEEv2wfREeAGagN4IEARxmYpUf4IUzjdSRaJvS2QzPJc19GzU7Ze83tTEe/ziXpd4Y1bIMjijh5UrSimOGnJrhdHVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mX9uY6AA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0A003C32782;
+	Fri, 16 Aug 2024 06:25:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723789513;
+	bh=j24GEDJCnKKDhHy6+RSpTUWeG0bpq/+BqdmeI6YLZn4=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=mX9uY6AAQT3AUyhWAlh4/HDp7Q7JfhYmDR5X3/BTpxF7PzHAc0rWF1HHRVWKdfaQI
+	 NsMIl9YLQGYG9PAw1V25+pXjdG67i+j/1KVEYU1wdy2ZV+8frJi2t2TWst9NmvAbFg
+	 1pQ0dxLk6Maq+ArYxG69VeV4lnVuJwHpPlWeqdsAlFoRlG0Ncn66H3OqDSganmf1aE
+	 w/lxH3/AUviMDzo+ER1vWJ/Wdr3yw6wqUMEGzaq0Mg210/j3jfwRlBL9ZBROFRDrIy
+	 bzngPwmai2IJv63hDlLvzu9flcU+e5evVEVEpWaRyFBdnzo2uVPwHC1BoOuWRIyo1Q
+	 rYBDk4L7aybOQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0DE7C531DC;
+	Fri, 16 Aug 2024 06:25:12 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
+Subject: [PATCH v3 0/2] ufs: qcom: Fix probe failure on SM8550 SoC due to
+ broken LSDBS field
+Date: Fri, 16 Aug 2024 11:55:09 +0530
+Message-Id: <20240816-ufs-bug-fix-v3-0-e6fe0e18e2a3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240815181557.GA53448@bhelgaas>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMXwvmYC/22MQQ7CIBAAv2L2LAYoCHryH8YD2KXdxBQDlmia/
+ l3ak008ziQzE2RMhBnOuwkSFsoUhwrNfgf33g0dMmorg+RScSsUG0NmfuxYoDdTSprgufD2yKE
+ Wz4RVr7frrXJP+RXTZ50Xsdj/nyIYZxq9OrU6GG3E5UGDS/EQUwfLqMjfWG9jWWPfmMYFh9bas
+ Innef4CGgeA0OQAAAA=
+To: Alim Akhtar <alim.akhtar@samsung.com>, 
+ Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
+ "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, Kyoungrul Kim <k831.kim@samsung.com>, 
+ Amit Pundir <amit.pundir@linaro.org>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1401;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=j24GEDJCnKKDhHy6+RSpTUWeG0bpq/+BqdmeI6YLZn4=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBmvvDG3izCG4Aa4sIaF9MGmyp4+eBt4PIJ3zbzq
+ Kt240kMDlGJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZr7wxgAKCRBVnxHm/pHO
+ 9c2wB/9LY1wbsfKqBJFfhbFYqm85l2kz0QHzdTnHH3r370AEFKpjXDPutaU74fUl3fjleZrXY9a
+ K5SbpRidW+agu3ggKsJRoTCVTKS3BWGAmtGyrebpBEnrYx6cd9634+ipEi79puvqXXH0RYqjxvt
+ IbQgCu+fz+Tc9D3Kq8KV0WGdfHrAG6OxBoJ4Orn5XCSVpBRsuhaOtoN48rjxKdSXS+4E0FwK1Ra
+ MY7tOvUs3oquLZ/AnYnSdyP+LzLb5gQCn26ai0FtVcAk9xpPJTMlU0eZTyg4GkIdRpb2rO8BWXJ
+ 1a1S7oxN431YYc1x9SQpQtQu6/fNPK7Fico8eyKIumpR0DOI
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@linaro.org/default with auth_id=185
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reply-To: manivannan.sadhasivam@linaro.org
 
-On Thu, Aug 15, 2024 at 01:15:57PM -0500, Bjorn Helgaas wrote:
-> On Sat, Jul 27, 2024 at 02:36:04PM +0530, Manivannan Sadhasivam wrote:
-> > Starting from commit 869bc5253406 ("PCI: dwc: ep: Fix DBI access failure
-> > for drivers requiring refclk from host"), all the hardware register access
-> > (like DBI) were moved to dw_pcie_ep_init_registers() which gets called only
-> > in qcom_pcie_perst_deassert() i.e., only after the endpoint received refclk
-> > from host.
-> > 
-> > So there is no need to enable the endpoint resources (like clk, regulators,
-> > PHY) during probe(). Hence, remove the call to qcom_pcie_enable_resources()
-> > helper from probe(). This was added earlier because dw_pcie_ep_init() was
-> > doing DBI access, which is not done now.
-> > 
-> > While at it, let's also call dw_pcie_ep_deinit() in err path to deinit the
-> > EP controller in the case of failure.
-> 
-> Is this v6.11 material?  If so, we need a little more justification
-> than "no need to enable".
-> 
+Hi,
 
-That's why I asked to merge the comment from Dmitry:
+This series fixes the probe failure on the Qcom SM8550 SoC due to the broken
+LSDBS field in the host controller capabilities register.
 
-"...moreover his makes PCIe EP fail on some of the platforms as powering on PHY
-requires refclk from the RC side, which is not enabled at the probe time."
+Please consider this series for v6.11 as it fixes a regression.
 
-And Krzysztof did that:
-https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git/commit/?h=controller/qcom&id=cd0b3e13ec309dcbe1efb66b1969fc72088b791d
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Changes in v3:
+- Dropped the patch that renamed LSDB field
+- Changed the comment for the quirk and also fixed the UFSHCI version in
+  description
+- Collected review tag
+- Link to v2: https://lore.kernel.org/r/20240815-ufs-bug-fix-v2-0-b373afae888f@linaro.org
 
-- Mani
+Changes in v2:
+- Changed SDBS to LSDBS as per the final version of UFSHCI 4.0 spec
+- Moved the quirk check to assignment
+- Used correct fixes tag in patch 3/3
+- Added tested-by tags
+- Link to v1: https://lore.kernel.org/r/20240814-ufs-bug-fix-v1-0-5eb49d5f7571@linaro.org
 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-qcom-ep.c | 14 ++++----------
-> >  1 file changed, 4 insertions(+), 10 deletions(-)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > index 236229f66c80..2319ff2ae9f6 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > @@ -846,21 +846,15 @@ static int qcom_pcie_ep_probe(struct platform_device *pdev)
-> >  	if (ret)
-> >  		return ret;
-> >  
-> > -	ret = qcom_pcie_enable_resources(pcie_ep);
-> > -	if (ret) {
-> > -		dev_err(dev, "Failed to enable resources: %d\n", ret);
-> > -		return ret;
-> > -	}
-> > -
-> >  	ret = dw_pcie_ep_init(&pcie_ep->pci.ep);
-> >  	if (ret) {
-> >  		dev_err(dev, "Failed to initialize endpoint: %d\n", ret);
-> > -		goto err_disable_resources;
-> > +		return ret;
-> >  	}
-> >  
-> >  	ret = qcom_pcie_ep_enable_irq_resources(pdev, pcie_ep);
-> >  	if (ret)
-> > -		goto err_disable_resources;
-> > +		goto err_ep_deinit;
-> >  
-> >  	name = devm_kasprintf(dev, GFP_KERNEL, "%pOFP", dev->of_node);
-> >  	if (!name) {
-> > @@ -877,8 +871,8 @@ static int qcom_pcie_ep_probe(struct platform_device *pdev)
-> >  	disable_irq(pcie_ep->global_irq);
-> >  	disable_irq(pcie_ep->perst_irq);
-> >  
-> > -err_disable_resources:
-> > -	qcom_pcie_disable_resources(pcie_ep);
-> > +err_ep_deinit:
-> > +	dw_pcie_ep_deinit(&pcie_ep->pci.ep);
-> >  
-> >  	return ret;
-> >  }
-> > -- 
-> > 2.25.1
-> > 
+---
+Manivannan Sadhasivam (2):
+      ufs: core: Add a quirk for handling broken LSDBS field in controller capabilities register
+      ufs: qcom: Add UFSHCD_QUIRK_BROKEN_LSDBS_CAP for SM8550 SoC
 
+ drivers/ufs/core/ufshcd.c   | 6 +++++-
+ drivers/ufs/host/ufs-qcom.c | 6 +++++-
+ include/ufs/ufshcd.h        | 8 ++++++++
+ 3 files changed, 18 insertions(+), 2 deletions(-)
+---
+base-commit: 7c626ce4bae1ac14f60076d00eafe71af30450ba
+change-id: 20240814-ufs-bug-fix-4427fb01b860
+
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+
 
