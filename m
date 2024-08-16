@@ -1,127 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-28720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28721-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BE20953FE6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 05:00:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FA24954017
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 05:42:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0941528443C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 03:00:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 389781C21380
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 03:42:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9A9F763EE;
-	Fri, 16 Aug 2024 03:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05D7C482CD;
+	Fri, 16 Aug 2024 03:42:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u+ZCR744"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WwQ7sfOE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCE455898
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 02:59:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF946F2E0;
+	Fri, 16 Aug 2024 03:42:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723777202; cv=none; b=k0dvT8bTbxzlUJau9pw/BxZZeBNCsOtKq+Ch0vMt2g9i4iKjYPEj74DSaqAv+JSb2ZEHGy3Omb5LueSBVA4U6XMcd8cPjTNMntXGyby3n6vLN36oGsF0JZIYjpGKCsnZ46pDXvamqxkCn2UnPxG6m9TNn9hFqoH/WfgDL/383ic=
+	t=1723779763; cv=none; b=B5k70sQCoGDpIFP6Sb965Mzwuh79qnR3cgIKb00M0kTJ8Pf+KFavrmmQYnO5wXM2KT3JDiOYaDhuWwQ7Bu5ahnIGoJDVZpftgIarcPnAhEEIuuE6xaLmQ1AGf09jDRv3nFRHSQH+CH6/wHnmjd/t/c7JtHTCNeoaQFwOyLRiMv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723777202; c=relaxed/simple;
-	bh=9HJ9mLsvE9hBdnzRmPMog4Duyb12/MBm70Ijnu1zd8g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cpnYtAf4QQE4r3rLqmAwE64nSYJ50fWbN9d2KtspUfVQozhm+SMqKgS/NJFbRgW2gP/q0brOo478RUBE950rstEBWnpPw62rYLaT/jLnOebq1cgMHgk2DZzHdkOv7Ot+zz3FlT5AAKDaYvImxLmedR7yOwqh+4KhBuNWXbTlHJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u+ZCR744; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2d394313aceso1146592a91.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 19:59:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723777199; x=1724381999; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=N3bMIBZKvJVfw9dWJhuewSKLJF4MA9XhsG885+6Ljg0=;
-        b=u+ZCR744batxOalIF5E3s712s1CwOo8FHO61hdi2DSkDOTcW854NkWko3wsp8OPXV2
-         /Xsz65MKcJhiFcET8f4KyEXJLFsZlgHcaWqpb/a1nskj7HZUdassP76pamTQxbIPMegt
-         XCJBZ9gXNWZC6/kb/7wFZipOwpCAOMTqYFJV3nfZiQ6r/IXV+Dn4Aca8jEfFL1IN4Rak
-         LRg8G4FSAfHV/VcSSclkfpqEXqfA14f3IJKl10cg3bQqD7uAskgGwXUVdjNL5DAqKI9+
-         pnhby6jCUzleU8Y5u+ZJjYf7s6DSrvQzZ2ADdORQUApG9xs575sUr++pYRvCa9sVaguL
-         2/Tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723777199; x=1724381999;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=N3bMIBZKvJVfw9dWJhuewSKLJF4MA9XhsG885+6Ljg0=;
-        b=GTQkITQbiogOUM5HJD4DV+hW+Ac1rPQtw1M0l1ubQiUKdwk6JCk547cfr5MBFnvbXU
-         pRT7AiIQ5vcCrqaFhcHRSv0fdGF2LO5IzvmSOY+JYv3XaiRH/Y3QzeO0w7efI1XNuym6
-         ls/9r/Xx8USLUjk8yoUpaNw7jOkXXFg5IugdB/17njGNFzdr+UrwPLI3hodjr7TPru/Z
-         HMwFWsEy7Z/U0X7oRCtrbkSvHoIJd3GywIzEVIxpnxGZ9qGUL81bk6BMdjpTUOkfIVAP
-         1xZj6znSJrdGiu2rqvDGTiJ1xYCa3rP2fIRYwNe7NGSIQNFkiLpYqCDLq91IEQVhEGfs
-         Lowg==
-X-Forwarded-Encrypted: i=1; AJvYcCWcicXCbHc4ZMRMVWXh7gwbFnnSQPILPh7n1H2MtzUV0YkxOLvHd+nYc69WlbBLKNIQV0Amf1r3jLgwB66UX5LF3HYkwof0bRpxzsLcFg==
-X-Gm-Message-State: AOJu0YyGUzUlcEz1tFqYpiNYPBcNSEeRsfgIrMvy9W/YpenqlNFOtQn7
-	2u3Bym9teAajeccpdebdF4qPNy3d2Oq2qOWVBSMoFmh0pWe5BuhBuxsOCXC2vms=
-X-Google-Smtp-Source: AGHT+IG41cmUunEpRo1YEW6i7VN78sorKRs9Ia30Ow8a4NnlLWJDOlmrrRZ7+f/r5YWbnu3bUTT4Ig==
-X-Received: by 2002:a17:90a:ca89:b0:2c9:754d:2cba with SMTP id 98e67ed59e1d1-2d3dfc2aa3amr1975748a91.3.1723777199224;
-        Thu, 15 Aug 2024 19:59:59 -0700 (PDT)
-Received: from localhost ([122.172.84.129])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d3e2330f26sm626022a91.0.2024.08.15.19.59.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 19:59:58 -0700 (PDT)
-Date: Fri, 16 Aug 2024 08:29:56 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Danila Tikhonov <danila@jiaxyga.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	andersson@kernel.org, konradybcio@kernel.org, davem@davemloft.net,
-	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
-	rafael@kernel.org, kees@kernel.org, tony.luck@intel.com,
-	gpiccoli@igalia.com, ulf.hansson@linaro.org, andre.przywara@arm.com,
-	quic_rjendra@quicinc.com, davidwronek@gmail.com,
-	neil.armstrong@linaro.org, heiko.stuebner@cherry.de,
-	rafal@milecki.pl, macromorgan@hotmail.com, linus.walleij@linaro.org,
-	lpieralisi@kernel.org, dmitry.baryshkov@linaro.org,
-	fekz115@gmail.com, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	netdev@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-hardening@vger.kernel.org
-Subject: Re: [PATCH v2 03/11] cpufreq: Add SM7325 to cpufreq-dt-platdev
- blocklist
-Message-ID: <20240816025956.utm7w2djq5ukvoxx@vireshk-i7>
-References: <20240808184048.63030-1-danila@jiaxyga.com>
- <20240808184048.63030-4-danila@jiaxyga.com>
+	s=arc-20240116; t=1723779763; c=relaxed/simple;
+	bh=WZ1OK58Hx+R2DQvNl64uL0au7gftJRQb0jKZcwS8v18=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=lFvBHUjvgutgMWwc2sZ8mRpEaScdmNIexwpc5dzBYCpGsMWOvZ+BeDkdo3ybJZed0Spn3KClXYe8UAlUIn0j/59YP/vg4gLADgARtXzdLv9FwEiCX0NFL6QuHv1mzkiQkj9YTtPJ+u8seBGuQdBF0hHg2CfTQb+f5IsmclIyGJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WwQ7sfOE; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47FKbxAq017861;
+	Fri, 16 Aug 2024 03:42:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+1/jkkrKCkMtArS0AjJ2tj3NvDCJus6VEJpFXSU7sYo=; b=WwQ7sfOEfY4Efvmx
+	qGyoCJfCy1vWShJ9/MJz5+asDpm/pUrPzwfcCNPZ06rSoSo/zPmpU5m6SnZAWVpd
+	QFp5upHZofUWaNZK1k51Nc9EW4cxZ7MUI5G4+BIiZvapM8jDxRqT1O68lk9w5Pwj
+	JqpJCWtPurG+HHUkwjMVlWMB6VYMf90DEjTYs6UNYCz2yp1kEnjM34RHcN4hfm/f
+	y78uSq9em3pBHe2PiJfnUb9/uUA9XII3DSTYZh73GHQJHR8LfQ/OFZr6ItYBnX6r
+	XjX0FXfU22oSGoKnFl+vc/5HASWryxFIBcTOx+lwN6bueCyFFz37zCs0LDsr0QVd
+	JLyhXg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 411rvr8n7r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Aug 2024 03:42:04 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47G3g2qQ027108
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Aug 2024 03:42:02 GMT
+Received: from [10.216.10.29] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 15 Aug
+ 2024 20:41:56 -0700
+Message-ID: <f9492c14-b07f-43d1-6f78-a895f2d8a2d9@quicinc.com>
+Date: Fri, 16 Aug 2024 09:11:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240808184048.63030-4-danila@jiaxyga.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH 1/4] perf/dwc_pcie: Fix registration issue in multi PCIe
+ controller instances
+To: Yicong Yang <yangyicong@huawei.com>
+CC: Shuai Xue <xueshuai@linux.alibaba.com>,
+        Jing Zhang
+	<renyu.zj@linux.alibaba.com>,
+        Will Deacon <will@kernel.org>, Mark Rutland
+	<mark.rutland@arm.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        "Yicong
+ Yang" <yangyicong@hisilicon.com>,
+        Jonathan Cameron
+	<Jonathan.Cameron@huawei.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <quic_parass@quicinc.com>,
+        <quic_mrana@quicinc.com>
+References: <20240731-dwc_pmu_fix-v1-0-ca47d153e5b2@quicinc.com>
+ <20240731-dwc_pmu_fix-v1-1-ca47d153e5b2@quicinc.com>
+ <3dcb4074-9958-b454-7456-9dcc455dd736@huawei.com>
+Content-Language: en-US
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <3dcb4074-9958-b454-7456-9dcc455dd736@huawei.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: r2iBRan8AZGdOzGNAzzf4Xc1jnfDCqtD
+X-Proofpoint-ORIG-GUID: r2iBRan8AZGdOzGNAzzf4Xc1jnfDCqtD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-15_18,2024-08-15_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ suspectscore=0 adultscore=0 malwarescore=0 spamscore=0 phishscore=0
+ mlxlogscore=999 priorityscore=1501 clxscore=1011 impostorscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408160025
 
-On 08-08-24, 21:40, Danila Tikhonov wrote:
-> The Qualcomm SM7325 platform uses the qcom-cpufreq-hw driver, so add
-> it to the cpufreq-dt-platdev driver's blocklist.
+
+
+On 8/15/2024 7:10 PM, Yicong Yang wrote:
+> On 2024/7/31 12:23, Krishna chaitanya chundru wrote:
+>> When there are multiple of instances of PCIe controllers, registration
+>> to perf driver fails with this error.
+>> sysfs: cannot create duplicate filename '/devices/platform/dwc_pcie_pmu.0'
+>> CPU: 0 PID: 166 Comm: modprobe Not tainted 6.10.0-rc2-next-20240607-dirty
+>> Hardware name: Qualcomm SA8775P Ride (DT)
+>> Call trace:
+>>   dump_backtrace.part.8+0x98/0xf0
+>>   show_stack+0x14/0x1c
+>>   dump_stack_lvl+0x74/0x88
+>>   dump_stack+0x14/0x1c
+>>   sysfs_warn_dup+0x60/0x78
+>>   sysfs_create_dir_ns+0xe8/0x100
+>>   kobject_add_internal+0x94/0x224
+>>   kobject_add+0xa8/0x118
+>>   device_add+0x298/0x7b4
+>>   platform_device_add+0x1a0/0x228
+>>   platform_device_register_full+0x11c/0x148
+>>   dwc_pcie_register_dev+0x74/0xf0 [dwc_pcie_pmu]
+>>   dwc_pcie_pmu_init+0x7c/0x1000 [dwc_pcie_pmu]
+>>   do_one_initcall+0x58/0x1c0
+>>   do_init_module+0x58/0x208
+>>   load_module+0x1804/0x188c
+>>   __do_sys_init_module+0x18c/0x1f0
+>>   __arm64_sys_init_module+0x14/0x1c
+>>   invoke_syscall+0x40/0xf8
+>>   el0_svc_common.constprop.1+0x70/0xf4
+>>   do_el0_svc+0x18/0x20
+>>   el0_svc+0x28/0xb0
+>>   el0t_64_sync_handler+0x9c/0xc0
+>>   el0t_64_sync+0x160/0x164
+>> kobject: kobject_add_internal failed for dwc_pcie_pmu.0 with -EEXIST,
+>> don't try to register things with the same name in the same directory.
+>>
+>> This is because of having same bdf value for devices under two different
+>> controllers.
+>>
+>> Update the logic to use sbdf which is a unique number in case of
+>> multi instance also.
+>>
+>> Fixes: af9597adc2f1 ("drivers/perf: add DesignWare PCIe PMU driver")
 > 
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/cpufreq/cpufreq-dt-platdev.c | 1 +
->  1 file changed, 1 insertion(+)
+> Did you run into this on a QCOM platform with Patch 4/4 since there's
+> multiple PCIe domains?
 > 
-> diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
-> index cac379ba006d..18942bfe9c95 100644
-> --- a/drivers/cpufreq/cpufreq-dt-platdev.c
-> +++ b/drivers/cpufreq/cpufreq-dt-platdev.c
-> @@ -166,6 +166,7 @@ static const struct of_device_id blocklist[] __initconst = {
->  	{ .compatible = "qcom,sm6350", },
->  	{ .compatible = "qcom,sm6375", },
->  	{ .compatible = "qcom,sm7225", },
-> +	{ .compatible = "qcom,sm7325", },
->  	{ .compatible = "qcom,sm8150", },
->  	{ .compatible = "qcom,sm8250", },
->  	{ .compatible = "qcom,sm8350", },
+Yes we ran this in QCOM platform where it has multiple PCIe instances.
+>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>> ---
+>>   drivers/perf/dwc_pcie_pmu.c | 16 ++++++++--------
+>>   1 file changed, 8 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/perf/dwc_pcie_pmu.c b/drivers/perf/dwc_pcie_pmu.c
+>> index c5e328f23841..c115348b8d53 100644
+>> --- a/drivers/perf/dwc_pcie_pmu.c
+>> +++ b/drivers/perf/dwc_pcie_pmu.c
+>> @@ -556,10 +556,10 @@ static int dwc_pcie_register_dev(struct pci_dev *pdev)
+>>   {
+>>   	struct platform_device *plat_dev;
+>>   	struct dwc_pcie_dev_info *dev_info;
+>> -	u32 bdf;
+>> +	u32 sbdf;
+>>   
+>> -	bdf = PCI_DEVID(pdev->bus->number, pdev->devfn);
+>> -	plat_dev = platform_device_register_data(NULL, "dwc_pcie_pmu", bdf,
+>> +	sbdf = (pci_domain_nr(pdev->bus) << 16) | PCI_DEVID(pdev->bus->number, pdev->devfn);
+>> +	plat_dev = platform_device_register_data(NULL, "dwc_pcie_pmu", sbdf,
+>>   						 pdev, sizeof(*pdev));
+>>   
+>>   	if (IS_ERR(plat_dev))
+>> @@ -611,15 +611,15 @@ static int dwc_pcie_pmu_probe(struct platform_device *plat_dev)
+>>   	struct pci_dev *pdev = plat_dev->dev.platform_data;
+>>   	struct dwc_pcie_pmu *pcie_pmu;
+>>   	char *name;
+>> -	u32 bdf, val;
+>> +	u32 sbdf, val;
+>>   	u16 vsec;
+>>   	int ret;
+>>   
+>>   	vsec = pci_find_vsec_capability(pdev, pdev->vendor,
+>>   					DWC_PCIE_VSEC_RAS_DES_ID);
+>>   	pci_read_config_dword(pdev, vsec + PCI_VNDR_HEADER, &val);
+>> -	bdf = PCI_DEVID(pdev->bus->number, pdev->devfn);
+>> -	name = devm_kasprintf(&plat_dev->dev, GFP_KERNEL, "dwc_rootport_%x", bdf);
+>> +	sbdf = (pci_domain_nr(pdev->bus) << 16) | PCI_DEVID(pdev->bus->number, pdev->devfn);
+> 
+> sbdf is also registerd as the id of the platform device in platform_device_register_data() above,
+> can we use it directly here without encoding it again?
+> 
+> Thanks.
+> 
+ack.
 
-Applied. Thanks.
-
--- 
-viresh
+- Krishna chaitanya.
+>> +	name = devm_kasprintf(&plat_dev->dev, GFP_KERNEL, "dwc_rootport_%x", sbdf);
+>>   	if (!name)
+>>   		return -ENOMEM;
+>>   
+>> @@ -650,7 +650,7 @@ static int dwc_pcie_pmu_probe(struct platform_device *plat_dev)
+>>   	ret = cpuhp_state_add_instance(dwc_pcie_pmu_hp_state,
+>>   				       &pcie_pmu->cpuhp_node);
+>>   	if (ret) {
+>> -		pci_err(pdev, "Error %d registering hotplug @%x\n", ret, bdf);
+>> +		pci_err(pdev, "Error %d registering hotplug @%x\n", ret, sbdf);
+>>   		return ret;
+>>   	}
+>>   
+>> @@ -663,7 +663,7 @@ static int dwc_pcie_pmu_probe(struct platform_device *plat_dev)
+>>   
+>>   	ret = perf_pmu_register(&pcie_pmu->pmu, name, -1);
+>>   	if (ret) {
+>> -		pci_err(pdev, "Error %d registering PMU @%x\n", ret, bdf);
+>> +		pci_err(pdev, "Error %d registering PMU @%x\n", ret, sbdf);
+>>   		return ret;
+>>   	}
+>>   	ret = devm_add_action_or_reset(&plat_dev->dev, dwc_pcie_unregister_pmu,
+>>
 
