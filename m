@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 286E995423A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 09:01:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A839954272
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 09:13:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB675281CBB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 07:01:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ABE501F2207E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 07:13:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DAFC823CB;
-	Fri, 16 Aug 2024 07:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EAEC84A21;
+	Fri, 16 Aug 2024 07:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bff/nJb4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UAsFap7K"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6B76FBF;
-	Fri, 16 Aug 2024 07:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2154678C68;
+	Fri, 16 Aug 2024 07:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723791703; cv=none; b=NF+eoionoZYSpzURgoQBGFBqUv0hupbqpbEDiZAokvdeycAHRTQONlTXitTZXFpXIRLo1CLLj8QqjfkVcg767HDV+xygxXVWjUlrW4nmqjd3gHLe+8CsDt04TU05ctpYXR4rTnjJzTc2gkUM9aTKhUemZIXZ4sXxMTbI6TurF9k=
+	t=1723792410; cv=none; b=ecbBv0GdzqB9hoNYaO0WIh/5e3ECm1653bjVOnNo6DAiGuIre6v3mwkab3Q6WEaB/1SGYMQ4zfTqPi1lku5j0CBQJsvL4P/mbS1aYlaTHsP2ljHSnl0eDwcC8K3D5v4RvmWPYZkiG4hzOY4YkRynWZZQ8MJvzYr3QOdsjwyS8ZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723791703; c=relaxed/simple;
-	bh=Kb8xr+L+9CIfFoqHX933aD9sf4I0wfxGgUypWNbliQ0=;
+	s=arc-20240116; t=1723792410; c=relaxed/simple;
+	bh=HRPnl+L1COn82thCnnrX8cp2TSP9xdO6WS49m/7BRKo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GINWNlY60EfMdiunIWAM+aVMakf1Q6rVGwpWrLf1ASbJSr1PITTytbUyPa+zPybjzwKrdNJtoGHd7qRW4CUhv6z+NdkFSg37Ky2oTQ+Ne/So4kZ9Cf4/XyyioW1b6J2v5FBS9jh180y98LwCJQLYU0VyWhG33dZigeYHCPXTNrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bff/nJb4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A4FC32782;
-	Fri, 16 Aug 2024 07:01:36 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=U/XBqq0fDZeDQX5fDEuGe0/kqL8jicbqs3eCGBM/5PTXl7SIU4Cc83iwOEWQcyBHq/6Bw80jeJo18Znoo9PQB+naGW2AjJIBJd1PNQLwWEBRwMQhXPFcgCpmf6I22e7og9Fl7qMe0lQ5jcvs2D3L54oT2KCAjUQ8MpVM6HatLr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UAsFap7K; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C019DC32782;
+	Fri, 16 Aug 2024 07:13:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723791701;
-	bh=Kb8xr+L+9CIfFoqHX933aD9sf4I0wfxGgUypWNbliQ0=;
+	s=k20201202; t=1723792409;
+	bh=HRPnl+L1COn82thCnnrX8cp2TSP9xdO6WS49m/7BRKo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=bff/nJb4JpMYDLowlQ9pJ02rs+w/jQzWxySJG1NsTVu4j73tgbEONFWDPirpmpTXS
-	 Nd4mJ/Tfmi9foJ8GGnDJq7vvfxBL9tz78gKl2ch6K5C2PRQvu/ElXaqS19nL+y7TTN
-	 6W9kbcLYXFPrebnEL3LTcLHFjgrK9Z/DVi9YYlxnHXOMlinxzB9B7ppVSQq/Fp48Ga
-	 e78RfZEM3WmYPDH2OFjgdKLQCs6OhWM5Uv/ou24Qk4owtUbLgvmYba+odKEiDfmjh2
-	 ZNhNxwE/XcDIB1NvDQW/W1l7vhLAiiWnCtQvgmhrY/CV5FOw3EdNWH1clHo6xj5e5g
-	 5rbJoCvL9kFIQ==
-Message-ID: <cb905d5e-6d70-4395-894c-55b3542e2ebe@kernel.org>
-Date: Fri, 16 Aug 2024 09:01:34 +0200
+	b=UAsFap7KRtpINfUj4Bh+uZJNXj9E/yrpyFUEZKqKBvtifGI7DQ6nEziGqvZLJ6U9R
+	 UuqRJaVOH/Ws3Zz49d+MWskVZaHJl1Yr1Wi844Yg/tLxvoK52nb+/wE+MeqLl0mPeL
+	 ofwtHPJOhY53mgkJ0bxb0XLGXP+tNnW/dZ4KpjT+sdPUZatHtkKRaA/3o+yszbrEuG
+	 p21njAMZGCk5dEqO5JsBAJvTlWi0C1m/mf02wpnRtEXZCrrsisDvQEP/DayipwH9xY
+	 RnQEmF57t1ZsHBiDLcaunGBMXMVxrYvRKtGkL4FudFfwnwuQ2upd8VpoFRRLxbnNuC
+	 rjwdUo0sUkfFg==
+Message-ID: <ad9a288c-bcce-4dc4-a572-6459cc99bfb7@kernel.org>
+Date: Fri, 16 Aug 2024 09:13:23 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,16 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
- binding
-To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-8-quic_depengs@quicinc.com>
+Subject: Re: [PATCH v3 1/6] dt-bindings: crypto: Add X1E80100 Crypto Engine
+To: Marcus Glocker <marcus@nazgul.ch>, Bjorn Andersson
+ <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
+ Johan Hovold <johan@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+References: <v2iah5yrne4u6uzrnzg36tvtxzqrpiez6io2gyyfrht2x42umw@5ribqndiavxv>
+ <szw5nxru6vwbsomhkpwdagnr4wg6ltjfbp6kmnb6sse6it3yzv@qwgui4kj2foj>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,41 +105,14 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240812144131.369378-8-quic_depengs@quicinc.com>
+In-Reply-To: <szw5nxru6vwbsomhkpwdagnr4wg6ltjfbp6kmnb6sse6it3yzv@qwgui4kj2foj>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12/08/2024 16:41, Depeng Shao wrote:
-> Add bindings for qcom,sm8550-camss in order to support the camera
-> subsystem for sm8550.
+On 15/08/2024 12:38, Marcus Glocker wrote:
+> Add the UFS Crypto Engine binding.
 > 
-> Co-developed-by: Yongsheng Li <quic_yon@quicinc.com>
-> Signed-off-by: Yongsheng Li <quic_yon@quicinc.com>
-> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
-
-...
-
-> +
-> +required:
-> +  - compatible
-> +  - clocks
-> +  - clock-names
-> +  - interconnects
-> +  - interconnect-names
-> +  - interrupts
-> +  - interrupt-names
-> +  - iommus
-> +  - power-domains
-> +  - power-domain-names
-> +  - reg
-> +  - reg-names
-> +  - vdda-phy-supply
-> +  - vdda-pll-supply
-
-Order is still not as expected. I already commented on this - keep the
-same order as in "properties:" block.
-
-With the order fixed:
+> Signed-off-by: Marcus Glocker <marcus@nazgul.ch>
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
