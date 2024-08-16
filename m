@@ -1,151 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-28794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BD6C9548AF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 14:24:04 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60D729548BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 14:30:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BFA0D1C22AE8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 12:24:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 93DB41C23273
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 12:30:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5FE11A4F04;
-	Fri, 16 Aug 2024 12:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA95019A281;
+	Fri, 16 Aug 2024 12:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="aYqtBBdg"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="g1ydmzpZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810E81991D2;
-	Fri, 16 Aug 2024 12:23:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C152E859
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 12:30:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723811040; cv=none; b=KBqYiJRuKY0vL4TciiB/dNEt4RRHQUnR+FYJU8jwRk+e6GQhdbv1NJidCEmDPlt3bdYKtWXP9INcDLNiwGJEbeohydZuT0IfMffciLFprrj7JjxFqoP1OcuI2N94kSHCNmAZ8mxCv7h6s110xYSud5vfbexLNvZPKkcQLtbKabw=
+	t=1723811414; cv=none; b=aIYqJ86dmRtuEu1LgjtSx5eJLukiKi55dpZJsH1ls9o+Fe9KDy8G1+KygOqv6fKTKBqq+7Dn7shNZcdQjUHaS/0AxSaPRaUB3gturIa3vd6QbiOEClcAiwuk2ZI9ZaDs+TVlIgivyG4FOwQ9F3EtbxIFeF+8MBUxLMV1fQPZypA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723811040; c=relaxed/simple;
-	bh=0XjBuQ5Ujk4jTqxw19KMbPoC57UVqxNo9JAgL8Zw148=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TdbeGUMBNPHFIPKSU3+ghWvI9T3e9oe6quP+8ZqXRJigwOOu67EejY+uil6tszJNZ5Tvzg2izVp1qt36qSpMYBZg1/wcAZWV8MVNS2SvcdDK2DlL/EeG2BBylyp66BrJr3kFEIjQuQ0tWUPxOsG6nkwfrkq7kLa5wdOZCnHWSwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=aYqtBBdg; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723811038; x=1755347038;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=0XjBuQ5Ujk4jTqxw19KMbPoC57UVqxNo9JAgL8Zw148=;
-  b=aYqtBBdgNnNTSV5pfAszHc7lgscHK0UzHc01ktKYC3lfFZjo0+opPpN2
-   4CGEVnstYDzgptBz1bTXFXn+I2617VLhkrt6QB42zVIaqyW6vxj3Lv3lX
-   WgO9zFWC1U0GSJdK588geEg4Shrn7ZLN1Q0zd67o8grF964usTZ/nNi8g
-   jNo1YO/ZJc9aH0dNk79EtOKUZXRcc5/n9XQpzYei8uGNUzVeVwbxO9RYm
-   3wkIfTwoDsx8kMjXuM2NEAY/0CtTV3+8Kjn1RNtKAjyprgEKa5/UQ4lyY
-   ++30kDoNYZA8xJ0pyKZtBwBiMBm4kdo44dHULc7xO6oOgzwDWbMuSQboH
-   w==;
-X-CSE-ConnectionGUID: I82+TdUmQje/iNe2JrIcoA==
-X-CSE-MsgGUID: e74t4+9tT2e4mGaXUrmUIw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11166"; a="22250475"
-X-IronPort-AV: E=Sophos;i="6.10,151,1719903600"; 
-   d="scan'208";a="22250475"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Aug 2024 05:23:57 -0700
-X-CSE-ConnectionGUID: jTI0ERjdQYOOOYnshjCUog==
-X-CSE-MsgGUID: S9gzk8e6RFu1PRuXaiBdrQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,151,1719903600"; 
-   d="scan'208";a="60218489"
-Received: from lkp-server01.sh.intel.com (HELO 9a732dc145d3) ([10.239.97.150])
-  by orviesa007.jf.intel.com with ESMTP; 16 Aug 2024 05:23:54 -0700
-Received: from kbuild by 9a732dc145d3 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1sevzj-0006Os-1J;
-	Fri, 16 Aug 2024 12:23:51 +0000
-Date: Fri, 16 Aug 2024 20:23:36 +0800
-From: kernel test robot <lkp@intel.com>
-To: Antonino Maniscalco <antomani103@gmail.com>,
-	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Antonino Maniscalco <antomani103@gmail.com>,
-	Sharat Masetty <smasetty@codeaurora.org>
-Subject: Re: [PATCH 4/7] drm/msm/A6xx: Implement preemption for A7XX targets
-Message-ID: <202408161951.81zgvcJ5-lkp@intel.com>
-References: <20240815-preemption-a750-t-v1-4-7bda26c34037@gmail.com>
+	s=arc-20240116; t=1723811414; c=relaxed/simple;
+	bh=KEWMVxcu/NLQtr33F3tQHy3IBtqOb4ps9ENmIRZm+W0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rMatmJzmAdAueQh9rjtO1hMfT2rcfspUYD9gsPgPxIOvPGxUeT/ysDtXUFr31iCyHqYVe7CrJZVA6sJT/48P/T0fhQpBv4d3snyfv6zxdX+mkXqzKz3ceF8ShfewLliOCT1JIq+nocQk0QJF24JLuRTk+Tff3BjE/nEugo6Oqok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=g1ydmzpZ; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-52fc4388a64so2532385e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 05:30:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1723811409; x=1724416209; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w96eQaH+JFVwUc2NHdKcq4o8sWhYVnxpQd6m10yEznM=;
+        b=g1ydmzpZlyIoAsEzBXBw3+psyCyndmGoztl8ZXN7uGBj7hwOEUkoFeBXh+bBeIR/TT
+         Nk37KNPO1JhHyJgfr22aAMtI8Gjf692Pua98WGbchNLopYyAX+upK1RV/20nyH+wdGfJ
+         ICzRciSIqNlIXtHtpGP4IFnXFu2mzNxZlxG391grEfPsu35kgnCWz/sD98zfVVsxilPU
+         TidTK+bVnngIVG/JUUN9mijqm6NaNmRpo4CU3Ir4QpIoVmHalU2gfmrYXGs9agpW1sGd
+         OCAYf/TkhTAZN7vBMLIWrRhd98pDYFKbQ/25qSE5Hh2zNphmf32Q3N7k7uO+0xq4JXq9
+         mFfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723811409; x=1724416209;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=w96eQaH+JFVwUc2NHdKcq4o8sWhYVnxpQd6m10yEznM=;
+        b=OaS+/62pknanmnv21WU1urWn9CJDFdfrp4KHc3bkU92j7wPt6G7bBLGePPKaVxJGAJ
+         3XWVn4+aWhbpbBePrGD7ucnfuZ0YQY5hSTKiYAyh0YVLr9CLE3nQtC/thq1vvtbqHUhS
+         ILdiIY0mXmz1UwBtdnFKU4eu9Pf7wCEtOiEJoVXK7pgKb5boGlGTDHhhnXcunkVCw+Fi
+         X3R8PT+1djPB6GfrJ9GMEG7w2QL1ENm2y+e3pWbyiIIDh3B8bCscce5sEvaLihwlAVeT
+         2xRb8cXaMRY+FPjifD2NM6ADIhNww3XuNyjXxzTmhJcS3iT9LOi/9YmUW094XVhZq02y
+         xJxQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWhaiNry92Ps/uXxnftBntp7oj+MhEPNWwnKHxcaMrwG8SduNejclsj3HNyL96svcXMwggcOz6ERsaoCfBkfqU9lNps0y0Gba18BxO9qg==
+X-Gm-Message-State: AOJu0YwbRwnoyT9TzoWSV5caIW0gHh+12m7W9CNdK0yf+kc3mCVhIp5N
+	nQdfq2T7FeWBWAXNU8ZIZiMBfwQ3EHi7nFicR/4rlEHUQlYArw4tJx4yuLAivALWlg/8iAx/72s
+	OVBFfwlEPGQ0mXy7twA3cXbHl/QQVc9/W7jddnQ==
+X-Google-Smtp-Source: AGHT+IFZaK4vjw4Aem+81rYMCtAGdtY0O6D4wq9Y8v3rCLdzZcg4Vb5soplVtVkp/6l3JtM6+jGW1KtRA1lR1iP6gzQ=
+X-Received: by 2002:a05:6512:3dab:b0:52c:c5c4:43d4 with SMTP id
+ 2adb3069b0e04-5331c6f0065mr1560017e87.53.1723811408941; Fri, 16 Aug 2024
+ 05:30:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240815-preemption-a750-t-v1-4-7bda26c34037@gmail.com>
+References: <20240816102345.16481-1-brgl@bgdev.pl> <c0af2eec-c289-4147-aca2-aac438451f5e@kernel.org>
+In-Reply-To: <c0af2eec-c289-4147-aca2-aac438451f5e@kernel.org>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Fri, 16 Aug 2024 14:29:56 +0200
+Message-ID: <CAMRc=MdmgcRUfYGo25spPOKqjpebiaZUP34B7PuuoAxMAupAYA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: misc: qcom,fastrpc: document new domain ID
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Amol Maheshwari <amahesh@qti.qualcomm.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Tengfei Fan <quic_tengfan@quicinc.com>, Ling Xu <quic_lxu5@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Antonino,
+On Fri, Aug 16, 2024 at 1:21=E2=80=AFPM Krzysztof Kozlowski <krzk@kernel.or=
+g> wrote:
+>
+> On 16/08/2024 12:23, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Add "cdsp1" as the new supported label for the CDSP1 fastrpc domain.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
+> >  Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml b=
+/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> > index c27a8f33d8d7..2a5b18982804 100644
+> > --- a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> > +++ b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+> > @@ -26,6 +26,7 @@ properties:
+> >        - mdsp
+> >        - sdsp
+> >        - cdsp
+> > +      - cdsp1
+>
+> Are there more than one cdsp domains? Why adding suffixes? Driver source
+> code does not have "cdsp1" domain, so this is confusing.
+>
+> Best regards,
+> Krzysztof
+>
 
-kernel test robot noticed the following build warnings:
+It does, Srini picked up this patch earlier today. I'm not an expert
+in fast RPC but it looks like the domain ID number matters here.
 
-[auto build test WARNING on 7c626ce4bae1ac14f60076d00eafe71af30450ba]
+Bart
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Antonino-Maniscalco/drm-msm-Fix-bv_fence-being-used-as-bv_rptr/20240816-023442
-base:   7c626ce4bae1ac14f60076d00eafe71af30450ba
-patch link:    https://lore.kernel.org/r/20240815-preemption-a750-t-v1-4-7bda26c34037%40gmail.com
-patch subject: [PATCH 4/7] drm/msm/A6xx: Implement preemption for A7XX targets
-config: i386-buildonly-randconfig-001-20240816 (https://download.01.org/0day-ci/archive/20240816/202408161951.81zgvcJ5-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240816/202408161951.81zgvcJ5-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202408161951.81zgvcJ5-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/gpu/drm/msm/adreno/a6xx_preempt.c: In function 'update_wptr':
->> drivers/gpu/drm/msm/adreno/a6xx_preempt.c:49:24: warning: unused variable 'cur_wptr' [-Wunused-variable]
-      49 |         uint32_t wptr, cur_wptr;
-         |                        ^~~~~~~~
-
-
-vim +/cur_wptr +49 drivers/gpu/drm/msm/adreno/a6xx_preempt.c
-
-    44	
-    45	/* Write the most recent wptr for the given ring into the hardware */
-    46	static inline void update_wptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
-    47	{
-    48		unsigned long flags;
-  > 49		uint32_t wptr, cur_wptr;
-    50	
-    51		if (!ring)
-    52			return;
-    53	
-    54		spin_lock_irqsave(&ring->preempt_lock, flags);
-    55	
-    56		if (ring->skip_inline_wptr) {
-    57			wptr = get_wptr(ring);
-    58	
-    59			gpu_write(gpu, REG_A6XX_CP_RB_WPTR, wptr);
-    60	
-    61			ring->skip_inline_wptr = false;
-    62		}
-    63	
-    64		spin_unlock_irqrestore(&ring->preempt_lock, flags);
-    65	}
-    66	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+[1] https://lore.kernel.org/all/20240805-topic-sa8775p-iot-remoteproc-v4-4-=
+86affdc72c04@linaro.org/
 
