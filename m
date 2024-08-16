@@ -1,48 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-28803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51BEB954BE2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 16:08:27 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6BBB954C43
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 16:21:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0FB55287309
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 14:08:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CAEBE1C22707
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 14:21:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 331F31BF329;
-	Fri, 16 Aug 2024 14:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D0EE1BC9F4;
+	Fri, 16 Aug 2024 14:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W49MYjsA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="guwriQEW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050191BF32B;
-	Fri, 16 Aug 2024 14:05:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970CC1E520
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 14:21:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723817154; cv=none; b=R97JhTVqpkRw2incuBpWS0lLGNAOIVWEC2hZtQ1UrlhISsN4fxPZ2KEyf7mPv+ObMsYF08ux72ROqPVE6ofj+re6r/vxTeGmvZjCmHdRs+zEKjmn8BoN7EClyayMspTodNgiad3zNPwSV3AD3tltO3+KftukyrHSRiTNTKWKBl0=
+	t=1723818070; cv=none; b=Z7u13EgFPaWhJ5HicdAhlUemdjikhPTIt61Zwuu5EWkviTnvCr+ZZICr0KyutLK2fNJ9RqsTS0PGqDky50GbORsrZi8Yqmc17AmREhXSIyWhpEEkfEl3NUpnTJzYYBYvRmTZ3mGxHGQZejavnXHwfwd/G4HmmACU+iqanIAhxk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723817154; c=relaxed/simple;
-	bh=mTwBE8FWythFJ/eb/9Scg+hZubeRcMzx9DTi1kVoUp8=;
+	s=arc-20240116; t=1723818070; c=relaxed/simple;
+	bh=LYIvL2aCKI6DvgZCGVQrwv1dVzMR+ddvSaY8gJtRBqY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ig0kcGJFsQp5GvwYXBkzmMTSI5qaupjtmKREKmZ36YO0rrQB4aoRx3E6Q5/Q0kLhZ2pRBdcflsqKn7SB1FKSwBl4UhbOOzzWIyihgoNeEFUx+xX28xuu4Q6DBLnNxrEZoR/6l7gDdwxbocjFAIZ2jEsyA4aOl74+0m8b31jMGVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W49MYjsA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12861C4AF0C;
-	Fri, 16 Aug 2024 14:05:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723817153;
-	bh=mTwBE8FWythFJ/eb/9Scg+hZubeRcMzx9DTi1kVoUp8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=W49MYjsAteRirH9gbHk90Z2aVvS+LUGUlQAmdbodh3i0wRmEAvnFZ5EYnE3i4RfJL
-	 hwrpMDnryWBVYbfSarZph0bX3TUVUhs3OP/ajJ8YKtdfblXYC0k0RrIoBEnQUp7zp1
-	 ajYsV4lyXFvPp9UhRBz47Hm64NPD/JscBsGgAUwbl5UtUx+AbGick6L/9swXiWv/iX
-	 EziTurgO1jDSWkpTUK7L/zNQUoypCYEMZz90MDVX26W5ttITwFPI4fV97omV5wJtYn
-	 Jn/1Xy4TnlKJUbO6fEPi4+h6dPXIYVD4GeYo7B66iryZ92TFNnN/9EBxrdm3IQdO2A
-	 h1yVzzQ03WCHg==
-Message-ID: <b34c0826-44fc-46cf-93ca-e07afb5df4e5@kernel.org>
-Date: Fri, 16 Aug 2024 16:05:47 +0200
+	 In-Reply-To:Content-Type; b=ATL+9a+oUJfqpp7iuAHtZgBPy2ZyBSvVvGx0C5HG6JbmJjzpZ5sOL4a4hCjh47xbPZw98WcbLi8Lc2GF65ltMPMrZGwFiLh1ZnpuE0zNeaZOE6t4WVxVLw/RS2Zls28F+6KbvJZEPuHBoo3F+Ia/0IIaXfdsn0IAmRS+hNuJj0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=guwriQEW; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3719398eafcso612857f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 07:21:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1723818067; x=1724422867; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pX+qhgpFaUEMlgLNTLJN0UUFwlGpHiwB1h8EJe7S0iI=;
+        b=guwriQEWRhP6J/eDfXBpNuhe7zBqa5kMEfJpO8+SxhXPgVVFXTIzH/B23dEONu1hcV
+         0iAknge0J68AqqBXUcFEL6LjmeEs0BLdq3sugz4X+kWdd3580HtjgSOV9Uv0MJpB6Xpz
+         StWA9SDHKexje9ECvaZ5JCsbgSHYzp98ZWawHTautY+fMtZZs0zeumPkAHwJULJs2txK
+         fssszuQoP2KGkVIdbY7HGSIGX3ZmtzI5fTShFwtyP0p6+v9TN2/yPcUdJVLxB+OqcVul
+         rTkyMDYCHNOHIag84mn2T8GZxukyssLg0tLwI2XEHKx93SoX1HXAGceTMqfL/emenOov
+         iGFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723818067; x=1724422867;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pX+qhgpFaUEMlgLNTLJN0UUFwlGpHiwB1h8EJe7S0iI=;
+        b=FEOp5SzWh9TKwELOLu2oS5gYrD5mOQL1vjDOrYJlybRvHal8RMc2gcf2HBGUdW2bTq
+         HCvperV98BP2lKilr/YJIZkHAWX7Gpro1Vvx7oChOnMqZkAcJj0alxE02r0+MsexvgfO
+         zb1vZL7dFdon230jsgMYTFIj/yMkVN7yce2MBqFQqWwbYLsKOY56xDAh0oIFFPp9hcAu
+         9p2t75GlHDaIGDloRjO7KCPXzsEmiSd8sl7PWndlPWPXlBbp22m5dvL+uMWo3aI9Z2Fh
+         /bt8Hh0bM/74PfgXxyhuXBaL9pJ1xEnWfNKOfrKAysC9JMNQ+Abo2vTJE3CZzjQ5UH94
+         8sig==
+X-Gm-Message-State: AOJu0Yznn6o9IAWSLPMqXlStjKYxigxO5NndWATqKlPZCw3JL810MGgZ
+	HdOV4XGVWjU1WSDZeyNIr9haSTfR/90dmGbauQaGcWmnYrdS7S73zQVlrD0D1LY=
+X-Google-Smtp-Source: AGHT+IF86Kn2yd17AhLJ6H/eJJ9YsESRDoCf+PYPIgA5eUrMMA9HT+lbZuCMhOOf+lIzMbKsxJjweg==
+X-Received: by 2002:adf:f2c5:0:b0:371:7cd1:86e5 with SMTP id ffacd0b85a97d-37194314fa2mr1727789f8f.8.1723818066623;
+        Fri, 16 Aug 2024 07:21:06 -0700 (PDT)
+Received: from [192.168.0.25] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37189897034sm3756413f8f.67.2024.08.16.07.21.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Aug 2024 07:21:05 -0700 (PDT)
+Message-ID: <a1aae525-4d38-4520-a6c0-0905f87922fc@linaro.org>
+Date: Fri, 16 Aug 2024 15:21:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,82 +75,42 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sa8775p: fix the fastrpc label
-To: Bartosz Golaszewski <brgl@bgdev.pl>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Amol Maheshwari <amahesh@qti.qualcomm.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Tengfei Fan <quic_tengfan@quicinc.com>, Ling Xu <quic_lxu5@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+Subject: Re: [PATCH 12/13] media: qcom: camss: Add CSID Gen3 support for
+ sm8550
+To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- Ekansh Gupta <quic_ekangupt@quicinc.com>
-References: <20240816102345.16481-1-brgl@bgdev.pl>
- <20240816102345.16481-2-brgl@bgdev.pl>
+ kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-13-quic_depengs@quicinc.com>
 Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240816102345.16481-2-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240812144131.369378-13-quic_depengs@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 16/08/2024 12:23, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> The fastrpc driver uses the label to determine the domain ID and create
-> the device nodes. It should be "cdsp1" as this is the engine we use here.
-> 
-> Fixes: df54dcb34ff2 ("arm64: dts: qcom: sa8775p: add ADSP, CDSP and GPDSP nodes")
-> Reported-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 12/08/2024 15:41, Depeng Shao wrote:
+> +#define CSID_RDI_CFG1(rdi)		(0x510 + 0x100 * (rdi))
+> +#define		RDI_CFG1_DROP_H_EN		5
+> +#define		RDI_CFG1_DROP_V_EN		6
+> +#define		RDI_CFG1_CROP_H_EN		7
+> +#define		RDI_CFG1_CROP_V_EN		8
+> +#define		RDI_CFG1_PIX_STORE		10
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Hmm - is bit 10 valid ? I'm looking at a register set derived from 8550 
+and don't see it
 
-Best regards,
-Krzysztof
+> +#define		RDI_CFG1_PACKING_FORMAT		15
 
+Bit 15 selects either BIT(15) = 0 PACKING_FORMAT_PLAIN or BIT(15) = 1 
+PACKING_FORMAT_MIPI
+
+Please give this bit a more descriptive name =>
+
+#define		RDI_CFG1_PACKING_FORMAT_MIPI		15
+
+---
+bod
 
