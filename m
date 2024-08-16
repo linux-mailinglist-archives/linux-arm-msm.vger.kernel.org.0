@@ -1,219 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-28829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BBA73955033
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 19:45:26 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE43D955035
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 19:45:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E0A2E1C2254C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 17:45:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1A76DB261BA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 17:45:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29ED31C37AB;
-	Fri, 16 Aug 2024 17:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA9201C3788;
+	Fri, 16 Aug 2024 17:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CF2OG1n5"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="B4Hn31V8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7B41C4630;
-	Fri, 16 Aug 2024 17:44:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1898D1C3791
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 17:45:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723830254; cv=none; b=R414kCGyTwV+59ohumLz9hwhBdSEVNAg8cp0tRwoJFvEeRY1tEuglf0VDtQ5M4Ra5+jjFOyTdNZ1PNnob1kWgX5HDbupgoiMUipyC6GGsRFhsAz1ueH+BrRxwukgEDvOpZdt3Ks+R36XZ5R0OL8IdmfNe27sYF2AJoZdlKx+Xk4=
+	t=1723830304; cv=none; b=JmSXXnKCi0QRE2JWg0BDT/7D9zlDhzDb/Im6gUsfumNhpo2Z4JANGaj7uNe3Rv/oa6Jyx9hBSv6CX+KHmpikmmi8Np4sFFO9zr8I/4XBN98smFfZGeCJ42nBhsxZcJTUmHGzriaGFOvuU11rLw+reT6dWAa1XPHB5NwZpUYAYko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723830254; c=relaxed/simple;
-	bh=Q34VrfGuWOEyEgQGZ89pTSn7gByo50xHoSSOmEvrPk0=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CT6+4aARaJfUiXydcEjpTqDpnliu+ZD4IuKjlxE6faZTRj2jsk+3scjHkJtNxXrD10DlXWnJNyiW5edly+3n2loYIkNx2woaZGr1yHFbWYg/X5WJp3EIRRJX/evJQUNftCFclDVc8rAzUdbUbXILI0HYypHOW2BuHZMKW6QWVYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CF2OG1n5; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47G8NEUQ020655;
-	Fri, 16 Aug 2024 17:43:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	KgrActngNPtMVns1AP4MwyVoxN4UueOaGf4POtohag4=; b=CF2OG1n5xiFx6ARY
-	ylVtVS1qscUGqp4EsfSt944iRit3MtVTTN1tg0Yv6zOumCqucMzDNobT5OlQ9LfK
-	3pl88C0Zy+8zvOLnmU/QLjbD/fO+BIAW5w7YC08c8f+hqMuNcX9szuliMlrZN3Rl
-	vUimDhDWI6X18UN7xK3gSVsmjp0/HK4hjTH2+8+dPG1ecWgcaDJ21/QVEw5OQGL0
-	PDgKr5oUh3oTZ995CaRmwI73oZ6cKSadxxEUbJTWTpKV/NS+SJde1kA1DTJLb170
-	k17Ll+/edpFH0yM2HWDw8d6IGo9F2FVWbk4pb18s/IAqoIk1NzHikJrIRJgP+JZ2
-	HRQlSw==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 412373sd7t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Aug 2024 17:43:57 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47GHhvbp012785
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Aug 2024 17:43:57 GMT
-Received: from hu-bibekkum-hyd.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 16 Aug 2024 10:43:52 -0700
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-To: <robdclark@gmail.com>, <will@kernel.org>, <robin.murphy@arm.com>,
-        <joro@8bytes.org>, <jgg@ziepe.ca>, <jsnitsel@redhat.com>,
-        <robh@kernel.org>, <krzysztof.kozlowski@linaro.org>,
-        <quic_c_gdjako@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        <konrad.dybcio@linaro.org>
-CC: <iommu@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        "Bibek Kumar Patro" <quic_bibekkum@quicinc.com>
-Subject: [PATCH v14 6/6] iommu/arm-smmu: add support for PRR bit setup
-Date: Fri, 16 Aug 2024 23:12:59 +0530
-Message-ID: <20240816174259.2056829-7-quic_bibekkum@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240816174259.2056829-1-quic_bibekkum@quicinc.com>
-References: <20240816174259.2056829-1-quic_bibekkum@quicinc.com>
+	s=arc-20240116; t=1723830304; c=relaxed/simple;
+	bh=5Q1HgjloIR0MpwBSSkUVVWkbj04/nU+bFDjCRNPuhA0=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=LSUdguZxffByRpqdebhiIxnyHBAWvQhCg/9vbGCpLAJCjASV61BBeJHU6rVb5STxqJIVp40xhp1mshAk762+5XWVqskB1RODHWu2LcFFY5UTGEHABoAHUYzeaFko8Iv08C4bh2bwBgyvL7apVaikcj8HPUz6ghRXV1QpgamzlMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=B4Hn31V8; arc=none smtp.client-ip=209.85.128.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
+Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6b41e02c255so4423707b3.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 10:45:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1723830302; x=1724435102; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=vLqQ0W+kiaSmHiEqBrEtQ8fcmXJFfIb+9LXgj3vFom8=;
+        b=B4Hn31V87GZQ/zp1/MHdTkicOLR7IZGJSCJkrKOj7/TzObmKcJ4pN6NoWKeYc+B5Zb
+         butWqSxkfVPYHYAJTfjayFp93a69P5MMpBZJcbiNLJ2pOEg6j1qhq/uM0enFDwStlYcY
+         R6Q6Z8mlufuitY/pnfNDZayp+4mRQTFePKl1ivPFWh0DtjtDig170CC9HPCT0WDyxwv8
+         jHotshxkXQyOAeQ5or9+L7BbNIR+RBlrG3e7AZvTGX7wVDic9k6cud9Rkf1q0j5CRInJ
+         Klz7bJKGoWW2Lm6w1JVY+vyqzuuHHEcYb+8FWV8+GZnBzLDWAdcnyAJyoWD4c0XDnZ1J
+         Fy4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723830302; x=1724435102;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vLqQ0W+kiaSmHiEqBrEtQ8fcmXJFfIb+9LXgj3vFom8=;
+        b=xQM6Sj9U2AbTysRDYVvmZpXlm3Fp/2OXgPZ8mnnUuw8W2l79XoVAFXpD74bUdK+6sg
+         sGMjJnEF7jsuDQOGtqcCwe9RkNLAYfQfLkOHQgXwApymfA6I7C2TfWYZ+ztU8ESPvSDg
+         k/V0P/2YkZfZHsq4jY6W1WlmXV7sy6TJSq/nt5gZt9uXjlrLIbn5FNg9yT8QyfwWn5yC
+         AFNEdcUuapuZyHL/vXqYRpaLRy/lEtXW6P7yk79pNTEGvX+ZDNTQXwfC2eY3J3bYk3qp
+         4KOVIPXpULJQwz182jlq7lPYsMMW5U3a3UxsAzJzqYJFcKYf/y8Ls4v0S/lpVa14Cxc5
+         AUwg==
+X-Forwarded-Encrypted: i=1; AJvYcCUS1vhQfvsFSBEhi4MmIBX1grujdt29RRxhKx659svu8h3y4EIOZ1TGDD4nTKyIBnAMJ0aiJBo88fy0eolWYetlKcArWmih8Dyt8Ns9EA==
+X-Gm-Message-State: AOJu0YwFsxU0ZZDPjfqLMAgYV6bw2wjs4jJ+L665HA0GAB5RdtURhD18
+	6MtULmPfJ3rra5KEwG6fIA3hs97h6937mHiJQGxQZmAm1DdfA766kpmh6HeR0/ONiOmCDFZ8LnI
+	lFAsNx9Yzz2iCKBXnigWCcg==
+X-Google-Smtp-Source: AGHT+IEi4/I6TDzoHhlZG83qsUH/gsU5TYse1nTv7CQbUM47gB6I7o2YM+wF22moMbfN4T1ecnVRfVCm4hd5c3ZkMQ==
+X-Received: from ackerleytng-ctop.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:13f8])
+ (user=ackerleytng job=sendgmr) by 2002:a05:690c:688d:b0:699:d8dc:668d with
+ SMTP id 00721157ae682-6b1bb2899d5mr1670697b3.5.1723830302029; Fri, 16 Aug
+ 2024 10:45:02 -0700 (PDT)
+Date: Fri, 16 Aug 2024 17:45:00 +0000
+In-Reply-To: <aa3b5be8-2c8a-4fe8-8676-a40a9886c715@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: egz9A8xXRCxAmUlaFQJ_qTEx_u_gbgB7
-X-Proofpoint-ORIG-GUID: egz9A8xXRCxAmUlaFQJ_qTEx_u_gbgB7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-16_12,2024-08-16_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
- lowpriorityscore=0 spamscore=0 priorityscore=1501 impostorscore=0
- adultscore=0 bulkscore=0 mlxlogscore=999 mlxscore=0 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408160123
+Mime-Version: 1.0
+References: <20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com>
+ <20240805-guest-memfd-lib-v1-4-e5a29a4ff5d7@quicinc.com> <4cdd93ba-9019-4c12-a0e6-07b430980278@redhat.com>
+ <CA+EHjTxNNinn7EzV_o1X1d0kwhEwrbj_O7H8WgDtEy2CwURZFQ@mail.gmail.com> <aa3b5be8-2c8a-4fe8-8676-a40a9886c715@redhat.com>
+Message-ID: <diqzjzggmkf7.fsf@ackerleytng-ctop.c.googlers.com>
+Subject: Re: [PATCH RFC 4/4] mm: guest_memfd: Add ability for mmap'ing pages
+From: Ackerley Tng <ackerleytng@google.com>
+To: David Hildenbrand <david@redhat.com>, Fuad Tabba <tabba@google.com>
+Cc: Elliot Berman <quic_eberman@quicinc.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	Paolo Bonzini <pbonzini@redhat.com>, Sean Christopherson <seanjc@google.com>, 
+	Patrick Roy <roypat@amazon.co.uk>, qperret@google.com, linux-coco@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-mm@kvack.org, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Add an adreno-smmu-priv interface for drm/msm to call
-into arm-smmu-qcom and initiate the PRR bit setup or reset
-sequence as per request.
 
-This will be used by GPU to setup the PRR bit and related
-configuration registers through adreno-smmu private
-interface instead of directly poking the smmu hardware.
+David Hildenbrand <david@redhat.com> writes:
 
-Suggested-by: Rob Clark <robdclark@gmail.com>
-Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
----
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 37 ++++++++++++++++++++++
- drivers/iommu/arm/arm-smmu/arm-smmu.h      |  2 ++
- include/linux/adreno-smmu-priv.h           | 10 +++++-
- 3 files changed, 48 insertions(+), 1 deletion(-)
+> On 15.08.24 09:24, Fuad Tabba wrote:
+>> Hi David,
+>
+> Hi!
+>
+>> 
+>> On Tue, 6 Aug 2024 at 14:51, David Hildenbrand <david@redhat.com> wrote:
+>>>
+>>>>
+>>>> -     if (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP) {
+>>>> +     if (!ops->accessible && (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP)) {
+>>>>                r = guest_memfd_folio_private(folio);
+>>>>                if (r)
+>>>>                        goto out_err;
+>>>> @@ -107,6 +109,82 @@ struct folio *guest_memfd_grab_folio(struct file *file, pgoff_t index, u32 flags
+>>>>    }
+>>>>    EXPORT_SYMBOL_GPL(guest_memfd_grab_folio);
+>>>>
+>>>> +int guest_memfd_make_inaccessible(struct file *file, struct folio *folio)
+>>>> +{
+>>>> +     unsigned long gmem_flags = (unsigned long)file->private_data;
+>>>> +     unsigned long i;
+>>>> +     int r;
+>>>> +
+>>>> +     unmap_mapping_folio(folio);
+>>>> +
+>>>> +     /**
+>>>> +      * We can't use the refcount. It might be elevated due to
+>>>> +      * guest/vcpu trying to access same folio as another vcpu
+>>>> +      * or because userspace is trying to access folio for same reason
+>>>
+>>> As discussed, that's insufficient. We really have to drive the refcount
+>>> to 1 -- the single reference we expect.
+>>>
+>>> What is the exact problem you are running into here? Who can just grab a
+>>> reference and maybe do nasty things with it?
+>> 
+>> I was wondering, why do we need to check the refcount? Isn't it enough
+>> to check for page_mapped() || page_maybe_dma_pinned(), while holding
+>> the folio lock?
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index a776c7906c76..f62e20d472d3 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -30,6 +30,7 @@
- #define PREFETCH_SHALLOW	(1 << PREFETCH_SHIFT)
- #define PREFETCH_MODERATE	(2 << PREFETCH_SHIFT)
- #define PREFETCH_DEEP		(3 << PREFETCH_SHIFT)
-+#define GFX_ACTLR_PRR		(1 << 5)
+Thank you Fuad for asking!
 
- static const struct actlr_config sc7280_apps_actlr_cfg[] = {
- 	{ 0x0800, 0x04e0, PREFETCH_DEFAULT | CMTLB },
-@@ -237,6 +238,40 @@ static void qcom_adreno_smmu_resume_translation(const void *cookie, bool termina
- 	arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
- }
+>
+> (folio_mapped() + folio_maybe_dma_pinned())
+>
+> Not everything goes trough FOLL_PIN. vmsplice() is an example, or just 
+> some very simple read/write through /proc/pid/mem. Further, some 
+> O_DIRECT implementations still don't use FOLL_PIN.
+>
+> So if you see an additional folio reference, as soon as you mapped that 
+> thing to user space, you have to assume that it could be someone 
+> reading/writing that memory in possibly sane context. (vmsplice() should 
+> be using FOLL_PIN|FOLL_LONGTERM, but that's a longer discussion)
+>
 
-+static void qcom_adreno_smmu_set_prr_bit(const void *cookie, bool set)
-+{
-+	struct arm_smmu_domain *smmu_domain = (void *)cookie;
-+	struct arm_smmu_device *smmu = smmu_domain->smmu;
-+	const struct device_node *np = smmu->dev->of_node;
-+	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
-+	u32 reg = 0;
-+
-+	if (of_device_is_compatible(np, "qcom,smmu-500") &&
-+			of_device_is_compatible(np, "qcom,adreno-smmu")) {
-+		reg =  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR);
-+		reg &= ~GFX_ACTLR_PRR;
-+		if (set)
-+			reg |= FIELD_PREP(GFX_ACTLR_PRR, 1);
-+		arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
-+	}
-+}
-+
-+static void qcom_adreno_smmu_set_prr_addr(const void *cookie, phys_addr_t page_addr)
-+{
-+	struct arm_smmu_domain *smmu_domain = (void *)cookie;
-+	struct arm_smmu_device *smmu = smmu_domain->smmu;
-+	const struct device_node *np = smmu->dev->of_node;
-+
-+	if (of_device_is_compatible(np, "qcom,smmu-500") &&
-+			of_device_is_compatible(np, "qcom,adreno-smmu")) {
-+		writel_relaxed(lower_32_bits(page_addr),
-+					(void *)smmu->ioaddr + ARM_SMMU_GFX_PRR_CFG_LADDR);
-+
-+		writel_relaxed(upper_32_bits(page_addr),
-+					(void *)smmu->ioaddr + ARM_SMMU_GFX_PRR_CFG_UADDR);
-+	}
-+}
-+
- #define QCOM_ADRENO_SMMU_GPU_SID 0
+Thanks David for the clarification, this example is very helpful!
 
- static bool qcom_adreno_smmu_is_gpu_device(struct device *dev)
-@@ -410,6 +445,8 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
- 	priv->get_fault_info = qcom_adreno_smmu_get_fault_info;
- 	priv->set_stall = qcom_adreno_smmu_set_stall;
- 	priv->resume_translation = qcom_adreno_smmu_resume_translation;
-+	priv->set_prr_bit = qcom_adreno_smmu_set_prr_bit;
-+	priv->set_prr_addr = qcom_adreno_smmu_set_prr_addr;
+IIUC folio_lock() isn't a prerequisite for taking a refcount on the
+folio.
 
- 	actlrvar = qsmmu->data->actlrvar;
- 	if (!actlrvar)
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-index 172f1b56b879..b3f5ff1ebb8d 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-@@ -154,6 +154,8 @@ enum arm_smmu_cbar_type {
- #define ARM_SMMU_SCTLR_M		BIT(0)
+Even if we are able to figure out a "safe" refcount, and check that the
+current refcount == "safe" refcount before removing from direct map,
+what's stopping some other part of the kernel from taking a refcount
+just after the check happens and causing trouble with the folio's
+removal from direct map?
 
- #define ARM_SMMU_CB_ACTLR		0x4
-+#define ARM_SMMU_GFX_PRR_CFG_LADDR	0x6008
-+#define ARM_SMMU_GFX_PRR_CFG_UADDR	0x600C
+> (noting that also folio_maybe_dma_pinned() can have false positives in 
+> some cases due to speculative references or *many* references).
 
- #define ARM_SMMU_CB_RESUME		0x8
- #define ARM_SMMU_RESUME_TERMINATE	BIT(0)
-diff --git a/include/linux/adreno-smmu-priv.h b/include/linux/adreno-smmu-priv.h
-index c637e0997f6d..03466eb16933 100644
---- a/include/linux/adreno-smmu-priv.h
-+++ b/include/linux/adreno-smmu-priv.h
-@@ -49,7 +49,13 @@ struct adreno_smmu_fault_info {
-  *                 before set_ttbr0_cfg().  If stalling on fault is enabled,
-  *                 the GPU driver must call resume_translation()
-  * @resume_translation: Resume translation after a fault
-- *
-+ * @set_prr_bit:   Extendible interface to be used by GPU to modify the
-+ *		   ACTLR register bits, currently used to configure
-+ *		   Partially-Resident-Region (PRR) bit for feature's
-+ *		   setup and reset sequence as requested.
-+ * @set_prr_addr:  Configure the PRR_CFG_*ADDR register with the
-+ *		   physical address of PRR page passed from
-+ *		   GPU driver.
-  *
-  * The GPU driver (drm/msm) and adreno-smmu work together for controlling
-  * the GPU's SMMU instance.  This is by necessity, as the GPU is directly
-@@ -67,6 +73,8 @@ struct adreno_smmu_priv {
-     void (*get_fault_info)(const void *cookie, struct adreno_smmu_fault_info *info);
-     void (*set_stall)(const void *cookie, bool enabled);
-     void (*resume_translation)(const void *cookie, bool terminate);
-+    void (*set_prr_bit)(const void *cookie, bool set);
-+    void (*set_prr_addr)(const void *cookie, phys_addr_t page_addr);
- };
+Are false positives (speculative references) okay since it's better to
+be safe than remove from direct map prematurely?
 
- #endif /* __ADRENO_SMMU_PRIV_H */
---
-2.34.1
-
+>
+> -- 
+> Cheers,
+>
+> David / dhildenb
 
