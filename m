@@ -1,169 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-28841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D62419553D9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 01:42:54 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E73F9553F1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 01:53:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0728E1C21AAA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 23:42:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A1D231F23647
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 23:53:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E048E1474BF;
-	Fri, 16 Aug 2024 23:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A92B145A01;
+	Fri, 16 Aug 2024 23:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JqgFDO9H"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BbYaKHkF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2173E147C96;
-	Fri, 16 Aug 2024 23:42:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7365CB661;
+	Fri, 16 Aug 2024 23:53:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723851768; cv=none; b=A5LZOe0wcNoZUS52JVOkAERx8w9qpkcsf6k3+Qr7ZYFX62vtX5JlTpkCzCqKnWej9zhwaSrRc6wElAY2v9QErhYxCa+MfqOvf6wdtjSjDuRXJ8gHaL8bRpL4lRyNS9eP5JeANCJZSK+wSaXNbDiZEv4rOiZ5wz4Rv/iFJyWlJcw=
+	t=1723852383; cv=none; b=rpVyET6+0/vS0IswduA7Alw4S3k/FB11TSo4zOKf7Cwhjh6Grh0Vg0cifrXyqPfXRZbVniZ2Uc7gKCTyjF4MT7Lsq+CHRclpAmhlDZC/kR75dr0tJeHynXwDGnzhE/ft/QdNXQbkKvIBIN0BIYZI1PN7l76uYJRcIZ5m2k14FR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723851768; c=relaxed/simple;
-	bh=Od8uOqD1E0LkGzBeMxbp6AiUK3x8htxNRrjfVi6rVBA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ATvf+R6yjm6KfRF7odSx0zKAY6oR+ljXNXaLMH9Tx95GGTQk8VYfKVkuiuvcn5ZO0m8D1IPBkpqyeV47rvgpArxmkbZrxwF2GJSK5XHDZsoIugfVR3jhkxqP8KSGhzL+Q80QuHUM5aHpiNHZyV3CWhHf0/O361/i38DXi/qKEcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JqgFDO9H; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a7aac70e30dso282848066b.1;
-        Fri, 16 Aug 2024 16:42:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723851765; x=1724456565; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RH/rPI35J13TIcTmDXM4xAWE7+R4US73obFliUuHk8g=;
-        b=JqgFDO9HnePD3FSIVqKOCKL4hQ/bDPRXcX21yc5UQDaEoA680zVrew1MUIodnY9DIZ
-         tqrGZcgrPFSUV8D/lLx0hyfiPf9/GFtF0Ij57UkxZ5tBXAhZTrwpBXZwluq8aQR1O1e+
-         NKsssX4xE1+yGBpF1iylYpeXGg9WmDDxr+q350agiRH72thCQIRZDVx27FXw+6xnLveK
-         feUa2QFI1ehVv+oV4PqhwMiXFhM4UuUyVETF3/qJZX6Yq9XopO5oswZMseaTKvG6bVYu
-         dnjEl1BqNaWAQCxLe/ZqPFjW/LolwF2cUH51UmD2q13aUXrqeOSMy7yky2c1liVK0NCw
-         BXMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723851765; x=1724456565;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RH/rPI35J13TIcTmDXM4xAWE7+R4US73obFliUuHk8g=;
-        b=f6LOK0b+vTfspMeumvK0Fc9KGzP83GoTFYk/xoUZ+Su0N8jQS+Ves1gsMbzKExzxrL
-         +KAttAjQ4/6Viz/aoUhVDgcmK6bT1rS73PeUt+bcW0MvqD5kQm0krQ7yCcbPDLWe7dsI
-         5dLq6jVgLhysyHEiDMF+2UCDRwulQeQJIafMdlwFab10d2xAuttP55kBpustNp9lyxN3
-         4mhmTq6w3rzUgJ1Xisl4IvscDpDvT+AY6NNPUW28OUEZxOACKnzoMRJRMWhl+o/64yA5
-         axVCojyre03eoS62+oqNdPpP/ZxvVD6fQK87pg8Js69d57O5VQP2W5UjyP5GghwhZBf5
-         88qg==
-X-Forwarded-Encrypted: i=1; AJvYcCWhQLiJ8hYTV9klv0R/mVjcIoQiSBVrG2Ql5M8CmZyh22kJYtJnX6cye+02DopHyc7A3Xxo4DoenAPxIiXeKagVr8K5e/iQVs0gqXifcho11THW8OIGVS7Mnbs9AnEts/kCdKjKLIck4DORyw==
-X-Gm-Message-State: AOJu0YzlLoibRqxrjVFZ/2fxSrQR+eM9C0Awjd6MIjQbgvnt9pze4Zxd
-	wEiipz2CnnKEv6pWKrwfSapY/412WD4fqvpycJnOiCTvv0zJAiwf
-X-Google-Smtp-Source: AGHT+IFHh3rJK/WkfcHOF52rAbjLG1pNSReXF3Ompen1dC2c00uCWocEwRcDw+ckHU2wnMDrRLmmaA==
-X-Received: by 2002:a17:907:7fa5:b0:a80:aefa:14d3 with SMTP id a640c23a62f3a-a8392a4128amr351909366b.63.1723851764930;
-        Fri, 16 Aug 2024 16:42:44 -0700 (PDT)
-Received: from [192.168.1.13] (host-95-235-164-146.retail.telecomitalia.it. [95.235.164.146])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a838393599asm319803166b.132.2024.08.16.16.42.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Aug 2024 16:42:44 -0700 (PDT)
-Message-ID: <78d36089-5a65-41b3-a9fa-102266736d9b@gmail.com>
-Date: Sat, 17 Aug 2024 01:42:42 +0200
+	s=arc-20240116; t=1723852383; c=relaxed/simple;
+	bh=DMO57vi9AiJjXnsgH5AIT5Qez88LtNPRhneBZN7cIZ8=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HLZX8TEoAHCKUR1WtPUQrKLQ3ezWif6ZSwwk6IyUekugJZDFxsT1eZ3Ry3ExF2+Vqc3AGuVoNnVB5TVGs4BCKkAUtxsogml8ei57qWuHPvKasf0ZEIEztvhoc5ceXcPiYB3dD9cg+47rH0y6IbOVSJndWOWWUhRz8XFeLidC4Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BbYaKHkF; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47GLbupb003157;
+	Fri, 16 Aug 2024 23:52:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=+JXtY3+Fg/Wm0qnAcs1ijp3a
+	tNHmKpNMITHGUXLSaa4=; b=BbYaKHkFmQ2/B1FGTdE06tTqPjMRo3i2YJFQoG6F
+	cuz1EydEBnnUN86NVgY08eDD+VOV2lv+2opRktK1gZ18DYA/08SlibgfMBFGOmc8
+	ASUma4kF9TYkJ4U1tsjFCZTGWmHOGtjLJT4IWcpoPs+5E78YrSvAx53eY6ukxJ7c
+	yqXuI6fchBgLWJDYtOdjI0nHlNV1Y1eptkk4MpooloMCUx5jI94GaZHUltCyJfID
+	IfxgZqgPHMX3WBvFY8YpJzU3Vpq31Dlxc+f3Olc0bKGbpQgZT4pCYKPMbRAYjCYF
+	S9fE0zPJtH1ownlsu/m5Zj1QEs1UcwujJRCFH4oRbQ1AeQ==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4123cuj22g-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Aug 2024 23:52:48 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47GNql0s025394
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Aug 2024 23:52:47 GMT
+Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 16 Aug 2024 16:52:47 -0700
+Date: Fri, 16 Aug 2024 16:52:46 -0700
+From: Elliot Berman <quic_eberman@quicinc.com>
+To: David Hildenbrand <david@redhat.com>
+CC: Ackerley Tng <ackerleytng@google.com>, Fuad Tabba <tabba@google.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Paolo Bonzini
+	<pbonzini@redhat.com>,
+        Sean Christopherson <seanjc@google.com>,
+        Patrick Roy
+	<roypat@amazon.co.uk>, <qperret@google.com>,
+        <linux-coco@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
+        <kvm@vger.kernel.org>
+Subject: Re: [PATCH RFC 4/4] mm: guest_memfd: Add ability for mmap'ing pages
+Message-ID: <20240816164546141-0700.eberman@hu-eberman-lv.qualcomm.com>
+References: <20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com>
+ <20240805-guest-memfd-lib-v1-4-e5a29a4ff5d7@quicinc.com>
+ <4cdd93ba-9019-4c12-a0e6-07b430980278@redhat.com>
+ <CA+EHjTxNNinn7EzV_o1X1d0kwhEwrbj_O7H8WgDtEy2CwURZFQ@mail.gmail.com>
+ <aa3b5be8-2c8a-4fe8-8676-a40a9886c715@redhat.com>
+ <diqzjzggmkf7.fsf@ackerleytng-ctop.c.googlers.com>
+ <94c5d735-821c-40ba-ae85-1881c6f4445d@redhat.com>
+ <diqz4j7km8yu.fsf@ackerleytng-ctop.c.googlers.com>
+ <93a010dd-d938-4c49-8643-047c7c1b33b9@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] Preemption support for A7XX
-To: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- Sharat Masetty <smasetty@codeaurora.org>
-References: <20240815-preemption-a750-t-v1-0-7bda26c34037@gmail.com>
- <CAF6AEGsiu2OBbwQJO5nS55CAQtCvKebc59-mu2h0BDiu4C2gxg@mail.gmail.com>
-Content-Language: en-US
-From: Antonino Maniscalco <antomani103@gmail.com>
-In-Reply-To: <CAF6AEGsiu2OBbwQJO5nS55CAQtCvKebc59-mu2h0BDiu4C2gxg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <93a010dd-d938-4c49-8643-047c7c1b33b9@redhat.com>
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: mtiFw9e4dNNfIlhdJ9ghNLDPswiUrfD6
+X-Proofpoint-ORIG-GUID: mtiFw9e4dNNfIlhdJ9ghNLDPswiUrfD6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-16_17,2024-08-16_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ clxscore=1015 mlxlogscore=999 priorityscore=1501 spamscore=0 bulkscore=0
+ adultscore=0 lowpriorityscore=0 malwarescore=0 impostorscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408160171
 
-On 8/16/24 7:47 PM, Rob Clark wrote:
-> On Thu, Aug 15, 2024 at 11:27 AM Antonino Maniscalco
-> <antomani103@gmail.com> wrote:
->>
->> This series implements preemption for A7XX targets, which allows the GPU to
->> switch to an higher priority ring when work is pushed to it, reducing latency
->> for high priority submissions.
->>
->> This series enables L1 preemption with skip_save_restore which requires
->> the following userspace patches to function:
->>
->> https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/30544
->>
->> A flag is added to `msm_gem_submit` to only allow submissions from compatible
->> userspace to be preempted, therefore maintaining compatibility.
+On Sat, Aug 17, 2024 at 12:03:50AM +0200, David Hildenbrand wrote:
+> On 16.08.24 23:52, Ackerley Tng wrote:
+> > David Hildenbrand <david@redhat.com> writes:
+> > 
+> > > On 16.08.24 19:45, Ackerley Tng wrote:
+> > > > 
+> > > > <snip>
+> > > > 
+> > > > IIUC folio_lock() isn't a prerequisite for taking a refcount on the
+> > > > folio.
+> > > 
+> > > Right, to do folio_lock() you only have to guarantee that the folio
+> > > cannot get freed concurrently. So you piggyback on another reference
+> > > (you hold indirectly).
+> > > 
+> > > > 
+> > > > Even if we are able to figure out a "safe" refcount, and check that the
+> > > > current refcount == "safe" refcount before removing from direct map,
+> > > > what's stopping some other part of the kernel from taking a refcount
+> > > > just after the check happens and causing trouble with the folio's
+> > > > removal from direct map?
+> > > 
+> > > Once the page was unmapped from user space, and there were no additional
+> > > references (e.g., GUP, whatever), any new references can only be
+> > > (should, unless BUG :) ) temporary speculative references that should
+> > > not try accessing page content, and that should back off if the folio is
+> > > not deemed interesting or cannot be locked. (e.g., page
+> > > migration/compaction/offlining).
+> > 
+> > I thought about it again - I think the vmsplice() cases are taken care
+> > of once we check that the folios are not mapped into userspace, since
+> > vmsplice() reads from a mapping.
+> > 
+> > splice() reads from the fd directly, but that's taken care since
+> > guest_memfd doesn't have a .splice_read() handler.
+> > 
+> > Reading /proc/pid/mem also requires the pages to first be mapped, IIUC,
+> > otherwise the pages won't show up, so checking that there are no more
+> > mappings to userspace takes care of this.
 > 
-> I guess this last para is from an earlier iteration of this series?
-> Looks like instead you are making this a submitqueue flag (which is an
-> approach that I prefer)
+> You have a misconception.
 > 
-> BR,
-> -R
+> You can map pages to user space, GUP them, and then unmap them from user
+> space. A GUP reference can outlive your user space mappings, easily.
 > 
+> So once there is a raised refcount, it could as well just be from vmsplice,
+> or a pending reference from /proc/pid/mem, O_DIRECT, ...
+> 
+> > 
+> > > 
+> > > Of course, there are some corner cases (kgdb, hibernation, /proc/kcore),
+> > > but most of these can be dealt with in one way or the other (make these
+> > > back off and not read/write page content, similar to how we handled it
+> > > for secretmem).
+> > 
+> > Does that really leave us with these corner cases? And so perhaps we
+> > could get away with just taking the folio_lock() to keep away the
+> > speculative references? So something like
+> > 
+> >    1. Check that the folio is not mapped and not pinned.
+> 
+> To do that, you have to lookup the folio first. That currently requires a
+> refcount increment, even if only temporarily. Maybe we could avoid that, if
+> we can guarantee that we are the only one modifying the pageache here, and
+> we sync against that ourselves.
+> 
+> >    2. folio_lock() all the folios about to be removed from direct map
+> >    -- With the lock, all other accesses should be speculative --
+> >    3. Check that the refcount == "safe" refcount
+> >        3a. Unlock and return to userspace with -EAGAIN
+> >    4. Remove from direct map
+> >    5. folio_unlock() all those folios
+> > 
+> > Perhaps a very naive question: can the "safe" refcount be statically
+> > determined by walking through the code and counting where refcount is
+> > expected to be incremented?
+> 
+> 
+> Depends on how we design it. But if you hand out "safe" references to KVM
+> etc, you'd have to track that -- and how often -- somehow. At which point we
+> are at "increment/decrement" safe reference to track that for you.
+>
 
-That is correct, I got confused on which one I ended up going with when 
-I wrote that.
+Just a status update: I've gotten the "safe" reference counter
+implementation working for Gunyah now. It feels a bit flimsy because
+we're juggling 3 reference counters*, but it seems like the right thing
+to do after all the discussions here. It's passing all the Gunyah unit
+tests I have which have so far been pretty good at finding issues.
 
-Thanks for spotting it!
+I need to clean up the patches now and I'm aiming to have it out for RFC
+next week.
 
->> Some commits from this series are based on a previous series to enable
->> preemption on A6XX targets:
->>
->> https://lkml.kernel.org/1520489185-21828-1-git-send-email-smasetty@codeaurora.org
->>
->> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
->> ---
->> Antonino Maniscalco (7):
->>        drm/msm: Fix bv_fence being used as bv_rptr
->>        drm/msm: Add submitqueue setup and close
->>        drm/msm: Add a `preempt_record_size` field
->>        drm/msm/A6xx: Implement preemption for A7XX targets
->>        drm/msm/A6xx: Add traces for preemption
->>        drm/msm/A6XX: Add a flag to allow preemption to submitqueue_create
->>        drm/msm/A6xx: Enable preemption for A7xx targets
->>
->>   drivers/gpu/drm/msm/Makefile              |   1 +
->>   drivers/gpu/drm/msm/adreno/a6xx_catalog.c |   3 +
->>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 339 ++++++++++++++++++++++-
->>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h     | 168 ++++++++++++
->>   drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 441 ++++++++++++++++++++++++++++++
->>   drivers/gpu/drm/msm/adreno/adreno_gpu.h   |   1 +
->>   drivers/gpu/drm/msm/msm_gpu.h             |   7 +
->>   drivers/gpu/drm/msm/msm_gpu_trace.h       |  28 ++
->>   drivers/gpu/drm/msm/msm_ringbuffer.h      |   8 +
->>   drivers/gpu/drm/msm/msm_submitqueue.c     |  10 +
->>   include/uapi/drm/msm_drm.h                |   5 +-
->>   11 files changed, 995 insertions(+), 16 deletions(-)
->> ---
->> base-commit: 7c626ce4bae1ac14f60076d00eafe71af30450ba
->> change-id: 20240815-preemption-a750-t-fcee9a844b39
->>
->> Best regards,
->> --
->> Antonino Maniscalco <antomani103@gmail.com>
->>
+* folio refcount, "accessible" refcount, and "safe" refcount
 
-Best regards,
--- 
-Antonino Maniscalco <antomani103@gmail.com>
+Thanks,
+Elliot
 
 
