@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D51AB954279
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 09:14:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3305995427E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 09:15:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 878DC1F2151A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 07:14:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CF7D51F215B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 07:15:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FB8084FA0;
-	Fri, 16 Aug 2024 07:14:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5789E83CA3;
+	Fri, 16 Aug 2024 07:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O+duIdwn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cgAx8Gq8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8C9127E3A;
-	Fri, 16 Aug 2024 07:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1C820E3;
+	Fri, 16 Aug 2024 07:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723792479; cv=none; b=lSdMjB38ik6EIDtQ1u5VNvge9Bi3eDG6IGvfxweCqokoW7yQxrTHfEPZ3XfnVYQGuoggJQVgSlISFW5rBRJOmyHNUvrY5+dqOcoSi50tvjh0EYsaIoCMB4PQrJZLBjoqSF3urMMGUqB6vQjV9WWw9qYqjGLINoxfqE4nnCfAgbM=
+	t=1723792514; cv=none; b=eU7I1ujkOPaP9GKf9hZY8bmRD6emiyf89OfO//vqtB/aHd1ZHIMccx/PL7k5d9qlDjjD1N0E0pANxY3zCcA1jcOnfEPsLpxWwmcrkb11xsQrzpXOPvBlrbLFz5CzTYxFQoIjfSdTDWg+4ntvLnNbJMn7iK/V8j8rVpYFreqOLeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723792479; c=relaxed/simple;
-	bh=OJ14c6CyHEANEhFbYyT5/xndcs8P963Gqv7n5+oykQs=;
+	s=arc-20240116; t=1723792514; c=relaxed/simple;
+	bh=lol7kTtNyIMAKOPg9Q6lR/exIrBORfb4Eafh5/hRXEY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ih7fG2Zjr2USjcFvVCIUnGrU/8TK6eIgLgr/oJDL32tvrqELgQwxs8W6iOCD6eGYcSBLi5TLPVyot9F2G/rs1xNCb2Vma7WETo7nXRJC4D4mXG+uUb66Pq417Vl1rav9UTLpiRIOP8uRpOTyaJx/7oYrDiExWb8o0pnctWhnnbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O+duIdwn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A8FC32782;
-	Fri, 16 Aug 2024 07:14:34 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=kOARehzKzr2nknjEizpX2xKWx/IBtxApKpa41mOmQbRUd01+pSAfv7CWMbJ3AEIxFhRmHH5L+XgmAOUOJtxowQ8YU3Aga/mvK3XWL8v/QvZt0wbFf5dHLG+QGrcwoxFav5So8Nt76/V6LMu7fdqZapaaZiZhnmYIoo611UUEbYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cgAx8Gq8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9949CC32782;
+	Fri, 16 Aug 2024 07:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723792478;
-	bh=OJ14c6CyHEANEhFbYyT5/xndcs8P963Gqv7n5+oykQs=;
+	s=k20201202; t=1723792513;
+	bh=lol7kTtNyIMAKOPg9Q6lR/exIrBORfb4Eafh5/hRXEY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=O+duIdwn914mxJUHN8K7yOAiYQpLzeVYha8O8ejpFz3YydI7slo9X8Y9mLH2lAk1a
-	 VToXj5ttl+PfnrRLjF4ddemp+BrtlOuLT8ouHF5aqrVxjKfHOWv4WlYsVRebbaMiO4
-	 qh0eZfeGzvS7xtCb38Runj04bA11s7aBwVoI/cGp+i/97ks+4mIoP3fbsK003El1tV
-	 4hMZoC4KQwzAAF2/BbQtsS/s/CMTXPcFiI0+A9oGZitboGRxxpQ198YPSrsxpDiTZH
-	 pThQt+OpdAf/Ty0ZtoQS1PAeSfqZoMIxY6PdgD4Xc3HkvYg527VE+IRyKwaNld7KoO
-	 Ym94VUhHYT6Ng==
-Message-ID: <05efa996-f176-438a-88f4-3a7c57fa3bae@kernel.org>
-Date: Fri, 16 Aug 2024 09:14:32 +0200
+	b=cgAx8Gq8QNgT/VEqlDOU6Z6Z5G14FVT9UYW/jiTIKRl4RgRSBsK0f9HLTz56ypxG2
+	 wn2gwJNoyQt4dsuSEP3o38Wt6RfVUPxAnZ+QmnHaRT83NqMs0Ni1oJQDr/uLxos5kV
+	 bKa9TJPGDCV/rljOhVrs5ZoDN6zJBo+VRxSlxyMs9zFkBrvw3lWXyYHCcgKnaePx2i
+	 TqfhQQUyGiG1g77l3Oby7bMorE/YHkC0krEYeNrQPJ8Mrl0eIv7NuXdXlZ/dDnLKee
+	 /JDwaRxIb2hnTqUj25+5O9OPeQ7bFV4fbrYTbnUFLDomNwWTgBUcURnfaJbNj4Imag
+	 soAnN7ge9qVMQ==
+Message-ID: <4b0cf051-2df0-44ad-bfc2-1bb7171a3ee5@kernel.org>
+Date: Fri, 16 Aug 2024 09:15:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/6] dt-bindings: phy: Add X1E80100 UFS
+Subject: Re: [PATCH v3 3/6] dt-bindings: ufs: Add X1E80100 UFS
 To: Marcus Glocker <marcus@nazgul.ch>, Bjorn Andersson
  <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
@@ -59,7 +59,7 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
  Johan Hovold <johan@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
 References: <v2iah5yrne4u6uzrnzg36tvtxzqrpiez6io2gyyfrht2x42umw@5ribqndiavxv>
- <to4nmtmxdthxsakntjw4yfnrcjup2wg4ehrociktz7a4rba5ki@7n64iufg6cl6>
+ <3mjmyo45td4zpnzntphwqdbc6rogs7c7q6jkjvqgvyzxl2l7ie@wkusfdalqwj5>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,18 +105,15 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <to4nmtmxdthxsakntjw4yfnrcjup2wg4ehrociktz7a4rba5ki@7n64iufg6cl6>
+In-Reply-To: <3mjmyo45td4zpnzntphwqdbc6rogs7c7q6jkjvqgvyzxl2l7ie@wkusfdalqwj5>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/08/2024 12:39, Marcus Glocker wrote:
-> Add the UFS PHY binding.
+On 15/08/2024 12:41, Marcus Glocker wrote:
+> Add the UFS Host Controller binding.
 
-That's really not enough for commit msg. At least say which device (full
-name)...
-
-
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Also incomplete and actually not matching the patch at all. You do not
+add new UFS Controller binding here.
 
 Best regards,
 Krzysztof
