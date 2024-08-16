@@ -1,193 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-28746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A41C79541DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 08:35:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43A699541E6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 08:37:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1E3A61F2184E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 06:35:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 656C41C20F50
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 06:37:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0868113AD22;
-	Fri, 16 Aug 2024 06:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7768584A21;
+	Fri, 16 Aug 2024 06:35:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bXYczgzT"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="21FlmIED"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E48913B59E;
-	Fri, 16 Aug 2024 06:33:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65DCB78B4C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 06:35:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723790040; cv=none; b=tsce/ZCSPY2sOD6csEcYb23OsR6glf6R0StouLH1th8sZ2AtfpOZK3dDQNpHaBAHm/ZFg/BAdfpiOnxj2wWZYvspUwT3QNYR8boMdO9Xw3btnjmF015HHCGvSQET4g7WzGkuutVPfuIPKxp7kOrWHcsyMLxpU+B9gIMrSo4LuQA=
+	t=1723790136; cv=none; b=O3c6leted+ixJTndvld3vHRC35tnNsdEcEs1ojy0Qc8vHzPQioF/zD1HoFwErOEpe9lSkJD2MRu1K/SlnkD2W1pXrqmr0mhW8an6vGHaNuwP1I6OYIMd/BbpkA8qTY1Eml/e3/Cu/51KZvd49ETFE4jkDuJCqlx7raxOWsKxTEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723790040; c=relaxed/simple;
-	bh=Ry8LysIbqlQoi1mRmXMzeNFeGaLwOTh7Xm7n6+szFzA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=ahp5MrZc+M4XgCu0VD47y7xiSM8nrseDVLMCgpKqmq/NV+mjCaFoonZe4Jb1TWm0WmHbmToi0kVasF++6Halt6DJDzJ8qE3P6HE/RlfDy2z4SoOuIUXpZKBUnMmt8gXq6/ufQ3mRmmDvxSFBBXXCduHRCPk5uks859ASNhrd3fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bXYczgzT; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47FNFkYZ000366;
-	Fri, 16 Aug 2024 06:33:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	K0eFNX//xIzz4GsFRB/BZYSW99mtDWDTVpD20AHM3lg=; b=bXYczgzTjvh/ezQN
-	IoerFYgta/sg5zNWx7jNKkIClZ9zGIQ15xQEDQZRkpSw8NzVJjofO3ZOkq1cWMXP
-	Rilgqeu/Gy206Q/hgomr6Rdpp3vAfp2vX6IHJi0B+yVJhjhIVpgfPZ5RVorYEm3Z
-	jgulEueGg7YuDbqkn/My8szn4svUFpP5o+yatN6wq2tOYpV87LGiM8DjhuCzKBxi
-	81gPVxFk7/OBRN+BecmqG6MGJjRt9NdL+ndYvHlE4sIcRAiZ7PC5bHvRtBo92UsT
-	gAeMEiGhJ6BYSMZ/W2I0NOpZtoG5+1JVmcGrbeWk9YF6e114gqYtmRK+yOLpbxSu
-	J0C2tA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41134eku5c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Aug 2024 06:33:55 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47G6Xs84016357
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Aug 2024 06:33:54 GMT
-Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 15 Aug 2024 23:33:50 -0700
-From: Taniya Das <quic_tdas@quicinc.com>
-Date: Fri, 16 Aug 2024 12:01:50 +0530
-Subject: [PATCH v4 8/8] arm64: dts: qcom: Add support for multimedia clock
- controllers
+	s=arc-20240116; t=1723790136; c=relaxed/simple;
+	bh=Fyd8Rghju8MutKywJURznuQGDhRTdOs24AGq+FEMZ5E=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=UWn7V+W+yav7UbwDmv3FHR8nl1DxIRlE8U0GLAl1rg4REZvOENrtLDK4xkrUd0ttOosCrK9B2+jT09aq9NOUxyC5z8n701mxkA3FVOLs3RBK4mpLWfU0a7i8HjALrDR/LqA7J4LWvAfc3K/58KEar+YD79b47SCIoOMd5ZhPVS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=21FlmIED; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a7a9a369055so190764466b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 23:35:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1723790132; x=1724394932; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dlvy/2cOpY4w4qpZGIrneMUP1FhFXubcCbWNdPksnnY=;
+        b=21FlmIEDHKSC+hmkidrhhwE8kt4G0xMdf2U/ZWiAMauSrmESjcKGM8Q7Dwqx7bjkbg
+         Fg974uAibwQv5ikFYWDTNge6Brdsr6AZFjEX7wfnrNn6QMGDNnDyJrCxEU3u6JsKMH0S
+         aFznz1SMdhdJ2Nw2feQVoxBjOh0WFvKIE/F3EpHfpmS6UvcLoZ65GWy6+ah/+oHGnDAs
+         UfNRdv46mANu22sNsR/JW0IPuIRBb+EZYzTxRzywjdk+Ie1BwJEekFUqly0/Ixit6oCR
+         YrDnfcO8O5LTfrjU21coRdXACskOaINA2jAhcG3xBbgyOBWHYGkJy7x4j0rknLPa8Dkj
+         i4gQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723790132; x=1724394932;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=dlvy/2cOpY4w4qpZGIrneMUP1FhFXubcCbWNdPksnnY=;
+        b=LUg4Gv91xuO47fz73EmP8SF1iXZxdeo3zh9WDrAls5NTBjdnQTwYDXt0W69NmY+WnM
+         PEeBpBiTT6ZRgUw3YliauZNeOoioqXwdRShMM0tu+HL52y0wvqX9xhbPZ280ZYgrtxmS
+         m+qR//K6lZJ8vbvP9i48FGMYJhpfVW0H5/AYUrvH8JQENS8deOqGOYiJZLZXzk0bjIRN
+         1U164MwScl9DKAqXLDquz+yyy8sJ+KxThXIfyzzujTeqAKPpH7c29cYWTN1ONnPhO5MI
+         EgmynCWcQAohxxkZN5DInaLYU5ijUVeyKItu3b756wL7aFzQ3xMLYil6D8mRhHpyb8Hy
+         5b0A==
+X-Gm-Message-State: AOJu0Yzwn7sAi8p8s3FX/Ha3IfjzNNNv8fjj47PNh73EquggOtUW+7zS
+	KYMIj3zYdrKW/fv2dih5YXcbgMnODGT87gAGpRK9x2L3sy1P8IY0e/jKlvPSAcI=
+X-Google-Smtp-Source: AGHT+IEjLooN9mJouFfwclDBmTI6IWvI0aT85+PtIm7Jj9agzY0qG27OrjnCsCVb6+1o8gjkiZQ/Qw==
+X-Received: by 2002:a17:907:944a:b0:a77:db36:1ccf with SMTP id a640c23a62f3a-a8392a3bb13mr117533666b.42.1723790131615;
+        Thu, 15 Aug 2024 23:35:31 -0700 (PDT)
+Received: from localhost ([145.15.244.232])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a83838eeecesm206592166b.95.2024.08.15.23.35.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Aug 2024 23:35:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240816-sa8775p-mm-v3-v1-8-77d53c3c0cef@quicinc.com>
-References: <20240816-sa8775p-mm-v3-v1-0-77d53c3c0cef@quicinc.com>
-In-Reply-To: <20240816-sa8775p-mm-v3-v1-0-77d53c3c0cef@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Bartosz
- Golaszewski" <bartosz.golaszewski@linaro.org>,
-        <quic_imrashai@quicinc.com>, <quic_jkona@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Taniya Das
-	<quic_tdas@quicinc.com>
-X-Mailer: b4 0.14-dev-f7c49
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: nhJwJuwTjfY4VZcOuPSplc6gb5CsGLTF
-X-Proofpoint-GUID: nhJwJuwTjfY4VZcOuPSplc6gb5CsGLTF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-15_18,2024-08-15_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 phishscore=0 impostorscore=0 suspectscore=0
- mlxlogscore=999 clxscore=1015 mlxscore=0 spamscore=0 adultscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408160045
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 16 Aug 2024 08:35:28 +0200
+Message-Id: <D3H4LOY4UHKJ.2E21EUSJWXQGJ@fairphone.com>
+Cc: <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 0/7] arm64: qcom: allow up to 4 lanes for the Type-C
+ DisplayPort Altmode
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Neil Armstrong" <neil.armstrong@linaro.org>, "Vinod Koul"
+ <vkoul@kernel.org>, "Kishon Vijay Abraham I" <kishon@kernel.org>, "Rob
+ Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+ "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>
+X-Mailer: aerc 0.18.2-0-ge037c095a049
+References: <20240527-topic-sm8x50-upstream-phy-combo-typec-mux-v2-0-a03e68d7b8fc@linaro.org>
+In-Reply-To: <20240527-topic-sm8x50-upstream-phy-combo-typec-mux-v2-0-a03e68d7b8fc@linaro.org>
 
-Add support for video, camera, display0 and display1 clock
-controllers on SA8775P platform.
+On Mon May 27, 2024 at 10:42 AM CEST, Neil Armstrong wrote:
+> Register a typec mux in order to change the PHY mode on the Type-C
+> mux events depending on the mode and the svid when in Altmode setup.
+>
+> The DisplayPort phy should be left enabled if is still powered on
+> by the DRM DisplayPort controller, so bail out until the DisplayPort
+> PHY is not powered off.
+>
+> The Type-C Mode/SVID only changes on plug/unplug, and USB SAFE states
+> will be set in between of USB-Only, Combo and DisplayPort Only so
+> this will leave enough time to the DRM DisplayPort controller to
+> turn of the DisplayPort PHY.
+>
+> The patchset also includes bindings changes and DT changes.
+>
+> This has been successfully tested on an SM8550 board, but the
+> Thinkpad X13s deserved testing between non-PD USB, non-PD DisplayPort,
+> PD USB Hubs and PD Altmode Dongles to make sure the switch works
+> as expected.
+>
+> The DisplayPort 4 lanes setup can be check with:
+> $ cat /sys/kernel/debug/dri/ae01000.display-controller/DP-1/dp_debug
+> 	name =3D msm_dp
+> 	drm_dp_link
+> 		rate =3D 540000
+> 		num_lanes =3D 4
+> ...
+>
+> This patchset depends on [1] to allow broadcasting the type-c mode
+> to the PHY, otherwise the PHY will keep the combo state while the
+> retimer would setup the 4 lanes in DP mode.
+>
+> [1] https://lore.kernel.org/all/20240527-topic-sm8x50-upstream-retimer-br=
+oadcast-mode-v1-0-79ec91381aba@linaro.org/
 
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 57 +++++++++++++++++++++++++++++++++++
- 1 file changed, 57 insertions(+)
+Hi Neil,
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 23f1b2e5e624..93be4683a31f 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -2911,6 +2911,47 @@ llcc: system-cache-controller@9200000 {
- 			interrupts = <GIC_SPI 580 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		videocc: clock-controller@abf0000 {
-+			compatible = "qcom,sa8775p-videocc";
-+			reg = <0x0 0x0abf0000 0x0 0x10000>;
-+			clocks = <&gcc GCC_VIDEO_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&sleep_clk>;
-+			power-domains = <&rpmhpd SA8775P_MMCX>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		camcc: clock-controller@ade0000 {
-+			compatible = "qcom,sa8775p-camcc";
-+			reg = <0x0 0x0ade0000 0x0 0x20000>;
-+			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&sleep_clk>;
-+			power-domains = <&rpmhpd SA8775P_MMCX>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
-+		dispcc0: clock-controller@af00000 {
-+			compatible = "qcom,sa8775p-dispcc0";
-+			reg = <0x0 0x0af00000 0x0 0x20000>;
-+			clocks = <&gcc GCC_DISP_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&sleep_clk>,
-+				 <0>, <0>, <0>, <0>,
-+				 <0>, <0>, <0>, <0>;
-+			power-domains = <&rpmhpd SA8775P_MMCX>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		pdc: interrupt-controller@b220000 {
- 			compatible = "qcom,sa8775p-pdc", "qcom,pdc";
- 			reg = <0x0 0x0b220000 0x0 0x30000>,
-@@ -3445,6 +3486,22 @@ cpufreq_hw: cpufreq@18591000 {
- 			#freq-domain-cells = <1>;
- 		};
- 
-+		dispcc1: clock-controller@22100000 {
-+			compatible = "qcom,sa8775p-dispcc1";
-+			reg = <0x0 0x22100000 0x0 0x20000>;
-+			clocks = <&gcc GCC_DISP_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK_A>,
-+				 <&sleep_clk>,
-+				 <0>, <0>, <0>, <0>,
-+				 <0>, <0>, <0>, <0>;
-+			power-domains = <&rpmhpd SA8775P_MMCX>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+			status = "disabled";
-+		};
-+
- 		ethernet1: ethernet@23000000 {
- 			compatible = "qcom,sa8775p-ethqos";
- 			reg = <0x0 0x23000000 0x0 0x10000>,
+Is there anything happening on this patchset? From what I can see there
+were a few comments on the patches, would be nice if we could get this
+in at some point.
 
--- 
-2.45.2
+Regards
+Luca
+
+>
+> To: Bjorn Andersson <andersson@kernel.org>
+> To: Konrad Dybcio <konrad.dybcio@linaro.org>
+> To: Vinod Koul <vkoul@kernel.org>
+> To: Kishon Vijay Abraham I <kishon@kernel.org>
+> To: Rob Herring <robh@kernel.org>
+> To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+> To: Conor Dooley <conor+dt@kernel.org>
+> To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-phy@lists.infradead.org
+> Cc: devicetree@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>
+> Changes in v2:
+> - Reference usb-switch.yaml in bindings patch
+> - Fix switch/case indenting
+> - Check svid for USB_TYPEC_DP_SID
+> - Fix X13s patch subject
+> - Update SM8650 patch to enable 4 lanes on HDK aswell
+> - Link to v1: https://lore.kernel.org/r/20240229-topic-sm8x50-upstream-ph=
+y-combo-typec-mux-v1-0-07e24a231840@linaro.org
+>
+> ---
+> Neil Armstrong (7):
+>       dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp: Reference usb-switch.y=
+aml to allow mode-switch
+>       phy: qcom: qmp-combo: store DP phy power state
+>       phy: qcom: qmp-combo: introduce QPHY_MODE
+>       phy: qcom: qmp-combo: register a typec mux to change the QPHY_MODE
+>       arm64: dts: qcom-sm8550: allow 4 lanes for DisplayPort and enable Q=
+MP PHY mode-switch
+>       arm64: dts: qcom-sm8650: allow 4 lanes for DisplayPort and enable Q=
+MP PHY mode-switch
+>       arm64: dts: qcom: sc8280xp-lenovo-thinkpad-x13: allow 4 lanes for D=
+isplayPort and enable QMP PHY mode-switch
+>
+>  .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml         |   7 +-
+>  .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     |   6 +-
+>  arch/arm64/boot/dts/qcom/sm8550-hdk.dts            |   3 +-
+>  arch/arm64/boot/dts/qcom/sm8550-qrd.dts            |   3 +-
+>  arch/arm64/boot/dts/qcom/sm8650-hdk.dts            |   3 +-
+>  arch/arm64/boot/dts/qcom/sm8650-qrd.dts            |   3 +-
+>  drivers/phy/qualcomm/phy-qcom-qmp-combo.c          | 169 +++++++++++++++=
+++++--
+>  7 files changed, 174 insertions(+), 20 deletions(-)
+> ---
+> base-commit: d4eef8b2e18d3e4d2343fb3bb975f8ac4522129a
+> change-id: 20240229-topic-sm8x50-upstream-phy-combo-typec-mux-31b5252513c=
+9
+>
+> Best regards,
 
 
