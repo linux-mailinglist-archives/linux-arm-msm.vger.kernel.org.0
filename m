@@ -1,151 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-28782-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E08AD954535
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 11:12:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C866954615
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 11:48:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1FFD01C21575
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 09:12:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F198728165E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 09:48:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2AD113C667;
-	Fri, 16 Aug 2024 09:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4070816F831;
+	Fri, 16 Aug 2024 09:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YCf26TwE"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="OdktREYl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FAA13A250
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 09:12:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A8876056
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 09:48:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723799544; cv=none; b=O/G4w8NWb6z4pCMwfIY2W87r+qtFRkXP3k36I0vNgU7kZ6BYosrTc+PJLgPD9wo73JNcAOKGxbm79dqy/MUlM0shR0uPiOm92eROt2B5+SHTvniz1x4/yxJ+FG54HAcqeKuwToLokalXaS61nOYQle6F7HZCaWWKiNCFTLm+cbk=
+	t=1723801689; cv=none; b=oa3PVI24bZEVBj9sQS4hfQkhNdO5G7y2o9L4vJ4P6NR3oVFnlnOtYYIkXKHUZw8mwFR9fHS8eScqIf+JD2XNax/zeuoMiF4d4ygXoC+dgc/aMuptzEm7aVSSBxbyubyVLwqsG9n8RDSEJRSSCIRfzcFSkCq2eise4TX8MECql2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723799544; c=relaxed/simple;
-	bh=uvPfs/sxceMFOcpt6ca5ZNnxd1WJmw0aOuCls/fF4tk=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NGZo1+niTrurVNWzSnfo/cW69REQf2lUpzuivdgbKM14VkF7LlFLNVlnCNh9h82dd+gxBFGQx3HfPy5xvwL3zSga8iQ/1IJFnrAihY+mSSDvEmtX7VvTjUlb9yezcX1xc2hu0WNIYp0zqBElH/P7gpjFsDuTLuzyw9bgX/XjFT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YCf26TwE; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-428e0d18666so12092245e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 02:12:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723799541; x=1724404341; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=WllYCtmCZzHsMxTLdu431wvQusgsnPG7xw41l1l/SJI=;
-        b=YCf26TwEuMvUmoJU8bY5TfLXC3LSgXyVlzoa5ZaJ8xIqGiLWgOYEEoYVok+Db4v6I1
-         yCmA/i6aqwVwqje5Tg3fxFFN5wNVHDD01txonwCZVGmIeai/CnN+aGzLuILcgil6OnLI
-         AcncqUtEH65inDJsyCUmaJ67qcFszXMoCpdTfh7WxEpls/tHBd4ToeG0ltBraQ7FJJ7T
-         5dcTa2PF6ElTgXcIAac2ez+Cvh1pQEYqFG/ceDADw+ZnjEUbb7i2Wxu6tpHJr3CQcoF+
-         xpPwuvV50Srn6+eorocKfDxwzNUODFE7U290WIbP/+ouxDnlu7HScPma2Prd6vg5/Lhn
-         MklQ==
+	s=arc-20240116; t=1723801689; c=relaxed/simple;
+	bh=PHgSv5/zg5E2QYWLyGGxNtJvJljjruwzsWzGFsvHl5w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JDLuvRUKvYRPzcTecO5Nzba6XeHDVHjJO207puUbvRwn8u68heakdjvxKubD0DsV6P9viGbsAfVTR0tkM6OF6Mn+QQIrR5MOQeY76nWAWzz6QDisIC1bLdAEbnsUCj46O/zLZXla1Y4lgOdmHrfKGavRO56ZTRZatt6wes+qEPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=OdktREYl; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1723801686;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=cItGQgldy/tTddRx+wC0nDZv5QfvZntHGpl6Xel0Reg=;
+	b=OdktREYl068uO+jGj6k9bcw8ODxofP2jk5V87EVfay4YLrFHjrq2BmVTJI1fDSrigm2HLI
+	MpM7q6z9C4sOADsjhlohrK+TCkaHAsMPezzLmmXqVRiYVcBUEznsbwY3+SiGaSHFsoHuhB
+	dBFC/8ybMMZSOzz1MKJItqIynofi3Cc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-513-ZZ6TLqpSNAyY0zmTsadIIg-1; Fri, 16 Aug 2024 05:48:03 -0400
+X-MC-Unique: ZZ6TLqpSNAyY0zmTsadIIg-1
+Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-42817980766so12295645e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 02:48:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723799541; x=1724404341;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WllYCtmCZzHsMxTLdu431wvQusgsnPG7xw41l1l/SJI=;
-        b=eIDjtSPblaIMCfFffEPbSrBvemKfRYxFn1qUm1hvarD9fcBKCWAzJAube1xV0r0MID
-         Jl9NwCCAo1zWmKGvAi+By0Xo8FZtGOf5eSfjtyupXLmGMsUn8SWzpNaNf2dWRXxSoWdV
-         R4G6k3h4jbM14K+zrx4l/0qpBuW+CjDDPW5eoF5RHgjT9C+TY+9pXtiBclUt01rwgBxP
-         0KgRz4UbW9yJLY2/e9lmiOy7sfMyLVSYlWf7eK1v/NnKYRq+IArC9Bfr6UUK5iZesB8C
-         UsaK4gztHnWK/c77eggCuPRXIN73hrFocdVzYgFOTi7d9PSkfubRBVw/Rq5Fy5tPJDyf
-         vcLw==
-X-Forwarded-Encrypted: i=1; AJvYcCV11SpUJ4ic44GlW4u5O0BNYJdY+pLvMsANFUAIPzIRWSoOMpA/qu+hyz+YTvnUv5Bi9A7yzXXzmVnWcENRjiBekHGXT/jTHzOchvASng==
-X-Gm-Message-State: AOJu0Yw3l90vBj2hZkSXgvn6thm1LjDfkYn+nBg6rfCE6lHYBV8xCwlO
-	q5qSaT92u5Ba0vQElAA/XZySZfI5fQ/BnY17mWREDdDnWs75aFuicNVslI+9gclfiyGxAmHbqRB
-	q
-X-Google-Smtp-Source: AGHT+IGvQ9bU4HwT1y0LssYKgZiF6iaa0214ap/5xVyvjFPYigK5l5fFUuG/x6CX2HWGTdPrbEznbA==
-X-Received: by 2002:a05:600c:3550:b0:428:fb96:e94a with SMTP id 5b1f17b1804b1-429ed788f3amr15403345e9.9.1723799540837;
-        Fri, 16 Aug 2024 02:12:20 -0700 (PDT)
-Received: from localhost.localdomain ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ed6507c4sm17525635e9.15.2024.08.16.02.12.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Aug 2024 02:12:20 -0700 (PDT)
-From: srinivas.kandagatla@linaro.org
-To: broonie@kernel.org
-Cc: perex@perex.cz,
-	tiwai@suse.com,
-	alsa-devel@alsa-project.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	amit.pundir@linaro.org,
-	dmitry.baryshkov@linaro.org,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v2] ASoC: codecs: lpass-va-macro: set the default codec version for sm8250
-Date: Fri, 16 Aug 2024 10:12:10 +0100
-Message-Id: <20240816091210.50172-1-srinivas.kandagatla@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        d=1e100.net; s=20230601; t=1723801682; x=1724406482;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=cItGQgldy/tTddRx+wC0nDZv5QfvZntHGpl6Xel0Reg=;
+        b=vflM1h9m37wu6iFfeFHTgckitD6gi72PJKpni4j+/o4DIx4Ctd4CyUsBN5Mvra2pX4
+         gEmLKFzhqYSh8swPVTEEPr8NTFrMSMq7HliVhz7qImf8jAPOxkBWR6LcOZ4rP2FEy24d
+         n4evnUIlmywQB2AqNVLNOXSAAygwFDGqd8znjoBONjA77x/gYqVXsCHOcXPp5PHxabsY
+         PrvxJ085mnZJ8KDtqyEYRXIDPLFmeQ749Kbk9QhQnK3laXQ0aFU+rSYnFWW8QcsEGa32
+         1IP2ya8XY4CjSY6FpD7ItgKxyFMqHspoAnKarl1AX2L/erTM5MtKtFkPZwO1Cu+ADwOl
+         cGiw==
+X-Forwarded-Encrypted: i=1; AJvYcCX45HOA66LUH1TgwjmG3AkOYTT5MHKYmIfR2aCcMqCQiIvW8rOmuogX++aaJfxzqhKlNDe/SErZLjEN+oqEIXCJ4xqIyePgtRV+LzO2mw==
+X-Gm-Message-State: AOJu0Yxnpv2yBGq/BWjSFi2yqtOj3PZaW9X3dzfPJL45pM9jqbR56EuH
+	jt7/D7Xk1C/bLtZ/WKzQZX66k/MVPeh8IZa4hEDxoLXL2ZQpwhVSXvigaArgMZ2AbpCbPca+dW0
+	7VbivfN3PRBJzhU8EPwAKEaf4938x1UrQIjQLnYylfH/aOYNl/2ho8d+ddrTacXM=
+X-Received: by 2002:a05:600c:3b83:b0:426:6688:2421 with SMTP id 5b1f17b1804b1-429ed7ba99dmr14049245e9.11.1723801682217;
+        Fri, 16 Aug 2024 02:48:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFpQLSDYM16Ri7D7oosItz25ievmmmK0kmDYRTh0OWVOGaMQHp0evjwLT/hi7XGFl5zrP7MkA==
+X-Received: by 2002:a05:600c:3b83:b0:426:6688:2421 with SMTP id 5b1f17b1804b1-429ed7ba99dmr14049015e9.11.1723801681661;
+        Fri, 16 Aug 2024 02:48:01 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c721:b900:4f34:b2b7:739d:a650? (p200300cbc721b9004f34b2b7739da650.dip0.t-ipconnect.de. [2003:cb:c721:b900:4f34:b2b7:739d:a650])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ed648ef5sm18253965e9.10.2024.08.16.02.48.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Aug 2024 02:48:01 -0700 (PDT)
+Message-ID: <aa3b5be8-2c8a-4fe8-8676-a40a9886c715@redhat.com>
+Date: Fri, 16 Aug 2024 11:48:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 4/4] mm: guest_memfd: Add ability for mmap'ing pages
+To: Fuad Tabba <tabba@google.com>
+Cc: Elliot Berman <quic_eberman@quicinc.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Sean Christopherson
+ <seanjc@google.com>, Patrick Roy <roypat@amazon.co.uk>, qperret@google.com,
+ Ackerley Tng <ackerleytng@google.com>, linux-coco@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org, kvm@vger.kernel.org
+References: <20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com>
+ <20240805-guest-memfd-lib-v1-4-e5a29a4ff5d7@quicinc.com>
+ <4cdd93ba-9019-4c12-a0e6-07b430980278@redhat.com>
+ <CA+EHjTxNNinn7EzV_o1X1d0kwhEwrbj_O7H8WgDtEy2CwURZFQ@mail.gmail.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <CA+EHjTxNNinn7EzV_o1X1d0kwhEwrbj_O7H8WgDtEy2CwURZFQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+On 15.08.24 09:24, Fuad Tabba wrote:
+> Hi David,
 
-sm8250 and sc7280 have lpass codec version 1.0, as these are very old
-platforms, they do not have a reliable way to get the codec version
-from core_id registers.
+Hi!
 
-On codec versions below 2.0, even though the core_id registers are
-available to read, the values of these registers are not unique to be
-able to determine the version of the codec dynamically.
+> 
+> On Tue, 6 Aug 2024 at 14:51, David Hildenbrand <david@redhat.com> wrote:
+>>
+>>>
+>>> -     if (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP) {
+>>> +     if (!ops->accessible && (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP)) {
+>>>                r = guest_memfd_folio_private(folio);
+>>>                if (r)
+>>>                        goto out_err;
+>>> @@ -107,6 +109,82 @@ struct folio *guest_memfd_grab_folio(struct file *file, pgoff_t index, u32 flags
+>>>    }
+>>>    EXPORT_SYMBOL_GPL(guest_memfd_grab_folio);
+>>>
+>>> +int guest_memfd_make_inaccessible(struct file *file, struct folio *folio)
+>>> +{
+>>> +     unsigned long gmem_flags = (unsigned long)file->private_data;
+>>> +     unsigned long i;
+>>> +     int r;
+>>> +
+>>> +     unmap_mapping_folio(folio);
+>>> +
+>>> +     /**
+>>> +      * We can't use the refcount. It might be elevated due to
+>>> +      * guest/vcpu trying to access same folio as another vcpu
+>>> +      * or because userspace is trying to access folio for same reason
+>>
+>> As discussed, that's insufficient. We really have to drive the refcount
+>> to 1 -- the single reference we expect.
+>>
+>> What is the exact problem you are running into here? Who can just grab a
+>> reference and maybe do nasty things with it?
+> 
+> I was wondering, why do we need to check the refcount? Isn't it enough
+> to check for page_mapped() || page_maybe_dma_pinned(), while holding
+> the folio lock?
 
-Add the version info into of_data, so that driver does not need to use
-core_id registers to get version number for such situations.
+(folio_mapped() + folio_maybe_dma_pinned())
 
-Fixes: 378918d59181 ("ASoC: codecs: lpass-macro: add helpers to get codec version")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
-Changes since v1:
-	- updated commit text to add more details
+Not everything goes trough FOLL_PIN. vmsplice() is an example, or just 
+some very simple read/write through /proc/pid/mem. Further, some 
+O_DIRECT implementations still don't use FOLL_PIN.
 
- sound/soc/codecs/lpass-va-macro.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+So if you see an additional folio reference, as soon as you mapped that 
+thing to user space, you have to assume that it could be someone 
+reading/writing that memory in possibly sane context. (vmsplice() should 
+be using FOLL_PIN|FOLL_LONGTERM, but that's a longer discussion)
 
-diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
-index 8454193ed22a..e95d1f29ef18 100644
---- a/sound/soc/codecs/lpass-va-macro.c
-+++ b/sound/soc/codecs/lpass-va-macro.c
-@@ -228,11 +228,13 @@ struct va_macro {
- struct va_macro_data {
- 	bool has_swr_master;
- 	bool has_npl_clk;
-+	int version;
- };
- 
- static const struct va_macro_data sm8250_va_data = {
- 	.has_swr_master = false,
- 	.has_npl_clk = false,
-+	.version = LPASS_CODEC_VERSION_1_0,
- };
- 
- static const struct va_macro_data sm8450_va_data = {
-@@ -1587,7 +1589,14 @@ static int va_macro_probe(struct platform_device *pdev)
- 			goto err_npl;
- 	}
- 
--	va_macro_set_lpass_codec_version(va);
-+	/**
-+	 * old version of codecs do not have a reliable way to determine the
-+	 * version from registers, get them from soc specific data
-+	 */
-+	if (data->version)
-+		lpass_macro_set_codec_version(data->version);
-+	else /* read version from register */
-+		va_macro_set_lpass_codec_version(va);
- 
- 	if (va->has_swr_master) {
- 		/* Set default CLK div to 1 */
+(noting that also folio_maybe_dma_pinned() can have false positives in 
+some cases due to speculative references or *many* references).
+
 -- 
-2.25.1
+Cheers,
+
+David / dhildenb
 
 
