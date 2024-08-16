@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3305995427E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 09:15:16 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1A4695428A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 09:17:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CF7D51F215B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 07:15:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5B6EEB24999
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 07:17:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5789E83CA3;
-	Fri, 16 Aug 2024 07:15:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C927E12C53B;
+	Fri, 16 Aug 2024 07:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cgAx8Gq8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kfEz0qy9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1C820E3;
-	Fri, 16 Aug 2024 07:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B04620E3;
+	Fri, 16 Aug 2024 07:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723792514; cv=none; b=eU7I1ujkOPaP9GKf9hZY8bmRD6emiyf89OfO//vqtB/aHd1ZHIMccx/PL7k5d9qlDjjD1N0E0pANxY3zCcA1jcOnfEPsLpxWwmcrkb11xsQrzpXOPvBlrbLFz5CzTYxFQoIjfSdTDWg+4ntvLnNbJMn7iK/V8j8rVpYFreqOLeI=
+	t=1723792613; cv=none; b=PabS+RkJ7A12exYC/vevZDrqtrCHfht2oLg98tZdu80M6ppgcBndO8KERjh+VL2OskG8nSf+NG6FibUAS6NrhB3/cmg/c8FZMqs14mTPTx1HXKz7B6Q/A+2XAbIzjlhcfoWUVLXJ95LlK2h/6xH0nGXnZIaoSiXJbqrPEmgPwvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723792514; c=relaxed/simple;
-	bh=lol7kTtNyIMAKOPg9Q6lR/exIrBORfb4Eafh5/hRXEY=;
+	s=arc-20240116; t=1723792613; c=relaxed/simple;
+	bh=1gTSrrztAXBO2+ImjkclrrGoKRUEM+ic9NBUsQGpSeI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kOARehzKzr2nknjEizpX2xKWx/IBtxApKpa41mOmQbRUd01+pSAfv7CWMbJ3AEIxFhRmHH5L+XgmAOUOJtxowQ8YU3Aga/mvK3XWL8v/QvZt0wbFf5dHLG+QGrcwoxFav5So8Nt76/V6LMu7fdqZapaaZiZhnmYIoo611UUEbYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cgAx8Gq8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9949CC32782;
-	Fri, 16 Aug 2024 07:15:09 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=lbCQRoPH/w+S8q0hJevViYXJ2XfoIz5obWpIRU4fPXsLEqcp8eRyyf749xuJvrBSu/EwEUVy6N+L0pFWVGQPLMeQQegEDCpRpSkq1bDAg/faI+BU3BJLUB1urwYbSq96YbfVk0j+PKOEAeT6G2n9lMd6TQf/aD3kUjO+j3I3/q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kfEz0qy9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32116C32782;
+	Fri, 16 Aug 2024 07:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723792513;
-	bh=lol7kTtNyIMAKOPg9Q6lR/exIrBORfb4Eafh5/hRXEY=;
+	s=k20201202; t=1723792613;
+	bh=1gTSrrztAXBO2+ImjkclrrGoKRUEM+ic9NBUsQGpSeI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=cgAx8Gq8QNgT/VEqlDOU6Z6Z5G14FVT9UYW/jiTIKRl4RgRSBsK0f9HLTz56ypxG2
-	 wn2gwJNoyQt4dsuSEP3o38Wt6RfVUPxAnZ+QmnHaRT83NqMs0Ni1oJQDr/uLxos5kV
-	 bKa9TJPGDCV/rljOhVrs5ZoDN6zJBo+VRxSlxyMs9zFkBrvw3lWXyYHCcgKnaePx2i
-	 TqfhQQUyGiG1g77l3Oby7bMorE/YHkC0krEYeNrQPJ8Mrl0eIv7NuXdXlZ/dDnLKee
-	 /JDwaRxIb2hnTqUj25+5O9OPeQ7bFV4fbrYTbnUFLDomNwWTgBUcURnfaJbNj4Imag
-	 soAnN7ge9qVMQ==
-Message-ID: <4b0cf051-2df0-44ad-bfc2-1bb7171a3ee5@kernel.org>
-Date: Fri, 16 Aug 2024 09:15:07 +0200
+	b=kfEz0qy9UDyoucCaotzwW9QZae48xWB7HUhLjGiM1LUI0/3HZv7BcTYg0T7lG6b6S
+	 DL5PGB8ag91uOFCAbpikGza5d69a2X61FEZ2NP5BwGzXtpm9rcL94b+aOMzoBbewwk
+	 4Y+3XJk3X/lh5DxQkDu2oiJ58opf4g+YV0WRt3PHfn5gCLi1Ggmmrc6hGCnd3pzW0u
+	 Y505xkCnl4AJIObpQNYO+0wYGHSdhdI6jVUfuWG4tQjXfnDGfaFGY6fYDgRTZf0XGE
+	 tLuJzNY0M4lqw5OeEUNQr1GTrN4+Kzdx46gtQk0BhkCc33m4kik9IfYUUpm/28Cj9n
+	 VjfVd7gWBrWCQ==
+Message-ID: <be229afd-fa06-4f91-8cb1-4534a91152d5@kernel.org>
+Date: Fri, 16 Aug 2024 09:16:46 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,16 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/6] dt-bindings: ufs: Add X1E80100 UFS
-To: Marcus Glocker <marcus@nazgul.ch>, Bjorn Andersson
- <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+Subject: Re: [PATCH v3 4/6] arm64: dts: qcom: Add UFS node
+To: Marcus Glocker <marcus@nazgul.ch>, Abel Vesa <abel.vesa@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
- Johan Hovold <johan@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+ linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
 References: <v2iah5yrne4u6uzrnzg36tvtxzqrpiez6io2gyyfrht2x42umw@5ribqndiavxv>
- <3mjmyo45td4zpnzntphwqdbc6rogs7c7q6jkjvqgvyzxl2l7ie@wkusfdalqwj5>
+ <ejeph4wspggkmvhl7qmpvw5jlojyvma7epqd67i6vk5p6fncrk@de56nvgi6vzi>
+ <Zr3cuxv4EdxMQa9C@linaro.org>
+ <kt5mrxse7dirsjgu3ldv4rzasgbmykluul7ie26zlavhlmfz4r@bo4fd4ybt7bx>
+ <Zr4AHoPpAXJM6AC+@linaro.org>
+ <zyhqlafrhfytjfcwf6jmhc233sikezskls54sgfchfvylqt5gj@fklz4yyrhobo>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,15 +109,37 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <3mjmyo45td4zpnzntphwqdbc6rogs7c7q6jkjvqgvyzxl2l7ie@wkusfdalqwj5>
+In-Reply-To: <zyhqlafrhfytjfcwf6jmhc233sikezskls54sgfchfvylqt5gj@fklz4yyrhobo>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15/08/2024 12:41, Marcus Glocker wrote:
-> Add the UFS Host Controller binding.
+On 15/08/2024 18:59, Marcus Glocker wrote:
+>>> Getting the right DTB in, at least opens the possibility to continue
+>>> development in the driver area to further support this new hardware.
+>>>
+>>> But I won't touch your drivers, not my goal.
+>>
+>> Presumably, you do have the UFS working on your Book4 laptop, right?
+> 
+> That's right, but ...
+>  
+>> If so, I would expect you do have the PHY working as well and therefore
+>> a patch that adds the X Elite compatible, right?
+> 
+> ... I'm not using Linux on that laptop but OpenBSD.  Hence, my UFS
+> driver patch will be useless for you.  If one of your developers gets
+> his hand on that laptop, enabling UFS based on that DTB should be
+> fairly straight forward.
+> 
+> The reason why we are interested to get new DTS' in your tree, is
+> because we're using the Linux DTS tree as a base, and then patch over
+> it as of our requirements.  The less patches we need to apply, the
+> easier the maintenance is.
 
-Also incomplete and actually not matching the patch at all. You do not
-add new UFS Controller binding here.
+That's fine. You do not need drivers implementing bindings and DTS in
+general.
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
