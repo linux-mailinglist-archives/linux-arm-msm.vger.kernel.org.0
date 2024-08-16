@@ -1,210 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-28783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C866954615
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 11:48:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 851A19546A7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 12:20:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F198728165E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 09:48:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B28F2890EF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 10:20:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4070816F831;
-	Fri, 16 Aug 2024 09:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32D7D157A41;
+	Fri, 16 Aug 2024 10:20:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="OdktREYl"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TG5Ua8gj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A8876056
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 09:48:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F93A86AE3
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 10:20:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723801689; cv=none; b=oa3PVI24bZEVBj9sQS4hfQkhNdO5G7y2o9L4vJ4P6NR3oVFnlnOtYYIkXKHUZw8mwFR9fHS8eScqIf+JD2XNax/zeuoMiF4d4ygXoC+dgc/aMuptzEm7aVSSBxbyubyVLwqsG9n8RDSEJRSSCIRfzcFSkCq2eise4TX8MECql2o=
+	t=1723803603; cv=none; b=A8EgXT4vNGOg36gzP5JKvcEAqPwDk41xidgJDUaNmr90mE1eUm636+dnhWlipug5fNxWfWXtzwszg/67+gRXDbcVKeAtG4Bok5wDVQQHeJp5/nWUCPkscle9kJhrwVfOLSNdMTmoCDaHGmfvVxLT535ajdild8tVqwsu3bi+ETM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723801689; c=relaxed/simple;
-	bh=PHgSv5/zg5E2QYWLyGGxNtJvJljjruwzsWzGFsvHl5w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JDLuvRUKvYRPzcTecO5Nzba6XeHDVHjJO207puUbvRwn8u68heakdjvxKubD0DsV6P9viGbsAfVTR0tkM6OF6Mn+QQIrR5MOQeY76nWAWzz6QDisIC1bLdAEbnsUCj46O/zLZXla1Y4lgOdmHrfKGavRO56ZTRZatt6wes+qEPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=OdktREYl; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1723801686;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=cItGQgldy/tTddRx+wC0nDZv5QfvZntHGpl6Xel0Reg=;
-	b=OdktREYl068uO+jGj6k9bcw8ODxofP2jk5V87EVfay4YLrFHjrq2BmVTJI1fDSrigm2HLI
-	MpM7q6z9C4sOADsjhlohrK+TCkaHAsMPezzLmmXqVRiYVcBUEznsbwY3+SiGaSHFsoHuhB
-	dBFC/8ybMMZSOzz1MKJItqIynofi3Cc=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-513-ZZ6TLqpSNAyY0zmTsadIIg-1; Fri, 16 Aug 2024 05:48:03 -0400
-X-MC-Unique: ZZ6TLqpSNAyY0zmTsadIIg-1
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-42817980766so12295645e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 02:48:03 -0700 (PDT)
+	s=arc-20240116; t=1723803603; c=relaxed/simple;
+	bh=MQFYcJgF3GCPNTGvdTNgyXl9CUcUIcxvfrPusyvNb6U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XTzXxsDCiatpFY34j5me2/nZoQlW0gV8n7lG0zrO9ynuzEg2mKKKMHbae+xmyD6lxA/xdrbGLocwnYnTqZQCwDtLCR6OpzZR7wnaxxUIATxW5fXBEtqfY0+aT2dHPl4EL0DwT5EMSWkucN5xVflzPBD8m+XrmHYw31hPoYHWGtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TG5Ua8gj; arc=none smtp.client-ip=209.85.217.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-49294bbd279so619698137.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 03:20:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1723803599; x=1724408399; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=tKl6sG125oIcosA1A44lD12PStzJaGU1SQK7ba2gVx0=;
+        b=TG5Ua8gj9Ru7+rM51I0Rm/Rz1D9GUxeos6xPqH06NTC1bdW75yy1I/BFfyulNlRMRq
+         0DZjNmaaUzDbJNinXirfN64Lk/7w51gA3IA82GteetWHlzjg4mbw6w0au/lIT476smo9
+         BUZA0y5L39K6ucwI7fSb6IZzIVhaq496b94ngKkKFnw/IMHz50BmXCwcV8mHdYtLc2Y2
+         uZ0n87SZz3HkSUveEzPq4DvZHTia1ylNfo0AlQFnzzfKEu0TfoxQsFUvBR1v4T0xrFWi
+         qO6G3+T+KNiPl7ILUU7LXSDTNR/48vFwuk/2BCW6I1wOgBWb+s0MVV1y5vSkTGYKTuqv
+         mORw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723801682; x=1724406482;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=cItGQgldy/tTddRx+wC0nDZv5QfvZntHGpl6Xel0Reg=;
-        b=vflM1h9m37wu6iFfeFHTgckitD6gi72PJKpni4j+/o4DIx4Ctd4CyUsBN5Mvra2pX4
-         gEmLKFzhqYSh8swPVTEEPr8NTFrMSMq7HliVhz7qImf8jAPOxkBWR6LcOZ4rP2FEy24d
-         n4evnUIlmywQB2AqNVLNOXSAAygwFDGqd8znjoBONjA77x/gYqVXsCHOcXPp5PHxabsY
-         PrvxJ085mnZJ8KDtqyEYRXIDPLFmeQ749Kbk9QhQnK3laXQ0aFU+rSYnFWW8QcsEGa32
-         1IP2ya8XY4CjSY6FpD7ItgKxyFMqHspoAnKarl1AX2L/erTM5MtKtFkPZwO1Cu+ADwOl
-         cGiw==
-X-Forwarded-Encrypted: i=1; AJvYcCX45HOA66LUH1TgwjmG3AkOYTT5MHKYmIfR2aCcMqCQiIvW8rOmuogX++aaJfxzqhKlNDe/SErZLjEN+oqEIXCJ4xqIyePgtRV+LzO2mw==
-X-Gm-Message-State: AOJu0Yxnpv2yBGq/BWjSFi2yqtOj3PZaW9X3dzfPJL45pM9jqbR56EuH
-	jt7/D7Xk1C/bLtZ/WKzQZX66k/MVPeh8IZa4hEDxoLXL2ZQpwhVSXvigaArgMZ2AbpCbPca+dW0
-	7VbivfN3PRBJzhU8EPwAKEaf4938x1UrQIjQLnYylfH/aOYNl/2ho8d+ddrTacXM=
-X-Received: by 2002:a05:600c:3b83:b0:426:6688:2421 with SMTP id 5b1f17b1804b1-429ed7ba99dmr14049245e9.11.1723801682217;
-        Fri, 16 Aug 2024 02:48:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFpQLSDYM16Ri7D7oosItz25ievmmmK0kmDYRTh0OWVOGaMQHp0evjwLT/hi7XGFl5zrP7MkA==
-X-Received: by 2002:a05:600c:3b83:b0:426:6688:2421 with SMTP id 5b1f17b1804b1-429ed7ba99dmr14049015e9.11.1723801681661;
-        Fri, 16 Aug 2024 02:48:01 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c721:b900:4f34:b2b7:739d:a650? (p200300cbc721b9004f34b2b7739da650.dip0.t-ipconnect.de. [2003:cb:c721:b900:4f34:b2b7:739d:a650])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ed648ef5sm18253965e9.10.2024.08.16.02.48.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 Aug 2024 02:48:01 -0700 (PDT)
-Message-ID: <aa3b5be8-2c8a-4fe8-8676-a40a9886c715@redhat.com>
-Date: Fri, 16 Aug 2024 11:48:00 +0200
+        d=1e100.net; s=20230601; t=1723803599; x=1724408399;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tKl6sG125oIcosA1A44lD12PStzJaGU1SQK7ba2gVx0=;
+        b=ik+CKqcxQN12/kRUwwBP5ckf7F7gIiT1PrC+c03WMKsxuwHG/aM4h74c1aitQ4Rpvw
+         IWxenYZdifZJfVXEUmJ45ztoR+RU8+CKthRKnaHQJuaIOZAo0o9UhpuLlGGL9W2gDWYu
+         vQuKL7i9Hp/SiIdXZZ6zKERc9BE06SpTH8iRPeETc8HIfhFAYQY8BU5utmqfhF8dspQx
+         kuwjZB2NB/6QpOBQaiTj+TD6RYZYJ5MSu7IiQfm5RyaQYWg8IxwOslOl7dwDT+t2rjYT
+         SsZZaCLo7CRdOjowNkrlH/CPwDgpx55W/jGZOrWJiJ+vPSk46R1uflk+JhFR1b8I23Mb
+         wWDA==
+X-Forwarded-Encrypted: i=1; AJvYcCVVE9B2kQ+nOOFoazP9Htz4u8D0YXDpeo1gcOqmQt4KtytoY7fpgvvNHgEAWn9ZJpoXdXx8x3aeDqhfnr0omcdHydAWtte+F3L5rAtilg==
+X-Gm-Message-State: AOJu0Yw/1GP1zMFKQ9unWFVK8flGKXCbxYaSA23qSekG3hvbYg+a0y8H
+	opnRnF7CGE9KlrF9gFEPJqPzS/as79Lfihdk2erulCdEQRMELbTILd9DwI5iGzGuwJ/ZuC92lYr
+	g8e4unIzt4iXN1+X9qTRqHV+XwNL8DfPOD7QDug==
+X-Google-Smtp-Source: AGHT+IFR1QBwy+VtprC05B+2GUxI//V9NWd4R/09+N+8JCX0Dgl5n0lV/1KsHDVBP3cRjPolh6r9Lf8PZd31g/60Gjc=
+X-Received: by 2002:a05:6102:3e94:b0:492:a5a9:a74 with SMTP id
+ ada2fe7eead31-497799b55b9mr3615334137.22.1723803598879; Fri, 16 Aug 2024
+ 03:19:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 4/4] mm: guest_memfd: Add ability for mmap'ing pages
-To: Fuad Tabba <tabba@google.com>
-Cc: Elliot Berman <quic_eberman@quicinc.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Sean Christopherson
- <seanjc@google.com>, Patrick Roy <roypat@amazon.co.uk>, qperret@google.com,
- Ackerley Tng <ackerleytng@google.com>, linux-coco@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org, kvm@vger.kernel.org
-References: <20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com>
- <20240805-guest-memfd-lib-v1-4-e5a29a4ff5d7@quicinc.com>
- <4cdd93ba-9019-4c12-a0e6-07b430980278@redhat.com>
- <CA+EHjTxNNinn7EzV_o1X1d0kwhEwrbj_O7H8WgDtEy2CwURZFQ@mail.gmail.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <CA+EHjTxNNinn7EzV_o1X1d0kwhEwrbj_O7H8WgDtEy2CwURZFQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20240502224703.103150-1-swboyd@chromium.org> <CAE-0n50VDgsg-4QnynvLOzykr3KP5JsnHqeFPA=uRT3EfgL19g@mail.gmail.com>
+ <CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com>
+ <CAE-0n53X1Gv9nnyDfeivYd7n5W6D1WFkO0tCvYc9drb0+4hQbw@mail.gmail.com>
+ <CAMi1Hd2_a7TjA7J9ShrAbNOd_CoZ3D87twmO5t+nZxC9sX18tA@mail.gmail.com>
+ <CAE-0n52JgfCBWiFQyQWPji8cq_rCsviBpW-m72YitgNfdaEhQg@mail.gmail.com>
+ <CAMi1Hd2drhMGTsvnX1aqwpDTOkK_+n2OKMYY1Y9ONHyYiFLTSQ@mail.gmail.com> <CAE-0n53pjPjSw0m93biWOXRkV=V5u-HVqBx8=MLgQ=Z2ydfEKA@mail.gmail.com>
+In-Reply-To: <CAE-0n53pjPjSw0m93biWOXRkV=V5u-HVqBx8=MLgQ=Z2ydfEKA@mail.gmail.com>
+From: Amit Pundir <amit.pundir@linaro.org>
+Date: Fri, 16 Aug 2024 15:49:22 +0530
+Message-ID: <CAMi1Hd2ue5D1gb5eekQqCXi1DdPtMbzQV9BxEDjLgvw+G7hHwA@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: Park shared RCGs upon registration
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
+	patches@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	Laura Nao <laura.nao@collabora.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Douglas Anderson <dianders@chromium.org>, Taniya Das <quic_tdas@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 15.08.24 09:24, Fuad Tabba wrote:
-> Hi David,
+On Tue, 13 Aug 2024 at 04:26, Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Amit Pundir (2024-08-12 02:39:47)
+> > gcc_qupv3_wrap1_s7_clk_src and gcc_usb30_prim_master_clk_src need to
+> > be left untouched to fix the Audio codec and USB-C host mode breakages
+> > respectively. It seem to have fixed the serial console garbage dump
+> > issue as well.
+>
+> Alright. Can you try with this patch for the gcc_qupv3* clks on top? And
+> keep gcc_usb30_prim_master_clk_src on the new clk_ops? I think we need
+> two patches. One for the usb clk and one for these QUP clks that don't
+> need to be parked.
+>
 
-Hi!
+Moving gcc_qupv3* clks to clk_rcg2_ops and keeping
+gcc_usb30_prim_master_clk_sr to the clk_rcg2_shared_no_init_park_ops
+works too. No audio or usb-c host regression in limited (~50) test
+runs.
 
-> 
-> On Tue, 6 Aug 2024 at 14:51, David Hildenbrand <david@redhat.com> wrote:
->>
->>>
->>> -     if (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP) {
->>> +     if (!ops->accessible && (gmem_flags & GUEST_MEMFD_FLAG_NO_DIRECT_MAP)) {
->>>                r = guest_memfd_folio_private(folio);
->>>                if (r)
->>>                        goto out_err;
->>> @@ -107,6 +109,82 @@ struct folio *guest_memfd_grab_folio(struct file *file, pgoff_t index, u32 flags
->>>    }
->>>    EXPORT_SYMBOL_GPL(guest_memfd_grab_folio);
->>>
->>> +int guest_memfd_make_inaccessible(struct file *file, struct folio *folio)
->>> +{
->>> +     unsigned long gmem_flags = (unsigned long)file->private_data;
->>> +     unsigned long i;
->>> +     int r;
->>> +
->>> +     unmap_mapping_folio(folio);
->>> +
->>> +     /**
->>> +      * We can't use the refcount. It might be elevated due to
->>> +      * guest/vcpu trying to access same folio as another vcpu
->>> +      * or because userspace is trying to access folio for same reason
->>
->> As discussed, that's insufficient. We really have to drive the refcount
->> to 1 -- the single reference we expect.
->>
->> What is the exact problem you are running into here? Who can just grab a
->> reference and maybe do nasty things with it?
-> 
-> I was wondering, why do we need to check the refcount? Isn't it enough
-> to check for page_mapped() || page_maybe_dma_pinned(), while holding
-> the folio lock?
+> > Thank you for diagnosing this race in ucsi_glink. I needed to run an
+> > overnight reboot test to reproduce this crash, and could reproduce it
+> > on ~380th reboot. I'll check if it has already been reported or fixed
+> > on linux-next.
+>
+> Amazing! Can you add the msleep() so that it is highly likely?
+>
 
-(folio_mapped() + folio_maybe_dma_pinned())
+You are right on the target with this one as well. I hit the following
+kernel panic on each of the 10 reboots that I tried with the msleep()
+in devm_pmic_glink_register_client().
 
-Not everything goes trough FOLL_PIN. vmsplice() is an example, or just 
-some very simple read/write through /proc/pid/mem. Further, some 
-O_DIRECT implementations still don't use FOLL_PIN.
+[   17.824050][  T164] Unable to handle kernel NULL pointer
+dereference at virtual address 0000000000000010
+[   17.824068][  T164] Mem abort info:
+[   17.824074][  T164]   ESR = 0x0000000096000006
+[   17.824084][  T164]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   17.824096][  T164]   SET = 0, FnV = 0
+[   17.824105][  T164]   EA = 0, S1PTW = 0
+[   17.824113][  T164]   FSC = 0x06: level 2 translation fault
+[   17.824124][  T164] Data abort info:
+[   17.824130][  T164]   ISV = 0, ISS = 0x00000006, ISS2 = 0x00000000
+[   17.824140][  T164]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[   17.824151][  T164]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[   17.824165][  T164] user pgtable: 4k pages, 39-bit VAs, pgdp=00000008820ac000
+[   17.824180][  T164] [0000000000000010] pgd=080000088208e003,
+p4d=080000088208e003, pud=080000088208e003, pmd=0000000000000000
+[   17.824221][  T164] Internal error: Oops: 0000000096000006 [#1] PREEMPT SMP
+[   17.825877][  T164] CPU: 0 UID: 0 PID: 164 Comm: kworker/0:10
+Tainted: G S          E
+6.11.0-rc3-mainline-00013-g1690e68dbe30-dirty #37
+[   17.825906][  T164] Tainted: [S]=CPU_OUT_OF_SPEC, [E]=UNSIGNED_MODULE
+[   17.825914][  T164] Hardware name: Qualcomm Technologies, Inc.
+SM8550 HDK (DT)
+[   17.825926][  T164] Workqueue: events
+pmic_glink_altmode_enable_worker [pmic_glink_altmode]
+[   17.825958][  T164] pstate: 43400005 (nZcv daif +PAN -UAO +TCO +DIT
+-SSBS BTYPE=--)
+[   17.825978][  T164] pc : pmic_glink_send+0x10/0x2c [pmic_glink]
+[   17.826002][  T164] lr : pmic_glink_altmode_request+0x74/0x108
+[pmic_glink_altmode]
+[   17.826328][  T164] Call trace:
+[   17.826335][  T164]  pmic_glink_send+0x10/0x2c [pmic_glink]
+[   17.826358][  T164]  pmic_glink_altmode_request+0x74/0x108
+[pmic_glink_altmode]
+[   17.826379][  T164]  pmic_glink_altmode_enable_worker+0x28/0x68
+[pmic_glink_altmode]
+[   17.826401][  T164]  process_one_work+0x184/0x2e8
+[   17.826432][  T164]  worker_thread+0x2f0/0x404
+[   17.826456][  T164]  kthread+0x114/0x118
+[   17.826477][  T164]  ret_from_fork+0x10/0x20
+[   17.826509][  T164] Code: d503233f f800865e a9bf7bfd 910003fd (f9400800)
+[   17.826520][  T164] ---[ end trace 0000000000000000 ]---
+[   17.826532][  T164] Kernel panic - not syncing: Oops: Fatal exception
+[   17.826541][  T164] SMP: stopping secondary CPUs
+[   19.164392][  T164] SMP: failed to stop secondary CPUs 0-1
+[   19.364551][  T164] Kernel Offset: 0xf96480000 from 0xffffffc080000000
+[   19.364562][  T164] PHYS_OFFSET: 0x80000000
+[   19.364570][  T164] CPU features: 0x18,004e0003,80113128,564676af
+[   19.364583][  T164] Memory Limit: none
 
-So if you see an additional folio reference, as soon as you mapped that 
-thing to user space, you have to assume that it could be someone 
-reading/writing that memory in possibly sane context. (vmsplice() should 
-be using FOLL_PIN|FOLL_LONGTERM, but that's a longer discussion)
+Again, I have not yet checked if it has already been reported upstream
+or fixed in the linux-next. I'll hopefully do that next week.
 
-(noting that also folio_maybe_dma_pinned() can have false positives in 
-some cases due to speculative references or *many* references).
+Regards,
+Amit Pundir
 
--- 
-Cheers,
 
-David / dhildenb
 
+> ----8<----
+> diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
+> index 9ebc0ba35947..12169b0d2adb 100644
+> --- a/drivers/soc/qcom/pmic_glink.c
+> +++ b/drivers/soc/qcom/pmic_glink.c
+> @@ -97,6 +97,8 @@ struct pmic_glink_client
+> *devm_pmic_glink_register_client(struct device *dev,
+>
+>         devres_add(dev, client);
+>
+> +       msleep(10000);
+> +
+>         return client;
+>  }
+>  EXPORT_SYMBOL_GPL(devm_pmic_glink_register_client);
 
