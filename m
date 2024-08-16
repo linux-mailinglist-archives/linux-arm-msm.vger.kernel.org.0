@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-28777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8487595448B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 10:35:35 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C94519544A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 10:42:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3559A1F26511
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 08:35:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ED3B91C21C59
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 08:42:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 843C81411EB;
-	Fri, 16 Aug 2024 08:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3316137923;
+	Fri, 16 Aug 2024 08:42:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CuMNfx1M"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MSiksUgY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCE576056;
-	Fri, 16 Aug 2024 08:34:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B02137903
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 08:42:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723797277; cv=none; b=LKNRf6TJtgRQWqdSxvSNNywHtxQ61N2zR8ECgXN+vkEoVkPuNAjA4yGcbGG2wmD6WQVEQEkIFaB2GAFGLRkGCTNqZObWhXCqXf2bCgGZprZgyeawP/cf9KDELIBFmLPnFig13pIcy3lgxyLzeeIUM83zIRp0P9ie9QHZRtwJ01U=
+	t=1723797725; cv=none; b=aSugsDpiLt5DtZhGijY0pwFFAZbeG26MqlGPaUjUcllQaiquLSl9aYyRanc7L/3DFrScFhJeVEJXsraUpbhU7p69TFF1rpJyBsec4KvkDfSwhqoOZFADk4qYafmqLm4NPQSb+E+zSyZWd9jwhRQmW7Z6DVMT84mXrDrvUwGPxe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723797277; c=relaxed/simple;
-	bh=slg7Mz/uR9NxJ6yJYvaCR2+orUklYXSMPH1ldn2azCw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bNt4AbeZPXsCeb90ODOioXgs6IkuoPjZGN8uuk4qkR3Mo6fqffWoMzj8BrHvVZziUcffNkg5wmlKYn1dDqMQrT0wcZGVDlNSfeLjuo4HdhD2iNgFt9UgrZehn0PDWF5HCYMzKdfhcqv9mq2WLv5UJ4w6F+iBhYi2CqUBEL5QPZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CuMNfx1M; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47G5mOTs025079;
-	Fri, 16 Aug 2024 08:34:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	WPCZ+v2h/YHhcM9sdW0Y/KTcld6Z1Q95K8izoqgcbK0=; b=CuMNfx1MiZlw9Wod
-	Kn0Us0TMPkCqc2NgEFsphMm+VI+rhc77Z3IIZqpz3CaSDNe32/4A6/rkxwnPq4L2
-	Lj/B5x8xueqtNwJoh8TlOSUCjVR+maRNogOD3YEKcT5aXJSLui0sNTOrD/BvwW4M
-	dI1Ut0d+RdK8yOgCNeL/htYut7p2BIAo5zxYY2JuLrcUCWyZi/a2N0ElRJOMo9QX
-	jT8rXBZTDjqAyDCqwB+dVsV35itMRM17erL6wWsC6AAgpXFqKR4IMyG6zLykjOSv
-	aMahtl0qO/ZnxQ9YaEujgBBwaQwLiZtSSDDkOJDEtTPyXYK+iy1hA1ZlEy7k79X8
-	RUxQeQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 410kywpt1t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Aug 2024 08:34:31 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47G8YVoU018495
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Aug 2024 08:34:31 GMT
-Received: from [10.217.216.152] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 16 Aug
- 2024 01:34:26 -0700
-Message-ID: <7fda5617-485a-4218-9cd5-bdb9deee0b56@quicinc.com>
-Date: Fri, 16 Aug 2024 14:04:26 +0530
+	s=arc-20240116; t=1723797725; c=relaxed/simple;
+	bh=n3daW060BpIkPDc5xEPApFykExBPhBzv1Hym9HGuIz4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AFnbhh2ifV45XkZXzZvX7aWj/Li39Okj3fBpqXbx+f4iVC0miKdI1roJ0nDwn//vBVbIXbG83aYwa6tCj9UAQfe+bA09T2a3YkKWstS7gUZcrq/vUDEBqR+amKXx22Eqt0Itj9Cuyfzu4vJSIzE5/2+j8xlMXjGuxMgtC1JIyzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MSiksUgY; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-37195f88a17so237249f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 01:42:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1723797722; x=1724402522; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rlzzuztbI3K2OQhNHN1fIvbR/jGvneqxORdTY6Xrev0=;
+        b=MSiksUgYD1CQVxT4tsPCSx2DuzvVjXvGB2BPeo0jK5D+WMA+oTL/zkMz4sfHdYZTil
+         frvrG1K9bwQr6QR8XAHyGAH/bdN0ZrGTXn7aXXxkgHjtOA5zp75b3Atng4wNN1TbfwLX
+         OOcOSUSkc2C287IChpyQjCC2PFSrJG2xpiOxU9K9XgoCE1PqJbqQwL0ADw33kAiADoRZ
+         OvedpkZRDMMzJbCy5SItMTz+bisC3KXN2U7/GPvmJ7QZBn49MnvZeQThjqzCS4vdHSiW
+         tBbuMKG/RPomH5Z8AIOjTrvIYm78iMGwO1skPb1KJfoRfoap1YiyEJsQ+tAKFvSU6i0i
+         42kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723797722; x=1724402522;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rlzzuztbI3K2OQhNHN1fIvbR/jGvneqxORdTY6Xrev0=;
+        b=Tvi8VAj7QfQcn6FsS7CTO1C64eKR1d1x3df/MGZ6mq13bGCKoQ12DdFJif/HDO0Vj1
+         EbjD4aZjArR89yk7lnbM+KYY3Aagwe7qf9b6bkHxYM5mgbcHUhnWPk8ezhMH+VMnznXv
+         AsJicGZxkYbyy7D7t7FKeeNiiPhVPzU8rzqiL3iohJ9UuLUVXRiNhrYCdtZAxKkw2g0o
+         Ck2higXDSRdLkY17k8VQoIaBg2E3myfzHEYdg3FuGKh8b/gcyvP9tQkfh6diJb/3tW0D
+         r3P2/7iaPF6ZmhwZzbKwTQWvGzfLrbiFnPzJbStnXS3wViE9JdlJ5w3zng7kZIunzKZ7
+         XMiw==
+X-Forwarded-Encrypted: i=1; AJvYcCWUlzyd8ZU2nhuDOiKiVSI5TEopljphP9mfKk0DrcjBvqMaMIGrfd4H3k1l12ogW1heV9rg37uc7nuNe08MmdZG2F1lefdySNPu5BeW2g==
+X-Gm-Message-State: AOJu0Yy9EGL2O5/qzk/9WFy0jYyd14RK++AwAYXi6IXDHgYnY9Z3gxcw
+	Dt7UwmqG592HCQ83qdObExa+iz5PaeowYLLgAQbymb8xsMwpRIwVGS0nWYtDLfg=
+X-Google-Smtp-Source: AGHT+IEy8yvFXp+IjacthXXmn/Kmsb3ujjbsLWxgTsBUVj7E2AWFCDp5KVyRKOOyF0dx/M+3nH3AEg==
+X-Received: by 2002:adf:e60c:0:b0:368:4b3a:2022 with SMTP id ffacd0b85a97d-37194317348mr1183834f8f.6.1723797721931;
+        Fri, 16 Aug 2024 01:42:01 -0700 (PDT)
+Received: from [192.168.68.116] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-429ed6507c4sm16946095e9.15.2024.08.16.01.42.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 Aug 2024 01:42:01 -0700 (PDT)
+Message-ID: <7fd85a5d-125c-4d52-bc86-94d98db6de7b@linaro.org>
+Date: Fri, 16 Aug 2024 09:42:00 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,117 +76,54 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: qcm6490-idp: Update protected
- clocks list
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <quic_jkona@quicinc.com>,
-        <quic_imrashai@quicinc.com>, <devicetree@vger.kernel.org>
-References: <20240531102252.26061-1-quic_tdas@quicinc.com>
- <20240531102252.26061-4-quic_tdas@quicinc.com>
- <4dvqegoz45ct5rqknf6vgi6rvh4osaecfyp7fcrs26lcsq4npu@dwoyubuqlbss>
- <3710a210-265c-493d-9d2f-27ebf486d00e@quicinc.com>
- <qiwy4uyxdrzp2omabh5nacdi37plomua22xsduvpatvb2pcp26@il6ncp7iluj6>
+Subject: Re: [PATCH v2] misc: fastrpc: Fix double free of 'buf' in error path
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Amol Maheshwari <amahesh@qti.qualcomm.com>, Arnd Bergmann
+ <arnd@arndb.de>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Abel Vesa <abel.vesa@linaro.org>, Sukrut Bellary <sukrut.bellary@linux.com>,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel-janitors@vger.kernel.org, Shuah Khan <skhan@linuxfoundation.org>
+References: <20230602113602.1271695-1-sukrut.bellary@linux.com>
+ <168656748193.162074.17313550564907901438.b4-ty@linaro.org>
+ <a301b77e-b833-482e-afa1-5306bd8fc8e7@stanley.mountain>
 Content-Language: en-US
-From: Taniya Das <quic_tdas@quicinc.com>
-In-Reply-To: <qiwy4uyxdrzp2omabh5nacdi37plomua22xsduvpatvb2pcp26@il6ncp7iluj6>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <a301b77e-b833-482e-afa1-5306bd8fc8e7@stanley.mountain>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: B3_sqfB9ipmjy1fWWtqPFODhIaXLd1wb
-X-Proofpoint-GUID: B3_sqfB9ipmjy1fWWtqPFODhIaXLd1wb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-15_18,2024-08-15_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
- impostorscore=0 mlxscore=0 phishscore=0 malwarescore=0 clxscore=1015
- mlxlogscore=999 priorityscore=1501 bulkscore=0 lowpriorityscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408160061
 
 
 
-On 6/10/2024 11:51 PM, Dmitry Baryshkov wrote:
-> On Mon, Jun 10, 2024 at 03:57:34PM +0530, Taniya Das wrote:
+On 15/08/2024 10:25, Dan Carpenter wrote:
+> On Mon, Jun 12, 2023 at 11:58:01AM +0100, Srinivas Kandagatla wrote:
 >>
->>
->> On 5/31/2024 5:34 PM, Dmitry Baryshkov wrote:
->>> On Fri, May 31, 2024 at 03:52:51PM +0530, Taniya Das wrote:
->>>> Certain clocks are not accessible on QCM6490-IDP board,
->>>> thus mark them as protected. Update the lpassaudio node to
->>>> support the new compatible as the lpassaudio needs to support
->>>> the reset functionality on the QCM6490 board and the rest of
->>>> the Audio functionality would be provided from the LPASS
->>>> firmware.
->>>>
->>>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->>>> ---
->>>>    arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 28 +++++++++++++++++++++++-
->>>>    1 file changed, 27 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
->>>> index a0668f767e4b..4eece564331a 100644
->>>> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
->>>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
->>>> @@ -1,6 +1,6 @@
->>>>    // SPDX-License-Identifier: BSD-3-Clause
->>>>    /*
->>>> - * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
->>>> + * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
->>>>     */
->>>>    /dts-v1/;
->>>> @@ -688,3 +688,29 @@
->>>>    &wifi {
->>>>    	memory-region = <&wlan_fw_mem>;
->>>>    };
->>>> +
->>>> +&gcc {
->>>> +	protected-clocks = <GCC_AGGRE_NOC_PCIE_1_AXI_CLK> ,<GCC_PCIE_1_AUX_CLK>,
->>>> +			<GCC_PCIE_1_AUX_CLK_SRC>, <GCC_PCIE_1_CFG_AHB_CLK>,
->>>> +			<GCC_PCIE_1_MSTR_AXI_CLK>, <GCC_PCIE_1_PHY_RCHNG_CLK_SRC>,
->>>> +			<GCC_PCIE_1_PIPE_CLK>, <GCC_PCIE_1_PIPE_CLK_SRC>,
->>>> +			<GCC_PCIE_1_SLV_AXI_CLK>, <GCC_PCIE_1_SLV_Q2A_AXI_CLK>,
->>>> +			<GCC_QSPI_CNOC_PERIPH_AHB_CLK>, <GCC_QSPI_CORE_CLK>,
->>>> +			<GCC_QSPI_CORE_CLK_SRC>,<GCC_USB30_SEC_MASTER_CLK>,
->>>> +			<GCC_USB30_SEC_MASTER_CLK_SRC>, <GCC_USB30_SEC_MOCK_UTMI_CLK>,
->>>> +			<GCC_USB30_SEC_MOCK_UTMI_CLK_SRC>,
->>>> +			<GCC_USB30_SEC_MOCK_UTMI_POSTDIV_CLK_SRC>, <GCC_USB30_SEC_SLEEP_CLK>,
->>>> +			<GCC_USB3_SEC_PHY_AUX_CLK>, <GCC_USB3_SEC_PHY_AUX_CLK_SRC>,
->>>> +			<GCC_USB3_SEC_PHY_COM_AUX_CLK>, <GCC_USB3_SEC_PHY_PIPE_CLK>,
->>>> +			<GCC_USB3_SEC_PHY_PIPE_CLK_SRC>, <GCC_CFG_NOC_LPASS_CLK>,
->>>> +			<GCC_MSS_GPLL0_MAIN_DIV_CLK_SRC>, <GCC_MSS_CFG_AHB_CLK>,
->>>> +			<GCC_MSS_OFFLINE_AXI_CLK>, <GCC_MSS_SNOC_AXI_CLK>,
->>>> +			<GCC_MSS_Q6_MEMNOC_AXI_CLK>, <GCC_MSS_Q6SS_BOOT_CLK_SRC>,
->>>> +			<GCC_SEC_CTRL_CLK_SRC>, <GCC_WPSS_AHB_CLK>,
->>>> +			<GCC_WPSS_AHB_BDG_MST_CLK>, <GCC_WPSS_RSCP_CLK>;
+>> On Fri, 02 Jun 2023 04:36:02 -0700, Sukrut Bellary wrote:
+>>> smatch warning:
+>>> drivers/misc/fastrpc.c:1926 fastrpc_req_mmap() error: double free of 'buf'
 >>>
->>> Is there any reason why this list is significantly larger than a list
->>> for RB3g2 or FP5?
+>>> In fastrpc_req_mmap() error path, the fastrpc buffer is freed in
+>>> fastrpc_req_munmap_impl() if unmap is successful.
 >>>
+>>> But in the end, there is an unconditional call to fastrpc_buf_free().
+>>> So the above case triggers the double free of fastrpc buf.
+>>>
+>>> [...]
 >>
->> Unfortunately these are all protected on the IDP board and any access would
->> cause a NoC error and then board will fail to boot up.
+>> Applied, thanks!
+>>
+>> [1/1] misc: fastrpc: Fix double free of 'buf' in error path
+>>        commit: 5b3006fffce89706a12741d7f657869ca2be1640
+>>
 > 
-> Why? I mean, why does it contain the clocks that are allowed to be
-> touched on RB3g2 and FP5?
+> This patch wasn't actually applied.  I'm not sure what went wrong.
+
+Am not sure either, its now applied!
+
+thanks for checking this.
+
+--srini
 > 
-
-There are some use case level and board functionality changes between 
-RB3g2/FP5 vs IDP. Thus these clocks are protected and cannot be accessed.
-
--- 
-Thanks & Regards,
-Taniya Das.
+> regards,
+> dan carpenter
+> 
 
