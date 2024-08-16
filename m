@@ -1,84 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-28724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7A629540CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 07:00:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 776E39540D1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 07:03:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7F6D61C22102
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 05:00:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 012F11F22929
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 05:03:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF4067829C;
-	Fri, 16 Aug 2024 05:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA223770E1;
+	Fri, 16 Aug 2024 05:03:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bR0YBm2/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ivTVQTM2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1505E57CB1
-	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 05:00:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4976E8489
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 05:03:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723784437; cv=none; b=mLnFZsYw6OMZDEwdqSbUsdRYmRBuAJqyU6GONwhxDCrbpCQey31jlGnjI9GxObJdAoBIwIg2MB0R9JElCSusfl0w6bhW4KptU3OAlZ4qp7upN67Qsgxd2llDvPc+aCGvvUx3ocjgOApVMeO8Y63D7lHklH/chzt1rBnVUrNQlZ4=
+	t=1723784592; cv=none; b=pJVIYqmgBevSbkM+U0b9DiqWf7Uoazp0NAiWVnz2wSr+jUKnk6pmlJ5rJuBGpPHjMQ5OVRqw6RCufTSETOiv3I6xktulsq5j8vvuRSk7NH7hJZO2LNREx1pLQ5ml3ZSRtixx+Ir1ZPPqey0GEimzjCzLUe5V+GkPqxsyqOeddoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723784437; c=relaxed/simple;
-	bh=V+5F1oveRmv0pSVGDANeVXah31hJMa43N75rfuBEQ0A=;
+	s=arc-20240116; t=1723784592; c=relaxed/simple;
+	bh=QKlYDVBAAflZ15/HRoSBk94fswp4zfvQsY9Jo/g3w0Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y6tY/SJoBZs0b+1xeraxPbMD6TyXQE/osKR9YQTEJ8Tvw/p46O66vPxcJetVjyQWrGrtEfPIYELeuTAi1jqQ4Bah5kisW2axTo0305aZbJ9Bdd3khfBmAQ4of9fOyO2DfpF4olf8g9XvdbPFgaz/12xYNwkIvEw1IcgOaox7KlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bR0YBm2/; arc=none smtp.client-ip=209.85.214.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=O0ou4Lryhp7g4K37enZak6J0ojwbFG+7dmM/WPc3a//w9dhFl0mKPIMa7btWRd9Ctx93A0/SqYd1hMh2lXzbP4dT2bybXyHmJff36fuFckc6Sq+HUJovKzo4SPdTY7aXm1LDbaqwznQ7l1F0bbbNBU5Oz0jJsR9B921q0xX2RK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ivTVQTM2; arc=none smtp.client-ip=209.85.210.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-20203988f37so6035655ad.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 22:00:34 -0700 (PDT)
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-710e39961f4so1221063b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 22:03:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723784434; x=1724389234; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1723784590; x=1724389390; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=tTlEisHK4yCx7hQg2VMWou4sqTPa4zx/4UhJkv4GXdY=;
-        b=bR0YBm2/MCI+GT/L9wCUWZxyK+o2HhlR1ECVamALamCjFtlfRMLa6sjfT/yGStVYrw
-         PhJ34XqLcBRDCLoV4jfXoIF/Q5rd0seD0gX5ETpc7vfMTE43oQd5Gs6SxAsoZLg2UVpm
-         FFG0E8jBSD/KAf+6tXon1ixcL45IdZ125fo2PpW7sW1jfvXu2efOvA6zasJugwnA4EwB
-         hBZ3HuoUqtbOnFiFsAOFbyIayKbnAx6KTHmicxmBg1JmH3anpifBNtWjpqTjk/B0ER1b
-         jXbNmnWJTCIcd+gBLbL2zKoJsQQxnlOC6YqCWGOFfWb+Zgt5pC4sz1Y+MDuxKOX2wdAu
-         BrRw==
+        bh=xg+4eAKOTh+mj0iqBF4qLZuw/+xIu3+MyiUmhRITewE=;
+        b=ivTVQTM2RoV10SiNBAVjZNWaK4kmGeOrNbPlpfjwEgAvN3FbKmbtrtRnBZERjSXZEn
+         F8Df5VRuJtmIf4Sjlt5PzzdugGk8YCAwjqNnz3irtf6HpmpBS8xXvdSCTkFZHjuQy2cy
+         /hyVO4vBxfTIClgq4g5UT5og/vVMcY+NJyOgURBS6Fef86HDe9DjlxG69rbqYOxjBvLF
+         eXyldTFNAAwk/RHKm3N8nR+SgUBH61BqwGwdj7K7sfxe7thQDHfgcz2Zf+jHNks8lxYk
+         CC9xHza6wdhCqzHvHpolrFgvEZuDqHCAb0bG1wW6xZGDI0j1te8Nv+Z2/K9CMTxkpdk8
+         tA+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723784434; x=1724389234;
+        d=1e100.net; s=20230601; t=1723784590; x=1724389390;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tTlEisHK4yCx7hQg2VMWou4sqTPa4zx/4UhJkv4GXdY=;
-        b=gfSF7FxbuHV3SwFfexSyvrkLhxPqlVgofrSpGYmHQrAJRr8sVzxqfU/B9Qqs2Y+Cif
-         QcJ9le75tKjLthaelKxDho/60g1ZwnYW3vmXbUTXPvzcG+dEwP9NIMCht+QBpHH0K6XD
-         gTAK9/UvmFUtaQhNSse3ojeuu24rY7670SNaVRYP10G1Vvy0MXGkWlnXxny7zl7clYSL
-         9P19EKu7ibsv+rmJvlBAcy1e8c38HLNCU0WcnL/SaZ+KV7xjrS2r8bbGgCf/HaDHHY/z
-         cPYbJMvpFikZu472KtgMl3CzFyRbs0yVbVtE4E00sMbPLlQkRvUzUCtiiyyp/ZZ2Bgqz
-         qjYA==
-X-Forwarded-Encrypted: i=1; AJvYcCXG1Y+cfrVb/EY1WJGEEOLBdcB1qvZME64mchGGdUA8sThsXMmqZuq/xO2mTAnvf0JmFcvozTUzaybaxHYWaOtVj8UIlWVyG8SC3B8IBQ==
-X-Gm-Message-State: AOJu0YwN4egTVEvQHhE6eTygp02/eQCCxWPW4+eoaWiF2HMuKOnHKckz
-	+Qgc3yjvymZrYm3ICLb/7uBQMACrSNUq1LRTncaiILh95OUO0atzVFIc7CnDFQ==
-X-Google-Smtp-Source: AGHT+IENkLRreSP3HlZngVQUlgQ00Q+Vublx35vVuWPTimnHvJsxDGPdLY8rLwQcUUZiPo4KftizDQ==
-X-Received: by 2002:a17:903:1c7:b0:1f7:37f:728d with SMTP id d9443c01a7336-20203e4f7edmr19517965ad.10.1723784434271;
-        Thu, 15 Aug 2024 22:00:34 -0700 (PDT)
+        bh=xg+4eAKOTh+mj0iqBF4qLZuw/+xIu3+MyiUmhRITewE=;
+        b=nprdTy6I0BZizAqCBu4lAoiaeuyObmKxnc45MO9pwLJGOtiDUAEPXVwi2GI1qAup4t
+         GvVK0dTOEGKZf0ZwfSPXeHFS9b/Z6gLtnON8KTtTpvKk35qgmid33nVBg7F8XZP4+hoM
+         DG9d+04HRyNAlCJuthmUBQufT43783cCmNeOsOh1+cy6e+oc4kE6F/ldW25l/WHVSCGZ
+         6oxyDrfq9ZPsh5kCDN1est0WiyTzJuKfx6IvON8whPrBovC/EqwiifYwAVX1+pAIFA1S
+         7AeuRuwC2kt+HcsExiIgLA24Fxpj/dRkH0kCYNfNr5sBveJ4BmCI1Z9V1aaDEQJvhl+c
+         hoPQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUM+1M5Fqss1xnYl7zf1dlA7+iio6NrHvgqNwPrrWpqqs7sr7SwYKgaoH3jYaL4OvgnAIHnUtofZOPMOusGVEJYc/115auHAVpb3GbK2A==
+X-Gm-Message-State: AOJu0Yy+OoklCDPQhVMOwdyCH42wiNsyB0W0Ho43EPG8lGYA2T2Mygiz
+	e+sZeK4pUgPPY4JUK3eJ1F1+KN/4xAmqf6R/SR2J2wMNdHmJQm026CaWO9Z8Bw==
+X-Google-Smtp-Source: AGHT+IHUPprol+xeDuvBURglcqhp00FI0buO/85LpeamuWc3FiF0xr3yT4+pj2erS70Rc9XVm4dZQQ==
+X-Received: by 2002:a05:6a00:91c9:b0:70d:27e0:a946 with SMTP id d2e1a72fcca58-713c4e3934dmr2112863b3a.9.1723784590591;
+        Thu, 15 Aug 2024 22:03:10 -0700 (PDT)
 Received: from thinkpad ([36.255.17.34])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-201f03956a8sm17934985ad.234.2024.08.15.22.00.30
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7127add68a3sm1839831b3a.7.2024.08.15.22.03.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Aug 2024 22:00:33 -0700 (PDT)
-Date: Fri, 16 Aug 2024 10:30:29 +0530
+        Thu, 15 Aug 2024 22:03:10 -0700 (PDT)
+Date: Fri, 16 Aug 2024 10:33:06 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-	bhelgaas@google.com, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Vidya Sagar <vidyas@nvidia.com>, Jon Hunter <jonathanh@nvidia.com>
-Subject: Re: [PATCH] PCI: qcom-ep: Move controller cleanups to
- qcom_pcie_perst_deassert()
-Message-ID: <20240816050029.GA2331@thinkpad>
-References: <20240729122245.33410-1-manivannan.sadhasivam@linaro.org>
- <20240815224717.GA53536@bhelgaas>
+To: Bart Van Assche <bvanassche@acm.org>
+Cc: Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, Kyoungrul Kim <k831.kim@samsung.com>,
+	Amit Pundir <amit.pundir@linaro.org>
+Subject: Re: [PATCH v2 1/3] ufs: core: Rename LSDB to LSDBS to reflect the
+ UFSHCI 4.0 spec
+Message-ID: <20240816050306.GB2331@thinkpad>
+References: <20240815-ufs-bug-fix-v2-0-b373afae888f@linaro.org>
+ <20240815-ufs-bug-fix-v2-1-b373afae888f@linaro.org>
+ <f339f1be-4d5f-46f4-8d57-473f38901bd8@acm.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,131 +92,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240815224717.GA53536@bhelgaas>
+In-Reply-To: <f339f1be-4d5f-46f4-8d57-473f38901bd8@acm.org>
 
-On Thu, Aug 15, 2024 at 05:47:17PM -0500, Bjorn Helgaas wrote:
-> [+cc Vidya, Jon since tegra194 does similar things]
+On Thu, Aug 15, 2024 at 11:09:06AM -0700, Bart Van Assche wrote:
+> On 8/14/24 10:16 PM, Manivannan Sadhasivam via B4 Relay wrote:
+> >   	/*
+> >   	 * The UFSHCI 3.0 specification does not define MCQ_SUPPORT and
+> > -	 * LSDB_SUPPORT, but [31:29] as reserved bits with reset value 0s, which
+> > +	 * LSDBS_SUPPORT, but [31:29] as reserved bits with reset value 0s, which
+> >   	 * means we can simply read values regardless of version.
+> >   	 */
 > 
-> On Mon, Jul 29, 2024 at 05:52:45PM +0530, Manivannan Sadhasivam wrote:
-> > Currently, the endpoint cleanup function dw_pcie_ep_cleanup() and EPF
-> > deinit notify function pci_epc_deinit_notify() are called during the
-> > execution of qcom_pcie_perst_assert() i.e., when the host has asserted
-> > PERST#. But quickly after this step, refclk will also be disabled by the
-> > host.
-> > 
-> > All of the Qcom endpoint SoCs supported as of now depend on the refclk from
-> > the host for keeping the controller operational. Due to this limitation,
-> > any access to the hardware registers in the absence of refclk will result
-> > in a whole endpoint crash. Unfortunately, most of the controller cleanups
-> > require accessing the hardware registers (like eDMA cleanup performed in
-> > dw_pcie_ep_cleanup(), powering down MHI EPF etc...). So these cleanup
-> > functions are currently causing the crash in the endpoint SoC once host
-> > asserts PERST#.
-> > 
-> > One way to address this issue is by generating the refclk in the endpoint
-> > itself and not depending on the host. But that is not always possible as
-> > some of the endpoint designs do require the endpoint to consume refclk from
-> > the host (as I was told by the Qcom engineers).
-> > 
-> > So let's fix this crash by moving the controller cleanups to the start of
-> > the qcom_pcie_perst_deassert() function. qcom_pcie_perst_deassert() is
-> > called whenever the host has deasserted PERST# and it is guaranteed that
-> > the refclk would be active at this point. So at the start of this function,
-> > the controller cleanup can be performed. Once finished, rest of the code
-> > execution for PERST# deassert can continue as usual.
+> Hmm ... neither MCQ_SUPPORT nor LSDBS_SUPPORT occurs in the UFSHCI 4.0
+> specification. I found the acronyms "MCQS" and "LSDBS" in that
+> specification. I propose either not to modify the above comment or to use
+> the acronyms used in the UFSHCI 4.0 standard.
 > 
-> What makes this v6.11 material?  Does it fix a problem we added in
-> v6.11-rc1?
+> >   	hba->mcq_sup = FIELD_GET(MASK_MCQ_SUPPORT, hba->capabilities);
+> > @@ -2426,7 +2426,7 @@ static inline int ufshcd_hba_capabilities(struct ufs_hba *hba)
+> >   	 * 0h: legacy single doorbell support is available
+> >   	 * 1h: indicate that legacy single doorbell support has been removed
+> >   	 */
+> > -	hba->lsdb_sup = !FIELD_GET(MASK_LSDB_SUPPORT, hba->capabilities);
+> > +	hba->lsdbs_sup = !FIELD_GET(MASK_LSDBS_SUPPORT, hba->capabilities);
+> >   	if (!hba->mcq_sup)
+> >   		return 0;
 > 
-
-No, this is not a 6.11 material, but the rest of the patches I shared offline.
-
-> Is there a Fixes: commit?
+> The final "s" in "lsdbs" stands for "support" so there are now two
+> references to the word "support" in the "lsdbs_sup" member name. Isn't
+> the original structure member name ("lsdb_sup") better because it doesn't
+> have that redundancy?
 > 
-
-Hmm, the controller addition commit could be the valid fixes tag.
-
-> This patch essentially does this:
+> >   	MASK_CRYPTO_SUPPORT			= 0x10000000,
+> > -	MASK_LSDB_SUPPORT			= 0x20000000,
+> > +	MASK_LSDBS_SUPPORT			= 0x20000000,
+> >   	MASK_MCQ_SUPPORT			= 0x40000000,
 > 
->   qcom_pcie_perst_assert
-> -   pci_epc_deinit_notify
-> -   dw_pcie_ep_cleanup
->     qcom_pcie_disable_resources
-> 
->   qcom_pcie_perst_deassert
-> +   if (pcie_ep->cleanup_pending)
-> +     pci_epc_deinit_notify(pci->ep.epc);
-> +     dw_pcie_ep_cleanup(&pci->ep);
->     dw_pcie_ep_init_registers
->     pci_epc_init_notify
-> 
-> Maybe it makes sense to call both pci_epc_deinit_notify() and
-> pci_epc_init_notify() from the PERST# deassert function, but it makes
-> me question whether we really need both.
+> Same comment here: in the constant name "MASK_LSDBS_SUPPORT" there are
+> two references to the word "support". Isn't the original name better?
+> Additionally, this change introduces an inconsistency between the
+> constant names "MASK_LSDBS_SUPPORT" and "MASK_MCQ_SUPPORT". The former
+> name includes the acronym from the spec (LSDBS) but the latter name not
+> (MCQS). Wouldn't it be better to leave this change out?
 > 
 
-There is really no need to call pci_epc_deinit_notify() during the first
-deassert (i.e., during the ep boot) because there are no cleanups to be done.
-It is only needed during a successive PERST# assert + deassert.
+Hmm, agree. My intention was to align with the spec, but then the _SUPPORT
+suffix is screwing it up :/
 
-> pcie-tegra194.c has a similar structure:
-> 
->   pex_ep_event_pex_rst_assert
->     pci_epc_deinit_notify
->     dw_pcie_ep_cleanup
-> 
->   pex_ep_event_pex_rst_deassert
->     dw_pcie_ep_init_registers
->     pci_epc_init_notify
-> 
-> Is there a reason to make them different, or could/should a similar
-> change be made to tegra?
-> 
-
-Design wise both drivers are similar, so it could apply. I didn't spin a patch
-because if testing of tegra driver gets delayed (I've seen this before), then I
-do not want to stall merging the whole series. For Qcom it is important to get
-this merged asap to avoid the crash.
-
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-qcom-ep.c | 12 ++++++++++--
-> >  1 file changed, 10 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > index 2319ff2ae9f6..e024b4dcd76d 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > @@ -186,6 +186,8 @@ struct qcom_pcie_ep_cfg {
-> >   * @link_status: PCIe Link status
-> >   * @global_irq: Qualcomm PCIe specific Global IRQ
-> >   * @perst_irq: PERST# IRQ
-> > + * @cleanup_pending: Cleanup is pending for the controller (because refclk is
-> > + *                   needed for cleanup)
-> >   */
-> >  struct qcom_pcie_ep {
-> >  	struct dw_pcie pci;
-> > @@ -214,6 +216,7 @@ struct qcom_pcie_ep {
-> >  	enum qcom_pcie_ep_link_status link_status;
-> >  	int global_irq;
-> >  	int perst_irq;
-> > +	bool cleanup_pending;
-> >  };
-> >  
-> >  static int qcom_pcie_ep_core_reset(struct qcom_pcie_ep *pcie_ep)
-> > @@ -389,6 +392,12 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
-> >  		return ret;
-> >  	}
-> >  
-> > +	if (pcie_ep->cleanup_pending) {
-> 
-> Do we really need this flag?  I assume the cleanup functions could
-> tell whether any previous setup was done?
-> 
-
-Not so. Some cleanup functions may trigger a warning if attempted to do it
-before 'setup'. I think dw_edma_remove() that is part of dw_pcie_ep_cleanup()
-does that IIRC.
+I'll drop the patch then.
 
 - Mani
 
