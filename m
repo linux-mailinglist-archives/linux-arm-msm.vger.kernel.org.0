@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14A81954BDB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 16:08:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C9A2954BDE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 16:08:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0BB9287678
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 14:07:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CB6791C243C0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 14:08:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 845621BD01D;
-	Fri, 16 Aug 2024 14:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC6D71BE871;
+	Fri, 16 Aug 2024 14:05:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iYc5adX2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="czPIoSKH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BF91E495;
-	Fri, 16 Aug 2024 14:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCE41E495;
+	Fri, 16 Aug 2024 14:05:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723817142; cv=none; b=PRwW9dPYbvBpwJGqV7LqGZA+cuiJ0fqoLNo3soJHZ2x/CrUNGceQf+f11sqNINF8VtZj7DbJHsz4WEQpKmOtm/8epYtma9qYQukCPilXDzR3C2QKlVb8nVdj5FN1git8amENpVicPEk53qK85Hsbqge7+zBnZf7vV3eND6yPb4A=
+	t=1723817147; cv=none; b=YWQ8KUi/UTjMtaZuT8d6OP6OHC007EfTJq571Axy1uk2gUeEm3A5z1pyXQSzRuFNMFN3IBlCFkme/8ETGDC37n3pWTKSxG98/X1+K3NA057hPBJA1HnnTrLgTxJmnDtS65+7fFA+pV99L40Xa4/HatE+0DaYL0EcTJZlEyBB+XE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723817142; c=relaxed/simple;
-	bh=5B+KtYZvyF6QxYfxPpQIVBG0PNxfFcRQ4s0rKDMjriI=;
+	s=arc-20240116; t=1723817147; c=relaxed/simple;
+	bh=cpZ3CxSVI/YRguz9ZMTPzxGBv9o8g/KQ+M0ueG23F5E=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HX/ParAu4fFkoC9goOa7oxKkvrp839MEuNovp0Z9OHBESuAqIrs2VmZNKb/4bfMoBYpKnAX1Xj1iQODcVjjP0dyEiPE63ASuPr/o1FsDNWQI1crby7fuv5CYZN0xqzs3SN4KwfOF+ZdI43Kx9POs83/8FPXJApyezL4VnE0uS1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iYc5adX2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2003FC32782;
-	Fri, 16 Aug 2024 14:05:36 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=EwNSRCy5DQ5KZpST2vtttUMbxdBjem20XI1+8pJv0vOwRDF7jE3g5WYHdB1fBO3wVopA5SscSWSwdmxZ/SzCXTgx7WxzBAcRfOfK4sjWG08YZDq6vrOv6vlDmQTxsnTtddZs9TDgk/l0Z4j3bR1MDyEHH+Jn/omKsEXy+snS/WE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=czPIoSKH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E84CC4AF0C;
+	Fri, 16 Aug 2024 14:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723817141;
-	bh=5B+KtYZvyF6QxYfxPpQIVBG0PNxfFcRQ4s0rKDMjriI=;
+	s=k20201202; t=1723817147;
+	bh=cpZ3CxSVI/YRguz9ZMTPzxGBv9o8g/KQ+M0ueG23F5E=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iYc5adX20RPqzjolC3YIly+hMGENPjEstYNqLJ9swM4HAn7nCvq3hzWJv9QYn2+FT
-	 AT3hQQP/QXxOnOAp1Y4MwVhhWwXoFshWHYYesJvqrD+epgW/QM9rDlSBQx9S1eStkC
-	 kr/bQUmN15TYLtD1U8AeAIm+x26RGo3J9x0VpLb4qBGf8seQ84G1d3jhzb3fSKqYzD
-	 2VHn3aPpbyfOaPh5r8/D2vr6PQ5Yn5L1N6HPUS1yHQBpF8UwlqCkcXBxT1hQpTIQyw
-	 IBCLrEU0655s8qGQagHT++K4NfleoA5JQqJe6ZHIvMLsA6wcdzoWlE473+9Y3039E9
-	 tcHTGr6z5TYrw==
-Message-ID: <9113fd98-f58c-485b-8d7a-1ac0c541c04a@kernel.org>
-Date: Fri, 16 Aug 2024 16:05:34 +0200
+	b=czPIoSKHNTuSqDmOYBo13qbWUTtRwuDUijy2GULrkJqz+bB4QgpqxpccDx7Fuf+b1
+	 DTw7UYq2xSoylBAndxeUEw9+C0YKu47bc+pk42oRe/9Kw9ObBv7tWmiPKpgXte8LSB
+	 vpfYL4bOU4NUPM+6T+uyB5fZsD43CrjiauvOxIWNv5Cq6pS2C151RldRvBhW4lnW72
+	 pAm12xbwFexypKWTse2rfw+C25vzAiZSlFsTrP7WK6PKrEeXcpC4ejIkt5+14zTp5U
+	 m2Tu+u5Mltx/DB0Y3dKbtJ2Yq5g9OIkXUqwohYlpC8Q4Yqiual6qcfhLeCXEL5gkep
+	 2U1hEUuzmpE2g==
+Message-ID: <32fe92aa-e2ca-4cce-9bd2-84c65304a6ad@kernel.org>
+Date: Fri, 16 Aug 2024 16:05:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,19 +52,17 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/2] dt-bindings: misc: qcom,fastrpc: document new domain
  ID
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+To: Bartosz Golaszewski <brgl@bgdev.pl>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
  Amol Maheshwari <amahesh@qti.qualcomm.com>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>,
- Tengfei Fan <quic_tengfan@quicinc.com>, Ling Xu <quic_lxu5@quicinc.com>,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ Tengfei Fan <quic_tengfan@quicinc.com>, Ling Xu <quic_lxu5@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 References: <20240816102345.16481-1-brgl@bgdev.pl>
- <c0af2eec-c289-4147-aca2-aac438451f5e@kernel.org>
- <CAMRc=MdmgcRUfYGo25spPOKqjpebiaZUP34B7PuuoAxMAupAYA@mail.gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,44 +108,19 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <CAMRc=MdmgcRUfYGo25spPOKqjpebiaZUP34B7PuuoAxMAupAYA@mail.gmail.com>
+In-Reply-To: <20240816102345.16481-1-brgl@bgdev.pl>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 16/08/2024 14:29, Bartosz Golaszewski wrote:
-> On Fri, Aug 16, 2024 at 1:21 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->>
->> On 16/08/2024 12:23, Bartosz Golaszewski wrote:
->>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>>
->>> Add "cdsp1" as the new supported label for the CDSP1 fastrpc domain.
->>>
->>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>> ---
->>>  Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml | 1 +
->>>  1 file changed, 1 insertion(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
->>> index c27a8f33d8d7..2a5b18982804 100644
->>> --- a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
->>> +++ b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
->>> @@ -26,6 +26,7 @@ properties:
->>>        - mdsp
->>>        - sdsp
->>>        - cdsp
->>> +      - cdsp1
->>
->> Are there more than one cdsp domains? Why adding suffixes? Driver source
->> code does not have "cdsp1" domain, so this is confusing.
->>
->> Best regards,
->> Krzysztof
->>
+On 16/08/2024 12:23, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> It does, Srini picked up this patch earlier today. I'm not an expert
-> in fast RPC but it looks like the domain ID number matters here.
+> Add "cdsp1" as the new supported label for the CDSP1 fastrpc domain.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
 
-Ah, ok, I did not see driver change here so it was a bit confusing.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
