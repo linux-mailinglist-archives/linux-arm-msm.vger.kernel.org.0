@@ -1,93 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-28821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F18BC954FA5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 19:11:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81CFA954FD7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 19:17:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 945BE1F2328F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 17:11:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3EDF82875FD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 17:17:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FC711C0DEB;
-	Fri, 16 Aug 2024 17:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FF731BF324;
+	Fri, 16 Aug 2024 17:16:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="GE7pwi/k"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtprelay05.ispgateway.de (smtprelay05.ispgateway.de [80.67.31.93])
+Received: from 009.lax.mailroute.net (009.lax.mailroute.net [199.89.1.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6B4558A5;
-	Fri, 16 Aug 2024 17:11:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.31.93
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7401F52F62;
+	Fri, 16 Aug 2024 17:16:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723828290; cv=none; b=lrEEzMbGCb7Cfwbe7x6qJ5dq2MI7TyeC+ozrEumfnSZZ58qUfbeJrGKfQwmwbEjp2e02TC/dbujV/fAmkcfy97AormjdBl5zDSvbegkyz4qitlQcaRctO3y/cZB64FVN22wFkCq6AUaphU5QFifYtBSKjp79A7rh1+VBcB31ftA=
+	t=1723828616; cv=none; b=dU7E2iP3JoeEhDB3A4BnkxTt3dEEbzYI5cW2uvZz5mFP4kGum8ppNvO6yItZHySJLyj+8nMreXwvzyTqGqITIdJPLw6gJvfjHX7iSTnhtXxgZtWcQf9wYr0EZtFCqSDpCSozLYv5+b6n7z9XJ4TyrnXGKTQnL0ytTHF6AIEUHzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723828290; c=relaxed/simple;
-	bh=OQj9aflFz5/1xZELeYBBSnRGJvXqvpt8ZmmFo5/oPpY=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=TyXODleqR4kTyuHbIiKD6E1f0+IGmqagq618CU38c2sYGmO8BJxL7XWMw60/XJXR2RQhV4KbWsxQtVgdDLvJeUS65e2Yse2V1bQVBsJAV2Gk/DV/tNeR7olKfoH2pPxlqMrzvvJ6SpoZi3EJ/YqpQBE6i3deIOmz/V9X7lm4IiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=apitzsch.eu; spf=pass smtp.mailfrom=apitzsch.eu; arc=none smtp.client-ip=80.67.31.93
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=apitzsch.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=apitzsch.eu
-Received: from [77.64.252.82] (helo=framework.lan)
-	by smtprelay05.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98)
-	(envelope-from <git@apitzsch.eu>)
-	id 1sf0TS-000000000nw-3QWQ;
-	Fri, 16 Aug 2024 19:10:50 +0200
-Message-ID: <f50d7129b6023d89d7c83820d9f69075800fe1ae.camel@apitzsch.eu>
-Subject: Re: [PATCH RESEND v6] arm64: dts: qcom: msm8939-longcheer-l9100:
- Add rear flash
-From: =?ISO-8859-1?Q?Andr=E9?= Apitzsch <git@apitzsch.eu>
-To: Bjorn Andersson <andersson@kernel.org>, Pavel Machek <pavel@ucw.cz>, Lee
- Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>,  "Gustavo A. R. Silva" <gustavoars@kernel.org>,
- Christophe JAILLET <christophe.jaillet@wanadoo.fr>,  Trilok Soni
- <quic_tsoni@quicinc.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Kees
- Cook <kees@kernel.org>,  Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
-	phone-devel@vger.kernel.org
-Date: Fri, 16 Aug 2024 19:11:29 +0200
-In-Reply-To: <172375444816.1011236.9460813836275052885.b4-ty@kernel.org>
-References: <20240729-sy7802-v6-1-86bb9083e40b@apitzsch.eu>
-	 <172375444816.1011236.9460813836275052885.b4-ty@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 
+	s=arc-20240116; t=1723828616; c=relaxed/simple;
+	bh=JxWcMmDZOzaQF7cGizeD6h0tcJULFDn6lE9WhxTJlwQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HXd9IK2iWhIosjy57TOnwNiKBKVL4TraL97CSHO1Hxu0jGquRNXAyvnYq6uvo+wSSNA2eCkprBWT/gTaeA8D7Oz/SQm+QFeYhVoGPkUhyDHfloY4tlNqdORg9qkV2l5tlFf2ctvJxcu3e0JnWVxYrBkPjPPjYBMrA/JgN18TCuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=GE7pwi/k; arc=none smtp.client-ip=199.89.1.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
+Received: from localhost (localhost [127.0.0.1])
+	by 009.lax.mailroute.net (Postfix) with ESMTP id 4WlpZF6c9hzlgMVQ;
+	Fri, 16 Aug 2024 17:16:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:from:from:content-language:references:subject:subject
+	:user-agent:mime-version:date:date:message-id:received:received;
+	 s=mr01; t=1723828610; x=1726420611; bh=kSYG2ak77BV7ibnycMsgwUjM
+	z96aW/qwSoF/lBrpy0A=; b=GE7pwi/kUevhfih72UyHlA4d+h/L1TN4MncS/c/1
+	oIKrXQ3EBPhotSKZq2Jj4Ep/UsnD6ftd8bgyaRJmdYjbk33BJE4RXJn23JJd4ShC
+	oZMLA5zh7O3P6i3dynMd9e2Fsv7qhqI9i4Pp5ip+HmQtYxVjQuzfp3qLI65NeMrH
+	nUrsy3J27TfcMU4sM40e9PEY4IGIPBfd3QXzifraLN2g1mHJI0Fr644XrwDVEnvW
+	E5XghuLE06LNzSpuZuPBS9dET5VcUr4ybUZoo/Z6Qp18eiSE8ka1d/HNRDAwYt4G
+	KwKWAts9/Euod/H9Shmfde1LodjEqfgGwPF4rFhK7cCxKw==
+X-Virus-Scanned: by MailRoute
+Received: from 009.lax.mailroute.net ([127.0.0.1])
+ by localhost (009.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
+ id 6kuDIXg72ger; Fri, 16 Aug 2024 17:16:50 +0000 (UTC)
+Received: from [100.66.154.22] (unknown [104.135.204.82])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bvanassche@acm.org)
+	by 009.lax.mailroute.net (Postfix) with ESMTPSA id 4WlpZ96ZG4zlgT1H;
+	Fri, 16 Aug 2024 17:16:49 +0000 (UTC)
+Message-ID: <36d30039-8e42-4f3d-9812-09f49b3c0e71@acm.org>
+Date: Fri, 16 Aug 2024 10:16:48 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Df-Sender: YW5kcmVAYXBpdHpzY2guZXU=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/2] ufs: core: Add a quirk for handling broken LSDBS
+ field in controller capabilities register
+To: manivannan.sadhasivam@linaro.org, Alim Akhtar <alim.akhtar@samsung.com>,
+ Avri Altman <avri.altman@wdc.com>,
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>
+Cc: linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Kyoungrul Kim <k831.kim@samsung.com>,
+ Amit Pundir <amit.pundir@linaro.org>
+References: <20240816-ufs-bug-fix-v3-0-e6fe0e18e2a3@linaro.org>
+ <20240816-ufs-bug-fix-v3-1-e6fe0e18e2a3@linaro.org>
+Content-Language: en-US
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20240816-ufs-bug-fix-v3-1-e6fe0e18e2a3@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Am Donnerstag, dem 15.08.2024 um 15:40 -0500 schrieb Bjorn Andersson:
->=20
-> On Mon, 29 Jul 2024 23:23:04 +0200, Andr=C3=A9 Apitzsch wrote:
-> > The phone has a Silergy SY7802 flash LED controller.
-> >=20
-> >=20
->=20
-> Applied, thanks!
->=20
-> [1/1] arm64: dts: qcom: msm8939-longcheer-l9100: Add rear flash
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 commit: 04b2f8d5aec32973d34839ae9838218579=
-24cc66
->=20
-> Best regards,
+On 8/15/24 11:25 PM, Manivannan Sadhasivam via B4 Relay wrote:
+> 'Legacy Queue & Single Doorbell Support (LSDBS)' field in the controller
+> capabilities register is supposed to report whether the legacy single
+> doorbell mode is supported in the controller or not. But some controllers
+> report '1' in this field which corresponds to 'LSDB not supported', but
+> they indeed support LSDB. So let's add a quirk to handle those controllers.
+> 
+> If the quirk is enabled by the controller driver, then LSDBS register field
+> will be ignored and legacy single doorbell mode is assumed to be enabled
+> always.
 
-Hi Bjorn,
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 
-It looks like you applied the patch twice (two different version)[1,2].
 
-Best regards,
-Andr=C3=A9
-
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?=
-h=3Dfor-next&id=3Df98bdb21cfc94cb7733a5c3216e8f1dec1c06023 (v5)
-[2] https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?=
-h=3Dfor-next&id=3D04b2f8d5aec32973d34839ae983821857924cc66 (v6)
 
