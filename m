@@ -1,274 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-28833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28834-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A958B9550CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 20:26:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 295BD955141
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 21:12:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B1951F239D8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 18:26:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7C4FFB22A69
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 19:12:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F16E51C37B3;
-	Fri, 16 Aug 2024 18:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 099221C460B;
+	Fri, 16 Aug 2024 19:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JbYLMWcJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SdWcYZJZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3901C3796;
-	Fri, 16 Aug 2024 18:26:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFFE1C3F25;
+	Fri, 16 Aug 2024 19:12:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723832787; cv=none; b=YLf3RdTPWQDLz/vmevD1wS4OXFBkDifEUSTA8i1taNDqHO7RxTzKwQRR2z6SKbGMiQ2TCjgaYZc1IlzOVTi4lWDZOj1EFKt9A30z25vZwV1mIx6+2XiFEGt1U5Ow/ErqLco5u8soU689L9hHvR8Se8I6Y30pYnhgEDt7tagQp1o=
+	t=1723835544; cv=none; b=tu1LN6grxpGYuJ+TQQ7ApbAZsuSlumCvAscTM6/Q5nPoYb6yu3Z0H/6g2uguV9yjrIuLNcpuZSvayKIh3wpoFfdiFe0P1XESvM5C51rT1NGM9iZZ2JofsseUzYGX9BcsBdZWWq+F/UObhOfgJ3KUY+g0LQCqnsRxKiGUIv9pDvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723832787; c=relaxed/simple;
-	bh=DPeLOYOagAKnh5ZukpveM96prGndAPIjdk5ydkkOY0o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=iOebxSnHh+n6J0O55yokWg/BnvRO58MB5qej+bSiHEcEjALAHPqTHbO0qgn588AZ+0vujZbTwrfPZjSAoJfvPj6Bj6o4NZSNngEPO8lltPosyqd0/ocTQzy13Ys09UOwX+uwvhf+2bC3qW49tHoCFzme1Fg2rSbcLKK/Xc4Be8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JbYLMWcJ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47GA5lxd028282;
-	Fri, 16 Aug 2024 18:22:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	AAO4g3kLHhH442QaXQyYQqWtZBVUSZQd+XlfgrdodQw=; b=JbYLMWcJ/lblCd5v
-	yHxezmaqrpWdHKsGAyLqJE0W4rUrTz6WvwrRvFVQXY7Jk89ddEjbzB0pe/qvBviF
-	i0Ku/Bh2FNocCRrRK28nshgO5uruSofzLvKJa6mk3AlOYIu/0qPobP0jtiLffn5F
-	Bd59t73QfGUMRb79mVxY3Hth4aMYejly5MJmAnYP04xkH5bY9JQz0CABTTm84ndg
-	5hOkAqB/c38+wkHT5GKcYCHrXU11pdom8b1LEFjvs0uvKPXP/r8D1Fx8YCqEJ0Zi
-	6UybW7knGzfsEntSbeY14JhaEtRWFS1ALO0G96+YBGJag6MO+64U5x1MXjH1Ggyw
-	tZ041Q==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 411s5pjnvu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Aug 2024 18:22:05 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47GIM4as022144
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Aug 2024 18:22:04 GMT
-Received: from [10.216.61.113] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 16 Aug
- 2024 11:21:57 -0700
-Message-ID: <5bf5c208-f90c-19b1-7006-694d3cd2351a@quicinc.com>
-Date: Fri, 16 Aug 2024 23:51:53 +0530
+	s=arc-20240116; t=1723835544; c=relaxed/simple;
+	bh=yHqCmAUyZzww13O+Qa0EgW2aJCxMZVqksQq6+a9X2cA=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=KmFgOGj6cSoGPlRbiRwjiA+PYKCI4ms0F0D1lmqoha5OBEh0KefULyG2RDiPxgr8cveTfgPwLQsFQPEasxMc3GotsTCDVYfkltiJjV/LubtKvZx+T6vmF2aMDmdK/h0iEpi5iVl1Bq2Kg+7y7MTDAuejhBVZuL+pzw2vKGeCcJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SdWcYZJZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB2DC4AF12;
+	Fri, 16 Aug 2024 19:12:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723835544;
+	bh=yHqCmAUyZzww13O+Qa0EgW2aJCxMZVqksQq6+a9X2cA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=SdWcYZJZ0ntMgbvL5K08ActS1yPWgsp6AOKJY5Ve+ka4icuPJRUWRLUDCOPwHKx3U
+	 wXNBCiK7n1EFFrEDF5K+AtLM5e4yjT155wLSHoOi/D3L8izNPARmHFZIQ7vZ0ts+8/
+	 x8OT/Ww8HM2SCGxHwMmyJnMqFf7nFqpM2bTgcZYdMBnXNQAwecLlIIUvDHDHYFy7Ti
+	 Hf6OUACcrkGXu8t8bcFcYY699LU4vhDX+BWPlsZlZo3hpNKi3gN/VKeWlO1RRb1Z95
+	 KckwHpLdisrCxfUXUsQR9Gi25hLRHJd30nwjLfdRHEmHV/V6Dwlwd8LNmyty+X2vaS
+	 YCOFEAg8IQrUg==
+Date: Fri, 16 Aug 2024 14:12:22 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+	bhelgaas@google.com, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Vidya Sagar <vidyas@nvidia.com>, Jon Hunter <jonathanh@nvidia.com>
+Subject: Re: [PATCH] PCI: qcom-ep: Move controller cleanups to
+ qcom_pcie_perst_deassert()
+Message-ID: <20240816191222.GA69867@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v5 3/4] firmware: psci: Read and use vendor reset types
-Content-Language: en-US
-To: Elliot Berman <quic_eberman@quicinc.com>,
-        Lorenzo Pieralisi
-	<lpieralisi@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Andy Yan
-	<andy.yan@rock-chips.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        "Bartosz
- Golaszewski" <bartosz.golaszewski@linaro.org>,
-        Satya Durga Srinivasu Prabhala
-	<quic_satyap@quicinc.com>,
-        Melody Olvera <quic_molvera@quicinc.com>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        Florian Fainelli
-	<florian.fainelli@broadcom.com>,
-        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_spratap@qucinc.com>
-References: <20240617-arm-psci-system_reset2-vendor-reboots-v5-0-086950f650c8@quicinc.com>
- <20240617-arm-psci-system_reset2-vendor-reboots-v5-3-086950f650c8@quicinc.com>
- <ZrOMjomTTWZ91Uzf@lpieralisi>
- <20240807103245593-0700.eberman@hu-eberman-lv.qualcomm.com>
- <ZrYZ/i1QFhfmv0zi@lpieralisi>
- <20240809090339647-0700.eberman@hu-eberman-lv.qualcomm.com>
- <28c8bc92-4a55-8a07-1ece-333316d78410@quicinc.com>
- <Zr4Td7PiKhKl3Et3@lpieralisi>
- <20240815100749641-0700.eberman@hu-eberman-lv.qualcomm.com>
-From: Shivendra Pratap <quic_spratap@quicinc.com>
-In-Reply-To: <20240815100749641-0700.eberman@hu-eberman-lv.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: k339WUc2558CtmYnKtpnI043KslKmbsq
-X-Proofpoint-ORIG-GUID: k339WUc2558CtmYnKtpnI043KslKmbsq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-16_13,2024-08-16_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
- mlxlogscore=999 suspectscore=0 lowpriorityscore=0 clxscore=1015
- bulkscore=0 phishscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408160129
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240816050029.GA2331@thinkpad>
 
-
-
-On 8/15/2024 11:35 PM, Elliot Berman wrote:
-> On Thu, Aug 15, 2024 at 04:40:55PM +0200, Lorenzo Pieralisi wrote:
->> On Mon, Aug 12, 2024 at 11:46:08PM +0530, Shivendra Pratap wrote:
->>>
->>>
->>> On 8/9/2024 10:28 PM, Elliot Berman wrote:
->>>> On Fri, Aug 09, 2024 at 03:30:38PM +0200, Lorenzo Pieralisi wrote:
->>>>> On Wed, Aug 07, 2024 at 11:10:50AM -0700, Elliot Berman wrote:
->>>>>
->>>>> [...]
->>>>>
->>>>>>>> +static void psci_vendor_sys_reset2(unsigned long action, void *data)
->>>>>>>
->>>>>>> 'action' is unused and therefore it is not really needed.
->>>>>>>
->>>>>>>> +{
->>>>>>>> +	const char *cmd = data;
->>>>>>>> +	unsigned long ret;
->>>>>>>> +	size_t i;
->>>>>>>> +
->>>>>>>> +	for (i = 0; i < num_psci_reset_params; i++) {
->>>>>>>> +		if (!strcmp(psci_reset_params[i].mode, cmd)) {
->>>>>>>> +			ret = invoke_psci_fn(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2),
->>>>>>>> +					     psci_reset_params[i].reset_type,
->>>>>>>> +					     psci_reset_params[i].cookie, 0);
->>>>>>>> +			pr_err("failed to perform reset \"%s\": %ld\n",
->>>>>>>> +				cmd, (long)ret);
->>>>>>>> +		}
->>>>>>>> +	}
->>>>>>>> +}
->>>>>>>> +
->>>>>>>>  static int psci_sys_reset(struct notifier_block *nb, unsigned long action,
->>>>>>>>  			  void *data)
->>>>>>>>  {
->>>>>>>> +	if (data && num_psci_reset_params)
->>>>>>>
->>>>>>> So, reboot_mode here is basically ignored; if there is a vendor defined
->>>>>>> reset, we fire it off.
->>>>>>>
->>>>>>> I think Mark mentioned his concerns earlier related to REBOOT_* mode and
->>>>>>> reset type (granted, the context was different):
->>>>>>>
->>>>>>> https://lore.kernel.org/all/20200320120105.GA36658@C02TD0UTHF1T.local/
->>>>>>>
->>>>>>> I would like to understand if this is the right thing to do before
->>>>>>> accepting this patchset.
->>>>>>>
->>>>>>
->>>>>> I don't have any concerns to move this part below checking reboot_mode.
->>>>>> Or, I could add reboot_mode == REBOOT_COLD check.
->>>>>
->>>>> The question is how can we map vendor specific reboot magic to Linux
->>>>> reboot modes sensibly in generic PSCI code - that's by definition
->>>>> vendor specific.
->>>>>
->>>>
->>>> I don't think it's a reasonable thing to do. "reboot bootloader" or
->>>> "reboot edl" don't make sense to the Linux reboot modes.
->>>>
->>>> I believe the Linux reboot modes enum is oriented to perspective of
->>>> Linux itself and the vendor resets are oriented towards behavior of the
->>>> SoC.
->>>>
->>>> Thanks,
->>>> Elliot
->>>>
->>>
->>> Agree.
->>>
->>> from perspective of linux reboot modes, kernel's current
->>> implementation in reset path is like:
->>>
->>> __
->>> #1 If reboot_mode is WARM/SOFT and PSCI_SYSRESET2 is supported 
->>>     Call PSCI - SYSTEM_RESET2 - ARCH RESET
->>> #2 ELSE
->>>     Call PSCI - SYSTEM_RESET COLD RESET
->>> ___
->>>
->>> ARM SPECS for PSCI SYSTEM_RESET2
->>> This function extends SYSTEM_RESET. It provides:
->>> • ARCH RESET: set Bit[31] to 0               = > This is already in place in condition #1.
->>> • vendor-specific resets: set Bit[31] to 1.  = > current patchset adds this part before kernel's reboot_mode reset at #0.
->>>
->>>
->>> In current patchset, we see a condition added at
->>> #0-psci_vendor_reset2 being called before kernel’s current
->>> reboot_mode condition and it can take any action only if all below
->>> conditions are satisfied.
->>> - PSCI SYSTEM_RESET2 is supported.
->>> - psci dt node defines an entry "bootloader" as a reboot-modes.
->>> - User issues reboot with a command say - (reboot bootloader).
->>> - If vendor reset fails, default reboot mode will execute as is.
->>>
->>> Don't see if we will skip or break the kernel reboot_mode flow with
->>> this patch.  Also if user issues reboot <cmd> and <cmd> is supported
->>> on SOC vendor reset psci node, should cmd take precedence over
->>> kernel reboot mode enum? may be yes? 
->>>
->>
->> Please wrap lines when replying.
-sure. will try to take care.
->>
->> I don't think it is a matter of precedence. reboot_mode and the reboot
->> command passed to the reboot() syscall are there for different (?)
->> reasons.
->>
->> What I am asking is whether it is always safe to execute a PSCI vendor
->> reset irrispective of the reboot_mode value.
-Valid point, but it depends on how we configure reboot mode and vendor reset.
-If the configuration is conflicting in DT, then reboot_mode and vendor reset
-may conflict and show non-predictable results.
-For instance, on qcs6490, we have have nvmem-reboot-mode driver
-which supports "reboot mode bootloader" function via its current DT as the PMIC
-registers are accessible for write on this soc. If we enable nvmem-reboot-mode
-and then configure vendor_reset2(mode-bootloader) to perform a different
-function on reboot, they will conflict and may result in a non-predictable
-behavior. The developer or soc vendor has to take care of this in any
-case so this may be a invalid scenario?
-
-May be vendor_reset2 gives more flexibility here on how a soc vendor may 
-implement reboot modes and other vendor reset types. In case soc vendor
-wants to keep some reboot mode register as open access, they can still
-use reboot_mode driver and then others reboot/reset modes can be configured
-via vendor_reset2.
-
-For instance, on qcs6490, we can use nvmem-reboot-mode driver for 
-"reboot mode bootloader" and use the current patch-vendor_reset2 for
-"reboot mode edl". This can be configured via DT. Now even if we
-enable both current-patch-vendor_reset2(reboot mode bootloader) 
-and nvmem-reboot-mode (mode-bootloader) at same time on this soc,
-they are harmless to each other and work as desired as both(DT entries)
-align with each other and the PMIC registers are accessible to kernel. The
-same thing can conflict, if we enable both drivers at same time and configure
-them with conflicting parameters in DT for (reboot mode bootloader).
-
+On Fri, Aug 16, 2024 at 10:30:29AM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Aug 15, 2024 at 05:47:17PM -0500, Bjorn Helgaas wrote:
+> > [+cc Vidya, Jon since tegra194 does similar things]
+> > 
+> > On Mon, Jul 29, 2024 at 05:52:45PM +0530, Manivannan Sadhasivam wrote:
+> > > Currently, the endpoint cleanup function dw_pcie_ep_cleanup() and EPF
+> > > deinit notify function pci_epc_deinit_notify() are called during the
+> > > execution of qcom_pcie_perst_assert() i.e., when the host has asserted
+> > > PERST#. But quickly after this step, refclk will also be disabled by the
+> > > host.
+> > > 
+> > > All of the Qcom endpoint SoCs supported as of now depend on the refclk from
+> > > the host for keeping the controller operational. Due to this limitation,
+> > > any access to the hardware registers in the absence of refclk will result
+> > > in a whole endpoint crash. Unfortunately, most of the controller cleanups
+> > > require accessing the hardware registers (like eDMA cleanup performed in
+> > > dw_pcie_ep_cleanup(), powering down MHI EPF etc...). So these cleanup
+> > > functions are currently causing the crash in the endpoint SoC once host
+> > > asserts PERST#.
+> > > 
+> > > One way to address this issue is by generating the refclk in the endpoint
+> > > itself and not depending on the host. But that is not always possible as
+> > > some of the endpoint designs do require the endpoint to consume refclk from
+> > > the host (as I was told by the Qcom engineers).
+> > > 
+> > > So let's fix this crash by moving the controller cleanups to the start of
+> > > the qcom_pcie_perst_deassert() function. qcom_pcie_perst_deassert() is
+> > > called whenever the host has deasserted PERST# and it is guaranteed that
+> > > the refclk would be active at this point. So at the start of this function,
+> > > the controller cleanup can be performed. Once finished, rest of the code
+> > > execution for PERST# deassert can continue as usual.
+> > 
+> > What makes this v6.11 material?  Does it fix a problem we added in
+> > v6.11-rc1?
 > 
-> The only way I see it to be unsafe is we need some other driver using
-> the reboot_mode to configure something and then the PSCI vendor reset
-> being incompatible with whatever that other driver did. I don't see that
-> happens today, so it is up to us to decide what the policy ought to be.
-> The PSCI spec doesn't help us here because the reboot_mode enum is
-> totally a Linux construct. In my opinion, firmware should be able to
-> deal with whatever the driver did or (less ideal) the driver need to be
-> aware of the PSCI vendor resets. Thus, it would be always safe to
-> execute a PSCI vendor reset regardless of the reboot_mode value.
+> No, this is not a 6.11 material, but the rest of the patches I
+> shared offline.
+
+For reference, the patches you shared offline are:
+
+  PCI: qcom: Use OPP only if the platform supports it
+  PCI: qcom-ep: Do not enable resources during probe()
+  PCI: qcom-ep: Disable MHI RAM data parity error interrupt for SA8775P SoC
+  PCI: qcom-ep: Move controller cleanups to qcom_pcie_perst_deassert()
+
+> > Is there a Fixes: commit?
 > 
-> Thanks,
-> Elliot
+> Hmm, the controller addition commit could be the valid fixes tag.
 > 
+> > This patch essentially does this:
+> > 
+> >   qcom_pcie_perst_assert
+> > -   pci_epc_deinit_notify
+> > -   dw_pcie_ep_cleanup
+> >     qcom_pcie_disable_resources
+> > 
+> >   qcom_pcie_perst_deassert
+> > +   if (pcie_ep->cleanup_pending)
+> > +     pci_epc_deinit_notify(pci->ep.epc);
+> > +     dw_pcie_ep_cleanup(&pci->ep);
+> >     dw_pcie_ep_init_registers
+> >     pci_epc_init_notify
+> > 
+> > Maybe it makes sense to call both pci_epc_deinit_notify() and
+> > pci_epc_init_notify() from the PERST# deassert function, but it makes
+> > me question whether we really need both.
+> 
+> There is really no need to call pci_epc_deinit_notify() during the first
+> deassert (i.e., during the ep boot) because there are no cleanups to be done.
+> It is only needed during a successive PERST# assert + deassert.
+> 
+> > pcie-tegra194.c has a similar structure:
+> > 
+> >   pex_ep_event_pex_rst_assert
+> >     pci_epc_deinit_notify
+> >     dw_pcie_ep_cleanup
+> > 
+> >   pex_ep_event_pex_rst_deassert
+> >     dw_pcie_ep_init_registers
+> >     pci_epc_init_notify
+> > 
+> > Is there a reason to make them different, or could/should a similar
+> > change be made to tegra?
+> 
+> Design wise both drivers are similar, so it could apply. I didn't
+> spin a patch because if testing of tegra driver gets delayed (I've
+> seen this before), then I do not want to stall merging the whole
+> series. 
+
+It can and should be separate patches, one per driver.  But I don't
+want to end up with the drivers being needlessly different.
+
+> For Qcom it is important to get this merged asap to avoid
+> the crash.
+
+If this is not v6.11 material, there's time to work this out.
+
+> > > +	if (pcie_ep->cleanup_pending) {
+> > 
+> > Do we really need this flag?  I assume the cleanup functions could
+> > tell whether any previous setup was done?
+> 
+> Not so. Some cleanup functions may trigger a warning if attempted to do it
+> before 'setup'. I think dw_edma_remove() that is part of dw_pcie_ep_cleanup()
+> does that IIRC.
+
+It looks safe to me:
+
+  dw_pcie_ep_cleanup
+    dw_pcie_edma_remove
+      dw_edma_remove(chip = &pci->edma)       # struct dw_pcie *pci
+        dev = chip->dev
+        dw = chip->dw
+        if (!dw)
+          return -ENODEV
+
+but if not, it could probably be made safe by adding a NULL pointer
+check and/or a "chip->dw = NULL" at the right spot.
+
+We hardly have any cleanup functions affected by "cleanup_pending", so
+I think we can decide that they should be safe before 'setup' and just
+make it so.
+
+Bjorn
 
