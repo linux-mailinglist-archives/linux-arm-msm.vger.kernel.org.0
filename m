@@ -1,159 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-28723-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFFE99540A5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 06:35:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A7A629540CB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 07:00:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E2C211C22008
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 04:35:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7F6D61C22102
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 05:00:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5198F763EE;
-	Fri, 16 Aug 2024 04:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF4067829C;
+	Fri, 16 Aug 2024 05:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SFhb4agF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bR0YBm2/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B588433CD2;
-	Fri, 16 Aug 2024 04:35:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1505E57CB1
+	for <linux-arm-msm@vger.kernel.org>; Fri, 16 Aug 2024 05:00:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723782938; cv=none; b=WGeqnzhL+KTqhmt+AgxRcmYt6IzbFAHozUlUFoKfiaiqCI1pWt3Uz82EmVB3boR2svmLDSwkEtBpf8z8sFPioHDTJojlge8YApoHpLxlZeFYPENlTsW0Qk7hxUwj45EdU58tcfF6EowiPlkbQBE9dZbIba3peKZkY4RV8qJqLyU=
+	t=1723784437; cv=none; b=mLnFZsYw6OMZDEwdqSbUsdRYmRBuAJqyU6GONwhxDCrbpCQey31jlGnjI9GxObJdAoBIwIg2MB0R9JElCSusfl0w6bhW4KptU3OAlZ4qp7upN67Qsgxd2llDvPc+aCGvvUx3ocjgOApVMeO8Y63D7lHklH/chzt1rBnVUrNQlZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723782938; c=relaxed/simple;
-	bh=pUxFcDaOYFmWHj/r/e/Gqlsqjrkg27PZ3Bsk2rL+VmM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=AN2Frj7FmosZ6Rhxbn4/sK+enTANH/s7R2cD05XbI6iSZCkribikNiNZEi1HvB1cFLHeS0ptwTecz7/ffpG7Bw0YICWe87eYqCb8WKnJ69rmgqWuKcdXhISqTPZ00XRIiupoJM7PxBCzctfd+AD2W0/Id3TprBGHJeAcSin9iGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SFhb4agF; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47FNqEbP000948;
-	Fri, 16 Aug 2024 04:35:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	uGg41Zj6uIzcFj0xSAbwGNEh48EQEXI7APG5R9cae/0=; b=SFhb4agFpoNBsuJo
-	pl8kNj86IFeKQCbC9gCmii6F2WbjG0CRQsV9EqVUtuFCBLVKhLcyv3xAvoos1788
-	VnCGHMAed0ZIMRH+KnNKwUjyogCfs3S3KtUtKNTBMb7dXfRmSPXRzDt1JswqGWYz
-	SStu1h5psMjMf14Dl4nzeGwlDUy95pDRnQWFwYDhaiEfW6XGDaspBa3Gc/ojbERH
-	//+J72A3wF/+hySdhHsthlHMGuWaroJkizdQI6HGS9DxV/PDsllGXnlsXeqM4Glq
-	wTSRdz91Xx7Jt3vBa/NuE2dO4PYy12xOiLoxiH0N7gwVroLsqeHGnRbLKY2een3G
-	0nSX2Q==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 410m296cju-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Aug 2024 04:35:32 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47G4ZV1m031836
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Aug 2024 04:35:31 GMT
-Received: from [10.217.216.152] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 15 Aug
- 2024 21:35:26 -0700
-Message-ID: <658285b0-9e79-427b-9f68-a8fea0c469ba@quicinc.com>
-Date: Fri, 16 Aug 2024 10:05:23 +0530
+	s=arc-20240116; t=1723784437; c=relaxed/simple;
+	bh=V+5F1oveRmv0pSVGDANeVXah31hJMa43N75rfuBEQ0A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y6tY/SJoBZs0b+1xeraxPbMD6TyXQE/osKR9YQTEJ8Tvw/p46O66vPxcJetVjyQWrGrtEfPIYELeuTAi1jqQ4Bah5kisW2axTo0305aZbJ9Bdd3khfBmAQ4of9fOyO2DfpF4olf8g9XvdbPFgaz/12xYNwkIvEw1IcgOaox7KlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bR0YBm2/; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-20203988f37so6035655ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Aug 2024 22:00:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1723784434; x=1724389234; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=tTlEisHK4yCx7hQg2VMWou4sqTPa4zx/4UhJkv4GXdY=;
+        b=bR0YBm2/MCI+GT/L9wCUWZxyK+o2HhlR1ECVamALamCjFtlfRMLa6sjfT/yGStVYrw
+         PhJ34XqLcBRDCLoV4jfXoIF/Q5rd0seD0gX5ETpc7vfMTE43oQd5Gs6SxAsoZLg2UVpm
+         FFG0E8jBSD/KAf+6tXon1ixcL45IdZ125fo2PpW7sW1jfvXu2efOvA6zasJugwnA4EwB
+         hBZ3HuoUqtbOnFiFsAOFbyIayKbnAx6KTHmicxmBg1JmH3anpifBNtWjpqTjk/B0ER1b
+         jXbNmnWJTCIcd+gBLbL2zKoJsQQxnlOC6YqCWGOFfWb+Zgt5pC4sz1Y+MDuxKOX2wdAu
+         BrRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723784434; x=1724389234;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tTlEisHK4yCx7hQg2VMWou4sqTPa4zx/4UhJkv4GXdY=;
+        b=gfSF7FxbuHV3SwFfexSyvrkLhxPqlVgofrSpGYmHQrAJRr8sVzxqfU/B9Qqs2Y+Cif
+         QcJ9le75tKjLthaelKxDho/60g1ZwnYW3vmXbUTXPvzcG+dEwP9NIMCht+QBpHH0K6XD
+         gTAK9/UvmFUtaQhNSse3ojeuu24rY7670SNaVRYP10G1Vvy0MXGkWlnXxny7zl7clYSL
+         9P19EKu7ibsv+rmJvlBAcy1e8c38HLNCU0WcnL/SaZ+KV7xjrS2r8bbGgCf/HaDHHY/z
+         cPYbJMvpFikZu472KtgMl3CzFyRbs0yVbVtE4E00sMbPLlQkRvUzUCtiiyyp/ZZ2Bgqz
+         qjYA==
+X-Forwarded-Encrypted: i=1; AJvYcCXG1Y+cfrVb/EY1WJGEEOLBdcB1qvZME64mchGGdUA8sThsXMmqZuq/xO2mTAnvf0JmFcvozTUzaybaxHYWaOtVj8UIlWVyG8SC3B8IBQ==
+X-Gm-Message-State: AOJu0YwN4egTVEvQHhE6eTygp02/eQCCxWPW4+eoaWiF2HMuKOnHKckz
+	+Qgc3yjvymZrYm3ICLb/7uBQMACrSNUq1LRTncaiILh95OUO0atzVFIc7CnDFQ==
+X-Google-Smtp-Source: AGHT+IENkLRreSP3HlZngVQUlgQ00Q+Vublx35vVuWPTimnHvJsxDGPdLY8rLwQcUUZiPo4KftizDQ==
+X-Received: by 2002:a17:903:1c7:b0:1f7:37f:728d with SMTP id d9443c01a7336-20203e4f7edmr19517965ad.10.1723784434271;
+        Thu, 15 Aug 2024 22:00:34 -0700 (PDT)
+Received: from thinkpad ([36.255.17.34])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-201f03956a8sm17934985ad.234.2024.08.15.22.00.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Aug 2024 22:00:33 -0700 (PDT)
+Date: Fri, 16 Aug 2024 10:30:29 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+	bhelgaas@google.com, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Vidya Sagar <vidyas@nvidia.com>, Jon Hunter <jonathanh@nvidia.com>
+Subject: Re: [PATCH] PCI: qcom-ep: Move controller cleanups to
+ qcom_pcie_perst_deassert()
+Message-ID: <20240816050029.GA2331@thinkpad>
+References: <20240729122245.33410-1-manivannan.sadhasivam@linaro.org>
+ <20240815224717.GA53536@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/8] dt-bindings: clock: qcom: Add SA8775P video clock
- controller
-To: Tengfei Fan <quic_tengfan@quicinc.com>,
-        Krzysztof Kozlowski
-	<krzk@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Bartosz
- Golaszewski" <bartosz.golaszewski@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_imrashai@quicinc.com>, <quic_jkona@quicinc.com>,
-        Tingwei
-	<quic_tingweiz@quicinc.com>,
-        "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
-References: <20240715-sa8775p-mm-v3-v1-0-badaf35ed670@quicinc.com>
- <20240715-sa8775p-mm-v3-v1-1-badaf35ed670@quicinc.com>
- <01f041b5-8ae9-4f04-b5cd-22ad39f12da3@kernel.org>
- <78c07cb4-c630-487d-b437-0aa775d2450c@quicinc.com>
-Content-Language: en-US
-From: Taniya Das <quic_tdas@quicinc.com>
-In-Reply-To: <78c07cb4-c630-487d-b437-0aa775d2450c@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _zBHtok1z9CeYr8vncPayjfJZkqZuYbT
-X-Proofpoint-ORIG-GUID: _zBHtok1z9CeYr8vncPayjfJZkqZuYbT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-15_18,2024-08-15_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1011
- spamscore=0 priorityscore=1501 mlxscore=0 bulkscore=0 adultscore=0
- impostorscore=0 phishscore=0 malwarescore=0 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408160031
+In-Reply-To: <20240815224717.GA53536@bhelgaas>
 
-
-
-On 7/29/2024 4:11 PM, Tengfei Fan wrote:
+On Thu, Aug 15, 2024 at 05:47:17PM -0500, Bjorn Helgaas wrote:
+> [+cc Vidya, Jon since tegra194 does similar things]
 > 
+> On Mon, Jul 29, 2024 at 05:52:45PM +0530, Manivannan Sadhasivam wrote:
+> > Currently, the endpoint cleanup function dw_pcie_ep_cleanup() and EPF
+> > deinit notify function pci_epc_deinit_notify() are called during the
+> > execution of qcom_pcie_perst_assert() i.e., when the host has asserted
+> > PERST#. But quickly after this step, refclk will also be disabled by the
+> > host.
+> > 
+> > All of the Qcom endpoint SoCs supported as of now depend on the refclk from
+> > the host for keeping the controller operational. Due to this limitation,
+> > any access to the hardware registers in the absence of refclk will result
+> > in a whole endpoint crash. Unfortunately, most of the controller cleanups
+> > require accessing the hardware registers (like eDMA cleanup performed in
+> > dw_pcie_ep_cleanup(), powering down MHI EPF etc...). So these cleanup
+> > functions are currently causing the crash in the endpoint SoC once host
+> > asserts PERST#.
+> > 
+> > One way to address this issue is by generating the refclk in the endpoint
+> > itself and not depending on the host. But that is not always possible as
+> > some of the endpoint designs do require the endpoint to consume refclk from
+> > the host (as I was told by the Qcom engineers).
+> > 
+> > So let's fix this crash by moving the controller cleanups to the start of
+> > the qcom_pcie_perst_deassert() function. qcom_pcie_perst_deassert() is
+> > called whenever the host has deasserted PERST# and it is guaranteed that
+> > the refclk would be active at this point. So at the start of this function,
+> > the controller cleanup can be performed. Once finished, rest of the code
+> > execution for PERST# deassert can continue as usual.
 > 
-> On 7/16/2024 3:44 PM, Krzysztof Kozlowski wrote:
->> On 15/07/2024 10:23, Taniya Das wrote:
->>> Add device tree bindings for the video clock controller on Qualcomm
->>> SA8775P platform.
->>>
->>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->>> ---
->>>   .../bindings/clock/qcom,sa8775p-videocc.yaml       | 62 
->>> ++++++++++++++++++++++
->>>   include/dt-bindings/clock/qcom,sa8775p-videocc.h   | 47 
->>> ++++++++++++++++
->>>   2 files changed, 109 insertions(+)
->>
->>
->> AFAIK, the sa8775p is being dropped and later re-introduced as quite
->> different device.
->>
->> What will be the use of these bindings after we remove sa8775p? Or
->> rename it? Or after whatever Qualcomm is planning?
->>
->> I am sorry, but at this moment I am reluctant to ack anything related to
->> sa8775p.
->>
->>
->> Best regards,
->> Krzysztof
->>
-> 
-> After considering the feedback provided on the subject, We have decided
-> to keep current SA8775p compatible and ABI compatibility in drivers.
-> Therefore, this patch is still needed, please continue to review this
-> patch.
-> Thank you for your input.
+> What makes this v6.11 material?  Does it fix a problem we added in
+> v6.11-rc1?
 > 
 
-Thank you Tengfei. Will submit the patches for review again.
+No, this is not a 6.11 material, but the rest of the patches I shared offline.
+
+> Is there a Fixes: commit?
+> 
+
+Hmm, the controller addition commit could be the valid fixes tag.
+
+> This patch essentially does this:
+> 
+>   qcom_pcie_perst_assert
+> -   pci_epc_deinit_notify
+> -   dw_pcie_ep_cleanup
+>     qcom_pcie_disable_resources
+> 
+>   qcom_pcie_perst_deassert
+> +   if (pcie_ep->cleanup_pending)
+> +     pci_epc_deinit_notify(pci->ep.epc);
+> +     dw_pcie_ep_cleanup(&pci->ep);
+>     dw_pcie_ep_init_registers
+>     pci_epc_init_notify
+> 
+> Maybe it makes sense to call both pci_epc_deinit_notify() and
+> pci_epc_init_notify() from the PERST# deassert function, but it makes
+> me question whether we really need both.
+> 
+
+There is really no need to call pci_epc_deinit_notify() during the first
+deassert (i.e., during the ep boot) because there are no cleanups to be done.
+It is only needed during a successive PERST# assert + deassert.
+
+> pcie-tegra194.c has a similar structure:
+> 
+>   pex_ep_event_pex_rst_assert
+>     pci_epc_deinit_notify
+>     dw_pcie_ep_cleanup
+> 
+>   pex_ep_event_pex_rst_deassert
+>     dw_pcie_ep_init_registers
+>     pci_epc_init_notify
+> 
+> Is there a reason to make them different, or could/should a similar
+> change be made to tegra?
+> 
+
+Design wise both drivers are similar, so it could apply. I didn't spin a patch
+because if testing of tegra driver gets delayed (I've seen this before), then I
+do not want to stall merging the whole series. For Qcom it is important to get
+this merged asap to avoid the crash.
+
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  drivers/pci/controller/dwc/pcie-qcom-ep.c | 12 ++++++++++--
+> >  1 file changed, 10 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > index 2319ff2ae9f6..e024b4dcd76d 100644
+> > --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > @@ -186,6 +186,8 @@ struct qcom_pcie_ep_cfg {
+> >   * @link_status: PCIe Link status
+> >   * @global_irq: Qualcomm PCIe specific Global IRQ
+> >   * @perst_irq: PERST# IRQ
+> > + * @cleanup_pending: Cleanup is pending for the controller (because refclk is
+> > + *                   needed for cleanup)
+> >   */
+> >  struct qcom_pcie_ep {
+> >  	struct dw_pcie pci;
+> > @@ -214,6 +216,7 @@ struct qcom_pcie_ep {
+> >  	enum qcom_pcie_ep_link_status link_status;
+> >  	int global_irq;
+> >  	int perst_irq;
+> > +	bool cleanup_pending;
+> >  };
+> >  
+> >  static int qcom_pcie_ep_core_reset(struct qcom_pcie_ep *pcie_ep)
+> > @@ -389,6 +392,12 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
+> >  		return ret;
+> >  	}
+> >  
+> > +	if (pcie_ep->cleanup_pending) {
+> 
+> Do we really need this flag?  I assume the cleanup functions could
+> tell whether any previous setup was done?
+> 
+
+Not so. Some cleanup functions may trigger a warning if attempted to do it
+before 'setup'. I think dw_edma_remove() that is part of dw_pcie_ep_cleanup()
+does that IIRC.
+
+- Mani
 
 -- 
-Thanks & Regards,
-Taniya Das.
+மணிவண்ணன் சதாசிவம்
 
