@@ -1,59 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-28807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28808-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E162954D5C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 17:10:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D87D6954D83
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 17:18:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EFC1028668E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 15:10:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7F2892866C7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Aug 2024 15:18:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 091AF1BD4E3;
-	Fri, 16 Aug 2024 15:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EFD31BE23E;
+	Fri, 16 Aug 2024 15:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oodnuVxp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="evjN0GS5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2D81BC9EA;
-	Fri, 16 Aug 2024 15:10:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754021BE222;
+	Fri, 16 Aug 2024 15:18:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723821043; cv=none; b=nWZ6bGTemUdVuUJclszjSbKmIOInBLHJjJS3NQ/8za6vNv09DwQGeAggMyQSuOTqSRfpYxlcJ/c55Gzsta8AnulhnPaugfQdUggm44YKK9em4hhbBUiiGlvTFKppJ3YH+Fb0PklGmDdmrgRQu8kzUl4imARppeS7dbguCt3XhsI=
+	t=1723821495; cv=none; b=X7Sauf5F3mD9LTVJUuqJzjCXCZ976jzgCIrQargR67L6xy80j+4rW2NFFEbTArZViqUrN969LpJWhysv7Zn6Q0bfFyHq0qnRAPE9AuXCh/r7sOzWuMP5gCQX6UzBifBQNufagI4RFkv5tGiw0nh6nOpp+GclVZIZ5ZUq2R8iRBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723821043; c=relaxed/simple;
-	bh=/gWJGAAYEWysus8W/MIeKMY6Sfi3VK0jLdw6jlTOx2Y=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=GW/42jpV4o0V83iyosQzoI3Saroxifj/Jf/whJXzy3RQ8LAZshX6Ic0TfZwem+TSChKVzEIn69PbJXDQx7ZVSXBUx62Bke9E8QPnjEuX3YxHUhsCUV4Zk1yoh/iAFOIqqH1NhGOusx6bG0mnum6mS0C1hKVh4ii07u8OMGaX1wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oodnuVxp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3BFEC4AF09;
-	Fri, 16 Aug 2024 15:10:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723821043;
-	bh=/gWJGAAYEWysus8W/MIeKMY6Sfi3VK0jLdw6jlTOx2Y=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=oodnuVxpVNOYj+ABas+W/M+19tvVVV+ISJz+iKdFYy9YEApNewhCJ00ZAh/50+lAY
-	 tmlAzPJNOXd/hajPrV8kBc5aE7ylNySspFB1d5OYmagTLhQvqcBSREVbW5uDQ0sm3M
-	 T+uptJTFkwuZU1aqeVoIu+4VSazi9qIq+SZ3GYgTSUTxiOH8bY3snCfEKEHMIJFkHh
-	 3i8mNIQ3Z326OplFFNVWRkFESALBdtGMFKlCoYkLc+0tpdQVoZCCCTc5u63Nj5I4xq
-	 MWAzhARvX0JlhmBuK64ydTWVy01WyU6UNLG4i7+IrlKymkyNHNub+uJupS3zgYcV4D
-	 iVDcBpYk4tD3A==
-From: Mark Brown <broonie@kernel.org>
-To: srinivas.kandagatla@linaro.org
-Cc: perex@perex.cz, tiwai@suse.com, alsa-devel@alsa-project.org, 
- linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
- linux-kernel@vger.kernel.org, amit.pundir@linaro.org, 
- dmitry.baryshkov@linaro.org, devicetree@vger.kernel.org, robh@kernel.org, 
- krzk+dt@kernel.org, conor+dt@kernel.org
-In-Reply-To: <20240815165320.18836-1-srinivas.kandagatla@linaro.org>
-References: <20240815165320.18836-1-srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH] ASoC: dt-bindings: qcom,lpass-wsa-macro: correct
- clocks on SM8250
-Message-Id: <172382104064.70235.8442859739541696689.b4-ty@kernel.org>
-Date: Fri, 16 Aug 2024 16:10:40 +0100
+	s=arc-20240116; t=1723821495; c=relaxed/simple;
+	bh=qObo8kHXnInQBzlR/cNjrltsirAPTB/xtD1p434BQx0=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=DHLLI2/IMgH1KIjiGgOw45u+b0gZx6zy9O423dtW23DN/1FRjLGtIkC6h/oFK4UN0QN/DiZ5nTZ577IByUU2XCqwiE194UiumaT/4m6ftLXfS3rYz3k42pXiVZa8cqADbUMmB+9O/G+Yv4/oSBc6swrxwa8mHLleBga+nBsB1cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=evjN0GS5; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47GA7pFF025889;
+	Fri, 16 Aug 2024 15:17:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=jTIMxHYS5+aU+huatUlsxn
+	djwuYPRmu9uAAoauJIt8Y=; b=evjN0GS596ouKXCQTFyZm18gB7qMT2Xggs9w4C
+	fdUXDTvsxGIJ5Hz2/qtawMSLZx9/rclo1E+JKUxc02hxrgPLcURM+JgvTosivqvv
+	XXNyFcYlNyLHAnwfj8gE3L9hIltAA8qv37yW6rmHugpLvAFUFU7U37iOhv5ABkkL
+	LK4yDp530QZm5+icX3SMxdlrPd9Db5AcxJrEdc3wCT0MViNJ1sUQgZOVyEEBNkFx
+	pgGY0Dmu9ziyTGgeqCSFdz7g8vKx+9OkISZ1prpdpxPnb6XvDLUcq02TSFDSYx4P
+	Hc5BZiLI8KAf13IE11/xqFu2PTUvv/lPdpQahlAqrp0y0hdQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 411s5pj78e-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Aug 2024 15:17:29 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47GFHTuf002970
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Aug 2024 15:17:29 GMT
+Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 16 Aug 2024 08:17:22 -0700
+From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: [PATCH v2 0/4] perf/dwc_pcie: Fix registration issue in multi PCIe
+ controller instances
+Date: Fri, 16 Aug 2024 20:47:19 +0530
+Message-ID: <20240816-dwc_pmu_fix-v2-0-198b8ab1077c@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,44 +67,92 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-37811
+X-B4-Tracking: v=1; b=H4sIAH9tv2YC/23OTQ6CMBAF4KuQrq2hLVhk5T0MIdAOMosWLD9qC
+ Hd3gIUbl+8l871Z2AABYWB5tLAAMw7YeQryFDHTVv4BHC1lJmOZxFoJbl+m7N1UNvjmSstrbdU
+ l1Q0wuugDUL1r9+LIAZ4ToeNR/kya2EWZcddiGSY/ogOSuVSZqnVitACbz4JtUIvD2IXP/iVVm
+ /T3oVnwmJsq0VakCtJa3mjdoDdn0zlWrOv6BTcd6wfxAAAA
+To: Shuai Xue <xueshuai@linux.alibaba.com>,
+        Jing Zhang
+	<renyu.zj@linux.alibaba.com>,
+        Will Deacon <will@kernel.org>, Mark Rutland
+	<mark.rutland@arm.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        "Yicong
+ Yang" <yangyicong@hisilicon.com>,
+        Jonathan Cameron
+	<Jonathan.Cameron@huawei.com>,
+        Jonathan Corbet <corbet@lwn.net>
+CC: <linux-arm-kernel@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <quic_vbadigan@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_skananth@quicinc.com>, <quic_ramkri@quicinc.com>,
+        <quic_parass@quicinc.com>, <quic_mrana@quicinc.com>,
+        "Krishna chaitanya
+ chundru" <quic_krichai@quicinc.com>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1723821442; l=1813;
+ i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
+ bh=qObo8kHXnInQBzlR/cNjrltsirAPTB/xtD1p434BQx0=;
+ b=8Zyxb5PmIxPy7bIIXA0DB7dGfalQ090aGkc3m1IgKgeJW5UcI7riqRNPPYzUnsUDSO558lDAI
+ IH8gnAKIHhnDZzWWj3zuP5HwjwjJ8Jr2DPvtAhwRaORcIurOYT2maIi
+X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
+ pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 4X9q1koEuR8ieOz8Q6o_gmqVNIkMUAnv
+X-Proofpoint-ORIG-GUID: 4X9q1koEuR8ieOz8Q6o_gmqVNIkMUAnv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-16_09,2024-08-16_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
+ mlxlogscore=999 suspectscore=0 lowpriorityscore=0 clxscore=1015
+ bulkscore=0 phishscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408160110
 
-On Thu, 15 Aug 2024 17:53:20 +0100, srinivas.kandagatla@linaro.org wrote:
-> we seems to have ended up with duplicate clocks for frame-sync on sm8250,
-> it has both va and fsgen which are exactly same things. Remove the redundant
-> va clock and make it align with other SoCs.
-> 
-> Codec driver does not even handle va clock, so remove this from the
-> bindings and examples to avoid any confusion.
-> 
-> [...]
+When there are multiple of instances of PCIe controllers, registration
+to perf driver fails with this error. This is because of having same
+bdf value for devices under two different controllers.
 
-Applied to
+Update the logic to use sbdf which is a unique number in case of
+multi instance also.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+When the PCIe devices are discovered late, the driver can't find
+the PCIe devices and returns in the init without registering with
+the bus notifier. Due to that the devices which are discovered late
+the driver can't register for this.
 
-Thanks!
+Register for bus notifier & driver even if the device is not found in init.
 
-[1/1] ASoC: dt-bindings: qcom,lpass-wsa-macro: correct clocks on SM8250
-      commit: d08ea4193a72c5e3090240872ff7ed60a70716e6
+Update the vendor table with QCOM PCIe vendorid to support QCOM devices.
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+---
+Changes in v2:
+- Use platform dev id for instead of encoding again (Yicong Yang).
+- Register for driver always along with bus notifier(Yicong Yang).
+- Link to v1: https://lore.kernel.org/r/20240731-dwc_pmu_fix-v1-0-ca47d153e5b2@quicinc.com
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+---
+Krishna chaitanya chundru (4):
+      perf/dwc_pcie: Fix registration issue in multi PCIe controller instances
+      Documentation: dwc_pcie_pmu: Update bdf to sbdf
+      perf/dwc_pcie: Always register for PCIe bus notifier
+      perf/dwc_pcie: Add support for QCOM vendor devices
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+ Documentation/admin-guide/perf/dwc_pcie_pmu.rst | 16 ++++++++--------
+ drivers/perf/dwc_pcie_pmu.c                     | 22 +++++++++-------------
+ 2 files changed, 17 insertions(+), 21 deletions(-)
+---
+base-commit: b236787b0da563e3bad0dab1b4b9a5bb54eabd39
+change-id: 20240731-dwc_pmu_fix-3729bd3657fe
+prerequisite-change-id: 20240728-mhi_runtime_pm-2383b74c71ed:v1
+prerequisite-patch-id: 90e73ba7ee4538c67f21f7f23ae4d931cb6e9967
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+Best regards,
+-- 
+Krishna chaitanya chundru <quic_krichai@quicinc.com>
 
 
