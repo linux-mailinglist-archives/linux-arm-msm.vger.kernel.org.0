@@ -1,139 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-28870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28871-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA86D9556E1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 11:46:36 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D3A3955771
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 13:32:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 68F171F222D9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 09:46:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2694FB21569
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 11:32:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72774149E1A;
-	Sat, 17 Aug 2024 09:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B624148855;
+	Sat, 17 Aug 2024 11:32:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rsI63r6i"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MxOeo0/b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E523143723
-	for <linux-arm-msm@vger.kernel.org>; Sat, 17 Aug 2024 09:46:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7001C32;
+	Sat, 17 Aug 2024 11:32:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723887975; cv=none; b=NIRWDvnuhchNjfuEVg0Yd7EiTwhVrHLVNKPAYsnbVVHQQRvfHh+SGh32bqw/p6k1RxUKHMMxeL12JdJC3fwnKh/0hD+t7U2Zelm/l/EeJonir0LaFazCOkuQsjMuxgUm3F5DtaSg0/0xdHyuuigq+6boI7JddBFMwfF4BUkcFEo=
+	t=1723894340; cv=none; b=M2B+I+RlVVhXJ2+9oQdKGjYu+LOwehlvncGAMIfgsNp9GlYImmWUtKBn7qBOV5xaZiKC2bVC/u/+altxlQgXrsHtZGJ2RvXWJAs3H7N3dvgu+THLMgeNgWwkixN1GPXJ9z4iuOmSRdjzRNUfY6wU8fmOeajHJ4v63kBZ9vwdXTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723887975; c=relaxed/simple;
-	bh=pRB6jjAwbq5n3iepo1Uhq/05UYrGiUHreEyKsYxNTp8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EXtwLhMJFZhdheXAqKo/i/Tm/WCvkak0RlmSCJV+WeSvpU8jaIacV5Ofo5b307Jht9j1GM7yxfKEn9QYMIZT1+OBrhm/9M1S/boHPCRQrQef+/pDkyVp6XKSk/F3TBvg+0Z/z6E5D6/RUdmM8fDVG5ZEkGknG2jGbAep80rhqH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rsI63r6i; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-42817f1eb1fso20096225e9.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Aug 2024 02:46:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723887970; x=1724492770; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8zVDbexPoYK9/xw9F/1lJ7dYaXx4jW1aArgheQ/v7dU=;
-        b=rsI63r6ibiosZNGU/I8kIcBh/zEZ21PNwGo3pKUcgsOGZ88EcFAdfc0qxHmanf4qcH
-         jQYDaif0tkFZ6YCyodUG86CsE/afSzzuSYfbc45jHc8m+apqfJ0TdczCoGPvptbx7xV0
-         dYGbrNTuoS+gXJY80RNNullY0WxGkipIqOATKwrG/4EPN/1cswjip6k6L79OCBZ/GBq9
-         fiSJ/HtannoR/Vv6whjL7sW5ymyOObB/uRakIrQTj6XfrKl6MeGX/jQ9DpVKTKDaL9PV
-         UT7y5UZAdKOsrXKG87uxeZgrzVGMnnj5AQWNj6tNwBJ2PAHdamJP18jEiP+sC2xjt2Ks
-         B/ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723887970; x=1724492770;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8zVDbexPoYK9/xw9F/1lJ7dYaXx4jW1aArgheQ/v7dU=;
-        b=OsxfkbPFkcorjUudcexDOqFkugEIrNeZKWdkyjCTni1NUiIQMLdQ/3x5QZX2E+PRHa
-         mvODbHLw5oX9V2X/8YJhoosuiLU18KdUkjYxdNEEDWZUj/QZ0Wy36S1it/lEuXqnHR7v
-         Bx9CgA3WmzQYzcTp+tOJTYhVXuaCalhXz+DpQDNA/OqB/1SsBjb/wnc09vVjaoMtWyW1
-         Y3Y+v+BByRsPCoqetx8+tUXeLMMdN9dsgXu7jX2QyBfnrMcE12ydBInlcbI3c9uSz/Vw
-         4I0t8pwGPioi3JrwHN3ClZuVAuwPjtXBGdVkoiasxjoq0vNYPSwYcr/3uC1H9I2eFA4y
-         JGqA==
-X-Forwarded-Encrypted: i=1; AJvYcCVc/gNQ6P/qJy18oZtv4mbRjBAttm5ezfJtM8DUc9bBcHnZDF0AJ3ssAD6Wf77x9WPC7VoNMB0u54b9aNeBS0UG1sA1pB27KBxeYGWrXw==
-X-Gm-Message-State: AOJu0YwAHC6UMxFeyHT8iP4sW2n1lOtXibOvhfPlI7CNSxL1aCaBPv9A
-	soFxPk/4hkO/VdOEiQ7GW0VRipqMfMRuHgcxsDSvYg3zPYSFE3nj4Xslrv2AMas=
-X-Google-Smtp-Source: AGHT+IHSZBCNPge3RyrSlkoKALJwN1ic4HFYxJS+brE6Zk7NO3r6FTp8PvLIn6jN3bvzXNHpgupzRg==
-X-Received: by 2002:a5d:5102:0:b0:371:7cd1:86ef with SMTP id ffacd0b85a97d-3719464182dmr3810954f8f.22.1723887970354;
-        Sat, 17 Aug 2024 02:46:10 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.215.209])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ded2931asm97641815e9.17.2024.08.17.02.46.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Aug 2024 02:46:09 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] dt-bindings: clock: qcom,sc7280-lpasscorecc: add top-level constraints
-Date: Sat, 17 Aug 2024 11:46:05 +0200
-Message-ID: <20240817094605.27185-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240817094605.27185-1-krzysztof.kozlowski@linaro.org>
-References: <20240817094605.27185-1-krzysztof.kozlowski@linaro.org>
+	s=arc-20240116; t=1723894340; c=relaxed/simple;
+	bh=WPi/0xKBeUVZfXJccLvpi5U+6P6UdVWcEVoeDHhgO7k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dNtLMh7dFN+SnEZgk81yBEqKVHOKrTZ4wf50RmYW9reyLb2zswWCHMXzundPobfkS3X9cqRExfkwqwIpahk41AJpFfym0sMlGqIqAV6ufJ7jx88TlVGuubI+WdqMRQgJSTsbjSC+fI9Nih9lAa0SoWTu0/m4Dp2Pbct5DjAdbSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MxOeo0/b; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E54C116B1;
+	Sat, 17 Aug 2024 11:32:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723894339;
+	bh=WPi/0xKBeUVZfXJccLvpi5U+6P6UdVWcEVoeDHhgO7k=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=MxOeo0/bxo8xsivJgCM4DVofw/hjy7d079G+29OSWivJctC7s4byJjcskgfcLbAYp
+	 cceorbq6LpNYvaMjriPMbb2/DaMR95twWKDxgS177ka+zIQBOFD9jzHtRNqcuN8hcZ
+	 ndqJ/RtXHs/AQo2NW52Z4tPm5ega4Uenm8AkdQGhVXp1bLigHP+Zh2sSud+z/YKez2
+	 PKrLc8H2otLba8Uqu20Lt/Su9yuiM9CxRuCWXQt9Du0InXSC6MThn+36Bs5qMZueKG
+	 nO3lYmXPYe4nh9gKeufwyHFK9KWocCaIUMEejPQrqhVxVUl+xEanfhxB2v0Nkfrgjm
+	 ce6tIzxp4qZIg==
+Message-ID: <9c731c93-772e-409e-b7e5-ae36af402c76@kernel.org>
+Date: Sat, 17 Aug 2024 13:32:11 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100: Add USB Multiport
+ controller
+To: Song Xue <quic_songxue@quicinc.com>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Krishna Kurapati <quic_kriskura@quicinc.com>,
+ Konrad Dybcio <quic_kdybcio@quicinc.com>
+References: <20240809-topic-h_mp-v1-0-3c5f468566d8@quicinc.com>
+ <20240809-topic-h_mp-v1-2-3c5f468566d8@quicinc.com>
+ <21fffb71-d559-4973-8028-d9c9b9f67001@quicinc.com>
+ <3077d600-c570-407a-87eb-6926a67636f9@gmail.com>
+ <81b60725-f744-4b40-9450-e881397c2ddf@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konradybcio@kernel.org>
+In-Reply-To: <81b60725-f744-4b40-9450-e881397c2ddf@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Properties with variable number of items per each device are expected to
-have widest constraints in top-level "properties:" block and further
-customized (narrowed) in "if:then:".  Add missing top-level constraints
-for reg, clocks and clock-names.
+On 14.08.2024 1:56 PM, Song Xue wrote:
+> 
+> 
+> On 8/14/2024 6:24 PM, Konrad Dybcio wrote:
+>> On 14.08.2024 12:08 PM, Song Xue wrote:
+>>>
+>>> On 8/9/2024 9:18 PM, Konrad Dybcio wrote:
+>>>> X1E80100 has a multiport controller with 2 HS (eUSB) and 2 SS PHYs
+>>>> attached to it. It's commonly used for USB-A ports and internally
+>>>> routed devices. Configure it to support such functionality.
+>>>>
+>>>> Signed-off-by: Konrad Dybcio<konrad.dybcio@linaro.org>
+>>>> ---
+>>
+>> [...]
+>>
+>>>> +
+>>>> +                phys = <&usb_mp_hsphy0>, <&usb_mp_qmpphy0>,
+>>>> +                       <&usb_mp_hsphy1>, <&usb_mp_qmpphy1>;
+>>>> +                phy-names = "usb2-0", "usb3-0",
+>>>> +                        "usb2-1", "usb3-1";
+>>>> +                dr_mode = "host";
+>>>
+>>> Why do we add the dr_mode definition in dtsi file rather than in corresponding board dts file?  Could we follow the node "usb_1_ss1_dwc3"  in x1e80100-crd.dtsi?
+>>
+>> That is because the MP controller is host-only and it doesn't make sense
+>> to ensure the OS of that in each board file separately. That's also how
+>> it's done on other platforms with a MP controller description.
+>>
+>>>
+>>> BTW, how do we verify the function of  multiport controller？From my test on x1e80100-crd,  the eusb6 which is from usb_mp_hsphy1 attaches the third-party repeater, do we need a new repeater node/driver to verify the function of eusb6?
+>>
+>> I have a X1E Surface Laptop 7 with a USB-A port with a NXP PTN3222 in
+>> front of it. Tested with a smoke test, with both SS and HS USB-A devices.
+>>
+> What is detailed information on smoke test.
+> From my end, I also have two questions.
+> 1. I found the usb_mp_hsphy1 is using the driver "phy-qcom-snps-eusb2". However, the driver requires a repeater node from DT. At present, we don't have the node or driver for NXP repeater and it is not working on eusb6 to detect the NXP repeater. So, is it possible for us to have complete function involving with MP DT and repeater node for CRD board, and then we push patches together?
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+I believe you're a bit confused about the upstreaming process. Describing
+hardware in Device Tree vs doing the same plus enabling it on some upstream
+board are of equal value, and this patch is very much in the spirit of
+"release early, release often".
 
----
+There's no need to delay patches that are correct within their own
+confinement (which they should be [1]) just so that the series is bigger.
+That may even be discouraged by some folks..
 
-Cc: Taniya Das <quic_tdas@quicinc.com>
----
- .../bindings/clock/qcom,sc7280-lpasscorecc.yaml      | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+> 2. The usb_mp_dwc3 node has four phys. When enabling the driver for the node, we must need enable all four phys in borad's DT. Howerver, if the board is only using one phy like eusb6, is it suitable to enable other three phys?
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-index 5e6737c39897..488d63959424 100644
---- a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-@@ -25,11 +25,17 @@ properties:
-       - qcom,sc7280-lpasscorecc
-       - qcom,sc7280-lpasshm
- 
--  reg: true
-+  reg:
-+    minItems: 1
-+    maxItems: 2
- 
--  clocks: true
-+  clocks:
-+    minItems: 1
-+    maxItems: 3
- 
--  clock-names: true
-+  clock-names:
-+    minItems: 1
-+    maxItems: 3
- 
-   '#clock-cells':
-     const: 1
--- 
-2.43.0
+Yes, they will simply be registered, configured and since there won't
+be any interrupts (as the pins are N/C, it will not do much). But
+these PHYs are physically on the SoC regardless of them being
+connected, so I see no issue.
 
+[1] https://www.kernel.org/doc/html/latest/process/submitting-patches.html#separate-your-changes
+
+Konrad
 
