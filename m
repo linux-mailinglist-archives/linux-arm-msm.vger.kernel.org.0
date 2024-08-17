@@ -1,156 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-28845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F1459554EF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 04:47:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 592C8955599
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 07:39:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E749A28546D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 02:47:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F0DFB1F23151
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 05:39:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 380CD1773D;
-	Sat, 17 Aug 2024 02:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99C7713213A;
+	Sat, 17 Aug 2024 05:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="VAWgS1nM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GA+g27nS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB5953BE;
-	Sat, 17 Aug 2024 02:47:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660BD12FB0A;
+	Sat, 17 Aug 2024 05:39:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723862852; cv=none; b=PrycBfo9hIdemgSHxi9FuB5kv84gVTGHzX/r1UsV9v/ickEaGYZP9Z7UmXT2hiu0/vOKiCGJY9i/16LIif0KRjgOgbSwMk7tcZ02nZvFrD9u9cric485OsBpBUmzwik8FeiIFuv/wYVKO18czJR6qwBOvhlMOTR/BfsZrquEhLM=
+	t=1723873150; cv=none; b=Albf8nPisZSBlTJMTTGP82JwrHrGsGEYsII/skh0s5ypOekigvsgyU5r85R9WYJd5jf3ul0mTZ11jnv/3LvJHAXW/8+6BS/oH0KjJR84aEZ0xJ21N0j9dZGTbbov312YSF4FrB3c7AwoOdWw0YYo+t0ZGShSdhdecQUkqX0qMbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723862852; c=relaxed/simple;
-	bh=y6B3Lnxh/IuPH+YcM3DrsXZ2JLrE/sXhz47kiJAK1Zc=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=qhwKSD26F833PVLMn3wbXI6b+i3CjjT43T4eGEEJGGqqvNS+VipKtoTJB7VICiC9OWZVesEsVClyQ+31u6otmlWV/bvpuMZK6nzxCavwBZ2qU8OpRYpaZJgEXO7N19+RzJ/s9GVZpaPYkM4wVBmb4q858NxcNYclxcyhZGB+Bl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=VAWgS1nM; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1723873150; c=relaxed/simple;
+	bh=L/27oyOVLbdmCNH9AknEU1c/3ghg8UF/LJ6ONoZ4cx4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=t4CwFua+LQfWZHgq68H3YZaN4H5H+fdUc5DWfzwOFt6f9QsKqGaIV+rJlXMfPTPHuTRZhR7TQS+PCTn5zWEdDJJrEuE5WIU14b6v2sEUbJU5DPl6TUgIxw7jKOFftAsPHGz9CflGgZEdBJDWHytO0ToZlschefMdS28upC5V8BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GA+g27nS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id DDA6CC4AF0F;
+	Sat, 17 Aug 2024 05:39:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723873149;
+	bh=L/27oyOVLbdmCNH9AknEU1c/3ghg8UF/LJ6ONoZ4cx4=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=GA+g27nSGJyvwV98rp+I2FTrd3esE38DlJHaQxgwNFf/qZoSB9eGxll0OD1LyW2OC
+	 Z6TY+iF4QP4pLtoxsS4YPATeyywISDTruws+/wVEndamCapc35mliHgj9zNhGfy8Oi
+	 8CtCbENfZ/2nzEtOssoHMhiNQ2iOQHdNkYOwaVVyKPaqt013hWvA93O4OQI4xzwXeN
+	 JO4YCNtltKCRiHqmMV/YpBkjbUGqPeXNGgAcYxoQCCG0MZBfSs9FjeTlPZo+Qcg7I7
+	 sD7HED61pY0AKNsjdvCSBkYwkSzQtJscHXgWH4nr3kYPyrgmaXQSnKTLgbg1yfIUjF
+	 bx3FjnH1VGweA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD783C52D7F;
+	Sat, 17 Aug 2024 05:39:08 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
+Subject: [PATCH 0/2] PCI: {qcom-ep/tegra194}: Move endpoint cleanups to
+ PERST# deassert handler
+Date: Sat, 17 Aug 2024 11:09:02 +0530
+Message-Id: <20240817-pci-qcom-ep-cleanup-v1-0-d6b958226559@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1723862846;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=7ILl21Jnwm7TqOlWHYJvqsxpr68uShoqtkHN6ha+OfM=;
-	b=VAWgS1nMBcf21iEqxxExT1YTixCG2/ArjIOyp2y2QE2zUicqnQh0VsJfOppfvF8lqOADIm
-	e3UbyLZj1wybuvvotbX/4Syao80zW8hnQb1aT+4QjXu2A9/p/APV5T/8/RyZtLB7U4abpw
-	xyvY/0vKNgEytQPXNdKD+XCulTved/lkLd/VfmOBr2JWutEPQY+U0Bq1YmCJ+6i1jzULmA
-	6tTHv2Q+lLlSv/o0sX5sxYTYpcNPib3oYngWWp3TAXdeYkS4i3zZAJfpRVVfFPIuMHPzes
-	+EL7EEppmXcGUYqZXNPZL0vne2c6MHbrbawHROS5IPosff1lYKwIYcsUp1OJdQ==
-Date: Sat, 17 Aug 2024 04:47:25 +0200
-From: Dragan Simic <dsimic@manjaro.org>
-To: Chen-Yu Tsai <wenst@chromium.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, "Rafael J.
- Wysocki" <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>,
- Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>, Amit
- Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
- Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter
- <jonathanh@nvidia.com>, Vasily Khoruzhick <anarsoul@gmail.com>, Yangtao Li
- <tiny.windzz@gmail.com>, Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec
- <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>,
- linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev
-Subject: Re: [PATCH 2/7] thermal: of: Use scoped device node handling to
- simplify thermal_of_trips_init()
-In-Reply-To: <20240815071538.GB350960@google.com>
-References: <20240814-b4-cleanup-h-of-node-put-thermal-v1-0-7a1381e1627e@linaro.org>
- <20240814-b4-cleanup-h-of-node-put-thermal-v1-2-7a1381e1627e@linaro.org>
- <20240815071538.GB350960@google.com>
-Message-ID: <c8f2e2b74bc46cf6870909add3f1ccd6@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+X-B4-Tracking: v=1; b=H4sIAHY3wGYC/x3MQQqAIBBA0avErBtQMZSuEi1CpxooNaUIorsnL
+ d/i/wcKZaYCffNAposLx1Ah2wbcOoWFkH01KKG0sNJgcoyHiztSQrfRFM6ERgujO1LSWwO1TJl
+ mvv/rML7vB4Z5YAFlAAAA
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Thierry Reding <thierry.reding@gmail.com>, 
+ Jonathan Hunter <jonathanh@nvidia.com>, Vidya Sagar <vidyas@nvidia.com>
+Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Thierry Reding <treding@nvidia.com>, 
+ linux-tegra@vger.kernel.org, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1346;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=L/27oyOVLbdmCNH9AknEU1c/3ghg8UF/LJ6ONoZ4cx4=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBmwDd5oSWJNpFaLg/slHpFuZZnWAOUt1u//hPmY
+ mKDHR5xbhuJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZsA3eQAKCRBVnxHm/pHO
+ 9d1sB/0WCIUlcJV87RKQ5qCtkHnD2ovZLEYil0rw3RCSmWyK//H4Tzkm9kMpbjxaISonGlWLOnm
+ ThYAn02ruelSxvKg7TJOHjpRgtJ6CzXGfSammhX3XpzUgTL3ABNUpUgInAS60cHyyp4J3w4bzp3
+ L+FWiGeX2mRVyt34Q1P7NgAiH8v2PGGYamFooJOYWTodSNEObHGoKZlZvrgaR9KrO9ODIox6Qm7
+ zfSPmFIoKAO3uqB8ZNjkCGl2OcB26VQA7fKpr/LTqJo/82aU84DvZaqFa2/0r2mvHdiLrZdMOp2
+ fMm/7p9QsGr5f3u2IhcFpTtLrxHqijs42qulAHGwT7e6B21a
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@linaro.org/default with auth_id=185
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reply-To: manivannan.sadhasivam@linaro.org
 
-On 2024-08-15 09:15, Chen-Yu Tsai wrote:
-> On Wed, Aug 14, 2024 at 10:17:48PM +0200, Krzysztof Kozlowski wrote:
->> Obtain the device node reference with scoped/cleanup.h to reduce error
->> handling and make the code a bit simpler.
->> 
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>  drivers/thermal/thermal_of.c | 14 ++++----------
->>  1 file changed, 4 insertions(+), 10 deletions(-)
->> 
->> diff --git a/drivers/thermal/thermal_of.c 
->> b/drivers/thermal/thermal_of.c
->> index a2278d4ad886..c8ded4462bb8 100644
->> --- a/drivers/thermal/thermal_of.c
->> +++ b/drivers/thermal/thermal_of.c
->> @@ -117,10 +117,9 @@ static int thermal_of_populate_trip(struct 
->> device_node *np,
->>  static struct thermal_trip *thermal_of_trips_init(struct device_node 
->> *np, int *ntrips)
->>  {
->>  	struct thermal_trip *tt;
->> -	struct device_node *trips;
->>  	int ret, count;
->> 
->> -	trips = of_get_child_by_name(np, "trips");
->> +	struct device_node *trips __free(device_node) = 
->> of_get_child_by_name(np, "trips");
->>  	if (!trips) {
->>  		pr_err("Failed to find 'trips' node\n");
->>  		return ERR_PTR(-EINVAL);
->> @@ -129,15 +128,12 @@ static struct thermal_trip 
->> *thermal_of_trips_init(struct device_node *np, int *n
->>  	count = of_get_child_count(trips);
->>  	if (!count) {
->>  		pr_err("No trip point defined\n");
->> -		ret = -EINVAL;
->> -		goto out_of_node_put;
->> +		return ERR_PTR(-EINVAL);
->>  	}
->> 
->>  	tt = kzalloc(sizeof(*tt) * count, GFP_KERNEL);
->> -	if (!tt) {
->> -		ret = -ENOMEM;
->> -		goto out_of_node_put;
->> -	}
->> +	if (!tt)
->> +		return ERR_PTR(-ENOMEM);
->> 
->>  	*ntrips = count;
-> 
-> Also drop the "of_node_put(trips);" in the successful path?
-> 
-> Once fixed,
-> 
-> Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-> 
-> And I plan to send a patch on top of this making "tt" auto released,
-> thereby eliminating the error path.
+Hi,
 
-Ah, with that additional patch in place, I totally agree with
-moving "*ntrips = 0" to the top.
+This series moves the call to endpoint cleanup functions (dw_pcie_ep_cleanup()
+pci_epc_deinit_notify()) to PERST# deassert handler in qcom-ep and tegra194
+drivers. It aims to fix a crash that is seen with Qcom endpoint SoCs when host
+asserts PERST# and the cleanup functions are called without refclk.
 
->> @@ -155,8 +151,6 @@ static struct thermal_trip 
->> *thermal_of_trips_init(struct device_node *np, int *n
->>  out_kfree:
->>  	kfree(tt);
->>  	*ntrips = 0;
->> -out_of_node_put:
->> -	of_node_put(trips);
->> 
->>  	return ERR_PTR(ret);
->>  }
->> 
->> --
->> 2.43.0
->> 
+During the review of v1 [1], Bjorn suggested fixing up tegra194 driver as well
+as both drivers share the same design and require refclk from host for
+operation.
+
+Testing
+=======
+
+The Qcom patch is tested on SM8450 development board. For tegra194, I'm
+expecting someone in the Cc list or the community will do the testing.
+
+[1] https://lore.kernel.org/linux-pci/20240815224717.GA53536@bhelgaas/
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Manivannan Sadhasivam (2):
+      PCI: qcom-ep: Move controller cleanups to qcom_pcie_perst_deassert()
+      PCI: tegra194: Move controller cleanups to pex_ep_event_pex_rst_deassert()
+
+ drivers/pci/controller/dwc/pcie-qcom-ep.c  | 6 ++++--
+ drivers/pci/controller/dwc/pcie-tegra194.c | 7 ++++---
+ 2 files changed, 8 insertions(+), 5 deletions(-)
+---
+base-commit: 8400291e289ee6b2bf9779ff1c83a291501f017b
+change-id: 20240817-pci-qcom-ep-cleanup-740745e21d87
+
+Best regards,
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+
 
