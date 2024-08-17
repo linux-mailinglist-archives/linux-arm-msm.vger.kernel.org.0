@@ -1,38 +1,38 @@
-Return-Path: <linux-arm-msm+bounces-28878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id B832B955991
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 22:34:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FD3E955996
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 22:37:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 07EF7B21156
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 20:34:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AA234B20B89
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 20:37:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 299CC155337;
-	Sat, 17 Aug 2024 20:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ADD9155C83;
+	Sat, 17 Aug 2024 20:37:02 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from gollum.nazgul.ch (gollum.nazgul.ch [81.221.21.253])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA6A79CC;
-	Sat, 17 Aug 2024 20:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8B213DDAD;
+	Sat, 17 Aug 2024 20:36:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.221.21.253
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723926886; cv=none; b=QVdPhAKikRclIX76RvMWa7EJfZJibifDBQtuZiS/06JwQoe7a4LfOG/ZygZokpM93TnPguY8tXpYDTja6qIOpS8r0uBR13J3eVCo3LHPxL33qKrKJTCb3LZZeE7FxzCsYCs9yILYmDadu9hOY6kRkSBPk9kEIVUoAijddEIB9ZY=
+	t=1723927022; cv=none; b=tW1AL1SxuOi2KMUQGT/SaZfzqt6vUCnhWFwl8wYSQC3HHqUoaSkIyk7ayRzSBV5gpOMdyYLMaZ0FnBvEj5G0HrenHE8UDFTAPzHOmw4udoBz2O1Bv+wFLvtDq7I9Pfi0y58sUlhZwdy/G8B10ksLTQg5o2nTChAaeIPslHE8vEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723926886; c=relaxed/simple;
-	bh=CJMYZ6HJutREKVlGmEw+JUikeOYoCH7Olvd1YLKcXtQ=;
+	s=arc-20240116; t=1723927022; c=relaxed/simple;
+	bh=RmPTMHik1Ww+as8nGPYipMDCD9r8HigdtJBXkQE/E1E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=laFxe31soKu5rKLm/EnYtaLPgv6OlllviZnVnyQe8q8NFtI0gUmiBRc+ZD//YHW7HtNRv98JOCQs2SO1+fZ52BQ+5nGnZn46yUi26IUoMYFEPqa4JeWzkfiTQoNaZs0m6eqwPmLqT7X/cqQS07iTtnsCas17mxTxonyiYYO64ck=
+	 Content-Type:Content-Disposition:In-Reply-To; b=di/6U1Bv7aFDZP849IDwqawm/7s8mYq3CLNA99PGTAxMJh0tUS1SghgsYDXvCGo+omrA5/Bl7s5KXItUOeM9b1s8DXjK/Rnsq6+8wXiibILZ0jgGCf8BEU4bsQGxMLMYNZwY5yWApmIp5FmaZsgGnQ6wfVEhKekeZTd3yNMQXek=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nazgul.ch; spf=pass smtp.mailfrom=nazgul.ch; arc=none smtp.client-ip=81.221.21.253
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nazgul.ch
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nazgul.ch
 Received: from localhost (gollum.nazgul.ch [local])
-	by gollum.nazgul.ch (OpenSMTPD) with ESMTPA id 54d48c44;
-	Sat, 17 Aug 2024 22:34:41 +0200 (CEST)
-Date: Sat, 17 Aug 2024 22:34:41 +0200
+	by gollum.nazgul.ch (OpenSMTPD) with ESMTPA id 158b7e6c;
+	Sat, 17 Aug 2024 22:36:58 +0200 (CEST)
+Date: Sat, 17 Aug 2024 22:36:58 +0200
 From: Marcus Glocker <marcus@nazgul.ch>
 To: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
@@ -40,8 +40,8 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
 	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>, 
 	Konrad Dybcio <konradybcio@kernel.org>
-Subject: [PATCH v5 2/6] dt-bindings: phy: Add X1E80100 UFS
-Message-ID: <szudb2teaacchrp4kn4swkqkoplgi5lbw7vbqtu5vhds4qat62@2tciswvelbmu>
+Subject: [PATCH v5 3/6] dt-bindings: ufs: Add X1E80100 UFS
+Message-ID: <zr3bk5yek44mpx4wcriw56uzzi6cnjvvtmt2mu42jyla2hnlgu@sbnulfjo2gks>
 References: <p3mhtj2rp6y2ezuwpd2gu7dwx5cbckfu4s4pazcudi4j2wogtr@4yecb2bkeyms>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -53,31 +53,30 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <p3mhtj2rp6y2ezuwpd2gu7dwx5cbckfu4s4pazcudi4j2wogtr@4yecb2bkeyms>
 
-Document the qmp ufs phy compatible for the Qualcomm X1E80100.
+Document the ufs host controller compatible for the Qualcomm X1E80100.
 
 Signed-off-by: Marcus Glocker <marcus@nazgul.ch>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- .../devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml      | 2 ++
+ Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-index f9cfbd0b2de6..c8a61cddb311 100644
---- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml
-@@ -35,6 +35,7 @@ properties:
-       - qcom,sm8475-qmp-ufs-phy
-       - qcom,sm8550-qmp-ufs-phy
-       - qcom,sm8650-qmp-ufs-phy
-+      - qcom,x1e80100-qmp-ufs-phy
+diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+index 25a5edeea164..4cb3fea53651 100644
+--- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
++++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+@@ -41,6 +41,7 @@ properties:
+           - qcom,sm8450-ufshc
+           - qcom,sm8550-ufshc
+           - qcom,sm8650-ufshc
++          - qcom,x1e80100-ufshc
+       - const: qcom,ufshc
+       - const: jedec,ufs-2.0
  
-   reg:
-     maxItems: 1
-@@ -102,6 +103,7 @@ allOf:
-               - qcom,sm8475-qmp-ufs-phy
-               - qcom,sm8550-qmp-ufs-phy
-               - qcom,sm8650-qmp-ufs-phy
-+              - qcom,x1e80100-qmp-ufs-phy
+@@ -121,6 +122,7 @@ allOf:
+           contains:
+             enum:
+               - qcom,sc7180-ufshc
++              - qcom,x1e80100-ufshc
      then:
        properties:
          clocks:
