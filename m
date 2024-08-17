@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28858-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28859-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26403955637
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 09:42:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32DBB95563B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 09:43:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C58D31F22A1B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 07:42:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB7892817AA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Aug 2024 07:43:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA4181422C7;
-	Sat, 17 Aug 2024 07:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95C261428F3;
+	Sat, 17 Aug 2024 07:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t5cJeN8R"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W5os2dVN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B92140369;
-	Sat, 17 Aug 2024 07:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65DBE1422C7;
+	Sat, 17 Aug 2024 07:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723880552; cv=none; b=KQqnGlQ32YQjKDiKc9r4S3NrnppQLjLttaC8naN6QgR9NjrQlwtAVeKV/QFzof+Gnrxi484UfkZcqMgEV2rJ8Smck6RKF004jlpC1ypoDIij9XfVipURhcUwywdBBt5sltyq+PENpNKoMXtdz6xr9iOFNqM5QMq7jgl/uRXgeoc=
+	t=1723880577; cv=none; b=QNk3lHjEc2CqM5Jvm4e5dGnhQCUpzYoVCWYkCrnMWO5391580whw5tCneUjyGZecaUQLRZKXloJ/FsvlGTisc37VaGpK5lAoFrcChdvN9SHCPAszogEFe4G5opZKXT2BaobhOl41sABdmoP8X9rWPq+tHdyjp9U8PcVJucoyMPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723880552; c=relaxed/simple;
-	bh=V0j+l2tcAbxWzch1S0WsYEHhCNv1eMDm66ZPHRSeTZk=;
+	s=arc-20240116; t=1723880577; c=relaxed/simple;
+	bh=L9qmGyz4KafnFl4DVDkUKTwh1bYTjIPVCMGBTJK7I5M=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=urm00wsw58IHGujSTWfB5fiZekzgL5qvxqnrt51GBypq5PLIZKN/GvoMJHayhQxwiIHeS5wSXAY8RY4dzNyYMBi5mlQAsstEPgdq8mzEfjpsmu2CPu8jUA0Czz/jnrrQU2EC5w3k6GnUXBY6O1xG0Enpf0EkidggeeyJ7gBSrxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t5cJeN8R; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3535C116B1;
-	Sat, 17 Aug 2024 07:42:28 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=lGxrFlgwHkxs48WAatRUA0j6nOvT7j1C2QEUCZ5nPeaNrH7XhHzzHwDl6ZXT7J/sMJ0JIr/Lylh7IMVwDxkYXqvfGshZIjirtdu3+4hJU1x08uuhLW9d2YjBfCmi5ibXcDAb/n/taF5UnzwJan6geI6Kqw0yCCWfRkIH6Pdl/TA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W5os2dVN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72498C116B1;
+	Sat, 17 Aug 2024 07:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723880552;
-	bh=V0j+l2tcAbxWzch1S0WsYEHhCNv1eMDm66ZPHRSeTZk=;
+	s=k20201202; t=1723880577;
+	bh=L9qmGyz4KafnFl4DVDkUKTwh1bYTjIPVCMGBTJK7I5M=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=t5cJeN8RE6VMzMUk7utqKmrukYlnpFHCtZP6OWot6qytygZxp4XgRkD2eQXyg+hg/
-	 0ZkBnQ5X0xD2vxzI4yGTaqm6a9L95cynv4rgH+69kcF1MXfoUGZOJQOdP6KcrYuZe5
-	 ERXIuEKqaLc+PTxwcV8Ia/e/OMpJt2EsChabGslNPOm7DKYgXil2lnVir7yDGxqqLj
-	 8/ZnCVNRsk3CLDn8Hi/Rr+RNxMIoOQTyhTf2L788m4pNx+/RniIxti3VhxCeka5pDu
-	 PEkKXabY9X3de4cwfeARl30xNlZcsbsBUtdrJkR7zxPxwOcOs6GYDKuLGu5prgjfKa
-	 6L8bJcEXjJtjg==
-Message-ID: <d1480d28-829a-44ad-bb99-8915f728672a@kernel.org>
-Date: Sat, 17 Aug 2024 09:42:25 +0200
+	b=W5os2dVNsX+1IQ7sWbe483uzAOiOGMC1CJ3ldWyHMyiWaCAaGHTDUepzTixc7sLwH
+	 w/Itb2pn5O+Ul3gdkipa2zZldxa5nUVXP2q7U1fH5QeVz+yqBT8dWJQokaV+XodhdE
+	 6JtKqjOTeOMAyVFZ7Qu3ONRS7x9j29G0TAsdu50XYY3WzfjY4OamX9ovtI6BxCf/cP
+	 NAZ92nadd9QyGmLekYY0xzSfs86qbJ8o/pucwV3qV5cmcIj0HqxcjNPc3hziuMLSR5
+	 HPcxSTYhfJ+DMGmnzVPq7jIf/7l7Uvk5ByBkqaog+QXenBJmk160TMTavK30jKtofB
+	 uHoHRXvN38dPA==
+Message-ID: <094264f7-a0b8-43f7-a405-305afb0d44e9@kernel.org>
+Date: Sat, 17 Aug 2024 09:42:51 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/6] dt-bindings: crypto: Add X1E80100 Crypto Engine
+Subject: Re: [PATCH v4 2/6] dt-bindings: phy: Add X1E80100 UFS
 To: Marcus Glocker <marcus@nazgul.ch>, Bjorn Andersson
  <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
@@ -59,9 +59,9 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
  Johan Hovold <johan@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
 References: <3lmcfffifsg6v3ljzxfbk25ydh6446phdff7w75k6gwoyw3jkw@ryc66frtyksk>
- <6xex326bp6rwybul4tfviiry37oz6qerkzov2czfiig56khnfn@o6nuxcudj3cn>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <ek4lj2gz4ykry4evfzhfwxgievrgypaqilqhbfs3ascmkb4rdf@u5nfzj733i5o>
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -105,15 +105,14 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <6xex326bp6rwybul4tfviiry37oz6qerkzov2czfiig56khnfn@o6nuxcudj3cn>
+In-Reply-To: <ek4lj2gz4ykry4evfzhfwxgievrgypaqilqhbfs3ascmkb4rdf@u5nfzj733i5o>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 17/08/2024 09:08, Marcus Glocker wrote:
-> Document the inline crypto engine compatible for the Qualcomm X1E80100.
+On 17/08/2024 09:09, Marcus Glocker wrote:
+> Document the qmp ufs phy compatible for the Qualcomm X1E80100.
 > 
 > Signed-off-by: Marcus Glocker <marcus@nazgul.ch>
-> ---
 
 <form letter>
 This is a friendly reminder during the review process.
@@ -132,6 +131,8 @@ https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submittin
 
 If a tag was not added on purpose, please state why and what changed.
 </form letter>
+
+I guess this applies everywhere...
 
 Best regards,
 Krzysztof
