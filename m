@@ -1,118 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-28895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 351FD955EB6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Aug 2024 21:29:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D728955EB8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Aug 2024 21:34:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4B1DF1C20968
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Aug 2024 19:29:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 23C131F211AA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Aug 2024 19:34:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80B3114D6EB;
-	Sun, 18 Aug 2024 19:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95305146A9B;
+	Sun, 18 Aug 2024 19:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="WL/oDZBH"
+	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="kdZ55mMd";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="hB8capu5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp36.i.mail.ru (smtp36.i.mail.ru [95.163.41.77])
+Received: from fallback1.i.mail.ru (fallback1.i.mail.ru [79.137.243.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C072C8FF;
-	Sun, 18 Aug 2024 19:29:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.163.41.77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0590249652;
+	Sun, 18 Aug 2024 19:34:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724009365; cv=none; b=iRrAyxFboP/oYj3l55asYYy6qizgGafrVkO8pVq1x/xOO3KgEqM4qXPDLQ7K8XGYYl4NQYt0Ub4l0BRMkiAzW4DuoKFSSyOueSXr4KuY2KqeCjFSz2t0L9gR95L9V6sTvAOmmeL3zqYeMEW0J2EAXBz6dWMH26MeRlHQttTJnyA=
+	t=1724009645; cv=none; b=MQtP0pva1TLC2dI09zaLzhjgxUBsZhNlW84MiR/G6myLuxllirFkS7p3WRr30RVPuJyfm87OlFRDKp7vPtEn8alYT7+bts24m236IgLXUoZh8H3Vx0Kp9jSxQOfxZ8aUFlwzBzkhfY/lIkX6v1X2GDK6QwnfSB3etyacgpqk+MU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724009365; c=relaxed/simple;
-	bh=fJ1AfZQaj+UhWBT6v8qe2Z0iYjkVwzI4WPia0tZaZyE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YAzeBz+3mEDAdCXlWpbYYtPhHQ+IfNK+ZzLR3K1H+4AJVt6q88usyOv9NNhQWAbfsugwdRkog09zIp877erBnSxo2wU9UO8sFxCADtN57kwM8REt56a/vm7c/gQ4sYz72vxUCHxGZ0gxqMM2XBXvcW/NOMyV6M5vNmeXYvavYv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=WL/oDZBH; arc=none smtp.client-ip=95.163.41.77
+	s=arc-20240116; t=1724009645; c=relaxed/simple;
+	bh=fFNHhBw7SepXzc4a+MSRVJIgxPJEfucKkKS49yTR+Ys=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FjK2AYfBDAeG9z/bnjWnPibHgDyyH0XW0pp5XyjbuuLKNiPmfDY3hzlV0KaWPB5qIrNCY1cwxNGaOWQijvF9/0gJkS0eQI9O4/GvuyBkEKdQKMu0gCjR89Njf2e0hxZm7DPKlqHA/IC1ybNYaVNhi+00DBWuLDJFVU3vnC3m3U0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=kdZ55mMd; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=hB8capu5; arc=none smtp.client-ip=79.137.243.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
+	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=o4HZngv5rT/F7nsPp7nt2xKTa8/c2OQBUvaQfl8HL50=;
+	t=1724009643;x=1724099643; 
+	b=kdZ55mMd27DEcCdZt9iwNXtPi7G3DJTmw+v420f0r6BMrxNlHgD9CptjNQpxhd6712vdqL4pdRDuhggx8NwiHoYqzEnk6fHthrzNwfkBIKVdIw6B5O10y7JEYVwwYiN2jXuBzkOBMYTgw5PJpGA7dQC/1zyC0AcWPomtNw8Y27s=;
+Received: from [10.12.4.18] (port=58814 helo=smtp45.i.mail.ru)
+	by fallback1.i.mail.ru with esmtp (envelope-from <danila@jiaxyga.com>)
+	id 1sflf0-00F15U-O1; Sun, 18 Aug 2024 22:33:55 +0300
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
-	; s=mailru; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
-	Cc:To:From:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
-	X-Cloud-Ids:Disposition-Notification-To;
-	bh=udl6muVOsy9RhZfqXQpG1Dccrp5eu5GJHorbEFFILnY=; t=1724009360; x=1724099360; 
-	b=WL/oDZBHT/Ytsdd8uV7mRItUWOADmNFMyPL4SgmlIalDtrzLlKkb/KX5HjS+8ngmIXsL83asDqK
-	tjYoQw85eEJNfUrHJ36t3dcSflIeUdsotIkeHi2Yw4oyvnkQR16LKvmnbotEpAHrF5gx2SRiCI/BT
-	BFTOOoQB816VvKD8oK0=;
-Received: by smtp36.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
-	id 1sflaQ-0000000Fztc-036c; Sun, 18 Aug 2024 22:29:10 +0300
-From: Danila Tikhonov <danila@jiaxyga.com>
-To: andersson@kernel.org,
-	konradybcio@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org
-Cc: cros-qcom-dts-watchers@chromium.org,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux@mainlining.org,
-	Danila Tikhonov <danila@jiaxyga.com>
-Subject: [PATCH] arm64: dts: qcom: sc7280.dtsi: Fix PMU nodes for Cortex A55 and A78
-Date: Sun, 18 Aug 2024 22:29:05 +0300
-Message-ID: <20240818192905.120477-1-danila@jiaxyga.com>
-X-Mailer: git-send-email 2.46.0
+	; s=mailru; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:From:Sender:Reply-To:To
+	:Cc:Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+	List-Archive:X-Cloud-Ids:Disposition-Notification-To;
+	bh=o4HZngv5rT/F7nsPp7nt2xKTa8/c2OQBUvaQfl8HL50=; t=1724009634; x=1724099634; 
+	b=hB8capu5s0GD9KDaoX/mRK1inzTrR59mHF1wmPEX8OJKdVHXWVhlXRGt3u/zSOkQJ0o4Dio9MPR
+	+sPgv+PQkgDXf/rQ0NIH/R5D3AdZhRUJbi9oUxA64nr025qY9gYL1U25D8p7+VYlbHse7EidNZ6xI
+	YIdhUFgowY84YsVRzDM=;
+Received: by smtp45.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
+	id 1sflek-0000000FQjW-1vei; Sun, 18 Aug 2024 22:33:39 +0300
+Message-ID: <e07928be-0557-4ffd-94bc-af27c20e33f1@jiaxyga.com>
+Date: Sun, 18 Aug 2024 22:33:12 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp36.i.mail.ru; auth=pass smtp.auth=danila@jiaxyga.com smtp.mailfrom=danila@jiaxyga.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 08/11] arm64: dts: qcom: Add SM7325 device tree
+To: Rob Herring <robh@kernel.org>
+Cc: krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com, rafael@kernel.org,
+ viresh.kumar@linaro.org, kees@kernel.org, tony.luck@intel.com,
+ gpiccoli@igalia.com, ulf.hansson@linaro.org, andre.przywara@arm.com,
+ quic_rjendra@quicinc.com, davidwronek@gmail.com, neil.armstrong@linaro.org,
+ heiko.stuebner@cherry.de, rafal@milecki.pl, macromorgan@hotmail.com,
+ linus.walleij@linaro.org, lpieralisi@kernel.org,
+ dmitry.baryshkov@linaro.org, fekz115@gmail.com, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ netdev@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-hardening@vger.kernel.org, danila@jiaxyga.com
+References: <20240808184048.63030-1-danila@jiaxyga.com>
+ <20240808184048.63030-9-danila@jiaxyga.com>
+ <20240808213840.GA2186890-robh@kernel.org>
+Content-Language: en-US
+From: Danila Tikhonov <danila@jiaxyga.com>
+In-Reply-To: <20240808213840.GA2186890-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Mailru-Src: smtp
-X-7564579A: 78E4E2B564C1792B
-X-77F55803: 4F1203BC0FB41BD9F97E3C14763C38E2F8667C40DD8CE92DDCF89D65A2CC9925182A05F53808504071AE4BB044892A39411046492FDDF806816939828098F1B8254A407EEDDCE0FF21809EC83B530B45
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE751BC6685BC61E6BCEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006373D58C44ED3182E498638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8FF9F91A8EFA4005C54F63F3BE51EAEC7BABF853B97CD85F3CC7F00164DA146DAFE8445B8C89999728AA50765F7900637DCE3DBD6F8E38AFD389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC80CABCCA60F52D7EBF6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947C6A1CB4668A9CA5FA9735652A29929C6C4AD6D5ED66289B523666184CF4C3C14F6136E347CC761E07725E5C173C3A84C31D8DC2DC17FB59B2BA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CF17B107DEF921CE791DD303D21008E298D5E8D9A59859A8B6D082881546D9349175ECD9A6C639B01B78DA827A17800CE7A9D141641BA1E09E731C566533BA786AA5CC5B56E945C8DA
-X-C1DE0DAB: 0D63561A33F958A54221E7CF9996FC5B5002B1117B3ED696A028FEB53A44C288C89B063BDC7FAC35823CB91A9FED034534781492E4B8EEADA757276DBF662F3EC79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
-X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CF5AC5FACBA5BAA3AFE47AE3604C9B5D8223762131651AE9B3FC538D687F35EE36A0D894938C2B729CABF86C07854D9473F8CAA9822D0DFF0CE33E49F6FCB2F35A7AF5E636959F39C5AF108DC32EA72A8402C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojbL9S8ysBdXjkZt+GJMYpLvCnV0AfnFG2
-X-Mailru-Sender: A29E055712C5B697A0B4B50D4D88F0E82B63BEF66D9A8258B951B70A5BD4BD8E40CEBE1E8290AE3A21401CF93FD6FA55210985D6C440852E55B4A2144138A88088F510C62CFD139357C462056C5AD9112068022A3E05D37EB4A721A3011E896F
+X-4EC0790: 10
+X-7564579A: EEAE043A70213CC8
+X-77F55803: 4F1203BC0FB41BD9DAB542EDD08389FEC0D4D473505DD1DFA118E75647FAA451182A05F5380850404C228DA9ACA6FE27F22E522AFCF42B6F411046492FDDF806A43285A420280F99254A407EEDDCE0FFECA116FACD37B17E
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE77FFAFB2D05C67BA5C2099A533E45F2D0395957E7521B51C2CFCAF695D4D8E9FCEA1F7E6F0F101C6778DA827A17800CE7F1942E6D70B4A2F0EA1F7E6F0F101C6723150C8DA25C47586E58E00D9D99D84E1BDDB23E98D2D38B043BF0FB74779F364FCAE00AC63E4D344E0FA9B1E382502B34085D59ED5AE7D6A471835C12D1D9774AD6D5ED66289B5278DA827A17800CE71AE4D56B06699BBC9FA2833FD35BB23D2EF20D2F80756B5F868A13BD56FB6657A471835C12D1D977725E5C173C3A84C37EF884183F8E4D67117882F4460429728AD0CFFFB425014E868A13BD56FB6657D81D268191BDAD3DC09775C1D3CA48CFDAEA9A8D61B93628BA3038C0950A5D36C8A9BA7A39EFB766D91E3A1F190DE8FDBA3038C0950A5D36D5E8D9A59859A8B6E235F5DB53CB48D176E601842F6C81A1F004C906525384303E02D724532EE2C3F43C7A68FF6260569E8FC8737B5C2249EC8D19AE6D49635B68655334FD4449CB9ECD01F8117BC8BEAAAE862A0553A39223F8577A6DFFEA7CCD798FA1FEA6F93543847C11F186F3C59DAA53EE0834AAEE
+X-C1DE0DAB: 0D63561A33F958A515A109684F90559B5002B1117B3ED69677F6881DED10522FB2920F75BA9A967F823CB91A9FED034534781492E4B8EEADA333A05395E4745BBDAD6C7F3747799A
+X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF3FED46C3ACD6F73ED3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CF4719DA0A4BDE4E13B03224382D39891DE4A752C9C77792DDB215187008F1B1865585C02E945303B3ABF86C07854D9473764F887D24D13FA9020A672009A07231C3ABF2E6E3ACDC07F3ED94C7A551C90002C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojxd0rRjfnTmYB1ygV5EDysA==
+X-Mailru-Sender: A29E055712C5B697A0B4B50D4D88F0E89028E65C052CC894B951B70A5BD4BD8E190E4F3972368560F43CCAED39DA92F1210985D6C440852E55B4A2144138A88088F510C62CFD139357C462056C5AD9112068022A3E05D37EB4A721A3011E896F
+X-Mras: Ok
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B401572549E177C9B7D4324AF0E71CFA3412DBEA2A235AFE98049FFFDB7839CE9E4D3E270CF25C1BA899EADCEB3EDF85C710D6FFF6664A2A9344C3625B2484981A
+X-7FA49CB5: 0D63561A33F958A5B0A153F8AF8C32D584B7A1AAA7F71869D82399AE838F212A8941B15DA834481FA18204E546F3947CD7F4798FD4FA8F52F6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F7900637CFE05210CFCCB54F389733CBF5DBD5E9B5C8C57E37DE458BD96E472CDF7238E0725E5C173C3A84C3798C2A1F5A143BF035872C767BF85DA2F004C90652538430E4A6367B16DE6309
+X-87b9d050: 1
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojxd0rRjfnTmavKFLmE+T3og==
+X-Mailru-MI: 8000000000000800
 X-Mras: Ok
 
-The SC7280, SM7325, and QCM6490 platforms feature an 8-core setup
-consisting of:
-- 1x Kryo 670 Prime (Cortex-A78) / Kryo 670 Gold Plus (Cortex-A78)
-- 3x Kryo 670 Gold (Cortex-A78)
-- 4x Kryo 670 Silver (Cortex-A55)
-(The CPU cores in the SC7280 are simply called Kryo, but are
-nevertheless based on the same Cortex A78 and A55).
+On 8/9/24 00:38, Rob Herring wrote:
+> On Thu, Aug 08, 2024 at 09:40:22PM +0300, Danila Tikhonov wrote:
+>> From: Eugene Lepshy <fekz115@gmail.com>
+>>
+>> The Snapdragon 778G (SM7325) / 778G+ (SM7325-AE) / 782G (SM7325-AF)
+>> is software-wise very similar to the Snapdragon 7c+ Gen 3 (SC7280).
+>>
+>> It uses the Kryo670.
+>>
+>> Signed-off-by: Eugene Lepshy <fekz115@gmail.com>
+>> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sm7325.dtsi | 17 +++++++++++++++++
+>>   1 file changed, 17 insertions(+)
+>>   create mode 100644 arch/arm64/boot/dts/qcom/sm7325.dtsi
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm7325.dtsi b/arch/arm64/boot/dts/qcom/sm7325.dtsi
+>> new file mode 100644
+>> index 000000000000..5b4574484412
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/sm7325.dtsi
+>> @@ -0,0 +1,17 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +/*
+>> + * Copyright (c) 2024, Eugene Lepshy <fekz115@gmail.com>
+>> + * Copyright (c) 2024, Danila Tikhonov <danila@jiaxyga.com>
+>> + */
+>> +
+>> +#include "sc7280.dtsi"
+>> +
+>> +/* SM7325 uses Kryo 670 */
+>> +&CPU0 { compatible = "qcom,kryo670"; };
+>> +&CPU1 { compatible = "qcom,kryo670"; };
+>> +&CPU2 { compatible = "qcom,kryo670"; };
+>> +&CPU3 { compatible = "qcom,kryo670"; };
+>> +&CPU4 { compatible = "qcom,kryo670"; };
+>> +&CPU5 { compatible = "qcom,kryo670"; };
+>> +&CPU6 { compatible = "qcom,kryo670"; };
+>> +&CPU7 { compatible = "qcom,kryo670"; };
+> No PMU? Because PMUs are also a per CPU model compatible string.
+>
+> I fixed most QCom platforms recently.
+>
+> Rob
+A patch has been sent to fix this in SC7280:
+https://lore.kernel.org/all/20240818192905.120477-1-danila@jiaxyga.com/
 
-Use the correct compatibility.
-
-Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 91cc5e74d8f5..ab024a3c3653 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -845,8 +845,13 @@ wlan_smp2p_in: wlan-wpss-to-ap {
- 		};
- 	};
- 
--	pmu {
--		compatible = "arm,armv8-pmuv3";
-+	pmu-a55 {
-+		compatible = "arm,cortex-a55-pmu";
-+		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
-+	};
-+
-+	pmu-a78 {
-+		compatible = "arm,cortex-a78-pmu";
- 		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
- 	};
- 
--- 
-2.46.0
-
+Best wishes,
+Danila
 
