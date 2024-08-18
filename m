@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-28899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72383955EF7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Aug 2024 22:44:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63F93955EF9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Aug 2024 22:44:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 147B0B20CE4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Aug 2024 20:44:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DA6821F2122B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Aug 2024 20:44:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18BE1154429;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D35A41552FA;
 	Sun, 18 Aug 2024 20:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="Ic5UQY0p"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="l4qucBGY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp31.i.mail.ru (smtp31.i.mail.ru [95.163.41.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA08125D6;
-	Sun, 18 Aug 2024 20:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4898149E09;
+	Sun, 18 Aug 2024 20:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.163.41.72
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724013849; cv=none; b=gKnhqXmsfaw+dcqtS6gchFPfbv2XOu0UafognPskOoIDacunC4sQ0ALv0VTcd7ED9zdY5wvygXAdMrYyzKdTf3NekW79gyOkjg5r76j7GiflBrvxEyvui1l9o4pt+IJLNBb9Cgk8gqF5uL9So9mQMJFrHvth6Dh0UiGP1jm++KA=
+	t=1724013849; cv=none; b=PGoT0xxeeNAsw54sGXP4eockSSOSJ0IC2OgiUytc6huTQ6U2Hs0DknbJNUrK5m+pJ5g7cblaF/xhxyj0RGptu3SmPat8LfhXUzAVbHOymyelMnXuCRwl86l+nhAQKzX3M9o0VcpvG6syj6otg1PO2VWSJbUjrBbAVTAwncHn5rE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1724013849; c=relaxed/simple;
-	bh=c60Q3txKO7TBPLh+plOZUUIA+nTDUbS/PnJCKlul++g=;
+	bh=/T7+PFFKEPscJNcTLhWTmtlAzCbMSkRoRx3xpkkXtMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l7p1DSlGSvaomcmP0J59QqtBiabBo5Bylx/IjQWoBXu9I80bZFKNR6wdCDnuJsU9nz5xLUj3wiaD+U0hbTccyB8uTzYoTacncVHAkC8bL1jPOl+SE+kAIMgrQBV2QsRWnaCnU3j9kjCWaaPlnsA5kDBgzEIVnzFHrXOoXrIktPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=Ic5UQY0p; arc=none smtp.client-ip=95.163.41.72
+	 MIME-Version; b=rzzUQoJ2AGPiCiYHfM9ORus7LVFPQ7Y8NmAkKazVTgUG85VmuG/fFdhb/ndR10NI+VZQCzyiZxq+2uFIvQMz+gLPHos18j0vzQpDyZUmczgoVwNrSC2hkjnPsvnbhZ9zWVI84xYAerBfVCJvn6dXvYVHb1yzsz/JtTkIq9GW8yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=l4qucBGY; arc=none smtp.client-ip=95.163.41.72
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
@@ -38,12 +38,12 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
 	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
 	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
 	X-Cloud-Ids:Disposition-Notification-To;
-	bh=xeki5XL/apdkkAx15/rMH0jndoRd9pH7Sb4r07QccvI=; t=1724013846; x=1724103846; 
-	b=Ic5UQY0pWUIO4Urjz8ZlME26Mn3wBRzCdI4fAgORkIan5KFtxmFLgsFR/vkbL9Hmm+3JhJFSSMe
-	Bk6gEdPJxKXLP3dkweNQGwCckuYSyXeZ3IXreNZohK/q3v7PW+JRNQl9/rDDWHnt2taX7FcOIkAxN
-	RiF7tBj41s/paJQCnGA=;
+	bh=QuTg/uBlx9oKunvGa7juWYRLBL2GKls8hLK0lZlqu4U=; t=1724013846; x=1724103846; 
+	b=l4qucBGYbBrWkJCKtSgps5TYBTTCSJze8prUZDVlF4OpHCVz+uSoHcW1octPNl/PA2phTyiIEzu
+	NwxcBE06ar5yRXhMqAsRmn8BP71AR4cEy8lgqsUuQNoL2MoeuY5k+gfKgjRNdmkCZ4SaGQ+gcAmud
+	S9zaiAsjAmcA1yzjrec=;
 Received: by smtp31.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
-	id 1sfmkr-0000000Cqfx-2CuY; Sun, 18 Aug 2024 23:44:02 +0300
+	id 1sfmkt-0000000Cqfx-2pZn; Sun, 18 Aug 2024 23:44:04 +0300
 From: Danila Tikhonov <danila@jiaxyga.com>
 To: andersson@kernel.org,
 	mturquette@baylibre.com,
@@ -63,9 +63,9 @@ Cc: linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux@mainlining.org,
 	Danila Tikhonov <danila@jiaxyga.com>
-Subject: [PATCH v2 05/10] dt-bindings: clock: qcom,sm8450-gpucc: Add SM8475 GPUCC bindings
-Date: Sun, 18 Aug 2024 23:43:43 +0300
-Message-ID: <20240818204348.197788-6-danila@jiaxyga.com>
+Subject: [PATCH v2 06/10] clk: qcom: gpucc-sm8450: Add SM8475 support
+Date: Sun, 18 Aug 2024 23:43:44 +0300
+Message-ID: <20240818204348.197788-7-danila@jiaxyga.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240818204348.197788-1-danila@jiaxyga.com>
 References: <20240818204348.197788-1-danila@jiaxyga.com>
@@ -79,34 +79,140 @@ Content-Transfer-Encoding: 8bit
 Authentication-Results: smtp31.i.mail.ru; auth=pass smtp.auth=danila@jiaxyga.com smtp.mailfrom=danila@jiaxyga.com
 X-Mailru-Src: smtp
 X-4EC0790: 10
-X-7564579A: 78E4E2B564C1792B
-X-77F55803: 4F1203BC0FB41BD9F97E3C14763C38E2F8667C40DD8CE92DDCF89D65A2CC9925182A05F538085040D989909C9EF6AEE90578E6996F383413CAC287AF43D02D69323C04D0FE7BBCAFF8A48EF99929F69E
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7B9D6DADD6B53929DEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006377BB8DC46C8539357EA1F7E6F0F101C6723150C8DA25C47586E58E00D9D99D84E1BDDB23E98D2D38B043BF0FB74779F360D455247F930E7142050ACA2FCB4889824B1DBA2743E710CA471835C12D1D9774AD6D5ED66289B5278DA827A17800CE767883B903EA3BAEA9FA2833FD35BB23D2EF20D2F80756B5F868A13BD56FB6657A471835C12D1D977725E5C173C3A84C3E97D2AE7161E217F117882F4460429728AD0CFFFB425014E868A13BD56FB6657D81D268191BDAD3DC09775C1D3CA48CFF0685002530F4075BA3038C0950A5D36C8A9BA7A39EFB766D91E3A1F190DE8FDBA3038C0950A5D36D5E8D9A59859A8B6945E48972B8D6B0376E601842F6C81A1F004C906525384303E02D724532EE2C3F43C7A68FF6260569E8FC8737B5C2249D082881546D93491E827F84554CEF50127C277FBC8AE2E8BF1175FABE1C0F9B6AAAE862A0553A39223F8577A6DFFEA7CE1AEB6AF2DA18B6243847C11F186F3C59DAA53EE0834AAEE
-X-C1DE0DAB: 0D63561A33F958A5C0152B4DADC615DB5002B1117B3ED696CC5C73604F6F51A2CCE9A60C8CB01D7C823CB91A9FED034534781492E4B8EEADEEA082C9A12FE455C79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
-X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF3FED46C3ACD6F73ED3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CFE6419565749E62795A5F6373CA2898F08CEAF41AD946CA597F631433A691B9D3744A43F78FC6FA90ABF86C07854D9473BFB1FEF98A9FA57CF37AA835A6091A5EA19A85F39C1455F4F59F2EA2782EDE9C02C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojxd0rRjfnTmY1WlOlIvQdBA==
-X-Mailru-Sender: 9EB879F2C80682A09F26F806C73949816B4BC91EC7BB554F20C74B26AAFF93459D66119557440A8C912F5E38557B6FD12C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
+X-7564579A: 646B95376F6C166E
+X-77F55803: 4F1203BC0FB41BD9F97E3C14763C38E294957C2873262015DF1FEF436675ABEA182A05F53808504089E99435B33C896D0578E6996F38341376B288B703F2B29E323C04D0FE7BBCAF906DE0852CB23FE4
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7D77100FFB2844417EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637E25DEE08FA4D750E8638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8E1F939F2A815322FCD7AC5B2B1C5E9D2C83B78BA4D3EE409CC7F00164DA146DAFE8445B8C89999728AA50765F7900637D0FEED2715E18529389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC8A9FF340AA05FB58CF6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947C62B3BD3CC35DA588AD7EC71F1DB884274AD6D5ED66289B523666184CF4C3C14F6136E347CC761E07725E5C173C3A84C3A4DC95554899BC9EBA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CF17B107DEF921CE791DD303D21008E298D5E8D9A59859A8B6D082881546D9349175ECD9A6C639B01B78DA827A17800CE7AD892BA7D319F029731C566533BA786AA5CC5B56E945C8DA
+X-C1DE0DAB: 0D63561A33F958A59429B1AB6ADE69DE5002B1117B3ED6961235A1DF2E68874054BB1175C6E7DD94823CB91A9FED034534781492E4B8EEAD9CFA8CFAC159CE19C79554A2A72441328621D336A7BC284946AD531847A6065A535571D14F44ED41
+X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF3FED46C3ACD6F73ED3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CF8131BE836E6D829E4665DC11CDDB7E64BBD53E2A0FB56E4B7CE721E8287CFA9DCC55679CEC9B022BABF86C07854D947334969F31F035FDEFF37AA835A6091A5EB6C0F38D0BA393D5F59F2EA2782EDE9C02C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojxd0rRjfnTmbyWEd4b8CZkQ==
+X-Mailru-Sender: 9EB879F2C80682A09F26F806C73949816B4BC91EC7BB554FEA62B7A476541487104E83A8F1C365FC8237F6E3787CCCCC2C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
 X-Mras: Ok
 
-Add new entry to the SM8450 dt-bindings for the SM8475 clocks.
+Add support to the SM8475 graphics clock controller by extending the
+SM8450 graphics clock controller, which is almost identical but has
+some minor differences.
 
 Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
 ---
- Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/qcom/Kconfig        |  3 +-
+ drivers/clk/qcom/gpucc-sm8450.c | 50 +++++++++++++++++++++++++++++----
+ 2 files changed, 47 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml
-index 2d2c59aa8c6b..b9d29e4f65de 100644
---- a/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml
-@@ -26,6 +26,7 @@ properties:
-     enum:
-       - qcom,sm4450-gpucc
-       - qcom,sm8450-gpucc
-+      - qcom,sm8475-gpucc
-       - qcom,sm8550-gpucc
-       - qcom,sm8650-gpucc
-       - qcom,x1e80100-gpucc
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 415b51b4fa38..f61f8f1eb0f6 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -1150,7 +1150,8 @@ config SM_GPUCC_8450
+ 	depends on ARM64 || COMPILE_TEST
+ 	select SM_GCC_8450
+ 	help
+-	  Support for the graphics clock controller on SM8450 devices.
++	  Support for the graphics clock controller on SM8450 or SM8475
++	  devices.
+ 	  Say Y if you want to support graphics controller devices and
+ 	  functionality such as 3D graphics.
+ 
+diff --git a/drivers/clk/qcom/gpucc-sm8450.c b/drivers/clk/qcom/gpucc-sm8450.c
+index b3c5d6923cd2..059df72deaa1 100644
+--- a/drivers/clk/qcom/gpucc-sm8450.c
++++ b/drivers/clk/qcom/gpucc-sm8450.c
+@@ -40,7 +40,7 @@ static const struct pll_vco lucid_evo_vco[] = {
+ 	{ 249600000, 2000000000, 0 },
+ };
+ 
+-static struct alpha_pll_config gpu_cc_pll0_config = {
++static const struct alpha_pll_config gpu_cc_pll0_config = {
+ 	.l = 0x1d,
+ 	.alpha = 0xb000,
+ 	.config_ctl_val = 0x20485699,
+@@ -50,6 +50,20 @@ static struct alpha_pll_config gpu_cc_pll0_config = {
+ 	.user_ctl_hi_val = 0x00000805,
+ };
+ 
++static const struct alpha_pll_config sm8475_gpu_cc_pll0_config = {
++	.l = 0x1d,
++	.alpha = 0xb000,
++	.config_ctl_val = 0x20485699,
++	.config_ctl_hi_val = 0x00182261,
++	.config_ctl_hi1_val = 0x82aa299c,
++	.test_ctl_val = 0x00000000,
++	.test_ctl_hi_val = 0x00000003,
++	.test_ctl_hi1_val = 0x00009000,
++	.test_ctl_hi2_val = 0x00000034,
++	.user_ctl_val = 0x00000000,
++	.user_ctl_hi_val = 0x00000005,
++};
++
+ static struct clk_alpha_pll gpu_cc_pll0 = {
+ 	.offset = 0x0,
+ 	.vco_table = lucid_evo_vco,
+@@ -67,7 +81,7 @@ static struct clk_alpha_pll gpu_cc_pll0 = {
+ 	},
+ };
+ 
+-static struct alpha_pll_config gpu_cc_pll1_config = {
++static const struct alpha_pll_config gpu_cc_pll1_config = {
+ 	.l = 0x34,
+ 	.alpha = 0x1555,
+ 	.config_ctl_val = 0x20485699,
+@@ -77,6 +91,20 @@ static struct alpha_pll_config gpu_cc_pll1_config = {
+ 	.user_ctl_hi_val = 0x00000805,
+ };
+ 
++static const struct alpha_pll_config sm8475_gpu_cc_pll1_config = {
++	.l = 0x34,
++	.alpha = 0x1555,
++	.config_ctl_val = 0x20485699,
++	.config_ctl_hi_val = 0x00182261,
++	.config_ctl_hi1_val = 0x82aa299c,
++	.test_ctl_val = 0x00000000,
++	.test_ctl_hi_val = 0x00000003,
++	.test_ctl_hi1_val = 0x00009000,
++	.test_ctl_hi2_val = 0x00000034,
++	.user_ctl_val = 0x00000000,
++	.user_ctl_hi_val = 0x00000005,
++};
++
+ static struct clk_alpha_pll gpu_cc_pll1 = {
+ 	.offset = 0x1000,
+ 	.vco_table = lucid_evo_vco,
+@@ -736,6 +764,7 @@ static const struct qcom_cc_desc gpu_cc_sm8450_desc = {
+ 
+ static const struct of_device_id gpu_cc_sm8450_match_table[] = {
+ 	{ .compatible = "qcom,sm8450-gpucc" },
++	{ .compatible = "qcom,sm8475-gpucc" },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, gpu_cc_sm8450_match_table);
+@@ -748,8 +777,19 @@ static int gpu_cc_sm8450_probe(struct platform_device *pdev)
+ 	if (IS_ERR(regmap))
+ 		return PTR_ERR(regmap);
+ 
+-	clk_lucid_evo_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
+-	clk_lucid_evo_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
++	if (of_device_is_compatible(pdev->dev.of_node, "qcom,sm8475-gpucc")) {
++		/* Update GPUCC PLL0 */
++		gpu_cc_pll0.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE];
++
++		/* Update GPUCC PLL1 */
++		gpu_cc_pll1.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_OLE];
++
++		clk_lucid_ole_pll_configure(&gpu_cc_pll0, regmap, &sm8475_gpu_cc_pll0_config);
++		clk_lucid_ole_pll_configure(&gpu_cc_pll1, regmap, &sm8475_gpu_cc_pll1_config);
++	} else {
++		clk_lucid_evo_pll_configure(&gpu_cc_pll0, regmap, &gpu_cc_pll0_config);
++		clk_lucid_evo_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
++	}
+ 
+ 	return qcom_cc_really_probe(&pdev->dev, &gpu_cc_sm8450_desc, regmap);
+ }
+@@ -763,5 +803,5 @@ static struct platform_driver gpu_cc_sm8450_driver = {
+ };
+ module_platform_driver(gpu_cc_sm8450_driver);
+ 
+-MODULE_DESCRIPTION("QTI GPU_CC SM8450 Driver");
++MODULE_DESCRIPTION("QTI GPU_CC SM8450 / SM8475 Driver");
+ MODULE_LICENSE("GPL");
 -- 
 2.46.0
 
