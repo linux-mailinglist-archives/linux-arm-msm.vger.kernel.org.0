@@ -1,147 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-28921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAEE695601C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 01:18:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B94D395603D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 01:59:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DEE571C20E0C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Aug 2024 23:18:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78A56281AC8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 18 Aug 2024 23:59:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87A0F158A09;
-	Sun, 18 Aug 2024 23:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0139155732;
+	Sun, 18 Aug 2024 23:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZkY98LCO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DaSvGV+5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFBE154454;
-	Sun, 18 Aug 2024 23:17:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3400156227
+	for <linux-arm-msm@vger.kernel.org>; Sun, 18 Aug 2024 23:59:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724023080; cv=none; b=sHUXP+Ay1tPVygAt5N7pvRNDwiC2Adt0oo7xvqyd5XPL89QZ3t3Gg1JEd/6fR7/2kaTUog2Y3hJsaoIyz1NEEk45Beg/mB0jC3/ex0Ja9bZics8oLyCeJ2OOiBD/z+bvKlc3ZG49KgfguxZtajiFyr1a9TTJ4c7+HgIVOyTcVoY=
+	t=1724025570; cv=none; b=LKIL7yR/U9hyCDupYMLC05xcREpBOSqgeF2NT9HQKubNRdrw3ykzCF9rcuE3SzgrR5LSAG/tLCPxw/LRqiY3pV7HfaDDojOlmmntTZ6nmPWYTV8Vw20qlmuV6tSm2cHqNxdsCNqfIbzBw0ViBJoffjXyZ0Gs7mglzjBZGQVxPYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724023080; c=relaxed/simple;
-	bh=A/HYDsrJuXFW0qGUWD2KE96ILaBtDbLU+NxkkFF5u+I=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=nF+SYsVj5ZCO9zz9n3RfundL/EMCX+BFH/5MBgZ3vqzPC5Y/sOUQE0pDEhD/BpaReos8WrYhHdabqdjIYSOHsNUvL1BRlrvvZKLTXtbFkdsVzknph3RuIN2auXNEKxHbmR9CMlw34krRjvcyl5oJu0ErhS1SyE9ZOooIl0u6938=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZkY98LCO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47IL3Ikb030735;
-	Sun, 18 Aug 2024 23:17:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	WJASdRSwBE2XVvB6rmnNHIQXn5hm5EE5wC8ypIKFpuo=; b=ZkY98LCOenmw2q4/
-	usrwk/AriItEPK9js3tQSVajxbnpS3CWKOjUw5yMeB57CutSW5k+AsflslYgg/g8
-	8I6vz964F3HotQ6QrZ2Pf1qsyLwQSOEDtZ6icVUSbKUs2lDcSxuBSY/K77iFjzp5
-	QZXO1CzNI1Ad51UN+VlsNKmnwUPIBVePL8Gv3t1+2Ft3vkVWrKKA7wd3g95C00gc
-	b2Y041+DKtwUiticFhfFTNtC3NOz6mPBzT7/PacL5eqZmfgyH2rl7yex4+/kAzak
-	t9DW/8c0KlmBHtSKB/XqNB/il/pP9iVFmuGH8ottBkEbPwyyxmXiX9XEo9Ql4s/h
-	LRUn0w==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 412m872ftf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 18 Aug 2024 23:17:40 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47INHcWG029847
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 18 Aug 2024 23:17:38 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 18 Aug 2024 16:17:38 -0700
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-Date: Sun, 18 Aug 2024 16:17:39 -0700
-Subject: [PATCH 3/3] soc: qcom: pmic_glink: Actually communicate with
- remote goes down
+	s=arc-20240116; t=1724025570; c=relaxed/simple;
+	bh=sT/oyCUnRgtfYKJKOX5462XXnI6zqyx/EMbY8RHPp1c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=D5Owt9h9NiRRHJ4q4XWcj3x39GSo90MCWOjIaOFp6FudNGGA+yaKEkBLaZXz8Y2y13EB6QV22LhcGT4J5I1hTYG9e6brFpg7vTP8nBemxGMQBfnGPMd0VIjnmNVjhYJfn8hr+LKdrgHzzH3O+I2CzDXQYOaePGcFzcaqslxrUpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DaSvGV+5; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-52f015ea784so619689e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 18 Aug 2024 16:59:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1724025567; x=1724630367; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mPLEJui4qj3siq5852EmGCqYh8ZMXe+JH32SZh64r0o=;
+        b=DaSvGV+59Qquts5jSrA/hipoQQlbzutt3BS5NSmi4flYelabXVfo074iwtn1tngagF
+         /IWYX0/BQVhvMc6yzxe/z0jxSHf9jDzO6bquSInPM2veDKU8v3Et8pxuRuU/rVohDYxt
+         397YY9CxCSdYNMSSF1CLLd226zvOAL8dwUY2Fw3465UCWZsJW+EMBNfCm2cP0RVqSM4+
+         f1lT9WLG8MyL0xUbtwd6EEdTFyQ4wFsrDjsXSGmJLi7+bha13AnkBfhP1R8pZs4ojRlD
+         KqTxcCk1gsWPNhfkZ3Bpl5jJQ/GnymGBm8ZNuhekX2nvgAEZhmn+QPPtaZreLMI+A4wV
+         I9xA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724025567; x=1724630367;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mPLEJui4qj3siq5852EmGCqYh8ZMXe+JH32SZh64r0o=;
+        b=ZEn+ycjmghRlaKSru8Ra6T3sD/ykHHJKOJuXK8uaRaIxSuqhupHgvJJI3ZK4hV7FB5
+         C9MSQCLOM3GNBhLJmoGQiohCp1xjrgQmFJoC9rl72HXCw5kDSXXYEaP68hFIDVviZ8UB
+         zTR7yq2tMO7A2tA5zV23R0J+PZGV1CO9zHPRHB7aoQgfwH1c39gDtecMt49P/w8QhhYt
+         xQqxlZAxv2FxSo1Q3H5NVyxhqSMqH19yP0lP6rmxHos4CExZWDBtNChRbSZGJQfyMbft
+         eaO0L07vi8+KEB8HP0jT3h+DbDzMR3Q8kaqu2PsH67XOpZ0TS7ov8hT6fHq4PUcsbu5k
+         kqNQ==
+X-Gm-Message-State: AOJu0Yw7TcS+njLDlQq+BA4xo3ExA/cM6F/ifOqJ9yHVSTuTVANHLqZj
+	0owwdflT5QX9pkh4YBgb+ipOeh7G8fY6UwpsHZh1LbB5hRJVnuaoIe+vL/MK6uI=
+X-Google-Smtp-Source: AGHT+IEF/bSFvm9nm+za9qay0GFZHl420IAWGzAtfnnPgV8iifqYEaCxGZWLsPfCFwJhXLeV97MNpw==
+X-Received: by 2002:a05:6512:e9d:b0:52f:e5:3765 with SMTP id 2adb3069b0e04-5331c6d9503mr3378335e87.6.1724025566646;
+        Sun, 18 Aug 2024 16:59:26 -0700 (PDT)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5330d4202eesm1321910e87.234.2024.08.18.16.59.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 18 Aug 2024 16:59:26 -0700 (PDT)
+Message-ID: <d54d299e-6634-4b0a-987e-2a1807734a38@linaro.org>
+Date: Mon, 19 Aug 2024 02:59:19 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/13] media: qcom: camss: csiphy-3ph: Use an offset
+ variable to find common control regs
+To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-7-quic_depengs@quicinc.com>
+Content-Language: en-US
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20240812144131.369378-7-quic_depengs@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240818-pmic-glink-v6-11-races-v1-3-f87c577e0bc9@quicinc.com>
-References: <20240818-pmic-glink-v6-11-races-v1-0-f87c577e0bc9@quicinc.com>
-In-Reply-To: <20240818-pmic-glink-v6-11-races-v1-0-f87c577e0bc9@quicinc.com>
-To: Sebastian Reichel <sre@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Heikki
- Krogerus" <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-CC: Johan Hovold <johan+linaro@kernel.org>, Chris Lew <quic_clew@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd
-	<swboyd@chromium.org>,
-        Amit Pundir <amit.pundir@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>,
-        Bjorn Andersson
-	<quic_bjorande@quicinc.com>, <stable@vger.kernel.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1724023057; l=1283;
- i=quic_bjorande@quicinc.com; s=20230915; h=from:subject:message-id;
- bh=A/HYDsrJuXFW0qGUWD2KE96ILaBtDbLU+NxkkFF5u+I=;
- b=N4uM4ZyFXEnLrngR9QzkC2v7udqPNoUqxiXM2V1jmLj+w7Ex2LraJQzLX9o6j/82ZvR4rIgXv
- n8LBCLwl8BOBOGmRJB77EHJkGNMkW1iJdJnPh9Psa9COmedQbk5WWFQ
-X-Developer-Key: i=quic_bjorande@quicinc.com; a=ed25519;
- pk=VkhObtljigy9k0ZUIE1Mvr0Y+E1dgBEH9WoLQnUtbIM=
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SZWl1v5oJrFfAjhOrZKPnL3eUeoZFCEN
-X-Proofpoint-ORIG-GUID: SZWl1v5oJrFfAjhOrZKPnL3eUeoZFCEN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-18_22,2024-08-16_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- mlxlogscore=999 priorityscore=1501 adultscore=0 lowpriorityscore=0
- clxscore=1015 bulkscore=0 suspectscore=0 spamscore=0 impostorscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408180174
 
-When the pmic_glink state is UP and we either receive a protection-
-domain (PD) notifcation indicating that the PD is going down, or that
-the whole remoteproc is going down, it's expected that the pmic_glink
-client instances are notified that their function has gone DOWN.
+On 8/12/24 17:41, Depeng Shao wrote:
+> From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> 
+> New versions of the CSIPHY locate the control registers at offset 0x1000
+> not offset 0x800.
+> 
+> Provide a variable to base an offset from for the purposes of redirecting
+> the base offset for the new PHY regs layout.
+> 
+> The existing setup bases from 0x800, the new from 0x1000 with some of the
+> 'EXT' registers dropped but the lower-order lane config regs at offset 0x00
+> and up the same as before.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+> ---
+>   .../qcom/camss/camss-csiphy-3ph-1-0.c         | 68 ++++++++++++-------
+>   1 file changed, 44 insertions(+), 24 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> index 93782ebfe0ea..1219a25ec55b 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> @@ -42,11 +42,11 @@
+>   #define CSIPHY_3PH_LNn_CSI_LANE_CTRL15(n)	(0x03c + 0x100 * (n))
+>   #define CSIPHY_3PH_LNn_CSI_LANE_CTRL15_SWI_SOT_SYMBOL	0xb8
+>   
+> -#define CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(n)	(0x800 + 0x4 * (n))
+> +#define CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(offset, n)	(offset + 0x4 * (n))
 
-This is not what the code does, which results in the client state either
-not updating, or being wrong in many cases. So let's fix the conditions.
+Macro value above shall be this one: ((offset) + 0x4 * (n))
 
-Fixes: 58ef4ece1e41 ("soc: qcom: pmic_glink: Introduce base PMIC GLINK driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
- drivers/soc/qcom/pmic_glink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+>   #define CSIPHY_3PH_CMN_CSI_COMMON_CTRL5_CLK_ENABLE	BIT(7)
+>   #define CSIPHY_3PH_CMN_CSI_COMMON_CTRL6_COMMON_PWRDN_B	BIT(0)
+>   #define CSIPHY_3PH_CMN_CSI_COMMON_CTRL6_SHOW_REV_ID	BIT(1)
+> -#define CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(n)	(0x8b0 + 0x4 * (n))
+> +#define CSIPHY_3PH_CMN_CSI_COMMON_STATUSn(offset, n)	((offset + 0xb0) + 0x4 * (n))
 
-diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
-index e4747f1d3da5..cb202a37e8ab 100644
---- a/drivers/soc/qcom/pmic_glink.c
-+++ b/drivers/soc/qcom/pmic_glink.c
-@@ -191,7 +191,7 @@ static void pmic_glink_state_notify_clients(struct pmic_glink *pg)
- 		if (pg->pdr_state == SERVREG_SERVICE_STATE_UP && pg->ept)
- 			new_state = SERVREG_SERVICE_STATE_UP;
- 	} else {
--		if (pg->pdr_state == SERVREG_SERVICE_STATE_UP && pg->ept)
-+		if (pg->pdr_state == SERVREG_SERVICE_STATE_DOWN || !pg->ept)
- 			new_state = SERVREG_SERVICE_STATE_DOWN;
- 	}
- 
+Macro value above shall be this one: ((offset) + 0xb0 + 0x4 * (n))
 
--- 
-2.34.1
+>   #define CSIPHY_DEFAULT_PARAMS		0
+>   #define CSIPHY_LANE_ENABLE		1
+> @@ -66,6 +66,7 @@ struct csiphy_lane_regs {
+>   struct csiphy_device_regs {
+>   	const struct csiphy_lane_regs *lane_regs;
+>   	int lane_array_size;
+> +	u32 offset;
+>   };
+>   
 
+With two minor fixes above,
+
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+
+--
+Best wishes,
+Vladimir
 
