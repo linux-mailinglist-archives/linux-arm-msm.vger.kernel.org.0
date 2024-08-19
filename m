@@ -1,128 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-28974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2293F956B05
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 14:39:49 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 111DB956B51
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 14:57:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D120828227B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 12:39:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 87F64B2100F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 12:57:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 266AD16B3B8;
-	Mon, 19 Aug 2024 12:39:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Tf5vBtaV"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4FF316BE0A;
+	Mon, 19 Aug 2024 12:57:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C7C16B397;
-	Mon, 19 Aug 2024 12:39:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4062916131C;
+	Mon, 19 Aug 2024 12:57:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724071181; cv=none; b=TvY4wJ14FzO+VA2GVLQH/KKDy6plqeW9U2KRSAsqVNSRYtqJurVoDvrMVUAdKZDGxOzh8UsUY88K3a8e/s/X1xOKIlu4aOTUec7kJOWlIOdOMqRzqkeMP0m6EA96qZYpq55oncGdhLd2W4QcdDBf+LgCRMdpkx5LJeBD+5nDlmY=
+	t=1724072240; cv=none; b=cVVsuaMU/qFc8tmoGjDIYYPNfPLzstvYaBTI98tBOJRj08Bpm0z+cutLubnuyJ1zMBNYlVxCum2U8kQLn0AA3TSS91v1h00UN/UVHU8mN5yU4QCmdpZx0+EIUZIh3tECjGNgb8SC7IGnYCIn+Rvukqjelnhh7xlzFE67qBPD3NM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724071181; c=relaxed/simple;
-	bh=HrTwzLj7XSeTw8tryKWAcTYmPm+9tklQ6X4mSbHuZms=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TWK9zUTwb5iw8qjZ5fOWMSqRO0dDgZ+3UxVlL2ZWJd99za+Lqot68ykZlGoeyv6/twLvaymPqFF0vN3xEQa9pLqevPYFz8A7xevFd45PFdhHhHMAAAj4FYZhZmXEL5H52p+pUWsPy7fhagyjs10MECDmJE4LoKNRkdcH3G+9ZeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Tf5vBtaV; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1724071179; x=1755607179;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=HrTwzLj7XSeTw8tryKWAcTYmPm+9tklQ6X4mSbHuZms=;
-  b=Tf5vBtaV1ZZgixYqHt7pp3U5F8hN+jWO9p4zrsGpA31jT84848/jPbOB
-   qbB91Un2Tw33edFfBIsEuVN2wc6RA0mnNBDeDJOVE6DnAnNOKsBQ7zRVQ
-   A60Z0a0xBUuV0I+4TN5+ixDsEfnBoz9tmokwJJXMFSR7ASVtIzljJi3lt
-   ETkyh4TvRqWPm6SsgE1cC+F0qyoN/3vC20VGuumgMWkAWpppV/6OaGm0d
-   m0/QZE9YS2/O4jEtd8h01Q82jAHfIgS0NQYFoYLKN4RIzpvBL3zoe6N8E
-   YgQoLg0WQSsgBKEr2MV+qrOm3ONzU4RzI3/q8KRK3bYgRrs2Kjw0DpOQl
-   w==;
-X-CSE-ConnectionGUID: XMNdGA50RUqP5mpP6tCpxQ==
-X-CSE-MsgGUID: fSYg2WLkQVG5iSC40gvYPg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11169"; a="22473825"
-X-IronPort-AV: E=Sophos;i="6.10,159,1719903600"; 
-   d="scan'208";a="22473825"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2024 05:39:38 -0700
-X-CSE-ConnectionGUID: HEKcbfg2SjuEnCUqRPyVFw==
-X-CSE-MsgGUID: gbH/QOgkRCevGz8xw6aE/w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,159,1719903600"; 
-   d="scan'208";a="60340619"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by fmviesa008.fm.intel.com with SMTP; 19 Aug 2024 05:39:35 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 19 Aug 2024 15:39:34 +0300
-Date: Mon, 19 Aug 2024 15:39:34 +0300
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH] usb: typec: fsa4480: Relax CHIP_ID check
-Message-ID: <ZsM9BkcaxV3qdWNs@kuha.fi.intel.com>
-References: <20240818-fsa4480-chipid-fix-v1-1-17c239435cf7@fairphone.com>
+	s=arc-20240116; t=1724072240; c=relaxed/simple;
+	bh=lakgPcIw7qUBbL2ZLM0qTThrZs/JFj0UeFbwr+dhzj0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Wc+byZuWG8mnK15QvHuv5Csz0OR11pmEDyl1mz9sWawBzUfs0aQ6PuvQNfkCXkGby732exZFqY/kZzZC/Zvm1fRLWSiYQ0Uc8diW/6drfQzcqDyHD2O1gCv2GFgb8JbGlx9yJ1fflCYNlVlnCyLRpTgL9sysJV2olVvTc4DAfa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8F910339;
+	Mon, 19 Aug 2024 05:57:42 -0700 (PDT)
+Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 87BB83F73B;
+	Mon, 19 Aug 2024 05:57:14 -0700 (PDT)
+Message-ID: <17893776-9666-4bbe-b5fc-c3fe977d0337@arm.com>
+Date: Mon, 19 Aug 2024 13:57:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240818-fsa4480-chipid-fix-v1-1-17c239435cf7@fairphone.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: arm-smmu: Add
+ qcom,last-ctx-bank-reserved
+To: Marc Gonzalez <mgonzalez@freebox.fr>, Rob Herring <robh@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>,
+ Joerg Roedel <joro@8bytes.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, iommu@lists.linux.dev,
+ linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Arnaud Vrac <avrac@freebox.fr>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>,
+ Marijn Suijten <marijn.suijten@somainline.org>
+References: <20240814-smmu-v1-0-3d6c27027d5b@freebox.fr>
+ <20240814-smmu-v1-1-3d6c27027d5b@freebox.fr>
+ <20240818152515.GA104481-robh@kernel.org>
+ <30489eee-075b-461b-ab43-c8807d667630@freebox.fr>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <30489eee-075b-461b-ab43-c8807d667630@freebox.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, Aug 18, 2024 at 10:21:01PM +0200, Luca Weiss wrote:
-> Some FSA4480-compatible chips like the OCP96011 used on Fairphone 5
-> return 0x00 from the CHIP_ID register. Handle that gracefully and only
-> fail probe when the I2C read has failed.
+On 19/08/2024 12:37 pm, Marc Gonzalez wrote:
+> On 18/08/2024 17:25, Rob Herring wrote:
 > 
-> With this the dev_dbg will print 0 but otherwise continue working.
+>> On Wed, Aug 14, 2024 at 03:59:55PM +0200, Marc Gonzalez wrote:
+>>
+>>> On qcom msm8998, writing to the last context bank of lpass_q6_smmu
+>>> (base address 0x05100000) produces a system freeze & reboot.
+>>>
+>>> Specifically, here:
+>>>
+>>> 	qsmmu->bypass_cbndx = smmu->num_context_banks - 1;
+>>> 	arm_smmu_cb_write(smmu, qsmmu->bypass_cbndx, ARM_SMMU_CB_SCTLR, 0);
+>>>
+>>> and here:
+>>>
+>>> 	arm_smmu_write_context_bank(smmu, i);
+>>> 	arm_smmu_cb_write(smmu, i, ARM_SMMU_CB_FSR, ARM_SMMU_CB_FSR_FAULT);
+>>>
+>>> It is likely that FW reserves the last context bank for its own use,
+>>> thus a simple work-around would be: DON'T USE IT in Linux.
+>>>
+>>> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+>>> ---
+>>>   Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 6 ++++++
+>>>   1 file changed, 6 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>> index 280b4e49f2191..f9b23aef351b0 100644
+>>> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+>>> @@ -204,6 +204,12 @@ properties:
+>>>         access to SMMU configuration registers. In this case non-secure aliases of
+>>>         secure registers have to be used during SMMU configuration.
+>>>   
+>>> +  qcom,last-ctx-bank-reserved:
+>>> +    type: boolean
+>>> +    description:
+>>> +      FW reserves the last context bank of this SMMU for its own use.
+>>> +      If Linux tries to use it, Linux gets nuked.
+>>
+>> How is this Qualcomm specific? Presumably any implementation could do
+>> this if there's no way to properly partition things. Robin?
 > 
->   [    0.251581] fsa4480 1-0042: Found FSA4480 v0.0 (Vendor ID = 0)
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: e885f5f1f2b4 ("usb: typec: fsa4480: Check if the chip is really there")
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> Obviously, there is nothing Qualcomm specific about reserving
+> an SMMU context bank for the FW / hypervisor, other than it
+> appears that qcom is the first to do it; or at least the
+> LPASS SMMU on qcom msm8998 is the first known SMMU where such
+> a work-around is required.
 
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Yes, the Qualcomm-specific aspect is that it's Qualcomm's hypervisor 
+which is broken and reporting a larger number in its emulated 
+SMMU_IDR1.NUMCB than the number of context banks it's actually willing 
+to emulate.
 
-> ---
->  drivers/usb/typec/mux/fsa4480.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> What is the correct nomenclature?
 > 
-> diff --git a/drivers/usb/typec/mux/fsa4480.c b/drivers/usb/typec/mux/fsa4480.c
-> index cd235339834b..f71dba8bf07c 100644
-> --- a/drivers/usb/typec/mux/fsa4480.c
-> +++ b/drivers/usb/typec/mux/fsa4480.c
-> @@ -274,7 +274,7 @@ static int fsa4480_probe(struct i2c_client *client)
->  		return dev_err_probe(dev, PTR_ERR(fsa->regmap), "failed to initialize regmap\n");
->  
->  	ret = regmap_read(fsa->regmap, FSA4480_DEVICE_ID, &val);
-> -	if (ret || !val)
-> +	if (ret)
->  		return dev_err_probe(dev, -ENODEV, "FSA4480 not found\n");
->  
->  	dev_dbg(dev, "Found FSA4480 v%lu.%lu (Vendor ID = %lu)\n",
-> 
-> ---
-> base-commit: ccdbf91fdf5a71881ef32b41797382c4edd6f670
-> change-id: 20240818-fsa4480-chipid-fix-2c7cf5810135
-> 
-> Best regards,
-> -- 
-> Luca Weiss <luca.weiss@fairphone.com>
+> Can we just drop the vendor prefix if a property is generic
+> across vendors? But does it require a subsystem prefix like
+> "iommu" in order to not clash with generic props in other subsystems?
 
--- 
-heikki
+I guess if we *were* to consider a generic property to endorse violating 
+the SMMU architecture, then it would logically be vendored to Arm as the 
+owner of the SMMU architecture. However I am strongly against that idea, 
+not only because I obviously don't want to normalise hypervisors 
+emulating non-architectural behaviour which every DT-consuming OS will 
+have to understand how to work around, but it's also less than great for 
+the user to have a workaround that's not compatible with existing DTBs.
+
+Luckily, in this case it seems straightforward enough to be able to see 
+that if we have a "qcom,msm8996-smmu-v2" with 13 context banks then we 
+should just treat it as if it has 12 - it's also notable that it only 
+reports NUMSMRG=12, so we couldn't use more than that many S1 context 
+banks at once anyway.
+
+Thanks,
+Robin.
+
+>> Also, this property isn't very flexible. What happens when it is not the
+>> last bank or more than 1 bank reserved? This should probably be a mask
+>> instead.
+> 
+> OK, I'm getting conflicting requests here.
+> 
+> Bjorn has recommended dropping the property altogether:
+> 
+>> It also seems, as the different SMMUs in this platform behave
+>> differently it might be worth giving them further specific compatibles,
+>> in which case we could just check if it's the qcom,msm8998-lpass-smmu,
+>> instead of inventing a property for this quirk.
+> 
+> 
+> I'll send a patch series in line with Bjorn's request.
+> 
+> Regards
+> 
 
