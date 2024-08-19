@@ -1,159 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-28999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13E0A957250
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 19:45:13 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EB3E95725B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 19:48:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 87A501F238E2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 17:45:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8A7121C230C1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 17:48:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 597A3188003;
-	Mon, 19 Aug 2024 17:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A6F118785E;
+	Mon, 19 Aug 2024 17:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kosuAoUn"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="E3YHG1wQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4EDE188CC7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 17:44:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3C4D531;
+	Mon, 19 Aug 2024 17:48:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724089498; cv=none; b=QZjS5gG/3DmVYZPxKG+fOBedctjmaASbN3V/pmP/OG2XykXTBOEHsBNDpn3fS0i25yanuCJRg8cPGLDumdSGJBYQSBOWcFgyTw+Q8VhsV2r+67opON1+eSWA5gffiisRp+FEG4ernr6edp9n8SvJHjslQY5HNRSktLa9xsdbgBg=
+	t=1724089731; cv=none; b=apHsil36Vog4lZZV2iHtTAU4bfUZh93Vv9XmAwFWH4c/K9o9GmC1EY1zyVQRg2MQ0Y/egrCtdgcTwNqAZieI1VS0KaVL2gdkbD7FBIbtm6ZM3RriE5Q8GKMjqYeLtUTg4SStDWwN/Fzph5vAcuwwdK+uryGUifsXqHvIAI53r5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724089498; c=relaxed/simple;
-	bh=/C4h0ZjTOtvWsCLc2SqGW5m6M0l7WwDl/wLkRMPcAiw=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=Jn4fl1A5Y7xSg5GsDHmRETlHjc15eplh1IPod1BZMdX8VwM+tOMknX2HBOV9pXfHv72se4em73PZPTAJRN/DDDYyM5JT+LHuzEO4oeAI0qZ9AOJGW9+sbPN7Nr9XsHNUq4+Mtvy3y/kENto1aslRWdgZVRjxJeS5Zd4MLg2XKhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kosuAoUn; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-44fe58fcf29so25988751cf.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 10:44:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724089495; x=1724694295; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=wgl1BIT1Iozvq+rn/hswreZzgz/VlUWJ1e7JlV7+eKs=;
-        b=kosuAoUnFOeAMJ+8/1YPj7B/kNisEpOGGrOJdMkXjBtWUaALiqM1fT6q6C+Kql2ebD
-         x2RjBYBMmEEJK/Fj9saIHAHIdddx3HF2flSGyk9Wnk7Iqzh6qGf+RkgH3QZk6QGxHVd1
-         sx1XzB/xa2PdwIfnaPYduxNnqvREhe810SUsxryIgkOhqArgw+ZtBbJxoQIz4F2hXgEd
-         RV48Jd7NOk9cI4FdvEnzpMinEKUR82y2wUm6Zy3p9kP9EcvNvDbMZMPgFI/CCg2S1Lyn
-         IRi9sydoHVtQJlyJCyQmaN1UdvjQC4lQeR5zcnmrmgmQ20L/uHyRoQKZqmIry5uAXGWh
-         7bsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724089495; x=1724694295;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wgl1BIT1Iozvq+rn/hswreZzgz/VlUWJ1e7JlV7+eKs=;
-        b=RKPKQdGhu3BAujjLbGkpnmmcQYjP/e3cajVCMLlnQ9ARakA2iQNCV0vQu2s1HYX7ja
-         X1VArOgtnoei0rQ3BBzUqy2RsBGwE+hFDRITj6nsPrpSdMDX7CcWiEfTFIwkEwiHbbk2
-         jaj5wZLiwSKZtU9Nb6EebprKd2UmtyDsECUlk2rOinD5Xi3fdQki9iFoI8uH9NI//dXc
-         tlfajbesDG+9KJiSVCzF2SMOZZhPXCn7LkUCnZgnSYpkyURPeiVA931mZkKyJSMGTk2s
-         X4nT3Qf+oA8SYRsZbpvk9GRA1RMr6FpwGC09XoVgLg+jrzu+I70EVSXdotJ9hzThUk83
-         VbMA==
-X-Forwarded-Encrypted: i=1; AJvYcCVPOtxIxBhrltBVANmoQ7Au4lzMLXXTgUBrswxTvaKwJWQMOwBCKcRp5+vpWMBfk4AJ05hH94O0pjsgdzBNcVem8vRC4O8m3/j8IrXQSQ==
-X-Gm-Message-State: AOJu0YwX+N9A/sfFDMWP8U+I8qgi3xpCrrcbAjegMMt5Yr1IY6zAAnWR
-	hK8WdLLOpVcxQJVR5o/gYqTzPRejoNnY4u3Ro7IebsHYHkRCefN0tQdftPR2Iv9qv1+e7cVFkQ/
-	cN+EmskQVwmUGj+3B7kdlghOjw50=
-X-Google-Smtp-Source: AGHT+IHUDWyeHAWncFwmJ3gO/XndoAN8ewNPeGsyFPpfqXOgHze3iG++N1bdhT8TIQWKdZvcy9tcj394w7QRjDtw8nQ=
-X-Received: by 2002:a05:622a:2486:b0:451:c93a:5aa5 with SMTP id
- d75a77b69052e-453743ac25bmr164309471cf.56.1724089495295; Mon, 19 Aug 2024
- 10:44:55 -0700 (PDT)
+	s=arc-20240116; t=1724089731; c=relaxed/simple;
+	bh=ni4JnbQqKyxLORQSUYNl7oTbtxwxJwY0o1MFtkynE3Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ZKgmGFNtWReYIvlLZRqmP0OQN5GtH4c0pzLoed4mLS9MZgbefJEosYsW0/Nnx6S8c/tWfahu78VvhCGKv9FU1ZSsxrgMAAeKKKOzcZsRWoTLdFWUn/H30ByrmqaG5h0rje8uqNJB1cSjCDo2swC56yWBegpgVPvLe9a8KxC5q+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=E3YHG1wQ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47JCLLYQ000780;
+	Mon, 19 Aug 2024 17:48:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	xb2HwpmO4diMmk7P1CzPpwyPXC67SiGk+A0s9ybBsAI=; b=E3YHG1wQSq9Z7Thc
+	HYCE9PMPpWOmZwFN9Lsh2hDQ2PpbsGxve1HKH+gycooteh9GglDQ3Ogzjoh/aMUm
+	s+uoDgZGDxLz6uy5qiSW47aqG6eer/a/IBzbIRlaXDv/FquWg+UdGVMEDTrF6Fum
+	0CHM7/JuYUn8HGh98umkKcLRM3fafqNUOa+xKnhCk3WDhxUdZtZ8ylfmCn2nVqz4
+	gutuHLip0ldTUgCHKlTPH7g4XAbs0tAczKS6Gvntgbm5b7rzk1OXl9bdWyCMzBTN
+	wl3V5D7wLTLQomuPS5qFc+ZwSBWNmxReX3pfcOwSgvz5xPw2Fj3r+Uz5AjAuNwy5
+	nRClrA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4145yw8w0c-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 19 Aug 2024 17:48:29 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47JHmSI7024113
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 19 Aug 2024 17:48:28 GMT
+Received: from [10.216.31.248] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 19 Aug
+ 2024 10:48:22 -0700
+Message-ID: <eb0d4f62-5dde-4a63-8515-23081ec9962c@quicinc.com>
+Date: Mon, 19 Aug 2024 23:18:15 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Clark <robdclark@gmail.com>
-Date: Mon, 19 Aug 2024 10:44:42 -0700
-Message-ID: <CAF6AEGvxF2p3-AsjUydmSYrA0Vb+Ea7nh3VtNX0pT0Ae_Me-Kw@mail.gmail.com>
-Subject: [pull] drm/msm: drm-msm-fixes-2024-08-19 for v6.11-rc5
-To: Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: dri-devel <dri-devel@lists.freedesktop.org>, 
-	freedreno <freedreno@lists.freedesktop.org>, 
-	linux-arm-msm <linux-arm-msm@vger.kernel.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/7] usb: dwc3: core: Expose core driver as library
+To: Bjorn Andersson <andersson@kernel.org>,
+        Thinh Nguyen
+	<Thinh.Nguyen@synopsys.com>
+CC: <linux-usb@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        Rob Herring <robh@kernel.org>, Wesley Cheng
+	<quic_wcheng@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Saravana Kannan
+	<saravanak@google.com>,
+        Felipe Balbi <balbi@kernel.org>
+References: <20240811-dwc3-refactor-v2-0-91f370d61ad2@quicinc.com>
+ <20240811-dwc3-refactor-v2-4-91f370d61ad2@quicinc.com>
+Content-Language: en-US
+From: Krishna Kurapati <quic_kriskura@quicinc.com>
+In-Reply-To: <20240811-dwc3-refactor-v2-4-91f370d61ad2@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Hb7xCsL2sC1qB3aglQtyQeMS9rTytYnX
+X-Proofpoint-GUID: Hb7xCsL2sC1qB3aglQtyQeMS9rTytYnX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-19_16,2024-08-19_03,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1011
+ adultscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0 mlxlogscore=999
+ bulkscore=0 phishscore=0 mlxscore=0 impostorscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408190120
 
-Hi Dave,
 
-A few fixes for v6.11, see description below.
 
-The following changes since commit fe34394ecdad459d2d7b1f30e4a39ac27fcd77f8:
+On 8/12/2024 8:42 AM, Bjorn Andersson wrote:
+> From: Bjorn Andersson <quic_bjorande@quicinc.com>
+> 
+> The DWC3 IP block is handled by three distinct device drivers: XHCI,
+> DWC3 core and a platform specific (optional) DWC3 glue driver.
+> 
+> This has resulted in, at least in the case of the Qualcomm glue, the
+> presence of a number of layering violations, where the glue code either
+> can't handle, or has to work around, the fact that core might not probe
+> deterministically.
+> 
+> An example of this is that the suspend path should operate slightly
+> different depending on the device operating in host or peripheral mode,
+> and the only way to determine the operating state is to peek into the
+> core's drvdata.
+> 
+> The Qualcomm glue driver is expected to make updates in the qscratch
+> register region (the "glue" region) during role switch events, but with
+> the glue and core split using the driver model, there is no reasonable
+> way to introduce listeners for mode changes.
+> 
+> Split the dwc3 core platform_driver callbacks and their implementation
+> and export the implementation, to make it possible to deterministically
+> instantiate the dwc3 core as part of the dwc3 glue drivers and to
+> allow flattening of the DeviceTree representation.
+> 
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-  dt-bindings: display/msm: dsi-controller-main: Add SM7150
-(2024-07-03 05:57:35 -0700)
+...
 
-are available in the Git repository at:
+> -static int dwc3_probe(struct platform_device *pdev)
+> +struct dwc3 *dwc3_probe(struct platform_device *pdev, struct resource *res,
+> +			bool ignore_clocks_and_resets, void *glue)
+>   {
+>   	struct device		*dev = &pdev->dev;
+> -	struct resource		*res, dwc_res;
+> +	struct resource		dwc_res;
+>   	unsigned int		hw_mode;
+>   	void __iomem		*regs;
+>   	struct dwc3		*dwc;
+> @@ -2087,15 +2089,10 @@ static int dwc3_probe(struct platform_device *pdev)
+>   
+>   	dwc = devm_kzalloc(dev, sizeof(*dwc), GFP_KERNEL);
+>   	if (!dwc)
+> -		return -ENOMEM;
+> +		return ERR_PTR(-ENOMEM);
+>   
+>   	dwc->dev = dev;
+> -
+> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> -	if (!res) {
+> -		dev_err(dev, "missing memory resource\n");
+> -		return -ENODEV;
+> -	}
 
-  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-fixes-2024-08-19
+...
 
-for you to fetch changes up to 624ab9cde26a9f150b4fd268b0f3dae3184dc40c:
+> +static int dwc3_plat_probe(struct platform_device *pdev)
+>   {
+> -	struct dwc3	*dwc = platform_get_drvdata(pdev);
+> +	struct resource *res;
+> +	struct dwc3 *dwc;
+> +
+> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +	if (!res) {
+> +		dev_err(&pdev->dev, "missing memory resource\n");
+> +		return -ENODEV;
+> +	}
+>   
+> -	pm_runtime_get_sync(&pdev->dev);
+> +	dwc = dwc3_probe(pdev, res, false, NULL);
+> +	if (IS_ERR(dwc))
+> +		return PTR_ERR(dwc);
+> +
+> +	platform_set_drvdata(pdev, dwc);
 
-  drm/msm/adreno: Fix error return if missing firmware-name
-(2024-08-15 10:12:07 -0700)
+This setting of platform drvdata is redundant I believe. We already do 
+it in dwc3_probe.
 
-----------------------------------------------------------------
-Fixes for v6.11-rc5
-
-1) Fixes from the virtual plane series, namely
-   - fix the list of formats for QCM2290 since it has no YUV support
-   - minor fix in dpu_plane_atomic_check_pipe() to check only for csc and
-     not csc and scaler while allowing yuv formats
-   - take rotation into account while allocating virtual planes
-
-2) Fix to cleanup FB if dpu_format_populate_layout() fails. This fixes the
-   warning splat during DRM file closure
-
-3) Fix to reset the phy link params before re-starting link training. This
-   fixes the 100% link training failure when someone starts modetest while
-   cable is connected
-
-4) Long pending fix to fix a visual corruption seen for 4k modes. Root-cause
-   was we cannot support 4k@30 with 30bpp with 2 lanes so this is a critical
-   fix to use 24bpp for such cases
-
-5) Fix to move dpu encoder's connector assignment to atomic_enable(). This
-   fixes the NULL ptr crash for cases when there is an atomic_enable()
-   without atomic_modeset() after atomic_disable() . This happens for
-   connectors_changed case of crtc. It fixes a NULL ptr crash reported
-   during hotplug.
-
-6) Fix to simplify DPU's debug macros without which dynamic debug does not
-   work as expected
-
-7) Fix the highest bank bit setting for sc7180
-
-8) adreno: fix error return if missing firmware-name
-
-----------------------------------------------------------------
-Abhinav Kumar (4):
-      drm/msm/dp: fix the max supported bpp logic
-      drm/msm/dpu: move dpu_encoder's connector assignment to atomic_enable()
-      drm/msm/dp: reset the link phy params before link training
-      drm/msm: fix the highest_bank_bit for sc7180
-
-Dmitry Baryshkov (5):
-      drm/msm/dpu: don't play tricks with debug macros
-      drm/msm/dpu: cleanup FB if dpu_format_populate_layout fails
-      drm/msm/dpu: limit QCM2290 to RGB formats only
-      drm/msm/dpu: relax YUV requirements
-      drm/msm/dpu: take plane rotation into account for wide planes
-
-Rob Clark (1):
-      drm/msm/adreno: Fix error return if missing firmware-name
-
- drivers/gpu/drm/msm/adreno/adreno_gpu.c        |  2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c    |  4 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  4 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h        | 14 ++------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 20 +++++++++++++++++---
- drivers/gpu/drm/msm/dp/dp_ctrl.c               |  2 ++
- drivers/gpu/drm/msm/dp/dp_panel.c              | 19 ++++++++++---------
- drivers/gpu/drm/msm/msm_mdss.c                 |  2 +-
- 8 files changed, 37 insertions(+), 30 deletions(-)
+> +
+> +	return 0;
+> +}
+> +
 
