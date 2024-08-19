@@ -1,94 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-28927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 497899560F2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 03:50:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C08A956146
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 04:56:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 36D811C213C9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 01:50:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A92C280FE2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 02:56:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E784F1BC2F;
-	Mon, 19 Aug 2024 01:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 086BE4594D;
+	Mon, 19 Aug 2024 02:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="filQ5NM+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JQPENKy9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D47F8BF0;
-	Mon, 19 Aug 2024 01:49:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACFB45023;
+	Mon, 19 Aug 2024 02:55:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724032200; cv=none; b=rl5PDpS49ktv0jaEi5YWezeEGXbNEzYjmUnsh2FiKkRG4WWjhacyBTfp1uIptgNHwwJY/yELjfz35pWKGCFnroH305gACrvPOvSQUldyGowSyQu3i4XVMpS7vU+EbWtEgPBmQOihejuRW6Ysi6mpR4Ql7f/PzmGH/LuQt3SsfB4=
+	t=1724036158; cv=none; b=CY48X6cKEt34v4ovoMkM5SgQrCA0L+osYZxu0Z20FyT9+p0JMcmxOVqynUC5EXiBWmdq99Dnus2VQ0/SVazi9BjEy7TSDpKgXTOz2NIw5pA4BrOksu4+rXGiMRHyB3rufheDpe2jOBvf5lO9qD9xPA/qlEGwo3rmxpG8P9cwJH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724032200; c=relaxed/simple;
-	bh=tcbtkDE3V7EuBdyDRwwcYx7oLKNfCX+wAgKuyAaHwfY=;
+	s=arc-20240116; t=1724036158; c=relaxed/simple;
+	bh=vWBUX2Q0Jh17sBKhqhIany0Jno6QmeBeVh5y6THcdjU=;
 	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H5OucidxvSaJEfABnWpNKcS4LoLVkDi/n2K/yshsnrJCvBLRQh3t84HjDAEGYeMTnOI6AzIOOpXIeeKr0UA+d/SBHjAoHdLt3wtVzv1Vex+INNEHwBhNiMKLy4iDRgEUULFZbCLCulow3GjQ72WAC5aSYWu1kyZSQ2eC07k5tB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=filQ5NM+; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=DQ3gxFWKkhTvQJWQuHaBm8gK+IG9BJlO1EuDBWPsdEkisqdl1gSGSlNM8zf5mc8vRJnPmdTSKN6WOTd1BnJUgL/ywDk6lUr83fY6dAup13sJKmxcfOlKOrXkuKGKbqWj72PXiC8RFF5167WZs1i8tYFpqXeGNTTiY9WuUxuKFck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JQPENKy9; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47IMvHRu002666;
-	Mon, 19 Aug 2024 01:49:27 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47INVrFW011055;
+	Mon, 19 Aug 2024 02:55:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	B/oAQdAlYc+fVzegRfsOmC0hhMJRAvBOn3QYApnrE10=; b=filQ5NM+pgDf/HmF
-	bH/Wm2S3xDJzIZ/+lNTsHanHTfSH6veE49CIybDziOpSV4ZPztkQQtvz//MjMSqT
-	Lhn49T38cqeRCvm3MmOZWE334SvxyS5lxQh4isK5953xZO9A4zA/1Ha69dY/wAxm
-	RrZtYIl75GjbfVIJ6SFOjVzgUkWVk+Y6cr68q+pM3zq0sYDG9WkGzWlwJAJ6xWZb
-	HD21hVy+odr30hvc6b3/NUc29mMfHPZeuB1NSG9f7CT531KWaVOLl8nhsgRhjrZE
-	GG61trKndwcKS+bszPdB9dE+CNabfW+UmJ/rGFBTuBxE9hZa3K/RiWdi4RVH9jNh
-	RthmtA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 412m32jn6c-1
+	fBeJdG1kMGEqi94+veSuqJgTQTyfpK4JMn9oHuLn0rQ=; b=JQPENKy9XdTj2yk8
+	7gkD1ocHC9trRE23Bsz8Fg9XF7vyuI2QSNwlh8S1Es9IJ/HtsdP/1KVCVxc6ABlD
+	ITRNvU5yJmLFcSFoPK3tZrB27QGjdKanGYnUicaNIsdsKvT6un5XszoK3Gp5Kdwk
+	jrHNtzVijtjJkg3EzZO5xdoPtFVo00VPpvam50W+9NbHDvgMRyomfoPOADn28kkf
+	T8jUHpfIj16MHNTMOB0/rFrWOL91rdN6HpFgL/zjGBCDhI516gqsE6rILbKGS6PZ
+	VinB7n1NpTymOA14J8kK7Cnof/3FGdJEvjWvMBjqQeKte1bjBRDXrsuNEtgwhInm
+	AVItlA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 412m872rtg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 19 Aug 2024 01:49:26 +0000 (GMT)
+	Mon, 19 Aug 2024 02:55:29 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47J1nP63011694
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47J2tSaw006632
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 19 Aug 2024 01:49:25 GMT
-Received: from jiegan-gv.ap.qualcomm.com (10.80.80.8) by
+	Mon, 19 Aug 2024 02:55:28 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 18 Aug 2024 18:49:19 -0700
-Date: Mon, 19 Aug 2024 09:49:15 +0800
-From: JieGan <quic_jiegan@quicinc.com>
-To: Rob Herring <robh@kernel.org>
-CC: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>,
-        "Alexander
- Shishkin" <alexander.shishkin@linux.intel.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        Tingwei Zhang
-	<quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        "Tao
- Zhang" <quic_taozha@quicinc.com>,
-        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>
-Subject: Re: [PATCH v3 3/5] dt-bindings: arm: Add Coresight TMC Control Unit
- hardware
-Message-ID: <ZsKkm/Pz0GYtH2Gl@jiegan-gv.ap.qualcomm.com>
-References: <20240812024141.2867655-1-quic_jiegan@quicinc.com>
- <20240812024141.2867655-4-quic_jiegan@quicinc.com>
- <20240818142834.GA27754-robh@kernel.org>
+ 15.2.1544.9; Sun, 18 Aug 2024 19:55:28 -0700
+Date: Sun, 18 Aug 2024 19:55:27 -0700
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Manivannan Sadhasivam <manisadhasivam.linux@gmail.com>
+CC: <regressions@lists.linux.dev>, Kyoungrul Kim <k831.kim@samsung.com>,
+        "James.Bottomley@HansenPartnership.com"
+	<James.Bottomley@hansenpartnership.com>,
+        "martin.petersen@oracle.com"
+	<martin.petersen@oracle.com>,
+        "bvanassche@acm.org" <bvanassche@acm.org>,
+        "Ed.Tsai@mediatek.com" <Ed.Tsai@mediatek.com>,
+        Minwoo Im
+	<minwoo.im@samsung.com>,
+        "linux-scsi@vger.kernel.org"
+	<linux-scsi@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH V4] scsi: ufs: core: Check LSDBS cap when !mcq
+Message-ID: <ZsK0H8RanqNfG9HJ@hu-bjorande-lv.qualcomm.com>
+References: <CGME20240709232520epcms2p8ebdb5c4fccc30a6221390566589bf122@epcms2p8>
+ <20240709232520epcms2p8ebdb5c4fccc30a6221390566589bf122@epcms2p8>
+ <Zr/XrH1hsp0seP2Q@hu-bjorande-lv.qualcomm.com>
+ <20240817055508.iomq7c4wvsn5gvj3@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,152 +86,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240818142834.GA27754-robh@kernel.org>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+In-Reply-To: <20240817055508.iomq7c4wvsn5gvj3@thinkpad>
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: FgV4sntAx5nC7_nJHd9ivOvQFGfo_Asd
-X-Proofpoint-ORIG-GUID: FgV4sntAx5nC7_nJHd9ivOvQFGfo_Asd
+X-Proofpoint-GUID: IwdvigNO0_B1rclqpJU8u037n8e0damB
+X-Proofpoint-ORIG-GUID: IwdvigNO0_B1rclqpJU8u037n8e0damB
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-18_24,2024-08-16_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
- suspectscore=0 priorityscore=1501 phishscore=0 bulkscore=0
- lowpriorityscore=0 impostorscore=0 clxscore=1015 mlxlogscore=999
- spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408190011
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ mlxlogscore=999 priorityscore=1501 adultscore=0 lowpriorityscore=0
+ clxscore=1011 bulkscore=0 suspectscore=0 spamscore=0 impostorscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408190020
 
-On Sun, Aug 18, 2024 at 08:28:34AM -0600, Rob Herring wrote:
-> On Mon, Aug 12, 2024 at 10:41:39AM +0800, Jie Gan wrote:
-> > Add binding file to specify how to define a Coresight TMC
-> > Control Unit device in device tree.
+On Sat, Aug 17, 2024 at 11:25:08AM +0530, Manivannan Sadhasivam wrote:
+> On Fri, Aug 16, 2024 at 03:50:20PM -0700, Bjorn Andersson wrote:
+> > On Wed, Jul 10, 2024 at 08:25:20AM +0900, Kyoungrul Kim wrote:
+> > > if the user sets use_mcq_mode to 0, the host will try to activate the
+> > > lsdb mode unconditionally even when the lsdbs of device hci cap is 1. so
+> > > it makes timeout cmds and fail to device probing.
+> > > 
+> > > To prevent that problem. check the lsdbs cap when mcq is not supported
+> > > case.
+> > > 
+> > > Signed-off-by: k831.kim <k831.kim@samsung.com>
+> > > ---
+> > > Changes to v1: Fix wrong bit of lsdb support.
+> > > Changes to v2: Fix extra space and wrong commit messeage.
+> > > Changes to v3: Close missing parenthesis and fix grammatical error.
 > > 
-> > It is responsible for controlling the data filter function
-> > based on the source device's Trace ID for TMC ETR device.
-> > The trace data with that Trace id can get into ETR's buffer
-> > while other trace data gets ignored.
+> > This causes the probe of the UFSHCD in Qualcomm SM8550 MTP to fail with
+> > -EINVAL.
 > > 
-> > Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
-> > ---
-> >  .../bindings/arm/qcom,coresight-ctcu.yaml     | 79 +++++++++++++++++++
-> >  1 file changed, 79 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+> > [    6.132937] ufshcd-qcom 1d84000.ufs: Adding to iommu group 4
+> > [    6.142509] ufshcd-qcom 1d84000.ufs: freq-table-hz property not specified
+> > [    6.149843] ufshcd-qcom 1d84000.ufs: ufshcd_populate_vreg: Unable to find vccq2-supply regulator, assuming enabled
+> > [    6.209794] ufshcd-qcom 1d84000.ufs: ufshcd_init: failed to initialize (legacy doorbell mode not supported)
+> > [    6.226571] ufshcd-qcom 1d84000.ufs: error -EINVAL: Initialization failed with error -22
+> > [    6.348770] ufshcd-qcom 1d84000.ufs: error -EINVAL: ufshcd_pltfrm_init() failed
+> > [    6.363203] ufshcd-qcom 1d84000.ufs: probe with driver ufshcd-qcom failed with error -22
 > > 
-> > diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
-> > new file mode 100644
-> > index 000000000000..7a9580007942
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
-> > @@ -0,0 +1,79 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/arm/qcom,coresight-ctcu.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: CoreSight TMC Control Unit
-> > +
-> > +maintainers:
-> > +  - Yuanfang Zhang <quic_yuanfang@quicinc.com>
-> > +  - Mao Jinlong <quic_jinlmao@quicinc.com>
-> > +  - Jie Gan <quic_jiegan@quicinc.com>
-> > +
-> > +description:
-> > +  The Coresight TMC Control unit controls various Coresight behaviors.
-> > +  It works as a helper device when connected to TMC ETR device.
-> > +  It is responsible for controlling the data filter function based on
-> > +  the source device's Trace ID for TMC ETR device. The trace data with
-> > +  that Trace id can get into ETR's buffer while other trace data gets
-> > +  ignored.
-> 
-> Nowhere is TMC defined.
-The Coresight TMC control unit(CTCU) connected to Coresight TMC device via replicator and
-works as a helper device to TMC device.
-
-The in-ports listed below illustrate their connection to TMC devices.
-
-> 
-> > +
-> > +properties:
-> > +  compatible:
-> > +    enum:
-> > +      - qcom,sa8775p-ctcu
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  clocks:
-> > +    maxItems: 1
-> > +
-> > +  clock-names:
-> > +    items:
-> > +      - const: apb
-> > +
-> > +  in-ports:
-> 
-> Use 'ports' unless you have both in and out ports.
-The ‘in-ports’ and ‘out-ports’ properties will be parsed by ‘of_coresight_get_port_parent’
-and their relationships to other devices will be stored in the coresight_platform_data structure.
-
-for example:
-struct coresight_platform_data {
-	int nr_inconns;
-	int nr_outconns;
-	struct coresight_connection **out_conns;
-	struct coresight_connection **in_conns;
-};
-
-https://elixir.bootlin.com/linux/v6.11-rc4/source/drivers/hwtracing/coresight/coresight-platform.c#L147
-
-> 
-> > +    $ref: /schemas/graph.yaml#/properties/ports
-> > +
-> > +    patternProperties:
-> > +      '^port(@[0-7])?$':
-> > +        description: Input connections from CoreSight Trace bus
-> > +        $ref: /schemas/graph.yaml#/properties/port
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - in-ports
-> > +
-> > +additionalProperties: false
-> > +
-> > +examples:
-> > +  - |
-> > +    ctcu@1001000 {
-> > +        compatible = "qcom,sa8775p-ctcu";
-> > +        reg = <0x1001000 0x1000>;
-> > +
-> > +        clocks = <&aoss_qmp>;
-> > +        clock-names = "apb";
-> > +
-> > +        in-ports {
-> > +            #address-cells = <1>;
-> > +            #size-cells = <0>;
-> > +
-> > +            port@0 {
-> > +                reg = <0>;
-> > +                ctcu_in_port0: endpoint {
-> > +                    remote-endpoint = <&etr0_out_port>;
-> > +                };
-> > +            };
-> > +
-> > +            port@1 {
-> > +                reg = <1>;
-> > +                ctcu_in_port1: endpoint {
-> > +                    remote-endpoint = <&etr1_out_port>;
-> > +                };
-> > +            };
-> > +        };
-> > +    };
-> > -- 
-> > 2.34.1
+> > #regzbot introduced: 0c60eb0cc320
+> > #regzbot title: scsi: ufs: Qualcomm SM8550 MTP UFSHCD probe failing
 > > 
 > 
+> Fix got merged for v6.11: https://lore.kernel.org/linux-scsi/20240816-ufs-bug-fix-v3-0-e6fe0e18e2a3@linaro.org/
+> 
 
-Thanks,
-Jie
+This seems to be included in v6.11-rc4, but I see the same issue still.
+Perhaps I'm doing something wrong?
+
+Regards,
+Bjorn
+
+> - Mani
+> 
+> -- 
+> மணிவண்ணன் சதாசிவம்
 
