@@ -1,125 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-28937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB82C95639E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 08:23:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A61959563A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 08:23:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A15301F219A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 06:23:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 265731F21C62
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 06:23:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E2431552FA;
-	Mon, 19 Aug 2024 06:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D25D6152DE7;
+	Mon, 19 Aug 2024 06:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zc0CKQhL"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RqeJoTZQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A3D14D29D;
-	Mon, 19 Aug 2024 06:22:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB44211CA0;
+	Mon, 19 Aug 2024 06:23:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724048547; cv=none; b=n6W+hS5PhomAdRbMjRfBHdXOSkI8qjHND1b2qM16rRTXCMtmJWdVT83eRbLPPODJ+rd2TU+W2SD8fTrH0m0RHZ6Yt0lIibZavGel3kVRitDK9hGBIDMnK50OXpZSVGTg1w2K4z9nxk+uhdGV36X1PgHFLO/c8qpMVddwKxCCG4E=
+	t=1724048627; cv=none; b=bC9ckywqkjT5K69dP1D8t+UPkC/weJPI+rQ3ZzvWE50vea7g4YwhWuIhFLI5AKMgBmlLAo+xspT00qnskQFe/pecbsRvXP0NMkeObH09nX9riV0KG4PKsVXxdaMtIpIxEtP107GUzjk0KVSrx6Hc6p3nwZw7+3ngcEyXWVDimRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724048547; c=relaxed/simple;
-	bh=EIbCQQocBdXcoRQFTBtr2H5aZ+0dOv0sdrVE7kaNGQg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fJitVzhJm1p4bicPQyPkDmCxQloyQEbT1JCp2bybQacQfQVFzpe7U/tAQ0m+jL0QztIhvg89vQJouOW5uUMbumNeeRJEzbr4TkZRJb79z5Pyu6SMwTQB66888cK/Jh/DnkAlJ2rsF3VOAyayGztlo1eraUhSWfWrOyNReCiwdwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zc0CKQhL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF367C4AF09;
-	Mon, 19 Aug 2024 06:22:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724048547;
-	bh=EIbCQQocBdXcoRQFTBtr2H5aZ+0dOv0sdrVE7kaNGQg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Zc0CKQhLlT/nFdCu19CAjmuERQFLot38AVvPuhqwvuypPaXwrV1EDsz2sJV8nWTUL
-	 yrSVSFAqvBQPlRKtPvqf5qDlU5PgfMe7Atzrn0yWCV+6REHEj0jUWJIMAkFM+fIjx6
-	 0MF4soOoNzAIf7dqJ1qPvUqLj+JYBI0V9F8kl8A9d2sDx4QhBebFBkZv/ccxkawR+j
-	 JyhCgZmZal24zFjzRrgJJEZb0WvobasEdN2xCGWa+AlMtgSEHvN5fz5/DR0KJnKXnA
-	 6+ifzlTWz5Dp+R6I+PCKcDozt0f/4+9+rib3ur4fDQN3UNkwDHA9bSGA8twdepgdA9
-	 hcvpRTqB1PlAQ==
-Message-ID: <c9144724-9bdd-42a0-9d9f-dcae5779e863@kernel.org>
-Date: Mon, 19 Aug 2024 08:22:18 +0200
+	s=arc-20240116; t=1724048627; c=relaxed/simple;
+	bh=9Rpx+bkgwpWHs5ORc7x75ZDWXqWWicrNMC/U+CEOevY=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=iPO19mTUF2c9oaEttqf+MUKft6FXMhfkB0nrbrViTuZBEPQsQ+wYmMBPLmuPNLzhH+uS8U/rAjgKCA66p6tIpqRzL6ELLCna+qUKEEPb+y0ypK73UiKBf28ZNHqH1s9MjPrjBB5MJ5NrrXn2dZsArjj93AAFV5i6vrsf6E/4URc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RqeJoTZQ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47INBB7Y014962;
+	Mon, 19 Aug 2024 06:23:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:date:from:message-id:subject:to; s=qcppdkim1; bh=n9szHIALgJMA
+	7bJHTvtGr26RNfQn4jp8/XBaU45CYds=; b=RqeJoTZQHhogJbkjfXoc1Z6xCSEP
+	ohVAwCEJpg8r2w2w2QtPVsgQFL3C44eGU/xOAnCMPHLTmvahJeSaqIBGAJj3wL7A
+	aG4RBzlZi8NKoQhgIqL+oSa+KB4gfKRLoTrFI/8teG0x6Z6msjfY1uGi/WsdQq6c
+	WwImgvPw+00qhpJV2I0uyRegBdULMWIUV607+LQDSJTIS8vWJHSWRYfiCau70t0D
+	7LcrCSq6X0k1mOodE3v47+p5fNev5/IVKoyJkhUlgrEAvgI+TVjhYz/ZoBh/Yg3d
+	oZ4aAeLT/cKN4OXH6wrx/SlW3BcJ+My6x8AR2Cwe0wQJYmYG4UqFPDKs0A==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 412h7n3cvd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 19 Aug 2024 06:23:35 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 47J6Gjuu004480;
+	Mon, 19 Aug 2024 06:23:32 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 412mxkapt6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Mon, 19 Aug 2024 06:23:31 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 47J6NFiX009384;
+	Mon, 19 Aug 2024 06:23:31 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-dikshita-hyd.qualcomm.com [10.213.110.13])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 47J6NVIY009412;
+	Mon, 19 Aug 2024 06:23:31 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 347544)
+	id 800C4359D; Mon, 19 Aug 2024 11:53:30 +0530 (+0530)
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+To: "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <len.brown@intel.com>,
+        Pavel Machek <pavel@ucw.cz>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>
+Subject: [PATCH v3 0/2] add device managed version of dev_pm_domain_attach|detach_list()
+Date: Mon, 19 Aug 2024 11:52:44 +0530
+Message-Id: <1724048566-5035-1-git-send-email-quic_dikshita@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: S1x7QEFE0pmVZ_ArBlLWtxFxodJsuzf4
+X-Proofpoint-GUID: S1x7QEFE0pmVZ_ArBlLWtxFxodJsuzf4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-19_02,2024-08-19_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 impostorscore=0 bulkscore=0 malwarescore=0
+ priorityscore=1501 clxscore=1015 phishscore=0 mlxlogscore=999 mlxscore=0
+ spamscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408190045
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/10] dt-bindings: clock: qcom,sm8450-videocc: Add
- SM8475 VIDEOCC bindings
-To: Danila Tikhonov <danila@jiaxyga.com>, andersson@kernel.org,
- mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, vkoul@kernel.org,
- vladimir.zapolskiy@linaro.org, quic_jkona@quicinc.com,
- dmitry.baryshkov@linaro.org, konradybcio@kernel.org, quic_tdas@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux@mainlining.org
-References: <20240818204348.197788-1-danila@jiaxyga.com>
- <20240818204348.197788-8-danila@jiaxyga.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240818204348.197788-8-danila@jiaxyga.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-On 18/08/2024 22:43, Danila Tikhonov wrote:
-> Add new entry to the SM8450 dt-bindings for the SM8475 clocks.
-> 
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
-> ---
+These patches add the devres-enabled version of
+dev_pm_domain_attach|detach_list in pm domain framework and
+use the same APIs in venus driver.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+If any client drivers use devm_pm_domain_attach_list() to
+attach the PM domains, devm_pm_domain_detach_list() will be
+invoked implicitly during remove phase.
 
-Best regards,
-Krzysztof
+Changes since v2:
+ - made devm_pm_domain_detach_list as static and no
+   longer export this API.
+ - added null checks for num_pds to avoid adding a 
+   devres callback for the same.
+ - added bryan's reviewed-by from v1.
+
+Changes since v1:
+ - fixed the warnings reported by kernel test robot.
+ - added stub functions for !CONFIG_PM case.
+ - removed un-necessasry type casting.
+ - fixed the issue with remove sequence.
+
+Dikshita Agarwal (2):
+  PM: domains: add device managed version of
+    dev_pm_domain_attach|detach_list()
+  media: venus: use device managed APIs for power domains
+
+ drivers/base/power/common.c                    | 45 ++++++++++++++++++++++++++
+ drivers/media/platform/qcom/venus/pm_helpers.c |  5 +--
+ include/linux/pm_domain.h                      | 11 +++++++
+ 3 files changed, 57 insertions(+), 4 deletions(-)
+
+-- 
+2.7.4
 
 
