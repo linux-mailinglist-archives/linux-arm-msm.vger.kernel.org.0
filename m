@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3203D9563A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 08:23:17 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FB279563B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 08:24:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B33D41F2194D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 06:23:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 11AFAB227C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 06:24:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4FD214F9E7;
-	Mon, 19 Aug 2024 06:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27B9B157E91;
+	Mon, 19 Aug 2024 06:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nacOwQ2e"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LshWfr0P"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9692711CA0;
-	Mon, 19 Aug 2024 06:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE066157A72;
+	Mon, 19 Aug 2024 06:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724048590; cv=none; b=Db5MboNXCckJ7LTnIIm+RIQzQ8OyL+1++o1vUacwuhgpwA4k/eJvL+sn1gK1yox39lKBNI77VCvRLuMF2RDt1wDJf+1gofc2TUAu6Uwl6MoasWM7KcIBdwZdNrAyzRXp+C/vH40EQPV6SQBtwCMY48VJJcXKIYB+nc00GrohwYw=
+	t=1724048634; cv=none; b=FMhCQJC6A8CRycB7nlIE75My94TTueWi5GIMk8smAIGpSZdxKZZDiSWb8GzS8EWlBnBKHkZz+3iVgOOMw1jQ8kwSTTEplyeY9u9weJ4SsJJ0WAEHKmdPQekPKRP/aegjxp4YIeRstV36bi8bSvxewburBWoHj8aUbPg97fG5u80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724048590; c=relaxed/simple;
-	bh=bC7T0p+tHuY2kO+MKQcdN5kNbzdUQRWUyWZzf5XlOVw=;
+	s=arc-20240116; t=1724048634; c=relaxed/simple;
+	bh=I7F459gF3MjeN0BbQOfEzkBzEnWMxCo8FHePbQFha8A=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UvOo6lJOENLx0KmSFBPTiVBr/dLMpVzpHlUwkQbu31O2KGw8y9L1I/UinDNDc2sxQu+hIcAEQlb7EVhYjmyiYt/64TCD6MridHbStQU522axZn3uP387C9G1BVseeLjXRbc4UleXLmRZHkQsDxmo48xHJTy1PHjT3FiNVlwKHpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nacOwQ2e; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4082C32782;
-	Mon, 19 Aug 2024 06:23:03 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=X5TRMAwZh0fEFIQa3UyJdTCDQJEbOpb8upqmKOxRhHET6WbnyFGcGAgYiLm/M0ZTv4LFkECTgW3G8xF9ALysLSI0YrfSJBDABYQNZ4XWe8bf9WUpIrWFKjRiZ42EYaqI5PsL+kmT7yIZP2L6qI5xXFsebgWhPbktN9MDWbWe9Mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LshWfr0P; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06372C4AF10;
+	Mon, 19 Aug 2024 06:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724048590;
-	bh=bC7T0p+tHuY2kO+MKQcdN5kNbzdUQRWUyWZzf5XlOVw=;
+	s=k20201202; t=1724048633;
+	bh=I7F459gF3MjeN0BbQOfEzkBzEnWMxCo8FHePbQFha8A=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nacOwQ2eT8pFcRuwvbqx9akyRegBd75fMhn0jof4YbjXGT+CeZ7t8N91hTZXjSBpk
-	 OsnTkgMriDbwqBBjwi+TSHrDrUDVs2ZohOij7nY+u5CsCgtT1ieuCTSbH6JJVhDWBa
-	 IxI8pxunczaRXQ4GSYuVm3ev/se0HZ2iYqXbpHd9bzWPpO3qA9GSHBo90sGl4W+7te
-	 s9Fti8xfiCaEhE6HbeAHiufbyvXLtymKvH2ss+pvW2s+c7RodxMz8RreYjK3v5kBmM
-	 bkz3IMC92zMy/c1widfTMYcOyl3Ksa1L6M2moWqo9AR1owp3/iQR0e8TBXjBa6dOhK
-	 rujgSCTOt4zdg==
-Message-ID: <3f85ad2e-4472-40e0-baf9-420e443107aa@kernel.org>
-Date: Mon, 19 Aug 2024 08:23:01 +0200
+	b=LshWfr0PGqBsqrkDxovrejrkHbFmOtHGehhG8cDVXEBYrDyiujURkSY1ACjvTVK0Z
+	 Pd7cdjmF9rnQFNgYQF6q69CP9OnZLPtuEt4B6ETwj1NUyl7JTQzAgssOHZR+dHoup/
+	 0wSfFW3JaMzS86NrlNvDTSlf/UPyT4fRwsrJrg8hawq03dCi7AxVOEWTBngYQfObyb
+	 aLEcIRnweVMDWGpEO6UhT2JiVQzKJvb2M7b09JDKpls7ToI099zlJy/2IybHDVwL9O
+	 7W1NWkWo5ETxoq2xRlcPae55TVL6KoYV0qwfh6H67LlDK0sW79uO4VEM8tQp0i+0Uw
+	 Jv+ozKvrYEDaA==
+Message-ID: <fd8b9c6c-447d-4186-a471-29cae3a4e388@kernel.org>
+Date: Mon, 19 Aug 2024 08:23:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/10] dt-bindings: clock: qcom,sm8450-videocc: Add
- SM8475 VIDEOCC bindings
+Subject: Re: [PATCH v2 09/10] dt-bindings: clock: qcom,sm8450-camcc: Add
+ SM8475 CAMCC bindings
 To: Danila Tikhonov <danila@jiaxyga.com>, andersson@kernel.org,
  mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
  krzk+dt@kernel.org, conor+dt@kernel.org, vkoul@kernel.org,
@@ -61,7 +61,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux@mainlining.org
 References: <20240818204348.197788-1-danila@jiaxyga.com>
- <20240818204348.197788-8-danila@jiaxyga.com>
+ <20240818204348.197788-10-danila@jiaxyga.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,7 +107,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240818204348.197788-8-danila@jiaxyga.com>
+In-Reply-To: <20240818204348.197788-10-danila@jiaxyga.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
@@ -115,8 +115,10 @@ On 18/08/2024 22:43, Danila Tikhonov wrote:
 > Add new entry to the SM8450 dt-bindings for the SM8475 clocks.
 > 
 > Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> ---
+>  Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml | 1 +
 
-Why required-opps are not a required property? Did you read entire binding?
+Same questions.
 
 Best regards,
 Krzysztof
