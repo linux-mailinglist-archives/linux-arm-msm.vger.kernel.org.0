@@ -1,198 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-28962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AC499567C3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 12:05:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F9DB9567D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 12:10:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 95CD2B20837
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 10:05:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E35C71F22303
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 10:10:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AF4615ADB2;
-	Mon, 19 Aug 2024 10:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37E6315ECFB;
+	Mon, 19 Aug 2024 10:10:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PY8sP2Hp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t4sKtkWJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6A6155337
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 10:04:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040CE15ECF8;
+	Mon, 19 Aug 2024 10:10:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724061897; cv=none; b=WQMbOq4OJxbtAMUeJut8qYuJiMcGP5+gR0LJTm3pEPi0PGjCoXmgIjZxHsBJxOeDOD3GuoXbO9YdeSk78sxcPYGbR3i4Vmx+2G37VQj3X4bwiDZJw7jsevqp8vChfkEqQzrbeH97CGaSQFAst8KAQR6fE+A8uniqfKWh1rL8Jt4=
+	t=1724062208; cv=none; b=OhoIOZtHIGAdCG75QN+BBS2KylT+gIF+IuVKWFRo82yXfYd2mX9fMdpCDaXWrgmnKe2cbCp/DeZiDPnhGPmZZtgxOd+YbRvpjJsNXgDDdYZwG/omIIqZFu/smpKc2iKQRLdNRhs67hPOyovu8Jvvj+YQuE/SrgqpKVYqlH76sz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724061897; c=relaxed/simple;
-	bh=xoT8WHk3WQmUClK7K7b/s/MGeeLj8XCH4SR68t7sZg0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QBhzQzhJEizsl2b7+Yjxygxkoxdbk5KqJ0IT6h5ks3gRNs6UW5gn9B45Dlv7bYVz6q3bjmCsJnBsVSJdIN+EzNWr2srcXvKVIfNwO5i2F69s1cyWql71pV6LAljMVqHyUX6d0s7kPErPoH0xhkNrYZZb76CJeEN48G1FCcBNz1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PY8sP2Hp; arc=none smtp.client-ip=209.85.219.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e0ea24477f0so4348331276.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 03:04:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724061895; x=1724666695; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=e1Ca1aEMxVbK/mwEr3WDL/uAexipVpTA2uL0ddyloYs=;
-        b=PY8sP2HpePQO8GpReSqZkOmsK5FbmPXSAXeBmd8CCPaUYhzW+v9pdnrryrxc/rbtyY
-         EQhocheYm+V08MFqtBKNixjGwNxjKgfU8LF+KxheTYdN7kk8Y4P2ECGJ/XW6xIhozTht
-         Z4W+ZlOGhH10A3C/nk7KvgBz0r7UP5R5huugjI31p8JVOpLqlA54TAOZRlexnKgxykPa
-         ugHEbvYX0XLzmamZ3NnV4idtaS2RPXbV6riSTsMSVeqQlPeGeqLhRLBcULHup1wPHKBq
-         81Me8bxafBmRoyzx5tXYY8ylAsUlNNxehGmQZ0iymhRzZI2LYwauqC1cCX2oVBKYqIqu
-         fqTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724061895; x=1724666695;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=e1Ca1aEMxVbK/mwEr3WDL/uAexipVpTA2uL0ddyloYs=;
-        b=BQCucsmbdDvEMTZ66LBFuAT63lCr5D1n3StP67xajH19rdW3kmu4m+zB7UY23bUyK3
-         Jo5Azkeh4ElbP3K5mO7FGmMf8Hb49Wr6nKgyTF2zECYWnPGPsPM5duUXfHp3ogGblaWx
-         JxVGR7Xs7mDvBi+4iOVS0UeXUWbJL5TOD6yfoDeSQkbcVQXHdwoT6OwwRKvKjDQAmprL
-         J4TFALk7xVy318A6tXCMB4tbmty1BpsN2PjMHv9OOWkpGhwzwYx+9VsM2jGEIXQul80T
-         uUMuUdyv6hRqb3zDGdIco0QfA8qJRk54ftznbyUEEbJ00n0XrTAmI4zC4qhpH5dvFpQe
-         btKA==
-X-Forwarded-Encrypted: i=1; AJvYcCXf8A1Jo25gzNfAeQjcvJJ45uM45b6eVfIfC7V1Zxx+UE903T73J++ChXfCeMyeJGISI0nH/SEXWJMGS34m4eMHh6eKBuyZ9NRk6ToQEA==
-X-Gm-Message-State: AOJu0Yw3KMzzYouCBtV50c7E59P0s5uDXOmbJ4M5Wclc8E4M+qtAcOSC
-	Fw+gGNjM4lrX/u9WXpUDZLGrGfqjcmBIyNFmT4Mf4GOZ+tnmZn7OMOBdoyD5BmxDLmwvArx9X5l
-	hPxU+VFxXfhhP/gfao/nCNkwdrwYqcHoEybiQZ24AroNdPmlO6TU=
-X-Google-Smtp-Source: AGHT+IHbPw975p5St5ukxgiGIy4CD4Vc8ysEaghu4/as749NoeR4PFK5yZ2MogHwI+n8JQDVO1DFvdB/CFAvp9O9pSA=
-X-Received: by 2002:a05:6902:1687:b0:e13:c7a1:4a72 with SMTP id
- 3f1490d57ef6-e13c7a15d8dmr9565396276.12.1724061895158; Mon, 19 Aug 2024
- 03:04:55 -0700 (PDT)
+	s=arc-20240116; t=1724062208; c=relaxed/simple;
+	bh=MqrpAk0V4swle/LX6Ozj2eaNefXVewFamWFL4cNI//U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ka1fO9xq9DUyrk8mpT2ta6VG/598Ur4avKFJs+/wP2cxI3KhH1eInT1ZOUZ5RMN1uhtxvRYEk9OEUhw/eAbyaGCV0RoYxacsCuggBXfXpbfUgQ9LYSjWFIC6idXRw8NUyIk4VbMnQ2UR+1KUcqHR0nEkaLIoy83wKM4d3qKvPQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t4sKtkWJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DADC4AF0C;
+	Mon, 19 Aug 2024 10:10:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724062207;
+	bh=MqrpAk0V4swle/LX6Ozj2eaNefXVewFamWFL4cNI//U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=t4sKtkWJVVCgI2rS4IoPvGbNm65zpijEGUb87xPR92lTxJWadFrmYGp17FlT5BmMw
+	 Raoy/HAEGKk6MiWKgewOFVKgiJ2Cks7Lbo4X3E6B75qiQamcZFSjPoplIQUM3UnUkp
+	 H1Ws0m0vTihHLcXVVp81Y9rj+9UfHfnxT50hqT318+xGVFZ9VlfVqT0uh6uN41KJ7y
+	 oMjgxN2lcg1W3WjJkP6R1gvbtB4nOvxO7hg10DYA4/00n/I8q8wKtdd/Du9hjO7/Ma
+	 Px3EMt9mQEHUvD19cbuoHmbg2nwnntQpkhG88CuF/Z1kGVqVLcdkuirtDdavsBQItj
+	 LvZ3bGVz3R7KQ==
+Date: Mon, 19 Aug 2024 13:09:52 +0300
+From: Mike Rapoport <rppt@kernel.org>
+To: Elliot Berman <quic_eberman@quicinc.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Fuad Tabba <tabba@google.com>, David Hildenbrand <david@redhat.com>,
+	Patrick Roy <roypat@amazon.co.uk>, qperret@google.com,
+	Ackerley Tng <ackerleytng@google.com>, linux-coco@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org, kvm@vger.kernel.org
+Subject: Re: [PATCH RFC 3/4] mm: guest_memfd: Add option to remove guest
+ private memory from direct map
+Message-ID: <ZsMZ8C2lnpMW+BT5@kernel.org>
+References: <20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com>
+ <20240805-guest-memfd-lib-v1-3-e5a29a4ff5d7@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <1724048566-5035-1-git-send-email-quic_dikshita@quicinc.com> <1724048566-5035-2-git-send-email-quic_dikshita@quicinc.com>
-In-Reply-To: <1724048566-5035-2-git-send-email-quic_dikshita@quicinc.com>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Mon, 19 Aug 2024 12:04:18 +0200
-Message-ID: <CAPDyKFroZ+E9+Nk6+H1A5xZDv=HpcUAfnYPCXJot1NiZZci6gQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] PM: domains: add device managed version of dev_pm_domain_attach|detach_list()
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240805-guest-memfd-lib-v1-3-e5a29a4ff5d7@quicinc.com>
 
-On Mon, 19 Aug 2024 at 08:23, Dikshita Agarwal
-<quic_dikshita@quicinc.com> wrote:
->
-> Add the devres-enabled version of dev_pm_domain_attach|detach_list.
-> If client drivers use devm_pm_domain_attach_list() to attach the PM domains,
-> devm_pm_domain_detach_list() will be invoked implicitly during remove phase.
->
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+On Mon, Aug 05, 2024 at 11:34:49AM -0700, Elliot Berman wrote:
+> This patch was reworked from Patrick's patch:
+> https://lore.kernel.org/all/20240709132041.3625501-6-roypat@amazon.co.uk/
+> 
+> While guest_memfd is not available to be mapped by userspace, it is
+> still accessible through the kernel's direct map. This means that in
+> scenarios where guest-private memory is not hardware protected, it can
+> be speculatively read and its contents potentially leaked through
+> hardware side-channels. Removing guest-private memory from the direct
+> map, thus mitigates a large class of speculative execution issues
+> [1, Table 1].
+> 
+> Direct map removal do not reuse the `.prepare` machinery, since
+> `prepare` can be called multiple time, and it is the responsibility of
+> the preparation routine to not "prepare" the same folio twice [2]. Thus,
+> instead explicitly check if `filemap_grab_folio` allocated a new folio,
+> and remove the returned folio from the direct map only if this was the
+> case.
+> 
+> The patch uses release_folio instead of free_folio to reinsert pages
+> back into the direct map as by the time free_folio is called,
+> folio->mapping can already be NULL. This means that a call to
+> folio_inode inside free_folio might deference a NULL pointer, leaving no
+> way to access the inode which stores the flags that allow determining
+> whether the page was removed from the direct map in the first place.
+> 
+> [1]: https://download.vusec.net/papers/quarantine_raid23.pdf
+> 
+> Cc: Patrick Roy <roypat@amazon.co.uk>
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > ---
->  drivers/base/power/common.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
->  include/linux/pm_domain.h   | 11 +++++++++++
->  2 files changed, 56 insertions(+)
->
-> diff --git a/drivers/base/power/common.c b/drivers/base/power/common.c
-> index 327d168..c8431de 100644
-> --- a/drivers/base/power/common.c
-> +++ b/drivers/base/power/common.c
-> @@ -277,6 +277,51 @@ int dev_pm_domain_attach_list(struct device *dev,
->  EXPORT_SYMBOL_GPL(dev_pm_domain_attach_list);
->
+>  include/linux/guest_memfd.h |  8 ++++++
+>  mm/guest_memfd.c            | 65 ++++++++++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 72 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/linux/guest_memfd.h b/include/linux/guest_memfd.h
+> index be56d9d53067..f9e4a27aed67 100644
+> --- a/include/linux/guest_memfd.h
+> +++ b/include/linux/guest_memfd.h
+> @@ -25,6 +25,14 @@ struct guest_memfd_operations {
+>  	int (*release)(struct inode *inode);
+>  };
+>  
+> +/**
+> + * @GUEST_MEMFD_FLAG_NO_DIRECT_MAP: When making folios inaccessible by host, also
+> + *                                  remove them from the kernel's direct map.
+> + */
+> +enum {
+
+please name this enum, otherwise kernel-doc wont' be happy
+
+> +	GUEST_MEMFD_FLAG_NO_DIRECT_MAP		= BIT(0),
+> +};
+> +
 >  /**
-> + * devm_pm_domain_detach_list - devres-enabled version of dev_pm_domain_detach_list.
-> + * @_list: The list of PM domains to detach.
-> + *
-> + * This function reverse the actions from devm_pm_domain_attach_list().
-> + * it will be invoked during the remove phase from drivers implicitly if driver
-> + * uses devm_pm_domain_attach_list() to attach the PM domains.
-> + */
-> +static void devm_pm_domain_detach_list(void *_list)
-> +{
-> +       struct dev_pm_domain_list *list = _list;
+>   * @GUEST_MEMFD_GRAB_UPTODATE: Ensure pages are zeroed/up to date.
+>   *                             If trusted hyp will do it, can ommit this flag
+> diff --git a/mm/guest_memfd.c b/mm/guest_memfd.c
+> index 580138b0f9d4..e9d8cab72b28 100644
+> --- a/mm/guest_memfd.c
+> +++ b/mm/guest_memfd.c
+> @@ -7,9 +7,55 @@
+>  #include <linux/falloc.h>
+>  #include <linux/guest_memfd.h>
+>  #include <linux/pagemap.h>
+> +#include <linux/set_memory.h>
 > +
-> +       dev_pm_domain_detach_list(list);
+> +static inline int guest_memfd_folio_private(struct folio *folio)
+> +{
+> +	unsigned long nr_pages = folio_nr_pages(folio);
+> +	unsigned long i;
+> +	int r;
+> +
+> +	for (i = 0; i < nr_pages; i++) {
+> +		struct page *page = folio_page(folio, i);
+> +
+> +		r = set_direct_map_invalid_noflush(page);
+> +		if (r < 0)
+> +			goto out_remap;
+> +	}
+> +
+> +	folio_set_private(folio);
+> +	return 0;
+> +out_remap:
+> +	for (; i > 0; i--) {
+> +		struct page *page = folio_page(folio, i - 1);
+> +
+> +		BUG_ON(set_direct_map_default_noflush(page));
+> +	}
+> +	return r;
 > +}
 > +
-> +/**
-> + * devm_pm_domain_attach_list - devres-enabled version of dev_pm_domain_attach_list
-> + * @dev: The device used to lookup the PM domains for.
-> + * @data: The data used for attaching to the PM domains.
-> + * @list: An out-parameter with an allocated list of attached PM domains.
-> + *
-> + * NOTE: this will also handle calling devm_pm_domain_detach_list() for
-> + * you during remove phase.
-> + *
-> + * Returns the number of attached PM domains or a negative error code in case of
-> + * a failure.
-> + */
-> +int devm_pm_domain_attach_list(struct device *dev,
-> +                              const struct dev_pm_domain_attach_data *data,
-> +                              struct dev_pm_domain_list **list)
+> +static inline void guest_memfd_folio_clear_private(struct folio *folio)
 > +{
-> +       int ret, num_pds;
+> +	unsigned long start = (unsigned long)folio_address(folio);
+> +	unsigned long nr = folio_nr_pages(folio);
+> +	unsigned long i;
 > +
-> +       num_pds = dev_pm_domain_attach_list(dev, data, list);
-> +       if (!num_pds)
-> +               return 0;
+> +	if (!folio_test_private(folio))
+> +		return;
+> +
+> +	for (i = 0; i < nr; i++) {
+> +		struct page *page = folio_page(folio, i);
+> +
+> +		BUG_ON(set_direct_map_default_noflush(page));
+> +	}
+> +	flush_tlb_kernel_range(start, start + folio_size(folio));
 
-This should be:
-if (num_pds <= 0)
-      return num_pds;
+I think that TLB flush should come after removing pages from the direct map
+rather than after adding them back.
 
 > +
-> +       ret = devm_add_action_or_reset(dev, devm_pm_domain_detach_list, *list);
-> +       if (ret)
-> +               return ret;
-> +
-> +       return num_pds;
+> +	folio_clear_private(folio);
 > +}
-> +EXPORT_SYMBOL_GPL(devm_pm_domain_attach_list);
-> +
-> +/**
->   * dev_pm_domain_detach - Detach a device from its PM domain.
->   * @dev: Device to detach.
->   * @power_off: Used to indicate whether we should power off the device.
-> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
-> index 772d328..b01e127 100644
-> --- a/include/linux/pm_domain.h
-> +++ b/include/linux/pm_domain.h
-> @@ -450,6 +450,9 @@ struct device *dev_pm_domain_attach_by_name(struct device *dev,
->  int dev_pm_domain_attach_list(struct device *dev,
->                               const struct dev_pm_domain_attach_data *data,
->                               struct dev_pm_domain_list **list);
-> +int devm_pm_domain_attach_list(struct device *dev,
-> +                              const struct dev_pm_domain_attach_data *data,
-> +                              struct dev_pm_domain_list **list);
->  void dev_pm_domain_detach(struct device *dev, bool power_off);
->  void dev_pm_domain_detach_list(struct dev_pm_domain_list *list);
->  int dev_pm_domain_start(struct device *dev);
-> @@ -476,6 +479,14 @@ static inline int dev_pm_domain_attach_list(struct device *dev,
+>  
+>  struct folio *guest_memfd_grab_folio(struct file *file, pgoff_t index, u32 flags)
 >  {
->         return 0;
->  }
-> +
-> +static inline int devm_pm_domain_attach_list(struct device *dev,
-> +                                            const struct dev_pm_domain_attach_data *data,
-> +                                            struct dev_pm_domain_list **list)
-> +{
-> +       return 0;
-> +}
-> +
->  static inline void dev_pm_domain_detach(struct device *dev, bool power_off) {}
->  static inline void dev_pm_domain_detach_list(struct dev_pm_domain_list *list) {}
->  static inline int dev_pm_domain_start(struct device *dev)
-> --
-> 2.7.4
->
+> +	unsigned long gmem_flags = (unsigned long)file->private_data;
+>  	struct inode *inode = file_inode(file);
+>  	struct guest_memfd_operations *ops = inode->i_private;
+>  	struct folio *folio;
 
-Kind regards
-Uffe
+-- 
+Sincerely yours,
+Mike.
 
