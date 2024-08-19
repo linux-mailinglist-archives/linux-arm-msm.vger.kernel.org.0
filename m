@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-28933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 677F995638C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 08:21:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FA16956393
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 08:22:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D2531B20E68
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 06:21:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C309F1C213A1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 06:22:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22AA114C5B3;
-	Mon, 19 Aug 2024 06:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5096414E2C2;
+	Mon, 19 Aug 2024 06:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X6rUFYVm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FHxoDji3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4C83EA69;
-	Mon, 19 Aug 2024 06:21:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CE814EC62;
+	Mon, 19 Aug 2024 06:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724048475; cv=none; b=UpmFply90pN4de6Nx+TIfZCMFJkhfK0trPVJSBnyx//4v21Sfzk4edFg1ZWTW74yFOClR7JidqkZoF+sRutZXb/gCM5gRS/7YLk6MkFeQOUM7wa7U9j+Ylt9W58Pt1+gnP++YcdpUlUBSh2HR7wxIEIco1AaYkW971yYgSOZInM=
+	t=1724048528; cv=none; b=IG4pOUzxVG5pWNK/AwoDkCf9O1u0odiH0xVqfGYFgh0nDQGUXS8tHMgLcvt/2J5qZLBlhPhMZ45NOxDL2pib0O94eCCOv64jYWOIWMti+hdzmBgYQxUU6xAD33LFGybyINPdbwft6zJMn/jjr6pumdlcr/QIisY54qF2thzVkEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724048475; c=relaxed/simple;
-	bh=JqIMZ0DbqksFrQUeGUYa/0oLg+02rBT4QhPT6cpTFn4=;
+	s=arc-20240116; t=1724048528; c=relaxed/simple;
+	bh=Ewjrt4ff2Jx0eI/nDvw5s0ZVl9oDUS2vIfDXflsQufg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p2e0npXiD2RkLE9IaMpOMvTDEbzt4Q2XzW14uEiGG6T+7RHK6XOc/tTXoKAdfVxutsDvp0/dfZSXxWHNNP1zEg0SgNr87YtVL/MwoNzZ05KRgbSLLB55ukJkz9iAIdv1zDDUABmOWMZXtX+Eq96pKSzJrz3DdGIIRpS7g2TNPUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X6rUFYVm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16EEDC32782;
-	Mon, 19 Aug 2024 06:21:05 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=jF3muD9pWA59usxzueWJQFRTSQDwHRt1b6We44w56QWgor3yCEvgBvM9j/YiBbsd0B0H04OewPEqxBYQQ7wiaIdw9KiZt+Iql35tK/zrrn8QnB3rzaBnxOiKeCnHZO9SkuoFDAdX1s2bympXn56bXuAk8xYMPwkTt9sBbT4LIyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FHxoDji3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38094C4AF0C;
+	Mon, 19 Aug 2024 06:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724048474;
-	bh=JqIMZ0DbqksFrQUeGUYa/0oLg+02rBT4QhPT6cpTFn4=;
+	s=k20201202; t=1724048527;
+	bh=Ewjrt4ff2Jx0eI/nDvw5s0ZVl9oDUS2vIfDXflsQufg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=X6rUFYVmwEOXOpSPoLjB6r0tYGrfNUQ7CA1F/9XF1GjXFN6BZVFT1w09Myq7DpMgC
-	 j8zJWpVTLHPHU79RJC5H0qfchVPrAZubsCwpNAkBzQ6Z0Mo67YX41O5h3LVlF0bBvB
-	 WH6p+HzXIMXxj3TiC9q9L28TlU7iUM5wqTn4akCP7p3WcR3aOQ/CVkc1ZCw8auBEE1
-	 fYgPlvn2umk98Bhyu/ulK02aT8GvI2KM6pykAnaUqaX8r6gIOr2lbnI7Sji6Pi3pTs
-	 41iTIeLZ4ihy5oRYo6l5SQPwYt2E4SPhzaj2kq+aNzw3CwU8dRIZiN/aodupN3J5WI
-	 6YEkNY5egs8SA==
-Message-ID: <7bbd48c8-7fa6-4d41-9560-3de0a2394c55@kernel.org>
-Date: Mon, 19 Aug 2024 08:21:03 +0200
+	b=FHxoDji3luzPB1RAbK99Kucouic8i6/00oruTYpNvPBqjHP0q/0PYv+ylp6ie4Hrk
+	 fnM4RcZcPnwDTIgs8X+lD+u4dGTYWZZoczUKh+XnbYlDB1VZOHphbVMzI0adQhNzKA
+	 QGB5QIl21JBzHOZKB1R6T2K4I+3CklgqzOiO4mvJg9f0d6YmeA5Xv4Lg1SlA0yvOh0
+	 lPKAeh5KxSln5b886hLtPevUVKwTBEshfDOCyP9TQDitV0xclBs8uxw7/alXpHeRCx
+	 G5fBKp7V1QHVqHfN5LZWkWStZkwyFnvAufiboiCz1umeg948j9Oqf0RcS1J4XvQGcl
+	 4MoQI+W4Jmu2g==
+Message-ID: <87b936c5-c3c9-4f96-9ee6-c766366a321c@kernel.org>
+Date: Mon, 19 Aug 2024 08:21:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,30 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] dt-bindings: net: Add DT bindings for DWMAC on NXP
- S32G/R SoCs
-To: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Jose Abreu <joabreu@synopsys.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, Vinod Koul <vkoul@kernel.org>,
- Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
- Russell King <linux@armlinux.org.uk>,
- Richard Cochran <richardcochran@gmail.com>,
- Giuseppe Cavallaro <peppe.cavallaro@st.com>
-Cc: "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
- "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "linux-stm32@st-md-mailman.stormreply.com"
- <linux-stm32@st-md-mailman.stormreply.com>,
- "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>,
- "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
- dl-S32 <S32@nxp.com>
-References: <AM9PR04MB8506A1FAC2DA26F27771D039E2832@AM9PR04MB8506.eurprd04.prod.outlook.com>
+Subject: Re: [PATCH v2 01/10] dt-bindings: clock: qcom,gcc-sm8450: Add SM8475
+ GCC bindings
+To: Danila Tikhonov <danila@jiaxyga.com>, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, vkoul@kernel.org,
+ vladimir.zapolskiy@linaro.org, quic_jkona@quicinc.com,
+ dmitry.baryshkov@linaro.org, konradybcio@kernel.org, quic_tdas@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux@mainlining.org
+References: <20240818204348.197788-1-danila@jiaxyga.com>
+ <20240818204348.197788-2-danila@jiaxyga.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -119,140 +107,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <AM9PR04MB8506A1FAC2DA26F27771D039E2832@AM9PR04MB8506.eurprd04.prod.outlook.com>
+In-Reply-To: <20240818204348.197788-2-danila@jiaxyga.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 18/08/2024 23:50, Jan Petrous (OSS) wrote:
-> Add basic description for DWMAC ethernet IP on NXP S32G2xx, S32G3xx
-> and S32R45 automotive series SoCs.
-
-Fix your email threading. b4 handle everything correctly, so start using it.
-
+On 18/08/2024 22:43, Danila Tikhonov wrote:
+> Add new entry to the SM8450 dt-bindings and add SM8475-specific clocks
+> to SM8450 GCC header file.
 > 
-> Signed-off-by: Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
+> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
 > ---
->  .../bindings/net/nxp,s32cc-dwmac.yaml         | 127 ++++++++++++++++++
->  .../devicetree/bindings/net/snps,dwmac.yaml   |   1 +
->  2 files changed, 128 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/nxp,s32cc-dwmac.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/net/nxp,s32cc-dwmac.yaml b/Documentation/devicetree/bindings/net/nxp,s32cc-dwmac.yaml
-> new file mode 100644
-> index 000000000000..443ad918a9a5
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/net/nxp,s32cc-dwmac.yaml
 
-Filename based on compatible, so what does "cc" stand for?
-
-> @@ -0,0 +1,127 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +# Copyright 2021-2024 NXP
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/net/nxp,s32cc-dwmac.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: NXP S32G2xx/S32G3xx/S32R45 GMAC ethernet controller
-> +
-> +maintainers:
-> +  - Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
-> +
-> +description: |
-
-Do not need '|' unless you need to preserve formatting.
-
-> +  This device is a platform glue layer for stmmac.
-
-Drop description of driver and instead describe the hardware.
-
-> +  Please see snps,dwmac.yaml for the other unchanged properties.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - nxp,s32g2-dwmac
-> +      - nxp,s32g3-dwmac
-> +      - nxp,s32r45-dwmac
-> +
-> +  reg:
-> +    items:
-> +      - description: Main GMAC registers
-> +      - description: GMAC PHY mode control register
-> +
-> +  interrupts:
-> +    description: Common GMAC interrupt
-
-No, instead maxItems: 1
-
-> +
-> +  interrupt-names:
-> +    const: macirq
-> +
-> +  clocks:
-> +    items:
-> +      - description: Main GMAC clock
-> +      - description: Transmit clock
-> +      - description: Receive clock
-> +      - description: PTP reference clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: stmmaceth
-> +      - const: tx
-> +      - const: rx
-> +      - const: ptp_ref
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +  - interrupt-names
-> +  - clocks
-> +  - clock-names
-> +  - phy-mode
-
-Drop, snps,dwmac requires this.
-
-> +
-> +allOf:
-> +  - $ref: snps,dwmac.yaml#
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +    #include <dt-bindings/phy/phy.h>
-> +    bus {
-> +      #address-cells = <2>;
-> +      #size-cells = <2>;
-> +
-> +      ethernet@4033c000 {
-> +        compatible = "nxp,s32cc-dwmac";
-> +        reg = <0x0 0x4033c000 0x0 0x2000>, /* gmac IP */
-> +              <0x0 0x4007c004 0x0 0x4>;    /* GMAC_0_CTRL_STS */
-> +        interrupt-parent = <&gic>;
-> +        interrupts = <GIC_SPI 57 IRQ_TYPE_LEVEL_HIGH>;
-> +        interrupt-names = "macirq";
-> +        snps,mtl-rx-config = <&mtl_rx_setup>;
-> +        snps,mtl-tx-config = <&mtl_tx_setup>;
-> +        clocks = <&clks 24>, <&clks 17>, <&clks 16>, <&clks 15>;
-> +        clock-names = "stmmaceth", "tx", "rx", "ptp_ref";
-> +        phy-mode = "rgmii-id";
-> +        phy-handle = <&phy0>;
-> +
-> +        mtl_rx_setup: rx-queues-config {
-> +          snps,rx-queues-to-use = <5>;
-> +
-> +          queue0 {
-> +          };
-> +          queue1 {
-> +          };
-
-
-Why listing empty nodes?
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
