@@ -1,185 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-29028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29029-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DC909578B6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 01:36:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DC439578BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 01:40:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 62EC51C22183
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 23:36:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DC1051F239DF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 23:40:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8E591E2125;
-	Mon, 19 Aug 2024 23:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F81D1E2119;
+	Mon, 19 Aug 2024 23:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Pb+qshuP"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ThB3gtsx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC1B1E2126
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 23:36:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 144671DF678
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 23:40:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724110595; cv=none; b=s3+C+L+vS2XQjJhXRBIC55nwinxwJYgeX8kSrqB96hrQupvWcFiLngtWh69H58xHRf6cy2HURiaM0szdcNQhV7iGLEqzP9frCcNLQePTrCMRU5Wlk6/BL+N7thkPu6BXWFLzVNfH13dDszL9fBtAf3GajILQAM/io2nkCahj9KA=
+	t=1724110827; cv=none; b=Jre3E/dfovOo8rD8ASjnKxN1GWs69Xb2Qqn1AVxq9enZ+cE+DTlUkdZZSDW6M7//AgBLG+n7OctjthmUXkVmhMdwqoPkIHdPelyIm4pqI6DJ5eAjbY3Yog0L+1/yLlfriroAom/obRSRXP6oJvUsBDeNcZBnJtMRmpfWW8b5cig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724110595; c=relaxed/simple;
-	bh=11LWC1dHsw1h3mwOO/q+bhPVSG1jtOalR/V6EhebHss=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ugwkafv70zRa1oYmpaFfH+GkuWh/FtH6TsmY6lt8pQmYyfWVFFXEIqMtzYGDv8BGcFlhQQOSzyAKbO5DyNrdFtilMTxBVakUrc/hgrfvOal2jQzn9Ck5zGcGtH+GYNseBUYgeVWICHntBp7PoQa4gie9SPcwXgGa315IGcSszp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Pb+qshuP; arc=none smtp.client-ip=209.85.214.174
+	s=arc-20240116; t=1724110827; c=relaxed/simple;
+	bh=YPvzOFnH4gwgca48Ur3A8Ax1NuMLReALK95xcXHVHYg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gVeWIIyHnd7mufgG4+Pxeu2ScUXNTcGLhpT1N3oMuEnRCQKVTkDFBcaon45EwqYl3a2w8IOu74Kh1tDFybi7GyVpmRrroauAnzjMJVzd1bo+AMbdOtybJnPjmjlIUnbmaMZJfFvX+jnYdvo4zRTwJe9iUClSXGLN/lDZKNpMNCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=ThB3gtsx; arc=none smtp.client-ip=209.85.161.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-201d5af11a4so45448625ad.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 16:36:33 -0700 (PDT)
+Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-5d5eec95a74so3107460eaf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 16:40:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1724110593; x=1724715393; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=chromium.org; s=google; t=1724110823; x=1724715623; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=c9Cd04T134NyakvqbnePNRvSvtAZOKVt3h8rY/EORRs=;
-        b=Pb+qshuPZtui6ns+HBWeSRvEjQaKKuY/hLWAgFkQXZ9idS3NvZCn0EPlQN76VMS3du
-         aizhQmcUAP7Vh87fA0JURODMrwuRX+OUT1ufgjrLI0RHqpBhI5Vmdfh9+KbV6r6Ldpn8
-         IlkO7pwsaqwJTRQjcEBonm3BGp+Vslo42C3Lo=
+        bh=XKnu/Iez1+mbjTx9dSE6EvXmZdzm/o7bv0RI9fycVok=;
+        b=ThB3gtsxYPH9cvOUxdIm2gXbkLF6iq5SzmKGFFt6Xl9isS8SvtHQgsCLnDkWAxvL6h
+         iLaZLobYyG1+Bml2iZF6Loqlp4pX5RhvcakbP9jaSKSQ0qguN3ghzGjY/Zm/5sFTTTOH
+         FPctM7vX1lOVRnJ7TUU2inBpHIqGTSSIFjV3o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724110593; x=1724715393;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1724110823; x=1724715623;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=c9Cd04T134NyakvqbnePNRvSvtAZOKVt3h8rY/EORRs=;
-        b=XWE/87GlYtPmw+eQnoK4+uwwfaH/IEaQn78tO+KMlhtpLemgh8tCm3WBs7s6nW5iNC
-         LQUb6EbUjbr0r8Sac/5bCHLmXFxBkLsWIp1kp2e8AqJ9q9xS2TuflR2C8pDMMyXhyvsF
-         HM205zMNuzx3zNKuQnoNhtk0BY/I70q35fgj6u92EMWlHR2EFv0dYM74Arf2ANxnn4Z7
-         pIDXnageoTtNJgp8P/D1QRkqOzZqI8nEAva56XdmcM8CQwUAVPP02e/vY8nOmXZKn1qF
-         00/mckj2kLv3maPJF/SZBhsfQ442KA/NZMDKxSAp1DscnY9F7rrS1XFe8PnYHOBBpyjJ
-         5Lvw==
-X-Forwarded-Encrypted: i=1; AJvYcCWhiIyd/skSAiQickya+X+3+AZmIoHwKzZhQGR6IIA7Q5xS4vXC44/fAGiUMJ7/oln8IqVyzbQTLaVsTQtV@vger.kernel.org
-X-Gm-Message-State: AOJu0YxImsFj6ZItaWSE/3uw5hP53kCu4Wx9y1Qmxy7ln4gNd6+H2nHh
-	oAODFn6c2EBPrmeDPFFBGEwDU3o18ClLmWZKO8qEV0oxcL2TIwzkajVZ8xTa0w==
-X-Google-Smtp-Source: AGHT+IHMdQuQYTmr1VZjFq64pkXwFedtdel2DhVJEBi38KoF3VM1xbdsltPsvQqi4APbbL4RALu4+w==
-X-Received: by 2002:a17:903:2307:b0:1fd:a5a2:5838 with SMTP id d9443c01a7336-20203e5518fmr187693085ad.6.1724110592977;
-        Mon, 19 Aug 2024 16:36:32 -0700 (PDT)
-Received: from localhost (210.73.125.34.bc.googleusercontent.com. [34.125.73.210])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-201f0302e84sm67507995ad.32.2024.08.19.16.36.32
+        bh=XKnu/Iez1+mbjTx9dSE6EvXmZdzm/o7bv0RI9fycVok=;
+        b=d1LLfSuN4RHrK9tKVrqF/hPC8gMD+8CBgJZQkDeqCaUQxkdTQ5AHLBaeiIWPSrwBJd
+         fYblvkFGlsZXocI+CUscEBSwMdEQSxy7bWUQu/cgi7Fs3QpDxNyZyK9xkgzBRfly2IQj
+         u5LcnMS/ugZbx6FjqbdDRWxHnMoFVQCaEoWdQmjTBHCVcVjorO6cwag2XN7FDcj9SlX4
+         l0aAU9LawRo2onpTW08T6SxoSxhc57Oyey4DMsXclbvDc2zjibyqyXg9ssYHtnNe8lJ1
+         /hBZiYBC5/MBkwWEMMukJZ6W5BKjxdRjxjSDp1/Ueh7vUG507Oqlyz5yhNh9RhnxnkoI
+         Zgig==
+X-Forwarded-Encrypted: i=1; AJvYcCVpwe/Pb0wYWl13j/MC1TQWCr8ZA02sg5hu8901M0rk+vdEgaZe9u8ArdJBOH23qh6BcLdRyX+yfNFGFMNE02repYFRk3fRthkt9Wfx8w==
+X-Gm-Message-State: AOJu0YxNywFmPudA5Osi/066wc/Lf2SWd0sgEcnSlzuc3drEVLHNLEuW
+	UE1ZPNueCFtB50JiqiKSL1pAtmEUONsiqebKuTS37RQEs3K73R+7Dm4zzg4plSTtktRob3U69Tk
+	q0rib
+X-Google-Smtp-Source: AGHT+IHKqdleFRLNMrNaspqsgC2X0p9iTt4Os3yUbrHRLBUmJ7hnGvszosmQ1zOQeQI24TeTcsynEg==
+X-Received: by 2002:a05:6820:811:b0:5da:b50a:2a6 with SMTP id 006d021491bc7-5dab50a08f0mr7184053eaf.4.1724110823547;
+        Mon, 19 Aug 2024 16:40:23 -0700 (PDT)
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com. [209.85.161.41])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-5dc93aa0fa3sm93444eaf.14.2024.08.19.16.40.22
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Aug 2024 16:36:32 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-clk@vger.kernel.org,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Amit Pundir <amit.pundir@linaro.org>
-Subject: [PATCH 2/2] clk: qcom: gcc-sm8550: Don't park the USB RCG at registration time
-Date: Mon, 19 Aug 2024 16:36:27 -0700
-Message-ID: <20240819233628.2074654-3-swboyd@chromium.org>
-X-Mailer: git-send-email 2.46.0.184.g6999bdac58-goog
-In-Reply-To: <20240819233628.2074654-1-swboyd@chromium.org>
-References: <20240819233628.2074654-1-swboyd@chromium.org>
+        Mon, 19 Aug 2024 16:40:22 -0700 (PDT)
+Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-5d5e97b8a22so2935616eaf.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 16:40:22 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWHP96y0c6wff9eOT3vy1KzI4tDOOElAvZczLo6ss0zkNBuCJJkc7kW/6yROD9kuC9cWMn+HPcaMsqhi2ma/EZPWIMtElAp0sP4eTP6cw==
+X-Received: by 2002:a05:6358:2923:b0:19f:4967:4e8f with SMTP id
+ e5c5f4694b2df-1b39329f298mr1693684755d.22.1724110821953; Mon, 19 Aug 2024
+ 16:40:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240819073020.3291287-1-quic_sibis@quicinc.com>
+In-Reply-To: <20240819073020.3291287-1-quic_sibis@quicinc.com>
+From: Doug Anderson <dianders@chromium.org>
+Date: Mon, 19 Aug 2024 16:40:07 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=VnQCO+y_wy=KQhK3wGwHGfO0+MQntgoPh78ZygcgNiig@mail.gmail.com>
+Message-ID: <CAD=FV=VnQCO+y_wy=KQhK3wGwHGfO0+MQntgoPh78ZygcgNiig@mail.gmail.com>
+Subject: Re: [PATCH] remoteproc: qcom_q6v5_mss: Re-order writes to the IMEM region
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: andersson@kernel.org, mathieu.poirier@linaro.org, 
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Amit Pundir reports that audio and USB-C host mode stops working if the
-gcc_usb30_prim_master_clk_src clk is registered and
-clk_rcg2_shared_init() parks it on XO. Skip parking this clk at
-registration time to fix those issues.
+Hi,
 
-Partially revert commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon
-registration") by skipping the parking bit for this clk, but keep the
-part where we cache the config register. That's still necessary to
-figure out the true parent of the clk at registration time.
+On Mon, Aug 19, 2024 at 12:30=E2=80=AFAM Sibi Sankar <quic_sibis@quicinc.co=
+m> wrote:
+>
+> Any write access to the IMEM region when the Q6 is setting up XPU
+> protection on it will result in a XPU violation. Fix this by ensuring
+> IMEM writes related to the MBA post-mortem logs happen before the Q6
+> is brought out of reset.
+>
+> Fixes: 318130cc9362 ("remoteproc: qcom_q6v5_mss: Add MBA log extraction s=
+upport")
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+>  drivers/remoteproc/qcom_q6v5_mss.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 
-Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
-Fixes: 929c75d57566 ("clk: qcom: gcc-sm8550: Mark RCGs shared where applicable")
-Cc: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Taniya Das <quic_tdas@quicinc.com>
-Reported-by: Amit Pundir <amit.pundir@linaro.org>
-Closes: https://lore.kernel.org/CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/clk/qcom/clk-rcg.h    |  1 +
- drivers/clk/qcom/clk-rcg2.c   | 30 ++++++++++++++++++++++++++++++
- drivers/clk/qcom/gcc-sm8550.c |  2 +-
- 3 files changed, 32 insertions(+), 1 deletion(-)
+As discussed offlist, this isn't a perfect fix since writes to this
+IMEM could happen by other drivers and those could still cause things
+to go boom if they run in parallel with this driver. That being said:
+* It seems like a more proper fix needs a coordinated effort between a
+device's built-in firmware and the modem firmware. This is difficult /
+near impossible to get done properly.
+* Even if we do a more proper fix, making this change won't hurt.
+* This change will immediately improve things by avoiding the XPU
+violation in the most common case.
 
-diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-index d7414361e432..8e0f3372dc7a 100644
---- a/drivers/clk/qcom/clk-rcg.h
-+++ b/drivers/clk/qcom/clk-rcg.h
-@@ -198,6 +198,7 @@ extern const struct clk_ops clk_byte2_ops;
- extern const struct clk_ops clk_pixel_ops;
- extern const struct clk_ops clk_gfx3d_ops;
- extern const struct clk_ops clk_rcg2_shared_ops;
-+extern const struct clk_ops clk_rcg2_shared_no_init_park_ops;
- extern const struct clk_ops clk_dp_ops;
- 
- struct clk_rcg_dfs_data {
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index 30b19bd39d08..bf26c5448f00 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -1348,6 +1348,36 @@ const struct clk_ops clk_rcg2_shared_ops = {
- };
- EXPORT_SYMBOL_GPL(clk_rcg2_shared_ops);
- 
-+static int clk_rcg2_shared_no_init_park(struct clk_hw *hw)
-+{
-+	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-+
-+	/*
-+	 * Read the config register so that the parent is properly mapped at
-+	 * registration time.
-+	 */
-+	regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, &rcg->parked_cfg);
-+
-+	return 0;
-+}
-+
-+/*
-+ * Like clk_rcg2_shared_ops but skip the init so that the clk frequency is left
-+ * unchanged at registration time.
-+ */
-+const struct clk_ops clk_rcg2_shared_no_init_park_ops = {
-+	.init = clk_rcg2_shared_no_init_park,
-+	.enable = clk_rcg2_shared_enable,
-+	.disable = clk_rcg2_shared_disable,
-+	.get_parent = clk_rcg2_shared_get_parent,
-+	.set_parent = clk_rcg2_shared_set_parent,
-+	.recalc_rate = clk_rcg2_shared_recalc_rate,
-+	.determine_rate = clk_rcg2_determine_rate,
-+	.set_rate = clk_rcg2_shared_set_rate,
-+	.set_rate_and_parent = clk_rcg2_shared_set_rate_and_parent,
-+};
-+EXPORT_SYMBOL_GPL(clk_rcg2_shared_no_init_park_ops);
-+
- /* Common APIs to be used for DFS based RCGR */
- static void clk_rcg2_dfs_populate_freq(struct clk_hw *hw, unsigned int l,
- 				       struct freq_tbl *f)
-diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
-index 0244a05866b8..5abaeddd6afc 100644
---- a/drivers/clk/qcom/gcc-sm8550.c
-+++ b/drivers/clk/qcom/gcc-sm8550.c
-@@ -1159,7 +1159,7 @@ static struct clk_rcg2 gcc_usb30_prim_master_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_shared_no_init_park_ops,
- 	},
- };
- 
--- 
-https://chromeos.dev
+I've confirmed that the test case I had where things were going boom
+is fixed. Thus:
 
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Douglas Anderson <dianders@chromium.org>
 
