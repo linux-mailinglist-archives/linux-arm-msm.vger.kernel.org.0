@@ -1,343 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-28931-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A639B9562B8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 06:51:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64BEC956375
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 08:03:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E2E94B2096C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 04:51:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 083F61F2134B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 06:03:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B77012C52E;
-	Mon, 19 Aug 2024 04:51:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04BF514BF8F;
+	Mon, 19 Aug 2024 06:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OBrN5FTr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DiWO2Wpc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C345B1870;
-	Mon, 19 Aug 2024 04:51:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CD3146D7E;
+	Mon, 19 Aug 2024 06:03:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724043074; cv=none; b=H4plmhgxPZxdzErbdj681DkARLQDUSKN4S5Ryqyru333uH+T79Mm1FZKC8mHHWuddveaZyYk5pUzjfDVyPV6mYP+tlvENOkz00/bsNy0h8NB3coQN7H3dSNAcLI6OjmKUg8TwZNp6F6Fb+diwDDMxI3TElEyS0fIYjGCyrIYS1A=
+	t=1724047420; cv=none; b=eD3I2uy4VsNz5I9NZl82SxY0BgfsszK3/6cdcFP8zIlyJkCzbDiKbdxVQj03gEQ5w4AnGlwZPFUM/GIDI5yN8CnO93+v6A4MdLsoJLF03p0u7UckQoHJDxT1bWYUCI9Emjhggf07S9nufvkFQmB8aotyUPj2p8CXItuWZXMhyEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724043074; c=relaxed/simple;
-	bh=66NmTOIU8LcloZQQD8SDEpR34B91KNwzzyB6zdiPhy8=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bdUFWglfJaSZlM+SNSx0ChixnGHUPVreS/N/Tw3gwMU32VDZT+pB49vPutDpFZWzq5lpVN8i5NbBnAdURVqRKUJGhfi3xWUS9QqNGrSQIpLuFK9us/RbJCqpI1DKFtX6sZX1pPlZJPjfXed0UQYW3yshJ5ALfMR1mJ3wOkyJNMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OBrN5FTr; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47IMtRGq031358;
-	Mon, 19 Aug 2024 04:51:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=3nkdJ08YDy/IDF1meDYgDa
-	xzC3n3Yv65W8W9nvVsZLc=; b=OBrN5FTriJ2IUPLHDvfyzjgAf+PcBl7qF4Tzmp
-	lxuLqw9K/d9tK2XZfyZjU5SZN9ireoSuf0Cy52ZWu01zKtsqQxOZBv0F8XR+FL9e
-	CwgUdGkaQqsAEUy9zPo2WehrMHdDNcFhAroKcOZVz2NOCbRhzcO1cqrvmJ30XBW2
-	UX2Il83h8GMoQA6BVpWgmKTGUV/uHwi5U7dbHwYlfd/+pkkaQhYp+BhzL9zMRG/g
-	9LJ/uqdJQLfu+JhYIuRqg842XlmeChJIJZ1qOwLAOMNAAgjXwPjtdudDkSJFhpVZ
-	/SD0gZYSksKcy4znW3y+MxwBS4gdnAyndhrB+/yInZTXYsVQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 412hjdb4qs-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 19 Aug 2024 04:51:07 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47J4p6SD005135
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 19 Aug 2024 04:51:06 GMT
-Received: from hu-lxu5-sha.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 18 Aug 2024 21:51:04 -0700
-From: Ling Xu <quic_lxu5@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
-CC: <quic_kuiw@quicinc.com>, <quic_ekangupt@quicinc.com>,
-        <quic_lxu5@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH] arm64: qcom: sa8775p: Add ADSP and CDSP0 fastrpc nodes
-Date: Mon, 19 Aug 2024 10:20:52 +0530
-Message-ID: <20240819045052.2405511-1-quic_lxu5@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1724047420; c=relaxed/simple;
+	bh=UU7wb69/DyzSalT79ABrAA2tk7EimyWYeG8qB0t/v40=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hpniae9DIlfsmYdUWPBFqGnYHZ6/sebQ7ZnKhu+f7YtkV7BsM6MvLXx4MTyk+QxfgZVOfY8p1oNt1hGn402lO1au9hR6SnPkmFXEx1U+XwwWpZBeoyFTFHsDBTfjK7jULQ31dpgacmDuCLynYDPe1Sou9JbZ95jKQKTF5cCoHao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DiWO2Wpc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343B9C32782;
+	Mon, 19 Aug 2024 06:03:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724047420;
+	bh=UU7wb69/DyzSalT79ABrAA2tk7EimyWYeG8qB0t/v40=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=DiWO2WpchIH31XRMJdF4fiWQdzrxXz9v57vgDqvM7/L9x8wGujrRvSQJLkIVFUuXw
+	 h/ySsBSVnXFyZMc5RsGXKCGI8g77kbBxPW0VSRv5Vm0ctcJGg12JJ9k7WUMTVWs6X4
+	 abYPmHeofc+U1B3Z6tPQqGz/SDgyK6xOuIzUJBIVXNlMx4zSZUyFUWWVYj/m8YJhrF
+	 kQLGm+c3hDivPHDLLlPN3Wx28+sOz1hAGR5UMztrsP37wfyc+selWi8UrQZtTCJ6/Q
+	 9eJLDUGyZknKIqQ4P+KNENe9OGUnw1kPCOCdt+sP3pmf2/Lstl7XDzLHomh649mK0V
+	 GaGX9RYoFIREQ==
+Message-ID: <ff9b3d88-9fe7-47fa-a425-4661181f9321@kernel.org>
+Date: Mon, 19 Aug 2024 08:03:30 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: A64k5YvjaPyhkQmARS36KD-CLLJ1iAJP
-X-Proofpoint-ORIG-GUID: A64k5YvjaPyhkQmARS36KD-CLLJ1iAJP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-19_02,2024-08-16_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 phishscore=0 spamscore=0 clxscore=1011 bulkscore=0
- lowpriorityscore=0 malwarescore=0 mlxlogscore=784 adultscore=0 mlxscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408190034
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/7] Add support for Synopsis DWMAC IP on NXP
+ Automotive SoCs S32G2xx/S32G3xx/S32R45
+To: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Jose Abreu <joabreu@synopsys.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, Vinod Koul <vkoul@kernel.org>,
+ Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
+ Russell King <linux@armlinux.org.uk>,
+ Richard Cochran <richardcochran@gmail.com>,
+ Giuseppe Cavallaro <peppe.cavallaro@st.com>
+Cc: "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-stm32@st-md-mailman.stormreply.com"
+ <linux-stm32@st-md-mailman.stormreply.com>,
+ "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>,
+ "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+ dl-S32 <S32@nxp.com>
+References: <AM9PR04MB85066576AD6848E2402DA354E2832@AM9PR04MB8506.eurprd04.prod.outlook.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <AM9PR04MB85066576AD6848E2402DA354E2832@AM9PR04MB8506.eurprd04.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add ADSP and CDSP0 fastrpc nodes.
+On 18/08/2024 23:50, Jan Petrous (OSS) wrote:
+> The SoC series S32G2xx and S32G3xx feature one DWMAC instance,
+> the SoC S32R45 has two instances. The devices can use RGMII/RMII/MII
+> interface over Pinctrl device or the output can be routed
+> to the embedded SerDes for SGMII connectivity.
+> 
+> The provided stmmac glue code implements only basic functionality,
+> interface support is restricted to RGMII only.
+> 
+> This patchset adds stmmac glue driver based on downstream NXP git [0].
+> 
+> [0] https://github.com/nxp-auto-linux/linux
 
-Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 218 ++++++++++++++++++++++++++
- 1 file changed, 218 insertions(+)
+All your threading is completely broken which makes it difficult to
+apply and compare patchsets. Just try - use b4 diff on this...
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 801e8a92359d..51e30cab5db1 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -10,6 +10,7 @@
- #include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
- #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
-+#include <dt-bindings/firmware/qcom,scm.h>
- #include <dt-bindings/power/qcom,rpmhpd.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-@@ -3998,6 +3999,190 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 
- 				label = "cdsp";
- 				qcom,remote-pid = <5>;
-+
-+				fastrpc {
-+					compatible = "qcom,fastrpc";
-+					qcom,glink-channels = "fastrpcglink-apps-dsp";
-+					label = "cdsp";
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					compute-cb@1 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <1>;
-+						iommus = <&apps_smmu 0x2141 0x04a0>,
-+							 <&apps_smmu 0x2161 0x04a0>,
-+							 <&apps_smmu 0x2181 0x0400>,
-+							 <&apps_smmu 0x21c1 0x04a0>,
-+							 <&apps_smmu 0x21e1 0x04a0>,
-+							 <&apps_smmu 0x2541 0x04a0>,
-+							 <&apps_smmu 0x2561 0x04a0>,
-+							 <&apps_smmu 0x2581 0x0400>,
-+							 <&apps_smmu 0x25c1 0x04a0>,
-+							 <&apps_smmu 0x25e1 0x04a0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@2 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <2>;
-+						iommus = <&apps_smmu 0x2142 0x04a0>,
-+							 <&apps_smmu 0x2162 0x04a0>,
-+							 <&apps_smmu 0x2182 0x0400>,
-+							 <&apps_smmu 0x21c2 0x04a0>,
-+							 <&apps_smmu 0x21e2 0x04a0>,
-+							 <&apps_smmu 0x2542 0x04a0>,
-+							 <&apps_smmu 0x2562 0x04a0>,
-+							 <&apps_smmu 0x2582 0x0400>,
-+							 <&apps_smmu 0x25c2 0x04a0>,
-+							 <&apps_smmu 0x25e2 0x04a0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@3 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <3>;
-+						iommus = <&apps_smmu 0x2143 0x04a0>,
-+							 <&apps_smmu 0x2163 0x04a0>,
-+							 <&apps_smmu 0x2183 0x0400>,
-+							 <&apps_smmu 0x21c3 0x04a0>,
-+							 <&apps_smmu 0x21e3 0x04a0>,
-+							 <&apps_smmu 0x2543 0x04a0>,
-+							 <&apps_smmu 0x2563 0x04a0>,
-+							 <&apps_smmu 0x2583 0x0400>,
-+							 <&apps_smmu 0x25c3 0x04a0>,
-+							 <&apps_smmu 0x25e3 0x04a0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@4 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <4>;
-+						iommus = <&apps_smmu 0x2144 0x04a0>,
-+							 <&apps_smmu 0x2164 0x04a0>,
-+							 <&apps_smmu 0x2184 0x0400>,
-+							 <&apps_smmu 0x21c4 0x04a0>,
-+							 <&apps_smmu 0x21e4 0x04a0>,
-+							 <&apps_smmu 0x2544 0x04a0>,
-+							 <&apps_smmu 0x2564 0x04a0>,
-+							 <&apps_smmu 0x2584 0x0400>,
-+							 <&apps_smmu 0x25c4 0x04a0>,
-+							 <&apps_smmu 0x25e4 0x04a0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@5 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <5>;
-+						iommus = <&apps_smmu 0x2145 0x04a0>,
-+							 <&apps_smmu 0x2165 0x04a0>,
-+							 <&apps_smmu 0x2185 0x0400>,
-+							 <&apps_smmu 0x21c5 0x04a0>,
-+							 <&apps_smmu 0x21e5 0x04a0>,
-+							 <&apps_smmu 0x2545 0x04a0>,
-+							 <&apps_smmu 0x2565 0x04a0>,
-+							 <&apps_smmu 0x2585 0x0400>,
-+							 <&apps_smmu 0x25c5 0x04a0>,
-+							 <&apps_smmu 0x25e5 0x04a0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@6 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <6>;
-+						iommus = <&apps_smmu 0x2146 0x04a0>,
-+							 <&apps_smmu 0x2166 0x04a0>,
-+							 <&apps_smmu 0x2186 0x0400>,
-+							 <&apps_smmu 0x21c6 0x04a0>,
-+							 <&apps_smmu 0x21e6 0x04a0>,
-+							 <&apps_smmu 0x2546 0x04a0>,
-+							 <&apps_smmu 0x2566 0x04a0>,
-+							 <&apps_smmu 0x2586 0x0400>,
-+							 <&apps_smmu 0x25c6 0x04a0>,
-+							 <&apps_smmu 0x25e6 0x04a0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@7 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <7>;
-+						iommus = <&apps_smmu 0x2147 0x04a0>,
-+							 <&apps_smmu 0x2167 0x04a0>,
-+							 <&apps_smmu 0x2187 0x0400>,
-+							 <&apps_smmu 0x21c7 0x04a0>,
-+							 <&apps_smmu 0x21e7 0x04a0>,
-+							 <&apps_smmu 0x2547 0x04a0>,
-+							 <&apps_smmu 0x2567 0x04a0>,
-+							 <&apps_smmu 0x2587 0x0400>,
-+							 <&apps_smmu 0x25c7 0x04a0>,
-+							 <&apps_smmu 0x25e7 0x04a0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@8 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <8>;
-+						iommus = <&apps_smmu 0x2148 0x04a0>,
-+							 <&apps_smmu 0x2168 0x04a0>,
-+							 <&apps_smmu 0x2188 0x0400>,
-+							 <&apps_smmu 0x21c8 0x04a0>,
-+							 <&apps_smmu 0x21e8 0x04a0>,
-+							 <&apps_smmu 0x2548 0x04a0>,
-+							 <&apps_smmu 0x2568 0x04a0>,
-+							 <&apps_smmu 0x2588 0x0400>,
-+							 <&apps_smmu 0x25c8 0x04a0>,
-+							 <&apps_smmu 0x25e8 0x04a0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@9 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <9>;
-+						iommus = <&apps_smmu 0x2149 0x04a0>,
-+							 <&apps_smmu 0x2169 0x04a0>,
-+							 <&apps_smmu 0x2189 0x0400>,
-+							 <&apps_smmu 0x21c9 0x04a0>,
-+							 <&apps_smmu 0x21e9 0x04a0>,
-+							 <&apps_smmu 0x2549 0x04a0>,
-+							 <&apps_smmu 0x2569 0x04a0>,
-+							 <&apps_smmu 0x2589 0x0400>,
-+							 <&apps_smmu 0x25c9 0x04a0>,
-+							 <&apps_smmu 0x25e9 0x04a0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@10 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <10>;
-+						iommus = <&apps_smmu 0x214a 0x04a0>,
-+							 <&apps_smmu 0x216a 0x04a0>,
-+							 <&apps_smmu 0x218a 0x0400>,
-+							 <&apps_smmu 0x21ca 0x04a0>,
-+							 <&apps_smmu 0x21ea 0x04a0>,
-+							 <&apps_smmu 0x254a 0x04a0>,
-+							 <&apps_smmu 0x256a 0x04a0>,
-+							 <&apps_smmu 0x258a 0x0400>,
-+							 <&apps_smmu 0x25ca 0x04a0>,
-+							 <&apps_smmu 0x25ea 0x04a0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@11 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <11>;
-+						iommus = <&apps_smmu 0x214b 0x04a0>,
-+							 <&apps_smmu 0x216b 0x04a0>,
-+							 <&apps_smmu 0x218b 0x0400>,
-+							 <&apps_smmu 0x21cb 0x04a0>,
-+							 <&apps_smmu 0x21eb 0x04a0>,
-+							 <&apps_smmu 0x254b 0x04a0>,
-+							 <&apps_smmu 0x256b 0x04a0>,
-+							 <&apps_smmu 0x258b 0x0400>,
-+							 <&apps_smmu 0x25cb 0x04a0>,
-+							 <&apps_smmu 0x25eb 0x04a0>;
-+						dma-coherent;
-+					};
-+				};
- 			};
- 		};
- 
-@@ -4300,6 +4485,39 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 
- 				label = "lpass";
- 				qcom,remote-pid = <2>;
-+
-+				fastrpc {
-+					compatible = "qcom,fastrpc";
-+					qcom,glink-channels = "fastrpcglink-apps-dsp";
-+					label = "adsp";
-+					memory-region = <&adsp_rpc_remote_heap_mem>;
-+					qcom,vmids = <QCOM_SCM_VMID_LPASS
-+							  QCOM_SCM_VMID_ADSP_HEAP>;
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					compute-cb@3 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <3>;
-+						iommus = <&apps_smmu 0x3003 0x0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@4 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <4>;
-+						iommus = <&apps_smmu 0x3004 0x0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@5 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <5>;
-+						iommus = <&apps_smmu 0x3005 0x0>;
-+						qcom,nsessions = <5>;
-+						dma-coherent;
-+					};
-+				};
- 			};
- 		};
- 	};
--- 
-2.34.1
+Best regards,
+Krzysztof
 
 
