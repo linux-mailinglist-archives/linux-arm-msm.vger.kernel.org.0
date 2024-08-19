@@ -1,74 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-28979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DB61956B77
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 15:04:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 496ED956B81
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 15:08:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 833BA1C221E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 13:04:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7C44A1C220EF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 13:08:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79BDD16BE30;
-	Mon, 19 Aug 2024 13:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E044216C426;
+	Mon, 19 Aug 2024 13:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="NZuLwHBt"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="U9kV81PN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F041684A0
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 13:04:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B3116A36E;
+	Mon, 19 Aug 2024 13:07:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724072674; cv=none; b=gplW3vl3FpLhOwpC3eNuwZYEUbAu+5y7at4WeCaVRCUzRA/TXji/pEKi7xsCBy4hRhUWqBHI8jY4t+2ManjNuiPihTEwU7L0uSeWtABHvW+kengmonzYy4n/G9MT/C7+zaRHlY5rOLyapr8mpHQHp1URjPSnlm8UDjM2zfArzjo=
+	t=1724072880; cv=none; b=qSFvofLkCrdbBcEur6e3zpSzCSog/jPvmmKOoCa3g8sNnvbu3VYOGIkmZ+N16stuSjNlC7nTPfGqdTJyy/QMrAtrM6axzjlenQr9gMvnj6NeAxlFFI4nNHmvri5pzUhpTeDncGG2fwXKNI8ehxNd/AwhjgkaDnvbAMk+yGZaRhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724072674; c=relaxed/simple;
-	bh=IYdbPe0OKx/9hkdhX0xvBdF2XVrWlDywpNqyZct7aPw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Yo8NjpPPPsaJPs7UcUWjs4Kgx/DaXoNmVrxxyIG4n+QNbKjVcoz6sUO88UEpdAiigA5n5EWPJgU3N0F1G4GtNaDw3mSuQjZsjLVEnfflNxnQVfV9O8WPcIWOUp7MYZeSOO67xZRaYdhHMLVY4E/W3sGf6Uo/53RqYQOiks8MJy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=NZuLwHBt; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-42812945633so37805655e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 06:04:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1724072670; x=1724677470; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=z0q7LUcKKVTgxdpr8vjwYxLdRxCnhdSlwF4/mUSsGME=;
-        b=NZuLwHBtVjzI/y9TywloRQLed4d5bIV0lLqC0hZuFcwcqXqUtqAeuhOflldMWloKyU
-         f43pNehxNS7GTwth6oXhowOkXYGY3413ir9boUnyhEKwyKXfeqjGrrXaDfAE6vFskZIe
-         IrGCHoqQ5s0UCkFRUT7cdvun43Jsx8w26HWnixx1kiZYCM6jxF8SbHd+ZfYNi6bOanpX
-         qSnOjWzscOXRgptOqRq5RWeHzOyk5qNF+6pf+fywQCERoAjSPzqZ1wDhL/l5QzIDiPPT
-         vIGl+DiIuhIgDGWFc6uP/IEIIDz4LGcWuKeR9m0OR/KXVAqnsdWzgqcYXLicAfohNmpt
-         HVxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724072670; x=1724677470;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=z0q7LUcKKVTgxdpr8vjwYxLdRxCnhdSlwF4/mUSsGME=;
-        b=EOLsQP1fqiAJk2CKpUU/Vg3oE15J8DmxMHqmYztNktl7NmnMciPLDO7M3RxUrJ07hT
-         gNq78AquqyScClKDfREV2m8tuWrkCvPXHIFTDihZfAFhi4knSrDb1WuwXNEPDa0E16e8
-         KQAWB3ZLunFhvnZ7rxrX8mCSECACPF3IVgfweQjKnRSJoC2FFeABz2cUU6EWh0kv9cDx
-         Yr/Hj1bFKMot/mI9+uAntBp6rqJuiMFBH5Z5rRieC8uWW9sgiEk47kVPREgv+2eds3Yn
-         KYOFuXbIZvxkTS8stqKwAyC6xuX9/FmrDob4+UWYXnA60Ppo5sEft//4/XlSYGwv8tF2
-         6oGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXwuau2nyjcAXPaRLa2P7iexf+1j8AGNdG5KX1+cC5YcJw9uKnosMVPaaHLoZWXJ0zWOhT84bbJ5ZOYm4FNRpVwVLQFmt9zfmxz4xArsw==
-X-Gm-Message-State: AOJu0YztCSa99LGNHXexXEEYgGNl93f/jZclJYXuMUK+WFZCBtL3sRa8
-	3Uz3GsUka7AEejoQMSpcenc2R/UQqxy8N0cHdx5vXL7uMle7yJZ4jsideASYoUw=
-X-Google-Smtp-Source: AGHT+IGcco8Uu1B03BDNK+9I1i3zqOW3bHDc2syatTmIlBY0tq167mhZ/tsqdcQ13lZ+5LzGYNYw8Q==
-X-Received: by 2002:a05:600c:3509:b0:426:6b92:387d with SMTP id 5b1f17b1804b1-429ed7b8860mr78913165e9.21.1724072669628;
-        Mon, 19 Aug 2024 06:04:29 -0700 (PDT)
-Received: from [192.168.108.81] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ded29fcfsm165221705e9.20.2024.08.19.06.04.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Aug 2024 06:04:29 -0700 (PDT)
-Message-ID: <bb3a8513-8ee2-4532-84e3-0f1de5e6ae96@freebox.fr>
-Date: Mon, 19 Aug 2024 15:04:28 +0200
+	s=arc-20240116; t=1724072880; c=relaxed/simple;
+	bh=2xqEHdOFiBcXyf6be6DUXlm93FRag2QMLOmGqWjxMNk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=CNEUUGnN7xz04JdBylEPEJd45qlnq31PU4p2M9TOk6CU9aFAn1JrmnOss9q0vPJ3yMmJeNalQYSUAZJ/QmDq1Eyb8/Fww1EE2RdO+PGG+Y4gJyUQO418jogKrTMzHiMYkM8H7lf7/Z7CE3R2276OQqBa4UuBPb8vAMVcGWtk0sY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=U9kV81PN; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47JCLFbB032745;
+	Mon, 19 Aug 2024 13:07:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	GAl+8aYYFCb3rvVJ1ZBeK55OJUfaICaKouVC58gy11Q=; b=U9kV81PNYKzU+/Fu
+	aUI69R8ctAhkROnXk9WmlA651iqkzk5bD7pyJcdDgAi8vFXhwM/t8p/5xJAo1QZF
+	OL83Ub/36DHtLn2w963jXWi+URR/ThUq1f3Y90l5S12t5A/LRr4DwKH5LKITg4Le
+	HwDshIYzJuvKcJYK/eN03FByef+/v3jBubdEqYLS8McH2ZY0OVEMgO9NAghzU2Md
+	Ja03DiVwJ/lCAaBMQvcFm7HcSQQHWxCcZU7lrE6W26dvz9fpP9Ny1lWC2rCL6dd6
+	z+VWSjnO8tJMSpi+iD62I8W2xB+YC0BZiaYeWjzhJQwN8QvkrBAG6vR/G404VcTr
+	uWrXIg==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4145yw82yk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 19 Aug 2024 13:07:54 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47JD7r93005563
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 19 Aug 2024 13:07:53 GMT
+Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 19 Aug
+ 2024 06:07:47 -0700
+Message-ID: <60d737b2-4ae6-42aa-abc3-5843dde7f7b2@quicinc.com>
+Date: Mon, 19 Aug 2024 21:07:45 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,105 +65,123 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Work around reserved SMMU context bank on msm8998
-To: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>,
- Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Arnaud Vrac <avrac@freebox.fr>,
- Pierre-Hugues Husson <phhusson@freebox.fr>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Caleb Connolly <caleb.connolly@linaro.org>
-References: <20240819-smmu-v1-0-bce6e4738825@freebox.fr>
+Subject: Re: [PATCH 13/13] media: qcom: camss: Add support for VFE hardware
+ version Titan 780
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, Yongsheng Li <quic_yon@quicinc.com>
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-14-quic_depengs@quicinc.com>
+ <eba83b14-e704-464a-b4c4-19322e70d177@linaro.org>
 Content-Language: en-US
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <20240819-smmu-v1-0-bce6e4738825@freebox.fr>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Depeng Shao <quic_depengs@quicinc.com>
+In-Reply-To: <eba83b14-e704-464a-b4c4-19322e70d177@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: DowNTWabrozRQLTz_kvGMfo4fehWnBvO
+X-Proofpoint-GUID: DowNTWabrozRQLTz_kvGMfo4fehWnBvO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-19_11,2024-08-19_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ lowpriorityscore=0 mlxlogscore=999 adultscore=0 bulkscore=0 phishscore=0
+ spamscore=0 malwarescore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2408190088
 
-PLEASE NOTE: b4 spazzed out, this is v2.
+Hi Bryan,
 
-On 19/08/2024 14:59, Marc Gonzalez wrote:
 
-> On qcom msm8998, writing to the last context bank of lpass_q6_smmu
-> (base address 0x05100000) produces a system freeze & reboot.
+On 8/19/2024 7:05 PM, Bryan O'Donoghue wrote:
+> On 12/08/2024 15:41, Depeng Shao wrote:
+>> +#define VFE_BUS_WM_CFG(n)        (BUS_REG_BASE + 0x200 + (n) * 0x100)
 > 
-> The hardware/hypervisor reports 13 context banks for the LPASS SMMU
-> on msm8998, but only the first 12 are accessible...
-> Override the number of context banks
+> <snip>
 > 
-> [    2.546101] arm-smmu 5100000.iommu: probing hardware configuration...
-> [    2.552439] arm-smmu 5100000.iommu: SMMUv2 with:
-> [    2.558945] arm-smmu 5100000.iommu: 	stage 1 translation
-> [    2.563627] arm-smmu 5100000.iommu: 	address translation ops
-> [    2.568923] arm-smmu 5100000.iommu: 	non-coherent table walk
-> [    2.574566] arm-smmu 5100000.iommu: 	(IDR0.CTTW overridden by FW configuration)
-> [    2.580220] arm-smmu 5100000.iommu: 	stream matching with 12 register groups
-> [    2.587263] arm-smmu 5100000.iommu: 	13 context banks (0 stage-2 only)
-> [    2.614447] arm-smmu 5100000.iommu: 	Supported page sizes: 0x63315000
-> [    2.621358] arm-smmu 5100000.iommu: 	Stage-1: 36-bit VA -> 36-bit IPA
-> [    2.627772] arm-smmu 5100000.iommu: 	preserved 0 boot mappings
+>> +#define RDI_WM(n)            ((vfe_is_lite(vfe) ? 0x0 : 0x17) + (n))
+>> +
+>> +static void vfe_wm_start(struct vfe_device *vfe, u8 wm, struct 
+>> vfe_line *line)
+>> +{
+>> +    struct v4l2_pix_format_mplane *pix =
+>> +        &line->video_out.active_fmt.fmt.pix_mp;
+>> +
+>> +    wm = RDI_WM(wm); /* map to actual WM used (from wm=RDI index) */
 > 
-> Specifically, here:
+> OK so one more point here.
 > 
-> 	qsmmu->bypass_cbndx = smmu->num_context_banks - 1;
-> 	arm_smmu_cb_write(smmu, qsmmu->bypass_cbndx, ARM_SMMU_CB_SCTLR, 0);
+> The non-lite VFE has I think in the case of sm8550 twenty seven 
+> different bus clients.
 > 
-> and here:
+> The above code takes a given index - take the example of index 0 meaning 
+> RDI0 and
 > 
-> 	arm_smmu_write_context_bank(smmu, i);
-> 	arm_smmu_cb_write(smmu, i, ARM_SMMU_CB_FSR, ARM_SMMU_CB_FSR_FAULT);
+> 1. Determines if is_lite() is true deriving a jump of 0 or 0x17
+> 2. Uses this index as a further offset to functions such as
+>     VFE_BUS_WM_CFG(n)
+> 3. In no way articulates which bus client is which.
 > 
-> It is likely that FW reserves the last context bank for its own use,
-> thus a simple work-around would be: DON'T USE IT in Linux.
+> So for a non lite case -> RDI0 is bus client # 23
 > 
-> For reference, the lpass_q6_smmu node looks like this:
+> The code we have for CAMSS just assumes RDI is the only client we are 
+> programming - which I'm not proposing to change for now, however the 
+> code is very not obvious in what it is doing here.
 > 
-> 	lpass_q6_smmu: iommu@5100000 {
-> 		compatible = "qcom,msm8998-smmu-v2", "qcom,smmu-v2";
-> 		reg = <0x05100000 0x40000>;
-> 		clocks = <&gcc HLOS1_VOTE_LPASS_ADSP_SMMU_CLK>;
-> 		clock-names = "iface";
+> This BTW isn't a criticism of what you've done here but, even though I 
+> have access to the registers in front of me, I had to spend about 30 
+> minutes looking up and verifying these offsets.
 > 
-> 		#global-interrupts = <0>;
-> 		#iommu-cells = <1>;
-> 		interrupts =
-> 			<GIC_SPI 226 IRQ_TYPE_LEVEL_HIGH>,
-> 			<GIC_SPI 393 IRQ_TYPE_LEVEL_HIGH>,
-> 			<GIC_SPI 394 IRQ_TYPE_LEVEL_HIGH>,
-> 			<GIC_SPI 395 IRQ_TYPE_LEVEL_HIGH>,
-> 			<GIC_SPI 396 IRQ_TYPE_LEVEL_HIGH>,
-> 			<GIC_SPI 397 IRQ_TYPE_LEVEL_HIGH>,
-> 			<GIC_SPI 398 IRQ_TYPE_LEVEL_HIGH>,
-> 			<GIC_SPI 399 IRQ_TYPE_LEVEL_HIGH>,
-> 			<GIC_SPI 400 IRQ_TYPE_LEVEL_HIGH>,
-> 			<GIC_SPI 401 IRQ_TYPE_LEVEL_HIGH>,
-> 			<GIC_SPI 402 IRQ_TYPE_LEVEL_HIGH>,
-> 			<GIC_SPI 403 IRQ_TYPE_LEVEL_HIGH>,
-> 			<GIC_SPI 137 IRQ_TYPE_LEVEL_HIGH>;
+> That's not sustainable.
 > 
-> 		power-domains = <&gcc LPASS_ADSP_GDSC>;
-> 		status = "disabled";
-> 	};
+> Could you please add a comment which details what each index relates to.
 > 
-> Changes in v2:
-> - Use the compatible prop instead of a specific prop to trigger work-around (Bjorn & Caleb)
-> - Add qcom,msm8998-lpass-smmu compatible string
-> - Link to v1: https://lore.kernel.org/r/20240814-smmu-v1-0-3d6c27027d5b@freebox.fr
+> /*
+>   * Bus client mapping
+>   *
+>   * 0 = VID_Y ?
+>   * 1 = VID_C
+>   * .. etc
+>   * .. etc
+>   * 23 = RDI0
+>   * 24 = RDI1
+>   */
 > 
-> ---
-> Marc Gonzalez (2):
->       iommu/arm-smmu-qcom: hide last LPASS SMMU context bank from linux
->       arm64: dts: qcom: msm8998: add qcom,msm8998-lpass-smmu compatible
+> I'll try to apply a similar level of index documentation for existing 
+> upstream submissions so that working out client mappings is less tedious 
+> and will be requiring these mappings for new VFE silicon enabling code 
+> upstream.
 > 
->  arch/arm64/boot/dts/qcom/msm8998.dtsi      | 2 +-
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 5 +++++
->  2 files changed, 6 insertions(+), 1 deletion(-)
-> ---
-> base-commit: edb6307a8d9be5052ba5ce121e0bd55900ce44c4
-> change-id: 20240814-smmu-d572c1a16aac
+
+Sure, I will add the comment for the bus client mapping in next version 
+patch.
+
+But the comment will occupy too many lines, I will fold the comment, e.g.,
+
+/*
+  * Bus client mapping
+  *
+  * Full VFE:
+  * 0 = VID_Y, 1 = VID_C, 2 = VID 4:1, 3 = VID 16:1, 4 = DISP Y, 5 = 
+DISP C, 6 = DISP 4:1,
+  * 7 = DISP 16:1, 8 = FD_Y, 9 = FD_C, ...
+  * ...
+  * 23 = RDI0, 24 = RDI1, 25 = RDI2, 26 = LTM STATS
+  *
+  * VFE LITE:
+  * 0 = RDI0, 1 = RDI1, 2 = RDI3, 4 = RDI4
+  */
+
+Since the full VFE has many ports, can we just add comment for the RDI 
+client?
+
+
+Thanks,
+Depeng
 
 
