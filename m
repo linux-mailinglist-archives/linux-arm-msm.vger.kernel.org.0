@@ -1,69 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-29027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D8049578B3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 01:36:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DC909578B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 01:36:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 92D271C2319D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 23:36:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 62EC51C22183
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 23:36:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DBBE1E2131;
-	Mon, 19 Aug 2024 23:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8E591E2125;
+	Mon, 19 Aug 2024 23:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="lRUamFfT"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Pb+qshuP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4001E2116
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 23:36:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC1B1E2126
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 23:36:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724110594; cv=none; b=pai4k0iklpuKh7/GFPy4Rq4bxFTGdw/Nys0kLW/R9wE6kknHy+KWQFoABt/ubMAO/EscSJHXD0euZXDB1VIRXrq3uVMwhymCQ9V9YAHyOwb5CQHsu1IdUHuiU5sH39SBG9QYi83fA+gCMQNZuz7A7ZQpFlOhQ5SPLCgsLwmPY+s=
+	t=1724110595; cv=none; b=s3+C+L+vS2XQjJhXRBIC55nwinxwJYgeX8kSrqB96hrQupvWcFiLngtWh69H58xHRf6cy2HURiaM0szdcNQhV7iGLEqzP9frCcNLQePTrCMRU5Wlk6/BL+N7thkPu6BXWFLzVNfH13dDszL9fBtAf3GajILQAM/io2nkCahj9KA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724110594; c=relaxed/simple;
-	bh=Roi5i8LAm2qbYFgu3vbjTEm7hUeJWtdnSFionwzXcEw=;
+	s=arc-20240116; t=1724110595; c=relaxed/simple;
+	bh=11LWC1dHsw1h3mwOO/q+bhPVSG1jtOalR/V6EhebHss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pybm8bd0iik6IBWW+bnzgj+lMqc+JFALaV6kT+Y5qjjJSLJzdkmvIuFtOkU6TRdt2dm4Hmg34ww/qpN0T3lmbhATmo2yIKgbQcV274qD2x5ZOYhqlDndWtYRrXMLhxcxo/6Lxew8TnAQxqWKupum45R7LGPIxrX5Q37J6rE+CZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=lRUamFfT; arc=none smtp.client-ip=209.85.216.43
+	 MIME-Version; b=Ugwkafv70zRa1oYmpaFfH+GkuWh/FtH6TsmY6lt8pQmYyfWVFFXEIqMtzYGDv8BGcFlhQQOSzyAKbO5DyNrdFtilMTxBVakUrc/hgrfvOal2jQzn9Ck5zGcGtH+GYNseBUYgeVWICHntBp7PoQa4gie9SPcwXgGa315IGcSszp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Pb+qshuP; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2d3c5f769d6so3355494a91.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 16:36:32 -0700 (PDT)
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-201d5af11a4so45448625ad.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 16:36:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1724110592; x=1724715392; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1724110593; x=1724715393; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MTKeVDX3B7Rec/avu2J3HYCERK0HslRs8x4rP1mNjLc=;
-        b=lRUamFfTS6DsVcWeFWIwQ3+KBQRhl2+x3p+POWL5+2fISjFp+Zo51yzcGXbd/aZaj2
-         FkwcJC9QRwDZZxsV7OkF3xg2rOvcUXMgE7l1dZrC+yWIrZATVXSCnVNxnff41PCiv+oM
-         yWAoZexk2YKECd5pXyaSDllc9dC7rg7WluhEY=
+        bh=c9Cd04T134NyakvqbnePNRvSvtAZOKVt3h8rY/EORRs=;
+        b=Pb+qshuPZtui6ns+HBWeSRvEjQaKKuY/hLWAgFkQXZ9idS3NvZCn0EPlQN76VMS3du
+         aizhQmcUAP7Vh87fA0JURODMrwuRX+OUT1ufgjrLI0RHqpBhI5Vmdfh9+KbV6r6Ldpn8
+         IlkO7pwsaqwJTRQjcEBonm3BGp+Vslo42C3Lo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724110592; x=1724715392;
+        d=1e100.net; s=20230601; t=1724110593; x=1724715393;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MTKeVDX3B7Rec/avu2J3HYCERK0HslRs8x4rP1mNjLc=;
-        b=BomuvGpGbyvdK8pdKN7zGauSl2RPPI4dGz9mjDVQg315/rv+ucMlpv66XSczN9RTFQ
-         Ql15nXjko8UYvD5jDice8kBHPjt1yNZWFD0N2XFt/H169xD9KIT7KEQyaGUy6K5tPbNj
-         KfXrMZIoyHOi2ehLWj//9KY1k0bjKkjz859bMFK4lfEefD+HKqSHWJKkzdvv3Pr2DsAb
-         RuJyNj9hiSRLHJ8HS1VKfrM4ZZ/7TyRepYX4hU8XWXiRmOwa0gwPC6TN3qfFfi1Wq5NP
-         Z/bQf8CplKYGknKq7KTiMzqUuURsRENcT3he8B8o6+vGiny4QXpLur2KQr3M/EXwI6py
-         4E0w==
-X-Forwarded-Encrypted: i=1; AJvYcCU7K8sacKFcbcT5ebBrjTUE1zBOsBc2QPshmK4WbCLZfL9VPQirDF08YqGSjBFFGMqfoWzhYyge787zFw2r@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKMJ2ainMW1fqLMobxJr2f78FZjbhquhtnKiW16U+bW6UsWPf2
-	mY7pLc6x95KmdIs2dUk5oGCXwcQJ9VInoLHuTBonH2pbEZN9uhE8nzz22InN9g==
-X-Google-Smtp-Source: AGHT+IFja8fgz65fqj/HxtsU1jnIOssam1yt+nNI7Qy7HCclfpXJ6+fUompPLNl4vW+lHeeLPkoYmA==
-X-Received: by 2002:a17:90b:682:b0:2d3:c6dd:4383 with SMTP id 98e67ed59e1d1-2d3dfc6f2cdmr11172016a91.16.1724110591558;
-        Mon, 19 Aug 2024 16:36:31 -0700 (PDT)
+        bh=c9Cd04T134NyakvqbnePNRvSvtAZOKVt3h8rY/EORRs=;
+        b=XWE/87GlYtPmw+eQnoK4+uwwfaH/IEaQn78tO+KMlhtpLemgh8tCm3WBs7s6nW5iNC
+         LQUb6EbUjbr0r8Sac/5bCHLmXFxBkLsWIp1kp2e8AqJ9q9xS2TuflR2C8pDMMyXhyvsF
+         HM205zMNuzx3zNKuQnoNhtk0BY/I70q35fgj6u92EMWlHR2EFv0dYM74Arf2ANxnn4Z7
+         pIDXnageoTtNJgp8P/D1QRkqOzZqI8nEAva56XdmcM8CQwUAVPP02e/vY8nOmXZKn1qF
+         00/mckj2kLv3maPJF/SZBhsfQ442KA/NZMDKxSAp1DscnY9F7rrS1XFe8PnYHOBBpyjJ
+         5Lvw==
+X-Forwarded-Encrypted: i=1; AJvYcCWhiIyd/skSAiQickya+X+3+AZmIoHwKzZhQGR6IIA7Q5xS4vXC44/fAGiUMJ7/oln8IqVyzbQTLaVsTQtV@vger.kernel.org
+X-Gm-Message-State: AOJu0YxImsFj6ZItaWSE/3uw5hP53kCu4Wx9y1Qmxy7ln4gNd6+H2nHh
+	oAODFn6c2EBPrmeDPFFBGEwDU3o18ClLmWZKO8qEV0oxcL2TIwzkajVZ8xTa0w==
+X-Google-Smtp-Source: AGHT+IHMdQuQYTmr1VZjFq64pkXwFedtdel2DhVJEBi38KoF3VM1xbdsltPsvQqi4APbbL4RALu4+w==
+X-Received: by 2002:a17:903:2307:b0:1fd:a5a2:5838 with SMTP id d9443c01a7336-20203e5518fmr187693085ad.6.1724110592977;
+        Mon, 19 Aug 2024 16:36:32 -0700 (PDT)
 Received: from localhost (210.73.125.34.bc.googleusercontent.com. [34.125.73.210])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-2d3e3ebfe46sm7816927a91.57.2024.08.19.16.36.30
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-201f0302e84sm67507995ad.32.2024.08.19.16.36.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Aug 2024 16:36:31 -0700 (PDT)
+        Mon, 19 Aug 2024 16:36:32 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
 To: Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
@@ -75,9 +75,9 @@ Cc: linux-kernel@vger.kernel.org,
 	Konrad Dybcio <konradybcio@kernel.org>,
 	Taniya Das <quic_tdas@quicinc.com>,
 	Amit Pundir <amit.pundir@linaro.org>
-Subject: [PATCH 1/2] clk: qcom: gcc-sm8550: Don't use parking clk_ops for QUPs
-Date: Mon, 19 Aug 2024 16:36:26 -0700
-Message-ID: <20240819233628.2074654-2-swboyd@chromium.org>
+Subject: [PATCH 2/2] clk: qcom: gcc-sm8550: Don't park the USB RCG at registration time
+Date: Mon, 19 Aug 2024 16:36:27 -0700
+Message-ID: <20240819233628.2074654-3-swboyd@chromium.org>
 X-Mailer: git-send-email 2.46.0.184.g6999bdac58-goog
 In-Reply-To: <20240819233628.2074654-1-swboyd@chromium.org>
 References: <20240819233628.2074654-1-swboyd@chromium.org>
@@ -89,23 +89,15 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The QUPs aren't shared in a way that requires parking the RCG at an
-always on parent in case some other entity turns on the clk. The
-hardware is capable of setting a new frequency itself with the DFS mode,
-so parking is unnecessary. Furthermore, there aren't any GDSCs for these
-devices, so there isn't a possibility of the GDSC turning on the clks
-for housekeeping purposes.
+Amit Pundir reports that audio and USB-C host mode stops working if the
+gcc_usb30_prim_master_clk_src clk is registered and
+clk_rcg2_shared_init() parks it on XO. Skip parking this clk at
+registration time to fix those issues.
 
-This wasn't a problem to mark these clks shared until we started parking
-shared RCGs at clk registration time in commit 01a0a6cc8cfd ("clk: qcom:
-Park shared RCGs upon registration"). Parking at init is actually
-harmful to the UART when earlycon is used. If the device is pumping out
-data while the frequency changes you'll see garbage on the serial
-console until the driver can probe and actually set a proper frequency.
-
-Revert the QUP part of commit 929c75d57566 ("clk: qcom: gcc-sm8550: Mark
-RCGs shared where applicable") so that the QUPs don't get parked during
-clk registration and break UART operations.
+Partially revert commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon
+registration") by skipping the parking bit for this clk, but keep the
+part where we cache the config register. That's still necessary to
+figure out the true parent of the clk at registration time.
 
 Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
 Fixes: 929c75d57566 ("clk: qcom: gcc-sm8550: Mark RCGs shared where applicable")
@@ -116,247 +108,77 @@ Reported-by: Amit Pundir <amit.pundir@linaro.org>
 Closes: https://lore.kernel.org/CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/clk/qcom/gcc-sm8550.c | 52 +++++++++++++++++------------------
- 1 file changed, 26 insertions(+), 26 deletions(-)
+ drivers/clk/qcom/clk-rcg.h    |  1 +
+ drivers/clk/qcom/clk-rcg2.c   | 30 ++++++++++++++++++++++++++++++
+ drivers/clk/qcom/gcc-sm8550.c |  2 +-
+ 3 files changed, 32 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
+index d7414361e432..8e0f3372dc7a 100644
+--- a/drivers/clk/qcom/clk-rcg.h
++++ b/drivers/clk/qcom/clk-rcg.h
+@@ -198,6 +198,7 @@ extern const struct clk_ops clk_byte2_ops;
+ extern const struct clk_ops clk_pixel_ops;
+ extern const struct clk_ops clk_gfx3d_ops;
+ extern const struct clk_ops clk_rcg2_shared_ops;
++extern const struct clk_ops clk_rcg2_shared_no_init_park_ops;
+ extern const struct clk_ops clk_dp_ops;
+ 
+ struct clk_rcg_dfs_data {
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index 30b19bd39d08..bf26c5448f00 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -1348,6 +1348,36 @@ const struct clk_ops clk_rcg2_shared_ops = {
+ };
+ EXPORT_SYMBOL_GPL(clk_rcg2_shared_ops);
+ 
++static int clk_rcg2_shared_no_init_park(struct clk_hw *hw)
++{
++	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
++
++	/*
++	 * Read the config register so that the parent is properly mapped at
++	 * registration time.
++	 */
++	regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, &rcg->parked_cfg);
++
++	return 0;
++}
++
++/*
++ * Like clk_rcg2_shared_ops but skip the init so that the clk frequency is left
++ * unchanged at registration time.
++ */
++const struct clk_ops clk_rcg2_shared_no_init_park_ops = {
++	.init = clk_rcg2_shared_no_init_park,
++	.enable = clk_rcg2_shared_enable,
++	.disable = clk_rcg2_shared_disable,
++	.get_parent = clk_rcg2_shared_get_parent,
++	.set_parent = clk_rcg2_shared_set_parent,
++	.recalc_rate = clk_rcg2_shared_recalc_rate,
++	.determine_rate = clk_rcg2_determine_rate,
++	.set_rate = clk_rcg2_shared_set_rate,
++	.set_rate_and_parent = clk_rcg2_shared_set_rate_and_parent,
++};
++EXPORT_SYMBOL_GPL(clk_rcg2_shared_no_init_park_ops);
++
+ /* Common APIs to be used for DFS based RCGR */
+ static void clk_rcg2_dfs_populate_freq(struct clk_hw *hw, unsigned int l,
+ 				       struct freq_tbl *f)
 diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
-index 7944ddb4b47d..0244a05866b8 100644
+index 0244a05866b8..5abaeddd6afc 100644
 --- a/drivers/clk/qcom/gcc-sm8550.c
 +++ b/drivers/clk/qcom/gcc-sm8550.c
-@@ -536,7 +536,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s0_clk_src = {
+@@ -1159,7 +1159,7 @@ static struct clk_rcg2 gcc_usb30_prim_master_clk_src = {
  		.parent_data = gcc_parent_data_0,
  		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
  		.flags = CLK_SET_RATE_PARENT,
 -		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
  	},
  };
  
-@@ -551,7 +551,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s1_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -566,7 +566,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s2_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -581,7 +581,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s3_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -596,7 +596,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s4_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -611,7 +611,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s5_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -626,7 +626,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s6_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -641,7 +641,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s7_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -656,7 +656,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s8_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -671,7 +671,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s9_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -700,7 +700,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s0_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s0_clk_src = {
-@@ -717,7 +717,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s1_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s1_clk_src = {
-@@ -750,7 +750,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s2_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s2_clk_src = {
-@@ -767,7 +767,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s3_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s3_clk_src = {
-@@ -784,7 +784,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s4_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s4_clk_src = {
-@@ -801,7 +801,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s5_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s5_clk_src = {
-@@ -818,7 +818,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s6_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s6_clk_src = {
-@@ -835,7 +835,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s7_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s7_clk_src = {
-@@ -852,7 +852,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s0_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s0_clk_src = {
-@@ -869,7 +869,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s1_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s1_clk_src = {
-@@ -886,7 +886,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s2_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s2_clk_src = {
-@@ -903,7 +903,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s3_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s3_clk_src = {
-@@ -920,7 +920,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s4_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s4_clk_src = {
-@@ -937,7 +937,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s5_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s5_clk_src = {
-@@ -975,7 +975,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s6_clk_src_init = {
- 	.parent_data = gcc_parent_data_8,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_8),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s6_clk_src = {
-@@ -992,7 +992,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s7_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s7_clk_src = {
 -- 
 https://chromeos.dev
 
