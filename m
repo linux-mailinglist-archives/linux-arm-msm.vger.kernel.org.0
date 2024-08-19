@@ -1,143 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-28967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9870295688B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 12:30:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B6C959568DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 13:00:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5171C286CE5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 10:30:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3B46A1F2259D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 11:00:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B9D01662F6;
-	Mon, 19 Aug 2024 10:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C7E816630A;
+	Mon, 19 Aug 2024 11:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="poQCGpxn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SUJoPjQx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994A6165EFA;
-	Mon, 19 Aug 2024 10:29:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5171F1662FD;
+	Mon, 19 Aug 2024 11:00:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724063374; cv=none; b=gyszPKpOSubgjrQxYgQKTBfSRELtbVXlyrgSJt59vTSWs6gUwJR6w0Rklijhy5u1I/FIg80DRNNs7Z098UjwUlDfOA/pfQ17LtuVgswLPwK7hGFklklEwzykJXF4wETI+JxbEqg4UgLdDSH6sd4lDMR7y1V1RZvmuMsAWSBvO80=
+	t=1724065221; cv=none; b=VunjOFTJ4K74zx70EK156QShp1sjVz13kEtfnle5+NQHN5MJlr47ym40pS4DatRQQuka+dAbX+YKYBOL6OeyKpN1+XQ8W8Mmpfc0o3Q6s3BhXmMESY87V75EGnMl+iR4RC28cbZhhudH+BppO5dXMAZheO7ZBt/aOAXsgK0smKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724063374; c=relaxed/simple;
-	bh=X4FazFzXFBrFIDymNcE3aAJDAA/4gZxS51gkJ3YUXjU=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=AnRYehdL8bHBxzq5g6QNbp3D8RHpacwhW68SHHo9AvBUQCAKvLhJkQb9py8ATlPwDVVwE9EUp5wJzoF2y9UhW0f7P9+nHi1UwUaBUdBpTsX/dRnR2xI9fRNoRJYhPRNCfXJaVEyqZwhAhXtP4DkSfo6xJOLcJFDV2CrHUAvBgSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=poQCGpxn; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47JARZAL032383;
-	Mon, 19 Aug 2024 10:29:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:date:from:in-reply-to:message-id:references:subject:to; s=
-	qcppdkim1; bh=MepeBszfSDfXc0P295OU6NN7o0ZjiJbyQfKnN+7BT0w=; b=po
-	QCGpxnrJuC8Uz1L4CKQE1sHaHpG6jOuzAUN1NC+//lnhfsOS2G5tkfQ18erYo3on
-	cPUBXLILxUY5S1gBlZQZ3VWAO8YfDjVqDsR/m0O1R13TiVHWhPCP9CuDTGNzH71U
-	1FUFTMHVW5ajjasZqcFr7PPwOQcVwTeXXQWeHz2NNTdV5mAvRcUgaWIwnqhjEfLy
-	VJ6rA7xFmklWl1BNHcxyM4LXeSxGVzItUhvV2vdYKsV7nCubWdcxllHHGKQk/Qnt
-	K53poxd9NaAZ+xRCO1iXb2F1PUmPKFpCvlRzEBThkfrBh/VNaqQ8cm4KFz8i03Uw
-	Iw5+xJTGgUA0rcI5jUDA==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 412m873tmb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 19 Aug 2024 10:29:21 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 47JATIo8015723;
-	Mon, 19 Aug 2024 10:29:18 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 412mxkbftb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Mon, 19 Aug 2024 10:29:18 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 47JATFMo015305;
-	Mon, 19 Aug 2024 10:29:17 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-dikshita-hyd.qualcomm.com [10.213.110.13])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 47JATHIh015713;
-	Mon, 19 Aug 2024 10:29:17 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 347544)
-	id C42F43474; Mon, 19 Aug 2024 15:59:16 +0530 (+0530)
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-To: "Rafael J. Wysocki" <rafael@kernel.org>, Pavel Machek <pavel@ucw.cz>,
-        Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>
-Subject: [PATCH v4 2/2] media: venus: use device managed APIs for power domains
-Date: Mon, 19 Aug 2024 15:59:10 +0530
-Message-Id: <1724063350-11993-3-git-send-email-quic_dikshita@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1724063350-11993-1-git-send-email-quic_dikshita@quicinc.com>
-References: <1724063350-11993-1-git-send-email-quic_dikshita@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: uiiew0fyT4wHdUV9RoCkr1jDPExags_1
-X-Proofpoint-ORIG-GUID: uiiew0fyT4wHdUV9RoCkr1jDPExags_1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-19_10,2024-08-19_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- mlxlogscore=999 priorityscore=1501 adultscore=0 lowpriorityscore=0
- clxscore=1015 bulkscore=0 suspectscore=0 spamscore=0 impostorscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408190069
+	s=arc-20240116; t=1724065221; c=relaxed/simple;
+	bh=XBHMEEhPwfwJ6wJsTcFGmgfYvxnXBbLVl1ivyet5cGc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=A3brgPOeszwW6AhVPJbn54UCDxXHyqAzgvHsA/ifmTsqFxPScxKGuFFjq6aiijquf1xlZ3Y9rk22MwA0eIj7foFd//eTL5Lrc73yNfnzYJzaeA0NBKM4nLFDsuSHpXPdrEAlGvFfo8kIxVIRDw7Gm1v3ccNzr6FolvtFga6/1cI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SUJoPjQx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FFFC4AF0C;
+	Mon, 19 Aug 2024 11:00:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724065220;
+	bh=XBHMEEhPwfwJ6wJsTcFGmgfYvxnXBbLVl1ivyet5cGc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=SUJoPjQxJkRWQDMdbqsd8ljreSfbs4lLEHRNErvO2OGQb6MYc9hvSstcGaR7Ih75I
+	 1ghZ+Ztz2eyERrQve6KZTnO5jXonKCuPpHjEgVD2isH9MmMUMAB0Y+psA1rAI6dJzv
+	 6iCxl7WiYYu1P+830qHbNz+UoqE0zbPe56O/VUGbDbOOwMfkY1b1YdmVHu37yvV3Mn
+	 Bwg5PJkOKuyIpVnWMsiquBUzTjo7ZZkcKhcZq2C/VYDi/KUk1erKrc+bkMgvg/d1Sv
+	 vtccfdM0a8obf9+ELr4gVjUJLVFn0CKbXmE3C+JzXrYKhINTOtUWKbT1JuO9ftXMSu
+	 HdiWT9BhcCczA==
+Message-ID: <9fce86a4-fadd-43cc-ab99-8524a6396d1e@kernel.org>
+Date: Mon, 19 Aug 2024 13:00:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sa8775p-ride: Add QCS9100
+ compatible
+To: "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>,
+ Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Tengfei Fan <quic_tengfan@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240806-add_qcs9100_soc_id-v1-0-04d14081f304@quicinc.com>
+ <20240806-add_qcs9100_soc_id-v1-4-04d14081f304@quicinc.com>
+ <90eae361-7d5d-440f-a85d-dfd81b384fe7@kernel.org>
+ <4a350e94-3c95-48e1-9ea8-ced483c1aa45@quicinc.com>
+ <14ec06bd-0c27-4930-8bce-d3f5b68067ed@kernel.org>
+ <ace5b3e1-f4a2-4c04-821a-e797d0f55cae@quicinc.com>
+ <9323127a-e6b5-4835-afa0-4ce0086fd9d1@kernel.org>
+ <0d1c44b9-3d5f-4d93-af64-1756e52f4fe3@quicinc.com>
+ <47c966c7-8736-44a2-8ec7-4d7989efa9cd@kernel.org>
+ <72b2d710-a7cb-45cf-9dad-e9fbd876697b@quicinc.com>
+ <d9060b49-66fe-4001-86cd-dda5e213e454@kernel.org>
+ <2229cc1a-0fa0-4291-874e-43b31f82ef50@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <2229cc1a-0fa0-4291-874e-43b31f82ef50@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Use devres-enabled version of power domain attach APIs.
+On 13/08/2024 10:59, Aiqun Yu (Maria) wrote:
+>>>>>> Does "new board" mean that "old board" disappears? No users to care
+>>>>>> about it? Or just the existing board is being changed (like new revision)?
+>>>>>
+>>>>> We will support both boards. Sa8775p-ride board with sa8775p chipset and
+>>>>> sa8775p-ride board with qcs9100 chipset. Both of them can be used for
+>>>>> development.
+>>>>
+>>>> Patch does something else then - changes compatibles for the existing
+>>>> (old) board.
+>>>
+>>> Can you educate us the right way to add the qcs9100 SoC support in 
+>>> sa8775p-ride board? We don't want to duplicate whole device tree file 
+>>> since all the hardwares are same except the SoC, so we add qcs9100 SoC 
+>>> compatible to sa8775p-ride board and still keep sa8775p SoC compatible.
+>>
+>> Split board DTS into shared DTSI (just don't forget about proper
+>> -M/-C/-B arguments for format-patch) and include it in relevant boards.
+>> You also need new SoC DTSI. This will be unusual code, but it matches
+>> what you want to achieve.
+> 
+> If we create two additional DTSs, a total of four DTBs will be generated.
+> Should we update the current board DTSs (sa8775p-ride-r3.dts and
+> sa8775p-ride.dts) to support the pin-to-pin compatible QCS9100 and
+> SA8775p SoCs?
 
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/media/platform/qcom/venus/pm_helpers.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+I don't know, I don't have such device. Decision should be based on real
+life, real events happening, real products, not on feelings.
 
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index 5028220..86221e0 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -869,7 +869,7 @@ static int vcodec_domains_get(struct venus_core *core)
- 	if (!res->vcodec_pmdomains_num)
- 		goto skip_pmdomains;
- 
--	ret = dev_pm_domain_attach_list(dev, &vcodec_data, &core->pmdomains);
-+	ret = devm_pm_domain_attach_list(dev, &vcodec_data, &core->pmdomains);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -895,14 +895,11 @@ static int vcodec_domains_get(struct venus_core *core)
- 	return 0;
- 
- opp_attach_err:
--	dev_pm_domain_detach_list(core->pmdomains);
- 	return ret;
- }
- 
- static void vcodec_domains_put(struct venus_core *core)
- {
--	dev_pm_domain_detach_list(core->pmdomains);
--
- 	if (!core->has_opp_table)
- 		return;
- 
--- 
-2.7.4
+> 
+> Considering the higher usage of QCS9100 boards in IoT compared to
+> SA8775p in automotive for these DTBs, perhaps we should prioritize the
+> 'qcom,qcs9100' compatibility before 'qcom,sa8775p'.
+
+Prioritize in what way? What does it mean?
+
+Best regards,
+Krzysztof
 
 
