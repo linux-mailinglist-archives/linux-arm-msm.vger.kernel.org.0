@@ -1,159 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-28961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5392B9567BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 12:03:50 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0AC499567C3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 12:05:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F19E21F228EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 10:03:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 95CD2B20837
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 10:05:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F22B1514C8;
-	Mon, 19 Aug 2024 10:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AF4615ADB2;
+	Mon, 19 Aug 2024 10:04:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PY8sP2Hp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BF033C0;
-	Mon, 19 Aug 2024 10:03:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6A6155337
+	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 10:04:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724061824; cv=none; b=ggsq5Y3qAAJxIW+b3upLT3Xp1ggWK5AEPpNBE9C6cG9uTMpdAUwuw0Kd64mg26Rhl49+3LW/WjMPqPU+0hev2+I1e73TzJkgX54T8jiN9nSegGP5bOD2rSj3kvS5BR3IqyK7bQqlXVcq1KUvlGPP+9H3qlU2o58e37GIaFQxtSw=
+	t=1724061897; cv=none; b=WQMbOq4OJxbtAMUeJut8qYuJiMcGP5+gR0LJTm3pEPi0PGjCoXmgIjZxHsBJxOeDOD3GuoXbO9YdeSk78sxcPYGbR3i4Vmx+2G37VQj3X4bwiDZJw7jsevqp8vChfkEqQzrbeH97CGaSQFAst8KAQR6fE+A8uniqfKWh1rL8Jt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724061824; c=relaxed/simple;
-	bh=vKxt43l0OwvJY5pOsltXEYOqsDQ7ksufql72nzGBt5A=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=drDT+Bsg3k6J6EUsXQ0JStXtNfoLKval9VFujmm8MYwQTYU1QvDPD+FL7oQ561s/PmPjXHjcXZOcgOzZcNMHWEkrm6OhUrPHYPKiwor2RCa7dSzViWaWro0fBGBd6uqXCeS9ir9EAlDBuItZrdkEwTWSfhJkJg0WIrXpFosJbYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
-X-UUID: 8fdc65be5e1111efa216b1d71e6e1362-20240819
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.1.38,REQID:0d267023-8f1c-4590-a5e5-11990b87f65d,IP:0,U
-	RL:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
-	:release,TS:-5
-X-CID-META: VersionHash:82c5f88,CLOUDID:e841c5a9961d80c9f7a7a15340738a8e,BulkI
-	D:nil,BulkQuantity:0,Recheck:0,SF:102,TC:nil,Content:0,EDM:-3,IP:nil,URL:0
-	,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:
-	NO,DKR:0,DKP:0,BRR:0,BRE:0
-X-CID-BVR: 0,NGT
-X-CID-BAS: 0,NGT,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-UUID: 8fdc65be5e1111efa216b1d71e6e1362-20240819
-Received: from node4.com.cn [(10.44.16.170)] by mailgw.kylinos.cn
-	(envelope-from <xialonglong@kylinos.cn>)
-	(Generic MTA)
-	with ESMTP id 193915827; Mon, 19 Aug 2024 17:58:19 +0800
-Received: from node4.com.cn (localhost [127.0.0.1])
-	by node4.com.cn (NSMail) with SMTP id 21C5616002085;
-	Mon, 19 Aug 2024 17:58:19 +0800 (CST)
-X-ns-mid: postfix-66C3173A-9875491417
-Received: from kylin-pc.. (unknown [172.25.130.133])
-	by node4.com.cn (NSMail) with ESMTPA id 49C2F16002084;
-	Mon, 19 Aug 2024 09:58:17 +0000 (UTC)
-From: Longlong Xia <xialonglong@kylinos.cn>
-To: quic_jhugo@quicinc.com
-Cc: quic_carlv@quicinc.com,
-	ogabbay@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Longlong Xia <xialonglong@kylinos.cn>
-Subject: [PATCH 1/1] accel/qaic: Change to use DEFINE_SHOW_ATTRIBUTE macro
-Date: Mon, 19 Aug 2024 17:58:16 +0800
-Message-ID: <20240819095816.447096-1-xialonglong@kylinos.cn>
-X-Mailer: git-send-email 2.45.1
+	s=arc-20240116; t=1724061897; c=relaxed/simple;
+	bh=xoT8WHk3WQmUClK7K7b/s/MGeeLj8XCH4SR68t7sZg0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QBhzQzhJEizsl2b7+Yjxygxkoxdbk5KqJ0IT6h5ks3gRNs6UW5gn9B45Dlv7bYVz6q3bjmCsJnBsVSJdIN+EzNWr2srcXvKVIfNwO5i2F69s1cyWql71pV6LAljMVqHyUX6d0s7kPErPoH0xhkNrYZZb76CJeEN48G1FCcBNz1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PY8sP2Hp; arc=none smtp.client-ip=209.85.219.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e0ea24477f0so4348331276.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 03:04:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1724061895; x=1724666695; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=e1Ca1aEMxVbK/mwEr3WDL/uAexipVpTA2uL0ddyloYs=;
+        b=PY8sP2HpePQO8GpReSqZkOmsK5FbmPXSAXeBmd8CCPaUYhzW+v9pdnrryrxc/rbtyY
+         EQhocheYm+V08MFqtBKNixjGwNxjKgfU8LF+KxheTYdN7kk8Y4P2ECGJ/XW6xIhozTht
+         Z4W+ZlOGhH10A3C/nk7KvgBz0r7UP5R5huugjI31p8JVOpLqlA54TAOZRlexnKgxykPa
+         ugHEbvYX0XLzmamZ3NnV4idtaS2RPXbV6riSTsMSVeqQlPeGeqLhRLBcULHup1wPHKBq
+         81Me8bxafBmRoyzx5tXYY8ylAsUlNNxehGmQZ0iymhRzZI2LYwauqC1cCX2oVBKYqIqu
+         fqTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724061895; x=1724666695;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=e1Ca1aEMxVbK/mwEr3WDL/uAexipVpTA2uL0ddyloYs=;
+        b=BQCucsmbdDvEMTZ66LBFuAT63lCr5D1n3StP67xajH19rdW3kmu4m+zB7UY23bUyK3
+         Jo5Azkeh4ElbP3K5mO7FGmMf8Hb49Wr6nKgyTF2zECYWnPGPsPM5duUXfHp3ogGblaWx
+         JxVGR7Xs7mDvBi+4iOVS0UeXUWbJL5TOD6yfoDeSQkbcVQXHdwoT6OwwRKvKjDQAmprL
+         J4TFALk7xVy318A6tXCMB4tbmty1BpsN2PjMHv9OOWkpGhwzwYx+9VsM2jGEIXQul80T
+         uUMuUdyv6hRqb3zDGdIco0QfA8qJRk54ftznbyUEEbJ00n0XrTAmI4zC4qhpH5dvFpQe
+         btKA==
+X-Forwarded-Encrypted: i=1; AJvYcCXf8A1Jo25gzNfAeQjcvJJ45uM45b6eVfIfC7V1Zxx+UE903T73J++ChXfCeMyeJGISI0nH/SEXWJMGS34m4eMHh6eKBuyZ9NRk6ToQEA==
+X-Gm-Message-State: AOJu0Yw3KMzzYouCBtV50c7E59P0s5uDXOmbJ4M5Wclc8E4M+qtAcOSC
+	Fw+gGNjM4lrX/u9WXpUDZLGrGfqjcmBIyNFmT4Mf4GOZ+tnmZn7OMOBdoyD5BmxDLmwvArx9X5l
+	hPxU+VFxXfhhP/gfao/nCNkwdrwYqcHoEybiQZ24AroNdPmlO6TU=
+X-Google-Smtp-Source: AGHT+IHbPw975p5St5ukxgiGIy4CD4Vc8ysEaghu4/as749NoeR4PFK5yZ2MogHwI+n8JQDVO1DFvdB/CFAvp9O9pSA=
+X-Received: by 2002:a05:6902:1687:b0:e13:c7a1:4a72 with SMTP id
+ 3f1490d57ef6-e13c7a15d8dmr9565396276.12.1724061895158; Mon, 19 Aug 2024
+ 03:04:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+References: <1724048566-5035-1-git-send-email-quic_dikshita@quicinc.com> <1724048566-5035-2-git-send-email-quic_dikshita@quicinc.com>
+In-Reply-To: <1724048566-5035-2-git-send-email-quic_dikshita@quicinc.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Mon, 19 Aug 2024 12:04:18 +0200
+Message-ID: <CAPDyKFroZ+E9+Nk6+H1A5xZDv=HpcUAfnYPCXJot1NiZZci6gQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] PM: domains: add device managed version of dev_pm_domain_attach|detach_list()
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <len.brown@intel.com>, Pavel Machek <pavel@ucw.cz>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Use DEFINE_SHOW_ATTRIBUTE macro to simplify the code.
-No functional change.
+On Mon, 19 Aug 2024 at 08:23, Dikshita Agarwal
+<quic_dikshita@quicinc.com> wrote:
+>
+> Add the devres-enabled version of dev_pm_domain_attach|detach_list.
+> If client drivers use devm_pm_domain_attach_list() to attach the PM domains,
+> devm_pm_domain_detach_list() will be invoked implicitly during remove phase.
+>
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> ---
+>  drivers/base/power/common.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
+>  include/linux/pm_domain.h   | 11 +++++++++++
+>  2 files changed, 56 insertions(+)
+>
+> diff --git a/drivers/base/power/common.c b/drivers/base/power/common.c
+> index 327d168..c8431de 100644
+> --- a/drivers/base/power/common.c
+> +++ b/drivers/base/power/common.c
+> @@ -277,6 +277,51 @@ int dev_pm_domain_attach_list(struct device *dev,
+>  EXPORT_SYMBOL_GPL(dev_pm_domain_attach_list);
+>
+>  /**
+> + * devm_pm_domain_detach_list - devres-enabled version of dev_pm_domain_detach_list.
+> + * @_list: The list of PM domains to detach.
+> + *
+> + * This function reverse the actions from devm_pm_domain_attach_list().
+> + * it will be invoked during the remove phase from drivers implicitly if driver
+> + * uses devm_pm_domain_attach_list() to attach the PM domains.
+> + */
+> +static void devm_pm_domain_detach_list(void *_list)
+> +{
+> +       struct dev_pm_domain_list *list = _list;
+> +
+> +       dev_pm_domain_detach_list(list);
+> +}
+> +
+> +/**
+> + * devm_pm_domain_attach_list - devres-enabled version of dev_pm_domain_attach_list
+> + * @dev: The device used to lookup the PM domains for.
+> + * @data: The data used for attaching to the PM domains.
+> + * @list: An out-parameter with an allocated list of attached PM domains.
+> + *
+> + * NOTE: this will also handle calling devm_pm_domain_detach_list() for
+> + * you during remove phase.
+> + *
+> + * Returns the number of attached PM domains or a negative error code in case of
+> + * a failure.
+> + */
+> +int devm_pm_domain_attach_list(struct device *dev,
+> +                              const struct dev_pm_domain_attach_data *data,
+> +                              struct dev_pm_domain_list **list)
+> +{
+> +       int ret, num_pds;
+> +
+> +       num_pds = dev_pm_domain_attach_list(dev, data, list);
+> +       if (!num_pds)
+> +               return 0;
 
-Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
----
- drivers/accel/qaic/qaic_debugfs.c | 43 ++++---------------------------
- 1 file changed, 5 insertions(+), 38 deletions(-)
+This should be:
+if (num_pds <= 0)
+      return num_pds;
 
-diff --git a/drivers/accel/qaic/qaic_debugfs.c b/drivers/accel/qaic/qaic_=
-debugfs.c
-index 20b653d99e52..ba0cf2f94732 100644
---- a/drivers/accel/qaic/qaic_debugfs.c
-+++ b/drivers/accel/qaic/qaic_debugfs.c
-@@ -64,20 +64,9 @@ static int bootlog_show(struct seq_file *s, void *unus=
-ed)
- 	return 0;
- }
-=20
--static int bootlog_fops_open(struct inode *inode, struct file *file)
--{
--	return single_open(file, bootlog_show, inode->i_private);
--}
--
--static const struct file_operations bootlog_fops =3D {
--	.owner =3D THIS_MODULE,
--	.open =3D bootlog_fops_open,
--	.read =3D seq_read,
--	.llseek =3D seq_lseek,
--	.release =3D single_release,
--};
-+DEFINE_SHOW_ATTRIBUTE(bootlog);
-=20
--static int read_dbc_fifo_size(struct seq_file *s, void *unused)
-+static int fifo_size_show(struct seq_file *s, void *unused)
- {
- 	struct dma_bridge_chan *dbc =3D s->private;
-=20
-@@ -85,20 +74,9 @@ static int read_dbc_fifo_size(struct seq_file *s, void=
- *unused)
- 	return 0;
- }
-=20
--static int fifo_size_open(struct inode *inode, struct file *file)
--{
--	return single_open(file, read_dbc_fifo_size, inode->i_private);
--}
--
--static const struct file_operations fifo_size_fops =3D {
--	.owner =3D THIS_MODULE,
--	.open =3D fifo_size_open,
--	.read =3D seq_read,
--	.llseek =3D seq_lseek,
--	.release =3D single_release,
--};
-+DEFINE_SHOW_ATTRIBUTE(fifo_size);
-=20
--static int read_dbc_queued(struct seq_file *s, void *unused)
-+static int queued_show(struct seq_file *s, void *unused)
- {
- 	struct dma_bridge_chan *dbc =3D s->private;
- 	u32 tail =3D 0, head =3D 0;
-@@ -115,18 +93,7 @@ static int read_dbc_queued(struct seq_file *s, void *=
-unused)
- 	return 0;
- }
-=20
--static int queued_open(struct inode *inode, struct file *file)
--{
--	return single_open(file, read_dbc_queued, inode->i_private);
--}
--
--static const struct file_operations queued_fops =3D {
--	.owner =3D THIS_MODULE,
--	.open =3D queued_open,
--	.read =3D seq_read,
--	.llseek =3D seq_lseek,
--	.release =3D single_release,
--};
-+DEFINE_SHOW_ATTRIBUTE(queued);
-=20
- void qaic_debugfs_init(struct qaic_drm_device *qddev)
- {
---=20
-2.45.1
+> +
+> +       ret = devm_add_action_or_reset(dev, devm_pm_domain_detach_list, *list);
+> +       if (ret)
+> +               return ret;
+> +
+> +       return num_pds;
+> +}
+> +EXPORT_SYMBOL_GPL(devm_pm_domain_attach_list);
+> +
+> +/**
+>   * dev_pm_domain_detach - Detach a device from its PM domain.
+>   * @dev: Device to detach.
+>   * @power_off: Used to indicate whether we should power off the device.
+> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+> index 772d328..b01e127 100644
+> --- a/include/linux/pm_domain.h
+> +++ b/include/linux/pm_domain.h
+> @@ -450,6 +450,9 @@ struct device *dev_pm_domain_attach_by_name(struct device *dev,
+>  int dev_pm_domain_attach_list(struct device *dev,
+>                               const struct dev_pm_domain_attach_data *data,
+>                               struct dev_pm_domain_list **list);
+> +int devm_pm_domain_attach_list(struct device *dev,
+> +                              const struct dev_pm_domain_attach_data *data,
+> +                              struct dev_pm_domain_list **list);
+>  void dev_pm_domain_detach(struct device *dev, bool power_off);
+>  void dev_pm_domain_detach_list(struct dev_pm_domain_list *list);
+>  int dev_pm_domain_start(struct device *dev);
+> @@ -476,6 +479,14 @@ static inline int dev_pm_domain_attach_list(struct device *dev,
+>  {
+>         return 0;
+>  }
+> +
+> +static inline int devm_pm_domain_attach_list(struct device *dev,
+> +                                            const struct dev_pm_domain_attach_data *data,
+> +                                            struct dev_pm_domain_list **list)
+> +{
+> +       return 0;
+> +}
+> +
+>  static inline void dev_pm_domain_detach(struct device *dev, bool power_off) {}
+>  static inline void dev_pm_domain_detach_list(struct dev_pm_domain_list *list) {}
+>  static inline int dev_pm_domain_start(struct device *dev)
+> --
+> 2.7.4
+>
 
+Kind regards
+Uffe
 
