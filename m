@@ -1,247 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-28960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC5B2956785
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 11:51:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5392B9567BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 12:03:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A4731F222C3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 09:51:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F19E21F228EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 10:03:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E54BC15C14A;
-	Mon, 19 Aug 2024 09:51:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dD3C811g"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F22B1514C8;
+	Mon, 19 Aug 2024 10:03:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B467813B592;
-	Mon, 19 Aug 2024 09:51:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BF033C0;
+	Mon, 19 Aug 2024 10:03:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724061110; cv=none; b=En2rS5GGJ25Kep+G6ZS+8A3bU0GKr9Ajo6VBB0AxNx32Xo+5DWV7UkWG8cRooRDRBf6Qoq/S6+22Cap6y7PNWWO/cP5KYl5FD/BJS25xlMPL0tk15YQAQJ97qg8ETrwbC7VZ9PSfmKX8KrBbE1HDeDXeGgVRYjq/bSix3GbbzrM=
+	t=1724061824; cv=none; b=ggsq5Y3qAAJxIW+b3upLT3Xp1ggWK5AEPpNBE9C6cG9uTMpdAUwuw0Kd64mg26Rhl49+3LW/WjMPqPU+0hev2+I1e73TzJkgX54T8jiN9nSegGP5bOD2rSj3kvS5BR3IqyK7bQqlXVcq1KUvlGPP+9H3qlU2o58e37GIaFQxtSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724061110; c=relaxed/simple;
-	bh=wgWy6oxFKRj+OpPXXDQFpun2GPwOwcekxCuQMmQ98y0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mJbYljFtC3syAzlyWgvcmSLHJFYU8Q54+24Nm4cALBgPzXVAX95SQK7it+mFVlVZrZVD+3C/MtxBlAG78alXmevSMxgp9tuir78GRQVhr+wPicIDURRGM64UD2jZibIsD7lKhC/LzmTenRV4puOr1sGbNO4F9UN3XYHjU/L1udo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dD3C811g; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0668C32782;
-	Mon, 19 Aug 2024 09:51:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724061110;
-	bh=wgWy6oxFKRj+OpPXXDQFpun2GPwOwcekxCuQMmQ98y0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=dD3C811g7v5Y9DUKpGMd/NlYHbpOZG7HKnGHZdF60myXYj32cO0UH/XWqqT1di5PY
-	 p1hduqCK2djslkrJ/TLpPpXyiRXlFUCyiuE8Ha9Rffo/OiD/UzMGgs2ykd0xF+Woxb
-	 7weMt+45JyxMh6vnEsTzH4SFNBcIv6zXZsoOPZxndiK3b67+QaDODvxeU/KDPEkidL
-	 OhU8ozW770goqBavmNYPEkO4zfh2wnbTAaXA3k9jB7jmi2Qw4s5JRRPm1JaeLjWkK3
-	 btksjYqZ//V+wQvpTIfyVFpVnTPrIjuchVV80lD46sOh4uFdfyK16T4hijlTkwiL8x
-	 Ji8uc/pQyIEWA==
-Message-ID: <d117e157-f2e2-4e17-bbe4-b84001eae1bb@kernel.org>
-Date: Mon, 19 Aug 2024 11:51:41 +0200
+	s=arc-20240116; t=1724061824; c=relaxed/simple;
+	bh=vKxt43l0OwvJY5pOsltXEYOqsDQ7ksufql72nzGBt5A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=drDT+Bsg3k6J6EUsXQ0JStXtNfoLKval9VFujmm8MYwQTYU1QvDPD+FL7oQ561s/PmPjXHjcXZOcgOzZcNMHWEkrm6OhUrPHYPKiwor2RCa7dSzViWaWro0fBGBd6uqXCeS9ir9EAlDBuItZrdkEwTWSfhJkJg0WIrXpFosJbYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 8fdc65be5e1111efa216b1d71e6e1362-20240819
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.38,REQID:0d267023-8f1c-4590-a5e5-11990b87f65d,IP:0,U
+	RL:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:-5
+X-CID-META: VersionHash:82c5f88,CLOUDID:e841c5a9961d80c9f7a7a15340738a8e,BulkI
+	D:nil,BulkQuantity:0,Recheck:0,SF:102,TC:nil,Content:0,EDM:-3,IP:nil,URL:0
+	,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:
+	NO,DKR:0,DKP:0,BRR:0,BRE:0
+X-CID-BVR: 0,NGT
+X-CID-BAS: 0,NGT,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-UUID: 8fdc65be5e1111efa216b1d71e6e1362-20240819
+Received: from node4.com.cn [(10.44.16.170)] by mailgw.kylinos.cn
+	(envelope-from <xialonglong@kylinos.cn>)
+	(Generic MTA)
+	with ESMTP id 193915827; Mon, 19 Aug 2024 17:58:19 +0800
+Received: from node4.com.cn (localhost [127.0.0.1])
+	by node4.com.cn (NSMail) with SMTP id 21C5616002085;
+	Mon, 19 Aug 2024 17:58:19 +0800 (CST)
+X-ns-mid: postfix-66C3173A-9875491417
+Received: from kylin-pc.. (unknown [172.25.130.133])
+	by node4.com.cn (NSMail) with ESMTPA id 49C2F16002084;
+	Mon, 19 Aug 2024 09:58:17 +0000 (UTC)
+From: Longlong Xia <xialonglong@kylinos.cn>
+To: quic_jhugo@quicinc.com
+Cc: quic_carlv@quicinc.com,
+	ogabbay@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Longlong Xia <xialonglong@kylinos.cn>
+Subject: [PATCH 1/1] accel/qaic: Change to use DEFINE_SHOW_ATTRIBUTE macro
+Date: Mon, 19 Aug 2024 17:58:16 +0800
+Message-ID: <20240819095816.447096-1-xialonglong@kylinos.cn>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/5] dt-bindings: arm: Add Coresight TMC Control Unit
- hardware
-To: JieGan <quic_jiegan@quicinc.com>
-Cc: Rob Herring <robh@kernel.org>, Suzuki K Poulose <suzuki.poulose@arm.com>,
- Mike Leach <mike.leach@linaro.org>, James Clark <james.clark@linaro.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Jinlong Mao <quic_jinlmao@quicinc.com>, coresight@lists.linaro.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
- Yuanfang Zhang <quic_yuanfang@quicinc.com>,
- Tao Zhang <quic_taozha@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
- linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com
-References: <20240812024141.2867655-1-quic_jiegan@quicinc.com>
- <20240812024141.2867655-4-quic_jiegan@quicinc.com>
- <20240818142834.GA27754-robh@kernel.org>
- <ZsKkm/Pz0GYtH2Gl@jiegan-gv.ap.qualcomm.com>
- <9d9704ed-6ef8-4920-9874-29e0a815e2ba@kernel.org>
- <ZsMHnKKvOey4SA1O@jiegan-gv.ap.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <ZsMHnKKvOey4SA1O@jiegan-gv.ap.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 
-On 19/08/2024 10:51, JieGan wrote:
-> On Mon, Aug 19, 2024 at 08:25:33AM +0200, Krzysztof Kozlowski wrote:
->> On 19/08/2024 03:49, JieGan wrote:
->>> On Sun, Aug 18, 2024 at 08:28:34AM -0600, Rob Herring wrote:
->>>> On Mon, Aug 12, 2024 at 10:41:39AM +0800, Jie Gan wrote:
->>>>> Add binding file to specify how to define a Coresight TMC
->>>>> Control Unit device in device tree.
->>>>>
->>>>> It is responsible for controlling the data filter function
->>>>> based on the source device's Trace ID for TMC ETR device.
->>>>> The trace data with that Trace id can get into ETR's buffer
->>>>> while other trace data gets ignored.
->>>>>
->>>>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
->>>>> ---
->>>>>  .../bindings/arm/qcom,coresight-ctcu.yaml     | 79 +++++++++++++++++++
->>>>>  1 file changed, 79 insertions(+)
->>>>>  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
->>>>>
->>>>> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
->>>>> new file mode 100644
->>>>> index 000000000000..7a9580007942
->>>>> --- /dev/null
->>>>> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
->>>>> @@ -0,0 +1,79 @@
->>>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>>>> +%YAML 1.2
->>>>> +---
->>>>> +$id: http://devicetree.org/schemas/arm/qcom,coresight-ctcu.yaml#
->>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>>> +
->>>>> +title: CoreSight TMC Control Unit
->>>>> +
->>>>> +maintainers:
->>>>> +  - Yuanfang Zhang <quic_yuanfang@quicinc.com>
->>>>> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
->>>>> +  - Jie Gan <quic_jiegan@quicinc.com>
->>>>> +
->>>>> +description:
->>>>> +  The Coresight TMC Control unit controls various Coresight behaviors.
->>>>> +  It works as a helper device when connected to TMC ETR device.
->>>>> +  It is responsible for controlling the data filter function based on
->>>>> +  the source device's Trace ID for TMC ETR device. The trace data with
->>>>> +  that Trace id can get into ETR's buffer while other trace data gets
->>>>> +  ignored.
->>>>
->>>> Nowhere is TMC defined.
->>> The Coresight TMC control unit(CTCU) connected to Coresight TMC device via replicator and
->>> works as a helper device to TMC device.
->>
->> Did you understand the feedback or just responding with whatever to get
->> rid of reviewers?
-> 
-> Sorry for the insufficient clarity in my response, I am just misunderstood the feedback and try
-> to explain the relationship between TMC and CTCU device.
-> 
-> I will add the TMC description to explain what TMC is as shown below:
-> The Trace Memory Controller(TMC) is used for Embedded Trace Buffer(ETB), Embedded Trace FIFO(ETF)
-> and Embedded Trace Router(ETR) configurations. The configuration mode (ETB, ETF, ETR) is
-> discovered at boot time when the device is probed.
+Use DEFINE_SHOW_ATTRIBUTE macro to simplify the code.
+No functional change.
 
-Thanks.
+Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
+---
+ drivers/accel/qaic/qaic_debugfs.c | 43 ++++---------------------------
+ 1 file changed, 5 insertions(+), 38 deletions(-)
 
-> 
->>
->>>
->>> The in-ports listed below illustrate their connection to TMC devices.
->>>
->>>>
->>>>> +
->>>>> +properties:
->>>>> +  compatible:
->>>>> +    enum:
->>>>> +      - qcom,sa8775p-ctcu
->>>>> +
->>>>> +  reg:
->>>>> +    maxItems: 1
->>>>> +
->>>>> +  clocks:
->>>>> +    maxItems: 1
->>>>> +
->>>>> +  clock-names:
->>>>> +    items:
->>>>> +      - const: apb
->>>>> +
->>>>> +  in-ports:
->>>>
->>>> Use 'ports' unless you have both in and out ports.
->>> The ‘in-ports’ and ‘out-ports’ properties will be parsed by ‘of_coresight_get_port_parent’
->>> and their relationships to other devices will be stored in the coresight_platform_data structure.
->>>
->>> for example:
->>> struct coresight_platform_data {
->>> 	int nr_inconns;
->>> 	int nr_outconns;
->>> 	struct coresight_connection **out_conns;
->>> 	struct coresight_connection **in_conns;
->>> };
->>>
->>> https://elixir.bootlin.com/linux/v6.11-rc4/source/drivers/hwtracing/coresight/coresight-platform.c#L147
->>
->> and? If you respond with some unrelated argument, we will respond with
->> the same: Use 'ports' unless you have both in and out ports.
-> 
-> Sorry for the insufficient response.
-> 
-> The Coresight driver prefers using ‘in-ports’ and ‘out-ports’ instead of the ‘ports’ property, as each
-> Coresight component needs to specify its input and output directions.
-> 
-> The Coresight system operates by integrating all Coresight components and construting its data flow path
-> based on the defined directions. 
-> 
-> Consequently, the data flow direction cannot be determined when utilizing the ‘ports’ property in the
-> Coresight system.
-
-It can be determined. Driver knows that there are only in-ports, so you
-cannot have here other direction. Maybe the drivers have somehow this
-hard-coded? But that's a bit annoying limitation.
-
-Best regards,
-Krzysztof
+diff --git a/drivers/accel/qaic/qaic_debugfs.c b/drivers/accel/qaic/qaic_=
+debugfs.c
+index 20b653d99e52..ba0cf2f94732 100644
+--- a/drivers/accel/qaic/qaic_debugfs.c
++++ b/drivers/accel/qaic/qaic_debugfs.c
+@@ -64,20 +64,9 @@ static int bootlog_show(struct seq_file *s, void *unus=
+ed)
+ 	return 0;
+ }
+=20
+-static int bootlog_fops_open(struct inode *inode, struct file *file)
+-{
+-	return single_open(file, bootlog_show, inode->i_private);
+-}
+-
+-static const struct file_operations bootlog_fops =3D {
+-	.owner =3D THIS_MODULE,
+-	.open =3D bootlog_fops_open,
+-	.read =3D seq_read,
+-	.llseek =3D seq_lseek,
+-	.release =3D single_release,
+-};
++DEFINE_SHOW_ATTRIBUTE(bootlog);
+=20
+-static int read_dbc_fifo_size(struct seq_file *s, void *unused)
++static int fifo_size_show(struct seq_file *s, void *unused)
+ {
+ 	struct dma_bridge_chan *dbc =3D s->private;
+=20
+@@ -85,20 +74,9 @@ static int read_dbc_fifo_size(struct seq_file *s, void=
+ *unused)
+ 	return 0;
+ }
+=20
+-static int fifo_size_open(struct inode *inode, struct file *file)
+-{
+-	return single_open(file, read_dbc_fifo_size, inode->i_private);
+-}
+-
+-static const struct file_operations fifo_size_fops =3D {
+-	.owner =3D THIS_MODULE,
+-	.open =3D fifo_size_open,
+-	.read =3D seq_read,
+-	.llseek =3D seq_lseek,
+-	.release =3D single_release,
+-};
++DEFINE_SHOW_ATTRIBUTE(fifo_size);
+=20
+-static int read_dbc_queued(struct seq_file *s, void *unused)
++static int queued_show(struct seq_file *s, void *unused)
+ {
+ 	struct dma_bridge_chan *dbc =3D s->private;
+ 	u32 tail =3D 0, head =3D 0;
+@@ -115,18 +93,7 @@ static int read_dbc_queued(struct seq_file *s, void *=
+unused)
+ 	return 0;
+ }
+=20
+-static int queued_open(struct inode *inode, struct file *file)
+-{
+-	return single_open(file, read_dbc_queued, inode->i_private);
+-}
+-
+-static const struct file_operations queued_fops =3D {
+-	.owner =3D THIS_MODULE,
+-	.open =3D queued_open,
+-	.read =3D seq_read,
+-	.llseek =3D seq_lseek,
+-	.release =3D single_release,
+-};
++DEFINE_SHOW_ATTRIBUTE(queued);
+=20
+ void qaic_debugfs_init(struct qaic_drm_device *qddev)
+ {
+--=20
+2.45.1
 
 
