@@ -1,62 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-28986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28987-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A695956CB3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 16:08:10 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0DB6956CF1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 16:15:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EC239B255DC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 14:08:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6B2031F247F4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 14:15:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4961C16D319;
-	Mon, 19 Aug 2024 14:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E18DD16C879;
+	Mon, 19 Aug 2024 14:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGaLxQRU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VuXgYYXg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF7E16CD02;
-	Mon, 19 Aug 2024 14:07:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF04416B399;
+	Mon, 19 Aug 2024 14:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724076466; cv=none; b=NiG16Pp60Ab7ginboEco4p5DT+hfvk9WjqBTkLrgIJvFk/JNmuNXgL90SRE3ZTrRNNTGTcW7bQQTnkFphICR7GZxaTUkH3FZDlp/YpRDqP+7v68bhbx4Jos6QKKnoVeyhT5nhpQa+ZzSN/HqVrWnP8eVZ9uNVpvqTCoP3TUdT1A=
+	t=1724076948; cv=none; b=Nzz+q4matUnuB+fw6zaLNDK+vDAvcBBu+E0hTcVdMJWPQEzZPA3nY8WlWUZAICzjG1bpuJs9hj0Xudrog/dcqjIZ4Vn+NxsBnr5Lp8Kx0bPf8Z/g6gLwxkmcvaWhkN3HPO4I8lPOI2Q77AO+aHOo4DkdfOBPlDNOxSmcZuo/soM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724076466; c=relaxed/simple;
-	bh=ISi78XNIMPVWDNGliDOOqlz+F6un0Fa04UJbTOxjiEg=;
+	s=arc-20240116; t=1724076948; c=relaxed/simple;
+	bh=MOZaGaCqrP4GQgWZMCVI3+A5OoGRB7tPix85SODkMRk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CvhhMO7J34F0/O4WSSEo9yWKsiODzkV8NhdZK5p26eF6qK44ILbqDQVAup/GCW947dUNDvKKlzIAz81CzraDJMQ8ZrLBC7cMIoBafH8q4/JOl3eLUflkaxR6YqMIr6Kn6kXKBLNS2papyopx2jhcf6E9s4fi+9zj/QqrC16Qqno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGaLxQRU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7021EC32782;
-	Mon, 19 Aug 2024 14:07:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724076465;
-	bh=ISi78XNIMPVWDNGliDOOqlz+F6un0Fa04UJbTOxjiEg=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=iZdZOBy8CINU3yLdvnocWCvR1V9acIcU2+PP+x5/2BFfHvFBFjy9Ywd5AZdiyqEMUSO4PyrV5XsesiOgMo35TEQUnkfrpywQ3YkM/2319v5iE68wHOu3WSMeqx8HEAt+DiqnekkdpJfXDkWVT4EscS9eF2FFZVOJhV5+nhCBg1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VuXgYYXg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B00FEC32782;
+	Mon, 19 Aug 2024 14:15:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724076948;
+	bh=MOZaGaCqrP4GQgWZMCVI3+A5OoGRB7tPix85SODkMRk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eGaLxQRU7fzLOB5R0JryMchI8iXukUXTmUpiDd7PtmJlycUdPNFWtFHaTWy6JnjcQ
-	 QHcl0X5oQG9wgkFONU/ubTN5FZp2kZaE9p6eeP6l1y5a62vsW5Y4CFAKqDM85IQ2rb
-	 rJSujDq1nH2b/5BI+wmkTjWGcQQ6e1YIGbvWsXfg=
-Date: Mon, 19 Aug 2024 16:07:41 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Sebastian Reichel <sre@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Chris Lew <quic_clew@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Amit Pundir <amit.pundir@linaro.org>, linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-usb@vger.kernel.org, Johan Hovold <johan@kernel.org>,
-	stable@vger.kernel.org
-Subject: Re: [PATCH 0/3] soc: qcom: pmic_glink: v6.11-rc bug fixes
-Message-ID: <2024081914-exploit-yonder-4d51@gregkh>
-References: <20240818-pmic-glink-v6-11-races-v1-0-f87c577e0bc9@quicinc.com>
+	b=VuXgYYXgjSynhcIUVRd88Vn8jb8VQEyEpu3wrHMFIdS239qr5Kr4EPkq3nBmuubZ2
+	 F0ZMxLbQJ6lq1zx8jK2Dr5ST9EpXYGenQL7ZXBJEt8RT/E+lkrcbk08kqTw6pzw8LP
+	 hbapYLR4Llew6HLwls8GwWLejwgSGVwbplzcqIaVvsN7wDC4qLHXI2/DJj34ZpEFlG
+	 VtY0m+TN7BGYGB3L1nhXvSnSRt2GzIBD4Vfiewa7SuH8WPo94qdsuy1YnSaQHTiFTb
+	 TdUa6+F0N5tADiLkoseiIFZt45WEDiTSkGsxJMKUpbubRLni8aC+sCz17UU04A6RSo
+	 Opt5qE3otX9wg==
+Date: Mon, 19 Aug 2024 15:15:41 +0100
+From: Simon Horman <horms@kernel.org>
+To: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
+Cc: "David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	"netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-stm32@st-md-mailman.stormreply.com" <linux-stm32@st-md-mailman.stormreply.com>,
+	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	dl-S32 <S32@nxp.com>
+Subject: Re: [PATCH v2 4/7] net: phy: add helper for mapping RGMII link speed
+ to clock rate
+Message-ID: <20240819141541.GE11472@kernel.org>
+References: <AM9PR04MB85062E3A66BA92EF8D996513E2832@AM9PR04MB8506.eurprd04.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,38 +77,96 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240818-pmic-glink-v6-11-races-v1-0-f87c577e0bc9@quicinc.com>
+In-Reply-To: <AM9PR04MB85062E3A66BA92EF8D996513E2832@AM9PR04MB8506.eurprd04.prod.outlook.com>
 
-On Sun, Aug 18, 2024 at 04:17:36PM -0700, Bjorn Andersson wrote:
-> Amit and Johan both reported a NULL pointer dereference in the
-> pmic_glink client code during initialization, and Stephen Boyd pointed
-> out the problem (race condition).
+On Sun, Aug 18, 2024 at 09:50:46PM +0000, Jan Petrous (OSS) wrote:
+> The helper rgmii_clock() implemented Russel's hint during stmmac
+> glue driver review:
 > 
-> While investigating, and writing the fix, I noticed that
-> ucsi_unregister() is called in atomic context but tries to sleep, and I
-> also noticed that the condition for when to inform the pmic_glink client
-> drivers when the remote has gone down is just wrong.
+> ---
+> We seem to have multiple cases of very similar logic in lots of stmmac
+> platform drivers, and I think it's about time we said no more to this.
+> So, what I think we should do is as follows:
 > 
-> So, let's fix all three.
+> add the following helper - either in stmmac, or more generically
+> (phylib? - in which case its name will need changing.)
 > 
-> As mentioned in the commit message for the UCSI fix, I have a series in
-> the works that makes the GLINK callback happen in a sleepable context,
-> which would remove the need for the clients list to be protected by a
-> spinlock, and removing the work scheduling. This is however not -rc
-> material...
+> static long stmmac_get_rgmii_clock(int speed)
+> {
+> 	switch (speed) {
+> 	case SPEED_10:
+> 		return 2500000;
 > 
-> In addition to the NULL pointer dereference, there is the -ECANCELED
-> issue reported here:
-> https://lore.kernel.org/all/Zqet8iInnDhnxkT9@hovoldconsulting.com/
-> I have not yet been able to either reproduce this or convince myself
-> that this is the same issue.
+> 	case SPEED_100:
+> 		return 25000000;
 > 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> 	case SPEED_1000:
+> 		return 125000000;
+> 
+> 	default:
+> 		return -ENVAL;
+> 	}
+> }
+> 
+> Then, this can become:
+> 
+> 	long tx_clk_rate;
+> 
+> 	...
+> 
+> 	tx_clk_rate = stmmac_get_rgmii_clock(speed);
+> 	if (tx_clk_rate < 0) {
+> 		dev_err(gmac->dev, "Unsupported/Invalid speed: %d\n", speed);
+> 		return;
+> 	}
+> 
+> 	ret = clk_set_rate(gmac->tx_clk, tx_clk_rate);
+> ---
+> 
+> Signed-off-by: Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
+> ---
+>  include/linux/phy.h | 21 +++++++++++++++++++++
+>  1 file changed, 21 insertions(+)
+> 
+> diff --git a/include/linux/phy.h b/include/linux/phy.h
+> index 6b7d40d49129..bb797364d91c 100644
+> --- a/include/linux/phy.h
+> +++ b/include/linux/phy.h
+> @@ -298,6 +298,27 @@ static inline const char *phy_modes(phy_interface_t interface)
+>  	}
+>  }
+>  
+> +/**
+> + * rgmi_clock - map link speed to the clock rate
 
-What tree are these to go through?  I can take them through mine, but if
-someone else wants to, feel free to route them some other way.
+nit: rgmii_clock
 
-thanks,
+     Flagged by ./scripts/kernel-doc -none
 
-greg k-h
+> + * @speed: link speed value
+> + *
+> + * Description: maps RGMII supported link speeds
+> + * into the clock rates.
+> + */
+> +static inline long rgmii_clock(int speed)
+> +{
+> +	switch (speed) {
+> +	case SPEED_10:
+> +		return 2500000;
+> +	case SPEED_100:
+> +		return 25000000;
+> +	case SPEED_1000:
+> +		return 125000000;
+> +	default:
+> +		return -EINVAL;
+> +	}
+> +}
+> +
+>  #define PHY_INIT_TIMEOUT	100000
+>  #define PHY_FORCE_TIMEOUT	10
+>  
+> -- 
+> 2.46.0
+> 
+> 
 
