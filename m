@@ -1,194 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-29018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8518B957718
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 00:05:17 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F7B1957728
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 00:11:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05E241F21A42
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 22:05:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9950DB207D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 22:11:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EBDA1D54E0;
-	Mon, 19 Aug 2024 22:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BE4C15DBC1;
+	Mon, 19 Aug 2024 22:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="omWIeMpK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PChuTNax"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD6518991C;
-	Mon, 19 Aug 2024 22:05:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9513926AD4;
+	Mon, 19 Aug 2024 22:10:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724105104; cv=none; b=ou1ZBxMDvKz7Dqn/xwWOUEQ/fN+l3w2+4X1BXBDlBeqx8yKAb9M0CqdURIMuYVx8xdvdFcblk0xPeh8gmflgF+HZPxLfyo+hJvP+D0/2xihYkFbd/3xvct7M6mG0dfEJcsqOwft7EOSw6tLMznEsk9J2wX6OZgUObUxMiDIWIoM=
+	t=1724105459; cv=none; b=UrInDgh5tsvP6DRGLfTrOw+uDEop6r8MUTBuZJPPvhDfWHROBjmNyrADrs/VpEaltp38Aq25PfxHVd5fPM21blmtr8QFY1AUKtoVyHWhpD0HpbjTjpLxwVYZdSEEO3km288FacI/arxQD4PKDZEAQfM6FZaoKjf9JiOynQz9fVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724105104; c=relaxed/simple;
-	bh=sAO3TUHgVk99Kw9RCvCoijE9MKOG4GkkxLNUBJJOGr4=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L9YkLUlDmGZUloRfyXZWtJzqpLjs5jNmvoUO283PWPwgvxHY9RnuGRqiW2qMZIc72uuNY16N4f60SQYxrByE+9gr9lDla5l7p7J2FS69EW/cUbXxcDSwdKQgNvTGg+ci3ORCLk5S5bo/xhdjMcRRlXmLODr/ou7AEmPPMPya8cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=omWIeMpK; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47JBB38O025706;
-	Mon, 19 Aug 2024 22:04:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=1Pdl09RIpjSpgpUzeTyvHQSd
-	kABHf3jk9ZT3rNx96zc=; b=omWIeMpKE0meovzZGitbpTCmprNlPA9orsKDCkam
-	9VpuHHTx0zmVBr5bg+QxKFowsjWSq/IZ1ctz+s3XG3GcsHTNcZlnqR0QVzdPt/q/
-	6CSPnCfoBk1gHk9RFioVojHZ2JV1n3OxHHSedr3uPRZJQcKtIMfTFrrcj9khSJnZ
-	SmTTD1fSJzz3mNL0IGponQY0p0n3C9s2UZsvPeWTdhs+yjywoO07sehgnI9ngnsP
-	aF40+Vfz+25TbhqJHFGemJID9FyguKIbt1CFA2VARCO9oC6jkCrgWH15jAwu5JIS
-	U6f1HuEkhNnH93z/HYkxhrfI5A13yi3CEEYsfEXr/faJLQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 412n585hux-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 19 Aug 2024 22:04:43 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47JM4hsp019820
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 19 Aug 2024 22:04:43 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 19 Aug 2024 15:04:42 -0700
-Date: Mon, 19 Aug 2024 15:04:41 -0700
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Marc Gonzalez <mgonzalez@freebox.fr>
-CC: Robin Murphy <robin.murphy@arm.com>, Rob Herring <robh@kernel.org>,
-        Rob
- Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>,
-        Joerg Roedel
-	<joro@8bytes.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, <iommu@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Arnaud Vrac
-	<avrac@freebox.fr>,
-        Pierre-Hugues Husson <phhusson@freebox.fr>,
-        Marijn
- Suijten <marijn.suijten@somainline.org>,
-        Caleb Connolly
-	<caleb.connolly@linaro.org>
-Subject: Re: [PATCH 1/2] dt-bindings: arm-smmu: Add
- qcom,last-ctx-bank-reserved
-Message-ID: <ZsPBeRTqE9o253Gw@hu-bjorande-lv.qualcomm.com>
-References: <20240814-smmu-v1-0-3d6c27027d5b@freebox.fr>
- <20240814-smmu-v1-1-3d6c27027d5b@freebox.fr>
- <20240818152515.GA104481-robh@kernel.org>
- <30489eee-075b-461b-ab43-c8807d667630@freebox.fr>
- <17893776-9666-4bbe-b5fc-c3fe977d0337@arm.com>
- <67f9a762-6d14-4557-b1f6-22aabb33f927@freebox.fr>
+	s=arc-20240116; t=1724105459; c=relaxed/simple;
+	bh=ZW844ioCz93Oa9LBH6CdQMs8bM07p/FvPAYk95Fffs8=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=Y6PYKDwLKqXJlSmxK8inCoFiPMDTp1CsbSGF3Rrn+iqk89nymMHhSU/7FEMH6z+6eL4ejE9kLKC6xSqyAqAypJEEHpjd6PtlYdfMW6iqA7lCpUjFsz4XC7Ct5pW/bXFUDArdiOovku27TOPeoXm7gfAh81JEdPEVP5kL8oRuy+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PChuTNax; arc=none smtp.client-ip=209.85.222.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-7a35eff1d06so341734585a.0;
+        Mon, 19 Aug 2024 15:10:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724105456; x=1724710256; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CA9Bp1k08Y8BqXZk5jLF5kLwjrXp9IU5/oWoCriKO2o=;
+        b=PChuTNaxJUwLNdTepiTiXCEISinjkQkDyeFko+8RBwF0X7lUPrH35llYURcA6WhF/i
+         VtN2kamxs4P7T6f5ZV5wez7kHJff0ezqP5D6plDljPZMYwDG2BNfzro0xzLRBbQ9VKwP
+         Rj086C2y1kE7ItygZ44g8sjSx5tXZGeb9rNZJYYZOD75MEAPlERoHYIPHQ/enyDzGHbk
+         Sq08kQriB/AHgQPNIWJpfKloANWFafxMkxzxdkiOaPr9CQbBlG9g10iv2DFVqwmtF3HH
+         1H79KJC9wSfQk+il8C7X+2YRZNwrzZ+OTT5R9jKJGHHaw+gVNjk+gmXsMhebjo21lZKk
+         opmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724105456; x=1724710256;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CA9Bp1k08Y8BqXZk5jLF5kLwjrXp9IU5/oWoCriKO2o=;
+        b=S95SQ9ifiFul6P7A/zX/IaacPIi+oVOxPu1bMZy+qeR/6+jiU4Si3f3r9BZGZuIDkz
+         fWgmIqPs5VAcavKqymMd9weAFPml97FMdeOue8Fr+HaXDBKCHsTjWH2mgZQbd8eerdPS
+         XshGTKEuUSkuryMOpISmQrjSkT421wYWMU473VdCbNU00/8YLFaHIX5ppQHEAE9pyAb2
+         HgNm+GbFO9W/eJazAa2Z/p7Qm/T42xf2VcoOsSKXrzEl0qVzvlEQS4KK8vzJauDUqe6Y
+         4ZPcyaPUTsbG0aTxuaju7JijDaYirZwLoNcGfbtJfda8+7DnSxo0aroB77dS+RMlcuXN
+         VsCQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUojJwNUnSlpYvnNXyARlx+n8Q+UYd58gdSWiMgKI5Uy0r4E5FizerH/0/IH/5gEOkfW+6zLiWneVI6@vger.kernel.org, AJvYcCUpGkCRvw5rSl1SQM/q0HAD81UxMA8fTJ97KH4lP30/1EsVj+yC+EenfdbB6oiF1yiZh9dUgQD7j2TQ2BzOKA==@vger.kernel.org, AJvYcCVTutz/TTYsbOThB+K7kIQZAoAyRx97RK6/LRRbOMCzLNx7aYANDyB0xyH2vzyJ5lkptcsICKItRaNqFJw=@vger.kernel.org, AJvYcCXsOxCuBW0ju23pSS8opGZ4W+f37MC/TP7F6qimUrF3CpGVfAiHqhymzaYgOnHWqw5ooEvCi7Nr7J0h@vger.kernel.org
+X-Gm-Message-State: AOJu0YxETateUtpG9+LZX9XLopCbnOo+StIv4g90svt2wKD5Vtqnd5Mx
+	gSpNOre0T+LJ5gbXmmDMNZZdz52QDajzTWdk5t1Y95O1PTLDOW1CP5KTsU0o
+X-Google-Smtp-Source: AGHT+IEcfDPtP9aGr9kNEWSHcGJP6IXe7mtsomI8Ll/WodYAVFnSLJC00cpX9hrr4YhNgu6ZgXIo3Q==
+X-Received: by 2002:a05:620a:2989:b0:7a2:e53:3f60 with SMTP id af79cd13be357-7a50693aa91mr1356449485a.21.1724105456248;
+        Mon, 19 Aug 2024 15:10:56 -0700 (PDT)
+Received: from localhost ([2607:fea8:52a3:d200:324c:b818:b179:79b])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a4ff11fa9csm466852285a.133.2024.08.19.15.10.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Aug 2024 15:10:56 -0700 (PDT)
+From: Richard Acayan <mailingradian@gmail.com>
+To: Loic Poulain <loic.poulain@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Todor Tomov <todor.too@gmail.com>,
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Richard Acayan <mailingradian@gmail.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-i2c@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-media@vger.kernel.org
+Subject: [PATCH v3 0/5] Add SDM670 camera subsystem
+Date: Mon, 19 Aug 2024 18:10:52 -0400
+Message-ID: <20240819221051.31489-7-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.46.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <67f9a762-6d14-4557-b1f6-22aabb33f927@freebox.fr>
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: zKRsNtyBD-iSNi9VaciL5bMiQXyEBl-I
-X-Proofpoint-ORIG-GUID: zKRsNtyBD-iSNi9VaciL5bMiQXyEBl-I
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-19_16,2024-08-19_03,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 clxscore=1011 spamscore=0
- mlxlogscore=793 mlxscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408190146
+Content-Transfer-Encoding: 8bit
 
-On Mon, Aug 19, 2024 at 05:02:16PM +0200, Marc Gonzalez wrote:
-> On 19/08/2024 14:57, Robin Murphy wrote:
-> 
-> > Luckily, in this case it seems straightforward enough to be able to see 
-> > that if we have a "qcom,msm8996-smmu-v2" with 13 context banks then we 
-> > should just treat it as if it has 12 - it's also notable that it only 
-> > reports NUMSMRG=12, so we couldn't use more than that many S1 context 
-> > banks at once anyway.
-> 
-> This is what the hypervisor reports:
-> 
-> [    2.550974] arm-smmu 5100000.iommu: probing hardware configuration...
-> [    2.557309] arm-smmu 5100000.iommu: SMMUv2 with:
-> [    2.563815] arm-smmu 5100000.iommu:  stage 1 translation
-> [    2.568494] arm-smmu 5100000.iommu:  address translation ops
-> [    2.573791] arm-smmu 5100000.iommu:  non-coherent table walk
-> [    2.579434] arm-smmu 5100000.iommu:  (IDR0.CTTW overridden by FW configuration)
-> [    2.585088] arm-smmu 5100000.iommu:  stream matching with 12 register groups
-> [    2.592132] arm-smmu 5100000.iommu:  13 context banks (0 stage-2 only)
-> [    2.619316] arm-smmu 5100000.iommu:  Supported page sizes: 0x63315000
-> [    2.626225] arm-smmu 5100000.iommu:  Stage-1: 36-bit VA -> 36-bit IPA
-> [    2.632645] arm-smmu 5100000.iommu:  preserved 0 boot mappings
-> 
-> 
-> smmu->num_mapping_groups = 12
+This adds support for the camera subsystem on the Snapdragon 670.
 
-Ignore num_mapping_groups, they are used to define which streams should
-be mapped to which context bank. But there's no relationship between
-these numbers.
+Changes since v2 (20240813230037.84004-8-mailingradian@gmail.com):
+- drop unnecessary assigned AXI clock frequency (5/5)
+- drop src clocks from cci (5/5)
+- add unit name, remove mmio properties from port in example dts (2/5)
+- correct the reg-names order (2/5)
+- add parent_dev_ops to csid (3/5)
+- remove CSID clocks from VFE (3/5)
+- remove AXI clock from CSIPHY (3/5)
+- change subsystem part of the commit message summary (3/5)
+- add reviewed-by (4/5)
 
-> smmu->num_context_banks  = 13
-> 
-> 
-> Are you saying that
-> 
-> 	smmu->num_context_banks > smmu->num_mapping_groups
-> 
-> does not make sense?
-> 
-> 
-> Would a well-placed
-> 
-> 	if (smmu->num_context_banks > smmu->num_mapping_groups)
-> 		smmu->num_context_banks = smmu->num_mapping_groups;
-> 
-> be a proper work-around?
+Changes since v1 (20240806224219.71623-7-mailingradian@gmail.com):
+- define dedicated resource structs/arrays for sdm670 (3/5)
+- separate camcc device tree node into its own patch (4/5)
+- specify correct dual license (2/5)
+- add include directives in dt-bindings camss example (2/5)
+- remove src clocks from dt-bindings (2/5)
+- remove src clocks from dtsi (5/5)
+- add power-domain-names to camss (5/5)
+- specify power domain names (3/5)
+- restrict cci-i2c clocks (1/5)
+- populate a commit message with hw info (2/5)
+- reword commit message (3/5)
 
-No, something like this would apply your quirk to other targets (and
-specifically it would be wrong, per above).
+Richard Acayan (5):
+  dt-bindings: i2c: qcom-cci: Document SDM670 compatible
+  dt-bindings: media: camss: Add qcom,sdm670-camss
+  media: qcom: camss: add support for SDM670 camss
+  arm64: dts: qcom: sdm670: add camcc
+  arm64: dts: qcom: sdm670: add camss and cci
 
-> 
-> (Probably in qcom_smmu_cfg_probe() so as to not interfere with other platforms.)
-> 
-> 
-> Maybe to limit the side effects even more:
-> 
-> 	if (of_device_is_compatible(smmu->dev->of_node, "qcom,msm8998-smmu-v2") &&
-> 		smmu->num_context_banks > smmu->num_mapping_groups))
-> 		smmu->num_context_banks = smmu->num_mapping_groups;
+ .../devicetree/bindings/i2c/qcom,i2c-cci.yaml |  18 +
+ .../bindings/media/qcom,sdm670-camss.yaml     | 319 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm670.dtsi          | 198 +++++++++++
+ drivers/media/platform/qcom/camss/camss.c     | 191 +++++++++++
+ 4 files changed, 726 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
 
-If we don't want to introduce a more specific compatible for this SMMU
-instance, then let's add this to qcom_smmu_cfg_probe():
+-- 
+2.46.0
 
-	/* MSM8998 LPASS SMMU reports 13 context banks, but only 12 are accessible */
- 	if (of_device_is_compatible(smmu->dev->of_node, "qcom,msm8998-smmu-v2") && smmu->num_context_banks == 13)
-		smmu->num_context_banks = 12;
-
-
-Regards,
-Bjorn
-
-> 
-> 
-> Neither work-around would require changing the binding.
-> 
-> Is either work-around acceptable, Robin?
-> 
-> Regards
-> 
-> 
 
