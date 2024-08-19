@@ -1,267 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-28949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-28951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A4619564BC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 09:33:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51441956608
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 10:52:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 55532B210AF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 07:33:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C42AD1F24EBD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Aug 2024 08:52:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4A7C158214;
-	Mon, 19 Aug 2024 07:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84D8415B55E;
+	Mon, 19 Aug 2024 08:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RY5C4ZbR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kAVrJNO5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3187199B9
-	for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 07:32:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9C51BDE6;
+	Mon, 19 Aug 2024 08:52:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724052782; cv=none; b=K61DEi7ea/Fx++YFNtMOmjD95ZY5huJg+a3nwHU+C3DwpDYkQiGIigSpwT8Tyhl07KlgwixuvXkGIonVSmSbSlmMJE20gZ5HJsqGCuxLacDpCVcbiRzL2Pv4knG/oSxjiH1E9HlzGn0SnmEpQGyKHe5OEDka1/gYxCYe+7vXDY4=
+	t=1724057540; cv=none; b=ilWCCx7/yehCge5ggASOBMnd0BbwUsw3LXfIMItSYGL31ktBOSAtRJmZIGGT0shcp208GjXAqpEfWK87hqqUFPOtPsAi1rBObQqTRXMeVPFhfeqtXiNSob34KmFpGwKa7Q3LwS6qIeb1aU2k7ZpDYCY1nrfFw0cnaLA4AmH7zRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724052782; c=relaxed/simple;
-	bh=lqG59gpccqoJniQbhLyFTrxHLnQRRH2XLMNU6pCm0bc=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=JEgka1qJrUTDxQAUcISR5Ne4+Kb6ZLQadnlsgo7OxwLwCefYDdhAikJltLFFvuRQIUtgyCr2PqCYka7AzthYg3gzbz0ZxSw3VnpQY0yv2RKRbFv6Q4tCtx4JtBiMg7mN1A7V8p9gWn1oQ6z2SeOLbIjX/8faOBWzLdUfCXqGnRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RY5C4ZbR; arc=none smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-710dc3015bfso2661781b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Aug 2024 00:32:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724052779; x=1724657579; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=bVF+vaplgIfDeqn8Jo/FGo4c3zDJgnAYKY22inJTgUE=;
-        b=RY5C4ZbRSr/qdLgu8HKFVmN4ewPDru+AGNit5VwvKAv2yzJ5q/1Cn2JD4O0PoDzNrg
-         n4Y17grSMdalKiNcQRoGY1BotaeUwRikPBKihx1dg8/kOI8cFFQ7cOINwIcQcwPz6OUe
-         JNHcgWqnG+vI0WGZTfC1te5jTgr/+qvUVyEATPyvbOQGd2Y8MIy076rdQCJELXEDZaEl
-         AhvDkVIut86r7ZILIBCWT9YqXW6hPQkuDOqNNRV8BCl6ppyolhV+DCukv+7kG1dJzlx1
-         ClnUL3F4dioS4qYew83d7I4Hns6b9mVujnudIg2oIyPPq0kpxc2NDFIapVoLxFCmEsRb
-         E10g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724052779; x=1724657579;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bVF+vaplgIfDeqn8Jo/FGo4c3zDJgnAYKY22inJTgUE=;
-        b=AYB4dWfgT9OvHXw+3FzOKl8J3G4uaKVlypEFqPRLpltUcUvDfXN3VIkeFW554YaZDw
-         f4qvitOvOMhEghTbdFwVuy6d7IZnr5yavXKZCYzDwQPc+xrDR1dY9Y+azMiSeMExCaDA
-         QwYROuiQR2c8oKda0ccQuf5Hxx4CINgNJb9mTJLzCNalha9fK3R25salO+Ed4IknAR4L
-         JFx3nNfBeZIJMMYqELAnO6Tdi/It4vYmeEyw+TAJuKiz82ywLnC1FBF8cg/u2IJK9R+j
-         98xpfg+7hhm7EEbqVve9C9dBJdA0cw40EMbMUkYedU67u6qtZqjGgcofCT1cbTxNFmI5
-         rhNA==
-X-Forwarded-Encrypted: i=1; AJvYcCUvnCv7Ur8hg2FyXdZLVmJgghc1qiyp9vNyOUdS7d88eBxrXMkuYMfYCAOUCZfHjeAQXeTuGsg1pdNn5DDqbAtunsJoHZZWj5yxaaEMJQ==
-X-Gm-Message-State: AOJu0YwpYVryGte3/NPjLI/JX9cda0pknLxLgf6iRO/6bv6aQfh4QmSi
-	qdHt+sUl//22npCaieolrJPLHb3/Bp92g3BjIS0g2QFo1QtyVnhEM5RPDUo6szs=
-X-Google-Smtp-Source: AGHT+IFfm2w3BSOecH3ZgllW9SAhYMQsRd/FMRvM7RHDXRP2ro3rXfQFvLQQyRy2k8EZr/AD4ObC6g==
-X-Received: by 2002:a05:6a00:17a7:b0:70e:98e2:c76e with SMTP id d2e1a72fcca58-713c66515f1mr15127310b3a.6.1724052779034;
-        Mon, 19 Aug 2024 00:32:59 -0700 (PDT)
-Received: from ?IPv6:::1? ([2405:9800:b900:a564:77f2:b46a:c9f8:ca95])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7127aef5787sm6111501b3a.120.2024.08.19.00.32.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Aug 2024 00:32:58 -0700 (PDT)
-Date: Mon, 19 Aug 2024 14:32:53 +0700
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-CC: Sebastian Reichel <sre@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Johan Hovold <johan+linaro@kernel.org>, Chris Lew <quic_clew@quicinc.com>,
- Stephen Boyd <swboyd@chromium.org>, Amit Pundir <amit.pundir@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
- stable@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_2/3=5D_usb=3A_typec=3A_ucsi=3A_M?=
- =?US-ASCII?Q?ove_unregister_out_of_atomic_section?=
-User-Agent: K-9 Mail for Android
-In-Reply-To: <ZsK2jSheqBlCW7OC@hu-bjorande-lv.qualcomm.com>
-References: <20240818-pmic-glink-v6-11-races-v1-0-f87c577e0bc9@quicinc.com> <20240818-pmic-glink-v6-11-races-v1-2-f87c577e0bc9@quicinc.com> <4F313FA4-C2C7-4BD8-8E42-64F98EACCBA2@linaro.org> <ZsK2jSheqBlCW7OC@hu-bjorande-lv.qualcomm.com>
-Message-ID: <A366AFBC-1775-421A-BEAC-274741DF3192@linaro.org>
+	s=arc-20240116; t=1724057540; c=relaxed/simple;
+	bh=vQf95RWwbIyuRDbTM2efRRBpBq2gM3PH2L48uDQLiuw=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gPeE4wLl2vL/3vZC8BJy9Nn5JiSqIJLsxEs172Q9gkPnVYyut5wjUZU3woZrvnwl2yd+QArzVEPhEKlA5yFtwq9feugOuZGAL0Dx8AejkUHQjFTpaDTsIZ9I+QHkXIoi3XpVicXsDVyFLXE1r43n5rUPBjgI3jz/M4bDsIFagso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kAVrJNO5; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47J0g0DS014401;
+	Mon, 19 Aug 2024 08:51:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	SzCwS7QNlEIxcBmhnNJGNnNT83kP0LndfQN7r9VYfzg=; b=kAVrJNO5VSRA3Yfd
+	t6lXkwHW/XwSDHLE1QS5B0j/sqgMSpOD0KNvOVEWNSP6HYHJ5VZOKKoZySYDNHmU
+	dBYyFwRF80qbRwRmOg6XdEtwNUJVr4pHmVeSi/09ILfilkHjvl73oo1PlYRxX85A
+	dbnW/ewyzljbzREhb2kEYVGQYG1F76z+/IQurz5DDE3JMw7xw9Ked1ryc8Dlkfty
+	9OzTRudpQYjj//OD3d4tAP0siIUvtj2qvf2Vr22L3UH3WF8fY6CbAmUqOJckifNw
+	zfAlk2ky3s7XTBn8v+Bvvqr4QOGEbWCrExe8ez6d3Zl8Fukm9/AHMI++NQdGdLIc
+	nnIPsA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 412mmekdrn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 19 Aug 2024 08:51:51 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47J8poEK001566
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 19 Aug 2024 08:51:50 GMT
+Received: from jiegan-gv.ap.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 19 Aug 2024 01:51:44 -0700
+Date: Mon, 19 Aug 2024 16:51:40 +0800
+From: JieGan <quic_jiegan@quicinc.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Rob Herring <robh@kernel.org>, Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Maxime Coquelin
+	<mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        Tingwei Zhang
+	<quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        "Tao
+ Zhang" <quic_taozha@quicinc.com>,
+        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>
+Subject: Re: [PATCH v3 3/5] dt-bindings: arm: Add Coresight TMC Control Unit
+ hardware
+Message-ID: <ZsMHnKKvOey4SA1O@jiegan-gv.ap.qualcomm.com>
+References: <20240812024141.2867655-1-quic_jiegan@quicinc.com>
+ <20240812024141.2867655-4-quic_jiegan@quicinc.com>
+ <20240818142834.GA27754-robh@kernel.org>
+ <ZsKkm/Pz0GYtH2Gl@jiegan-gv.ap.qualcomm.com>
+ <9d9704ed-6ef8-4920-9874-29e0a815e2ba@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9d9704ed-6ef8-4920-9874-29e0a815e2ba@kernel.org>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: o7jeiQiUQJah3lHZXkR4lCvm1Y1xekY9
+X-Proofpoint-ORIG-GUID: o7jeiQiUQJah3lHZXkR4lCvm1Y1xekY9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-19_07,2024-08-19_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1011
+ mlxlogscore=999 priorityscore=1501 bulkscore=0 impostorscore=0
+ adultscore=0 mlxscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408190063
 
-On 19 August 2024 10:05:49 GMT+07:00, Bjorn Andersson <quic_bjorande@quicin=
-c=2Ecom> wrote:
->On Mon, Aug 19, 2024 at 08:16:25AM +0700, Dmitry Baryshkov wrote:
->> On 19 August 2024 06:17:38 GMT+07:00, Bjorn Andersson <quic_bjorande@qu=
-icinc=2Ecom> wrote:
->> >Commit 'caa855189104 ("soc: qcom: pmic_glink: Fix race during
->> >initialization")' moved the pmic_glink client list under a spinlock, a=
-s
->> >it is accessed by the rpmsg/glink callback, which in turn is invoked
->> >from IRQ context=2E
->> >
->> >This means that ucsi_unregister() is now called from IRQ context, whic=
-h
->> >isn't feasible as it's expecting a sleepable context=2E An effort is u=
-nder
->> >way to get GLINK to invoke its callbacks in a sleepable context, but
->> >until then lets schedule the unregistration=2E
->> >
->> >A side effect of this is that ucsi_unregister() can now happen
->> >after the remote processor, and thereby the communication link with it=
-, is
->> >gone=2E pmic_glink_send() is amended with a check to avoid the resulti=
-ng
->> >NULL pointer dereference, but it becomes expecting to see a failing se=
-nd
->> >upon shutting down the remote processor (e=2Eg=2E during a restart fol=
-lowing
->> >a firmware crash):
->> >
->> >  ucsi_glink=2Epmic_glink_ucsi pmic_glink=2Eucsi=2E0: failed to send U=
-CSI write request: -5
->> >
->> >Fixes: caa855189104 ("soc: qcom: pmic_glink: Fix race during initializ=
-ation")
->> >Cc: stable@vger=2Ekernel=2Eorg
->> >Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc=2Ecom>
->> >---
->> > drivers/soc/qcom/pmic_glink=2Ec       | 10 +++++++++-
->> > drivers/usb/typec/ucsi/ucsi_glink=2Ec | 28 +++++++++++++++++++++++---=
---
->> > 2 files changed, 32 insertions(+), 6 deletions(-)
->> >
->> >diff --git a/drivers/soc/qcom/pmic_glink=2Ec b/drivers/soc/qcom/pmic_g=
-link=2Ec
->> >index 58ec91767d79=2E=2Ee4747f1d3da5 100644
->> >--- a/drivers/soc/qcom/pmic_glink=2Ec
->> >+++ b/drivers/soc/qcom/pmic_glink=2Ec
->> >@@ -112,8 +112,16 @@ EXPORT_SYMBOL_GPL(pmic_glink_register_client);
->> > int pmic_glink_send(struct pmic_glink_client *client, void *data, siz=
-e_t len)
->> > {
->> > 	struct pmic_glink *pg =3D client->pg;
->> >+	int ret;
->> >=20
->> >-	return rpmsg_send(pg->ept, data, len);
->> >+	mutex_lock(&pg->state_lock);
->> >+	if (!pg->ept)
->> >+		ret =3D -ECONNRESET;
->> >+	else
->> >+		ret =3D rpmsg_send(pg->ept, data, len);
->> >+	mutex_unlock(&pg->state_lock);
->> >+
->> >+	return ret;
->> > }
->> > EXPORT_SYMBOL_GPL(pmic_glink_send);
->> >=20
->> >diff --git a/drivers/usb/typec/ucsi/ucsi_glink=2Ec b/drivers/usb/typec=
-/ucsi/ucsi_glink=2Ec
->> >index ac53a81c2a81=2E=2Ea33056eec83d 100644
->> >--- a/drivers/usb/typec/ucsi/ucsi_glink=2Ec
->> >+++ b/drivers/usb/typec/ucsi/ucsi_glink=2Ec
->> >@@ -68,6 +68,9 @@ struct pmic_glink_ucsi {
->> >=20
->> > 	struct work_struct notify_work;
->> > 	struct work_struct register_work;
->> >+	spinlock_t state_lock;
->> >+	unsigned int pdr_state;
->> >+	unsigned int new_pdr_state;
->> >=20
->> > 	u8 read_buf[UCSI_BUF_SIZE];
->> > };
->> >@@ -244,8 +247,22 @@ static void pmic_glink_ucsi_notify(struct work_st=
-ruct *work)
->> > static void pmic_glink_ucsi_register(struct work_struct *work)
->> > {
->> > 	struct pmic_glink_ucsi *ucsi =3D container_of(work, struct pmic_glin=
-k_ucsi, register_work);
->> >+	unsigned long flags;
->> >+	unsigned int new_state;
->> >+
->> >+	spin_lock_irqsave(&ucsi->state_lock, flags);
->> >+	new_state =3D ucsi->new_pdr_state;
->> >+	spin_unlock_irqrestore(&ucsi->state_lock, flags);
->> >+
->> >+	if (ucsi->pdr_state !=3D SERVREG_SERVICE_STATE_UP) {
->> >+		if (new_state =3D=3D SERVREG_SERVICE_STATE_UP)
->> >+			ucsi_register(ucsi->ucsi);
->> >+	} else {
->> >+		if (new_state =3D=3D SERVREG_SERVICE_STATE_DOWN)
->> >+			ucsi_unregister(ucsi->ucsi);
->> >+	}
->> >=20
->> >-	ucsi_register(ucsi->ucsi);
->> >+	ucsi->pdr_state =3D new_state;
->> > }
->>=20
->> Is there a chance if a race condition if the firmware is restarted quic=
-kly, but the system is under heavy mist:=20
->> - the driver gets DOWN event, updates the state and schedules the work,
->> - the work starts to execute, reads the state,
->> - the driver gets UP event, updates the state, but the work is not resc=
-heduled as it is still executing=20
->> - the worker finishes unregistering the UCSI=2E
->>=20
->
->I was under the impression that if we reach the point where we start
->executing the worker, then a second schedule_work() would cause the
->worker to run again=2E But I might be mistaken here=2E
+On Mon, Aug 19, 2024 at 08:25:33AM +0200, Krzysztof Kozlowski wrote:
+> On 19/08/2024 03:49, JieGan wrote:
+> > On Sun, Aug 18, 2024 at 08:28:34AM -0600, Rob Herring wrote:
+> >> On Mon, Aug 12, 2024 at 10:41:39AM +0800, Jie Gan wrote:
+> >>> Add binding file to specify how to define a Coresight TMC
+> >>> Control Unit device in device tree.
+> >>>
+> >>> It is responsible for controlling the data filter function
+> >>> based on the source device's Trace ID for TMC ETR device.
+> >>> The trace data with that Trace id can get into ETR's buffer
+> >>> while other trace data gets ignored.
+> >>>
+> >>> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+> >>> ---
+> >>>  .../bindings/arm/qcom,coresight-ctcu.yaml     | 79 +++++++++++++++++++
+> >>>  1 file changed, 79 insertions(+)
+> >>>  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+> >>>
+> >>> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+> >>> new file mode 100644
+> >>> index 000000000000..7a9580007942
+> >>> --- /dev/null
+> >>> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+> >>> @@ -0,0 +1,79 @@
+> >>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> >>> +%YAML 1.2
+> >>> +---
+> >>> +$id: http://devicetree.org/schemas/arm/qcom,coresight-ctcu.yaml#
+> >>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> >>> +
+> >>> +title: CoreSight TMC Control Unit
+> >>> +
+> >>> +maintainers:
+> >>> +  - Yuanfang Zhang <quic_yuanfang@quicinc.com>
+> >>> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
+> >>> +  - Jie Gan <quic_jiegan@quicinc.com>
+> >>> +
+> >>> +description:
+> >>> +  The Coresight TMC Control unit controls various Coresight behaviors.
+> >>> +  It works as a helper device when connected to TMC ETR device.
+> >>> +  It is responsible for controlling the data filter function based on
+> >>> +  the source device's Trace ID for TMC ETR device. The trace data with
+> >>> +  that Trace id can get into ETR's buffer while other trace data gets
+> >>> +  ignored.
+> >>
+> >> Nowhere is TMC defined.
+> > The Coresight TMC control unit(CTCU) connected to Coresight TMC device via replicator and
+> > works as a helper device to TMC device.
+> 
+> Did you understand the feedback or just responding with whatever to get
+> rid of reviewers?
 
-I don't have full source code at hand and the docs only speak about being =
-queued, so it is perfectly possible that I am mistaken here=2E
+Sorry for the insufficient clarity in my response, I am just misunderstood the feedback and try
+to explain the relationship between TMC and CTCU device.
 
->
->What I do expect though is that if we for some reason don't start
->executing the work before the state becomes UP again, the UCSI core
->wouldn't know that the firmware has been reset=2E
->
->
->My proposal is to accept this risk for v6=2E11 (and get the benefit of
->things actually working) and then take a new swing at getting rid of all
->these workers for v6=2E12/13=2E Does that sound reasonable?
+I will add the TMC description to explain what TMC is as shown below:
+The Trace Memory Controller(TMC) is used for Embedded Trace Buffer(ETB), Embedded Trace FIFO(ETF)
+and Embedded Trace Router(ETR) configurations. The configuration mode (ETB, ETF, ETR) is
+discovered at boot time when the device is probed.
+
+> 
+> > 
+> > The in-ports listed below illustrate their connection to TMC devices.
+> > 
+> >>
+> >>> +
+> >>> +properties:
+> >>> +  compatible:
+> >>> +    enum:
+> >>> +      - qcom,sa8775p-ctcu
+> >>> +
+> >>> +  reg:
+> >>> +    maxItems: 1
+> >>> +
+> >>> +  clocks:
+> >>> +    maxItems: 1
+> >>> +
+> >>> +  clock-names:
+> >>> +    items:
+> >>> +      - const: apb
+> >>> +
+> >>> +  in-ports:
+> >>
+> >> Use 'ports' unless you have both in and out ports.
+> > The ‘in-ports’ and ‘out-ports’ properties will be parsed by ‘of_coresight_get_port_parent’
+> > and their relationships to other devices will be stored in the coresight_platform_data structure.
+> > 
+> > for example:
+> > struct coresight_platform_data {
+> > 	int nr_inconns;
+> > 	int nr_outconns;
+> > 	struct coresight_connection **out_conns;
+> > 	struct coresight_connection **in_conns;
+> > };
+> > 
+> > https://elixir.bootlin.com/linux/v6.11-rc4/source/drivers/hwtracing/coresight/coresight-platform.c#L147
+> 
+> and? If you respond with some unrelated argument, we will respond with
+> the same: Use 'ports' unless you have both in and out ports.
+
+Sorry for the insufficient response.
+
+The Coresight driver prefers using ‘in-ports’ and ‘out-ports’ instead of the ‘ports’ property, as each
+Coresight component needs to specify its input and output directions.
+
+The Coresight system operates by integrating all Coresight components and construting its data flow path
+based on the defined directions. 
+
+Consequently, the data flow direction cannot be determined when utilizing the ‘ports’ property in the
+Coresight system.
 
 
-Yes, makes sense to me=2E=20
+> 
+> Best regards,
+> Krzysztof
+> 
 
-Reviewed-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
-
-
->
->Regards,
->Bjorn
->
->>=20
->>=20
->> >=20
->> > static void pmic_glink_ucsi_callback(const void *data, size_t len, vo=
-id *priv)
->> >@@ -269,11 +286,12 @@ static void pmic_glink_ucsi_callback(const void =
-*data, size_t len, void *priv)
->> > static void pmic_glink_ucsi_pdr_notify(void *priv, int state)
->> > {
->> > 	struct pmic_glink_ucsi *ucsi =3D priv;
->> >+	unsigned long flags;
->> >=20
->> >-	if (state =3D=3D SERVREG_SERVICE_STATE_UP)
->> >-		schedule_work(&ucsi->register_work);
->> >-	else if (state =3D=3D SERVREG_SERVICE_STATE_DOWN)
->> >-		ucsi_unregister(ucsi->ucsi);
->> >+	spin_lock_irqsave(&ucsi->state_lock, flags);
->> >+	ucsi->new_pdr_state =3D state;
->> >+	spin_unlock_irqrestore(&ucsi->state_lock, flags);
->> >+	schedule_work(&ucsi->register_work);
->> > }
->> >=20
->> > static void pmic_glink_ucsi_destroy(void *data)
->> >
->>=20
-
+Thanks,
+Jie
 
