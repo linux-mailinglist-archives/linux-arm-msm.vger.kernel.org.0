@@ -1,63 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-29077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1D829582BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 11:37:16 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9F5B9582C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 11:37:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5F4F9B21C11
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 09:37:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D63281C249D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 09:37:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BDD418C915;
-	Tue, 20 Aug 2024 09:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A37F18CC17;
+	Tue, 20 Aug 2024 09:36:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WfHxBiJC"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="m8fCVQmm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC40B18C34D;
-	Tue, 20 Aug 2024 09:36:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A5E18C020;
+	Tue, 20 Aug 2024 09:36:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724146600; cv=none; b=ILgKsDHWBXhy4OhS2TkothMWeqK7yaYpRkZbgVLFD7ed39hMRSJlaUEQGfZ0NPRq4aOy/ejr/Tpv7lUGSbW+TVJdPfniUgILiPWxAxsbxmn8DficRuOOpnSl1OpVQSXAYq8Q5+MHVccy4MzjWHY0xSiweHKZvxJ1GFBZJ2vl2I4=
+	t=1724146605; cv=none; b=sdQNzss0B768k4A9I0RqZQ4x9HFu9JZ8v2yZxtBTUiLZCvLXs/yRguIcWnuuH+yX6uTo2+U6rG3rH8JiCJAq8BeaPBnbW1UikegytVsmVnHxxa9xcR1Ozlpl2cys+L4xgc7LmFTD7j6Oy9RJyyvA+QnsAOQw4r6PRc+jWOVD9LI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724146600; c=relaxed/simple;
-	bh=6AAVHfwe0wwspkdEUmTXOA/WDI+6Nq+UyY6c1P262+I=;
-	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=VToAwACnnDlfiIQtxLJhyIMgCciGuOmObMO7LX91jyUBzPtbV/hC9eap4cCC0KplIelG0xT9Hrvd40kWJL7SaoGzCMXs26UtFM2ZjP5zafhZXeVqsFNGSdyYnciY+SR3W5yHZU25R06oXGtD/XDxPIhe33zWLOCOF+h/42YczqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WfHxBiJC; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1724146605; c=relaxed/simple;
+	bh=wzazxw1+9Qr8Ax7eeeTSd46Ln0fAKyyoLBADk6snYec=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
+	 In-Reply-To:To:CC; b=BIR7DBjDozU5XXDkiwJFYtIq8n/saxn8XJUho1+ClSgQirdvArZFLxL9QS4eIKcctYblz8Ipjh8IyjgzA7s/0ZucijdKDiSneVWbJ/D162Q2d3hGeOUfdl/d+OEsvxxSxxDcmVCPjdA/3XGcAj4e20ZXl2VmCeV1eW7dMR292q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=m8fCVQmm; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47K2BjUh011272;
-	Tue, 20 Aug 2024 09:36:34 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47K8gOql022742;
+	Tue, 20 Aug 2024 09:36:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=707cU4+Qw048yNCm0J3erP
-	0jjvGpuWqc+P1g4tcosgM=; b=WfHxBiJCd3T7wszGO3RPsGEnhfJmPlzC/lRhaZ
-	+LeZ9tQGclT1jPJc1kM3ipfq9oWdz9VvrFcQ3EOEpXj+7xUQKstBw5XRCnQR4Ba5
-	3YQz/bCeE8BcCWDFfZ+isnuBwNaajLKfOb0TuOWVUC2NDZKgL2PgIbAFBObdijuT
-	ArgFqypUOhvceXfGTA1qjXM0IRXYEYCl1XwoNP3Ls+H2UGnlhsW5YDDIIwx+O/ex
-	kJ2BBf5jp4ZLkETP3E/jdOo+HgcxCWIErN6cyMXdB6izlhMgmK32djaYaJ3B0UJA
-	mVeCpsjq2wpmGB1sS7mJ473Rt6dRQZDEiRqodggXYf4T13wA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 414j5715ug-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QGZmwtJcDAL683GtsUw3ZkF8pwWoSKEqBs+Ue9GCoL8=; b=m8fCVQmm6+K6uaVk
+	OXgczVUtFKjD4CyoaZx57ZoOYHgXdJW1MWgcykHzn6ZZodTil4FN8xytRofRbBrn
+	k/y9cr/z6JtSJqRtb8zIeHWPI8SCsbn/sG4KUCTFsWGqetQssu9/4Zm8ZQIkQjvY
+	lIGAXJo1uqG3E70z5V5nlNgXiFHGYjt9ONhuwSKfMADUEllau7RhhLsTFl5oAPUK
+	0t3GR9mi6Bf5Ol/ujR1yTUyK5uiM++dpMC/M9bYe4txrr/2eBMgRf/3mFZJrB8tc
+	Qg9uKGtI6RWLqFmNNa4ShpdfSfPJGEZDtmT7oMPJKCL3g2jpeIAIKLbZd0ARMMIZ
+	XeLQvA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 412m32q7mr-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Aug 2024 09:36:34 +0000 (GMT)
+	Tue, 20 Aug 2024 09:36:38 +0000 (GMT)
 Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47K9aWN4012819
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47K9ab68029503
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Aug 2024 09:36:32 GMT
+	Tue, 20 Aug 2024 09:36:37 GMT
 Received: from hu-imrashai-hyd.qualcomm.com (10.80.80.8) by
  nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 20 Aug 2024 02:36:27 -0700
+ 15.2.1544.9; Tue, 20 Aug 2024 02:36:32 -0700
 From: Imran Shaik <quic_imrashai@quicinc.com>
-Subject: [PATCH 0/2] clk: qcom: Add support for GCC on QCS8300
-Date: Tue, 20 Aug 2024 15:06:19 +0530
-Message-ID: <20240820-qcs8300-gcc-v1-0-d81720517a82@quicinc.com>
+Date: Tue, 20 Aug 2024 15:06:20 +0530
+Subject: [PATCH 1/2] dt-bindings: clock: qcom: Add GCC clocks for QCS8300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,9 +67,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAJNjxGYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDCyMD3cLkYgtjAwPd9ORkXRNjYwMjYyMzyyRjMyWgjoKi1LTMCrBp0bG
- 1tQA7FgoZXQAAAA==
+Message-ID: <20240820-qcs8300-gcc-v1-1-d81720517a82@quicinc.com>
+References: <20240820-qcs8300-gcc-v1-0-d81720517a82@quicinc.com>
+In-Reply-To: <20240820-qcs8300-gcc-v1-0-d81720517a82@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
         Michael Turquette
 	<mturquette@baylibre.com>,
@@ -91,42 +92,339 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: OQT6EyEkadwfY8FFZwfKEXCiyfw3YmwO
-X-Proofpoint-GUID: OQT6EyEkadwfY8FFZwfKEXCiyfw3YmwO
+X-Proofpoint-GUID: b5jwwe1AeF4gBk9RRCiBehV3wthsbQJY
+X-Proofpoint-ORIG-GUID: b5jwwe1AeF4gBk9RRCiBehV3wthsbQJY
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-20_09,2024-08-19_03,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=830
- priorityscore=1501 clxscore=1011 bulkscore=0 phishscore=0 impostorscore=0
- adultscore=0 suspectscore=0 mlxscore=0 spamscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
+ suspectscore=0 priorityscore=1501 phishscore=0 bulkscore=0
+ lowpriorityscore=0 impostorscore=0 clxscore=1015 mlxlogscore=999
+ spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2407110000 definitions=main-2408200071
 
-This series adds the dt-bindings and driver support for GCC on QCS8300 platform.
-
-Please note that this series is dependent on [1] which adds support
-for QCS8275/QCS8300 SoC ID.
-
-[1] https://lore.kernel.org/all/20240814072806.4107079-1-quic_jingyw@quicinc.com/
+Add support for qcom global clock controller bindings for QCS8300 platform.
 
 Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
 ---
-Imran Shaik (2):
-      dt-bindings: clock: qcom: Add GCC clocks for QCS8300
-      clk: qcom: Add support for Global Clock Controller on QCS8300
+ .../bindings/clock/qcom,qcs8300-gcc.yaml           |  66 ++++++
+ include/dt-bindings/clock/qcom,qcs8300-gcc.h       | 234 +++++++++++++++++++++
+ 2 files changed, 300 insertions(+)
 
- .../bindings/clock/qcom,qcs8300-gcc.yaml           |   66 +
- drivers/clk/qcom/Kconfig                           |   10 +
- drivers/clk/qcom/Makefile                          |    1 +
- drivers/clk/qcom/gcc-qcs8300.c                     | 3640 ++++++++++++++++++++
- include/dt-bindings/clock/qcom,qcs8300-gcc.h       |  234 ++
- 5 files changed, 3951 insertions(+)
----
-base-commit: bb1b0acdcd66e0d8eedee3570d249e076b89ab32
-change-id: 20240820-qcs8300-gcc-433023269b36
+diff --git a/Documentation/devicetree/bindings/clock/qcom,qcs8300-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,qcs8300-gcc.yaml
+new file mode 100644
+index 000000000000..081bc452081f
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,qcs8300-gcc.yaml
+@@ -0,0 +1,66 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,qcs8300-gcc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Technologies, Inc. Global Clock & Reset Controller on QCS8300
++
++maintainers:
++  - Taniya Das <quic_tdas@quicinc.com>
++  - Imran Shaik <quic_imrashai@quicinc.com>
++
++description: |
++  Qualcomm Technologies, Inc. Global clock control module provides the clocks, resets and
++  power domains on QCS8300
++
++  See also: include/dt-bindings/clock/qcom,qcs8300-gcc.h
++
++properties:
++  compatible:
++    const: qcom,qcs8300-gcc
++
++  clocks:
++    items:
++      - description: Board XO source
++      - description: Sleep clock source
++      - description: PCIE 0 Pipe clock source
++      - description: PCIE 1 Pipe clock source
++      - description: PCIE Phy Auxiliary clock source
++      - description: First EMAC controller reference clock
++      - description: UFS Phy Rx symbol 0 clock source
++      - description: UFS Phy Rx symbol 1 clock source
++      - description: UFS Phy Tx symbol 0 clock source
++      - description: USB3 Phy wrapper pipe clock source
++
++required:
++  - compatible
++  - clocks
++  - '#power-domain-cells'
++
++allOf:
++  - $ref: qcom,gcc.yaml#
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    clock-controller@100000 {
++      compatible = "qcom,qcs8300-gcc";
++      reg = <0x00100000 0xc7018>;
++      clocks = <&rpmhcc RPMH_CXO_CLK>,
++               <&sleep_clk>,
++               <&pcie_0_pipe_clk>,
++               <&pcie_1_pipe_clk>,
++               <&pcie_phy_aux_clk>,
++               <&rxc0_ref_clk>,
++               <&ufs_phy_rx_symbol_0_clk>,
++               <&ufs_phy_rx_symbol_1_clk>,
++               <&ufs_phy_tx_symbol_0_clk>,
++               <&usb3_phy_wrapper_gcc_usb30_prim_pipe_clk>;
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++    };
++...
+diff --git a/include/dt-bindings/clock/qcom,qcs8300-gcc.h b/include/dt-bindings/clock/qcom,qcs8300-gcc.h
+new file mode 100644
+index 000000000000..a0083b1d2126
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,qcs8300-gcc.h
+@@ -0,0 +1,234 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_GCC_QCS8300_H
++#define _DT_BINDINGS_CLK_QCOM_GCC_QCS8300_H
++
++/* GCC clocks */
++#define GCC_GPLL0						0
++#define GCC_GPLL0_OUT_EVEN					1
++#define GCC_GPLL1						2
++#define GCC_GPLL4						3
++#define GCC_GPLL7						4
++#define GCC_GPLL9						5
++#define GCC_AGGRE_NOC_QUPV3_AXI_CLK				6
++#define GCC_AGGRE_UFS_PHY_AXI_CLK				7
++#define GCC_AGGRE_USB2_PRIM_AXI_CLK				8
++#define GCC_AGGRE_USB3_PRIM_AXI_CLK				9
++#define GCC_AHB2PHY0_CLK					10
++#define GCC_AHB2PHY2_CLK					11
++#define GCC_AHB2PHY3_CLK					12
++#define GCC_BOOT_ROM_AHB_CLK					13
++#define GCC_CAMERA_AHB_CLK					14
++#define GCC_CAMERA_HF_AXI_CLK					15
++#define GCC_CAMERA_SF_AXI_CLK					16
++#define GCC_CAMERA_THROTTLE_XO_CLK				17
++#define GCC_CAMERA_XO_CLK					18
++#define GCC_CFG_NOC_USB2_PRIM_AXI_CLK				19
++#define GCC_CFG_NOC_USB3_PRIM_AXI_CLK				20
++#define GCC_DDRSS_GPU_AXI_CLK					21
++#define GCC_DISP_AHB_CLK					22
++#define GCC_DISP_HF_AXI_CLK					23
++#define GCC_DISP_XO_CLK						24
++#define GCC_EDP_REF_CLKREF_EN					25
++#define GCC_EMAC0_AXI_CLK					26
++#define GCC_EMAC0_PHY_AUX_CLK					27
++#define GCC_EMAC0_PHY_AUX_CLK_SRC				28
++#define GCC_EMAC0_PTP_CLK					29
++#define GCC_EMAC0_PTP_CLK_SRC					30
++#define GCC_EMAC0_RGMII_CLK					31
++#define GCC_EMAC0_RGMII_CLK_SRC					32
++#define GCC_EMAC0_SLV_AHB_CLK					33
++#define GCC_GP1_CLK						34
++#define GCC_GP1_CLK_SRC						35
++#define GCC_GP2_CLK						36
++#define GCC_GP2_CLK_SRC						37
++#define GCC_GP3_CLK						38
++#define GCC_GP3_CLK_SRC						39
++#define GCC_GP4_CLK						40
++#define GCC_GP4_CLK_SRC						41
++#define GCC_GP5_CLK						42
++#define GCC_GP5_CLK_SRC						43
++#define GCC_GPU_CFG_AHB_CLK					44
++#define GCC_GPU_GPLL0_CLK_SRC					45
++#define GCC_GPU_GPLL0_DIV_CLK_SRC				46
++#define GCC_GPU_MEMNOC_GFX_CENTER_PIPELINE_CLK			47
++#define GCC_GPU_MEMNOC_GFX_CLK					48
++#define GCC_GPU_SNOC_DVM_GFX_CLK				49
++#define GCC_GPU_TCU_THROTTLE_AHB_CLK				50
++#define GCC_GPU_TCU_THROTTLE_CLK				51
++#define GCC_PCIE_0_AUX_CLK					52
++#define GCC_PCIE_0_AUX_CLK_SRC					53
++#define GCC_PCIE_0_CFG_AHB_CLK					54
++#define GCC_PCIE_0_MSTR_AXI_CLK					55
++#define GCC_PCIE_0_PHY_AUX_CLK					56
++#define GCC_PCIE_0_PHY_AUX_CLK_SRC				57
++#define GCC_PCIE_0_PHY_RCHNG_CLK				58
++#define GCC_PCIE_0_PHY_RCHNG_CLK_SRC				59
++#define GCC_PCIE_0_PIPE_CLK					60
++#define GCC_PCIE_0_PIPE_CLK_SRC					61
++#define GCC_PCIE_0_PIPE_DIV_CLK_SRC				62
++#define GCC_PCIE_0_PIPEDIV2_CLK					63
++#define GCC_PCIE_0_SLV_AXI_CLK					64
++#define GCC_PCIE_0_SLV_Q2A_AXI_CLK				65
++#define GCC_PCIE_1_AUX_CLK					66
++#define GCC_PCIE_1_AUX_CLK_SRC					67
++#define GCC_PCIE_1_CFG_AHB_CLK					68
++#define GCC_PCIE_1_MSTR_AXI_CLK					69
++#define GCC_PCIE_1_PHY_AUX_CLK					70
++#define GCC_PCIE_1_PHY_AUX_CLK_SRC				71
++#define GCC_PCIE_1_PHY_RCHNG_CLK				72
++#define GCC_PCIE_1_PHY_RCHNG_CLK_SRC				73
++#define GCC_PCIE_1_PIPE_CLK					74
++#define GCC_PCIE_1_PIPE_CLK_SRC					75
++#define GCC_PCIE_1_PIPE_DIV_CLK_SRC				76
++#define GCC_PCIE_1_PIPEDIV2_CLK					77
++#define GCC_PCIE_1_SLV_AXI_CLK					78
++#define GCC_PCIE_1_SLV_Q2A_AXI_CLK				79
++#define GCC_PCIE_CLKREF_EN					80
++#define GCC_PCIE_THROTTLE_CFG_CLK				81
++#define GCC_PDM2_CLK						82
++#define GCC_PDM2_CLK_SRC					83
++#define GCC_PDM_AHB_CLK						84
++#define GCC_PDM_XO4_CLK						85
++#define GCC_QMIP_CAMERA_NRT_AHB_CLK				86
++#define GCC_QMIP_CAMERA_RT_AHB_CLK				87
++#define GCC_QMIP_DISP_AHB_CLK					88
++#define GCC_QMIP_DISP_ROT_AHB_CLK				89
++#define GCC_QMIP_VIDEO_CVP_AHB_CLK				90
++#define GCC_QMIP_VIDEO_VCODEC_AHB_CLK				91
++#define GCC_QMIP_VIDEO_VCPU_AHB_CLK				92
++#define GCC_QUPV3_WRAP0_CORE_2X_CLK				93
++#define GCC_QUPV3_WRAP0_CORE_CLK				94
++#define GCC_QUPV3_WRAP0_S0_CLK					95
++#define GCC_QUPV3_WRAP0_S0_CLK_SRC				96
++#define GCC_QUPV3_WRAP0_S1_CLK					97
++#define GCC_QUPV3_WRAP0_S1_CLK_SRC				98
++#define GCC_QUPV3_WRAP0_S2_CLK					99
++#define GCC_QUPV3_WRAP0_S2_CLK_SRC				100
++#define GCC_QUPV3_WRAP0_S3_CLK					101
++#define GCC_QUPV3_WRAP0_S3_CLK_SRC				102
++#define GCC_QUPV3_WRAP0_S4_CLK					103
++#define GCC_QUPV3_WRAP0_S4_CLK_SRC				104
++#define GCC_QUPV3_WRAP0_S5_CLK					105
++#define GCC_QUPV3_WRAP0_S5_CLK_SRC				106
++#define GCC_QUPV3_WRAP0_S6_CLK					107
++#define GCC_QUPV3_WRAP0_S6_CLK_SRC				108
++#define GCC_QUPV3_WRAP0_S7_CLK					109
++#define GCC_QUPV3_WRAP0_S7_CLK_SRC				110
++#define GCC_QUPV3_WRAP1_CORE_2X_CLK				111
++#define GCC_QUPV3_WRAP1_CORE_CLK				112
++#define GCC_QUPV3_WRAP1_S0_CLK					113
++#define GCC_QUPV3_WRAP1_S0_CLK_SRC				114
++#define GCC_QUPV3_WRAP1_S1_CLK					115
++#define GCC_QUPV3_WRAP1_S1_CLK_SRC				116
++#define GCC_QUPV3_WRAP1_S2_CLK					117
++#define GCC_QUPV3_WRAP1_S2_CLK_SRC				118
++#define GCC_QUPV3_WRAP1_S3_CLK					119
++#define GCC_QUPV3_WRAP1_S3_CLK_SRC				120
++#define GCC_QUPV3_WRAP1_S4_CLK					121
++#define GCC_QUPV3_WRAP1_S4_CLK_SRC				122
++#define GCC_QUPV3_WRAP1_S5_CLK					123
++#define GCC_QUPV3_WRAP1_S5_CLK_SRC				124
++#define GCC_QUPV3_WRAP1_S6_CLK					125
++#define GCC_QUPV3_WRAP1_S6_CLK_SRC				126
++#define GCC_QUPV3_WRAP1_S7_CLK					127
++#define GCC_QUPV3_WRAP1_S7_CLK_SRC				128
++#define GCC_QUPV3_WRAP3_CORE_2X_CLK				129
++#define GCC_QUPV3_WRAP3_CORE_CLK				130
++#define GCC_QUPV3_WRAP3_QSPI_CLK				131
++#define GCC_QUPV3_WRAP3_S0_CLK					132
++#define GCC_QUPV3_WRAP3_S0_CLK_SRC				133
++#define GCC_QUPV3_WRAP3_S0_DIV_CLK_SRC				134
++#define GCC_QUPV3_WRAP_0_M_AHB_CLK				135
++#define GCC_QUPV3_WRAP_0_S_AHB_CLK				136
++#define GCC_QUPV3_WRAP_1_M_AHB_CLK				137
++#define GCC_QUPV3_WRAP_1_S_AHB_CLK				138
++#define GCC_QUPV3_WRAP_3_M_AHB_CLK				139
++#define GCC_QUPV3_WRAP_3_S_AHB_CLK				140
++#define GCC_SDCC1_AHB_CLK					141
++#define GCC_SDCC1_APPS_CLK					142
++#define GCC_SDCC1_APPS_CLK_SRC					143
++#define GCC_SDCC1_ICE_CORE_CLK					144
++#define GCC_SDCC1_ICE_CORE_CLK_SRC				145
++#define GCC_SGMI_CLKREF_EN					146
++#define GCC_UFS_PHY_AHB_CLK					147
++#define GCC_UFS_PHY_AXI_CLK					148
++#define GCC_UFS_PHY_AXI_CLK_SRC					149
++#define GCC_UFS_PHY_ICE_CORE_CLK				150
++#define GCC_UFS_PHY_ICE_CORE_CLK_SRC				151
++#define GCC_UFS_PHY_PHY_AUX_CLK					152
++#define GCC_UFS_PHY_PHY_AUX_CLK_SRC				153
++#define GCC_UFS_PHY_RX_SYMBOL_0_CLK				154
++#define GCC_UFS_PHY_RX_SYMBOL_0_CLK_SRC				155
++#define GCC_UFS_PHY_RX_SYMBOL_1_CLK				156
++#define GCC_UFS_PHY_RX_SYMBOL_1_CLK_SRC				157
++#define GCC_UFS_PHY_TX_SYMBOL_0_CLK				158
++#define GCC_UFS_PHY_TX_SYMBOL_0_CLK_SRC				159
++#define GCC_UFS_PHY_UNIPRO_CORE_CLK				160
++#define GCC_UFS_PHY_UNIPRO_CORE_CLK_SRC				161
++#define GCC_USB20_MASTER_CLK					162
++#define GCC_USB20_MASTER_CLK_SRC				163
++#define GCC_USB20_MOCK_UTMI_CLK					164
++#define GCC_USB20_MOCK_UTMI_CLK_SRC				165
++#define GCC_USB20_MOCK_UTMI_POSTDIV_CLK_SRC			166
++#define GCC_USB20_SLEEP_CLK					167
++#define GCC_USB30_PRIM_MASTER_CLK				168
++#define GCC_USB30_PRIM_MASTER_CLK_SRC				169
++#define GCC_USB30_PRIM_MOCK_UTMI_CLK				170
++#define GCC_USB30_PRIM_MOCK_UTMI_CLK_SRC			171
++#define GCC_USB30_PRIM_MOCK_UTMI_POSTDIV_CLK_SRC		172
++#define GCC_USB30_PRIM_SLEEP_CLK				173
++#define GCC_USB3_PRIM_PHY_AUX_CLK				174
++#define GCC_USB3_PRIM_PHY_AUX_CLK_SRC				175
++#define GCC_USB3_PRIM_PHY_COM_AUX_CLK				176
++#define GCC_USB3_PRIM_PHY_PIPE_CLK				177
++#define GCC_USB3_PRIM_PHY_PIPE_CLK_SRC				178
++#define GCC_USB_CLKREF_EN					179
++#define GCC_VIDEO_AHB_CLK					180
++#define GCC_VIDEO_AXI0_CLK					181
++#define GCC_VIDEO_AXI1_CLK					182
++#define GCC_VIDEO_XO_CLK					183
++
++/* GCC power domains */
++#define GCC_EMAC0_GDSC						0
++#define GCC_PCIE_0_GDSC						1
++#define GCC_PCIE_1_GDSC						2
++#define GCC_UFS_PHY_GDSC					3
++#define GCC_USB20_PRIM_GDSC					4
++#define GCC_USB30_PRIM_GDSC					5
++
++/* GCC resets */
++#define GCC_EMAC0_BCR						0
++#define GCC_PCIE_0_BCR						1
++#define GCC_PCIE_0_LINK_DOWN_BCR				2
++#define GCC_PCIE_0_NOCSR_COM_PHY_BCR				3
++#define GCC_PCIE_0_PHY_BCR					4
++#define GCC_PCIE_0_PHY_NOCSR_COM_PHY_BCR			5
++#define GCC_PCIE_1_BCR						6
++#define GCC_PCIE_1_LINK_DOWN_BCR				7
++#define GCC_PCIE_1_NOCSR_COM_PHY_BCR				8
++#define GCC_PCIE_1_PHY_BCR					9
++#define GCC_PCIE_1_PHY_NOCSR_COM_PHY_BCR			10
++#define GCC_SDCC1_BCR						11
++#define GCC_UFS_PHY_BCR						12
++#define GCC_USB20_PRIM_BCR					13
++#define GCC_USB2_PHY_PRIM_BCR					14
++#define GCC_USB2_PHY_SEC_BCR					15
++#define GCC_USB30_PRIM_BCR					16
++#define GCC_USB3_DP_PHY_PRIM_BCR				17
++#define GCC_USB3_PHY_PRIM_BCR					18
++#define GCC_USB3_PHY_TERT_BCR					19
++#define GCC_USB3_UNIPHY_MP0_BCR					20
++#define GCC_USB3_UNIPHY_MP1_BCR					21
++#define GCC_USB3PHY_PHY_PRIM_BCR				22
++#define GCC_USB3UNIPHY_PHY_MP0_BCR				23
++#define GCC_USB3UNIPHY_PHY_MP1_BCR				24
++#define GCC_USB_PHY_CFG_AHB2PHY_BCR				25
++#define GCC_VIDEO_BCR						26
++#define GCC_VIDEO_AXI0_CLK_ARES					27
++#define GCC_VIDEO_AXI1_CLK_ARES					28
++
++#endif
 
-Best regards,
 -- 
-Imran Shaik <quic_imrashai@quicinc.com>
+2.25.1
 
 
