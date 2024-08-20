@@ -1,136 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-29149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C58AB958F5A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 22:50:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 37B83958F41
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 22:44:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4EA50B22E22
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 20:50:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C0252B22C9E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 20:44:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BA0C1C463F;
-	Tue, 20 Aug 2024 20:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4B1D1BB6B3;
+	Tue, 20 Aug 2024 20:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jb92FbYl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QCkuD9mv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4761C579D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Aug 2024 20:50:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BA7165EE1;
+	Tue, 20 Aug 2024 20:43:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724187013; cv=none; b=ZiyH1JN83brzXaxTPApXlyVrgZ5o+JvQ16GBYHJ4EwJuuGSCRDMXaDQ7qiNpon7wLD7UJhPN8Tde97Blp6+YX0NLrZGdnfEvn5TqPDiLoUfG5+K8hkkFLLZAenmAuHZNds1yMpMdxmm3GV1f6Vb2Cgkc/XYNcZnFSj1fmU03a84=
+	t=1724186637; cv=none; b=LY8OpqRnp3OXE7lCbw4qjCqlADQi+ljc5Zmb0+wxnTYhKPmrJk3aLmLL3CqtDL+SZ1O2DVAT8LNG1ex4I0CYZLekhwj1k4BWTJqzQ0rM5UYBH5Wn5qf6sWsL4wPUTuIcmA/qJgDqtOanuEfBqhw9SEOoDh4nc5uhfW155l2GkcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724187013; c=relaxed/simple;
-	bh=moUYRmKoiklI27xXChgM7F3wRr4LTiF1FOPhO+EjaIk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To; b=mKtzMqE55/hiwWwMbooGa4aNYOpt37Dkz4PS6XLBnMNtw7aP3xHNHRkxNvsMED4/y8pPpTNuQcfeWOgqYwZOOjq3ZsN9mECF1QyxGEM6kBWz1xA6+FaKLbnIDPUvnZ2VfOid/BDOYN54/mDD4f+86jaabogLERQzdPKd/cxp5W4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jb92FbYl; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47KKflcw002183
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Aug 2024 20:50:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	STFgVJkvjFKc6FxMrNncc/kN9l+9alOK9mTNWuNXnAs=; b=jb92FbYl7xaPF0eC
-	BmyW+K20LvqYi9zzXqHmqmI541ctaVdZzLEPlyMYPcKaN9TXNBTdZK9vdlTbvBbQ
-	3OEt6Sk1lKOuP5xpWo+Ho8xznelJNT0puK0BSPodiDFCL0VTIZrHUet+516i8jEl
-	Sai1y9zDDgTtWHNT1vLC+M6AhL4/SOS1NwhyKQ+uXCV1ph9uN4X8wxRKcck/tik9
-	Eg7KLZ46BZW9wJtHRAv/SvxYfq0HBr68dPJ5F9LOKNF3lmCZbVBefx5oGJqZxUnm
-	rZdwnhB/ft5duguCTlzGngKTteV71OdVmlzpekSMyNho0NzRD58sml7TqHy4nk3l
-	w1waIw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 412key8xgp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Aug 2024 20:50:09 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47KKo8rU002019
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Aug 2024 20:50:08 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 20 Aug 2024 13:50:08 -0700
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-Date: Tue, 20 Aug 2024 13:29:32 -0700
-Subject: [PATCH v3 3/3] soc: qcom: pmic_glink: Actually communicate when
- remote goes down
+	s=arc-20240116; t=1724186637; c=relaxed/simple;
+	bh=JLwJvZEJ4FQcJlsdkCdftpn7WlsfUPPZSu64ISMQJ9o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lhaplR2hu0wF1MfXJuN7AKr+3p27AvGdEDERy7rIOVOUtfhhGjfIIQkmajzbKvxwn8tXgYhBwuj0ubc0uVgiJR5E+8ULuxOYFn5Hv8E8mALSo1PP+V5sh/k8ispJgykl4I241lSZXAv22+6FKQy6Oyg3jpxxq2Q0L76i7WISRCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QCkuD9mv; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a7a9cf7d3f3so761996966b.1;
+        Tue, 20 Aug 2024 13:43:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724186634; x=1724791434; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yY4vNetXYvsnkw2DFC8H1kH4gA8u7ARIbqvnE6sG1Cc=;
+        b=QCkuD9mvMGQcd1nZbd1hiUOePP0tmmCEnlxlBVyjVbzY93fNI+g/0PZXKQkUEqOPZx
+         bDWgUAxwp6o5GuZNhrsQOT+dUs6Se+dIN8O4837dc/dW9mj6zRDx/y8FfS3tthm6Sa7I
+         mJQiF7SoNkn8X5bVj16Gqg1CBY47SbG7xbSiGxvk7KRlMumQmb9/0jSyo5Vc150wXHlb
+         eiwfVfhggXgLSXju0oh2ZvjT6GOMO54JSmz5yueUU40RTvkxXZ+7CkPw9pns3u2r1pyX
+         1iZGtTGCLqvYXN3mgWG8Qv2B9SBwc1QjTPC67nGZiwxOeiw0rlC7GxNVIUWYWFQSEESQ
+         n4PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724186634; x=1724791434;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yY4vNetXYvsnkw2DFC8H1kH4gA8u7ARIbqvnE6sG1Cc=;
+        b=Mq/Vjz5FCLiiFnGdH2cEe30Cpl1iTB6eYYkY9g6IPeg6sbcMaEp1R5lk6PakzNJh6+
+         I9tkF357Ej/a9uSzYXyJ9uESMzME6wiXf7cqXgBtg2WvmF/erItoeHcfdRkDYtaCD1dT
+         esF8FQPd4ITl91l6FlV3/h8jaK20UCdI50Rram5TWQYsTuqPPUO2FuinjdX7BxILp6pt
+         sfaDWpCKfA69QoYxUfz1TOQMjYU+cL7aBkufA1HN9NSPXUSo7tzL/g0x7/KqhQu04R5G
+         OyUXmYNvOKLmOfi4KmwEZO7WcpBkreSNN7l5SdeArRHAxSEREm1pxloTG5Pa9AghJG1+
+         GbLA==
+X-Forwarded-Encrypted: i=1; AJvYcCU1JvKTqD1DpntZoMJrcRxPlgHrAkzgdV6N7IiWHPzPATiAVWhfVQc3FKLQFwUl7mUPVZ4QUEnUZT7XCtc=@vger.kernel.org, AJvYcCUXvdYEb6Xj6RFviI33y9wXLOXBLyKc7qSo0ER6bK1o0kuzIQybJtRDIumRduI9ms3ZaY70BSMXmUrD2Qo1@vger.kernel.org, AJvYcCVg5VkpwPmoYzcmf4r+Vq5ZmmoWwa5KtUhHqZmgPw8OTA6ppLeFeIo4yaHAqXV7ajMdR8x2SazcZ1HvUm+a@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzni/+n3No/Au74o7WhgFbUEHUXEMcvn6681rU3IaGiFm6uzJVT
+	GorNR8iwLZ2EEhVROjjB3c3H8Kz+TJXZR66DSIjglJOyUlTZ/CAh
+X-Google-Smtp-Source: AGHT+IFT9OxSMHaf7wcsfNkvmOqHVu8Tc7SNr/lwJLFjb8ZxbaJb78dYme0DOGlzA7c3aDg+TR3IWQ==
+X-Received: by 2002:a17:907:944d:b0:a7d:e956:ad51 with SMTP id a640c23a62f3a-a866f2c3804mr11419766b.21.1724186634040;
+        Tue, 20 Aug 2024 13:43:54 -0700 (PDT)
+Received: from [192.168.1.19] (79-100-234-73.ip.btc-net.bg. [79.100.234.73])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a83838c689dsm805712166b.37.2024.08.20.13.43.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Aug 2024 13:43:53 -0700 (PDT)
+Message-ID: <c5141c18-3f7b-41ac-a064-9911873d0bf9@gmail.com>
+Date: Tue, 20 Aug 2024 23:43:50 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240820-pmic-glink-v6-11-races-v3-3-eec53c750a04@quicinc.com>
-References: <20240820-pmic-glink-v6-11-races-v3-0-eec53c750a04@quicinc.com>
-In-Reply-To: <20240820-pmic-glink-v6-11-races-v3-0-eec53c750a04@quicinc.com>
-To: <linux-arm-msm@vger.kernel.org>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1724187007; l=1619;
- i=quic_bjorande@quicinc.com; s=20230915; h=from:subject:message-id;
- bh=moUYRmKoiklI27xXChgM7F3wRr4LTiF1FOPhO+EjaIk=;
- b=to11t3arKv1hYRqlCMa7QoXl3uzxRDjACill1OOmQZBNQHY9Uo8nWdW2zaev3QqiDdpu7HFyV
- 4ZrjG0/sxAsAqCDTqJWdJmujHZKGgdz46ZSISdCQIZttaqXXu3L5PMa
-X-Developer-Key: i=quic_bjorande@quicinc.com; a=ed25519;
- pk=VkhObtljigy9k0ZUIE1Mvr0Y+E1dgBEH9WoLQnUtbIM=
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: SHhN_ZAt_vC8k3hSmIwFHheqVYcqTxki
-X-Proofpoint-GUID: SHhN_ZAt_vC8k3hSmIwFHheqVYcqTxki
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-20_16,2024-08-19_03,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- lowpriorityscore=0 mlxscore=0 adultscore=0 clxscore=1015 impostorscore=0
- suspectscore=0 malwarescore=0 priorityscore=1501 spamscore=0
- mlxlogscore=999 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2407110000 definitions=main-2408200152
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] media: venus: firmware: Use
+ iommu_paging_domain_alloc()
+To: Lu Baolu <baolu.lu@linux.intel.com>, Dmitry Osipenko <digetx@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>, Joerg Roedel <joro@8bytes.org>,
+ Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+ Jason Gunthorpe <jgg@ziepe.ca>, Kevin Tian <kevin.tian@intel.com>
+Cc: linux-media@vger.kernel.org, linux-tegra@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
+ linux-kernel@vger.kernel.org, Jason Gunthorpe <jgg@nvidia.com>
+References: <20240812072105.9578-1-baolu.lu@linux.intel.com>
+ <20240812072105.9578-2-baolu.lu@linux.intel.com>
+Content-Language: en-US, bg-BG
+From: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+In-Reply-To: <20240812072105.9578-2-baolu.lu@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-When the pmic_glink state is UP and we either receive a protection-
-domain (PD) notification indicating that the PD is going down, or that
-the whole remoteproc is going down, it's expected that the pmic_glink
-client instances are notified that their function has gone DOWN.
+Hi,
 
-This is not what the code does, which results in the client state either
-not updating, or being wrong in many cases. So let's fix the conditions.
+Thank you for the patch!
 
-Fixes: 58ef4ece1e41 ("soc: qcom: pmic_glink: Introduce base PMIC GLINK driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
- drivers/soc/qcom/pmic_glink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 12.08.24 г. 10:21 ч., Lu Baolu wrote:
+> An iommu domain is allocated in venus_firmware_init() and is attached to
+> core->fw.dev in the same function. Use iommu_paging_domain_alloc() to
+> make it explicit.
+> 
+> Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+> Link: https://lore.kernel.org/r/20240610085555.88197-10-baolu.lu@linux.intel.com
+> ---
+>   drivers/media/platform/qcom/venus/firmware.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
+> index fe7da2b30482..66a18830e66d 100644
+> --- a/drivers/media/platform/qcom/venus/firmware.c
+> +++ b/drivers/media/platform/qcom/venus/firmware.ced
 
-diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
-index b218460219b7..9606222993fd 100644
---- a/drivers/soc/qcom/pmic_glink.c
-+++ b/drivers/soc/qcom/pmic_glink.c
-@@ -191,7 +191,7 @@ static void pmic_glink_state_notify_clients(struct pmic_glink *pg)
- 		if (pg->pdr_state == SERVREG_SERVICE_STATE_UP && pg->ept)
- 			new_state = SERVREG_SERVICE_STATE_UP;
- 	} else {
--		if (pg->pdr_state == SERVREG_SERVICE_STATE_UP && pg->ept)
-+		if (pg->pdr_state == SERVREG_SERVICE_STATE_DOWN || !pg->ept)
- 			new_state = SERVREG_SERVICE_STATE_DOWN;
- 	}
- 
+Acked-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+
+I'll take the patch through linux-media tree.
+
+> @@ -316,10 +316,10 @@ int venus_firmware_init(struct venus_core *core)
+>   
+>   	core->fw.dev = &pdev->dev;
+>   
+> -	iommu_dom = iommu_domain_alloc(&platform_bus_type);
+> -	if (!iommu_dom) {
+> +	iommu_dom = iommu_paging_domain_alloc(core->fw.dev);
+> +	if (IS_ERR(iommu_dom)) {
+>   		dev_err(core->fw.dev, "Failed to allocate iommu domain\n");
+> -		ret = -ENOMEM;
+> +		ret = PTR_ERR(iommu_dom);
+>   		goto err_unregister;
+>   	}
+>   
 
 -- 
-2.34.1
-
+regards,
+Stan
 
