@@ -1,145 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-29054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC94B957E6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 08:40:51 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 021A8957E8F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 08:43:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2B6101C24050
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 06:40:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 349671C24253
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 06:43:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C31718E367;
-	Tue, 20 Aug 2024 06:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D46CA1849;
+	Tue, 20 Aug 2024 06:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hzf3vvLa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GfGfqWTx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC2518E35E;
-	Tue, 20 Aug 2024 06:40:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE8118E367;
+	Tue, 20 Aug 2024 06:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724136008; cv=none; b=GQ00RxMesye1WD8Nzqwit5MOkCY2fMMNJwmLaqgf+vzcYz6kwNM2j1Qdw36f9Ad82yIta9F76nKe5V+7nBgufqrxs0IWQEwkL9npSyGnGdhXCkQ6674uVkxQ2JhuAnOwE9beoAqy3Cc0KZcHeCoe3ROV8FPRpOUfjuMw029bhQM=
+	t=1724136186; cv=none; b=ix8r7w77T9Hy8Y4kf33WjFVlEcysFsTZosO8K2Jo1tVlYfNDBWfjF/4kLuFazgx7F7hdHmkggjqUSrb3ImuQYcqI9g6Z+M5t78vxINFeGcKG03rjpdTZ+YszLyJ/RhDFyU1iZOo3o7AlUpG0VePzAZN5XOXWC0sUQVv7CdEsums=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724136008; c=relaxed/simple;
-	bh=/hHiRcXgLHm4sUaUmn1kvv9aDZlbaGSXQTZLN7Klh8Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Yst4Zwsl5xppStn7ye34550ISEEr59VoeucJul4NMdl40p8g2q6Lm7T8SycuDjuzipTam2JhpDy/7RNK9NwH00o23aKgnifGOxEYUIjWYb13KY3x2fMVSFW1SvN6N+kxdIpoFwFhAFBJiy6UXjJtBQmChp2p1uSsdYRGhwq1WYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hzf3vvLa; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1724136006; x=1755672006;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=/hHiRcXgLHm4sUaUmn1kvv9aDZlbaGSXQTZLN7Klh8Q=;
-  b=hzf3vvLaPyT72YwlfpxPwBNxh6f5vZrIW/KUrDIwGZ0kkTCJoc+iSDVv
-   zMJGvEKw7fRKM8EwYJIom5a3vdB+rU4e+NelGupv1dvQsUfuh62O0B33C
-   KjAnTXzOVQDwxCheG9kWwCbU/mLyvg5Z2exg8yj/OEfZ9Q8o+/BR1orwb
-   qqhYd6UFSCGVLlMsbn9l5gq8lsQzUBudG864F5OwOY1f1RNZFTVGCAhVn
-   vBtHyO6LIKjE9RL9Nk7x29+G1HMXGJSg0XaMhHo9Gb/EqnzSywvqOOcF2
-   KEd7RxUmp/9MG+1jt6gKVYo5G3vhyOpFEqX/HfjyIHNfLeXcbhIR9W3oJ
-   g==;
-X-CSE-ConnectionGUID: CdxFjwjoTfKEp/1GMtWZ7g==
-X-CSE-MsgGUID: yBjM6gz2Q3Kvm1f76jU9Kw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11169"; a="22297503"
-X-IronPort-AV: E=Sophos;i="6.10,161,1719903600"; 
-   d="scan'208";a="22297503"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2024 23:40:05 -0700
-X-CSE-ConnectionGUID: BsfZeq6bQjGX4UIBe0hLfA==
-X-CSE-MsgGUID: efE7EHc2Sbe1ViKK24ig2w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,161,1719903600"; 
-   d="scan'208";a="91394800"
-Received: from fdefranc-mobl3.ger.corp.intel.com (HELO [10.245.246.176]) ([10.245.246.176])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2024 23:39:59 -0700
-Message-ID: <f507a228-4865-4df5-9215-bc59e330a82f@linux.intel.com>
-Date: Tue, 20 Aug 2024 08:39:56 +0200
+	s=arc-20240116; t=1724136186; c=relaxed/simple;
+	bh=w6EyYXc3Ndy/Jh0CvsxJfvu+nAOW2WtZ+hmTnufK72I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pzMDgPuEDG5FKzMim+j5TPMcODDwi2n3n2Jc302XrMbQRc82ac7U6cjBLMShJjVW0EyH8OCOiTqIPb/2qN9R+LqfF8gPoYi3XbY4QwiGfP74szktxHPzhYyMvPqCPBMq9LG8hPJX74khxhFatvuvYihY/ECRUa6FY4WUgoTadVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GfGfqWTx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24E43C4AF09;
+	Tue, 20 Aug 2024 06:43:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724136186;
+	bh=w6EyYXc3Ndy/Jh0CvsxJfvu+nAOW2WtZ+hmTnufK72I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GfGfqWTxv6nVsr6Z26gFvWerB7LKCwvv/HP778VS0+1IR2OM4V4rAqOz17kgy1XfK
+	 kS18eVUt6gQwF6xoJK0q2H01eKDyspu4U4eJ1bbV6bOeBPgW2EVsK+bWXAvO8rNYVE
+	 Cq+drnxMqt4p55HMQGR1c2209bemomaQ/+Hfmm2OATt+TTy5mnwlvu4sQ9bMe4llUk
+	 UEQM25FaRkAsRONsloJszOK49wHp6fznTKyI/UQTWbO5sY5hehkTtXEWbywUCos+6O
+	 V23hrmYldcdq0Tgd/2QyFw8Eh+Fd80KSJzaiRPvtjnFgWRiglWlQ3wX+2sH/iVlB0O
+	 ONLVL38Ol/5xA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sgIa7-000000002N9-38hD;
+	Tue, 20 Aug 2024 08:43:04 +0200
+Date: Tue, 20 Aug 2024 08:43:03 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Sebastian Reichel <sre@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Chris Lew <quic_clew@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Amit Pundir <amit.pundir@linaro.org>, linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-usb@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] usb: typec: ucsi: Move unregister out of atomic
+ section
+Message-ID: <ZsQ696Jq5aO8IMKG@hovoldconsulting.com>
+References: <20240819-pmic-glink-v6-11-races-v2-0-88fe3ab1f0e2@quicinc.com>
+ <20240819-pmic-glink-v6-11-races-v2-2-88fe3ab1f0e2@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v24 29/34] ALSA: usb-audio: qcom: Add USB offload route
- kcontrol
-To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
- mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
- corbet@lwn.net, broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
- Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, tiwai@suse.com,
- gregkh@linuxfoundation.org, robh@kernel.org
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
- alsa-devel@alsa-project.org
-References: <20240801011730.4797-1-quic_wcheng@quicinc.com>
- <20240801011730.4797-30-quic_wcheng@quicinc.com>
- <4d5fe3f8-d7ba-4647-8dd7-22656ec2fde5@linux.intel.com>
- <58043166-c494-42db-b7d3-575991e43e8b@quicinc.com>
-Content-Language: en-US
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <58043166-c494-42db-b7d3-575991e43e8b@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240819-pmic-glink-v6-11-races-v2-2-88fe3ab1f0e2@quicinc.com>
 
+On Mon, Aug 19, 2024 at 01:07:46PM -0700, Bjorn Andersson wrote:
+> Commit '635ce0db8956 ("soc: qcom: pmic_glink: don't traverse clients
 
->>> +/**
->>> + * snd_usb_offload_create_ctl() - Add USB offload bounded mixer
->>> + * @chip - USB SND chip device
->>> + *
->>> + * Creates a sound control for a USB audio device, so that applications can
->>> + * query for if there is an available USB audio offload path, and which
->>> + * card is managing it.
->>> + */
->>> +int snd_usb_offload_create_ctl(struct snd_usb_audio *chip)
->>> +{
->>> +	struct usb_device *udev = chip->dev;
->>> +	struct snd_kcontrol_new *chip_kctl;
->>> +	struct snd_usb_stream *as;
->>> +	char ctl_name[37];
->>> +	int ret;
->>> +
->>> +	list_for_each_entry(as, &chip->pcm_list, list) {
->>> +		chip_kctl = &snd_usb_offload_mapped_ctl;
->>> +		chip_kctl->count = 1;
->>> +		/*
->>> +		 * Store the associated USB SND card number and PCM index for
->>> +		 * the kctl.
->>> +		 */
->>> +		chip_kctl->private_value = as->pcm_index |
->>> +					  chip->card->number << 16;
->>> +		sprintf(ctl_name, "USB Offload Playback Route PCM#%d",
->>> +			as->pcm_index);
->>> +		chip_kctl->name = ctl_name;
->>> +		ret = snd_ctl_add(chip->card, snd_ctl_new1(chip_kctl,
->>> +				  udev->bus->sysdev));
->>> +		if (ret < 0)
->>> +			break;
->>> +	}
->>> +
->>> +	return ret;
-> Hi Pierre,
->> None of this looks Qualcomm-specific, shouldn't this be part of the
->> soc_usb framework instead of being added in the qcom/ stuff?
-> 
-> Started working on this particular comment, and there are some things that needs to be considered if we moved this into SOC USB:
-> 
-> 1.  We do save the reference to the USB BE DAI link within the USB DT node, which can be fetched/referenced based on sysdev.  However, I'm not sure if everyone would potentially follow that way.
-> 
-> 2.  I tried a few implementations of adding a new SOC USB API, and the argument list was a bit long, because I didn't want to directly reference the usb_chip.
-> 
-> Sorry for the delay, but I wanted to give a good stab at implementing this before bringing up the implications.  It is possible, but definitely not as clean as how we have it now IMO.
+Looks like you copied the wrong SHA again. This should be
 
-My comment was only referring to the location of the code, it's now in
-sound/usb/qcom/mixer_usb_offload.c but does not contain anything
-specific to Qualcomm. I was not asking for any encapsulation inside of
-soc-usb, I was only suggesting a move of the code to a shared helper
-library so that this code can be reused as is and not duplicated if the
-QCOM parts are not compiled in.
+	9329933699b3 ("soc: qcom: pmic_glink: Make client-lock non-sleeping")
+
+as we discussed.
+
+> list without a lock")' moved the pmic_glink client list under a
+> spinlock, as it is accessed by the rpmsg/glink callback, which in turn
+> is invoked from IRQ context.
+> 
+> This means that ucsi_unregister() is now called from IRQ context, which
+
+And this should be "atomic context" as pdr notifications are done from
+a worker thread.
+
+> isn't feasible as it's expecting a sleepable context. An effort is under
+> way to get GLINK to invoke its callbacks in a sleepable context, but
+> until then lets schedule the unregistration.
+> 
+> A side effect of this is that ucsi_unregister() can now happen
+> after the remote processor, and thereby the communication link with it, is
+> gone. pmic_glink_send() is amended with a check to avoid the resulting NULL
+> pointer dereference.
+> This does however result in the user being informed about this error by
+> the following entry in the kernel log:
+> 
+>   ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: failed to send UCSI write request: -5
+> 
+> Fixes: 635ce0db8956 ("soc: qcom: pmic_glink: don't traverse clients list without a lock")
+
+Fixes: 9329933699b3 ("soc: qcom: pmic_glink: Make client-lock non-sleeping")
+
+> Cc: stable@vger.kernel.org
+> Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Tested-by: Amit Pundir <amit.pundir@linaro.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+
+> @@ -269,11 +284,12 @@ static void pmic_glink_ucsi_callback(const void *data, size_t len, void *priv)
+>  static void pmic_glink_ucsi_pdr_notify(void *priv, int state)
+>  {
+>  	struct pmic_glink_ucsi *ucsi = priv;
+> +	unsigned long flags;
+>  
+> -	if (state == SERVREG_SERVICE_STATE_UP)
+> -		schedule_work(&ucsi->register_work);
+> -	else if (state == SERVREG_SERVICE_STATE_DOWN)
+> -		ucsi_unregister(ucsi->ucsi);
+> +	spin_lock_irqsave(&ucsi->state_lock, flags);
+> +	ucsi->pd_running = state == SERVREG_SERVICE_STATE_UP;
+
+Add parentheses for readability?
+
+> +	spin_unlock_irqrestore(&ucsi->state_lock, flags);
+> +	schedule_work(&ucsi->register_work);
+>  }
+>  
+>  static void pmic_glink_ucsi_destroy(void *data)
+> @@ -320,6 +336,7 @@ static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
+>  	INIT_WORK(&ucsi->register_work, pmic_glink_ucsi_register);
+>  	init_completion(&ucsi->read_ack);
+>  	init_completion(&ucsi->write_ack);
+> +	spin_lock_init(&ucsi->state_lock);
+>  	mutex_init(&ucsi->lock);
+>  
+>  	ucsi->ucsi = ucsi_create(dev, &pmic_glink_ucsi_ops);
+
+Looks good otherwise:
+
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+
+Johan
 
