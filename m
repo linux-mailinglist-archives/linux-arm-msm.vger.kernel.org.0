@@ -1,176 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-29105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B63D6958522
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 12:48:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 553DE95855B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 13:03:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7262D2848F7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 10:48:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 62A0D1C243D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 11:03:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B23518C32E;
-	Tue, 20 Aug 2024 10:48:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jURa0YCt"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A631D18D62F;
+	Tue, 20 Aug 2024 11:03:06 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3E2178376;
-	Tue, 20 Aug 2024 10:48:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD7418C020;
+	Tue, 20 Aug 2024 11:03:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724150928; cv=none; b=O8Nlec0dD+jbkZIRbkRvW2ThDlJvUiG4mBexXVgOwD8Tu57FmI0UtdRkT40y3AaWG3JddSppq8fOn+OcjzVG/ZCVbVpNdIQGgCdDTusH80GAMAz7Q0YjgK6ghrjdlAsxu2rxjq8uX6bqswOdJZ1gWH7Xd4c591aSxiDwO35sz+s=
+	t=1724151786; cv=none; b=a0KMjAuHR9/XST21PV4sVY1VV3rYS5jermQx/7uacsZFksu99t6lFFjivar2VwmH3qEG9lFA/JcAilNl2NF6UbdJjMIR9PYr+eCMMFs5a14Ht/W1czOehRxRUqNCnzq3K93GpQieXIPu4P+2MRSvXyA7LDgkOPU7TihRa7DTxD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724150928; c=relaxed/simple;
-	bh=73/WCryTOnaLketaWiwEIWfdVvNjwhGibaBdp9xJ4q8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UmiMWkhut+8JYh9kWClR8a0YhePYq2yPNJMmxDyBc65STG9zcFP9KbMifzvK2xL7ZtntGw4tmIlvsZGVOFF8H012pvMjNXzNj05Fu+xSFyvg6AW638Kv8+RiBTvUOO0lh2iVqT9PuglzUvXs6u//y3eGEj2J/WJLepzAHYo8D8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jURa0YCt; arc=none smtp.client-ip=209.85.216.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1724151786; c=relaxed/simple;
+	bh=HoaPV/fSjPPgZQ5KsJkTOE8xyAsJCORttngoT1ZLyEk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=okbj86uLaQ/efAYG3Ke5fJQPSzHyz7lN2Xlv+bpFYno8TyfC/FPdthDZJbfDPNZhriBK1Q1UwTbAEjp8W0er+YVHl0/JU22IUcJ1gtOIQRc7+7F0TzHJIVV38VMo8x/kDSPWGFIGyJicbSpB+A5eUbQO54nwm0XRBRULp4XraXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2d427fb7c92so1552828a91.1;
-        Tue, 20 Aug 2024 03:48:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724150926; x=1724755726; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cHozHS2Z5KlQ/nEnJ4FIOFQCi2BYEVkICQui/aYg9Y4=;
-        b=jURa0YCtj9uSeHZLdITP5zifjMcyMGW53K3OzuIbEkJzxahSKa6GVb4WLQvY+R8D6O
-         Ddo1pyCfkXA0zaqdhlhl4RQV/TSqObDk7RV8zJ/xuONact4L5J6vvcB8Dfw1e0SnQi5S
-         IT8/WawFNMTODWxaHxkCvybe55nUHqm5B5XazpyP3dC80ww/VESNKWtppm4pVxLDA21h
-         rjM9otsF0Ujfz7+Lblqsit6aWdx8GiPOz3hiPd9WqyOKaBEC1YjVXo/5DNSWOTNy3n3i
-         GzUZfjhpphx5RhHKmCLSSsPE7Hr76C/UZ7c/YQSb+yTGSyNyHYOYOGym74LR6zcWO5m6
-         WyaQ==
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-371b015572cso2329737f8f.1;
+        Tue, 20 Aug 2024 04:03:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724150926; x=1724755726;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cHozHS2Z5KlQ/nEnJ4FIOFQCi2BYEVkICQui/aYg9Y4=;
-        b=XeX1rdlVtfyqxf7OE0gb5qZjzs4PEP8VlSiPRk4k8IeuQkkzcXid/itQSRy8EhGDRJ
-         dRBKPR/GaYzgu//zHpCYfKwHkiNmHpKqcU/gcwtDJYXif5PPwldcamBFZhemNTc5iUnx
-         rbaV7eFoSyHA30FBSPq4xKr+7b3vel6A99fyNaBH2ciMrFHaDY2zUs8JP/i7S2unqxJu
-         LGCPicF30Z/SXT8DdsF2SH4q4NGJ0wkJhpjSFQDgoZ+3e7ymOfCUdX7joa1pN1OP2i42
-         kouYodt6263Fqs+c1nyljF2R52TI4jnk3CZIvUS7IUTWuQSIXd4z7hIyoalgvVVRVOWW
-         Bj2A==
-X-Forwarded-Encrypted: i=1; AJvYcCWz9SFKiX+WphTksq02WM5f4gTU2yOq1bM7KCSUEyYltCuw9mQE6L6o1TfGOKFWXqfpzK9trklPdxTp2AfP@vger.kernel.org, AJvYcCX9UandHXENNWnDnZAuZuFR17oZG+kPoE74QrbeUMB0ne2X+Bv+omZxst50cL28hMHVYc0ioXTcetywC3sO@vger.kernel.org
-X-Gm-Message-State: AOJu0YwS8JbU7/UpHlsrjt9yQ3eH76NIW49qgWwKcKi9N5vVZpaEEUbu
-	pYGAkeaRqCpIKzPNNNMwyJNVTTxDTUb1WSHdIMk+YMf47LzwV6kCWTHc5JQWIva5NoIuhKfkf0W
-	AA6Y26jUbdBhSCCjFwtNlk0jLFms=
-X-Google-Smtp-Source: AGHT+IEisKinF3iVS7neNg7As2gXSCSo9FnUNLT+WaDRg+VngACC0dp8/ePn2UZ3VfV5sHWMAIpYdwMu7ABuow2QTg4=
-X-Received: by 2002:a17:90a:34cc:b0:2c9:6278:27c9 with SMTP id
- 98e67ed59e1d1-2d3e0409761mr12762164a91.38.1724150926144; Tue, 20 Aug 2024
- 03:48:46 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1724151783; x=1724756583;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1uSbusyjca75DM3uPFt41Mi7fTzEOWCLLIWEIvrKa5o=;
+        b=tknuC/cXYbepJQh5g5OTlS/m9Gcj5jtU8jvw93o39+a7Askq10gsJgE5KLZtjaOTC2
+         rq/JQLp+ToLmTC/jKUSwwjVGEIPDCSeytEha1nzDA4aRVA5XS0aV24YmQl8HYKelumq+
+         f8019X9mO8YWNzv3CQP5WHfolEz3sMYOC0nVcFsJ4uG6HLrlYPNF8Z+T1mEwlHPWNCjj
+         IvGSlVg6aSiwfW5uD55Wi8IUwyyTon2J58/2kn6bLI/IpKxwhyR9tx0UZ8Fe3BmOgSs7
+         1Y79mDaUfSpr8zfu6s6sFtk87FrztCAl6YH5c7x7Di7wYn9ev7+0MrNCZLKkq/xi3qD1
+         QE3A==
+X-Forwarded-Encrypted: i=1; AJvYcCUSAHKaZcT5A6YiNHQ2WK+TeSMRyTMw/Lv4bxCvFu0Eq70whihLWjxiuEP89XLPC05w66JHQDB8qqixMBJAkw==@vger.kernel.org, AJvYcCVa4ezmooHBfY31lvLoYCjWHW1edBGUFrHUZ7yR36mxWMa5A5ekLQGhGVROhBOSNRAQJyYgV43JnRb2@vger.kernel.org, AJvYcCVwdDk02PZIXdT5Ado/PD1XeZB7puG9JN2B1A2Akv4tH4juu19EZpD3gmueM02xm3xGul6OzCBEt9bp7x6a@vger.kernel.org, AJvYcCWtIzOkhBZ1NBwk6jeiS0SD+heqjFI5jWjB+GKIveiIFOI3Hf9Ho/ytb3KQiJAglDUaAZP3WN0eJArc@vger.kernel.org, AJvYcCX0keSfx910Iq/EGD8efCGKsWSEMYzN4DML9pNzP4JS2uaxk112Q4lcSfL4TUdhiOJ+PDChgNxC@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyiy/IQTiAZNpFlbZ7c/uklrrMgWeau9jW149Mser4aUDL4AQE4
+	51b1Cq1vVebzhtwv8RFyauKxFGLX8oLcM1TYbo7sUejDt1xRpYmEgAZS15mc
+X-Google-Smtp-Source: AGHT+IFT9bFKeLhKs/xtBpkkK/ON8CFh0OUF6n4KfBdOT9wAl8DndMiltOVoJhuy3Zu4jx6yXnKCmg==
+X-Received: by 2002:a5d:4644:0:b0:371:7d3c:51bd with SMTP id ffacd0b85a97d-371943285b7mr10354707f8f.14.1724151782649;
+        Tue, 20 Aug 2024 04:03:02 -0700 (PDT)
+Received: from krzk-bin ([178.197.215.209])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3718985a6ddsm12843904f8f.58.2024.08.20.04.03.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Aug 2024 04:03:02 -0700 (PDT)
+Date: Tue, 20 Aug 2024 13:02:59 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Imran Shaik <quic_imrashai@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Richard Cochran <richardcochran@gmail.com>, Ajit Pandey <quic_ajipan@quicinc.com>, 
+	Taniya Das <quic_tdas@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>, 
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Subject: Re: [PATCH 0/2] clk: qcom: Add support for GCC on QCS8300
+Message-ID: <c6t35o5pnqw25x6gho725qvpgyr6bl2xkpsurq4jtjgii2v5mq@mvdl64azwpz4>
+References: <20240820-qcs8300-gcc-v1-0-d81720517a82@quicinc.com>
+ <c1dd239f-7b07-4a98-a346-2b6b525dafc4@kernel.org>
+ <5011eeb2-61e3-495a-85b3-e7c608340a82@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240815-preemption-a750-t-v1-0-7bda26c34037@gmail.com>
- <20240815-preemption-a750-t-v1-6-7bda26c34037@gmail.com> <20240819203128.hit2csdpbbsybkoq@hu-akhilpo-hyd.qualcomm.com>
-In-Reply-To: <20240819203128.hit2csdpbbsybkoq@hu-akhilpo-hyd.qualcomm.com>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Tue, 20 Aug 2024 11:48:33 +0100
-Message-ID: <CACu1E7GnwjS3Hv140emJ_-yJKDd+FB75upF9z3pDTj7Ey7zWRA@mail.gmail.com>
-Subject: Re: [PATCH 6/7] drm/msm/A6XX: Add a flag to allow preemption to submitqueue_create
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc: Antonino Maniscalco <antomani103@gmail.com>, Rob Clark <robdclark@gmail.com>, 
-	Sean Paul <sean@poorly.run>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5011eeb2-61e3-495a-85b3-e7c608340a82@quicinc.com>
 
-On Mon, Aug 19, 2024 at 9:31=E2=80=AFPM Akhil P Oommen <quic_akhilpo@quicin=
-c.com> wrote:
->
-> On Thu, Aug 15, 2024 at 08:26:16PM +0200, Antonino Maniscalco wrote:
-> > Some userspace changes are necessary so add a flag for userspace to
-> > advertise support for preemption.
->
-> So the intention is to fallback to level 0 preemption until user moves
-> to Mesa libs with level 1 support for each new GPU? Please elaborate a bi=
-t.
->
-> -Akhil.
+On Tue, Aug 20, 2024 at 03:38:39PM +0530, Imran Shaik wrote:
+> 
+> 
+> On 8/20/2024 3:27 PM, Krzysztof Kozlowski wrote:
+> > On 20/08/2024 11:36, Imran Shaik wrote:
+> > > This series adds the dt-bindings and driver support for GCC on QCS8300 platform.
+> > > 
+> > > Please note that this series is dependent on [1] which adds support
+> > > for QCS8275/QCS8300 SoC ID.
+> > > 
+> > > [1] https://lore.kernel.org/all/20240814072806.4107079-1-quic_jingyw@quicinc.com/
+> > 
+> > How do the depend? What is exactly the dependency?
+> > 
+> > If so this cannot be merged...
+> > 
+> 
+> They are not functionally dependent, but we want to ensure the base QCS8300
+> changes to merge first and then our GCC changes. Hence added the dependency.
 
-Yes, that's right. My Mesa series fixes L1 preemption and
-skipsaverestore by changing some of the CP_SET_MARKER calls and
-register programming and introducing CP_SET_AMBLE calls and then
-enables the flag on a7xx.
+This does not work like that, these are different trees, even if they go
+via Bjorn.
 
-Connor
+Why do you insist on some specific workflow, different than every
+upstreaming process? What is so special here?
 
->
-> >
-> > Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
-> > ---
-> >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 12 ++++++++----
-> >  include/uapi/drm/msm_drm.h            |  5 ++++-
-> >  2 files changed, 12 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/ms=
-m/adreno/a6xx_gpu.c
-> > index 1a90db5759b8..86357016db8d 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > @@ -453,8 +453,10 @@ static void a7xx_submit(struct msm_gpu *gpu, struc=
-t msm_gem_submit *submit)
-> >       OUT_PKT7(ring, CP_SET_MARKER, 1);
-> >       OUT_RING(ring, 0x101); /* IFPC disable */
-> >
-> > -     OUT_PKT7(ring, CP_SET_MARKER, 1);
-> > -     OUT_RING(ring, 0x00d); /* IB1LIST start */
-> > +     if (submit->queue->flags & MSM_SUBMITQUEUE_ALLOW_PREEMPT) {
-> > +             OUT_PKT7(ring, CP_SET_MARKER, 1);
-> > +             OUT_RING(ring, 0x00d); /* IB1LIST start */
-> > +     }
-> >
-> >       /* Submit the commands */
-> >       for (i =3D 0; i < submit->nr_cmds; i++) {
-> > @@ -485,8 +487,10 @@ static void a7xx_submit(struct msm_gpu *gpu, struc=
-t msm_gem_submit *submit)
-> >                       update_shadow_rptr(gpu, ring);
-> >       }
-> >
-> > -     OUT_PKT7(ring, CP_SET_MARKER, 1);
-> > -     OUT_RING(ring, 0x00e); /* IB1LIST end */
-> > +     if (submit->queue->flags & MSM_SUBMITQUEUE_ALLOW_PREEMPT) {
-> > +             OUT_PKT7(ring, CP_SET_MARKER, 1);
-> > +             OUT_RING(ring, 0x00e); /* IB1LIST end */
-> > +     }
-> >
-> >       get_stats_counter(ring, REG_A7XX_RBBM_PERFCTR_CP(0),
-> >               rbmemptr_stats(ring, index, cpcycles_end));
-> > diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-> > index 3fca72f73861..f37858db34e6 100644
-> > --- a/include/uapi/drm/msm_drm.h
-> > +++ b/include/uapi/drm/msm_drm.h
-> > @@ -345,7 +345,10 @@ struct drm_msm_gem_madvise {
-> >   * backwards compatibility as a "default" submitqueue
-> >   */
-> >
-> > -#define MSM_SUBMITQUEUE_FLAGS (0)
-> > +#define MSM_SUBMITQUEUE_ALLOW_PREEMPT        0x00000001
-> > +#define MSM_SUBMITQUEUE_FLAGS                    ( \
-> > +             MSM_SUBMITQUEUE_ALLOW_PREEMPT | \
-> > +             0)
-> >
-> >  /*
-> >   * The submitqueue priority should be between 0 and MSM_PARAM_PRIORITI=
-ES-1,
-> >
-> > --
-> > 2.46.0
-> >
-> >
+If you keep insisting, I will keep disagreeing, because it is not
+justified and just complicates things unnecessarily.
 
