@@ -1,108 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-29060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11C74957FA5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 09:31:42 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F730957FAB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 09:32:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 445BC1C21166
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 07:31:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2696F1F237C4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 07:32:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D087219E0;
-	Tue, 20 Aug 2024 07:31:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YIKbNpsK"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB1E4148301;
+	Tue, 20 Aug 2024 07:31:59 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225CF3FB9F;
-	Tue, 20 Aug 2024 07:31:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F33218E376;
+	Tue, 20 Aug 2024 07:31:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724139097; cv=none; b=CAs7ooFbnKRZB9mcZH+0KszSbmUAmwoF7HudJ9MP8yF5FlGgkCR3qPfNvNZZJUyAvkGSmZnl82wSgY2AqxkCcizfQG9GgUVoUTMYKaxgYtcT0yxKIzUCoent9abBOXDzg11kCofEGbioF4+C7jqTdqTQof6pu4p8MeFtY95YCD8=
+	t=1724139119; cv=none; b=DNVggnkmCqNGOmfIZP2ELEFXh/7O2t0QIiUOP5YTnfhGDy41kC+Ek9WqrbDzjeIkxJqZPxOVs967XOFNvPy2RLe+dFM1XuXrmEomw/2uT8KvBlWe609tlcm7rT1RbDeFF3OtTbp3c5ZxHTKvQNhtNVLWXNL+DTc9rq01R07+8lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724139097; c=relaxed/simple;
-	bh=lnVex45HkIbSrdva5jTznQrLVTO/IJ9b3LjfB4dv2tY=;
+	s=arc-20240116; t=1724139119; c=relaxed/simple;
+	bh=Qmx2xkZx6QjU8y0JpQ3DgBemV0QRZuTDRzUNGnGAqAs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FjjPj+qtGpe7maIw+AKIpGASQ/dkPNWwhEEnxAa3tri2a/K8g4UII0mSrofdl1ux640DTvXSoh3I1mFcyEOjr+0zCT3sQizUwAZ0AgPK9RVs0//XzVFsxNxJiOO5Fm5NexDCRJRek9VRR1qDwm818SYetixWDPE8D00FqxfqYRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YIKbNpsK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F39C4AF09;
-	Tue, 20 Aug 2024 07:31:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724139096;
-	bh=lnVex45HkIbSrdva5jTznQrLVTO/IJ9b3LjfB4dv2tY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YIKbNpsKqef0mmWZHrPR6/ZB8Lp0kbqpqBvjxDYuT8iReRhu1cXIUT53QPKlzUqqJ
-	 mU6l+Y8lgvXwWgkeeVbiaLY4mdn6StAqucalxjVgu5janM8gCmcAl1mBoVpMrucU45
-	 DvyHIcPJfzsV9NpaGlOh+fCYWQHrSDLTNEgjG3/0yoPi+2uAOCFPJughZ0VfbdYRaT
-	 lvJT5BteKypflqJWrDO4eM7bsKUcn0zJ0CNVb7QY43kfb0iCbOBTmn9ViL6W6hmbbW
-	 pqFmxGq4pfdA28JBFoY3vigUjsqxf/1YuyzblUNjtJC2I/ye+66n8+FEsC0rLwjc5j
-	 0XibAonJ3IJsQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1sgJL5-000000005jS-0IhH;
-	Tue, 20 Aug 2024 09:31:35 +0200
-Date: Tue, 20 Aug 2024 09:31:35 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Sebastian Reichel <sre@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Chris Lew <quic_clew@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Amit Pundir <amit.pundir@linaro.org>, linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-usb@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 0/3] soc: qcom: pmic_glink: v6.11-rc bug fixes
-Message-ID: <ZsRGV4hplvidpYji@hovoldconsulting.com>
-References: <20240818-pmic-glink-v6-11-races-v1-0-f87c577e0bc9@quicinc.com>
- <ZsNpSt3BtdFIT6ml@hovoldconsulting.com>
- <ZsN4dcErSt3nioWn@hu-bjorande-lv.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=CSulkfH7ecLsRn3WHCGSIkZhMGbwaBgF/lvu3YBhpOBwDrUGk8CU7EUDJ3VDhka4rOjdtl2dIwrKdk5VYLiwDsmMBYUoCCL7C/u6oFBGopEdrTV73w10Cz+uvFRXS1I9UZyOKfwhklO0i7wA0IEnIduPxCO04rwqSLOA2thDw2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3717ff2358eso2787007f8f.1;
+        Tue, 20 Aug 2024 00:31:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724139116; x=1724743916;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zwQbZZzYKJfp9JXZBu90gOlgrt4jvpTVXR4uFjbp38Q=;
+        b=YYiM7fOmDJZSj/cwxKUHSsWdPoF9rS2gsC08v5U2w5+GlcmH08ID2rCy70sejmv5uD
+         OOWLmak2vO0mtgW5uD4ueNO7Gc73Fzm9hhg3sHw/JUJU+jmZm90oFMRtq8kW4xEZuy/3
+         MUmDvHSzrb2ipFutK4lrzb0BZcbFz4iC4/UHxXtMS6HyrfqV57qXTKLAf4y+pUfFrZ+G
+         47gHGXCk0UA/OvrHmmhJJlwlE6F2l/mn/+5C6L4BLNERHSiscelYEjaRGqpJ/cVwuS45
+         IPKFOhlNFB+yv3IWi6l8OE3w8lCyWSgdr9PpiYNaQT8AyMBimj4JQRkW4zbxbwP+0qZQ
+         qy5w==
+X-Forwarded-Encrypted: i=1; AJvYcCWgVcYERPAwBdPS5uQkTL8G4X1PBX75+P1QyPFYhEf28r33RS8qxwXLUuCKOAuH76z0vF7MTv/Ffi/RnNmUOss9G074tJ7UxVLKt0DDLMzQ50n+JRxmKVgnf1vrmxg45Dan2TDy305OPx74gDlMFkLylLcPft4MliVUutKHIOWcachKDfECPo2fszkmDgjrCSBiXC3yBxwkfO8jYXBE9Kpc4A==
+X-Gm-Message-State: AOJu0Yz4vbKeHW8ovKilBoeb9oLWlE+W1PJoL3T33C9CuzCULzD53HME
+	H+Q/30sKjGCyLTDtpXu0N1netjGMa2BMO+90gMfAKkz5Mmp7ec8W
+X-Google-Smtp-Source: AGHT+IHTd/LmyAb9MTCxstjAsJD6mcKXnM89dKlsj660yY9f1w+dAMRpSYvFWk6FPDY5kqLqPENMjw==
+X-Received: by 2002:adf:8b59:0:b0:371:844f:e0c with SMTP id ffacd0b85a97d-37194314b17mr8264101f8f.10.1724139115875;
+        Tue, 20 Aug 2024 00:31:55 -0700 (PDT)
+Received: from krzk-bin ([178.197.215.209])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3718985a48asm12439743f8f.62.2024.08.20.00.31.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Aug 2024 00:31:55 -0700 (PDT)
+Date: Tue, 20 Aug 2024 09:31:52 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Richard Acayan <mailingradian@gmail.com>
+Cc: Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Todor Tomov <todor.too@gmail.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-media@vger.kernel.org
+Subject: Re: [PATCH v3 2/5] dt-bindings: media: camss: Add qcom,sdm670-camss
+Message-ID: <u7enyv6sb5n2jjsxg6tyrzjdj3tswzo7733hl3vuxh3j5nshz4@mklofzu3dzqi>
+References: <20240819221051.31489-7-mailingradian@gmail.com>
+ <20240819221051.31489-9-mailingradian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZsN4dcErSt3nioWn@hu-bjorande-lv.qualcomm.com>
+In-Reply-To: <20240819221051.31489-9-mailingradian@gmail.com>
 
-On Mon, Aug 19, 2024 at 09:53:09AM -0700, Bjorn Andersson wrote:
-> On Mon, Aug 19, 2024 at 05:48:26PM +0200, Johan Hovold wrote:
-
-> > I can confirm that I still see the -ECANCELED issue with this series
-> > applied:
-> > 
-> > [    8.979329] pmic_glink_altmode.pmic_glink_altmode pmic_glink.altmode.0: failed to send altmode request: 0x10 (-125)
-> > [    9.004735] pmic_glink_altmode.pmic_glink_altmode pmic_glink.altmode.0: failed to request altmode notifications: -125
+On Mon, Aug 19, 2024 at 06:10:54PM -0400, Richard Acayan wrote:
+> As found in the Pixel 3a, the Snapdragon 670 has a camera subsystem with
+> 3 CSIDs and 3 VFEs (including 1 VFE lite). Add this camera subsystem to
+> the bindings.
 > 
-> Could you confirm that you're seeing a call to
-> qcom_glink_handle_intent_req_ack() with granted == 0, leading to the
-> transfer failing.
+> Adapted from SC8280XP camera subsystem.
+> 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>  .../bindings/media/qcom,sdm670-camss.yaml     | 319 ++++++++++++++++++
+>  1 file changed, 319 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+> new file mode 100644
+> index 000000000000..5789cf66a516
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+> @@ -0,0 +1,319 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +
 
-It appears so:
+No blank line here.
 
-[    9.539415]  30000000.remoteproc:glink-edge: qcom_glink_handle_intent_req_ack - cid = 9, granted = 0
-[    9.561750] qcom_battmgr.pmic_glink_power_supply pmic_glink.power-supply.0: failed to request power notifications
+> +%YAML 1.2
 
-[    9.448945]  30000000.remoteproc:glink-edge: qcom_glink_handle_intent_req_ack - cid = 9, granted = 0
-[    9.461267] pmic_glink_altmode.pmic_glink_altmode pmic_glink.altmode.0: failed to send altmode request: 0x10 (-125)
-[    9.469241] qcom,apr 30000000.remoteproc:glink-edge.adsp_apps.-1.-1: Adding APR/GPR dev: gprsvc:service:2:1
-[    9.478968] pmic_glink_altmode.pmic_glink_altmode pmic_glink.altmode.0: failed to request altmode notifications: -125
+With above:
 
-> It would also be nice, just for completeness sake to rule out that you
-> do not get a call to qcom_glink_intent_req_abort() here.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-And I'm not seeing this function being called.
+Best regards,
+Krzysztof
 
-Johan
 
