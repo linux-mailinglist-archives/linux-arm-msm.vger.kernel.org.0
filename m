@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-29085-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29086-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99712958352
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 11:56:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E51F958362
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 11:57:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B7C421C20C9A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 09:56:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D28A41F256D1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 09:57:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A8E918C353;
-	Tue, 20 Aug 2024 09:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFCC118C349;
+	Tue, 20 Aug 2024 09:57:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RnoXpU1B"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O9enyykS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3852718C348;
-	Tue, 20 Aug 2024 09:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A2E18A923;
+	Tue, 20 Aug 2024 09:57:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724147771; cv=none; b=IwS5ReRN+aEabi4IWHr2C014P6vw4Hypo4H6IY0L7z4gWZkiZkK8CAQa8frKZRIy52aiGOsi9mn3t7whT5VoRbxRuZDNmKUZtiooB10kkWyrt9zj1DxNTQuAEqpPRwHhh+jRqRlfX65z+CN92Vhmw+smfEpgHl3gESHBhgTv+Ho=
+	t=1724147848; cv=none; b=SRX5bhFiLPvUDjr8+b1rSNmLc6r3tuEftlpJctG5Ewjc1cViSVs49zY2l6rOJ3tueiOXfYjLZ4RuXX97vIjfuVEfFxKFeRvaAlMFzVenBqhMYjoX/2fIlgbc7LfbFUhedQWJzk2StTz6afQKTx9PPeQzSGGpZ468Hg39fm0wNvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724147771; c=relaxed/simple;
-	bh=mrrk7AixQHeb+sIOhbK+mRb+VKoG098zJfUJdZ8/JYQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Y2GwcFin339S99D9xCr12/dNsWTmGYSW4MZFmhiiFWu5wUUIWew1bOs2/qLzgTinteZjFJTfyHfS6VCfXJhhNvDJx8DHdxdU30hj4/1X3h9ptyZfqof0z+hmR1tmbFgcuTSnJOiexbdHXV4aJbMK/cVg5zYqOblxa+/7SO3UKEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RnoXpU1B; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D87C4AF09;
-	Tue, 20 Aug 2024 09:56:04 +0000 (UTC)
+	s=arc-20240116; t=1724147848; c=relaxed/simple;
+	bh=JKx8rbUCK+tZTbkSZV2GYfmXRjLpAY2UdSqmrMkGDjk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qATxdsMGuRgqf7U66Vg9fomXSA9VL6efDE7yM2X0+a1Jy+gjMTTP8kSmSoWTOTSu1OZWFdtctWRz3+a537FTGAZT7gehh7S4CX5LT5Jumaq9TL3yU7R97YVGyZFYqVJysMgKZV1MsYU9J4yVCjieLLxUTVi0ghnSgGWLixPxaU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O9enyykS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466DDC4AF0B;
+	Tue, 20 Aug 2024 09:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724147770;
-	bh=mrrk7AixQHeb+sIOhbK+mRb+VKoG098zJfUJdZ8/JYQ=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=RnoXpU1Bm0io2J6RirFlnx0ZwLGObreqjKPqDIh8uUHoQ+/SSnB6zAN51Uk1+dUBI
-	 kYl4ijQIxzgFAaAkfdZ12hDgMhYOlWer+uMQ6PatoaXGTBCghLrBUiCVWwPJs0R7C1
-	 ZNL5biLKXmILDTLzssGbqLddZ93NsxhRaodMkJ4HT4J7ps+hwoZsI9x/n54fSJpoB/
-	 mmXV06b72lAr1CRWyvqF7M2yj2vdYzQie5n7cgI9/ijRSmcWh7f2xuW3Fyx91uhOEl
-	 j0k+/8ZK4Cd5rekSth04fnVNr6PJvYffiqaJBGFy7cyP+Jmy7kwW69af1+izkZwZFh
-	 o8l3Trq+FGknQ==
-Message-ID: <e34dd20c-e67e-4b69-88df-b4d34e01f8b8@kernel.org>
-Date: Tue, 20 Aug 2024 11:56:01 +0200
+	s=k20201202; t=1724147848;
+	bh=JKx8rbUCK+tZTbkSZV2GYfmXRjLpAY2UdSqmrMkGDjk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=O9enyykSSx1UnpSIjnFHwHHSL0wEo7XgIl5w+5h/1jYkul/x5sgw/94ny7Xrto3lK
+	 eAPbyvYMxuaFvlYDkN2g25mQzGIvAcS2R2H6ShKKltpr0EQ1hYVKZtS4ZPw92fi578
+	 4OyMJ5+QlcHW8TevPNqxgtpKOLZSHTGHwx1o9JRmNNdOSZRzz8TeTwEWl6EuHA8mRx
+	 FRfOLxRyCeNP83fGV9wn3FeDmEXwn+eVQbj9bPtoqhM3pv4j3CVBHEljwyG9fmrkDy
+	 CjUWOJHH5I7N0HO0xxuAxWUB25p5XuDBIwNuFjGVmv86XDI6Rl80fjgfNK0WZu/5u0
+	 /b0OEzU71SXjA==
+Message-ID: <c1dd239f-7b07-4a98-a346-2b6b525dafc4@kernel.org>
+Date: Tue, 20 Aug 2024 11:57:21 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,22 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/5] dt-bindings: media: camss: Add qcom,sdm670-camss
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Richard Acayan <mailingradian@gmail.com>,
- Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
+Subject: Re: [PATCH 0/2] clk: qcom: Add support for GCC on QCS8300
+To: Imran Shaik <quic_imrashai@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
- linux-media@vger.kernel.org
-References: <20240819221051.31489-7-mailingradian@gmail.com>
- <20240819221051.31489-9-mailingradian@gmail.com>
- <3b3774de-3aeb-4a58-8c0e-e494a2f2aaf8@linaro.org>
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Richard Cochran <richardcochran@gmail.com>
+Cc: Ajit Pandey <quic_ajipan@quicinc.com>, Taniya Das
+ <quic_tdas@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ netdev@vger.kernel.org
+References: <20240820-qcs8300-gcc-v1-0-d81720517a82@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,174 +109,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <3b3774de-3aeb-4a58-8c0e-e494a2f2aaf8@linaro.org>
+In-Reply-To: <20240820-qcs8300-gcc-v1-0-d81720517a82@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20/08/2024 11:15, Vladimir Zapolskiy wrote:
-> Hi Richard,
+On 20/08/2024 11:36, Imran Shaik wrote:
+> This series adds the dt-bindings and driver support for GCC on QCS8300 platform.
 > 
+> Please note that this series is dependent on [1] which adds support
+> for QCS8275/QCS8300 SoC ID.
+> 
+> [1] https://lore.kernel.org/all/20240814072806.4107079-1-quic_jingyw@quicinc.com/
 
-...
+How do the depend? What is exactly the dependency?
 
->> +
->> +  clocks:
-> 
-> Please add
-> 
-> minItems: 22
-> 
->> +    maxItems: 22> +
->> +  clock-names:
->> +    items:
->> +      - const: camnoc_axi
->> +      - const: cpas_ahb
->> +      - const: csi0
->> +      - const: csi1
->> +      - const: csi2
->> +      - const: csiphy0
->> +      - const: csiphy0_timer
->> +      - const: csiphy1
->> +      - const: csiphy1_timer
->> +      - const: csiphy2
->> +      - const: csiphy2_timer
->> +      - const: gcc_camera_ahb
->> +      - const: gcc_camera_axi
->> +      - const: soc_ahb
->> +      - const: vfe0_axi
->> +      - const: vfe0
->> +      - const: vfe0_cphy_rx
->> +      - const: vfe1_axi
->> +      - const: vfe1
->> +      - const: vfe1_cphy_rx
->> +      - const: vfe_lite
->> +      - const: vfe_lite_cphy_rx
->> +
->> +  interrupts:
-> 
-> Please add
-> 
-> minItems: 9
-> 
->> +    maxItems: 9
->> +
->> +  interrupt-names:
->> +    items:
->> +      - const: csid0
->> +      - const: csid1
->> +      - const: csid2
->> +      - const: csiphy0
->> +      - const: csiphy1
->> +      - const: csiphy2
->> +      - const: vfe0
->> +      - const: vfe1
->> +      - const: vfe_lite
->> +
->> +  iommus:
-> 
-> Please add
-> 
-> minItems: 4>
->> +    maxItems: 4
->> +
->> +  power-domains:
->> +    items:
->> +      - description: IFE0 GDSC - Image Front End, Global Distributed Switch Controller.
->> +      - description: IFE1 GDSC - Image Front End, Global Distributed Switch Controller.
->> +      - description: Titan Top GDSC - Titan ISP Block, Global Distributed Switch Controller.
->> +
->> +  power-domain-names:
->> +    items:
->> +      - const: ife0
->> +      - const: ife1
->> +      - const: top
->> +
->> +  ports:
->> +    $ref: /schemas/graph.yaml#/properties/ports
->> +
->> +    description:
->> +      CSI input ports.
->> +
->> +    properties:
->> +      port@0:
->> +        $ref: /schemas/graph.yaml#/$defs/port-base
->> +        unevaluatedProperties: false
->> +        description:
->> +          Input port for receiving CSI data from CSIPHY0.
->> +
->> +        properties:
->> +          endpoint:
->> +            $ref: video-interfaces.yaml#
->> +            unevaluatedProperties: false
->> +
->> +            properties:
->> +              clock-lanes:
->> +                maxItems: 1
->> +
->> +              data-lanes:
->> +                minItems: 1
->> +                maxItems: 4
->> +
->> +            required:
->> +              - clock-lanes
->> +              - data-lanes
->> +
->> +      port@1:
->> +        $ref: /schemas/graph.yaml#/$defs/port-base
->> +        unevaluatedProperties: false
->> +        description:
->> +          Input port for receiving CSI data from CSIPHY1.
->> +
->> +        properties:
->> +          endpoint:
->> +            $ref: video-interfaces.yaml#
->> +            unevaluatedProperties: false
->> +
->> +            properties:
->> +              clock-lanes:
->> +                maxItems: 1
->> +
->> +              data-lanes:
->> +                minItems: 1
->> +                maxItems: 4
->> +
->> +            required:
->> +              - clock-lanes
->> +              - data-lanes
->> +
->> +      port@2:
->> +        $ref: /schemas/graph.yaml#/$defs/port-base
->> +        unevaluatedProperties: false
->> +        description:
->> +          Input port for receiving CSI data from CSIPHY2.
->> +
->> +        properties:
->> +          endpoint:
->> +            $ref: video-interfaces.yaml#
->> +            unevaluatedProperties: false
->> +
->> +            properties:
->> +              clock-lanes:
->> +                maxItems: 1
->> +
->> +              data-lanes:
->> +                minItems: 1
->> +                maxItems: 4
->> +
->> +            required:
->> +              - clock-lanes
->> +              - data-lanes
->> +
->> +  reg:
-> 
-> Please add
-> 
-> minItems: 9
-
-
-None of above are necessary and this contradicts review we give to drop
-these...
-
+If so this cannot be merged...
 
 Best regards,
 Krzysztof
