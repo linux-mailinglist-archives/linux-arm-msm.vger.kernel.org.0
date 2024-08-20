@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-29086-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E51F958362
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 11:57:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 496BB958368
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 11:59:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D28A41F256D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 09:57:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7BD7C1C23C82
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 09:59:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFCC118C349;
-	Tue, 20 Aug 2024 09:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A53AC18C03E;
+	Tue, 20 Aug 2024 09:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O9enyykS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rv+UCbg8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A2E18A923;
-	Tue, 20 Aug 2024 09:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C48C18991B;
+	Tue, 20 Aug 2024 09:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724147848; cv=none; b=SRX5bhFiLPvUDjr8+b1rSNmLc6r3tuEftlpJctG5Ewjc1cViSVs49zY2l6rOJ3tueiOXfYjLZ4RuXX97vIjfuVEfFxKFeRvaAlMFzVenBqhMYjoX/2fIlgbc7LfbFUhedQWJzk2StTz6afQKTx9PPeQzSGGpZ468Hg39fm0wNvs=
+	t=1724147951; cv=none; b=TJCbF/OAf+lfxFuWRmR2T/ZusK1bMsRbI4bxIaIfUOt6/JDFn4NEJ1XpZllUcDUotPd67ZjkuBpFoN2lX8XTq/Q1SEcI5lQxXXQBrtMJyx6qbfJfc89nl8EtHFiAWPBwloE09/zQy1PHmUl1H+asqNyCIJcXDKpgnGnu792XNoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724147848; c=relaxed/simple;
-	bh=JKx8rbUCK+tZTbkSZV2GYfmXRjLpAY2UdSqmrMkGDjk=;
+	s=arc-20240116; t=1724147951; c=relaxed/simple;
+	bh=dbA4tfGWFrMwQpbUlnCHwxDQlmWd6zFPb1N1RLUlSVY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qATxdsMGuRgqf7U66Vg9fomXSA9VL6efDE7yM2X0+a1Jy+gjMTTP8kSmSoWTOTSu1OZWFdtctWRz3+a537FTGAZT7gehh7S4CX5LT5Jumaq9TL3yU7R97YVGyZFYqVJysMgKZV1MsYU9J4yVCjieLLxUTVi0ghnSgGWLixPxaU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O9enyykS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466DDC4AF0B;
-	Tue, 20 Aug 2024 09:57:22 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=UTXF1Ej+Y4KdEXoei5aVGegG1uejEcm+lIWiDEyD0GEFYNZ8bFo6Q2PPvTMqeV69l3+YgPmse4FEiOYkhfw+sXHqHrYauPTHazLdHvJynFOeTSJdfAJdRwjTybJGv85DsgFTIl1G6+IQeHDdleB5DKzhwuP0d6+IH4MAG6j32jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rv+UCbg8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3C3C4AF0B;
+	Tue, 20 Aug 2024 09:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724147848;
-	bh=JKx8rbUCK+tZTbkSZV2GYfmXRjLpAY2UdSqmrMkGDjk=;
+	s=k20201202; t=1724147951;
+	bh=dbA4tfGWFrMwQpbUlnCHwxDQlmWd6zFPb1N1RLUlSVY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=O9enyykSSx1UnpSIjnFHwHHSL0wEo7XgIl5w+5h/1jYkul/x5sgw/94ny7Xrto3lK
-	 eAPbyvYMxuaFvlYDkN2g25mQzGIvAcS2R2H6ShKKltpr0EQ1hYVKZtS4ZPw92fi578
-	 4OyMJ5+QlcHW8TevPNqxgtpKOLZSHTGHwx1o9JRmNNdOSZRzz8TeTwEWl6EuHA8mRx
-	 FRfOLxRyCeNP83fGV9wn3FeDmEXwn+eVQbj9bPtoqhM3pv4j3CVBHEljwyG9fmrkDy
-	 CjUWOJHH5I7N0HO0xxuAxWUB25p5XuDBIwNuFjGVmv86XDI6Rl80fjgfNK0WZu/5u0
-	 /b0OEzU71SXjA==
-Message-ID: <c1dd239f-7b07-4a98-a346-2b6b525dafc4@kernel.org>
-Date: Tue, 20 Aug 2024 11:57:21 +0200
+	b=rv+UCbg8gH8kkMYF1mTnqXZvfVBx2jFymWYzFmyZqQ/YXwldeAsYh9d587b2mcOLN
+	 OwwrnO871iKT8Fuf1uQu9cF9AY54s6cghNePs6A5yP/CN2QtYi+bQyQdsbqi2onwCU
+	 YPxULyDBbz6va/56KLFFkznNmeE6mY+M8e0erv+boNQm/vvgqoLIV6UVVdTwfDLHj6
+	 kIDe7v0HO/4ThIigdYlJBZWVGxm2uWR8Oa50hfy5V1WjSvN0dlCwtYBtAzrPuVy43s
+	 M91d0+8jLFTKOmFYhHfUhP40arDYySMu4pzxj9CP9qU6NHu6bOzMcuGEZircJ8ero1
+	 PluRsNOUFeoTA==
+Message-ID: <3a6fcbb3-8d52-436e-a476-8913b838b083@kernel.org>
+Date: Tue, 20 Aug 2024 11:59:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] clk: qcom: Add support for GCC on QCS8300
+Subject: Re: [PATCH 1/2] dt-bindings: clock: qcom: Add GCC clocks for QCS8300
 To: Imran Shaik <quic_imrashai@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
@@ -64,6 +64,7 @@ Cc: Ajit Pandey <quic_ajipan@quicinc.com>, Taniya Das
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  netdev@vger.kernel.org
 References: <20240820-qcs8300-gcc-v1-0-d81720517a82@quicinc.com>
+ <20240820-qcs8300-gcc-v1-1-d81720517a82@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,21 +110,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240820-qcs8300-gcc-v1-0-d81720517a82@quicinc.com>
+In-Reply-To: <20240820-qcs8300-gcc-v1-1-d81720517a82@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 20/08/2024 11:36, Imran Shaik wrote:
-> This series adds the dt-bindings and driver support for GCC on QCS8300 platform.
+> Add support for qcom global clock controller bindings for QCS8300 platform.
 > 
-> Please note that this series is dependent on [1] which adds support
-> for QCS8275/QCS8300 SoC ID.
-> 
-> [1] https://lore.kernel.org/all/20240814072806.4107079-1-quic_jingyw@quicinc.com/
+> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+> ---
+>  .../bindings/clock/qcom,qcs8300-gcc.yaml           |  66 ++++++
+>  include/dt-bindings/clock/qcom,qcs8300-gcc.h       | 234 +++++++++++++++++++++
+>  2 files changed, 300 insertions(+)
 
-How do the depend? What is exactly the dependency?
-
-If so this cannot be merged...
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
