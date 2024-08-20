@@ -1,224 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-29132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C764958C9F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 18:56:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFE67958CFB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 19:17:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C06551F22ABA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 16:56:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1E0CC1C21E30
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 17:17:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D53F51B8E9B;
-	Tue, 20 Aug 2024 16:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BB8C1BC080;
+	Tue, 20 Aug 2024 17:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Q4GwamGV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gd8RsQLR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2947B7E59A;
-	Tue, 20 Aug 2024 16:56:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF44818C92C;
+	Tue, 20 Aug 2024 17:17:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724172989; cv=none; b=GzDtPQ7bKC8KhdHhB+tqAaKmZAs2Kyuyrpymo74b2y9eGX6SQ73AZz1/fdG3tx6xVVi8onthdeEOIqFSw2NegUW+WA6QRlOGuBgKV2TdqBd3ulWAxH/J3xB5ES5mr9uoSpOtQFjde2atF8UjgwdbiMlx6tsjd6P99GQv3evYpFo=
+	t=1724174227; cv=none; b=O5wMHPWnUdyfp67HPI+qR7i0btrGaDByLQnpoWGcSjF/neEVwrfaDUDF+K9WKBsIN+IVsNzOmDVUshtBg97xjakTtyUBuCZFA7JXogcb9Gh9AWLWngxDKLlExoN/s/J1wu1YQf7YyfLqmNHmrk2kTjBgUIL5KPWYfnEQVX6x5Wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724172989; c=relaxed/simple;
-	bh=3IWBNMxVlkA05qY1CDuZJnnXqlmH8EbjZGUMVsHm/+U=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mSYRNowRWFeKpvZhZpYnnsmCV6PZB/cDhXy1nncqJAhQNJfUAjlljCcyIzymfxYpB9wm4WVYY+Ui2J4Cm6aidFbNzq2duKhn7eG6AnxPEC37MQW5uhC9JrUjUb9R79T2q6azbAKMiv7VUI9D7wUZCLwGP2ZjkBLnObtKvvsfUbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Q4GwamGV; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47KEYqTD022348;
-	Tue, 20 Aug 2024 16:56:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=jzY5T8RZv1PP7op27sD8n0SO
-	NGxQfSzjHm+fnS2Ly20=; b=Q4GwamGVnUYHezWuHUjtjza6A/lLhwDxn1B0wORk
-	bTlnIlWzNfi+wdhxzaABCNC/EMT3P7WJx6vG6pV1Fwn5PVyJfdT53/ZOpvsxCh+x
-	yRRMs/d5cYjyhzv1WRhQYp6A20O8lgMVpsicruTmmAgl5STF1ExdY9JD5rLzcptl
-	OB9oWUcGUEINslDeow42p7Z9UJLQH3+HKEI15Zq8UVGnNQvk4XaLi16dJ4zRtuEX
-	PU9LejQ20kkidZ0OSAwhbBsd/qS3WT2NmyjJdtJyhxXbWsqaupLPxecTuE6SkdVb
-	XB7+CPgBlSpH/P156LOeoP6utSCQjj5j7lq1U40Zb9BwRA==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 414pdm9ngv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Aug 2024 16:56:12 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47KGuBDx007487
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Aug 2024 16:56:11 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 20 Aug 2024 09:56:10 -0700
-Date: Tue, 20 Aug 2024 09:56:10 -0700
-From: Elliot Berman <quic_eberman@quicinc.com>
-To: Mike Rapoport <rppt@kernel.org>
-CC: Andrew Morton <akpm@linux-foundation.org>,
-        Paolo Bonzini
-	<pbonzini@redhat.com>,
-        Sean Christopherson <seanjc@google.com>,
-        Fuad Tabba
-	<tabba@google.com>, David Hildenbrand <david@redhat.com>,
-        Patrick Roy
-	<roypat@amazon.co.uk>, <qperret@google.com>,
-        Ackerley Tng
-	<ackerleytng@google.com>, <linux-coco@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-mm@kvack.org>, <kvm@vger.kernel.org>
-Subject: Re: [PATCH RFC 3/4] mm: guest_memfd: Add option to remove guest
- private memory from direct map
-Message-ID: <20240820094213541-0700.eberman@hu-eberman-lv.qualcomm.com>
-References: <20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com>
- <20240805-guest-memfd-lib-v1-3-e5a29a4ff5d7@quicinc.com>
- <ZsMZ8C2lnpMW+BT5@kernel.org>
+	s=arc-20240116; t=1724174227; c=relaxed/simple;
+	bh=K0bgmvxUNrz5vihGLhxf3Ou13m+eII+OugE43qEVdV0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sua/LDxRsW+7jBMG5CnJmv+xn1oXRMDUv+JPoItKHx4TPbAAKNgnhVEx5Fz2cqGtj/kLdvE3+Kohy301H6rbJkg4cfsWogYtv+gBMiLlsdSkqnrmJabynUxdWle4eMmUTkGT3klljKYtBnK7GWDqatxc1wFBXdFcFSdoD6O66so=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gd8RsQLR; arc=none smtp.client-ip=209.85.215.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-7cd830e0711so384727a12.0;
+        Tue, 20 Aug 2024 10:17:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724174225; x=1724779025; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dx99I4gVjE0nKHxOcEFDps9UKSShAk0pVoAeBRskDVw=;
+        b=Gd8RsQLR1zy8qOnxsEwHtnuxYI2h7E3E+976iQHcUsCFFLpgGZvGlaYmOf5zjNXctB
+         1eKEwDLhM0Mkoy4T0+Wc2cQkcEFfNz9Q6l1MH3kyryQ9febO6/j1OTVmbn2cx0/4m8Kd
+         TfgSFcqCPdfxsaIKSCGB7BG2WrhKC7fDPVCJvmx0jLatiC5yvR+mfx4djDGQEgXIqHSQ
+         7o/pILkJmf0PRMyE75WFj61eyvamsTKoihMIZUYGgKHBSkAwPQGOgVPp562qo5tg54QJ
+         0+g3VCmPbTbUIukew9mXhnFCF4gVUJFYHcVc8A4RSDIYCm+7TzqZoHtQe9WngEWis1Vb
+         uSGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724174225; x=1724779025;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dx99I4gVjE0nKHxOcEFDps9UKSShAk0pVoAeBRskDVw=;
+        b=bzDiQxZ6WGeRhOHLz9wD26uoxjvvI+RNP3LEeLJgqNKJ97Axslg0kw12XjKiu8YWLe
+         Ty4UTooa4MYYnXXk2RUPmdlXd63vZ3/19SvaCKOscnn8AQel26Ei+isPd+g3eCnZe/MI
+         WIJIytDO9RBm1384w3lZ0L2kmjd3WZuQt6xczc+hY5pL0dweA+Z23GLYeLqeR0+9+Vzi
+         lmI3TrY07dVJSUNbEn/oWNSj8MBQbCRhnQvKvacj2W86Wqn5aEnzjm4ZBzfwUANDucQ8
+         wyKYUq1xUa18n8MwaunXAvgCjbWKmjY7PqCg2qZvcIso/Bl/y407VV5PtRVH/onxZEAJ
+         iSrQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW4rvCCdaAVfmmR2bql+uhKRBsBH9hcN0w4lsL0i7Kr5tEJfgPSjQs3XLdEgIFseNLTXOtH3ZDNsHhrIV8=@vger.kernel.org, AJvYcCWGRKFkhkxK5Ggz7tirBodD8/MzJzubg7WOD+ymewdKER3Dg6BAx7PYOx1K2lnqTudcI5xZbN2KyPg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxpmGEm4/1s5zqZhJfoIyEHYtFRqU/gyClTr5VEZsy2Th9Y22Ky
+	s3q0QdityIHYgAV2VVH73X5PKGKZr+8J33w6odf5vrYAbFm/9B62
+X-Google-Smtp-Source: AGHT+IFqPaVzJwjKdCz+zT/UW2wJpDdZc+xGRDH+xt/ijn6H6ZIBqZtSC9ajtEejlFBlcXFWdHaCwg==
+X-Received: by 2002:a17:90a:ce08:b0:2ab:8324:1b47 with SMTP id 98e67ed59e1d1-2d47327c70bmr5465287a91.15.1724174224643;
+        Tue, 20 Aug 2024 10:17:04 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:bd02:d0ce:e791:dc08:a375])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d3e3171e01sm9721042a91.30.2024.08.20.10.17.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Aug 2024 10:17:04 -0700 (PDT)
+From: Rob Clark <robdclark@gmail.com>
+To: iommu@lists.linux.dev
+Cc: linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	Mostafa Saleh <smostafa@google.com>,
+	Will Deacon <will@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	dri-devel@lists.freedesktop.org (open list:DRM DRIVER for Qualcomm Adreno GPUs),
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-arm-kernel@lists.infradead.org (moderated list:ARM SMMU DRIVERS),
+	linux-kernel@vger.kernel.org (open list),
+	linux-pm@vger.kernel.org (open list:SUSPEND TO RAM),
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Sean Paul <sean@poorly.run>
+Subject: [PATCH v7 0/4] io-pgtable-arm + drm/msm: Extend iova fault debugging
+Date: Tue, 20 Aug 2024 10:16:43 -0700
+Message-ID: <20240820171652.145673-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.46.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <ZsMZ8C2lnpMW+BT5@kernel.org>
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BsZBnYdjUKxH8zs16Q3X3BsOufoDwHwH
-X-Proofpoint-ORIG-GUID: BsZBnYdjUKxH8zs16Q3X3BsOufoDwHwH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-20_12,2024-08-19_03,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=850 spamscore=0
- suspectscore=0 malwarescore=0 phishscore=0 priorityscore=1501 mlxscore=0
- impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0 clxscore=1011
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2408200125
+Content-Transfer-Encoding: 8bit
 
-On Mon, Aug 19, 2024 at 01:09:52PM +0300, Mike Rapoport wrote:
-> On Mon, Aug 05, 2024 at 11:34:49AM -0700, Elliot Berman wrote:
-> > This patch was reworked from Patrick's patch:
-> > https://lore.kernel.org/all/20240709132041.3625501-6-roypat@amazon.co.uk/
-> > 
-> > While guest_memfd is not available to be mapped by userspace, it is
-> > still accessible through the kernel's direct map. This means that in
-> > scenarios where guest-private memory is not hardware protected, it can
-> > be speculatively read and its contents potentially leaked through
-> > hardware side-channels. Removing guest-private memory from the direct
-> > map, thus mitigates a large class of speculative execution issues
-> > [1, Table 1].
-> > 
-> > Direct map removal do not reuse the `.prepare` machinery, since
-> > `prepare` can be called multiple time, and it is the responsibility of
-> > the preparation routine to not "prepare" the same folio twice [2]. Thus,
-> > instead explicitly check if `filemap_grab_folio` allocated a new folio,
-> > and remove the returned folio from the direct map only if this was the
-> > case.
-> > 
-> > The patch uses release_folio instead of free_folio to reinsert pages
-> > back into the direct map as by the time free_folio is called,
-> > folio->mapping can already be NULL. This means that a call to
-> > folio_inode inside free_folio might deference a NULL pointer, leaving no
-> > way to access the inode which stores the flags that allow determining
-> > whether the page was removed from the direct map in the first place.
-> > 
-> > [1]: https://download.vusec.net/papers/quarantine_raid23.pdf
-> > 
-> > Cc: Patrick Roy <roypat@amazon.co.uk>
-> > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> > ---
-> >  include/linux/guest_memfd.h |  8 ++++++
-> >  mm/guest_memfd.c            | 65 ++++++++++++++++++++++++++++++++++++++++++++-
-> >  2 files changed, 72 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/include/linux/guest_memfd.h b/include/linux/guest_memfd.h
-> > index be56d9d53067..f9e4a27aed67 100644
-> > --- a/include/linux/guest_memfd.h
-> > +++ b/include/linux/guest_memfd.h
-> > @@ -25,6 +25,14 @@ struct guest_memfd_operations {
-> >  	int (*release)(struct inode *inode);
-> >  };
-> >  
-> > +/**
-> > + * @GUEST_MEMFD_FLAG_NO_DIRECT_MAP: When making folios inaccessible by host, also
-> > + *                                  remove them from the kernel's direct map.
-> > + */
-> > +enum {
-> 
-> please name this enum, otherwise kernel-doc wont' be happy
-> 
-> > +	GUEST_MEMFD_FLAG_NO_DIRECT_MAP		= BIT(0),
-> > +};
-> > +
-> >  /**
-> >   * @GUEST_MEMFD_GRAB_UPTODATE: Ensure pages are zeroed/up to date.
-> >   *                             If trusted hyp will do it, can ommit this flag
-> > diff --git a/mm/guest_memfd.c b/mm/guest_memfd.c
-> > index 580138b0f9d4..e9d8cab72b28 100644
-> > --- a/mm/guest_memfd.c
-> > +++ b/mm/guest_memfd.c
-> > @@ -7,9 +7,55 @@
-> >  #include <linux/falloc.h>
-> >  #include <linux/guest_memfd.h>
-> >  #include <linux/pagemap.h>
-> > +#include <linux/set_memory.h>
-> > +
-> > +static inline int guest_memfd_folio_private(struct folio *folio)
-> > +{
-> > +	unsigned long nr_pages = folio_nr_pages(folio);
-> > +	unsigned long i;
-> > +	int r;
-> > +
-> > +	for (i = 0; i < nr_pages; i++) {
-> > +		struct page *page = folio_page(folio, i);
-> > +
-> > +		r = set_direct_map_invalid_noflush(page);
-> > +		if (r < 0)
-> > +			goto out_remap;
-> > +	}
-> > +
-> > +	folio_set_private(folio);
-> > +	return 0;
-> > +out_remap:
-> > +	for (; i > 0; i--) {
-> > +		struct page *page = folio_page(folio, i - 1);
-> > +
-> > +		BUG_ON(set_direct_map_default_noflush(page));
-> > +	}
-> > +	return r;
-> > +}
-> > +
-> > +static inline void guest_memfd_folio_clear_private(struct folio *folio)
-> > +{
-> > +	unsigned long start = (unsigned long)folio_address(folio);
-> > +	unsigned long nr = folio_nr_pages(folio);
-> > +	unsigned long i;
-> > +
-> > +	if (!folio_test_private(folio))
-> > +		return;
-> > +
-> > +	for (i = 0; i < nr; i++) {
-> > +		struct page *page = folio_page(folio, i);
-> > +
-> > +		BUG_ON(set_direct_map_default_noflush(page));
-> > +	}
-> > +	flush_tlb_kernel_range(start, start + folio_size(folio));
-> 
-> I think that TLB flush should come after removing pages from the direct map
-> rather than after adding them back.
-> 
+From: Rob Clark <robdclark@chromium.org>
 
-Gunyah flushes the tlb when it removes the stage 2 mapping, so we
-skipped it on removal as a performance optimization. I remember seeing
-that pKVM does the same (tlb flush for the stage 2 unmap & the
-equivalent for x86). Patrick had also done the same in their patches.
+This series extends io-pgtable-arm with a method to retrieve the page
+table entries traversed in the process of address translation, and then
+beefs up drm/msm gpu devcore dump to include this (and additional info)
+in the devcore dump.
 
-Thanks,
-Elliot
+This is a respin of https://patchwork.freedesktop.org/series/94968/
+(minus a patch that was already merged)
+
+v2: Fix an armv7/32b build error in the last patch
+v3: Incorperate Will Deacon's suggestion to make the interface
+    callback based.
+v4: Actually wire up the callback
+v5: Drop the callback approach
+v6: Make walk-data struct pgtable specific and rename
+    io_pgtable_walk_data to arm_lpae_io_pgtable_walk_data
+v7: Re-use the pgtable walker added for arm_lpae_read_and_clear_dirty()
+
+Rob Clark (4):
+  iommu/io-pgtable-arm: Make pgtable walker more generic
+  iommu/io-pgtable-arm: Re-use the pgtable walk for iova_to_phys
+  iommu/io-pgtable-arm: Add way to debug pgtable walk
+  drm/msm: Extend gpu devcore dumps with pgtbl info
+
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c |  10 ++
+ drivers/gpu/drm/msm/msm_gpu.c           |   9 ++
+ drivers/gpu/drm/msm/msm_gpu.h           |   8 ++
+ drivers/gpu/drm/msm/msm_iommu.c         |  22 ++++
+ drivers/gpu/drm/msm/msm_mmu.h           |   3 +-
+ drivers/iommu/io-pgtable-arm.c          | 147 +++++++++++++++---------
+ include/linux/io-pgtable.h              |  15 +++
+ 7 files changed, 158 insertions(+), 56 deletions(-)
+
+-- 
+2.46.0
 
 
