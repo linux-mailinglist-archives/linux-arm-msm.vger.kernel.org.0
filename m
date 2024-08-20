@@ -1,74 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-29030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 542FE957A95
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 02:48:56 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B65A7957B75
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 04:34:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 08CDB1F2360B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 00:48:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 13F0CB224B4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 02:34:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A5A18825;
-	Tue, 20 Aug 2024 00:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23CEB22318;
+	Tue, 20 Aug 2024 02:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KmEVsdRH"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dDiqdbHN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CA3A92D;
-	Tue, 20 Aug 2024 00:48:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F79749622;
+	Tue, 20 Aug 2024 02:34:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724114930; cv=none; b=rocjG5TsGhH0/KHC4CS0br7hyTcEcOdyZLipb9c9O8nxag+cV6CL/u1x2GuaxkPaLYfvZZ5YSCvf6c/NAV2t07oxBPs5hW02jkQJO/hFeqWrE89kvnaSOhL/fYm8l5l5UYBnhvIjQLGBi7BlW/WFSQjd1vQhtgVVlyUKsLRB16o=
+	t=1724121259; cv=none; b=tEviD8PJhSuJbokAq1eC0BLwsy2qDgOrzaEGEWUzhXWLdM3tTvHQnLEYxVOVp38h62RZ41SLK11TSos5i/OXXgFAWlQODUdSj8T0MQAAbuoyUY7c02nwiyn4PsS4YrhzA7OTU109YZ8arbMciZ/0MYR6JSig9cVOd+2r6dcV/tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724114930; c=relaxed/simple;
-	bh=S1yD5jjtloQRCRz1+d0jr0pqgFXrBjkSHQAMv9YOMiA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=smPT4vgowuXDwaUfrzw2PF+X2g104MEo/fAbo1beKb8THsZsqwC1byCu/k3n+Fg+c8XWRRRLKboplI4BMxcQ0uwUXEHiiEDuAawbsGQVzl0uIR+Z0qMV7p4DSXWr3q18atwerKJg2Bs5xNpdmO/yIztavJJSCLvoMzB9zDJslsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KmEVsdRH; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a7d89bb07e7so524641966b.3;
-        Mon, 19 Aug 2024 17:48:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724114927; x=1724719727; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Aak847kfGgqL39Kc/QBpkJh3q9r3EfbJoDakBsppDnM=;
-        b=KmEVsdRHGlghGxICz21Zjrwi4eq1M80N2cOEcxNYV5G67bK8vifjZpJ4Ol23IhvMko
-         LoQQXnvl28CrnauUHyxv382nlW1m5FsTJCahU/+W1w87FxX319r6WaHrrlB0cP33it6N
-         hhFtfUD/Rcrkov/A9nuMUwTEPfp0VVd+nOzXeJERhIlM8bHwf0BX1kvbC5quM1yTbXfm
-         dSj7jS5yfWAiw9nKP9e5eQBDKmMl6xG5+48AKCUFvm3TXn8s3ajWXTAnMQSOkhPnvolE
-         eXFVyIRnaBpjJq3HTBNtQE4LRz6k+5XJWc7wBAnElDwTyDm+/QLLe2qcCC0CBHE3sIhH
-         bbUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724114927; x=1724719727;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Aak847kfGgqL39Kc/QBpkJh3q9r3EfbJoDakBsppDnM=;
-        b=lOziogqXz05WQHnSKXkH/6qEeFRTUNPmVQduSJ12WKfrpR/BrUamwYzRsQDLoIFXHP
-         UzYKb3mciqXfifQuLr2zLH7wReExdrWWlBEdvllLSYgnHe9K7R0HbBt6RdDAV/lHGpDe
-         q+9ECFq7hhoFpjp9Y9ozSk0+YN9RzEKXsPFYCv4ijuyuQtmEESXVHm1Jh0UjM5fxfnhV
-         nhUh00tOKI15roCJjR9/X3hfCtdNYmcwMkgvu/Ahjh+YYxy9LbT5h9xiZEV0if7sRo6T
-         laC7jV0zsXLdZpEF1ihzuc2MkpOz7ZKNZn5NOdK516wAbMs0ZgC8QCimDktdkYT8dX5G
-         WKhg==
-X-Forwarded-Encrypted: i=1; AJvYcCUHBcmlXikwcbfTq4Bzhhh5+52FuISesBbni2T06uEg5KhegpxA0iSaiZ9MzYRIWo4HDR3znVJnhnucO5V9@vger.kernel.org, AJvYcCUnkpOM8LNxcbkYuQeleySdGv8swvW6BBO/QIkAWVne63Elp9DYEeOJrWO/cQwar90fb99ALQ3xbf73hlP0@vger.kernel.org, AJvYcCUsygNu3QTAXLzCXXnUgHsj8oMnCKDV+n6XQu3WnMtB/ft5RgwgMtuNQcR4fEFUaEAVrDjIyQRP@vger.kernel.org, AJvYcCW4qS5PU+OtM4zE94GG6N4jgZXsRBXP/89ViXuvePsyBx0AIeV464WQ+vwSkffurnZrHnmfzSCLmRMKTF1VEKab@vger.kernel.org, AJvYcCXYwnUyOeYRf4+KkCbAq2xJeIG8cKJ8kL8SjD2SBy8FFXwInT3t2dPdSqeJpmbm1VLEWzM+fDb6Ixg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxYnC0db6pLpcZLJs6s9i6WvwOo9//gQ0PHLiwWbtkBRxGiTuQ0
-	4XwWRs8xYrIcWidy75dCC5Zm5Oo301UNVa8xc8SNjcJMaPvt5pGA
-X-Google-Smtp-Source: AGHT+IEUbNzyKkL8AD794LCfaPtnP6kDKp9OUrsiw25fkzayVlzgeUWcLK6D0mUSHIMPsExRLInG/g==
-X-Received: by 2002:a17:907:f169:b0:a7a:acae:3420 with SMTP id a640c23a62f3a-a8392a11c05mr869163566b.49.1724114926168;
-        Mon, 19 Aug 2024 17:48:46 -0700 (PDT)
-Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a83839344b5sm696714266b.118.2024.08.19.17.48.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Aug 2024 17:48:45 -0700 (PDT)
-Message-ID: <90a95443-65c5-44e8-8737-26145cda1e35@gmail.com>
-Date: Tue, 20 Aug 2024 02:48:40 +0200
+	s=arc-20240116; t=1724121259; c=relaxed/simple;
+	bh=EX7m7E4uVFpmQxuytLHn8Izj+uT6XzL1vKALGH1360A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=icS9o40H89OHJ8Bdd22Jg7d2hu8wLeja399HGNwS3MaUyEQVyWFMTjNKYZ+y4GJ+NV3nOIl68ZSNu99CtdUqVj3TnaJ4n0bQwGqg8AVixG4M37OGPnpSR81vZqBNGk0CajRHF0YMC13GXr9yNikIA7o+SrgYAjavrZbK8/xoc0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dDiqdbHN; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47K2C282012421;
+	Tue, 20 Aug 2024 02:33:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	NdvKqTI0IYHL1eLLYyhx4z9hi6k3a2+Z/kg0NhcHBQQ=; b=dDiqdbHNDfh0A2B2
+	7lcKjF3MXhfcotG6OaBzKeZoe7WZxVfzkm79PzCip8UaoCzPB9YLLlydhq7ZhFOU
+	xhgdFt8cipELYl7AaoRAT7wRs8y4xYjXdNmXVNzcfOK9d6evn2ejqfrfvj6ugDl8
+	jGiFdwxeNPgQs24oWUKuLRULkxucJDdBnJFub23pNnAuoSoa2h6eb0iTwflXrwlY
+	cpysxvpIFaGTZKiJZ06/YUekpzMq16Wq5CD43hniELuKbiuqKhd57R96+mQGr308
+	NYNy7RTmP4oAzOgpI4eMAtuIXsmOcIerUif6sdc/z5y8NguzGWc0RuoWojG/nozR
+	2/dpog==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 414j5701bh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Aug 2024 02:33:50 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47K2Xmw2030765
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Aug 2024 02:33:48 GMT
+Received: from [10.110.70.123] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 19 Aug
+ 2024 19:33:47 -0700
+Message-ID: <58043166-c494-42db-b7d3-575991e43e8b@quicinc.com>
+Date: Mon, 19 Aug 2024 19:33:47 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,73 +65,174 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/11] arm64: dts: qcom: Add SM7325 device tree
-To: Danila Tikhonov <danila@jiaxyga.com>, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
- konradybcio@kernel.org, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, rafael@kernel.org,
- viresh.kumar@linaro.org, kees@kernel.org, tony.luck@intel.com,
- gpiccoli@igalia.com, ulf.hansson@linaro.org, andre.przywara@arm.com,
- quic_rjendra@quicinc.com, davidwronek@gmail.com, neil.armstrong@linaro.org,
- heiko.stuebner@cherry.de, rafal@milecki.pl, macromorgan@hotmail.com,
- linus.walleij@linaro.org, lpieralisi@kernel.org,
- dmitry.baryshkov@linaro.org, fekz115@gmail.com
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-hardening@vger.kernel.org
-References: <20240808184048.63030-1-danila@jiaxyga.com>
- <20240808184048.63030-9-danila@jiaxyga.com>
+Subject: Re: [PATCH v24 29/34] ALSA: usb-audio: qcom: Add USB offload route
+ kcontrol
+To: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <broonie@kernel.org>, <lgirdwood@gmail.com>, <krzk+dt@kernel.org>,
+        <Thinh.Nguyen@synopsys.com>, <bgoswami@quicinc.com>, <tiwai@suse.com>,
+        <gregkh@linuxfoundation.org>, <robh@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>
+References: <20240801011730.4797-1-quic_wcheng@quicinc.com>
+ <20240801011730.4797-30-quic_wcheng@quicinc.com>
+ <4d5fe3f8-d7ba-4647-8dd7-22656ec2fde5@linux.intel.com>
 Content-Language: en-US
-From: Konrad Dybcio <konradybcio@gmail.com>
-In-Reply-To: <20240808184048.63030-9-danila@jiaxyga.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <4d5fe3f8-d7ba-4647-8dd7-22656ec2fde5@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: kHPYq0DIRqcezxG483IwCovOPnBE9jat
+X-Proofpoint-GUID: kHPYq0DIRqcezxG483IwCovOPnBE9jat
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-19_16,2024-08-19_03,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ priorityscore=1501 clxscore=1015 bulkscore=0 phishscore=0 impostorscore=0
+ adultscore=0 suspectscore=0 mlxscore=0 spamscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408200018
 
-On 8.08.2024 8:40 PM, Danila Tikhonov wrote:
-> From: Eugene Lepshy <fekz115@gmail.com>
-> 
-> The Snapdragon 778G (SM7325) / 778G+ (SM7325-AE) / 782G (SM7325-AF)
-> is software-wise very similar to the Snapdragon 7c+ Gen 3 (SC7280).
-> 
-> It uses the Kryo670.
-> 
-> Signed-off-by: Eugene Lepshy <fekz115@gmail.com>
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm7325.dtsi | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sm7325.dtsi
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm7325.dtsi b/arch/arm64/boot/dts/qcom/sm7325.dtsi
-> new file mode 100644
-> index 000000000000..5b4574484412
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm7325.dtsi
-> @@ -0,0 +1,17 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2024, Eugene Lepshy <fekz115@gmail.com>
-> + * Copyright (c) 2024, Danila Tikhonov <danila@jiaxyga.com>
-> + */
-> +
-> +#include "sc7280.dtsi"
-> +
-> +/* SM7325 uses Kryo 670 */
-> +&CPU0 { compatible = "qcom,kryo670"; };
-> +&CPU1 { compatible = "qcom,kryo670"; };
-> +&CPU2 { compatible = "qcom,kryo670"; };
-> +&CPU3 { compatible = "qcom,kryo670"; };
-> +&CPU4 { compatible = "qcom,kryo670"; };
-> +&CPU5 { compatible = "qcom,kryo670"; };
-> +&CPU6 { compatible = "qcom,kryo670"; };
-> +&CPU7 { compatible = "qcom,kryo670"; };
+Hi Pierre,
 
-This is a meaningless marketing name. As you mentioned in your
-reply, cpu0-3 and cpu4-7 are wholly different (maybe cpu7 even
-has a different MIDR part num?), we should do something about it :/
+On 8/1/2024 2:02 AM, Pierre-Louis Bossart wrote:
+>
+>> +ifneq ($(CONFIG_SND_USB_QC_OFFLOAD_MIXER),)
+>> +snd-usb-audio-qmi-objs += mixer_usb_offload.o
+>> +endif
+>> \ No newline at end of file
+> add one?
+>
+>> diff --git a/sound/usb/qcom/mixer_usb_offload.c b/sound/usb/qcom/mixer_usb_offload.c
+>> new file mode 100644
+>> index 000000000000..c00770400c67
+>> --- /dev/null
+>> +++ b/sound/usb/qcom/mixer_usb_offload.c
+>> @@ -0,0 +1,101 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +/*
+>> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+>> +#include <linux/usb.h>
+>> +
+>> +#include <sound/core.h>
+>> +#include <sound/control.h>
+>> +#include <sound/soc-usb.h>
+>> +
+>> +#include "../card.h"
+>> +#include "../mixer.h"
+>> +#include "../usbaudio.h"
+>> +
+>> +#include "mixer_usb_offload.h"
+>> +
+>> +#define PCM_IDX(n)  (n & 0xffff)
+>> +#define CARD_IDX(n) (n >> 16)
+>> +
+>> +static int
+>> +snd_usb_offload_route_get(struct snd_kcontrol *kcontrol,
+>> +		      struct snd_ctl_elem_value *ucontrol)
+>> +{
+>> +	struct device *sysdev = snd_kcontrol_chip(kcontrol);
+>> +	int card;
+>> +	int pcm;
+>> +
+>> +	card = soc_usb_get_offload_device(sysdev, CARD_IDX(kcontrol->private_value),
+>> +					  PCM_IDX(kcontrol->private_value),
+>> +					  SND_SOC_USB_KCTL_CARD_ROUTE);
+>> +
+>> +	pcm = soc_usb_get_offload_device(sysdev, CARD_IDX(kcontrol->private_value),
+>> +					 PCM_IDX(kcontrol->private_value),
+>> +					 SND_SOC_USB_KCTL_PCM_ROUTE);
+>> +	if (card < 0 || pcm < 0) {
+>> +		card = -1;
+>> +		pcm = -1;
+>> +	}
+>> +
+>> +	ucontrol->value.integer.value[0] = card;
+>> +	ucontrol->value.integer.value[1] = pcm;
+>> +
+>> +	return 0;
+>> +}
+> see my earlier comment, should those two calls be collapsed to return
+> all the information in one shot?
+>
+>> +
+>> +static int snd_usb_offload_route_info(struct snd_kcontrol *kcontrol,
+>> +			      struct snd_ctl_elem_info *uinfo)
+>> +{
+>> +	uinfo->type = SNDRV_CTL_ELEM_TYPE_INTEGER;
+>> +	uinfo->count = 2;
+>> +	uinfo->value.integer.min = -1;
+>> +	/* Arbitrary max value, as there is no 'limit' on number of PCM devices */
+>> +	uinfo->value.integer.max = 0xff;
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static struct snd_kcontrol_new snd_usb_offload_mapped_ctl = {
+>> +	.iface = SNDRV_CTL_ELEM_IFACE_CARD,
+>> +	.access = SNDRV_CTL_ELEM_ACCESS_READ,
+>> +	.info = snd_usb_offload_route_info,
+>> +	.get = snd_usb_offload_route_get,
+>> +};
+>> +
+>> +/**
+>> + * snd_usb_offload_create_ctl() - Add USB offload bounded mixer
+>> + * @chip - USB SND chip device
+>> + *
+>> + * Creates a sound control for a USB audio device, so that applications can
+>> + * query for if there is an available USB audio offload path, and which
+>> + * card is managing it.
+>> + */
+>> +int snd_usb_offload_create_ctl(struct snd_usb_audio *chip)
+>> +{
+>> +	struct usb_device *udev = chip->dev;
+>> +	struct snd_kcontrol_new *chip_kctl;
+>> +	struct snd_usb_stream *as;
+>> +	char ctl_name[37];
+>> +	int ret;
+>> +
+>> +	list_for_each_entry(as, &chip->pcm_list, list) {
+>> +		chip_kctl = &snd_usb_offload_mapped_ctl;
+>> +		chip_kctl->count = 1;
+>> +		/*
+>> +		 * Store the associated USB SND card number and PCM index for
+>> +		 * the kctl.
+>> +		 */
+>> +		chip_kctl->private_value = as->pcm_index |
+>> +					  chip->card->number << 16;
+>> +		sprintf(ctl_name, "USB Offload Playback Route PCM#%d",
+>> +			as->pcm_index);
+>> +		chip_kctl->name = ctl_name;
+>> +		ret = snd_ctl_add(chip->card, snd_ctl_new1(chip_kctl,
+>> +				  udev->bus->sysdev));
+>> +		if (ret < 0)
+>> +			break;
+>> +	}
+>> +
+>> +	return ret;
+Hi Pierre,
+> None of this looks Qualcomm-specific, shouldn't this be part of the
+> soc_usb framework instead of being added in the qcom/ stuff?
 
-Please post the output of `dmesg | grep "Booted secondary processor"`
+Started working on this particular comment, and there are some things that needs to be considered if we moved this into SOC USB:
 
-Konrad
+1.  We do save the reference to the USB BE DAI link within the USB DT node, which can be fetched/referenced based on sysdev.  However, I'm not sure if everyone would potentially follow that way.
+
+2.  I tried a few implementations of adding a new SOC USB API, and the argument list was a bit long, because I didn't want to directly reference the usb_chip.
+
+Sorry for the delay, but I wanted to give a good stab at implementing this before bringing up the implications.  It is possible, but definitely not as clean as how we have it now IMO.
+
+Thanks
+
+Wesley Cheng
+
 
