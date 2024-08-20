@@ -1,113 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-29061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F730957FAB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 09:32:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A0574957FE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 09:36:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2696F1F237C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 07:32:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 56E5A1F2503D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 07:36:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB1E4148301;
-	Tue, 20 Aug 2024 07:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54B0E189B98;
+	Tue, 20 Aug 2024 07:35:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NLG8ZfDT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F33218E376;
-	Tue, 20 Aug 2024 07:31:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225381667ED;
+	Tue, 20 Aug 2024 07:35:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724139119; cv=none; b=DNVggnkmCqNGOmfIZP2ELEFXh/7O2t0QIiUOP5YTnfhGDy41kC+Ek9WqrbDzjeIkxJqZPxOVs967XOFNvPy2RLe+dFM1XuXrmEomw/2uT8KvBlWe609tlcm7rT1RbDeFF3OtTbp3c5ZxHTKvQNhtNVLWXNL+DTc9rq01R07+8lA=
+	t=1724139318; cv=none; b=nc+4wyUzSsWJygVwJis4XPpNBemqnaZOXyk9K70TlLS8VKfYDs01E2S2OhZryPGn739Bi2yderjQW8AMuG/y17J7IH+tRTuoPJVK5xRh2s/COgNcgMjiEPlq8XwgKS7altt2dM4T9bmzleg45UCNrb4NKu/rMQD0ghsv5J/+CS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724139119; c=relaxed/simple;
-	bh=Qmx2xkZx6QjU8y0JpQ3DgBemV0QRZuTDRzUNGnGAqAs=;
+	s=arc-20240116; t=1724139318; c=relaxed/simple;
+	bh=VlFp3AV+5ntIAXoC1p5XsTcSavlW4JGSdKmcfmgxiA4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CSulkfH7ecLsRn3WHCGSIkZhMGbwaBgF/lvu3YBhpOBwDrUGk8CU7EUDJ3VDhka4rOjdtl2dIwrKdk5VYLiwDsmMBYUoCCL7C/u6oFBGopEdrTV73w10Cz+uvFRXS1I9UZyOKfwhklO0i7wA0IEnIduPxCO04rwqSLOA2thDw2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3717ff2358eso2787007f8f.1;
-        Tue, 20 Aug 2024 00:31:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724139116; x=1724743916;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zwQbZZzYKJfp9JXZBu90gOlgrt4jvpTVXR4uFjbp38Q=;
-        b=YYiM7fOmDJZSj/cwxKUHSsWdPoF9rS2gsC08v5U2w5+GlcmH08ID2rCy70sejmv5uD
-         OOWLmak2vO0mtgW5uD4ueNO7Gc73Fzm9hhg3sHw/JUJU+jmZm90oFMRtq8kW4xEZuy/3
-         MUmDvHSzrb2ipFutK4lrzb0BZcbFz4iC4/UHxXtMS6HyrfqV57qXTKLAf4y+pUfFrZ+G
-         47gHGXCk0UA/OvrHmmhJJlwlE6F2l/mn/+5C6L4BLNERHSiscelYEjaRGqpJ/cVwuS45
-         IPKFOhlNFB+yv3IWi6l8OE3w8lCyWSgdr9PpiYNaQT8AyMBimj4JQRkW4zbxbwP+0qZQ
-         qy5w==
-X-Forwarded-Encrypted: i=1; AJvYcCWgVcYERPAwBdPS5uQkTL8G4X1PBX75+P1QyPFYhEf28r33RS8qxwXLUuCKOAuH76z0vF7MTv/Ffi/RnNmUOss9G074tJ7UxVLKt0DDLMzQ50n+JRxmKVgnf1vrmxg45Dan2TDy305OPx74gDlMFkLylLcPft4MliVUutKHIOWcachKDfECPo2fszkmDgjrCSBiXC3yBxwkfO8jYXBE9Kpc4A==
-X-Gm-Message-State: AOJu0Yz4vbKeHW8ovKilBoeb9oLWlE+W1PJoL3T33C9CuzCULzD53HME
-	H+Q/30sKjGCyLTDtpXu0N1netjGMa2BMO+90gMfAKkz5Mmp7ec8W
-X-Google-Smtp-Source: AGHT+IHTd/LmyAb9MTCxstjAsJD6mcKXnM89dKlsj660yY9f1w+dAMRpSYvFWk6FPDY5kqLqPENMjw==
-X-Received: by 2002:adf:8b59:0:b0:371:844f:e0c with SMTP id ffacd0b85a97d-37194314b17mr8264101f8f.10.1724139115875;
-        Tue, 20 Aug 2024 00:31:55 -0700 (PDT)
-Received: from krzk-bin ([178.197.215.209])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3718985a48asm12439743f8f.62.2024.08.20.00.31.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Aug 2024 00:31:55 -0700 (PDT)
-Date: Tue, 20 Aug 2024 09:31:52 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Richard Acayan <mailingradian@gmail.com>
-Cc: Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Todor Tomov <todor.too@gmail.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-media@vger.kernel.org
-Subject: Re: [PATCH v3 2/5] dt-bindings: media: camss: Add qcom,sdm670-camss
-Message-ID: <u7enyv6sb5n2jjsxg6tyrzjdj3tswzo7733hl3vuxh3j5nshz4@mklofzu3dzqi>
-References: <20240819221051.31489-7-mailingradian@gmail.com>
- <20240819221051.31489-9-mailingradian@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=I9jagB0+xeQvqzb1gaLpofObqSMjYRtDd/g4e9LDI4tqp7wCoHL/HjJtRHY9m+75VdCGc0DXhhyoBRMWKwfxwafGd+pDX/7bu65e4N1mEI98mSk7wqwwN3yVBW++A8I4DppCfalXPqHTcIAAF9Tc8R8/WmhMi6Y+xPgnkgDi3B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NLG8ZfDT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E21F6C4AF09;
+	Tue, 20 Aug 2024 07:35:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724139317;
+	bh=VlFp3AV+5ntIAXoC1p5XsTcSavlW4JGSdKmcfmgxiA4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NLG8ZfDTt9MYyQTQ3bqC7GyppuVm23T4iHs6c/gwcMpKcxOdemVUGu26+W6mDF2bu
+	 E3siv6F9F1jTR7H9av0b7G5EfNueVKZWMuaCcz6FCAHjw3FqsfXGgO7DWu5jhfq+u3
+	 QIg4uoHC+L2wt4Pn7hPMg2qNw1vlE/qoeQk6oB6+M2RVEi2+EcO6OmMu33EcJXzUP1
+	 w4MuSHe84DnLpkoj2GMck3hWYZ7SQ2DGnSN8XG+iNfhHHylRfiKHBY+C2E8su092iT
+	 Cl70P842YearIv8oL1wKXb9zIOLSyY5/uraFBRFaZSz4A9Lm9FwrkC/rrwvzNfkstT
+	 w46TW2PzUzDxg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sgJOe-000000005rZ-1Thw;
+	Tue, 20 Aug 2024 09:35:16 +0200
+Date: Tue, 20 Aug 2024 09:35:16 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Sebastian Reichel <sre@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Chris Lew <quic_clew@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Amit Pundir <amit.pundir@linaro.org>, linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-usb@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] soc: qcom: pmic_glink: Actually communicate with
+ remote goes down
+Message-ID: <ZsRHNIMy7KbCaE7x@hovoldconsulting.com>
+References: <20240819-pmic-glink-v6-11-races-v2-0-88fe3ab1f0e2@quicinc.com>
+ <20240819-pmic-glink-v6-11-races-v2-3-88fe3ab1f0e2@quicinc.com>
+ <ZsRAnWgsoSHmrFE5@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240819221051.31489-9-mailingradian@gmail.com>
+In-Reply-To: <ZsRAnWgsoSHmrFE5@hovoldconsulting.com>
 
-On Mon, Aug 19, 2024 at 06:10:54PM -0400, Richard Acayan wrote:
-> As found in the Pixel 3a, the Snapdragon 670 has a camera subsystem with
-> 3 CSIDs and 3 VFEs (including 1 VFE lite). Add this camera subsystem to
-> the bindings.
-> 
-> Adapted from SC8280XP camera subsystem.
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->  .../bindings/media/qcom,sdm670-camss.yaml     | 319 ++++++++++++++++++
->  1 file changed, 319 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-> new file mode 100644
-> index 000000000000..5789cf66a516
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-> @@ -0,0 +1,319 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +
+On Tue, Aug 20, 2024 at 09:07:10AM +0200, Johan Hovold wrote:
+> On Mon, Aug 19, 2024 at 01:07:47PM -0700, Bjorn Andersson wrote:
+> > When the pmic_glink state is UP and we either receive a protection-
+> > domain (PD) notification indicating that the PD is going down, or that
+> > the whole remoteproc is going down, it's expected that the pmic_glink
+> > client instances are notified that their function has gone DOWN.
+> > 
+> > This is not what the code does, which results in the client state either
+> > not updating, or being wrong in many cases. So let's fix the conditions.
 
-No blank line here.
+And I believe you meant
 
-> +%YAML 1.2
+	s/with/when/
 
-With above:
+in the patch Subject.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+Johan
 
