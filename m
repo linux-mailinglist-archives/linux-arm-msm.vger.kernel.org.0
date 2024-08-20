@@ -1,144 +1,273 @@
-Return-Path: <linux-arm-msm+bounces-29032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2463957BC3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 05:07:52 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C539957CB2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 07:18:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E10E11C23B23
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 03:07:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B95DF2847DF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 05:18:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 971E31BC58;
-	Tue, 20 Aug 2024 03:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E83F14885D;
+	Tue, 20 Aug 2024 05:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aUNMnkTh"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UIWOYDOa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66FF533F9;
-	Tue, 20 Aug 2024 03:07:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257CDEEAE;
+	Tue, 20 Aug 2024 05:18:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724123268; cv=none; b=KLGuWsgWY7W2XY7tkvJImzdxk72UjyD8zb5LO0aS7fhLgRVEhRFlHQgZ3NWA47934/lNOmoZffYjSqVNG4vzdabC/rWMcPFsmZH12/ai3UuFlYPE2DgGv/qB4oNGbwlFMZs3vu5sdwbqswNxZhkyAAb95gBKaxHq217Zy/TELDI=
+	t=1724131097; cv=none; b=c45TjmSeotlpTSSc1JOQjawMsxQneA0Wb3ZUM8yc3+mJ7WyiZas7Ea13cQbwQkAYIy+4+uLJQGwIURo2vT+haLS03h9F7oIalvqYauV2daFJkwXqKZ+jw5lAVhaBBlT5PEl5WPWV9wOwz8joxW9jNWLR7iSARRAnLl+cf9vrDwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724123268; c=relaxed/simple;
-	bh=/Axwd6v4J3R0M1uVLGMjdtdRPmKmwT6RQHIPaUGm6QU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=EvtzHeA9TNZRhQWzx2Z3MY3KBwhtlmblTeIHhKIyjpL4LXMZiNT0957X8ue8r7oZpmAEANna6Fuecwe66+0HdsYUKDlAG/RDoN0nprONtlNNrEUNprdrGOMdpOvRRFufXjZLQX8DBpuoSWvnsAylo8T0EIto/387BIBnbSXr1Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aUNMnkTh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A54FC32782;
-	Tue, 20 Aug 2024 03:07:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724123268;
-	bh=/Axwd6v4J3R0M1uVLGMjdtdRPmKmwT6RQHIPaUGm6QU=;
-	h=From:Date:Subject:To:Cc:From;
-	b=aUNMnkThZD3ifTu04whxjYzNoBqMuoAOZk48Zc6g3AUtYWEG6IOK4k7vKA4iXjI6c
-	 0ci8rWdBsQhT5E2pHPbz9RlaG1/VvUamv1vZjsiHQO3eE73nBjTlWpgCOVsk/GkNVZ
-	 Xq9nzllGtKPg19CjmRM0WmsiiD8mLWlFxN5BjdVvl5D1PaWh5C2HjiBVnDy4lNalo2
-	 MX0uEXx5R/r2MzRecnF5nSdI69AL3Cdhsn4b73uYxtCuDxWM/c1r4NFdGzhhYsXOF3
-	 GFe9RcMTCgmWQFeFJIs0osXk7WCMCLA+k/26lK30Dkn6AWM+ULdHCoKxFxqAuiR5jl
-	 SUxXPlbRI6ftQ==
-From: Bjorn Andersson <andersson@kernel.org>
-Date: Mon, 19 Aug 2024 20:11:58 -0700
-Subject: [PATCH] arm64: Allow packing uncompressed images into distro
- packages
+	s=arc-20240116; t=1724131097; c=relaxed/simple;
+	bh=UXpVLZ4CufVhK3zP+2QQqiisBVB75MRuFmQHpYQPifs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Z8K3YFM2xumtOcQlx1s1tJ6HfyyPRUdKibS1Ehck+AD2IARp0tVuDrTW0RDjKRRdkCXxhowgDW9HATqQXL3bB6hokxx1fmHDbbjqQnEYKTTlMoaKg3skDweeVgQDPmDu2vJypftuzWsR6SelMCCU4Fy+N0c9QnYik4/K3AcZ9qA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UIWOYDOa; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47K1pNYk005015;
+	Tue, 20 Aug 2024 05:18:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	UXpVLZ4CufVhK3zP+2QQqiisBVB75MRuFmQHpYQPifs=; b=UIWOYDOaZ9yq7iAv
+	nVxDcFj9eM3qfeMFjMf6vF9C7AbLDcaGAY8aSh1vKzxWspAIwqR0oM3SbA9cwpWZ
+	Hm1EVF79HLriYDizw1OdRuDt3rcF+YUA/oI+4y3KRj25pTAfJSwrIqvGfAz1uHkf
+	I1STYNkul3IQacAcAFsQ8BvrkCzg80xXD1ZnZJ9rPEDb5Vfj19YakLmTU0z99yTf
+	iLR1LhVEfsRXJ1r72Zb9W2MwgZGXVT19YNyy9XuNYLL52Xn5mGjmzlBRio491P9C
+	xsdDO6ekBVXgww+KGDIqBiz13OPqCQbfC/H1xkpOM389ms1DjB2Es4V3cB4gXZuf
+	wrMchQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 412k6gee86-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Aug 2024 05:18:09 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47K5I8aO023680
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 20 Aug 2024 05:18:08 GMT
+Received: from [10.204.65.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 19 Aug
+ 2024 22:18:05 -0700
+Message-ID: <a0b522f5-8d70-4659-be00-d37bfbc39994@quicinc.com>
+Date: Tue, 20 Aug 2024 10:48:02 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240819-uncompressed-distro-packages-v1-1-c8accc8bc9ea@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAH0JxGYC/x3MQQqEMAxA0atI1hNQUWm9isyiNFGD2EqjIoh3t
- 7h88Pk3KCdhhb64IfEpKjFkVL8C/OzCxCiUDXVZN6WpLB7Bx3VLrMqEJLqniJvzi5tY0ZDrbGu
- ZOmsgL3I3yvXth//zvLMIoxhuAAAA
-To: Catalin Marinas <catalin.marinas@arm.com>, 
- Will Deacon <will@kernel.org>, 
- Linus Torvalds <torvalds@linux-foundation.org>
-Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Bjorn Andersson <quic_bjorande@quicinc.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1735;
- i=quic_bjorande@quicinc.com; h=from:subject:message-id;
- bh=bvOxw2747Tbs7BVukVhYfFrC+fslcUhZqtC3yXHe77M=;
- b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBmxAl/EUyFFWtnQPr+MYx58NwUKEYRipWXWoHYJ
- jU3fk1xmBCJAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCZsQJfxUcYW5kZXJzc29u
- QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcVd0Q/+NZm/hJzfpYFRs7ON4nGrPu9frFuWNqoVujZuLU2
- xUmAfCMZb+rXSmIYf/o//afVDa+X8AWrsZX4Hzph5hAaY97fJKd73D1Bol7z75p+5nhKSn/88f/
- DnI6LwBNyhZrgsJOStEKAkM00kvXyaX6/tDe9nXNG6F/121ODeaQ/sNaF+PKpm0lXU26mp1z1BG
- E2iYk4csGk4YO8PGMh+DQA7GHL2uvHnM5H3yyZNaPlVHtVda5x1/Cy+Z8z+2FBsdzDF4Uccd27A
- NKrp01mhcIJQR93TQPHODLE1Unh5BlkgPQlq97fZ+mQSyzFoDM8kqTsOIQKIlNltUepJHYc00mU
- aVX31BAotTlafbjIht3lpGyIOOmOaOOUj5HeOB/sRSGE1kehlGLiWzIANvDf40+DT9hwl0zNKQ2
- CTs+t5aJn1SkKtKel7YSg6F7RdcDJcZ2q+Fo0j8+5hwdi9bc008IYHihSkYI6oU4tiX4CNZ6bxT
- u/uiJ5Bvo6nYIivYGlhnZeFpbX5T7qC59t276GOXkyYKSTeD+D62QLFX1AO00cDVGAYlEN3evy8
- HdJkz4Ugt/gdS/yQ0rcUZp+08GOCKWZh3NWHdJAh3knn4EsPr/nMCJdymbgkUhxrbbKjGTDo/az
- scBt644e+/NP3uPNTw22QmUtnCV+vso3WmrkW117aFak=
-X-Developer-Key: i=quic_bjorande@quicinc.com; a=openpgp;
- fpr=05DE03CC5F35EA4F0966D5250B1F393F0D99ADC5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] misc: fastrpc: Add support for multiple PD from one
+ process
+To: Caleb Connolly <caleb.connolly@linaro.org>,
+        <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
+CC: <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>
+References: <20240808104228.839629-1-quic_ekangupt@quicinc.com>
+ <ed270718-63ef-4484-9856-0ff488e01b98@linaro.org>
+Content-Language: en-US
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+In-Reply-To: <ed270718-63ef-4484-9856-0ff488e01b98@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: g7ghUSx1stifz5pic6qG1LntI4Cl21bL
+X-Proofpoint-GUID: g7ghUSx1stifz5pic6qG1LntI4Cl21bL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-19_16,2024-08-19_03,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1011 priorityscore=1501 adultscore=0 bulkscore=0 malwarescore=0
+ impostorscore=0 spamscore=0 mlxlogscore=999 suspectscore=0 phishscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408200038
 
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-The distro packages (deb-pkg, pacman-pkg, rpm-pkg) are generated using
-the compressed kernel image, which means that the kernel once installed
-can not be booted with systemd-boot.
 
-This differs from the packages generated by the distros themselves,
-which uses the uncompressed image.
+On 8/19/2024 4:35 PM, Caleb Connolly wrote:
+> Hi Ekansh,
+>
+> On 08/08/2024 12:42, Ekansh Gupta wrote:
+>> Memory intensive applications(which requires more tha 4GB) that wants
+>> to offload tasks to DSP might have to split the tasks to multiple
+>> user PD to make the resources available.
+>>
+>> For every call to DSP, fastrpc driver passes the process tgid which
+>> works as an identifier for the DSP to enqueue the tasks to specific PD.
+>> With current design, if any process opens device node more than once
+>> and makes PD init request, same tgid will be passed to DSP which will
+>> be considered a bad request and this will result in failure as the same
+>> identifier cannot be used for multiple DSP PD.
+>>
+>> Assign and pass a client ID to DSP which would be assigned during device
+>> open and will be dependent on the index of session allocated for the PD.
+>> This will allow the same process to open the device more than once and
+>> spawn multiple dynamic PD for ease of processing.
+>
+> A test tool to validate this fix and prevent it regressing in the future would be a good addition here.
+Thanks for reviewing the change, Caleb.
 
-Expand the newly introduced CONFIG_COMPRESSED_INSTALL option to allow
-selection of which version of the kernel image should be packaged into
-the distro packages.
+This is more of a feature than a bug fix as it just adding support to spawn multiple user PDs from
+single process. Test cases for this feature was added to the recent versions of Hexagon SDK.
 
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
- arch/arm64/Makefile | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
-
-diff --git a/arch/arm64/Makefile b/arch/arm64/Makefile
-index f6bc3da1ef11..7bb9a0a5500a 100644
---- a/arch/arm64/Makefile
-+++ b/arch/arm64/Makefile
-@@ -166,9 +166,13 @@ BOOT_TARGETS	:= Image vmlinuz.efi image.fit
- PHONY += $(BOOT_TARGETS)
- 
- ifeq ($(CONFIG_EFI_ZBOOT),)
--KBUILD_IMAGE	:= $(boot)/Image.gz
-+  ifeq ($(CONFIG_COMPRESSED_INSTALL),y)
-+    KBUILD_IMAGE := $(boot)/Image.gz
-+  else
-+    KBUILD_IMAGE := $(boot)/Image
-+  endif
- else
--KBUILD_IMAGE	:= $(boot)/vmlinuz.efi
-+  KBUILD_IMAGE := $(boot)/vmlinuz.efi
- endif
- 
- all:	$(notdir $(KBUILD_IMAGE))
-@@ -182,13 +186,6 @@ $(BOOT_TARGETS): vmlinux
- Image.%: Image
- 	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@
- 
--ifeq ($(CONFIG_COMPRESSED_INSTALL),y)
-- DEFAULT_KBUILD_IMAGE = $(KBUILD_IMAGE)
--else
-- DEFAULT_KBUILD_IMAGE = $(boot)/Image
--endif
--
--install: KBUILD_IMAGE := $(DEFAULT_KBUILD_IMAGE)
- install zinstall:
- 	$(call cmd,install)
- 
-
----
-base-commit: 469f1bad3c1c6e268059f78c0eec7e9552b3894c
-change-id: 20240819-uncompressed-distro-packages-8da6959ed698
-
-Best regards,
--- 
-Bjorn Andersson <quic_bjorande@quicinc.com>
+--Ekansh
+>>
+>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+>> ---
+>> Changes in v2:
+>>    - Reformatted commit text.
+>>    - Moved from ida to idr.
+>>    - Changed dsp_pgid data type.
+>>    - Resolved memory leak.
+>> Changes in v3:
+>>    - Modified commit text.
+>>    - Removed idr implementation.
+>>    - Using session index for client id.
+>>
+>>   drivers/misc/fastrpc.c | 30 ++++++++++++++++--------------
+>>   1 file changed, 16 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index a7a2bcedb37e..0ce1eedcb2c3 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -38,6 +38,7 @@
+>>   #define FASTRPC_INIT_HANDLE    1
+>>   #define FASTRPC_DSP_UTILITIES_HANDLE    2
+>>   #define FASTRPC_CTXID_MASK (0xFF0)
+>> +#define FASTRPC_CLIENTID_MASK (16)
+>>   #define INIT_FILELEN_MAX (2 * 1024 * 1024)
+>>   #define INIT_FILE_NAMELEN_MAX (128)
+>>   #define FASTRPC_DEVICE_NAME    "fastrpc"
+>> @@ -298,7 +299,7 @@ struct fastrpc_user {
+>>       struct fastrpc_session_ctx *sctx;
+>>       struct fastrpc_buf *init_mem;
+>>   -    int tgid;
+>> +    int client_id;
+>>       int pd;
+>>       bool is_secure_dev;
+>>       /* Lock for lists */
+>> @@ -613,7 +614,7 @@ static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
+>>       ctx->sc = sc;
+>>       ctx->retval = -1;
+>>       ctx->pid = current->pid;
+>> -    ctx->tgid = user->tgid;
+>> +    ctx->tgid = user->client_id;
+>>       ctx->cctx = cctx;
+>>       init_completion(&ctx->work);
+>>       INIT_WORK(&ctx->put_work, fastrpc_context_put_wq);
+>> @@ -1111,7 +1112,7 @@ static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
+>>       int ret;
+>>         cctx = fl->cctx;
+>> -    msg->pid = fl->tgid;
+>> +    msg->pid = fl->client_id;
+>>       msg->tid = current->pid;
+>>         if (kernel)
+>> @@ -1294,7 +1295,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+>>           }
+>>       }
+>>   -    inbuf.pgid = fl->tgid;
+>> +    inbuf.pgid = fl->client_id;
+>>       inbuf.namelen = init.namelen;
+>>       inbuf.pageslen = 0;
+>>       fl->pd = USER_PD;
+>> @@ -1396,7 +1397,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
+>>           goto err;
+>>       }
+>>   -    inbuf.pgid = fl->tgid;
+>> +    inbuf.pgid = fl->client_id;
+>>       inbuf.namelen = strlen(current->comm) + 1;
+>>       inbuf.filelen = init.filelen;
+>>       inbuf.pageslen = 1;
+>> @@ -1470,8 +1471,9 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
+>>   }
+>>     static struct fastrpc_session_ctx *fastrpc_session_alloc(
+>> -                    struct fastrpc_channel_ctx *cctx)
+>> +                    struct fastrpc_user *fl)
+>>   {
+>> +    struct fastrpc_channel_ctx *cctx = fl->cctx;
+>>       struct fastrpc_session_ctx *session = NULL;
+>>       unsigned long flags;
+>>       int i;
+>> @@ -1481,6 +1483,7 @@ static struct fastrpc_session_ctx *fastrpc_session_alloc(
+>>           if (!cctx->session[i].used && cctx->session[i].valid) {
+>>               cctx->session[i].used = true;
+>>               session = &cctx->session[i];
+>> +            fl->client_id = FASTRPC_CLIENTID_MASK | i;
+>>               break;
+>>           }
+>>       }
+>> @@ -1505,7 +1508,7 @@ static int fastrpc_release_current_dsp_process(struct fastrpc_user *fl)
+>>       int tgid = 0;
+>>       u32 sc;
+>>   -    tgid = fl->tgid;
+>> +    tgid = fl->client_id;
+>>       args[0].ptr = (u64)(uintptr_t) &tgid;
+>>       args[0].length = sizeof(tgid);
+>>       args[0].fd = -1;
+>> @@ -1580,11 +1583,10 @@ static int fastrpc_device_open(struct inode *inode, struct file *filp)
+>>       INIT_LIST_HEAD(&fl->maps);
+>>       INIT_LIST_HEAD(&fl->mmaps);
+>>       INIT_LIST_HEAD(&fl->user);
+>> -    fl->tgid = current->tgid;
+>>       fl->cctx = cctx;
+>>       fl->is_secure_dev = fdevice->secure;
+>>   -    fl->sctx = fastrpc_session_alloc(cctx);
+>> +    fl->sctx = fastrpc_session_alloc(fl);
+>>       if (!fl->sctx) {
+>>           dev_err(&cctx->rpdev->dev, "No session available\n");
+>>           mutex_destroy(&fl->mutex);
+>> @@ -1648,7 +1650,7 @@ static int fastrpc_dmabuf_alloc(struct fastrpc_user *fl, char __user *argp)
+>>   static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
+>>   {
+>>       struct fastrpc_invoke_args args[1];
+>> -    int tgid = fl->tgid;
+>> +    int tgid = fl->client_id;
+>>       u32 sc;
+>>         args[0].ptr = (u64)(uintptr_t) &tgid;
+>> @@ -1804,7 +1806,7 @@ static int fastrpc_req_munmap_impl(struct fastrpc_user *fl, struct fastrpc_buf *
+>>       int err;
+>>       u32 sc;
+>>   -    req_msg.pgid = fl->tgid;
+>> +    req_msg.pgid = fl->client_id;
+>>       req_msg.size = buf->size;
+>>       req_msg.vaddr = buf->raddr;
+>>   @@ -1890,7 +1892,7 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+>>           return err;
+>>       }
+>>   -    req_msg.pgid = fl->tgid;
+>> +    req_msg.pgid = fl->client_id;
+>>       req_msg.flags = req.flags;
+>>       req_msg.vaddr = req.vaddrin;
+>>       req_msg.num = sizeof(pages);
+>> @@ -1980,7 +1982,7 @@ static int fastrpc_req_mem_unmap_impl(struct fastrpc_user *fl, struct fastrpc_me
+>>           return -EINVAL;
+>>       }
+>>   -    req_msg.pgid = fl->tgid;
+>> +    req_msg.pgid = fl->client_id;
+>>       req_msg.len = map->len;
+>>       req_msg.vaddrin = map->raddr;
+>>       req_msg.fd = map->fd;
+>> @@ -2033,7 +2035,7 @@ static int fastrpc_req_mem_map(struct fastrpc_user *fl, char __user *argp)
+>>           return err;
+>>       }
+>>   -    req_msg.pgid = fl->tgid;
+>> +    req_msg.pgid = fl->client_id;
+>>       req_msg.fd = req.fd;
+>>       req_msg.offset = req.offset;
+>>       req_msg.vaddrin = req.vaddrin;
+>
 
 
