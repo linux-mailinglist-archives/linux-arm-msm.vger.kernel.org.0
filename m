@@ -1,48 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-29080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B82F39582CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 11:38:34 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 784989582F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 11:42:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EA6C81C20AD8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 09:38:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2EA5D283266
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 09:42:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C4F618C343;
-	Tue, 20 Aug 2024 09:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60E4618991B;
+	Tue, 20 Aug 2024 09:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ALSiNT2y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oLgNv9mI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F89718C332;
-	Tue, 20 Aug 2024 09:37:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AEC318C02C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Aug 2024 09:40:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724146631; cv=none; b=ODxFQv1QS5icp41YZSxRL6i8gmZovxZsKBere8MwK5MrAcHThJgPi4mbYJmIksDwMaa2IgimOQ581SITe109DgNTrpW5SyDoqmBTzuvGNVu/lQ3aMoYslexlG1tgpaAI9IOFpcPcpRfIK/CwCiprbJYCKp5B4zpr7mG5HH2/dfU=
+	t=1724146816; cv=none; b=KlXJ3uxZiUqU67ehJ+XCRTPjT4ZAmLAWESofsYNu7iZbkFye94I7pNlMef+idFuQt3XzcqJ6SNaXJw/nTpChMJlK2FL5l5CDnTOdS6Mls+WFXNu0eCxgIrS0cTQ8XimYaskoXtoKXcdphEs5IMORlk6YdhznyVbXQ4h8c+MVCbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724146631; c=relaxed/simple;
-	bh=27VQnEMdnqOcGlF7LNJhoGhfIvxG5khxXm1G5k4+TBs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sZKIB7a3dWwhJe7uMbYmSmYPFLLmaIqxtnyjq9jQeJp+yMd0Jt0cPSBSYwR+k2kVqTlLyZP0vB7tOw66+6Wa+h6IYTcov2fhISN+dej2PxYannOVD3waPJV1qFi07U9UrkH5+S/8PBb972B8mKp9BLUnelF5QwoeYvmRpS72+QU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ALSiNT2y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE989C4AF0F;
-	Tue, 20 Aug 2024 09:37:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724146631;
-	bh=27VQnEMdnqOcGlF7LNJhoGhfIvxG5khxXm1G5k4+TBs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ALSiNT2yd7HBz2jpgfAZUiv/N9akqjpIfqYDV2dGBAQxcGOvvtNzRQw/6ZGrTz+7n
-	 od3kHyuyX1kOEGTcaPT5TBPArVDBKT2OAm/BaNLKVmpYkoBFHidxSRVXawekbFZpJv
-	 zXtPypbCl/B2PA1Xp/d1hFS+PHO2+AmFL3ycIO8Q47dFIc0Gd+DWH8MYUeLjU6fhD5
-	 kA2+Yfz5UOIJcK09FP4b+aSPlaqt/MeORAPj/8L9MZiyRXWwPovpTuiuf1yvMG38QM
-	 LcjfZwayQWMBxQ+awv7SpTKVAqBzlig1Wk1dAVwbyS/VPh+hU7Pen00cVkbw1q35d7
-	 jsBuwuX10CFHg==
-Message-ID: <f608289a-3e84-4ef4-8ced-2c615a67dd55@kernel.org>
-Date: Tue, 20 Aug 2024 11:37:04 +0200
+	s=arc-20240116; t=1724146816; c=relaxed/simple;
+	bh=h4dh7CaNB4WkQEEbJfH7tP75tDnRV7swdehH667kjlI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=sLLcBrJPE4gk+aA/SgZH62a2rA9Dwc0mLopGG9RV9P5Ff6ZgPDEfhy/Vc9oR+TdqM86H0W3EBdVsTA1MpxMx3hn8DcfwDlo8miZqc3tvq5ZRdJ+DJ2yiPucfEBvJaKtAbuTU+jP9Aq/ypMqr48j+BOEJ8JHUtbEw2dm2N2aZhHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oLgNv9mI; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52f00ad303aso6849332e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Aug 2024 02:40:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1724146813; x=1724751613; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=fFuH+vZGVMrawIFZ7bXsY051cjH5fetWTgyPYqHJdLU=;
+        b=oLgNv9mIgJz9p6WDjv8mmZg38HfutK9OHtDCBgFE/DJehI5G6wmqBgN691EqjYXRea
+         cYh1vsqPnH5jIaNzvXcPQi/IyrNAzjHW8E9x1uZebru8MP4putmX1v3iVpbVbNmqEomo
+         ma8hZAeBtR9b8VWxuYV/GlBb4AAbApo19ce75wybjUEvaALdJUZXcZnnkxE/lwb+eI7W
+         j3JKuotpKw2W3Xe2xn87fzMhx8E7DMC1XUHx5qlblsLvVNaxLFUyIZAB/GpeUTr5YHoH
+         /hVwZ7kW3K0TKJhzFdN9InRlkfWsXVB4HSabTMpbL/B3oLf0D20wAoWI9QY+0U/dB3sW
+         +TPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724146813; x=1724751613;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fFuH+vZGVMrawIFZ7bXsY051cjH5fetWTgyPYqHJdLU=;
+        b=KJH74cegKht1E247RgclS7jUGSGo+yFowTd/abeCBpbklI72g8mPiSrnfbrUt+goP0
+         gRdxOKd1vjydRyFzjIHre77cOYlLAeHO+k/DJC9HNDuXAMqQCAa+6+Jx4p1IsCDbt+lz
+         GEWdizEgJK30Ts8vwVJFlz3u7lAyQP/bquSDeCuZZgbm6Sl54WssXgZEIgPhCjamc0GI
+         wHDaGr3nw5q3+bAdGTroyLXCAGJPvZhe/I0Gq+O51wQS/Zp9RQex6A78FxrnzDBBrNpX
+         Yw0X1G3CE1l4IkCiS1D1r2jkoNV2wClCRNlwcB9eKdT+otl5LUwWxBYApgAISiH9WGCh
+         M28Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVHUBZtZa44F9CO5j1JAXN2vq2aOZklXgCSQLAsUllqa/Lk5ZDo+seS/FDeIOGBrwCLviyxGmD5hV6i3E01Zrnz0MFWdJRTJDtw/zC5Lg==
+X-Gm-Message-State: AOJu0YzbGw4giH+GCsx3nwRf/Mo8jsZM+3t3qix+YKK77mOkAwomis4Q
+	uk2bLeii317Z9hm7wY5UKqTiFiR2Q6pMXNQje4R5SkpR3jfXprlJsqF9ICRQbyk=
+X-Google-Smtp-Source: AGHT+IElGwWSpEpk2zE5tI15XFgx0ouOncTxY/I2E06xW1H3aGfFZLK5sqWddHYBVO3wGlvPkVE/0w==
+X-Received: by 2002:a05:6512:ad2:b0:52c:de29:9ff with SMTP id 2adb3069b0e04-5331c692a14mr9861915e87.2.1724146812511;
+        Tue, 20 Aug 2024 02:40:12 -0700 (PDT)
+Received: from [192.168.0.25] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a83839470ebsm740650366b.159.2024.08.20.02.40.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Aug 2024 02:40:12 -0700 (PDT)
+Message-ID: <ea5c2d1f-5ced-4084-8478-c722ad99be46@linaro.org>
+Date: Tue, 20 Aug 2024 10:40:10 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,71 +76,42 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/8] ASoC: qcom: apq8016_sbc.c: Add Quinary support
-To: Adam Skladowski <a39.skl@gmail.com>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: sdm670: add camss and cci
+To: Richard Acayan <mailingradian@gmail.com>,
+ Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- Stephan Gerhold <stephan@gerhold.net>
-Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, Vladimir Lypak <vladimir.lypak@gmail.com>
-References: <20240731-msm8953-msm8976-asoc-v3-0-163f23c3a28d@gmail.com>
- <20240731-msm8953-msm8976-asoc-v3-1-163f23c3a28d@gmail.com>
+ <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-media@vger.kernel.org
+References: <20240819221051.31489-7-mailingradian@gmail.com>
+ <20240819221051.31489-12-mailingradian@gmail.com>
 Content-Language: en-US
-From: Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <20240731-msm8953-msm8976-asoc-v3-1-163f23c3a28d@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240819221051.31489-12-mailingradian@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 31.07.2024 5:25 PM, Adam Skladowski wrote:
-> From: Vladimir Lypak <vladimir.lypak@gmail.com>
+On 19/08/2024 23:10, Richard Acayan wrote:
+> Add the camera subsystem and CCI used to interface with cameras on the
+> Snapdragon 670.
 > 
-> Add support for configuring Quinary Mi2S interface
-> it will be used on MSM8953 and MSM8976 platform.
-> 
-> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-> [Adam: Split from MSM8953 support patch,add msg]
-> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 > ---
->  sound/soc/qcom/apq8016_sbc.c | 17 ++++++++++++++++-
->  1 file changed, 16 insertions(+), 1 deletion(-)
+>   arch/arm64/boot/dts/qcom/sdm670.dtsi | 188 +++++++++++++++++++++++++++
+>   1 file changed, 188 insertions(+)
 > 
-> diff --git a/sound/soc/qcom/apq8016_sbc.c b/sound/soc/qcom/apq8016_sbc.c
-> index 3023cf180a75..5a29adbd3f82 100644
-> --- a/sound/soc/qcom/apq8016_sbc.c
-> +++ b/sound/soc/qcom/apq8016_sbc.c
-> @@ -20,12 +20,13 @@
->  #include "common.h"
->  #include "qdsp6/q6afe.h"
->  
-> -#define MI2S_COUNT  (MI2S_QUATERNARY + 1)
-> +#define MI2S_COUNT  (MI2S_QUINARY + 1)
->  
->  struct apq8016_sbc_data {
->  	struct snd_soc_card card;
->  	void __iomem *mic_iomux;
->  	void __iomem *spkr_iomux;
-> +	void __iomem *quin_iomux;
->  	struct snd_soc_jack jack;
->  	bool jack_setup;
->  	int mi2s_clk_count[MI2S_COUNT];
-> @@ -86,6 +87,12 @@ static int apq8016_dai_init(struct snd_soc_pcm_runtime *rtd, int mi2s)
->  			SPKR_CTL_TLMM_DATA1_EN | SPKR_CTL_TLMM_WS_OUT_SEL_SEC |
->  			SPKR_CTL_TLMM_WS_EN_SEL_SEC, pdata->spkr_iomux);
->  		break;
-> +	case MI2S_QUINARY:
-> +		/* Configure Quinary MI2S */
-> +		if (!pdata->quin_iomux)
-> +			return -ENOENT;
-> +		writel(readl(pdata->quin_iomux) | 0x01, pdata->quin_iomux);
+> diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+> index ba93cef33dbb..37bc4fa04286 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
 
-I'm nitpicking, but 0x01 here is BIT(0)
+This looks neater - better indentation for example than what we have for 
+845 upstream.
 
-Acked-by: Konrad Dybcio <konradybcio@kernel.org>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-Konrad
 
