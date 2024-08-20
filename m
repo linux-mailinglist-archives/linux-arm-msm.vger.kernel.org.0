@@ -1,120 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-29107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3541695857D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 13:13:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D7FE3958595
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 13:20:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 609561C21DC3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 11:13:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F2C6E1C24482
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 11:20:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17D4618E050;
-	Tue, 20 Aug 2024 11:13:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uNprruVp"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0D9818CC1A;
+	Tue, 20 Aug 2024 11:20:40 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D774518E048;
-	Tue, 20 Aug 2024 11:13:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E17155C80;
+	Tue, 20 Aug 2024 11:20:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724152385; cv=none; b=ejcgveEz7ivmhQyKOTC2/2wEJHfkLq116USNovBqYByDZYk9mm5CiqEWBiFta6zX45GxlVIAJpSSx7skD2Mnzp97j4G+Osvi74F0I1/ei4i8h8hAUZuGVS5NJ8P6QDpXoSHyaAMWDVTE7v7kIP9PmQY+9tP9hs5II3NQSPuAs6E=
+	t=1724152840; cv=none; b=lrglayZsaUuW/7tB6SlHmBxCf8wzuyK/A9drTNv/yOk2jdb/Yw/uK4LnHTAHTjKv+cAxjCFB9zhQKNFght4tnPPJVNp2BnAbuSwM9skQL/lluRftvcwApzeoTPh4/6tlFtv9u0F6ZgMESyx/MVtirXe6SIi1N6d4oJYd6faMx+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724152385; c=relaxed/simple;
-	bh=1zbN2sNRtfPRGWcjxVwDgWYDBk9g6pO9DkhmuXEJIJ0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nBC5dcEhXW4Li4SjfmFBb2031pft/LroxuCGrdPekcqwvqDB8+so4aKsg3rbh6V6jdL+hZxzYsBBmgT3RMASQbHBooO9V7nS3/n2Bb0DQssW6ErDmGauelp9emBGNltGFv6JAdOQMDJkSBzcgjccwUvH5gjDBFrpMr3UUJBpdrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uNprruVp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A640EC4AF0F;
-	Tue, 20 Aug 2024 11:13:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724152384;
-	bh=1zbN2sNRtfPRGWcjxVwDgWYDBk9g6pO9DkhmuXEJIJ0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uNprruVpQlH0SZga+pnYL3gZGQiKxOIHWEGabjDKpKl9mLLlBUiRgU1LJKJ8Bgx2v
-	 HKkUz8qe2GI1XzRxYXjoVby3/0OVsNdnSxZNpc5LDijBHk2WocaUgaubPqdLVznGSF
-	 qZNvH0uKaafn3EftbmXCaeWpKK6iW+t6XwpwXD64EFXQ6Hj6IQ79eLm+Z0UKbhDA2f
-	 /7GsJAgE+l+N4WehhvePUGXTtenkWji9gzT20AJtaH52kdJDrbqJ2fGWWNb1k2Z/K2
-	 Ka6MXNP4lFLvwvvCj9hXIVHX8wP+wYeoNow2n5zd87qlkrN1SYgkYqYTRRsbzWbWBe
-	 m9/Ox1KIJnR/g==
-Message-ID: <4d1c0d17-20b8-4989-9757-61031e9f03a4@kernel.org>
-Date: Tue, 20 Aug 2024 13:12:58 +0200
+	s=arc-20240116; t=1724152840; c=relaxed/simple;
+	bh=Au1yckoSCUXUgrrdigjhuQ0Zp4yrP2RtTGZIxjsiu3c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gYRFemVxGqWyczjfZxtdONun0D6ICuO6p6v1x5doZz6mc3cvCNy57v+YY2ns6+53ez9ATkLTvf5nViz5b/18vPGN1UZP3d3Fbu06eB9yIHK+LeDHzEAsca+rv1tGXXb87IsTo/wiZkMwVUZBE3TlZWRsunqfbs5IwwS7x0zY8k8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-37189d8e637so3225012f8f.3;
+        Tue, 20 Aug 2024 04:20:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724152837; x=1724757637;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8YqNonoW+AXT4DFqG0cqXTVS5fYaya45lKpoOnLhQQI=;
+        b=qSitCzkWnoYeho7x5swAUPc4Zy31XbPYXrDuGA370/BLuX2cL+Kk3SPLAo8VtOdujM
+         4WKOADcQ/hmI2w9C8GqNfJPNlOIa1TOfPk/W7xd3r/yZyViYRTiSUNaJ7CB2lIs6onEG
+         zEcVm9TTJd7TkhkEtVoYEVv1iT/XcP1rSqhjb9LoUp7eAZRKAGs/7oe/Ltg9X45I100j
+         rL2oI3+EEgnHtFoxKy4K+JNohjW98IGxbxEmzF5hCFz0oHAz74bMyxJGthV0OiZSqLfh
+         e5ASgxkiAKPKjFdyI6MQ5jmPh7O5AmPyf9etjz5wJazikrlqmkF7uWq14iKCIQO0uHVF
+         57cg==
+X-Forwarded-Encrypted: i=1; AJvYcCV1ii4E36dZiN+hcXiBGKm84R6X4irE+IJeEgplPHhU/fNYlgh0nQmtm/WeHs/oydgY0wOKRffAJhBZ1zmliQ==@vger.kernel.org, AJvYcCVZ+qu/1IrHEANxJ34cbFLnflya2QYTwNA8adgL7QY4DdmU4/LT+ANYBWya2jgRPdbWdYJW90LuEm9rZ9nU1HxfRw==@vger.kernel.org, AJvYcCW94vpjtpC6jI8euBrMoscUFe2Z2yd5TGSr3TY648+XmJ2uROUudPL+syo3UgFhnqQ8fSSaf4YFe0u5fOvA@vger.kernel.org, AJvYcCXZ9HIve6Pjjy3ip4lUAJv8XCQ596pr0+p0hytTkuqvBPeD17HsfRtNdCGSxQmhI0g1/7a8DUWTNkwO@vger.kernel.org
+X-Gm-Message-State: AOJu0YwSeb9sp3015KUNzg7jK5LC3aJ1JxpGFZYnTsYx3SAHXgoyDJIM
+	nOwPNQdAT9RD9mUbevd95+ZnFmxlPP/1WmQ2WmBoYSFbHBRtJMYm
+X-Google-Smtp-Source: AGHT+IHEr21C0aY1t6Xf8SNHDmzvuwEc3DtDIQzCLlmVHlaBE3Cae0i7JJpirzSyu0Kq3f+wv+GIkg==
+X-Received: by 2002:adf:e255:0:b0:371:9395:9c2d with SMTP id ffacd0b85a97d-371946a5ac4mr9567018f8f.55.1724152836890;
+        Tue, 20 Aug 2024 04:20:36 -0700 (PDT)
+Received: from krzk-bin ([178.197.215.209])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-371898b8ad6sm12890025f8f.114.2024.08.20.04.20.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Aug 2024 04:20:36 -0700 (PDT)
+Date: Tue, 20 Aug 2024 13:20:33 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
+	q@krzk-bin.smtp.subspace.kernel.org
+Cc: andersson@kernel.org, krzk+dt@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, quic_viswanat@quicinc.com, quic_mmanikan@quicinc.com, 
+	quic_varada@quicinc.com, quic_srichara@quicinc.com
+Subject: Re: [PATCH 1/2] dt-bindings: remoteproc: qcom: document hexagon
+ based WCSS secure PIL
+Message-ID: <ticwyyycqlk2uqpiqckoqqnapqatw74s6f6tjqmmyt2d6siqqt@xxe2qdtr4c2c>
+References: <20240820085517.435566-1-quic_gokulsri@quicinc.com>
+ <20240820085517.435566-2-quic_gokulsri@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] Add new driver for WCSS secure PIL loading
-To: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
- andersson@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Cc: quic_viswanat@quicinc.com, quic_mmanikan@quicinc.com,
- quic_varada@quicinc.com, quic_srichara@quicinc.com
-References: <20240820085517.435566-1-quic_gokulsri@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240820085517.435566-1-quic_gokulsri@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240820085517.435566-2-quic_gokulsri@quicinc.com>
 
-On 20/08/2024 10:55, Gokul Sriram Palanisamy wrote:
-> This series depends on q6 clock removal series [1].
+On Tue, Aug 20, 2024 at 02:25:14PM +0530, Gokul Sriram Palanisamy wrote:
+> From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+> 
+> Add new binding document for hexagon based WCSS secure PIL remoteproc.
+> IPQ5332, IPQ9574 follows secure PIL remoteproc.
+> 
+> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+> ---
+>  .../remoteproc/qcom,wcss-sec-pil.yaml         | 125 ++++++++++++++++++
+>  1 file changed, 125 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,wcss-sec-pil.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,wcss-sec-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,wcss-sec-pil.yaml
+> new file mode 100644
+> index 000000000000..c69401b6cec1
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcss-sec-pil.yaml
+> @@ -0,0 +1,125 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/remoteproc/qcom,wcss-sec-pil.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm WCSS Secure Peripheral Image Loader
 
-How? So this cannot be tested and merged?
+...
 
-That's second patchset to day with some totally bogus dependencies.
-People, stop it.
+> +
+> +maintainers:
+> +  - Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+> +
+> +description:
+> +  WCSS Secure Peripheral Image Loader loads firmware and power up QDSP6
 
+What is WCSS? Don't add random acronyms without any explanation.
+
+> +  remoteproc's on the Qualcomm IPQ9574, IPQ5332 SoC.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,ipq5332-wcss-sec-pil
+> +      - qcom,ipq9574-wcss-sec-pil
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  firmware-name:
+> +    $ref: /schemas/types.yaml#/definitions/string
+> +    description: Firmware name for the Hexagon core
+
+No, look how other bindings are doing it.
+
+It looks like you develop patches on some old kernel, so please start
+from scratch on newest kernel.
+
+> +
+> +  interrupts:
+> +    items:
+> +      - description: Watchdog interrupt
+> +      - description: Fatal interrupt
+> +      - description: Ready interrupt
+> +      - description: Handover interrupt
+> +      - description: Stop acknowledge interrupt
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: wdog
+> +      - const: fatal
+> +      - const: ready
+> +      - const: handover
+> +      - const: stop-ack
+> +
+> +  clocks:
+> +    items:
+> +      - description: IM SLEEP clock
+
+What is IM? Explain all acronyms.
+
+What is SLEEP?
+
+> +
+> +  clock-names:
+> +    items:
+> +      - const: im_sleep
+
+sleep? Are there different sleep clocks here?
+
+> +
+> +  qcom,smem-states:
+> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> +    description: States used by the AP to signal the remote processor
+> +    items:
+> +      - description: Shutdown Q6
+> +      - description: Stop Q6
+> +
+
+Do not introduce other order. First stop, then shutdown.
+
+> +  qcom,smem-state-names:
+> +    description:
+> +      Names of the states used by the AP to signal the remote processor
+> +    items:
+> +      - const: shutdown
+> +      - const: stop
+
+The same.
+
+> +
+> +  memory-region:
+> +    items:
+> +      - description: Q6 reserved region
+> +
+> +  glink-edge:
+> +    $ref: /schemas/remoteproc/qcom,glink-edge.yaml#
+> +    description:
+> +      Qualcomm G-Link subnode which represents communication edge, channels
+> +      and devices related to the Modem.
+> +    unevaluatedProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - firmware-name
+> +  - reg
+> +  - interrupts
+> +  - interrupt-names
+> +  - qcom,smem-states
+> +  - qcom,smem-state-names
+> +  - memory-region
+
+Keep the same order as in properties.
+
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/clock/qcom,ipq5332-gcc.h>
+> +    q6v5_wcss: remoteproc@d100000 {
+
+Drop unused label.
+
+> +      compatible = "qcom,ipq5332-wcss-sec-pil";
+> +      reg = <0xd100000 0x4040>;
+> +      firmware-name = "ath12k/IPQ5332/hw1.0/q6_fw0.mdt";
+> +      interrupts-extended = <&intc GIC_SPI 291 IRQ_TYPE_EDGE_RISING>,
+> +                            <&wcss_smp2p_in 0 IRQ_TYPE_NONE>,
+> +                            <&wcss_smp2p_in 1 IRQ_TYPE_NONE>,
 
 Best regards,
 Krzysztof
