@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-29081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 784989582F6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 11:42:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5BDE9582FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 11:43:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2EA5D283266
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 09:42:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D03B284880
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 09:43:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60E4618991B;
-	Tue, 20 Aug 2024 09:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE69418C34C;
+	Tue, 20 Aug 2024 09:40:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oLgNv9mI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VM2SSEru"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AEC318C02C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 20 Aug 2024 09:40:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F993E47B;
+	Tue, 20 Aug 2024 09:40:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724146816; cv=none; b=KlXJ3uxZiUqU67ehJ+XCRTPjT4ZAmLAWESofsYNu7iZbkFye94I7pNlMef+idFuQt3XzcqJ6SNaXJw/nTpChMJlK2FL5l5CDnTOdS6Mls+WFXNu0eCxgIrS0cTQ8XimYaskoXtoKXcdphEs5IMORlk6YdhznyVbXQ4h8c+MVCbo=
+	t=1724146821; cv=none; b=I73QEJkSsyOdyEx0tQqXfNif7YVxTrNMN3NjRZQlpsQ1kJOxSDAvMRXyK3Z+NDvMx6IrWo9e++Pxq6FJkusVTdVlv5Od06kVLUzQ9nUFGK528EQoYQQGrE7eMjUNAWZf5j4h1bfBLeBBeCRhwFcN5L55zDRE/feZJMX7wqvdX04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724146816; c=relaxed/simple;
-	bh=h4dh7CaNB4WkQEEbJfH7tP75tDnRV7swdehH667kjlI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=sLLcBrJPE4gk+aA/SgZH62a2rA9Dwc0mLopGG9RV9P5Ff6ZgPDEfhy/Vc9oR+TdqM86H0W3EBdVsTA1MpxMx3hn8DcfwDlo8miZqc3tvq5ZRdJ+DJ2yiPucfEBvJaKtAbuTU+jP9Aq/ypMqr48j+BOEJ8JHUtbEw2dm2N2aZhHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oLgNv9mI; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-52f00ad303aso6849332e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Aug 2024 02:40:14 -0700 (PDT)
+	s=arc-20240116; t=1724146821; c=relaxed/simple;
+	bh=lXEEDwRzoFc+Xn7QACfiLEhpgAwRwq2ArplWqB3K3Zo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=W+98VchbB/LntiHWPGrqbuD0VhgvrezBN4oE45bL4B2CJrh8DphqIIzS8kxidEDYrZBrHljrYH3hBMdzFrYs78aGl2QP/ONlOqq8Qeto5ld2wZc9rRl3rmB/OdZjF3sPLFsYut9mjjzWkrozoERH8Zty0Q3LjT2+DhldcwdbVbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VM2SSEru; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2f3eabcd293so6834351fa.2;
+        Tue, 20 Aug 2024 02:40:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724146813; x=1724751613; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1724146818; x=1724751618; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=fFuH+vZGVMrawIFZ7bXsY051cjH5fetWTgyPYqHJdLU=;
-        b=oLgNv9mIgJz9p6WDjv8mmZg38HfutK9OHtDCBgFE/DJehI5G6wmqBgN691EqjYXRea
-         cYh1vsqPnH5jIaNzvXcPQi/IyrNAzjHW8E9x1uZebru8MP4putmX1v3iVpbVbNmqEomo
-         ma8hZAeBtR9b8VWxuYV/GlBb4AAbApo19ce75wybjUEvaALdJUZXcZnnkxE/lwb+eI7W
-         j3JKuotpKw2W3Xe2xn87fzMhx8E7DMC1XUHx5qlblsLvVNaxLFUyIZAB/GpeUTr5YHoH
-         /hVwZ7kW3K0TKJhzFdN9InRlkfWsXVB4HSabTMpbL/B3oLf0D20wAoWI9QY+0U/dB3sW
-         +TPw==
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qGdzoV4raGjUE/t8kSVhE9E8ZPs0EkYSUtLm853VbOc=;
+        b=VM2SSEruDzWSP0G63srd0/pqQ6kaQaomIrWpUpVLO+sh+UaL/OByRnTrhHQetVvl61
+         H8a5ud5s0vWpE1ho9mnd5aUqJHbz+AKRt6uJbOJMHldvYhNqGKmLg7bfyyw172/Tu732
+         UNn34BdtQi5pn9fmiTmTihOnmAS5J2KhRs3KVXMW8WRl15gMNIfif+9h88JYi4cPRMaz
+         YLE8YsAood8bP9YDjjt3zEBnh2lSYB6CeIgUaWHv43tGEOrLL9eMbgmMg3F+Dau2DnAC
+         qq55Up1e2tU75b+6vvC1Q1gSyXDadqwPJCuSw8l+cRmVLnZvaO8hz7JQo/d5di0Am1/c
+         8bmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724146813; x=1724751613;
+        d=1e100.net; s=20230601; t=1724146818; x=1724751618;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fFuH+vZGVMrawIFZ7bXsY051cjH5fetWTgyPYqHJdLU=;
-        b=KJH74cegKht1E247RgclS7jUGSGo+yFowTd/abeCBpbklI72g8mPiSrnfbrUt+goP0
-         gRdxOKd1vjydRyFzjIHre77cOYlLAeHO+k/DJC9HNDuXAMqQCAa+6+Jx4p1IsCDbt+lz
-         GEWdizEgJK30Ts8vwVJFlz3u7lAyQP/bquSDeCuZZgbm6Sl54WssXgZEIgPhCjamc0GI
-         wHDaGr3nw5q3+bAdGTroyLXCAGJPvZhe/I0Gq+O51wQS/Zp9RQex6A78FxrnzDBBrNpX
-         Yw0X1G3CE1l4IkCiS1D1r2jkoNV2wClCRNlwcB9eKdT+otl5LUwWxBYApgAISiH9WGCh
-         M28Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVHUBZtZa44F9CO5j1JAXN2vq2aOZklXgCSQLAsUllqa/Lk5ZDo+seS/FDeIOGBrwCLviyxGmD5hV6i3E01Zrnz0MFWdJRTJDtw/zC5Lg==
-X-Gm-Message-State: AOJu0YzbGw4giH+GCsx3nwRf/Mo8jsZM+3t3qix+YKK77mOkAwomis4Q
-	uk2bLeii317Z9hm7wY5UKqTiFiR2Q6pMXNQje4R5SkpR3jfXprlJsqF9ICRQbyk=
-X-Google-Smtp-Source: AGHT+IElGwWSpEpk2zE5tI15XFgx0ouOncTxY/I2E06xW1H3aGfFZLK5sqWddHYBVO3wGlvPkVE/0w==
-X-Received: by 2002:a05:6512:ad2:b0:52c:de29:9ff with SMTP id 2adb3069b0e04-5331c692a14mr9861915e87.2.1724146812511;
-        Tue, 20 Aug 2024 02:40:12 -0700 (PDT)
-Received: from [192.168.0.25] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a83839470ebsm740650366b.159.2024.08.20.02.40.11
+        bh=qGdzoV4raGjUE/t8kSVhE9E8ZPs0EkYSUtLm853VbOc=;
+        b=szGO8MaER4A3HqjUBqJ1La7CC4hdFEvSjgSmSTACyFNbqMjWANrMPz2k5JlOEI8QnC
+         o7XMUDGx18RosaTU/UYv/k1zmnU3u9xAyDkV3jaiQeI8CsVDr6JK5Q9hHvm21OQaHwU2
+         xL0yXG+ce5SVlW6vVVaNjOkKus6dphhSXVe/p4b72y9fUVBBW9NNCIzeHX2yR3lAmohu
+         drv8NExqVWixdgaiClHvhdbqFosKrnhE8u23LZTcDVfT8tJ3QWuaAq8AhDSnz2QdH3ys
+         DwHz43C8fC/ZHIMrttbL6PV5p+1n8vxJ8JiDrM1gR5bnhtehsHBFYaLzU6UAEdO0Ilwe
+         XqUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXbzb1NF5aW8TS/oAUkgV9o+9FhCHuJZhNAezxVQYzSo3bx14z3qQ7KCeoGY9K5kXD4+sN4FJShbszMNvR1JQxrSs+HUqAjPCjFOESnJDnOd5wJ8mh1Uje7f7eGW6ubdDUstcbTw/F6XFdvSyKrMqgx0fPx9UZnU4QrE0YranTsg/TPewzLajEKM8yBuSPewBthe4EalP9jxCJ+4kw5zWhlarSOMQ==
+X-Gm-Message-State: AOJu0Yz0hlScqt7uWC3rq0jRTUOZVq72Z2iUdzC+lqZ+NURiAAa9mz5P
+	ou7MPMCUnms/+Mr34YX7dACRKiU74WltcCnFjWHYurABNKg0mRKu
+X-Google-Smtp-Source: AGHT+IHYRs/auh9A6D5deXi9S3suCxwWcI02PT4Az0n5KToMYJ1uE1P/dVslk8K+8kXcBvwm0tVGsw==
+X-Received: by 2002:a05:651c:1545:b0:2ef:2b05:2ab3 with SMTP id 38308e7fff4ca-2f3be574d67mr103145531fa.10.1724146817182;
+        Tue, 20 Aug 2024 02:40:17 -0700 (PDT)
+Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5bebbdfbb4asm6564664a12.52.2024.08.20.02.40.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Aug 2024 02:40:12 -0700 (PDT)
-Message-ID: <ea5c2d1f-5ced-4084-8478-c722ad99be46@linaro.org>
-Date: Tue, 20 Aug 2024 10:40:10 +0100
+        Tue, 20 Aug 2024 02:40:16 -0700 (PDT)
+Message-ID: <945edee7-f1c4-42ba-b4c6-c600cbdd70cc@gmail.com>
+Date: Tue, 20 Aug 2024 11:40:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,42 +76,64 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: sdm670: add camss and cci
-To: Richard Acayan <mailingradian@gmail.com>,
- Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v3 7/8] ASoC: qcom: apq8016_sbc: Add support for msm8976
+ SoC
+To: Adam Skladowski <a39.skl@gmail.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
- linux-media@vger.kernel.org
-References: <20240819221051.31489-7-mailingradian@gmail.com>
- <20240819221051.31489-12-mailingradian@gmail.com>
+ <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Stephan Gerhold <stephan@gerhold.net>
+Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20240731-msm8953-msm8976-asoc-v3-0-163f23c3a28d@gmail.com>
+ <20240731-msm8953-msm8976-asoc-v3-7-163f23c3a28d@gmail.com>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240819221051.31489-12-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Konrad Dybcio <konradybcio@gmail.com>
+In-Reply-To: <20240731-msm8953-msm8976-asoc-v3-7-163f23c3a28d@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 19/08/2024 23:10, Richard Acayan wrote:
-> Add the camera subsystem and CCI used to interface with cameras on the
-> Snapdragon 670.
+On 31.07.2024 5:25 PM, Adam Skladowski wrote:
+> Introduce support for audio card on MSM8976 platform.
+> While MSM8976 falls into v1 category with MSM8916, digitial codec clock
+> is not available in GCC so we have to set it in machine driver.
+> For that reason for V1 clocks new boolean is added to check
+> if we need to enable codec clock.
 > 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
 > ---
->   arch/arm64/boot/dts/qcom/sdm670.dtsi | 188 +++++++++++++++++++++++++++
->   1 file changed, 188 insertions(+)
+>  sound/soc/qcom/apq8016_sbc.c | 28 ++++++++++++++++++++++++++++
+>  1 file changed, 28 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> index ba93cef33dbb..37bc4fa04286 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+> diff --git a/sound/soc/qcom/apq8016_sbc.c b/sound/soc/qcom/apq8016_sbc.c
+> index 3ed35beb671a..8219d4d55625 100644
+> --- a/sound/soc/qcom/apq8016_sbc.c
+> +++ b/sound/soc/qcom/apq8016_sbc.c
+> @@ -35,6 +35,7 @@ struct apq8016_sbc_data {
+>  	struct snd_soc_jack jack;
+>  	bool jack_setup;
+>  	enum afe_clk_api q6afe_clk_ver;
+> +	bool dig_cdc_mclk_en;
+>  	int mi2s_clk_count[MI2S_COUNT];
+>  };
+>  
+> @@ -242,6 +243,16 @@ static int msm8916_qdsp6_startup(struct snd_pcm_substream *substream)
+>  
+>  	if (++data->mi2s_clk_count[mi2s] > 1)
+>  		return 0;
+> +	/*
+> +	 * On newer legacy SoC (MSM8976) lpass codec clocks are not available in gcc region
+> +	 * so we have to request clock from machine driver using V1 API)
+> +	 */
+> +	if (data->q6afe_clk_ver == Q6AFE_CLK_V1 &&
+> +	    data->dig_cdc_mclk_en) {
+> +		ret = snd_soc_dai_set_sysclk(cpu_dai,  LPAIF_DIG_CLK, DEFAULT_MCLK_RATE, 0);
 
-This looks neater - better indentation for example than what we have for 
-845 upstream.
+Double space here and below
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
+Konrad
 
