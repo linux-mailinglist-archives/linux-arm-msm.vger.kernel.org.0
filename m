@@ -1,154 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-29049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB051957DF6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 08:19:39 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67228957E00
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 08:23:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 672862840DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 06:19:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C38C5B22A9C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Aug 2024 06:23:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57C8016A95F;
-	Tue, 20 Aug 2024 06:19:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l3z+AbXr"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3B1016B381;
+	Tue, 20 Aug 2024 06:23:51 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874562A1B2;
-	Tue, 20 Aug 2024 06:19:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D9B2A1B2;
+	Tue, 20 Aug 2024 06:23:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724134774; cv=none; b=sW5grpOeOYD7O386YxV5D8u28DkijXlii6iYy8LsuWk14EohHb+b5K7Vez5DLpQz3DOqYoGXOh/G40ukghqQhMIEzkr948kEwdlAhgYzyqpOw+rN50REPOlreLczcXn61nGJM1v+brZse2ly6hyEoz6TwQ8WnMXbTi2sPojw/2c=
+	t=1724135031; cv=none; b=j4LcB8vk1EEdYDrdFhQD5l1vMeocmqvBkm2timQd9/v4MBwWAuzC7mrAyCzpepZpqL1F99+QQ/7pxbeqztJAZBNIinYbA5KZnqc9UXm994s9dyKz4VIn0pqcP4DQwjy8czQbju/eW842wsi6bqv52VwiF4NnHe7IDcRa7p58NA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724134774; c=relaxed/simple;
-	bh=qbLTJSAjd2i5MbXaaXESgl/A7y4ae0phkjCMfbjlFKI=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CsuDRkZXb2yTt1wVQv8shhRxX2KsG+42tIIML9TeSEXQzGtYmtPYkMLjWtVqMjDOKO0x6RrYCaWyrzrPVcmtMKq6+1w9Yjd29SfUjHsOmwFH1v4xX2JYbQNYeZ4lNnD5PT/Ie2X+eP3NPuUxqWZ5rs6WGcyA7envlzpdiHuXLRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l3z+AbXr; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47K026Cv015828;
-	Tue, 20 Aug 2024 06:19:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=qbLTJSAjd2i5MbXaaXESgl/A
-	7y4ae0phkjCMfbjlFKI=; b=l3z+AbXrHLD9815V2NftGAMqv/B+veGAuF/ex7SD
-	PPD+S37RO8tULO8kNH0EwbNsBgd3gP55Aub7I8u3DxniiKXAAyIh6q7vzrfvDsKH
-	Hfpe1SegTfzCNUwcWFf9KEFX5KaeoUYtFoEE6yJZ2C0INYfPm1NZ2O1m+QiHXhmz
-	IYjnOldISuGMJGfPwSR+mOzEJIdFahC5tj61Y3hoYmbXuCDtrvmuwCoh+Hz2Y1JV
-	0Vvsr+rn/tD2nHQiO2jDk1AKCkjSgJ+e4JujRbbt1Rd5YVkYeRbIkntQFS3obBCB
-	4KvFfYaLT5mLlSdTMiaC+uB1xWB9aNnbE4xWfWD1nARKqQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 412m876nvk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Aug 2024 06:19:16 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47K6JE73027670
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 20 Aug 2024 06:19:14 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 19 Aug 2024 23:19:07 -0700
-Date: Tue, 20 Aug 2024 11:49:03 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Ulf Hansson <ulf.hansson@linaro.org>
-CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <ilia.lin@kernel.org>,
-        <rafael@kernel.org>, <viresh.kumar@linaro.org>,
-        <quic_sibis@quicinc.com>, <quic_rjendra@quicinc.com>,
-        <danila@jiaxyga.com>, <neil.armstrong@linaro.org>,
-        <otto.pflueger@abscue.de>, <abel.vesa@linaro.org>, <luca@z3ntu.xyz>,
-        <geert+renesas@glider.be>, <stephan.gerhold@kernkonzept.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>,
-        Praveenkumar I
-	<quic_ipkumar@quicinc.com>
-Subject: Re: [PATCH v6 5/9] pmdomain: qcom: rpmpd: Add IPQ9574 power domains
-Message-ID: <ZsQ1V/qusOz6uctA@hu-varada-blr.qualcomm.com>
-References: <20240710061102.1323550-1-quic_varada@quicinc.com>
- <20240710061102.1323550-6-quic_varada@quicinc.com>
- <d454e01f-3d6b-4a02-87cf-3d289bc6957c@linaro.org>
- <ZpeLYG6vegJYZ5Rs@hu-varada-blr.qualcomm.com>
- <ZqCD3xtkLHbw9BHN@hu-varada-blr.qualcomm.com>
- <iy3l3ybmvllqxtyqq7fifiokxaaedrs22davveel4ikjoqivdm@dinswoc52qpz>
- <CAPDyKFoSK4_gRtOY2_pZhT7AytZ4qpZpRTzg5cOrqJj7A22b6A@mail.gmail.com>
+	s=arc-20240116; t=1724135031; c=relaxed/simple;
+	bh=zM2oa1EdLLGiJmNc29lSzfeEOuTWrGgptwcW+xB/Rfc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fElytIw1LfUPp/l6PBWOnxO4dwp6j0dMjqJwz5Bc+MZOFbR7aVtc2ASfysyAVSFrHsC8NhPMJ56A082xiWNq48fQ9/60hT9jSQThDjHTZ4dGkWEhd+RKxvP7qaDMyY4146Qk3iTtD1Y2XJo8gif60IQ4R2rzKw0KErClHbtTfks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4281ca54fd3so40893795e9.2;
+        Mon, 19 Aug 2024 23:23:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724135028; x=1724739828;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XN9Ta845ZUEPl4X0vI0xluoJCw89dQ0gUl/RLrISjt8=;
+        b=rUK6qlj6iyzioxxlzLlrzJfJG/mTzxr1EmTHrgmss7vEF+Wq1LbGTqIe5GubFUGxFp
+         EAIYzHnZ1mJ2UmQK35WonyZbJfj8VG5XGFIe32a3KfQp4LE3rpYWQxQLWoKuP3AUGzYw
+         3Unr7MA2p4ye1OM+/lFEPFJpawsQZFpQc5At1N2wG8vyRIsYX1g5LAdTF887vFGDnC2v
+         biN+g4XFj8KQrGBgAooYeEbCwaDkKkdVBucpwYUyOIkoGTLX/DVzZ9BmA3rtPP2Xhj4V
+         c3sFNdKVyshvbqjL7Y7FDioMizgkN6ld8umCi+Rl0+7QR7Jmf0WtBEPfePLaZ+ecgfFQ
+         Yq7A==
+X-Forwarded-Encrypted: i=1; AJvYcCXMYhZgeLUGZ2Z56u6t98he6umBPIVz2p2/S7GQ3xfHDiE0RGmOaubQzYM8sxEFqkkpIAkSUfozKFARcSHjU4xLthC30P+JN/5cCLsVLIMT2tcMQLb3L5dnzt0l/BtfM5WYs4B+JjILqb0YhSCOjZw48Jpkub4vqRUTg/fGpdhfId+5rCZPQRAb+cm8+N16jMVjG/rNgpVD2JKR6pRdI3CghA==
+X-Gm-Message-State: AOJu0Ywce1SZEAP/S3XwPeY+hwN22U/GotvbG8vCes6h0PawwbW/iA/f
+	pd64uT/UTd2wogmoi1iMx2+jNceOg6Ze1C8/RJwRY3Mv6eOQHnV3
+X-Google-Smtp-Source: AGHT+IFT+XlXOjd5JjOmSbppAhR/wOGsMmDdyAbLHqMaMiTG1TIeu4Zce6BhVxVpn/1wz/Kt8Q3nIw==
+X-Received: by 2002:a5d:4089:0:b0:371:8e68:a6dd with SMTP id ffacd0b85a97d-3719434434emr7741985f8f.23.1724135027745;
+        Mon, 19 Aug 2024 23:23:47 -0700 (PDT)
+Received: from krzk-bin ([178.197.215.209])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-429ed784726sm131190065e9.35.2024.08.19.23.23.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Aug 2024 23:23:46 -0700 (PDT)
+Date: Tue, 20 Aug 2024 08:23:44 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Richard Acayan <mailingradian@gmail.com>
+Cc: Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Todor Tomov <todor.too@gmail.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-media@vger.kernel.org
+Subject: Re: [PATCH v3 1/5] dt-bindings: i2c: qcom-cci: Document SDM670
+ compatible
+Message-ID: <63ma4u7vihvjalmwnsptlwjvogdopkrganhj7njhjxy6ykjoly@weforkdwazcb>
+References: <20240819221051.31489-7-mailingradian@gmail.com>
+ <20240819221051.31489-8-mailingradian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPDyKFoSK4_gRtOY2_pZhT7AytZ4qpZpRTzg5cOrqJj7A22b6A@mail.gmail.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: MweU2tGZChrAwiTpkRejd55buTB5loI-
-X-Proofpoint-ORIG-GUID: MweU2tGZChrAwiTpkRejd55buTB5loI-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-19_16,2024-08-19_03,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- mlxlogscore=581 priorityscore=1501 adultscore=0 lowpriorityscore=0
- clxscore=1011 bulkscore=0 suspectscore=0 spamscore=0 impostorscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408200045
+In-Reply-To: <20240819221051.31489-8-mailingradian@gmail.com>
 
-On Mon, Aug 05, 2024 at 12:32:34PM +0200, Ulf Hansson wrote:
-> On Wed, 24 Jul 2024 at 19:26, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > On Wed, Jul 24, 2024 at 10:02:31AM GMT, Varadarajan Narayanan wrote:
-> > > On Wed, Jul 17, 2024 at 02:44:08PM +0530, Varadarajan Narayanan wrote:
-> > > > On Tue, Jul 16, 2024 at 02:15:12PM +0200, Konrad Dybcio wrote:
-> > > > > On 10.07.2024 8:10 AM, Varadarajan Narayanan wrote:
-> > > > > > From: Praveenkumar I <quic_ipkumar@quicinc.com>
-> > > > > >
-> > > > > > Add the APC power domain definitions used in IPQ9574.
-> > > > > >
-> > > > > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > > Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> > > > > > Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> > > > > > ---
-> > > > >
-> > > > > Could you please confirm [1]?
-> > > > >
-> > > > > Konrad
-> > > > >
-> > > > > [1] https://lore.kernel.org/linux-arm-msm/57dadb35-5dde-4127-87aa-962613730336@linaro.org/
-> > > >
-> > > > The author is off for a few days. Will get back to you once he is in.
-> > >
-> > > Have responded to that query. Please see https://lore.kernel.org/linux-arm-msm/ZqCCpf1FwLWulSgr@hu-varada-blr.qualcomm.com/
-> >
-> > If it responds to voltage values, please model it as a regulator rather
-> > than a power domain.
->
-> Just wanted to give my brief opinion around this too.
->
-> I agree that it seems to make sense to model it as a regulator, but
-> that doesn't necessarily mean that we shouldn't model it as a
-> power-domain too.
->
-> If it is a power-domain it should be modelled like that - and then the
-> power-domain provider should be assigned as the consumer of that
-> regulator.
+On Mon, Aug 19, 2024 at 06:10:53PM -0400, Richard Acayan wrote:
+> The CCI on the Snapdragon 670 is the interface for controlling camera
+> hardware over I2C. Add the compatible so it can be added to the SDM670
+> device tree.
+> 
+> @@ -138,6 +139,23 @@ allOf:
+>              - const: cci
+>              - const: camss_ahb
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,sdm670-cci
+> +    then:
+> +      properties:
+> +        clocks:
+> +          minItems: 4
 
-Have posted V7 (without modelling as power-domain).
-Please review.
+maxItems: 4
 
-Thanks
-Varada
+> +        clock-names:
+
+Best regards,
+Krzysztof
+
 
