@@ -1,156 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-29174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 533959593F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 07:16:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71BB4959407
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 07:26:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 11933284E55
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 05:16:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 270E61F22048
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 05:26:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F1E2161936;
-	Wed, 21 Aug 2024 05:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6173C166F02;
+	Wed, 21 Aug 2024 05:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pmU9hxl5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gvrSyu/S"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F6F1537D1;
-	Wed, 21 Aug 2024 05:16:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA071165F03
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Aug 2024 05:26:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724217407; cv=none; b=JGNwoFLE8DQjGSr8ulfArUv/VbuolUZ796WvhXbn3H/is1h4AkWEEhK8A2lXsJT4qekGYDLh4LTR0mSek9va+UWJpCr8Fo2j1in77dz7KZq7vpRjKyL7zcHUCBPbcfAdGBnsPTHLL2n6bUvqxH5gSgF8rf2HJNjGIdkPfMYMwUM=
+	t=1724218001; cv=none; b=H0ANGICeteg9Mznx6ykBPLBGE2PRQXmSvKaivGcv9f4s5LFcfQ9oc4lrm723moxqxw74+T2igkW00RDcy3eO0Bb1kr8dUyUmRc85OPio5PjiKLOdUGfWeNWhwJLMEK59B/8ZKrhJ35hnj8iqCHZ6N56B75TJLxps2jk09BMBo7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724217407; c=relaxed/simple;
-	bh=ZZXp028kuznJ40MHUeSJt4Qcm9NAbrJnKp1wijan5lw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=cRMid9wv7qiyODG9enoEPb9aQwMf0N/LmdFDNODQeD8ckpRNOOq5BFucZerBoC8S3gNCYi8nABUSSXY1xOrxGqKBcBudQjXkZR4jH985HdiHPYagqUDqOm/lknbn0x539BjHPcw0qXfCCjN0Ss/+9XYCMHX/kTNETYZZmCKiNww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pmU9hxl5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47L5AQT6022670;
-	Wed, 21 Aug 2024 05:16:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1mpMc7tEgd9LCX6iqpPcU8hX1X+O3hBWQ6RVnA+nEWs=; b=pmU9hxl5TNCPmcZH
-	Kn6SLir45a5KfH9MgsdaLZ9Riy3H4tmvq36bV8eWnIwdkSlGvBjFakLT1crmXYfs
-	LKhvZRUmKIQSVbPeQoUknqY8fJlQuxhf7DEMwvGPtPLMmlZ6sOR5ppUtKiYiQfV0
-	3uOdLAyyrynCz3oy+iGL5SI+vSYnPE4fw0rUQBDPixQbCruc8UVnpObLmNlMAvgW
-	rzxfbsoDsju76kXp+gxxNYE3uJWPPAE7kQxAwgrrPFnsgg9LFA1HuXASkNGba3Mc
-	9qShuDfqP88ICXlROhjIQBTWwrqz750JB7dafsyw6sv3UpJi81CnJfSZ8Yb7vUT/
-	q777/A==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 414pdmb1bc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 Aug 2024 05:16:35 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47L5GYBf026977
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 21 Aug 2024 05:16:34 GMT
-Received: from [10.151.37.94] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 20 Aug
- 2024 22:16:27 -0700
-Message-ID: <ef8b3a3d-5791-f5c5-4362-7e2f87d726d0@quicinc.com>
-Date: Wed, 21 Aug 2024 10:46:24 +0530
+	s=arc-20240116; t=1724218001; c=relaxed/simple;
+	bh=zxHSx8Qkmwfv1qbxR2XM+iv/f7HieylHJdMXty5tQ7E=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=RVe2S5fBRWziI5aliG8puTtEa7hG30QvERMD79RHqYl72/edh+7PWYiL0yBmniIODnqZm1BzWn8RvTUIX9qh+ThPyhStoUoFbfNRhzkqszPwDddGOaI+T3qbJZMKRhnlthlsALoM4Ebn5I2dHA6Oa/FLudrBXLnrMpGn1HGdw6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gvrSyu/S; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-201cd78c6a3so48269315ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Aug 2024 22:26:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1724217999; x=1724822799; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gr01ud/MlbqAFDWoZnwqdTmOp2X/OTSf0xujXNR87Ok=;
+        b=gvrSyu/SygebgvIiJf7MDxVgp8SDk6mrnQRRDag7lHck8+BoLQAr3b4EDDnSL7pPmF
+         kudkTouynIXkjnA61QRpFdJxOB40mLyUa4r+m+YBO4+1buIEJ82zaxrzEUn9vRvjMOQ2
+         dduMn+4WtUOIXn9PqUZ6HQ+0Obx/+UAucM+jghWZdbI7FwmAKCsdbI61ISnVSEcUOHq4
+         aOBInb7kL88931BZB+1U2Wn4a7xNJI29BYuby4TWj5tciBfzvtSUImYSohHOrsngVces
+         aGykCKDj68vmuSQP3nDfv/T7UNNqbYPykthd8N65SZjPyOt9RGRYfkKuAElctKKcNit3
+         dysA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724217999; x=1724822799;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gr01ud/MlbqAFDWoZnwqdTmOp2X/OTSf0xujXNR87Ok=;
+        b=qakqi1wp5AvQRinuEOiRYZZJOPT4JqX9S3L2nQV2bMQ1hv0WN1r2DqJbiDzDHXfRn8
+         4Mcr7f5f8F2DuUsVXGAUEii+jer0D6RNpJ8LEh2mFZHJGv1MwNDnPb0rTOWQPvcLm/03
+         /5Pt14/97EVOQptLpnd5oYVQDcPT5aoRU5/s3DeIQ0lfbFrnyhkioNCJo9gY6QxxokrZ
+         kNPqa5SYNynTHc4aZeHe8LYBqcZ0Q1OeJhS+bktfVCrUBVtYE6vucXv3F8KLnSz1p4Gm
+         TwbEbYtU6n/drPonlHAwoyQoK06iT6llj/efsozGq1Cf8yYtatOk4jYWmSbq403tvQVX
+         N4wQ==
+X-Gm-Message-State: AOJu0YwDhcmurGVEHuVQHBlaTsF9e6iTZ8SkXgnM3Wmwy2FcLFGjltaO
+	M3D6lJqrXrvfmplE2b1wtE5QU3Zqv/kMoo/HRvA6We2t9SCUNVZGGW9N4kqi/FcDwRFxmkj87Y3
+	4IDdhhg==
+X-Google-Smtp-Source: AGHT+IHFHkaUJiJ+vmnBvrmHCqFtfETI8Z7H2ktJsyLBwQ0HAS3lLQrgzteOvJx5srYip5yeV7tHfQ==
+X-Received: by 2002:a17:902:d4cc:b0:202:52c:8027 with SMTP id d9443c01a7336-2036808f52emr11256945ad.47.1724217998795;
+        Tue, 20 Aug 2024 22:26:38 -0700 (PDT)
+Received: from [127.0.0.1] ([49.230.194.219])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2025ab75623sm25070665ad.30.2024.08.20.22.26.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Aug 2024 22:26:38 -0700 (PDT)
+Date: Wed, 21 Aug 2024 12:26:33 +0700
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Chris Lew <quic_clew@quicinc.com>
+CC: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: pd-mapper: Fix singleton refcount
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20240820-pd-mapper-refcount-fix-v1-1-03ea65c0309b@quicinc.com>
+References: <20240820-pd-mapper-refcount-fix-v1-1-03ea65c0309b@quicinc.com>
+Message-ID: <80424800-2E75-4240-9B87-FD48CC4515B0@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v2 14/16] arm64: dts: qcom: ipq9574: enable bam pipe
- locking/unlocking
-Content-Language: en-US
-To: Bjorn Andersson <andersson@kernel.org>
-CC: <vkoul@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <konradybcio@kernel.org>,
-        <thara.gopinath@gmail.com>, <herbert@gondor.apana.org.au>,
-        <davem@davemloft.net>, <gustavoars@kernel.org>,
-        <u.kleine-koenig@pengutronix.de>, <kees@kernel.org>,
-        <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-crypto@vger.kernel.org>,
-        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
-        <quic_utiwari@quicinc.com>
-References: <20240815085725.2740390-1-quic_mdalam@quicinc.com>
- <20240815085725.2740390-15-quic_mdalam@quicinc.com>
- <lr53irikxjjoiks2utckyt5bsflxm52r2nlospkv3id6qwkfih@pycrjkeibx4g>
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <lr53irikxjjoiks2utckyt5bsflxm52r2nlospkv3id6qwkfih@pycrjkeibx4g>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: KN-cptjYjujvWk4URMmF6hvTYq_beEY-
-X-Proofpoint-ORIG-GUID: KN-cptjYjujvWk4URMmF6hvTYq_beEY-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-21_05,2024-08-19_03,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
- suspectscore=0 malwarescore=0 phishscore=0 priorityscore=1501 mlxscore=0
- impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2408210036
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+On August 21, 2024 5:59:34 AM GMT+07:00, Bjorn Andersson <quic_bjorande@qui=
+cinc=2Ecom> wrote:
+>The Qualcomm pd-mapper is a refcounted singleton, but the refcount is
+>never incremented, which means the as soon as any remoteproc instance
+>stops the count will hit 0=2E
+>
+>At this point the pd-mapper QMI service is stopped, leaving firmware
+>without access to the PD information=2E Stopping any other remoteproc
+>instances will result in a use-after-free, which best case manifest
+>itself as a refcount underflow:
+>
+>  refcount_t: underflow; use-after-free=2E
+>  WARNING: CPU: 1 PID: 354 at lib/refcount=2Ec:87 refcount_dec_and_mutex_=
+lock+0xc4/0x148
+>  =2E=2E=2E
+>  Call trace:
+>   refcount_dec_and_mutex_lock+0xc4/0x148
+>   qcom_pdm_remove+0x40/0x118 [qcom_pd_mapper]
+>   =2E=2E=2E
+>
+>Fix this by incrementing the refcount, so that the pd-mapper is only
+>torn down when the last remoteproc stops, as intended=2E
+>
+>Fixes: 1ebcde047c54 ("soc: qcom: add pd-mapper implementation")
+>Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc=2Ecom>
+>---
+> drivers/soc/qcom/qcom_pd_mapper=2Ec | 2 ++
+> 1 file changed, 2 insertions(+)
+
+Reviewed-by: Dmitry Baryshkov <dmitry=2Ebaryshkov@linaro=2Eorg>
 
 
 
-On 8/16/2024 10:10 PM, Bjorn Andersson wrote:
-> On Thu, Aug 15, 2024 at 02:27:23PM GMT, Md Sadre Alam wrote:
->> enable bam pipe locking/unlocking for ipq9507 SoC.
-> 
-> Note that the commit messages for the other non-dts commits will not
-> show up in the git history for this file. So, please follow
-> https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
-> and give some indication of "problem description", to give future
-> readers an idea why this is here.
-   Ok
-> 
->>
->> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->> ---
->>
->> Change in [v2]
->>
->> * enabled locking/unlocking support for ipq9574
->>
->> Change in [v1]
->>
->> * This patch was not included in [v1]
->>
->>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> index 48dfafea46a7..dacaec62ec39 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->> @@ -262,6 +262,7 @@ cryptobam: dma-controller@704000 {
->>   			#dma-cells = <1>;
->>   			qcom,ee = <1>;
->>   			qcom,controlled-remotely;
->> +			qcom,bam_pipe_lock;
-> 
-> Per the question before about what does this actually lock. Is this a
-> property of the BAM controller, or the crypto channel?
-   This is the property of BAM controller.
-> 
-> Regards,
-> Bjorn
-> 
->>   		};
->>   
->>   		crypto: crypto@73a000 {
->> -- 
->> 2.34.1
->>
+
+--=20
+With best wishes
+Dmitry
 
