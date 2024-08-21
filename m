@@ -1,205 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-29203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 340BC959FDD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 16:29:43 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36C0F95A003
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 16:34:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 672E11C21725
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 14:29:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B5202B240B9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 14:34:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13A6E1B2EC9;
-	Wed, 21 Aug 2024 14:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B998F1607B0;
+	Wed, 21 Aug 2024 14:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RfAawSWT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WQjNdJ2K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53CB1B1D73;
-	Wed, 21 Aug 2024 14:28:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D72132111;
+	Wed, 21 Aug 2024 14:34:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724250519; cv=none; b=lQmKrqDE5vFOJKYiQEXnNHKT/FiSe25jo+OAS4KO5PR8jK3XOI3bCqW4kUP+ZoRv+4BAr6usvFNGRtMEMZAIg4E/zKLX/nPRBVvDg4Z4CCP3WvNq3deTlwnrmVEa7iTeqYaOFW39xY6k+CT7VxC0Dt9+sNXiSz/T4pQoGbh6Ejc=
+	t=1724250862; cv=none; b=Wzadf6LyXany2/40hfGTCtYPVdRejIMwQOuqgV9WoJUEGIEUydCtJdYxuRaRt+LXd7R7BghyNF46VBMr/Zn/cwLXNgTyQbx8vliLd/u/BHnHIz+B9MqactEfQ6FZSgDCefacpS2MjHKsw5CYZ8yTf5e3QmBN/9Oja1JwELnScS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724250519; c=relaxed/simple;
-	bh=4j/xNgP1vGlnOe8f12JqGPfxZdJhHY5ZsFrNsEs2y3Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hPY/+uDFw6IlvlNYvjOsJr5Go7PMY6hFyxfi4/DZxZkP/mzPQiVdMrLGEuv/vCVlyoQUbe7NQdaYBjh1KbG0XQmq5VMPJgINnTquhJiJibphlaUJXkw/QPvolP4euOgihS8Y9mQyPzzo6DWYkWQXGuNa9hEJvxz+PwgBsb7d7/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RfAawSWT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00F4C32781;
-	Wed, 21 Aug 2024 14:28:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724250518;
-	bh=4j/xNgP1vGlnOe8f12JqGPfxZdJhHY5ZsFrNsEs2y3Y=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RfAawSWTfoKXWAbO1ubaMfLCuFzfKiZcKRuJ93wChVgh5vH8nFow+yTPgYblIAaxo
-	 TQg1RLAEzqXry4clPa2b0JAtssoCdl60VttoYB+JTbg1Jr380Bpk2kJ8qLus3WUB1y
-	 5bXNVmFkumx0/4/1HPFdjAODdHkye78vqNT6rmG0Ls0O5J6EOL0IVgQVcSXYEDhvSj
-	 pDlHFXCoF+RqjuOjikbzHHcOhwAM+SMTekZD/puddRWDYK9YHrcaLGb6BeUHEDmTC/
-	 2Mqop+D3bC4tvzn1NX2brBZfqTEQ1UE82m7DVyHN31u8+SmRiizsC24Q9nVnDziCY+
-	 gnYK/36zK9eiQ==
-Date: Wed, 21 Aug 2024 17:26:07 +0300
-From: Mike Rapoport <rppt@kernel.org>
-To: Elliot Berman <quic_eberman@quicinc.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Fuad Tabba <tabba@google.com>, David Hildenbrand <david@redhat.com>,
-	Patrick Roy <roypat@amazon.co.uk>, qperret@google.com,
-	Ackerley Tng <ackerleytng@google.com>, linux-coco@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org, kvm@vger.kernel.org
-Subject: Re: [PATCH RFC 3/4] mm: guest_memfd: Add option to remove guest
- private memory from direct map
-Message-ID: <ZsX4_1TlIu6WNo7r@kernel.org>
-References: <20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com>
- <20240805-guest-memfd-lib-v1-3-e5a29a4ff5d7@quicinc.com>
- <ZsMZ8C2lnpMW+BT5@kernel.org>
- <20240820094213541-0700.eberman@hu-eberman-lv.qualcomm.com>
+	s=arc-20240116; t=1724250862; c=relaxed/simple;
+	bh=bUZVo5y0uo9wGVTTsOaA5HDns+wyi0nCGXSLbh+/Yxo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BsB+lZs16IfgD+N+7C76fum4CPZfAHYQQ2mn9Bu7oSvnobQK0EsWZ/iGCUrm4aQCDu4YxoWOO/nZFsyrMrKtY+fZxXNy4tkrgbmTJz7t+DEiY8Ilzv7DdUYGsUlTzd07mdgas5L06GNnoBhEuV/Je2dXD4V03XLZQGfUpx61D+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WQjNdJ2K; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5bed72ff443so6274116a12.1;
+        Wed, 21 Aug 2024 07:34:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724250859; x=1724855659; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UR+KwYc9lrWNXtCafAT5/wVnX1MflyYbcpT1ZdueVMM=;
+        b=WQjNdJ2Kvr61/qjjku+wKJ6DDuhUFcckwpNY6SUGhJ0ISgRA+te/LQ7vyE9EAB40OA
+         Ey2jmZEbMuDbOk1OaSd4aZ6L3hjzTe1NquGqqMJueGhw1Gnd8nvvimn7MUNoHUKxqwEo
+         tvfuYqjuq06g69ny/gNMxf5zl4O8Q7Nv8IJuSqH1QqnnelONQNe+2PLjAO/vG7XUeVDU
+         /TOdw3Fg9gkl+1//83hmFrLREH9TJF96sRI23M/b1v3++0+ZkhoQPQULr7TgYeob9rU3
+         kQ1k8sBfKGfmGoWA9dGHbeGPhvDQaA5c+oJahbmULmDVVtF4ayx2F7ONJ+YYxTCXN5Ez
+         7zTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724250859; x=1724855659;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UR+KwYc9lrWNXtCafAT5/wVnX1MflyYbcpT1ZdueVMM=;
+        b=FLOsDmtH28FM9m6GXROw+EVf6B5ZmGS9I9ou8PR4TodTvyYQbKLWXdHjXAyXxUANdJ
+         P4hR6dj3qEZ/oh+/umVZuKiwIKt2zVDHObXVYOQabHHjTbZsvXBAHbu8k7JKB5OJ2M9m
+         x3CpW0yUVpB2bGiGmcZtq/psGg0qsvEFMR1LZgBtra+rmjujeYEJoOkDxHIUSESk9D+7
+         jTBP7Ksuz2MUiCTwGe3kAPqXG6lPna0Ob7SKNjHfuzU8S7mwEOU29A3Hp1RuHGEx5ToK
+         hJ0dj11yxfPvAoKQ7xmX+Phh2sPg74JYw0m+65SjafmqRlSHDFobrlhqb4d+Eb9ABLXN
+         SnVA==
+X-Forwarded-Encrypted: i=1; AJvYcCWZdn+IoZGHJR9xz0QeJhEjUH9zIxsw7faIBotiStf0FZ9HdsS6u4FqaAVnn7q59EPUWp4jqs+Gbk/1T5/S@vger.kernel.org, AJvYcCX6q1HOlxMQEtvm77KnfaKSeptbNeBUPvWTq3sV2Lp0KGlN8PtBALT+A+9OAmO+N4vDtC/ImFXnxdZChFSB@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXcaAE7RIlhuQpmgL1+w4RG6lkL3MhQN2vc9ulpjW9rQUofMSw
+	MYGBQCizcaZvE909kb4PHo0FY+daOJTW8koYpe8JBIaTk6EpF0um
+X-Google-Smtp-Source: AGHT+IG00gtDcFSOH4+sQGkIehK6jaUt+gJZWvpFBFTs9mKnIYjUOIRHHw+Pbxh2Ln0y3OO1unQn0g==
+X-Received: by 2002:a05:6402:320d:b0:5a3:a9f8:cf20 with SMTP id 4fb4d7f45d1cf-5bf1f25be42mr2012925a12.34.1724250858531;
+        Wed, 21 Aug 2024 07:34:18 -0700 (PDT)
+Received: from [192.168.1.14] (host-80-104-252-9.retail.telecomitalia.it. [80.104.252.9])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5bebc081db4sm8112609a12.88.2024.08.21.07.34.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Aug 2024 07:34:18 -0700 (PDT)
+Message-ID: <14591112-4455-49b4-8b1a-3feffc4d343f@gmail.com>
+Date: Wed, 21 Aug 2024 16:34:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240820094213541-0700.eberman@hu-eberman-lv.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/7] drm/msm/A6xx: Implement preemption for A7XX targets
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ Sharat Masetty <smasetty@codeaurora.org>
+References: <20240815-preemption-a750-t-v1-0-7bda26c34037@gmail.com>
+ <20240815-preemption-a750-t-v1-4-7bda26c34037@gmail.com>
+ <20240819200837.etzn7oaoamnceigr@hu-akhilpo-hyd.qualcomm.com>
+Content-Language: en-US
+From: Antonino Maniscalco <antomani103@gmail.com>
+In-Reply-To: <20240819200837.etzn7oaoamnceigr@hu-akhilpo-hyd.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Aug 20, 2024 at 09:56:10AM -0700, Elliot Berman wrote:
-> On Mon, Aug 19, 2024 at 01:09:52PM +0300, Mike Rapoport wrote:
-> > On Mon, Aug 05, 2024 at 11:34:49AM -0700, Elliot Berman wrote:
-> > > This patch was reworked from Patrick's patch:
-> > > https://lore.kernel.org/all/20240709132041.3625501-6-roypat@amazon.co.uk/
-> > > 
-> > > While guest_memfd is not available to be mapped by userspace, it is
-> > > still accessible through the kernel's direct map. This means that in
-> > > scenarios where guest-private memory is not hardware protected, it can
-> > > be speculatively read and its contents potentially leaked through
-> > > hardware side-channels. Removing guest-private memory from the direct
-> > > map, thus mitigates a large class of speculative execution issues
-> > > [1, Table 1].
-> > > 
-> > > Direct map removal do not reuse the `.prepare` machinery, since
-> > > `prepare` can be called multiple time, and it is the responsibility of
-> > > the preparation routine to not "prepare" the same folio twice [2]. Thus,
-> > > instead explicitly check if `filemap_grab_folio` allocated a new folio,
-> > > and remove the returned folio from the direct map only if this was the
-> > > case.
-> > > 
-> > > The patch uses release_folio instead of free_folio to reinsert pages
-> > > back into the direct map as by the time free_folio is called,
-> > > folio->mapping can already be NULL. This means that a call to
-> > > folio_inode inside free_folio might deference a NULL pointer, leaving no
-> > > way to access the inode which stores the flags that allow determining
-> > > whether the page was removed from the direct map in the first place.
-> > > 
-> > > [1]: https://download.vusec.net/papers/quarantine_raid23.pdf
-> > > 
-> > > Cc: Patrick Roy <roypat@amazon.co.uk>
-> > > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> > > ---
-> > >  include/linux/guest_memfd.h |  8 ++++++
-> > >  mm/guest_memfd.c            | 65 ++++++++++++++++++++++++++++++++++++++++++++-
-> > >  2 files changed, 72 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/include/linux/guest_memfd.h b/include/linux/guest_memfd.h
-> > > index be56d9d53067..f9e4a27aed67 100644
-> > > --- a/include/linux/guest_memfd.h
-> > > +++ b/include/linux/guest_memfd.h
-> > > @@ -25,6 +25,14 @@ struct guest_memfd_operations {
-> > >  	int (*release)(struct inode *inode);
-> > >  };
-> > >  
-> > > +/**
-> > > + * @GUEST_MEMFD_FLAG_NO_DIRECT_MAP: When making folios inaccessible by host, also
-> > > + *                                  remove them from the kernel's direct map.
-> > > + */
-> > > +enum {
-> > 
-> > please name this enum, otherwise kernel-doc wont' be happy
-> > 
-> > > +	GUEST_MEMFD_FLAG_NO_DIRECT_MAP		= BIT(0),
-> > > +};
-> > > +
-> > >  /**
-> > >   * @GUEST_MEMFD_GRAB_UPTODATE: Ensure pages are zeroed/up to date.
-> > >   *                             If trusted hyp will do it, can ommit this flag
-> > > diff --git a/mm/guest_memfd.c b/mm/guest_memfd.c
-> > > index 580138b0f9d4..e9d8cab72b28 100644
-> > > --- a/mm/guest_memfd.c
-> > > +++ b/mm/guest_memfd.c
-> > > @@ -7,9 +7,55 @@
-> > >  #include <linux/falloc.h>
-> > >  #include <linux/guest_memfd.h>
-> > >  #include <linux/pagemap.h>
-> > > +#include <linux/set_memory.h>
-> > > +
-> > > +static inline int guest_memfd_folio_private(struct folio *folio)
-> > > +{
-> > > +	unsigned long nr_pages = folio_nr_pages(folio);
-> > > +	unsigned long i;
-> > > +	int r;
-> > > +
-> > > +	for (i = 0; i < nr_pages; i++) {
-> > > +		struct page *page = folio_page(folio, i);
-> > > +
-> > > +		r = set_direct_map_invalid_noflush(page);
-> > > +		if (r < 0)
-> > > +			goto out_remap;
-> > > +	}
-> > > +
-> > > +	folio_set_private(folio);
-> > > +	return 0;
-> > > +out_remap:
-> > > +	for (; i > 0; i--) {
-> > > +		struct page *page = folio_page(folio, i - 1);
-> > > +
-> > > +		BUG_ON(set_direct_map_default_noflush(page));
-> > > +	}
-> > > +	return r;
-> > > +}
-> > > +
-> > > +static inline void guest_memfd_folio_clear_private(struct folio *folio)
-> > > +{
-> > > +	unsigned long start = (unsigned long)folio_address(folio);
-> > > +	unsigned long nr = folio_nr_pages(folio);
-> > > +	unsigned long i;
-> > > +
-> > > +	if (!folio_test_private(folio))
-> > > +		return;
-> > > +
-> > > +	for (i = 0; i < nr; i++) {
-> > > +		struct page *page = folio_page(folio, i);
-> > > +
-> > > +		BUG_ON(set_direct_map_default_noflush(page));
-> > > +	}
-> > > +	flush_tlb_kernel_range(start, start + folio_size(folio));
-> > 
-> > I think that TLB flush should come after removing pages from the direct map
-> > rather than after adding them back.
-> > 
+On 8/19/24 10:08 PM, Akhil P Oommen wrote:
+> On Thu, Aug 15, 2024 at 08:26:14PM +0200, Antonino Maniscalco wrote:
+>> This patch implements preemption feature for A6xx targets, this allows
+>> the GPU to switch to a higher priority ringbuffer if one is ready. A6XX
+>> hardware as such supports multiple levels of preemption granularities,
+>> ranging from coarse grained(ringbuffer level) to a more fine grained
+>> such as draw-call level or a bin boundary level preemption. This patch
+>> enables the basic preemption level, with more fine grained preemption
+>> support to follow.
+>>
+>> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+>> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
+>> ---
 > 
-> Gunyah flushes the tlb when it removes the stage 2 mapping, so we
-> skipped it on removal as a performance optimization. I remember seeing
-> that pKVM does the same (tlb flush for the stage 2 unmap & the
-> equivalent for x86). Patrick had also done the same in their patches.
+> No postamble packets which resets perfcounters? It is necessary. Also, I
+> think we should disable preemption during profiling like we disable slumber.
+> 
+> -Akhil.
+> 
 
-Strictly from the API perspective, unmapping the pages from the direct map
-would imply removing potentially stale TLB entries.
-If all currently anticipated users do it elsewhere, at the very least there
-should be a huge bold comment.
+You mention that we disable slumber during profiling however I wasn't 
+able to find code doing that. Can you please clarify which code you are 
+referring to or a mechanism through which the kernel can know when we 
+are profiling?
 
-And what's the point of tlb flush after setting the direct map to default?
-There should not be stale tlb entries for the unmapped pages.
- 
-> Thanks,
-> Elliot
-
+Best regards,
 -- 
-Sincerely yours,
-Mike.
+Antonino Maniscalco <antomani103@gmail.com>
+
 
