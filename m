@@ -1,162 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-29176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C50D19594F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 08:48:14 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id ADE9595951F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 08:52:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 734F8285A51
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 06:48:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E106C1C20FC8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 06:52:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B89B21C161;
-	Wed, 21 Aug 2024 06:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3874919258E;
+	Wed, 21 Aug 2024 06:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OLtyZU3U"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bO8cwyiB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BE42139B6;
-	Wed, 21 Aug 2024 06:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1468B19258A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Aug 2024 06:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724222889; cv=none; b=GCyVQEUQzhHvFocGb4ifpE2x8tskfYVmZU1CIpbmwxm7uxZThD0BsI/GRC85C9RpjYqGkjJofTpuhgF5tKxA9SdcvPEbzswCdH5NMtYm5gut03duzv+P7MXkR49PsrAkMcEuceNVP/Y3CDrgNJhGlzeMEwBiQuXOWxW7fKwb8vQ=
+	t=1724223162; cv=none; b=rLRTP3HssmCzatJjnVMD085QHOyJjVjtIpge1I51IODGxpskl9BW3Xrc39MYStbJ2ZAlLAGtIeRwzDbP5FD+VqNyUCibr3eyFEQQx5WuCyS+wf3SGPmWFSyXfmcOlfefUuBGNrFp2YruAa/VjGTX4hnzT9h0Q2Xk7/IVWyfIJhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724222889; c=relaxed/simple;
-	bh=KnyKptH5XM79KZ+C1EQSJLGrGtVSPFQ5nOZWireWwZM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OoCQwZqcfaciFcmm4kbaqWseP8yWDMUQGf1Z3bJEafpjY4jmlFvzBR5WQl6xDS90kprUhh9fnRg/4Y1hm3hpLKqC5Qm5GG/DZoJfVDYwbb7QcbOqvsbHyL6o+R1hu7CsLGfAo7Jl+F+9Mscd4EkqE9/EpG5Kl41YfF1hnYDjjZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OLtyZU3U; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C706DC32782;
-	Wed, 21 Aug 2024 06:48:02 +0000 (UTC)
+	s=arc-20240116; t=1724223162; c=relaxed/simple;
+	bh=ICrJcs7OEf0Li17q5LhAGGtSH/X/Gt65/30gX0OOqdU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pxJu31bw3xp1ZKyMkfHf74wta1l1DJ4E/eui7sWEIxwT6Y5HgCuUBi0dKom297CYbh2gRaxYvjZVmqRY9aAAfDMGBqQMGRmEzCZu9JaL6n/UzSIknWezt187GD5eyf+KACLcpg5bZMqHYmdHUJ2V5BtkBYCBgJ14QQfgwbN9Pvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bO8cwyiB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C823C4AF09;
+	Wed, 21 Aug 2024 06:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724222888;
-	bh=KnyKptH5XM79KZ+C1EQSJLGrGtVSPFQ5nOZWireWwZM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=OLtyZU3UnOXLPgnRcroAuwGR1i4uYqC0wBm2yr/fBIbtThb7bhbFQp8uk1gPM8mcb
-	 hZqZ7sZSyJZSU3gFM0tI1SaMJh0aeU5EiHT0KOKdiGh5jzweOfjWt1spclCLdQ9tua
-	 es7sneCvw4vGSjckr2hGnAsezRbz3TFvcaPC3ssWO56zYWl2+aXbI+/iQ5BpdRuGry
-	 KYdV5EETL1MvHC0qPAwRbUhTyJjYENU8enUhnFqk0N15GN04BkaNswLe24Dp0xCzL/
-	 o3R/fWspusNYk/PtOUvY50SCCg+V3bXrJuIHAOzaR3BtJPVijCCn/wtTLQc+BUOMLo
-	 O2+Wmx+O5YjsA==
-Message-ID: <11ca366c-7788-41d0-bf47-4f31c1ee2626@kernel.org>
-Date: Wed, 21 Aug 2024 08:48:00 +0200
+	s=k20201202; t=1724223161;
+	bh=ICrJcs7OEf0Li17q5LhAGGtSH/X/Gt65/30gX0OOqdU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bO8cwyiBFF0jjJAYTuyJ+Iz41vBTdRNc4amsvXhPIzmcAnPSJB7Z2eRZrQ16OdZtI
+	 ZJ0lWV9QzbCT456luNRbOki7MKFkFgPTfNfmE4XqQDXlZ09s8D8JScE0t4L4E1xLsq
+	 +G0jXI3vU5jh0bi7KIyns/7IpZ5xVUw88aPnYthIJLzlQf+ncTpSl1L9SjUUcUvzb0
+	 BU2Evzcnhm9jPU9SzEkUN/MiGEmVIrhk5FParrmsrUesGfVMBvKsml/sv1SGVSkhA/
+	 T/0AMj1IqC1AaAA54p99JvGnby3aU6/P2YGD09gN0jjnerq++QnL8MyPCvnvlufyWp
+	 L3/qavUvyrMlg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sgfD0-000000003ZF-1BNv;
+	Wed, 21 Aug 2024 08:52:43 +0200
+Date: Wed, 21 Aug 2024 08:52:42 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] soc: qcom: pmic_glink: Fix race during
+ initialization
+Message-ID: <ZsWOujOQsJtLcVf-@hovoldconsulting.com>
+References: <20240820-pmic-glink-v6-11-races-v3-0-eec53c750a04@quicinc.com>
+ <20240820-pmic-glink-v6-11-races-v3-1-eec53c750a04@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/3] dt-bindings: soc: qcom: eud: Update compatible
- strings for eud
-To: Konrad Dybcio <konradybcio@kernel.org>,
- Melody Olvera <quic_molvera@quicinc.com>,
- Trilok Soni <quic_tsoni@quicinc.com>,
- Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
- Elson Serrao <quic_eserrao@quicinc.com>
-Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-usb@vger.kernel.org
-References: <20240807183205.803847-1-quic_molvera@quicinc.com>
- <20240807183205.803847-2-quic_molvera@quicinc.com>
- <dfb1ac84-f011-45ea-9fb1-b8c6bc36cabc@kernel.org>
- <46d0627d-877b-41f3-83f6-4c33b562f460@quicinc.com>
- <0ebb1ca3-722d-422f-9f71-fcc61c3470b0@kernel.org>
- <2b118a49-2229-4346-ab21-0aa5377d7a4e@kernel.org>
- <8bb412f8-4fe1-40ca-8414-bb77c66899ae@quicinc.com>
- <0eca6755-a2ec-404f-b98c-ee6c9f6fb55f@gmail.com>
- <f8caa9aa-7fc4-4d42-9011-21ca40eb106d@quicinc.com>
- <81ec34a6-8627-4a59-8fc7-87eee4625b2d@quicinc.com>
- <e663d19a-0ad1-4dfc-903b-ff2012796d84@kernel.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <e663d19a-0ad1-4dfc-903b-ff2012796d84@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240820-pmic-glink-v6-11-races-v3-1-eec53c750a04@quicinc.com>
 
-On 20/08/2024 21:19, Konrad Dybcio wrote:
-> On 20.08.2024 8:21 PM, Melody Olvera wrote:
->>
->>
->> On 8/14/2024 3:09 PM, Trilok Soni wrote:
->>> On 8/14/2024 1:25 PM, Konrad Dybcio wrote:
->>>>> Unfortunately, no. We considered several options, but none guarantee that we will avoid
->>>>> a crash if we try non-securely. The secure call also won't give a specific error if it fails either
->>>>> (for security reasons) so we can't know if a secure access failed because it's supposed to be
->>>>> accessed non-securely or for another reason; hence this approach. If there's
->>>>> another way to achieve this functionality that might be better, I'm all ears.
->>>> Can we read some fuse values and decide based on that?
->>> In most of the cases, these fuse values are not allowed to be read
->>> from the Linux, so that will be another problem. Melody can check
->>> if there is any fuse values around here and possible to read them
->>> through Linux.
->>>
->>
->> I double-checked, but there really isn't any kind of fuse or anything we can read to determine
->> how we need to access these registers. I remembered checking before authoring these patches,
->> but I wanted to just make sure before responding here.
+On Tue, Aug 20, 2024 at 01:29:30PM -0700, Bjorn Andersson wrote:
+> As pointed out by Stephen Boyd it is possible that during initialization
+> of the pmic_glink child drivers, the protection-domain notifiers fires,
+> and the associated work is scheduled, before the client registration
+> returns and as a result the local "client" pointer has been initialized.
 > 
-> Well in that case I suppose a new compatible / property (please voice
-> your opinion Krzysztof) is necessary after all.. Thanks for making sure
+> The outcome of this is a NULL pointer dereference as the "client"
+> pointer is blindly dereferenced.
 
-You mean the "secure" part? Sure, I don't object that, although
-(repeating as usual) I am not in favor of it in the first place, be
-cause you should use only SoC compatibles.
+> Resolve this by splitting the allocation of the "client" object and the
+> registration thereof into two operations.
 
-The objection here was for dropping specific front compatible, without
-any relevant explanation.
+It seems something went wrong when you posted v3 (using b4 automagic?)
+so the cover letter and changelog is now missing and no one is on CC any
+more.
 
-Best regards,
-Krzysztof
+Patches look good, though, with the exception of one nit below.
 
+> diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+> index 49bef4a5ac3f..07758ab6ac1c 100644
+> --- a/drivers/power/supply/qcom_battmgr.c
+> +++ b/drivers/power/supply/qcom_battmgr.c
+> @@ -1387,12 +1387,16 @@ static int qcom_battmgr_probe(struct auxiliary_device *adev,
+>  					     "failed to register wireless charing power supply\n");
+>  	}
+>  
+> -	battmgr->client = devm_pmic_glink_register_client(dev,
+> -							  PMIC_GLINK_OWNER_BATTMGR,
+> -							  qcom_battmgr_callback,
+> -							  qcom_battmgr_pdr_notify,
+> -							  battmgr);
+> -	return PTR_ERR_OR_ZERO(battmgr->client);
+> +	battmgr->client = devm_pmic_glink_client_alloc(dev, PMIC_GLINK_OWNER_BATTMGR,
+> +						     qcom_battmgr_callback,
+> +						     qcom_battmgr_pdr_notify,
+> +						     battmgr);
+
+I'm not a fan of open-parenthesis alignment of arguments, but since this
+driver uses it you need to adjust the alignment to the new symbol name
+in v3.
+
+> +	if (IS_ERR(battmgr->client))
+> +		return PTR_ERR(battmgr->client);
+> +
+> +	pmic_glink_client_register(battmgr->client);
+> +
+> +	return 0;
+>  }
+
+> diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
+> index 1e0808b3cb93..c6f3d5188fc6 100644
+> --- a/drivers/soc/qcom/pmic_glink_altmode.c
+> +++ b/drivers/soc/qcom/pmic_glink_altmode.c
+> @@ -520,12 +520,17 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
+>  			return ret;
+>  	}
+>  
+> -	altmode->client = devm_pmic_glink_register_client(dev,
+> -							  altmode->owner_id,
+> -							  pmic_glink_altmode_callback,
+> -							  pmic_glink_altmode_pdr_notify,
+> -							  altmode);
+> -	return PTR_ERR_OR_ZERO(altmode->client);
+> +	altmode->client = devm_pmic_glink_client_alloc(dev,
+> +						     altmode->owner_id,
+> +						     pmic_glink_altmode_callback,
+> +						     pmic_glink_altmode_pdr_notify,
+> +						     altmode);
+
+Same here.
+
+> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
+> index 16c328497e0b..6425904f2bfc 100644
+> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
+> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+> @@ -367,12 +367,16 @@ static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
+>  		ucsi->port_orientation[port] = desc;
+>  	}
+>  
+> -	ucsi->client = devm_pmic_glink_register_client(dev,
+> -						       PMIC_GLINK_OWNER_USBC,
+> -						       pmic_glink_ucsi_callback,
+> -						       pmic_glink_ucsi_pdr_notify,
+> -						       ucsi);
+> -	return PTR_ERR_OR_ZERO(ucsi->client);
+> +	ucsi->client = devm_pmic_glink_client_alloc(dev, PMIC_GLINK_OWNER_USBC,
+> +						  pmic_glink_ucsi_callback,
+> +						  pmic_glink_ucsi_pdr_notify,
+> +						  ucsi);
+
+And here.
+
+> +	if (IS_ERR(ucsi->client))
+> +		return PTR_ERR(ucsi->client);
+> +
+> +	pmic_glink_client_register(ucsi->client);
+> +
+> +	return 0;
+>  }
+>  
+>  static void pmic_glink_ucsi_remove(struct auxiliary_device *adev)
+> diff --git a/include/linux/soc/qcom/pmic_glink.h b/include/linux/soc/qcom/pmic_glink.h
+> index fd124aa18c81..4c68385b2765 100644
+> --- a/include/linux/soc/qcom/pmic_glink.h
+> +++ b/include/linux/soc/qcom/pmic_glink.h
+> @@ -23,10 +23,11 @@ struct pmic_glink_hdr {
+>  
+>  int pmic_glink_send(struct pmic_glink_client *client, void *data, size_t len);
+>  
+> -struct pmic_glink_client *devm_pmic_glink_register_client(struct device *dev,
+> -							  unsigned int id,
+> -							  void (*cb)(const void *, size_t, void *),
+> -							  void (*pdr)(void *, int),
+> -							  void *priv);
+> +struct pmic_glink_client *devm_pmic_glink_client_alloc(struct device *dev,
+> +						     unsigned int id,
+> +						     void (*cb)(const void *, size_t, void *),
+> +						     void (*pdr)(void *, int),
+> +						     void *priv);
+
+And here.
+
+Johan
 
