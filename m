@@ -1,80 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-29233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20DBB95A6A7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 23:32:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7633C95A6F0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 23:43:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B15BBB209CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 21:32:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 32672285BC2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 21:43:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19652176FA5;
-	Wed, 21 Aug 2024 21:32:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 610AC17839D;
+	Wed, 21 Aug 2024 21:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tBuhswM4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OhjPjrLs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4BF16FF3B;
-	Wed, 21 Aug 2024 21:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F80F13A3E8;
+	Wed, 21 Aug 2024 21:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724275930; cv=none; b=LQ3fdsHqVL7wWoAr/G5seThCojmHj6zFsVB8ewy6BVJB+mf/x/qaF3B0Odnc3xvtQfRZvc/KGqkx4QCex5YXVQ3VMQX6yqDBIXlUq3mKnAX1Coe+O7FMgu4+LAp3CoJZS79eHBGFdZt9r1UhoxnwVLR/wMUVUaTb9a3rrTb2fLo=
+	t=1724276595; cv=none; b=lUKPW5yYsd7xGD5U/g+j6ZQ5jdpeJQ3c7ZGB6AOXl/6nt63mQ1fVRepcZgnsMnfjMeA2BN/TX67i5K1VFYkNhk2ndVPg10CyV/2koO8XwfXB6quF0nvA01DeWovrlx+OdL5edD0LadkYKaUbSU8V9jeDevIXwah2emqGYa6h0Ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724275930; c=relaxed/simple;
-	bh=l5xBHEjT3i+UeKlUGVISUFPtAZO6Ebyyuc4e6mTyje4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mDFJjel96ZhuEg+kKnctMhtOeU14R3DdAi5A2z5d3ClmWGX1nuGe1HviroQMzEJGIAbRNOnq6OXd5/yNjuizZon2OeyBcRSr9cKkj9RRHnoyXFTPIg1I7JS62Q3jcGBCn3MvDLaxEoMJOHo/TCQh73tS9OA7rFwXYyhmPsq9JXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tBuhswM4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02A8C4AF0E;
-	Wed, 21 Aug 2024 21:32:08 +0000 (UTC)
+	s=arc-20240116; t=1724276595; c=relaxed/simple;
+	bh=0Yu32Y2Y97+J7V2U2AZCL0+qw3bl5E2OZ9XQy9g/wxI=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=sSAKvsdY9OclugnwZkyDsrV6a+pz+59AWAPKsYXeT7zEqY+yPwfYvEe0CaIUmN6hxv2IxUTGqOOo3VxV1MsQSf0/y5uHz0gtph+4MxjmjwVRiSpDQ8LlrapCy2dyMDog9fPV5H9mXvjv6LCjppvm1guyB6TizODK0hZOizYN2Fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OhjPjrLs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66549C32781;
+	Wed, 21 Aug 2024 21:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724275929;
-	bh=l5xBHEjT3i+UeKlUGVISUFPtAZO6Ebyyuc4e6mTyje4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tBuhswM4RGc4yx8nKhn/fDU5FwvUCPvpwv8f3f2HYOrbPGVmuvBm/elaRvfmqnbS7
-	 BH7Lu+6+FXazVjRagDwtsdl5OEaY55j82ru93UJN9KfeMItUS7lP2AyNejSZ3P1MYL
-	 WNGwFEFn/UNGsd/XgHJG8zgTZ4PR2BzElfGrtMgrrTiaKGJK/uOrptlmObvk8cWP0Z
-	 TOf8abzPNXqe6rl1nL+HGFN2i7+OL2yaLx8WFf21t+YP8YJMeQEXkaxSSYMw7d1l9Q
-	 Tv157jv5/Ye/PaP8Fm4+epUDjtK/pBaJG+fBgpcfj20G7pILVrhWUx0o5GgE64LVVc
-	 Tmz5USTbVGtDw==
-Date: Wed, 21 Aug 2024 23:32:05 +0200
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Richard Acayan <mailingradian@gmail.com>
-Subject: Re: [PATCH] dt-bindings: i2c: qcom,i2c-cci: add missing clocks
- constraint in if:then:
-Message-ID: <na4tcb6qn5uzm222zq2lnmilivfxl5d5k3jp4jymb25j6kmpbl@q3h7637y32ta>
-References: <20240820063124.9242-1-krzysztof.kozlowski@linaro.org>
+	s=k20201202; t=1724276594;
+	bh=0Yu32Y2Y97+J7V2U2AZCL0+qw3bl5E2OZ9XQy9g/wxI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=OhjPjrLsmnbkOEwzQ9TSQaOGfhTR81foJZIrjn0jymdJ+DsxoJcgziNLu+BGWtDNN
+	 s8/2P9SG/UL0N0I4n/zenqFhKZy+RdEm288mPAHUHy7z+BJmrk+loKShjm/EU/3GcL
+	 iYjRgE/CEVnsy8cNEaMZBfT6eYkgsD3bydNA8R+jwhITiKi8KaMj1GVTjGHWhVWV11
+	 KzqtRREbV7A9NVOQ5sABE8OGsfW9ad8dJ2WxZqFWh2NSNeeLgFAGExDKKf6NQYiYXF
+	 slZHRazBltWpNdsA+eCG6oi1lYoowuOqOMyo39nRRvGrW9I+AWhRYBk5nJC1jkWAXn
+	 5YlrqUOysjyNA==
+Date: Wed, 21 Aug 2024 16:43:12 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	lpieralisi@kernel.org, robh@kernel.org, bhelgaas@google.com,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] PCI: qcom-ep: Move controller cleanups to
+ qcom_pcie_perst_deassert()
+Message-ID: <20240821214312.GA270533@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240820063124.9242-1-krzysztof.kozlowski@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240813202837.GE1922056@rocinante>
 
-Hi Krzysztof,
-
-On Tue, Aug 20, 2024 at 08:31:24AM GMT, Krzysztof Kozlowski wrote:
-> Top level defines clocks as variable from 3 to 6 items, so each clause
-> in if:then: should narrow it further with explicit min and maxItems.
-> Without minItems, the constrain from top-level is being applied, thus
-> qcom,msm8996-cci allows between 3 and 4 clocks.
+On Wed, Aug 14, 2024 at 05:28:37AM +0900, Krzysztof Wilczyński wrote:
+> > Currently, the endpoint cleanup function dw_pcie_ep_cleanup() and EPF
+> > deinit notify function pci_epc_deinit_notify() are called during the
+> > execution of qcom_pcie_perst_assert() i.e., when the host has asserted
+> > PERST#. But quickly after this step, refclk will also be disabled by the
+> > host.
+> > 
+> > All of the Qcom endpoint SoCs supported as of now depend on the refclk from
+> > the host for keeping the controller operational. Due to this limitation,
+> > any access to the hardware registers in the absence of refclk will result
+> > in a whole endpoint crash. Unfortunately, most of the controller cleanups
+> > require accessing the hardware registers (like eDMA cleanup performed in
+> > dw_pcie_ep_cleanup(), powering down MHI EPF etc...). So these cleanup
+> > functions are currently causing the crash in the endpoint SoC once host
+> > asserts PERST#.
+> > 
+> > One way to address this issue is by generating the refclk in the endpoint
+> > itself and not depending on the host. But that is not always possible as
+> > some of the endpoint designs do require the endpoint to consume refclk from
+> > the host (as I was told by the Qcom engineers).
+> > 
+> > So let's fix this crash by moving the controller cleanups to the start of
+> > the qcom_pcie_perst_deassert() function. qcom_pcie_perst_deassert() is
+> > called whenever the host has deasserted PERST# and it is guaranteed that
+> > the refclk would be active at this point. So at the start of this function,
+> > the controller cleanup can be performed. Once finished, rest of the code
+> > execution for PERST# deassert can continue as usual.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Applied to controller/qcom, thank you!
+> 
+> [1/1] PCI: qcom-ep: Move controller cleanups to qcom_pcie_perst_deassert()
+>       https://git.kernel.org/pci/pci/c/6960cdc1ef97
 
-Merged in i2c/i2c-host.
+I dropped this for now, looking for a new simpler version without
+"cleanup_pending" and a similar change for tegra194 (separate patch).
 
-Thanks,
-Andi
+I think it's still an open question whether both
+pci_epc_deinit_notify() and pci_epc_init_notify() are needed, but that
+should be separate and I don't think that would fix a crash.
+
+You said this was not strictly v6.11 material, but it does fix a
+crash, and it only touches the endpoint driver, so ... it seems like a
+possible candidate, especially if we can identify a recent commit that
+caused the crash.
+
+Bjorn
 
