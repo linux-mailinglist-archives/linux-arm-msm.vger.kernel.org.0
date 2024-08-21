@@ -1,118 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-29199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6031959AFB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 13:59:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84264959E33
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 15:11:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 15DA81C2296A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 11:59:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 433931F21BE4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 13:11:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29750199FBC;
-	Wed, 21 Aug 2024 11:49:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="On+GWy28"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE93515FA92;
+	Wed, 21 Aug 2024 13:11:05 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6472019259A;
-	Wed, 21 Aug 2024 11:49:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6C1192D9C;
+	Wed, 21 Aug 2024 13:11:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724240973; cv=none; b=gNYpUCuq525ITb47KVVmTwPPlcOAI9NL2bKmJqM6nDYhe8n30dQrnxg26wKc0w43vIrD5elhF87YM8wmzsxF06GALLOLmFC8AqQ5sS0j1tJItJ4v99Uk2RGZk6hhWeUxVMY8FbcFdNBiGsM/f98NjfUoCPVoZQ0eR4z4wbPdFkA=
+	t=1724245865; cv=none; b=OUFukn8dfYLPvHZaaBlu2YO4DWElTrzvcwC/QYvzAQTztUz0arL24S2X4mlOE1Rj3mn8XaBn7Jz0dkPoFrYaS7wA3hosi/es7t1ANYWGn0rSa2wmlKT2TK5GL85dlsI9UKN2lM9K6Ipt9QvMUXlxGqiNfG39VqC6w+aZieNsXv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724240973; c=relaxed/simple;
-	bh=ZNOIiksq+oIvdQ6nChxSzgVj3WAtiicwlWk2MzXMfF8=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=ftiVi/HZszCEfxRnlvxP4rOJ02tgxbOd4gR7Lkbsrmkiv4Z7TiJfM9Wn2bpsqNW8k0ueq6uYYZB7zdUOkWS+ct3b88hgAJ6mZ8rKL2SYUvqP3SJ+uFxTFwnvH0ZpB+R2Ef/F6FYmva8v8yxs0w9YAhETcaOmZgZ5egrRXWYOT7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=On+GWy28; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-533462b9428so2109285e87.3;
-        Wed, 21 Aug 2024 04:49:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724240969; x=1724845769; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MuMMiFy/GV/lo8qvjkEdntUASLQW+h7BP1y0eXqQ2Fk=;
-        b=On+GWy28spkefp1kxyhb8ci3UmCdA7uos/e34JEbPlNGvO3VibxHnV+QPRdeAlbD8j
-         ujuKRVZvwupv4RpaaI7W0TOaE6rFL6mX8FXWWcYYpAgvBAsEAFcKH1mZiJOxq8fRxd9I
-         +P/LsOvU0/Xhf6P1luQmum5VNsuI4RSY7INNllf72AYSEFaWma9H/ynbVWW3nnuO8X9o
-         bqEPsmIB0eVIvwATgUaGhf0EThrCEOKdek/8DUStVU0neXDbBB6ffIcacP2ZIdOoWw7w
-         kkgKYVPxanqLzoXctLYNrkpYk+BUfxFr9K9Gp2DKJTmBhSZg+0lK7pJiLRMS5e30lGte
-         Lk7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724240969; x=1724845769;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MuMMiFy/GV/lo8qvjkEdntUASLQW+h7BP1y0eXqQ2Fk=;
-        b=nd+mDTOrn9m78YGvOOAswY69Tu1S5pxRlwgOldPDS2YpSWpD3+JrAXYkIqZHogzGk3
-         kXnj+mKBwhqAM3k9O+7jyOyyeQXq2WhEI2c+GE1MweFYoihVdlDQpgU4pObw6CPYuc1J
-         5kU7lVBde5zhMMqucWnd5RTVKDPL5r+DvoPT+XpTLTTwXvb3iNVDaqipGn5+nSXUNFmw
-         Bwr1JWT5bxE0Sdw37QHcnRl+P3ADpdckOOUxyLbQsLg7RzJ7vfT40BtDK0QjLgYncqhL
-         6OQ9gGHzadPfJOSmDrT5HuBCC4gfk+8Kw5dN9vQ2Vj7YMYmBLEOcB6yOHXjva5oTOkjP
-         Y/Ew==
-X-Forwarded-Encrypted: i=1; AJvYcCUgcabg/EhPBeDCUL/rAXl+7WcqBmGDckc2tj1KHOacjEbYCG0udaixAgyqS9SbVxw0ecsLlLO9E1ilGfcr@vger.kernel.org, AJvYcCXaeL4AWosMUnOld6EXa8NXyqv04RtoqGb+CgK2OC+D/ORo30mLA9BEun6WB+Orxik+rgc/GFg3xDwhBn4=@vger.kernel.org, AJvYcCXmdVyXlfBm4J0ctPZv8TCPMS/wDyfxOxiRj9daMym4DevyEF/u3/N8WhBpSnex0KpZ0NC19coB4hf1nPYw@vger.kernel.org
-X-Gm-Message-State: AOJu0YwxPRb+xVEZwhCMZecZSTsANDymhU5og8haLnEeC88sqekyi/mE
-	WkVShB6SOdvzLxElA6iBulzCURiEZO1/L2LEQAv/Ew+EA6zJTjsz
-X-Google-Smtp-Source: AGHT+IERUWWgK3HBz7H/4+znx84XAekugvyQB1GyHzWt3CJXUdgvULEOKqQjl6jNQIER3p0yxeZlVg==
-X-Received: by 2002:a05:6512:1256:b0:533:324a:9df6 with SMTP id 2adb3069b0e04-533485928cdmr2036535e87.29.1724240969163;
-        Wed, 21 Aug 2024 04:49:29 -0700 (PDT)
-Received: from localhost (craw-09-b2-v4wan-169726-cust2117.vm24.cable.virginm.net. [92.238.24.70])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a86702ad43fsm89820966b.136.2024.08.21.04.49.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Aug 2024 04:49:28 -0700 (PDT)
-From: Colin Ian King <colin.i.king@gmail.com>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	alsa-devel@alsa-project.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org
-Cc: kernel-janitors@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] ASoC: codecs: wcd934x: make read-only array minCode_param static const
-Date: Wed, 21 Aug 2024 12:49:27 +0100
-Message-Id: <20240821114927.520193-1-colin.i.king@gmail.com>
-X-Mailer: git-send-email 2.39.2
+	s=arc-20240116; t=1724245865; c=relaxed/simple;
+	bh=IXNh5XLies2Zu+d70075n+GhEUYfdwWx9D38TKDaRHo=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=FWSxxW3jjgHpiyWGXB4R+gNF8sDFaTko4DU/HXXR9GU3uM0572KhXVNCu/Pwh3oRVElefcEUYbCOthSDQtHPvJKGU2n9OmuxnRpPaEMYKRBLafJxhvvNLnbEwpTUME55G9atvhrsMS9F1D9tTdQsy+pjgAQgbIIuNu0Oa37NuzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from icess-ProLiant-DL380-Gen10.. (unknown [183.174.60.14])
+	by APP-05 (Coremail) with SMTP id zQCowAC3vzNT58VmLeC2CA--.16735S2;
+	Wed, 21 Aug 2024 21:10:50 +0800 (CST)
+From: Ma Ke <make24@iscas.ac.cn>
+To: vkoul@kernel.org,
+	kishon@kernel.org,
+	make24@iscas.ac.cn,
+	agross@codeaurora.org,
+	ansuelsmth@gmail.com
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: [PATCH] phy: qualcomm: Check NULL ptr on lvts_data in qcom_ipq806x_usb_phy_probe()
+Date: Wed, 21 Aug 2024 21:10:42 +0800
+Message-Id: <20240821131042.1464529-1-make24@iscas.ac.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:zQCowAC3vzNT58VmLeC2CA--.16735S2
+X-Coremail-Antispam: 1UD129KBjvdXoWrZr13try3AFW8tr17CrW3Wrg_yoWDGrbEga
+	4UZr47urn7JF1rKr1UtrnIvryvka4qqrW8Xa1IgFyfCrWrAF1aqFyDJrs8ZrZxu3WIvr1D
+	J34YvFZ5Zr1jqjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUbVkFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
+	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Jr0_
+	Gr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
+	0DM2vYz4IE04k24VAvwVAKI4IrM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI
+	64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8Jw
+	Am72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAG
+	YxC7MxkF7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r
+	1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CE
+	b7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0x
+	vE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAI
+	cVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2Kf
+	nxnUUI43ZEXa7VUbQVy7UUUUU==
+X-CM-SenderInfo: ppdnvj2u6l2u1dvotugofq/
 
-Don't populate the read-only array minCode_param on the stack at
-run time, instead make it static const.
+of_device_get_match_data() can return NULL if of_match_device failed, and
+the pointer 'data' was dereferenced without checking against NULL. Add
+checking of pointer 'data' in qcom_ipq806x_usb_phy_probe().
 
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Cc: stable@vger.kernel.org
+Fixes: ef19b117b834 ("phy: qualcomm: add qcom ipq806x dwc usb phy driver")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
 ---
- sound/soc/codecs/wcd934x.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-ipq806x-usb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/wcd934x.c b/sound/soc/codecs/wcd934x.c
-index 291d0c80a6fc..910852eb9698 100644
---- a/sound/soc/codecs/wcd934x.c
-+++ b/sound/soc/codecs/wcd934x.c
-@@ -2643,8 +2643,8 @@ static void wcd934x_mbhc_get_result_params(struct wcd934x_codec *wcd934x,
- 	s16 c1;
- 	s32 x1, d1;
- 	int32_t denom;
--	int minCode_param[] = {
--			3277, 1639, 820, 410, 205, 103, 52, 26
-+	static const int minCode_param[] = {
-+		3277, 1639, 820, 410, 205, 103, 52, 26
- 	};
+diff --git a/drivers/phy/qualcomm/phy-qcom-ipq806x-usb.c b/drivers/phy/qualcomm/phy-qcom-ipq806x-usb.c
+index 06392ed7c91b..9b9fd9c1b1f7 100644
+--- a/drivers/phy/qualcomm/phy-qcom-ipq806x-usb.c
++++ b/drivers/phy/qualcomm/phy-qcom-ipq806x-usb.c
+@@ -492,6 +492,8 @@ static int qcom_ipq806x_usb_phy_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
  
- 	regmap_update_bits(wcd934x->regmap, WCD934X_ANA_MBHC_ZDET, 0x20, 0x20);
+ 	data = of_device_get_match_data(&pdev->dev);
++	if (!data)
++		return -ENODEV;
+ 
+ 	phy_dwc3->dev = &pdev->dev;
+ 
 -- 
-2.39.2
+2.25.1
 
 
