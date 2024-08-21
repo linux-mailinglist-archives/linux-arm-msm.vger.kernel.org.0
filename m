@@ -1,190 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-29177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADE9595951F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 08:52:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 190DA95953F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 09:02:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E106C1C20FC8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 06:52:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B956528322F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 07:02:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3874919258E;
-	Wed, 21 Aug 2024 06:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE5DD192D7E;
+	Wed, 21 Aug 2024 07:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bO8cwyiB"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YY1g8XpH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1468B19258A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Aug 2024 06:52:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06171192D6A;
+	Wed, 21 Aug 2024 07:02:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724223162; cv=none; b=rLRTP3HssmCzatJjnVMD085QHOyJjVjtIpge1I51IODGxpskl9BW3Xrc39MYStbJ2ZAlLAGtIeRwzDbP5FD+VqNyUCibr3eyFEQQx5WuCyS+wf3SGPmWFSyXfmcOlfefUuBGNrFp2YruAa/VjGTX4hnzT9h0Q2Xk7/IVWyfIJhs=
+	t=1724223767; cv=none; b=qKDsCipmg2z7Hn7pCJRYxz0mA6fCwkglbpV7UWvRJamgNFxazpbRRbS1sMLdmXgs808SDePHDjS8/Zh4UK14R2TFU4qlPUZ+cRLAxiwyJxGGZc8VPD7rD+qLTVlxG+7JIohO6ipNxNrZzyNGcTusDkCIqpCFVId+feerN7KXmVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724223162; c=relaxed/simple;
-	bh=ICrJcs7OEf0Li17q5LhAGGtSH/X/Gt65/30gX0OOqdU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pxJu31bw3xp1ZKyMkfHf74wta1l1DJ4E/eui7sWEIxwT6Y5HgCuUBi0dKom297CYbh2gRaxYvjZVmqRY9aAAfDMGBqQMGRmEzCZu9JaL6n/UzSIknWezt187GD5eyf+KACLcpg5bZMqHYmdHUJ2V5BtkBYCBgJ14QQfgwbN9Pvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bO8cwyiB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C823C4AF09;
-	Wed, 21 Aug 2024 06:52:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724223161;
-	bh=ICrJcs7OEf0Li17q5LhAGGtSH/X/Gt65/30gX0OOqdU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bO8cwyiBFF0jjJAYTuyJ+Iz41vBTdRNc4amsvXhPIzmcAnPSJB7Z2eRZrQ16OdZtI
-	 ZJ0lWV9QzbCT456luNRbOki7MKFkFgPTfNfmE4XqQDXlZ09s8D8JScE0t4L4E1xLsq
-	 +G0jXI3vU5jh0bi7KIyns/7IpZ5xVUw88aPnYthIJLzlQf+ncTpSl1L9SjUUcUvzb0
-	 BU2Evzcnhm9jPU9SzEkUN/MiGEmVIrhk5FParrmsrUesGfVMBvKsml/sv1SGVSkhA/
-	 T/0AMj1IqC1AaAA54p99JvGnby3aU6/P2YGD09gN0jjnerq++QnL8MyPCvnvlufyWp
-	 L3/qavUvyrMlg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1sgfD0-000000003ZF-1BNv;
-	Wed, 21 Aug 2024 08:52:43 +0200
-Date: Wed, 21 Aug 2024 08:52:42 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] soc: qcom: pmic_glink: Fix race during
- initialization
-Message-ID: <ZsWOujOQsJtLcVf-@hovoldconsulting.com>
-References: <20240820-pmic-glink-v6-11-races-v3-0-eec53c750a04@quicinc.com>
- <20240820-pmic-glink-v6-11-races-v3-1-eec53c750a04@quicinc.com>
+	s=arc-20240116; t=1724223767; c=relaxed/simple;
+	bh=8rUm72MnGLmHQNl/Pyxx0EYzyXtHSorMLOIHmsjfdMk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HxwHumIdFonq2SoDL71KjbqDo4KV4j2brhRkBDHnS2kOLANbgSkGwvEtD2EVE+OFb0aX6X2GFibJjKt4v5gfJyxxTeNxQhI5uaO9+kxw2WgwW/FmsbFRAWZXb1EGonXsFv7QGuuBIgHSfK6KFS+vO48u/9p5TQVX6ufYC1BZ6Ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YY1g8XpH; arc=none smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1724223766; x=1755759766;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=8rUm72MnGLmHQNl/Pyxx0EYzyXtHSorMLOIHmsjfdMk=;
+  b=YY1g8XpHLdE595GK51tnrBrNO/HM5rr8j+FEc1APx3Ifcx+tH0VLnkr1
+   PWovQjs+6o5WGEgDTCnMkBUbIXUe+K4/x3cEdjntn+ibtEiW0AoyemxgU
+   kHtXkELsiWDlcD0aCUIz23Lht+MYyuVDjBdDOwfXqQYBnhSXrC94v9f0O
+   LANXScKrbZEnTtolgYBfj7vAL5PfbWR0ISOKVPA4BxzlOjoDbQ6dL6ArF
+   s8C+drAMjOY59JRwxRCvtmMFGsT2uDFpfJyD+eDX2eirm6xqmjXgVhsE0
+   +ZzYnIABT4XV7xVVbp1ejs+/k3cw8H3x5ZMvYV/gsk61a5h0XSLfmntfz
+   A==;
+X-CSE-ConnectionGUID: Hhs8JmD/QsW33kpH3E9nCw==
+X-CSE-MsgGUID: DGFSXacyTGqSOOjiLVDqZA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11170"; a="22706002"
+X-IronPort-AV: E=Sophos;i="6.10,164,1719903600"; 
+   d="scan'208";a="22706002"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Aug 2024 00:02:46 -0700
+X-CSE-ConnectionGUID: r7X2J0LrR8ub329AoQ8R8g==
+X-CSE-MsgGUID: fYBNYWdMTGy2tKnZxPcjmg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,164,1719903600"; 
+   d="scan'208";a="65871786"
+Received: from kniemiec-mobl1.ger.corp.intel.com (HELO [10.245.246.16]) ([10.245.246.16])
+  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Aug 2024 00:02:39 -0700
+Message-ID: <7b3421f5-8d57-4138-9456-1bf0eb4662c0@linux.intel.com>
+Date: Wed, 21 Aug 2024 09:02:37 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240820-pmic-glink-v6-11-races-v3-1-eec53c750a04@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v24 29/34] ALSA: usb-audio: qcom: Add USB offload route
+ kcontrol
+To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+ mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+ corbet@lwn.net, broonie@kernel.org, lgirdwood@gmail.com, krzk+dt@kernel.org,
+ Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, tiwai@suse.com,
+ gregkh@linuxfoundation.org, robh@kernel.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ alsa-devel@alsa-project.org
+References: <20240801011730.4797-1-quic_wcheng@quicinc.com>
+ <20240801011730.4797-30-quic_wcheng@quicinc.com>
+ <4d5fe3f8-d7ba-4647-8dd7-22656ec2fde5@linux.intel.com>
+ <58043166-c494-42db-b7d3-575991e43e8b@quicinc.com>
+ <f507a228-4865-4df5-9215-bc59e330a82f@linux.intel.com>
+ <88d5ed6f-1429-4381-8014-d5824ec7866e@quicinc.com>
+ <56ebd11e-9522-406b-9ca4-5e284eaac409@quicinc.com>
+Content-Language: en-US
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <56ebd11e-9522-406b-9ca4-5e284eaac409@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Aug 20, 2024 at 01:29:30PM -0700, Bjorn Andersson wrote:
-> As pointed out by Stephen Boyd it is possible that during initialization
-> of the pmic_glink child drivers, the protection-domain notifiers fires,
-> and the associated work is scheduled, before the client registration
-> returns and as a result the local "client" pointer has been initialized.
+
+
+
+>>>>>> +/**
+>>>>>> + * snd_usb_offload_create_ctl() - Add USB offload bounded mixer
+>>>>>> + * @chip - USB SND chip device
+>>>>>> + *
+>>>>>> + * Creates a sound control for a USB audio device, so that applications can
+>>>>>> + * query for if there is an available USB audio offload path, and which
+>>>>>> + * card is managing it.
+>>>>>> + */
+>>>>>> +int snd_usb_offload_create_ctl(struct snd_usb_audio *chip)
+>>>>>> +{
+>>>>>> +	struct usb_device *udev = chip->dev;
+>>>>>> +	struct snd_kcontrol_new *chip_kctl;
+>>>>>> +	struct snd_usb_stream *as;
+>>>>>> +	char ctl_name[37];
+>>>>>> +	int ret;
+>>>>>> +
+>>>>>> +	list_for_each_entry(as, &chip->pcm_list, list) {
+>>>>>> +		chip_kctl = &snd_usb_offload_mapped_ctl;
+>>>>>> +		chip_kctl->count = 1;
+>>>>>> +		/*
+>>>>>> +		 * Store the associated USB SND card number and PCM index for
+>>>>>> +		 * the kctl.
+>>>>>> +		 */
+>>>>>> +		chip_kctl->private_value = as->pcm_index |
+>>>>>> +					  chip->card->number << 16;
+>>>>>> +		sprintf(ctl_name, "USB Offload Playback Route PCM#%d",
+>>>>>> +			as->pcm_index);
+>>>>>> +		chip_kctl->name = ctl_name;
+>>>>>> +		ret = snd_ctl_add(chip->card, snd_ctl_new1(chip_kctl,
+>>>>>> +				  udev->bus->sysdev));
+>>>>>> +		if (ret < 0)
+>>>>>> +			break;
+>>>>>> +	}
+>>>>>> +
+>>>>>> +	return ret;
+>>>> Hi Pierre,
+>>>>> None of this looks Qualcomm-specific, shouldn't this be part of the
+>>>>> soc_usb framework instead of being added in the qcom/ stuff?
+>>>> Started working on this particular comment, and there are some things that needs to be considered if we moved this into SOC USB:
+>>>>
+>>>> 1.  We do save the reference to the USB BE DAI link within the USB DT node, which can be fetched/referenced based on sysdev.  However, I'm not sure if everyone would potentially follow that way.
+>>>>
+>>>> 2.  I tried a few implementations of adding a new SOC USB API, and the argument list was a bit long, because I didn't want to directly reference the usb_chip.
+>>>>
+>>>> Sorry for the delay, but I wanted to give a good stab at implementing this before bringing up the implications.  It is possible, but definitely not as clean as how we have it now IMO.
+>>> My comment was only referring to the location of the code, it's now in
+>>> sound/usb/qcom/mixer_usb_offload.c but does not contain anything
+>>> specific to Qualcomm. I was not asking for any encapsulation inside of
+>>> soc-usb, I was only suggesting a move of the code to a shared helper
+>>> library so that this code can be reused as is and not duplicated if the
+>>> QCOM parts are not compiled in.
+>> Ah, great, thanks for the clarification.  Let me take a look with that perspective.
+>>
+> Going back on the history behind moving it into qcom/ was based off feedback that Takashi pointed out in v14[1].  It was mainly due to the fact that we would be adding another hard dependency between USB SND and the offloading components.  Hence the reason for moving it to within the QCOM offloading package. 
 > 
-> The outcome of this is a NULL pointer dereference as the "client"
-> pointer is blindly dereferenced.
+> Thanks
+> 
+> Wesley Cheng
+> 
+> [1]: https://lore.kernel.org/linux-usb/87y1bt2acg.wl-tiwai@suse.de/
 
-> Resolve this by splitting the allocation of the "client" object and the
-> registration thereof into two operations.
+I don't see anything wrong with the initial proposal
 
-It seems something went wrong when you posted v3 (using b4 automagic?)
-so the cover letter and changelog is now missing and no one is on CC any
-more.
 
-Patches look good, though, with the exception of one nit below.
+ +config SND_USB_OFFLOAD_MIXER
+ +	bool
+ +
+  config SND_USB_AUDIO_QMI
+  	tristate "Qualcomm Audio Offload driver"
+  	depends on QCOM_QMI_HELPERS && SND_USB_AUDIO && USB_XHCI_SIDEBAND
+  	select SND_PCM
+ +	select SND_USB_OFFLOAD_MIXER
 
-> diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-> index 49bef4a5ac3f..07758ab6ac1c 100644
-> --- a/drivers/power/supply/qcom_battmgr.c
-> +++ b/drivers/power/supply/qcom_battmgr.c
-> @@ -1387,12 +1387,16 @@ static int qcom_battmgr_probe(struct auxiliary_device *adev,
->  					     "failed to register wireless charing power supply\n");
->  	}
->  
-> -	battmgr->client = devm_pmic_glink_register_client(dev,
-> -							  PMIC_GLINK_OWNER_BATTMGR,
-> -							  qcom_battmgr_callback,
-> -							  qcom_battmgr_pdr_notify,
-> -							  battmgr);
-> -	return PTR_ERR_OR_ZERO(battmgr->client);
-> +	battmgr->client = devm_pmic_glink_client_alloc(dev, PMIC_GLINK_OWNER_BATTMGR,
-> +						     qcom_battmgr_callback,
-> +						     qcom_battmgr_pdr_notify,
-> +						     battmgr);
 
-I'm not a fan of open-parenthesis alignment of arguments, but since this
-driver uses it you need to adjust the alignment to the new symbol name
-in v3.
-
-> +	if (IS_ERR(battmgr->client))
-> +		return PTR_ERR(battmgr->client);
-> +
-> +	pmic_glink_client_register(battmgr->client);
-> +
-> +	return 0;
->  }
-
-> diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
-> index 1e0808b3cb93..c6f3d5188fc6 100644
-> --- a/drivers/soc/qcom/pmic_glink_altmode.c
-> +++ b/drivers/soc/qcom/pmic_glink_altmode.c
-> @@ -520,12 +520,17 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
->  			return ret;
->  	}
->  
-> -	altmode->client = devm_pmic_glink_register_client(dev,
-> -							  altmode->owner_id,
-> -							  pmic_glink_altmode_callback,
-> -							  pmic_glink_altmode_pdr_notify,
-> -							  altmode);
-> -	return PTR_ERR_OR_ZERO(altmode->client);
-> +	altmode->client = devm_pmic_glink_client_alloc(dev,
-> +						     altmode->owner_id,
-> +						     pmic_glink_altmode_callback,
-> +						     pmic_glink_altmode_pdr_notify,
-> +						     altmode);
-
-Same here.
-
-> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> index 16c328497e0b..6425904f2bfc 100644
-> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> @@ -367,12 +367,16 @@ static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
->  		ucsi->port_orientation[port] = desc;
->  	}
->  
-> -	ucsi->client = devm_pmic_glink_register_client(dev,
-> -						       PMIC_GLINK_OWNER_USBC,
-> -						       pmic_glink_ucsi_callback,
-> -						       pmic_glink_ucsi_pdr_notify,
-> -						       ucsi);
-> -	return PTR_ERR_OR_ZERO(ucsi->client);
-> +	ucsi->client = devm_pmic_glink_client_alloc(dev, PMIC_GLINK_OWNER_USBC,
-> +						  pmic_glink_ucsi_callback,
-> +						  pmic_glink_ucsi_pdr_notify,
-> +						  ucsi);
-
-And here.
-
-> +	if (IS_ERR(ucsi->client))
-> +		return PTR_ERR(ucsi->client);
-> +
-> +	pmic_glink_client_register(ucsi->client);
-> +
-> +	return 0;
->  }
->  
->  static void pmic_glink_ucsi_remove(struct auxiliary_device *adev)
-> diff --git a/include/linux/soc/qcom/pmic_glink.h b/include/linux/soc/qcom/pmic_glink.h
-> index fd124aa18c81..4c68385b2765 100644
-> --- a/include/linux/soc/qcom/pmic_glink.h
-> +++ b/include/linux/soc/qcom/pmic_glink.h
-> @@ -23,10 +23,11 @@ struct pmic_glink_hdr {
->  
->  int pmic_glink_send(struct pmic_glink_client *client, void *data, size_t len);
->  
-> -struct pmic_glink_client *devm_pmic_glink_register_client(struct device *dev,
-> -							  unsigned int id,
-> -							  void (*cb)(const void *, size_t, void *),
-> -							  void (*pdr)(void *, int),
-> -							  void *priv);
-> +struct pmic_glink_client *devm_pmic_glink_client_alloc(struct device *dev,
-> +						     unsigned int id,
-> +						     void (*cb)(const void *, size_t, void *),
-> +						     void (*pdr)(void *, int),
-> +						     void *priv);
-
-And here.
-
-Johan
+That would allows the SND_USB_OFFLOAD_MIXER to be build as a module, and
+it would allow other non-QCON solutions to use the module.
+Maybe just make it a tristate?
 
