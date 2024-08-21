@@ -1,101 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-29211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A855E95A158
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 17:25:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B50395A16F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 17:35:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB07F1C229CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 15:25:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 757291C219B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 15:35:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB14E14F9CD;
-	Wed, 21 Aug 2024 15:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB16414C59B;
+	Wed, 21 Aug 2024 15:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YVXmxd1e"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PXXsHuD8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDEC714F13A;
-	Wed, 21 Aug 2024 15:24:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF4E149C42
+	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Aug 2024 15:35:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724253890; cv=none; b=cNJQq1Jr3rxjVsYGO+fDqh1S0cKFZBgywwLYeDpbp5/dIC7IDs2OJuGlo3LkuhA5OxHbob5sflCQPmhkqTOBJFUHU90oXXvQnqTKfCWDtgJrz/gCgyxG9rLsMFininqCevTj67i92g20qBogyAYWMCWj3UnKf9n0PxajmFEtdSA=
+	t=1724254522; cv=none; b=VcoLMnYXHBD3cUOpOkAgHXHyucSw8P7EBBagvMO1V1x0vNKRA166/gMEQtrcjz+NBxQvxucjrV5+ipPFvpy+O231NHCdA357gun2tXni/Yc5isjf/4PRVplqoNcZmVRQHGTUyFdt1HwCfkm97Z0qyGErAuaMZoBb7p92EZFvLO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724253890; c=relaxed/simple;
-	bh=W6Dm+pw4jKVI1NoMBaeLuQYMNAlSSIuKPuzkfQBk0wU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=C6wBhOgx4hX/1nPuA3ydjCCkbGfg+diyp2SropG+IE3ttuzq6iIIV/m7et6/F3IQ3DhG2LZzZTQwUiwcyPskhG9zUbDs4SchI8VgBY5YUcT8ihcN9LzGUngj/dMt8lFdF3zgYyqshq25PCN1WSHIoA6qzpzegP0iAPmD7dUxYq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YVXmxd1e; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D56EC32781;
-	Wed, 21 Aug 2024 15:24:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724253890;
-	bh=W6Dm+pw4jKVI1NoMBaeLuQYMNAlSSIuKPuzkfQBk0wU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=YVXmxd1eK1rsVkqeL1K3kB85wpV5tsEhKpBR7XuGnOPqUwBOqNEcxhL0cvCXR9l2J
-	 QkixuXmAmzleeGVMTlAAaW4PUhlGy2Ik+eP7EMqc5LQEaJL70m+kAlousN44o2lNoN
-	 6YLvZyb2iBqgwccb0ckkq5bCwef5FpwNqbLZGqyEnAFWYZOAV4VI72XWiJY7seFnnc
-	 pLW1Yzr5Mbcn85sx9TVhsaEzBlYue48aXHMyBEeuqd8d2nMH6lBN7R8JC2M93an0HO
-	 ur93a+PHoXdbrVZ+3jNjYoDtSO7myjqO7NHoug1uxh8uWcUswhgwZNbdAYSZPRs5t7
-	 kc0HkwI38pC4Q==
-From: Mark Brown <broonie@kernel.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org, 
- linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
- Colin Ian King <colin.i.king@gmail.com>
-Cc: kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20240821114927.520193-1-colin.i.king@gmail.com>
-References: <20240821114927.520193-1-colin.i.king@gmail.com>
-Subject: Re: [PATCH] ASoC: codecs: wcd934x: make read-only array
- minCode_param static const
-Message-Id: <172425388817.1704682.13476563163594836442.b4-ty@kernel.org>
-Date: Wed, 21 Aug 2024 16:24:48 +0100
+	s=arc-20240116; t=1724254522; c=relaxed/simple;
+	bh=q0aRixnhWUWpxjM3Ck4bjrpb4pe7AI96MxRCxkxtVwA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PLoHee6cGeZZdJTeVXuz8w0jU8fTehl/lOVHXrXwLxfvWLyWBP4XcBb0swf/NucJJLQLYkfjM8gKrF+RS8+jrYiyGqJxDssQuN6SRuq8yaFzFSvjNFC0D/0x3D1TZ/7+3yE8/gt2ROPFKot2lg2194ZC16Ou9p11YEYv8lqqIwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PXXsHuD8; arc=none smtp.client-ip=209.85.161.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-5dcad91e64bso214427eaf.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Aug 2024 08:35:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1724254520; x=1724859320; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=B92SIehQD/sLMBWjePhjq8cDV+wlqZQrnnvx6Bm71co=;
+        b=PXXsHuD8muxBu9u7zISm/280RncJXoB7bBQbyDhwKHMlVmEuc/BCXqyh2l/i57uE/H
+         fpA0qchv5IyhMZIan0fgEzcAZcB/cWP5FeWguolLSMb2v+S0C8all8ZwXhn7nMJ+24a8
+         +q+KEW9xVxw8iw/rgxJWBU4jhIzCq6IqGfySZtxopgBw3lGHYb5Whvsab6tZFiBB9cd7
+         t6IGpxGZy6VFgsRrvIvl4y71yJKjoKpvTyNgLZSwi/fkoylfhwmdYtyL2pk9QyjUKARH
+         KrAbnMOYPY3YERhnibbFt+PRYgrdnD0rNyeyNIMvMKj4UkARHddu0WkZa4KrzRybg3K8
+         zcrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724254520; x=1724859320;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B92SIehQD/sLMBWjePhjq8cDV+wlqZQrnnvx6Bm71co=;
+        b=NNR8QTm8l6XzfF4bIKhm6M485pHphBJ7T2jw5g+dG113VNWcx0lyFawrrqedAnfStK
+         qf0rqHDZvDcwOhkNX+/YNcI93FdNlJeLSpZk3fIu4xNatLW359yllUzFGaEnHFqgMgeW
+         3PECShgU2hjZU/93bY8zL89WglSAyjPAfw/3DN0M3T2SQo0ZXze3xBEiDxrpaFdZEuAL
+         MYnhGxxj+PelzWVog75hKdgMGwbRV1dBrVQ2HeenfWUILqrQ2memp2IY20bVjbmfIfiB
+         XMQGgveKfuk4Yl+Qrx1LySjbxNOl/edrkpvwG1Mkd5FaI6qeWQ2pFBkIVwOffdU1+oZO
+         nkgA==
+X-Forwarded-Encrypted: i=1; AJvYcCVRwSYgNpQHKXduTQT4/3k+vCa4HX6APEV4xU34noikduYVFHzPaEJQeZdLKOMypUdIcj3pxO1NwMtCVCuS@vger.kernel.org
+X-Gm-Message-State: AOJu0YwNrglY8L3xpPR9cs5IVBkwRg+P3vSlTwPHdFu9Vw0GpAwRT0yg
+	K7Z7rHMZlC6o3SnMd3/w0ZOHojIFWVx+7i2rAjSP64Vf3KdNf6yETUHeraXC11dD2HyklxR26sZ
+	DbE8o/Ui9gQ/lHwB5RAMNZBkmdrwqRvch4VAmeA==
+X-Google-Smtp-Source: AGHT+IHtjLVFoilgrnbbIQMVwq05/DqJA4CW2+AENaI/70z5AgIJxpdFSd6TduzT2Mi5cnCvDMGVL39BMCO82c2hHq8=
+X-Received: by 2002:a05:6358:310b:b0:1b5:a060:678b with SMTP id
+ e5c5f4694b2df-1b5a265b26amr290392655d.3.1724254520067; Wed, 21 Aug 2024
+ 08:35:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-37811
+References: <20240819233628.2074654-1-swboyd@chromium.org>
+In-Reply-To: <20240819233628.2074654-1-swboyd@chromium.org>
+From: Amit Pundir <amit.pundir@linaro.org>
+Date: Wed, 21 Aug 2024 21:04:43 +0530
+Message-ID: <CAMi1Hd3=1S0Jktej0vv0ZJna1Z=Kb6WHEzpbxuHFHdCaEUKWrQ@mail.gmail.com>
+Subject: Re: [PATCH 0/2] clk: qcom: gcc-sm8550: Fix shared clk parking breakage
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, patches@lists.linux.dev, 
+	linux-clk@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 21 Aug 2024 12:49:27 +0100, Colin Ian King wrote:
-> Don't populate the read-only array minCode_param on the stack at
-> run time, instead make it static const.
-> 
-> 
+On Tue, 20 Aug 2024 at 05:06, Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Amit Pundir reported[1] that a recent commit 01a0a6cc8cfd ("clk: qcom:
+> Park shared RCGs upon registration") broke USB and audio on sm8550-hdk.
+> These two patches fix the issue by skipping the parking bit of the
+> shared RCGs for devices that can't run so slow.
+>
+> [1] https://lore.kernel.org/CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com/
+>
 
-Applied to
+Thank you for the patches Stephen. This series fixes the serial
+console garbage, audio, and USB-C host mode regression I see on
+SM8550-HDK running AOSP.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+Tested-by: Amit Pundir <amit.pundir@linaro.org>
 
-Thanks!
 
-[1/1] ASoC: codecs: wcd934x: make read-only array minCode_param static const
-      commit: 6f6d8b2d49299492e704030632ab79257685e5d3
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+> Stephen Boyd (2):
+>   clk: qcom: gcc-sm8550: Don't use parking clk_ops for QUPs
+>   clk: qcom: gcc-sm8550: Don't park the USB RCG at registration time
+>
+>  drivers/clk/qcom/clk-rcg.h    |  1 +
+>  drivers/clk/qcom/clk-rcg2.c   | 30 +++++++++++++++++++
+>  drivers/clk/qcom/gcc-sm8550.c | 54 +++++++++++++++++------------------
+>  3 files changed, 58 insertions(+), 27 deletions(-)
+>
+>
+> base-commit: 8400291e289ee6b2bf9779ff1c83a291501f017b
+> --
+> https://chromeos.dev
+>
 
