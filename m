@@ -1,125 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-29194-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29195-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52A319599D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 13:29:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70B749599EE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 13:31:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 152602831F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 11:29:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A67D41F22B6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Aug 2024 11:31:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF3972140F1;
-	Wed, 21 Aug 2024 10:26:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Si8srhhu"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77CFE1D1305;
+	Wed, 21 Aug 2024 10:39:02 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1659E2140EC
-	for <linux-arm-msm@vger.kernel.org>; Wed, 21 Aug 2024 10:26:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB1A81D12FE;
+	Wed, 21 Aug 2024 10:38:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724235969; cv=none; b=RJixSE0F75CYbEmqDJVSHIIDIxilesw4VI0sKMSpA9D21ctoWtl72hu2aZ1sIakWL67+DufDuWgvEkmPXkbtY1rpEqA5z3GK6sB4RdrVzvl1LFykdZctSiIer1IZZsVEd0kbkiPWLhRTpn5HbOIG9PN7WOqdr32mQfwpXdjOZBE=
+	t=1724236742; cv=none; b=ITGTBOWpVlAeD/EOHts7soFej3VZrRgMSAI+BvS0mN++ggXjgWMNKGDkvNGaaDtw4qqdZqdjoGmyTTZAbz6crd6sMGKCUy//ztiNFosZkU84b9qBAdiyG1WzgipGpfTf3RPZr6wWt37pzUjteFfA9Pl2cCs3lktd9hbMG9tb7Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724235969; c=relaxed/simple;
-	bh=EP1yi2pd8hzm/WofOdN7duGfAzgqL716j09t0RLjKgw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DsgUkGCOvypItkziUUvc0kotPZZ10HmFMES7UhXZl4xbUCjXi5kxKCBOaLOv/iLzXh4kPXU5LzrOqlMbIlm7WsN+U6EcwXu82nVv1Cankb+cU3BNr0D+tq/ycjhFn6ytxicAZtfhegQas/LWJ9maB/hrvOzJfCVr54eYSbtw7J4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Si8srhhu; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a866902708fso2434366b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Aug 2024 03:26:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724235966; x=1724840766; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lr3fWsg1+KHj57spoBkvDMc7FLWUNMPanVJOyFPAj14=;
-        b=Si8srhhuoBoWfTrantoAQLc1xDEH+wl9VAIMocGuWg+rTiuxYXMmLfu0y7+XGO85jS
-         zz4r5QMuxzMrg/yi5xNIttLsmK7YeG9twduYRWVgeNvOW4Jip31els2KgD9JbfT5H6sg
-         kE+bFwPf8v92jdBe7+bxKxpv7yTdCJ5IPmOYhsQEs9BA7E0ZNOOdgQZ5li94cEL1Noqa
-         NPgQs4k8B5g49YiritREH8BzNzp0qU4rgSHk832YzzXtkCB+uiORTEdbSP6JYbbSSksZ
-         c0pLqJSnh+QlU3kUQBohpyBO4P/QXd3JzxLXDOkSS24PG/rji8BlHYKLeiE1zBzPyqOe
-         LLfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724235966; x=1724840766;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Lr3fWsg1+KHj57spoBkvDMc7FLWUNMPanVJOyFPAj14=;
-        b=iLO1VH4N+ZRov8PhtLoSgSxO4JsV2C2/prb2nTSyJVp2HtQAMgP98o/qRs/dtgkZkJ
-         hyy+YjH6Ieh3BOwV7PkGo9ZpF9jZu5R8dhhuhqP6XV/fquXq0wjVqG10CqejO1iPAtMV
-         MaqqX9vOAwvb+eWYYY/1M86jyRD3f5hP4O9/eFGPmEr9xULE+wx9wLJBX6njK66DfgN1
-         +iNq0uQKNBA8vLy4P8wR+atFJHiNDx6TdDKflYmL8cQrjpBN+4n4JAm6OLIBSRLTUlpM
-         nwoPSffTX3Qo83KuemM7Jxe89hXueozWLj5XdSqwSbAIo0hiF2Ldf11CrT21NR+mvG1q
-         m+2w==
-X-Forwarded-Encrypted: i=1; AJvYcCXm/YtE1io+xM1RC2SM4zfOc4WDfFCGAoNler7avrkSbCfg0v8+mpBZE8kQrfYqms8kT5hT8ysT+81nUXpb@vger.kernel.org
-X-Gm-Message-State: AOJu0YzvHKEdS+8sXDZW+CRFkSSuua+bVjiiK82J352RKDBryEPF3raA
-	oXz+6O46eT0SgS6UlSxncUUVMTjUCXZvSWSe6cfm4hbmPNEa41LV61lrb8WdXts=
-X-Google-Smtp-Source: AGHT+IFE9DDiTWfHEqN6SuGGKYnmlDYPMOyf2r32jVYUDs1QI2EmwGPFKQJxc/gUX9mm8Yke/5LOZA==
-X-Received: by 2002:a17:907:2da5:b0:a7a:a5ed:43c3 with SMTP id a640c23a62f3a-a866f10a0bbmr67188366b.2.1724235966210;
-        Wed, 21 Aug 2024 03:26:06 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.215.209])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a83838c68f2sm879613166b.2.2024.08.21.03.26.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Aug 2024 03:26:05 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] qcom: MAINTAINERS: add linux-msm IRC on OFTC
-Date: Wed, 21 Aug 2024 12:26:02 +0200
-Message-ID: <20240821102602.134216-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1724236742; c=relaxed/simple;
+	bh=RmQmTjDDSu/v2Oc8+OOVBVUUOFGP3r3fgDj2i6yJMBQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ojAczwohxuuBXHq5kEd3jB8OUfcbpOP0mSURBs4EaYw5gw1x2ee8KgAg+gZHNkR6OHlzFnU5gIdMnuaEWwzBQUTQvQiqZ27eqD04hE+dRTJ1AFxHP0p21QMw4uQPDG6Be4Az33380WwHITer34aAC0GvGC/qLzDNfujU8YXq1nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0353ADA7;
+	Wed, 21 Aug 2024 03:39:25 -0700 (PDT)
+Received: from [10.57.71.237] (unknown [10.57.71.237])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CE0213F73B;
+	Wed, 21 Aug 2024 03:38:56 -0700 (PDT)
+Message-ID: <a01d2f2f-d963-4eb1-98ee-3dc6f86c9397@arm.com>
+Date: Wed, 21 Aug 2024 11:38:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/3] dt-bindings: arm:
+ qcom,coresight-static-replicator: Add property for source filtering
+Content-Language: en-GB
+To: Tao Zhang <quic_taozha@quicinc.com>, Mike Leach <mike.leach@linaro.org>,
+ James Clark <james.clark@arm.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Leo Yan <leo.yan@linux.dev>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20240821031348.6837-1-quic_taozha@quicinc.com>
+ <20240821031348.6837-2-quic_taozha@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20240821031348.6837-2-quic_taozha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Qualcomm SoC community gathers in #linux-msm channel on OFTC, so mention
-it in the maintainer entries.
+On 21/08/2024 04:13, Tao Zhang wrote:
+> The is some "magic" hard coded filtering in the replicators,
+> which only passes through trace from a particular "source". Add
+> a new property "filter-src" to label a phandle to the coresight
+> trace source device matching the hard coded filtering for the port.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- MAINTAINERS | 3 +++
- 1 file changed, 3 insertions(+)
+Minor nit: Please do not use abbreviate "source" in the bindings.
+I am not an expert on other changes below and will leave it to
+Rob/Krzysztof to comment.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a7cb909ffa1d..8b8dc4be96e4 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2776,6 +2776,7 @@ F:	arch/arm64/boot/dts/qcom/sdm845-cheza*
- 
- ARM/QUALCOMM MAILING LIST
- L:	linux-arm-msm@vger.kernel.org
-+C:	irc://irc.oftc.net/linux-msm
- F:	Documentation/devicetree/bindings/*/qcom*
- F:	Documentation/devicetree/bindings/soc/qcom/
- F:	arch/arm/boot/dts/qcom/
-@@ -2817,6 +2818,7 @@ M:	Bjorn Andersson <andersson@kernel.org>
- M:	Konrad Dybcio <konradybcio@kernel.org>
- L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
-+C:	irc://irc.oftc.net/linux-msm
- T:	git git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git
- F:	Documentation/devicetree/bindings/arm/qcom-soc.yaml
- F:	Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -18156,6 +18158,7 @@ PIN CONTROLLER - QUALCOMM
- M:	Bjorn Andersson <andersson@kernel.org>
- L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
-+C:	irc://irc.oftc.net/linux-msm
- F:	Documentation/devicetree/bindings/pinctrl/qcom,*
- F:	drivers/pinctrl/qcom/
- 
--- 
-2.43.0
+Rob, Krzysztof,
+
+We need someway to "link" (add a phandle) from a "port". The patch below
+is extending "standard" port to add a phandle. Please let us know if
+there is a better way.
+
+e.g.:
+
+filters = list of tuples of port, phandle. ?
+
+e.g.:
+
+filters = < 0, <&tpdm_video>,
+             1, <&tpdm_mdss>
+	   >
+
+
+Thanks
+
+Suzuki
+
+
+> 
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> ---
+>   .../arm/arm,coresight-static-replicator.yaml  | 19 ++++++++++++++++++-
+>   1 file changed, 18 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
+> index 1892a091ac35..0d258c79eb94 100644
+> --- a/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
+> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
+> @@ -45,7 +45,22 @@ properties:
+>       patternProperties:
+>         '^port@[01]$':
+>           description: Output connections to CoreSight Trace bus
+> -        $ref: /schemas/graph.yaml#/properties/port
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        unevaluatedProperties: false
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: /schemas/graph.yaml#/$defs/endpoint-base
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              filter-src:
+> +                $ref: /schemas/types.yaml#/definitions/phandle
+> +                description:
+> +                  phandle to the coresight trace source device matching the
+> +                  hard coded filtering for this port
+> +
+> +              remote-endpoint: true
+>   
+>   required:
+>     - compatible
+> @@ -72,6 +87,7 @@ examples:
+>                   reg = <0>;
+>                   replicator_out_port0: endpoint {
+>                       remote-endpoint = <&etb_in_port>;
+> +                    filter-src = <&tpdm_video>;
+>                   };
+>               };
+>   
+> @@ -79,6 +95,7 @@ examples:
+>                   reg = <1>;
+>                   replicator_out_port1: endpoint {
+>                       remote-endpoint = <&tpiu_in_port>;
+> +                    filter-src = <&tpdm_mdss>;
+>                   };
+>               };
+>           };
 
 
