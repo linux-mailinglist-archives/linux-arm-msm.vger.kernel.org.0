@@ -1,185 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-29282-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29283-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A23B695B7BE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 15:58:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92B9C95B80A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 16:10:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 23FF91F25B5E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 13:58:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 44EBC283B81
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 14:10:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2CA01CB31F;
-	Thu, 22 Aug 2024 13:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF5511C9ED5;
+	Thu, 22 Aug 2024 14:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GkyQov+W"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZwRK10DB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BCF1CB336;
-	Thu, 22 Aug 2024 13:53:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808311CB15D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2024 14:10:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724334797; cv=none; b=PLnQ62Kz4cLXSxSDbOoD6DFL5OGm2GuohLzO/jL2y6PdGSFkxbUo24EfYsU3h6lBwkMMS5aHT4GBL5PhDxTNPX/OdHe+AseYOL1Sl2JZihvgxSySvQcaL/aOSstpryEuabHDRR+XcMlicEu1oAg5Mok82NQte6IHTBQkB2elVZU=
+	t=1724335816; cv=none; b=SbSgz5+CQTEVhzcoI9sx+boEruBqLeHCUjxG1lxnTJzL1g68+9n1qKOihqays0oOUqV/20hho/P/e0e705M1mZYJOVSj+DX+6NYysseS59ZmthYud9NRZtXWScPtcTusutB2KnP/zkLOBSAp9inbJc32Plf2iEQOXtXjnsNWFSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724334797; c=relaxed/simple;
-	bh=b+4zkE+oHIiJn3+Zf87WDYtnXdB8KgyWtfesZC6Zh7Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=T/yIuiUigKyeyk+4RH+dHgZH1p+iOu8gcp20AOAC7kFUlO/bQpQz+JZ5nz9PgZa9QXCW4G9//xoxYfTz1E+l0cOAbyG6G/+N/GOVLR2zZhNcd8VMWHvbcgK4gpc7Ehvv4f2hp9Ztte+ikJuz2Zq2HEQiG0AZLk8jqbD0uifa96E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GkyQov+W; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47MA6PAj006591;
-	Thu, 22 Aug 2024 13:53:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MBthUzIbc6aeQsygWdUFG+pmnVUpFeCt8aopJtX3ZBk=; b=GkyQov+W0cDGgzuk
-	FAjG5k7f1tll+mHu7OBNyu2oAoT7n1itdfWFKP52CNz1SUn7UQpzO04ETr/Tt3A2
-	eIHydPeciTZwFqCFNH+6EX8WLZsBu6S9Y7o6udSI36EHVJs8n8YuJjRz418Pa+0B
-	9wfKByrs7tFSZVE7sgHCYf3EJ0DO6OxisePULKH5RCLMw/dvCRoeWNJACrFO6g9P
-	cEXrTAuxqxITgWN4Bi5BpzYZBHChTHl7I0obHLhiROiNnCtPa543Zk5URXLsGSw7
-	C03Cvwd63QEk31xcAchGbZk9KtDXV0c6vl8nj7yClzeSg/Pz3Sppy2WjW7M7bLBl
-	gYS/QQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 415bkwcq83-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Aug 2024 13:53:05 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47MDr42V025804
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Aug 2024 13:53:04 GMT
-Received: from [10.253.73.208] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 22 Aug
- 2024 06:52:52 -0700
-Message-ID: <285be0e5-0060-403c-a927-d69e31b163cd@quicinc.com>
-Date: Thu, 22 Aug 2024 21:52:47 +0800
+	s=arc-20240116; t=1724335816; c=relaxed/simple;
+	bh=0zjURCfVd5HHj/VTX5X8G1aOa7+YHoPv4IrUn3361ys=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=guv9d9erG6KR5VF49Hq1Thi0Uod+jbOI6jLrIi1mUdHsFDONQzD2xjRT3Cw10bGFJ/NvI4RuuvWajmT11jtinXhRWTQOq+kx83sAIkC47PIG5G90HXXPkq/++nct+tlrJM/GFafpounNlCBKIQaaEx5BRC0q2ySJ05FWfxR/QHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZwRK10DB; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-20202df1c2fso13193405ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2024 07:10:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1724335814; x=1724940614; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ksLULyP/cLRQ/mJ475rRnLjhOrwePPcDiwX+xXFf4p4=;
+        b=ZwRK10DBAUbWV0dSM3OA9u0IlISYXoCNeimPb++TbYD4Tm/Uicn5BYFz4ToO68hA6R
+         LvR/0SLOe6YmN/GaY9S0J0w5mBGCL1K1lZvjlrjvCKpKG7sRLxgDAXKBs0pr02yBFRqH
+         j5KgLvDsN3km41CPwMlKF8aLjt8ZBYVoPsByAYBJDoxgRq5OrZONoPDK9t0N2sqN4uxi
+         1nmC0LiOoyYJvPj3UdPWeJluJXHxsZNysrH5UNsOrdDiYTNWKyUiX9lYi15sapzYPQZP
+         Vy4qBs+eJUqFRQwdA6uM0s0HNNi7HdlPTEnNGfG+rwIJMYTTy4tT2AQEcmN9KHz9ISdo
+         +wpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724335814; x=1724940614;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ksLULyP/cLRQ/mJ475rRnLjhOrwePPcDiwX+xXFf4p4=;
+        b=YkpNBJLU6Q6/EiSSZfiYK32NlQz5UXrhEcj2YEg5oSKSPxItCLudik4WUgIjKUOvM9
+         DWAE9mENMNcLNveCHJjfFhJHJlzNbe335W/Pm0wM4tSWZQQNmVMu7pfRV+nosRA4UjMP
+         8lYSo3DOBC+tPDqss7UvqdbHfKDEP8Nyq4YTJ/DVQYiNTBUoeRrMsud3BEPnYi+6Tm8s
+         M2pSftOV7+OZrgZOwbHBJlAtmeMo+R4ToqHi5IlSQCt+IbWeqW821OHOQvoBpPGRTYUU
+         nnf9RMT9+/btDowojomZc17NwQX/r7tl5oyMo2fOshkqDW7bQxRz9nE2il0LW4ewUgFt
+         Pi+A==
+X-Forwarded-Encrypted: i=1; AJvYcCWF2HPv0giOU+zX2c7vs830lIHZTkmtbsQv0Jl0GCPjHJyUFFgOv1N6Qg1wYcFxPR3ZR8i1kPABS4yxG1+P@vger.kernel.org
+X-Gm-Message-State: AOJu0YwXI/ptzZOYEQ79JYTZgQkkNYwBrR+2HpbG/LvG/rYTM/6AgPKK
+	mKqxeyoNY2fxni+zpabNwmx0une5e6bLeWRF1m2VOTqLTj48cdFYAxlnwb5vfQ==
+X-Google-Smtp-Source: AGHT+IFzrt+20YcBicCQwfyJ+mUBIOMfNnIP2J0ZKEzrCrBDMEr3UYtUjafNmadoQZ655bU1nScC3Q==
+X-Received: by 2002:a17:902:db03:b0:202:4bd9:aea5 with SMTP id d9443c01a7336-2037ef2a562mr46871435ad.14.1724335813800;
+        Thu, 22 Aug 2024 07:10:13 -0700 (PDT)
+Received: from thinkpad ([120.60.60.148])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2038560fb70sm13035215ad.232.2024.08.22.07.10.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Aug 2024 07:10:13 -0700 (PDT)
+Date: Thu, 22 Aug 2024 19:39:56 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Jingoo Han <jingoohan1@gmail.com>, andersson@kernel.org,
+	quic_vbadigan@quicinc.com, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v2 1/8] dt-bindings: PCI: Add binding for qps615
+Message-ID: <20240822140956.unt45fgpleqwniwa@thinkpad>
+References: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
+ <20240803-qps615-v2-1-9560b7c71369@quicinc.com>
+ <5f65905c-f1e4-4f52-ba7c-10c1a4892e30@kernel.org>
+ <f8985c98-82a5-08c3-7095-c864516b66b9@quicinc.com>
+ <ZrEGypbL85buXEsO@hu-bjorande-lv.qualcomm.com>
+ <90582c92-ca50-4776-918d-b7486cf942b0@kernel.org>
+ <20240808120109.GA18983@thinkpad>
+ <cb69c01b-08d0-40a1-9ea2-215979fb98c8@kernel.org>
+ <20240808124121.GB18983@thinkpad>
+ <c5bae58c-4200-40d3-94c6-669d2ee131d4@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] dt-bindings: clock: qcom: Add CMN PLL clock
- controller for IPQ SoC
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon
-	<will@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <quic_kkumarcs@quicinc.com>,
-        <quic_suruchia@quicinc.com>, <quic_pavir@quicinc.com>,
-        <quic_linchen@quicinc.com>, <quic_leiwei@quicinc.com>,
-        <bartosz.golaszewski@linaro.org>, <srinivas.kandagatla@linaro.org>
-References: <20240820-qcom_ipq_cmnpll-v2-0-b000dd335280@quicinc.com>
- <20240820-qcom_ipq_cmnpll-v2-1-b000dd335280@quicinc.com>
- <krbpzjccn6xvnpfsa7eeeowmtjuuw4yp72qqqbeq2icxrqvdo4@x6pawrcctyd3>
- <51198961-2e09-4d0e-8bf3-907c81597724@quicinc.com>
- <be2eae05-6deb-49fb-94ce-cb5e3a5bd1ba@kernel.org>
-Content-Language: en-US
-From: Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <be2eae05-6deb-49fb-94ce-cb5e3a5bd1ba@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: eYOahMDNrDzgVcazXItIgIP6muxkEHSy
-X-Proofpoint-GUID: eYOahMDNrDzgVcazXItIgIP6muxkEHSy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-22_07,2024-08-22_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- mlxscore=0 mlxlogscore=999 bulkscore=0 malwarescore=0 priorityscore=1501
- adultscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2408220102
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c5bae58c-4200-40d3-94c6-669d2ee131d4@kernel.org>
 
-
-
-On 8/22/2024 2:29 PM, Krzysztof Kozlowski wrote:
-> On 21/08/2024 18:08, Jie Luo wrote:
->>
->>
->> On 8/21/2024 4:33 PM, Krzysztof Kozlowski wrote:
->>> On Tue, Aug 20, 2024 at 10:02:42PM +0800, Luo Jie wrote:
->>>> The CMN PLL controller provides clocks to networking hardware blocks
->>>> on Qualcomm IPQ9574 SoC. It receives input clock from the on-chip Wi-Fi,
->>>> and produces output clocks at fixed rates. These output rates are
->>>> predetermined, and are unrelated to the input clock rate. The output
->>>> clocks are supplied to the Ethernet hardware such as PPE (packet
->>>> process engine) and the externally connected switch or PHY device.
->>>>
->>>> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
->>>> ---
->>>>    .../bindings/clock/qcom,ipq9574-cmn-pll.yaml       | 70 ++++++++++++++++++++++
->>>>    include/dt-bindings/clock/qcom,ipq-cmn-pll.h       | 15 +++++
->>>>    2 files changed, 85 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml
->>>> new file mode 100644
->>>> index 000000000000..7ad04b58a698
->>>> --- /dev/null
->>>> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml
->>>> @@ -0,0 +1,70 @@
->>>> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
->>>> +%YAML 1.2
->>>> +---
->>>> +$id: http://devicetree.org/schemas/clock/qcom,ipq9574-cmn-pll.yaml#
->>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>> +
->>>> +title: Qualcomm CMN PLL Clock Controller on IPQ SoC
->>>> +
->>>> +maintainers:
->>>> +  - Bjorn Andersson <andersson@kernel.org>
->>>> +  - Luo Jie <quic_luoj@quicinc.com>
->>>> +
->>>> +description:
->>>> +  The CMN PLL clock controller expects a reference input clock.
->>>
->>> You did not explain what is CMN. Is this some sort of acronym?
->>
->> CMN is short form for 'common'. Since it is referred to as 'CMN'
->> PLL in the hardware programming guides, we wanted the driver name
->> to include it as well. The description can be updated as below to
->> clarify the name and purpose of this hardware block. Hope this is
->> fine.
->>
->> "The CMN PLL clock controller expects a reference input clock
->> from the on-board Wi-Fi, and supplies a number of fixed rate
->> output clocks to the Ethernet devices including PPE (packet
->> process engine) and the connected switch or PHY device. The
->> CMN (or 'common') PLL's only function is to enable clocks to
->> Ethernet hardware used with the IPQ SoC and does not include
->> any other function."
+On Thu, Aug 08, 2024 at 03:06:28PM +0200, Krzysztof Kozlowski wrote:
+> On 08/08/2024 14:41, Manivannan Sadhasivam wrote:
+> > On Thu, Aug 08, 2024 at 02:13:01PM +0200, Krzysztof Kozlowski wrote:
+> >> On 08/08/2024 14:01, Manivannan Sadhasivam wrote:
+> >>> On Mon, Aug 05, 2024 at 07:18:04PM +0200, Krzysztof Kozlowski wrote:
+> >>>> On 05/08/2024 19:07, Bjorn Andersson wrote:
+> >>>>> On Mon, Aug 05, 2024 at 09:41:26AM +0530, Krishna Chaitanya Chundru wrote:
+> >>>>>> On 8/4/2024 2:23 PM, Krzysztof Kozlowski wrote:
+> >>>>>>> On 03/08/2024 05:22, Krishna chaitanya chundru wrote:
+> >>>>>>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,qps615.yaml b/Documentation/devicetree/bindings/pci/qcom,qps615.yaml
+> >>>>> [..]
+> >>>>>>>> +  qps615,axi-clk-freq-hz:
+> >>>>>>>> +    description:
+> >>>>>>>> +      AXI clock which internal bus of the switch.
+> >>>>>>>
+> >>>>>>> No need, use CCF.
+> >>>>>>>
+> >>>>>> ack
+> >>>>>
+> >>>>> This is a clock that's internal to the QPS615, so there's no clock
+> >>>>> controller involved and hence I don't think CCF is applicable.
+> >>>>
+> >>>> AXI does not sound that internal.
+> >>>
+> >>> Well, AXI is applicable to whatever entity that implements it. We mostly seen it
+> >>> in ARM SoCs (host), but in this case the PCIe switch also has a microcontroller
+> >>> /processor of some sort, so AXI is indeed relevant for it. The naming actually
+> >>> comes from the switch's i2c register name that is being configured in the driver
+> >>> based on this property value.
+> >>>
+> >>>> DT rarely needs to specify internal
+> >>>> clock rates. What if you want to define rates for 20 clocks? Even
+> >>>> clock-frequency is deprecated, so why this would be allowed?
+> >>>> bus-frequency is allowed for buses, but that's not the case here, I guess?
+> >>>>
+> >>>
+> >>> This clock frequency is for the switch's internal AXI bus that runs at default
+> >>> 200MHz. And this property is used to specify a frequency that is configured over
+> >>> the i2c interface so that the switch's AXI bus can operate in a low frequency
+> >>> there by reducing the power consumption of the switch.
+> >>>
+> >>> It is not strictly needed for the switch operation, but for power optimization.
+> >>> So this property can also be dropped for the initial submission and added later
+> >>> if you prefer.
+> >>
+> >> So if the clock rate can change, why this is static in DTB? Or why this
+> >> is configurable per-board?
+> >>
+> > 
+> > Because, board manufacturers can change the frequency depending on the switch
+> > configuration (enablement of DSP's etc...)
+> > 
+> >> There is a reason why clock-frequency property is not welcomed and you
+> >> are re-implementing it.
+> >>
+> > 
+> > Hmm, I'm not aware that 'clock-frequency' is not encouraged these days. So you
+> > are suggesting to change the rate in the driver itself based on the switch
+> > configuration? If so, what difference does it make?
 > 
-> So the block is called "CMN" in hardware programming guide, without any
-> explanation of the acronym?
-
-Yes, I double checked again with our hardware team and the
-documentation. CMN is just a short form of "common" with no additional
-information in the guide.
-
-Thanks for review.
-
-> 
-> Best regards,
-> Krzysztof
+> Based on the switch, other clocks, votes etc. whatever is reasonable
+> there. In most cases, not sure if this one here as well, devices can
+> operate on different clock frequencies thus specifying fixed frequency
+> in the DTS is simplification and lack of flexibility. It is chosen by
+> people only because it is easier for them but then they come back with
+> ABI issues when it turns out they need to switch to some dynamic control.
 > 
 
+Atleast for this device, this frequency is going to be static. Because, the
+device itself cannot change the frequency, only the host driver can. That too is
+only possible before enumerating the device. So there is no way the frequency is
+going to change dynamically.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
