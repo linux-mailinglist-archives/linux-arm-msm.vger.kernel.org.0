@@ -1,172 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-29270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64D9295B359
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 13:00:35 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC98D95B38B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 13:12:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DD93A1F23DC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 11:00:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AD03528213D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 11:12:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82E31185926;
-	Thu, 22 Aug 2024 11:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13C9B14A0B8;
+	Thu, 22 Aug 2024 11:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="h8vrMuTK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hsDWw8tt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4D4184551;
-	Thu, 22 Aug 2024 11:00:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7325317E46E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2024 11:12:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724324403; cv=none; b=MpCo7tQE/mLlbTxh+Tpgxti/OZoAtipuaxL1FrxeCvRwKORdvV8VHSRSMeJyBxJ2A4szCQrxFrX2yr4W44Bg5wyO6o87+1we/0vodR5JoJhsABoikZqPFCoc1QiPv4qG1wjYb7svb+scCk/6e/+vj9bVsheeYcceG258Lbfv+pM=
+	t=1724325138; cv=none; b=po3+7IARoxK/V7IVuqCAq4Z3WVOH1JHz2mKxFMO0xJBapq432p5q7IHKCVJOhburq+n3tl4eO/nQLP08f3Zg+m1z4BENHajjdMOE5AvXqrJ+Y/GcR9GApLmNaMHM+EK+4WggeNWrzj+LU6qK509RtZZxLY+nJm3Hq5RXnGyOxHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724324403; c=relaxed/simple;
-	bh=ftpARBDVSOINYSY49FomyfaoJ/hYTZRwJMBbqkqTY/0=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MJGZnHScShMyTy6QoAI26YjRO4DdON8PL4qKpSWvFJGAsnk9825cdzb4PJ1+Km3BmzSI/zOyEiP0+vqrU5Ne7NQshhKd6xm+5UL7G0qrSJuIClyyuHfUixt4wsB6f3goDLEiUrzyVaL7B5ALaLFCu/UI+rt7iOMCm+DUtqluxtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=h8vrMuTK; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47M9Op2m001444;
-	Thu, 22 Aug 2024 10:59:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	sCNtADH6kP3rE4w/Nyr4Fckfz/UXQrBUsaH0+FahJ18=; b=h8vrMuTKSp4yPYMW
-	Nea3LHn/Fgob/IkiRs+xoA/0NwHe3Dz+7C3JfZ86Q9AyVQ3BlLkba59ZUvmPr6uN
-	+AsutMuKY2BocnT5OQku51Wq/4eA1ZGZ0PYOS7yDhQVWxmYwvCcGH1kR02etrXa8
-	0cf7kwozJguxo3a86E3HA+LMDv/FFb8CUBDp+D9IGdEeixIAjk1dbypM4SZYhCsT
-	Rg9wwp5n2XilSmG8OWg5LIyPqVqg+DaG/ISrYG8IucycwID3gDxkRed4mTjsMFXj
-	Em0kXykzCRe41cgOmtdtkX05TnqeBgA+74GZTdTARsxGdMNtyfR3V2zc/mdn52NE
-	LNu0rA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 415nrrt2xk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Aug 2024 10:59:55 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47MAxsEr023085
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Aug 2024 10:59:54 GMT
-Received: from hu-ekangupt-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 22 Aug 2024 03:59:51 -0700
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
-To: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
-CC: <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>,
-        stable
-	<stable@kernel.org>
-Subject: [PATCH v1 3/3] misc: fastrpc: Skip reference for DMA handles
-Date: Thu, 22 Aug 2024 16:29:33 +0530
-Message-ID: <20240822105933.2644945-4-quic_ekangupt@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240822105933.2644945-1-quic_ekangupt@quicinc.com>
-References: <20240822105933.2644945-1-quic_ekangupt@quicinc.com>
+	s=arc-20240116; t=1724325138; c=relaxed/simple;
+	bh=vi9h1FidMBka1pRgw2AnPFKWunRB65e+lyirWA4Ekmo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RKY/gsYT+TtGvHPJ8ujdIGkm040JF3K0UVhYP2jWOY90T72S7nowCEYb7lmfdGlWDVV3j6i+4fq/FcCCh5cHak3tVVuQgllKwcCHGrGcJ3BZsmbz1L31XF5G3EbOxa5dotu0tBOCFivQVqyLja6jeD6MpAfAlBZNnUpKTSNosNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hsDWw8tt; arc=none smtp.client-ip=209.85.210.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-70cec4aa1e4so475090b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2024 04:12:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1724325136; x=1724929936; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=BbJ9Z+sMrkclfRagtYJm2Qhjn1slaJi07OZtLt0xRqg=;
+        b=hsDWw8ttWVsaIp7qwC4SQh5i2dVzC10WKYFKvavGOvPcQVb80pUDxO4ayhlYf5Khi+
+         m8oNPAKdZFQsFJKhsNAWCt5C+GZioz3NKxhkSZUfihESrwwXRuCfIOEp2t9+Xylsx0ON
+         4mSUa8Oyc1s5pD7WbkQPDWzD1CZYYJrRxEEAlICodsMJjY6yH12T3GK3t+5+LaQl3hgI
+         abxt+1nVk/vL+Zpz3xH1N4GqaOiju2s9KKqbmEz+pOU+ywBHZB8fSUWIKRRfyJ2rwHSF
+         fLH5IiefzED3eBmMUw+6KrrpH3kE7fL7jIf5jmnh0mg9814fPxaRtd9+YXGYHsvDYBL5
+         DDTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724325136; x=1724929936;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BbJ9Z+sMrkclfRagtYJm2Qhjn1slaJi07OZtLt0xRqg=;
+        b=j4KAMeL9x1Fy2G4umpQstZEj0sXoe+LInz1B+nrRdEx5mb0Wkcl3DLBYP2J40J3rPv
+         nSmOZ/bR0QLlecGn95CCS3rOfoq2fT3I0aAbVLZrYDSkwmrrVHD9FbxuOGfju/ISrckE
+         FQJA+5ffvebqQlmbUjGg9TR48m/Ng/kCpHHtw2Qxt/U3ImHExvVqBOIj2vJD9GBRnK3K
+         BP0oumrYFOEqntpINJF9iyUk3hy5g0fCn53BvjtrsryRVsqgBYmBjQbO26TitBMAD0M9
+         y3paF/Gz1XAwi+y675JG75ElBwMRJjBEUaJWN6Wvom0nlQSGUBSkK7St0Pe5zo01LliP
+         0m/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVlQOPTpFO3tX6h+9nbhI4/Eg+ydO4f+O2+DRopntaIGIYZsJUMvJFs7D1mrA3/GgY15i8B9Hfu1LHV6RIt@vger.kernel.org
+X-Gm-Message-State: AOJu0YweHcB9SlQ+0uWgj30obD8LXrFTMcXluUATLPx2GMdwRmO3ToiD
+	lu5leTcq0wKPp4Pkc9iaBAypJAvlg1z8uRsGgP/3kUIJZ/oPSG9i2vTmh9Cb3w==
+X-Google-Smtp-Source: AGHT+IGzybvAIUuXxPl7dmKySzy1eKxeJTiu0SQmcSr83L0+MazI/R/cvJax85qZEJ7fPuLq07i6aA==
+X-Received: by 2002:a05:6a20:9313:b0:1ca:da6d:675f with SMTP id adf61e73a8af0-1cada6d79e0mr4593437637.0.1724325135657;
+        Thu, 22 Aug 2024 04:12:15 -0700 (PDT)
+Received: from thinkpad ([117.213.99.42])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7cd9acdc7c6sm978832a12.46.2024.08.22.04.12.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Aug 2024 04:12:15 -0700 (PDT)
+Date: Thu, 22 Aug 2024 16:42:07 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Pranjal Shrivastava <praan@google.com>
+Cc: Rob Clark <robdclark@gmail.com>, iommu@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Rob Clark <robdclark@chromium.org>, Will Deacon <will@kernel.org>,
+	Joerg Roedel <joro@8bytes.org>, Jason Gunthorpe <jgg@ziepe.ca>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Georgi Djakov <quic_c_gdjako@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v3 3/3] iommu/arm-smmu: Pretty-print context fault
+ related regs
+Message-ID: <20240822111207.vbotlrtw72vflefj@thinkpad>
+References: <20240701162025.375134-1-robdclark@gmail.com>
+ <20240701162025.375134-4-robdclark@gmail.com>
+ <20240822100941.3tfqpjskzq43slfw@thinkpad>
+ <ZscTkTOa8UPZtwRU@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Sq62xZ1lzNDHqXiJUBFQpPA0Hr3DXlwg
-X-Proofpoint-GUID: Sq62xZ1lzNDHqXiJUBFQpPA0Hr3DXlwg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-22_03,2024-08-22_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- mlxlogscore=999 mlxscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
- malwarescore=0 suspectscore=0 priorityscore=1501 clxscore=1015
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408220081
+In-Reply-To: <ZscTkTOa8UPZtwRU@google.com>
 
-If multiple dma handles are passed with same fd over a remote call
-the kernel driver takes a reference and expects that put for the
-map will be called as many times to free the map. But DSP only
-updates the fd one time in the fd list when the DSP refcount
-goes to zero and hence kernel make put call only once for the
-fd. This can cause SMMU fault issue as the same fd can be used
-in future for some other call.
+On Thu, Aug 22, 2024 at 10:31:45AM +0000, Pranjal Shrivastava wrote:
+> On Thu, Aug 22, 2024 at 03:39:41PM +0530, Manivannan Sadhasivam wrote:
+> > On Mon, Jul 01, 2024 at 09:20:12AM -0700, Rob Clark wrote:
+> > > From: Rob Clark <robdclark@chromium.org>
+> > > 
+> > > Parse out the bitfields for easier-to-read fault messages.
+> > > 
+> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > ---
+> > >  .../iommu/arm/arm-smmu/arm-smmu-qcom-debug.c  | 52 +++++---------
+> > >  drivers/iommu/arm/arm-smmu/arm-smmu.c         | 70 +++++++++++++++----
+> > >  drivers/iommu/arm/arm-smmu/arm-smmu.h         | 21 ++++++
+> > >  3 files changed, 92 insertions(+), 51 deletions(-)
+> > > 
+> > 
+> > [...]
+> > 
+> > > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > > index 23cf91ac409b..79ec911ae151 100644
+> > > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > > @@ -405,32 +405,72 @@ static const struct iommu_flush_ops arm_smmu_s2_tlb_ops_v1 = {
+> > >  	.tlb_add_page	= arm_smmu_tlb_add_page_s2_v1,
+> > >  };
+> > >  
+> > > +
+> > > +void arm_smmu_read_context_fault_info(struct arm_smmu_device *smmu, int idx,
+> > > +				      struct arm_smmu_context_fault_info *cfi)
+> > > +{
+> > > +	cfi->iova = arm_smmu_cb_readq(smmu, idx, ARM_SMMU_CB_FAR);
+> > > +	cfi->fsr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSR);
+> > > +	cfi->fsynr = arm_smmu_cb_read(smmu, idx, ARM_SMMU_CB_FSYNR0);
+> > > +	cfi->cbfrsynra = arm_smmu_gr1_read(smmu, ARM_SMMU_GR1_CBFRSYNRA(idx));
+> > > +}
+> > > +
+> > > +void arm_smmu_print_context_fault_info(struct arm_smmu_device *smmu, int idx,
+> > > +				       const struct arm_smmu_context_fault_info *cfi)
+> > > +{
+> > > +	dev_dbg(smmu->dev,
+> > > +		"Unhandled context fault: fsr=0x%x, iova=0x%08lx, fsynr=0x%x, cbfrsynra=0x%x, cb=%d\n",
+> > > +		cfi->fsr, cfi->iova, cfi->fsynr, cfi->cbfrsynra, idx);
+> > > +
+> > 
+> > I just happen to hit an IOMMU fault in 6.11-rc4 and I did not see the 'Unhandled
+> > context fault' log, but just the register dump in dmesg. Tracking that lead me
+> > to this patch.
+> > 
+> > May I know the reasoning behind making the actual error message _dbg()? It is
+> > intentional first place?
+> > 
+> > - Mani
+> 
+> Hi Mani,
+> 
+> That was a miss in this series, but it was fixed recently in [1].
+> I think it should land soon.
+> 
+> [1] https://lore.kernel.org/linux-iommu/172381862229.1794487.17068761066364130246.b4-ty@kernel.org/
+> 
 
-Fixes: 35a82b87135d ("misc: fastrpc: Add dma handle implementation")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
----
- drivers/misc/fastrpc.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+Cool, thanks!
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index ebe828770a8d..ad56e918e1f8 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -755,7 +755,7 @@ static const struct dma_buf_ops fastrpc_dma_buf_ops = {
- 
- static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
- 				u64 va, u64 len, u32 attr,
--				struct fastrpc_map **ppmap)
-+				struct fastrpc_map **ppmap, bool take_ref)
- {
- 	struct fastrpc_session_ctx *sess = fl->sctx;
- 	struct fastrpc_map *map = NULL;
-@@ -763,7 +763,7 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
- 	struct scatterlist *sgl = NULL;
- 	int err = 0, sgl_index = 0;
- 
--	if (!fastrpc_map_lookup(fl, fd, va, len, ppmap, true))
-+	if (!fastrpc_map_lookup(fl, fd, va, len, ppmap, take_ref))
- 		return 0;
- 
- 	map = kzalloc(sizeof(*map), GFP_KERNEL);
-@@ -917,14 +917,17 @@ static int fastrpc_create_maps(struct fastrpc_invoke_ctx *ctx)
- 	int i, err;
- 
- 	for (i = 0; i < ctx->nscalars; ++i) {
-+		bool take_ref = true;
- 
- 		if (ctx->args[i].fd == 0 || ctx->args[i].fd == -1 ||
- 		    ctx->args[i].length == 0)
- 			continue;
- 
-+		if (i >= ctx->nbufs)
-+			take_ref = false;
- 		err = fastrpc_map_create(ctx->fl, ctx->args[i].fd,
- 				(u64)ctx->args[i].ptr, ctx->args[i].length,
--				ctx->args[i].attr, &ctx->maps[i]);
-+				ctx->args[i].attr, &ctx->maps[i], take_ref);
- 		if (err) {
- 			dev_err(dev, "Error Creating map %d\n", err);
- 			return -EINVAL;
-@@ -1417,7 +1420,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
- 
- 	if (init.filelen && init.filefd) {
- 		err = fastrpc_map_create(fl, init.filefd, init.file,
--				init.filelen, 0, &map);
-+				init.filelen, 0, &map, true);
- 		if (err)
- 			goto err;
- 	}
-@@ -2040,7 +2043,7 @@ static int fastrpc_req_mem_map(struct fastrpc_user *fl, char __user *argp)
- 
- 	/* create SMMU mapping */
- 	err = fastrpc_map_create(fl, req.fd, req.vaddrin, req.length,
--			0, &map);
-+			0, &map, true);
- 	if (err) {
- 		dev_err(dev, "failed to map buffer, fd = %d\n", req.fd);
- 		return err;
+- Mani
+
 -- 
-2.34.1
-
+மணிவண்ணன் சதாசிவம்
 
