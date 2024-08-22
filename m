@@ -1,75 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-29300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 544EC95BC7D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 18:52:25 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D11795BCB8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 19:06:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 07415285C55
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 16:52:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 87E3FB2367A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 17:01:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 224D81CE701;
-	Thu, 22 Aug 2024 16:52:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eUGT99XO"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F4801CCB4D;
+	Thu, 22 Aug 2024 17:01:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D4B1CDA2E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2024 16:52:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0523B26AC1;
+	Thu, 22 Aug 2024 17:01:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724345527; cv=none; b=soTUtsgZuO7XsdwivHNCgwOBcm2Fz4NsEI8ZlqRkKIaydsp/Zv8HINAx0u6gjSDfUJBl8uUUiy5/1qFgNMYEHyWo1A3v8B1Nvb108ZoDxXdTwJxZAnmjePRpob02bhssdBBjtrP4yYB6XHNK6ltKUQdwqyV3nrnc/DzIbCM4Dqw=
+	t=1724346080; cv=none; b=gN1ZrSQMqMw+7GDSmUeE2TjvV/BeulyzP+VsXVOpLQArXTFX1BkFQfAmRIdaU/hd4H1qPv6QBGzvbEnaAE1hbIgS4OF53oMLwJ1ed5GsLOMmIPdsrNKtnoagwaQO3I62McgpumyAAWpVtNbPwLZ9McqFBUm2yMyeMNr0lsigVM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724345527; c=relaxed/simple;
-	bh=PYun9E4NdnlNTayM1uIxJGk9dxfQdSd5lwmXFLu+Bxg=;
+	s=arc-20240116; t=1724346080; c=relaxed/simple;
+	bh=CIphFNT5ZFa3ik6c8w2cjWRiGQpgW10nPRdBGhiETkk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IdTdd3p4koUuki5cUAqAb6ylpIEfx0tFfUWFuLGZBvymR8cd12lgcUmobqpOCccJJSkSnbqiIe7BzBqUQX0cGz7m3WotS2UH1/Wtq0DaJwaViJzLpOB0jsdpYBUzbQtnInTMWc/iW99PgprZncDz85ySlKH3fNOOhC2PxWbhkkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eUGT99XO; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4280ef642fbso1422255e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2024 09:52:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724345522; x=1724950322; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=/QUDsxMTjf2w+QDhT+U7tmzKnt6f0H6iAuBZFC82qFA=;
-        b=eUGT99XOLxwA3pNF6SYaEAcc62PWT2GJGHXxdF9hm51YEUVT6Qx+HLy2pHPymJfMvS
-         QI1iy+azoXDzTGRg2EzvCNwolJLlAI2so8ZvEpW4BwWfHXzCflratOKeVP3fWaiR/Que
-         b/1DsyjrjBC8l+PO9X5y9Tbp35iQ0nra6FbG582ZcQTpz+EGear4spoPlANEsnHidC5S
-         V4H8IXagYuQIDlGzZpZAwH8GFBE6BM54unpPrPKoeF2RsEnVZQQljNV5oT0xU+AxdZ20
-         Vsc7MCga7T/fxwVB4yhzo8X8dHF23BFiWHOpRGuozBnLT/XlTdxb1sUl61u2hDvUKQnK
-         owQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724345522; x=1724950322;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/QUDsxMTjf2w+QDhT+U7tmzKnt6f0H6iAuBZFC82qFA=;
-        b=F6eQt1iub4wJ3bOD7zRUJbNsgziCeyFCIVVCro4vBjMkkyq6XoW3HD1pOtxTtiwZMP
-         UMX+1WmCf1vsGaMMBC+4zj+ympaH7T8id3XwpQ2qMaZagatL3d7vjc3GVKzcj9IeCCcr
-         djEtbFPZ6aBHM00mubIASLckQGWrOEZemUapwyCfiSuDXpK/dx6WFCVX34Fr1+wW9zYe
-         UmxOOen6sEZ/z6cKoqbzobIx9nK6faphbccfv/HJ3rHTb3pN4vo7MmZVQKRQuS1LBu0I
-         R+oVZUYIvG2yxITZaBxdqg7tP8swhqWbU22n71Z+ER2S7xz2v25tXffp28hu4ylBTGOs
-         F5sQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWzizmM4Aw9s+eSYMQTH7DKhv50GpJaRkjq4pUxCGRX07ADgJPL1q0FATYdphRrEj4fyAT9yg2qS0U+6sSv@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy0+CfWdPSdSahnou/3O5cdDNBwuE9Hmc87s/SwTpzHFeKocNTl
-	D8PyoFm8xa/Ot6yS5OnKhNrRorc6dnrCnDNVS4ulANTiD9zh+1zUOzRMLIMFP4A=
-X-Google-Smtp-Source: AGHT+IEmRXduMOrtFKh/hFBgUXKJK9/J/CuRfA2q/OHoR+nQkaNMhkQzQGKUk+hf3U7+h5e56zPw1g==
-X-Received: by 2002:a5d:6d01:0:b0:367:90a8:4d3b with SMTP id ffacd0b85a97d-372fd585cefmr2573813f8f.3.1724345522334;
-        Thu, 22 Aug 2024 09:52:02 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.82])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3730826b10bsm2072959f8f.114.2024.08.22.09.52.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Aug 2024 09:52:01 -0700 (PDT)
-Message-ID: <3813d9d1-5481-47d6-ada3-977439ee9b6a@linaro.org>
-Date: Thu, 22 Aug 2024 18:52:00 +0200
+	 In-Reply-To:Content-Type; b=i3eSAWPpnLyoKZsMDOvMbA1sx+4o8wmv3noajlmzCJpxakmhrocZnyiAZ1VVW5p2rNGCLNWX1BUMLmUg+ArDwQ6/92avPa4P6o8vLhxnTPOQP9qvsUhkIfqImIm5RcPpnU1Ad7PLA4Fs3QszG1KIL7ahKKnyJw8K6lvClxmy9co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4D8E8DA7;
+	Thu, 22 Aug 2024 10:01:43 -0700 (PDT)
+Received: from [10.57.72.240] (unknown [10.57.72.240])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6FB073F58B;
+	Thu, 22 Aug 2024 10:01:15 -0700 (PDT)
+Message-ID: <06e91336-4543-4598-92d7-d2fa52f780f0@arm.com>
+Date: Thu, 22 Aug 2024 18:01:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,77 +42,325 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: smem_state: fix missing of_node_put in error
- path
-To: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Andy Gross <agross@codeaurora.org>,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org
-References: <20240822164853.231087-1-krzysztof.kozlowski@linaro.org>
- <20240822164853.231087-2-krzysztof.kozlowski@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240822164853.231087-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v3 2/3] coresight: Add support for trace filtering by
+ source
+Content-Language: en-GB
+To: Tao Zhang <quic_taozha@quicinc.com>, Mike Leach <mike.leach@linaro.org>,
+ James Clark <james.clark@arm.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Leo Yan <leo.yan@linux.dev>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20240821031348.6837-1-quic_taozha@quicinc.com>
+ <20240821031348.6837-3-quic_taozha@quicinc.com>
+ <5d34d9b6-7571-4db8-847b-6721251efc55@arm.com>
+ <a76bf942-e36f-467d-a436-0a1d8e682c10@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <a76bf942-e36f-467d-a436-0a1d8e682c10@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 22/08/2024 18:48, Krzysztof Kozlowski wrote:
-> If of_parse_phandle_with_args() succeeds, the OF node reference should
-> be dropped, regardless of number of phandle arguments.
+Hi Tao
+
+On 22/08/2024 17:44, Tao Zhang wrote:
 > 
-> Cc: <stable@vger.kernel.org>
-> Fixes: 9460ae2ff308 ("soc: qcom: Introduce common SMEM state machine code")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
+> On 8/21/2024 11:23 PM, Suzuki K Poulose wrote:
+>> Hi Tao
+>>
+>> On 21/08/2024 04:13, Tao Zhang wrote:
+>>> Some replicators have hard coded filtering of "trace" data, based on the
+>>> source device. This is different from the trace filtering based on
+>>> TraceID, available in the standard programmable replicators. e.g.,
+>>> Qualcomm replicators have filtering based on custom trace protocol
+>>> format and is not programmable.
+>>>
+>>> The source device could be connected to the replicator via intermediate
+>>> components (e.g., a funnel). Thus we need platform information from
+>>> the firmware tables to decide the source device corresponding to a
+>>> given output port from the replicator. Given this affects "trace
+>>> path building" and traversing the path back from the sink to source,
+>>> add the concept of "filtering by source" to the generic coresight
+>>> connection.
+>>>
+>>
+>> This looks good, except for some minor comments below.
+> OK, I will remove the comments below in the next version.
+>>
+>>> The specified source will be marked like below in the Devicetree.
+>>> test-replicator {
+>>>      ... ... ... ...
+>>>      out-ports {
+>>>          ... ... ... ...
+>>>          port@0 {
+>>>              reg = <0>;
+>>>              xxx: endpoint {
+>>>                  remote-endpoint = <&xxx>;
+>>>                  filter_src = <&xxx>; <-- To specify the source to
+>>>              };                           be filtered out here.
+>>>          };
+>>>
+>>>          port@1 {
+>>>              reg = <1>;
+>>>              yyy: endpoint {
+>>>                  remote-endpoint = <&yyy>;
+>>>                  filter_src = <&yyy>; <-- To specify the source to
+>>>              };                           be filtered out here.
+>>>          };
+>>>      };
+>>> };
+>>>
+>>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>>> ---
+>>>   drivers/hwtracing/coresight/coresight-core.c  | 136 +++++++++++++++---
+>>>   .../hwtracing/coresight/coresight-platform.c  |  18 +++
+>>>   include/linux/coresight.h                     |   5 +
+>>>   3 files changed, 136 insertions(+), 23 deletions(-)
 
-And this one patch is a duplicate of what I sent separately. Can be
-ignored. Sorry for the mess, time to finish work for today. :(
+...
 
-Best regards,
-Krzysztof
+>>> @@ -337,7 +374,8 @@ EXPORT_SYMBOL_GPL(coresight_disable_source);
+>>>    * disabled.
+>>>    */
+>>>   static void coresight_disable_path_from(struct list_head *path,
+>>> -                    struct coresight_node *nd)
+>>> +                    struct coresight_node *nd,
+>>> +                    struct coresight_device *source)
+>>
+>> Apologies, I may not have been clear enough. But we concluded that the
+>> path here is suitable for coresight_get_source(path) and as such we
+>> don't need to explicitly pass the source.
+> 
+> Do you mean we don't need to explicitly pass the source on 
+> "coresight_disable_path_from",
+> 
+> we can pass the "source" to "coresight_disable_link" by the following way?
+> 
+> coresight_disable_link(csdev, parent, child, coresight_get_source(path));
+
+Correct.
+
+> 
+>>
+>>>   {
+>>>       u32 type;
+>>>       struct coresight_device *csdev, *parent, *child;
+>>> @@ -375,7 +413,7 @@ static void coresight_disable_path_from(struct 
+>>> list_head *path,
+>>>           case CORESIGHT_DEV_TYPE_LINK:
+>>>               parent = list_prev_entry(nd, link)->csdev;
+>>>               child = list_next_entry(nd, link)->csdev;
+>>> -            coresight_disable_link(csdev, parent, child);
+>>> +            coresight_disable_link(csdev, parent, child, source);
+>>>               break;
+>>>           default:
+>>>               break;
+>>> @@ -388,7 +426,10 @@ static void coresight_disable_path_from(struct 
+>>> list_head *path,
+>>>     void coresight_disable_path(struct list_head *path)
+>>>   {
+>>> -    coresight_disable_path_from(path, NULL);
+>>> +    struct coresight_device *source;
+>>> +
+>>> +    source = coresight_get_source(path);
+>>> +    coresight_disable_path_from(path, NULL, source);
+>>>   }
+>>>   EXPORT_SYMBOL_GPL(coresight_disable_path);
+>>>   @@ -418,7 +459,9 @@ int coresight_enable_path(struct list_head 
+>>> *path, enum cs_mode mode,
+>>>       u32 type;
+>>>       struct coresight_node *nd;
+>>>       struct coresight_device *csdev, *parent, *child;
+>>> +    struct coresight_device *source;
+>>>   +    source = coresight_get_source(path);
+>>>       list_for_each_entry_reverse(nd, path, link) {
+>>>           csdev = nd->csdev;
+>>>           type = csdev->type;
+>>> @@ -456,7 +499,7 @@ int coresight_enable_path(struct list_head *path, 
+>>> enum cs_mode mode,
+>>>           case CORESIGHT_DEV_TYPE_LINK:
+>>>               parent = list_prev_entry(nd, link)->csdev;
+>>>               child = list_next_entry(nd, link)->csdev;
+>>> -            ret = coresight_enable_link(csdev, parent, child);
+>>> +            ret = coresight_enable_link(csdev, parent, child, source);
+>>>               if (ret)
+>>>                   goto err;
+>>>               break;
+>>> @@ -468,7 +511,7 @@ int coresight_enable_path(struct list_head *path, 
+>>> enum cs_mode mode,
+>>>   out:
+>>>       return ret;
+>>>   err:
+>>> -    coresight_disable_path_from(path, nd);
+>>> +    coresight_disable_path_from(path, nd, source);
+>>>       goto out;
+>>>   }
+>>>   @@ -619,6 +662,7 @@ static void coresight_drop_device(struct 
+>>> coresight_device *csdev)
+>>>    * @csdev:    The device to start from.
+>>>    * @sink:    The final sink we want in this path.
+>>>    * @path:    The list to add devices to.
+>>> + * @source:    The trace source device of the path.
+>>>    *
+>>>    * The tree of Coresight device is traversed until @sink is found.
+>>>    * From there the sink is added to the list along with all the 
+>>> devices that led
+>>> @@ -627,7 +671,8 @@ static void coresight_drop_device(struct 
+>>> coresight_device *csdev)
+>>>    */
+>>>   static int _coresight_build_path(struct coresight_device *csdev,
+>>>                    struct coresight_device *sink,
+>>> -                 struct list_head *path)
+>>> +                 struct list_head *path,
+>>> +                 struct coresight_device *source)
+>>
+>> minor nit: Please could we reorder the parameter order :
+>>
+>> _coresight_build_path(csdev, source, sink, path) ?
+>>
+>> That makes it much better to read : build a path from "source" to 
+>> "sink", from "csdev"
+> All right, I will update in the next version.
+>>
+>>>   {
+>>>       int i, ret;
+>>>       bool found = false;
+>>> @@ -639,7 +684,7 @@ static int _coresight_build_path(struct 
+>>> coresight_device *csdev,
+>>>         if (coresight_is_percpu_source(csdev) && 
+>>> coresight_is_percpu_sink(sink) &&
+>>>           sink == per_cpu(csdev_sink, 
+>>> source_ops(csdev)->cpu_id(csdev))) {
+>>> -        if (_coresight_build_path(sink, sink, path) == 0) {
+>>> +        if (_coresight_build_path(sink, sink, path, source) == 0) {
+>>>               found = true;
+>>>               goto out;
+>>>           }
+>>> @@ -650,8 +695,13 @@ static int _coresight_build_path(struct 
+>>> coresight_device *csdev,
+>>>           struct coresight_device *child_dev;
+>>>             child_dev = csdev->pdata->out_conns[i]->dest_dev;
+>>> +
+>>> +        if (csdev->pdata->out_conns[i]->filter_src_dev
+>>> +            && (csdev->pdata->out_conns[i]->filter_src_dev != source))
+>>> +            continue;
+>>
+>> Please reuse coresight_block_source(). i.e.,
+>>
+>> if (coresight_block_source(source, csdev->pdata->cout_conns[i]))
+>>     continue;
+> OK, I will update in the next version.
+>>
+>>> +
+>>>           if (child_dev &&
+>>> -            _coresight_build_path(child_dev, sink, path) == 0) {
+>>> +            _coresight_build_path(child_dev, sink, path, source) == 
+>>> 0) {
+>>>               found = true;
+>>>               break;
+>>>           }
+>>> @@ -696,7 +746,7 @@ struct list_head *coresight_build_path(struct 
+>>> coresight_device *source,
+>>>         INIT_LIST_HEAD(path);
+>>>   -    rc = _coresight_build_path(source, sink, path);
+>>> +    rc = _coresight_build_path(source, sink, path, source);
+>>>       if (rc) {
+>>>           kfree(path);
+>>>           return ERR_PTR(rc);
+>>> @@ -924,6 +974,16 @@ static int coresight_orphan_match(struct device 
+>>> *dev, void *data)
+>>>       for (i = 0; i < src_csdev->pdata->nr_outconns; i++) {
+>>>           conn = src_csdev->pdata->out_conns[i];
+>>>   +        /* Fix filter source device before skip the port */
+>>> +        if ((conn->filter_src_fwnode) && dst_csdev
+>>
+>> minor nit: unnecessary () around conn->filter_src_fwnode
+> OK, I will update in the next version.
+>>
+>>> +            && (conn->filter_src_fwnode == dst_csdev->dev.fwnode)) {
+>>> +            if (dst_csdev->type == CORESIGHT_DEV_TYPE_SOURCE)
+>>> +                conn->filter_src_dev = dst_csdev;
+>>> +            else
+>>> +                dev_warn(&conn->filter_src_dev->dev,
+>>> +                  "Filter source is not a source device\n");
+>>> +        }
+>>
+>> We could set the still_orphan here instead of down below.
+>>
+>>     /* Fixup filter source link */
+>>     if (conn->filter_src_fwnode && !conn->filter_src_dev) {
+>>         if (dst_csdev &&
+>>             conn->filter_src_fwnode == dst_csdev->dev.fwnode &&
+>>             !WARN_ON_ONCE(dst_csdev->type != CORESIGHT_DEV_TYPE_SOURCE) {
+>>             conn->filter_src_dev = dst_csdev;
+>>         else
+>>             still_orphan = true;
+>>     }
+>>
+>> minor nit: Also I think it is high time we add a helper to check if a
+>> devices is SOURCE, something like we did for is_device_tpdm(). e.g.,
+>>
+>>
+>> static inline bool coresight_is_device_source(struct coresight_device 
+>> *csdev)
+>> {
+>>     return csdev && (csdev->type == CORESIGHT_DEV_TYPE_SOURCE);
+>> }
+> Could you help review the following approach?
+> 
+> I will add the helper to coresight-priv.h
+> 
+> static inline bool coresight_is_device_source(struct coresight_device 
+> *csdev)
+> {
+>      return (csdev && (csdev->type == CORESIGHT_DEV_TYPE_SOURCE));
+
+minor nit:
+
+	return csdev && (csdev->type == CORESIGHT_DEV_TYPE_SOURCE);
+
+> }
+> 
+> Then, calling the help to check if a device is SOURCE in 
+> coresight-platform.c and coresight-core.c
+
+and evert where you compare for SOURCE.
+
+> 
+> coresight-platform.c
+> 
+> ... ... ... ...
+> 
+>          else {
+>              conn.filter_src_dev =
+>   coresight_find_csdev_by_fwnode(conn.filter_src_fwnode);
+>              if (conn.filter_src_dev &&
+>                  !coresight_is_device_source(conn.filter_src_dev))
+>                  dev_warn(&conn.filter_src_dev->dev,
+>                    "Filter source is not a source device\n");
+>          }
+> 
+> coresight-core.c
+> 
+> ... ... ... ...
+> 
+>          if (conn->filter_src_fwnode && !conn->filter_src_dev) {
+>              if (dst_csdev && (conn->filter_src_fwnode == 
+> dst_csdev->dev.fwnode)
+>                  && !WARN_ON_ONCE(!coresight_is_device_source(dst_csdev)))
+>                  conn->filter_src_dev = dst_csdev;
+>              else
+>                  still_orphan = true;
+>          }
+> 
+
+Correct.
+
+Thanks for your patience. Please wait until we sort out the device tree
+bindings
+
+Suzuki
 
 
