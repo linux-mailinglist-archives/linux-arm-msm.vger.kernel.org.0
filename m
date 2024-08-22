@@ -1,120 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-29313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A45A95C01A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 23:13:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C364595C059
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 23:40:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 484FD2845A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 21:13:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7F867285DAD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 21:40:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32B8E1D1724;
-	Thu, 22 Aug 2024 21:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB6A41D174F;
+	Thu, 22 Aug 2024 21:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UIdAJoFK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XQGIyIh5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33912AD00;
-	Thu, 22 Aug 2024 21:13:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4ED18EB1
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2024 21:40:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724361219; cv=none; b=rnXXwTpPEedj9sdzkBZGMq2pJoTBBzxevCWiZb6GcBfAa58lFs/gV0KYZgYQantfPIJ6DcNs5i7v8gVPwJeeIStQrlO7Z+9wwyfASZM0n4evIc/rLwVApAsTZeUDnW6m+1WfynST/Ph+hWYD0ufEOT/f/Km4xN94V7TqzH/P0LI=
+	t=1724362848; cv=none; b=FCfqmZvOQ4oHXfxCmXGLgo4+wVGVU7GWxCZar9YHHgDcC4V91p9/kDDdYJ8QXZsayVIED3yzVIoCGYNK84RNdoXpE49+A/7FWjmaLunhNJRsO4alYM7QZIx/2xial1Vkc6vDSt8DNQ4uT7ZsI9CSheiDjd/Z4bw3+Bf/uRI6iIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724361219; c=relaxed/simple;
-	bh=mTBgG3Ma68htfIo38K+TfYoh4pQFiUyFdbvudorGaXQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=cuJc9GCBEc6S/60/aFqDzc7T3jfW0d8n/9ESSHLOOAUJiCk2MbvQUVnEERX0KugHNoHpWIjgh8iwDaUEMhag1ACrrlPX1TZOyzHJxQeBuLCjIv6r39vZyjt+fU69HANpkwPTFROK/HeVDzhy0rg4bjTKsojWS5NSRKsjuFoMHDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UIdAJoFK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1A7C32782;
-	Thu, 22 Aug 2024 21:13:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724361218;
-	bh=mTBgG3Ma68htfIo38K+TfYoh4pQFiUyFdbvudorGaXQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=UIdAJoFKyUrY6k1SVSCNgFxRcKhr3Q5ZDOWajIilSTCXlT83kTV/nykP+UuimYLyE
-	 zOS7U9Q+s4Y+p3Y2PGIkYlwlx7sW51ny40FP0cLIFpSWYJ7Ynvo665hiRLShDnx1ht
-	 b76D3im0Ef+MHz9z2s/X2om/rqCkbXq75YG9OCzClVuT9vIzo0Ar9NepkWq3KYFRaI
-	 5PZG1XbgvQ1fCRvBuXiMbVZkTxy0KX6gdlqaFEhodtlPZI8swE3dFYrnz58DvkTApW
-	 G/Mz1rtdZXG0wp9fIC2KMjzg6BsOh1FqG+VyHcNtzRvSE3dAahQE3yBcr8PVA+EEsj
-	 OVgolAFc7OkgQ==
-Date: Thu, 22 Aug 2024 16:13:36 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	andersson@kernel.org, quic_vbadigan@quicinc.com,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v2 4/8] PCI: Change the parent to correctly represent
- pcie hierarchy
-Message-ID: <20240822211336.GA349622@bhelgaas>
+	s=arc-20240116; t=1724362848; c=relaxed/simple;
+	bh=YAwTBlspylclxG2dO/RW9LGMYbdR0PNTcVaNyiKAFKc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=f0cSNB/lAGdvsTieKz2F5L8jD0dhf03pDdcCUmP7uXxS4sJVmOVcZebUpd9Fay8QMCjIBF4TbopJZroCOljHL5nccosyK8QaTNSwA58PYgaIgySa0LGmiKjOhRdH6isMDeRTiQIH7Ta6AtWnBdS0EsGW6whPkr/LID6g7pY1IhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XQGIyIh5; arc=none smtp.client-ip=209.85.219.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-e13e11b23faso1331992276.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2024 14:40:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1724362845; x=1724967645; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZT9AcM0ePvmiNGNtKdrgApHdgj0aPYzu2lD9LlnjVd8=;
+        b=XQGIyIh5NbKpQi1ptLxfOZNJTEhZoIMvCAY7vF5OblF7WPwBZdTQhLB4ziU/dz7UjC
+         QbLFSFPXcKurTDt4dUUifGrQncZkRdEiC1o+ITT+NFlWeCtV2aXzlmU0k3236bIAWMV+
+         4gAxvGr8NERThSMBPIOxYg3B16HmrpH0oZnPDz0zR+oPqfiT8+I9KML8xIB8zznmH18J
+         Upg8iM9nd8RiaV7RTDueLo9YXLTyjQDcGUpW3j3tEYcBK0PHtDHSEKl5Nc89sy54nVGb
+         GwlzwKsUcS+FY02ZSfCdyYjsIzzlBjkUEBUVZBmtUnMc9RmnujB8xWnJi4n9xfeI7z3L
+         0a0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724362845; x=1724967645;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZT9AcM0ePvmiNGNtKdrgApHdgj0aPYzu2lD9LlnjVd8=;
+        b=C7liJLiDEfIpVE/vd/xzwqi5aUXdXqMPt7o9/nDeOK5R6KnRGaZTZCgYJhv3STg3HF
+         yDKLyhSAkrJSWuTwD0j9oCacIkQL70RIkOYOj6A5VyFzKWUhAyZlEtU55YqZ6PQmjebW
+         DHmVjMqCFHfaQ4aVoV/NNojk04CXn5w0nFHX+HT71KG006YEebTIswtJwAy2Y+VN0QR1
+         s3fHS4D91HLIxhMK7FmllwuOZd/kxI/hKvRs0GdHFmrnt+nserREQ/0+CG/F5FS8JIpA
+         VA3sTCpp61SUKrrjCAWeJQx37K0329nu8rRQjrWe9l7VGyYeZyqw8qSiC3Dv9qelQfsg
+         axEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW2x2UJ0FWJOexOUY1cxCkJdPV5SOomLvkE8f83T8zn0G1UW4/6RiAhjO7y/zw/53lohGnUWFKOFbH8XLsg@vger.kernel.org
+X-Gm-Message-State: AOJu0YzYom4+lzb+/Xatp/HUNDF319a/mslsVznvrPUFJ+NADZ5F+yr4
+	+yLE5oEPeKh071KU4XaQOSqmAWIy571e4E5qEQYh56Z1KkerU68xCujXY0xvVLz95mz4tmIeOEB
+	7JoqZwQPstH1GT9ReqHV4RSArLRABlmlhA4WtrQ==
+X-Google-Smtp-Source: AGHT+IEqgdfXdOfSwd9Wk29Zs7Gg9XD8psen0pbklM2Nwowqt/bbjkVBarQRzKbRRoNz7ciwvAr9rkWW9GaQjfXbk8I=
+X-Received: by 2002:a05:6902:849:b0:e13:65c9:e994 with SMTP id
+ 3f1490d57ef6-e17a864dc20mr317011276.41.1724362845157; Thu, 22 Aug 2024
+ 14:40:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=Mcrrhagqykg6eXXkVJ2dYAm5ViLtwL=VKTn8i72UY12Zg@mail.gmail.com>
+References: <20240723144610.564273-1-ulf.hansson@linaro.org>
+ <20240723144610.564273-3-ulf.hansson@linaro.org> <0af670ae-8c8f-4e78-b1e0-e9ccb4fba2c9@gmail.com>
+ <CAPDyKFr5xjE867rHRZxtKPr0iKh9B6_Ckyu=B4Jzn-ExDpQjVQ@mail.gmail.com> <bfb90d04-6885-4623-a846-f04b4fe4bff4@gmail.com>
+In-Reply-To: <bfb90d04-6885-4623-a846-f04b4fe4bff4@gmail.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Thu, 22 Aug 2024 23:40:08 +0200
+Message-ID: <CAPDyKFp5R=T1BgCHZhR=mr+z7VnF3x=DeAvjPZ3bE1Q5TWYzVQ@mail.gmail.com>
+Subject: Re: [PATCH 2/4] media: venus: Use dev_pm_domain_attach|detach_list()
+ for OPP PM domain
+To: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Cc: Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Thierry Reding <thierry.reding@gmail.com>, 
+	Mikko Perttunen <mperttunen@nvidia.com>, Jonathan Hunter <jonathanh@nvidia.com>, linux-pm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	Vikash Garodia <quic_vgarodia@quicinc.com>, linux-media@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 22, 2024 at 10:01:04PM +0200, Bartosz Golaszewski wrote:
-> On Thu, Aug 22, 2024 at 9:28 PM Bjorn Helgaas <helgaas@kernel.org> wrote:
+On Thu, 22 Aug 2024 at 20:05, Stanimir Varbanov
+<stanimir.k.varbanov@gmail.com> wrote:
+>
+> Hi Ulf,
+>
+> On 21.08.24 =D0=B3. 11:56 =D1=87., Ulf Hansson wrote:
+> > On Tue, 20 Aug 2024 at 22:48, Stanimir Varbanov
+> > <stanimir.k.varbanov@gmail.com> wrote:
+> >>
+> >> Hi Ulf,
+> >>
+> >> Thank you for the patch!
+> >>
+> >> On 23.07.24 =D0=B3. 17:46 =D1=87., Ulf Hansson wrote:
+> >>> Rather than hooking up the PM domains through devm_pm_opp_attach_genp=
+d()
+> >>> and manage the device-link, let's avoid the boilerplate-code by conve=
+rting
+> >>> into dev_pm_domain_attach|detach_list.
+> >>>
+> >>> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> >>> ---
+> >>>    drivers/media/platform/qcom/venus/core.c      |  8 ++---
+> >>>    drivers/media/platform/qcom/venus/core.h      |  6 +---
+> >>>    .../media/platform/qcom/venus/pm_helpers.c    | 31 ++++++---------=
+----
+> >>>    3 files changed, 14 insertions(+), 31 deletions(-)
+> >>>
+> >>
+> >> Acked-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
 > >
-> > On Tue, Aug 13, 2024 at 09:15:06PM +0200, Bartosz Golaszewski wrote:
-> > > On Sat, Aug 3, 2024 at 5:23 AM Krishna chaitanya chundru
-> > > <quic_krichai@quicinc.com> wrote:
-> > > >
-> > > > Currently the pwrctl driver is child of pci-pci bridge driver,
-> > > > this will cause issue when suspend resume is introduced in the pwr
-> > > > control driver. If the supply is removed to the endpoint in the
-> > > > power control driver then the config space access by the
-> > > > pci-pci bridge driver can cause issues like Timeouts.
-> > > >
-> > > > For this reason change the parent to controller from pci-pci bridge.
-> > > >
-> > > > Fixes: 4565d2652a37 ("PCI/pwrctl: Add PCI power control core code")
-> > > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > > > ---
-> > >
-> > > Tested-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > >
-> > > Bjorn,
-> > >
-> > > I think this should go into v6.11 as it does indeed better represent
-> > > the underlying logic.
+> > Thanks!
 > >
-> > Is this patch independent of the rest?  I don't think the whole series
-> > looks like v6.11 material, but if this patch can be applied
-> > independently, *and* we can make a case in the commit log for why it
-> > is v6.11 material, we can do that.
+> >>
+> >> I'll pick it through linux-media.
 > >
-> > Right now the commit log doesn't tell me enough to justify a
-> > post-merge window change.
-> 
-> Please, apply this patch independently. FYI I have a WiP branch[1]
-> with a v3 of the fixes series rebased on top of this one. Manivannan
-> and I are working on fixing one last remaining issue and I'll resend
-> it. This should go into v6.11.
+> > Please don't.
+> >
+> > I should have stated that this depends on another series [1] - and
+> > they need either to go together or we need to defer $subject patch
+> > until the next release cycle.
+>
+> Sure, then I guess we will deffer venus patch until the preparation
+> series is merged to avoid conflicts. Thank you!
 
-OK.  I just need to be able to justify *why* we need it in v6.11, so I
-can apply it as soon as somebody supplies that kind of text for the
-commit log.  I.e., what is broken without this change?  What bad
-things happen if we defer it to v6.12?
+Assuming the preparation series gets accepted, maybe we can give it a
+try via my pmdomain tree? Or do expect to land a lot of code that
+could conflict?
 
-> [1] https://git.codelinaro.org/bartosz_golaszewski/linux/-/tree/topic/pci-pwrctl-fixes
+I also realized that I already have a different series [1] queued in
+my pmdomain tree from Dikshita Agarwal (reviewed by Bryan), that moves
+an existing call for dev_pm_domain_attach() to the new
+devm_pm_domain_attach() helper. So far I haven't received any reports
+about conflicts from linux-next, so it looks good I think.
+
+Kind regards
+Uffe
+
+[1]
+https://lore.kernel.org/all/CAPDyKFqsHL3uatmLZaRzZ_GfkZw-+fURQNSEgvmrf-ini+=
+WHng@mail.gmail.com/
 
