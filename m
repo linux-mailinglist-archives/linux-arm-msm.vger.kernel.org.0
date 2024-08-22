@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-29276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A335D95B3CC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 13:29:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CC9595B3DF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 13:31:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 14ACDB20F4B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 11:29:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC3FD1F222A9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 11:31:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 725091C93C6;
-	Thu, 22 Aug 2024 11:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A030C1C6F7B;
+	Thu, 22 Aug 2024 11:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m5S7dntk"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oe3Tqtkg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8CF1C93A6;
-	Thu, 22 Aug 2024 11:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7022C17DE06;
+	Thu, 22 Aug 2024 11:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724326132; cv=none; b=OswGFUSAjv126Zhn94gx9vUOa9nEd08Szo9Dmw9IhQXKOLUzTt1hH1Rz5SGEq3GWRcxIS2BEn5VN8Bkk/m+EC1FB7dvYnN0ON7aZ/+Okp6gbXGNBwCYFIuR/UdiBAK2/PwvCVE678Soi7nfFgfMt3rPzdIMW4ii2MDZihQdA/tE=
+	t=1724326267; cv=none; b=e44tpfd+3fmnKxQ8u9Qx8OKlUF+cmyx60vXoDXR8laYx3JpL1oyN4vai7QGc495xT/x8g1vUIcIS1FNDyK/rJixGSjciZtB19iiMCjeySK/zO3VpTSVPG3KwUC/hdDR5X7yN0B0l9WwZgi4x5DzUg2MwHa2iZ6Y2HaaqTLwOUS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724326132; c=relaxed/simple;
-	bh=5hbZSENnRd7z98/NMEpOsFqrQH6Pepm32EMOy9lVhqo=;
+	s=arc-20240116; t=1724326267; c=relaxed/simple;
+	bh=gDbTL4GZRvQeDgNI3gcM09/p4LhAfcobcN6NTa3ZLBk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bzdnjWMswkGION09BSSIz9Q+3C6eJZlU59ldBer4aZxS/FtdQRGx0rTHPGmF18t5tSuPMxFVl5CASLthM0NYdLhL3q6CIYbievbknCMnthNtxjJ4b4eRUSELbIf5GLOBh6de2zO2RGezNmoOV6dYFZsA8Xq74pG6mc5uomgVlf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m5S7dntk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07BC3C32782;
-	Thu, 22 Aug 2024 11:28:46 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=rxU139VIFBBLLfgT1QNf7RoCun7NK2tKPyo0fhxTn2MdFKc03Jmwvi3kWn8NViTywDn3VCoVHcM3T4OtIqfzIxRYyPWKzo0OOVBMwQ7HWVgH5SKRWptnnaANdgzhKnijcAiFrFtLJ5ypQ+9B7LedjiV0uTYmsm5hqvAavRCaVks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oe3Tqtkg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E87C32782;
+	Thu, 22 Aug 2024 11:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724326131;
-	bh=5hbZSENnRd7z98/NMEpOsFqrQH6Pepm32EMOy9lVhqo=;
+	s=k20201202; t=1724326267;
+	bh=gDbTL4GZRvQeDgNI3gcM09/p4LhAfcobcN6NTa3ZLBk=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=m5S7dntkbMQAo+QlAfo8AxJJ1mFq1/Y4WygNHaSBUTD/3jD7plytcoT/iQHfr7d44
-	 gu9ySOv16hraDtejVnKehXq6hpWmWz3EcF9/ohf4zVKflqWwdVPWPobG0VuobEKeIU
-	 xBoTaPwa0RObN+GVlTk3nufqXZwOsE27S7LboAKXbEsB02OSJZD/N8zAQ3EZ6uWr1B
-	 QK+xhaSsgRkdpD1mdK3QSbQ5/tN1mo4h9CUgUaaOaRZy/26DlJL1txgyXKnde5OLDf
-	 CEbxotQ+SFBB6G859sviYiYNUxfLorUWoINNts79AJdhqyAsLDl0Iby7P0oNv6h3xX
-	 E9RzH+aVwvCjg==
-Message-ID: <2b5105c6-ccc1-47fb-b22c-010537f39681@kernel.org>
-Date: Thu, 22 Aug 2024 13:28:44 +0200
+	b=oe3Tqtkg1IlHXhjmboLrWfO1WBSTFiwjBK9XuytGxkdmGjMAuGKZTq6MYcfkVzigh
+	 BFwraNixJP8gULzt85oN9y6+JZcmBgzYTd0tkZIK+UDB+xNehayYFP/qh9fh9Lfntp
+	 t0Y/o/r9JQi51HK3/+JLqVcNkDpKNfc/Uoj1Jz1PUhSUaCy9uuCQ3izys63VOro0iC
+	 R22dOUDsuM+8fYhRL9UDbPxBtoul99TbdlI7+wtZ/OSPVMgzJaf15vZRQ6ab11wWEE
+	 qPwaSWz16jUSe9inDqrUVB7WGSwJoCUvMBVCNAgw9USgFYUeFVglhXtZImYxG667HF
+	 CmtE95KYH1NFA==
+Message-ID: <7b8f488a-deac-4089-be7a-c0d76afca0fa@kernel.org>
+Date: Thu, 22 Aug 2024 13:30:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,16 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] Add new driver for WCSS secure PIL loading
-To: Gokul Sriram P <quic_gokulsri@quicinc.com>, andersson@kernel.org,
- krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+Subject: Re: [PATCH 1/2] dt-bindings: remoteproc: qcom: document hexagon based
+ WCSS secure PIL
+To: Gokul Sriram P <quic_gokulsri@quicinc.com>,
+	q@krzk-bin.smtp.subspace.kernel.org
+Cc: andersson@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
  linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Cc: quic_viswanat@quicinc.com, quic_mmanikan@quicinc.com,
- quic_varada@quicinc.com, quic_srichara@quicinc.com
+ linux-kernel@vger.kernel.org, quic_viswanat@quicinc.com,
+ quic_mmanikan@quicinc.com, quic_varada@quicinc.com, quic_srichara@quicinc.com
 References: <20240820085517.435566-1-quic_gokulsri@quicinc.com>
- <4d1c0d17-20b8-4989-9757-61031e9f03a4@kernel.org>
- <807c9315-bf88-4a0a-9632-2ce471b329b6@quicinc.com>
+ <20240820085517.435566-2-quic_gokulsri@quicinc.com>
+ <ticwyyycqlk2uqpiqckoqqnapqatw74s6f6tjqmmyt2d6siqqt@xxe2qdtr4c2c>
+ <2b6b43b3-c99b-4aac-b1fb-24f6e5e562ce@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,28 +107,58 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <807c9315-bf88-4a0a-9632-2ce471b329b6@quicinc.com>
+In-Reply-To: <2b6b43b3-c99b-4aac-b1fb-24f6e5e562ce@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 22/08/2024 12:43, Gokul Sriram P wrote:
+On 22/08/2024 12:47, Gokul Sriram P wrote:
+>>> +
+>>> +  interrupts:
+>>> +    items:
+>>> +      - description: Watchdog interrupt
+>>> +      - description: Fatal interrupt
+>>> +      - description: Ready interrupt
+>>> +      - description: Handover interrupt
+>>> +      - description: Stop acknowledge interrupt
+>>> +
+>>> +  interrupt-names:
+>>> +    items:
+>>> +      - const: wdog
+>>> +      - const: fatal
+>>> +      - const: ready
+>>> +      - const: handover
+>>> +      - const: stop-ack
+>>> +
+>>> +  clocks:
+>>> +    items:
+>>> +      - description: IM SLEEP clock
+>> What is IM? Explain all acronyms.
+>>
+>> What is SLEEP?
 > 
-> On 8/20/2024 4:42 PM, Krzysztof Kozlowski wrote:
->> On 20/08/2024 10:55, Gokul Sriram Palanisamy wrote:
->>> This series depends on q6 clock removal series [1].
->> How? So this cannot be tested and merged?
+> IM_SLEEP_CLK - Internal Module sleep clock needed for Q6 reset.
 > 
-> Yes. Though TrustZone enables these clocks, since Linux Kernel will 
-> consider these clock as unused.
-> These clock will be disabled so we cannot bring Q6 out of reset. So we 
-> have the dependency set.
-> I posted this as a separate series because [1] 'remove unnecessary q6 
-> clocks' series was already reviewed for some
-> versions.
+> SLEEP is not an acronym here.
 
-This is not a dependency in the kernel workflow. Nothing gets broken,
-nothing stops this patch from merging. Your remark is confusing and will
-either start questions or prevent applying the patchset.
+Then probably you mean "Internal sleep", although "internal" is also
+confusing. Devices do not receive as input something which is internal
+to them.
+
+> 
+>>> +
+>>> +  clock-names:
+>>> +    items:
+>>> +      - const: im_sleep
+>> sleep? Are there different sleep clocks here?
+> 
+> We have different branches of sleep clk each enabled separately.
+> 
+> im_sleep is one of those branches that q6 uses.
+
+So this device misses other branches? Then provide them. Otherwise it is
+just "sleep".
+
+
 
 Best regards,
 Krzysztof
