@@ -1,191 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-29280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4DCD95B445
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 13:51:36 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E697D95B43E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 13:51:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 408671F2435C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 11:51:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 256E11C230EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 11:51:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF2111C93DC;
-	Thu, 22 Aug 2024 11:51:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QCcrmN/l"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85BA81C9457;
+	Thu, 22 Aug 2024 11:50:27 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7F81AB514;
-	Thu, 22 Aug 2024 11:51:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A92A91C9428;
+	Thu, 22 Aug 2024 11:50:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724327494; cv=none; b=G3aXIJaG/kQvIT7u0PvWPElPfqdLy6zy7j87i1ZChL31fSzlp9xEm3GadLu0w5RYz+KsRytgH31RkSgQoZP7DGnfo5cAzqKbNHbNNV5aWDRqOrW3aIH7TCsZ+c0niCmWFCC8v1SbEILJ5kcAQXvQd5JN1RsI4YMyANDFqDECsIg=
+	t=1724327427; cv=none; b=ZIJM0bv41TaNTDwQgmFb7pptNdXQ5W3fNOOw9MSdPhF6gnBxC+fCijoSQEGaq5oY6EXsKIl99QOhICg0DwPQA9tOKe+1aAzxAa2nLRa29DiCON8LWiwGRto4iT166ni3gv9ObDUNfbmi5EZBcU1DJ96cCSpcxPnyYkJLcyDZb6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724327494; c=relaxed/simple;
-	bh=OC/2onS7BuHn8+8AOM+P2syLpYkAd2f1CT1DErhWLHk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=PL1WdEhlY2mDvSa4pOZzqXLe7EZnP2CiWdKm80cfxRdLO9Dm2g4c18Q18cmerkpy6cAr258tUXYOiZZx/4fem39nPRJGM4if5hgjSohFoGCLOksQlFRfToWq1QxKVvi13RgnFX01VTrQHypr2p8z4RA7i4SRTF4P4OnmwOneghM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QCcrmN/l; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47MAOJaX001725;
-	Thu, 22 Aug 2024 11:46:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6UbGdF+C67OhIMspQo6RFBnUxUYJFpjLS5akkaxqhYU=; b=QCcrmN/lU/5sZGVO
-	EkV2JJfyUXSncUNlRTAMwtZmGrmBlx9iTR5PGV52YR87Goot1xERDWWmXVuBOgu1
-	esbSonQIbqJL/rh+c3wrgoAZuYZBqlVBPBkKLABMJR/VZRLJJ9xPsMxupTOi/KJo
-	2uvoyvkiMcAeMy2yIZBppR8pLEF74GvJjIFbGZvVcpp+Ocjsexd3hvnatk3hgpfU
-	FNxe/Y9TqHdthNOchTuuaKdwjtSTzhmdjYN7tyctAYI4yMx/Q2WQGgV6c1CpjE9G
-	4+cOgFH4TTRiU77bNkwUBKfRWLzSbqG84vvoem5xnGGJb7356sL/5PibI3MDEtvl
-	L9IdBw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 414pdmyy3s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Aug 2024 11:46:18 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47MBkH7G024122
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 22 Aug 2024 11:46:17 GMT
-Received: from [10.216.59.247] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 22 Aug
- 2024 04:46:09 -0700
-Message-ID: <6365b444-f552-4b13-c73b-00ba04ec1e62@quicinc.com>
-Date: Thu, 22 Aug 2024 17:15:53 +0530
+	s=arc-20240116; t=1724327427; c=relaxed/simple;
+	bh=XXKGzE7Rd62JJickoifzIAp34sE8kiiPeOtfKnQBOws=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=VxHCQAkhobLmI2n/MouPuWP9OaEAyZnjWmVPJJfttDjOWwOJKzq9lj+dPEKotKnh0m/4ftv8htj0lQC/gXXhWaXTmPCrCsPcEdgesafRCWfDbyMK/jDReL7TYF/+qSA29wN2oC3R3ZKy7NNoVy5WBMxCcY3q4EMKailrH6S3LkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8B53ADA7;
+	Thu, 22 Aug 2024 04:50:50 -0700 (PDT)
+Received: from [10.57.71.237] (unknown [10.57.71.237])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E29023F66E;
+	Thu, 22 Aug 2024 04:50:21 -0700 (PDT)
+Message-ID: <53ec46af-3438-44e0-82b2-9432fc7f0fcb@arm.com>
+Date: Thu, 22 Aug 2024 12:50:19 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v2 01/16] dt-bindings: dma: qcom,bam: Add bam pipe lock
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>, <vkoul@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <thara.gopinath@gmail.com>, <herbert@gondor.apana.org.au>,
-        <davem@davemloft.net>, <gustavoars@kernel.org>,
-        <u.kleine-koenig@pengutronix.de>, <kees@kernel.org>,
-        <agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dmaengine@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-crypto@vger.kernel.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
-        <quic_utiwari@quicinc.com>
-References: <20240815085725.2740390-1-quic_mdalam@quicinc.com>
- <20240815085725.2740390-2-quic_mdalam@quicinc.com>
- <0a2b884b-bd28-428e-be12-8fef4fdfd278@kernel.org>
- <c8b7c2f0-9de1-1787-2f1b-2aa0102f347c@quicinc.com>
- <c2292ef2-e93e-4ca3-bcd3-542bd27526ad@kernel.org>
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <c2292ef2-e93e-4ca3-bcd3-542bd27526ad@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: uRzuvOQX7Pb4PoW0Sp1lJHLY9ec_o9XB
-X-Proofpoint-GUID: uRzuvOQX7Pb4PoW0Sp1lJHLY9ec_o9XB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-22_03,2024-08-22_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- lowpriorityscore=0 adultscore=0 mlxlogscore=999 bulkscore=0 mlxscore=0
- priorityscore=1501 malwarescore=0 suspectscore=0 clxscore=1015
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408220088
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/3] dt-bindings: arm:
+ qcom,coresight-static-replicator: Add property for source filtering
+Content-Language: en-GB
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Tao Zhang <quic_taozha@quicinc.com>, Mike Leach <mike.leach@linaro.org>,
+ James Clark <james.clark@arm.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Leo Yan <leo.yan@linux.dev>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20240821031348.6837-1-quic_taozha@quicinc.com>
+ <20240821031348.6837-2-quic_taozha@quicinc.com>
+ <a01d2f2f-d963-4eb1-98ee-3dc6f86c9397@arm.com>
+ <xmijaayxveghxx76nnudo5mlpxv6tpxvooiox7wj2jyojf3xpe@ntm67lxikfop>
+ <44e2617c-62b0-436f-ac6a-0bd3e3855473@arm.com>
+In-Reply-To: <44e2617c-62b0-436f-ac6a-0bd3e3855473@arm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
-
-On 8/22/2024 11:57 AM, Krzysztof Kozlowski wrote:
-> On 21/08/2024 18:34, Md Sadre Alam wrote:
+On 22/08/2024 11:34, Suzuki K Poulose wrote:
+> On 22/08/2024 08:08, Krzysztof Kozlowski wrote:
+>> On Wed, Aug 21, 2024 at 11:38:55AM +0100, Suzuki K Poulose wrote:
+>>> On 21/08/2024 04:13, Tao Zhang wrote:
+>>>> The is some "magic" hard coded filtering in the replicators,
+>>>> which only passes through trace from a particular "source". Add
+>>>> a new property "filter-src" to label a phandle to the coresight
+>>>> trace source device matching the hard coded filtering for the port.
+>>>
+>>> Minor nit: Please do not use abbreviate "source" in the bindings.
+>>> I am not an expert on other changes below and will leave it to
+>>> Rob/Krzysztof to comment.
+>>>
+>>> Rob, Krzysztof,
+>>>
+>>> We need someway to "link" (add a phandle) from a "port". The patch below
+>>> is extending "standard" port to add a phandle. Please let us know if
+>>> there is a better way.
+>>>
+>>> e.g.:
+>>>
+>>> filters = list of tuples of port, phandle. ?
+>>>
+>>> e.g.:
+>>>
+>>> filters = < 0, <&tpdm_video>,
+>>>              1, <&tpdm_mdss>
+>>>        >
+>>>
 >>
+>> Current solution feels like band-aid - what if next time you need some
+>> second filter? Or "wall"? Or whatever? Next property?
+> 
+> 
+> 
 >>
->> On 8/17/2024 2:38 PM, Krzysztof Kozlowski wrote:
->>> On 15/08/2024 10:57, Md Sadre Alam wrote:
->>>> BAM having pipe locking mechanism. The Lock and Un-Lock bit
->>>> should be set on CMD descriptor only. Upon encountering a
->>>> descriptor with Lock bit set, the BAM will lock all other
->>>> pipes not related to the current pipe group, and keep
->>>> handling the current pipe only until it sees the Un-Lock
->>>> set.
->>>
->>> Please wrap commit message according to Linux coding style / submission
->>> process (neither too early nor over the limit):
->>> https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
->>     Ok , will update in next patch.
->>>
->>>>
->>>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->>>> ---
->>>>
->>>> Change in [v2]
->>>>
->>>> * Added initial support for dt-binding
->>>>
->>>> Change in [v1]
->>>>
->>>> * This patch was not included in [v1]
->>>>
->>>>    Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 8 ++++++++
->>>>    1 file changed, 8 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
->>>> index 3ad0d9b1fbc5..91cc2942aa62 100644
->>>> --- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
->>>> +++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
->>>> @@ -77,6 +77,12 @@ properties:
->>>>          Indicates that the bam is powered up by a remote processor but must be
->>>>          initialized by the local processor.
->>>>    
->>>> +  qcom,bam_pipe_lock:
->>>
->>> Please follow DTS coding style.
->>     Ok
->>>
->>>> +    type: boolean
->>>> +    description:
->>>> +      Indicates that the bam pipe needs locking or not based on client driver
->>>> +      sending the LOCK or UNLOK bit set on command descriptor.
->>>
->>> You described the desired Linux feature or behavior, not the actual
->>> hardware. The bindings are about the latter, so instead you need to
->>> rephrase the property and its description to match actual hardware
->>> capabilities/features/configuration etc.
->>     Ok, will update in next patch.
->>>
->>>> +
->>>>      reg:
->>>>        maxItems: 1
->>>>    
->>>> @@ -92,6 +98,8 @@ anyOf:
->>>>          - qcom,powered-remotely
->>>>      - required:
->>>>          - qcom,controlled-remotely
->>>> +  - required:
->>>> +      - qcom,bam_pipe_lock
->>>
->>> Why is it here? What do you want to achieve?
->>     This property added to achieve locking/unlocking
->>     of BAM pipe groups for mutual exclusion of resources
->>     that can be used across multiple EE's
+>> Isn't filter just one endpoint in the graph?
+>>
+>> A <--> filter <--> B
 > 
-> This explains me nothing. I am questioning the anyOf block. Why this is
-> the fourth method of controlling BAM? Anyway, if it is, then explain
-> this in commit msg.
-   This is the BAM property for locking/unlocking the BAM pipes.That's
-   why I kept in anyOf block.
-   Will explain in commit message in next patch.
+> To be more precise, "Filter" is a "port (p0, p1, p2 below)" (among a
+> multi output ports).
 > 
-> Best regards,
-> Krzysztof
+> For clearer example:
 > 
+> A0 <--> .. <--> ..\                  p0  / --> Filtered for (A1) <--> B1
+> A1 <--> .. <--> .. - < L(filters>    p1  - --> Filtered for (A2) <--> B2
+> A2 <--> .. <--> ../                  p2  \ --> Unfiltered        <--> B0
+> 
+> 
+> 
+>> Instead of
+>>
+>> A <----through-filter----> B?
+> 
+> The problem is we need to know the components in the path from A0 to X
+> through, (Not just A0 and L). And also we need to know "which port (p0 
+> vs p1 vs p2)" does the traffic take from a source (A0/A1/A2) out of the
+> link "L".
+> 
+> So ideally, we need a way to tie p0 -> A1, p1 -> A2.
+> 
+> would we need something else in the future ? I don't know for sure.
+> People could design their own things ;-). But this was the first time
+> ever in the last 12yrs since we supported coresight in the kernel.
+> (there is always a first time).
+> 
+> Fundamentally, the "ports" cannot have additional properties today.
+> Not sure if there are other usecases (I don't see why). So, we have
+> to manually extend like above, which I think is not nice.
+
+Replying to the other thread [0], made me realize that the above is not
+true. Indeed it is possible to add properties for endpoints, e.g:
+
+e.g.: media/video-interfaces.yaml
+
+So extending the endpoint node is indeed acceptable (unlike I thought).
+May be the we it is achieved in this patch is making it look otherwise.
+
+Suzuki
+[0] https://lkml.kernel.org/r/4b51d5a9-3706-4630-83c1-01b01354d9a4@arm.com
+
+
+
+> 
+> Happy to proceed with anything that seems acceptable for you folks.
+> 
+> Suzuki
+> 
+> 
+> 
+>>
+>> Best regards,
+>> Krzysztof
+>>
+> 
+
 
