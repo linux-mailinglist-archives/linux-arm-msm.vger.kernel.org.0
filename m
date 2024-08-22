@@ -1,142 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-29272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29D2395B3B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 13:25:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F71495B3BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 13:27:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 915B9B21725
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 11:25:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C46A01C22E37
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 11:27:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB6DA1C93AC;
-	Thu, 22 Aug 2024 11:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 941531C93CF;
+	Thu, 22 Aug 2024 11:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gmNssrdI"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bu9iDcP4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967AC16EB54;
-	Thu, 22 Aug 2024 11:25:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06EB81C93CD;
+	Thu, 22 Aug 2024 11:27:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724325928; cv=none; b=FPu2P1Z0uncmAfTUXjYPEdU6NlT8v9budYLQXsOtciI+py95NGqfFTW5i4/QnQ3OlNkBKjS/OHTIge3ttlKhHcPwPynlYfOpZYRfI1ECpPHMG7K/eNiNtlltc+K1KwdmI9Aop2SlwiOtyZaAemB3qS+QBdLHjcrxFT47Sxv2yh4=
+	t=1724326062; cv=none; b=hs6nKyZpZ7yzVqexYzxwxH0NWIbS8R6i5ZlwKyDAGnHObyVHpEQb0tBQZQ2KR0pBPPRr2226b0Zj2b2h9vRUuiERI3LrhP7p0KSVdE6bo5ol5xV/UWH6s2UI+UYmlPrl/dVv5T29GihduQZNHDwkYLgI1GLTeDVPfHVYCUIgVMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724325928; c=relaxed/simple;
-	bh=0wm2QDWmoy3DcgYoZOxR4m3/bMn4YIfdxBe8Ay0Wn9E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PxaZFktbb7bWwR5BhlB/xzPD+zROTTKNq8BHtNjdtq1tF4ytaW+2c4Z3Pi+K6CsF6lIxhO3l//d53ks4+qi33vC3WG+bnRbU8E4fGF/2de9+5e1LuyrHpQGxy1eTRF3eFsHtTtF05z3GpgIkhNc7dCw1f77HUQPatp28FCEt5rU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gmNssrdI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F28C32782;
-	Thu, 22 Aug 2024 11:25:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724325928;
-	bh=0wm2QDWmoy3DcgYoZOxR4m3/bMn4YIfdxBe8Ay0Wn9E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gmNssrdIoA7QqnvUX8wDzc0wlu56DCiIj/IpdYq5EjtIZr2CpXMWBHEYGqtdNiATe
-	 imBWPOyzQiWKjdZ+4L0O9Vgu920Wv4AdnFSeFlLpipcTwEwsB9f1+Lg90CCVgdALIH
-	 fiwWShqOf4J2QZlcfieLeGmYTKjzzvKffUGzYAKpp3YnoZdLez791ACWo4rlXuapBD
-	 U+sHbemXbWAElMwN36PvEQFtSJ2zyX3FwliANBPWSuh1N6mNulhtBpn9ugWLQX7EWn
-	 5+/gmqTEUz1pC9Zba4kv6t9Ar/MuhoSuxhyPMWhm0YjmUKygP0pCba4eF7tHK0m5ez
-	 O5ebkcMkczQtw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1sh5wZ-000000005PY-2Jhk;
-	Thu, 22 Aug 2024 13:25:32 +0200
-Date: Thu, 22 Aug 2024 13:25:31 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Faisal Hassan <quic_faisalh@quicinc.com>
-Cc: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH] usb: dwc3: qcom: fix NULL pointer dereference on
- dwc3_qcom_read_usb2_speed
-Message-ID: <ZscgKygXTFON3lKk@hovoldconsulting.com>
-References: <20240813111847.31062-1-quic_faisalh@quicinc.com>
+	s=arc-20240116; t=1724326062; c=relaxed/simple;
+	bh=YTQZD840jQL6WynsalQ6I85hUQYCV8bw2+SJCazhrTU=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=gD1cgSE8hBkouYh53xfIOBIOPgDfWNieHol9z0W5ikW/a9noKXVg5YNXJXrVUULN6G8U4PVPSvzrIdpwDaniWZS6HQXEe0SFSkPbuLfD1kOtgE8JuruciGJipBFrW26/1P4woNP+Bw41pN0eQ2irV888YJyJco0g+vsBI/rvK9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bu9iDcP4; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47M9jcwn027854;
+	Thu, 22 Aug 2024 11:27:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=3bKTSGxjKcVpBXNiDJqNTK
+	9YW8F+5ML9zXx8QFGj2SU=; b=bu9iDcP49BPkoROUHale0GL7Kn7mECT5+KwUDU
+	szFP5tjg77Ogpc2MggRGyDQj+rQNu+GTCk8RV8xo8N3IbLaHkTfRNZx7CqYvnyd2
+	R2iMotwjbfOm8Lmep+c2COwF9LhQcLpnjylfNiM5p8MPq5gYIUhbv2b5CPK6MhsC
+	3snnXXlH6EfKm4PyWcuHbLMg9u6p6iYOJXXYk79pLhPtmQC5To+dOv/sqCtZq1+l
+	cWprY64zbzpHdzhlQXNxyt2W66NoWv7zqy4vycosdcsCo/gOHxuD3ErVmuXDQFAx
+	Q27yk/nZp6Mpj8ujXyinGXdkBsY6lOEt9ytk5EcRslS7Utbg==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 414v5cem3b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 22 Aug 2024 11:27:34 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47MBRYOL010209
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 22 Aug 2024 11:27:34 GMT
+Received: from hu-imrashai-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 22 Aug 2024 04:27:29 -0700
+From: Imran Shaik <quic_imrashai@quicinc.com>
+Subject: [PATCH v2 0/2] clk: qcom: Add support for GCC on QCS8300
+Date: Thu, 22 Aug 2024 16:57:17 +0530
+Message-ID: <20240822-qcs8300-gcc-v2-0-b310dfa70ad8@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240813111847.31062-1-quic_faisalh@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJUgx2YC/23MQQ6CMBCF4auQWVsznSJUV97DsMChwixspdVGQ
+ 7i7lbXL/yXvWyC5KC7BqVoguixJgi9Buwp46v3olAylgZBqtIRq5mQNohqZVW0MkqHmeDUNlMc
+ jupu8N+3SlZ4kPUP8bHjWv/W/k7VCNVjdEh5021s6zy9h8bzncIduXdcv8VP8oagAAAA=
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>
+CC: Ajit Pandey <quic_ajipan@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Satya Priya Kakitapalli
+	<quic_skakitap@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <netdev@vger.kernel.org>, Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.1
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: wIBscJtR56Be3xJyPg8V4iUACJZOCyzF
+X-Proofpoint-ORIG-GUID: wIBscJtR56Be3xJyPg8V4iUACJZOCyzF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-22_03,2024-08-22_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
+ spamscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0
+ phishscore=0 priorityscore=1501 clxscore=1011 malwarescore=0
+ mlxlogscore=876 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408220085
 
-On Tue, Aug 13, 2024 at 04:48:47PM +0530, Faisal Hassan wrote:
-> Null pointer dereference occurs when accessing 'hcd' to detect speed
-> from dwc3_qcom_suspend after the xhci-hcd is unbound.
+This series adds the dt-bindings and driver support for GCC on QCS8300 platform.
 
-Why are you unbinding the xhci driver?
+Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+---
+Changes in v2:
+- Removed the QCS8300 SoC info series dependency in cover letter as per the review
+comments from Krzysztof.
+- Link to v1: https://lore.kernel.org/r/20240820-qcs8300-gcc-v1-0-d81720517a82@quicinc.com
 
-> To avoid this issue, ensure to check for NULL in dwc3_qcom_read_usb2_speed.
-> 
-> echo xhci-hcd.0.auto > /sys/bus/platform/drivers/xhci-hcd/unbind
->   xhci_plat_remove() -> usb_put_hcd() -> hcd_release() -> kfree(hcd)
-> 
->   Unable to handle kernel NULL pointer dereference at virtual address
->   0000000000000060
->   Call trace:
->    dwc3_qcom_suspend.part.0+0x17c/0x2d0 [dwc3_qcom]
->    dwc3_qcom_runtime_suspend+0x2c/0x40 [dwc3_qcom]
->    pm_generic_runtime_suspend+0x30/0x44
->    __rpm_callback+0x4c/0x190
->    rpm_callback+0x6c/0x80
->    rpm_suspend+0x10c/0x620
->    pm_runtime_work+0xc8/0xe0
->    process_one_work+0x1e4/0x4f4
->    worker_thread+0x64/0x43c
->    kthread+0xec/0x100
->    ret_from_fork+0x10/0x20
-> 
-> Fixes: c5f14abeb52b ("usb: dwc3: qcom: fix peripheral and OTG suspend")
+---
+Imran Shaik (2):
+      dt-bindings: clock: qcom: Add GCC clocks for QCS8300
+      clk: qcom: Add support for Global Clock Controller on QCS8300
 
-This is clearly not the commit that introduced this issue, please be
-more careful.
+ .../bindings/clock/qcom,qcs8300-gcc.yaml           |   66 +
+ drivers/clk/qcom/Kconfig                           |   10 +
+ drivers/clk/qcom/Makefile                          |    1 +
+ drivers/clk/qcom/gcc-qcs8300.c                     | 3640 ++++++++++++++++++++
+ include/dt-bindings/clock/qcom,qcs8300-gcc.h       |  234 ++
+ 5 files changed, 3951 insertions(+)
+---
+base-commit: bb1b0acdcd66e0d8eedee3570d249e076b89ab32
+change-id: 20240820-qcs8300-gcc-433023269b36
 
-Also make sure to CC the author of any patch introducing a bug so that
-they may help with review.
+Best regards,
+-- 
+Imran Shaik <quic_imrashai@quicinc.com>
 
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Faisal Hassan <quic_faisalh@quicinc.com>
-> ---
->  drivers/usb/dwc3/dwc3-qcom.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 88fb6706a18d..0c7846478655 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -319,13 +319,15 @@ static bool dwc3_qcom_is_host(struct dwc3_qcom *qcom)
->  static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom, int port_index)
->  {
->  	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> -	struct usb_device *udev;
-> +	struct usb_device __maybe_unused *udev;
->  	struct usb_hcd __maybe_unused *hcd;
->  
->  	/*
->  	 * FIXME: Fix this layering violation.
->  	 */
->  	hcd = platform_get_drvdata(dwc->xhci);
-> +	if (!hcd)
-> +		return USB_SPEED_UNKNOWN;
-
-This is just papering over the real issue here which is the layering
-violation of having drivers accessing driver data of their children. 
-
-Nothing is preventing the driver data from being deallocated after you
-check for NULL here.
-
-I suggest leaving this as is until Bjorn's patches that should address
-this properly lands.
-
->  
->  #ifdef CONFIG_USB
->  	udev = usb_hub_find_child(hcd->self.root_hub, port_index + 1);
-
-Johan
 
