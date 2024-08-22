@@ -1,108 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-29258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F96295B1BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 11:33:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 909C795B22B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 11:48:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DFC5928443E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 09:33:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1D5C91F21A95
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 09:48:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A44771741FA;
-	Thu, 22 Aug 2024 09:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41EB91865F9;
+	Thu, 22 Aug 2024 09:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZcvv2nS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="c5ZNT5Lk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D61615572C;
-	Thu, 22 Aug 2024 09:33:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1813188A2F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2024 09:42:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724319220; cv=none; b=X3UBZBewi9RPKpzfk+Rb6+5oVe9WZsOlNprD78DdEV2VLpbPzcfDXHEcWAnlJCF8f6mRFZIPGbvMmCdRqWv/1QE0EWutDx5KTulUs9krCTA463L3MgBnCK4BoCkzAeV0wE3x/DsD6ZSbC9Ag2g0IGjRkFO6rrQsMvsauVoeUsUQ=
+	t=1724319773; cv=none; b=sHYx4opjyLQPzFf2rLr92gl/yAyVQ2Hw+x+/oouNYUk7RsJJZqBLhzeobwUKhoLG3f6gJoDBMep7ffQDUV8vP54zCx+yqx+OBVfMj5v8xEKaX6ttTtdIUoXLnAAKVMCbyrUc9kO9671AGnX5GzcVdr/0+9HT9rxnNRsRpVp0ZLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724319220; c=relaxed/simple;
-	bh=p7S48QfruIYwHkz8S8PWUe82mvLlNq2MePw4nAygAmE=;
+	s=arc-20240116; t=1724319773; c=relaxed/simple;
+	bh=addi5O1iO8rPzp7Xba1I/SVDBMpDp0inLY71MiioA78=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j+4+HDU60JIvqRDiAppIRDJRS0ivUoGZ0i4ZzHBVYDWqLHWZd+JE1Qy58jaCfwuslYScIRshe4uls3hE/63lDVs0JI7Zw8fEOECRfcEd877Fd3QFT42GNGGumHDZmjx+fK2BWQsAk4tww2Siqt7XUpD5Gzpyl/3+2WsAhsyd8Mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZcvv2nS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A427C32782;
-	Thu, 22 Aug 2024 09:33:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1724319220;
-	bh=p7S48QfruIYwHkz8S8PWUe82mvLlNq2MePw4nAygAmE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GZcvv2nSDceIxMI7AFu9lNkmDZhvmyMsG1aSr3IguWOc41YJx94I1plLe1fLHyzYq
-	 a9D1D7Gm6Cn3GUe+iz4byvG5GonvMkqivb99KaHVCBAD6KzkZ8Z8NsugwJaJD0uekR
-	 SmAT8IkQMyUc+3H8NVZrsTk5Oo1heDPUZRKtc8+Q=
-Date: Thu, 22 Aug 2024 17:33:37 +0800
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Faisal Hassan <quic_faisalh@quicinc.com>
-Cc: Thinh Nguyen <Thinh.Nguyen@synopsys.com>, linux-arm-msm@vger.kernel.org,
-	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] usb: dwc3: qcom: fix NULL pointer dereference on
- dwc3_qcom_read_usb2_speed
-Message-ID: <2024082211-eleven-stinking-9083@gregkh>
-References: <20240813111847.31062-1-quic_faisalh@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=F2mrEOvZdY0qOZakXFqZqcNIhN3VPrP+LdWfWBbg3yM4gF/ckSKbyjLqQmrZzX3Y160xZu6y/onU90YLTAGllT6TrSVmtuDuLFiPUA8zo47Hj5yYIb3QJDBUvbwKBLtcKOt4KgfDtvoB+xanMdQ5YI6Bwg1UMw0d/sLLfwlAABY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=c5ZNT5Lk; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-201f2b7fe0dso5172165ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2024 02:42:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1724319771; x=1724924571; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=rT9nphr3FBy8w8TlOkDTcSqop/iUievOqu1C/QTIuD4=;
+        b=c5ZNT5Lkf7Woof+RDwAmTdBCUkGwgHzZJ9vwFSQfvVVMcEj+aQF2Tvdh5Q+5d1zeM+
+         sa6RP9LuW9h300308GXQ4kTk3urVDoD1/R9BhINzL0A6V/SVCbL/6g5Qy4L9Rngtuu0t
+         0HKMCpj1dD2CUGxcdJ/Ri/KlRayIEnVp8E9gM2yocv90gCEVKNJ9VnPgPGSVauW+bOUn
+         lOLzkatrVy4P5EUXxLUu6kEWcQGyA4j6QvDTvK/6lmVuxya86EgPaQvwOJnjIIjL7Es8
+         gpTnuKnfM/c5YBgVvJWCOTc+QoxyCKBx3zCDTVgKynK5CHnTQAYP62EZ2obzI/IwWLtS
+         Oe5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724319771; x=1724924571;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rT9nphr3FBy8w8TlOkDTcSqop/iUievOqu1C/QTIuD4=;
+        b=KtjDLtkRRSi2k/BGJ97EYEWJ6a9uzxqdn/FsbZn1ZVmnhCM1yhQafCseqrZOQ/ADW9
+         THLb+1w+YScimo4fBOSCYQwsus/ETxAHr2vWc69V61jrlWYQ6AsFj4ZN4CfBvj2fgVkW
+         Bf25Y83WVphcUf1epvYerqPHMwAvYpfoQ0TY6VYYsneezy9QwUkXGpCrUo2Kd+fUVV54
+         PAMNbHdLUyNSyYCow1MbHB+HOu7eZO3waGGOqdOP1AhAtjaEQzBT5fYU5vu0DUamOSj6
+         N5BIwkqudSfQcsa6riDwtNcQyABaCqa7pRuNy06HJw2G+74R6wB4uR1N7rEyCdmtZnQ6
+         o5vw==
+X-Forwarded-Encrypted: i=1; AJvYcCVyj1bkMMyTt6o2TD+bcN2IEThEGH0+zuAvcC56aXBu4fvalBZ8SoXU/RfjBMuY39NM28edQCsqW8+AEyTC@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx5SNIANBVPrirlH57MRj1yyxG2KyGaVGt3FHVx7pKHH1DW/iGm
+	Z18dCpa7pI4YxsCnCLXQiPVVQa+XwVZRIHXD60nZL9j8SvXeZbbZdhBUd8aHGjy4CIC5i25093Y
+	=
+X-Google-Smtp-Source: AGHT+IHfsANLzJW+TqoOiWeWY8HxcLe//pwPC8OGFSSjXI3DlfJLCyXQY4eLQyLzlBfwBgYxNwVtwA==
+X-Received: by 2002:a17:903:22cc:b0:1fb:1afb:b864 with SMTP id d9443c01a7336-203881f3792mr15614615ad.5.1724319770860;
+        Thu, 22 Aug 2024 02:42:50 -0700 (PDT)
+Received: from thinkpad ([117.213.99.42])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2038b7ebe0dsm6850535ad.287.2024.08.22.02.42.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Aug 2024 02:42:50 -0700 (PDT)
+Date: Thu, 22 Aug 2024 15:12:43 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: PCI: qcom: Allow 'vddpe-3v3-supply' again
+Message-ID: <20240822094243.b7crebodnbb542te@thinkpad>
+References: <20240723151328.684-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240813111847.31062-1-quic_faisalh@quicinc.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240723151328.684-1-johan+linaro@kernel.org>
 
-On Tue, Aug 13, 2024 at 04:48:47PM +0530, Faisal Hassan wrote:
-> Null pointer dereference occurs when accessing 'hcd' to detect speed
-> from dwc3_qcom_suspend after the xhci-hcd is unbound.
-> To avoid this issue, ensure to check for NULL in dwc3_qcom_read_usb2_speed.
+On Tue, Jul 23, 2024 at 05:13:28PM +0200, Johan Hovold wrote:
+> Commit 756485bfbb85 ("dt-bindings: PCI: qcom,pcie-sc7280: Move SC7280 to
+> dedicated schema") incorrectly removed 'vddpe-3v3-supply' from the
+> bindings, which results in DT checker warnings like:
 > 
-> echo xhci-hcd.0.auto > /sys/bus/platform/drivers/xhci-hcd/unbind
->   xhci_plat_remove() -> usb_put_hcd() -> hcd_release() -> kfree(hcd)
+> 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb: pcie@600000: Unevaluated properties are not allowed ('vddpe-3v3-supply' was unexpected)
+>         from schema $id: http://devicetree.org/schemas/pci/qcom,pcie.yaml#
 > 
->   Unable to handle kernel NULL pointer dereference at virtual address
->   0000000000000060
->   Call trace:
->    dwc3_qcom_suspend.part.0+0x17c/0x2d0 [dwc3_qcom]
->    dwc3_qcom_runtime_suspend+0x2c/0x40 [dwc3_qcom]
->    pm_generic_runtime_suspend+0x30/0x44
->    __rpm_callback+0x4c/0x190
->    rpm_callback+0x6c/0x80
->    rpm_suspend+0x10c/0x620
->    pm_runtime_work+0xc8/0xe0
->    process_one_work+0x1e4/0x4f4
->    worker_thread+0x64/0x43c
->    kthread+0xec/0x100
->    ret_from_fork+0x10/0x20
+> Note that this property has been part of the Qualcomm PCIe bindings
+> since 2018 and would need to be deprecated rather than simply removed if
+> there is a desire to replace it with 'vpcie3v3' which is used for some
+> non-Qualcomm controllers.
 > 
-> Fixes: c5f14abeb52b ("usb: dwc3: qcom: fix peripheral and OTG suspend")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Faisal Hassan <quic_faisalh@quicinc.com>
+> Fixes: 756485bfbb85 ("dt-bindings: PCI: qcom,pcie-sc7280: Move SC7280 to dedicated schema")
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+- Mani
+
 > ---
->  drivers/usb/dwc3/dwc3-qcom.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+>  Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml   | 3 +++
+>  Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml   | 3 ---
+>  Documentation/devicetree/bindings/pci/qcom,pcie-sc8280xp.yaml | 3 ---
+>  Documentation/devicetree/bindings/pci/qcom,pcie.yaml          | 3 +++
+>  4 files changed, 6 insertions(+), 6 deletions(-)
 > 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 88fb6706a18d..0c7846478655 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -319,13 +319,15 @@ static bool dwc3_qcom_is_host(struct dwc3_qcom *qcom)
->  static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom, int port_index)
->  {
->  	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> -	struct usb_device *udev;
-> +	struct usb_device __maybe_unused *udev;
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml
+> index 0a39bbfcb28b..2b6f5a171f20 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml
+> @@ -78,6 +78,9 @@ properties:
+>      description: GPIO controlled connection to WAKE# signal
+>      maxItems: 1
+>  
+> +  vddpe-3v3-supply:
+> +    description: PCIe endpoint power supply
+> +
+>  required:
+>    - reg
+>    - reg-names
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
+> index 634da24ec3ed..7ed46a929d73 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sc7280.yaml
+> @@ -66,9 +66,6 @@ properties:
+>      items:
+>        - const: pci
+>  
+> -  vddpe-3v3-supply:
+> -    description: PCIe endpoint power supply
+> -
+>  allOf:
+>    - $ref: qcom,pcie-common.yaml#
+>  
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sc8280xp.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sc8280xp.yaml
+> index 25c9f13ae977..15ba2385eb73 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-sc8280xp.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sc8280xp.yaml
+> @@ -58,9 +58,6 @@ properties:
+>      items:
+>        - const: pci
+>  
+> -  vddpe-3v3-supply:
+> -    description: A phandle to the PCIe endpoint power supply
+> -
+>  required:
+>    - interconnects
+>    - interconnect-names
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> index f867746b1ae5..ffabbac57fc1 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> @@ -91,6 +91,9 @@ properties:
+>    vdda_refclk-supply:
+>      description: A phandle to the core analog power supply for IC which generates reference clock
+>  
+> +  vddpe-3v3-supply:
+> +    description: A phandle to the PCIe endpoint power supply
+> +
+>    phys:
+>      maxItems: 1
+>  
+> -- 
+> 2.44.2
+> 
 
-This change is not relevant to this overall patch, please remove it and
-submit it separately if still needed.
-
-thanks,
-
-greg k-h
+-- 
+மணிவண்ணன் சதாசிவம்
 
