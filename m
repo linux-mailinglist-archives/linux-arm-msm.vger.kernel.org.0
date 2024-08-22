@@ -1,40 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-29263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE35B95B2F7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 12:34:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E56F95B30E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 12:39:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1D26D1C20F8B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 10:34:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 43A0B1C22F3F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 10:39:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C42417E00C;
-	Thu, 22 Aug 2024 10:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2796183CAB;
+	Thu, 22 Aug 2024 10:39:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JfS5wt5d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5561414A0B8;
-	Thu, 22 Aug 2024 10:34:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30A514A0B8;
+	Thu, 22 Aug 2024 10:39:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724322883; cv=none; b=D8k6ueVfJ2+iEESb/b3KVrHYsxcMNz5xbU5i4Q6U1AZS7zCmae3bA/pMGUvds/xvYe2kl4YFkWpuaIrv/b0AI1vk7H0qdKEnBe+F4QFJ7NDN2R576dys019LRZEEnLMh0spmDGjpU8xS+5VbKCDhNojcXGWNefeBe6xq8uDrI88=
+	t=1724323145; cv=none; b=T4PgDdno+uad9enXEosMRYMZzChTNXCcDjtqrGU+YJQ4U+SteGLjJhx8QylkF0VQzoXMMKeUqY7hQn6ClOLclqVL+n5hldgzePULy5QHcm0M5SmbzkpXC+G1Lletwf7DST/wZG0UjYqHuZx62Iu2y2OZyBRD/VJNasNHCO6jyD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724322883; c=relaxed/simple;
-	bh=ObyHFC5tccRwpQmL7QaHLGgLEm9VertuA9HLXTPamPM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WbRCZqepUb0+U/UDnLYbOTZxZ41V6lEB2Qxq59DZJt0c/KQLyUTBl+RwmZfXC4RWdkeMw+rewvt9AxYuMXywPCnPdTsUN1A/0v0/Wo7SSlKcpuux0/D8Lj2ZVmTPxqqvzYJCPK8hqmu5Z2gRiHGkD+ttUj+ZzfbzTzB/V/+Y4gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BFF7CDA7;
-	Thu, 22 Aug 2024 03:35:07 -0700 (PDT)
-Received: from [10.57.71.237] (unknown [10.57.71.237])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0769E3F66E;
-	Thu, 22 Aug 2024 03:34:38 -0700 (PDT)
-Message-ID: <44e2617c-62b0-436f-ac6a-0bd3e3855473@arm.com>
-Date: Thu, 22 Aug 2024 11:34:36 +0100
+	s=arc-20240116; t=1724323145; c=relaxed/simple;
+	bh=73U3oxAgVvHOaMzR1QpVTyqEX8IRtnR3bzMy3tyiFOw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=HikgG/UlQUhdy8c6L00dn6osKkqTCp//H1mTgq1CPFgPxH3bNIMWakWnYfcxefbaQIUjVFRqE7MPStqMHJDrKBFabM5a3eESPTJ+cDKzIEWtrI5WXzB7OIc4Snyoh+o1a01OgG4E++k7DzQMLljtqZROhSWd12ebO6xn+NXdDB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JfS5wt5d; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47MA3RXO031491;
+	Thu, 22 Aug 2024 10:39:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	A1xhamwPcK8kSkzkJ4K90mqhrkcwsBHMWhpVZtpwV98=; b=JfS5wt5dcnfQvMcl
+	oVEdUWOooKtEGPYYmrgJgHCSgDRcPIN0B53Ld+VQDX20+/8CNtMrXMRrA0FJ7x0l
+	egHZQwOruVA7U/FRhP/vayayqGq5t1PJ7uL3KNNeoUjjEOsiAJeeBguBYdiZPB2v
+	U6jg0/T/iNYWVe7DsCHvU3f0qKPoh44vLsyP/DykHhrEcYfpfHZVMtotwWPaqFaw
+	0MU8Rw8VGHi7ud8QKyjjZH8UojYWr/JQwlCddbyeZFpsMiXlLq1PCB//e3pGYydK
+	BfeNjM416v9HfRxXyTLzFMe5C9pErB11Gie+qCWZGGb1rujTXJ172xwmQd0RzDM4
+	J+EjCw==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 415ck9c1mq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 22 Aug 2024 10:39:00 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47MAd0wC031825
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 22 Aug 2024 10:39:00 GMT
+Received: from [10.152.201.37] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 22 Aug
+ 2024 03:38:56 -0700
+Message-ID: <0af53810-4148-4330-9d7c-063114cdb455@quicinc.com>
+Date: Thu, 22 Aug 2024 16:08:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -42,107 +65,89 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] dt-bindings: arm:
- qcom,coresight-static-replicator: Add property for source filtering
-Content-Language: en-GB
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: ipq5332: add nodes to bringup q6
 To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Tao Zhang <quic_taozha@quicinc.com>, Mike Leach <mike.leach@linaro.org>,
- James Clark <james.clark@arm.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>,
- Leo Yan <leo.yan@linux.dev>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240821031348.6837-1-quic_taozha@quicinc.com>
- <20240821031348.6837-2-quic_taozha@quicinc.com>
- <a01d2f2f-d963-4eb1-98ee-3dc6f86c9397@arm.com>
- <xmijaayxveghxx76nnudo5mlpxv6tpxvooiox7wj2jyojf3xpe@ntm67lxikfop>
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <xmijaayxveghxx76nnudo5mlpxv6tpxvooiox7wj2jyojf3xpe@ntm67lxikfop>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+CC: <andersson@kernel.org>, <krzk+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_viswanat@quicinc.com>, <quic_mmanikan@quicinc.com>,
+        <quic_varada@quicinc.com>, <quic_srichara@quicinc.com>
+References: <20240820085517.435566-1-quic_gokulsri@quicinc.com>
+ <20240820085517.435566-4-quic_gokulsri@quicinc.com>
+ <f6g2bvosd7y5zyufel73lm6xr2otf25q7ut6tz3vnphtlqotk6@uftsnu4z6xql>
+Content-Language: en-US
+From: Gokul Sriram P <quic_gokulsri@quicinc.com>
+In-Reply-To: <f6g2bvosd7y5zyufel73lm6xr2otf25q7ut6tz3vnphtlqotk6@uftsnu4z6xql>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: UzHyG1PBKN7CbETfglDktEDyeUbVGmYa
+X-Proofpoint-ORIG-GUID: UzHyG1PBKN7CbETfglDktEDyeUbVGmYa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-22_03,2024-08-19_03,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=787
+ suspectscore=0 mlxscore=0 spamscore=0 bulkscore=0 adultscore=0
+ clxscore=1015 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408220079
 
-On 22/08/2024 08:08, Krzysztof Kozlowski wrote:
-> On Wed, Aug 21, 2024 at 11:38:55AM +0100, Suzuki K Poulose wrote:
->> On 21/08/2024 04:13, Tao Zhang wrote:
->>> The is some "magic" hard coded filtering in the replicators,
->>> which only passes through trace from a particular "source". Add
->>> a new property "filter-src" to label a phandle to the coresight
->>> trace source device matching the hard coded filtering for the port.
+
+On 8/20/2024 4:51 PM, Krzysztof Kozlowski wrote:
+> On Tue, Aug 20, 2024 at 02:25:16PM +0530, Gokul Sriram Palanisamy wrote:
+>> From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 >>
->> Minor nit: Please do not use abbreviate "source" in the bindings.
->> I am not an expert on other changes below and will leave it to
->> Rob/Krzysztof to comment.
+>> Enable nodes required for q6 remoteproc bring up.
 >>
->> Rob, Krzysztof,
+>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/ipq5332.dtsi | 62 +++++++++++++++++++++++++++
+>>   1 file changed, 62 insertions(+)
 >>
->> We need someway to "link" (add a phandle) from a "port". The patch below
->> is extending "standard" port to add a phandle. Please let us know if
->> there is a better way.
->>
->> e.g.:
->>
->> filters = list of tuples of port, phandle. ?
->>
->> e.g.:
->>
->> filters = < 0, <&tpdm_video>,
->>              1, <&tpdm_mdss>
->> 	   >
->>
-> 
-> Current solution feels like band-aid - what if next time you need some
-> second filter? Or "wall"? Or whatever? Next property?
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+>> index 0a74ed4f72cc..ec93e7b64b9e 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
+>> @@ -145,6 +145,11 @@ smem@4a800000 {
+>>   
+>>   			hwlocks = <&tcsr_mutex 3>;
+>>   		};
+>> +
+>> +		q6_region: wcnss@4a900000 {
+> Why here it is wcnss...
+will change it to wcss.
+>> +			reg = <0x0 0x4a900000 0x0 0x2b00000>;
+>> +			no-map;
+>> +		};
+>>   	};
+>>   
+>>   	soc@0 {
+>> @@ -476,6 +481,39 @@ frame@b128000 {
+>>   				status = "disabled";
+>>   			};
+>>   		};
+>> +
+>> +		q6v5_wcss: remoteproc@d100000 {
+> but everywhere else is wcss?
+yes, will stick to wcss everywhere.
+>
+>> +			compatible = "qcom,ipq5332-wcss-sec-pil";
+>> +			reg = <0xd100000 0x4040>;
+>> +			firmware-name = "ath12k/IPQ5332/hw1.0/q6_fw0.mdt";
+> It's one firmware independent of board?
 
+Yes, we have only one firmware across all our boards.
 
+Regards,
 
-> 
-> Isn't filter just one endpoint in the graph?
-> 
-> A <--> filter <--> B
+Gokul
 
-To be more precise, "Filter" is a "port (p0, p1, p2 below)" (among a
-multi output ports).
-
-For clearer example:
-
-A0 <--> .. <--> ..\                  p0  / --> Filtered for (A1) <--> B1
-A1 <--> .. <--> .. - < L(filters>    p1  - --> Filtered for (A2) <--> B2
-A2 <--> .. <--> ../                  p2  \ --> Unfiltered        <--> B0
-
-
-
-> Instead of
-> 
-> A <----through-filter----> B?
-
-The problem is we need to know the components in the path from A0 to X
-through, (Not just A0 and L). And also we need to know "which port (p0 
-vs p1 vs p2)" does the traffic take from a source (A0/A1/A2) out of the
-link "L".
-
-So ideally, we need a way to tie p0 -> A1, p1 -> A2.
-
-would we need something else in the future ? I don't know for sure.
-People could design their own things ;-). But this was the first time
-ever in the last 12yrs since we supported coresight in the kernel.
-(there is always a first time).
-
-Fundamentally, the "ports" cannot have additional properties today.
-Not sure if there are other usecases (I don't see why). So, we have
-to manually extend like above, which I think is not nice.
-
-Happy to proceed with anything that seems acceptable for you folks.
-
-Suzuki
-
-
-
-> 
+>
 > Best regards,
 > Krzysztof
-> 
-
+>
 
