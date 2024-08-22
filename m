@@ -1,148 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-29303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9238195BDF7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 20:06:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 071E995BEC6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 21:22:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0D807B27CAD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 18:06:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2880A1C2284C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 19:22:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69FA11CFEA0;
-	Thu, 22 Aug 2024 18:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 225BE1D0498;
+	Thu, 22 Aug 2024 19:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="il6XOhcm"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kINVqTAV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B579043165;
-	Thu, 22 Aug 2024 18:05:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7C23F9F9;
+	Thu, 22 Aug 2024 19:22:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724349956; cv=none; b=QiCFVaQc1aBvU4VM7BbIyuVzy2GCRPPfcI8pbEmoToaR3jaMGFxJI01U5NK47utBqpAanWmSD2iz4ozwtfjAXVpw8C0jtA9pEXzQfF0hGBqc9roOc2ncD9Uu7ClYJOfDUvEIMjKulWMM/oNlZHUWfj1A8Nl6EjCsyvxV9ywqfqs=
+	t=1724354531; cv=none; b=A1CjkWYtqQSCDF3gEQ2pu3qKaHdrUm8JDO+NqNZl24aVGbRVyyBBzEpXqpeyK9WZH0BZlhKSrTvgtNcwFYWNeKC4/oXHocuGSmoO+FUDXnCYUUdUhH9l4cRDCSNcNtZFtzhKz1wU7Tnv1TAHKcFbVT3MJLSjvrj8AE68q5Tfo/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724349956; c=relaxed/simple;
-	bh=xxDajwvWaTQZsm5XsfIXvuOow4CpGD7cab9sLV4lt9k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gZ2SXjLxD+cQ+a+JEebD4Mczr8BVrGe89jUg0uTzeWzwn9IXgL8eZySgcjBuuNVD8Zp0DI5tEyvMrYX+DoM7ZdVyvFZNVz+FsLmyg+aLTi61Dv3AMLso4DLsimVY8KISf5uADkZAEKIk7LOVc9lHwKu3g/pRR5GR5b+V8Al2uO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=il6XOhcm; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3718706cf8aso542049f8f.3;
-        Thu, 22 Aug 2024 11:05:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724349953; x=1724954753; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ChkEmDHJpLp22o9Gz9omg/yWXzIelShKRL284UjCVsM=;
-        b=il6XOhcmIXXXT5RjreuETwaxk7Gw9tcsM7YWLeGCHdQaWdeNXpSO93WMzcG+zA2q0E
-         IETJlv5OQyFC9jKaBz1AermovON9wPEp2T2gn3b0+0y/A1ur1Ttwv4hQYhpr+wz69JqG
-         ZdCUmWK/ioF6o7eqGOud071weAQS8zWR468jOEHKpyFmPK4b5iH16NESZ7Z0Zwszh53g
-         Siigi3PfvEgWBM5XzF2R6yBI8WN/vV0DVunHFtCTbi9qswkvdPpFbIgiU26H7iz630cj
-         IxFJh5R69Q43YWMOYSlroaEMiPj1QBIn8LgQiLC+pPemMEFRHfPLnvQyr8x3FglvFJN/
-         Bi6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724349953; x=1724954753;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ChkEmDHJpLp22o9Gz9omg/yWXzIelShKRL284UjCVsM=;
-        b=YkIRfN2dHe/jLh1oXUluaquYxKYFxMiF89eFNt1tTcx2nQwEVKpL2x1iq095Q6QKMW
-         T5+/4tj4324LuEQQmD/seK//QFUyvtZ8L3/gn8dzKnUVSamwmgcf+rtywKB/Ipft+dJ1
-         wnpjQaBdrBOWaggORaUi1HrIV17UaKhmv9f9DHN5Mk5ePRl5LJldM1rwDFgAH06Mwf+b
-         eJkOLaEbSYtuxYOLSp9fvdadohe8cBybztyU4uJlEyunkcm6oPt2OuAyxSMnxTFlP69Y
-         Qcee735dKqzHQn/1Gbh7Jrqlb8F9QIEMdCgO6ZbSb6sHi3omCyrorXVZB7ZGJbsIIQ25
-         DhZw==
-X-Forwarded-Encrypted: i=1; AJvYcCVAGKMhrq0l7jcjLFoxG7e4vYFEf6QfEeAjtdWka8Mx60p3CzoYvHS/8o6NMCx8vI1j+fhnOA2+3qqj9Frb@vger.kernel.org, AJvYcCVnd8VvWVxvae+Z/PTrUOQ66M1T+94B27yg3QKg6Z2c3xH64Lkx+EEPHu0gjDlC71rS7+aOnewzg+AKS1U=@vger.kernel.org, AJvYcCWD/rW8e5qvO4smqeFbwKfIUMlFRHogPadyVfE36eh6+MpYZvkdPI2klz+vhix6OU913luL4ktMcimQ9zU+@vger.kernel.org, AJvYcCWVWeD2UeYw0e+9QkrjvHaIy74UsimZ9U6YbC4bjkcLGGChpQou0OVx/cb2snxM9yS2UUXF1pCAD6Y=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyuQDNeM5PZ1nAFBDnDBvFI/2ojUO57vMsLcn/2G9KDpNAVNm3i
-	GgpPdwzuVoAfM4SzfaQGo1tkbiscaZVj/aBhkEs0xQ90uzG141V2
-X-Google-Smtp-Source: AGHT+IG98jZeG77SK35etXTcp87ViQArhUinVIMzyVgy9Spb4N3eb60A3B+uTymusmlOwGNs1PYB3g==
-X-Received: by 2002:a05:6000:1803:b0:371:9388:2cdd with SMTP id ffacd0b85a97d-37308c1f88bmr1730818f8f.17.1724349952686;
-        Thu, 22 Aug 2024 11:05:52 -0700 (PDT)
-Received: from [192.168.1.19] (79-100-234-73.ip.btc-net.bg. [79.100.234.73])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42abee86e9fsm68592305e9.13.2024.08.22.11.05.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Aug 2024 11:05:52 -0700 (PDT)
-Message-ID: <bfb90d04-6885-4623-a846-f04b4fe4bff4@gmail.com>
-Date: Thu, 22 Aug 2024 21:05:50 +0300
+	s=arc-20240116; t=1724354531; c=relaxed/simple;
+	bh=dIFnx3DMA2z/aQRpGRf3zFPoMrt12Gsl+1c2mpFN5PI=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y1jAsM1+9qC6IvlE1g+ce93sBXQahTzPdD8X5kW8DWCELYxbeDBNIm8jsRopLxUWPMVFZh58o/c26kO2/kRznJta3KBJG86bRK5wIRe6vTnUcB73JiYiLI8CcZCcQsPwrgWBD9tMoU4Xss9lbgwkfQXcgKK5PUUQq9/3nV/RnpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kINVqTAV; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47MDh5Zl011951;
+	Thu, 22 Aug 2024 19:21:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	SkVk6w/LpiJSCL+Ax35mZ8fTnNCWU4hM0bRlaiMhjwY=; b=kINVqTAVpaloEM0q
+	mz1AgZRO1OEUK1yIIk3iTE21Xk9LtCI6/srL1jb76Loh47CCe1abFDxIMAm3pTxJ
+	anCsx7Xl82Pi9iHzT6dl4+W0z0oew9vHx4o7V0t2l95r92HBV+vcQ9s5kQeV6hmb
+	W2lcmjwjuCmvsFnSixWg0LIMPXEfcpNx6/2wKVWm9rlhG6AqMrU3WXtXg2+Ah1ke
+	pA8f3/N69rE72ILTY/wU0DsZzLSQMVDOqMvnl+A76s/5iBXVaOGNSirBVFzYv1IT
+	/dEQsxgFClDZtO+XO+2l5PFTOmC1H38qovAZTZCXxn3+xKG+7LUYYnA6er/kxpsy
+	nynJAg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4166ex8x81-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 22 Aug 2024 19:21:54 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47MJLrur022036
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 22 Aug 2024 19:21:53 GMT
+Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 22 Aug 2024 12:21:48 -0700
+Date: Fri, 23 Aug 2024 00:51:44 +0530
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+To: Connor Abbott <cwabbott0@gmail.com>
+CC: Antonino Maniscalco <antomani103@gmail.com>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Daniel
+ Vetter" <daniel@ffwll.ch>,
+        Maarten Lankhorst
+	<maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 6/7] drm/msm/A6XX: Add a flag to allow preemption to
+ submitqueue_create
+Message-ID: <20240822192144.e7u3fhlqpeyypbxp@hu-akhilpo-hyd.qualcomm.com>
+References: <20240815-preemption-a750-t-v1-0-7bda26c34037@gmail.com>
+ <20240815-preemption-a750-t-v1-6-7bda26c34037@gmail.com>
+ <20240819203128.hit2csdpbbsybkoq@hu-akhilpo-hyd.qualcomm.com>
+ <CACu1E7GnwjS3Hv140emJ_-yJKDd+FB75upF9z3pDTj7Ey7zWRA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] media: venus: Use dev_pm_domain_attach|detach_list()
- for OPP PM domain
-To: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
- Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Thierry Reding <thierry.reding@gmail.com>,
- Mikko Perttunen <mperttunen@nvidia.com>,
- Jonathan Hunter <jonathanh@nvidia.com>, linux-pm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- Vikash Garodia <quic_vgarodia@quicinc.com>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240723144610.564273-1-ulf.hansson@linaro.org>
- <20240723144610.564273-3-ulf.hansson@linaro.org>
- <0af670ae-8c8f-4e78-b1e0-e9ccb4fba2c9@gmail.com>
- <CAPDyKFr5xjE867rHRZxtKPr0iKh9B6_Ckyu=B4Jzn-ExDpQjVQ@mail.gmail.com>
-Content-Language: en-US, bg-BG
-From: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-In-Reply-To: <CAPDyKFr5xjE867rHRZxtKPr0iKh9B6_Ckyu=B4Jzn-ExDpQjVQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACu1E7GnwjS3Hv140emJ_-yJKDd+FB75upF9z3pDTj7Ey7zWRA@mail.gmail.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: z5MMdcRMd41HgQcy0Annz-ATRb_to7qB
+X-Proofpoint-ORIG-GUID: z5MMdcRMd41HgQcy0Annz-ATRb_to7qB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-22_12,2024-08-22_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
+ adultscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0 clxscore=1015
+ bulkscore=0 mlxlogscore=999 phishscore=0 priorityscore=1501 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408220146
 
-Hi Ulf,
+On Tue, Aug 20, 2024 at 11:48:33AM +0100, Connor Abbott wrote:
+> On Mon, Aug 19, 2024 at 9:31 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
+> >
+> > On Thu, Aug 15, 2024 at 08:26:16PM +0200, Antonino Maniscalco wrote:
+> > > Some userspace changes are necessary so add a flag for userspace to
+> > > advertise support for preemption.
+> >
+> > So the intention is to fallback to level 0 preemption until user moves
+> > to Mesa libs with level 1 support for each new GPU? Please elaborate a bit.
+> >
+> > -Akhil.
+> 
+> Yes, that's right. My Mesa series fixes L1 preemption and
+> skipsaverestore by changing some of the CP_SET_MARKER calls and
+> register programming and introducing CP_SET_AMBLE calls and then
+> enables the flag on a7xx.
 
-On 21.08.24 г. 11:56 ч., Ulf Hansson wrote:
-> On Tue, 20 Aug 2024 at 22:48, Stanimir Varbanov
-> <stanimir.k.varbanov@gmail.com> wrote:
->>
->> Hi Ulf,
->>
->> Thank you for the patch!
->>
->> On 23.07.24 г. 17:46 ч., Ulf Hansson wrote:
->>> Rather than hooking up the PM domains through devm_pm_opp_attach_genpd()
->>> and manage the device-link, let's avoid the boilerplate-code by converting
->>> into dev_pm_domain_attach|detach_list.
->>>
->>> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
->>> ---
->>>    drivers/media/platform/qcom/venus/core.c      |  8 ++---
->>>    drivers/media/platform/qcom/venus/core.h      |  6 +---
->>>    .../media/platform/qcom/venus/pm_helpers.c    | 31 ++++++-------------
->>>    3 files changed, 14 insertions(+), 31 deletions(-)
->>>
->>
->> Acked-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-> 
-> Thanks!
-> 
->>
->> I'll pick it through linux-media.
-> 
-> Please don't.
-> 
-> I should have stated that this depends on another series [1] - and
-> they need either to go together or we need to defer $subject patch
-> until the next release cycle.
+And we want to control L1 preemption per submitqueue because both
+freedreno and turnip may not have support ready at the same time?
 
-Sure, then I guess we will deffer venus patch until the preparation 
-series is merged to avoid conflicts. Thank you!
+Antonino, since this is a UAPI update, it is good to have these details
+captured in the commit msg for reference.
+
+-Akhil.
 
 > 
-> Kind regards
-> Uffe
-
--- 
-regards,
-Stan
+> Connor
+> 
+> >
+> > >
+> > > Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
+> > > ---
+> > >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 12 ++++++++----
+> > >  include/uapi/drm/msm_drm.h            |  5 ++++-
+> > >  2 files changed, 12 insertions(+), 5 deletions(-)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > > index 1a90db5759b8..86357016db8d 100644
+> > > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> > > @@ -453,8 +453,10 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+> > >       OUT_PKT7(ring, CP_SET_MARKER, 1);
+> > >       OUT_RING(ring, 0x101); /* IFPC disable */
+> > >
+> > > -     OUT_PKT7(ring, CP_SET_MARKER, 1);
+> > > -     OUT_RING(ring, 0x00d); /* IB1LIST start */
+> > > +     if (submit->queue->flags & MSM_SUBMITQUEUE_ALLOW_PREEMPT) {
+> > > +             OUT_PKT7(ring, CP_SET_MARKER, 1);
+> > > +             OUT_RING(ring, 0x00d); /* IB1LIST start */
+> > > +     }
+> > >
+> > >       /* Submit the commands */
+> > >       for (i = 0; i < submit->nr_cmds; i++) {
+> > > @@ -485,8 +487,10 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+> > >                       update_shadow_rptr(gpu, ring);
+> > >       }
+> > >
+> > > -     OUT_PKT7(ring, CP_SET_MARKER, 1);
+> > > -     OUT_RING(ring, 0x00e); /* IB1LIST end */
+> > > +     if (submit->queue->flags & MSM_SUBMITQUEUE_ALLOW_PREEMPT) {
+> > > +             OUT_PKT7(ring, CP_SET_MARKER, 1);
+> > > +             OUT_RING(ring, 0x00e); /* IB1LIST end */
+> > > +     }
+> > >
+> > >       get_stats_counter(ring, REG_A7XX_RBBM_PERFCTR_CP(0),
+> > >               rbmemptr_stats(ring, index, cpcycles_end));
+> > > diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
+> > > index 3fca72f73861..f37858db34e6 100644
+> > > --- a/include/uapi/drm/msm_drm.h
+> > > +++ b/include/uapi/drm/msm_drm.h
+> > > @@ -345,7 +345,10 @@ struct drm_msm_gem_madvise {
+> > >   * backwards compatibility as a "default" submitqueue
+> > >   */
+> > >
+> > > -#define MSM_SUBMITQUEUE_FLAGS (0)
+> > > +#define MSM_SUBMITQUEUE_ALLOW_PREEMPT        0x00000001
+> > > +#define MSM_SUBMITQUEUE_FLAGS                    ( \
+> > > +             MSM_SUBMITQUEUE_ALLOW_PREEMPT | \
+> > > +             0)
+> > >
+> > >  /*
+> > >   * The submitqueue priority should be between 0 and MSM_PARAM_PRIORITIES-1,
+> > >
+> > > --
+> > > 2.46.0
+> > >
+> > >
 
