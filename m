@@ -1,175 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-29292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34F7495BC33
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 18:45:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E969E95BC61
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 18:48:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E44C1C21034
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 16:45:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0861D1C209AD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 16:48:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB60A1CDA27;
-	Thu, 22 Aug 2024 16:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B589A1CDA1B;
+	Thu, 22 Aug 2024 16:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H9zM2Pwh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="t7KJNCXw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A29A1C9ED0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2024 16:44:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28DB38F9A
+	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2024 16:48:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724345093; cv=none; b=pJtxM56iwDwp5IHWxD7XCeFqlEkI5KEpplY4ceDvfS/vYePDAvxf29k8wp2U7ECriMwBtMp19+KLLJleOyImGVF1TojuybnpjUvbJh4JfasV2RSTk2Pt+a/13X0rOHEsuCqo+24KrfrIWcl1Glsg3eAFC2OlP2Rrdn09kI5+WCU=
+	t=1724345302; cv=none; b=obEcf/DIX1meL/9VwHZniDDCGDKbjUOWV+84pKmAj/WIoiV13e0kotbRCCVCS0a8fVrFTSnoJZ4ArKoR7Fman5eZUw+PeX4MPX3r6r+U+13MCs0pjWcPcRfDUZOLW4QWoFTCfi7Dy5Glz+5N5ZmTpm3MQLErAGfQkqWfTOHnacw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724345093; c=relaxed/simple;
-	bh=eetgk0xjeiZwykHbHzB49rFPe5JDRDuO3poVAEw45q0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=rmzLJfxAt1Jhjc3ACF/5eAAcaG9UVMUr8Ib/GJ2a8PR9QdUKp7Xp9XEIwb3JvwofHl2wKjtY2DJWOLXpwofU1XT4eYyPKXoFfJkgQb/gGgSgPMqIREU0OiQ1rLW/pknbjHPFCVfCbT5yfLiW8eFNcBAdcnvubyhYVGOh6LdP3uQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H9zM2Pwh; arc=none smtp.client-ip=209.85.218.49
+	s=arc-20240116; t=1724345302; c=relaxed/simple;
+	bh=W+yhKt0K2YnsfpUxEhT3jP48r1wVmHPtyOlbX9EDfcE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hWPgOrBzM2OnwAdR9bev+JHC7ceGEh1baUTm+wta06S7b9Hh3XmdaBGgNeJq4Kl6+CWzsJsJ24QXbjYZBtXQymuPMP2ZB5bvIdY5EU/KP539spQXw2iY6JtJBsjI1LOMQSjKzucua7ar2BEzkTjWuv/sLo+HjPiS20iNoh6+ZXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=t7KJNCXw; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a868ec0d239so7850366b.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2024 09:44:51 -0700 (PDT)
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-428e09ee91eso1403515e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2024 09:48:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724345090; x=1724949890; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tVi2Mh/4egq1ay696jM8IMQlXhQ1UWi7W7AhMeHZVJ8=;
-        b=H9zM2PwhQyOJQITMlctKIIb1Wt16N4U+wVIakmL1bYBVcIvyo92SIZQd55uX6WJstJ
-         vwHTwgjGWWkBXdmFwTd/0EMsZEhUzHxNNs0TkiJj+egR428WsjuguDwdDmifTEagP5Yv
-         mOtoRlJb+xGRit01k+yIPIKG0UayuObyhSI80QSGLtF3BDgkJSNg07WhsmvRe4yLkrHv
-         8cEltZzYbOp1PortFo9rdbYjmVUOcSLZKCYnY46qgxlgOnDTi15ifsx90Vd4PLm3LV4O
-         e1znZVChvXbdvgAzWz+x14wWIoz8AAOC++1cWPPpKigpuebSs57Nk2xA0yE7lJQQCoIk
-         WDwA==
+        d=linaro.org; s=google; t=1724345299; x=1724950099; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+oILSwqOlp1bdPHfMP4vxny2FOaT2vijwwCTJAp5jg0=;
+        b=t7KJNCXwolIMgk1n1Jr+xkmDttEGeV0CIDpKRpJNDnC4qlFKRA7NTxAPC4+zXuHlaK
+         qoucLEHiXa5ma0oMNJXjzwLEznrXclTtLSIZo525BtITU3OiEiEGuV9EeQKFoSqtA/G5
+         pRE/BNMQGSH5cMrgHVhJBvfWndCy+vFNA28zs+fxnVXjy1Rboz657Nm82HTbV+bwmA9d
+         5kspDj2Yj+3Qp2/26lwTvc9UfM4OiCc2RlizeUY0sudxXUSTUPstp+9mM//9p1dQGjPD
+         lIfUWirY/cAqNn6Rcg7jYhMNhYB72m3YlxEbPeiND9dbpFdWTwjDZlUDyomFbiWTGyjc
+         sXgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724345090; x=1724949890;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tVi2Mh/4egq1ay696jM8IMQlXhQ1UWi7W7AhMeHZVJ8=;
-        b=Exfq6QtSRVBHiCC+upoIWHYSkpl2GeJBupfn04Y6GN0YqiBevkRSfcWOqeREBdaSsl
-         eN065NJ7vA/coIW21c2SXdQarnbFS5y9MgGqHwglyteveHRICK9vNCiiw2yg1uuXy9aX
-         HaPKYZOlK2hMSidUslGRpAPP/KXmu/BJXqq3aUJ48bXj1FMtzIRtsQlBXJnKhrCU32tM
-         ClnwMQP6lvTEIBSiLaneoUYkwenzPSEdcYWUIXB7t+8nVDlPbO9sqkmQ4As09lRv6veU
-         AMdHKlpY81DxuYKC9kg2BNUbabOBLuExjAxZRpFMfzgu3gfgC+4HKZimFgTaoP+fS273
-         5fLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWDcjn/7akFjkCWl97KQ/19sw31oFUAmAc7xB1GyqEzF3QZu7CypqkEVlWW+uDL2ESfnrsAJXPUQyNZEY1W@vger.kernel.org
-X-Gm-Message-State: AOJu0YyP/L5kxQ8l3xaWVekUsMVMHwd2Mh4OsdgbUYhxSc61CWS118Dy
-	RCNOuKtPUI58X9myWXZHmRu0EbuHrLzUSKeZbV+MBJd3D0UcvI98U5l4ZISqnYc=
-X-Google-Smtp-Source: AGHT+IGIqv7Nz6bY9CZnyOfYtb0TqWlTqflok9MaYqR8Jb1tYOgVpnVaF56xWOH7t7a+/6MlNXRZTg==
-X-Received: by 2002:a17:907:7252:b0:a80:a37f:c303 with SMTP id a640c23a62f3a-a866f303b0fmr312455566b.4.1724345090196;
-        Thu, 22 Aug 2024 09:44:50 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.82])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a868f437930sm140842066b.107.2024.08.22.09.44.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Aug 2024 09:44:49 -0700 (PDT)
-Message-ID: <dd1383fd-39d2-47e9-b559-21f20c995310@linaro.org>
-Date: Thu, 22 Aug 2024 18:44:48 +0200
+        d=1e100.net; s=20230601; t=1724345299; x=1724950099;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+oILSwqOlp1bdPHfMP4vxny2FOaT2vijwwCTJAp5jg0=;
+        b=TWuGPur5PGbWaxcc701IThYWgsS3Ypk3QxZWkT5XOnwLL86kZSrJjSKGcvaNR7DvUT
+         yYhfS3Sa77gzo0lC8A5o8TM5eM2iLZF+5VPscNVA/s7Nuj0NUMrxrnjSegVi1LKX/Evr
+         aKDM9OWhxeyHoYe25IvmCk2Tufxn7LhQx7RiY4j3up1w33fmuvmC6qcS3xy+OqqLkoPB
+         1hAWmBXHuPcMI0HjtPjHVssHVhomHf2DYfdP0753GMbWlfcaGl/SojntmUSW8/D0Cvw4
+         3MZsu5f3PV7ys+6mdWndQ3hAbYu8Hdevj/kDBaNvDkwJiSKybPccSyS9/yIkY0QR5+dn
+         KBYw==
+X-Forwarded-Encrypted: i=1; AJvYcCVGwqNsff1S0AHJYgrsM9ria67VBg9wQXYoWmrxAm0OLJSW8BBNWHXZ1oC+qD+qVtZoWODzYOUbRwrHLBcF@vger.kernel.org
+X-Gm-Message-State: AOJu0YxuhHhDk67o97P2Qox8rWcj76az7zWu+nIFkQFXxZdo0DS2QBuX
+	LjrkXFjYd7UQI/+Yn59OEWoImGmwok7/dNQqBpvM8kH1v052+Jmt+JsQhHENDqo=
+X-Google-Smtp-Source: AGHT+IFQK9BFp8WZQ2dHiYAJunbO3nUd6mwUMRCTPG+YPkZQ6xmuIam6FqpLPHkNWB94UH9ETgCd4w==
+X-Received: by 2002:a05:600c:1c8b:b0:425:65b1:abb4 with SMTP id 5b1f17b1804b1-42abee8bcb6mr26258155e9.0.1724345299173;
+        Thu, 22 Aug 2024 09:48:19 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.222.82])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3730814602asm2073890f8f.44.2024.08.22.09.48.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Aug 2024 09:48:18 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	stable@vger.kernel.org
+Subject: [PATCH v2 1/2] soc: qcom: pmic_glink: fix scope of __pmic_glink_lock in pmic_glink_rpmsg_probe()
+Date: Thu, 22 Aug 2024 18:48:14 +0200
+Message-ID: <20240822164815.230167-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] soc: qcom: pmic_glink: simplify locking with guard()
-To: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240822163345.223787-1-krzysztof.kozlowski@linaro.org>
- <20240822163345.223787-2-krzysztof.kozlowski@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240822163345.223787-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 22/08/2024 18:33, Krzysztof Kozlowski wrote:
-> Simplify error handling over locks with guard().  In few places this
-> elimiates error gotos and local variables.  Switch to guard() everywhere
-> in the code for consistency, even if it does not bring benefit in such
-> places.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
+File-scope "__pmic_glink_lock" mutex protects the filke-scope
+"__pmic_glink", thus reference to it should be obtained under the lock,
+just like pmic_glink_rpmsg_remove() is doing.  Otherwise we have a race
+during if PMIC GLINK device removal: the pmic_glink_rpmsg_probe()
+function could store local reference before mutex in driver removal is
+acquired.
 
-...
+Fixes: 58ef4ece1e41 ("soc: qcom: pmic_glink: Introduce base PMIC GLINK driver")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
->  
->  static void pmic_glink_rpmsg_remove(struct rpmsg_device *rpdev)
->  {
->  	struct pmic_glink *pg;
->  
-> -	mutex_lock(&__pmic_glink_lock);
-> +	guard(mutex)(&__pmic_glink_lock);
->  	pg = __pmic_glink;
->  	if (!pg)
-> -		goto out_unlock;
-> +		return;
->  
-> -	mutex_lock(&pg->state_lock);
-> +	guard(mutex)(&pg->state_lock);
->  	pg->ept = NULL;
->  	pmic_glink_state_notify_clients(pg);
-> -	mutex_unlock(&pg->state_lock);
-> -out_unlock:
-> -	mutex_unlock(&__pmic_glink_lock);
+---
 
-I am really sorry, I thought I built it with W=1, but turns out I did
-not. Code needs a fix, I will send a v2.
+Changes in v2:
+1. None
+---
+ drivers/soc/qcom/pmic_glink.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
+index 9606222993fd..452f30a9354d 100644
+--- a/drivers/soc/qcom/pmic_glink.c
++++ b/drivers/soc/qcom/pmic_glink.c
+@@ -217,10 +217,11 @@ static void pmic_glink_pdr_callback(int state, char *svc_path, void *priv)
+ 
+ static int pmic_glink_rpmsg_probe(struct rpmsg_device *rpdev)
+ {
+-	struct pmic_glink *pg = __pmic_glink;
++	struct pmic_glink *pg;
+ 	int ret = 0;
+ 
+ 	mutex_lock(&__pmic_glink_lock);
++	pg = __pmic_glink;
+ 	if (!pg) {
+ 		ret = dev_err_probe(&rpdev->dev, -ENODEV, "no pmic_glink device to attach to\n");
+ 		goto out_unlock;
+-- 
+2.43.0
 
 
