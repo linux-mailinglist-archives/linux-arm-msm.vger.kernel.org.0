@@ -1,206 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-29244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E218195ADF6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 08:48:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6803A95ADFA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 08:49:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9AE93284957
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 06:48:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 25A8D281667
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Aug 2024 06:49:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDAC414B957;
-	Thu, 22 Aug 2024 06:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE635139D05;
+	Thu, 22 Aug 2024 06:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qb561h/t"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tH/e7n+2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372AC81727
-	for <linux-arm-msm@vger.kernel.org>; Thu, 22 Aug 2024 06:48:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B158A3B290;
+	Thu, 22 Aug 2024 06:49:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724309311; cv=none; b=bqVRtLD6JO7LHtizq3zmRJb5O0Xy418E5BQu/0VGr+hk7k0sH2VXfkmmLgSgHVbznZZtzwOaPTabzBsWEGS47mNdzqvvNY1sqADY24PPD9QcOSm9m58t2AgItgf1/v1R7NMF8DANsorhT1bA3x0zA9aiqFuHOT0JYj8Kv8i1PlU=
+	t=1724309382; cv=none; b=eyimPxNTxMiWYAsbJyrzxcm6nI+aPowtJ3ZxMh+i7eRDskcb+GRCX3age6mQGnUH6QjyQFZdzL2RBq7f2T/5sFgQ7VlZUWp6sULbZQCvT2L/2Y5tdlUizdL7LosHCgFJ8BIUeIPAs3OwbK/8yj6apH0u/Td7jE+5t42rgu/j7RQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724309311; c=relaxed/simple;
-	bh=Q3RaQTthFLGzHxCrgTbtz1ZJXYee5PwCPBPzsgT+2J0=;
+	s=arc-20240116; t=1724309382; c=relaxed/simple;
+	bh=GaeE+vHB9FpTDdnRoHEB3IZqWE5qQS6LAnO0ppG8Pc8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ollhPr/ITy5fC7V/r/I+nePcMfRRluXAUFLMhodZOF5H4OnHjj1YWBMkk59mL9TtxxYpz22q2qZFHBNM793Xe/5yY1Vt2AkL3k1dcWTzRMohUar1s/MgQ/gAa64I4Wfj6k8/AlKhP3Xt3C6xtDxA2r7DEEDnzK9JKMk70sXLAzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qb561h/t; arc=none smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2d3b36f5366so336931a91.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Aug 2024 23:48:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724309309; x=1724914109; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=2cTrGbpd4HSUevNKGqvJ3V68XZ6nrr6FN6bBsJQjjtE=;
-        b=qb561h/tL0IrzYyO4WTwgpCS7NykRgEdmN7pZB/8IXba1hKPm0ttWrHUpvXteSxpaB
-         NC7GwEOgxz0TbV6figKcNLUvk9LS1hpOSeV0IwMez8ydHeJgiOWeugFDw+yI3wzbp8QE
-         91XVfuqh0zeK7EqS87ohofwlDMZuVZyIQNGRuay4dm0v6Dur5omC059AcqM8fAmCfXk7
-         B2UV+Bkvo5kiJ2v1v3vwDMwXGccxT1VMsyHmn7uaaiUXoyqCcPntc23ak2kk28QttkWk
-         38iEnzRwm04cRSpWtk77HKM08SkutAR7pGsNrCPj2dkdz3RzjWr/Jb5Y5/KvKioFMR8v
-         wZ0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724309309; x=1724914109;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2cTrGbpd4HSUevNKGqvJ3V68XZ6nrr6FN6bBsJQjjtE=;
-        b=J1D8DKOlGncrsMaQ2EE1/sHNiAB8poWvrmt0JmbooAZJ+Cs/2KnCHgtQz2x4fMTsj5
-         aPHmlKv3TMw0ojLLaFAQGsd7/xadAnCVDo63hLJwJna8nSJUu/u+H4Dt+72I81hoqPSF
-         M1fDycCu7+ZEMzrfoSkHHLAM8GoOaJhDUOtaLkHvQXS7PuXlPX0jpLPKiw8glR0icjVx
-         Cb3QE6Qn+cz3uDD+90Afgc9mtNu52uD/QP/H1Y6NLL1qOrrj+VlapzyU2jsue7oBqibR
-         7g1SXtb6p2PLlWXABp49VIHe4QqvbIanH1cikb28DUxYFjZUyL0k2zQ01y2HvLWBvWzD
-         4xcw==
-X-Forwarded-Encrypted: i=1; AJvYcCW+qQUbjM1zZT9qylGCbvJBSBjXDN7mdOBvBOV/GQvf0uUNqZiddscA0mHhfJOUQvcfFtHNJg50F6f4Jipg@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw3jlfp6Ru4VbepWPaUS03Ydald6ZGZ96vTStdjCYFCGm5Csctk
-	qJuz79V/VZSr+r7bqO8lf69awWJrFvXaVKYDBRyCvgzc5VaW6i89UrlKfgibTg==
-X-Google-Smtp-Source: AGHT+IGzpHEk+tReHF5mUVed8OkxXUvu8WNzbGV/GptH5xMS7EQ5B+lFYWNn8tj8JipsQgSzgi461A==
-X-Received: by 2002:a17:90b:1b48:b0:2c9:8c34:9754 with SMTP id 98e67ed59e1d1-2d5e9a66838mr4991548a91.21.1724309309452;
-        Wed, 21 Aug 2024 23:48:29 -0700 (PDT)
-Received: from thinkpad ([117.213.99.42])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d5eba239f9sm3171237a91.28.2024.08.21.23.48.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Aug 2024 23:48:29 -0700 (PDT)
-Date: Thu, 22 Aug 2024 12:18:23 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	lpieralisi@kernel.org, robh@kernel.org, bhelgaas@google.com,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] PCI: qcom-ep: Do not enable resources during probe()
-Message-ID: <20240822064823.x26bjqev6ye32v5j@thinkpad>
-References: <20240813202547.GC1922056@rocinante>
- <20240821225618.GA270826@bhelgaas>
+	 Content-Type:Content-Disposition:In-Reply-To; b=RjZBb15Bsj3wvOntv3AGo2sqtd5M4T4DCDPOyf/Vp0py72msR7nWug+0xlttwXREMivsz1KiI9sBHUlftagQVUCcpdq0LO3WEqVDB2Bp+0VZWuPdRaoCXI9buM6EzvDrT4g4LOl3eaCvmlECwUzz27En4sHfSLCRMmSJTnCKW1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tH/e7n+2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E26C4AF09;
+	Thu, 22 Aug 2024 06:49:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724309381;
+	bh=GaeE+vHB9FpTDdnRoHEB3IZqWE5qQS6LAnO0ppG8Pc8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tH/e7n+2tGWq/zhOSNu63p3SRduTj4pV0iwSPzr5KYoZa0jPEXRuKDIJmEZkQ06AB
+	 DyKih1kf5TWOzrHqBnV5KrUdcq/6qfkuB4sEjc2S1XbK1CDET/iqc2KBNE/yzJeb8G
+	 2hE0a13eU9n6iTIfSxLRWR1YHul8UStKTxKkMLcwih70yuKIoGma937CvH46/wW50F
+	 uAs6n9LTI/mROjs86jIr26m8FsZ2R7AMyM8lv0jQX+ghNNUkoYH6LvEwLPS3ZMNfnD
+	 P31RUMT6WsZ6Ie4vk913AcIjxVKcRobSaPq5E09eBiuFu85d3ru9PVzCkRSyIoS+p3
+	 dtyyWfij8s4Bw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sh1dg-000000004q3-2HHb;
+	Thu, 22 Aug 2024 08:49:44 +0200
+Date: Thu, 22 Aug 2024 08:49:44 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2 1/2] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy:
+ Document the X1E80100 QMP PCIe PHY Gen4 x4
+Message-ID: <ZsbfiMGP4aLmfwkv@hovoldconsulting.com>
+References: <20240821-x1e80100-phy-add-gen4x4-v2-0-c34db42230e9@linaro.org>
+ <20240821-x1e80100-phy-add-gen4x4-v2-1-c34db42230e9@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240821225618.GA270826@bhelgaas>
+In-Reply-To: <20240821-x1e80100-phy-add-gen4x4-v2-1-c34db42230e9@linaro.org>
 
-On Wed, Aug 21, 2024 at 05:56:18PM -0500, Bjorn Helgaas wrote:
-> On Wed, Aug 14, 2024 at 05:25:47AM +0900, Krzysztof Wilczyński wrote:
-> > > Starting from commit 869bc5253406 ("PCI: dwc: ep: Fix DBI access failure
-> > > for drivers requiring refclk from host"), all the hardware register access
-> > > (like DBI) were moved to dw_pcie_ep_init_registers() which gets called only
-> > > in qcom_pcie_perst_deassert() i.e., only after the endpoint received refclk
-> > > from host.
-> > > 
-> > > So there is no need to enable the endpoint resources (like clk, regulators,
-> > > PHY) during probe(). Hence, remove the call to qcom_pcie_enable_resources()
-> > > helper from probe(). This was added earlier because dw_pcie_ep_init() was
-> > > doing DBI access, which is not done now.
-> > > 
-> > > While at it, let's also call dw_pcie_ep_deinit() in err path to deinit the
-> > > EP controller in the case of failure.
-> > 
-> > Applied to controller/qcom, thank you!
-> > 
-> > [1/1] PCI: qcom-ep: Do not enable resources during probe()
-> >       https://git.kernel.org/pci/pci/c/cd0b3e13ec30
+On Wed, Aug 21, 2024 at 11:39:00AM +0300, Abel Vesa wrote:
+> The sixth PCIe instance on X1E80100 can be used in either 4-lane mode or
+> 2-lane mode. Document the 4-lane mode as a separate compatible.
 > 
-> I think we do need this, but I dropped it for now pending a commit log
-> that says "we're fixing a crash" and explains how.
-> 
-> The current log says "869bc5253406 moved hardware register access like
-> DBI to dw_pcie_ep_init_registers()", but 869bc5253406 actually moved a
-> bunch of register accesses from dw_pcie_ep_init() to
-> dw_pcie_ep_init_complete(), and a subsequent patch renamed
-> dw_pcie_ep_init_complete() to dw_pcie_ep_init_registers().  I did
-> eventually figure out the rename, but it took a while to make that
-> leap.
-> 
+> Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 
-Ah, sorry about that. I somehow managed to merge those two commits in my mind.
-
-> It also says dw_pcie_ep_init_registers() is called only from
-> qcom_pcie_perst_deassert(), but obviously all drivers call it.  I
-> think what you meant is that on qcom and tegra194,
-
-Yeah, the context is only applicable to the respective SoCs.
-
-> dw_pcie_ep_init_registers() isn't called from .probe(); it's called
-> later because they require refclk to access the registers, so qcom and
-> tegra194 call it after PERST# is deasserted, because then refclk is
-> available.
-> 
-> Trying to understand the 869bc5253406 reference: I guess the
-> point is that the dw_pcie_ep_init_registers() work depends on
-> qcom_pcie_enable_resources(), and before 869bc5253406, that work was
-> done by qcom_pcie_ep_probe() calling dw_pcie_ep_init(), so it had to
-> call qcom_pcie_enable_resources() first.
-> 
-> But after 869bc5253406, dw_pcie_ep_init_registers() is done in
-> qcom_pcie_perst_deassert(), which already calls
-> qcom_pcie_enable_resources().  So qcom_pcie_ep_probe() no longer needs
-> to call qcom_pcie_enable_resources().
-> 
-
-Right.
-
-> As far as the *crash*, phy_power_on() has been called from
-> qcom_pcie_ep_probe() since the very beginning in f55fee56a631 ("PCI:
-> qcom-ep: Add Qualcomm PCIe Endpoint controller driver").  But
-> apparently on some new platforms phy_power_on() depends on refclk and
-> (I assume) it causes a crash when done from qcom_pcie_ep_probe().
-> 
-
-Yeah. The actual intention of the patch was to get rid of the
-qcom_pcie_enable_resources() from probe() as it is now not needed. But later
-Dmitry pointed out that qcom_pcie_enable_resources() is also causing a crash on
-his platform because phy_power_on() depends on refclk from host. So he had to
-manually boot the host first and then endpoint to avoid the crash (without this
-patch).
-
-Then I thought that this is an RC candidate as it fixes a hard crash and asked
-to merge the patch ammending the commit message with Dmitry's info.
-
-But now I understood that I should've reworded the commit message to make it
-look like an RC material.
-
-> So I would think the commit log should look something like this:
-> 
->   PCI: qcom-ep: Postpone PHY power-on until refclk available
-> 
->   qcom_pcie_enable_resources() is called by qcom_pcie_ep_probe() and
->   powers on PHYs.  On new platforms like X, Y, Z, this depends on
->   refclk from the RC, which may not be available at the time of
->   qcom_pcie_ep_probe(), so this causes a crash in the qcom-ep driver.
-> 
->   qcom_pcie_enable_resources() is already called by
->   qcom_pcie_perst_deassert() when PERST# is deasserted, and refclk is
->   available at that time.
-> 
->   Remove the unnecessary call from qcom_pcie_ep_probe() to prevent the
->   crash on X, Y, Z.
-> 
-
-Looks good to me. I'll post v2 incorporating this.
-
-> Although I do have the question of what happens if the RC deasserts
-> PERST# before qcom-ep is loaded.  We probably don't execute
-> qcom_pcie_perst_deassert() in that case, so how does the init happen?
-> 
-
-PERST# is a level trigger signal. So even if the host has asserted it before EP
-booted, the level will stay low and ep will detect it while booting.
-
-If it is an edge trigger signal, then ep wouldn't be able to catch it as you
-suspected.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 
