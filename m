@@ -1,133 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-29417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 016CA95D8F5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 00:04:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A566495D981
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 01:09:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 166F41C214F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 22:04:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 627EE281D23
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 23:09:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 462181C86E8;
-	Fri, 23 Aug 2024 22:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6573C193412;
+	Fri, 23 Aug 2024 23:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m0GIUvrF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="O+AQVCkY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142DB191F6B;
-	Fri, 23 Aug 2024 22:04:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F52E1684A4;
+	Fri, 23 Aug 2024 23:08:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724450679; cv=none; b=W6YJ45+sKsKHvZeEeNxl8O8Q5E6k5AXBQ/6tsfm2Xp+A2OuVcDP+inu1aRaZN2pwEkHthVJeeardPJrukNEHiXVAVjsiZfbE83JwyRAv3su0GoKTdsaZjNnxA+KrsOOrFQfo1s1OoUBBuLk51lAWmj0IalL5zzjhrn+fwRIjh14=
+	t=1724454538; cv=none; b=BmQuMcnHSde+dzF/s+Ent+jsvbfy3mviCbOOjWyNswgd9X4A8mJlFhC0O+0easrakj90z7oKcNAuPsCKSK+9rn9En/YDmZk2lttoW/olshLQYMZqcr5YWOEo5O7G+7gDptm0L2fdWcNsDGmpHyZs/7kjcBOzvA289Py4ACKX2TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724450679; c=relaxed/simple;
-	bh=sOlJNt/5c8Tti76v1n49s0eMhAqmyUoYvBQpT3/63iw=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=nKHUA85GaIRzA5mnyPb8um8UkG9p4p99ergC2jUTnu8Rz1FamW8yOPQrvzX9TwLFi92t8GrMsZq3HkpZ4lKJxXEB+jUmtElXtIyjup69EqLqoGOL4gtN9fBOUhwWsmKg0UEZA1AAsKeb10nhgHPIyz8k0fnVjHKkOGmKfcOQ82U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m0GIUvrF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2E6C4AF09;
-	Fri, 23 Aug 2024 22:04:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724450678;
-	bh=sOlJNt/5c8Tti76v1n49s0eMhAqmyUoYvBQpT3/63iw=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=m0GIUvrFPOyEVZhaqCcLPsT3YYIF0gj8VeSwK6EDF2BeJmSdE1/NX8wGZ5PTVN8Gc
-	 I/XEwJ8xILDRraxWzFbzoDYlh14JAEOuX29IGL1epmBvcmtTnxgwdeOsgATdXP92Dg
-	 yjIT0MckINcQ35Uz8wliKIRgiOsIKf+2c4P265C3K9JLJ8wA0w6luL9cOzv8RTgknl
-	 qAmDEbZIikugVGnACgJ9XYxU4OKbpCWgTJ75X8TSH/xssxeJrjvVxwLn4KkA/TqBCy
-	 4e32l57W24Sk3bbjP9ZGykzx3weT+QurgxW0CyPeiaLpxODCtrwM26K3+m5mXKgNKy
-	 Sf7wl0gx0/lDQ==
-Date: Fri, 23 Aug 2024 17:04:36 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	lpieralisi@kernel.org, robh@kernel.org, bhelgaas@google.com,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] PCI: qcom-ep: Do not enable resources during probe()
-Message-ID: <20240823220436.GA387844@bhelgaas>
+	s=arc-20240116; t=1724454538; c=relaxed/simple;
+	bh=giDUnuq5inlhh3IT83c4ThKoCl4vW8XSjkk5asxdoxI=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YeNEmVETzcd0C9Xz2dfCu6+e0F7GHiiHSJgdBP6k1p2E1HT9n9du9Ps6/56Y/Q/FKsABfBgyroVU9Uo/5+7rH8ohj093fx6KSTC3/tA3thJH1x+Jg3SXCm9ECx7qr1Z5mVnqAn4EAJinTyvv4iVgamqQY1HQXZdKtQvx7KI0rIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=O+AQVCkY; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47NMG5PJ007079;
+	Fri, 23 Aug 2024 23:08:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=OnFfZKNcSxBRX5EfhZBjBWik
+	3XhATKgjGZdy1MpDYUY=; b=O+AQVCkYaPGf+wqBrV+njZs0f7xYJb4WaJR3+gLo
+	GiRXhKn5Z2kcUnx+DZWTz730Hy75qqB9f/rnYVEVe1x5L6/u/sH36s//522w29IB
+	zERH6Jvrh36F7YtUegIvPvad0dp/xKOCaGfYSu4hyCodPJp3AcuaofiR6YpafSwl
+	8agbYzIj0qWobzgLHe7KrLo+5Qz4vCnfQWQSX43VTXDqPdp+I/QKWBoJ/VEnc4UI
+	KuAQbJvHBPFgJUYWcnAPNTnkM1DGMm0Rb1nwyHm8NKjsiEQ6T0AERuXFeZdOycHh
+	w4IrCcwIS2GW23PylqMxYcOi8xqz7vsHU2xuSRPBAVQBdg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41732pg271-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 23 Aug 2024 23:08:46 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47NN8ki4011717
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 23 Aug 2024 23:08:46 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 23 Aug 2024 16:08:45 -0700
+Date: Fri, 23 Aug 2024 16:08:44 -0700
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Will Deacon <will@kernel.org>,
+        Linus Torvalds
+	<torvalds@linux-foundation.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Catalin Marinas
+	<catalin.marinas@arm.com>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] arm64: Allow packing uncompressed images into distro
+ packages
+Message-ID: <ZskWfKIZkThKpj9m@hu-bjorande-lv.qualcomm.com>
+References: <20240819-uncompressed-distro-packages-v1-1-c8accc8bc9ea@quicinc.com>
+ <20240823105853.GC31866@willie-the-truck>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20240823044133.b27cgioefsg4sjlr@thinkpad>
+In-Reply-To: <20240823105853.GC31866@willie-the-truck>
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 1PMmpXXX4xhmLVq14yvRdiIlDaHY6xVB
+X-Proofpoint-ORIG-GUID: 1PMmpXXX4xhmLVq14yvRdiIlDaHY6xVB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-23_16,2024-08-23_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 adultscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0
+ mlxlogscore=999 priorityscore=1501 bulkscore=0 clxscore=1011 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408230169
 
-On Fri, Aug 23, 2024 at 10:11:33AM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Aug 22, 2024 at 12:31:33PM -0500, Bjorn Helgaas wrote:
-> > On Thu, Aug 22, 2024 at 09:10:25PM +0530, Manivannan Sadhasivam wrote:
-> > > On Thu, Aug 22, 2024 at 10:16:58AM -0500, Bjorn Helgaas wrote:
-> > > > On Thu, Aug 22, 2024 at 12:18:23PM +0530, Manivannan Sadhasivam wrote:
-> > > > > On Wed, Aug 21, 2024 at 05:56:18PM -0500, Bjorn Helgaas wrote:
-> > > > > ...
-> > > > 
-> > > > > > Although I do have the question of what happens if the RC deasserts
-> > > > > > PERST# before qcom-ep is loaded.  We probably don't execute
-> > > > > > qcom_pcie_perst_deassert() in that case, so how does the init happen?
-> > > > > 
-> > > > > PERST# is a level trigger signal. So even if the host has asserted
-> > > > > it before EP booted, the level will stay low and ep will detect it
-> > > > > while booting.
-> > > > 
-> > > > The PERST# signal itself is definitely level oriented.
-> > > > 
-> > > > I'm still skeptical about the *interrupt* from the PCIe controller
-> > > > being level-triggered, as I mentioned here:
-> > > > https://lore.kernel.org/r/20240815224735.GA57931@bhelgaas
-> > > 
-> > > Sorry, that comment got buried into my inbox. So didn't get a chance
-> > > to respond.
-> > > 
-> > > > tegra194 is also dwc-based and has a similar PERST# interrupt but
-> > > > it's edge-triggered (tegra_pcie_ep_pex_rst_irq()), which I think
-> > > > is a cleaner implementation.  Then you don't have to remember the
-> > > > current state, switch between high and low trigger, worry about
-> > > > races and missing a pulse, etc.
-> > > 
-> > > I did try to mimic what tegra194 did when I wrote the qcom-ep
-> > > driver, but it didn't work. If we use the level triggered interrupt
-> > > as edge, the interrupt will be missed if we do not listen at the
-> > > right time (when PERST# goes from high to low and vice versa).
-> > > 
-> > > I don't know how tegra194 interrupt controller is wired up, but IIUC
-> > > they will need to boot the endpoint first and then host to catch the
-> > > PERST# interrupt.  Otherwise, the endpoint will never see the
-> > > interrupt until host toggles it again.
+On Fri, Aug 23, 2024 at 11:58:54AM +0100, Will Deacon wrote:
+> On Mon, Aug 19, 2024 at 08:11:58PM -0700, Bjorn Andersson wrote:
+> > From: Bjorn Andersson <quic_bjorande@quicinc.com>
 > > 
-> > Having to control the boot ordering of endpoint and host is definitely
-> > problematic.
+> > The distro packages (deb-pkg, pacman-pkg, rpm-pkg) are generated using
+> > the compressed kernel image, which means that the kernel once installed
+> > can not be booted with systemd-boot.
 > > 
-> > What is the nature of the crash when we try to enable the PHY when
-> > Refclk is not available?  The endpoint has no control over when the
-> > host asserts/deasserts PERST#.  If PERST# happens to be asserted while
-> > the endpoint is enabling the PHY, and this causes some kind of crash
-> > that the endpoint driver can't easily recover from, that's a serious
-> > robustness problem.
+> > This differs from the packages generated by the distros themselves,
+> > which uses the uncompressed image.
+> > 
+> > Expand the newly introduced CONFIG_COMPRESSED_INSTALL option to allow
+> > selection of which version of the kernel image should be packaged into
+> > the distro packages.
+> > 
+> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > ---
+> >  arch/arm64/Makefile | 15 ++++++---------
+> >  1 file changed, 6 insertions(+), 9 deletions(-)
+> > 
+> > diff --git a/arch/arm64/Makefile b/arch/arm64/Makefile
+> > index f6bc3da1ef11..7bb9a0a5500a 100644
+> > --- a/arch/arm64/Makefile
+> > +++ b/arch/arm64/Makefile
+> > @@ -166,9 +166,13 @@ BOOT_TARGETS	:= Image vmlinuz.efi image.fit
+> >  PHONY += $(BOOT_TARGETS)
+> >  
+> >  ifeq ($(CONFIG_EFI_ZBOOT),)
+> > -KBUILD_IMAGE	:= $(boot)/Image.gz
+> > +  ifeq ($(CONFIG_COMPRESSED_INSTALL),y)
+> > +    KBUILD_IMAGE := $(boot)/Image.gz
+> > +  else
+> > +    KBUILD_IMAGE := $(boot)/Image
+> > +  endif
+> >  else
+> > -KBUILD_IMAGE	:= $(boot)/vmlinuz.efi
+> > +  KBUILD_IMAGE := $(boot)/vmlinuz.efi
+> >  endif
+> >  
+> >  all:	$(notdir $(KBUILD_IMAGE))
+> > @@ -182,13 +186,6 @@ $(BOOT_TARGETS): vmlinux
+> >  Image.%: Image
+> >  	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@
+> >  
+> > -ifeq ($(CONFIG_COMPRESSED_INSTALL),y)
+> > - DEFAULT_KBUILD_IMAGE = $(KBUILD_IMAGE)
+> > -else
+> > - DEFAULT_KBUILD_IMAGE = $(boot)/Image
+> > -endif
+> > -
+> > -install: KBUILD_IMAGE := $(DEFAULT_KBUILD_IMAGE)
 > 
-> The whole endpoint SoC crashes if the refclk is not available during
-> phy_power_on() as the PHY driver tries to access some register on Dmitry's
-> platform (I did not see this crash on SM8450 SoC though).
+> Hmm, doesn't this mean that we always install vmlinuz.efi if
+> CONFIG_EFI_ZBOOT=y?
 > 
-> If we keep the enable_resources() during probe() then the race condition you
-> observed above could apply. So removing that from probe() will also make the
-> race condition go away,
 
-Example:
+Hmm, you're right, I failed to parse that part.
 
-  1) host deasserts PERST#
-  2) qcom-ep handles PERST# IRQ
-  3) qcom_pcie_ep_perst_irq_thread() calls qcom_pcie_perst_deassert()
-  4) host asserts PERST#, Refclk no longer valid
-  5) qcom_pcie_perst_deassert() calls qcom_pcie_enable_resources()
-  6) qcom_pcie_enable_resources() enables PHY
+That said, prior to Linus' change we'd always install "Image" and I read
+his commit message to allow installing "Image.gz".
 
-I don't see what prevents the PERST# assertion at 4.  It sounds like
-the endpoint SoC crashes at 6.
+But the change also made it possible to install "vmlinuz.efi", by
+setting both options to =y. Was this intentional?
+
+Can you confirm that this is what we want:
+
+ZBOOT | COMPRESS | BUILD_IMAGE | install
+------+----------+-------------+--------
+  N   |    N     | Image       | Image
+  N   |    Y     | Image.gz    | Image.gz
+  Y   |    N     | vmlinuz.efi | Image (?)
+  Y   |    Y     | vmlinuz.efi | vmlinuz.efi (was Image in v6.10)
+
+It seems reasonable to keep the two last entries in the "install" column
+either "Image/Image.gz" or "vmlinuz.efi/vmlinuz.efi" (if it should be
+possible to pass vmlinuz.efi to installkernel).
+
+Regards,
+Bjorn
 
