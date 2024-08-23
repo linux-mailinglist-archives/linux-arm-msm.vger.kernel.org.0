@@ -1,114 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-29416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F338895D7DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 22:33:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 016CA95D8F5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 00:04:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 32D511C225BE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 20:33:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 166F41C214F1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 22:04:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2CFA1C174A;
-	Fri, 23 Aug 2024 20:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 462181C86E8;
+	Fri, 23 Aug 2024 22:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="cFTZss0A"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m0GIUvrF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5171F1C7B65
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 20:33:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142DB191F6B;
+	Fri, 23 Aug 2024 22:04:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724445207; cv=none; b=kA47/DH3rKcpZPhzb1U0CovJeBQwOp68JbA9sQi96sA3+TRyL1h3jIn520lYiUH04cxMCoOqz3cfc91pr/YgDZ2u+hY6CpLhFZhLwCbFfzu4D4FVpILJDjajxWTvhygiFnmdzkWyOi05uJtEBTP9XRdVm/5aUmVyUJE/DJoC+Ho=
+	t=1724450679; cv=none; b=W6YJ45+sKsKHvZeEeNxl8O8Q5E6k5AXBQ/6tsfm2Xp+A2OuVcDP+inu1aRaZN2pwEkHthVJeeardPJrukNEHiXVAVjsiZfbE83JwyRAv3su0GoKTdsaZjNnxA+KrsOOrFQfo1s1OoUBBuLk51lAWmj0IalL5zzjhrn+fwRIjh14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724445207; c=relaxed/simple;
-	bh=MsOMxkYeIW9qydJzRqD0Ihv3BRacgITErjIgiRvw2KI=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VnuA2epa2uhrbzHKr6F22AyodqdDTh4WkLraBzK27DituR/cdRLoNplakxjPWjUd/bn9Qirj00YhzZH3iULf4EwNF61cafxfQSyyyS98sBphT75J7QFN0ZlWSFm1b6pwu6RIC6/NpgDEWaaTplceKiUWlo7csiIVluvRrcirIzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=cFTZss0A; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7a1e4c75488so143269585a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 13:33:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1724445205; x=1725050005; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/0Yyeee2Vf8r1D/wovFCOKuxZaGFv9fKeG3mfjxEVas=;
-        b=cFTZss0AaAWpfKQeI8Idfc6fqkRGpIPKMJXs8fvEZraYzcmoJoA6hTJ0ThLIGiwNNr
-         F30K72MKPjoT2g6KfmMBkTAFWbtAzmEoZbdYzgxKpYK5iHCSrUZOQDov+oWhG3O3YklN
-         kVVUqJCL/yQJCif6Bv1AdisX4MGrx90wQGICg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724445205; x=1725050005;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/0Yyeee2Vf8r1D/wovFCOKuxZaGFv9fKeG3mfjxEVas=;
-        b=fxdCG9URiNLpm6gq1kRMDXB1LVLthuVqH3mzOWRmhEOh0v4Ibpnt5auHiOkVQcht4z
-         /1wCFSO2JlO8U74bfaGrwBSC8lyN6OgF305efwpBATXynDadnuYmq3rA5d+IzI4hAW5S
-         2YfHGfIKT6f7FJ75soPD6EhHDnAKSEEleE3lmp+DJWaFn9SJccnMS4bhb3AQTSi76Izo
-         Kind+DSOvySH1KxCAaXZNw/1ZKpxVQzxpBiP8pOuJCWYVPu+cc019YAlZlpdpT2LBV7M
-         flaN39/FNTiBsg//3oksIYvR1njqJ5+Ak1gdCAR1RA6J5JIZuBDT0aPlyOIPcwOocxQZ
-         X0uQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWUi5z8ucJOyM/TwuLTwLK68VWu9x8tUj7xgr/6rrh7WtjZlYcJ8cCyPqFj7MiuJRgYM39qhMo7j2ZKib4L@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUsSIDRa+ItMA14RQQnfhubzu9DtA2nc5BMgcwS8vibsnJGICP
-	zrfFJbKFPhXgBaGroqfuiA9ueSDWvbCa8f26nrI1mTocS4ZBa/yVz03A1aF+/4Kv4wOR58T6E5a
-	5Xq4XtXn050X/IdX40vshCZ20imYmv+cYQFb8
-X-Google-Smtp-Source: AGHT+IGW/VO5LDbH2qUnWbdRuqhhtG11KOFQeC4peX75Dv4BIQ4AXaDFfDgoU0VrJw72vzH9xwkXBWdGeZo2zOTAGgE=
-X-Received: by 2002:a05:620a:461e:b0:79f:dce:76c7 with SMTP id
- af79cd13be357-7a6897c444dmr460409785a.68.1724445205109; Fri, 23 Aug 2024
- 13:33:25 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 23 Aug 2024 13:33:24 -0700
+	s=arc-20240116; t=1724450679; c=relaxed/simple;
+	bh=sOlJNt/5c8Tti76v1n49s0eMhAqmyUoYvBQpT3/63iw=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=nKHUA85GaIRzA5mnyPb8um8UkG9p4p99ergC2jUTnu8Rz1FamW8yOPQrvzX9TwLFi92t8GrMsZq3HkpZ4lKJxXEB+jUmtElXtIyjup69EqLqoGOL4gtN9fBOUhwWsmKg0UEZA1AAsKeb10nhgHPIyz8k0fnVjHKkOGmKfcOQ82U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m0GIUvrF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2E6C4AF09;
+	Fri, 23 Aug 2024 22:04:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724450678;
+	bh=sOlJNt/5c8Tti76v1n49s0eMhAqmyUoYvBQpT3/63iw=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=m0GIUvrFPOyEVZhaqCcLPsT3YYIF0gj8VeSwK6EDF2BeJmSdE1/NX8wGZ5PTVN8Gc
+	 I/XEwJ8xILDRraxWzFbzoDYlh14JAEOuX29IGL1epmBvcmtTnxgwdeOsgATdXP92Dg
+	 yjIT0MckINcQ35Uz8wliKIRgiOsIKf+2c4P265C3K9JLJ8wA0w6luL9cOzv8RTgknl
+	 qAmDEbZIikugVGnACgJ9XYxU4OKbpCWgTJ75X8TSH/xssxeJrjvVxwLn4KkA/TqBCy
+	 4e32l57W24Sk3bbjP9ZGykzx3weT+QurgxW0CyPeiaLpxODCtrwM26K3+m5mXKgNKy
+	 Sf7wl0gx0/lDQ==
+Date: Fri, 23 Aug 2024 17:04:36 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	lpieralisi@kernel.org, robh@kernel.org, bhelgaas@google.com,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] PCI: qcom-ep: Do not enable resources during probe()
+Message-ID: <20240823220436.GA387844@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <d03d5425-bd7c-4c20-a54e-5708ffd059e0@linaro.org>
-References: <20240819233628.2074654-1-swboyd@chromium.org> <d03d5425-bd7c-4c20-a54e-5708ffd059e0@linaro.org>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Fri, 23 Aug 2024 13:33:24 -0700
-Message-ID: <CAE-0n52=kQzEx76D5AmZfui_X0jqejQ+ENz+VQunY_ovph65Hw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] clk: qcom: gcc-sm8550: Fix shared clk parking breakage
-To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	neil.armstrong@linaro.org
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	patches@lists.linux.dev, linux-clk@vger.kernel.org, 
-	Amit Pundir <amit.pundir@linaro.org>, Taniya Das <quic_tdas@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240823044133.b27cgioefsg4sjlr@thinkpad>
 
-Quoting neil.armstrong@linaro.org (2024-08-21 08:44:00)
-> Hi,
->
-> On 20/08/2024 01:36, Stephen Boyd wrote:
-> > Amit Pundir reported[1] that a recent commit 01a0a6cc8cfd ("clk: qcom:
-> > Park shared RCGs upon registration") broke USB and audio on sm8550-hdk.
-> > These two patches fix the issue by skipping the parking bit of the
-> > shared RCGs for devices that can't run so slow.
-> >
-> > [1] https://lore.kernel.org/CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com/
-> >
-> > Stephen Boyd (2):
-> >    clk: qcom: gcc-sm8550: Don't use parking clk_ops for QUPs
-> >    clk: qcom: gcc-sm8550: Don't park the USB RCG at registration time
-> >
-> >   drivers/clk/qcom/clk-rcg.h    |  1 +
-> >   drivers/clk/qcom/clk-rcg2.c   | 30 +++++++++++++++++++
-> >   drivers/clk/qcom/gcc-sm8550.c | 54 +++++++++++++++++------------------
-> >   3 files changed, 58 insertions(+), 27 deletions(-)
-> >
-> >
-> > base-commit: 8400291e289ee6b2bf9779ff1c83a291501f017b
->
-> I'm pretty sure sm8450 & sm8650 (and probably other SoCs) could be also affected, could you check ?
+On Fri, Aug 23, 2024 at 10:11:33AM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Aug 22, 2024 at 12:31:33PM -0500, Bjorn Helgaas wrote:
+> > On Thu, Aug 22, 2024 at 09:10:25PM +0530, Manivannan Sadhasivam wrote:
+> > > On Thu, Aug 22, 2024 at 10:16:58AM -0500, Bjorn Helgaas wrote:
+> > > > On Thu, Aug 22, 2024 at 12:18:23PM +0530, Manivannan Sadhasivam wrote:
+> > > > > On Wed, Aug 21, 2024 at 05:56:18PM -0500, Bjorn Helgaas wrote:
+> > > > > ...
+> > > > 
+> > > > > > Although I do have the question of what happens if the RC deasserts
+> > > > > > PERST# before qcom-ep is loaded.  We probably don't execute
+> > > > > > qcom_pcie_perst_deassert() in that case, so how does the init happen?
+> > > > > 
+> > > > > PERST# is a level trigger signal. So even if the host has asserted
+> > > > > it before EP booted, the level will stay low and ep will detect it
+> > > > > while booting.
+> > > > 
+> > > > The PERST# signal itself is definitely level oriented.
+> > > > 
+> > > > I'm still skeptical about the *interrupt* from the PCIe controller
+> > > > being level-triggered, as I mentioned here:
+> > > > https://lore.kernel.org/r/20240815224735.GA57931@bhelgaas
+> > > 
+> > > Sorry, that comment got buried into my inbox. So didn't get a chance
+> > > to respond.
+> > > 
+> > > > tegra194 is also dwc-based and has a similar PERST# interrupt but
+> > > > it's edge-triggered (tegra_pcie_ep_pex_rst_irq()), which I think
+> > > > is a cleaner implementation.  Then you don't have to remember the
+> > > > current state, switch between high and low trigger, worry about
+> > > > races and missing a pulse, etc.
+> > > 
+> > > I did try to mimic what tegra194 did when I wrote the qcom-ep
+> > > driver, but it didn't work. If we use the level triggered interrupt
+> > > as edge, the interrupt will be missed if we do not listen at the
+> > > right time (when PERST# goes from high to low and vice versa).
+> > > 
+> > > I don't know how tegra194 interrupt controller is wired up, but IIUC
+> > > they will need to boot the endpoint first and then host to catch the
+> > > PERST# interrupt.  Otherwise, the endpoint will never see the
+> > > interrupt until host toggles it again.
+> > 
+> > Having to control the boot ordering of endpoint and host is definitely
+> > problematic.
+> > 
+> > What is the nature of the crash when we try to enable the PHY when
+> > Refclk is not available?  The endpoint has no control over when the
+> > host asserts/deasserts PERST#.  If PERST# happens to be asserted while
+> > the endpoint is enabling the PHY, and this causes some kind of crash
+> > that the endpoint driver can't easily recover from, that's a serious
+> > robustness problem.
+> 
+> The whole endpoint SoC crashes if the refclk is not available during
+> phy_power_on() as the PHY driver tries to access some register on Dmitry's
+> platform (I did not see this crash on SM8450 SoC though).
+> 
+> If we keep the enable_resources() during probe() then the race condition you
+> observed above could apply. So removing that from probe() will also make the
+> race condition go away,
 
-Does someone have the hardware to test? It looks like sm8450 isn't using
-the shared ops, but sm8650 is, likely incorrectly.
+Example:
+
+  1) host deasserts PERST#
+  2) qcom-ep handles PERST# IRQ
+  3) qcom_pcie_ep_perst_irq_thread() calls qcom_pcie_perst_deassert()
+  4) host asserts PERST#, Refclk no longer valid
+  5) qcom_pcie_perst_deassert() calls qcom_pcie_enable_resources()
+  6) qcom_pcie_enable_resources() enables PHY
+
+I don't see what prevents the PERST# assertion at 4.  It sounds like
+the endpoint SoC crashes at 6.
 
