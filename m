@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-29339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D02395C8C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 11:06:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B075E95C8D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 11:08:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CFBFD282F76
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 09:06:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6D6A32810B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 09:08:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCF7E149C65;
-	Fri, 23 Aug 2024 09:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19BAC149C79;
+	Fri, 23 Aug 2024 09:08:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VE0Q1rfe"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lMDsO8Xk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC88E1442F4;
-	Fri, 23 Aug 2024 09:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FE4149C43;
+	Fri, 23 Aug 2024 09:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724403996; cv=none; b=Fy0ANJpqTZN1T2cuvz7+yEljMEZSdE7oaoYqKmikmi1pfFn86JctOWg6VJuUmyYkvIsKKPGNMO8NRj54tmPJYfRIlRiXI9U7r3JRzKM+z/3hNPtZdqv/vATK6kdSweHzrK+sUyZThOnuHXbGN6h6foDLuTBE59FaDMWHgKA0bv0=
+	t=1724404089; cv=none; b=mUHeiY3RWHEvXR7ysmO7zY7qmkiPKs+VV5wzFiCx9rEYHrHfsv13WOjMESGzOmlU2cNUouOfgYwpK6bdxHglvxl2/ieCTrLdxkbbRxRaVEPbN82Ynseo9sdYeBmn7VK5rjRkmL0wLojCC/az4Sj5OdNfSvhq4BZpa3XunpL2A/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724403996; c=relaxed/simple;
-	bh=E0K9BVlAinKOdFlygcfsApTpKAoMe644T1TVWtyM6E4=;
+	s=arc-20240116; t=1724404089; c=relaxed/simple;
+	bh=Ve2sqD6iFM1UKf+rloPpgtAo7gWk9UfkFY95e3//i/s=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DjOvuiQE1b0JsQOyH+yRaHJFjEZLVA2S7mDDXDqJN9Ug930y8cM8jz87mYziTcxJYwMvEO/fJjhtXGBIhgRDxmWH7y5KOlWcYpM3xZVueFpLZhTuiakP0LsBPmXQMtxA3C5BDC9IDgSjWIF/rah+MYsMMXkuNUfX1u3l79Man4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VE0Q1rfe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4035C32786;
-	Fri, 23 Aug 2024 09:06:30 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=RJ+RgM9SpbDkDEGKdbvIiG4qlHC+9+nXzWnP00e5mxr8o+QPPg08hg7qW/7RT6Y0yoeyQ9h+gHTqHgETjDWHyc4KpLfTkkfFFaW/t+uV89fHe4LtS4es88Lb0s07AT+1S1+QEOFmQfU5v5NvlTiFZsyjN34BJU8F+G/2J4as9XI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lMDsO8Xk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A5FC4AF0B;
+	Fri, 23 Aug 2024 09:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724403996;
-	bh=E0K9BVlAinKOdFlygcfsApTpKAoMe644T1TVWtyM6E4=;
+	s=k20201202; t=1724404088;
+	bh=Ve2sqD6iFM1UKf+rloPpgtAo7gWk9UfkFY95e3//i/s=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=VE0Q1rfeKUR/o1bPbuT8w8OB8ooEPzB3TipQjnSeKQVp07nKbkZR2E7eIPFZo81zN
-	 obOC6larKQbQVKTuLYMutOWGQmMCZaebkxQLSKO51VDUtU7A+kHKwkg4yOMNmFm0EB
-	 GfAyvDqZA29DdOPt9aZwap2py1vSc6DBd9c0nCvtxgjIT16Y+f2Ea6xsOTEU9tb1JX
-	 5NzY+7RAM14KO4YUn0TqJVgnWhwSjQgRyRhCbO4NBNKd+IzYEB/4BZd7p+B1pK7zVH
-	 AYBdcExzgg+46gIVeCTaRIZ42ArXnmWtiJQUgPlNRQaENWZ4tPnhoMdMoJZ5594b/g
-	 HHaEekzTtlbjQ==
-Message-ID: <7969b2e6-1046-4bd4-bdfe-d2bc12a1db1b@kernel.org>
-Date: Fri, 23 Aug 2024 11:06:28 +0200
+	b=lMDsO8Xkg+vjG2uP+6H2ZjIIT3JzFHH1ZwI1nqWbcVlzEOIsVzDIk88LYoxB0z2xa
+	 UgZZizGqAlJfQ3b5mNUN3+sw5oU04G9i/Dj4Nygsz9/P7O6sW1B0H9VDJCOrWIUoqX
+	 x9zix5JZ1n59sCQr/gsMEFrXCCwmPulHb9y98TsG4sgv4LZMHmF3mJlMG8MUxwlu0u
+	 job095Z+DEmA5ZV2ZZEs+wHQ57yUUKsCoQzmZ3dEHzb1ArxKsH/hQeaCHEcgsXtHzq
+	 ndXd3kv/xo+uX8jPtsp5+hPllBmgjfHDgzQdNvMU+HnX9O2OWJOxGmbn7YA1eVrSZh
+	 b4os0KwMC/EUA==
+Message-ID: <bf49738a-6979-41f2-a8d3-e36ac634102f@kernel.org>
+Date: Fri, 23 Aug 2024 11:07:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,32 +50,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] dt-bindings: PCI: Add binding for qps615
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,
- Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- cros-qcom-dts-watchers@chromium.org, Bartosz Golaszewski <brgl@bgdev.pl>,
- Jingoo Han <jingoohan1@gmail.com>, andersson@kernel.org,
- quic_vbadigan@quicinc.com, linux-arm-msm@vger.kernel.org,
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
- <20240803-qps615-v2-1-9560b7c71369@quicinc.com>
- <5f65905c-f1e4-4f52-ba7c-10c1a4892e30@kernel.org>
- <f8985c98-82a5-08c3-7095-c864516b66b9@quicinc.com>
- <ZrEGypbL85buXEsO@hu-bjorande-lv.qualcomm.com>
- <90582c92-ca50-4776-918d-b7486cf942b0@kernel.org>
- <20240808120109.GA18983@thinkpad>
- <cb69c01b-08d0-40a1-9ea2-215979fb98c8@kernel.org>
- <20240808124121.GB18983@thinkpad>
- <c5bae58c-4200-40d3-94c6-669d2ee131d4@kernel.org>
- <20240822140956.unt45fgpleqwniwa@thinkpad>
+Subject: Re: [PATCH v2 01/16] dt-bindings: dma: qcom,bam: Add bam pipe lock
+To: Md Sadre Alam <quic_mdalam@quicinc.com>, vkoul@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ andersson@kernel.org, konradybcio@kernel.org, thara.gopinath@gmail.com,
+ herbert@gondor.apana.org.au, davem@davemloft.net, gustavoars@kernel.org,
+ u.kleine-koenig@pengutronix.de, kees@kernel.org, agross@kernel.org,
+ linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-crypto@vger.kernel.org
+Cc: quic_srichara@quicinc.com, quic_varada@quicinc.com,
+ quic_utiwari@quicinc.com
+References: <20240815085725.2740390-1-quic_mdalam@quicinc.com>
+ <20240815085725.2740390-2-quic_mdalam@quicinc.com>
+ <0a2b884b-bd28-428e-be12-8fef4fdfd278@kernel.org>
+ <c8b7c2f0-9de1-1787-2f1b-2aa0102f347c@quicinc.com>
+ <c2292ef2-e93e-4ca3-bcd3-542bd27526ad@kernel.org>
+ <6365b444-f552-4b13-c73b-00ba04ec1e62@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -121,90 +112,96 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240822140956.unt45fgpleqwniwa@thinkpad>
+In-Reply-To: <6365b444-f552-4b13-c73b-00ba04ec1e62@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 22/08/2024 16:09, Manivannan Sadhasivam wrote:
-> On Thu, Aug 08, 2024 at 03:06:28PM +0200, Krzysztof Kozlowski wrote:
->> On 08/08/2024 14:41, Manivannan Sadhasivam wrote:
->>> On Thu, Aug 08, 2024 at 02:13:01PM +0200, Krzysztof Kozlowski wrote:
->>>> On 08/08/2024 14:01, Manivannan Sadhasivam wrote:
->>>>> On Mon, Aug 05, 2024 at 07:18:04PM +0200, Krzysztof Kozlowski wrote:
->>>>>> On 05/08/2024 19:07, Bjorn Andersson wrote:
->>>>>>> On Mon, Aug 05, 2024 at 09:41:26AM +0530, Krishna Chaitanya Chundru wrote:
->>>>>>>> On 8/4/2024 2:23 PM, Krzysztof Kozlowski wrote:
->>>>>>>>> On 03/08/2024 05:22, Krishna chaitanya chundru wrote:
->>>>>>>>>> diff --git a/Documentation/devicetree/bindings/pci/qcom,qps615.yaml b/Documentation/devicetree/bindings/pci/qcom,qps615.yaml
->>>>>>> [..]
->>>>>>>>>> +  qps615,axi-clk-freq-hz:
->>>>>>>>>> +    description:
->>>>>>>>>> +      AXI clock which internal bus of the switch.
->>>>>>>>>
->>>>>>>>> No need, use CCF.
->>>>>>>>>
->>>>>>>> ack
->>>>>>>
->>>>>>> This is a clock that's internal to the QPS615, so there's no clock
->>>>>>> controller involved and hence I don't think CCF is applicable.
->>>>>>
->>>>>> AXI does not sound that internal.
->>>>>
->>>>> Well, AXI is applicable to whatever entity that implements it. We mostly seen it
->>>>> in ARM SoCs (host), but in this case the PCIe switch also has a microcontroller
->>>>> /processor of some sort, so AXI is indeed relevant for it. The naming actually
->>>>> comes from the switch's i2c register name that is being configured in the driver
->>>>> based on this property value.
->>>>>
->>>>>> DT rarely needs to specify internal
->>>>>> clock rates. What if you want to define rates for 20 clocks? Even
->>>>>> clock-frequency is deprecated, so why this would be allowed?
->>>>>> bus-frequency is allowed for buses, but that's not the case here, I guess?
->>>>>>
->>>>>
->>>>> This clock frequency is for the switch's internal AXI bus that runs at default
->>>>> 200MHz. And this property is used to specify a frequency that is configured over
->>>>> the i2c interface so that the switch's AXI bus can operate in a low frequency
->>>>> there by reducing the power consumption of the switch.
->>>>>
->>>>> It is not strictly needed for the switch operation, but for power optimization.
->>>>> So this property can also be dropped for the initial submission and added later
->>>>> if you prefer.
->>>>
->>>> So if the clock rate can change, why this is static in DTB? Or why this
->>>> is configurable per-board?
->>>>
->>>
->>> Because, board manufacturers can change the frequency depending on the switch
->>> configuration (enablement of DSP's etc...)
->>>
->>>> There is a reason why clock-frequency property is not welcomed and you
->>>> are re-implementing it.
->>>>
->>>
->>> Hmm, I'm not aware that 'clock-frequency' is not encouraged these days. So you
->>> are suggesting to change the rate in the driver itself based on the switch
->>> configuration? If so, what difference does it make?
->>
->> Based on the switch, other clocks, votes etc. whatever is reasonable
->> there. In most cases, not sure if this one here as well, devices can
->> operate on different clock frequencies thus specifying fixed frequency
->> in the DTS is simplification and lack of flexibility. It is chosen by
->> people only because it is easier for them but then they come back with
->> ABI issues when it turns out they need to switch to some dynamic control.
->>
+On 22/08/2024 13:45, Md Sadre Alam wrote:
 > 
-> Atleast for this device, this frequency is going to be static. Because, the
-> device itself cannot change the frequency, only the host driver can. That too is
-> only possible before enumerating the device. So there is no way the frequency is
-> going to change dynamically.
+> 
+> On 8/22/2024 11:57 AM, Krzysztof Kozlowski wrote:
+>> On 21/08/2024 18:34, Md Sadre Alam wrote:
+>>>
+>>>
+>>> On 8/17/2024 2:38 PM, Krzysztof Kozlowski wrote:
+>>>> On 15/08/2024 10:57, Md Sadre Alam wrote:
+>>>>> BAM having pipe locking mechanism. The Lock and Un-Lock bit
+>>>>> should be set on CMD descriptor only. Upon encountering a
+>>>>> descriptor with Lock bit set, the BAM will lock all other
+>>>>> pipes not related to the current pipe group, and keep
+>>>>> handling the current pipe only until it sees the Un-Lock
+>>>>> set.
+>>>>
+>>>> Please wrap commit message according to Linux coding style / submission
+>>>> process (neither too early nor over the limit):
+>>>> https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
+>>>     Ok , will update in next patch.
+>>>>
+>>>>>
+>>>>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>>>>> ---
+>>>>>
+>>>>> Change in [v2]
+>>>>>
+>>>>> * Added initial support for dt-binding
+>>>>>
+>>>>> Change in [v1]
+>>>>>
+>>>>> * This patch was not included in [v1]
+>>>>>
+>>>>>    Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 8 ++++++++
+>>>>>    1 file changed, 8 insertions(+)
+>>>>>
+>>>>> diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+>>>>> index 3ad0d9b1fbc5..91cc2942aa62 100644
+>>>>> --- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+>>>>> +++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+>>>>> @@ -77,6 +77,12 @@ properties:
+>>>>>          Indicates that the bam is powered up by a remote processor but must be
+>>>>>          initialized by the local processor.
+>>>>>    
+>>>>> +  qcom,bam_pipe_lock:
+>>>>
+>>>> Please follow DTS coding style.
+>>>     Ok
+>>>>
+>>>>> +    type: boolean
+>>>>> +    description:
+>>>>> +      Indicates that the bam pipe needs locking or not based on client driver
+>>>>> +      sending the LOCK or UNLOK bit set on command descriptor.
+>>>>
+>>>> You described the desired Linux feature or behavior, not the actual
+>>>> hardware. The bindings are about the latter, so instead you need to
+>>>> rephrase the property and its description to match actual hardware
+>>>> capabilities/features/configuration etc.
+>>>     Ok, will update in next patch.
+>>>>
+>>>>> +
+>>>>>      reg:
+>>>>>        maxItems: 1
+>>>>>    
+>>>>> @@ -92,6 +98,8 @@ anyOf:
+>>>>>          - qcom,powered-remotely
+>>>>>      - required:
+>>>>>          - qcom,controlled-remotely
+>>>>> +  - required:
+>>>>> +      - qcom,bam_pipe_lock
+>>>>
+>>>> Why is it here? What do you want to achieve?
+>>>     This property added to achieve locking/unlocking
+>>>     of BAM pipe groups for mutual exclusion of resources
+>>>     that can be used across multiple EE's
+>>
+>> This explains me nothing. I am questioning the anyOf block. Why this is
+>> the fourth method of controlling BAM? Anyway, if it is, then explain
+>> this in commit msg.
+>    This is the BAM property for locking/unlocking the BAM pipes.That's
+>    why I kept in anyOf block.
 
-We have assigned-clocks properties for this... but there are no clock
-inputs here, so maybe it is not applicable? What generates this internal
-AXI clock? Does it have internal oscillator?
+You keep repeating the same. It's like poking me with the same comment
+till I agree. I am done with this.
 
-So many questions and nothing in the property description helps to
-understand this.
+NAK. Provide proper rationale.
 
 Best regards,
 Krzysztof
