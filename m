@@ -1,105 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-29376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8613495D2F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 18:17:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3735895D3F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 19:03:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2EF3E1F22B41
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 16:17:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E9112283BBF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 17:03:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CCD5189BB2;
-	Fri, 23 Aug 2024 16:14:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80F5D190463;
+	Fri, 23 Aug 2024 17:02:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OMVOYl//"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VREJfoRV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704D3189539
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 16:14:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5014C18BB97;
+	Fri, 23 Aug 2024 17:02:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724429666; cv=none; b=ts+8d+IHRG152Xb0QZwQErRHXWTFpa2cXldp9NAtcN3M5ZJfAPwKbw450AeX1qAQngZ35jZTnGhD70G2GgYBsKpVZmsfPUOAS9wI+fweXKi1FdS0byONBjBwVHHVevQMtCFr2UCUBYy5j8CUn+qvZjnoUIk6pxspfioX2YdZbVE=
+	t=1724432556; cv=none; b=F3BoEF152Lb8K+QsIvqNT9I7cpMLTwrzFrEXjOrW2BCHYzDA/wMM9pX4IwNjH2coGfP24tfPTaWKg7Ue7GiFMmptr99fG2UPNHes2w6PYgSTSi4gKERHj+oE0teOG+/HLrmFGI3wD8B3aqEr4m+0zh+v5PsWnH7a509a6IS8hbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724429666; c=relaxed/simple;
-	bh=mkK9OpIlp+rC5+8SuvVSTiaZiUn8xekgkAN2PDqZa98=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UUsiNErcyWsBh3I4ysjWOHvmPRyyvDkmb4IxnUD7yFvUzgg0RZrAxBlZ+X0Db918ZGNgpTrI8Hq2HA5WTZ7Zf9q7xYu32WQLLk1Uw9b9P1mBMfBntX67VaE+ECpmIHBFvSssU2DtX/nDPiYjp3ChbVbkRjHJVwLm4fEqfXwq444=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OMVOYl//; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5334a8a1af7so2116745e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 09:14:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724429663; x=1725034463; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mkK9OpIlp+rC5+8SuvVSTiaZiUn8xekgkAN2PDqZa98=;
-        b=OMVOYl//1AEprFgoo69NCNiFCe6wu88vrEG6x0WIRZeqNtZZlknzC1EB6mhI/PmvgF
-         FU1FFNud3FxHadF0b0mFlUBFmwGDEIjWo4i4RfQ6KMq7ResI7L2RD3UOV+WWJ0JPobs4
-         tZa7tyPFc7hLVfXATqCVeqs33/RqJ/x8NPzXKrg8AB8sePqXnjPWY+EyXlZLgs8wYpXW
-         CQXG8aaAccvhTK2OILFc1vF9EE9/wI5JR87hY9HkoKQctIT+JL3VVq+PFaOquXEZc7Av
-         UlZs7dAUpKlCj/0Bd6G2ArlBTxzvENxUb7LFh+GJomwdHMU0QUsLnsJDr/trw4LmqmfL
-         U6wA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724429663; x=1725034463;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mkK9OpIlp+rC5+8SuvVSTiaZiUn8xekgkAN2PDqZa98=;
-        b=ahu5qd/4fypF3Ytf1/T0BmBUU3Q6DRN44XfF0502HCD+MfI7iI+ycxYCGZXV3Rok2t
-         TrsZSIU58Uj7jokFchga/642Js3RXKL2hOLIips8k+4DDfIRp09y51zcrG9p+dBOxaV6
-         3UTozSA6NQweSgMfTg7BmhDkgBedcGNUkPqDYrcvQ3bkztD2ztiYl507z9I/cltY69sT
-         kaEvHpIp/gTGuXDvbe/1ZP1f0JY6IpQ0QJgfgXZDjPJXJrsvzetXhQpSGpPhAn2g3T44
-         XW5ZqjdhtSLlvGBGtUXwzWMUGLubctnEShOyfWxo79o+VDdlPGXHDifBUoy+RE+CBfr/
-         RkqA==
-X-Forwarded-Encrypted: i=1; AJvYcCXJLF+bcyXWlEdTqb9+oZbAYDvj3TEt9GSp39XHCID9fdMKUvpGYY6nImQzeWISL+PnVNkgJ9+f2OATu4Zp@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJLWDQxJ3/GKsxJbjjnI3/hH5/zgMVtknEWbnk8PBbJKigFb3G
-	zR9/NRkm2HY0JdWKKYEoeAGRbLFgIAuc4KLJuXaB/LUC82fD7TqnGw7FElgKx6iKV/PFvN2zqt9
-	eydDH2hitl54QlGS8uyEpEaNQj95CMChkX2z1ww==
-X-Google-Smtp-Source: AGHT+IEsfcnzPgsQoJ771YERWp2GUiap4p2oaV1CMBOAbsvMhAWazYNU+D6IzPIgm3rXTmstOlX2PpANC4vujmG4rUc=
-X-Received: by 2002:a05:6512:3c87:b0:52c:dc57:868b with SMTP id
- 2adb3069b0e04-53438779988mr1859108e87.13.1724429662127; Fri, 23 Aug 2024
- 09:14:22 -0700 (PDT)
+	s=arc-20240116; t=1724432556; c=relaxed/simple;
+	bh=KTOqkWcx4VJ3PzktD2qDUCcUOUY9+HIU+QUcTAXO0s4=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=XY8JHPuCCeu+qBxSLiFbWfDOgx2maLCJMY782S7LNo7YA6B2/pa7NSiAGNOc8YtLNPdxdAgxsad05kwISzFCnCH0cZJfdeuf9de+JUr946r/LcsF91aefmGk/+fBSL0sW1grLQ9HbEs+EcIcJhpRX5k090n6IG5LNOKrraI0Mwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VREJfoRV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146ADC32786;
+	Fri, 23 Aug 2024 17:02:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724432555;
+	bh=KTOqkWcx4VJ3PzktD2qDUCcUOUY9+HIU+QUcTAXO0s4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=VREJfoRVY97Dv8b1g+75FarIAmgTQalQ8zeeaU5A5NTBdBFRP1QLr7LfxvbtFlwZK
+	 ORqPD854lMYLJxFRiFuaAkYYceJSA6hdCVJ2rixtDC7OKSDL2AF4VG5+hkzp5qMscZ
+	 QfV1KRgn3/zLCWwf5XKg9nG6e4TPkLxzqNXmMBmGbJYKbAHsHNG2KPS9RO5n1znY0i
+	 Q7Znl+a3XtIPSICWAgno0ad+MI4Me5VmYSVCqZVXn8hDz51kF4DBuoJFMosFbzwQM9
+	 Ykg1bkmJGxTwfTouNR7aX22JRlhEwXPloE4uayV6b+REwl0bh9h0gJlqFX+AYRv112
+	 qJ4Wx3Q6Z0vng==
+From: Will Deacon <will@kernel.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: catalin.marinas@arm.com,
+	kernel-team@android.com,
+	Will Deacon <will@kernel.org>,
+	iommu@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Arnaud Vrac <avrac@freebox.fr>,
+	Pierre-Hugues Husson <phhusson@freebox.fr>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Caleb Connolly <caleb.connolly@linaro.org>
+Subject: Re: [PATCH v3] iommu/arm-smmu-qcom: hide last LPASS SMMU context bank from linux
+Date: Fri, 23 Aug 2024 18:02:11 +0100
+Message-Id: <172442858770.2796746.16801443724407766952.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20240820-smmu-v3-1-2f71483b00ec@freebox.fr>
+References: <20240820-smmu-v3-1-2f71483b00ec@freebox.fr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240809-topic-h_sdc-v1-1-bb421532c531@quicinc.com>
-In-Reply-To: <20240809-topic-h_sdc-v1-1-bb421532c531@quicinc.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Fri, 23 Aug 2024 18:14:11 +0200
-Message-ID: <CACRpkdZPO=3RUAjMjB8hekn4s469d6LdCAiRhBYHh5ix5Z5_7g@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: x1e80100: Fix special pin offsets
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Abel Vesa <abel.vesa@linaro.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Sibi Sankar <quic_sibis@quicinc.com>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Rajendra Nayak <quic_rjendra@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Konrad Dybcio <quic_kdybcio@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Fri, Aug 9, 2024 at 2:22=E2=80=AFAM Konrad Dybcio <konradybcio@kernel.or=
-g> wrote:
+On Tue, 20 Aug 2024 15:27:19 +0200, Marc Gonzalez wrote:
+> On qcom msm8998, writing to the last context bank of lpass_q6_smmu
+> (base address 0x05100000) produces a system freeze & reboot.
+> 
+> The hardware/hypervisor reports 13 context banks for the LPASS SMMU
+> on msm8998, but only the first 12 are accessible...
+> Override the number of context banks
+> 
+> [...]
 
-> From: Konrad Dybcio <quic_kdybcio@quicinc.com>
->
-> Remove the erroneus 0x100000 offset to prevent the boards from crashing
-> on pin state setting, as well as for the intended state changes to take
-> effect.
->
-> Fixes: 05e4941d97ef ("pinctrl: qcom: Add X1E80100 pinctrl driver")
-> Signed-off-by: Konrad Dybcio <quic_kdybcio@quicinc.com>
+Applied to will (for-joerg/arm-smmu/updates), thanks!
 
-Patch applied, sorry for the delay!
+[1/1] iommu/arm-smmu-qcom: hide last LPASS SMMU context bank from linux
+      https://git.kernel.org/will/c/3a8990b8a778
 
-Yours,
-Linus Walleij
+Cheers,
+-- 
+Will
+
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
 
