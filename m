@@ -1,211 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-29381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 226CF95D43A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 19:23:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EB5F95D65C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 22:01:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A3B4B1F22534
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 17:23:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DAD8828483B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 20:01:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72E0018E057;
-	Fri, 23 Aug 2024 17:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED033193089;
+	Fri, 23 Aug 2024 20:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l8g7O/HD"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OIPbGLHg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1CF18594C;
-	Fri, 23 Aug 2024 17:23:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A6E192D6F;
+	Fri, 23 Aug 2024 20:01:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724433822; cv=none; b=iV4ZebMklSAMhu3m9MkO2QegJTe5hoQjXuRRqsn09NWxM+bCFfKf67BFMHNKXDpmcYjLLneq3oOewvp7egkbmq4QZ47rU3miszl3oehiFI+awJquXWLUyRrhwKIHbce3JVWzCqcNG7YRdKZ8tA13Ka+psG5kryKBSnqfF/qjmnQ=
+	t=1724443300; cv=none; b=FDTVBVwyj6N9sOBn0t/2QqdcUhehciuQHg49z1CDJN1A2GWkAwTiGgtOpQJs5/yN5D5WGkjYUOgLUoQ6GUGV4C30RDI17RZU1MlG1jaRIkxNFkngAnrO5tIOu+B5pASCKqodG6C7CBaTFF8cUIzFJ70rAZGAN8syozL/y62g8So=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724433822; c=relaxed/simple;
-	bh=TDmWT5YnHW8yIQcSnVwkjxI1/quD6m7l3+e5yWHnZZo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sDnDZAOfcEawIyo7c0xN6Ye9y2KFBuPPJe0MNneJgSkkgrsW7MbM8BA0WdsPyayptGelUFBXtUEeefSxIQ0n7reYBrtGSgWC1CaxVqDiHl4BwadoYXxxGLHEVZYQ9MvuHp5aRjhQszXgfucciYTqpnz+GDg5DYpUygVAxYKZuqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l8g7O/HD; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5bef295a2b4so3653703a12.0;
-        Fri, 23 Aug 2024 10:23:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724433819; x=1725038619; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=igaQ+cq5DGxYKGyVENdg674ni4YlsPPzIF+5a4ikTl4=;
-        b=l8g7O/HDxUn+eOx+T0avPVv6foW7CwtuU6Um7IEjbdUg+T3md+Qq/NpRiC08odNH48
-         hWwhA5ubxBQebb3YisKLaPhEwVcjqX2Z3GZ6qFOvQ9OjENzJVCyF3zpmQpi777Gv0zV2
-         Z4O5j+Rtx8QJuJE6hi23sCz2QydH3mSgbS81nez5z5a5VaKKWZ9BEzP8v/fwbhIvh2Mf
-         oNruie9l/LJYfiuEw7Fv3axxecneZYZP0FRFmGgWA54mCV4rjbo+PPRjYf7ErWiJSMnt
-         12wRfAyWqDYb1CwrSzS8UFYmATqE05Ozih97nhsTb2q/KIs0U0KSaUovL1Dyvxcqj0Ha
-         Nqng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724433819; x=1725038619;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=igaQ+cq5DGxYKGyVENdg674ni4YlsPPzIF+5a4ikTl4=;
-        b=Wyu8NNnTjCGOSiU95RS/UkAvxoxOfhgAGBfZ2gxH86G2gmMxcQzYk+FoElVN2BiJvp
-         +SaZ/WD3oX7mkhF/LpT3kazn8DKoZJFZ4mANb01gQHPKRujpKKihUfnxoVEx2mjJqNHD
-         OXGgdRcNuVYfCwD7zwblyMdD+ZBlPHtrBb66eHtLwo0lK1+TGFYyeY2W1x7tHau4CX0p
-         jdaHBTyWUraBXPVc5VQR6cVEXL8QCL1jK06QBE1fVS/gyyx7uVvGH6U5h3HTNyvGVShF
-         2s6nDrWKatRWYKS4fkxAvTipirXLx+l2VfXatOLZJid1z4A8y1fX3L4LYUXG+U8RmhNb
-         ZQkg==
-X-Forwarded-Encrypted: i=1; AJvYcCVqq2bY4Cz+plKJKV1l6tW/+lycsZcpL2X36Ztmi9dExPDzOm0bQeZH8G5l0HES8cUhMZbQF65XISOCGLl8@vger.kernel.org, AJvYcCW393Cb9NEIU4dgqMErCyf66lcEdTwM2CnqeSpOK7ZSRLIvC7tiL/8agIIIFUzI7jn8tS20EgSEDcEKiBN7@vger.kernel.org
-X-Gm-Message-State: AOJu0YyCvZhH39aZHlCTBeNogTVf+Ucp+Nus75KOR0ECB+r2xp8MQxBQ
-	hE5kBvJ1JKuzpfUB8P3w4eOELvZvTqtiKhETNJdsyCEAxHr78O7Q6Oedy9r4uPsm6GosV/bXrMz
-	cIRS+z4fKINz8/E1ge3HsXTZDth4=
-X-Google-Smtp-Source: AGHT+IEvKoYswWA+Kv16z62fxTPQiFoASnuCbE+YY/d9Vq/hDJvvJimzLBjRmNdz9Z390iTh/rA9GLCllZDWraUA9ZU=
-X-Received: by 2002:a05:6402:35ce:b0:5c0:8ff8:d7da with SMTP id
- 4fb4d7f45d1cf-5c08ff8d8d6mr1124508a12.12.1724433818375; Fri, 23 Aug 2024
- 10:23:38 -0700 (PDT)
+	s=arc-20240116; t=1724443300; c=relaxed/simple;
+	bh=aw59SIunqFIELS5Fh0+Q8lxZNWNSMCUFa1CSIJx6JvQ=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=DO07kbhYVQ+e6sqGf3gfVJ0rpdK1cn/G7/4Q+0h312GIZWojzp8V5wD7sFdTh7R1vDSs3Us6PElpko0yo9xxI4MDWLlO+iOhuAyu3AsrmTX+Jf9cs8KtHadMbfkpDeeH0FTHPbQs6omZhz3S6zJU3KeT7/TVgb1lGX/wbHdhjtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OIPbGLHg; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47NBD2wA009021;
+	Fri, 23 Aug 2024 20:01:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=EbpUGdZYWaz1gSCzAD70ouF4
+	KW64zbhrUQmGahwL2ZM=; b=OIPbGLHgBM/uSttHDcD7BY9T0AzRWDNJiCh1Nb0E
+	AIsFU6Qkyr1/Fk+f53/xKcjJtWUVHo9QakbjSrzCqK5maP5X0us2BeAFOZSgSxAP
+	29pbePjghq92Ugo9lrtSeGcQ8Cg9NWeqFe2A8R53BjgsrFsGUxD/jwnEn8Sq77C4
+	Ovh0u9ow2so3sXIPId56HS+zdp0Bbrf1wqaEz9T2FLcDWL+H5UXsZC73HEUer5Lm
+	+LyJUDs3MTrp/ELNGssKgIIxaJ2HXXQTz1oVjH+lygpFE34VE8zcvaQMC2QmG3Na
+	MzbPfd9A0bK9U98LJbvFkwAtRdu+ljT7wEKwRhir/ORENg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 414pe5v8ch-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 23 Aug 2024 20:01:16 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47NK1EVG008329
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 23 Aug 2024 20:01:14 GMT
+Received: from hu-wcheng-lv.qualcomm.com (10.49.16.6) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 23 Aug 2024 13:01:14 -0700
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+To: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
+        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
+        <tiwai@suse.com>, <krzk+dt@kernel.org>, <Thinh.Nguyen@synopsys.com>,
+        <bgoswami@quicinc.com>, <robh@kernel.org>,
+        <gregkh@linuxfoundation.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-input@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        Wesley Cheng
+	<quic_wcheng@quicinc.com>
+Subject: [PATCH v25 04/33] usb: xhci: Allow for secondary interrupter to set IMOD
+Date: Fri, 23 Aug 2024 13:00:32 -0700
+Message-ID: <20240823200101.26755-5-quic_wcheng@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20240823200101.26755-1-quic_wcheng@quicinc.com>
+References: <20240823200101.26755-1-quic_wcheng@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240820171652.145673-1-robdclark@gmail.com> <20240820171652.145673-2-robdclark@gmail.com>
- <20240823160929.GA851@willie-the-truck>
-In-Reply-To: <20240823160929.GA851@willie-the-truck>
-From: Rob Clark <robdclark@gmail.com>
-Date: Fri, 23 Aug 2024 10:23:25 -0700
-Message-ID: <CAF6AEGtkwjs4XLEBpo2O7W+UgbdxGoMAsYd+3Cr_qY88ofpMjQ@mail.gmail.com>
-Subject: Re: [PATCH v7 1/4] iommu/io-pgtable-arm: Make pgtable walker more generic
-To: Will Deacon <will@kernel.org>
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, Mostafa Saleh <smostafa@google.com>, 
-	Rob Clark <robdclark@chromium.org>, Robin Murphy <robin.murphy@arm.com>, 
-	Joerg Roedel <joro@8bytes.org>, 
-	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>, 
-	open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: kUAMkixSalBMAvNgxvAJbo6QLoj3pMjW
+X-Proofpoint-GUID: kUAMkixSalBMAvNgxvAJbo6QLoj3pMjW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-23_16,2024-08-23_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ mlxscore=0 lowpriorityscore=0 adultscore=0 priorityscore=1501
+ impostorscore=0 clxscore=1015 spamscore=0 mlxlogscore=675 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408230147
 
-On Fri, Aug 23, 2024 at 9:09=E2=80=AFAM Will Deacon <will@kernel.org> wrote=
-:
->
-> On Tue, Aug 20, 2024 at 10:16:44AM -0700, Rob Clark wrote:
-> > diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-=
-arm.c
-> > index f5d9fd1f45bf..b4bc358740e0 100644
-> > --- a/drivers/iommu/io-pgtable-arm.c
-> > +++ b/drivers/iommu/io-pgtable-arm.c
-> > @@ -747,33 +747,31 @@ static phys_addr_t arm_lpae_iova_to_phys(struct i=
-o_pgtable_ops *ops,
-> >  }
-> >
-> >  struct io_pgtable_walk_data {
-> > -     struct iommu_dirty_bitmap       *dirty;
-> > +     void                            *data;
-> > +     int (*visit)(struct io_pgtable_walk_data *walk_data, int lvl,
-> > +                  arm_lpae_iopte pte, size_t size);
-> >       unsigned long                   flags;
-> >       u64                             addr;
-> >       const u64                       end;
-> >  };
-> >
-> > -static int __arm_lpae_iopte_walk_dirty(struct arm_lpae_io_pgtable *dat=
-a,
-> > -                                    struct io_pgtable_walk_data *walk_=
-data,
-> > -                                    arm_lpae_iopte *ptep,
-> > -                                    int lvl);
-> > +static int __arm_lpae_iopte_walk(struct arm_lpae_io_pgtable *data,
-> > +                              struct io_pgtable_walk_data *walk_data,
-> > +                              arm_lpae_iopte *ptep,
-> > +                              int lvl);
-> >
-> > -static int io_pgtable_visit_dirty(struct arm_lpae_io_pgtable *data,
-> > -                               struct io_pgtable_walk_data *walk_data,
-> > -                               arm_lpae_iopte *ptep, int lvl)
-> > +static int io_pgtable_visit(struct arm_lpae_io_pgtable *data,
-> > +                         struct io_pgtable_walk_data *walk_data,
-> > +                         arm_lpae_iopte *ptep, int lvl)
-> >  {
-> >       struct io_pgtable *iop =3D &data->iop;
-> >       arm_lpae_iopte pte =3D READ_ONCE(*ptep);
-> >
-> >       if (iopte_leaf(pte, lvl, iop->fmt)) {
-> >               size_t size =3D ARM_LPAE_BLOCK_SIZE(lvl, data);
-> > -
-> > -             if (iopte_writeable_dirty(pte)) {
-> > -                     iommu_dirty_bitmap_record(walk_data->dirty,
-> > -                                               walk_data->addr, size);
-> > -                     if (!(walk_data->flags & IOMMU_DIRTY_NO_CLEAR))
-> > -                             iopte_set_writeable_clean(ptep);
-> > -             }
-> > +             int ret =3D walk_data->visit(walk_data, lvl, pte, size);
-> > +             if (ret)
-> > +                     return ret;
-> >               walk_data->addr +=3D size;
-> >               return 0;
-> >       }
-> > @@ -782,13 +780,13 @@ static int io_pgtable_visit_dirty(struct arm_lpae=
-_io_pgtable *data,
-> >               return -EINVAL;
-> >
-> >       ptep =3D iopte_deref(pte, data);
-> > -     return __arm_lpae_iopte_walk_dirty(data, walk_data, ptep, lvl + 1=
-);
-> > +     return __arm_lpae_iopte_walk(data, walk_data, ptep, lvl + 1);
-> >  }
-> >
-> > -static int __arm_lpae_iopte_walk_dirty(struct arm_lpae_io_pgtable *dat=
-a,
-> > -                                    struct io_pgtable_walk_data *walk_=
-data,
-> > -                                    arm_lpae_iopte *ptep,
-> > -                                    int lvl)
-> > +static int __arm_lpae_iopte_walk(struct arm_lpae_io_pgtable *data,
-> > +                              struct io_pgtable_walk_data *walk_data,
-> > +                              arm_lpae_iopte *ptep,
-> > +                              int lvl)
-> >  {
-> >       u32 idx;
-> >       int max_entries, ret;
-> > @@ -803,7 +801,7 @@ static int __arm_lpae_iopte_walk_dirty(struct arm_l=
-pae_io_pgtable *data,
-> >
-> >       for (idx =3D ARM_LPAE_LVL_IDX(walk_data->addr, lvl, data);
-> >            (idx < max_entries) && (walk_data->addr < walk_data->end); +=
-+idx) {
-> > -             ret =3D io_pgtable_visit_dirty(data, walk_data, ptep + id=
-x, lvl);
-> > +             ret =3D io_pgtable_visit(data, walk_data, ptep + idx, lvl=
-);
-> >               if (ret)
-> >                       return ret;
-> >       }
-> > @@ -811,6 +809,20 @@ static int __arm_lpae_iopte_walk_dirty(struct arm_=
-lpae_io_pgtable *data,
-> >       return 0;
-> >  }
-> >
-> > +static int visit_dirty(struct io_pgtable_walk_data *walk_data, int lvl=
-,
-> > +                    arm_lpae_iopte pte, size_t size)
-> > +{
-> > +     struct iommu_dirty_bitmap *dirty =3D walk_data->data;
-> > +
-> > +     if (iopte_writeable_dirty(pte)) {
-> > +             iommu_dirty_bitmap_record(dirty, walk_data->addr, size);
-> > +             if (!(walk_data->flags & IOMMU_DIRTY_NO_CLEAR))
-> > +                     iopte_set_writeable_clean(&pte);
->
-> Are you sure that's correct? I suspect we really want to update the actua=
-l
-> page-table in this case, so we probably want to pass the pointer in inste=
-ad
-> of the pte value.
+When creating a secondary interrupter, add an argument for XHCI sideband
+clients to specify an interrupt moderation value for the interrupter
+context.
 
-oh, right
+Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+---
+ drivers/usb/host/xhci-mem.c       | 4 +++-
+ drivers/usb/host/xhci-sideband.c  | 4 ++--
+ drivers/usb/host/xhci.c           | 2 +-
+ drivers/usb/host/xhci.h           | 5 ++++-
+ include/linux/usb/xhci-sideband.h | 2 +-
+ 5 files changed, 11 insertions(+), 6 deletions(-)
 
-> Will
+diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
+index 3100219d6496..2ca5937b73f4 100644
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -2334,7 +2334,8 @@ xhci_add_interrupter(struct xhci_hcd *xhci, struct xhci_interrupter *ir,
+ }
+ 
+ struct xhci_interrupter *
+-xhci_create_secondary_interrupter(struct usb_hcd *hcd, unsigned int segs)
++xhci_create_secondary_interrupter(struct usb_hcd *hcd, unsigned int segs,
++					u32 imod_interval)
+ {
+ 	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
+ 	struct xhci_interrupter *ir;
+@@ -2367,6 +2368,7 @@ xhci_create_secondary_interrupter(struct usb_hcd *hcd, unsigned int segs)
+ 		return NULL;
+ 	}
+ 
++	xhci_set_interrupter_moderation(ir, imod_interval);
+ 	xhci_dbg(xhci, "Add secondary interrupter %d, max interrupters %d\n",
+ 		 i, xhci->max_interrupters);
+ 
+diff --git a/drivers/usb/host/xhci-sideband.c b/drivers/usb/host/xhci-sideband.c
+index 281ab4c1fc42..f06bb49ede4d 100644
+--- a/drivers/usb/host/xhci-sideband.c
++++ b/drivers/usb/host/xhci-sideband.c
+@@ -259,7 +259,7 @@ EXPORT_SYMBOL_GPL(xhci_sideband_get_event_buffer);
+  */
+ int
+ xhci_sideband_create_interrupter(struct xhci_sideband *sb, int num_seg,
+-				 bool ip_autoclear)
++				 bool ip_autoclear, u32 imod_interval)
+ {
+ 	int ret = 0;
+ 
+@@ -273,7 +273,7 @@ xhci_sideband_create_interrupter(struct xhci_sideband *sb, int num_seg,
+ 	}
+ 
+ 	sb->ir = xhci_create_secondary_interrupter(xhci_to_hcd(sb->xhci),
+-			num_seg);
++			num_seg, imod_interval);
+ 	if (!sb->ir) {
+ 		ret = -ENOMEM;
+ 		goto out;
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index 3a051ed32907..0b22342bbff1 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -347,7 +347,7 @@ static int xhci_disable_interrupter(struct xhci_interrupter *ir)
+ }
+ 
+ /* interrupt moderation interval imod_interval in nanoseconds */
+-static int xhci_set_interrupter_moderation(struct xhci_interrupter *ir,
++int xhci_set_interrupter_moderation(struct xhci_interrupter *ir,
+ 					   u32 imod_interval)
+ {
+ 	u32 imod;
+diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+index 58236b435e1c..a2db8250b1fd 100644
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1832,7 +1832,8 @@ struct xhci_container_ctx *xhci_alloc_container_ctx(struct xhci_hcd *xhci,
+ void xhci_free_container_ctx(struct xhci_hcd *xhci,
+ 		struct xhci_container_ctx *ctx);
+ struct xhci_interrupter *
+-xhci_create_secondary_interrupter(struct usb_hcd *hcd, unsigned int segs);
++xhci_create_secondary_interrupter(struct usb_hcd *hcd, unsigned int segs,
++					u32 imod_interval);
+ void xhci_remove_secondary_interrupter(struct usb_hcd
+ 				       *hcd, struct xhci_interrupter *ir);
+ 
+@@ -1872,6 +1873,8 @@ int xhci_alloc_tt_info(struct xhci_hcd *xhci,
+ 		struct xhci_virt_device *virt_dev,
+ 		struct usb_device *hdev,
+ 		struct usb_tt *tt, gfp_t mem_flags);
++int xhci_set_interrupter_moderation(struct xhci_interrupter *ir,
++					   u32 imod_interval);
+ 
+ /* xHCI ring, segment, TRB, and TD functions */
+ dma_addr_t xhci_trb_virt_to_dma(struct xhci_segment *seg, union xhci_trb *trb);
+diff --git a/include/linux/usb/xhci-sideband.h b/include/linux/usb/xhci-sideband.h
+index a03f0958ebed..dd4b1a27c08d 100644
+--- a/include/linux/usb/xhci-sideband.h
++++ b/include/linux/usb/xhci-sideband.h
+@@ -56,7 +56,7 @@ xhci_sideband_get_event_buffer(struct xhci_sideband *sb);
+ 
+ int
+ xhci_sideband_create_interrupter(struct xhci_sideband *sb, int num_seg,
+-				 bool ip_autoclear);
++				 bool ip_autoclear, u32 imod_interval);
+ 
+ void
+ xhci_sideband_remove_interrupter(struct xhci_sideband *sb);
 
