@@ -1,192 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-29329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E31195C60C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 09:05:03 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9F9A95C660
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 09:16:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 32ED11C21D09
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 07:05:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 56B8CB25297
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 07:16:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C1DD137932;
-	Fri, 23 Aug 2024 07:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA1EA13C827;
+	Fri, 23 Aug 2024 07:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V+ncnovi"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Mw+6YZ1N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8A113AA3F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 07:04:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9DB13B7BC;
+	Fri, 23 Aug 2024 07:16:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724396673; cv=none; b=OBFG2QiqLD6oGcgOQGrM2d5ypqMSOJSXkebQHJhu1jCOnLxzeCE06Yc9+iUa/vOj2TqrfmYAjHmJIXj2dk1Kn0LKG4Yaqu9bMGVTQtHvCy9AeF85vF0E2BfyVRecdrxDbEwW+hKGhazJ32s04HPLT9d4qzA429+PM8Ml6QlXMiw=
+	t=1724397396; cv=none; b=tjW98l4AWXe7gj1k4+Ssi1mhHqlGEpXH3dXkOqGpmG+UqHpPP7Wm806KjUOghb/tb24Qe/6pwm+mHMn50bYSa52YssFwC933F6z/It38yv48nuEO7caSyZU+Ku9qgS23a+XkDnRztY32VBDMxo1qk6KCI7/I9Yrqol1Lb9ZTCIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724396673; c=relaxed/simple;
-	bh=b5lp9G5kmgGElPkC1EMZU1PTPbFZTnN0DYN7a06Uff8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Dp9+JIPr2jCyFD2LyDUA/u1TOgak7PQ0SoQNjY4qjQE0fjAatA1MB3py6Z9EJ8DoQY+b3Y+xm20s/0XlZC6cjdQbMm2/vNx7sd+VpYI44hig3R0S7SCd6xHnbNSJTNz/106cWiz2yO3ZjB79j45XurAFyyAPbzTkwwx13jd9XnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V+ncnovi; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5bf01bdaff0so1979895a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 00:04:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724396669; x=1725001469; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=K9EVzof5rnrF7mBTDm9cmpbs8lruT3c0ahwVf6GsTNQ=;
-        b=V+ncnoviX4lLCl15ftJ84isJc3HzghtM6+b4ULjdfuplmHoyHzABJ0e9BSHkc5xfyq
-         lbMrWsdrWdLim1k7+/zRabor+o5XWhTRpZp01hrPcTEi6j3w7W3fF8L7orscjqJtKxqE
-         Rslmdc0zLCU+O1aSWW1S3P3hyVTRmis5515Cces9RNOcuUcvy/LbYg8Bm+87K42M0HQk
-         +V+yFtHPndxdUz8ak4XEzFLbN7zUlVmP60LgSIJMfGaaUUbV2fs/Jv0hzlNMdeRcKwaX
-         UHE4wicoXKh9dkG9NxCmZxf1BbMoE7mheBhnXenWX8ZVKO5M6U43dDa36eWe+TG89YIV
-         gdbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724396669; x=1725001469;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=K9EVzof5rnrF7mBTDm9cmpbs8lruT3c0ahwVf6GsTNQ=;
-        b=GfarA+JPhxvbb4QVfj01IV2xo5cnL53g/t7iq4YPo0ZY+Hl+zYVTrR253qut7W3smz
-         V/G8l86q/J7zXFFgeGjApAA7A01gZqOfDAYV2EVhIXxXrZa7Bj/91K+ZsxwkgCx9aVoK
-         x8EH+ifjR2SoGxvgvYdtnM8CBVwKHIsNegvnGzqZLCBFPViraY3HneCv6wr6qXZI5tMY
-         XElJqgzVCegMErK7x2XYAb1Kz58keZbX2AvEWIzU1nJ42F3kEMRnVSy14DO0u8UJFeRw
-         ryIQicxBRbe1I24+gMUm+sv7dLngGhFTMdFLHu1ZTg5MMejVJWUF8bI/0kvg38/iBoVR
-         Jnow==
-X-Forwarded-Encrypted: i=1; AJvYcCUPPYdqmG+waqSjl/UZJy+8A9UChhTVu5fA2Ry1SdyDqMFJeqbRELp1Qck+H+EU8dEfgbOBVBhANTWcbcCE@vger.kernel.org
-X-Gm-Message-State: AOJu0YzbpYBT6EnDCzBB7h0OreFJaQrwUyFEohUcmETxFfHVNT1DG5BC
-	wragrbq+r+Z7k1zJNv+iISFoLtKWRNT1B19ov9oRwUGbxeU5zKDvVn7FpspvXtA=
-X-Google-Smtp-Source: AGHT+IHjg4XmnO2sOWE82GNncjVHJpDpCtPri9+DoItYKOfnkhp4FmhI1YIfIFnKycH3bCttR0tviA==
-X-Received: by 2002:a17:907:9604:b0:a7a:b561:3564 with SMTP id a640c23a62f3a-a86a54be101mr86976466b.61.1724396668635;
-        Fri, 23 Aug 2024 00:04:28 -0700 (PDT)
-Received: from [127.0.1.1] ([82.79.186.176])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a868f48ae0dsm214820766b.184.2024.08.23.00.04.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Aug 2024 00:04:28 -0700 (PDT)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Fri, 23 Aug 2024 10:04:16 +0300
-Subject: [PATCH v3 2/2] phy: qcom: qmp-pcie: Add Gen4 4-lanes mode for
- X1E80100
+	s=arc-20240116; t=1724397396; c=relaxed/simple;
+	bh=SmD2pAgg2Cga/t5bFDBOFnKZxjdDUcoMeuUuhKrJUN8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=UcMvcc11ZmZMOWgLBiq7wArKKtiFkIlJNravfPzaey2RCg6uDxH0Ii/KSB/ahJ+8C9bPymaVFE1/Azvd00JJhE6qnrj3x1ccq9EGBXcpHL4ySh+l0rZXXSY6+ulXlwb9FagjMejCNTzoHQkG0mYv9+brhnY2zqWLwaX4nYS7REs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Mw+6YZ1N; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47N0q4wX001725;
+	Fri, 23 Aug 2024 07:16:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	pvvmRzjjGmzJRu2QtaD2yqG7o8BFSxdAfyKmQ8OGQcs=; b=Mw+6YZ1N8M8rR9Jf
+	X8NPvg30YWIm0tHNwHZvEUkQ+IKOcKW+6n5qnurlXoSM9/9RLC+ER1cDDdOP4NH/
+	sR9P/86A1MTReubX3cLFbk7J48xoc671SOrEEYT6ljwZCydeKuJbDxWCHEmuuGqX
+	qCAQj/dfromoGUbp9JV8rglWvbeLloiUy1kVgaiMzy5ChFcFC4x3zuxMqSsCUUnM
+	LBwRet/APr+IlYv3HdLpoIlL+UV4oTEIl+I5prdGkZM1q/b5WbgWm9/57g5ZxEbh
+	rl+dzuzgyzhsdzMgOaaS1qos9kE5cKplrH7k/dsUqHGV3iqu4s1XkY34w8ot3Djb
+	c51yMw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 414pdn2fdd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 23 Aug 2024 07:16:14 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47N7GD8O029109
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 23 Aug 2024 07:16:13 GMT
+Received: from [10.239.133.49] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 23 Aug
+ 2024 00:16:10 -0700
+Message-ID: <13ac63cb-8ef8-41e4-8758-82635cbfade4@quicinc.com>
+Date: Fri, 23 Aug 2024 15:16:07 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/2] dt-bindings: arm: Add qcom,qmi-id for remote etm
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+        Alexander
+ Shishkin <alexander.shishkin@linux.intel.com>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, <linux-kernel@vger.kernel.org>,
+        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20240822064122.5231-1-quic_jinlmao@quicinc.com>
+ <20240822064122.5231-2-quic_jinlmao@quicinc.com>
+ <x45dqaramqjwqjmwf5fbagzsrzb4f4qaohpaaohrdfjkmq2oil@x3sz4jeqnmj5>
+Content-Language: en-US
+From: Jinlong Mao <quic_jinlmao@quicinc.com>
+In-Reply-To: <x45dqaramqjwqjmwf5fbagzsrzb4f4qaohpaaohrdfjkmq2oil@x3sz4jeqnmj5>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240823-x1e80100-phy-add-gen4x4-v3-2-b7765631ca01@linaro.org>
-References: <20240823-x1e80100-phy-add-gen4x4-v3-0-b7765631ca01@linaro.org>
-In-Reply-To: <20240823-x1e80100-phy-add-gen4x4-v3-0-b7765631ca01@linaro.org>
-To: Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, 
- linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
- Johan Hovold <johan+linaro@kernel.org>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3189; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=b5lp9G5kmgGElPkC1EMZU1PTPbFZTnN0DYN7a06Uff8=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBmyDR3wFDJ2SAY4MkWDE3DejDh7JtRUTNDkC8+C
- cysi5JuaJKJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZsg0dwAKCRAbX0TJAJUV
- VtAKD/9ALd2gF6a+o75iynnVAYMk+/sCqHJj/Lm/vd8KJA6Rv50EAV+Ucc+pnncbyxUR2jyLsdz
- NIzmWgJgNpSHR7tY52Rz/BvSlX5ES1ZhWpwny8x+4QbJ0MQ0hKk00/i7Mw0iVQ2wFiVE3hxCPWu
- cwMBKR5urOs8/pgRikupMduEMxkJigCvZZFCCb11l/2Tr5Iq3qVyaMEJU2npG+fpFF7DBmrAHUK
- ArD3BYWWRYb3OZ7UJzV4wpsST7X/fGnjoySuYsEEnStg2/QP+8FzfAK2pR0kTADK/Vz8meVozkn
- l5dzJU7iLkPSgaNA+7gGRWv+vS06pxP+9lrxzcurBxzlTstlIsF4Qcb3Eq3S4YwOCpr3djX0PqT
- wO/egk4w3OWaM2z8EoKOijbQWFoILcGcANtcxDy/v+Tcfx69q/p1tmKe4lClxOSsRLDu81f1m1P
- StCrHmNtoLVssS+j+0W0cB8Q6sW784OzxfNMr71WPxhMBiogEKDAi5V8dLTRvlUZLIkHJFxFYaf
- BKSIUBWUW5bNJ14lTnKdHt4Qsxx+cubXamOhQ0PMSnN+alZcwkQswIVh57jfMsLF7kSi558rqwQ
- xbPwFyb1e+wq5CV44sH1BV2LZeZgW9crVdXes2uR2ardI3gWp76L1NeZHoGRZMl+NQ0kumOF4n5
- Is4Fv3x0l51MqJg==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: OyOa49kwiLNuUPASs-1kIOjy-lAoPgOG
+X-Proofpoint-GUID: OyOa49kwiLNuUPASs-1kIOjy-lAoPgOG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-23_04,2024-08-22_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ lowpriorityscore=0 adultscore=0 mlxlogscore=999 bulkscore=0 mlxscore=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 clxscore=1011
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408230051
 
-The sixth PCIe controller on X1E80100 can be used in either
-4-lanes mode or 2-lanes mode. Add the configuration and compatible
-for the 4-lane mode.
 
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 42 ++++++++++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index a7e2ce0c500d..f71787fb4d7e 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -1242,6 +1242,10 @@ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_serdes_tbl[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_VCO_DC_LEVEL_CTRL, 0x0f),
- };
- 
-+static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x4_pcie_serdes_4ln_tbl[] = {
-+	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_BIAS_EN_CLK_BUFLR_EN, 0x1c),
-+};
-+
- static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_ln_shrd_tbl[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_RXCLK_DIV2_CTRL, 0x01),
- 	QMP_PHY_INIT_CFG(QSERDES_V6_LN_SHRD_DFE_DAC_ENABLE1, 0x88),
-@@ -3654,6 +3658,41 @@ static const struct qmp_phy_cfg x1e80100_qmp_gen4x2_pciephy_cfg = {
- 		.ln_shrd		= x1e80100_qmp_gen4x2_pcie_ln_shrd_tbl,
- 		.ln_shrd_num		= ARRAY_SIZE(x1e80100_qmp_gen4x2_pcie_ln_shrd_tbl),
- 	},
-+
-+	.reset_list		= sdm845_pciephy_reset_l,
-+	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
-+	.vreg_list		= sm8550_qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(sm8550_qmp_phy_vreg_l),
-+	.regs			= pciephy_v6_regs_layout,
-+
-+	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-+	.phy_status		= PHYSTATUS_4_20,
-+	.has_nocsr_reset	= true,
-+};
-+
-+static const struct qmp_phy_cfg x1e80100_qmp_gen4x4_pciephy_cfg = {
-+	.lanes = 4,
-+
-+	.offsets		= &qmp_pcie_offsets_v6_20,
-+
-+	.tbls = {
-+		.serdes			= x1e80100_qmp_gen4x2_pcie_serdes_tbl,
-+		.serdes_num		= ARRAY_SIZE(x1e80100_qmp_gen4x2_pcie_serdes_tbl),
-+		.tx			= x1e80100_qmp_gen4x2_pcie_tx_tbl,
-+		.tx_num			= ARRAY_SIZE(x1e80100_qmp_gen4x2_pcie_tx_tbl),
-+		.rx			= x1e80100_qmp_gen4x2_pcie_rx_tbl,
-+		.rx_num			= ARRAY_SIZE(x1e80100_qmp_gen4x2_pcie_rx_tbl),
-+		.pcs			= x1e80100_qmp_gen4x2_pcie_pcs_tbl,
-+		.pcs_num		= ARRAY_SIZE(x1e80100_qmp_gen4x2_pcie_pcs_tbl),
-+		.pcs_misc		= x1e80100_qmp_gen4x2_pcie_pcs_misc_tbl,
-+		.pcs_misc_num		= ARRAY_SIZE(x1e80100_qmp_gen4x2_pcie_pcs_misc_tbl),
-+		.ln_shrd		= x1e80100_qmp_gen4x2_pcie_ln_shrd_tbl,
-+		.ln_shrd_num		= ARRAY_SIZE(x1e80100_qmp_gen4x2_pcie_ln_shrd_tbl),
-+	},
-+
-+	.serdes_4ln_tbl		= x1e80100_qmp_gen4x4_pcie_serdes_4ln_tbl,
-+	.serdes_4ln_num		= ARRAY_SIZE(x1e80100_qmp_gen4x4_pcie_serdes_4ln_tbl),
-+
- 	.reset_list		= sdm845_pciephy_reset_l,
- 	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
- 	.vreg_list		= sm8550_qmp_phy_vreg_l,
-@@ -4436,6 +4475,9 @@ static const struct of_device_id qmp_pcie_of_match_table[] = {
- 	}, {
- 		.compatible = "qcom,x1e80100-qmp-gen4x2-pcie-phy",
- 		.data = &x1e80100_qmp_gen4x2_pciephy_cfg,
-+	}, {
-+		.compatible = "qcom,x1e80100-qmp-gen4x4-pcie-phy",
-+		.data = &x1e80100_qmp_gen4x4_pciephy_cfg,
- 	},
- 	{ },
- };
+On 2024/8/22 15:41, Krzysztof Kozlowski wrote:
+> On Wed, Aug 21, 2024 at 11:41:18PM -0700, Mao Jinlong wrote:
+>> qcom,qmi-id is the instance id used by qmi API to communicate with
+>> remote processor.
+>>
+>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>> ---
+>>   .../bindings/arm/qcom,coresight-remote-etm.yaml        | 10 ++++++++++
+>>   1 file changed, 10 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-remote-etm.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-remote-etm.yaml
+>> index 4fd5752978cd..27e5f18bfedf 100644
+>> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-remote-etm.yaml
+>> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-remote-etm.yaml
+>> @@ -20,6 +20,13 @@ properties:
+>>     compatible:
+>>       const: qcom,coresight-remote-etm
+>>   
+>> +  qcom,qmi-id:
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>> +    description:
+>> +      This id is used by qmi API to communicate with remote processor for
+>> +      enabling and disabling remote etm. Each processor has its unique instance
+>> +      id.
+>> +
+>>     out-ports:
+>>       $ref: /schemas/graph.yaml#/properties/ports
+>>       additionalProperties: false
+>> @@ -31,6 +38,7 @@ properties:
+>>   
+>>   required:
+>>     - compatible
+>> +  - qcom,qmi-id
+> 
+> That's an ABI break.
+> 
+> Best regards,
+> Krzysztof
+Hi Krzysztof,
 
--- 
-2.34.1
+Sorry, I didn't get your point.
+Could you please share more details ?
 
+Thanks
+Jinlong Mao
+
+> 
+> 
 
