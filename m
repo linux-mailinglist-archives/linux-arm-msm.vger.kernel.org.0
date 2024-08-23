@@ -1,179 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-29375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D45195D299
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 18:12:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8613495D2F1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 18:17:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EFD08B28D72
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 16:11:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2EF3E1F22B41
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 16:17:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FB18189BBF;
-	Fri, 23 Aug 2024 16:11:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CCD5189BB2;
+	Fri, 23 Aug 2024 16:14:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j6aiM/nb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OMVOYl//"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332C7189538;
-	Fri, 23 Aug 2024 16:11:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704D3189539
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 16:14:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724429514; cv=none; b=sNWvyVlG0bJRGZ3Dh6b+QGWZJht5fPlE0aj/MXwYzdcwgDnVknPrbEDxfR74NdNXtkjawpL6odvwqApzeNCXFjCZBRTgm3o+5cimIZV666W12S/6oUBjRzaa5Q7ChPVIpMrv2tXN0ttDpYoSsi6lnjVQvDFoOePqud+bqphkhYk=
+	t=1724429666; cv=none; b=ts+8d+IHRG152Xb0QZwQErRHXWTFpa2cXldp9NAtcN3M5ZJfAPwKbw450AeX1qAQngZ35jZTnGhD70G2GgYBsKpVZmsfPUOAS9wI+fweXKi1FdS0byONBjBwVHHVevQMtCFr2UCUBYy5j8CUn+qvZjnoUIk6pxspfioX2YdZbVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724429514; c=relaxed/simple;
-	bh=GkWrXMYKB3T3rhIJd97AJ1oo1C6XtPEZ9s0XGKFHziA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ASAg6eX1egg/u5IKu4N++0vBlJGXpfvM9+D5ggE4r/8ghEO22u5bPexICaJzZqBT1UDOhvFGafcSDy5MQ0yRcVc6oW6htz20RPFue/Ywu/sxo6pAR0GLsZAljUEWxihzyfruhrEgIezse+Jr1+CKb94VjORVuMLFPFlB6TtSF5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j6aiM/nb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCEB6C32786;
-	Fri, 23 Aug 2024 16:11:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724429513;
-	bh=GkWrXMYKB3T3rhIJd97AJ1oo1C6XtPEZ9s0XGKFHziA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=j6aiM/nbOLkq0CShwDeNYoPTwdbzW78DfJnvQpHD23uodFryDRc/M5j0W6R74gc/e
-	 nppNavurxH85NQpGBR1zR5VrsnWFebsAcTVjZS0ZQ2JdKAjltl+l+gi4XT3x5k7XV9
-	 D945cAn6pUG3BbznbOHshMcJ/2ZcaaU9iHnh2Y06jMW6RQiTDdXivNw5ya1/sM0ZfB
-	 XO9pJZ6HcCuVX+rwqJ/1KITSTp3iJpu4Z3RWP9IeNuNxuVIAHqmIoup5ET9IZXqcOT
-	 +roeiKtlqZnMMUuwzbCvRoe+lPU99qQ8dfimedoy3nNIJYmlHmzgTeumcFwDPZ2ik2
-	 xUEeoQaoyOBYA==
-Date: Fri, 23 Aug 2024 17:11:48 +0100
-From: Will Deacon <will@kernel.org>
-To: Rob Clark <robdclark@gmail.com>
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Mostafa Saleh <smostafa@google.com>,
-	Rob Clark <robdclark@chromium.org>,
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
-	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v7 2/4] iommu/io-pgtable-arm: Re-use the pgtable walk for
- iova_to_phys
-Message-ID: <20240823161148.GB851@willie-the-truck>
-References: <20240820171652.145673-1-robdclark@gmail.com>
- <20240820171652.145673-3-robdclark@gmail.com>
+	s=arc-20240116; t=1724429666; c=relaxed/simple;
+	bh=mkK9OpIlp+rC5+8SuvVSTiaZiUn8xekgkAN2PDqZa98=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UUsiNErcyWsBh3I4ysjWOHvmPRyyvDkmb4IxnUD7yFvUzgg0RZrAxBlZ+X0Db918ZGNgpTrI8Hq2HA5WTZ7Zf9q7xYu32WQLLk1Uw9b9P1mBMfBntX67VaE+ECpmIHBFvSssU2DtX/nDPiYjp3ChbVbkRjHJVwLm4fEqfXwq444=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OMVOYl//; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5334a8a1af7so2116745e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 09:14:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1724429663; x=1725034463; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mkK9OpIlp+rC5+8SuvVSTiaZiUn8xekgkAN2PDqZa98=;
+        b=OMVOYl//1AEprFgoo69NCNiFCe6wu88vrEG6x0WIRZeqNtZZlknzC1EB6mhI/PmvgF
+         FU1FFNud3FxHadF0b0mFlUBFmwGDEIjWo4i4RfQ6KMq7ResI7L2RD3UOV+WWJ0JPobs4
+         tZa7tyPFc7hLVfXATqCVeqs33/RqJ/x8NPzXKrg8AB8sePqXnjPWY+EyXlZLgs8wYpXW
+         CQXG8aaAccvhTK2OILFc1vF9EE9/wI5JR87hY9HkoKQctIT+JL3VVq+PFaOquXEZc7Av
+         UlZs7dAUpKlCj/0Bd6G2ArlBTxzvENxUb7LFh+GJomwdHMU0QUsLnsJDr/trw4LmqmfL
+         U6wA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724429663; x=1725034463;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mkK9OpIlp+rC5+8SuvVSTiaZiUn8xekgkAN2PDqZa98=;
+        b=ahu5qd/4fypF3Ytf1/T0BmBUU3Q6DRN44XfF0502HCD+MfI7iI+ycxYCGZXV3Rok2t
+         TrsZSIU58Uj7jokFchga/642Js3RXKL2hOLIips8k+4DDfIRp09y51zcrG9p+dBOxaV6
+         3UTozSA6NQweSgMfTg7BmhDkgBedcGNUkPqDYrcvQ3bkztD2ztiYl507z9I/cltY69sT
+         kaEvHpIp/gTGuXDvbe/1ZP1f0JY6IpQ0QJgfgXZDjPJXJrsvzetXhQpSGpPhAn2g3T44
+         XW5ZqjdhtSLlvGBGtUXwzWMUGLubctnEShOyfWxo79o+VDdlPGXHDifBUoy+RE+CBfr/
+         RkqA==
+X-Forwarded-Encrypted: i=1; AJvYcCXJLF+bcyXWlEdTqb9+oZbAYDvj3TEt9GSp39XHCID9fdMKUvpGYY6nImQzeWISL+PnVNkgJ9+f2OATu4Zp@vger.kernel.org
+X-Gm-Message-State: AOJu0YxJLWDQxJ3/GKsxJbjjnI3/hH5/zgMVtknEWbnk8PBbJKigFb3G
+	zR9/NRkm2HY0JdWKKYEoeAGRbLFgIAuc4KLJuXaB/LUC82fD7TqnGw7FElgKx6iKV/PFvN2zqt9
+	eydDH2hitl54QlGS8uyEpEaNQj95CMChkX2z1ww==
+X-Google-Smtp-Source: AGHT+IEsfcnzPgsQoJ771YERWp2GUiap4p2oaV1CMBOAbsvMhAWazYNU+D6IzPIgm3rXTmstOlX2PpANC4vujmG4rUc=
+X-Received: by 2002:a05:6512:3c87:b0:52c:dc57:868b with SMTP id
+ 2adb3069b0e04-53438779988mr1859108e87.13.1724429662127; Fri, 23 Aug 2024
+ 09:14:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240820171652.145673-3-robdclark@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20240809-topic-h_sdc-v1-1-bb421532c531@quicinc.com>
+In-Reply-To: <20240809-topic-h_sdc-v1-1-bb421532c531@quicinc.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Fri, 23 Aug 2024 18:14:11 +0200
+Message-ID: <CACRpkdZPO=3RUAjMjB8hekn4s469d6LdCAiRhBYHh5ix5Z5_7g@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: x1e80100: Fix special pin offsets
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Abel Vesa <abel.vesa@linaro.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Sibi Sankar <quic_sibis@quicinc.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Rajendra Nayak <quic_rjendra@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Konrad Dybcio <quic_kdybcio@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 20, 2024 at 10:16:45AM -0700, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> Re-use the generic pgtable walk path.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->  drivers/iommu/io-pgtable-arm.c | 73 +++++++++++++++++-----------------
->  1 file changed, 36 insertions(+), 37 deletions(-)
-> 
-> diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-> index b4bc358740e0..5fa1274a665a 100644
-> --- a/drivers/iommu/io-pgtable-arm.c
-> +++ b/drivers/iommu/io-pgtable-arm.c
-> @@ -710,42 +710,6 @@ static size_t arm_lpae_unmap_pages(struct io_pgtable_ops *ops, unsigned long iov
->  				data->start_level, ptep);
->  }
->  
-> -static phys_addr_t arm_lpae_iova_to_phys(struct io_pgtable_ops *ops,
-> -					 unsigned long iova)
-> -{
-> -	struct arm_lpae_io_pgtable *data = io_pgtable_ops_to_data(ops);
-> -	arm_lpae_iopte pte, *ptep = data->pgd;
-> -	int lvl = data->start_level;
-> -
-> -	do {
-> -		/* Valid IOPTE pointer? */
-> -		if (!ptep)
-> -			return 0;
-> -
-> -		/* Grab the IOPTE we're interested in */
-> -		ptep += ARM_LPAE_LVL_IDX(iova, lvl, data);
-> -		pte = READ_ONCE(*ptep);
-> -
-> -		/* Valid entry? */
-> -		if (!pte)
-> -			return 0;
-> -
-> -		/* Leaf entry? */
-> -		if (iopte_leaf(pte, lvl, data->iop.fmt))
-> -			goto found_translation;
-> -
-> -		/* Take it to the next level */
-> -		ptep = iopte_deref(pte, data);
-> -	} while (++lvl < ARM_LPAE_MAX_LEVELS);
-> -
-> -	/* Ran out of page tables to walk */
-> -	return 0;
-> -
-> -found_translation:
-> -	iova &= (ARM_LPAE_BLOCK_SIZE(lvl, data) - 1);
-> -	return iopte_to_paddr(pte, data) | iova;
-> -}
-> -
->  struct io_pgtable_walk_data {
->  	void				*data;
->  	int (*visit)(struct io_pgtable_walk_data *walk_data, int lvl,
-> @@ -760,6 +724,41 @@ static int __arm_lpae_iopte_walk(struct arm_lpae_io_pgtable *data,
->  				 arm_lpae_iopte *ptep,
->  				 int lvl);
->  
-> +struct iova_to_phys_data {
-> +	arm_lpae_iopte pte;
-> +	int lvl;
-> +};
-> +
-> +static int visit_iova_to_phys(struct io_pgtable_walk_data *walk_data, int lvl,
-> +			      arm_lpae_iopte pte, size_t size)
-> +{
-> +	struct iova_to_phys_data *data = walk_data->data;
-> +	data->pte = pte;
-> +	data->lvl = lvl;
-> +	return 0;
-> +}
-> +
-> +static phys_addr_t arm_lpae_iova_to_phys(struct io_pgtable_ops *ops,
-> +					 unsigned long iova)
-> +{
-> +	struct arm_lpae_io_pgtable *data = io_pgtable_ops_to_data(ops);
-> +	struct iova_to_phys_data d;
-> +	struct io_pgtable_walk_data walk_data = {
-> +		.data = &d,
-> +		.visit = visit_iova_to_phys,
-> +		.addr = iova,
-> +		.end = iova + 1,
-> +	};
-> +	int ret;
-> +
-> +	ret = __arm_lpae_iopte_walk(data, &walk_data, data->pgd, data->start_level);
-> +	if (ret)
-> +		return 0;
-> +
-> +	iova &= (ARM_LPAE_BLOCK_SIZE(d.lvl, data) - 1);
-> +	return iopte_to_paddr(d.pte, data) | iova;
-> +}
-> +
->  static int io_pgtable_visit(struct arm_lpae_io_pgtable *data,
->  			    struct io_pgtable_walk_data *walk_data,
->  			    arm_lpae_iopte *ptep, int lvl)
-> @@ -776,7 +775,7 @@ static int io_pgtable_visit(struct arm_lpae_io_pgtable *data,
->  		return 0;
->  	}
->  
-> -	if (WARN_ON(!iopte_table(pte, lvl)))
-> +	if (WARN_ON(!iopte_table(pte, lvl) && !selftest_running))
+On Fri, Aug 9, 2024 at 2:22=E2=80=AFAM Konrad Dybcio <konradybcio@kernel.or=
+g> wrote:
 
-Why do you care about the selftest here?
+> From: Konrad Dybcio <quic_kdybcio@quicinc.com>
+>
+> Remove the erroneus 0x100000 offset to prevent the boards from crashing
+> on pin state setting, as well as for the intended state changes to take
+> effect.
+>
+> Fixes: 05e4941d97ef ("pinctrl: qcom: Add X1E80100 pinctrl driver")
+> Signed-off-by: Konrad Dybcio <quic_kdybcio@quicinc.com>
 
-Will
+Patch applied, sorry for the delay!
+
+Yours,
+Linus Walleij
 
