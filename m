@@ -1,103 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-29367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8479D95D140
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 17:21:58 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E72595D1B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 17:40:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B71231C2174D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 15:21:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 443E72855FF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 15:40:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7322F188908;
-	Fri, 23 Aug 2024 15:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FF0F189BB9;
+	Fri, 23 Aug 2024 15:38:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z028GTwJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nGrb7kF5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A96188903;
-	Fri, 23 Aug 2024 15:21:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3A518890B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 15:38:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724426514; cv=none; b=p3tBFtDULLIMju9zukVgm/FBxiVhYB4QvXAp+QnvTzaCuhIgx8GlT7dhEhQ6T1rN+iGznvZvcCOi8fGYN/rgwQbSWUHaZqCziZw6h7+TLpyTkJiyJHqv0mSYtrFaAFv3XhkCtVnywOcUdQm4zuYkaEdYY+Wq71LPZIP4r1c+Fio=
+	t=1724427535; cv=none; b=KWZmawtPHWSRTZ9ey4sZpdca4n6oH227SyC9VsIZ1Pwd/ekuCMHBUF8qSy3IdrUZjRZQZ8g2STc0E63Ymd6URBpTc4VXcDqWDkKsAyr6ClmRaxhCIIB9tJufxRb3+UF+Zy4xMUwm33vrqp2JFMBQqquBr+XGnLvjl84nUaL08xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724426514; c=relaxed/simple;
-	bh=z/xlA997HrrjimGdMRbL+kogTgPfZTfDFAxkUoJUHPQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WgvnfCDK3IdrHkU3F4Tzq7hexTcM7dLvHNjHr+CdaYQtjl2MTRbYMLXOkT+Hnm5qIwm2tgAH6G3HhTyyM9ftVG/pRl24uq0nXpbBJtUnNPu9CUS38gVYUopBW1bCGaVHMyamhtwhxyzq/YM+ztBJ7CshapwMHaLtuyhUJwfiwYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z028GTwJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30861C32786;
-	Fri, 23 Aug 2024 15:21:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724426513;
-	bh=z/xlA997HrrjimGdMRbL+kogTgPfZTfDFAxkUoJUHPQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Z028GTwJDVdrD1dy3EjvhFp7/d7QDBryXCZodsxMo5qKnH3PWsQ/4+Wm6eTEOplEp
-	 kyBxZ8jGqrPeG1Xt8UjF3BY6dJ8CDvKsug5GIhKRmTuCV4NrVNBw8ZaqqiDNn028+N
-	 NVE4bPZFx8i7vIG9zzXW4Gy2cPxD11soRQ0JnmfdL+f5+tDk7wneORN70sI2Sa0XGl
-	 z207z0JmHzApJt8hYOYpgbu5My/ukNBLeso2W2h8bw5s2cXb4TcR+6oAOuUZgzBM13
-	 VU1auf4S0UCnI1WUEFGc62AHSLTSq7/h8ij4AjUY+ZmCIeixPeD8mntVJWiTS4ZRVS
-	 Ksi6NBAv4Cdhg==
-Date: Fri, 23 Aug 2024 16:21:48 +0100
-From: Will Deacon <will@kernel.org>
-To: Trilok Soni <quic_tsoni@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konradybcio@gmail.com>,
-	Rob Clark <robdclark@gmail.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Sumit Semwal <sumit.semwal@linaro.org>
-Subject: Re: [PATCH] iommu/arm-smmu-qcom: Work around SDM845 Adreno SMMU w/
- 16K pages
-Message-ID: <20240823152147.GA396@willie-the-truck>
-References: <20240729-topic-845_gpu_smmu-v1-1-8e372abbde41@kernel.org>
- <osxynb352ubxgcb5tv3u7mskkon23nmm3gxkfiiiqss5zp67jf@fv5d6bob2rgp>
- <CAF6AEGuWULwrJDWW37nQhByTpc-2bBYVv3b_Ac6OCwaJ83Ed9w@mail.gmail.com>
- <CAA8EJpp9zaQSKbis7J9kYTudTt=RFhfbzeayz3b-VbGQENtqeA@mail.gmail.com>
- <3332c732-4555-46bf-af75-aa36ce2d58df@gmail.com>
- <CAA8EJppZsNTqh_KxD=BWXjmedA1ogeMa74cA=vVbCWAU7A-qgQ@mail.gmail.com>
- <d766e2e8-9f3f-af3a-bb5e-633b11bce941@quicinc.com>
+	s=arc-20240116; t=1724427535; c=relaxed/simple;
+	bh=I1SOWiIGPu6vY2GBisGqQLn9Gw/7zARxAsMqXEON4rU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=GlcG3cOxQ6v3Z0CtRSuGP7Jo3ZFmpaanU6wiLGLX1tkIuzWSB79EHT0n8I07q54n1asfe5KO9+6/wfKa2Z6L+ewmjajf4V1zzng7t84XHa+ZSQNFIoJ7ZcWcciqKapG8taO3jdy64VkbSLnm+wpDrzqamU8EuVPJGVLI8Erz8OU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nGrb7kF5; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5beccb39961so314039a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 08:38:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1724427532; x=1725032332; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=02t30s/ybPllnLA3TyUJSbU8BgvNyPfDBBck1hFXkxk=;
+        b=nGrb7kF5Abymgbn+PvfdUU/iEcgTrUWk9Tzuzvq58xrUEJqmJncdiRntA3sEl9N5/q
+         3sRLHdiIV2TwXEhWRbD2aLojAFoSOuvfzcVUWqmEYw64KQBi970lm3YeVSAlBqIU/bE4
+         VOvFP3ZJKI1rUQ3pxUJvDTHun+NG7Cxn8xBJmXw9WolMUKs90lJ2a3cJGi7a6m7nz2L+
+         QPqoM+6Y/dsMFmukWqF1jaTQ1KNNr9LooR34FysFmxTliAmFqh5pD0XnD6J2uK+2/FbA
+         wXiCehPg7HJZOWrmzzNR9iVEmuh2NM6NR3U+nP9prBcs0N2I57/xMeqURaUAmaLwhRex
+         mqYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724427532; x=1725032332;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=02t30s/ybPllnLA3TyUJSbU8BgvNyPfDBBck1hFXkxk=;
+        b=veZuiiDqzpR3pBz1aQzz0pSj4w46JmGk+h0CYiIMYJRRiZzVWh70W1MhoPmYs+UEmB
+         6Qy4LP8hGzxFJWJEKjRuJ1zoaKTuPU4VunBUF4QRIPZ0nM49kdkSn5cpfoVhehTIu2kt
+         OQwQUpTQdK8sXVRbeN74JxLK0uVpdjrvAoeEZq0BSzdMWoxAW37T5MdaO4y0okBS0h+L
+         aMTptG+z3szDq1D0IgCDsEi1Ddh+eHJt7NiNkHeR/pe2xP9vPiQcWlNPiZynt3jcT5Hg
+         gVAOX3ErzLX1ciortYjRqfTnZNMKYkJGn3h/1ThaEQpQg1ZAqhzTKrgPHW59dPYYF6HB
+         1o/w==
+X-Gm-Message-State: AOJu0YxYUoRvxUMpWFJiv3yj7nFMAZi+FCrGNjfsqcba4Q6m3WsE6S51
+	86PEQE2nv6z9nDw8GC06iVym6IZVmU+7g/fVDy5HNq8oYO+l/AgVF+8tOqUxS7HWKv6KFQXoyIq
+	G
+X-Google-Smtp-Source: AGHT+IF+oQ/oTjHRbmUr6WGmP63IA5idFyALrsMFoNHmXhsK4HxGj6ZLMO2u1Ea+dVgRNa7oqKaM/Q==
+X-Received: by 2002:a17:907:daa:b0:a80:79ff:6aa9 with SMTP id a640c23a62f3a-a86a54bbc5bmr95455266b.8.1724427532157;
+        Fri, 23 Aug 2024 08:38:52 -0700 (PDT)
+Received: from [127.0.1.1] ([178.197.222.82])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a868f2e6722sm273279866b.91.2024.08.23.08.38.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Aug 2024 08:38:51 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 0/3] clk: qcom: simplify locking with guard()
+Date: Fri, 23 Aug 2024 17:38:42 +0200
+Message-Id: <20240823-cleanup-h-guard-clk-qcom-v1-0-68bb9601c9dd@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d766e2e8-9f3f-af3a-bb5e-633b11bce941@quicinc.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAKtyGYC/x3MQQ5AMBBA0avIrE0ySkpcRSyqBhMUbYhE3F1j+
+ Rb/PxDYCweokwc8XxJkcxFZmoCdjBsZpY8GRaqgSuVoFzbu3HHC8TS+j57xsNuKypRaE1HXFRp
+ ivnse5P7XTfu+H33wRfxqAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=756;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=I1SOWiIGPu6vY2GBisGqQLn9Gw/7zARxAsMqXEON4rU=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmyK0E5oVO76GQ4lUsSKXTyKg1q37ZGutvV4lFI
+ V+OGz6MhTWJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZsitBAAKCRDBN2bmhouD
+ 19aFD/9DTXsgKVzm38+yVPk+FF8ijkYsQKdKmnee/5f0/gF+z6P+LBvcQwDIJTa/prG94BHl85l
+ 3+GvXg67LWC4U/9ygi72U1nB5KZM7r7+TPc8tRAxzt+jHWLdoCUNU94hcRez03387xuTKLssBcf
+ q87PEFVUsNTLzDkMfMUhnymwte6/qCyTJSsVdg4ZgfhXdKKe3oae46R7O3VoIUHEeXOF39Q+I9d
+ wAYz1YR6w9kER9BZGVw1i4hnYNCliFItXJnSBgAbR4qBNDNUXj+oTYeYGD70/kiU7z9bJd255jH
+ B4zJBgLidZXNSWgGokwqPY14MZwMc/tiGFGuSMouh5iBW2+p4YB8oh4VSxb6osFQl8bCzZVgdO4
+ kpHqMZ1lJOpiEjtfY5yUir+QEYV/FPoPuDLDQGvv9xoATTA5JCW9qOH4fwuEgl3rQF60z+YbhPi
+ VVQ41j1gc2+/VllinXNCrk9v28V+c7DIO08/yKa1fYXUTE5zuHYIFZweORu41PLT3RuteyCO6C8
+ 3S78nTt97MZsacqPjNXtRkcVXQZkCEYxp4c2HG640qj7y9mlKlpt+s2bbwZMSWWYCFJv3/VSXPu
+ r96ykj8aa0B5Eo/N8R4/2sPLIpZtoRFh7eYNQf6Ocjmy4DQMteaReNV1JXgLvzYC4jPOTyCjpKW
+ 0LRWTPeyzr+sLNQ==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-On Tue, Jul 30, 2024 at 10:16:00AM -0700, Trilok Soni wrote:
-> On 7/30/2024 1:50 AM, Dmitry Baryshkov wrote:
-> >>>>>> SDM845's Adreno SMMU is unique in that it actually advertizes support
-> >>>>>> for 16K (and 32M) pages, which doesn't hold for newer SoCs.
-> > My question is about forbidding 16k pages for sdm845 only or for other
-> > chips too. I'd assume that it shouldn't also work for other smmu-v2
-> > platforms.
-> 
-> Yes, my understanding was that SMMUv2 based IPs doesn't have 16k support
-> and it is only starting from SMMUv3. 
+Simplify error handling around locks with guard().  Less gotos needed.
 
-I'm not sure about that. The architecture doc for SMMUv2 talks about the
-AArch64 translation regime in section 1.5 and bit 13 of SMMU_IDR2 says:
+Best regards,
+Krzysztof
 
-  | PTFSv8_16kB, bit[13]
-  | Support for 16KB translation granule size. The possible values of this bit are:
-  | 0	The 16KB translation granule is not supported.
-  | 1	The 16KB translation granule is supported.
-  | In SMMUv1, this bit is reserved.
+---
+Krzysztof Kozlowski (3):
+      clk: qcom: rpm: simplify locking with guard()
+      clk: qcom: smd-rpm: simplify locking with guard()
+      clk: qcom: spmi-pmic-div: simplify locking with guard()
 
-so I think Konrad's patch is about right, but if you want to extend it
-to cover other implementations then that's fine too.
+ drivers/clk/qcom/clk-rpm.c           | 27 +++++++++++----------------
+ drivers/clk/qcom/clk-smd-rpm.c       | 25 ++++++++++---------------
+ drivers/clk/qcom/clk-spmi-pmic-div.c | 13 +++++--------
+ 3 files changed, 26 insertions(+), 39 deletions(-)
+---
+base-commit: e188fd67a69319f3d105d9b90e424b8d1ff9580c
+change-id: 20240823-cleanup-h-guard-clk-qcom-2a766000bb46
 
-Will
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
