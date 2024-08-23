@@ -1,155 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-29400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B92C95D6BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 22:05:48 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F338895D7DC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 22:33:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 426E32858B6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 20:05:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 32D511C225BE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 20:33:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E513C19A29A;
-	Fri, 23 Aug 2024 20:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2CFA1C174A;
+	Fri, 23 Aug 2024 20:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Bs6leHwl"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="cFTZss0A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2D9198A20;
-	Fri, 23 Aug 2024 20:01:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5171F1C7B65
+	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 20:33:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724443316; cv=none; b=T2hzH4STuAoLaej2lehn5Slw6M83WwE9MjEPHQncb8jvnK6kleOM6higu0qDgJ4s6XBbHkhY5NZ+I6DwHmo9cjKUDuxnQtCpi4T896brAWAxlocIvrDLv76AHn3C7W3VtRm61drpv9PTjutHHLwuMTvaF2Wmq6J3axuU6KJsmJk=
+	t=1724445207; cv=none; b=kA47/DH3rKcpZPhzb1U0CovJeBQwOp68JbA9sQi96sA3+TRyL1h3jIn520lYiUH04cxMCoOqz3cfc91pr/YgDZ2u+hY6CpLhFZhLwCbFfzu4D4FVpILJDjajxWTvhygiFnmdzkWyOi05uJtEBTP9XRdVm/5aUmVyUJE/DJoC+Ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724443316; c=relaxed/simple;
-	bh=lw7y74FMUQgfwEquFaZBoNBGbghBe8E56AGuz8AUDtw=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I3Eqmm/5YcO/N5xOJuFgYeH14VReyEe/fRjESC4pfT1KiPVBquciNoewMhPIs9CM9jdxHLjOi1p/0yZ6jhglzZDCOxFmAHUmqobI12Xri39ncDPQhLHRe78rWT7q45iz2rzKGuaVceZyvGuTtTSVrd5qeVA9iIeoiELk5iBP56o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Bs6leHwl; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47NDlE7p014793;
-	Fri, 23 Aug 2024 20:01:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=FQceBJzv282ZgzUCIfn52eGt
-	+Y4Pfhd+0oONvDqa46E=; b=Bs6leHwlhtOFdsubHqjczHmu+0zvd70w9xqEEQXN
-	DmMVirpm095BmI0ZAkyFOcE5YWUM0N2XUG9IMZBmI0suqADfwSQb1IogaVSybW1M
-	l1r/OfL8Yr8I4C25+Lkjf3e/wyi14gjOYTgO+SdHmjJ8z3M6P3aFDFZq+2mTh4/b
-	pWttGOfEyV9zHpHRYHZp0Ji13+2Qzu2k3xAYA7GE+LMbDnJ9gpsfIFg3Skq1gGMh
-	APF/dV7/N8tad6n24QvZTpeU6whAuv3wnNEAyyVxRz9dnCEp8N6Ao+qJ/yETLKqj
-	bKHd5uwwegTBLCIV5cDiDfWdBt4VvnUyp70Ajgfsg5Tpkg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 416ukyguey-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 23 Aug 2024 20:01:22 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47NK1LFL001696
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 23 Aug 2024 20:01:22 GMT
-Received: from hu-wcheng-lv.qualcomm.com (10.49.16.6) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 23 Aug 2024 13:01:21 -0700
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-To: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <tiwai@suse.com>, <krzk+dt@kernel.org>, <Thinh.Nguyen@synopsys.com>,
-        <bgoswami@quicinc.com>, <robh@kernel.org>,
-        <gregkh@linuxfoundation.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-input@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        Wesley Cheng
-	<quic_wcheng@quicinc.com>
-Subject: [PATCH v25 29/33] ALSA: usb-audio: qcom: Don't allow USB offload path if PCM device is in use
-Date: Fri, 23 Aug 2024 13:00:57 -0700
-Message-ID: <20240823200101.26755-30-quic_wcheng@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240823200101.26755-1-quic_wcheng@quicinc.com>
-References: <20240823200101.26755-1-quic_wcheng@quicinc.com>
+	s=arc-20240116; t=1724445207; c=relaxed/simple;
+	bh=MsOMxkYeIW9qydJzRqD0Ihv3BRacgITErjIgiRvw2KI=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VnuA2epa2uhrbzHKr6F22AyodqdDTh4WkLraBzK27DituR/cdRLoNplakxjPWjUd/bn9Qirj00YhzZH3iULf4EwNF61cafxfQSyyyS98sBphT75J7QFN0ZlWSFm1b6pwu6RIC6/NpgDEWaaTplceKiUWlo7csiIVluvRrcirIzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=cFTZss0A; arc=none smtp.client-ip=209.85.222.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7a1e4c75488so143269585a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 13:33:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1724445205; x=1725050005; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/0Yyeee2Vf8r1D/wovFCOKuxZaGFv9fKeG3mfjxEVas=;
+        b=cFTZss0AaAWpfKQeI8Idfc6fqkRGpIPKMJXs8fvEZraYzcmoJoA6hTJ0ThLIGiwNNr
+         F30K72MKPjoT2g6KfmMBkTAFWbtAzmEoZbdYzgxKpYK5iHCSrUZOQDov+oWhG3O3YklN
+         kVVUqJCL/yQJCif6Bv1AdisX4MGrx90wQGICg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724445205; x=1725050005;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/0Yyeee2Vf8r1D/wovFCOKuxZaGFv9fKeG3mfjxEVas=;
+        b=fxdCG9URiNLpm6gq1kRMDXB1LVLthuVqH3mzOWRmhEOh0v4Ibpnt5auHiOkVQcht4z
+         /1wCFSO2JlO8U74bfaGrwBSC8lyN6OgF305efwpBATXynDadnuYmq3rA5d+IzI4hAW5S
+         2YfHGfIKT6f7FJ75soPD6EhHDnAKSEEleE3lmp+DJWaFn9SJccnMS4bhb3AQTSi76Izo
+         Kind+DSOvySH1KxCAaXZNw/1ZKpxVQzxpBiP8pOuJCWYVPu+cc019YAlZlpdpT2LBV7M
+         flaN39/FNTiBsg//3oksIYvR1njqJ5+Ak1gdCAR1RA6J5JIZuBDT0aPlyOIPcwOocxQZ
+         X0uQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWUi5z8ucJOyM/TwuLTwLK68VWu9x8tUj7xgr/6rrh7WtjZlYcJ8cCyPqFj7MiuJRgYM39qhMo7j2ZKib4L@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUsSIDRa+ItMA14RQQnfhubzu9DtA2nc5BMgcwS8vibsnJGICP
+	zrfFJbKFPhXgBaGroqfuiA9ueSDWvbCa8f26nrI1mTocS4ZBa/yVz03A1aF+/4Kv4wOR58T6E5a
+	5Xq4XtXn050X/IdX40vshCZ20imYmv+cYQFb8
+X-Google-Smtp-Source: AGHT+IGW/VO5LDbH2qUnWbdRuqhhtG11KOFQeC4peX75Dv4BIQ4AXaDFfDgoU0VrJw72vzH9xwkXBWdGeZo2zOTAGgE=
+X-Received: by 2002:a05:620a:461e:b0:79f:dce:76c7 with SMTP id
+ af79cd13be357-7a6897c444dmr460409785a.68.1724445205109; Fri, 23 Aug 2024
+ 13:33:25 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 23 Aug 2024 13:33:24 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: XnhhrCmslDpPvQ1bZ49XPFY8Uj64WLIv
-X-Proofpoint-GUID: XnhhrCmslDpPvQ1bZ49XPFY8Uj64WLIv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-23_16,2024-08-23_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
- lowpriorityscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0
- suspectscore=0 mlxscore=0 impostorscore=0 priorityscore=1501 adultscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408230147
+In-Reply-To: <d03d5425-bd7c-4c20-a54e-5708ffd059e0@linaro.org>
+References: <20240819233628.2074654-1-swboyd@chromium.org> <d03d5425-bd7c-4c20-a54e-5708ffd059e0@linaro.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Fri, 23 Aug 2024 13:33:24 -0700
+Message-ID: <CAE-0n52=kQzEx76D5AmZfui_X0jqejQ+ENz+VQunY_ovph65Hw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] clk: qcom: gcc-sm8550: Fix shared clk parking breakage
+To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	neil.armstrong@linaro.org
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	patches@lists.linux.dev, linux-clk@vger.kernel.org, 
+	Amit Pundir <amit.pundir@linaro.org>, Taniya Das <quic_tdas@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Add proper checks and updates to the USB substream once receiving a USB QMI
-stream enable request.  If the substream is already in use from the non
-offload path, reject the stream enable request.  In addition, update the
-USB substream opened parameter when enabling the offload path, so the
-non offload path can be blocked.
+Quoting neil.armstrong@linaro.org (2024-08-21 08:44:00)
+> Hi,
+>
+> On 20/08/2024 01:36, Stephen Boyd wrote:
+> > Amit Pundir reported[1] that a recent commit 01a0a6cc8cfd ("clk: qcom:
+> > Park shared RCGs upon registration") broke USB and audio on sm8550-hdk.
+> > These two patches fix the issue by skipping the parking bit of the
+> > shared RCGs for devices that can't run so slow.
+> >
+> > [1] https://lore.kernel.org/CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com/
+> >
+> > Stephen Boyd (2):
+> >    clk: qcom: gcc-sm8550: Don't use parking clk_ops for QUPs
+> >    clk: qcom: gcc-sm8550: Don't park the USB RCG at registration time
+> >
+> >   drivers/clk/qcom/clk-rcg.h    |  1 +
+> >   drivers/clk/qcom/clk-rcg2.c   | 30 +++++++++++++++++++
+> >   drivers/clk/qcom/gcc-sm8550.c | 54 +++++++++++++++++------------------
+> >   3 files changed, 58 insertions(+), 27 deletions(-)
+> >
+> >
+> > base-commit: 8400291e289ee6b2bf9779ff1c83a291501f017b
+>
+> I'm pretty sure sm8450 & sm8650 (and probably other SoCs) could be also affected, could you check ?
 
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
----
- sound/usb/qcom/qc_audio_offload.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
-index a728e560a591..b76c61678738 100644
---- a/sound/usb/qcom/qc_audio_offload.c
-+++ b/sound/usb/qcom/qc_audio_offload.c
-@@ -1475,12 +1475,17 @@ static void handle_uaudio_stream_req(struct qmi_handle *handle,
- 		goto response;
- 	}
- 
-+	mutex_lock(&chip->mutex);
- 	if (req_msg->enable) {
--		if (info_idx < 0 || chip->system_suspend) {
-+		if (info_idx < 0 || chip->system_suspend || subs->opened) {
- 			ret = -EBUSY;
-+			mutex_unlock(&chip->mutex);
-+
- 			goto response;
- 		}
-+		subs->opened = 1;
- 	}
-+	mutex_unlock(&chip->mutex);
- 
- 	if (req_msg->service_interval_valid) {
- 		ret = get_data_interval_from_si(subs,
-@@ -1502,6 +1507,11 @@ static void handle_uaudio_stream_req(struct qmi_handle *handle,
- 		if (!ret)
- 			ret = prepare_qmi_response(subs, req_msg, &resp,
- 					info_idx);
-+		if (ret < 0) {
-+			mutex_lock(&chip->mutex);
-+			subs->opened = 0;
-+			mutex_unlock(&chip->mutex);
-+		}
- 	} else {
- 		info = &uadev[pcm_card_num].info[info_idx];
- 		if (info->data_ep_pipe) {
-@@ -1525,6 +1535,9 @@ static void handle_uaudio_stream_req(struct qmi_handle *handle,
- 		}
- 
- 		disable_audio_stream(subs);
-+		mutex_lock(&chip->mutex);
-+		subs->opened = 0;
-+		mutex_unlock(&chip->mutex);
- 	}
- 
- response:
+Does someone have the hardware to test? It looks like sm8450 isn't using
+the shared ops, but sm8650 is, likely incorrectly.
 
