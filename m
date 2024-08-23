@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-29363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A869F95CE50
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 15:47:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D53D95CE67
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 15:51:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1CEA1B23D1A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 13:47:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C33991C21CD9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 13:51:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B734A17C7DC;
-	Fri, 23 Aug 2024 13:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4512D18859B;
+	Fri, 23 Aug 2024 13:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G2XJh4Hp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XRcxzYT0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84CC81DFE8;
-	Fri, 23 Aug 2024 13:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12DCB1DFE8;
+	Fri, 23 Aug 2024 13:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724420870; cv=none; b=c6s73HY9UsqMXm9/CatlZqLHovfbwfqysOyh5P+FMSa2W+vN06/hYvV3DN3XwCJQ/2XthxAhaObLcNbTbzGxJWVZA1XXRQBWPQ/a14h0vAf4KkZgAMBNlxYMRNuuw3tfaM4cU9lCfWNAcZ1/pfLqLqMibH/1M71Zus6mk0gi/IE=
+	t=1724421094; cv=none; b=hvJR9EKsMDCu+QGKj/VG1ef3usI1u1zkFJkmRY4AkkmgvXzlRi8/mLgOk6u8g9Ifs0RVgS3UZqJCBiWzHDvuzjiT31T9Ld6VsRrmNJnKsJ22YQBVkCl0AWn2QUcp0ztbNeM+vZ1DndIrjPVIGpdlgONo31zezc1Lf3MbJjeXwlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724420870; c=relaxed/simple;
-	bh=bXC2LfSkMhE/9jDJneZMl800SDYiBayRvK7YQTFG5M4=;
+	s=arc-20240116; t=1724421094; c=relaxed/simple;
+	bh=UE483HCROS2DBDxQZGMnMhL4YknFLf2TEl7zKV9B2eM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MZ9GUQGU2n4FnYtDQ+ceU8PprOnsHAC5xYicXXWIq9ElVdkvAP6QnAuICldZGVIUGpCpin4dhJTmBXc58N6kaZPci8fTv6Aurh0UUxGcGwWZBs6ONWnc3mIymy+B8vPqRkHWiC3g6s9EzbzelH9HllaR2Ys4ZTZ8l4eCSoay8lA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G2XJh4Hp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13697C32786;
-	Fri, 23 Aug 2024 13:47:45 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=fM5SwolssAM4/EJBPYyD5tM8tsITklfOxex0jZ3OmpJoS3peCo3UVKFCVPMW60g7Q1/lRRPzsspc2gowW90kqMblVM6c7wsX94UJ25Bp3yMvKCL6Nw//K5KGqbglJfarMta1vsmVweYdoKCqO4ArAsLkJ+VPhzioEXc4Snucbtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XRcxzYT0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B34C32786;
+	Fri, 23 Aug 2024 13:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724420870;
-	bh=bXC2LfSkMhE/9jDJneZMl800SDYiBayRvK7YQTFG5M4=;
+	s=k20201202; t=1724421093;
+	bh=UE483HCROS2DBDxQZGMnMhL4YknFLf2TEl7zKV9B2eM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=G2XJh4HpqiQf/s3AFYsVLG2QaL45QMJuGIL/P5ZUh/yiqXyDPpwzJAMpB6Dy+e1LZ
-	 NSebxt64/XEO6Ns+/7cnWG9M7Lv/M1aHdzmoai0C7JJ+3kzSLzAb+h7Znji+LfefTi
-	 s1eJIO+eWW3EjRxQyuI8Lex0gEXoQQ7FzbyAhLg9bhkZRGq9873oRPhyR76j19IRoI
-	 e7cpj2gfHw9fh3I5JE4S/ATI1ldDARSh1afF8psjoD/M+c17abe2zAkUjsHQ+EJO1b
-	 CnbwaKCcCIrgua+XiBoYq/ZZA47dNFOgd+/AnjISNj++RzckXYHmQkK7PAqXn/QLyr
-	 WwaKDe3GKWNXA==
-Message-ID: <2a8c20ce-0c90-4e59-ab77-7c71de21e502@kernel.org>
-Date: Fri, 23 Aug 2024 15:47:43 +0200
+	b=XRcxzYT0+0378RLFOQuyD3+ZfetboZHOG4fmwphK8TrgtOh1sz5KgSpLy0Vei9UPC
+	 9TnhWMezxUgoWyvUmtoMf1OeXUQ/VbZQewPzUQEol0H9BVmn4862etQqGgYaqm8gts
+	 DktbZoXYoMnS6IzBnQZjKlANrXLverPEiRzC/E5rpRpEB8faWGkLaqkEz+xIUemUsI
+	 KfJ4sjPmDzkXiwLwbeLbuwbt/SeYklBoLlehen67M/OfR4y1h8hlbiTSG1tzHwhW0k
+	 zh1iTDEWzi2Lu7fHp8/nzO7X8Tovmrt+GgJnHasXHbS+m2FJqphYg6Sd2v4H5WrStY
+	 a/Cu8/sMZYm2Q==
+Message-ID: <ececab1a-b4c7-49ac-8a76-038d672a0dd4@kernel.org>
+Date: Fri, 23 Aug 2024 15:51:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,31 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: remoteproc: qcom: document hexagon based
- WCSS secure PIL
-To: Gokul Sriram P <quic_gokulsri@quicinc.com>,
-	q@krzk-bin.smtp.subspace.kernel.org
-Cc: andersson@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_viswanat@quicinc.com,
- quic_mmanikan@quicinc.com, quic_varada@quicinc.com, quic_srichara@quicinc.com
-References: <20240820085517.435566-1-quic_gokulsri@quicinc.com>
- <20240820085517.435566-2-quic_gokulsri@quicinc.com>
- <ticwyyycqlk2uqpiqckoqqnapqatw74s6f6tjqmmyt2d6siqqt@xxe2qdtr4c2c>
- <2b6b43b3-c99b-4aac-b1fb-24f6e5e562ce@quicinc.com>
- <7b8f488a-deac-4089-be7a-c0d76afca0fa@kernel.org>
- <982ca02e-a0b0-4dac-9294-ae2c2fb3463f@quicinc.com>
+Subject: Re: [PATCH v2 1/8] dt-bindings: PCI: Add binding for qps615
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ cros-qcom-dts-watchers@chromium.org, Bartosz Golaszewski <brgl@bgdev.pl>,
+ Jingoo Han <jingoohan1@gmail.com>, andersson@kernel.org,
+ quic_vbadigan@quicinc.com, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20240803-qps615-v2-1-9560b7c71369@quicinc.com>
+ <5f65905c-f1e4-4f52-ba7c-10c1a4892e30@kernel.org>
+ <f8985c98-82a5-08c3-7095-c864516b66b9@quicinc.com>
+ <58317fe2-fbea-400e-bd1d-8e64d1311010@kernel.org>
+ <100e27d7-2714-89ca-4a98-fccaa5b07be3@quicinc.com>
+ <c80ae784-c1f3-4046-9d86-d7e57bd93669@kernel.org>
+ <7f48f71c-7f57-492c-47df-6aac1d3b794b@quicinc.com>
+ <aa311052-deba-4d13-9ede-1d863a4f362e@kernel.org>
+ <20240822141622.tw7vcoc4ciwbydsw@thinkpad>
+ <9cff09b0-d039-4e65-b6dc-57adaf94c12e@kernel.org>
+ <20240823094419.7l2kvly4mnajrm4z@thinkpad>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,36 +120,77 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <982ca02e-a0b0-4dac-9294-ae2c2fb3463f@quicinc.com>
+In-Reply-To: <20240823094419.7l2kvly4mnajrm4z@thinkpad>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 23/08/2024 11:47, Gokul Sriram P wrote:
-> 
-> On 8/22/2024 5:00 PM, Krzysztof Kozlowski wrote:
->>> IM_SLEEP_CLK - Internal Module sleep clock needed for Q6 reset.
+On 23/08/2024 11:44, Manivannan Sadhasivam wrote:
+> On Fri, Aug 23, 2024 at 11:01:37AM +0200, Krzysztof Kozlowski wrote:
+>> On 22/08/2024 16:16, Manivannan Sadhasivam wrote:
+>>> On Mon, Aug 05, 2024 at 04:43:47PM +0200, Krzysztof Kozlowski wrote:
+>>>> On 05/08/2024 07:57, Krishna Chaitanya Chundru wrote:
+>>>>>>
+>>>>> Hi Krzysztof,
+>>>>>
+>>>>> QPS615 has a 3 downstream ports and 1 upstream port as described below
+>>>>> diagram.
+>>>>> For this entire switch there are some supplies which we described in the
+>>>>> dt-binding (vdd18-supply, vdd09-supply etc) and one GPIO which controls
+>>>>> reset of the switch (reset-gpio). The switch hardware can configure the
+>>>>> individual ports DSP0, DSP1, DSP2, upstream port and also one integrated
+>>>>> ethernet endpoint which is connected to DSP2(I didn't mentioned in the
+>>>>> diagram) through I2C.
+>>>>>
+>>>>> The properties other than supplies,i2c client, reset gpio which
+>>>>> are added will be applicable for all the ports.
+>>>>> _______________________________________________________________
+>>>>> |   |i2c|                   QPS615       |Supplies||Resx gpio |
+>>>>> |   |___|              _________________ |________||__________|
+>>>>> |      ________________| Upstream port |_____________         |
+>>>>> |      |               |_______________|            |         |
+>>>>> |      |                       |                    |         |
+>>>>> |      |                       |                    |         |
+>>>>> |  ____|_____              ____|_____            ___|____     |
+>>>>> |  |DSP 0   |              | DSP 1  |            | DSP 2|     |
+>>>>> |  |________|              |________|            |______|     |
+>>>>> |_____________________________________________________________|
+>>>>>
+>>>>
+>>>> I don't get why then properties should apply to main device node.
+>>>>
 >>>
->>> SLEEP is not an acronym here.
->> Then probably you mean "Internal sleep", although "internal" is also
->> confusing. Devices do not receive as input something which is internal
->> to them.
+>>> The problem here is, we cannot differentiate between main device node and the
+>>> upstream node. Typically the differentiation is not needed because no one cared
+>>> about configuring the upstream port. But this PCIe switch is special (as like
+>>> most of the Qcom peripherals).
+>>>
+>>> I agree that if we don't differentiate then it also implies that all main node
+>>> properties are applicable to upstream port and vice versa. But AFAIK, upstream
+>>> port is often considered as the _device_ itself as it shares the same bus
+>>> number.
 >>
->>>>> +
->>>>> +  clock-names:
->>>>> +    items:
->>>>> +      - const: im_sleep
->>>> sleep? Are there different sleep clocks here?
->>> We have different branches of sleep clk each enabled separately.
->>>
->>> im_sleep is one of those branches that q6 uses.
->> So this device misses other branches? Then provide them. Otherwise it is
->> just "sleep".
+>> Well, above diagram shows supplies being part of the entire device, not
+>> each port. That's confusing. Based on diagram, downstream ports do not
+>> have any supplies... and what exactly do they supply? Let's look at
+>> vdd18 and vdd09 which sound main supplies of the entire device. In
+>> context of port: what exactly do they power? Which part of the port?
+>>
 > 
-> ok, I shall keep it as simply "sleep" and move on? Other branches of 
-> sleep clk are irrelevant to remoteproc.
+> The supplies for the downstream ports are derived from the switch power supply
+> only. There is no way we can describe them as the port suppliers are internal to
+> the device.
 
-Then it is "sleep". The name here describes the clock input in this
-device, not the clock in other places.
+IIUC, this means supplies are not valid for downstream ports, so it is a
+proof that binding is not correct. I don't get why we keep poking this
+and get to the same conclusions I had 3 weeks ago.
+
+Basically the binding is saying that downstream ports are identical to
+the device. Including the aspect of having more downstream ports (so
+device -> downstream ports -> downstream ports -> downstream ports ...
+infinite). To remind that was my conclusion:
+
+"Downstream port is not the same as device. Why downstream port has the
+same supplies? To which pins are they connected?"
 
 Best regards,
 Krzysztof
