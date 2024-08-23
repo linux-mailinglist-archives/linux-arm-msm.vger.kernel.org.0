@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-29377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3735895D3F0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 19:03:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4DF895D3F4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 19:03:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E9112283BBF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 17:03:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 245871C21525
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 17:03:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80F5D190463;
-	Fri, 23 Aug 2024 17:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66A6219069B;
+	Fri, 23 Aug 2024 17:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VREJfoRV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KXU6+DF8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5014C18BB97;
-	Fri, 23 Aug 2024 17:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3907118BB97;
+	Fri, 23 Aug 2024 17:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724432556; cv=none; b=F3BoEF152Lb8K+QsIvqNT9I7cpMLTwrzFrEXjOrW2BCHYzDA/wMM9pX4IwNjH2coGfP24tfPTaWKg7Ue7GiFMmptr99fG2UPNHes2w6PYgSTSi4gKERHj+oE0teOG+/HLrmFGI3wD8B3aqEr4m+0zh+v5PsWnH7a509a6IS8hbg=
+	t=1724432560; cv=none; b=YU+kUnuK2XE35ih84WdZxIobvuS2LC7h4GhRREg9i4Up4f6267HRlv233eKcH2cq07o7e+L2XwL+QUsGmWKaT4Ex59sTI8X96MXdFpENy6fo9f1rgAkMvWZev0OCWV6m5bwR/ZXAaGwMRB3NDhU1yEbcIP95bwmtbolH1fQJ5jY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724432556; c=relaxed/simple;
-	bh=KTOqkWcx4VJ3PzktD2qDUCcUOUY9+HIU+QUcTAXO0s4=;
+	s=arc-20240116; t=1724432560; c=relaxed/simple;
+	bh=LrsQbM+9Culzk5ZY9Zi1h3Hk51nvlJlLN7JY3gYeZ58=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XY8JHPuCCeu+qBxSLiFbWfDOgx2maLCJMY782S7LNo7YA6B2/pa7NSiAGNOc8YtLNPdxdAgxsad05kwISzFCnCH0cZJfdeuf9de+JUr946r/LcsF91aefmGk/+fBSL0sW1grLQ9HbEs+EcIcJhpRX5k090n6IG5LNOKrraI0Mwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VREJfoRV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146ADC32786;
-	Fri, 23 Aug 2024 17:02:31 +0000 (UTC)
+	 MIME-Version:Content-Type; b=qElWmEXSVfgaXJ1IUNdFg57fqbDZyfCUUP7rszVfCeob/MHUPZH+6qOital58Xfkd1AC2Tl86XEWW48/ksoHoXPN+6QO3Khnzdi1sX5UemUnlHitEMmw+lpX5o7APFaGNaT7GTU3iQkmSWlC/jaafuOGohzq+dUdBmq3hwsxx+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KXU6+DF8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35515C4AF0B;
+	Fri, 23 Aug 2024 17:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724432555;
-	bh=KTOqkWcx4VJ3PzktD2qDUCcUOUY9+HIU+QUcTAXO0s4=;
+	s=k20201202; t=1724432559;
+	bh=LrsQbM+9Culzk5ZY9Zi1h3Hk51nvlJlLN7JY3gYeZ58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VREJfoRVY97Dv8b1g+75FarIAmgTQalQ8zeeaU5A5NTBdBFRP1QLr7LfxvbtFlwZK
-	 ORqPD854lMYLJxFRiFuaAkYYceJSA6hdCVJ2rixtDC7OKSDL2AF4VG5+hkzp5qMscZ
-	 QfV1KRgn3/zLCWwf5XKg9nG6e4TPkLxzqNXmMBmGbJYKbAHsHNG2KPS9RO5n1znY0i
-	 Q7Znl+a3XtIPSICWAgno0ad+MI4Me5VmYSVCqZVXn8hDz51kF4DBuoJFMosFbzwQM9
-	 Ykg1bkmJGxTwfTouNR7aX22JRlhEwXPloE4uayV6b+REwl0bh9h0gJlqFX+AYRv112
-	 qJ4Wx3Q6Z0vng==
+	b=KXU6+DF89znEUirCTp35mYNCLYojgYk8MR4FlxokFC7tSsPoU37sbQtr02dfE1X7J
+	 9n0mLdPKtVRtwVpQFcLDbssODFWM9GoSU46M/qpPWDhir5xrMW7tSy3Y4WQh6KV5EV
+	 Sb2/OznrLSC4d7Hf2fVVFY6wBAIxM6+ymWj/1+upUnGdmhbqbLUkc3c1N/gK8fzKXy
+	 KGveAS0qbHrTaxhR/za4wjDURJtnpYOEWmqE3i2S35JIrwREglgcbxVUyFdIjzfNWY
+	 mf3gAeJfXjvLm6qU1lLly3DakzOWHRx35GILq/HXgMCN+TGUoxaYzOWA3D9+f6QZYJ
+	 m/yyAyJIpThuA==
 From: Will Deacon <will@kernel.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Marc Gonzalez <mgonzalez@freebox.fr>
+To: Shuai Xue <xueshuai@linux.alibaba.com>,
+	Jing Zhang <renyu.zj@linux.alibaba.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>
 Cc: catalin.marinas@arm.com,
 	kernel-team@android.com,
 	Will Deacon <will@kernel.org>,
-	iommu@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Arnaud Vrac <avrac@freebox.fr>,
-	Pierre-Hugues Husson <phhusson@freebox.fr>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Caleb Connolly <caleb.connolly@linaro.org>
-Subject: Re: [PATCH v3] iommu/arm-smmu-qcom: hide last LPASS SMMU context bank from linux
-Date: Fri, 23 Aug 2024 18:02:11 +0100
-Message-Id: <172442858770.2796746.16801443724407766952.b4-ty@kernel.org>
+	linux-doc@vger.kernel.org,
+	quic_vbadigan@quicinc.com,
+	quic_nitegupt@quicinc.com,
+	quic_skananth@quicinc.com,
+	quic_ramkri@quicinc.com,
+	quic_parass@quicinc.com,
+	quic_mrana@quicinc.com
+Subject: Re: [PATCH v2 0/4] perf/dwc_pcie: Fix registration issue in multi PCIe controller instances
+Date: Fri, 23 Aug 2024 18:02:12 +0100
+Message-Id: <172442564702.2792102.12095795549059563421.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20240820-smmu-v3-1-2f71483b00ec@freebox.fr>
-References: <20240820-smmu-v3-1-2f71483b00ec@freebox.fr>
+In-Reply-To: <20240816-dwc_pmu_fix-v2-0-198b8ab1077c@quicinc.com>
+References: <20240816-dwc_pmu_fix-v2-0-198b8ab1077c@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,20 +78,26 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-On Tue, 20 Aug 2024 15:27:19 +0200, Marc Gonzalez wrote:
-> On qcom msm8998, writing to the last context bank of lpass_q6_smmu
-> (base address 0x05100000) produces a system freeze & reboot.
+On Fri, 16 Aug 2024 20:47:19 +0530, Krishna chaitanya chundru wrote:
+> When there are multiple of instances of PCIe controllers, registration
+> to perf driver fails with this error. This is because of having same
+> bdf value for devices under two different controllers.
 > 
-> The hardware/hypervisor reports 13 context banks for the LPASS SMMU
-> on msm8998, but only the first 12 are accessible...
-> Override the number of context banks
+> Update the logic to use sbdf which is a unique number in case of
+> multi instance also.
 > 
 > [...]
 
-Applied to will (for-joerg/arm-smmu/updates), thanks!
+Applied to will (for-next/perf), thanks!
 
-[1/1] iommu/arm-smmu-qcom: hide last LPASS SMMU context bank from linux
-      https://git.kernel.org/will/c/3a8990b8a778
+[1/4] perf/dwc_pcie: Fix registration issue in multi PCIe controller instances
+      https://git.kernel.org/will/c/e669388537c4
+[2/4] Documentation: dwc_pcie_pmu: Update bdf to sbdf
+      https://git.kernel.org/will/c/96a37ec98664
+[3/4] perf/dwc_pcie: Always register for PCIe bus notifier
+      https://git.kernel.org/will/c/b94b05478fb6
+[4/4] perf/dwc_pcie: Add support for QCOM vendor devices
+      https://git.kernel.org/will/c/db9e7a83d308
 
 Cheers,
 -- 
