@@ -1,145 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-29419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B642F95D985
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 01:12:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7950E95D988
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 01:13:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DA7901C21E2E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 23:12:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 264931F2341D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 23:13:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D0BF1C8FCF;
-	Fri, 23 Aug 2024 23:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE45D1C8FD9;
+	Fri, 23 Aug 2024 23:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VOp7aAFF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YG6Xbge+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA2C195;
-	Fri, 23 Aug 2024 23:12:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A311C8FCD;
+	Fri, 23 Aug 2024 23:13:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724454727; cv=none; b=GcnUwLL/nQMt4moEzzmS+1SZ0LgIxFAFXG59cd0CqSwGT0KeuCbnnar+3l8irEOTti0jgewz05/ceedhxSewjnpZrfkEWXvjMXnPsZck3BXjpqVvJc1wogEpnu/RwhamrA6oF2MNgMAe81PFam8BL6BGZqNV6QjQ8ixeNQcCN/8=
+	t=1724454792; cv=none; b=NhK8EeQ5izxyDBbCT5BgDNrSI6Q81WOCnctl2n5e4VCP2AFgpxgtD84ZM2uweAbQDopy8r2k+lLBZJO66EL9zcwlVtf80y6Y3ie7lTXycvBg0MMXkKIN+2Czmlx2TADEc13FvTjzx1IGnV2g+s/Bv6qc+Z/5BAzsg7Ykijtdmp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724454727; c=relaxed/simple;
-	bh=YI7IRkaJ3EfhYHm4WUDr42kxZuTU0IHj5kwNKoD7h7Y=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=DG0oHhW4YjkNsuJJSV3lSDtBaspuNgVJ/DIOFnMt/XReYQktPweky8p1JKT+VWqQK4L08yNM6q194qOJWnwRA9mGf/KxVHVTZNym1tZP9uAlnFMphrDAN6oQLUyxSl9Fgowll/5wUYvrtJCcfaJHHyPM8bfXYX6PzOi4bfAQUzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VOp7aAFF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A32C32786;
-	Fri, 23 Aug 2024 23:12:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724454726;
-	bh=YI7IRkaJ3EfhYHm4WUDr42kxZuTU0IHj5kwNKoD7h7Y=;
-	h=From:Date:Subject:To:Cc:From;
-	b=VOp7aAFF3mINLLoKsuyxfBuKRqB+SuwjLfLSil65HdtFgh1+6huaD+MpUnK+qRJjB
-	 7/A31idlxNOZeVUomfZQLNALjX45TBA9yoEDOpNcMZ0ITNBNV7aof9tJ7TMMtq5PL2
-	 3+qiRXYDYSI3aelyDFqC8Iz44l0YOIpPfsCJ6s6LTb2WNWJzKlauT0FXyaRJ6Vjf8h
-	 kea0Vol1iUoeHj1EdicZnYRsQjv6ctNHPnWmItN+rgDfrkJ1B+mn7qsHdBoCvGLgth
-	 j1b13rGgP/mEtkljs9ssL7svE4krPjcCUo/jtJTmrFOMEOvCzSRxO0KCGgax+Q6092
-	 qfCfoeaNGBM+Q==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Sat, 24 Aug 2024 01:12:01 +0200
-Subject: [PATCH v2] iommu/arm-smmu-qcom: Work around SDM845 Adreno SMMU w/
- 16K pages
+	s=arc-20240116; t=1724454792; c=relaxed/simple;
+	bh=cZb5bENC2/V22FAm8H6EPE8XYq7AE9WeNFGzS39Z234=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=cfdfYsFZlnAb39mSdSdAUXYDIsmuERplwWoufprywXhvLd4PX7Q10GPCjK8EQnMskDciuMN+OHeAKuCWDMaBt7XIwUEZFOAkELKEfVSy0T1QJB3AWuJjj2FNrS9WYWLrWNHqID7eQ9QQU52XB/9+hhhF1V1qaiqpNqooj55bEeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YG6Xbge+; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47NBU0K1007716;
+	Fri, 23 Aug 2024 23:13:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	98ojfFnRqT6OFd+DsmKj4oWIC/lf/udM01Zdlqh5I+s=; b=YG6Xbge+NssyG6iK
+	wvN8ZM9+VVl9mkoaN+1V7dBg9BP4JJ1rjGf8O6val93XqsGyHgRwQ3y6Zd+FcllP
+	9ROMBKdL33ebT2wvVXqjdDwZzPRYLOr+8ZrnB1elk/cfj0flXBkp1zzjLPKqfudj
+	FUA5EiDVnlUcAel9KCApWmbASfOHcC0ss5qAgMdi9wLoPYTtQ+zGBrn6PB8ivcdZ
+	ku0wBcF/XStMlaXW/sNmUWLVvUeObokNDiTOitMAt/ZtE4OTSdTaAX88ETKeD1U9
+	STiA6GUTQgaqOlX/6YjVYXy4txlVP4rMuJFHMmvhJYx+QWapQ9jUpcmFDDknbH+2
+	W8aPxQ==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 414pe5vpct-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 23 Aug 2024 23:13:06 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47NND54L008923
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 23 Aug 2024 23:13:05 GMT
+Received: from [10.251.44.135] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 23 Aug
+ 2024 16:13:03 -0700
+Message-ID: <1893aa81-89f0-459e-b5b5-9973014ed1e6@quicinc.com>
+Date: Sat, 24 Aug 2024 02:13:00 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clk: qcom: gdsc: Add a flag to skip setting power
+ collapse bits
+To: Stephen Boyd <sboyd@kernel.org>, <andersson@kernel.org>,
+        <quic_mdtipton@quicinc.com>, <quic_viveka@quicinc.com>
+CC: <mturquette@baylibre.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240813120015.3242787-1-quic_c_gdjako@quicinc.com>
+ <496d7baf4c0e7e83c54f57edf789eafc.sboyd@kernel.org>
+Content-Language: en-US
+From: Georgi Djakov <quic_c_gdjako@quicinc.com>
+In-Reply-To: <496d7baf4c0e7e83c54f57edf789eafc.sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240824-topic-845_gpu_smmu-v2-1-a302b8acc052@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAEAXyWYC/22NwQ6CMBAFf4Xs2Zq2oEVP/ochpJSlbBRKWiAa0
- n+3knjzOJO8eRsE9IQBrtkGHlcK5MYE8pCB6fVokVGbGCSXBVfyzGY3kWFlcarttNRhGBamG5W
- XndJc5AbScPLY0WuP3qvEPYXZ+ff+sYqv/eUu/3KrYIKVmCupm6bFQtwe6Ed8Hp23UMUYP4U0X
- U21AAAA
-To: Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>, 
- Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
- Joerg Roedel <joro@8bytes.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, iommu@lists.linux.dev, 
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Sumit Semwal <sumit.semwal@linaro.org>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1724454724; l=2539;
- i=quic_kdybcio@quicinc.com; s=20230215; h=from:subject:message-id;
- bh=Oe0I3xruTRwKQHvvq9uqhvIoICiJTWXHJSTJikeT6WM=;
- b=lfjEUIfrLxCTM1F6xcBnuFC7bbDE0b2o0/H/WC7i0+JH0EnXupF8hAV1QKAjqlL/oEuK1Efp/
- mJ2L9S3WlnZB1tGaPWj1TJjSTPQnrydPKWrhQbUD8emmV7kt4J+IbWh
-X-Developer-Key: i=quic_kdybcio@quicinc.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: jTbEoyWWRZbzrpcJAgb-ATPzJXdRbxl2
+X-Proofpoint-GUID: jTbEoyWWRZbzrpcJAgb-ATPzJXdRbxl2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-23_16,2024-08-23_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ mlxscore=0 lowpriorityscore=0 adultscore=0 priorityscore=1501
+ impostorscore=0 clxscore=1011 spamscore=0 mlxlogscore=503 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408230170
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+On 8/17/2024 12:48 AM, Stephen Boyd wrote:
+> Quoting Georgi Djakov (2024-08-13 05:00:15)
+>> The sdm845 platforms have a hardware issue that requires keeping
+>> some of the MMNOC GDSCs in SW collapse mode (which is the power-on
+>> default). But if some driver tries to use these GDSCs and the mode
+>> is updated because of runtime pm calls, we may get a board hang.
+>> Introduce a flag to skip any updates to the power collapse settings
+>> for the impacted GDSCs to avoid unexpected board hangs.
+> 
+> Can you add a Fixes tag? And does this need to go to stable kernels?
 
-SDM845's Adreno SMMU is unique in that it actually advertizes support
-for 16K (and 32M) pages, which doesn't hold for newer SoCs.
+These GDSCs got a user in v6.11-rc1 and there is currently a workaround
+in place to avoid the hang, but this patch is the proper way to handle
+it. Getting it into either fixes or next is both fine. There is no need
+to backport it, as these GDSCs are not used on older kernels.
 
-This however, seems either broken in the hardware implementation, the
-hypervisor middleware that abstracts the SMMU, or there's a bug in the
-Linux kernel somewhere down the line that nobody managed to track down.
-
-Booting SDM845 with 16K page sizes and drm/msm results in:
-
-*** gpu fault: ttbr0=0000000000000000 iova=000100000000c000 dir=READ
-type=TRANSLATION source=CP (0,0,0,0)
-
-right after loading the firmware. The GPU then starts spitting out
-illegal intstruction errors, as it's quite obvious that it got a
-bogus pointer.
-
-Moreover, it seems like this issue also concerns other implementations
-of SMMUv2 on Qualcomm SoCs, such as the one on SC7180.
-
-Hide 16K support on such instances to work around this.
-
-Reported-by: Sumit Semwal <sumit.semwal@linaro.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
-Changes in v2:
-- Extend to all Qualcomm SMMUv2 implementations
-- Link to v1: https://lore.kernel.org/r/20240729-topic-845_gpu_smmu-v1-1-8e372abbde41@kernel.org
----
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 36c6b36ad4ff..cca6d5b0bf5d 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -338,6 +338,14 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
- 	return 0;
- }
- 
-+static int qcom_adreno_smmuv2_cfg_probe(struct arm_smmu_device *smmu)
-+{
-+	/* Support for 16K pages is advertised on some SoCs, but it doesn't seem to work */
-+	smmu->features &= ~ARM_SMMU_FEAT_FMT_AARCH64_16K;
-+
-+	return 0;
-+}
-+
- static void qcom_smmu_write_s2cr(struct arm_smmu_device *smmu, int idx)
- {
- 	struct arm_smmu_s2cr *s2cr = smmu->s2crs + idx;
-@@ -436,6 +444,7 @@ static const struct arm_smmu_impl sdm845_smmu_500_impl = {
- 
- static const struct arm_smmu_impl qcom_adreno_smmu_v2_impl = {
- 	.init_context = qcom_adreno_smmu_init_context,
-+	.cfg_probe = qcom_adreno_smmuv2_cfg_probe,
- 	.def_domain_type = qcom_smmu_def_domain_type,
- 	.alloc_context_bank = qcom_adreno_smmu_alloc_context_bank,
- 	.write_sctlr = qcom_adreno_smmu_write_sctlr,
-
----
-base-commit: 9243b36b254ffe3809eb0c8c565c287511a07f20
-change-id: 20240726-topic-845_gpu_smmu-ab738f7a013c
-
-Best regards,
--- 
-Konrad Dybcio <quic_kdybcio@quicinc.com>
-
+Thanks,
+Georgi
 
