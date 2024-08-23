@@ -1,121 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-29337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A11EE95C81E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 10:31:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0C0C95C8BA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 11:01:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 040CFB2654A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 08:31:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F87B1F22E1C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 09:01:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC36874BF8;
-	Fri, 23 Aug 2024 08:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6DD7149C4C;
+	Fri, 23 Aug 2024 09:01:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tKpgDZLb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KeoW3Cxl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300A1566A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 08:31:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804AB142E9D;
+	Fri, 23 Aug 2024 09:01:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724401907; cv=none; b=jrGr5fbMRGLLbT5khtntmn4+ZtWl8uONj5jkstn6DVbI4LmlKly04hfeR83DTiQHzSxLi1NF/eVr8dwV+hbu/GZZNTZdhR4BKcXtJXO1srEybKzYdg2Z8358FY6oyZk9YNd0Zca0BYnrR4qWO7YpkmqH7a0nm2C1S9rvMlE2B2g=
+	t=1724403705; cv=none; b=uHLTJcqI6uGFHU8NzklU3HHkR+9/kfumvV49rLCrMeKfjHsk5HgGQXTAQRJMevsDAGKqz27v54SUMMG9AQIWyqHgZVz6+fzK1n/SOKSr0c66clNQtPQpkbz/wm4r/INcTvjJ+FHkFwpD7YESLkE/U2jWdY1MPZVblwUGCCrWONM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724401907; c=relaxed/simple;
-	bh=SPa15IxMtD1+oEt0qhbtGb1r7/rMPjjAGbG/DvezoRg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Hx9BcYvtYJmsnVfhcuCI5U+8+zFXxMWbO6fU8Ecw8DJ5bJ9eCcPZLqjV7CTxpOs2SO8zUBCYMr1q2mTt7I8Aw9KMIsWgWj8uJ6MV0TFyWOg2tPRF7mJoBnU9R7fgajuwaZN+CcKENriqt6oyJBOfp010p1+7R8lZKycCsgDD/aE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tKpgDZLb; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-6c0e22218d0so19667057b3.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 01:31:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724401905; x=1725006705; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=WJ7ulpTWG+6HgKylvJsyXasgt19eHQQJ+2F5s9QNO4Y=;
-        b=tKpgDZLbqPU5H29JibzR6hJIQGZR6epYCaRhz2uglTAGScp1vmWDinXpPxJBbrN4cO
-         mu+h0af5UtIrdV72YgMBWew5mDy8tdzld6+B9gu7fBHqll7Bn3TZ/8sWom598pdALXJj
-         +h5+CmEG1VKy7i6gJHcCbuZzYeSxkMmpILgOga1TceYesf7+fAqRGF2KIuYUTN1fzXGz
-         pEOHZrb0O54ge5PBszJbdUGAPVyAUD41eyyGp1NbgXg3w6p9BppSDf/oqkDw1h9X4JSt
-         KdpMScOSneYXm8d9IrPXH1IePDlUjzCYPQbT0+Z+8j0cIHpUvIYFtIAfG6c7LFtzjYpA
-         pt0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724401905; x=1725006705;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WJ7ulpTWG+6HgKylvJsyXasgt19eHQQJ+2F5s9QNO4Y=;
-        b=iFp5rDX29sW0dttQfMQkDcZkl8K39FyrYdM1PHcuStr6XZzTpeQF9JrRRZ+nKdyfr8
-         Af63rhs/bMirWfY3pAWqPrVkcM+k2L6mv4U0u7lWy76IOVb0PRjeGARjffAnIudaYtT2
-         Y3QNnN0DvLoX3W/a506tFaPGfd4fQF5L7AulFl4thmxwuaH1oYOHGvvH5Yab4ea17lZe
-         wTCltNgq0J5NfOoFDR77Z0ZBOmG2jlj+/XuzRL8TI7Ksscscdk/ak+ArfTL3KMrPPwRB
-         OJR4X7zUVGQjHXKCax35SqtHJAfQbtxMDa1Zm9ZVMmmUmBxnc5DXMlI3H9hLCocBjGTR
-         1F2g==
-X-Forwarded-Encrypted: i=1; AJvYcCVfIymoxsP+ZRYsC51/Cblx13qPRJxWiIAT5tqBGXmCcuAnAXjcunFZh+S08ql6hZDMuJW3NL2+gzAYVtrc@vger.kernel.org
-X-Gm-Message-State: AOJu0YwOUI3cbO91HeZkwX2ctqHfx32gyLsW1l9ii6irY/aHMzcmvp/k
-	L+wcMynAl4Mn6wTgeIQ+0K4noVEDYQs0hidym9wS5SW6iKrmkb9l6AI3cKMx3J1CjmJVqM673eS
-	LWKIHYZWSG2VJMSWWdm0fNGiCf/eBPUjqOGaRJA==
-X-Google-Smtp-Source: AGHT+IGdbZDfcNoEUAB0bb/rCb0T98GoH36MoE5i8HUCFy4dJ6s2GKkd5DSz+YMp+FRyq0Ql++zMNaic+QIGlp7hpk4=
-X-Received: by 2002:a05:690c:fca:b0:6b3:a6ff:7688 with SMTP id
- 00721157ae682-6c6243209e9mr16621977b3.3.1724401905207; Fri, 23 Aug 2024
- 01:31:45 -0700 (PDT)
+	s=arc-20240116; t=1724403705; c=relaxed/simple;
+	bh=KkcSMeNxc4lVjiUv4GeEvtjyVDjWqimlUOO02y+9qaU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XFpT3XW/cVoXWw1o/T63/MjRqdhxb8WCFO6rORtBEOZZwfBKslueIJV4moIes0DwQgOV16mfs/mZh3qH0IinFcpB9xATVquzSgXmpDMXONYbEi12gWXBDEMy9hLfEJTT5eEvvdEqScRnJiQu5Tdm4A9yytaIuYNCuKvWpuduNIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KeoW3Cxl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 796F7C4AF09;
+	Fri, 23 Aug 2024 09:01:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724403705;
+	bh=KkcSMeNxc4lVjiUv4GeEvtjyVDjWqimlUOO02y+9qaU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=KeoW3CxllBiLGl0NdCeWyHNIm9F5ZDPOuMv2D6Y0LdDsfAT2/wPJOLj+Z4ddjAvtG
+	 Ai69cpz2VaNE8viKXngzKZ6TQrA13mC/2zPCq1nu2O01cx4S5rGT2bMxcHCDhw8361
+	 vBqVdLBYlQDI27Ccpwf2TFzAlsFUfxM8Y79thUxuxpHWKeYNXw+qOM41YeJX0UL/Gf
+	 SqQHjQzMKIMhrPWKtFTEcTUHMJQMw7DRd24pQnUOPG55z0jeU98DM1i89BUMDzF//o
+	 +ajSAY369+fkL2oMYBHwpvNpe70DyDu1KZnHGU4qwuRVMhflYrMDZd+33padegWT2a
+	 jyg8g3jL3Q5Jg==
+Message-ID: <9cff09b0-d039-4e65-b6dc-57adaf94c12e@kernel.org>
+Date: Fri, 23 Aug 2024 11:01:37 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAMRc=Mcrrhagqykg6eXXkVJ2dYAm5ViLtwL=VKTn8i72UY12Zg@mail.gmail.com>
- <20240822211336.GA349622@bhelgaas> <20240823083004.rzylgm66yaw3rlyi@thinkpad>
-In-Reply-To: <20240823083004.rzylgm66yaw3rlyi@thinkpad>
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Date: Fri, 23 Aug 2024 10:31:34 +0200
-Message-ID: <CACMJSeuHkbUYSSE_7=HE5L2_j4LaR_jA2XSDgg_6=WFd_GdE2g@mail.gmail.com>
-Subject: Re: [PATCH v2 4/8] PCI: Change the parent to correctly represent pcie hierarchy
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/8] dt-bindings: PCI: Add binding for qps615
 To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Bjorn Helgaas <helgaas@kernel.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Krishna chaitanya chundru <quic_krichai@quicinc.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, cros-qcom-dts-watchers@chromium.org, 
-	Jingoo Han <jingoohan1@gmail.com>, andersson@kernel.org, quic_vbadigan@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ cros-qcom-dts-watchers@chromium.org, Bartosz Golaszewski <brgl@bgdev.pl>,
+ Jingoo Han <jingoohan1@gmail.com>, andersson@kernel.org,
+ quic_vbadigan@quicinc.com, linux-arm-msm@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
+ <20240803-qps615-v2-1-9560b7c71369@quicinc.com>
+ <5f65905c-f1e4-4f52-ba7c-10c1a4892e30@kernel.org>
+ <f8985c98-82a5-08c3-7095-c864516b66b9@quicinc.com>
+ <58317fe2-fbea-400e-bd1d-8e64d1311010@kernel.org>
+ <100e27d7-2714-89ca-4a98-fccaa5b07be3@quicinc.com>
+ <c80ae784-c1f3-4046-9d86-d7e57bd93669@kernel.org>
+ <7f48f71c-7f57-492c-47df-6aac1d3b794b@quicinc.com>
+ <aa311052-deba-4d13-9ede-1d863a4f362e@kernel.org>
+ <20240822141622.tw7vcoc4ciwbydsw@thinkpad>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <20240822141622.tw7vcoc4ciwbydsw@thinkpad>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, 23 Aug 2024 at 10:30, Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> > > >
-> > > > Right now the commit log doesn't tell me enough to justify a
-> > > > post-merge window change.
-> > >
-> > > Please, apply this patch independently. FYI I have a WiP branch[1]
-> > > with a v3 of the fixes series rebased on top of this one. Manivannan
-> > > and I are working on fixing one last remaining issue and I'll resend
-> > > it. This should go into v6.11.
-> >
-> > OK.  I just need to be able to justify *why* we need it in v6.11, so I
-> > can apply it as soon as somebody supplies that kind of text for the
-> > commit log.  I.e., what is broken without this change?  What bad
-> > things happen if we defer it to v6.12?
-> >
->
-> I'm not sure if this is a 6.11 material as this patch is not fixing any crash or
-> potential breakage in 6.11. This patch changes the hierarchy in such a way that
-> the suspend/resume could work fine once added in the pwrctl drivers.
->
-> At the same time, I'd like to get it merged separately for 6.12 instead of
-> bundling it in this same series.
->
+On 22/08/2024 16:16, Manivannan Sadhasivam wrote:
+> On Mon, Aug 05, 2024 at 04:43:47PM +0200, Krzysztof Kozlowski wrote:
+>> On 05/08/2024 07:57, Krishna Chaitanya Chundru wrote:
+>>>>
+>>> Hi Krzysztof,
+>>>
+>>> QPS615 has a 3 downstream ports and 1 upstream port as described below
+>>> diagram.
+>>> For this entire switch there are some supplies which we described in the
+>>> dt-binding (vdd18-supply, vdd09-supply etc) and one GPIO which controls
+>>> reset of the switch (reset-gpio). The switch hardware can configure the
+>>> individual ports DSP0, DSP1, DSP2, upstream port and also one integrated
+>>> ethernet endpoint which is connected to DSP2(I didn't mentioned in the
+>>> diagram) through I2C.
+>>>
+>>> The properties other than supplies,i2c client, reset gpio which
+>>> are added will be applicable for all the ports.
+>>> _______________________________________________________________
+>>> |   |i2c|                   QPS615       |Supplies||Resx gpio |
+>>> |   |___|              _________________ |________||__________|
+>>> |      ________________| Upstream port |_____________         |
+>>> |      |               |_______________|            |         |
+>>> |      |                       |                    |         |
+>>> |      |                       |                    |         |
+>>> |  ____|_____              ____|_____            ___|____     |
+>>> |  |DSP 0   |              | DSP 1  |            | DSP 2|     |
+>>> |  |________|              |________|            |______|     |
+>>> |_____________________________________________________________|
+>>>
+>>
+>> I don't get why then properties should apply to main device node.
+>>
+> 
+> The problem here is, we cannot differentiate between main device node and the
+> upstream node. Typically the differentiation is not needed because no one cared
+> about configuring the upstream port. But this PCIe switch is special (as like
+> most of the Qcom peripherals).
+> 
+> I agree that if we don't differentiate then it also implies that all main node
+> properties are applicable to upstream port and vice versa. But AFAIK, upstream
+> port is often considered as the _device_ itself as it shares the same bus
+> number.
 
-Ok, I'll find a way to rework my patches so that this one's not needed.
+Well, above diagram shows supplies being part of the entire device, not
+each port. That's confusing. Based on diagram, downstream ports do not
+have any supplies... and what exactly do they supply? Let's look at
+vdd18 and vdd09 which sound main supplies of the entire device. In
+context of port: what exactly do they power? Which part of the port?
 
-Bart
+Best regards,
+Krzysztof
+
 
