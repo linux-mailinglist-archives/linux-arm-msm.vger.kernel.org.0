@@ -1,74 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-29439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F06C595DE05
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 15:19:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DBC095DE18
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 15:31:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F2BCA1C20E06
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 13:19:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 982531F21C06
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 13:31:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC1DF177992;
-	Sat, 24 Aug 2024 13:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A18F176AC1;
+	Sat, 24 Aug 2024 13:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JFbQxXJ1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AcdQWU0q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E370E1714DF
-	for <linux-arm-msm@vger.kernel.org>; Sat, 24 Aug 2024 13:19:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA4B16DC28
+	for <linux-arm-msm@vger.kernel.org>; Sat, 24 Aug 2024 13:31:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724505550; cv=none; b=WPTXZQyoez25DdKlVoPd78nZeF7ShdHskTziFwRI0OjUmRes3CkNp/NoAmoGisC1y2oZIpIJjAkrO12mXqSo9sbyDlsjntHPbiiqtYaOqU08Gswz/4t4M9sMJRvlEwzsIIbSam9mXnyQiyEo3dpt4uzGDZi9R76fcCGzyzaWW1Y=
+	t=1724506311; cv=none; b=bvdDtbQdHWVsz6/ulLDwMQlR15hSb+cCZ8i1ITFJKlNFRWpMtQueQZ5Af7rRW2vOQV6t2vwmNGMqCLiNMviQCu1IjEP0YBdmQ5uRETsAV7+pHRJ2bU10j0VJ+hvwDY9PWqdIBaleolHccmLHqVv70olIL9fJ6DEZJ1XpmP0BdCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724505550; c=relaxed/simple;
-	bh=5GAWK8GXBZ43Qd9YCfwm6fB0G6hv+fMqaGGUOLfk8w0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KtA23J3IM0+vPuRPmirbJoUEYiOzIQO7Rq1EiKbHbbjGEzYFtbtLahFWxwLgkZ4htfPuLO2kss9Awds4aj/nzKuYXhdzOM9LPrIkCzIzz3ndrV479ZnJKdGcAFX1bcsVCPGRjMxoiwueIQDPDnof6WN+7Nf9hiLBHh0KgHJl7tU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JFbQxXJ1; arc=none smtp.client-ip=209.85.208.172
+	s=arc-20240116; t=1724506311; c=relaxed/simple;
+	bh=q2FiwbWN5Ks/pfrAWeo4mRm9niAs0IVKgREydX5NwxY=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=stwxx2jJKR70q8DNxmgDoJqBJLMp+QuqjyDOJQGnHkbSMqih4YMHOfagTRtCibF3IBjWIjIleyfy/VVrhYQr7A0T2w3p3i5vvyfY7ZFkQX0Unq6d3WKkki7YGJ7wPDAL4dZ7oinjlONaPlSO2WF9w1qhu8Dm+oJ0EwqzV8Xjf0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AcdQWU0q; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2f3f99ccb76so1226781fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Aug 2024 06:19:08 -0700 (PDT)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5334eec7485so501308e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Aug 2024 06:31:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724505547; x=1725110347; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1724506308; x=1725111108; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=KlcwWdXlvkbWcgPP22YAHa16AeHVn67ihK+bfFfAGEM=;
-        b=JFbQxXJ1OGJ47H+/Bf+q4ZQeA877VPxWpyFGvkmG71JmFgrlvt/satx+5NE0jSbDQl
-         l5eYrDZr6IqAMD4DawP48Zv4kNtIoZr20iETqKsz57o9k0d6gxqr7pT2Uw49Rd6U1Kqi
-         se9jIbIdYWjETZ92x7tm9j+Vx/mlruV9Z7/yx8vbYW1EeXlGzxaZATV4TuYrTZYZrzDD
-         8ofeaBli9bgq++IVwXyZC7yYW2qVLK73wPgJN/VCYj5r1fnDsDyHw3Z7vodXEVYS9tmx
-         d45B+nGxkV7y9IgggdyP4fuCnc8m4hENFtwmfYvYbl8yQaSb/ETOhu+W+DBZKXBwAKcZ
-         mTMg==
+        bh=RLWX/5SIYPjwceOuGKBwVTZlsQA8zhlUnRn9GP6P+OY=;
+        b=AcdQWU0qhF8EPyW1wq/B/Y8OhjHHeyWW+KiyadulPFjUtYtRxfB5CScUTX9K3vZ+Tf
+         kUkF3TvX3T7sdXVMlPD5bUr/tHyAQTRxPlO4anl/DaNf5CwvvK/ZbnqLqo/RSRi9amRk
+         FZy899ZNctP4OMRRYpv7/ClmMTZP2qxe1xOYUkAW2B8nDk+GCQGz92Muk4v57JL1Gpbx
+         AIyqrc3LK0AfWQs0g7IgwFrKK+bQCrlKzOG/E0BgJZD5U6AIAE+731RRovbOBUNP1K3E
+         2fOv1wUVxK88vXELU0LeHhaxVWJ72D9gcnQBHnmSc4RDyeltqmQSYiFSMmogllA7Idwl
+         XvAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724505547; x=1725110347;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20230601; t=1724506308; x=1725111108;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KlcwWdXlvkbWcgPP22YAHa16AeHVn67ihK+bfFfAGEM=;
-        b=vJcSjoMfZ48KbXhgozjmHXf1dx3aVN8FCrierTAroFjGpwqBeNHlb8kFCEIHLbr/LI
-         KApMtGc7tKo9LsNTEh8twg8nOJAc/rQht3SvCqfPCUw3DJoMF0JSpQIzLeXJC7E5cXzD
-         bgPSeVcfrvZbvFMXUPIQisLLHx29z//WTsfZ9p2n57faU3WgDJ7m3+1Bt/Y07SS9pl80
-         HDctA2nFXlXx3jREyx5kfJsHGmw8AykeFA95y3qjh94AkYo9Cg2jue+1Gow4RoADKLfC
-         p+sYQh5/SdB/ElXRJM0vu3gVS0kfS2QEO/vJOZBWB/V6ZRNbkFppLRSvH2ynkCo+WeBN
-         eKeA==
-X-Gm-Message-State: AOJu0YydfqQdL5X/98LxrisRnbI+jJFXiz5rMjvJvpeFoiOncdeJT2Vu
-	kB6FWYrj2oxSiWvksNgYnkWNtxRk1VHCSNJA38/9tI5+h6RTB5nfqbHDWxNpJXMIIwGb70wwjTj
-	i7i8=
-X-Google-Smtp-Source: AGHT+IFBIwC0BGxRq38k2uQbp83gwHSHw197HqkHuRG00CoY+zDTa9VpKFRblNc7X1DFXpEpeVOTsA==
-X-Received: by 2002:a2e:a813:0:b0:2ef:2b1f:180b with SMTP id 38308e7fff4ca-2f4f4990338mr19253951fa.8.1724505546640;
-        Sat, 24 Aug 2024 06:19:06 -0700 (PDT)
+        bh=RLWX/5SIYPjwceOuGKBwVTZlsQA8zhlUnRn9GP6P+OY=;
+        b=LfAGRfgU30w8Pzlb+JXZ6VySIgNa4h4obJq7x1WeXqficVG11t7dTTz5QFSvZckG+A
+         2QQigC8Q2/On+mhh2TRqnpXOFudzCEcmrD0k9ha2gvFpOEL5ASIXonC4K4FLykdxI+iq
+         VLXIulZcP51U79McwtOWnaN0qae249j0Er4PvPi5kb9FqQ6RtC+TsEyZrEVTfa33FShm
+         BF+HEX7mFBENEIKNY3H/FRimYhng6uk++1GuB5HGhMl9wRZ9a4MzFef6CkIMeCopPHTK
+         NfYbcFdnJ7Liye1w4ShOh+bFnXo7L7pGS0qg3CIoxaEvFWXE4E+0QHrpeCsyOeycSExy
+         hvHA==
+X-Gm-Message-State: AOJu0Yy0jMe+op0WajvXQaY6tDP53hMf8xdhceus41uGGkskxICDRnJ2
+	9PypqNAgg4M8+WS76jUdQa5w2cIJYgWHZI+Gxg/9+i2A6I/bmPPeMjYKljp+VGs=
+X-Google-Smtp-Source: AGHT+IGAyhgfB2fZzHIr7u9lFSSzZcMJDsFciOaPklAFNW6SbOGfj3F1ghJolQzNo0SgeO8ySa++yg==
+X-Received: by 2002:ac2:4e07:0:b0:52e:ccf4:c5e2 with SMTP id 2adb3069b0e04-534387cd2d2mr1999710e87.8.1724506307592;
+        Sat, 24 Aug 2024 06:31:47 -0700 (PDT)
 Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f40484c31dsm7430811fa.90.2024.08.24.06.19.05
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5334ea36408sm854425e87.73.2024.08.24.06.31.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 24 Aug 2024 06:19:06 -0700 (PDT)
-Message-ID: <5a91ea63-2229-4c21-8caa-ca0912b1b8da@linaro.org>
-Date: Sat, 24 Aug 2024 16:19:05 +0300
+        Sat, 24 Aug 2024 06:31:47 -0700 (PDT)
+Message-ID: <c7aa6519-0706-4cc2-b043-43f31a78ab5b@linaro.org>
+Date: Sat, 24 Aug 2024 16:31:45 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,9 +75,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/13] media: qcom: camss: Add CSID Gen3 support for
- sm8550
+Subject: Re: [PATCH 13/13] media: qcom: camss: Add support for VFE hardware
+ version Titan 780
 Content-Language: en-US
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
  todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
  robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
@@ -86,167 +86,59 @@ Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
 References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-13-quic_depengs@quicinc.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20240812144131.369378-13-quic_depengs@quicinc.com>
+ <20240812144131.369378-14-quic_depengs@quicinc.com>
+ <c501b813-e78a-4fb0-aa7b-a2fbbb90f10d@linaro.org>
+In-Reply-To: <c501b813-e78a-4fb0-aa7b-a2fbbb90f10d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 8/12/24 17:41, Depeng Shao wrote:
-> The CSID in sm8550 is gen3, it has new register offset and new
-> functionality. The buf done irq,register update and reset are
-> moved to CSID gen3.
+On 8/21/24 14:11, Vladimir Zapolskiy wrote:
+> On 8/12/24 17:41, Depeng Shao wrote:
+>> Add support for VFE found on SM8550 (Titan 780). This implementation is
+>> based on the titan 480 implementation. It supports the normal and lite
+>> VFE.
+>>
+>> Co-developed-by: Yongsheng Li <quic_yon@quicinc.com>
+>> Signed-off-by: Yongsheng Li <quic_yon@quicinc.com>
+>> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+>> ---
 > 
-> The sm8550 also has a new block is named as CSID top, CSID can
-> connect to VFE or SFE(Sensor Front End), the connection is controlled
-> by CSID top.
+> <snip>
 > 
-> Co-developed-by: Yongsheng Li <quic_yon@quicinc.com>
-> Signed-off-by: Yongsheng Li <quic_yon@quicinc.com>
-> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
-> ---
->   drivers/media/platform/qcom/camss/Makefile    |   1 +
->   .../platform/qcom/camss/camss-csid-gen3.c     | 339 ++++++++++++++++++
->   .../platform/qcom/camss/camss-csid-gen3.h     |  26 ++
->   .../media/platform/qcom/camss/camss-csid.c    |  46 ++-
->   .../media/platform/qcom/camss/camss-csid.h    |  10 +
->   drivers/media/platform/qcom/camss/camss.c     |  91 +++++
->   drivers/media/platform/qcom/camss/camss.h     |   2 +
->   7 files changed, 503 insertions(+), 12 deletions(-)
->   create mode 100644 drivers/media/platform/qcom/camss/camss-csid-gen3.c
->   create mode 100644 drivers/media/platform/qcom/camss/camss-csid-gen3.h
+>> +
+>> +static void vfe_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
+>> +{
+>> +	int port_id = line_id;
+>> +
+>> +	/* RUP(register update) registers has beem moved to CSID in Titan 780.
+>> +	 * Notify the event of trigger RUP.
+>> +	 */
+>> +	camss_reg_update(vfe->camss, vfe->id, port_id, false);
+>> +}
+>> +
+>> +static inline void vfe_reg_update_clear(struct vfe_device *vfe,
+>> +					enum vfe_line_id line_id)
+>> +{
+>> +	int port_id = line_id;
 > 
-> diff --git a/drivers/media/platform/qcom/camss/Makefile b/drivers/media/platform/qcom/camss/Makefile
-> index e636968a1126..c336e4c1a399 100644
-> --- a/drivers/media/platform/qcom/camss/Makefile
-> +++ b/drivers/media/platform/qcom/camss/Makefile
-> @@ -7,6 +7,7 @@ qcom-camss-objs += \
->   		camss-csid-4-1.o \
->   		camss-csid-4-7.o \
->   		camss-csid-gen2.o \
-> +		camss-csid-gen3.o \
->   		camss-csiphy-2ph-1-0.o \
->   		camss-csiphy-3ph-1-0.o \
->   		camss-csiphy.o \
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen3.c b/drivers/media/platform/qcom/camss/camss-csid-gen3.c
-> new file mode 100644
-> index 000000000000..d96bc126f0a9
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/camss/camss-csid-gen3.c
-> @@ -0,0 +1,339 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * camss-csid-gen3.c
-> + *
-> + * Qualcomm MSM Camera Subsystem - CSID (CSI Decoder) Module
-> + *
-> + * Copyright (c) 2024 Qualcomm Technologies, Inc.
-> + */
-> +#include <linux/completion.h>
-> +#include <linux/delay.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/io.h>
-> +#include <linux/kernel.h>
-> +#include <linux/of.h>
-> +
-> +#include "camss.h"
-> +#include "camss-csid.h"
-> +#include "camss-csid-gen3.h"
-> +
-> +#define CSID_TOP_IO_PATH_CFG0(csid)	(0x4 * (csid))
-> +#define		OUTPUT_IFE_EN			0x100
-> +#define		INTERNAL_CSID			1
-> +
-> +#define CSID_RST_CFG			0xC
-> +#define		RST_MODE			0
-> +#define		RST_LOCATION			4
-> +
-> +#define CSID_RST_CMD			0x10
-> +#define		SELECT_HW_RST			0
-> +#define		SELECT_SW_RST			1
-> +#define		SELECT_IRQ_RST			2
-> +
-> +#define CSID_CSI2_RX_IRQ_STATUS		0x9C
-> +#define CSID_CSI2_RX_IRQ_MASK		0xA0
-> +#define CSID_CSI2_RX_IRQ_CLEAR		0xA4
-> +#define CSID_CSI2_RX_IRQ_SET		0xA8
-> +
-> +#define CSID_CSI2_RDIN_IRQ_STATUS(rdi)	(0xEC + 0x10 * (rdi))
-> +
-> +#define CSID_CSI2_RDIN_IRQ_CLEAR(rdi)	(0xF4 + 0x10 * (rdi))
-> +#define CSID_CSI2_RDIN_IRQ_SET(rdi)	(0xF8 + 0x10 * (rdi))
-> +
-> +#define CSID_TOP_IRQ_STATUS		0x7C
+> Once I said that the comment with a typo can be removed from these two
+> functions, however the functions can be removed, since they are trivial,
+> use camss_reg_update(vfe->camss, vfe->id, port_id, ...) directly in the code.
+> 
 
-The list of macros shall be sorted by register offset value.
+I see that these new vfe_reg_update() and vfe_reg_update_clear() are
+callback functions now, so, without making a step back, now it will not
+be straightforward to get rid of one more level of indirection.
 
-> +#define		 TOP_IRQ_STATUS_RESET_DONE	0
-> +
-> +#define CSID_TOP_IRQ_MASK		0x80
-> +#define CSID_TOP_IRQ_CLEAR		0x84
-> +#define CSID_TOP_IRQ_SET		0x88
-> +
-> +#define CSID_IRQ_CMD			0x14
-> +#define		IRQ_CMD_CLEAR			0
-> +#define		IRQ_CMD_SET			4
-> +
-> +#define CSID_REG_UPDATE_CMD		0x18
-> +
-> +#define CSID_BUF_DONE_IRQ_STATUS	0x8C
-> +#define		BUF_DONE_IRQ_STATUS_RDI_OFFSET	(csid_is_lite(csid) ? 1 : 14)
-> +#define CSID_BUF_DONE_IRQ_MASK		0x90
-> +#define CSID_BUF_DONE_IRQ_CLEAR		0x94
-> +#define CSID_BUF_DONE_IRQ_SET		0x98
-> +
-> +#define	CSI2_RX_CFG0_PHY_SEL_BASE_IDX	1
-> +
-> +#define CSID_CSI2_RX_CFG0		0x200
-> +#define		CSI2_RX_CFG0_NUM_ACTIVE_LANES	0
-> +#define		CSI2_RX_CFG0_DL0_INPUT_SEL	4
-> +#define		CSI2_RX_CFG0_PHY_NUM_SEL	20
-> +
-> +#define CSID_CSI2_RX_CFG1		0x204
-> +#define		CSI2_RX_CFG1_ECC_CORRECTION_EN	0
-> +#define		CSI2_RX_CFG1_VC_MODE		2
-> +
-> +#define CSID_RDI_CFG0(rdi)		(0x500 + 0x100 * (rdi))
-> +#define		RDI_CFG0_TIMESTAMP_EN		6
-> +#define		RDI_CFG0_TIMESTAMP_STB_SEL	8
-> +#define		RDI_CFG0_DECODE_FORMAT		12
-> +#define		RDI_CFG0_DT			16
-> +#define		RDI_CFG0_VC			22
-> +#define		RDI_CFG0_DT_ID			27
-> +#define		RDI_CFG0_EN			31
-> +
-> +#define CSID_RDI_CFG1(rdi)		(0x510 + 0x100 * (rdi))
-> +#define		RDI_CFG1_DROP_H_EN		5
-> +#define		RDI_CFG1_DROP_V_EN		6
-> +#define		RDI_CFG1_CROP_H_EN		7
-> +#define		RDI_CFG1_CROP_V_EN		8
-> +#define		RDI_CFG1_PIX_STORE		10
-> +#define		RDI_CFG1_PACKING_FORMAT		15
-> +
-> +#define CSID_RDI_CTRL(rdi)		(0x504 + 0x100 * (rdi))
+Just remove the comments then.
 
-Sorted by register offset please.
-
-> +#define		RDI_CTRL_START_CMD		0
-> +
-> +#define CSID_RDI_IRQ_SUBSAMPLE_PATTERN(rdi)	(0x548 + 0x100 * (rdi))
-> +#define CSID_RDI_IRQ_SUBSAMPLE_PERIOD(rdi)	(0x54C + 0x100 * (rdi))
-> +
-> +static inline int reg_update_rdi(struct csid_device *csid, int n)
-> +{
-> +	return BIT(n + 4) + BIT(20 + n);
-
-Taking as unshifted bit BIT(4) is RUP and BIT(20) is AUP, add
-corresponding macros for them, then
-
-return (... | ...) << n;
-
-> +}
-> +#define REG_UPDATE_RDI			reg_update_rdi
-> +
+>> +
+>> +	/* RUP(register update) registers has beem moved to CSID in Titan 780.
+>> +	 * Notify the event of trigger RUP clear.
+>> +	 */
+>> +	camss_reg_update(vfe->camss, vfe->id, port_id, true);
+>> +}
+>> +
 
 --
 Best wishes,
