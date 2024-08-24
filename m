@@ -1,147 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-29431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29433-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5E7895DC2B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 08:19:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CEF895DC5E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 09:10:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D16D284A2E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 06:19:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BCD00283A19
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 07:10:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9F2B14BF9B;
-	Sat, 24 Aug 2024 06:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 413A6153837;
+	Sat, 24 Aug 2024 07:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AgJvfAag"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IYxl7xYi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6820257D;
-	Sat, 24 Aug 2024 06:19:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DE1153824;
+	Sat, 24 Aug 2024 07:10:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724480359; cv=none; b=dnBob/31kJRt3j/mAl9Nue0jF7uLqpi7x7dAlmTk/IW7fVQ/jx8OITrq+t4mtSsJANuigR37U+WDjUu89s3wYrOjsSXPJCZn6e8Tr7JsTLOJ51Ho2C5nQwGp6Iluq/tqEf7DET+fHVm8O03BAiDE4wWJ4jl9I6BQxE13KVGYP6c=
+	t=1724483430; cv=none; b=Ip+AYvCRjoKPLnokCZqra8yzmtujNQRWQiO55QMPienO+NKSIxZB8r6lTS9lveG1stayn5qY29QQo0JUGaIMEoIB57d64co7V5GU4tRItA3AGkrd9lqRejd4hrqF5n98vhQXXH5Qp6EAcZCAhICuVzdCEXfL7cXU3EW0c9j4FHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724480359; c=relaxed/simple;
-	bh=QyZ4RHcVpYoPpVB+kiK+jXBJjtzJnTlUdNJnH1LW2UI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YFD/P48MTUgzECDe9OKjwlnOStWq+kFkUsKpYmwQnOeeT908thAXxzk/1XdL4GFl5JUXM2sj5F6IseZVnOA9IZwW1qK/UJZtMqxuCB4MhRpUTpne6MSC2NI6Zzgvl6XUdIVVYBnmr0JsSbnrYtET8XRciIbTJGxMLv3TLd30Am8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AgJvfAag; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75403C32781;
-	Sat, 24 Aug 2024 06:19:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724480359;
-	bh=QyZ4RHcVpYoPpVB+kiK+jXBJjtzJnTlUdNJnH1LW2UI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=AgJvfAagUYzBrd7PcuJ1ffJKAULrekugWB+QCTt2hvPXnASaNn8gOeh1P0D/+MgRv
-	 MyrypHMWqSXCHVzx7C4xgg9Dh5hAPs0f7cXhkDmIY3l4/hCBXP1XoIB52qOGGcT4Nd
-	 KvYZI8QEUMTuyepbGcRieEnq2NpyRfzpWATHQZkVLxz7iz/FcINbt/bUPST9Flv5bS
-	 q7i3DwMKGUwPQLNikWazambq9GtyoaRENUrKGT83+bSpTpCbqCqdsnl5PFUOIt2W+B
-	 m7Y+eXEPWOYNPMjBJfRtAgU2oxEsmrGLUg5cMi19m+pvJ8k+J0smTlcrNgUsVCTDtN
-	 peZxG8i0kK3Ng==
-Message-ID: <a36c434e-0fb6-43f0-b9a7-c59f0c7bc9f9@kernel.org>
-Date: Sat, 24 Aug 2024 08:19:12 +0200
+	s=arc-20240116; t=1724483430; c=relaxed/simple;
+	bh=UMSSgFtE9sSYCRl7FqDQxvs8kkccAFFNVpy/6zc6pq0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=qvLUYjaeKGHZbynOgSrVo47QD1DxOAQffaZGd/1GeYEpf+tg/1ryWwrnFWbEBWMZeJ33SBzK75SclsHx/oXD7baOOrVk+yOXqF2IztqcN+8/lcVS9xoRsFMdcB6T86rFynKKkQULzEF8kCVWeOFWLkSLugYlvn4nGGrasR0yrXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IYxl7xYi; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47O5S3sA023727;
+	Sat, 24 Aug 2024 07:05:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ak1bjo5v/J0lhnYtiB4yxlYX1xBnGK1uJl/2njt9Dn4=; b=IYxl7xYiJCXgkflT
+	R2d2uDaG/EIKr4hQCBiCsdb8pOxHz81A7ktgxSvY3jeotypDcpgPvs0wRgJh8KPj
+	leC13oK/4iC1zeovvBwfmFut1yI01apa1qVqaS3uvMRrgigosUFhPLshc4nsqFRm
+	2shBJory1gY5/PA1EKyFT0WuuCEtPDkma9suMKFM2j1bUOs0qVnghTnDCH7d+tmj
+	srPA/rezRTRGlrbDQQC+TgYPg47OtRFFEz5EoJT260+jHAgGgBIw8q394vS7QGbq
+	xu9P7BccrFM0TPncSSpi89sxWXMgiIqxJ7uN4eRUD4q+f4x/Xmgag5mJuufPqUUM
+	dnAaWw==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 417980r36h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 24 Aug 2024 07:05:14 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47O75Dfp025819
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 24 Aug 2024 07:05:13 GMT
+Received: from [10.216.42.154] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sat, 24 Aug
+ 2024 00:05:06 -0700
+Message-ID: <51653ef6-07f3-5419-e85b-b3e26958173f@quicinc.com>
+Date: Sat, 24 Aug 2024 12:34:53 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: interconnect: qcom: Do not require reg for
- sc8180x virt NoCs
-To: Georgi Djakov <djakov@kernel.org>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- quic_okukatla@quicinc.com, linux-arm-msm@vger.kernel.org,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
-References: <20240730141016.1142608-1-djakov@kernel.org>
- <31173e79-4b2d-4027-a4a2-61071206f387@kernel.org>
- <7c75defd-372b-42cc-897a-eb46e4a8966e@kernel.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v2 01/16] dt-bindings: dma: qcom,bam: Add bam pipe lock
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: <vkoul@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <thara.gopinath@gmail.com>,
+        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
+        <gustavoars@kernel.org>, <u.kleine-koenig@pengutronix.de>,
+        <kees@kernel.org>, <agross@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-crypto@vger.kernel.org>, <quic_srichara@quicinc.com>,
+        <quic_varada@quicinc.com>, <quic_utiwari@quicinc.com>
+References: <20240815085725.2740390-1-quic_mdalam@quicinc.com>
+ <20240815085725.2740390-2-quic_mdalam@quicinc.com>
+ <20240823153958.vk4naz34vgkqzhrb@thinkpad>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <7c75defd-372b-42cc-897a-eb46e4a8966e@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <20240823153958.vk4naz34vgkqzhrb@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: fgyA9iH7KNSk9YsPjZ7AZdROO68WMbCg
+X-Proofpoint-ORIG-GUID: fgyA9iH7KNSk9YsPjZ7AZdROO68WMbCg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-24_05,2024-08-23_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ adultscore=0 mlxlogscore=999 spamscore=0 lowpriorityscore=0 clxscore=1015
+ malwarescore=0 phishscore=0 priorityscore=1501 mlxscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408240039
 
-On 24/08/2024 01:39, Georgi Djakov wrote:
-> On 30.07.24 17:32, Krzysztof Kozlowski wrote:
->> On 30/07/2024 16:10, djakov@kernel.org wrote:
->>> From: Georgi Djakov <djakov@kernel.org>
->>>
->>> The virtual interconnect providers do not have their own IO address space,
->>> but this is not documented in the DT schema and the following warnings are
->>> reported by dtbs_check:
->>>
->>> sc8180x-lenovo-flex-5g.dtb: interconnect-camnoc-virt: 'reg' is a required property
->>> sc8180x-lenovo-flex-5g.dtb: interconnect-mc-virt: 'reg' is a required property
->>> sc8180x-lenovo-flex-5g.dtb: interconnect-qup-virt: 'reg' is a required property
->>> sc8180x-primus.dtb: interconnect-camnoc-virt: 'reg' is a required property
->>> sc8180x-primus.dtb: interconnect-mc-virt: 'reg' is a required property
->>> sc8180x-primus.dtb: interconnect-qup-virt: 'reg' is a required property
->>>
->>> Fix this by adding them to the list of compatibles that do not require
->>> the reg property.
+
+
+On 8/23/2024 9:09 PM, Manivannan Sadhasivam wrote:
+> On Thu, Aug 15, 2024 at 02:27:10PM +0530, Md Sadre Alam wrote:
+>> BAM having pipe locking mechanism. The Lock and Un-Lock bit
+>> should be set on CMD descriptor only. Upon encountering a
+>> descriptor with Lock bit set, the BAM will lock all other
+>> pipes not related to the current pipe group, and keep
+>> handling the current pipe only until it sees the Un-Lock
+>> set.
 >>
->> So I guess we are giving up on
->> https://lore.kernel.org/all/20230530162454.51708-4-vkoul@kernel.org/
->> ?
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>> ---
+>>
+>> Change in [v2]
+>>
+>> * Added initial support for dt-binding
+>>
+>> Change in [v1]
+>>
+>> * This patch was not included in [v1]
+>>
+>>   Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml | 8 ++++++++
+>>   1 file changed, 8 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+>> index 3ad0d9b1fbc5..91cc2942aa62 100644
+>> --- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+>> +++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+>> @@ -77,6 +77,12 @@ properties:
+>>         Indicates that the bam is powered up by a remote processor but must be
+>>         initialized by the local processor.
+>>   
+>> +  qcom,bam_pipe_lock:
+>> +    type: boolean
+>> +    description:
+>> +      Indicates that the bam pipe needs locking or not based on client driver
+>> +      sending the LOCK or UNLOK bit set on command descriptor.
+>> +
 > 
-> Thanks for the pointer! That approach is fine too, but i was expecting
-> a re-send and then later completely forgot about it. I have a slight
-> preference towards my patch, because it is more compact, but i can also
-> revive Vinod's patch if you think that it would be a better pattern to
-> follow in the long term.
-
-Vinod sent his patch more than a year ago, so I think we are indeed
-giving up on this :)
-
-Best regards,
-Krzysztof
-
+> This looks like a pure driver implementation and doesn't belong to the DT at
+> all. Why can't you add a logic in the driver to use the lock based on some
+> detection mechanism?
+   Sure , will use BAM_SW_VERSION register for detection mechanism, since this
+   support only for bam version above 1.4.0.
+> 
+> - Mani
+> 
+>>     reg:
+>>       maxItems: 1
+>>   
+>> @@ -92,6 +98,8 @@ anyOf:
+>>         - qcom,powered-remotely
+>>     - required:
+>>         - qcom,controlled-remotely
+>> +  - required:
+>> +      - qcom,bam_pipe_lock
+>>     - required:
+>>         - clocks
+>>         - clock-names
+>> -- 
+>> 2.34.1
+>>
+>>
+> 
 
