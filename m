@@ -1,179 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-29423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6402295DA8B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 04:20:04 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FDB595DA9E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 04:23:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DA8941F22B87
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 02:20:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5C6FF1C21863
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 02:23:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C66E1179BD;
-	Sat, 24 Aug 2024 02:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC2F54C69;
+	Sat, 24 Aug 2024 02:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="StZa89Wu"
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="GRbye5n4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EC115E8B
-	for <linux-arm-msm@vger.kernel.org>; Sat, 24 Aug 2024 02:19:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9B4111AD
+	for <linux-arm-msm@vger.kernel.org>; Sat, 24 Aug 2024 02:23:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724466000; cv=none; b=MEE69u4diBfjcMrtyi/1+IJESPhux1LrgRlIn+v52J0cYQet0eEE0V6Wrvuz+dSnKBqM3AujuPFuFsJs/QtfedWvf3hinm2IhVYEp+IReYU42XHop8kP/Usz20ItJi8NHYP4LZhrls+dMyLBGNpA0BBh31/j8c/pKly6hbT7k9Q=
+	t=1724466196; cv=none; b=nxO7lQa78Ire8nDy7xT5qX941qc8VxV4FgOq1tMYNplLGxd7Ev453I7hPOWO+sYVVt1AE7uk9GikwC2qibG/LvIl23nzERI9KIPUGrsfobyck2NXoim22ChofhFs67ee62F4IJw7nCYv7tRWNDR3tPzBU126D+QDptJ+/W7Mk3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724466000; c=relaxed/simple;
-	bh=9sQ6JCFssdZGtmsYy5s9QY2cnq9zziz23TvGEam7rTE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tn/5KkNXiXa8H+EMqf5SHyA9x+D3AnehrrTMsvfQdl19lEnGCQnplpLLcQxD8zyl1KhzNesiLYq3kFC+tBHBf2xv+ojU21pC/dOYE7aRbVTGBsF5Mg9v7FoCpQ/IFhhsfs8aXhXnsUBsVUearKnKKCj7zZT/rJCzFcClgdg3mMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=StZa89Wu; arc=none smtp.client-ip=209.85.210.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-7093abb12edso2416877a34.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 19:19:58 -0700 (PDT)
+	s=arc-20240116; t=1724466196; c=relaxed/simple;
+	bh=i35o0zzTkuuLgSrNUQubaIIl4CJFgxIAVXBVtabL3fg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=B50efVBI4XFsJTvivUssUVAlA2IuTh8j+83ylRj4IT5ai15hVW1YUcmD2bDIpVeDLez9JVsLlDvV2D4yBLAJ4hJIm8YUw8p/WEebL+/sWQhEmwJhUz8LldjvCNRuopKfyKoiZt7mgCD/MyI3mWHrz7grwQ/xURFPdwnPN90tGmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=GRbye5n4; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2ef2d96164aso24141591fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 19:23:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724465998; x=1725070798; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=q9g7D4EjyQqlZkVFhMkSsFS8fbMF1DEOst87SjuDKg8=;
-        b=StZa89WucGiiLoyhYGdUbeWVd7glncTNSANrKtAH/CV1L7liBk3WFBRi9JYbrkoNuS
-         ulUir6qtXnuqN+4JgbLqWbWpDUsB7Nq/AHtiPCGEqRfzUt1VXCdaCsznj2v9hnyFT+7O
-         MYVbeVeTXsgWDtYiA6E/HwQje6eYUEXhfdJdFd8PGa/VRiCthMOCy5hwD/ZjnlgoVy2Q
-         w4LpYQTjBI2FXpfaFxcMuEhCydECb+R/s7m+jBAot8hz+MsNPLwu5U1Y7CHVVyaKbRNk
-         kF8l8O3wj8AavXeOUh7fKrxfqg5HmTXKnYVGbRXM01GUX9rEvUbuGY838R2llfv51aZp
-         FUng==
+        d=linux-foundation.org; s=google; t=1724466193; x=1725070993; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=O9zI+L5MCe2KlUtOy00sjP2H1MksZ4qDKvLS3+IXg5s=;
+        b=GRbye5n4LZHBkrSg2DKD7k8YDwFYolwFrFctLmU3rfgAPZbLGqPt5O6zpNNkyXmnn+
+         KP++T0mGb/4380WPGiPddF+a79fAAShZauahbvRVRhPjPuB6nrWQ7wdpDZjDa23AEQuV
+         aeBI2kILp6Jq+FZ8KLx+TbU5QQVDBwW3BLA8E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724465998; x=1725070798;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q9g7D4EjyQqlZkVFhMkSsFS8fbMF1DEOst87SjuDKg8=;
-        b=excTDTJWpKjHP33ZMWiujsg0CkMuyr1uwFKj95NjYvAne1CJps+U1V8LfLFYlMGygk
-         aEhm2ayHcZdF8wfV2JKOYBKnS2d2wWiFYNl0JSS8POA/Y7YyWbXpcH5IYs+PR53RsuoL
-         l0Ae64JfoXP+WO4Nk1QD+wEzT38TfwP0KrMU5DAwDMSB3/0WWtQRsKRknc3g0wwOHI/m
-         PoSXj+YXfpKPzFnrb/e2D+x4DL3KXmMDY1zihyxLYSC9hFHHcfWBmSB2W2KP+SbveUEu
-         hbSj5jZLqj+9TlR0kKcwKxRcMweDE6gWgZpyYWlMAW1PK6UW7A2g8mu/jGx2a6QnZn9j
-         5gCg==
-X-Forwarded-Encrypted: i=1; AJvYcCU0ffNcWTAehAwx1bBlDOCJVIP+BRzBwMgqGXG+BZV7kkJ+DH/Mjp6jnMw3Z5SPyYViabaN0KcrYWBHk3Vk@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxntpsda3yWIK4/hcBT5LEWgKudkcTRzU5EKVZ21+gg+y7w3Nob
-	njhDqaYWX0a6cJsVLUoGAc2SbaBr0KiXFbIo/Yu06vS6pQcywT4SXgtyj4WkKw==
-X-Google-Smtp-Source: AGHT+IGu8hxs5nyQH8QxjA1xEWXYw+NH7bSGHW27OjR19bep/VZUDM94F+d3I21JXE3DZ7Uw4A37gQ==
-X-Received: by 2002:a05:6830:6a8f:b0:709:3e0c:6735 with SMTP id 46e09a7af769-70e0eb2f327mr4524723a34.17.1724465998015;
-        Fri, 23 Aug 2024 19:19:58 -0700 (PDT)
-Received: from thinkpad ([120.60.50.97])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d61968ecc7sm4601882a91.54.2024.08.23.19.19.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Aug 2024 19:19:57 -0700 (PDT)
-Date: Sat, 24 Aug 2024 07:49:46 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	lpieralisi@kernel.org, robh@kernel.org, bhelgaas@google.com,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] PCI: qcom-ep: Do not enable resources during probe()
-Message-ID: <20240824021946.s5jbzvysjxl5dcvt@thinkpad>
-References: <20240823044133.b27cgioefsg4sjlr@thinkpad>
- <20240823220436.GA387844@bhelgaas>
+        d=1e100.net; s=20230601; t=1724466193; x=1725070993;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=O9zI+L5MCe2KlUtOy00sjP2H1MksZ4qDKvLS3+IXg5s=;
+        b=EAOWDbUkiXClRZnT8lVct2znnuOIjTe07pZ7bYkE5iBQvg+sUP8arUGwwXAQMVR2em
+         F5GTR+nJWlCX/n/0jyHx5+7Bd1JzYlfv45843gvxUNQd+E2JRCyHAmgNMrXXqNcDPiKF
+         P+pIjOMZpGKdRsuDpN4i2EXkXnRdQN/26hcBSGv9pIqK4r1SwBooY8/+6hoS7un4yUcG
+         6C7n/pXxFq4i89lCYDfJNWIUlStEvBiNh4N0Kn8IoU3kvCS96KoPPGe0Xugav2gwIXnw
+         cqkSmRqz72u4NKJoxH2fZFLc8A8Hk5XrBv4/xmsIRMR2kerB4hY7mBbwE4WMhSAqcDOB
+         GwEg==
+X-Forwarded-Encrypted: i=1; AJvYcCXr3uQjIlHyido1KtIcVpE9pbK+03Ab7V1hkNsSgl1W7wYBRuR092SuNv7uUEtmaFGU8AT08jZ5w9zwJdk3@vger.kernel.org
+X-Gm-Message-State: AOJu0YxmUhq0c7ifAZ8F+bcQ+LeZfgClYF3+tkXS3IIh40KQOFommDmb
+	UcyBRmKiaJMWrFBiThxnjY0DGG4CyDnE/Dmqx5qkarmOSovkvj1tf2bpHf5XHNK9rGd8gnA30cR
+	EJDq4AQ==
+X-Google-Smtp-Source: AGHT+IHKjvQnrr+jNIxYl8bJ6dEVkrSuIQd8RbZixUAYwnK6diVtb75A1N8Ie6fbFLP8erxLjmcGlw==
+X-Received: by 2002:a2e:702:0:b0:2ef:29cd:3183 with SMTP id 38308e7fff4ca-2f4f57b7bdbmr23783521fa.48.1724466192163;
+        Fri, 23 Aug 2024 19:23:12 -0700 (PDT)
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com. [209.85.208.182])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f4047c6741sm6206221fa.50.2024.08.23.19.23.10
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Aug 2024 19:23:11 -0700 (PDT)
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2ef2d96164aso24141431fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 19:23:10 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWDQfWNdFgxucGZbQsLG80HesuAzyvZwR4zCcrJGeb8MbmeNHKuNNoo1EuQ93OQmZ7MWrbk8QwkmRdWCU/y@vger.kernel.org
+X-Received: by 2002:a2e:4611:0:b0:2f3:f054:684b with SMTP id
+ 38308e7fff4ca-2f4f5778f77mr20400311fa.29.1724466190574; Fri, 23 Aug 2024
+ 19:23:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240823220436.GA387844@bhelgaas>
+References: <20240819-uncompressed-distro-packages-v1-1-c8accc8bc9ea@quicinc.com>
+ <20240823105853.GC31866@willie-the-truck> <ZskWfKIZkThKpj9m@hu-bjorande-lv.qualcomm.com>
+In-Reply-To: <ZskWfKIZkThKpj9m@hu-bjorande-lv.qualcomm.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Sat, 24 Aug 2024 10:22:54 +0800
+X-Gmail-Original-Message-ID: <CAHk-=wjpXFOMq03cVq9XA+33QGALRzWV4mCND6dYpwAnXRqnmA@mail.gmail.com>
+Message-ID: <CAHk-=wjpXFOMq03cVq9XA+33QGALRzWV4mCND6dYpwAnXRqnmA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: Allow packing uncompressed images into distro packages
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Will Deacon <will@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Aug 23, 2024 at 05:04:36PM -0500, Bjorn Helgaas wrote:
-> On Fri, Aug 23, 2024 at 10:11:33AM +0530, Manivannan Sadhasivam wrote:
-> > On Thu, Aug 22, 2024 at 12:31:33PM -0500, Bjorn Helgaas wrote:
-> > > On Thu, Aug 22, 2024 at 09:10:25PM +0530, Manivannan Sadhasivam wrote:
-> > > > On Thu, Aug 22, 2024 at 10:16:58AM -0500, Bjorn Helgaas wrote:
-> > > > > On Thu, Aug 22, 2024 at 12:18:23PM +0530, Manivannan Sadhasivam wrote:
-> > > > > > On Wed, Aug 21, 2024 at 05:56:18PM -0500, Bjorn Helgaas wrote:
-> > > > > > ...
-> > > > > 
-> > > > > > > Although I do have the question of what happens if the RC deasserts
-> > > > > > > PERST# before qcom-ep is loaded.  We probably don't execute
-> > > > > > > qcom_pcie_perst_deassert() in that case, so how does the init happen?
-> > > > > > 
-> > > > > > PERST# is a level trigger signal. So even if the host has asserted
-> > > > > > it before EP booted, the level will stay low and ep will detect it
-> > > > > > while booting.
-> > > > > 
-> > > > > The PERST# signal itself is definitely level oriented.
-> > > > > 
-> > > > > I'm still skeptical about the *interrupt* from the PCIe controller
-> > > > > being level-triggered, as I mentioned here:
-> > > > > https://lore.kernel.org/r/20240815224735.GA57931@bhelgaas
-> > > > 
-> > > > Sorry, that comment got buried into my inbox. So didn't get a chance
-> > > > to respond.
-> > > > 
-> > > > > tegra194 is also dwc-based and has a similar PERST# interrupt but
-> > > > > it's edge-triggered (tegra_pcie_ep_pex_rst_irq()), which I think
-> > > > > is a cleaner implementation.  Then you don't have to remember the
-> > > > > current state, switch between high and low trigger, worry about
-> > > > > races and missing a pulse, etc.
-> > > > 
-> > > > I did try to mimic what tegra194 did when I wrote the qcom-ep
-> > > > driver, but it didn't work. If we use the level triggered interrupt
-> > > > as edge, the interrupt will be missed if we do not listen at the
-> > > > right time (when PERST# goes from high to low and vice versa).
-> > > > 
-> > > > I don't know how tegra194 interrupt controller is wired up, but IIUC
-> > > > they will need to boot the endpoint first and then host to catch the
-> > > > PERST# interrupt.  Otherwise, the endpoint will never see the
-> > > > interrupt until host toggles it again.
-> > > 
-> > > Having to control the boot ordering of endpoint and host is definitely
-> > > problematic.
-> > > 
-> > > What is the nature of the crash when we try to enable the PHY when
-> > > Refclk is not available?  The endpoint has no control over when the
-> > > host asserts/deasserts PERST#.  If PERST# happens to be asserted while
-> > > the endpoint is enabling the PHY, and this causes some kind of crash
-> > > that the endpoint driver can't easily recover from, that's a serious
-> > > robustness problem.
-> > 
-> > The whole endpoint SoC crashes if the refclk is not available during
-> > phy_power_on() as the PHY driver tries to access some register on Dmitry's
-> > platform (I did not see this crash on SM8450 SoC though).
-> > 
-> > If we keep the enable_resources() during probe() then the race condition you
-> > observed above could apply. So removing that from probe() will also make the
-> > race condition go away,
-> 
-> Example:
-> 
->   1) host deasserts PERST#
->   2) qcom-ep handles PERST# IRQ
->   3) qcom_pcie_ep_perst_irq_thread() calls qcom_pcie_perst_deassert()
->   4) host asserts PERST#, Refclk no longer valid
->   5) qcom_pcie_perst_deassert() calls qcom_pcie_enable_resources()
->   6) qcom_pcie_enable_resources() enables PHY
-> 
-> I don't see what prevents the PERST# assertion at 4.  It sounds like
-> the endpoint SoC crashes at 6.
+On Sat, 24 Aug 2024 at 07:08, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
+>
+> But the change also made it possible to install "vmlinuz.efi", by
+> setting both options to =y. Was this intentional?
 
-IDK why host would quickly assert the PERST# after deasserting during probe()
-unless someone intentionally does that from host side.
+Absolutely. My arm64 config in fact has EFI_ZBOOT enabled.
 
-If that happens then there is a possibility of the endpoint SoC crash, but I'm
-not sure how we can avoid that.
+IOW, the intent of that CONFIG_COMPRESSED_INSTALL was simply to make
+"make install" do the same thing that "make zinstall" used to do.
 
-But what this patch fixes is a crash occuring in a sane scenario:
+I in fact initially limited the whole COMPRESSED_INSTALL question to
+be *only* for when EFI_ZBOOT is enabled (because that was my
+situation), and privately asked Will if maybe non-EFI people want it.
+So the patch originally had
 
-1) Endpoint boots first (no refclk from host)
-2) Probe() calls qcom_pcie_enable_resources() --> Crash
++       depends on EFI && EFI_ZBOOT
 
-- Mani
+and I asked Will
 
--- 
-மணிவண்ணன் சதாசிவம்
+  Comments? Do the non-EFI_ZBOOT cases also perhaps want this (ie
+  "Image.gz" as opposed to "vmlinuz.efi")?
+
+  I intentionally tried to make it as limited as possible, but maybe the
+  non-EFI people would want this too?
+
+and he thought that it would be better to just make this compressed
+install question be independent of anything else, and literally just
+boil down to "do you want 'make install' to do the same thing as 'make
+zinstall' does?"
+
+I have *no* idea about what the actual package manager case wants, though.
+
+              Linus
 
