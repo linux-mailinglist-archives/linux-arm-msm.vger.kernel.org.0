@@ -1,264 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-29422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBA1695D9C9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 01:44:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6402295DA8B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 04:20:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9F8E7282D56
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Aug 2024 23:44:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DA8941F22B87
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Aug 2024 02:20:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E70A1C6F7D;
-	Fri, 23 Aug 2024 23:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C66E1179BD;
+	Sat, 24 Aug 2024 02:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VC5oNgjA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="StZa89Wu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D41F152196;
-	Fri, 23 Aug 2024 23:44:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EC115E8B
+	for <linux-arm-msm@vger.kernel.org>; Sat, 24 Aug 2024 02:19:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724456671; cv=none; b=D2u82ucXGiGxHN6PP6EKP/k6dP/Daohv48MOumBiUazRFOA7PGEADj+Seoe+WlU7RElaXuyoN4iNBFr2A7INXe7S+fn2y4Z2zZbtRGcM+6S0Fvm4Zsed1/a0LuUpdQLlikVTGLkx9hmmsEKtMidXqu2tSF3GHMV0LBxvp2HyKUA=
+	t=1724466000; cv=none; b=MEE69u4diBfjcMrtyi/1+IJESPhux1LrgRlIn+v52J0cYQet0eEE0V6Wrvuz+dSnKBqM3AujuPFuFsJs/QtfedWvf3hinm2IhVYEp+IReYU42XHop8kP/Usz20ItJi8NHYP4LZhrls+dMyLBGNpA0BBh31/j8c/pKly6hbT7k9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724456671; c=relaxed/simple;
-	bh=PKOqjsh55k0gUWF28he/tpFo7CnOI0T+o1W/ywoIY40=;
+	s=arc-20240116; t=1724466000; c=relaxed/simple;
+	bh=9sQ6JCFssdZGtmsYy5s9QY2cnq9zziz23TvGEam7rTE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b3Kj9WUUQXVGVhe6KCYrD1blsvJkZIh9Mgt2Pm1fxWKf9aIv7dAbpDeYB4sVcdCH29IZxE6BhaAxGdx5r2jSw+2dFP08s7bKku/YBMBdOo3R2qiEwHeSZXRe7LFhryfO2V6SLsWrvvXWBmFDbNC64/P0lCxbTRWewANN5ZDe2IA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VC5oNgjA; arc=none smtp.client-ip=209.85.219.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-6bf75ed0e0eso12955736d6.1;
-        Fri, 23 Aug 2024 16:44:29 -0700 (PDT)
+	 Content-Type:Content-Disposition:In-Reply-To; b=tn/5KkNXiXa8H+EMqf5SHyA9x+D3AnehrrTMsvfQdl19lEnGCQnplpLLcQxD8zyl1KhzNesiLYq3kFC+tBHBf2xv+ojU21pC/dOYE7aRbVTGBsF5Mg9v7FoCpQ/IFhhsfs8aXhXnsUBsVUearKnKKCj7zZT/rJCzFcClgdg3mMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=StZa89Wu; arc=none smtp.client-ip=209.85.210.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-7093abb12edso2416877a34.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Aug 2024 19:19:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724456668; x=1725061468; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ye+Ps90cwlGsT4oHvYpdjI85sw14z4sG45EsgOKagSg=;
-        b=VC5oNgjAA01PpyWUv0wOeWT+XVdaltS73h7+vLfG6RfslSabKCrAdOJ7vqCJe9ckID
-         /Iw2uyTyOZZwAM51zdTU46f1ChNNAmTtk5I8Qug33wXNC56Cv07QxEMB/mcTQp75Ufr4
-         GK+4jiIadffLc9HUz7J9lMAfVmDc5sEBDAehZcaDt/vzZCaxwKD9p0eisHa9MGdhCKUA
-         x4BYF9T7IMjj07hw6vxI8WAsa+YSBAw6TcsM8LBtVe58jc4E99n13mtKSHnslIs4g5wP
-         LR0hg8TP6RvrGv/ypZRrtmd9hy4g/3MDUHsulMw+oWfdiVc3Y3jlaUwvVcvyvOMmLyPR
-         /atA==
+        d=linaro.org; s=google; t=1724465998; x=1725070798; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=q9g7D4EjyQqlZkVFhMkSsFS8fbMF1DEOst87SjuDKg8=;
+        b=StZa89WucGiiLoyhYGdUbeWVd7glncTNSANrKtAH/CV1L7liBk3WFBRi9JYbrkoNuS
+         ulUir6qtXnuqN+4JgbLqWbWpDUsB7Nq/AHtiPCGEqRfzUt1VXCdaCsznj2v9hnyFT+7O
+         MYVbeVeTXsgWDtYiA6E/HwQje6eYUEXhfdJdFd8PGa/VRiCthMOCy5hwD/ZjnlgoVy2Q
+         w4LpYQTjBI2FXpfaFxcMuEhCydECb+R/s7m+jBAot8hz+MsNPLwu5U1Y7CHVVyaKbRNk
+         kF8l8O3wj8AavXeOUh7fKrxfqg5HmTXKnYVGbRXM01GUX9rEvUbuGY838R2llfv51aZp
+         FUng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724456668; x=1725061468;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ye+Ps90cwlGsT4oHvYpdjI85sw14z4sG45EsgOKagSg=;
-        b=N/nZIqTs6PQ4whp5tigyShnJccqQt9chaslw2UXvpLn09LEOjGaBWy6M+edxajdT/O
-         vKmkOSVhpCe/EG7GPlHmxH/JvkxOUS4M6pQJ6AlU0jfpLoIeLFPsMDIs21nDJiyehCqK
-         FxCeDV6A8v0Y5c74a78Js5h+XOFfbLo+pjbY8aQkPWsql6TlJKUk+5GGdxVHnSDL6dv+
-         pzVKidlkOhJ5vJSt044rqUvc4sRQmhgy+VbrpdN7RXJtFtDTAH16VQt5mIIStIlNeMpy
-         cY7qgqHYIoQkWIkn1Utcz3aQ3j1s3vWySHxozVu5A4uNGRpmOiExg/OmBGe2DwoDibCX
-         y4Mg==
-X-Forwarded-Encrypted: i=1; AJvYcCU2YoHuDLrQJtPBL19euYWKBDbethnsUNTFoGHidrZS1Vri4wYYB2edqU5508oeH1+M6HCf+VxKplqPlAOCnA==@vger.kernel.org, AJvYcCW8ISDUgr1eXYeXzTa5e2Sylae3uhZgtKHZ465tHMVDzq4ptLldfAkowCV+sIe7T9bq0rdCG0aSSqFS@vger.kernel.org, AJvYcCX1JsXBgzmpCbCCaAQnJBfjzgVN9UXjKOIQoNtC8CN2GtpW7VIobbckh0uceGAebONoBuQmbZZc2TDuNM4=@vger.kernel.org, AJvYcCX3wYE/UlNtzv5LHy0EVuifY+rC9BKgKHk8mvGQdvKLizJkRMVOGUDlf2fC1vs2RMYKpvHj0XHr4wzF@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCUsYIQoatBummyeRQ2WI9KzSpXA3aYR1HWEQYy7w7ZUMEe67E
-	bal6RCCqlZtI5CDBK5AQnxJlBjoovzSbPb2gUQUDGdr9ibde3BjKcmVkUfh/
-X-Google-Smtp-Source: AGHT+IHsrMKOopKNem9M07VfAEBD9lUhg2aiNwXgCaC6w49RC2sZLM8rvab1CMAWFtEWOEzJpHPW4Q==
-X-Received: by 2002:a05:6214:3382:b0:6b0:90b4:1ca9 with SMTP id 6a1803df08f44-6c16dc217c1mr39081636d6.6.1724456668104;
-        Fri, 23 Aug 2024 16:44:28 -0700 (PDT)
-Received: from localhost ([2607:fea8:52a3:d200:324c:b818:b179:79b])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6c162d6548csm23198626d6.68.2024.08.23.16.44.27
+        d=1e100.net; s=20230601; t=1724465998; x=1725070798;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=q9g7D4EjyQqlZkVFhMkSsFS8fbMF1DEOst87SjuDKg8=;
+        b=excTDTJWpKjHP33ZMWiujsg0CkMuyr1uwFKj95NjYvAne1CJps+U1V8LfLFYlMGygk
+         aEhm2ayHcZdF8wfV2JKOYBKnS2d2wWiFYNl0JSS8POA/Y7YyWbXpcH5IYs+PR53RsuoL
+         l0Ae64JfoXP+WO4Nk1QD+wEzT38TfwP0KrMU5DAwDMSB3/0WWtQRsKRknc3g0wwOHI/m
+         PoSXj+YXfpKPzFnrb/e2D+x4DL3KXmMDY1zihyxLYSC9hFHHcfWBmSB2W2KP+SbveUEu
+         hbSj5jZLqj+9TlR0kKcwKxRcMweDE6gWgZpyYWlMAW1PK6UW7A2g8mu/jGx2a6QnZn9j
+         5gCg==
+X-Forwarded-Encrypted: i=1; AJvYcCU0ffNcWTAehAwx1bBlDOCJVIP+BRzBwMgqGXG+BZV7kkJ+DH/Mjp6jnMw3Z5SPyYViabaN0KcrYWBHk3Vk@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxntpsda3yWIK4/hcBT5LEWgKudkcTRzU5EKVZ21+gg+y7w3Nob
+	njhDqaYWX0a6cJsVLUoGAc2SbaBr0KiXFbIo/Yu06vS6pQcywT4SXgtyj4WkKw==
+X-Google-Smtp-Source: AGHT+IGu8hxs5nyQH8QxjA1xEWXYw+NH7bSGHW27OjR19bep/VZUDM94F+d3I21JXE3DZ7Uw4A37gQ==
+X-Received: by 2002:a05:6830:6a8f:b0:709:3e0c:6735 with SMTP id 46e09a7af769-70e0eb2f327mr4524723a34.17.1724465998015;
+        Fri, 23 Aug 2024 19:19:58 -0700 (PDT)
+Received: from thinkpad ([120.60.50.97])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d61968ecc7sm4601882a91.54.2024.08.23.19.19.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Aug 2024 16:44:27 -0700 (PDT)
-Date: Fri, 23 Aug 2024 19:44:26 -0400
-From: Richard Acayan <mailingradian@gmail.com>
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Todor Tomov <todor.too@gmail.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-media@vger.kernel.org
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: sdm670: add camss and cci
-Message-ID: <Zske2ptZAV12YLyf@radian>
-References: <20240819221051.31489-7-mailingradian@gmail.com>
- <20240819221051.31489-12-mailingradian@gmail.com>
- <40cd7a52-1c60-40dc-aee6-730b5247b216@linaro.org>
+        Fri, 23 Aug 2024 19:19:57 -0700 (PDT)
+Date: Sat, 24 Aug 2024 07:49:46 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	lpieralisi@kernel.org, robh@kernel.org, bhelgaas@google.com,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] PCI: qcom-ep: Do not enable resources during probe()
+Message-ID: <20240824021946.s5jbzvysjxl5dcvt@thinkpad>
+References: <20240823044133.b27cgioefsg4sjlr@thinkpad>
+ <20240823220436.GA387844@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <40cd7a52-1c60-40dc-aee6-730b5247b216@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240823220436.GA387844@bhelgaas>
 
-On Wed, Aug 21, 2024 at 01:40:14PM +0300, Vladimir Zapolskiy wrote:
-> On 8/20/24 01:10, Richard Acayan wrote:
-> > Add the camera subsystem and CCI used to interface with cameras on the
-> > Snapdragon 670.
+On Fri, Aug 23, 2024 at 05:04:36PM -0500, Bjorn Helgaas wrote:
+> On Fri, Aug 23, 2024 at 10:11:33AM +0530, Manivannan Sadhasivam wrote:
+> > On Thu, Aug 22, 2024 at 12:31:33PM -0500, Bjorn Helgaas wrote:
+> > > On Thu, Aug 22, 2024 at 09:10:25PM +0530, Manivannan Sadhasivam wrote:
+> > > > On Thu, Aug 22, 2024 at 10:16:58AM -0500, Bjorn Helgaas wrote:
+> > > > > On Thu, Aug 22, 2024 at 12:18:23PM +0530, Manivannan Sadhasivam wrote:
+> > > > > > On Wed, Aug 21, 2024 at 05:56:18PM -0500, Bjorn Helgaas wrote:
+> > > > > > ...
+> > > > > 
+> > > > > > > Although I do have the question of what happens if the RC deasserts
+> > > > > > > PERST# before qcom-ep is loaded.  We probably don't execute
+> > > > > > > qcom_pcie_perst_deassert() in that case, so how does the init happen?
+> > > > > > 
+> > > > > > PERST# is a level trigger signal. So even if the host has asserted
+> > > > > > it before EP booted, the level will stay low and ep will detect it
+> > > > > > while booting.
+> > > > > 
+> > > > > The PERST# signal itself is definitely level oriented.
+> > > > > 
+> > > > > I'm still skeptical about the *interrupt* from the PCIe controller
+> > > > > being level-triggered, as I mentioned here:
+> > > > > https://lore.kernel.org/r/20240815224735.GA57931@bhelgaas
+> > > > 
+> > > > Sorry, that comment got buried into my inbox. So didn't get a chance
+> > > > to respond.
+> > > > 
+> > > > > tegra194 is also dwc-based and has a similar PERST# interrupt but
+> > > > > it's edge-triggered (tegra_pcie_ep_pex_rst_irq()), which I think
+> > > > > is a cleaner implementation.  Then you don't have to remember the
+> > > > > current state, switch between high and low trigger, worry about
+> > > > > races and missing a pulse, etc.
+> > > > 
+> > > > I did try to mimic what tegra194 did when I wrote the qcom-ep
+> > > > driver, but it didn't work. If we use the level triggered interrupt
+> > > > as edge, the interrupt will be missed if we do not listen at the
+> > > > right time (when PERST# goes from high to low and vice versa).
+> > > > 
+> > > > I don't know how tegra194 interrupt controller is wired up, but IIUC
+> > > > they will need to boot the endpoint first and then host to catch the
+> > > > PERST# interrupt.  Otherwise, the endpoint will never see the
+> > > > interrupt until host toggles it again.
+> > > 
+> > > Having to control the boot ordering of endpoint and host is definitely
+> > > problematic.
+> > > 
+> > > What is the nature of the crash when we try to enable the PHY when
+> > > Refclk is not available?  The endpoint has no control over when the
+> > > host asserts/deasserts PERST#.  If PERST# happens to be asserted while
+> > > the endpoint is enabling the PHY, and this causes some kind of crash
+> > > that the endpoint driver can't easily recover from, that's a serious
+> > > robustness problem.
 > > 
-> > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> > ---
-> >   arch/arm64/boot/dts/qcom/sdm670.dtsi | 188 +++++++++++++++++++++++++++
-> >   1 file changed, 188 insertions(+)
+> > The whole endpoint SoC crashes if the refclk is not available during
+> > phy_power_on() as the PHY driver tries to access some register on Dmitry's
+> > platform (I did not see this crash on SM8450 SoC though).
 > > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> > index ba93cef33dbb..37bc4fa04286 100644
-> > --- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> > @@ -6,6 +6,7 @@
-> >    * Copyright (c) 2022, Richard Acayan. All rights reserved.
-> >    */
-> > +#include <dt-bindings/clock/qcom,camcc-sdm845.h>
-> >   #include <dt-bindings/clock/qcom,dispcc-sdm845.h>
-> >   #include <dt-bindings/clock/qcom,gcc-sdm845.h>
-> >   #include <dt-bindings/clock/qcom,rpmh.h>
-> > @@ -1168,6 +1169,34 @@ tlmm: pinctrl@3400000 {
-> >   			gpio-ranges = <&tlmm 0 0 151>;
-> >   			wakeup-parent = <&pdc>;
-> > +			cci0_default: cci0-default-state {
-> > +				pins = "gpio17", "gpio18";
-> > +				function = "cci_i2c";
-> > +				drive-strength = <2>;
-> > +				bias-pull-up;
-> > +			};
-> > +
-> > +			cci0_sleep: cci0-sleep-state {
-> > +				pins = "gpio17", "gpio18";
-> > +				function = "cci_i2c";
-> > +				drive-strength = <2>;
-> > +				bias-pull-down;
-> > +			};
-> > +
-> > +			cci1_default: cci1-default-state {
-> > +				pins = "gpio19", "gpio20";
-> > +				function = "cci_i2c";
-> > +				drive-strength = <2>;
-> > +				bias-pull-up;
-> > +			};
-> > +
-> > +			cci1_sleep: cci1-sleep-state {
-> > +				pins = "gpio19", "gpio20";
-> > +				function = "cci_i2c";
-> > +				drive-strength = <2>;
-> > +				bias-pull-down;
-> > +			};
-> > +
-> >   			qup_i2c0_default: qup-i2c0-default-state {
-> >   				pins = "gpio0", "gpio1";
-> >   				function = "qup0";
-> > @@ -1400,6 +1429,165 @@ spmi_bus: spmi@c440000 {
-> >   			#interrupt-cells = <4>;
-> >   		};
-> > +		cci: cci@ac4a000 {
-> > +			compatible = "qcom,sdm670-cci", "qcom,msm8996-cci";
-> > +			#address-cells = <1>;
-> > +			#size-cells = <0>;
-> > +
-> > +			reg = <0 0x0ac4a000 0 0x4000>;
-> > +			interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
-> > +			power-domains = <&camcc TITAN_TOP_GDSC>;
-> > +
-> > +			clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
-> > +				 <&camcc CAM_CC_SOC_AHB_CLK>,
-> > +				 <&camcc CAM_CC_CPAS_AHB_CLK>,
-> > +				 <&camcc CAM_CC_CCI_CLK>;
-> > +			clock-names = "camnoc_axi",
-> > +				      "soc_ahb",
-> > +				      "cpas_ahb",
-> > +				      "cci";
-> > +
-> > +			assigned-clocks = <&camcc CAM_CC_CCI_CLK>;
-> > +			assigned-clock-rates = <37500000>;
+> > If we keep the enable_resources() during probe() then the race condition you
+> > observed above could apply. So removing that from probe() will also make the
+> > race condition go away,
 > 
-> Please remove assigned-clocks and assigned-clock-rates properties.
-
-Doing this adds a warning to dmesg, where the clock rate is set to 19.2
-MHz by default.
-
-> > +
-> > +			pinctrl-names = "default", "sleep";
-> > +			pinctrl-0 = <&cci0_default &cci1_default>;
-> > +			pinctrl-1 = <&cci0_sleep &cci1_sleep>;
-> > +
-> > +			status = "disabled";
-> > +
-> > +			cci_i2c0: i2c-bus@0 {
-> > +				reg = <0>;
-> > +				clock-frequency = <1000000>;
-> > +				#address-cells = <1>;
-> > +				#size-cells = <0>;
-> > +			};
-> > +
-> > +			cci_i2c1: i2c-bus@1 {
-> > +				reg = <1>;
-> > +				clock-frequency = <1000000>;
-> > +				#address-cells = <1>;
-> > +				#size-cells = <0>;
-> > +			};
-> > +		};
-> > +
-> > +		camss: camera-controller@ac65000 {
-> > +			compatible = "qcom,sdm670-camss";
-> > +			reg = <0 0x0ac65000 0 0x1000>,
-> > +			      <0 0x0ac66000 0 0x1000>,
-> > +			      <0 0x0ac67000 0 0x1000>,
-> > +			      <0 0x0acaf000 0 0x4000>,
-> > +			      <0 0x0acb3000 0 0x1000>,
-> > +			      <0 0x0acb6000 0 0x4000>,
-> > +			      <0 0x0acba000 0 0x1000>,
-> > +			      <0 0x0acc4000 0 0x4000>,
-> > +			      <0 0x0acc8000 0 0x1000>;
-> > +			reg-names = "csiphy0",
-> > +				    "csiphy1",
-> > +				    "csiphy2",
-> > +				    "vfe0",
-> > +				    "csid0",
-> > +				    "vfe1",
-> > +				    "csid1",
-> > +				    "vfe_lite",
-> > +				    "csid2";
-> > +
-> > +			interrupts = <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 468 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
-> > +				     <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>;
-> > +			interrupt-names = "csid0",
-> > +					  "csid1",
-> > +					  "csid2",
-> > +					  "csiphy0",
-> > +					  "csiphy1",
-> > +					  "csiphy2",
-> > +					  "vfe0",
-> > +					  "vfe1",
-> > +					  "vfe_lite";
-> > +
-> > +			clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
-> > +				 <&camcc CAM_CC_CPAS_AHB_CLK>,
-> > +				 <&camcc CAM_CC_IFE_0_CSID_CLK>,
-> > +				 <&camcc CAM_CC_IFE_1_CSID_CLK>,
-> > +				 <&camcc CAM_CC_IFE_LITE_CSID_CLK>,
-> > +				 <&camcc CAM_CC_CSIPHY0_CLK>,
-> > +				 <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
-> > +				 <&camcc CAM_CC_CSIPHY1_CLK>,
-> > +				 <&camcc CAM_CC_CSI1PHYTIMER_CLK>,
-> > +				 <&camcc CAM_CC_CSIPHY2_CLK>,
-> > +				 <&camcc CAM_CC_CSI2PHYTIMER_CLK>,
-> > +				 <&gcc GCC_CAMERA_AHB_CLK>,
-> > +				 <&gcc GCC_CAMERA_AXI_CLK>,
-> > +				 <&camcc CAM_CC_SOC_AHB_CLK>,
+> Example:
 > 
-> Please put two &gcc and "soc_ahb" clock sources on top, it will
-> require a change in dt bindings documentation also.
+>   1) host deasserts PERST#
+>   2) qcom-ep handles PERST# IRQ
+>   3) qcom_pcie_ep_perst_irq_thread() calls qcom_pcie_perst_deassert()
+>   4) host asserts PERST#, Refclk no longer valid
+>   5) qcom_pcie_perst_deassert() calls qcom_pcie_enable_resources()
+>   6) qcom_pcie_enable_resources() enables PHY
+> 
+> I don't see what prevents the PERST# assertion at 4.  It sounds like
+> the endpoint SoC crashes at 6.
 
-I'll do this for the clocks themselves because they have no parents (so
-no obvious clock sources).
+IDK why host would quickly assert the PERST# after deasserting during probe()
+unless someone intentionally does that from host side.
+
+If that happens then there is a possibility of the endpoint SoC crash, but I'm
+not sure how we can avoid that.
+
+But what this patch fixes is a crash occuring in a sane scenario:
+
+1) Endpoint boots first (no refclk from host)
+2) Probe() calls qcom_pcie_enable_resources() --> Crash
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
