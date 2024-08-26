@@ -1,98 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-29495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF87B95F352
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 15:55:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 48C4B95F3FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 16:38:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A324C1F22129
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 13:55:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A67371F22529
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 14:38:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AA0F18732F;
-	Mon, 26 Aug 2024 13:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99F9018BC01;
+	Mon, 26 Aug 2024 14:38:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z2MDYqw2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from forward203d.mail.yandex.net (forward203d.mail.yandex.net [178.154.239.218])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E58F3D71;
-	Mon, 26 Aug 2024 13:55:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A016143C70;
+	Mon, 26 Aug 2024 14:38:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724680510; cv=none; b=AMyEmqwgqtTfLtFJoREZhZfRp+iSMbJfyBKceHPmEn+i1qVH6RXQ3b/KRuSWo3EhZl94KpYYtcoWyrRhW9vK2VKxA01Uih71q1sHOUstSFsEb4Cw2S4xwb4n/0Ww0WLmgIbgmBQZy/sbAOtetkowfIKOa+Tud41s4Vw9o4hA18A=
+	t=1724683085; cv=none; b=iz/zz1LrShPBnmDWIoWZoGXRh8m/XYyzI0O94DvrcZaiTcKD7+ts3ox/fZk6zV4LnOgx/VCm6qO9Xc+xXj4acDlayNmeWrjhQlReUanMhlJ05Y+oNUyoLbhQQ7Hc4CtnLfw9DxRyNpXeMK9EmAQM+mO9/7/21+th6QT/7S43Ozw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724680510; c=relaxed/simple;
-	bh=C42m+jPwh32KPCsnO0oyfF4dYvxrQhak5pCgtDH4W8I=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PEbfzSun05qYbIFhyyAoH7YxfRlnZoHdPR4224+GpgAP5uzO+wlGv+jVy9dSqEG/889+jvPtoy9fB7iG8+/OBZFfw1t6Mi1FXM36c96FrVF9fDayiAoPf2prbqlL2s7OV4lZkalp7ogpgHTmfAOg7LwBz7RYNVQKagFDwnmZwnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=travitia.xyz; spf=none smtp.mailfrom=travitia.xyz; arc=none smtp.client-ip=178.154.239.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=travitia.xyz
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=travitia.xyz
-Received: from forward103d.mail.yandex.net (forward103d.mail.yandex.net [IPv6:2a02:6b8:c41:1300:1:45:d181:d103])
-	by forward203d.mail.yandex.net (Yandex) with ESMTPS id 4F08862BFD;
-	Mon, 26 Aug 2024 16:49:48 +0300 (MSK)
-Received: from mail-nwsmtp-smtp-production-main-35.klg.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-35.klg.yp-c.yandex.net [IPv6:2a02:6b8:c42:24a4:0:640:473f:0])
-	by forward103d.mail.yandex.net (Yandex) with ESMTPS id A329760024;
-	Mon, 26 Aug 2024 16:49:40 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-35.klg.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id UnTqJJ0oEKo0-cU9hcZFx;
-	Mon, 26 Aug 2024 16:49:39 +0300
-X-Yandex-Fwd: 1
-Authentication-Results: mail-nwsmtp-smtp-production-main-35.klg.yp-c.yandex.net; dkim=pass
-From: Jens Reidel <adrian@travitia.xyz>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>
-Cc: alsa-devel@alsa-project.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux@mainlining.org,
-	Jens Reidel <adrian@travitia.xyz>
-Subject: [PATCH 1/1] ASoC: qcom: sm8250: enable primary mi2s
-Date: Mon, 26 Aug 2024 15:49:20 +0200
-Message-ID: <20240826134920.55148-2-adrian@travitia.xyz>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240826134920.55148-1-adrian@travitia.xyz>
-References: <20240826134920.55148-1-adrian@travitia.xyz>
+	s=arc-20240116; t=1724683085; c=relaxed/simple;
+	bh=2F3ChVpAapohZrK4s3eXXnWeAXbnRLAmsVoMUX+5w0M=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=dkP6Mto/uy7d/g/DX7GiVtnCwVOM0oxtnIF4puk6JPZMIkxSGiNI9W6jPtOXsbf66a76hNZcJJGeJovyT/vLczyIrl/D1YN6axXms0kW1KYtOGdt8nr4m3P3SMA4GJkp8XTT+gS6m1eCBv7ni2z+/pXr3QP82hV+vMatKJMDMog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z2MDYqw2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32481C4FEAC;
+	Mon, 26 Aug 2024 14:38:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724683084;
+	bh=2F3ChVpAapohZrK4s3eXXnWeAXbnRLAmsVoMUX+5w0M=;
+	h=From:Subject:Date:To:Cc:From;
+	b=Z2MDYqw2RSEChrNEjQPTm+m1gWRre/spe7mkQR64Qj0ROHDFFykED7Nn5ZCBd30Tq
+	 HFG0tUP+/2bB6Micc+s6CUDf0+rfiIEX1vcuy7eki01jcm1z6yR5pqKM1rQUmr7KjT
+	 l4ZLMYPJ+Fant6YQOV8CatK6V52nRP1dNyuHIqFqF5RaiM/mZyGCV0Btl5ztg4SK2R
+	 kCKxE1x3xtH57hdDGvqamUohz35UB7bilvgBj4tW8Vd5jA0cqstyC1hpAWqPptP0qn
+	 0y07AsndHc0uBjP3ovGWkrZFTHrZ7fX+UbYENrUxCF7QMFvO0fhmKAOgRFYSfyKN/E
+	 2H5Ovrf0zDYeA==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Subject: [PATCH v2 0/5] X1E Surface Laptop 7 support
+Date: Mon, 26 Aug 2024 16:37:49 +0200
+Message-Id: <20240826-topic-sl7-v2-0-c32ebae78789@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAD2TzGYC/23MQQ7CIBCF4as0sxYzhUZbV97DdIEw2EkUKlSia
+ bi72LXL/+XlWyFRZEpwalaIlDlx8DXkrgEzaX8jwbY2SJQd9jiIJcxsRLofhb0qIofa6oOF+p8
+ jOX5v1mWsPXFaQvxsdG5/6z8ltwKFxAE7pWxvnTk/X2zYm70JDxhLKV/3it3JpAAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>, 
+ Stephan Gerhold <stephan.gerhold@linaro.org>, 
+ Konrad Dybcio <quic_kdybcio@quicinc.com>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1724683080; l=1440;
+ i=quic_kdybcio@quicinc.com; s=20230215; h=from:subject:message-id;
+ bh=2F3ChVpAapohZrK4s3eXXnWeAXbnRLAmsVoMUX+5w0M=;
+ b=BhVGrCYaAqnM6E7bm//Ol6PqDp2zaoQP9lbgUFN5k1b6WIPELIjvm+VgspyJOjIcAY90T9Gk1
+ NNYeVyZa+YvDgD3lP887N40CyjQ0QVxy2S7iGNLRZ6XU6Nz0GGSOz19
+X-Developer-Key: i=quic_kdybcio@quicinc.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-When using primary mi2s on sm8250-compatible SoCs, the correct clock
-needs to get enabled to be able to use the mi2s interface.
+This series brings support for X Elite-based Surface Laptop 7 devices.
 
-Signed-off-by: Jens Reidel <adrian@travitia.xyz>
+See patch 4 for a more detailed status explanation
+
+Signed-off-by: Konrad Dybcio <quic_kdybcio@quicinc.com>
 ---
- sound/soc/qcom/sm8250.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Changes in v2:
+- Style fixes
+- incorporate SAM support
+- separate out adding PMC8380C PWM
+- Link to v1: https://lore.kernel.org/r/20240809-topic-sl7-v1-0-2090433d8dfc@quicinc.com
 
-diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
-index a15dafb99b33..274bab28209a 100644
---- a/sound/soc/qcom/sm8250.c
-+++ b/sound/soc/qcom/sm8250.c
-@@ -55,6 +55,14 @@ static int sm8250_snd_startup(struct snd_pcm_substream *substream)
- 	struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(rtd, 0);
- 
- 	switch (cpu_dai->id) {
-+	case PRIMARY_MI2S_RX:
-+		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
-+		snd_soc_dai_set_sysclk(cpu_dai,
-+			Q6AFE_LPASS_CLK_ID_PRI_MI2S_IBIT,
-+			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
-+		snd_soc_dai_set_fmt(cpu_dai, fmt);
-+		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
-+		break;
- 	case TERTIARY_MI2S_RX:
- 		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
- 		snd_soc_dai_set_sysclk(cpu_dai,
+---
+Konrad Dybcio (5):
+      dt-bindings: arm: qcom: Add Surface Laptop 7 devices
+      firmware: qcom: scm: Allow QSEECOM on Surface Laptop 7 models
+      arm64: dts: qcom: x1e80100-pmics: Add PMC8380C PWM
+      arm64: dts: qcom: x1e80100: Add UART2
+      arm64: dts: qcom: Add support for X1-based Surface Laptop 7 devices
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   2 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   2 +
+ .../boot/dts/qcom/x1e80100-microsoft-romulus.dtsi  | 835 +++++++++++++++++++++
+ .../boot/dts/qcom/x1e80100-microsoft-romulus13.dts |  13 +
+ .../boot/dts/qcom/x1e80100-microsoft-romulus15.dts |  13 +
+ arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi       |   8 +
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi             |  70 +-
+ drivers/firmware/qcom/qcom_scm.c                   |   2 +
+ 8 files changed, 940 insertions(+), 5 deletions(-)
+---
+base-commit: 1ca4237ad9ce29b0c66fe87862f1da54ac56a1e8
+change-id: 20240809-topic-sl7-db3eef0ada6d
+
+Best regards,
 -- 
-2.46.0
+Konrad Dybcio <quic_kdybcio@quicinc.com>
 
 
