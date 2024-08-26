@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-29497-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D186195F3FE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 16:38:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C90795F401
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 16:38:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3F75CB22252
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 14:38:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4510C283E6D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 14:38:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 591A518D658;
-	Mon, 26 Aug 2024 14:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 850BF1925A4;
+	Mon, 26 Aug 2024 14:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WaOvVh7w"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lwk5+ZFy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4E3149E1A;
-	Mon, 26 Aug 2024 14:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5971718BBBF;
+	Mon, 26 Aug 2024 14:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724683090; cv=none; b=VXLrptmkLu7c0ho0jN6WA0K697h69ypYgFdFneJSO3orEr6r4ST+PA7pTNnmf0xHVOw/aK1xMmXRjRIx6AWW/MkcIm69QYWjKYwij5YC07zVtvdscIV1A64sIfkxuh7telcLuZUYTuxRHSwhl4IGiK9mNXwcA5aQlevsu5aX2l4=
+	t=1724683094; cv=none; b=heFcMqVYfgTvBqtJdbOkewRqX561nQ77cQo02BY2NAvKpqZTCA8VOzGa/oITXZHtpeSJmbQHEqcBVmlxOOeQmBx3rj991qS2DidypZUKA1gfkMg5G+nEKyMlZ5w+vYg4vc4CKBISPoFeVcdH9DA9GREIaa8bGaU9CnDbN4y/I6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724683090; c=relaxed/simple;
-	bh=t8M6b0z/Fk1vZ3IRTbABLfRpVuDns73VjaslYbxx0gc=;
+	s=arc-20240116; t=1724683094; c=relaxed/simple;
+	bh=DRoA//tuTNs17dBMB6WWIDm/GSBiogveVMeL7KMVcMU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Nu2ForRX+1M4g7VZ2iB0zT0gVlfeRqPdOw2xVLRcSUNoxe/c1waHAUZr+W3SGFyHEPnUgYOnNj3DVEjREO/b+qqdKYoTftY7d6eM9lx4bqk7UE6LjmdVmb5PpNPnlJaaHS5hAxSGbZ3h1nsY4Dfxsp9zvAVnQU09JEZ12bc3ru0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WaOvVh7w; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCBFC4FEF6;
-	Mon, 26 Aug 2024 14:38:05 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=r98Z2o+1UAU9xyIkscqAZGSQJY0IhRZFnKfKYADByrUeFdmOCXgpimK7Cg3imqy91wjN1w3a49jQ7mYW+6jpTkZq1gaDzO0gZ4XZweJBN9m6N382qfZ/jjMN6Prv1I3UPiDCO/XmeQ1fgntu5SrLan8bmKy6tr8cyMMwhVN2+RE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lwk5+ZFy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207D2C4FEF3;
+	Mon, 26 Aug 2024 14:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724683089;
-	bh=t8M6b0z/Fk1vZ3IRTbABLfRpVuDns73VjaslYbxx0gc=;
+	s=k20201202; t=1724683093;
+	bh=DRoA//tuTNs17dBMB6WWIDm/GSBiogveVMeL7KMVcMU=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=WaOvVh7wWgNORFiynXYwE9Ubp13/qTREmE38cheNZ6Jg7y+A3YC1tu8aqod2gVl/l
-	 imgkPCgVGT7J1Z+EM9kSjyKEuwRaA6By29fesMYceqiA1MXqCfuJjrW2VWxoaA2iRW
-	 fID9RBOY8QfXtu+nAEfL0ZhubvfEWZ339/bkYR32q4vBoteOuv+3UtoGE9KHzA/I0f
-	 9KBB18VesqMHsgXo+WBZvHHnG9ZCnRcra8xntnIpOQz1mCFl708LFxL9TFPbuab8yA
-	 M2N6Yp9xX/ELwX+Fb42phWoNno2WVy+IT2BtbBj3OSGAj435EP1GBJbIe343QIHVLK
-	 B0FEBiEfzwEAw==
+	b=lwk5+ZFyKmzpgdQDFcQNG4eDyEyoIN4CQUt9wQW5FQjyqflJ4DJs7vJtvgvhVfXU0
+	 pHBc/NVtBgsWkHjb2y56ZrxqcF8OoX724lnCRF8hzWPh0J3+QOm5NOc+MegPzrvmjT
+	 5ORbPFznhX4B6nkAh6em1aDs8RMH8QxRqiT+BtoPptxCL+iC9FcQNVuN4sBRmXSep3
+	 Qtie8PuZIWpa7h7dBK5d+NHNqYXpDPUUIa//nH6reQ6pNYcdAkqotUCIK++wuUUYRK
+	 36lHV+xG6o5cfREmOzpxf5eOJRNX0jBUBywD7ncNNS8jP5K3vtZAkGsCQcDvqQEnFk
+	 x96EodTpa2+TQ==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Mon, 26 Aug 2024 16:37:50 +0200
-Subject: [PATCH v2 1/5] dt-bindings: arm: qcom: Add Surface Laptop 7
- devices
+Date: Mon, 26 Aug 2024 16:37:51 +0200
+Subject: [PATCH v2 2/5] firmware: qcom: scm: Allow QSEECOM on Surface
+ Laptop 7 models
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +53,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240826-topic-sl7-v2-1-c32ebae78789@quicinc.com>
+Message-Id: <20240826-topic-sl7-v2-2-c32ebae78789@quicinc.com>
 References: <20240826-topic-sl7-v2-0-c32ebae78789@quicinc.com>
 In-Reply-To: <20240826-topic-sl7-v2-0-c32ebae78789@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -66,36 +66,36 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  Stephan Gerhold <stephan.gerhold@linaro.org>, 
  Konrad Dybcio <quic_kdybcio@quicinc.com>
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1724683080; l=794;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1724683080; l=881;
  i=quic_kdybcio@quicinc.com; s=20230215; h=from:subject:message-id;
- bh=VHqsv0DC+5Hjp8WeEOdT9U4KazigkcrrNPyMsieUuog=;
- b=lq0WHFW//StOMDPKpBHGxL/7slztDv/nOUmr2LG/KzUmBIeB3jt/0X13oyGnIwKXob9L1g5sT
- PW+z8VnDGW/DcHc8fP/GcWK4QKKLJfdRRfsuYKO0DrAXQpSCe1gBJ2Y
+ bh=hz8khZErMZVcNrc7s3hAF1DBBz9jOKGK92fHRodhiCw=;
+ b=RPm58eWrf/2rQYid51znrewcDShPD+w/wP4k0LWUiRmop9Dq9NlmgFlEGXEX0ivlYx2Y9lbkk
+ qWe1QIUcFLUB9hazDNLLbJ1YkRHDbYL8MoJtLx1/oOMfOg4XX/jEnD4
 X-Developer-Key: i=quic_kdybcio@quicinc.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
 From: Konrad Dybcio <quic_kdybcio@quicinc.com>
 
-Document the X1E80100-based Microsoft laptops.
+Add the aforementioned machines to the list to get e.g. efivars up.
 
 Signed-off-by: Konrad Dybcio <quic_kdybcio@quicinc.com>
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 2 ++
+ drivers/firmware/qcom/qcom_scm.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index c0529486810f..2cee7d96ce6d 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -1053,6 +1053,8 @@ properties:
-           - enum:
-               - asus,vivobook-s15
-               - lenovo,yoga-slim7x
-+              - microsoft,romulus13
-+              - microsoft,romulus15
-               - qcom,x1e80100-crd
-               - qcom,x1e80100-qcp
-           - const: qcom,x1e80100
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index bdb5e98b82ef..10986cb11ec0 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -1734,6 +1734,8 @@ static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
+ 	{ .compatible = "lenovo,flex-5g" },
+ 	{ .compatible = "lenovo,thinkpad-t14s" },
+ 	{ .compatible = "lenovo,thinkpad-x13s", },
++	{ .compatible = "microsoft,romulus13", },
++	{ .compatible = "microsoft,romulus15", },
+ 	{ .compatible = "qcom,sc8180x-primus" },
+ 	{ .compatible = "qcom,x1e80100-crd" },
+ 	{ .compatible = "qcom,x1e80100-qcp" },
 
 -- 
 2.46.0
