@@ -1,274 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-29514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6746C95F8F9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 20:30:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0324395FA95
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 22:25:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BDBA32833EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 18:30:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 78F0B1F21EDB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 20:25:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55D26824BB;
-	Mon, 26 Aug 2024 18:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CCFD199EA6;
+	Mon, 26 Aug 2024 20:25:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QV6HdLMx"
+	dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="z8fyGVDa";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b="oE2JdHhe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from fallback22.i.mail.ru (fallback22.i.mail.ru [79.137.243.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E2FB677;
-	Mon, 26 Aug 2024 18:29:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCC919A288;
+	Mon, 26 Aug 2024 20:25:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724696990; cv=none; b=Ogvu4t5TjCpISnNc2UPMBvqOaayJt/3w9b6TbENMd5V5kc7JtUmmpXWyIV/R4m37tQtBJ7VBUFBjsPYHoP/mXhvC5CWkzLLApJN+7BudEJ+7WdPqyuWFjAT0FFMqkEyeFNyOwjR4uxJidRAdtAltLt7pjr+yjKD/8Lyj2CTU7wg=
+	t=1724703931; cv=none; b=Q+Q4u3OJnV008HkRlfsSknROx97Vj2ueOvW0PdnYZwHQL92MQc+6rA4hlteg/p9T0SdEUodDagGZ8Dtr3TJU8B59laTmwQdCjvWKtmndpaC4cPCRW34e5vnfRUl2AkVnd7XwR2Ca6xLvWgPcAvvBVQfa6DIIcKsP+xLacA0h0hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724696990; c=relaxed/simple;
-	bh=DoqSWBVRDMY9nAZiN+3zetnRbsIkRgSSX511Rab4zDk=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sWHC3FRJTsPcObBImCBcApddxxKTn+52TJZsNx54gYAmk62x5+x3oGKc6j6+LDK84WrvJs3CmVqMO8/35sZgUPoX585BiLFzx38WsHWx7czC2fYKxqiF6k21VSgE6WwtevJprvyt5NJcljIIj0WGG/iZGZNyVR92F5wEMjbj03A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QV6HdLMx; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47QGjvZX014445;
-	Mon, 26 Aug 2024 18:29:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	msHYl9Xj4RS1OPrJlrsccFKr/fThyPbI4ZRc5QLXCo4=; b=QV6HdLMxyIctrgGR
-	7lz7VoZEatuUThWWBnELhCuNFL74btoCP0O+2SknJ8rfgU3Z40s0BXaVQi4WC5Tg
-	e1FbDzGcH8zuLDRLfrP4+VjfudCjn9aqW8myrqRUD7ak3V01DF6Njn11ZXZ7ig2R
-	AR9Eegc4hPSgeU73mfvXOWYhVRg40f3BwnlOsmtMxsRrVwi70wI4Tqc3Yp4Z2HMQ
-	Ik9tX2CHmj4cLoAgJWCO22fOBcJx8ScSPvJTtBWzv16jz03KdqDyoqARY85Tf+hK
-	EPSvEwxsMyE+zrAFQJVUK7F1lRlFSTv6dBuYNKoqVV7eSrlWDFq13OKkmDo5I0jg
-	PecNsg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 417993mgan-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 Aug 2024 18:29:32 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47QITVRS029932
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 Aug 2024 18:29:31 GMT
-Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 26 Aug 2024 11:29:26 -0700
-Date: Mon, 26 Aug 2024 23:59:22 +0530
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-To: Rob Clark <robdclark@gmail.com>
-CC: <iommu@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>, Mostafa Saleh <smostafa@google.com>,
-        "Will
- Deacon" <will@kernel.org>, Rob Clark <robdclark@chromium.org>,
-        Sean Paul
-	<sean@poorly.run>, Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie
-	<airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        "open list:DRM DRIVER
- for Qualcomm Adreno GPUs" <dri-devel@lists.freedesktop.org>,
-        open list
-	<linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v7 4/4] drm/msm: Extend gpu devcore dumps with pgtbl info
-Message-ID: <20240826182922.wxxx3bwflxga2dlr@hu-akhilpo-hyd.qualcomm.com>
-References: <20240820171652.145673-1-robdclark@gmail.com>
- <20240820171652.145673-5-robdclark@gmail.com>
- <20240822203401.odfmdlqto6lsqefz@hu-akhilpo-hyd.qualcomm.com>
- <CAF6AEGtGCT=TSp2XRmPaqb23dk42V_ic06OCB+JLEp6f5Y4tNg@mail.gmail.com>
+	s=arc-20240116; t=1724703931; c=relaxed/simple;
+	bh=Qn3M3vmRZzraCJP1PyOXHTgq9SDzr8WdswahhXJn/J4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kfw7LsG8m2ABGELa7gaGezBXmH57iwE3KlMlmTMHTbLQOhedPCC9Ln/u0xyyhMsGlpA07SCt6GA/5nAH4dMIyFUWZdPHCEicuQ8d7RUnrvdkx8RwUWCfoJu0ClKPe1JmORAV6sTBO1ElVnb2+iJYMJFNpygKodj5Y0cuh5UPhdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com; spf=pass smtp.mailfrom=jiaxyga.com; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=z8fyGVDa; dkim=pass (1024-bit key) header.d=jiaxyga.com header.i=@jiaxyga.com header.b=oE2JdHhe; arc=none smtp.client-ip=79.137.243.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jiaxyga.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jiaxyga.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com; s=mailru;
+	h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=ilmNAnKKxEeweg3uWm2brVCV7sOH91NkrbsL8Az54xs=;
+	t=1724703926;x=1724793926; 
+	b=z8fyGVDae9t1nK8gh2133Oon/RMSInjjVGdurf4XeXnNIMnKqQeXT1m6jf4YkTyv9GIQMUt05YbVQwCv1RAtGkTak/iDNfBx3U0TEiWH76A4U+4EY7sEh092/44d/aYZrdxp+qmZ24qTNPzhnNQ5kYxATgw5AISkA0kGV7spsRk=;
+Received: from [10.12.4.21] (port=56940 helo=smtp42.i.mail.ru)
+	by fallback22.i.mail.ru with esmtp (envelope-from <danila@jiaxyga.com>)
+	id 1sig2B-00Fu8N-Cd; Mon, 26 Aug 2024 23:09:51 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=jiaxyga.com
+	; s=mailru; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:From:Sender:Reply-To:To
+	:Cc:Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+	List-Archive:X-Cloud-Ids:Disposition-Notification-To;
+	bh=ilmNAnKKxEeweg3uWm2brVCV7sOH91NkrbsL8Az54xs=; t=1724702991; x=1724792991; 
+	b=oE2JdHheHwBIF50iJ6I4cLDUaJdYUPGC+sZCXgZVQdicapFz2Kf9HzmfErEBaQk/a2jy8ilDAcX
+	U0e+p0pzZeUnSGOfGZfHnGQiKhRe/4oml+T1c/S0n/tjB/T6kSnoPT+PCtOqAb66lInEJq53z0qaL
+	lGlri7SZCJjMgVnjLUo=;
+Received: by smtp42.i.mail.ru with esmtpa (envelope-from <danila@jiaxyga.com>)
+	id 1sig1u-0000000DUOL-29qg; Mon, 26 Aug 2024 23:09:35 +0300
+Message-ID: <d31553a0-b132-4766-ac9a-482c9741279d@jiaxyga.com>
+Date: Mon, 26 Aug 2024 23:09:10 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF6AEGtGCT=TSp2XRmPaqb23dk42V_ic06OCB+JLEp6f5Y4tNg@mail.gmail.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4iY9OrKCU8OH8cKCTPCe6d5xiAVpZivz
-X-Proofpoint-ORIG-GUID: 4iY9OrKCU8OH8cKCTPCe6d5xiAVpZivz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-26_13,2024-08-26_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- priorityscore=1501 bulkscore=0 adultscore=0 mlxscore=0 clxscore=1015
- phishscore=0 mlxlogscore=999 spamscore=0 impostorscore=0
- lowpriorityscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2407110000 definitions=main-2408260140
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] ASoC: qcom: sm8250: enable primary mi2s
+To: Jens Reidel <adrian@travitia.xyz>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux@mainlining.org, danila@jiaxyga.com
+References: <20240826134920.55148-1-adrian@travitia.xyz>
+ <20240826134920.55148-2-adrian@travitia.xyz>
+Content-Language: en-US
+From: Danila Tikhonov <danila@jiaxyga.com>
+In-Reply-To: <20240826134920.55148-2-adrian@travitia.xyz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Mailru-Src: smtp
+X-7564579A: 646B95376F6C166E
+X-77F55803: 4F1203BC0FB41BD9B598A67DFB323527D48FFF5EF22321F878691CF7956759E8182A05F538085040C4F1C46E9BE3493DAC8EDD30083ED68E52CAA46F094D7EF06387C59B9F8F67A3CC29A3283896A6B0
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE743A67C3F703598BFEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637D24CDE3D695BBBC6EA1F7E6F0F101C6723150C8DA25C47586E58E00D9D99D84E1BDDB23E98D2D38B043BF0FB74779F36FC7603D7D7DA14629B0EB3E6C23E510AC614157694A2C2EAA471835C12D1D9774AD6D5ED66289B5259CC434672EE6371117882F4460429724CE54428C33FAD30A8DF7F3B2552694AC26CFBAC0749D213D2E47CDBA5A9658378DA827A17800CE70F3DDF2BBF19B93A9FA2833FD35BB23DF004C90652538430302FCEF25BFAB3454AD6D5ED66289B5278DA827A17800CE70C93C844AB25B962D32BA5DBAC0009BE395957E7521B51C2330BD67F2E7D9AF1090A508E0FED6299176DF2183F8FC7C0FD819E82F1CB4899CD04E86FAF290E2DB606B96278B59C421DD303D21008E29813377AFFFEAFD269176DF2183F8FC7C088D2E8BEBF93D4B068655334FD4449CB33AC447995A7AD18262FEC7FBD7D1F5BD5E8D9A59859A8B6F82A78844E5C6993089D37D7C0E48F6C5571747095F342E88FB05168BE4CE3AF
+X-C1DE0DAB: 0D63561A33F958A5E9988FBB8A8C66425002B1117B3ED69627A8CAB2A2024D76466072E6821086B3823CB91A9FED034534781492E4B8EEAD8D8BB953E4894305BDAD6C7F3747799A
+X-C8649E89: 1C3962B70DF3F0ADE00A9FD3E00BEEDF77DD89D51EBB7742D3581295AF09D3DF87807E0823442EA2ED31085941D9CD0AF7F820E7B07EA4CFF5F1E4C4F712246222B7216557DFBFA7D0D8DF8E3C4E7E7803E8075B400D3F03506ED036F265C5428CBD875B35315F9A8B23EECF961B6CB091A3EDCF40A9E60E2F85287069806F0C42BF32D1DA1046D202C26D483E81D6BE72B480F99247062FEE42F474E8A1C6FD34D382445848F2F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2bioj/M7/1rzOD9un0x4JxBuqlg==
+X-Mailru-Sender: 9EB879F2C80682A09F26F806C7394981FA4D19B1A53E9A3AA7CF1FCFAF80C0E94883779FF0B09D57E7C767D26902A0D02C62728BC403A049225EC17F3711B6CF1A6F2E8989E84EC137BFB0221605B344978139F6FA5A77F05FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
+X-7564579A: 78E4E2B564C1792B
+X-77F55803: 6242723A09DB00B4E352C08110291256EB698700D5CD5493965B77B4ADB569D9049FFFDB7839CE9EDDD06FDA38415CFF53DD720F8F2F7ACAB66926C3599D367FAAF2756BD0131C69
+X-7FA49CB5: 0D63561A33F958A52BFEE871C33970129030361B7581A5160E0E99AB9833E5EE8941B15DA834481FA18204E546F3947C629BAC65E8BCEBC0F6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F7900637EDB6B411A17B440E389733CBF5DBD5E9B5C8C57E37DE458BD96E472CDF7238E0725E5C173C3A84C325AE611EB865B371089D37D7C0E48F6C5571747095F342E88FB05168BE4CE3AF
+X-87b9d050: 1
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2bioj/M7/1rzOD9sUNTBP4WUakw==
+X-Mailru-MI: 8000000000000800
+X-Mras: Ok
 
-On Thu, Aug 22, 2024 at 04:15:24PM -0700, Rob Clark wrote:
-> On Thu, Aug 22, 2024 at 1:34 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
-> >
-> > On Tue, Aug 20, 2024 at 10:16:47AM -0700, Rob Clark wrote: > From: Rob Clark <robdclark@chromium.org>
-> > >
-> > > In the case of iova fault triggered devcore dumps, include additional
-> > > debug information based on what we think is the current page tables,
-> > > including the TTBR0 value (which should match what we have in
-> > > adreno_smmu_fault_info unless things have gone horribly wrong), and
-> > > the pagetable entries traversed in the process of resolving the
-> > > faulting iova.
-> > >
-> > > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > > ---
-> > >  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 10 ++++++++++
-> > >  drivers/gpu/drm/msm/msm_gpu.c           |  9 +++++++++
-> > >  drivers/gpu/drm/msm/msm_gpu.h           |  8 ++++++++
-> > >  drivers/gpu/drm/msm/msm_iommu.c         | 22 ++++++++++++++++++++++
-> > >  drivers/gpu/drm/msm/msm_mmu.h           |  3 ++-
-> > >  5 files changed, 51 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > > index 1c6626747b98..3848b5a64351 100644
-> > > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > > @@ -864,6 +864,16 @@ void adreno_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
-> > >               drm_printf(p, "  - dir=%s\n", info->flags & IOMMU_FAULT_WRITE ? "WRITE" : "READ");
-> > >               drm_printf(p, "  - type=%s\n", info->type);
-> > >               drm_printf(p, "  - source=%s\n", info->block);
-> > > +
-> > > +             /* Information extracted from what we think are the current
-> > > +              * pgtables.  Hopefully the TTBR0 matches what we've extracted
-> > > +              * from the SMMU registers in smmu_info!
-> > > +              */
-> > > +             drm_puts(p, "pgtable-fault-info:\n");
-> > > +             drm_printf(p, "  - ttbr0: %.16llx\n", (u64)info->pgtbl_ttbr0);
-> >
-> > "0x" prefix? Otherwise, it is a bit confusing when the below one is
-> > decimal.
-> 
-> mixed feelings, the extra 0x is annoying when pasting into calc which
-> is a simple way to get binary decoding
-> 
-> OTOH none of this is machine decoded so I guess we could change it
+On 8/26/24 16:49, Jens Reidel wrote:
+> When using primary mi2s on sm8250-compatible SoCs, the correct clock
+> needs to get enabled to be able to use the mi2s interface.
+>
+> Signed-off-by: Jens Reidel <adrian@travitia.xyz>
+> ---
+>   sound/soc/qcom/sm8250.c | 8 ++++++++
+>   1 file changed, 8 insertions(+)
+>
+> diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
+> index a15dafb99b33..274bab28209a 100644
+> --- a/sound/soc/qcom/sm8250.c
+> +++ b/sound/soc/qcom/sm8250.c
+> @@ -55,6 +55,14 @@ static int sm8250_snd_startup(struct snd_pcm_substream *substream)
+>   	struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(rtd, 0);
+>   
+>   	switch (cpu_dai->id) {
+> +	case PRIMARY_MI2S_RX:
+> +		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
+> +		snd_soc_dai_set_sysclk(cpu_dai,
+> +			Q6AFE_LPASS_CLK_ID_PRI_MI2S_IBIT,
+> +			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+> +		snd_soc_dai_set_fmt(cpu_dai, fmt);
+> +		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+> +		break;
+>   	case TERTIARY_MI2S_RX:
+>   		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
+>   		snd_soc_dai_set_sysclk(cpu_dai,
+Thank you. I use sm8250-sndcard on sm7325 and it works for me:
+https://github.com/mainlining/linux/commit/292a1ac9f093c639363f257e92d313489ec5a394
 
-On second thought, I think it is fine as this is an address. Probably,
-it is helpful for the pte values below.
+Let the maintainers decide whether it is really fair to add this tag.
 
-> 
-> > > +             drm_printf(p, "  - asid: %d\n", info->asid);
-> > > +             drm_printf(p, "  - ptes: %.16llx %.16llx %.16llx %.16llx\n",
-> > > +                        info->ptes[0], info->ptes[1], info->ptes[2], info->ptes[3]);
-> >
-> > Does crashdec decodes this?
-> 
-> No, it just passed thru for human eyeballs
-> 
-> crashdec _does_ have some logic to flag buffers that are "near" the
-> faulting iova to help identify if the fault is an underflow/overflow
-> (which has been, along with the pte trail, useful to debug some
-> issues)
+Tested-by: Danila Tikhonov <danila@jiaxyga.com> # sm7325-nothing-spacewar
 
-Alright.
-
-Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-
--Akhil.
-> 
-> BR,
-> -R
-> 
-> > -Akhil.
-> >
-> > >       }
-> > >
-> > >       drm_printf(p, "rbbm-status: 0x%08x\n", state->rbbm_status);
-> > > diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> > > index 3666b42b4ecd..bf2f8b2a7ccc 100644
-> > > --- a/drivers/gpu/drm/msm/msm_gpu.c
-> > > +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> > > @@ -281,6 +281,15 @@ static void msm_gpu_crashstate_capture(struct msm_gpu *gpu,
-> > >       if (submit) {
-> > >               int i;
-> > >
-> > > +             if (state->fault_info.ttbr0) {
-> > > +                     struct msm_gpu_fault_info *info = &state->fault_info;
-> > > +                     struct msm_mmu *mmu = submit->aspace->mmu;
-> > > +
-> > > +                     msm_iommu_pagetable_params(mmu, &info->pgtbl_ttbr0,
-> > > +                                                &info->asid);
-> > > +                     msm_iommu_pagetable_walk(mmu, info->iova, info->ptes);
-> > > +             }
-> > > +
-> > >               state->bos = kcalloc(submit->nr_bos,
-> > >                       sizeof(struct msm_gpu_state_bo), GFP_KERNEL);
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-> > > index 1f02bb9956be..82e838ba8c80 100644
-> > > --- a/drivers/gpu/drm/msm/msm_gpu.h
-> > > +++ b/drivers/gpu/drm/msm/msm_gpu.h
-> > > @@ -101,6 +101,14 @@ struct msm_gpu_fault_info {
-> > >       int flags;
-> > >       const char *type;
-> > >       const char *block;
-> > > +
-> > > +     /* Information about what we think/expect is the current SMMU state,
-> > > +      * for example expected_ttbr0 should match smmu_info.ttbr0 which
-> > > +      * was read back from SMMU registers.
-> > > +      */
-> > > +     phys_addr_t pgtbl_ttbr0;
-> > > +     u64 ptes[4];
-> > > +     int asid;
-> > >  };
-> > >
-> > >  /**
-> > > diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-> > > index 2a94e82316f9..3e692818ba1f 100644
-> > > --- a/drivers/gpu/drm/msm/msm_iommu.c
-> > > +++ b/drivers/gpu/drm/msm/msm_iommu.c
-> > > @@ -195,6 +195,28 @@ struct iommu_domain_geometry *msm_iommu_get_geometry(struct msm_mmu *mmu)
-> > >       return &iommu->domain->geometry;
-> > >  }
-> > >
-> > > +int
-> > > +msm_iommu_pagetable_walk(struct msm_mmu *mmu, unsigned long iova, uint64_t ptes[4])
-> > > +{
-> > > +     struct msm_iommu_pagetable *pagetable;
-> > > +     struct arm_lpae_io_pgtable_walk_data wd = {};
-> > > +
-> > > +     if (mmu->type != MSM_MMU_IOMMU_PAGETABLE)
-> > > +             return -EINVAL;
-> > > +
-> > > +     pagetable = to_pagetable(mmu);
-> > > +
-> > > +     if (!pagetable->pgtbl_ops->pgtable_walk)
-> > > +             return -EINVAL;
-> > > +
-> > > +     pagetable->pgtbl_ops->pgtable_walk(pagetable->pgtbl_ops, iova, &wd);
-> > > +
-> > > +     for (int i = 0; i < ARRAY_SIZE(wd.ptes); i++)
-> > > +             ptes[i] = wd.ptes[i];
-> > > +
-> > > +     return 0;
-> > > +}
-> > > +
-> > >  static const struct msm_mmu_funcs pagetable_funcs = {
-> > >               .map = msm_iommu_pagetable_map,
-> > >               .unmap = msm_iommu_pagetable_unmap,
-> > > diff --git a/drivers/gpu/drm/msm/msm_mmu.h b/drivers/gpu/drm/msm/msm_mmu.h
-> > > index 88af4f490881..96e509bd96a6 100644
-> > > --- a/drivers/gpu/drm/msm/msm_mmu.h
-> > > +++ b/drivers/gpu/drm/msm/msm_mmu.h
-> > > @@ -53,7 +53,8 @@ static inline void msm_mmu_set_fault_handler(struct msm_mmu *mmu, void *arg,
-> > >  struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent);
-> > >
-> > >  int msm_iommu_pagetable_params(struct msm_mmu *mmu, phys_addr_t *ttbr,
-> > > -             int *asid);
-> > > +                            int *asid);
-> > > +int msm_iommu_pagetable_walk(struct msm_mmu *mmu, unsigned long iova, uint64_t ptes[4]);
-> > >  struct iommu_domain_geometry *msm_iommu_get_geometry(struct msm_mmu *mmu);
-> > >
-> > >  #endif /* __MSM_MMU_H__ */
-> > > --
-> > > 2.46.0
-> > >
+---
+Best wishes,
+Danila
 
