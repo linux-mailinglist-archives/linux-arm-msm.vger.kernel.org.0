@@ -1,102 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-29506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3B7C95F4BD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 17:11:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8AC3295F4C7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 17:12:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 263DAB21A7B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 15:11:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0C3011F253BA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 15:12:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52846192B95;
-	Mon, 26 Aug 2024 15:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B208D192B93;
+	Mon, 26 Aug 2024 15:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="baO+0YTe"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bRqcjasO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A803194A5B;
-	Mon, 26 Aug 2024 15:08:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B705F1925A1;
+	Mon, 26 Aug 2024 15:12:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724684938; cv=none; b=RnXd/VMtSSc223PFYIETlp8twLf0IyY7xYRoBl4enU9JnjAy7QBFedBALpqqOesg/AXyaAdlV606yt5c1bO1Mq4ExScSjuxT56gJbuKl+WBqNp9frzSO62DW8rMQ+poHMtSZEaKy3iCnTXxTHrQFNt3DUQkV4ZaLHuA4+HsE7ws=
+	t=1724685128; cv=none; b=L52ON/mOriV93ndLfFlPxYK7boaSIC8kTh1sOwRu/iBj5HC9vseX2H7sVZdGwrrkcKcdZe2DG7rwxU6QsHAeMOfm+n7jk6ugWSuT+bO0mNOOrFe7wprvggkYvSRM+dzGtkMkrKnYagrnQBEDHP1/JXBedb8sIlETJR1SCiJHGTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724684938; c=relaxed/simple;
-	bh=5blJDuMEX3E4geAq1lFwpcNVREtjQI6qqEGDWBsSQ08=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WBSvTbU0hdaHZdBSLTYN7OhSy4TxXq53bHWjMxHRcBkAVgf4mcHQ9vIRA23T6GM/SyhHu3ZITS9N+t0mUN5t+Pmu7Z6VdUX6Fm2LUkZzv7lZc6zV42zGkMJ8kwpPOsoi9VMAfSEyUBVUCiDJ10hcOomgiHt7SgKJqLQBuPdInC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=baO+0YTe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C19C4FF64;
-	Mon, 26 Aug 2024 15:08:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724684937;
-	bh=5blJDuMEX3E4geAq1lFwpcNVREtjQI6qqEGDWBsSQ08=;
-	h=From:To:Cc:Subject:Date:From;
-	b=baO+0YTeRUvghxCvZL+FIFHwtWzQt9Se0F2uKUKkMUn990Ny+icb606IHNELPasTm
-	 2xZOOl4/P0ztJKizt18imdIYVoPpKZ9M1jS4jPVD7hoG7BxAJSVVLnaFcyyVIEFWGt
-	 Ihr+ve+y01hTx0uBuiWXwJ7kHwKSyWKJJVWCirTQZ0SNZMEeiRPlAqoRO1lnSF6L34
-	 gJLGyy0CQan+WiC/LRD1Nbl9Czq1AFRsbKVtjITvsk5Rz91JjX9UN7mLVj+nZKCU2z
-	 nxV+lAtIA3x9Ae6ojDTz9ONFTub8GmWJCio0wuT3otRqZbhY/DWNpbPum77BgAXLbf
-	 zZwmAiiThgKEg==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Stephen Boyd <sboyd@kernel.org>,
-	linux-clk@vger.kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	devi priya <quic_devipriy@quicinc.com>
-Subject: [GIT PULL] Qualcomm clock fixes for v6.11
-Date: Mon, 26 Aug 2024 10:08:55 -0500
-Message-ID: <20240826150856.1647492-1-andersson@kernel.org>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1724685128; c=relaxed/simple;
+	bh=MNySsTMjSfq+h1YPOUlX+67nt0L84v5H9Fl6brzwTkI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=I+g4V7+XFlksSyC56ShD8JwnSuv6E9Kb/O5vvM1+i+Lftzvd6OT1rhj52Iec0MYITlapn6x+w1cHTtffzVCv2porxlFmxUeRIO4vewxKf1VDgsuL5w0nKP4KmxrCkXE+PeMFzURMDKpjGaBjyo8HeoJrTBCiuWcme5RC98RBx/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bRqcjasO; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47Q8MSR5003106;
+	Mon, 26 Aug 2024 15:11:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	2WGmtVoNopml6AxDzLxFtlGo8E8wIzrXO8d4WxlEMaA=; b=bRqcjasOwsmas9aV
+	UYudAUzthwzDtTcb2T2KNGHLiCBmz7L29S1nPWntYunXe2nT2OY10QXKhO0TI5fn
+	udCVuc+e5aF/0ETvRBLUPo9KyQa3aDD+JsEmPQw2kNlaKHQ4Lxbun4sn23ew89ou
+	DzgXtpeSm+hYKJmSUFnifZ2vUdVcqTYnOt5r86rZxUKEMARX4UgZ41guO7sYSNhC
+	kyVhmgrpI2UWJjpywhtzA+2Iw4tmnBRBkUnOFFMkJQd9UfqGPfYhc3N4kB+zbeuS
+	ktw2SuN2EV+IoMVk5HKcvuH1W2ztm2JNrjva+WOpYr8a05Y3YfpZ+2dyfoRbeP1D
+	ySTzRg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41796kv1b8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 26 Aug 2024 15:11:46 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47QFBi60008804
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 26 Aug 2024 15:11:44 GMT
+Received: from [10.110.100.101] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 26 Aug
+ 2024 08:11:44 -0700
+Message-ID: <5459c1bc-33eb-41ad-b290-3d40bb5b81fe@quicinc.com>
+Date: Mon, 26 Aug 2024 08:11:43 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v25 01/33] xhci: add helper to stop endpoint and wait for
+ completion
+To: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
+        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
+        <tiwai@suse.com>, <krzk+dt@kernel.org>, <Thinh.Nguyen@synopsys.com>,
+        <bgoswami@quicinc.com>, <robh@kernel.org>,
+        <gregkh@linuxfoundation.org>
+CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-input@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        Mathias Nyman
+	<mathias.nyman@linux.intel.com>
+References: <20240823200101.26755-1-quic_wcheng@quicinc.com>
+ <20240823200101.26755-2-quic_wcheng@quicinc.com>
+ <9f25b900-ae1c-41af-a380-ac5e00860283@linux.intel.com>
+Content-Language: en-US
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <9f25b900-ae1c-41af-a380-ac5e00860283@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: tzt44VPgerTf-ShlyNRILMJIgpSquE64
+X-Proofpoint-ORIG-GUID: tzt44VPgerTf-ShlyNRILMJIgpSquE64
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-26_12,2024-08-26_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ malwarescore=0 impostorscore=0 phishscore=0 adultscore=0
+ priorityscore=1501 lowpriorityscore=0 suspectscore=0 bulkscore=0
+ spamscore=0 clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2408260115
 
+Hi Pierre,
 
-The following changes since commit 8400291e289ee6b2bf9779ff1c83a291501f017b:
+On 8/26/2024 1:48 AM, Pierre-Louis Bossart wrote:
+>
+> On 8/23/24 22:00, Wesley Cheng wrote:
+>> From: Mathias Nyman <mathias.nyman@linux.intel.com>
+>>
+>> Expose xhci_stop_endpoint_sync() which is a synchronous variant of
+>> xhci_queue_stop_endpoint().  This is useful for client drivers that are
+>> using the secondary interrupters, and need to stop/clean up the current
+>> session.  The stop endpoint command handler will also take care of cleaning
+>> up the ring.
+>>
+>> Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+>> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>> ---
+>>  drivers/usb/host/xhci.c | 39 +++++++++++++++++++++++++++++++++++++++
+>>  drivers/usb/host/xhci.h |  2 ++
+>>  2 files changed, 41 insertions(+)
+>>
+>> diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+>> index 37eb37b0affa..3a051ed32907 100644
+>> --- a/drivers/usb/host/xhci.c
+>> +++ b/drivers/usb/host/xhci.c
+>> @@ -2784,6 +2784,45 @@ static int xhci_reserve_bandwidth(struct xhci_hcd *xhci,
+>>  	return -ENOMEM;
+>>  }
+>>  
+>> +/*
+>> + * Synchronous XHCI stop endpoint helper.  Issues the stop endpoint command and
+>> + * waits for the command completion before returning.
+>> + */
+>> +int xhci_stop_endpoint_sync(struct xhci_hcd *xhci, struct xhci_virt_ep *ep, int suspend,
+>> +			    gfp_t gfp_flags)
+>> +{
+>> +	struct xhci_command *command;
+>> +	unsigned long flags;
+>> +	int ret;
+>> +
+>> +	command = xhci_alloc_command(xhci, true, gfp_flags);
+>> +	if (!command)
+>> +		return -ENOMEM;
+>> +
+>> +	spin_lock_irqsave(&xhci->lock, flags);
+>> +	ret = xhci_queue_stop_endpoint(xhci, command, ep->vdev->slot_id,
+>> +				       ep->ep_index, suspend);
+>> +	if (ret < 0) {
+>> +		spin_unlock_irqrestore(&xhci->lock, flags);
+>> +		goto out;
+>> +	}
+>> +
+>> +	xhci_ring_cmd_db(xhci);
+>> +	spin_unlock_irqrestore(&xhci->lock, flags);
+>> +
+>> +	wait_for_completion(command->completion);
+>> +
+>> +	if (command->status == COMP_COMMAND_ABORTED ||
+>> +	    command->status == COMP_COMMAND_RING_STOPPED) {
+>> +		xhci_warn(xhci, "Timeout while waiting for stop endpoint command\n");
+> nit-pick: is this really a timeout? In that case you would have used
+> wait_for_completion_timeout(), no?
 
-  Linux 6.11-rc1 (2024-07-28 14:19:55 -0700)
+With respects to the xHCI command implementation, every time a command is queued to the host controller, it arms timer (xhci->cmd_timer) that is used to handle the timeout conditions.  This is the reason for not using the _timeout() variant, as we can let the xHCI command timeout handler do the cleanup and stopping of the HCD. (marking as dead)  It will also ensure that any completion events are completed as part of the timeout handler as well (xhci_handle_command_timeout() --> xhci_abort_cmd_ring())
 
-are available in the Git repository at:
+Thanks
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-clk-fixes-for-6.11
+Wesley Cheng
 
-for you to fetch changes up to 6357efe3abead68048729adf11a9363881657939:
-
-  clk: qcom: ipq9574: Update the alpha PLL type for GPLLs (2024-08-14 21:56:45 -0500)
-
-----------------------------------------------------------------
-Qualcomm clock fixes for v6.11
-
-This corrects several issues with the Alpha PLL clock driver.
-
-It updates IPQ9574 GCC driver to correctly use the EVO PLL registers for
-GPLL clocks. X1E USB GDSC flags are corrected to leave these in
-retention as the controllers are suspended.
-
-----------------------------------------------------------------
-Abel Vesa (1):
-      clk: qcom: gcc-x1e80100: Fix USB 0 and 1 PHY GDSC pwrsts flags
-
-Satya Priya Kakitapalli (4):
-      clk: qcom: clk-alpha-pll: Fix the pll post div mask
-      clk: qcom: clk-alpha-pll: Fix the trion pll postdiv set rate API
-      clk: qcom: clk-alpha-pll: Fix zonda set_rate failure when PLL is disabled
-      clk: qcom: clk-alpha-pll: Update set_rate for Zonda PLL
-
-devi priya (1):
-      clk: qcom: ipq9574: Update the alpha PLL type for GPLLs
-
- drivers/clk/qcom/clk-alpha-pll.c | 25 ++++++++++++++++++++++---
- drivers/clk/qcom/gcc-ipq9574.c   | 12 ++++++------
- drivers/clk/qcom/gcc-x1e80100.c  |  4 ++--
- 3 files changed, 30 insertions(+), 11 deletions(-)
+>> +		ret = -ETIME;
+>> +	}
+>> +out:
+>> +	xhci_free_command(xhci, command);
+>> +
+>> +	return ret;
+>> +}
+>> +EXPORT_SYMBOL_GPL(xhci_stop_endpoint_sync);
+>>  
+>>  /* Issue a configure endpoint command or evaluate context command
+>>   * and wait for it to finish.
+>> diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+>> index 30415158ed3c..1c6126ed55b0 100644
+>> --- a/drivers/usb/host/xhci.h
+>> +++ b/drivers/usb/host/xhci.h
+>> @@ -1914,6 +1914,8 @@ void xhci_ring_doorbell_for_active_rings(struct xhci_hcd *xhci,
+>>  void xhci_cleanup_command_queue(struct xhci_hcd *xhci);
+>>  void inc_deq(struct xhci_hcd *xhci, struct xhci_ring *ring);
+>>  unsigned int count_trbs(u64 addr, u64 len);
+>> +int xhci_stop_endpoint_sync(struct xhci_hcd *xhci, struct xhci_virt_ep *ep,
+>> +			    int suspend, gfp_t gfp_flags);
+>>  
+>>  /* xHCI roothub code */
+>>  void xhci_set_link_state(struct xhci_hcd *xhci, struct xhci_port *port,
 
