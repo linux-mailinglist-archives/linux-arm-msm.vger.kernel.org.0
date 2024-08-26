@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-29489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C26095F017
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 13:46:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0963795F103
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 14:14:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8E9481C212BF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 11:46:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ADCD428B48B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 12:14:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7768150981;
-	Mon, 26 Aug 2024 11:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE45D18D65A;
+	Mon, 26 Aug 2024 12:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N99IvR4R"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BYPHoJVh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B969213CFAA;
-	Mon, 26 Aug 2024 11:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C12172798;
+	Mon, 26 Aug 2024 12:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724672773; cv=none; b=G4/sKUaj0iskjP6L0ybVml5zGTyPzZZBZ7Z9vjpR3nEGh/Dfqz3kXN0iWLHcvRuQ6KRd4cl76tNHM2zq3nNuY5bxcu5ajy9eby7/Ep9dIadR8ozQru8Sl0hDDEAjgj9eC5/xkc9UM3fv4jLe90aihwJSfLyrvMIK8e5e52jghpg=
+	t=1724674257; cv=none; b=B1GSpu4en7Vw4eNHQQ9GzmfGn+HwCYV79rgxDskhbDAP/x/tvkPPdeIz+P+yRRaGVumb+dI1YadUYLD7YnYBj3bPqlHsFb26M7dMNeOQvxWQh3Kjoc/XRxbbhXWBu5lYeyh1DkcC9jH+iT7sCuGZGJGWaJ0Ua9K3Ce7gzJnxdNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724672773; c=relaxed/simple;
-	bh=ViYtp/ls2jsHCvrRsFhG6/zsebLRkcjZ6GthyyqwuLc=;
+	s=arc-20240116; t=1724674257; c=relaxed/simple;
+	bh=XoNvGZEd0jn83AcWVePGvHhp0KOl9p5SiFsphjRpmvY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UAf729hTzuoGQqtE511VpFOzEe8DPnfT0tkcnNqwpwMo8Y75zl5diDr5jX+Uti6XrLCDCBU07wE61Cyg/yFSAKJTVFkRt7HdzeSZS9Cq8OE9csnVZlZ3Omiw4V3LLBS5+T/ZgWK6d+K7ljnn9M+7UcKIeWv85uaViiiXP+1Zwxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N99IvR4R; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4794DC4AF16;
-	Mon, 26 Aug 2024 11:46:13 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=msSiAX9NiI0yOM4HqgTEp0qun8cjK9iUHVjX6syTcFSHhnzxpWXeaW3AouNNa+llErLwDGexkesrnobznFycZV3Em3cM0+8klJLBc7XijK8GuwUR5/A1diQD+UC4UIVyJ4MQDgJOngRua+VetwSMI+zW/CGVUQE3HxTDbI2n2Cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BYPHoJVh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F30C4DE1A;
+	Mon, 26 Aug 2024 12:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724672773;
-	bh=ViYtp/ls2jsHCvrRsFhG6/zsebLRkcjZ6GthyyqwuLc=;
+	s=k20201202; t=1724674257;
+	bh=XoNvGZEd0jn83AcWVePGvHhp0KOl9p5SiFsphjRpmvY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=N99IvR4RfGEjWTwUxlnD+dYzzl5vn4X9FVU6R3shDAiQeBSfiUYRzX0FxygqyeH2t
-	 i4SyS6VGcpZFi0m60hP3rmrOuKK/0iFV7Datciip3vz/KyhQ3g6Zik7TRRyn7HT9Y2
-	 x/rtkxZhLMfChlB2RkulXDJFTFLafHXJ6ILplGwld1SFeRlaJplP0MHkKu7HV1ntLH
-	 enf2eHyy2X1IF3dmcGh6eM2r0G4i5zvzHicH2t47miy4OP0YLGdqBzqux8sKlhdpAb
-	 ugKRZCAhP9Ba+lYsPfM303m7kWtr7/W++pGMlAMpt4Z05G7w3boBlgklV2Jv03D0mB
-	 RiPh7NWasTwVQ==
+	b=BYPHoJVhVrTUQVg624ssVlJGmQJD/+H8HzNNE9dKy7zrKQjG3Gxarcg37xJf+jA1/
+	 P9MkH+KVzhMNWFDHOw1MTPvGwZgV0LWc69OZsNOTEC0sR9yXM2oYk3a8s9Y4+y6g+E
+	 T6hh5FJicCaukVpFSoNdRoeaWLbq/OcWXtFaKkhnev4zsTGQv38nr5ibwRsPtRvpRV
+	 dkGV6iuaIH3rr307QJSOMHt16Z0lociUZZoIzFp8qR/IAN4fZ57NAgEvKT1p1DLLPP
+	 cnT4rLLVbS/xuQSGdOep35JXh7p1meEkz97rSTuU7u61Xu1Ys6VTVJLuetQXrKMZR3
+	 9rOf/IXrRwDag==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1siYAw-0000000024w-3qtd;
-	Mon, 26 Aug 2024 13:46:22 +0200
-Date: Mon, 26 Aug 2024 13:46:22 +0200
+	id 1siYYr-000000002Pq-3ak2;
+	Mon, 26 Aug 2024 14:11:06 +0200
+Date: Mon, 26 Aug 2024 14:11:05 +0200
 From: Johan Hovold <johan@kernel.org>
 To: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
 Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
@@ -62,10 +62,10 @@ Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
 	Conor Dooley <conor.dooley@microchip.com>,
 	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v5 0/3] pci: qcom: Add 16GT/s equalization and margining
- settings
-Message-ID: <ZsxrDmtMcrimszue@hovoldconsulting.com>
+Subject: Re: [PATCH v5 1/3] PCI: qcom: Refactor common code
+Message-ID: <Zsxw2RIfLxEfgYN8@hovoldconsulting.com>
 References: <20240821170917.21018-1-quic_schintav@quicinc.com>
+ <20240821170917.21018-2-quic_schintav@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,55 +74,244 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240821170917.21018-1-quic_schintav@quicinc.com>
+In-Reply-To: <20240821170917.21018-2-quic_schintav@quicinc.com>
 
-On Wed, Aug 21, 2024 at 10:08:41AM -0700, Shashank Babu Chinta Venkata wrote:
-> Add 16GT/s specific equalization and rx lane margining settings. These
-> settings are inline with respective PHY settings for 16GT/s 
-> operation. 
+On Wed, Aug 21, 2024 at 10:08:42AM -0700, Shashank Babu Chinta Venkata wrote:
+> Refactor common code from RC(Root Complex) and EP(End Point)
+
+Space before open parentheses, please (again).
+
+> drivers and move them to a common driver. This acts as placeholder
+> for common source code for both drivers, thus avoiding duplication.
 > 
-> In addition, current QCOM EP and RC drivers do not share common
-> codebase which would result in code duplication. Hence, adding
-> common files for code reusability among RC and EP drivers.
-> 
-> v4 -> v5:
-> - Added additional parameter bandwidth to accommodate new icc path.
-> - Fixed typo.
-> - Picked up Reviewed-by tags.
+> Signed-off-by: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
 
-First, make sure to CC people that help reviewing your patches.
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.c b/drivers/pci/controller/dwc/pcie-qcom-common.c
+> new file mode 100644
+> index 000000000000..1d8992147bba
+> --- /dev/null
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.c
+> @@ -0,0 +1,88 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2014-2015, 2020 The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2015, 2021 Linaro Limited.
+> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
 
-Second, you don't mention that your previous series were completely
-broken as I pointed out here:
+Again, you can't claim copyright for just moving code around.
 
-	https://lore.kernel.org/all/ZpDlf5xD035x2DqL@hovoldconsulting.com/
+> + *
+> + */
+> +
+> +#include <linux/pci.h>
+> +#include <linux/interconnect.h>
+> +#include <linux/pm_opp.h>
+> +#include <linux/units.h>
+> +
+> +#include "../../pci.h"
+> +#include "pcie-designware.h"
+> +#include "pcie-qcom-common.h"
+> +
+> +struct icc_path *qcom_pcie_common_icc_get_resource(struct dw_pcie *pci, const char *path)
+> +{
+> +	struct icc_path *icc_p;
+> +
+> +	icc_p = devm_of_icc_get(pci->dev, path);
+> +	return icc_p;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_pcie_common_icc_get_resource);
+> +
+> +int qcom_pcie_common_icc_init(struct dw_pcie *pci, struct icc_path *icc, u32 bandwidth)
+> +{
+> +	int ret;
+> +
+> +	ret = icc_set_bw(icc, 0, bandwidth);
+> +	if (ret) {
+> +		dev_err(pci->dev, "Failed to set interconnect bandwidth: %d\n",
+> +			ret);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_pcie_common_icc_init);
 
-You apparently fixed that in v5 but conveniently forgot to mention it in
-the change log. Don't do that. Own your mistakes and learn from them.
+As I already pointed out, these helpers seems to be of very little worth
+and just hides what is really going on (e.g. that the resources are
+device managed). Please consider dropping them.
 
-Third, don't send untested crap upstream. You clearly did not test your
-previous series properly and now v5 does not even build.
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.h b/drivers/pci/controller/dwc/pcie-qcom-common.h
+> new file mode 100644
+> index 000000000000..897fa18e618a
+> --- /dev/null
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.h
+> @@ -0,0 +1,15 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Copyright (c) 2014-2015, 2020 The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2015, 2021 Linaro Limited.
+> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
 
-Seriously, this is completely unacceptable and you're just wasting other
-people's time.
+Same copyright issue here.
 
-> v3 -> v4:
-> - Addressed review comments from Mani and Konrad.
-> - Preceded subject line with pci: qcom: tags
-> 
-> v2 -> v3:
-> - Replaced FIELD_GET/FIELD_PREP macros for bit operations.
-> - Renamed cmn to common.
-> - Avoided unnecessary argument validations.
-> - Addressed review comments from Konrad and Mani.
-> 
-> v1 -> v2:
-> - Capitilized commit message to be inline with history 
-> - Dropped stubs from header file.
-> - Moved Designware specific register offsets and masks to
->   pcie-designware.h header file.
-> - Applied settings based on bus data rate rather than link generation.
-> - Addressed review comments from Bjorn and Frank.
+> + */
+> +
+> +#include "pcie-designware.h"
+> +
+> +#define QCOM_PCIE_LINK_SPEED_TO_BW(speed) \
+> +		Mbps_to_icc(PCIE_SPEED2MBS_ENC(pcie_link_speed[speed]))
+> +
+> +struct icc_path *qcom_pcie_common_icc_get_resource(struct dw_pcie *pci, const char *path);
+> +int qcom_pcie_common_icc_init(struct dw_pcie *pci, struct icc_path *icc_mem, u32 bandwidth);
+> +void qcom_pcie_common_icc_update(struct dw_pcie *pci, struct icc_path *icc_mem);
+
+Compile guards still missing, despite me pointing that out before.
+
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> index 236229f66c80..e1860026e134 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+  
+> -	ret = icc_set_bw(pcie_ep->icc_mem, 0, QCOM_PCIE_LINK_SPEED_TO_BW(1));
+> +	ret = qcom_pcie_common_icc_init(pci, pcie_ep->icc_mem);
+
+Does not even compile, as reported by the build bots.
+
+> -static int qcom_pcie_icc_init(struct qcom_pcie *pcie)
+> -{
+> -	struct dw_pcie *pci = pcie->pci;
+> -	int ret;
+> -
+> -	pcie->icc_mem = devm_of_icc_get(pci->dev, "pcie-mem");
+> -	if (IS_ERR(pcie->icc_mem))
+> -		return PTR_ERR(pcie->icc_mem);
+> -
+> -	pcie->icc_cpu = devm_of_icc_get(pci->dev, "cpu-pcie");
+> -	if (IS_ERR(pcie->icc_cpu))
+> -		return PTR_ERR(pcie->icc_cpu);
+> -	/*
+> -	 * Some Qualcomm platforms require interconnect bandwidth constraints
+> -	 * to be set before enabling interconnect clocks.
+> -	 *
+> -	 * Set an initial peak bandwidth corresponding to single-lane Gen 1
+> -	 * for the pcie-mem path.
+> -	 */
+> -	ret = icc_set_bw(pcie->icc_mem, 0, QCOM_PCIE_LINK_SPEED_TO_BW(1));
+> -	if (ret) {
+> -		dev_err(pci->dev, "Failed to set bandwidth for PCIe-MEM interconnect path: %d\n",
+> -			ret);
+> -		return ret;
+> -	}
+> -
+> -	/*
+> -	 * Since the CPU-PCIe path is only used for activities like register
+> -	 * access of the host controller and endpoint Config/BAR space access,
+> -	 * HW team has recommended to use a minimal bandwidth of 1KBps just to
+> -	 * keep the path active.
+> -	 */
+> -	ret = icc_set_bw(pcie->icc_cpu, 0, kBps_to_icc(1));
+> -	if (ret) {
+> -		dev_err(pci->dev, "Failed to set bandwidth for CPU-PCIe interconnect path: %d\n",
+> -			ret);
+> -		icc_set_bw(pcie->icc_mem, 0, 0);
+> -		return ret;
+> -	}
+> -
+> -	return 0;
+> -}
+
+Just keep this function as is.
+
+> -static void qcom_pcie_icc_opp_update(struct qcom_pcie *pcie)
+> -{
+> -	u32 offset, status, width, speed;
+> -	struct dw_pcie *pci = pcie->pci;
+> -	unsigned long freq_kbps;
+> -	struct dev_pm_opp *opp;
+> -	int ret, freq_mbps;
+> -
+> -	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> -	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
+> -
+> -	/* Only update constraints if link is up. */
+> -	if (!(status & PCI_EXP_LNKSTA_DLLLA))
+> -		return;
+> -
+> -	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
+> -	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
+> -
+> -	if (pcie->icc_mem) {
+> -		ret = icc_set_bw(pcie->icc_mem, 0,
+> -				 width * QCOM_PCIE_LINK_SPEED_TO_BW(speed));
+> -		if (ret) {
+> -			dev_err(pci->dev, "Failed to set bandwidth for PCIe-MEM interconnect path: %d\n",
+> -				ret);
+> -		}
+> -	} else {
+> -		freq_mbps = pcie_dev_speed_mbps(pcie_link_speed[speed]);
+> -		if (freq_mbps < 0)
+> -			return;
+> -
+> -		freq_kbps = freq_mbps * KILO;
+> -		opp = dev_pm_opp_find_freq_exact(pci->dev, freq_kbps * width,
+> -						 true);
+> -		if (!IS_ERR(opp)) {
+> -			ret = dev_pm_opp_set_opp(pci->dev, opp);
+> -			if (ret)
+> -				dev_err(pci->dev, "Failed to set OPP for freq (%lu): %d\n",
+> -					freq_kbps * width, ret);
+> -			dev_pm_opp_put(opp);
+> -		}
+> -	}
+> -}
+
+Maybe it's worth trying to generalise this, but probably not. Either
+way, I don't think the gen4 stability *fixes* should depend on this (the
+gen4 nvme link on x1e80100 is currently broken and depends on the later
+changes in this series).
+
+Please consider dropping all this, mostly bogus, refactoring and just
+get the gen4 fixes in first.
+
+> -
+>  static int qcom_pcie_link_transition_count(struct seq_file *s, void *data)
+>  {
+>  	struct qcom_pcie *pcie = (struct qcom_pcie *)dev_get_drvdata(s->private);
+> @@ -1561,6 +1472,18 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  		goto err_pm_runtime_put;
+>  	}
+>  
+> +	pcie->icc_mem = qcom_pcie_common_icc_get_resource(pcie->pci, "pcie-mem");
+> +	if (IS_ERR_OR_NULL(pcie->icc_mem)) {
+
+This will break machines which don't have this path. NULL is valid here.
+
+> +		ret = PTR_ERR(pcie->icc_mem);
+> +		goto err_pm_runtime_put;
+> +	}
+> +
+> +	pcie->icc_cpu = qcom_pcie_common_icc_get_resource(pcie->pci, "cpu-pcie");
+> +	if (IS_ERR_OR_NULL(pcie->icc_cpu)) {
+
+Same here.
+
+> +		ret = PTR_ERR(pcie->icc_cpu);
+> +		goto err_pm_runtime_put;
+> +	}
+> +
+>  	/* OPP table is optional */
+>  	ret = devm_pm_opp_of_add_table(dev);
+>  	if (ret && ret != -ENODEV) {
+
+> @@ -1681,7 +1629,8 @@ static int qcom_pcie_suspend_noirq(struct device *dev)
+>  	if (pm_suspend_target_state != PM_SUSPEND_MEM) {
+>  		ret = icc_disable(pcie->icc_cpu);
+>  		if (ret)
+> -			dev_err(dev, "Failed to disable CPU-PCIe interconnect path: %d\n", ret);
+> +			dev_err(dev,
+> +			"Failed to disable CPU-PCIe interconnect path: %d\n", ret);
+
+Unrelated, bogus change.
 
 Johan
 
