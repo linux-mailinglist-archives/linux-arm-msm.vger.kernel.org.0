@@ -1,65 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-29472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EBD295ED4F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 11:33:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9364495EDC7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 11:55:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8EFAFB20BF5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 09:33:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A72D28421D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 09:55:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74BA9146581;
-	Mon, 26 Aug 2024 09:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EFAD14658D;
+	Mon, 26 Aug 2024 09:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="d+EjeyBH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PZlBbLZx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892FC13D630;
-	Mon, 26 Aug 2024 09:33:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B06145A01
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Aug 2024 09:55:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724664792; cv=none; b=keHUoY0pMrmxdKFVhfO3Gp1B5gxiqGGDX17GHdOXZgHrJ4Z+FYJYZMu3ZXu5edyM1VLi3ZjMrTEpUhtWwzhzAWPisA1v7jUBbXgA0qwj5t/0+6PmF9LjB+hsMi5Jhwk8DlpsWj93K8THUsgQzej0TsdIHvT4R3NWxkKTwYb8IDA=
+	t=1724666129; cv=none; b=WfRWsK0POzPrjcATQlmhGk9nGErcumEztYKkfxMB14/cv7U0qzh8tqXVm8THdFdk2WgqFzvN6OvQAWmPWzNTRqYwp9EbuhXn0tMMc2JlHq2PIygBC17DoLUolSsYybV3OGbo3dkQE1aXPmrHg6ibdzAEAWLdNCyuoJvV52KEmwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724664792; c=relaxed/simple;
-	bh=5gF49ZsaBl+eyYEsQZFl8g7Ns5jOi2/2z9XqrrfRfmI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SV+uiTefO6odSYwMbjTztiBa59T5ZgIA/Mdc3TBrUKkNyvonjBnSXhxjYRIGfhQvt8kSCn9r1gAAvuexMPvWpx+UABoGGJQ7VSgktOKwJpbvAcW6aK3KHXKS/IKd2uOLyHV05mG7uLgebdLRqbZryjVPrOrmRLqrXmmWpU30QRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=d+EjeyBH; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1724664791; x=1756200791;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=5gF49ZsaBl+eyYEsQZFl8g7Ns5jOi2/2z9XqrrfRfmI=;
-  b=d+EjeyBHlhkx1BjfdYbQsoXrglBjlBrZdwqR4WIFaK0oK9RzFyGJKaVV
-   BAcPLfxqHTnmYVKKESGwvik+P69q+wIxjGUS3+YiJcO7SKHm8++jLqCU2
-   ExCaswP+Qy+b1zSZ/79KCsgFI61CVcwA8CQNfikrzlHR5JiQKqzHy5hXw
-   trynUIAvPxnr3hnQbhmqfZK8MD4tzz65v37E8zTgSU9rXdmoKPp46GYa7
-   HdiA+rNYIAAfBQUIfubYgcr9IE8N0JpeI34uBRWkZsv+WNut8gc/tEG6p
-   zKD1+wAo6bt49ngN4kGuE8f41o+SQEQ+J5/jZw2I64cmLEAkccWt9P6LO
-   w==;
-X-CSE-ConnectionGUID: uAbQSPB9RSW0VeQbYmKcPw==
-X-CSE-MsgGUID: lnnUEWNvQRu7WcdIPA4ThA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11175"; a="25967099"
-X-IronPort-AV: E=Sophos;i="6.10,177,1719903600"; 
-   d="scan'208";a="25967099"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2024 02:33:10 -0700
-X-CSE-ConnectionGUID: StgiaI9yQWW9P7hnhG707A==
-X-CSE-MsgGUID: q0WWbT5FSWeCAnkmt419Iw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,177,1719903600"; 
-   d="scan'208";a="62134701"
-Received: from cpetruta-mobl1.ger.corp.intel.com (HELO [10.245.246.121]) ([10.245.246.121])
-  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2024 02:33:03 -0700
-Message-ID: <f4e609c0-92ff-4724-8243-bfe5de50d308@linux.intel.com>
-Date: Mon, 26 Aug 2024 11:28:45 +0200
+	s=arc-20240116; t=1724666129; c=relaxed/simple;
+	bh=5j3I46k6ptwrT5KLfjuvRJi02PLBHAdj9fxSvDP75Io=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=iQK3Armv4I3BaCjycfc3UJmRcypfwTOpraVfnVaIr5L1JSc6oRnEW7kR8HLnZOx8UzIzqod9v1Wb83Wz0mTLMxvQsdr0pa1rVupz2lUyruRJtg3zdUNYIX35/3DaoNripm1hiI7/1naoLvpu3x9loI+YxkVDIigv/Ua7Z6hiK8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PZlBbLZx; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-428243f928cso36574185e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Aug 2024 02:55:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1724666126; x=1725270926; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VK7ceKk9+QuKgFb+l7lbOmbbJTuc/8ZMI5BdFql0QbQ=;
+        b=PZlBbLZxOX3gpM73VWcHaM6ZQ0dCrvBmshz9RzkGx1oxPQbtj7Tss75dyAa0gaImxc
+         7fafDjKPTVF9LYCncGZdxcXVYC/+pdWvjfOHyxShQCdcc+qPf7r3iWTqyh7AR7719A4v
+         cCARfs2EfSRdIMl7D7xYNy0/50ovtWLbl5W5HjSOcuGsjKxskVGyHWgb2D3kaQOkER5b
+         FaM2yNOs8XoF1iKJvDAEq2DJVw/R7Ur9sQtjH7hz/6mKIyIomnHQSDKTXJ92nFq8nZcC
+         EnAVidgpBbU2HqV+fCuQYsWDFdDDOVm0lFpT5P2pGwE7sb36pn4pt0oXJHOX82yVQS60
+         SICA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724666126; x=1725270926;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=VK7ceKk9+QuKgFb+l7lbOmbbJTuc/8ZMI5BdFql0QbQ=;
+        b=buAPgQy/Ln0H5iKhlxhhuuIR4GNLIsc/NAUJLAw8E0UpJwbyG+1aIzs2RRD+6fcPA/
+         5h+oaSfkgK20/50F6NLdw9Z97iTpGi5WKGk5BJd1zN4EWhftvcrEC4DcvcKMdpaUKj4c
+         Yk0AP0rfCP/5cleeR2sgxSL9PLWiSqPmTqXL2iitwnNknXmWipvScL3DcczNFffZImK9
+         7lvMk6aFi+WGBoCKY0jJobHeMZCcjtq0Ymelg5DFh5pcsX3YbSClfddaQn44BeK/jY35
+         EwV2waU0eYZR0smlHO0Xj1B09LiGBs+Px5ODvV3PUW936E2asP9KgXeSwl3e8LxqHXaZ
+         B/9g==
+X-Forwarded-Encrypted: i=1; AJvYcCV+fFntYzgHFkYEOE0utO017XiOznziToEMfohl+yz0tjS9Wj3DBU6Ro7GJDgjshAvvSLm6AfVsN9osQUcn@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCnpOA5jZsJbk62P/WZ2tJBIIwivvbY1bultMpP7K6Ip4fz954
+	dykYGocJ1pIJBXZhp9lsKzoNX2cD6rCsSmi4G7fj3VcACu82BKftUPOyHtfpRSo=
+X-Google-Smtp-Source: AGHT+IFreUR3/E7uHdXTquMSkJpFO/dW71VumcJUcTwCvc9tqzIioKTR8C4yLeHdVUzlxat4VoCD7g==
+X-Received: by 2002:adf:a209:0:b0:367:8f29:f7b6 with SMTP id ffacd0b85a97d-37311919579mr5512128f8f.51.1724666125502;
+        Mon, 26 Aug 2024 02:55:25 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:7355:c4a4:da66:6d71? ([2a01:e0a:982:cbb0:7355:c4a4:da66:6d71])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42ac51860e8sm147572485e9.48.2024.08.26.02.55.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Aug 2024 02:55:25 -0700 (PDT)
+Message-ID: <c6fa1da6-c244-4fe8-9ef1-dd2c9b76f2f9@linaro.org>
+Date: Mon, 26 Aug 2024 11:55:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,117 +78,80 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v25 00/33] Introduce QC USB SND audio offloading support
-To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
- mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
- dmitry.torokhov@gmail.com, corbet@lwn.net, broonie@kernel.org,
- lgirdwood@gmail.com, tiwai@suse.com, krzk+dt@kernel.org,
- Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, robh@kernel.org,
- gregkh@linuxfoundation.org
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-doc@vger.kernel.org, alsa-devel@alsa-project.org
-References: <20240823200101.26755-1-quic_wcheng@quicinc.com>
-Content-Language: en-US
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <20240823200101.26755-1-quic_wcheng@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 0/2] clk: qcom: gcc-sm8550: Fix shared clk parking
+ breakage
+To: Stephen Boyd <swboyd@chromium.org>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ patches@lists.linux.dev, linux-clk@vger.kernel.org,
+ Amit Pundir <amit.pundir@linaro.org>, Taniya Das <quic_tdas@quicinc.com>
+References: <20240819233628.2074654-1-swboyd@chromium.org>
+ <d03d5425-bd7c-4c20-a54e-5708ffd059e0@linaro.org>
+ <CAE-0n52=kQzEx76D5AmZfui_X0jqejQ+ENz+VQunY_ovph65Hw@mail.gmail.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <CAE-0n52=kQzEx76D5AmZfui_X0jqejQ+ENz+VQunY_ovph65Hw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
+On 23/08/2024 22:33, Stephen Boyd wrote:
+> Quoting neil.armstrong@linaro.org (2024-08-21 08:44:00)
+>> Hi,
+>>
+>> On 20/08/2024 01:36, Stephen Boyd wrote:
+>>> Amit Pundir reported[1] that a recent commit 01a0a6cc8cfd ("clk: qcom:
+>>> Park shared RCGs upon registration") broke USB and audio on sm8550-hdk.
+>>> These two patches fix the issue by skipping the parking bit of the
+>>> shared RCGs for devices that can't run so slow.
+>>>
+>>> [1] https://lore.kernel.org/CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com/
+>>>
+>>> Stephen Boyd (2):
+>>>     clk: qcom: gcc-sm8550: Don't use parking clk_ops for QUPs
+>>>     clk: qcom: gcc-sm8550: Don't park the USB RCG at registration time
+>>>
+>>>    drivers/clk/qcom/clk-rcg.h    |  1 +
+>>>    drivers/clk/qcom/clk-rcg2.c   | 30 +++++++++++++++++++
+>>>    drivers/clk/qcom/gcc-sm8550.c | 54 +++++++++++++++++------------------
+>>>    3 files changed, 58 insertions(+), 27 deletions(-)
+>>>
+>>>
+>>> base-commit: 8400291e289ee6b2bf9779ff1c83a291501f017b
+>>
+>> I'm pretty sure sm8450 & sm8650 (and probably other SoCs) could be also affected, could you check ?
+> 
+> Does someone have the hardware to test? It looks like sm8450 isn't using
+> the shared ops, but sm8650 is, likely incorrectly.
 
-> Changelog
-> --------------------------------------------
-> Changes in v25:
-> - Cleanups on typos mentioned within the xHCI layers
-> - Modified the xHCI interrupter search if clients specify interrupter index
-> - Moved mixer_usb_offload into its own module, so that other vendor offload USB
-> modules can utilize it also.
-> - Added support for USB audio devices that may have multiple PCM streams, as
-> previous implementation only assumed a single PCM device.  SOC USB will be
-> able to handle an array of PCM indexes supported by the USB audio device.
-> - Added some additional checks in the QC USB offload driver to check that device
-> has at least one playback stream before allowing to bind
-> - Reordered DT bindings to fix the error found by Rob's bot.  The patch that
-> added USB_RX was after the example was updated.
-> - Updated comments within SOC USB to clarify terminology and to keep it consistent
-> - Added SND_USB_JACK type for notifying of USB device audio connections
+I can't reproduce the uart issue on 8650, I'll try moving some dependencies (CLK, ICC, ..) as modules.
 
-I went through the code and didn't find anything that looked like a
-major blocker. There are still a number of cosmetic things you'd want to
-fix such as using checkpatch.pl --strict --codespell to look for obvious
-style issues and typos, see selection below. git am also complains about
-EOF lines.
+Bryan reproduced it on X1, and he posted a patch.
 
-Overall this is starting to look good and ready for other reviewers to
-look at.
-
-
-
-WARNING: 'reaquire' may be misspelled - perhaps 'reacquire'?
-#54: FILE: drivers/usb/host/xhci-ring.c:3037:
-+ * for non OS owned interrupter event ring. It may drop and reaquire
-xhci->lock
-                                                             ^^^^^^^^
-WARNING: 'compliation' may be misspelled - perhaps 'compilation'?
-#16:
-module compliation added by Wesley Cheng to complete original concept code
-       ^^^^^^^^^^^
-CHECK: Prefer kzalloc(sizeof(*sgt)...) over kzalloc(sizeof(struct
-sg_table)...)
-#105: FILE: drivers/usb/host/xhci-sideband.c:35:
-+	sgt = kzalloc(sizeof(struct sg_table), GFP_KERNEL);
-
-CHECK: struct mutex definition without comment
-#557: FILE: include/linux/usb/xhci-sideband.h:35:
-+	struct mutex			mutex;
-
-WARNING: 'straightfoward' may be misspelled - perhaps 'straightforward'?
-#22:
-straightfoward, as the ASoC components have direct references to the ASoC
-^^^^^^^^^^^^^^
-CHECK: Unnecessary parentheses around 'card == sdev->card_idx'
-#142: FILE: sound/soc/qcom/qdsp6/q6usb.c:217:
-+	if ((card == sdev->card_idx) &&
-+		(pcm == sdev->ppcm_idx[sdev->num_playback - 1])) {
-
-CHECK: Unnecessary parentheses around 'pcm ==
-sdev->ppcm_idx[sdev->num_playback - 1]'
-#142: FILE: sound/soc/qcom/qdsp6/q6usb.c:217:
-+	if ((card == sdev->card_idx) &&
-+		(pcm == sdev->ppcm_idx[sdev->num_playback - 1])) {
-
-WARNING: 'seqeunces' may be misspelled - perhaps 'sequences'?
-#8:
-seqeunces.  This allows for platform USB SND modules to properly initialize
-^^^^^^^^^
-
-WARNING: 'exisiting' may be misspelled - perhaps 'existing'?
-#12:
-exisiting parameters.
-^^^^^^^^^
-
-CHECK: Please use a blank line after function/struct/union/enum declarations
-#1020: FILE: sound/usb/qcom/usb_audio_qmi_v01.h:98:
-+};
-+#define QMI_UAUDIO_STREAM_REQ_MSG_V01_MAX_MSG_LEN 46
-
-CHECK: Please use a blank line after function/struct/union/enum declarations
-#1054: FILE: sound/usb/qcom/usb_audio_qmi_v01.h:132:
-+};
-+#define QMI_UAUDIO_STREAM_RESP_MSG_V01_MAX_MSG_LEN 202
-
-CHECK: Please use a blank line after function/struct/union/enum declarations
-#1081: FILE: sound/usb/qcom/usb_audio_qmi_v01.h:159:
-+};
-+#define QMI_UAUDIO_STREAM_IND_MSG_V01_MAX_MSG_LEN 181
-
-CHECK: Macro argument 'n' may be better as '(n)' to avoid precedence issues
-#100: FILE: sound/usb/mixer_usb_offload.c:19:
-+#define PCM_IDX(n)  (n & 0xffff)
-
-CHECK: Macro argument 'n' may be better as '(n)' to avoid precedence issues
-#101: FILE: sound/usb/mixer_usb_offload.c:20:
-+#define CARD_IDX(n) (n >> 16)
-
+Neil
 
