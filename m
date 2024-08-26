@@ -1,54 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-29456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B99E95EB3B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 10:02:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70EE495EB60
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 10:06:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7FA4F1C227FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 08:02:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 946741C21AC6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 08:06:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69E5213A896;
-	Mon, 26 Aug 2024 07:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DF5512E1EE;
+	Mon, 26 Aug 2024 08:06:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nsvkdg4b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DD42D052;
-	Mon, 26 Aug 2024 07:55:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3344E75817
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Aug 2024 08:06:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724658914; cv=none; b=C8RB2WqBgvtGzw9cajE4ObpkChubjypLLvg4sg/lCDG0fM8elENxk74x9q0zVDJumh6HH90HbbdIJwgH/Wm8k0fsjCbQpFEFhck97ARybm8t3SepQcPDMz2Dt2YF8KkxVZIf+oTZS6dP0eB7AtXl+lS93Su3WczSf6qoL7LCcsU=
+	t=1724659571; cv=none; b=Ip6clYk1FsFoPepsmu7omvL70rzWLKVN0CbZhRNOnrEyauA/bdPRzPMcme+HHIXSR4uRCT+gXXSiUXYQC0a1Lha6N0lELIXAwi34cftSLVW2s9itss4mfcxLWvwjcEKwQSl4eoQzq5OnwXdq3j5uDZJyEnwGhEwTk2TRpX9pkuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724658914; c=relaxed/simple;
-	bh=jJiYC1g7DDJ2SI7n4ZqSQeOupm9HEWP+pCn4FZGr1Vc=;
+	s=arc-20240116; t=1724659571; c=relaxed/simple;
+	bh=20T+z1/UbHbTVU1JoaoVQa/Dmn44LgaPG0dQ4LmTMiU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ErCntOiqEDbJBMQqsFdRvevLdtLUZIUn7FEItOXB5+J3hBcRGcZj+WfTpX784R4JeAGXiGBWaPULiSZGXsOT4iV3x2jgo9zCk86Q6gVdcTUoI6kyLVCi5kfnNW10jBo6cRVg1npCFYO8W/qxAkf4jTw2QbeYxRq2mOHmXqC1+uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4CFC8CDD4;
-	Mon, 26 Aug 2024 07:55:08 +0000 (UTC)
-Date: Mon, 26 Aug 2024 13:25:05 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
-Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-	mani@kernel.org, quic_msarkar@quicinc.com,
-	quic_kraravin@quicinc.com,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v5 2/3] PCI: qcom: Add equalization settings for 16 GT/s
-Message-ID: <20240826075505.zg3tr7abs5rotkjo@thinkpad>
-References: <20240821170917.21018-1-quic_schintav@quicinc.com>
- <20240821170917.21018-3-quic_schintav@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=I+Go/rRFSoSlot06Z6Ru0gnIhKcqRJHCHWN7k8PEmCRRIF/RLh1eSBzj7mjxgARcw9ttgswMZj2YREJME9U6H/fbOopluiuLRXVUr26/lweM9Oa6p7s6CYlfOsY2kNT0l/2Y6z5f0YSQt+THchFa1WW98d9wIPtGFgLyapuWW0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nsvkdg4b; arc=none smtp.client-ip=209.85.166.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-81fb419f77bso221461039f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Aug 2024 01:06:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1724659568; x=1725264368; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=QkvVVX0WwYMRkuJr4fT+lZy5RdN02KU4cSUWfXWqpT4=;
+        b=nsvkdg4bnf9+5IBqNp/OzJuXRYsynBJOah6w0WfDqVfPNAbM+G0NfeIYXcsrtsLWRM
+         zROwXG97lYqvx7vsXmiXohNRm1Pl0DEqT9VZccVs5LGuVZp7Qc/NUyuZQIVY7CLs0bv9
+         8oM6BnktztUTmpl9foOqVnxDmIb1BJjCitlRIzfk8qHtvVBJps+PzForuy+CzE7korKn
+         JIl8X0w0PLs+fClA4wvsC/y+vA6lDJJdAq8/dn3GK8IqAaU3FNiCEfpkgU78nicnueP7
+         R+XQ+PwIV8UQycNSIFk/8j4OYBZ5ehBKBi6Dg7mXLcqdyPHf8Ef7L0WM9Xr7oNLe2Rs5
+         oXvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724659568; x=1725264368;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QkvVVX0WwYMRkuJr4fT+lZy5RdN02KU4cSUWfXWqpT4=;
+        b=o/XYMvMkemXGBiNVd7nOGu8wLbVJSQeKKyWKuU+BcGYRaJwjoku44bckngmyR35ZT2
+         FnyMy+vpCE2mInHeOqCbPU4f4qjerOWq8nwk4cy4ha9hhUkLU0bsdVtV2Opp8qFGIsgx
+         Bkj2I8zWYZ+QdDvKu4gGkbA5Bjsrtxsp+0bDsYmsYpiZdYhNGXMftml5I3nMIF0JZrQT
+         d+8haCMAOwLaVFy3got767HLVFgyFeD9+Q6QuXDVHM3duXaAtMTHlf6xAFivW6Aegt+z
+         CV/sjfYqdnUsAJv/GAH/U+pNyVTwB8JqxuX1WlkdjS0xibqjp+juJRSxeHzoYtd3JSe4
+         Adag==
+X-Forwarded-Encrypted: i=1; AJvYcCWHrvdoa+a1k6eJ+j8jAHogyH+nghlsyLkKkvTsDGB3i2h/3tUaqmjhkmyTcr3LIY1UgAszHQqlJQ1sJGp6@vger.kernel.org
+X-Gm-Message-State: AOJu0YygGL0WtBCQpsfs/jNY2bhb8vCvotQbeh9xEs0aGSK6D8uLBiDR
+	Vb06ZCDA0b1B4wVbqwxkfIY0xc/bi5P1PsQs1ETAqc0J+T+y+uMTThPgX5wIeQ==
+X-Google-Smtp-Source: AGHT+IE14MNMnJz/dTmMXrxFZE1GO2GsfhXBXLXTNOED5Orn8DKvtf61Cpi9sYgA4TkhBdRdPZ3h9w==
+X-Received: by 2002:a05:6e02:190c:b0:39b:2669:4e44 with SMTP id e9e14a558f8ab-39e3c985c60mr130046555ab.8.1724659568225;
+        Mon, 26 Aug 2024 01:06:08 -0700 (PDT)
+Received: from thinkpad ([220.158.156.53])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7cd9ac98b32sm7134309a12.2.2024.08.26.01.06.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Aug 2024 01:06:07 -0700 (PDT)
+Date: Mon, 26 Aug 2024 13:36:03 +0530
+From: "manivannan.sadhasivam@linaro.org" <manivannan.sadhasivam@linaro.org>
+To: Mank Wang <mank.wang@netprisma.us>
+Cc: "duke_xinanwen@163.com" <duke_xinanwen@163.com>,
+	"loic.poulain@linaro.org" <loic.poulain@linaro.org>,
+	"quic_qianyu@quicinc.com" <quic_qianyu@quicinc.com>,
+	"mhi@lists.linux.dev" <mhi@lists.linux.dev>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add support for Netprisma
+ LCUR57 and FCUN69
+Message-ID: <20240826080603.joynf4hqklgt6kph@thinkpad>
+References: <PH7PR22MB30388908C5E6DCE67E98C68681B02@PH7PR22MB3038.namprd22.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,148 +89,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240821170917.21018-3-quic_schintav@quicinc.com>
+In-Reply-To: <PH7PR22MB30388908C5E6DCE67E98C68681B02@PH7PR22MB3038.namprd22.prod.outlook.com>
 
-On Wed, Aug 21, 2024 at 10:08:43AM -0700, Shashank Babu Chinta Venkata wrote:
-> During high data transmission rates such as 16 GT/s , there is an
-> increased risk of signal loss due to poor channel quality and
-> interference. This can impact receiver's ability to capture signals
-> accurately. Hence, signal compensation is achieved through appropriate
-> lane equalization settings at both transmitter and receiver. This will
-> result in increased PCIe signal strength.
+On Tue, Jul 30, 2024 at 03:01:05AM +0000, Mank Wang wrote:
+> Add Netprisma LCUR57 and FCUN69 hardware revision:
 > 
-> Signed-off-by: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> LCUR57:
+> 02:00.0 Unassigned class [ff00]: Device 203e:1000
+> 	Subsystem: Device 203e:1000
+> 
+> FCUN69:
+> 02:00.0 Unassigned class [ff00]: Device 203e:1001
+> 	Subsystem: Device 203e:1001
+> 
+
+Can you please add a note on how this modem is tested? Like using any modem
+manager commands, how the IP interface is created (IPA or MBIM) etc...
+
+> Signed-off-by: Mank Wang <mank.wang@netprisma.us>
 > ---
->  drivers/pci/controller/dwc/pcie-designware.h  | 12 ++++++
->  drivers/pci/controller/dwc/pcie-qcom-common.c | 37 +++++++++++++++++++
->  drivers/pci/controller/dwc/pcie-qcom-common.h |  1 +
->  drivers/pci/controller/dwc/pcie-qcom-ep.c     |  3 ++
->  drivers/pci/controller/dwc/pcie-qcom.c        |  3 ++
->  5 files changed, 56 insertions(+)
+>  drivers/bus/mhi/host/pci_generic.c | 29 +++++++++++++++++++++++++++++
+>  1 file changed, 29 insertions(+)
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> index 53c4c8f399c8..50265a2fbb9f 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.h
-> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> @@ -126,6 +126,18 @@
->  #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_SHIFT	24
->  #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK	GENMASK(25, 24)
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 14a11880bcea..054420ca4c8f 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -26,6 +26,7 @@
+>  /* PCI VID definitions */
+>  #define PCI_VENDOR_ID_THALES	0x1269
+>  #define PCI_VENDOR_ID_QUECTEL	0x1eac
+> +#define PCI_VENDOR_ID_NETPRISMA	0x203e
 >  
-> +#define GEN3_EQ_CONTROL_OFF			0x8a8
-> +#define GEN3_EQ_CONTROL_OFF_FB_MODE		GENMASK(3, 0)
-> +#define GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE	BIT(4)
-> +#define GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC	GENMASK(23, 8)
-> +#define GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL	BIT(24)
-> +
-> +#define GEN3_EQ_FB_MODE_DIR_CHANGE_OFF          0x8ac
-> +#define GEN3_EQ_FMDC_T_MIN_PHASE23		GENMASK(4, 0)
-> +#define GEN3_EQ_FMDC_N_EVALS			GENMASK(9, 5)
-> +#define GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA	GENMASK(13, 10)
-> +#define GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA	GENMASK(17, 14)
-> +
->  #define PCIE_PORT_MULTI_LANE_CTRL	0x8C0
->  #define PORT_MLTI_UPCFG_SUPPORT		BIT(7)
+>  #define MHI_EDL_DB			91
+>  #define MHI_EDL_COOKIE			0xEDEDEDED
+> @@ -680,6 +681,28 @@ static const struct mhi_pci_dev_info mhi_telit_fn990_info = {
+>  	.mru_default = 32768,
+>  };
 >  
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.c b/drivers/pci/controller/dwc/pcie-qcom-common.c
-> index 1d8992147bba..e085075557cd 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-common.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.c
-> @@ -15,6 +15,43 @@
->  #include "pcie-designware.h"
->  #include "pcie-qcom-common.h"
->  
-> +void qcom_pcie_common_set_16gt_eq_settings(struct dw_pcie *pci)
-> +{
-> +	u32 reg;
-> +
-> +	/*
-> +	 * GEN3_RELATED_OFF register is repurposed to apply equalization
-> +	 * settings at various data transmission rates through registers
-> +	 * namely GEN3_EQ_*. RATE_SHADOW_SEL bit field of GEN3_RELATED_OFF
-> +	 * determines data rate for which this equalization settings are
-> +	 * applied.
-> +	 */
-> +	reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
-> +	reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
-> +	reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
-> +	reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK, 0x1);
-> +	dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
-> +
-> +	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
-> +	reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
-> +		GEN3_EQ_FMDC_N_EVALS |
-> +		GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
-> +		GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
-> +	reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
-> +		FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
-> +		FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
-> +		FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
-> +	dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
-> +
-> +	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
-> +	reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
-> +		GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
-> +		GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
-> +		GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
-> +	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_pcie_common_set_16gt_eq_settings);
-> +
->  struct icc_path *qcom_pcie_common_icc_get_resource(struct dw_pcie *pci, const char *path)
->  {
->  	struct icc_path *icc_p;
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.h b/drivers/pci/controller/dwc/pcie-qcom-common.h
-> index 897fa18e618a..c281582de12c 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-common.h
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.h
-> @@ -13,3 +13,4 @@
->  struct icc_path *qcom_pcie_common_icc_get_resource(struct dw_pcie *pci, const char *path);
->  int qcom_pcie_common_icc_init(struct dw_pcie *pci, struct icc_path *icc_mem, u32 bandwidth);
->  void qcom_pcie_common_icc_update(struct dw_pcie *pci, struct icc_path *icc_mem);
-> +void qcom_pcie_common_set_16gt_eq_settings(struct dw_pcie *pci);
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> index e1860026e134..823e33a4d745 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> @@ -455,6 +455,9 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
->  		goto err_disable_resources;
->  	}
->  
-> +	if (pcie_link_speed[pci->link_gen] == PCIE_SPEED_16_0GT)
+> +static const struct mhi_pci_dev_info mhi_netprisma_lcur57_info = {
+> +	.name = "netprisma-lcur57",
+> +	.edl = "qcom/prog_firehose_sdx24.mbn",
+> +	/* LCUR57 uses the same controller configuration as quectel_em1xx */
 
-Abel reported that 'pci->link_gen' is not updated unless the 'max-link-speed'
-property is set in DT on his platform. I fixed that issue locally and this
-series will depend on those patches.
-
-Provided that you are having issues with your build environment as discussed
-offline, I'd like to take over the series to combine my patches and address the
-review comments. Let me know if you are OK with this or not.
+No need of this comment here and below.
 
 - Mani
 
-> +		qcom_pcie_common_set_16gt_eq_settings(pci);
+> +	.config = &modem_quectel_em1xx_config,
+> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> +	.dma_data_width = 32,
+> +	.mru_default = 32768,
+> +	.sideband_wake = true,
+> +};
 > +
->  	/*
->  	 * The physical address of the MMIO region which is exposed as the BAR
->  	 * should be written to MHI BASE registers.
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index ee32590f1506..829b34391af1 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -280,6 +280,9 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
->  {
->  	struct qcom_pcie *pcie = to_qcom_pcie(pci);
->  
-> +	if (pcie_link_speed[pci->link_gen] == PCIE_SPEED_16_0GT)
-> +		qcom_pcie_common_set_16gt_eq_settings(pci);
+> +static const struct mhi_pci_dev_info mhi_netprisma_fcun69_info = {
+> +	.name = "netprisma-fcun69",
+> +	.edl = "qcom/prog_firehose_sdx6x.elf",
+> +	/* FCUN69 uses the same controller configuration as quectel_em1xx */
+> +	.config = &modem_quectel_em1xx_config,
+> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> +	.dma_data_width = 32,
+> +	.mru_default = 32768,
+> +	.sideband_wake = true,
+> +};
 > +
->  	/* Enable Link Training state machine */
->  	if (pcie->cfg->ops->ltssm_enable)
->  		pcie->cfg->ops->ltssm_enable(pcie);
+>  /* Keep the list sorted based on the PID. New VID should be added as the last entry */
+>  static const struct pci_device_id mhi_pci_id_table[] = {
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
+> @@ -778,6 +801,12 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+>  	/* T99W175 (sdx55), HP variant */
+>  	{ PCI_DEVICE(0x03f0, 0x0a6c),
+>  		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w175_info },
+> +	/* NETPRISMA LCUR57 (SDX24) */
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_NETPRISMA, 0x1000),
+> +		.driver_data = (kernel_ulong_t) &mhi_netprisma_lcur57_info },
+> +	/* NETPRISMA FCUN69 (SDX6X) */
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_NETPRISMA, 0x1001),
+> +		.driver_data = (kernel_ulong_t) &mhi_netprisma_fcun69_info },
+>  	{  }
+>  };
+>  MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
 > -- 
-> 2.46.0
+> 2.34.1
 > 
+
+
 
 -- 
 மணிவண்ணன் சதாசிவம்
