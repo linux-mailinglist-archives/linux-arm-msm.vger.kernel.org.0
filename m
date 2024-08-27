@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-29567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6595C9605B1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 11:35:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A78829605BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 11:37:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1CB342820C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 09:35:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3238C1F239FC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 09:37:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5657619DF60;
-	Tue, 27 Aug 2024 09:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1658F13BAE4;
+	Tue, 27 Aug 2024 09:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bxJmPm7A"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lLv8mbeo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98AE819D886
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 09:35:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21064149E0B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 09:36:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724751329; cv=none; b=Jzw+UbXJiCwP/4HNq9hJ8063AC+SnlxJIOVAgsi7/nrRz81kYPMv7i770jD/us4fo0T9Asjj01bryopqr9ikhgTu7Fp9jY+wR3ozu6A9pZNj/SetHtiVqBOj8THQIrqMij2pKNA1QofF5SdE2y8v72Dar/XExMuzO+hCXlJ2hCg=
+	t=1724751416; cv=none; b=GP65NkzzonNIPkjsje7u2/3OZEZ1RptaR1MmMR+8pak1dUNSt0aMpX0StlcN6Hp1lH97boYXUOrvON0n9xtID4R9IfGjc9yypSrgk5fiMUDmpEfmVukZPHdgKDk91KICEbbcwuFKZE4dZmMt1c4vca3B5zx3iax3qK2RJxAb4jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724751329; c=relaxed/simple;
-	bh=/qYEaNO0f0/j0GNVdDMtDz3dnPGIlUfEcopvMXwrDzo=;
+	s=arc-20240116; t=1724751416; c=relaxed/simple;
+	bh=X9O+EYBPhG0oPp9gn2NEJ2N9MNjQHqi4I2lEEvzDuPw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rTrnYASEKisfJUbpLiyL4PXZpAkRJpmJ6I2fSS5YKL9JJE+7UWA+oQ5UHbodw3ORT2l/hJI4Pa+ZlCidPNx/Z75V6mDfWq8SXykUUSrhv8Xh15DhnmcmUC/3TguM1Dy63WhifLV3ZirCb0uGJ8PToGtI/R9dWp2z+bKn33O079g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bxJmPm7A; arc=none smtp.client-ip=209.85.221.41
+	 In-Reply-To:Content-Type; b=sQBnnzLAGPU5ebrvvN/Dooq1Ka6zEWXPuUXLxEglQe7DAZPHIWkfztRej76ekp73lwTrgw1KM6XkSqqayknGbLbYMZfvC9HKLMbA9ckWLOG8EC7VAV5YFzJRzJzJDEtzaMs3Ka+vAa0908RBYUTR7+6QnU2ogZEK/ImGBHgXYfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lLv8mbeo; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-36830a54b34so214196f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 02:35:27 -0700 (PDT)
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-42802e90140so3400675e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 02:36:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724751326; x=1725356126; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1724751412; x=1725356212; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=FwvkZPahHcoAXP/+I5Y9zpq7z6mvaxa3E0EjT/3SfIU=;
-        b=bxJmPm7AQ+ekl1kEL1annYEDETsoedxDHJhhLA530vyagSp8hsstjG3yaGoxSYoNQW
-         raxWlIpYAejXRDsb4MwUwP7hyLy4/KN6t3j8//gpNg7YrHKxXwTl0/GUSE9h/2Q2Xquf
-         fiHAj6wQnHFwT0yVod3IEl+rtP5huMw5fuIAQ+xXT0WV3S1OJiQnYV1lJu8uCqU6unPT
-         bdxg1MIMUV9oRMpfameUrsNOP0CrnU9eIImGVW1LUf05IVgqts6X/haqlKH5W9GMkZ/J
-         0V6NbJHKPiDKBI0sfFXf+Y4nisDpEZSkXbTtKgh8G51Gx/FiVt1ToKi4h4iya2HO5cPn
-         4n6A==
+        bh=M4PoEhpT/1Y6hj7d27Ubo4PU4N3vsMKBCO+obqQicug=;
+        b=lLv8mbeoqdmmFBv8uR9hS5skfyavMp+VkIuo1qTQbreIkDte+e7Q5Gg9MtBR0HDr7A
+         gINpyGEMOLm7PGoElMw75b2ffijz5NI/kYCYukRP9Mrg+JgsOk2TB59e68wzFQaCeLK8
+         hdlF0lDPgZ/Jaovl06Cy0hq5adEvOhSU/+1ZHyjDp2TrIGt9AHqBEqhfD03FSq8OvK5p
+         KFexYoB1vNxP25ZkLu0vVqSi3DPG+3KltMObjzlsAb84MrGoMx5O2sv0tHGlrXAtnFjV
+         sAJozjz31d2LsGh6zL9DwXb2qRjVBo3PCmD+KfnAFdW1TuU4KHEAxYKXk82GkgsJqis6
+         W9vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724751326; x=1725356126;
+        d=1e100.net; s=20230601; t=1724751412; x=1725356212;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=FwvkZPahHcoAXP/+I5Y9zpq7z6mvaxa3E0EjT/3SfIU=;
-        b=qOOVhrs8hKDbEYK4+IWm0OYCVMHjRMWQTgyU3MCxeB4n02a86MKhIgihnWFO+AueoZ
-         w1PuOiFv8kBY73oghHRHqj5IVIyeDUn443xfLibS68/Btu3mGQsRmIv/uYOXqBZ4os93
-         OmJUCoeW5+NNQ+zmZsn398gs/3f7VoWxFVv5qhj70rYETWV7CoqmQ5kNwNCEODScoBvh
-         MsbUASRIAgnLcakqK/OdMSdE9tTi0tvH/AyYGTCHhEkJYBDUAR3iTJImozxAnj/fZKpN
-         Lnr+5glDkyRP82IidpXMBf3MRvgeB12DSCjDC2vBPtv75HXdn25cZL6VVSrM13z1Y5jO
-         JT9Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUQ5a2yLd7s7xNAIT6L/PHjRajyKdl8390UJQMxRAk/A4OXgpBKt3euLSIylysM/zvqnoTjKZt1nFoaTGoW@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDs/qFYpEyHn5acrBqmydzii8/rY5QgQ/hMfLXw1VaH/HSM3uE
-	tGo83eDnOmr7u8iQ4ks1xs9Y6bzqzV1UlFMF3Eh/cOEvBRqKKSLu9bupTeumf9A=
-X-Google-Smtp-Source: AGHT+IGbIMoyFxf2wkJPSy9lJAdsfddn7eHX3cATKuq9Occ3teA1vXlQLSZWmqbpLkgrcqoTcC6ReQ==
-X-Received: by 2002:a5d:6daf:0:b0:362:4aac:8697 with SMTP id ffacd0b85a97d-373117c3298mr5146120f8f.0.1724751325846;
-        Tue, 27 Aug 2024 02:35:25 -0700 (PDT)
+        bh=M4PoEhpT/1Y6hj7d27Ubo4PU4N3vsMKBCO+obqQicug=;
+        b=cy/jQyUGQupwA8P1udByxlQqT2goYIXKZ+RibQA7/MTI0Jc8LIYqrZfcbVcS45/7Gi
+         9ajEPIJn5IWLq5nEEZ6eSeGchmh2A1nID/axpSToNlEimEGBdlvciQDxFiL8TI/9uvwL
+         BUEb4G1jEZzgNR6m+uCGOu0gjbqolNPrdlBxjpxyDi16+2qvzqjh6hPtE0EEN2/9gxZ+
+         g6J/M3bzyL9sA9x57Gls3HkZP+prK9xvOcW2JPqY8j/CSoooz9L3eCzS9f1agJ+kmCHU
+         7HBlPaj24Pw9+HiCdcH0+raT+O3SWqKEZ1HOOtoOoov9ADOGrluKFxLfMD14B2mzmZDO
+         PH7A==
+X-Forwarded-Encrypted: i=1; AJvYcCXU0BBRNlc5ZAQdbC2HGtRvKWznffT76A4BpPKcbBDfDGMGRstRjElLvpQ7bJsw+oM8tK0MhVTbISBwsal/@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+FnBFRXhpWOABz2DYnFK4Rbt3CFyYmZ8HYD34cgUq2LfLB9Ve
+	yge0i+XYffJQCZxuEjwXE3hpH0v9oNRUIamizKHutf/4wpWQBEW33fz8CcWAffo=
+X-Google-Smtp-Source: AGHT+IHhU4n7XJX4hzth7pnaIq3GZK+7CE/UqwPlLuVNRXMquJGOS+sHoUFb4pe+02lyEzmmhouFzw==
+X-Received: by 2002:a05:600c:3c99:b0:426:668f:5ed7 with SMTP id 5b1f17b1804b1-42acc8dd868mr58502275e9.2.1724751412223;
+        Tue, 27 Aug 2024 02:36:52 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.222.82])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3730817a548sm12592529f8f.63.2024.08.27.02.35.24
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42abee86d5esm211917745e9.15.2024.08.27.02.36.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Aug 2024 02:35:25 -0700 (PDT)
-Message-ID: <7c6df930-f685-421d-9186-b064d15dfa00@linaro.org>
-Date: Tue, 27 Aug 2024 11:35:23 +0200
+        Tue, 27 Aug 2024 02:36:51 -0700 (PDT)
+Message-ID: <c9f11ee1-382b-4742-b558-c2b0801d8669@linaro.org>
+Date: Tue, 27 Aug 2024 11:36:50 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +77,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/11] usb: dwc3: st: simplify with dev_err_probe
+Subject: Re: [PATCH 00/11] usb: dwc3: various cleanups
 To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 Cc: Patrice Chotard <patrice.chotard@foss.st.com>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -91,8 +91,7 @@ Cc: Patrice Chotard <patrice.chotard@foss.st.com>,
  "imx@lists.linux.dev" <imx@lists.linux.dev>,
  "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
 References: <20240814-b4-cleanup-h-of-node-put-usb-v1-0-95481b9682bc@linaro.org>
- <20240814-b4-cleanup-h-of-node-put-usb-v1-2-95481b9682bc@linaro.org>
- <20240827011901.zcu3x24ph3bmfwap@synopsys.com>
+ <20240827015935.bzv6nevcd7ec2uu2@synopsys.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -139,22 +138,72 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240827011901.zcu3x24ph3bmfwap@synopsys.com>
+In-Reply-To: <20240827015935.bzv6nevcd7ec2uu2@synopsys.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27/08/2024 03:19, Thinh Nguyen wrote:
+On 27/08/2024 03:59, Thinh Nguyen wrote:
+> Hi Krzysztof,
+> 
 > On Wed, Aug 14, 2024, Krzysztof Kozlowski wrote:
->> Use dev_err_probe() to make the error paths a bit simpler.
+>> Hi,
+>>
+>> The first ST patch depends on my fix:
+>> https://urldefense.com/v3/__https://lore.kernel.org/all/20240814093957.37940-2-krzysztof.kozlowski@linaro.org/__;!!A4F2R9G_pg!eFzt54pYSEl8wrvrH7yQSwFRzbojnRSyelnYjxlY8RZaU6oZCVeui2f-DHQ0bk8Fdy6gvJoSWLeAPz2w_3F9ownOFLGUoyHd$ 
+>>
+>> Series makes some code simplifications and cleanups.
+>>
+>> Best regards,
+>> Krzysztof
+>>
+>> ---
+>> Krzysztof Kozlowski (11):
+>>       usb: dwc3: st: use scoped device node handling to simplify error paths
+>>       usb: dwc3: st: simplify with dev_err_probe
+>>       usb: dwc3: st: simplify pdev->dev usage
+>>       usb: dwc3: imx8mp: simplify with devm_clk_get_enabled
+>>       usb: dwc3: imx8mp: simplify with dev_err_probe
+>>       usb: dwc3: imx8mp: use scoped device node handling to simplify error paths
+>>       usb: dwc3: qcom: use scoped device node handling to simplify error paths
+>>       usb: dwc3: qcom: simplify with devm_platform_ioremap_resource
+>>       usb: dwc3: rtk: use scoped device node handling to simplify error paths
+>>       usb: dwc3: rtk: return directly and simplify with devm_platform_ioremap_resource
+>>       usb: dwc3: xilinx: simplify with dev_err_probe
+>>
+>>  drivers/usb/dwc3/dwc3-imx8mp.c | 66 ++++++++++++------------------------------
+>>  drivers/usb/dwc3/dwc3-qcom.c   | 16 ++++------
+>>  drivers/usb/dwc3/dwc3-rtk.c    | 52 ++++++++++-----------------------
+>>  drivers/usb/dwc3/dwc3-st.c     | 38 +++++++++++-------------
+>>  drivers/usb/dwc3/dwc3-xilinx.c |  7 ++---
+>>  5 files changed, 58 insertions(+), 121 deletions(-)
+>> ---
+>> base-commit: 64b429eaf21be888cc83e9013e25897d5fb03a75
+>> change-id: 20240814-b4-cleanup-h-of-node-put-usb-93fadfc77d33
+>>
+>> Best regards,
+>> -- 
+>> Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
 > 
-> I think it makes more sense to note that this helps with cases of
-> -EPROBE_DEFER than making this simpler. Regardless, this is an
-> improvement.
+> Thanks for the cleanup!
 > 
-> Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+> I wish the mixed declarations in between statements for some of the
+> scoped device node handling can be changed. Bugs me a little with how
+> I'm used to parse the old standard with my eyes, but it's not a big
+> issue.
 
-Yeah, I forgot about this argument. Getting resets can defer, so this
-actually solves the dmesg flood for deferred probes.
+Maybe this will be helpful:
+
+
+https://lore.kernel.org/all/CAHk-=wicfvWPuRVDG5R1mZSxD8Xg=-0nLOiHay2T_UJ0yDX42g@mail.gmail.com/
+
+https://lore.kernel.org/all/CAHk-=wgRHiV5VSxtfXA4S6aLUmcQYEuB67u3BJPJPtuESs1JyA@mail.gmail.com/
+
+https://lore.kernel.org/all/CAHk-=whvOGL3aNhtps0YksGtzvaob_bvZpbaTcVEqGwNMxB6xg@mail.gmail.com/
+
+and finally it will reach documentation (although it focuses on
+unwinding process to be specific - "When the unwind order ..."):
+https://lore.kernel.org/all/171175585714.2192972.12661675876300167762.stgit@dwillia2-xfh.jf.intel.com/
 
 Best regards,
 Krzysztof
