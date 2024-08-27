@@ -1,252 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-29653-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 570169614C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 18:58:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C355961568
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 19:26:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0E2CC2833C2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 16:58:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8B45E1C2309F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 17:26:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC3A21CF2A4;
-	Tue, 27 Aug 2024 16:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C808E1CF299;
+	Tue, 27 Aug 2024 17:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TX8SU47K"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NLdu4Iv7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F28D1CF2BA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 16:58:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B481CDFC3;
+	Tue, 27 Aug 2024 17:25:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724777919; cv=none; b=Z7SQ3gQNri1GTTkcKuy1geoRy8HzKUdbLBkq4p/jcVWBLB+/xvnemMlbmcHYFqWsmyKSwlT3ajaCgVMYQvOCUYSdNg3NfzPW5+68UnDcWmfnCHM7FmBb/wh4jG+49tUU2CQXhKOP9S0NF6UweMgnwWeUV+NrDh1vNJEghLJGPVk=
+	t=1724779551; cv=none; b=f2/YEGAX58EZyYvIj1FVD+QsdQrQodjK3BuFQU87lhtrSQP+4Y0UUDDo5H2CqdemLuW9otB0bYZ2v7viywl4khLEYMQqc8vXCez7EsPwE/mBjDPR6V63PA98bTtvv1vIj8zk1mwPZrKydGaokHq/2s9ZxR1mscWBO8dUmMuRVa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724777919; c=relaxed/simple;
-	bh=lNC8TKaZ7ZAeR7oZUyy1KiKW62bn47+uI8IaJy1GuD4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iNOyfv3sCkjrkWWujclWR+cjxL04907E7g806HC3PpYr4r3uBzHxoPFj5GilnUU4bd6clGeYMjwUkzFS/tY8LclnpBTX7S2TIqoLaY/h+LJublFWOJGciL1x6z5TLL4JBmKeo26b8mo/xLynbUP/pvh+atkSswyQ/kw8Lmh/Yp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TX8SU47K; arc=none smtp.client-ip=209.85.216.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2d427fb7c92so4217905a91.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 09:58:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724777917; x=1725382717; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=RNOwiGcykeoyGFZH+Z8xEbsCMXGedxmWrwkU43JsjYY=;
-        b=TX8SU47KoQckwcUGI/0lnAuH463BP1bmO5nAgkSfZ153JDzS4BxFs4QkxX3Pmksfxi
-         ZoqS+7PIlFfXeup1GXypegHWsfyOQnikutwN/k1vRVYvaVOZXZ2sGskklCY0A75nCW2n
-         AGo7P0IbX/uFND436/RisTyeN4NuVTa/A6HHIwVCpKB64o9zPezbDEpU7Zxo0T2Mliyy
-         V4YrRMC1VdA3GlYkvBcwkwt1lJAQuPPKMl2W/nSB6OAsVyswc9MRkioAVfyyDL+WIAAv
-         qfoK17lMiDdFL5JDjgG4P2tVjILQb9y0sPRPCZNJQxN0ZmjfBg4UbrlRAfX3g8YAWTWB
-         WCEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724777917; x=1725382717;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RNOwiGcykeoyGFZH+Z8xEbsCMXGedxmWrwkU43JsjYY=;
-        b=XqHZJb3LphPozkD1OUgHLw9uI0AN7INCw36um7Thwq0RieWsZCr9pQdfB0XU2kNe8x
-         pH7naLv6Gv2iIGUWOjg2tsndhLC8wdhiACzmLaRq2aaUfU7oqT679ogfLOWRB/U1j5IN
-         dRgUhUZKTrADKkjO5Qlj6tQg9jOwST3lSO30FGAVAeZtYFq43gFJgnA9qa4JO3WeP5WS
-         5rYzjbH4f/YmrZdmWWVG275Z6M346GlXBEGPiGWKmJATc2ZXx8oAZQ9CFYEAFusOgJmu
-         xtlGYAvubijLrxCKA/HatQFqHB+MFMShzXV6Olizb17IWv+2ea6YsI3+XNiUcZ2GHau5
-         UQ9A==
-X-Forwarded-Encrypted: i=1; AJvYcCXFT4jFdCJYSwDzkBU6t3enmUyIW6v9Tpz3gKonhGEdJwsoL8UB82AkC/cl4Hp5SgKP/h9rGaziScqbUmaT@vger.kernel.org
-X-Gm-Message-State: AOJu0YzgylmuIAmsjJlxqE/Mi5+lbUxIy6yi4NjS62L+BKC2/JTQSeY8
-	UGVJsrteCw709HGtGC8LZQmOkQvaj1IHSJE9zNuPZ5xZh2/swgPm7Ea7iKw9/Q==
-X-Google-Smtp-Source: AGHT+IGLcPL1IDSSlTXVztXaCfb8EIBRYUJpya5p4/6WNmOA1w8yKEQ+6PrKcZDyqShicuXYBx34YA==
-X-Received: by 2002:a17:90a:a883:b0:2d3:cfe1:31f6 with SMTP id 98e67ed59e1d1-2d646c1ebd8mr13729729a91.25.1724777917253;
-        Tue, 27 Aug 2024 09:58:37 -0700 (PDT)
-Received: from thinkpad ([117.213.96.164])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d613b1f0d5sm12370594a91.55.2024.08.27.09.58.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Aug 2024 09:58:36 -0700 (PDT)
-Date: Tue, 27 Aug 2024 22:28:26 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Qiang Yu <quic_qianyu@quicinc.com>, vkoul@kernel.org, kishon@kernel.org,
-	robh@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org, mturquette@baylibre.com,
-	sboyd@kernel.org, abel.vesa@linaro.org, quic_msarkar@quicinc.com,
-	quic_devipriy@quicinc.com, kw@linux.com, lpieralisi@kernel.org,
-	neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-clk@vger.kernel.org
-Subject: Re: [PATCH 8/8] PCI: qcom: Add support to PCIe slot power supplies
-Message-ID: <20240827165826.moe6cnemeheos6jn@thinkpad>
-References: <20240827063631.3932971-1-quic_qianyu@quicinc.com>
- <20240827063631.3932971-9-quic_qianyu@quicinc.com>
- <CAA8EJpq5KergZ8czg4F=EYMLANoOeBsiSVoO-zAgfG0ezQrKCQ@mail.gmail.com>
+	s=arc-20240116; t=1724779551; c=relaxed/simple;
+	bh=gsynHgCPX56eHP2lMOSf04oHQewytQUubbE7qASTqHE=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=RBWW+VDzaxGWqtwNx717/uxDMw7wTMZ2jGA/VsFZEcK54iX1SywcMNL9cYt21m7v8lzn2fQKRSFEOQkJSTqgHxN01QRj9xur3FXpoNI/+u9k/VrBNLVx9YzoQ8QiQZnPdScNheoKnAsWR0QQik3y216wCH+ovh2lJYMIhDiaUIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NLdu4Iv7; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47R8N0xb006778;
+	Tue, 27 Aug 2024 17:25:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=xe7JSXGjfZ1mZqRUQ/ndIl
+	0VSdiNuXwfacr3jInpd8Y=; b=NLdu4Iv7+L1F5Ff3wB5z3ZSMCHV+CzNchwv/XT
+	W+ynjG2VHekDgjxGMjH2DpOnk9H0HvQp5SHIA2Q2670CKJf3kw3z5Cs5XjZ5tjK/
+	HvxLADn1Lrfh4nYDUp2zNH94q4TpGuioOYCBdnJ6J1PPeIz+yaV27uotHrY4ZcMx
+	ce+MDEXMvnF+MZPfkQvLTujgXxu8QoA2gDIqT+P1Qg7EioEDKkAY2TcA6gynIdiy
+	yIsoaPlnup5l/1qbuOw6Ugj5z8PgaN3J0StqNUIiI0DMZFxnUSwRkX28ZGldwdzQ
+	K1Krc7VUfp6y5GkZzz1gz26JugcQDtD2jg09gOYReJEOLVRg==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41796kyq5b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Aug 2024 17:25:45 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47RHPiXF012501
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Aug 2024 17:25:44 GMT
+Received: from e94a984817b1.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 27 Aug 2024 10:25:41 -0700
+From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+To: Georgi Djakov <djakov@kernel.org>
+CC: Konrad Dybcio <konradybcio@kernel.org>,
+        Jeff Johnson
+	<quic_jjohnson@quicinc.com>, <quic_mdtipton@quicinc.com>,
+        <quic_okukatla@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Raviteja
+ Laggyshetty" <quic_rlaggysh@quicinc.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>
+Subject: [PATCH] interconnect: qcom: icc-rpmh: probe defer incase of missing QoS clock dependency
+Date: Tue, 27 Aug 2024 17:25:24 +0000
+Message-ID: <20240827172524.89-1-quic_rlaggysh@quicinc.com>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAA8EJpq5KergZ8czg4F=EYMLANoOeBsiSVoO-zAgfG0ezQrKCQ@mail.gmail.com>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 3a8WrjPVPFR8F7YSZdWPIymFHk0nOoSX
+X-Proofpoint-ORIG-GUID: 3a8WrjPVPFR8F7YSZdWPIymFHk0nOoSX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-27_10,2024-08-27_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ malwarescore=0 impostorscore=0 phishscore=0 adultscore=0
+ priorityscore=1501 lowpriorityscore=0 suspectscore=0 bulkscore=0
+ spamscore=0 clxscore=1011 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2408270131
 
-On Tue, Aug 27, 2024 at 02:44:09PM +0300, Dmitry Baryshkov wrote:
-> On Tue, 27 Aug 2024 at 09:36, Qiang Yu <quic_qianyu@quicinc.com> wrote:
-> >
-> > On platform x1e80100 QCP, PCIe3 is a standard x8 form factor. Hence, add
-> > support to use 3.3v, 3.3v aux and 12v regulators.
-> 
-> First of all, I don't see corresponding bindings change.
-> 
-> Second, these supplies power up the slot, not the host controller
-> itself. As such these supplies do not belong to the host controller
-> entry. Please consider using the pwrseq framework instead.
-> 
+Return -EPROBE_DEFER from interconnect provider incase probe defer is
+received from devm_clk_bulk_get_all(). This would help in reattempting
+the inteconnect driver probe, once the required QoS clocks are
+available.
+Rename qos_clks_required flag to qos_requires_clocks in qcom_icc_desc
+structure. This flag indicates that interconnect provider requires
+clocks for programming QoS.
 
-Indeed. For legacy reasons, slot power supplies were populated in the host
-bridge node itself until recently Rob started objecting it [1]. And it makes
-real sense to put these supplies in the root port node and handle them in the
-relevant driver.
+Suggested-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+---
+ drivers/interconnect/qcom/icc-rpmh.c | 10 +++++++---
+ drivers/interconnect/qcom/icc-rpmh.h |  2 +-
+ drivers/interconnect/qcom/sc7280.c   |  4 ++--
+ 3 files changed, 10 insertions(+), 6 deletions(-)
 
-I'm still evaluating whether the handling should be done in the portdrv or
-pwrctl driver, but haven't reached the conclusion. Pwrctl seems to be the ideal
-choice, but I see a few issues related to handling the OF node for the root
-port.
-
-Hope I'll come to a conclusion in the next few days and will update this thread.
-
-- Mani
-
-[1] https://lore.kernel.org/lkml/20240604235806.GA1903493-robh@kernel.org/
-
-> >
-> > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> > ---
-> >  drivers/pci/controller/dwc/pcie-qcom.c | 52 +++++++++++++++++++++++++-
-> >  1 file changed, 50 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > index 6f953e32d990..59fb415dfeeb 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > @@ -248,6 +248,8 @@ struct qcom_pcie_cfg {
-> >         bool no_l0s;
-> >  };
-> >
-> > +#define QCOM_PCIE_SLOT_MAX_SUPPLIES                    3
-> > +
-> >  struct qcom_pcie {
-> >         struct dw_pcie *pci;
-> >         void __iomem *parf;                     /* DT parf */
-> > @@ -260,6 +262,7 @@ struct qcom_pcie {
-> >         struct icc_path *icc_cpu;
-> >         const struct qcom_pcie_cfg *cfg;
-> >         struct dentry *debugfs;
-> > +       struct regulator_bulk_data slot_supplies[QCOM_PCIE_SLOT_MAX_SUPPLIES];
-> >         bool suspended;
-> >         bool use_pm_opp;
-> >  };
-> > @@ -1174,6 +1177,41 @@ static int qcom_pcie_link_up(struct dw_pcie *pci)
-> >         return !!(val & PCI_EXP_LNKSTA_DLLLA);
-> >  }
-> >
-> > +static int qcom_pcie_enable_slot_supplies(struct qcom_pcie *pcie)
-> > +{
-> > +       struct dw_pcie *pci = pcie->pci;
-> > +       int ret;
-> > +
-> > +       ret = regulator_bulk_enable(ARRAY_SIZE(pcie->slot_supplies),
-> > +                                   pcie->slot_supplies);
-> > +       if (ret < 0)
-> > +               dev_err(pci->dev, "Failed to enable slot regulators\n");
-> > +
-> > +       return ret;
-> > +}
-> > +
-> > +static void qcom_pcie_disable_slot_supplies(struct qcom_pcie *pcie)
-> > +{
-> > +       regulator_bulk_disable(ARRAY_SIZE(pcie->slot_supplies),
-> > +                              pcie->slot_supplies);
-> > +}
-> > +
-> > +static int qcom_pcie_get_slot_supplies(struct qcom_pcie *pcie)
-> > +{
-> > +       struct dw_pcie *pci = pcie->pci;
-> > +       int ret;
-> > +
-> > +       pcie->slot_supplies[0].supply = "vpcie12v";
-> > +       pcie->slot_supplies[1].supply = "vpcie3v3";
-> > +       pcie->slot_supplies[2].supply = "vpcie3v3aux";
-> > +       ret = devm_regulator_bulk_get(pci->dev, ARRAY_SIZE(pcie->slot_supplies),
-> > +                                     pcie->slot_supplies);
-> > +       if (ret < 0)
-> > +               dev_err(pci->dev, "Failed to get slot regulators\n");
-> > +
-> > +       return ret;
-> > +}
-> > +
-> >  static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
-> >  {
-> >         struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> > @@ -1182,10 +1220,14 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
-> >
-> >         qcom_ep_reset_assert(pcie);
-> >
-> > -       ret = pcie->cfg->ops->init(pcie);
-> > +       ret = qcom_pcie_enable_slot_supplies(pcie);
-> >         if (ret)
-> >                 return ret;
-> >
-> > +       ret = pcie->cfg->ops->init(pcie);
-> > +       if (ret)
-> > +               goto err_disable_slot;
-> > +
-> >         ret = phy_set_mode_ext(pcie->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
-> >         if (ret)
-> >                 goto err_deinit;
-> > @@ -1216,7 +1258,8 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
-> >         phy_power_off(pcie->phy);
-> >  err_deinit:
-> >         pcie->cfg->ops->deinit(pcie);
-> > -
-> > +err_disable_slot:
-> > +       qcom_pcie_disable_slot_supplies(pcie);
-> >         return ret;
-> >  }
-> >
-> > @@ -1228,6 +1271,7 @@ static void qcom_pcie_host_deinit(struct dw_pcie_rp *pp)
-> >         qcom_ep_reset_assert(pcie);
-> >         phy_power_off(pcie->phy);
-> >         pcie->cfg->ops->deinit(pcie);
-> > +       qcom_pcie_disable_slot_supplies(pcie);
-> >  }
-> >
-> >  static void qcom_pcie_host_post_init(struct dw_pcie_rp *pp)
-> > @@ -1602,6 +1646,10 @@ static int qcom_pcie_probe(struct platform_device *pdev)
-> >                         goto err_pm_runtime_put;
-> >         }
-> >
-> > +       ret = qcom_pcie_get_slot_supplies(pcie);
-> > +       if (ret)
-> > +               goto err_pm_runtime_put;
-> > +
-> >         ret = pcie->cfg->ops->get_resources(pcie);
-> >         if (ret)
-> >                 goto err_pm_runtime_put;
-> > --
-> > 2.34.1
-> >
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
-
+diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+index f49a8e0cb03c..5417abf59e28 100644
+--- a/drivers/interconnect/qcom/icc-rpmh.c
++++ b/drivers/interconnect/qcom/icc-rpmh.c
+@@ -311,9 +311,13 @@ int qcom_icc_rpmh_probe(struct platform_device *pdev)
+ 		}
+ 
+ 		qp->num_clks = devm_clk_bulk_get_all(qp->dev, &qp->clks);
+-		if (qp->num_clks < 0 || (!qp->num_clks && desc->qos_clks_required)) {
+-			dev_info(dev, "Skipping QoS, failed to get clk: %d\n", qp->num_clks);
+-			goto skip_qos_config;
++		if (qp->num_clks < 0 || (!qp->num_clks && desc->qos_requires_clocks)) {
++			if (qp->num_clks != -EPROBE_DEFER) {
++				dev_info(dev, "Skipping QoS, failed to get clk: %d\n",
++						qp->num_clks);
++				goto skip_qos_config;
++			}
++			return qp->num_clks;
+ 		}
+ 
+ 		ret = qcom_icc_rpmh_configure_qos(qp);
+diff --git a/drivers/interconnect/qcom/icc-rpmh.h b/drivers/interconnect/qcom/icc-rpmh.h
+index 14db89850fb3..82344c734091 100644
+--- a/drivers/interconnect/qcom/icc-rpmh.h
++++ b/drivers/interconnect/qcom/icc-rpmh.h
+@@ -153,7 +153,7 @@ struct qcom_icc_desc {
+ 	size_t num_nodes;
+ 	struct qcom_icc_bcm * const *bcms;
+ 	size_t num_bcms;
+-	bool qos_clks_required;
++	bool qos_requires_clocks;
+ };
+ 
+ int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+diff --git a/drivers/interconnect/qcom/sc7280.c b/drivers/interconnect/qcom/sc7280.c
+index 167971f8e8be..6c314e000c3a 100644
+--- a/drivers/interconnect/qcom/sc7280.c
++++ b/drivers/interconnect/qcom/sc7280.c
+@@ -1691,7 +1691,7 @@ static const struct qcom_icc_desc sc7280_aggre1_noc = {
+ 	.num_nodes = ARRAY_SIZE(aggre1_noc_nodes),
+ 	.bcms = aggre1_noc_bcms,
+ 	.num_bcms = ARRAY_SIZE(aggre1_noc_bcms),
+-	.qos_clks_required = true,
++	.qos_requires_clocks = true,
+ };
+ 
+ static struct qcom_icc_bcm * const aggre2_noc_bcms[] = {
+@@ -1723,7 +1723,7 @@ static const struct qcom_icc_desc sc7280_aggre2_noc = {
+ 	.num_nodes = ARRAY_SIZE(aggre2_noc_nodes),
+ 	.bcms = aggre2_noc_bcms,
+ 	.num_bcms = ARRAY_SIZE(aggre2_noc_bcms),
+-	.qos_clks_required = true,
++	.qos_requires_clocks = true,
+ };
+ 
+ static struct qcom_icc_bcm * const clk_virt_bcms[] = {
 -- 
-மணிவண்ணன் சதாசிவம்
+2.39.2
+
 
