@@ -1,365 +1,270 @@
-Return-Path: <linux-arm-msm+bounces-29682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09FBA961A4F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 01:13:19 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25835961A57
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 01:14:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B40AA28538E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 23:13:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4A99E1C22F8A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 23:14:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9DE41D47B3;
-	Tue, 27 Aug 2024 23:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ABD71D4606;
+	Tue, 27 Aug 2024 23:14:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="b4WLKu1H"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EGAbf8MZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61DA1D460A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 23:12:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6204512C475;
+	Tue, 27 Aug 2024 23:14:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724800366; cv=none; b=F5idGJsf/oBuamnZLQxnYO8a5NYvdOT7hf0nJHODavMl4O6wirt+B1rRotOOC0gmxOK1ToYxuQXbEOr/jF7lrMaPTWGl3F3aJDb9CSSqwH4ljLdT9rtigJ4S4PPQaKDMDGpikfFMpbYCGr+hduFkS7vHnuolYv40RG+loaGXATw=
+	t=1724800466; cv=none; b=fG2xHcyZyIUUhnEoJBzt3HHtHZ2apBmKngkAMHLx/x/tWoq6uyt7NGbbKGwbJlC1SVKAquW++A/oX2buVooFbQ+w/dNJG4NtWBx9F/oxCKjWjI3P/EA8dAC7Gp332xJdlC7G6gXL+SuTFO4wJt3b/HLkc7QgJffH3nO73z082fE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724800366; c=relaxed/simple;
-	bh=pydQzqttrobXPxYrV9xD01A2kGsR6s/mRdxcFVeZq1I=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ONnT8bGVAb8FjSEvNlSG/NMYFBIStAlZw3sR0ytBMHpe657du9aXXRG7a96+sLpZnIlS9OFBNxB3uR/KJb2WVNpDjfLg29dNTpw2ZpY33FzkArlHsSSrcpdcaJC0cnLfQSDTwrHAaBo6vMdscNNe+lUpG9TbfnZ9L+fOX4d0Heg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=b4WLKu1H; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2d3c05ec278so4474085a91.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 16:12:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1724800364; x=1725405164; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Xt7PVUozcOkVti6ZjAPf01OtJ5FVQQk6eXc9L78hY64=;
-        b=b4WLKu1HL4wMzjaaRwyho/7F5KsIN6AGC6g6emq/1MC8CsYvSETeG3WQiPgvS3L9js
-         Bb+6gnK42DSo0bOGM1BYuX/M2wzJnt2HEwh/5SILzh4nWEBNzOuXC8tLIMUC0QealJM6
-         vJP1lc8tolWZV/YLccNFfOyMpmMSD+5N9JIXY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724800364; x=1725405164;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Xt7PVUozcOkVti6ZjAPf01OtJ5FVQQk6eXc9L78hY64=;
-        b=dQ9dkZTcBShIrmDFA7RuVB2ByA5b9G9T6ajqBcqQ7f1qf+GYk5ZePEyG0y/XnqsgX1
-         Fhv0l93eQq3prbwBXQxULZKAdjv2xF9Iz5C4ZxDJZwIR+Wz1EkPTih++2khtc2/wO1QC
-         gV7a4KLoXlXfkkNqM4ZMQIzl1B7H/PC8v7+xkziREhx4w/b6Rm46tZTY3HBGhF7YHnmB
-         N/Vvbsyia80ARjgmBhO1vyudcfHkpKCVQ1unhAecLC9L9gd2qThAjONRnsBwUHDeP3mi
-         k1CPH+r3PeVnCWNtYFXCuxixx+s03nBMGkZ+E4KJJZ4BMpHZfJtGVNo6z7ArPt6LOZns
-         S1Pw==
-X-Forwarded-Encrypted: i=1; AJvYcCWw3xgFRZWdqg1+OO11lhc9h+sj+Okankpe6aVPncl/A+J5CVHt3D4dBofqPZyft63KLQvWFs7G1mT6aYDo@vger.kernel.org
-X-Gm-Message-State: AOJu0YwefKCC7P8IuaqtM/8b6LGqJvhoc2Z1iISP6wopqePdvwrjMH4c
-	bkdFpRgdquilqxN82I6zI0YX8tTeSZtFFEn+8SDDu7YDE5rZ7vaJQHQvav7+cg==
-X-Google-Smtp-Source: AGHT+IEAI3xuv6/Qc0Gz02PFmfkKy+Fs/Aoolbg8k5nMPrctpU+khEs9Ayty8BQqGwyTqGxBdT+KlQ==
-X-Received: by 2002:a17:90b:4f83:b0:2c9:80fd:a111 with SMTP id 98e67ed59e1d1-2d646bf2bd3mr14758133a91.18.1724800363982;
-        Tue, 27 Aug 2024 16:12:43 -0700 (PDT)
-Received: from localhost (210.73.125.34.bc.googleusercontent.com. [34.125.73.210])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-2d83f695e06sm240164a91.1.2024.08.27.16.12.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Aug 2024 16:12:43 -0700 (PDT)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-clk@vger.kernel.org,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Amit Pundir <amit.pundir@linaro.org>
-Subject: [PATCH v2 2/2] clk: qcom: gcc-sm8550: Don't use shared clk_ops for QUPs
-Date: Tue, 27 Aug 2024 16:12:35 -0700
-Message-ID: <20240827231237.1014813-3-swboyd@chromium.org>
-X-Mailer: git-send-email 2.46.0.295.g3b9ea8a38a-goog
-In-Reply-To: <20240827231237.1014813-1-swboyd@chromium.org>
-References: <20240827231237.1014813-1-swboyd@chromium.org>
+	s=arc-20240116; t=1724800466; c=relaxed/simple;
+	bh=5tz1G93NRxsPIGpvobyXVbvfwx5sxEmuE1mv+e1eidg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mK0TEMwdrACocak/zjiD1DglkcgnEi9cyatAyrU3Bzuh/9h50SySpJ4S5V2XOWOwi4RQx4fc/zHhzPoM86dtZY7WleG2zahvgfZ/24vdZ4T8+kooGlKy+JWPA5+gC0WmhMTcg4mYNSpI99O9doEMP7YssUVcQiPZsWzAer+Iu7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EGAbf8MZ; arc=none smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1724800464; x=1756336464;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=5tz1G93NRxsPIGpvobyXVbvfwx5sxEmuE1mv+e1eidg=;
+  b=EGAbf8MZZF6pfqJwX8/+s+E3955D8aCfBjRoMSXg4PvhWlKf71D+hO3f
+   WuEEWosSquNHnYAadMJezRmrEL5fbwmZqQhMDU1NTPUIxQzSeDC10ksPI
+   Ye+kBu+kwyTjgtdH6GyFvGdNl62x62LexkavA44jpxWiN4WBzJqGKV0VW
+   Uwu5YLdz1p2BWsEq5qd2nmGFEOB0S2ImyYQxFe16NISDHrUGATHWl1Qpw
+   G0ETv/SR95SE3Fd5Wsbf4uLcYkaMjzB4cSskRxWSWivFUksDHCvjRPOcw
+   WojENY7sW16u7fNErO04Z1OZulWS4U1CmWMDx6tNK+KmQB6zevUiayBjv
+   A==;
+X-CSE-ConnectionGUID: zxmPHjE3RaOBnM/PT9dutg==
+X-CSE-MsgGUID: luhYohPCTY2+ea3siX60Ww==
+X-IronPort-AV: E=McAfee;i="6700,10204,11177"; a="48690608"
+X-IronPort-AV: E=Sophos;i="6.10,181,1719903600"; 
+   d="scan'208";a="48690608"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Aug 2024 16:14:23 -0700
+X-CSE-ConnectionGUID: 33OTtixcRg67rLk17NupHQ==
+X-CSE-MsgGUID: m8+QGGjbSweQHKL8zAVgQw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,181,1719903600"; 
+   d="scan'208";a="63541486"
+Received: from lkp-server01.sh.intel.com (HELO 9a732dc145d3) ([10.239.97.150])
+  by orviesa007.jf.intel.com with ESMTP; 27 Aug 2024 16:14:21 -0700
+Received: from kbuild by 9a732dc145d3 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1sj5OE-000KBA-19;
+	Tue, 27 Aug 2024 23:14:18 +0000
+Date: Wed, 28 Aug 2024 07:13:58 +0800
+From: kernel test robot <lkp@intel.com>
+To: Dikshita Agarwal via B4 Relay <devnull+quic_dikshita.quicinc.com@kernel.org>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>
+Cc: oe-kbuild-all@lists.linux.dev, linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>
+Subject: Re: [PATCH v3 07/29] media: iris: implement video firmware
+ load/unload
+Message-ID: <202408280657.WziT1uXM-lkp@intel.com>
+References: <20240827-iris_v3-v3-7-c5fdbbe65e70@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240827-iris_v3-v3-7-c5fdbbe65e70@quicinc.com>
 
-The QUPs aren't shared in a way that requires parking the RCG at an
-always on parent in case some other entity turns on the clk. The
-hardware is capable of setting a new frequency itself with the DFS mode,
-so parking is unnecessary. Furthermore, there aren't any GDSCs for these
-devices, so there isn't a possibility of the GDSC turning on the clks
-for housekeeping purposes.
+Hi Dikshita,
 
-This wasn't a problem to mark these clks shared until we started parking
-shared RCGs at clk registration time in commit 01a0a6cc8cfd ("clk: qcom:
-Park shared RCGs upon registration"). Parking at init is actually
-harmful to the UART when earlycon is used. If the device is pumping out
-data while the frequency changes you'll see garbage on the serial
-console until the driver can probe and actually set a proper frequency.
+kernel test robot noticed the following build warnings:
 
-Revert the QUP part of commit 929c75d57566 ("clk: qcom: gcc-sm8550: Mark
-RCGs shared where applicable") so that the QUPs don't get parked during
-clk registration and break UART operations.
+[auto build test WARNING on 31aaa7d95e09892c81df0d7c49ae85640fa4e202]
 
-Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
-Fixes: 929c75d57566 ("clk: qcom: gcc-sm8550: Mark RCGs shared where applicable")
-Cc: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Taniya Das <quic_tdas@quicinc.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-Reported-by: Amit Pundir <amit.pundir@linaro.org>
-Closes: https://lore.kernel.org/CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/clk/qcom/gcc-sm8550.c | 52 +++++++++++++++++------------------
- 1 file changed, 26 insertions(+), 26 deletions(-)
+url:    https://github.com/intel-lab-lkp/linux/commits/Dikshita-Agarwal-via-B4-Relay/dt-bindings-media-Add-sm8550-dt-schema/20240827-181059
+base:   31aaa7d95e09892c81df0d7c49ae85640fa4e202
+patch link:    https://lore.kernel.org/r/20240827-iris_v3-v3-7-c5fdbbe65e70%40quicinc.com
+patch subject: [PATCH v3 07/29] media: iris: implement video firmware load/unload
+config: m68k-allmodconfig (https://download.01.org/0day-ci/archive/20240828/202408280657.WziT1uXM-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 14.1.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240828/202408280657.WziT1uXM-lkp@intel.com/reproduce)
 
-diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
-index 7944ddb4b47d..0244a05866b8 100644
---- a/drivers/clk/qcom/gcc-sm8550.c
-+++ b/drivers/clk/qcom/gcc-sm8550.c
-@@ -536,7 +536,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s0_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -551,7 +551,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s1_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -566,7 +566,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s2_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -581,7 +581,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s3_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -596,7 +596,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s4_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -611,7 +611,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s5_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -626,7 +626,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s6_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -641,7 +641,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s7_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -656,7 +656,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s8_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -671,7 +671,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s9_clk_src = {
- 		.parent_data = gcc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_ops,
- 	},
- };
- 
-@@ -700,7 +700,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s0_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s0_clk_src = {
-@@ -717,7 +717,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s1_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s1_clk_src = {
-@@ -750,7 +750,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s2_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s2_clk_src = {
-@@ -767,7 +767,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s3_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s3_clk_src = {
-@@ -784,7 +784,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s4_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s4_clk_src = {
-@@ -801,7 +801,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s5_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s5_clk_src = {
-@@ -818,7 +818,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s6_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s6_clk_src = {
-@@ -835,7 +835,7 @@ static struct clk_init_data gcc_qupv3_wrap1_s7_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap1_s7_clk_src = {
-@@ -852,7 +852,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s0_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s0_clk_src = {
-@@ -869,7 +869,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s1_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s1_clk_src = {
-@@ -886,7 +886,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s2_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s2_clk_src = {
-@@ -903,7 +903,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s3_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s3_clk_src = {
-@@ -920,7 +920,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s4_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s4_clk_src = {
-@@ -937,7 +937,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s5_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s5_clk_src = {
-@@ -975,7 +975,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s6_clk_src_init = {
- 	.parent_data = gcc_parent_data_8,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_8),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s6_clk_src = {
-@@ -992,7 +992,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s7_clk_src_init = {
- 	.parent_data = gcc_parent_data_0,
- 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
- 	.flags = CLK_SET_RATE_PARENT,
--	.ops = &clk_rcg2_shared_ops,
-+	.ops = &clk_rcg2_ops,
- };
- 
- static struct clk_rcg2 gcc_qupv3_wrap2_s7_clk_src = {
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202408280657.WziT1uXM-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   In file included from include/linux/device.h:15,
+                    from include/linux/of_reserved_mem.h:5,
+                    from drivers/media/platform/qcom/iris/iris_firmware.c:9:
+   drivers/media/platform/qcom/iris/iris_firmware.c: In function 'iris_load_fw_to_memory':
+>> drivers/media/platform/qcom/iris/iris_firmware.c:80:36: warning: format '%ld' expects argument of type 'long int', but argument 3 has type 'ssize_t' {aka 'int'} [-Wformat=]
+      80 |                 dev_err(core->dev, "out of bound fw image fw size: %ld, res_size: %lu\n",
+         |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/dev_printk.h:110:30: note: in definition of macro 'dev_printk_index_wrap'
+     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
+         |                              ^~~
+   include/linux/dev_printk.h:154:56: note: in expansion of macro 'dev_fmt'
+     154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
+         |                                                        ^~~~~~~
+   drivers/media/platform/qcom/iris/iris_firmware.c:80:17: note: in expansion of macro 'dev_err'
+      80 |                 dev_err(core->dev, "out of bound fw image fw size: %ld, res_size: %lu\n",
+         |                 ^~~~~~~
+   drivers/media/platform/qcom/iris/iris_firmware.c:80:70: note: format string is defined here
+      80 |                 dev_err(core->dev, "out of bound fw image fw size: %ld, res_size: %lu\n",
+         |                                                                    ~~^
+         |                                                                      |
+         |                                                                      long int
+         |                                                                    %d
+>> drivers/media/platform/qcom/iris/iris_firmware.c:80:36: warning: format '%lu' expects argument of type 'long unsigned int', but argument 4 has type 'size_t' {aka 'unsigned int'} [-Wformat=]
+      80 |                 dev_err(core->dev, "out of bound fw image fw size: %ld, res_size: %lu\n",
+         |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/dev_printk.h:110:30: note: in definition of macro 'dev_printk_index_wrap'
+     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
+         |                              ^~~
+   include/linux/dev_printk.h:154:56: note: in expansion of macro 'dev_fmt'
+     154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
+         |                                                        ^~~~~~~
+   drivers/media/platform/qcom/iris/iris_firmware.c:80:17: note: in expansion of macro 'dev_err'
+      80 |                 dev_err(core->dev, "out of bound fw image fw size: %ld, res_size: %lu\n",
+         |                 ^~~~~~~
+   drivers/media/platform/qcom/iris/iris_firmware.c:80:85: note: format string is defined here
+      80 |                 dev_err(core->dev, "out of bound fw image fw size: %ld, res_size: %lu\n",
+         |                                                                                   ~~^
+         |                                                                                     |
+         |                                                                                     long unsigned int
+         |                                                                                   %u
+
+
+vim +80 drivers/media/platform/qcom/iris/iris_firmware.c
+
+   > 9	#include <linux/of_reserved_mem.h>
+    10	#include <linux/soc/qcom/mdt_loader.h>
+    11	
+    12	#include "iris_core.h"
+    13	#include "iris_firmware.h"
+    14	
+    15	#define MAX_FIRMWARE_NAME_SIZE	128
+    16	
+    17	static int iris_protect_cp_mem(struct iris_core *core)
+    18	{
+    19		struct tz_cp_config *cp_config;
+    20		int ret;
+    21	
+    22		cp_config = core->iris_platform_data->tz_cp_config_data;
+    23	
+    24		ret = qcom_scm_mem_protect_video_var(cp_config->cp_start,
+    25						     cp_config->cp_size,
+    26						     cp_config->cp_nonpixel_start,
+    27						     cp_config->cp_nonpixel_size);
+    28		if (ret)
+    29			dev_err(core->dev, "failed to protect memory(%d)\n", ret);
+    30	
+    31		return ret;
+    32	}
+    33	
+    34	static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
+    35	{
+    36		const struct firmware *firmware = NULL;
+    37		struct device_node *node = NULL;
+    38		struct reserved_mem *rmem;
+    39		phys_addr_t mem_phys = 0;
+    40		void *mem_virt = NULL;
+    41		size_t res_size = 0;
+    42		ssize_t fw_size = 0;
+    43		struct device *dev;
+    44		int pas_id = 0;
+    45		int ret;
+    46	
+    47		if (!fw_name || !(*fw_name) || !core)
+    48			return -EINVAL;
+    49	
+    50		dev = core->dev;
+    51	
+    52		if (strlen(fw_name) >= MAX_FIRMWARE_NAME_SIZE - 4)
+    53			return -EINVAL;
+    54	
+    55		pas_id = core->iris_platform_data->pas_id;
+    56	
+    57		node = of_parse_phandle(dev->of_node, "memory-region", 0);
+    58		if (!node)
+    59			return -EINVAL;
+    60	
+    61		rmem = of_reserved_mem_lookup(node);
+    62		if (!rmem) {
+    63			ret = -EINVAL;
+    64			goto err_put_node;
+    65		}
+    66	
+    67		mem_phys = rmem->base;
+    68		res_size = rmem->size;
+    69	
+    70		ret = request_firmware(&firmware, fw_name, dev);
+    71		if (ret) {
+    72			dev_err(core->dev, "failed to request fw \"%s\", error %d\n",
+    73				fw_name, ret);
+    74			goto err_put_node;
+    75		}
+    76	
+    77		fw_size = qcom_mdt_get_size(firmware);
+    78		if (fw_size < 0 || res_size < (size_t)fw_size) {
+    79			ret = -EINVAL;
+  > 80			dev_err(core->dev, "out of bound fw image fw size: %ld, res_size: %lu\n",
+    81				fw_size, res_size);
+    82			goto err_release_fw;
+    83		}
+    84	
+    85		mem_virt = memremap(mem_phys, res_size, MEMREMAP_WC);
+    86		if (!mem_virt) {
+    87			dev_err(core->dev, "failed to remap fw memory phys %pa[p]\n",
+    88				&mem_phys);
+    89			goto err_release_fw;
+    90		}
+    91	
+    92		ret = qcom_mdt_load(dev, firmware, fw_name,
+    93				    pas_id, mem_virt, mem_phys, res_size, NULL);
+    94		if (ret) {
+    95			dev_err(core->dev, "error %d loading fw \"%s\"\n",
+    96				ret, fw_name);
+    97			goto err_mem_unmap;
+    98		}
+    99		ret = qcom_scm_pas_auth_and_reset(pas_id);
+   100		if (ret) {
+   101			dev_err(core->dev, "error %d authenticating fw \"%s\"\n",
+   102				ret, fw_name);
+   103			goto err_mem_unmap;
+   104		}
+   105	
+   106		return ret;
+   107	
+   108	err_mem_unmap:
+   109		memunmap(mem_virt);
+   110	err_release_fw:
+   111		release_firmware(firmware);
+   112	err_put_node:
+   113		of_node_put(node);
+   114		return ret;
+   115	}
+   116	
+
 -- 
-https://chromeos.dev
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
