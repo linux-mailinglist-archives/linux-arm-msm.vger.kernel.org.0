@@ -1,128 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-29647-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29648-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E854C961395
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 18:05:02 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C18C9613D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 18:17:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 23BE8B223D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 16:05:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ED0FFB2358A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 16:17:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC9821C86F0;
-	Tue, 27 Aug 2024 16:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E29791C9458;
+	Tue, 27 Aug 2024 16:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YvecuaA+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F4NgYzSV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62DC1C6F48;
-	Tue, 27 Aug 2024 16:04:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A2F1C86F6;
+	Tue, 27 Aug 2024 16:17:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724774694; cv=none; b=l+FMN+MnISbN+m6Lxx6h3lDYX27zLN2Vr0Za/sHhZ/R172d9IeB7gNKH9vIHQMZYsyMMqnzzwrbpXyMLny189c4sTn8NKazjaQS3aDNknroZNh7Qrw//kxBgwykIu+qzDe6qq0PVuXfyUCC/yqg2dvbMiG9522EOITO2ncwA0JM=
+	t=1724775439; cv=none; b=tF7wyWs0my/mklWf4ftwSgQVBC6CWQpKrbb2SXUOGTf56ylyJL3DEcCneoOUkcu+XSJslnL/sRptF+EXjTbVjYjawFK2k/ZChYo6SC06jcaQdSKtKW4Pb9sV4Mm2WfJ3AoS+81s/qBgQndiHLo8uwIgX4y9aFJpO41X6c+n4D2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724774694; c=relaxed/simple;
-	bh=e46VkUMx+O9YtB2a77Mdsp+OyuWhfRtS3jV/UsDqPTQ=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UdhCLTGisKKPNV6jJ5FANI8GlK+5eiqvQFpyZHEMPWV6+optB26wakBUhGncraRqBy0xWmxFPiHBdXdTE9TJJGtxCfaBHtg+sK4VNOgX9Qlq5oxNjfV+t88CwXqerZdismpTq0JvG4On2grW1fv+FhKuAFzAdl9zAUYaxZn+GEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YvecuaA+; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47RFcJLR025767;
-	Tue, 27 Aug 2024 16:04:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=qmxualgWirVB9VB+ifEsGQ5T
-	J/kSK5dckP6lTNPJwb0=; b=YvecuaA+G6r+KSXhl4Ste/45KnpaC0Uv2T1/r3vb
-	QOBukkeLcvWUS+xUzooXl2L6qipLkehkJOilCkeFxuR7J/bJRUpKEha7vZrXYZzM
-	+kwl57icCDLUPsLcQqNmjw6AGhCD6T04sdQQxShJ6fGrMTS2/DBEYx8V7MV4gQP2
-	deWNyU4E2vp3MnAtkA4MMad6uqiA9TYqTRo49xnCTC0Wx/LPYXUKH7ohT3tATxqH
-	MkniNAL47K8kDZJrg1s0mv4Tn5adMNxDSjmGjeGrD9caqcyaXx2Rrhiwwmy17zMq
-	4oFVRXRP3dqx3+X/4NRftgjqjpwe94WPoCpEUvifeq4F9w==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4199s89khd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Aug 2024 16:04:48 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47RG4lrQ031027
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Aug 2024 16:04:47 GMT
-Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 27 Aug 2024 09:04:43 -0700
-Date: Tue, 27 Aug 2024 21:34:35 +0530
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-To: Tengfei Fan <quic_tengfan@quicinc.com>
-CC: Krzysztof Kozlowski <krzk@kernel.org>, <lee@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Tingwei <quic_tingweiz@quicinc.com>,
-        "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
-Subject: Re: [PATCH 1/2] dt-bindings: mfd: qcom,tcsr: Add compatible for
- sa8775p
-Message-ID: <Zs35Ez/xGIkcXXd+@hu-mojha-hyd.qualcomm.com>
-References: <20240705153252.1571814-1-quic_mojha@quicinc.com>
- <3b16214b-4693-4754-b62a-fea2e070269c@kernel.org>
- <1f5c5be4-f864-489c-941d-aad4a914508e@quicinc.com>
+	s=arc-20240116; t=1724775439; c=relaxed/simple;
+	bh=e9/SnnD2Hc7nrmiUV26PmTlAN807y9TdOycQU6CJMA8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EJaZWCNoZvPPSURgCb7/8jyxyD2x2qsqWjdnWQ4EvGetjMBr2ztN3erausoO1PAKbopSTvoIcBg3LXYkYgQ5kEf0p0StssXc4aSXQoAazU+pObLCrZyWfb6CZJV24KPZhxK+8tjavkB3+FWUsffMlIYZKrwjAT1jxRx8AMbNgyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F4NgYzSV; arc=none smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6c91f9fb0d7so31364977b3.3;
+        Tue, 27 Aug 2024 09:17:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724775437; x=1725380237; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=GgD4dqFDyUnD/vStQPVANJoNOpD1Qd5JKsejYAWVUn0=;
+        b=F4NgYzSVNY0kVqtHxz5fRXOPW8cv1uShLwF0ZcUJhO1TVrXYJvAWxsjeioERu5TdYJ
+         rvyeBTzC8T9QVJKPaHE/XCBpO0Go3RATK/FYPJKiOJaSxUpunBFt6Oos9GWoWGvkdWEb
+         BbzKrxNXQLy1Z3zXOINog6Q5dPVklPBUvvZixJYPZP4r2Dn5MTLwT8ZBLs9haTiNBz5b
+         4u3k5W+Tg9a82yIbxSvDF6KE1H3ZHfDncFu5VoPk5lfwXMLGAi7asQugasGz9JK0HqYt
+         MKG0z0slxNJCwvMrAXdVM+jZcrUiw0TaoqTw8y6V9xBLFNJY+cSKhtrKu7fxKu2gFqPP
+         5EIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724775437; x=1725380237;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GgD4dqFDyUnD/vStQPVANJoNOpD1Qd5JKsejYAWVUn0=;
+        b=pqhwCQzn6ka4s1mlOGsbGkimjv9gP4AZFLhCVevZubyQJwkBzI24Hfe5ZDQj4sQKIt
+         NFBuTqDNtbFcA4Vyz984L9HKYjzU262GKe0wv+beTSy+nS0hzrn5mIn1W5sE/z9m/UE4
+         X4VFWYFS5qEtKklcDlZy2tkd3ELS+N2fQTarTy5QY4/K9ANh0mdRwRAPsEqnOy5lF1ZO
+         kqm1a4pAV3zbYaZ/n0RnYP5101Uu/lpz3ix7yQ0VBiaO878/XemkLN5nf+wW47lCEh0s
+         YbRD3YmGmTc81KNZ5Y4OkFSJ4280UKkKhbG5GZiM4ckBorAT/eoW/X+E4kFk59brx1+6
+         NkKw==
+X-Forwarded-Encrypted: i=1; AJvYcCUXeAFtL4KvATtb3dn/9nkkWFUQOH2iWcRtcakN6B3C0x+YmObq4eHaUEPDT2VE7A68qGtzh1FJpcG7Y1gx@vger.kernel.org, AJvYcCUzOdIEuGPqaLy+8l/cZ/c5VwOuTG6lYmKfhGvRJPKHirGfovschkHigkTW7O6SsaUCxund9HhT9qbaVFE=@vger.kernel.org, AJvYcCXAD9ya4HiE1Xq3PRzEPpheFkh0nP3jP5PZ1geX3HMdJtXHXwkXTTuC5aveIDJ+f510Znp3wc7ZKekfDS+v@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw/Yrnk3Q8SQrmaejUz+uzwBKVwJQW2YWv6bllGM2Imk+TygrWz
+	9CXMlJolZmnYzjlo4qROQhFY1iwcg09TXNknY1K9fxLCa2riGtEzh9W/daL0x5bm8laGL2aNCge
+	3gyAPUnJpHBmMcMYQ3FDjrjRFXiw=
+X-Google-Smtp-Source: AGHT+IHnzsaeAYPx8AAxOBSMK1fpK8G2cmPPm5333uqFeT+rlrVWxKv2QLBzOXLZg8T5AQY4Vh4hdFkNwQmz32UOBto=
+X-Received: by 2002:a05:690c:688a:b0:6ad:8bbd:aec2 with SMTP id
+ 00721157ae682-6c6262f44e9mr177725977b3.25.1724775437350; Tue, 27 Aug 2024
+ 09:17:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1f5c5be4-f864-489c-941d-aad4a914508e@quicinc.com>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VMB5P-PHeUtTEYylM-1sk6A6aJMEwLqp
-X-Proofpoint-GUID: VMB5P-PHeUtTEYylM-1sk6A6aJMEwLqp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-27_09,2024-08-27_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
- spamscore=0 adultscore=0 mlxscore=0 priorityscore=1501 phishscore=0
- suspectscore=0 lowpriorityscore=0 mlxlogscore=706 impostorscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408270120
+References: <20240817080408.8010-1-av2082000@gmail.com> <b155a6e9-9fe1-4990-8ba7-e1ff24cca041@stanley.mountain>
+ <CAPMW_rLPN1uLNR=j+A7U03AHX5m_LSpd1EnQoCpXixX+0e4ApQ@mail.gmail.com> <070cc3e2-d0db-4d50-9a64-6a16d88b30df@stanley.mountain>
+In-Reply-To: <070cc3e2-d0db-4d50-9a64-6a16d88b30df@stanley.mountain>
+From: Amit Vadhavana <av2082000@gmail.com>
+Date: Tue, 27 Aug 2024 21:47:06 +0530
+Message-ID: <CAPMW_rJi46_2Ho6KNS9NK0kbfc3ujrx-EJ3586wf0u7vq2kUog@mail.gmail.com>
+Subject: Re: [PATCH V2] dmaengine: Fix spelling mistakes
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	ricardo@marliere.net, linux-kernel-mentees@lists.linux.dev, 
+	skhan@linuxfoundation.org, vkoul@kernel.org, olivierdautricourt@gmail.com, 
+	sr@denx.de, ludovic.desroches@microchip.com, florian.fainelli@broadcom.com, 
+	bcm-kernel-feedback-list@broadcom.com, rjui@broadcom.com, 
+	sbranden@broadcom.com, wangzhou1@hisilicon.com, haijie1@huawei.com, 
+	fenghua.yu@intel.com, dave.jiang@intel.com, zhoubinbin@loongson.cn, 
+	sean.wang@mediatek.com, matthias.bgg@gmail.com, 
+	angelogioacchino.delregno@collabora.com, afaerber@suse.de, 
+	manivannan.sadhasivam@linaro.org, Basavaraj.Natikar@amd.com, 
+	linus.walleij@linaro.org, ldewangan@nvidia.com, jonathanh@nvidia.com, 
+	thierry.reding@gmail.com, laurent.pinchart@ideasonboard.com, 
+	michal.simek@amd.com, Frank.Li@nxp.com, n.shubin@yadro.com, 
+	yajun.deng@linux.dev, quic_jjohnson@quicinc.com, lizetao1@huawei.com, 
+	pliem@maxlinear.com, konrad.dybcio@linaro.org, kees@kernel.org, 
+	gustavoars@kernel.org, bryan.odonoghue@linaro.org, linux@treblig.org, 
+	linux-arm-kernel@lists.infradead.org, linux-rpi-kernel@lists.infradead.org, 
+	linux-mediatek@lists.infradead.org, linux-actions@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Jul 29, 2024 at 06:48:51PM +0800, Tengfei Fan wrote:
-> 
-> 
-> On 7/7/2024 8:46 PM, Krzysztof Kozlowski wrote:
-> > On 05/07/2024 17:32, Mukesh Ojha wrote:
-> > > Document the compatible for sa8775p SoC.
-> > > 
-> > > Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> > 
-> > Eh? SA8775p is going to be removed/changed... why adding this?
-> > 
-> > Best regards,
-> > Krzysztof
-> > 
-> 
-> After considering the feedback provided on the subject, We have decided
-> to keep current SA8775p compatible and ABI compatibility in drivers.
-> Therefore, this patch is still needed, please continue to review this
-> patch.
-> Thank you for your input.
+On Sat, 17 Aug 2024 at 14:38, Dan Carpenter <dan.carpenter@linaro.org> wrote:
+>
+> On Sat, Aug 17, 2024 at 02:11:57PM +0530, Amit Vadhavana wrote:
+> > On Sat, 17 Aug 2024 at 13:55, Dan Carpenter <dan.carpenter@linaro.org> wrote:
+> > >
+> > > On Sat, Aug 17, 2024 at 01:34:08PM +0530, Amit Vadhavana wrote:
+> > > > Correct spelling mistakes in the DMA engine to improve readability
+> > > > and clarity without altering functionality.
+> > > >
+> > > > Signed-off-by: Amit Vadhavana <av2082000@gmail.com>
+> > > > Reviewed-by: Kees Cook <kees@kernel.org>
+> > > > ---
+> > > > V1: https://lore.kernel.org/all/20240810184333.34859-1-av2082000@gmail.com
+> > > > V1 -> V2:
+> > > > - Write the commit description in imperative mode.
+> > >
+> > > Why?  Did someone ask for that?
+> > No, I received a review comment on my other document patch.
+> > So, make similar changes in response.
+>
+> Ah.  Okay.  I was worried someone was sending private reviews.
+>
+> (There wasn't any real need to resend this but also resending is fine).
+>
+> regards,
+> dan carpenter
+>
+Hi All,
 
-Thanks Tengfei for the reply.
+I wanted to follow up on the DMA patch that I submitted on 17 Aug.
+Kees Cook has already reviewed it. Have you all had a chance to review
+it as well?
+Please let me know if any additional changes or updates are needed.
 
-Can this series be considered now, it still applied fine on linux-next.
+Looking forward to your feedback.
 
--Mukesh
-
-> 
-> -- 
-> Thx and BRs,
-> Tengfei Fan
+Best regards,
+Amit V
 
