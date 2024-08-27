@@ -1,76 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-29649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29650-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAA6D9613FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 18:26:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83212961423
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 18:36:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 749FB2848E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 16:26:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B7ED281B15
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 16:36:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 919E11C6893;
-	Tue, 27 Aug 2024 16:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB1581CC150;
+	Tue, 27 Aug 2024 16:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WipV0yn/"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XCBcs0Ub"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695FD1CBE8F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 16:26:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0406B1803D;
+	Tue, 27 Aug 2024 16:35:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724776001; cv=none; b=ndN1PUy4+Z4p6m4DRB32MiEhO0v6Av9r25pI5rJssvccEiGpIfgzkrfhgzJIp/Ou89pBGzofvgx1v/8f6vjY+po75K8p+ucAkxyNnAhfwh/+zH/ImQoxj+C1iovU/mQCTjHyFYl4tu0aXAF6TLOBfJQMmD6BqnWTil71E41uSIY=
+	t=1724776561; cv=none; b=rgaeEYhmk0stiqgrjqmZvzJYYHiADgIMjnZU8tWDTNfgia0XpLVpl/XBi3qE/mm4GfLh8wPUiAJUX7i0UWk8SSOEhSs+Es0ZAir/IP6yYtfptoUaBPu9qfvcrjPt0BGyqvl0fCwjfxCxpw3+mWajU12Nl3u/olCEtIGpPlWBu9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724776001; c=relaxed/simple;
-	bh=e8CooLDyjqVzLqCwIuVAsXY+x0H9Iip9UWRM8TAkzXc=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=F2UNAgO/oNIA67iK8nw8DU+9zdWZT77p5Jvdlzzt76jKG94Wnlfcny4ljgOw4vxc3a4aj9og/Kfei0QJUi4N5E2Ijk8VGdby2vtcS3rU67E/t6uouRsyXjZDhOeF1mfhS01vXgQY80KNuP/1U5YqrJdBOOFLXYLq8B7LN45vmnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WipV0yn/; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-429d2d7be1eso31267555e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 09:26:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724775998; x=1725380798; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=v8CXfOImNZAPo+0QEI9EfNOPJJp994RZWBU+MZvr+8c=;
-        b=WipV0yn/IOr74mX0aWaZnPihkrpRFFyo99+LjPa8YBB2LfRKT/3AL3eMnS6iqA5h/n
-         m1gMAIs2oO7HAsZ2lcn9eeRBZbMPzzg26lHgBJ1Y1OHvgv1DTV0T5UToAoGagE7UQJRJ
-         Vxt2GLQP0uMX3mZzGzg70Sn2l5rK08K9vqgbODPgzDi3uo619WlGO+gwKY/weXS3Mwyc
-         oWKmvY/5WdTDz9nQrzACyTx2/ROOZuFnnA1XYLp1FMmZuHPayqf6D4ArWxXNWZudNlGy
-         cnd1wdRP5JlJSBOPJEq2FuxrTvlChyPM4ss6Vu6HB+XnswUG3lEl/Sir6NMaVprU3uyh
-         rYBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724775998; x=1725380798;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=v8CXfOImNZAPo+0QEI9EfNOPJJp994RZWBU+MZvr+8c=;
-        b=mMdc77AoE4tou24ORgFY9gcresvuey5ytBhUEbXxZFMXBdJHUR/8zFpRnkd/KkPIrQ
-         8epLvqcEimHNkDZS5VPP2tlbGHmwMAM5GAUwDRITU6reeVy/IYoz845wMGn4B/Re3s9A
-         0NhWP9r2wgshg8iW8lCQlxXVCoSmycrJDlDyKpFXmDRPDY++N5OcmZVUR07GTz3n/tKE
-         HSx+v44p0XXJHyCaGj87JQtk2haMcgUdT7ZL6CMm9xSrGQ25mBVLoawmM4t+h3/FzpyN
-         DUTcfHIZU6ZH6EPPZFGkRtFbTA8BPuSfba6tgHOxgsfuDzaMx+MnpXaSZE36eqq/JxgR
-         BM8A==
-X-Forwarded-Encrypted: i=1; AJvYcCVn4OBm30wvdxl/NWaki4lg/95j75zXhsDRz+jmzQDInYFX98GrntksihfWRuQhbRht+8yucLllYMQbsuj6@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw48YHsNm83CjcYsohkm9+W4XsyzR5v6NvPhO90rpdsrmv6XypQ
-	TU/TbswbP0udBbDs+X2n15F/uREHUt6II+z0oGY/PzS1Rz1HLTozNUvbqtBJ7Bw=
-X-Google-Smtp-Source: AGHT+IESU8S9DEVBMpyZfWscDxO0CMagekuQ/YRK6C4x9dg34h8I1OCh7vzpCcvK6gT1EZnV3jT6HQ==
-X-Received: by 2002:a05:600c:8aa:b0:42a:a749:e6 with SMTP id 5b1f17b1804b1-42b9a471114mr23411325e9.10.1724775996955;
-        Tue, 27 Aug 2024 09:26:36 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:cedc:30f:887e:7717? ([2a01:e0a:982:cbb0:cedc:30f:887e:7717])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42abefc627asm231269735e9.34.2024.08.27.09.26.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Aug 2024 09:26:36 -0700 (PDT)
-Message-ID: <aa0f4f1c-3043-4b03-8b9f-f9a39f3682aa@linaro.org>
-Date: Tue, 27 Aug 2024 18:26:35 +0200
+	s=arc-20240116; t=1724776561; c=relaxed/simple;
+	bh=KUsQEoo59HB6zRQOjwbza9kagc56VpT/QgZ4l59uo8Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DUr79AKu7d29rwHOVtlEzl6Jvxi4IFA9dQj5xGsSb+GOmkzRtRjvxujrKjtRR//XCjV7Pqp13ARiXl4Vz+w2dIzyGlIPmXb4symhiEA0PD2egbzdDYnMKP1HftDHXJ59EHybhmM4mp2rSqTFlBhludwkk4I152QXlJ1RwCsd/zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XCBcs0Ub; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1724776559; x=1756312559;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=KUsQEoo59HB6zRQOjwbza9kagc56VpT/QgZ4l59uo8Q=;
+  b=XCBcs0Ub1pFqym6CFN1iB6TmqmemlTLb4pYgyIpU7fs7Ij+9BQ8V6v6/
+   XsMFHebZckSQoC6+b/f2ilKelrSdYWkglWKskMLM+QGjXwVluGjb+CY74
+   4Xepq5xFtHPfFTf+Fxl1NBZHnxrngW7JLF3O7siJiRWvSGoqldF6151au
+   V4JGb2tUTZMdP4E1Yo43zsPvrQ1b+hhya6/dk/eyc8iXd6AKoyG8RQh2m
+   dpsF978iEGkWXFJ4rlQQmGBld/vG62107azUn+dN76EeDj//YMZfBPrH1
+   uPvyMg6ZdbyHeikiqJvwvf0/QnC1eAT3wrk6FnEIlzx27FjoMeVXir2RT
+   Q==;
+X-CSE-ConnectionGUID: Pc388Iu5T6WpjPpn4SxIxg==
+X-CSE-MsgGUID: yNNFGQA4Treu60rO6NmHEA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11177"; a="13240439"
+X-IronPort-AV: E=Sophos;i="6.10,180,1719903600"; 
+   d="scan'208";a="13240439"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Aug 2024 09:35:58 -0700
+X-CSE-ConnectionGUID: yOB0wG2URFC7VnsoCXGB5g==
+X-CSE-MsgGUID: peBFih0WRKKS34ROIWg1Zw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,180,1719903600"; 
+   d="scan'208";a="67619906"
+Received: from rchatre-mobl4.amr.corp.intel.com (HELO [10.125.110.233]) ([10.125.110.233])
+  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Aug 2024 09:35:55 -0700
+Message-ID: <e61104e3-b1c8-4752-89f2-487fee6887b1@intel.com>
+Date: Tue, 27 Aug 2024 09:35:53 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,177 +67,652 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 2/4] Revert "drm/panel-edp: Add SDC ATNA45AF01"
-To: Doug Anderson <dianders@chromium.org>
-Cc: Stephan Gerhold <stephan.gerhold@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Jessica Zhang <quic_jesszhan@quicinc.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, dri-devel@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>,
- Johan Hovold <johan@kernel.org>
-References: <20240715-x1e80100-crd-backlight-v2-0-31b7f2f658a3@linaro.org>
- <20240715-x1e80100-crd-backlight-v2-2-31b7f2f658a3@linaro.org>
- <7daa3c0d-cecf-4f50-be32-ae116b920db0@linaro.org>
- <ZpUcI3KkIa58zC55@linaro.org>
- <d1603248-afe8-4594-9e2e-81ba208dff00@linaro.org>
- <CAD=FV=WimxYmDrkfn0+E3MbXp8kS9TicN2kT3AM4eM+SAwYsOg@mail.gmail.com>
- <CAD=FV=XfvD1OniNBrCrA8C6XjOB15fye8EdnniNmgpu4DnpH6w@mail.gmail.com>
- <CAD=FV=Vp1Trv2JeFtqk2=Zhi0B7io5w402GkG_UhYm2q34q8dw@mail.gmail.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <CAD=FV=Vp1Trv2JeFtqk2=Zhi0B7io5w402GkG_UhYm2q34q8dw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH V2] dmaengine: Fix spelling mistakes
+To: Amit Vadhavana <av2082000@gmail.com>, dmaengine@vger.kernel.org,
+ linux-kernel@vger.kernel.org, ricardo@marliere.net
+Cc: linux-kernel-mentees@lists.linux.dev, skhan@linuxfoundation.org,
+ vkoul@kernel.org, olivierdautricourt@gmail.com, sr@denx.de,
+ ludovic.desroches@microchip.com, florian.fainelli@broadcom.com,
+ bcm-kernel-feedback-list@broadcom.com, rjui@broadcom.com,
+ sbranden@broadcom.com, wangzhou1@hisilicon.com, haijie1@huawei.com,
+ fenghua.yu@intel.com, zhoubinbin@loongson.cn, sean.wang@mediatek.com,
+ matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
+ afaerber@suse.de, manivannan.sadhasivam@linaro.org,
+ Basavaraj.Natikar@amd.com, linus.walleij@linaro.org, ldewangan@nvidia.com,
+ jonathanh@nvidia.com, thierry.reding@gmail.com,
+ laurent.pinchart@ideasonboard.com, michal.simek@amd.com, Frank.Li@nxp.com,
+ n.shubin@yadro.com, yajun.deng@linux.dev, quic_jjohnson@quicinc.com,
+ lizetao1@huawei.com, pliem@maxlinear.com, konrad.dybcio@linaro.org,
+ kees@kernel.org, gustavoars@kernel.org, bryan.odonoghue@linaro.org,
+ linux@treblig.org, dan.carpenter@linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-rpi-kernel@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linux-actions@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org
+References: <20240817080408.8010-1-av2082000@gmail.com>
+Content-Language: en-US
+From: Dave Jiang <dave.jiang@intel.com>
+In-Reply-To: <20240817080408.8010-1-av2082000@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 27/08/2024 17:36, Doug Anderson wrote:
-> Hi,
+
+
+On 8/17/24 1:04 AM, Amit Vadhavana wrote:
+> Correct spelling mistakes in the DMA engine to improve readability
+> and clarity without altering functionality.
 > 
-> On Mon, Jul 22, 2024 at 8:49 AM Doug Anderson <dianders@chromium.org> wrote:
->>
->> Hi,
->>
->> On Mon, Jul 15, 2024 at 6:51 AM Doug Anderson <dianders@chromium.org> wrote:
->>>
->>> Hi,
->>>
->>> On Mon, Jul 15, 2024 at 6:02 AM Neil Armstrong
->>> <neil.armstrong@linaro.org> wrote:
->>>>
->>>> On 15/07/2024 14:54, Stephan Gerhold wrote:
->>>>> On Mon, Jul 15, 2024 at 02:42:12PM +0200, Neil Armstrong wrote:
->>>>>> On 15/07/2024 14:15, Stephan Gerhold wrote:
->>>>>>> This reverts commit 8ebb1fc2e69ab8b89a425e402c7bd85e053b7b01.
->>>>>>>
->>>>>>> The panel should be handled through the samsung-atna33xc20 driver for
->>>>>>> correct power up timings. Otherwise the backlight does not work correctly.
->>>>>>>
->>>>>>> We have existing users of this panel through the generic "edp-panel"
->>>>>>> compatible (e.g. the Qualcomm X1E80100 CRD), but the screen works only
->>>>>>> partially in that configuration: It works after boot but once the screen
->>>>>>> gets disabled it does not turn on again until after reboot. It behaves the
->>>>>>> same way with the default "conservative" timings, so we might as well drop
->>>>>>> the configuration from the panel-edp driver. That way, users with old DTBs
->>>>>>> will get a warning and can move to the new driver.
->>>>>>>
->>>>>>> Reviewed-by: Douglas Anderson <dianders@chromium.org>
->>>>>>> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
->>>>>>> ---
->>>>>>>     drivers/gpu/drm/panel/panel-edp.c | 2 --
->>>>>>>     1 file changed, 2 deletions(-)
->>>>>>>
->>>>>>> diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
->>>>>>> index 3a574a9b46e7..d2d682385e89 100644
->>>>>>> --- a/drivers/gpu/drm/panel/panel-edp.c
->>>>>>> +++ b/drivers/gpu/drm/panel/panel-edp.c
->>>>>>> @@ -1960,8 +1960,6 @@ static const struct edp_panel_entry edp_panels[] = {
->>>>>>>      EDP_PANEL_ENTRY('L', 'G', 'D', 0x05af, &delay_200_500_e200_d200, "Unknown"),
->>>>>>>      EDP_PANEL_ENTRY('L', 'G', 'D', 0x05f1, &delay_200_500_e200_d200, "Unknown"),
->>>>>>> -   EDP_PANEL_ENTRY('S', 'D', 'C', 0x416d, &delay_100_500_e200, "ATNA45AF01"),
->>>>>>> -
->>>>>>>      EDP_PANEL_ENTRY('S', 'H', 'P', 0x1511, &delay_200_500_e50, "LQ140M1JW48"),
->>>>>>>      EDP_PANEL_ENTRY('S', 'H', 'P', 0x1523, &delay_80_500_e50, "LQ140M1JW46"),
->>>>>>>      EDP_PANEL_ENTRY('S', 'H', 'P', 0x153a, &delay_200_500_e50, "LQ140T1JH01"),
->>>>>>>
->>>>>>
->>>>>> How will we handle current/old crd DT with new kernels ?
->>>>>>
->>>>>
->>>>> I think this is answered in the commit message:
->>>>>
->>>>>>> We have existing users of this panel through the generic "edp-panel"
->>>>>>> compatible (e.g. the Qualcomm X1E80100 CRD), but the screen works only
->>>>>>> partially in that configuration: It works after boot but once the screen
->>>>>>> gets disabled it does not turn on again until after reboot. It behaves the
->>>>>>> same way with the default "conservative" timings, so we might as well drop
->>>>>>> the configuration from the panel-edp driver. That way, users with old DTBs
->>>>>>> will get a warning and can move to the new driver.
->>>>>
->>>>> Basically with the entry removed, the panel-edp driver will fallback to
->>>>> default "conservative" timings when using old DTBs. There will be a
->>>>> warning in dmesg, but otherwise the panel will somewhat work just as
->>>>> before. I think this is a good way to remind users to upgrade.
->>>>
->>>> I consider this as a regression
->>>>
->>>>>
->>>>>> Same question for patch 3, thie serie introduces a bindings that won't be valid
->>>>>> if we backport patch 3. I don't think patch should be backported, and this patch
->>>>>> should be dropped.
->>>>>
->>>>> There would be a dtbs_check warning, yeah. Functionally, it would work
->>>>> just fine. Is that reason enough to keep display partially broken for
->>>>> 6.11? We could also apply the minor binding change for 6.11 if needed.
->>>>
->>>> I don't know how to answer this, I'll let the DT maintainer comment this.
->>>>
->>>> The problem is I do not think we can pass the whole patchset as fixes
->>>> for v6.11, patches 2 & 3 could, patches 1 & 4 definitely can't.
->>>>
->>>> Neil
->>>
->>> IMO: patch #3 (dts) and #4 (CONFIG) go through the Qualcomm tree
->>> whenever those folks agree to it. If we're worried about the
->>> dtbs_check breakage I personally wouldn't mind "Ack"ing patch #1 to go
->>> through the Qualcomm tree as long as it made it into 6.11-rc1. I have
->>> a hunch that there are going to be more Samsung OLED panels in the
->>> future that will need to touch the same file, but if the change is in
->>> -rc1 it should make it back into drm-misc quickly, right?
->>>
->>> Personally I think patch #2 could go in anytime since, as people have
->>> said, things are pretty broken today and the worst that happens is
->>> that someone gets an extra warning. That would be my preference. That
->>> being said, we could also snooze that patch for a month or two and
->>> land it later. There's no real hurry.
->>
->> For now I'm going to snooze this patch for a month just to avoid any
->> controversy. I'll plan to apply it (to drm-misc-next) when I see the
->> device tree patch land. Since the device tree patch should land as a
->> fix that should keep things landing in the correct order. ...and, as
->> per above, the worst case is that if someone has an old DTS and a new
->> kernel then a panel that was already not working well will print a fat
->> warning and startup a bit slower.
->>
->> If somehow I mess up and forget about this patch, feel free to send me
->> a poke when the device tree patch is landed.
+> Signed-off-by: Amit Vadhavana <av2082000@gmail.com>
+> Reviewed-by: Kees Cook <kees@kernel.org>
+
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+
+For idxd and ioat
+
+> ---
+> V1: https://lore.kernel.org/all/20240810184333.34859-1-av2082000@gmail.com 
+> V1 -> V2:
+> - Write the commit description in imperative mode.
+> ---
+>  drivers/dma/acpi-dma.c                  | 4 ++--
+>  drivers/dma/altera-msgdma.c             | 4 ++--
+>  drivers/dma/amba-pl08x.c                | 2 +-
+>  drivers/dma/at_hdmac.c                  | 6 +++---
+>  drivers/dma/bcm-sba-raid.c              | 4 ++--
+>  drivers/dma/bcm2835-dma.c               | 2 +-
+>  drivers/dma/ep93xx_dma.c                | 4 ++--
+>  drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.h | 6 +++---
+>  drivers/dma/hisi_dma.c                  | 2 +-
+>  drivers/dma/idma64.c                    | 4 ++--
+>  drivers/dma/idxd/submit.c               | 2 +-
+>  drivers/dma/ioat/init.c                 | 2 +-
+>  drivers/dma/lgm/lgm-dma.c               | 2 +-
+>  drivers/dma/ls2x-apb-dma.c              | 4 ++--
+>  drivers/dma/mediatek/mtk-cqdma.c        | 4 ++--
+>  drivers/dma/mediatek/mtk-hsdma.c        | 2 +-
+>  drivers/dma/mv_xor.c                    | 4 ++--
+>  drivers/dma/mv_xor.h                    | 2 +-
+>  drivers/dma/mv_xor_v2.c                 | 2 +-
+>  drivers/dma/nbpfaxi.c                   | 2 +-
+>  drivers/dma/of-dma.c                    | 4 ++--
+>  drivers/dma/owl-dma.c                   | 2 +-
+>  drivers/dma/ppc4xx/adma.c               | 2 +-
+>  drivers/dma/ppc4xx/dma.h                | 2 +-
+>  drivers/dma/ptdma/ptdma.h               | 2 +-
+>  drivers/dma/qcom/bam_dma.c              | 4 ++--
+>  drivers/dma/qcom/gpi.c                  | 2 +-
+>  drivers/dma/qcom/qcom_adm.c             | 2 +-
+>  drivers/dma/sh/shdmac.c                 | 2 +-
+>  drivers/dma/ste_dma40.h                 | 2 +-
+>  drivers/dma/ste_dma40_ll.h              | 2 +-
+>  drivers/dma/tegra20-apb-dma.c           | 2 +-
+>  drivers/dma/xgene-dma.c                 | 2 +-
+>  drivers/dma/xilinx/xilinx_dpdma.c       | 4 ++--
+>  34 files changed, 49 insertions(+), 49 deletions(-)
 > 
-> More than a month has passed now. One last warning before I apply this
-> revert in a few more days.
-
-It's fine if you apply it now
-
-Neil
-
-> 
-> -Doug
-> 
-
+> diff --git a/drivers/dma/acpi-dma.c b/drivers/dma/acpi-dma.c
+> index 5906eae26e2a..a58a1600dd65 100644
+> --- a/drivers/dma/acpi-dma.c
+> +++ b/drivers/dma/acpi-dma.c
+> @@ -112,7 +112,7 @@ static int acpi_dma_parse_resource_group(const struct acpi_csrt_group *grp,
+>  }
+>  
+>  /**
+> - * acpi_dma_parse_csrt - parse CSRT to exctract additional DMA resources
+> + * acpi_dma_parse_csrt - parse CSRT to extract additional DMA resources
+>   * @adev:	ACPI device to match with
+>   * @adma:	struct acpi_dma of the given DMA controller
+>   *
+> @@ -305,7 +305,7 @@ EXPORT_SYMBOL_GPL(devm_acpi_dma_controller_free);
+>   * found.
+>   *
+>   * Return:
+> - * 0, if no information is avaiable, -1 on mismatch, and 1 otherwise.
+> + * 0, if no information is available, -1 on mismatch, and 1 otherwise.
+>   */
+>  static int acpi_dma_update_dma_spec(struct acpi_dma *adma,
+>  		struct acpi_dma_spec *dma_spec)
+> diff --git a/drivers/dma/altera-msgdma.c b/drivers/dma/altera-msgdma.c
+> index 0968176f323d..e6a6566b309e 100644
+> --- a/drivers/dma/altera-msgdma.c
+> +++ b/drivers/dma/altera-msgdma.c
+> @@ -153,7 +153,7 @@ struct msgdma_extended_desc {
+>  /**
+>   * struct msgdma_sw_desc - implements a sw descriptor
+>   * @async_tx: support for the async_tx api
+> - * @hw_desc: assosiated HW descriptor
+> + * @hw_desc: associated HW descriptor
+>   * @node: node to move from the free list to the tx list
+>   * @tx_list: transmit list node
+>   */
+> @@ -511,7 +511,7 @@ static void msgdma_copy_one(struct msgdma_device *mdev,
+>  	 * of the DMA controller. The descriptor will get flushed to the
+>  	 * FIFO, once the last word (control word) is written. Since we
+>  	 * are not 100% sure that memcpy() writes all word in the "correct"
+> -	 * oder (address from low to high) on all architectures, we make
+> +	 * order (address from low to high) on all architectures, we make
+>  	 * sure this control word is written last by single coding it and
+>  	 * adding some write-barriers here.
+>  	 */
+> diff --git a/drivers/dma/amba-pl08x.c b/drivers/dma/amba-pl08x.c
+> index 73a5cfb4da8a..38cdbca59485 100644
+> --- a/drivers/dma/amba-pl08x.c
+> +++ b/drivers/dma/amba-pl08x.c
+> @@ -2,7 +2,7 @@
+>  /*
+>   * Copyright (c) 2006 ARM Ltd.
+>   * Copyright (c) 2010 ST-Ericsson SA
+> - * Copyirght (c) 2017 Linaro Ltd.
+> + * Copyright (c) 2017 Linaro Ltd.
+>   *
+>   * Author: Peter Pearse <peter.pearse@arm.com>
+>   * Author: Linus Walleij <linus.walleij@linaro.org>
+> diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
+> index 40052d1bd0b5..baebddc740b0 100644
+> --- a/drivers/dma/at_hdmac.c
+> +++ b/drivers/dma/at_hdmac.c
+> @@ -339,7 +339,7 @@ static inline u8 convert_buswidth(enum dma_slave_buswidth addr_width)
+>   * @regs: memory mapped register base
+>   * @clk: dma controller clock
+>   * @save_imr: interrupt mask register that is saved on suspend/resume cycle
+> - * @all_chan_mask: all channels availlable in a mask
+> + * @all_chan_mask: all channels available in a mask
+>   * @lli_pool: hw lli table
+>   * @memset_pool: hw memset pool
+>   * @chan: channels table to store at_dma_chan structures
+> @@ -668,7 +668,7 @@ static inline u32 atc_calc_bytes_left(u32 current_len, u32 ctrla)
+>   * CTRLA is read in turn, next the DSCR is read a second time. If the two
+>   * consecutive read values of the DSCR are the same then we assume both refers
+>   * to the very same LLI as well as the CTRLA value read inbetween does. For
+> - * cyclic tranfers, the assumption is that a full loop is "not so fast". If the
+> + * cyclic transfers, the assumption is that a full loop is "not so fast". If the
+>   * two DSCR values are different, we read again the CTRLA then the DSCR till two
+>   * consecutive read values from DSCR are equal or till the maximum trials is
+>   * reach. This algorithm is very unlikely not to find a stable value for DSCR.
+> @@ -700,7 +700,7 @@ static int atc_get_llis_residue(struct at_dma_chan *atchan,
+>  			break;
+>  
+>  		/*
+> -		 * DSCR has changed inside the DMA controller, so the previouly
+> +		 * DSCR has changed inside the DMA controller, so the previously
+>  		 * read value of CTRLA may refer to an already processed
+>  		 * descriptor hence could be outdated. We need to update ctrla
+>  		 * to match the current descriptor.
+> diff --git a/drivers/dma/bcm-sba-raid.c b/drivers/dma/bcm-sba-raid.c
+> index fbaacb4c19b2..cfa6e1167a1f 100644
+> --- a/drivers/dma/bcm-sba-raid.c
+> +++ b/drivers/dma/bcm-sba-raid.c
+> @@ -15,7 +15,7 @@
+>   * number of hardware rings over one or more SBA hardware devices. By
+>   * design, the internal buffer size of SBA hardware device is limited
+>   * but all offload operations supported by SBA can be broken down into
+> - * multiple small size requests and executed parallely on multiple SBA
+> + * multiple small size requests and executed parallelly on multiple SBA
+>   * hardware devices for achieving high through-put.
+>   *
+>   * The Broadcom SBA RAID driver does not require any register programming
+> @@ -135,7 +135,7 @@ struct sba_device {
+>  	u32 max_xor_srcs;
+>  	u32 max_resp_pool_size;
+>  	u32 max_cmds_pool_size;
+> -	/* Maibox client and Mailbox channels */
+> +	/* Mailbox client and Mailbox channels */
+>  	struct mbox_client client;
+>  	struct mbox_chan *mchan;
+>  	struct device *mbox_dev;
+> diff --git a/drivers/dma/bcm2835-dma.c b/drivers/dma/bcm2835-dma.c
+> index 9d74fe97452e..e1b92b4d7b05 100644
+> --- a/drivers/dma/bcm2835-dma.c
+> +++ b/drivers/dma/bcm2835-dma.c
+> @@ -369,7 +369,7 @@ static struct bcm2835_desc *bcm2835_dma_create_cb_chain(
+>  	/* the last frame requires extra flags */
+>  	d->cb_list[d->frames - 1].cb->info |= finalextrainfo;
+>  
+> -	/* detect a size missmatch */
+> +	/* detect a size mismatch */
+>  	if (buf_len && (d->size != buf_len))
+>  		goto error_cb;
+>  
+> diff --git a/drivers/dma/ep93xx_dma.c b/drivers/dma/ep93xx_dma.c
+> index d6c60635e90d..4ee337e78c23 100644
+> --- a/drivers/dma/ep93xx_dma.c
+> +++ b/drivers/dma/ep93xx_dma.c
+> @@ -841,7 +841,7 @@ static dma_cookie_t ep93xx_dma_tx_submit(struct dma_async_tx_descriptor *tx)
+>  	desc = container_of(tx, struct ep93xx_dma_desc, txd);
+>  
+>  	/*
+> -	 * If nothing is currently prosessed, we push this descriptor
+> +	 * If nothing is currently processed, we push this descriptor
+>  	 * directly to the hardware. Otherwise we put the descriptor
+>  	 * to the pending queue.
+>  	 */
+> @@ -1025,7 +1025,7 @@ ep93xx_dma_prep_dma_memcpy(struct dma_chan *chan, dma_addr_t dest,
+>   * @chan: channel
+>   * @sgl: list of buffers to transfer
+>   * @sg_len: number of entries in @sgl
+> - * @dir: direction of tha DMA transfer
+> + * @dir: direction of the DMA transfer
+>   * @flags: flags for the descriptor
+>   * @context: operation context (ignored)
+>   *
+> diff --git a/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.h b/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.h
+> index 2c80077cb7c0..36c284a3d184 100644
+> --- a/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.h
+> +++ b/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.h
+> @@ -12,8 +12,8 @@ struct dpaa2_qdma_sd_d {
+>  	u32 rsv:32;
+>  	union {
+>  		struct {
+> -			u32 ssd:12; /* souce stride distance */
+> -			u32 sss:12; /* souce stride size */
+> +			u32 ssd:12; /* source stride distance */
+> +			u32 sss:12; /* source stride size */
+>  			u32 rsv1:8;
+>  		} sdf;
+>  		struct {
+> @@ -48,7 +48,7 @@ struct dpaa2_qdma_sd_d {
+>  #define QDMA_SER_DISABLE	(8) /* no notification */
+>  #define QDMA_SER_CTX		BIT(8) /* notification by FQD_CTX[fqid] */
+>  #define QDMA_SER_DEST		(2 << 8) /* notification by destination desc */
+> -#define QDMA_SER_BOTH		(3 << 8) /* soruce and dest notification */
+> +#define QDMA_SER_BOTH		(3 << 8) /* source and dest notification */
+>  #define QDMA_FD_SPF_ENALBE	BIT(30) /* source prefetch enable */
+>  
+>  #define QMAN_FD_VA_ENABLE	BIT(14) /* Address used is virtual address */
+> diff --git a/drivers/dma/hisi_dma.c b/drivers/dma/hisi_dma.c
+> index 4c47bff81064..25a4134be36b 100644
+> --- a/drivers/dma/hisi_dma.c
+> +++ b/drivers/dma/hisi_dma.c
+> @@ -677,7 +677,7 @@ static void hisi_dma_init_hw_qp(struct hisi_dma_dev *hdma_dev, u32 index)
+>  		writel_relaxed(tmp, addr);
+>  
+>  		/*
+> -		 * 0 - dma should process FLR whith CPU.
+> +		 * 0 - dma should process FLR with CPU.
+>  		 * 1 - dma not process FLR, only cpu process FLR.
+>  		 */
+>  		addr = q_base + HISI_DMA_HIP09_DMA_FLR_DISABLE +
+> diff --git a/drivers/dma/idma64.c b/drivers/dma/idma64.c
+> index e3505e56784b..2192b7136c2a 100644
+> --- a/drivers/dma/idma64.c
+> +++ b/drivers/dma/idma64.c
+> @@ -290,7 +290,7 @@ static void idma64_desc_fill(struct idma64_chan *idma64c,
+>  		desc->length += hw->len;
+>  	} while (i);
+>  
+> -	/* Trigger an interrupt after the last block is transfered */
+> +	/* Trigger an interrupt after the last block is transferred */
+>  	lli->ctllo |= IDMA64C_CTLL_INT_EN;
+>  
+>  	/* Disable LLP transfer in the last block */
+> @@ -364,7 +364,7 @@ static size_t idma64_active_desc_size(struct idma64_chan *idma64c)
+>  	if (!i)
+>  		return bytes;
+>  
+> -	/* The current chunk is not fully transfered yet */
+> +	/* The current chunk is not fully transferred yet */
+>  	bytes += desc->hw[--i].len;
+>  
+>  	return bytes - IDMA64C_CTLH_BLOCK_TS(ctlhi);
+> diff --git a/drivers/dma/idxd/submit.c b/drivers/dma/idxd/submit.c
+> index 817a564413b0..94eca25ae9b9 100644
+> --- a/drivers/dma/idxd/submit.c
+> +++ b/drivers/dma/idxd/submit.c
+> @@ -134,7 +134,7 @@ static void llist_abort_desc(struct idxd_wq *wq, struct idxd_irq_entry *ie,
+>  	 * completing the descriptor will return desc to allocator and
+>  	 * the desc can be acquired by a different process and the
+>  	 * desc->list can be modified.  Delete desc from list so the
+> -	 * list trasversing does not get corrupted by the other process.
+> +	 * list traversing does not get corrupted by the other process.
+>  	 */
+>  	list_for_each_entry_safe(d, t, &flist, list) {
+>  		list_del_init(&d->list);
+> diff --git a/drivers/dma/ioat/init.c b/drivers/dma/ioat/init.c
+> index 7b502b60b38b..cc9ddd6c325b 100644
+> --- a/drivers/dma/ioat/init.c
+> +++ b/drivers/dma/ioat/init.c
+> @@ -905,7 +905,7 @@ static int ioat_xor_val_self_test(struct ioatdma_device *ioat_dma)
+>  
+>  	op = IOAT_OP_XOR_VAL;
+>  
+> -	/* validate the sources with the destintation page */
+> +	/* validate the sources with the destination page */
+>  	for (i = 0; i < IOAT_NUM_SRC_TEST; i++)
+>  		xor_val_srcs[i] = xor_srcs[i];
+>  	xor_val_srcs[i] = dest;
+> diff --git a/drivers/dma/lgm/lgm-dma.c b/drivers/dma/lgm/lgm-dma.c
+> index 4117c7b67e9c..8173c3f1075a 100644
+> --- a/drivers/dma/lgm/lgm-dma.c
+> +++ b/drivers/dma/lgm/lgm-dma.c
+> @@ -107,7 +107,7 @@
+>   * If header mode is set in DMA descriptor,
+>   *   If bit 30 is disabled, HDR_LEN must be configured according to channel
+>   *     requirement.
+> - *   If bit 30 is enabled(checksum with heade mode), HDR_LEN has no need to
+> + *   If bit 30 is enabled(checksum with header mode), HDR_LEN has no need to
+>   *     be configured. It will enable check sum for switch
+>   * If header mode is not set in DMA descriptor,
+>   *   This register setting doesn't matter
+> diff --git a/drivers/dma/ls2x-apb-dma.c b/drivers/dma/ls2x-apb-dma.c
+> index a49913f3ed3f..9652e8666722 100644
+> --- a/drivers/dma/ls2x-apb-dma.c
+> +++ b/drivers/dma/ls2x-apb-dma.c
+> @@ -33,11 +33,11 @@
+>  #define LDMA_STOP		BIT(4) /* DMA stop operation */
+>  #define LDMA_CONFIG_MASK	GENMASK(4, 0) /* DMA controller config bits mask */
+>  
+> -/* Bitfields in ndesc_addr field of HW decriptor */
+> +/* Bitfields in ndesc_addr field of HW descriptor */
+>  #define LDMA_DESC_EN		BIT(0) /*1: The next descriptor is valid */
+>  #define LDMA_DESC_ADDR_LOW	GENMASK(31, 1)
+>  
+> -/* Bitfields in cmd field of HW decriptor */
+> +/* Bitfields in cmd field of HW descriptor */
+>  #define LDMA_INT		BIT(1) /* Enable DMA interrupts */
+>  #define LDMA_DATA_DIRECTION	BIT(12) /* 1: write to device, 0: read from device */
+>  
+> diff --git a/drivers/dma/mediatek/mtk-cqdma.c b/drivers/dma/mediatek/mtk-cqdma.c
+> index 529100c5b9f5..b69eabf12a24 100644
+> --- a/drivers/dma/mediatek/mtk-cqdma.c
+> +++ b/drivers/dma/mediatek/mtk-cqdma.c
+> @@ -518,7 +518,7 @@ mtk_cqdma_prep_dma_memcpy(struct dma_chan *c, dma_addr_t dest,
+>  		/* setup dma channel */
+>  		cvd[i]->ch = c;
+>  
+> -		/* setup sourece, destination, and length */
+> +		/* setup source, destination, and length */
+>  		tlen = (len > MTK_CQDMA_MAX_LEN) ? MTK_CQDMA_MAX_LEN : len;
+>  		cvd[i]->len = tlen;
+>  		cvd[i]->src = src;
+> @@ -617,7 +617,7 @@ static int mtk_cqdma_alloc_chan_resources(struct dma_chan *c)
+>  	u32 i, min_refcnt = U32_MAX, refcnt;
+>  	unsigned long flags;
+>  
+> -	/* allocate PC with the minimun refcount */
+> +	/* allocate PC with the minimum refcount */
+>  	for (i = 0; i < cqdma->dma_channels; ++i) {
+>  		refcnt = refcount_read(&cqdma->pc[i]->refcnt);
+>  		if (refcnt < min_refcnt) {
+> diff --git a/drivers/dma/mediatek/mtk-hsdma.c b/drivers/dma/mediatek/mtk-hsdma.c
+> index 36ff11e909ea..58c7961ab9ad 100644
+> --- a/drivers/dma/mediatek/mtk-hsdma.c
+> +++ b/drivers/dma/mediatek/mtk-hsdma.c
+> @@ -226,7 +226,7 @@ struct mtk_hsdma_soc {
+>   * @pc_refcnt:		     Track how many VCs are using the PC
+>   * @lock:		     Lock protect agaisting multiple VCs access PC
+>   * @soc:		     The pointer to area holding differences among
+> - *			     vaious platform
+> + *			     various platform
+>   */
+>  struct mtk_hsdma_device {
+>  	struct dma_device ddev;
+> diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
+> index bcd3b623ac6c..43efce77bb57 100644
+> --- a/drivers/dma/mv_xor.c
+> +++ b/drivers/dma/mv_xor.c
+> @@ -414,7 +414,7 @@ mv_xor_tx_submit(struct dma_async_tx_descriptor *tx)
+>  		if (!mv_chan_is_busy(mv_chan)) {
+>  			u32 current_desc = mv_chan_get_current_desc(mv_chan);
+>  			/*
+> -			 * and the curren desc is the end of the chain before
+> +			 * and the current desc is the end of the chain before
+>  			 * the append, then we need to start the channel
+>  			 */
+>  			if (current_desc == old_chain_tail->async_tx.phys)
+> @@ -1074,7 +1074,7 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
+>  	if (!mv_chan->dma_desc_pool_virt)
+>  		return ERR_PTR(-ENOMEM);
+>  
+> -	/* discover transaction capabilites from the platform data */
+> +	/* discover transaction capabilities from the platform data */
+>  	dma_dev->cap_mask = cap_mask;
+>  
+>  	INIT_LIST_HEAD(&dma_dev->channels);
+> diff --git a/drivers/dma/mv_xor.h b/drivers/dma/mv_xor.h
+> index d86086b05b0e..c87cefd38a07 100644
+> --- a/drivers/dma/mv_xor.h
+> +++ b/drivers/dma/mv_xor.h
+> @@ -99,7 +99,7 @@ struct mv_xor_device {
+>   * @common: common dmaengine channel object members
+>   * @slots_allocated: records the actual size of the descriptor slot pool
+>   * @irq_tasklet: bottom half where mv_xor_slot_cleanup runs
+> - * @op_in_desc: new mode of driver, each op is writen to descriptor.
+> + * @op_in_desc: new mode of driver, each op is written to descriptor.
+>   */
+>  struct mv_xor_chan {
+>  	int			pending;
+> diff --git a/drivers/dma/mv_xor_v2.c b/drivers/dma/mv_xor_v2.c
+> index 97ebc791a30b..c8c67f4d982c 100644
+> --- a/drivers/dma/mv_xor_v2.c
+> +++ b/drivers/dma/mv_xor_v2.c
+> @@ -175,7 +175,7 @@ struct mv_xor_v2_device {
+>   * struct mv_xor_v2_sw_desc - implements a xor SW descriptor
+>   * @idx: descriptor index
+>   * @async_tx: support for the async_tx api
+> - * @hw_desc: assosiated HW descriptor
+> + * @hw_desc: associated HW descriptor
+>   * @free_list: node of the free SW descriprots list
+>  */
+>  struct mv_xor_v2_sw_desc {
+> diff --git a/drivers/dma/nbpfaxi.c b/drivers/dma/nbpfaxi.c
+> index c08916339aa7..3b011a91d48e 100644
+> --- a/drivers/dma/nbpfaxi.c
+> +++ b/drivers/dma/nbpfaxi.c
+> @@ -897,7 +897,7 @@ static int nbpf_config(struct dma_chan *dchan,
+>  	/*
+>  	 * We could check config->slave_id to match chan->terminal here,
+>  	 * but with DT they would be coming from the same source, so
+> -	 * such a check would be superflous
+> +	 * such a check would be superfluous
+>  	 */
+>  
+>  	chan->slave_dst_addr = config->dst_addr;
+> diff --git a/drivers/dma/of-dma.c b/drivers/dma/of-dma.c
+> index e588fff9f21d..423442e55d36 100644
+> --- a/drivers/dma/of-dma.c
+> +++ b/drivers/dma/of-dma.c
+> @@ -26,7 +26,7 @@ static DEFINE_MUTEX(of_dma_lock);
+>   *
+>   * Finds a DMA controller with matching device node and number for dma cells
+>   * in a list of registered DMA controllers. If a match is found a valid pointer
+> - * to the DMA data stored is retuned. A NULL pointer is returned if no match is
+> + * to the DMA data stored is returned. A NULL pointer is returned if no match is
+>   * found.
+>   */
+>  static struct of_dma *of_dma_find_controller(const struct of_phandle_args *dma_spec)
+> @@ -342,7 +342,7 @@ EXPORT_SYMBOL_GPL(of_dma_simple_xlate);
+>   *
+>   * This function can be used as the of xlate callback for DMA driver which wants
+>   * to match the channel based on the channel id. When using this xlate function
+> - * the #dma-cells propety of the DMA controller dt node needs to be set to 1.
+> + * the #dma-cells property of the DMA controller dt node needs to be set to 1.
+>   * The data parameter of of_dma_controller_register must be a pointer to the
+>   * dma_device struct the function should match upon.
+>   *
+> diff --git a/drivers/dma/owl-dma.c b/drivers/dma/owl-dma.c
+> index e001f4f7aa64..aa436f9e3571 100644
+> --- a/drivers/dma/owl-dma.c
+> +++ b/drivers/dma/owl-dma.c
+> @@ -1156,7 +1156,7 @@ static int owl_dma_probe(struct platform_device *pdev)
+>  	}
+>  
+>  	/*
+> -	 * Eventhough the DMA controller is capable of generating 4
+> +	 * Even though the DMA controller is capable of generating 4
+>  	 * IRQ's for DMA priority feature, we only use 1 IRQ for
+>  	 * simplification.
+>  	 */
+> diff --git a/drivers/dma/ppc4xx/adma.c b/drivers/dma/ppc4xx/adma.c
+> index bbb60a970dab..7b78759ac734 100644
+> --- a/drivers/dma/ppc4xx/adma.c
+> +++ b/drivers/dma/ppc4xx/adma.c
+> @@ -9,7 +9,7 @@
+>   */
+>  
+>  /*
+> - * This driver supports the asynchrounous DMA copy and RAID engines available
+> + * This driver supports the asynchronous DMA copy and RAID engines available
+>   * on the AMCC PPC440SPe Processors.
+>   * Based on the Intel Xscale(R) family of I/O Processors (IOP 32x, 33x, 134x)
+>   * ADMA driver written by D.Williams.
+> diff --git a/drivers/dma/ppc4xx/dma.h b/drivers/dma/ppc4xx/dma.h
+> index 1ff4be23db0f..b5725481bfa6 100644
+> --- a/drivers/dma/ppc4xx/dma.h
+> +++ b/drivers/dma/ppc4xx/dma.h
+> @@ -14,7 +14,7 @@
+>  
+>  /* Number of elements in the array with statical CDBs */
+>  #define	MAX_STAT_DMA_CDBS	16
+> -/* Number of DMA engines available on the contoller */
+> +/* Number of DMA engines available on the controller */
+>  #define DMA_ENGINES_NUM		2
+>  
+>  /* Maximum h/w supported number of destinations */
+> diff --git a/drivers/dma/ptdma/ptdma.h b/drivers/dma/ptdma/ptdma.h
+> index 21b4bf895200..39bc37268235 100644
+> --- a/drivers/dma/ptdma/ptdma.h
+> +++ b/drivers/dma/ptdma/ptdma.h
+> @@ -192,7 +192,7 @@ struct pt_cmd_queue {
+>  	/* Queue dma pool */
+>  	struct dma_pool *dma_pool;
+>  
+> -	/* Queue base address (not neccessarily aligned)*/
+> +	/* Queue base address (not necessarily aligned)*/
+>  	struct ptdma_desc *qbase;
+>  
+>  	/* Aligned queue start address (per requirement) */
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index 5e7d332731e0..2d7550b8e03e 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -440,7 +440,7 @@ static void bam_reset(struct bam_device *bdev)
+>  	val |= BAM_EN;
+>  	writel_relaxed(val, bam_addr(bdev, 0, BAM_CTRL));
+>  
+> -	/* set descriptor threshhold, start with 4 bytes */
+> +	/* set descriptor threshold, start with 4 bytes */
+>  	writel_relaxed(DEFAULT_CNT_THRSHLD,
+>  			bam_addr(bdev, 0, BAM_DESC_CNT_TRSHLD));
+>  
+> @@ -667,7 +667,7 @@ static struct dma_async_tx_descriptor *bam_prep_slave_sg(struct dma_chan *chan,
+>  	for_each_sg(sgl, sg, sg_len, i)
+>  		num_alloc += DIV_ROUND_UP(sg_dma_len(sg), BAM_FIFO_SIZE);
+>  
+> -	/* allocate enough room to accomodate the number of entries */
+> +	/* allocate enough room to accommodate the number of entries */
+>  	async_desc = kzalloc(struct_size(async_desc, desc, num_alloc),
+>  			     GFP_NOWAIT);
+>  
+> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+> index e6ebd688d746..52a7c8f2498f 100644
+> --- a/drivers/dma/qcom/gpi.c
+> +++ b/drivers/dma/qcom/gpi.c
+> @@ -1856,7 +1856,7 @@ static void gpi_issue_pending(struct dma_chan *chan)
+>  
+>  	read_lock_irqsave(&gpii->pm_lock, pm_lock_flags);
+>  
+> -	/* move all submitted discriptors to issued list */
+> +	/* move all submitted descriptors to issued list */
+>  	spin_lock_irqsave(&gchan->vc.lock, flags);
+>  	if (vchan_issue_pending(&gchan->vc))
+>  		vd = list_last_entry(&gchan->vc.desc_issued,
+> diff --git a/drivers/dma/qcom/qcom_adm.c b/drivers/dma/qcom/qcom_adm.c
+> index 53f4273b657c..c1db398adc84 100644
+> --- a/drivers/dma/qcom/qcom_adm.c
+> +++ b/drivers/dma/qcom/qcom_adm.c
+> @@ -650,7 +650,7 @@ static enum dma_status adm_tx_status(struct dma_chan *chan, dma_cookie_t cookie,
+>  	/*
+>  	 * residue is either the full length if it is in the issued list, or 0
+>  	 * if it is in progress.  We have no reliable way of determining
+> -	 * anything inbetween
+> +	 * anything in between
+>  	 */
+>  	dma_set_residue(txstate, residue);
+>  
+> diff --git a/drivers/dma/sh/shdmac.c b/drivers/dma/sh/shdmac.c
+> index 7cc9eb2217e8..8ead0a1fd237 100644
+> --- a/drivers/dma/sh/shdmac.c
+> +++ b/drivers/dma/sh/shdmac.c
+> @@ -318,7 +318,7 @@ static void sh_dmae_setup_xfer(struct shdma_chan *schan,
+>  }
+>  
+>  /*
+> - * Find a slave channel configuration from the contoller list by either a slave
+> + * Find a slave channel configuration from the controller list by either a slave
+>   * ID in the non-DT case, or by a MID/RID value in the DT case
+>   */
+>  static const struct sh_dmae_slave_config *dmae_find_slave(
+> diff --git a/drivers/dma/ste_dma40.h b/drivers/dma/ste_dma40.h
+> index c697bfe16a01..a90c786acc1f 100644
+> --- a/drivers/dma/ste_dma40.h
+> +++ b/drivers/dma/ste_dma40.h
+> @@ -4,7 +4,7 @@
+>  #define STE_DMA40_H
+>  
+>  /*
+> - * Maxium size for a single dma descriptor
+> + * Maximum size for a single dma descriptor
+>   * Size is limited to 16 bits.
+>   * Size is in the units of addr-widths (1,2,4,8 bytes)
+>   * Larger transfers will be split up to multiple linked desc
+> diff --git a/drivers/dma/ste_dma40_ll.h b/drivers/dma/ste_dma40_ll.h
+> index c504e855eb02..2e30e9a94a1e 100644
+> --- a/drivers/dma/ste_dma40_ll.h
+> +++ b/drivers/dma/ste_dma40_ll.h
+> @@ -369,7 +369,7 @@ struct d40_phy_lli_bidir {
+>   * @lcsp02: Either maps to register lcsp0 if src or lcsp2 if dst.
+>   * @lcsp13: Either maps to register lcsp1 if src or lcsp3 if dst.
+>   *
+> - * This struct must be 8 bytes aligned since it will be accessed directy by
+> + * This struct must be 8 bytes aligned since it will be accessed directly by
+>   * the DMA. Never add any none hw mapped registers to this struct.
+>   */
+>  
+> diff --git a/drivers/dma/tegra20-apb-dma.c b/drivers/dma/tegra20-apb-dma.c
+> index ac69778827f2..7d1acda2d72b 100644
+> --- a/drivers/dma/tegra20-apb-dma.c
+> +++ b/drivers/dma/tegra20-apb-dma.c
+> @@ -463,7 +463,7 @@ static void tegra_dma_configure_for_next(struct tegra_dma_channel *tdc,
+>  
+>  	/*
+>  	 * If interrupt is pending then do nothing as the ISR will handle
+> -	 * the programing for new request.
+> +	 * the programming for new request.
+>  	 */
+>  	if (status & TEGRA_APBDMA_STATUS_ISE_EOC) {
+>  		dev_err(tdc2dev(tdc),
+> diff --git a/drivers/dma/xgene-dma.c b/drivers/dma/xgene-dma.c
+> index fd4397adeb79..275848a9c450 100644
+> --- a/drivers/dma/xgene-dma.c
+> +++ b/drivers/dma/xgene-dma.c
+> @@ -1742,7 +1742,7 @@ static int xgene_dma_probe(struct platform_device *pdev)
+>  	/* Initialize DMA channels software state */
+>  	xgene_dma_init_channels(pdma);
+>  
+> -	/* Configue DMA rings */
+> +	/* Configure DMA rings */
+>  	ret = xgene_dma_init_rings(pdma);
+>  	if (ret)
+>  		goto err_clk_enable;
+> diff --git a/drivers/dma/xilinx/xilinx_dpdma.c b/drivers/dma/xilinx/xilinx_dpdma.c
+> index 36bd4825d389..c26ebced866c 100644
+> --- a/drivers/dma/xilinx/xilinx_dpdma.c
+> +++ b/drivers/dma/xilinx/xilinx_dpdma.c
+> @@ -149,7 +149,7 @@ struct xilinx_dpdma_chan;
+>   * @addr_ext: upper 16 bit of 48 bit address (next_desc and src_addr)
+>   * @next_desc: next descriptor 32 bit address
+>   * @src_addr: payload source address (1st page, 32 LSB)
+> - * @addr_ext_23: payload source address (3nd and 3rd pages, 16 LSBs)
+> + * @addr_ext_23: payload source address (2nd and 3rd pages, 16 LSBs)
+>   * @addr_ext_45: payload source address (4th and 5th pages, 16 LSBs)
+>   * @src_addr2: payload source address (2nd page, 32 LSB)
+>   * @src_addr3: payload source address (3rd page, 32 LSB)
+> @@ -210,7 +210,7 @@ struct xilinx_dpdma_tx_desc {
+>   * @vchan: virtual DMA channel
+>   * @reg: register base address
+>   * @id: channel ID
+> - * @wait_to_stop: queue to wait for outstanding transacitons before stopping
+> + * @wait_to_stop: queue to wait for outstanding transactions before stopping
+>   * @running: true if the channel is running
+>   * @first_frame: flag for the first frame of stream
+>   * @video_group: flag if multi-channel operation is needed for video channels
 
