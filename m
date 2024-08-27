@@ -1,133 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-29538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11AAA9600AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 07:00:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A16B29600CE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 07:06:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B99071F22AD0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 05:00:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 487A11F2267F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 05:06:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43B1A6EB5C;
-	Tue, 27 Aug 2024 04:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF294374CB;
+	Tue, 27 Aug 2024 05:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pI+OB1lm"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UO5f3t0u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67EF15623A;
-	Tue, 27 Aug 2024 04:59:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8EF4C92;
+	Tue, 27 Aug 2024 05:06:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724734750; cv=none; b=Av5QBZmtoTUP2kcIMmLmmeJk3HkVZ/3PO+XpX9u/3D5qyxPW+BLmLMu5nDPugX0jXTpbh9orS+QFfslg+b3PgY0QBeLtdN3CWXWQxdALFbCIWVITTgBcaW39dvk+ljE/IKeeGPiQSQ+E9X7tT5VWSdT2DDDbZoLZJvVaWIKGldg=
+	t=1724735194; cv=none; b=I0Qx0Cukw9k5gjycqt0pDpkbG96mmKzefuiHIv4bRCCqFSek5lydeXVbOAjbqynfpC5wakZfLlCf/RCf/Qt0vX67D7Z29y1Z8UkTYbKODO7Cqm5Jmbt+tCVT7DKekxWlpaxw8tjJGhEQk54AsigoafiT3QqP+y0BRbkO0XS/CaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724734750; c=relaxed/simple;
-	bh=den0R47vJ5dWVBkraX2DlbIpeIhiEvA7YmXMI0JRU24=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jQ+/fxFaf+ww5CqSK6TNuXKOJQUYEpZBGWWLdlFutC6yEsrSmQT8aN/vnI0+iTEaH2SsPErRwesqftyq2GbcfPANW5iaduAIL3+EJDR/Nx/djkzjKXuBcakASSxYeDH7rwz8kTtbK78USKWKnxAZ+gtwv3DkUfoAmO3ocBYZpXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pI+OB1lm; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1724735194; c=relaxed/simple;
+	bh=XwbMjVHH0AuUfCI+3AJDGCet6dUgI5476UcxqTp0KMg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=S4ELdlImT7kMo2PfcjxvuQ83PWebf5XFyXaIJmhq+DOz31N1k2tWKHJmqH+qvYUWgJGjzxO7O+b0qCKjFkHQ45olkkJESIX0aiW7QSYobDc7p6/aGsb/sYms/IQD03Sm6olm893PYnQl5jO0lmaNU/60ukrXikcU0afu5wEUcqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UO5f3t0u; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47QJHT2d024185;
-	Tue, 27 Aug 2024 04:58:57 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47QJGUPl011881;
+	Tue, 27 Aug 2024 05:06:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jHB9yk9VaKLj8o1RY2pT6NEb5yxM0s2Bi/4RN2ueWyw=; b=pI+OB1lme4v0EhZI
-	/h4DqVh5IepbIAgS6hpG00ix3cTAVkEaYqp1yL+KEXEQzAfiXs4vPIBvwnC0x5p/
-	Fk0b7sdZWDw/jWJJ/IQ4uXk3ExQrn3t8E5AgvpKO7NxPD8JbvjlFQtkHf76PZ1zv
-	pvFP+GF8DZu1y8bH6O1xSGvu5msm2KPAHRIBar5RwvW6DNRltr6TanvG76tMfgJl
-	4xflew5WZPdHM2E6WGlwQnbzoCFgQcXwyWoQh3Mhp9CgagG4cttVJp/JpDTJ2jb4
-	VsjBDY5Ar6Ge/G2gzS8FkM3n2411Hcu0ehmIdXsf4HW8BvIgWfQB8sPgC8UAUp6T
-	F4KV4w==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 418rbxaaqt-1
+	vYNxu/gCy9eu9jcsYYy++tNXVX/yq9NX8B9cUSJp5As=; b=UO5f3t0ujVxQTz6G
+	RAQBepUYVyp/2Ib4egMV1Eqdzso96ghHZSqtHXh5jHwpTeS/AIC9Cb9c11KsCudZ
+	Cv28iJ/VT+x7kH0TkBE2V3qHA6T/A7QBCVkh47qpv9g7uC+Uo1c5vDWnt3HmxyQ6
+	IKgIjust8042vlXwOvdGiro7Epp3RMxvzBhuM1WKxbasp3DblB7MqLgx4wINHevx
+	vKQ/sQhi7mJZVCTTSabdIn+XYO9tA6qRw0bxdl7ecg9x6AyWML0myFKWFpyo/oxv
+	ht4ooEPMzqbD8alB4x8n2bvWIocjYWdvw6hScw9f/z7wQ+ifDLjP5GJAQiB9GuRC
+	HfqV7g==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4179a1wnmt-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Aug 2024 04:58:57 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47R4wtC9028644
+	Tue, 27 Aug 2024 05:06:13 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47R56Cr7018336
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Aug 2024 04:58:55 GMT
-Received: from hu-srichara-blr.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 26 Aug 2024 21:58:49 -0700
-From: Sricharan R <quic_srichara@quicinc.com>
-To: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <p.zabel@pengutronix.de>, <dmitry.baryshkov@linaro.org>,
-        <quic_nsekar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <robimarko@gmail.com>, <quic_srichara@quicinc.com>
-Subject: [PATCH V2 6/6] arm64: dts: qcom: ipq5018: Enable PCIe
-Date: Tue, 27 Aug 2024 10:27:57 +0530
-Message-ID: <20240827045757.1101194-7-quic_srichara@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240827045757.1101194-1-quic_srichara@quicinc.com>
-References: <20240827045757.1101194-1-quic_srichara@quicinc.com>
+	Tue, 27 Aug 2024 05:06:12 GMT
+Received: from [10.216.58.121] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 26 Aug
+ 2024 22:06:08 -0700
+Message-ID: <9881058a-5897-4f01-a5ed-7ae6c58b0906@quicinc.com>
+Date: Tue, 27 Aug 2024 10:36:03 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] scsi: ufs: ufs-qcom: Apply DELAY_AFTER_LPM quirk for
+ Toshiba devices
+To: Bart Van Assche <bvanassche@acm.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        "James E.J. Bottomley"
+	<James.Bottomley@HansenPartnership.com>,
+        "Martin K. Petersen"
+	<martin.petersen@oracle.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
+        <quic_nguyenb@quicinc.com>, <quic_nitirawa@quicinc.com>,
+        <quic_bhaskarv@quicinc.com>, <quic_narepall@quicinc.com>,
+        <quic_rampraka@quicinc.com>
+References: <20240820123756.24590-1-quic_mapa@quicinc.com>
+ <20240820123756.24590-4-quic_mapa@quicinc.com>
+ <7527d15c-9318-47f7-99f8-028c865a698b@acm.org>
+Content-Language: en-US
+From: MANISH PANDEY <quic_mapa@quicinc.com>
+In-Reply-To: <7527d15c-9318-47f7-99f8-028c865a698b@acm.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: CG0lggzUw9Qy8DAvZwHZoq4UbsbXlpnY
-X-Proofpoint-GUID: CG0lggzUw9Qy8DAvZwHZoq4UbsbXlpnY
+X-Proofpoint-GUID: efXMBKb3sXKBN7Yb7LSCd8ejDfCe7uCV
+X-Proofpoint-ORIG-GUID: efXMBKb3sXKBN7Yb7LSCd8ejDfCe7uCV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-27_03,2024-08-26_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- impostorscore=0 bulkscore=0 lowpriorityscore=0 mlxlogscore=768
- priorityscore=1501 clxscore=1015 malwarescore=0 spamscore=0 mlxscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408270034
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ phishscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0 mlxlogscore=709
+ spamscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408270035
 
-From: Nitheesh Sekar <quic_nsekar@quicinc.com>
 
-Enable the PCIe controller and PHY nodes for RDP 432-c2.
 
-Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
-Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
----
- [v2] Moved status as last property
+On 8/21/2024 3:05 AM, Bart Van Assche wrote:
+> On 8/20/24 5:37 AM, Manish Pandey wrote:
+>> +    { .wmanufacturerid = UFS_VENDOR_TOSHIBA,
+>> +      .model = UFS_ANY_MODEL,
+>> +      .quirk = UFS_DEVICE_QUIRK_DELAY_AFTER_LPM },
+> 
+> Isn't three patches a bit much for these changes? I think all three
+> patches can be combined into a single patch without making it harder for
+> reviewers to understand what is going on.
+> 
+> Thanks,
+> 
+> Bart.
+> 
+> 
 
- arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts | 9 +++++++++
- 1 file changed, 9 insertions(+)
+Thanks Bart for quick review.
+I will merge all 3 changes to a single change in next patch set [V2].
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-index 8460b538eb6a..2b253da7f776 100644
---- a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
-@@ -28,6 +28,15 @@ &blsp1_uart1 {
- 	status = "okay";
- };
- 
-+&pcie1 {
-+	perst-gpios = <&tlmm 15 GPIO_ACTIVE_LOW>;
-+	status = "okay";
-+};
-+
-+&pcie_x2phy {
-+	status = "okay";
-+};
-+
- &sdhc_1 {
- 	pinctrl-0 = <&sdc_default_state>;
- 	pinctrl-names = "default";
--- 
-2.34.1
-
+Regards
+Manish
 
