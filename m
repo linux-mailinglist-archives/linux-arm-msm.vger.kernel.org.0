@@ -1,325 +1,269 @@
-Return-Path: <linux-arm-msm+bounces-29517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA31295FB40
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 23:09:33 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3975B95FE23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 03:09:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 363151F21959
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Aug 2024 21:09:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3500FB21BF4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 01:09:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F222313B58F;
-	Mon, 26 Aug 2024 21:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EBF828EB;
+	Tue, 27 Aug 2024 01:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B0kuVs49"
+	dkim=pass (2048-bit key) header.d=synopsys.com header.i=@synopsys.com header.b="fP9q7ji6";
+	dkim=pass (2048-bit key) header.d=synopsys.com header.i=@synopsys.com header.b="G8SKUwku";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=synopsys.com header.i=@synopsys.com header.b="JzjbztPw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-00230701.pphosted.com (mx0b-00230701.pphosted.com [148.163.158.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05820881E;
-	Mon, 26 Aug 2024 21:09:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724706569; cv=none; b=RpriY+HbF96XsKb9nHt2q+bxcVlSj9Otwg+e7Z61Wwh6UEm/enVez/h8L0qZPKzsAQLSVu4TGnbL0TEPdF+e1ZiYvL0gKa9xIts5uhLCpU8Ogm++w6Pgv5zDuWOlYNsH2o4EGOQ0TopDG+rfHSdaYI14TQ7mIOAixnPBDO7Ocqs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724706569; c=relaxed/simple;
-	bh=I30tP0ct4Q1VA620dqYabm9pe2UtKdECUXZ+Kh0jOrQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WDAQQ3F1DX5fKKNssTLRrDgp9cMatQclN7AcU83svDsIvXPleJOLIqeSLLijgCDQGEU68X3w3C8SidPk3bp5nUZ62mr4rSUZK2jVL0ZmYWWQdAxMF9SVZKs6Q5yxVW8BJztxdQY7JaLgni0VLCfh3HvdFJ4lCeCpzhepBqXjeAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B0kuVs49; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5bed83488b6so5508845a12.2;
-        Mon, 26 Aug 2024 14:09:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724706566; x=1725311366; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FIX2QhDkWrEJbwJWC9B9IU1GEoxp6p+7TY4C9wY3zQk=;
-        b=B0kuVs49iYyl8UfJU2PoVdu7avumTMaDFLgYs4iGJAxrh0e+UMdw9ssWiHx/XFnElT
-         JF/vd3oaGDCXDqG0Pw2qh2Ba9rda3HFMLYkF5QBX6igwwupNo1rrp3PKgyrWe251yNq0
-         RclIhlPv4yUKVJpDLgQsWyOUG15nwpcHNql5+gzLoHTf6B2NKNJLn71TyZyC0JqIzX7K
-         HDQ3IRo5W8ALgJWOLQgC2n9T1uFD0MYYxt2pvPFCnDaSXA0XO4n9zNnPNuXNJ+KA+Mnl
-         Vpwj4j54BXX9BxT+Bm3zdj4ILGCe5LZe6V0NyuK93HSoutZjxHNdWgXXVYn0ZfFvuU+U
-         402A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724706566; x=1725311366;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FIX2QhDkWrEJbwJWC9B9IU1GEoxp6p+7TY4C9wY3zQk=;
-        b=DE91/itvSOUn8NHENRnnJLTQOU+B5skgCG6uXxTIjlGeKDOu07JcNmItlXbWtyoArI
-         PYmYg8ik+T3rwcJTHrpt5HzQf8oE39tVSQ4MumZY6T+XAesv1OehPw6IttlysPK39Eoc
-         7A4RAny6aAsInaP6mgZd2YtTg3XtSh5Uq5XZwBQw6BAHvjMtejjy+2YCkI4EmpcwahmI
-         icJ7Op6OI2+AUzY87uABSYsS319xCR843Js4vn6pM3BpUJ0bjPMbZvPHyGcGVTjKD7Do
-         A0aq8jON8aIOPm0Zz2q3HfzbWBGdrufhonBqwqGZ6vUTM0V5sl2o4k69C/Ltz0b1Rg3M
-         VtXw==
-X-Forwarded-Encrypted: i=1; AJvYcCWb12elMAIqzVnT6opHeP70TMdw2ArwPvRPOpYKeGJRu4Y1ivkXsFy4RdMCM5emi7JsUUoU6IpKXEMzyytN@vger.kernel.org, AJvYcCXV1Pq+8aYNXTnAtf8PDS2og/W4W06tGOv3c7xAon07873fFwMZMmUH+fWFOSSquCizrv0//4QOM8yzbHQz@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx9cmufF8N8puFBpV8MMwPMfX1EPhE4XBEXK+kSj11/lFXr19sT
-	9ZEprjTZkl4Oc8Wi0OZqR9iNz4m438gEs7rEMWCIBJjfiWyUuvYR8LCFCKqkje6y6AFhgt0H0JI
-	dZlfaYevFglj39HmO03pRsnmx/ds=
-X-Google-Smtp-Source: AGHT+IHjH2V+r3o8cuh9MtOoJUMYYUTv3WA9yQbt9yDfSAYpP0BqSZlmFoQzTuLcTdeynqPmZo+JxZ8fXgfCkSNazcs=
-X-Received: by 2002:a05:6402:520b:b0:5c0:ab6f:653c with SMTP id
- 4fb4d7f45d1cf-5c0ab6f66b8mr2061302a12.1.1724706565773; Mon, 26 Aug 2024
- 14:09:25 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5EC2564;
+	Tue, 27 Aug 2024 01:09:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.158.9
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1724720943; cv=fail; b=WsDhJ9HTaXbEAqk4oqFqEfyWH3gFcOjVU9ikDocCM3302owYx0t0DU+uyb7Rly91qm/LigLvWZwBuAD017Zkval4yjhUA+A7X6MO8wHwxmH8WFlJ55+bTYjLk1CYEtg4aKOvrAcM4EcblLTTA/qnG9G8I20JWqL/E2T+/ZCulD0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1724720943; c=relaxed/simple;
+	bh=II91BY4XN4S15jcL/G8DESnrJejCi/4MTQ153SpSQvI=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=SRhvdWVN2D2ASsxj8pI48JI3k89/Y1v0jYMRUFIiM2CtOJd032W4zOaV4sLd1fvKkZFSG84du6hjDvAPvhwuSFUmPHAF0xNKX+voSvPl0i6iNurVdfOqL51RTGIAHsjpFISXW0IcA4fROK8fysSa837ELd7bjOVgPiKq+k2kdTQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=synopsys.com; spf=pass smtp.mailfrom=synopsys.com; dkim=pass (2048-bit key) header.d=synopsys.com header.i=@synopsys.com header.b=fP9q7ji6; dkim=pass (2048-bit key) header.d=synopsys.com header.i=@synopsys.com header.b=G8SKUwku; dkim=fail (1024-bit key) header.d=synopsys.com header.i=@synopsys.com header.b=JzjbztPw reason="signature verification failed"; arc=fail smtp.client-ip=148.163.158.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=synopsys.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=synopsys.com
+Received: from pps.filterd (m0098572.ppops.net [127.0.0.1])
+	by mx0b-00230701.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47QLdmbv017951;
+	Mon, 26 Aug 2024 18:08:24 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=synopsys.com; h=
+	cc:content-id:content-transfer-encoding:content-type:date:from
+	:in-reply-to:message-id:mime-version:references:subject:to; s=
+	pfptdkimsnps; bh=II91BY4XN4S15jcL/G8DESnrJejCi/4MTQ153SpSQvI=; b=
+	fP9q7ji6RDG9fAIaOXgNT8Yg0BIJNp2b0xCMHodAbKfkmvnXXCS6jLMTELbvPmHP
+	jr6HHlWtsTdv5xoUZXofcJb/vkR6A/oJKPx6geKDT3utXOfvW4hR+cWnwGEENT+r
+	fjHy0GepMCg6Al0gPYq9UBx2WG7rrVBjmhJH0V6UspEi8L5qOHgDFhol4O/yJDge
+	l8WzbqKbHRhlGqFkF9M+CTr4NDs+V4xDy2YAGguq1L3Xwjb3Sufws6/RfS4K2nBp
+	2LprpNzZNT3j87fjmx+03n+mA09jIJFMb0cO1MXSmIJMt9MRXp1quwgShkQ4kijC
+	zaDcFLNus+5kmRFOIO9Lcw==
+Received: from smtprelay-out1.synopsys.com (smtprelay-out1.synopsys.com [149.117.73.133])
+	by mx0b-00230701.pphosted.com (PPS) with ESMTPS id 4191tqgr4h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 26 Aug 2024 18:08:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=synopsys.com; s=mail;
+	t=1724720902; bh=II91BY4XN4S15jcL/G8DESnrJejCi/4MTQ153SpSQvI=;
+	h=From:To:CC:Subject:Date:References:In-Reply-To:From;
+	b=G8SKUwku5Nw8Ez/uFi17JcBnjCAutuGEBLuV7V0I2R4feF2Wwd4obdEtbVaNPppgo
+	 Wli3HW35sFgugGqo7f8m0NHoHx/1VKDeC0+e63QCSUsbmLA5Qz4szMYiRKk6j9LiLz
+	 5pNSP9uM1npuPhEcHkRUlOQ2gLBQg4Mm1lDInyJPxNj6/oY/Y/c13FTgOtLJ2GBfq0
+	 53V31OlSAumDpp9jHL/gC6YcDB+k62uXFzdvwTi3WEmNPbCB5eLrXA/wrWXsPNaADo
+	 Y4n+3OksxOm3ODlxgkkqOb0i7x39uOTDRP8Imi7l4PbyeWSLb0LS0XsIDYld4WFiVO
+	 lMZfJjiJu+D9g==
+Received: from mailhost.synopsys.com (sv2-mailhost2.synopsys.com [10.205.2.134])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits)
+	 client-signature RSA-PSS (2048 bits))
+	(Client CN "mailhost.synopsys.com", Issuer "SNPSica2" (verified OK))
+	by smtprelay-out1.synopsys.com (Postfix) with ESMTPS id 9565F40524;
+	Tue, 27 Aug 2024 01:08:20 +0000 (UTC)
+Received: from o365relay-in.synopsys.com (sv2-o365relay1.synopsys.com [10.202.1.137])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	(Client CN "o365relay-in.synopsys.com", Issuer "Entrust Certification Authority - L1K" (verified OK))
+	by mailhost.synopsys.com (Postfix) with ESMTPS id 2EE0DA00A1;
+	Tue, 27 Aug 2024 01:08:20 +0000 (UTC)
+Authentication-Results: o365relay-in.synopsys.com; dmarc=pass (p=reject dis=none) header.from=synopsys.com
+Authentication-Results: o365relay-in.synopsys.com; spf=pass smtp.mailfrom=synopsys.com
+Authentication-Results: o365relay-in.synopsys.com;
+	dkim=pass (1024-bit key; unprotected) header.d=synopsys.com header.i=@synopsys.com header.a=rsa-sha256 header.s=selector1 header.b=JzjbztPw;
+	dkim-atps=neutral
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11lp2176.outbound.protection.outlook.com [104.47.57.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(Client CN "mail.protection.outlook.com", Issuer "DigiCert Cloud Services CA-1" (verified OK))
+	by o365relay-in.synopsys.com (Postfix) with ESMTPS id F05164044C;
+	Tue, 27 Aug 2024 01:08:17 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Aj7/uUqOEeYMKYlPmMiiMeyq+WiQQdTPXkpgTYjMCeWHAvEy+M7tYC+WDoEeOR0nhrAwfq2rQgA+n/NOdsGrd5t4XybSXL8hgQMicFbkXhEwobJDeLCtMWLeZ/VbH2kjyVARprQxzbwHqABr9xTmHpsIr0AQIUSkQ3T5bCrL73/o9xg2ETjvqxW3HH8PgON+vQaWiPxaB+F6r4O3WGyO2XriU+vuFB6p6uPBHNiwEBDp7c4gRav9YqFiNSvk1U9Z8XfuUc7UwauvqI2/xT0L727qMK+y250OPT9oZyC4ZdVjlr0BMeMKOr5TBMqcxMRKlPJ9nhCs9vL/FgwuFLK5mw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=II91BY4XN4S15jcL/G8DESnrJejCi/4MTQ153SpSQvI=;
+ b=Nje4lloWBsqAe1GWBmdC6pemguQAtcxGkj2ZNYaRIsoGGUIIL2Vw9u3bFAzuRLeRwSe1G6MAQACCd91PXyo41reP3tb65pTTPQ2F2GebDxPkshlwGU3vCAKD7bXtHWpkWbd/KyOZXH/dm957o6z8esuUMcv5nbr1c4CS62KhP0+4LtLi7ZM+9lDMmn9Nl+pmYQpXtpZ3SXJk3H8JMYJ74Ir9eSC9n4BL0QCPkKIX3O0ySceeFoOdqQQmqadFjguSeU9Nn7oth6CEYh91RCA5suWxk2gapPf+pVeederY+3BP8ez75lPJ2mJomNbnYuNMP71Z9/Qg80B0hHA6d5NJEg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=synopsys.com; dmarc=pass action=none header.from=synopsys.com;
+ dkim=pass header.d=synopsys.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=synopsys.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=II91BY4XN4S15jcL/G8DESnrJejCi/4MTQ153SpSQvI=;
+ b=JzjbztPwGPYE8KqFn4hfde3EQ6jO06REYWuXXeVFaXzsJknADiw7AQ7Mz5Ai3AdBSaRT2YzkWauySrWlO4aVogPOzHgz18TjPL+LAoDuyPSwBhaUZoBoIeu1RpbsjGmLMulcmcNeCLwo+491MvEnpUrPYhs1pkrv+dpXLofdz78=
+Received: from LV2PR12MB5990.namprd12.prod.outlook.com (2603:10b6:408:170::16)
+ by SN7PR12MB8147.namprd12.prod.outlook.com (2603:10b6:806:32e::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.24; Tue, 27 Aug
+ 2024 01:08:13 +0000
+Received: from LV2PR12MB5990.namprd12.prod.outlook.com
+ ([fe80::3d09:f15f:d888:33a8]) by LV2PR12MB5990.namprd12.prod.outlook.com
+ ([fe80::3d09:f15f:d888:33a8%5]) with mapi id 15.20.7897.021; Tue, 27 Aug 2024
+ 01:08:12 +0000
+X-SNPS-Relay: synopsys.com
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+CC: Patrice Chotard <patrice.chotard@foss.st.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Michal Simek <michal.simek@amd.com>,
+        "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "imx@lists.linux.dev" <imx@lists.linux.dev>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH 01/11] usb: dwc3: st: use scoped device node handling to
+ simplify error paths
+Thread-Topic: [PATCH 01/11] usb: dwc3: st: use scoped device node handling to
+ simplify error paths
+Thread-Index: AQHa7jXEKyMccEpULEuRChZWzeS17bI6XrwA
+Date: Tue, 27 Aug 2024 01:08:12 +0000
+Message-ID: <20240827010808.wnhwhaz7zugbmes7@synopsys.com>
+References:
+ <20240814-b4-cleanup-h-of-node-put-usb-v1-0-95481b9682bc@linaro.org>
+ <20240814-b4-cleanup-h-of-node-put-usb-v1-1-95481b9682bc@linaro.org>
+In-Reply-To:
+ <20240814-b4-cleanup-h-of-node-put-usb-v1-1-95481b9682bc@linaro.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: LV2PR12MB5990:EE_|SN7PR12MB8147:EE_
+x-ms-office365-filtering-correlation-id: 27703bee-8032-412f-2549-08dcc634b913
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|7416014|376014|1800799024|366016|38070700018;
+x-microsoft-antispam-message-info:
+ =?utf-8?B?ZFZFNU1FOTNWcDNVekVyNXJ6QXZNTVl1eHg3aVIrZHlDTlh3ZFNLbnBORDZH?=
+ =?utf-8?B?RzdOWGNNVkpKcC8rZUpZUTVKSTFoNllOZ0drN1V4eFVmL3VlS3dFYzFXZUYx?=
+ =?utf-8?B?ZjY5c3FKcnBrTDBXN0IrUFUyNFUzRTdnMVRtbUFWNXhEM00wVU9XT3VkcGxz?=
+ =?utf-8?B?VHRhbm9SUWtRVHh2K3ZHSFpOZTFaNzI5aWVkRzE4eDl4SGNGak1uT3p4bmJ4?=
+ =?utf-8?B?UGw3bE50RURTYklHTXdBazZaeEpPcE9GTnNTN0dscjV6R1JIdTNiWkJteGhz?=
+ =?utf-8?B?S0g4Rkl1YjhhOGpuNlFtdWtnWGhFM1pRODluZmptZHlMREdmRUFjdDR1SDFE?=
+ =?utf-8?B?THBPNkZJN2FEVkg0QnVkSUFmeWQxZlN2WVArTjdnNGJ0RlQ3U2ZOWFRHYjEv?=
+ =?utf-8?B?MHRib1MvQThhWk92Y2hlcVZGbkhnOFZjMmpZaHp2Y01tS2xRQzR6S0o1MlF2?=
+ =?utf-8?B?eHdVc1d0UVhIS1haY1VVRTh6aDdjSHVuS0psM3NsdWxxaGRTQVdIcGlaQmpr?=
+ =?utf-8?B?TjRsUk1HWjFoVUl1dW1WOUt5c0I4S0VKNkNiMldIcnMwS0FNSTZ5MVZWN2V4?=
+ =?utf-8?B?T3pmeDZVZ2tkdy81VlNsTmNzejl3akx3dmJUd01WcElvZi9NTEFZZzBJZHRw?=
+ =?utf-8?B?NW5oN2lnQm5oVlUxUzZlZDI1OE1jYzVUNno4dFlVODNKKzB3S212THhsOEZC?=
+ =?utf-8?B?bXZQNmFzVnBQMGlqbXZteTI1d1c5emRXSkxRUUJyZmVOdHYydzdBZ3U2bDhL?=
+ =?utf-8?B?TnpLQWF5Y2ZOQkNvQXErWjBJZWo2M2Q4a0xEM3cySUZIU0ZDa282OURQS2l3?=
+ =?utf-8?B?cXpCcGdWL2NNYTlxdVdYeE0vMEtacDVUYlRTeG9GdytRdGI3VWVhWkRzRUVy?=
+ =?utf-8?B?NVY3KzgxcHFaQW9OZ2JGMWhGYW5YcUlSM3Jxam12K0dreGI3em1kYVBIaDZ3?=
+ =?utf-8?B?clo0aHZCVFpLbWZ5bXNlb1o0SHFuaUZMaDRzQXFQa29nUDJwZExJN05OM0dM?=
+ =?utf-8?B?SjI0YjNoY1d6WlhONXdhY2hZQkt1ZWR0WExHLzRoZ2JIM2VWWjNFbmpFSFo1?=
+ =?utf-8?B?Nm1Nd0ppTkU3VGUxbW44OHA5cVhSRGU3SlU1TXllbFcrT1FpSWxzQVl2am9C?=
+ =?utf-8?B?bmdWMTNaemJDU0VDT2JzZkRpZzg2WmRHZTRBM1FXOUhiVlJhNkR3TTdQdGpq?=
+ =?utf-8?B?aEloaDhWNGtZZ3hvd0VRSHdON3h5d3BuRTdPdmNkczNKVmN6TUQwaVpSRUxV?=
+ =?utf-8?B?dHg1ZHZ2THRkeDdGb0VWSXFBWXV2MUt3LzVuU1g5eEN1c0o1M05JcHFTNkdV?=
+ =?utf-8?B?UlhvdEIxbzBFQmxUd2xXYlRmd0p3TmgwRzlOSkVtNy95OUZNZFYwRXBxckRN?=
+ =?utf-8?B?K1hBSW5SMXRFK05kTEx6UWRYdm5sOGJzQ09TU0NVRTFCbTRVWHRic1FDWWVL?=
+ =?utf-8?B?aHI3T1BvdWF3ZEczdkFBd1BIN0FEOHFkcko2cFNDRVBuK0lhU2E3eVhnTEhT?=
+ =?utf-8?B?ditZNXBseWlpY0V6bWp5WnVxeDdVWDEwazlzMjF0Mlk3NWFyR2xVS3RKN2p4?=
+ =?utf-8?B?ZDc0SjJ2U3FHYldXaXZCOUgvb3ZBV1B5TFBiYVBNZ3BZVVYzQ0MwVUoyR2Zk?=
+ =?utf-8?B?Wjh4T3duU21vdWlFdlZUSGROeFA5anp6eW9IQW1FUDJaMFgrV1Qydkoybkd5?=
+ =?utf-8?B?MFowaUttdnlOU0orZ08yUFRlZmdGOUdtR09ZS2NsTnZSMGVzOTBNbDBuN0wv?=
+ =?utf-8?B?TjVxQk53N3JLSmxiLzlldG0vL2RGT01xYWEwVmVJTHpWV1YyMFNqWkVSUHIz?=
+ =?utf-8?B?TWVDTm5zSWF6ZFpRQnZzTjBHdWlzbzF0UVRqM0ZNd05PUEVjWnd4L01RY1Bt?=
+ =?utf-8?B?aUM3TWdVMDZRNUlaenhIUnYvVXNlaC9EQkJtZzhLS04vUHc9PQ==?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5990.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(366016)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?cktFV2s4MnRONk80Zkt3c2x1dnRzekdnYnBMem9DSi9vSGo3OUV1cloyekhu?=
+ =?utf-8?B?OHh1U3cvR05QUEVtY1VGSkN1RDJ6bURoeXpmMVFnYmtqVGRSNUNSSDRWS3o5?=
+ =?utf-8?B?VlBWODExMEhoelpNVUtRRWlHc1B6UFRrY2tIWjVKWHVpajhoRVFMQytTczhS?=
+ =?utf-8?B?TlplaW5SMWYwYityZDFWWHo4NnNOTmRhTlF6bkJVMU9YSTBvcWdCem0vdllz?=
+ =?utf-8?B?MFJhbFBEU2h2Q2hndHIvMW1XcHh2c2dROUM3UjY1SE5SQkVSQ3RxTE1mTFBN?=
+ =?utf-8?B?RXR3WnhHalBwU01LcXBtTEZYWmdQWFZNTEd3V00wcGlWdkYyODNMT1lnbG9D?=
+ =?utf-8?B?QkU0WXltZEtZa3hUNVlZQUkxR3Q1dmVQSXo4TGwwL255VjZiMDUydUNRYjB2?=
+ =?utf-8?B?S1AwbXlSVlcwbmk1clh1MTJTYVZ2MUEwUWZUVjNvbStrTjZ4MFZKNzQzOGFX?=
+ =?utf-8?B?NU1icEFYY1I5Y3BzS1ZhdC9OOVdJbTlaU0tqNTY0NWpUNWQwQVlFQ24xUGMv?=
+ =?utf-8?B?QmFmZFRXdFE1VzVSTnRDaE4reDVOOE9scGJRNi9ETHR5R0RTZm5PcGViT2Nv?=
+ =?utf-8?B?Rm5mUlBTQU9rckZyS2hNUU5SSXVTUGNLSE00bjRqeHUrNHBaZ2hWLzRlbGl5?=
+ =?utf-8?B?UWNDeWFQV3M1dW1mQ2h4cXl3WWx4N1RJVVBxc0plSFV0R1ZHNkJlT3B1TDNY?=
+ =?utf-8?B?d2sybHI1OHkxSFJOQjhLZnNrTTg1N2t6K2RQTzZyeElwVWhmS2l1bEFPcWRG?=
+ =?utf-8?B?bE5OVTZhc0hsSjJqK2MxejdxZWVpd2p2SUE4ZHRTSTZoTHdFVzlHVllrY2cw?=
+ =?utf-8?B?aWEvRzcvWUxtWmFpUlptU2xOZzZvUkJ1WHQ2ZGJGbGpwbG9KZVlsaXFadndV?=
+ =?utf-8?B?c3N1OEVMckUyTnkwdDEweWVSQ0J5Z1FOcW52am45LzdGZS9ZcmVpOUVORzZX?=
+ =?utf-8?B?K0tWNTVqd0FsZlprZ214c2VXbEIzTmtpcis4c2tlZEhkK3ZxaVlTTERhaGIz?=
+ =?utf-8?B?L0ZuUFN0MkJvVUZOaVpSVDF2T2xib3NtN3ZPdzZkR2g0QjhGZ05xMkU3dDA3?=
+ =?utf-8?B?SW0ycEF3VWUvSzlLU3NQdFR0d2M1a3AvM3dqM3RTdnlvSGdUZm8vM1IxUVE2?=
+ =?utf-8?B?a0dkdUg4Um1RbDNrOXpHRmNkYlhiVDZJMlJJUFpLVTlVSGdzdjVsYnlJTm1C?=
+ =?utf-8?B?VnNTbnM2anRFWHRrODgxS3k0T0Z5VEVjOG5uY1dBWHRNWnpRYzRiQmtmMDRn?=
+ =?utf-8?B?ZytQMmRZYklSR2ViMXorak9LUHBkYVNjQlgyanpweVFsS0oyTCtISkk3bU1R?=
+ =?utf-8?B?cEs0YXdwTzRDaXVPdW96ZVdYNW5ySmZlOE85UHV3SDM3eGRUdUlsbDg1dlRC?=
+ =?utf-8?B?Uk9WdXVCTE5FWG5yZ2Jzd0dxY2syVzB0ZklhaG10TjlDeWNkd0lTbUJvV1Qy?=
+ =?utf-8?B?NnVVMndGeDhZUG1OZEc5RGJRQ0ZtcVdrd056a1JJNS9VN2ZBUlJJRUl5aEhM?=
+ =?utf-8?B?RWtZV0tkVXFMMFc4a3RHd242bGRkTks0RFlLQWhrMDhodWloT2lGa2x4TSs0?=
+ =?utf-8?B?OTBCV1Mwb3hRTjltczVMYVVEaDR5WlhoZGwzQUtjK0xSNUR3VXRXaS9VTFZl?=
+ =?utf-8?B?aEJ6bVBQUE5CZDhTYnBRUUYyQ3ZSMDZ2NE1CYUxVTnVkWjY5VUNzL3FvaldX?=
+ =?utf-8?B?NFpJR3ZFSVlOVEV5dmVzV1RTK2VnZzFGcVNjZkt4NFloTC8zcThWRmk0WFhB?=
+ =?utf-8?B?Y1MxdkVVYVJPL0ZSTkNlYkhCYWRqS090VHI5TDNtWXBvcVEwV2tqc3lkUTg1?=
+ =?utf-8?B?TE1WVk5lVHlCZDdpYzNnL1VBL2R3WkZvZnB6RGo0bzN6ZFVoWGJ2MU9HME1I?=
+ =?utf-8?B?SkFPVE1nK3FJRmhQME14Y2s4NXFKQzU2UzBPaWRRNnJHQ3EzTkxOdC9RR1Fv?=
+ =?utf-8?B?NzVXclVKNDdnRWZXMmIvTk1lcTZHSURNd05rZkRFVVlGRmE5NFZ6dW5EZ2xh?=
+ =?utf-8?B?QUE1VGprRHlIbmFWNFdtN29PbzAvNlJpTXRkeWpsS1NNTGw5cVRPK09KWnNN?=
+ =?utf-8?B?MUladWM2aWI3R0ppOHpWT3lEM0lvVWtKK09DT3FtclhXNFowU1JxcHNkZHJy?=
+ =?utf-8?Q?bX2P1B6pToAScWok8Wx1Ymy9M?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <F0A2F86CB1FE7F418987D9E618EBF3F3@namprd12.prod.outlook.com>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240719-topic-a621-v1-0-850ae5307cf4@linaro.org>
- <20240719-topic-a621-v1-3-850ae5307cf4@linaro.org> <CAF6AEGs23d5OqKst+ik-kMMXPCS_0=-a8ndskv3j4NduOVR1Vw@mail.gmail.com>
-In-Reply-To: <CAF6AEGs23d5OqKst+ik-kMMXPCS_0=-a8ndskv3j4NduOVR1Vw@mail.gmail.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Mon, 26 Aug 2024 14:09:14 -0700
-Message-ID: <CAF6AEGuB5oB6RZLk+PfYMTV8ybboJymcvzJVu9ByHdu=KyvV+w@mail.gmail.com>
-Subject: Re: [PATCH 3/5] drm/msm/a6xx: Store gmu_cgc_mode in struct a6xx_info
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Sean Paul <sean@poorly.run>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	xGyvdXfVJQrXTAwn89fBoRcOyCHS4GW+JSpMBa8Oockqq+z9d1E2YuOEIOpBc6Q6G2hlnjeZiTlEmOPW1eZdvr+zdXiYoXqN6Tk+r7w3qyrs/knpba/TBjMU7Cja3jFaiOlrPiIPSyovH87/AoD7ENSrK/m2H1up4iwbu/U9rxQJaTBizQ/Q//1gM/j2JYkjQziEUxx9RUDSnYzBJt3vs2EMO+L0BbEsCKwdyDucAjmD1mPxrJ8/QWr+wQnEf7BlL1YUx7/28F3sq2iGrnIYeZfFY/i7mKAX2RN8XNTeydO6ZnUooqnb4Q77A3jh9ROn3oMThlQz8ucGqb5JD8HwrNGVmHcXENeu5zq6WiPxJQYerJMJJPFmo4/2YPwBdPs3yk7vABc9YYXJsKEs4Ed9VLYpbTysgAyZT9MgV6MCrAd9O8g+SDNKlLWM6ECHV7SREselU6ZoaP+U3QVW/iIonXLIzuxuA9sZK/zMk7Wp1/kHDP0Jcbj2IKrtQZ8ylysqS2D8DjwF7yNsuGYxomQuOzJ3AJH+Q6bXqc0Y2Ijk6encLqL33nhncg39bW0Q6XAbCSSHk/ydYPS5mXyi8CBHEkTC71akAsbKNzAhC37nDUsAuf60FseUUS72Ti04VVgTj9cfHikMpTuFnpWSO7WNUQ==
+X-OriginatorOrg: synopsys.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5990.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 27703bee-8032-412f-2549-08dcc634b913
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Aug 2024 01:08:12.4792
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: c33c9f88-1eb7-4099-9700-16013fd9e8aa
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 5JNbR/ZfjMQsh8DzFYcxP+8Tq8Yu10D2o26/5Z/mPmnKC5/dwdtfaqA89nocogBXkwhGmfPxgW3oUL9iv8US1A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB8147
+X-Proofpoint-ORIG-GUID: QBbjTBe2EyhFwElQmBUANBCilFe2sziP
+X-Authority-Analysis: v=2.4 cv=dOr0m/Zb c=1 sm=1 tr=0 ts=66cd2708 cx=c_pps a=8EbXvwLXkpGsT4ql/pYRAw==:117 a=8EbXvwLXkpGsT4ql/pYRAw==:17 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=yoJbH4e0A30A:10 a=nEwiWwFL_bsA:10
+ a=KKAkSRfTAAAA:8 a=VwQbUJbxAAAA:8 a=jIQo8A4GAAAA:8 a=Mn_y58DmcRfC5XK0emMA:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22 a=AjGcO6oz07-iQ99wixmX:22 a=Lf5xNeLK5dgiOs8hzIjU:22
+X-Proofpoint-GUID: QBbjTBe2EyhFwElQmBUANBCilFe2sziP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-26_18,2024-08-26_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_active_cloned_notspam policy=outbound_active_cloned score=0
+ priorityscore=1501 bulkscore=0 suspectscore=0 mlxscore=0 mlxlogscore=947
+ malwarescore=0 clxscore=1011 lowpriorityscore=0 impostorscore=0
+ spamscore=0 adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2408270006
 
-On Mon, Aug 26, 2024 at 2:07=E2=80=AFPM Rob Clark <robdclark@gmail.com> wro=
-te:
->
-> On Fri, Jul 19, 2024 at 3:03=E2=80=AFAM Konrad Dybcio <konrad.dybcio@lina=
-ro.org> wrote:
-> >
-> > This was apparently almost never set on a6xx.. move the existing values
-> > and fill out the remaining ones within the catalog.
-> >
-> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > ---
-> >  drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 19 ++++++++++++++++++-
-> >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     |  6 ++----
-> >  drivers/gpu/drm/msm/adreno/a6xx_gpu.h     |  1 +
-> >  3 files changed, 21 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/dr=
-m/msm/adreno/a6xx_catalog.c
-> > index 1ea535960f32..deee0b686962 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-> > @@ -448,7 +448,6 @@ static const struct adreno_reglist a690_hwcg[] =3D =
-{
-> >         {REG_A6XX_RBBM_CLOCK_CNTL_GMU_GX, 0x00000222},
-> >         {REG_A6XX_RBBM_CLOCK_DELAY_GMU_GX, 0x00000111},
-> >         {REG_A6XX_RBBM_CLOCK_HYST_GMU_GX, 0x00000555},
-> > -       {REG_A6XX_GPU_GMU_AO_GMU_CGC_MODE_CNTL, 0x20200},
-> >         {REG_A6XX_GPU_GMU_AO_GMU_CGC_DELAY_CNTL, 0x10111},
-> >         {REG_A6XX_GPU_GMU_AO_GMU_CGC_HYST_CNTL, 0x5555},
-> >         {}
-> > @@ -636,6 +635,7 @@ static const struct adreno_info a6xx_gpus[] =3D {
-> >                 .a6xx =3D &(const struct a6xx_info) {
-> >                         .hwcg =3D a612_hwcg,
-> >                         .protect =3D &a630_protect,
-> > +                       .gmu_cgc_mode =3D 0x00020202,
-> >                         .prim_fifo_threshold =3D 0x00080000,
-> >                 },
-> >                 /*
-> > @@ -668,6 +668,7 @@ static const struct adreno_info a6xx_gpus[] =3D {
-> >                 .a6xx =3D &(const struct a6xx_info) {
-> >                         .hwcg =3D a615_hwcg,
-> >                         .protect =3D &a630_protect,
-> > +                       .gmu_cgc_mode =3D 0x00000222,
-> >                         .prim_fifo_threshold =3D 0x00180000,
-> >                 },
-> >                 .speedbins =3D ADRENO_SPEEDBINS(
-> > @@ -691,6 +692,7 @@ static const struct adreno_info a6xx_gpus[] =3D {
-> >                 .init =3D a6xx_gpu_init,
-> >                 .a6xx =3D &(const struct a6xx_info) {
-> >                         .protect =3D &a630_protect,
-> > +                       .gmu_cgc_mode =3D 0x00000222,
-> >                         .prim_fifo_threshold =3D 0x00180000,
-> >                 },
-> >                 .speedbins =3D ADRENO_SPEEDBINS(
-> > @@ -714,6 +716,7 @@ static const struct adreno_info a6xx_gpus[] =3D {
-> >                 .a6xx =3D &(const struct a6xx_info) {
-> >                         .hwcg =3D a615_hwcg,
-> >                         .protect =3D &a630_protect,
-> > +                       .gmu_cgc_mode =3D 0x00000222,
-> >                         .prim_fifo_threshold =3D 0x00018000,
-> >                 },
-> >                 .speedbins =3D ADRENO_SPEEDBINS(
-> > @@ -737,6 +740,7 @@ static const struct adreno_info a6xx_gpus[] =3D {
-> >                 .a6xx =3D &(const struct a6xx_info) {
-> >                         .hwcg =3D a615_hwcg,
-> >                         .protect =3D &a630_protect,
-> > +                       .gmu_cgc_mode =3D 0x00000222,
-> >                         .prim_fifo_threshold =3D 0x00018000,
-> >                 },
-> >                 .speedbins =3D ADRENO_SPEEDBINS(
-> > @@ -760,6 +764,7 @@ static const struct adreno_info a6xx_gpus[] =3D {
-> >                 .a6xx =3D &(const struct a6xx_info) {
-> >                         .hwcg =3D a615_hwcg,
-> >                         .protect =3D &a630_protect,
-> > +                       .gmu_cgc_mode =3D 0x00000222,
-> >                         .prim_fifo_threshold =3D 0x00018000,
-> >                 },
-> >                 .speedbins =3D ADRENO_SPEEDBINS(
-> > @@ -788,6 +793,7 @@ static const struct adreno_info a6xx_gpus[] =3D {
-> >                 .a6xx =3D &(const struct a6xx_info) {
-> >                         .hwcg =3D a630_hwcg,
-> >                         .protect =3D &a630_protect,
-> > +                       .gmu_cgc_mode =3D 0x00020202,
-> >                         .prim_fifo_threshold =3D 0x00180000,
-> >                 },
-> >         }, {
-> > @@ -806,6 +812,7 @@ static const struct adreno_info a6xx_gpus[] =3D {
-> >                 .a6xx =3D &(const struct a6xx_info) {
-> >                         .hwcg =3D a640_hwcg,
-> >                         .protect =3D &a630_protect,
-> > +                       .gmu_cgc_mode =3D 0x00020202,
-> >                         .prim_fifo_threshold =3D 0x00180000,
-> >                 },
-> >                 .speedbins =3D ADRENO_SPEEDBINS(
-> > @@ -829,6 +836,7 @@ static const struct adreno_info a6xx_gpus[] =3D {
-> >                 .a6xx =3D &(const struct a6xx_info) {
-> >                         .hwcg =3D a650_hwcg,
-> >                         .protect =3D &a650_protect,
-> > +                       .gmu_cgc_mode =3D 0x00020202,
-> >                         .prim_fifo_threshold =3D 0x00300200,
-> >                 },
-> >                 .address_space_size =3D SZ_16G,
-> > @@ -855,6 +863,7 @@ static const struct adreno_info a6xx_gpus[] =3D {
-> >                 .a6xx =3D &(const struct a6xx_info) {
-> >                         .hwcg =3D a660_hwcg,
-> >                         .protect =3D &a660_protect,
-> > +                       .gmu_cgc_mode =3D 0x00020000,
-> >                         .prim_fifo_threshold =3D 0x00300200,
-> >                 },
-> >                 .address_space_size =3D SZ_16G,
-> > @@ -874,6 +883,7 @@ static const struct adreno_info a6xx_gpus[] =3D {
-> >                 .a6xx =3D &(const struct a6xx_info) {
-> >                         .hwcg =3D a660_hwcg,
-> >                         .protect =3D &a660_protect,
-> > +                       .gmu_cgc_mode =3D 0x00020202,
-> >                         .prim_fifo_threshold =3D 0x00200200,
-> >                 },
-> >                 .address_space_size =3D SZ_16G,
-> > @@ -899,6 +909,7 @@ static const struct adreno_info a6xx_gpus[] =3D {
-> >                 .a6xx =3D &(const struct a6xx_info) {
-> >                         .hwcg =3D a640_hwcg,
-> >                         .protect =3D &a630_protect,
-> > +                       .gmu_cgc_mode =3D 0x00020202,
-> >                         .prim_fifo_threshold =3D 0x00200200,
-> >                 },
-> >         }, {
-> > @@ -917,6 +928,7 @@ static const struct adreno_info a6xx_gpus[] =3D {
-> >                 .a6xx =3D &(const struct a6xx_info) {
-> >                         .hwcg =3D a690_hwcg,
-> >                         .protect =3D &a690_protect,
-> > +                       .gmu_cgc_mode =3D 0x00020200,
-> >                         .prim_fifo_threshold =3D 0x00800200,
-> >                 },
-> >                 .address_space_size =3D SZ_16G,
-> > @@ -1178,6 +1190,7 @@ static const struct adreno_info a7xx_gpus[] =3D {
-> >                 .a6xx =3D &(const struct a6xx_info) {
-> >                         .hwcg =3D a702_hwcg,
-> >                         .protect =3D &a650_protect,
-> > +                       .gmu_cgc_mode =3D 0x00020202,
-> >                         .prim_fifo_threshold =3D 0x0000c000,
-> >                 },
-> >                 .speedbins =3D ADRENO_SPEEDBINS(
-> > @@ -1202,6 +1215,7 @@ static const struct adreno_info a7xx_gpus[] =3D {
-> >                 .a6xx =3D &(const struct a6xx_info) {
-> >                         .hwcg =3D a730_hwcg,
-> >                         .protect =3D &a730_protect,
-> > +                       .gmu_cgc_mode =3D 0x00020000,
-> >                 },
-> >                 .address_space_size =3D SZ_16G,
-> >         }, {
-> > @@ -1221,6 +1235,7 @@ static const struct adreno_info a7xx_gpus[] =3D {
-> >                         .hwcg =3D a740_hwcg,
-> >                         .protect =3D &a730_protect,
-> >                         .gmu_chipid =3D 0x7020100,
-> > +                       .gmu_cgc_mode =3D 0x00020202,
-> >                 },
-> >                 .address_space_size =3D SZ_16G,
-> >         }, {
-> > @@ -1239,6 +1254,7 @@ static const struct adreno_info a7xx_gpus[] =3D {
-> >                         .hwcg =3D a740_hwcg,
-> >                         .protect =3D &a730_protect,
-> >                         .gmu_chipid =3D 0x7050001,
-> > +                       .gmu_cgc_mode =3D 0x00020202,
-> >                 },
-> >                 .address_space_size =3D SZ_256G,
-> >         }, {
-> > @@ -1257,6 +1273,7 @@ static const struct adreno_info a7xx_gpus[] =3D {
-> >                 .a6xx =3D &(const struct a6xx_info) {
-> >                         .protect =3D &a730_protect,
-> >                         .gmu_chipid =3D 0x7090100,
-> > +                       .gmu_cgc_mode =3D 0x00020202,
-> >                 },
-> >                 .address_space_size =3D SZ_16G,
-> >         }
-> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/ms=
-m/adreno/a6xx_gpu.c
-> > index aaeb1161f90d..871452daa189 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > @@ -402,7 +402,7 @@ static void a6xx_set_hwcg(struct msm_gpu *gpu, bool=
- state)
-> >         struct a6xx_gmu *gmu =3D &a6xx_gpu->gmu;
-> >         const struct adreno_reglist *reg;
-> >         unsigned int i;
-> > -       u32 val, clock_cntl_on, cgc_mode;
-> > +       u32 val, clock_cntl_on;
-> >
-> >         if (!(adreno_gpu->info->a6xx->hwcg || adreno_is_a7xx(adreno_gpu=
-)))
-> >                 return;
-> > @@ -417,10 +417,8 @@ static void a6xx_set_hwcg(struct msm_gpu *gpu, boo=
-l state)
-> >                 clock_cntl_on =3D 0x8aa8aa82;
-> >
-> >         if (adreno_is_a7xx(adreno_gpu)) {
-> > -               cgc_mode =3D adreno_is_a740_family(adreno_gpu) ? 0x2022=
-2 : 0x20000;
-> > -
->
-> This does appear to change the gmu_cgc_mode in nearly all cases.. was
-> this intended?
-
-Hmm, and this will only get written for a7xx, so we're dropping the
-reg write for a690..
-
-> BR,
-> -R
->
-> >                 gmu_write(&a6xx_gpu->gmu, REG_A6XX_GPU_GMU_AO_GMU_CGC_M=
-ODE_CNTL,
-> > -                         state ? cgc_mode : 0);
-> > +                         state ? adreno_gpu->info->a6xx->gmu_cgc_mode =
-: 0);
-> >                 gmu_write(&a6xx_gpu->gmu, REG_A6XX_GPU_GMU_AO_GMU_CGC_D=
-ELAY_CNTL,
-> >                           state ? 0x10111 : 0);
-> >                 gmu_write(&a6xx_gpu->gmu, REG_A6XX_GPU_GMU_AO_GMU_CGC_H=
-YST_CNTL,
-> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/ms=
-m/adreno/a6xx_gpu.h
-> > index bc37bd8c7f65..0fb7febf70e7 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-> > @@ -22,6 +22,7 @@ struct a6xx_info {
-> >         const struct adreno_reglist *hwcg;
-> >         const struct adreno_protect *protect;
-> >         u32 gmu_chipid;
-> > +       u32 gmu_cgc_mode;
-> >         u32 prim_fifo_threshold;
-> >  };
-> >
-> >
-> > --
-> > 2.45.2
-> >
+T24gV2VkLCBBdWcgMTQsIDIwMjQsIEtyenlzenRvZiBLb3psb3dza2kgd3JvdGU6DQo+IE9idGFp
+biB0aGUgZGV2aWNlIG5vZGUgcmVmZXJlbmNlIHdpdGggc2NvcGVkL2NsZWFudXAuaCB0byByZWR1
+Y2UgZXJyb3INCj4gaGFuZGxpbmcgYW5kIG1ha2UgdGhlIGNvZGUgYSBiaXQgc2ltcGxlci4gIFNj
+b3BlZC9jbGVhbnVwLmggY29kaW5nIHN0eWxlDQo+IGV4cGVjdHMgdmFyaWFibGUgZGVjbGFyYXRp
+b24gd2l0aCBpbml0aWFsaXphdGlvbiwgc28gdGhlDQo+IG9mX2dldF9jb21wYXRpYmxlX2NoaWxk
+KCkgY2FsbCBoYXMgdG8gYmUgbW92ZWQgZWFybGllciwgYmVmb3JlIGFueSBnb3RvDQo+IGp1bXBz
+IGhhcHBlbi4NCj4gDQo+IFNpZ25lZC1vZmYtYnk6IEtyenlzenRvZiBLb3psb3dza2kgPGtyenlz
+enRvZi5rb3psb3dza2lAbGluYXJvLm9yZz4NCj4gDQo+IC0tLQ0KPiANCj4gVGhpcyBkZXBlbmRz
+IG9uIG15IGVhcmxpZXIgZml4Og0KPiBodHRwczovL3VybGRlZmVuc2UuY29tL3YzL19faHR0cHM6
+Ly9sb3JlLmtlcm5lbC5vcmcvYWxsLzIwMjQwODE0MDkzOTU3LjM3OTQwLTIta3J6eXN6dG9mLmtv
+emxvd3NraUBsaW5hcm8ub3JnL19fOyEhQTRGMlI5R19wZyFleFZZam5GSVJraUJnYVlCVEVJVzNh
+cEZuRE00TW9qcDNyNS1heWkzc2VCckk3b3N6bGRzRkstWW8xdXpwTFdqcmc2OVphMDJ2THlfU2xN
+UUU3NkV5UkMzaG4yeGFWNWokIA0KDQoNCkFja2VkLWJ5OiBUaGluaCBOZ3V5ZW4gPFRoaW5oLk5n
+dXllbkBzeW5vcHN5cy5jb20+DQoNClRoYW5rcywNClRoaW5o
 
