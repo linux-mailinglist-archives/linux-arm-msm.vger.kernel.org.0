@@ -1,167 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-29628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CA92960A71
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 14:33:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B51E960ACC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 14:46:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 35384283DF7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 12:33:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 451E41F23BE7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 12:46:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 201341BFDF9;
-	Tue, 27 Aug 2024 12:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 372421BBBE9;
+	Tue, 27 Aug 2024 12:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gNMjNWho"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c/146qm1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAFE1BF812;
-	Tue, 27 Aug 2024 12:31:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E6719CCE7;
+	Tue, 27 Aug 2024 12:46:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724761904; cv=none; b=MaAx87LBx4bIOO7Nf026fm85ELGnpifhmxNvTdWEh1m2i4vWPwBUCDMN3I0RbS2qIP3EfK6wfUEKHaVZAeBYC0KVB5CcynZrMMq3Wb1NDSOGOml1wTWIEicbeaDU2bgIDlCCi1zZfeUOzFz3Ip1F8Jcoo15EoK0jzGvg4k+tD5U=
+	t=1724762789; cv=none; b=ro/8Cxd5AMUgye0aOxP03iI9yual8mOUK8i35jHMrQhiS8TaP+oV0uPCQ8poAScrfk93e/EG/EVcY+lW7i0jsHkcz3zxrnQdDuO9qDdmu7FAggVY0xvG/kCeEc5osmgdtahnmktTk4lRKDY1wie+J15HiMhpWQ5j6RreyfD0o+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724761904; c=relaxed/simple;
-	bh=qmMzGnC28ZCDh31+2GefMmB0QMXAHDZVokWKSX+jKyU=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=amyFdVdDVROEhtwJtqlTOlBEnGDFhHdmbBjlnApfyFQj701o/R8ijFGnQT3EDUR0qJ9Wy5TE0GF2bLQBEQ9h40N1pcnhne9HD/vKSvYWqeRrrFreoi2YYDyf08teUpsBb5+uawZBNyrYe23wgbGUUYoOnzt70OkA4XK4YtVo8ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gNMjNWho; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FCAAC6104D;
-	Tue, 27 Aug 2024 12:31:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724761903;
-	bh=qmMzGnC28ZCDh31+2GefMmB0QMXAHDZVokWKSX+jKyU=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=gNMjNWhoZffSOv1un8ggYbJD221iCDLPRhGXySnV4I9D0LpvMrLudiopVGiQHN41h
-	 sIBQFWvONGMXeFUFsvTLZ4Ug1Jk986Qn8V/R0P6HPX4mCfVarAnDYwW0/qkFeI52C5
-	 01CzjlyjSbdqLE57f0Z7YxxcQUqPP+SMMfHtgYmXU+gqDJ+wswLxRVol2yYOpC351t
-	 qK2N/HKBi6FJkb2HVNv6vR1SOwo3hokVVhnBRqlcjvuQSR4QX+OeVvg7kT6TdWJvpy
-	 1+b9n3YM4Im9LXRIM2j4UWAmCnOVb797kw4jDDohWQHpwNRuMGm0w7oCdc+o7+8r3l
-	 FWDFBNRa0Xctw==
-Date: Tue, 27 Aug 2024 07:31:41 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1724762789; c=relaxed/simple;
+	bh=vgn8uX1N5zG+nayIOSO9znCgxojVnlywzQCSUueGkXk=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=s+2po2v/C8X3Y3cnku+9XZU8WOLxlnLdBONM7ifyWXaN/ClQJ/9bmI3qHIBucvUe4vkjdaeEmMbBsWVgwipcHQ/WiWEH2LKoxSGisDpAvQZXYKwFVrctEsYoV5J82nwuk23HtVyBfkiMPRo31EpF7QEeVm9ScMYRvzt7oNLLFd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=c/146qm1; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47R8Ljxb027921;
+	Tue, 27 Aug 2024 12:46:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=1NWakbH7hilxF70Y026R8y
+	lbkAIcSwyIxHqUXroCl4U=; b=c/146qm1+mOHMx9YB87aGne/o++ioWfyV0fEWb
+	U/8dnU63FOCtx9VzgwBcxLWFbvxt3luurCr4Bb8yFr9kOGz7jvdrfzE8NbUoea4I
+	UzvvPc7xhEER26DJlMDYeXGCFDxABKD1S6obgxi8ckOSx5rDQbfhlaxFj1mOFih3
+	xUHdN9uPBZi1tbzBt9ACie4wOj/NxZnIIl+D1ZhsFDLeCkoGGn2yvcC/C5Gy+VEu
+	bPO1NeoTQ1JNOoRETpNrSWzf3MUc5//+1wda0yEuLE869eOM79iEfrQflbW0S1i4
+	DBxMThCbEfBUOlQqAOneIvKzxR24Ff7UBGCS5QEaDEUSx+uw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41798exvcs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Aug 2024 12:46:16 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47RCkF3H019808
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Aug 2024 12:46:15 GMT
+Received: from nsssdc-sh01-lnx.ap.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 27 Aug 2024 05:46:10 -0700
+From: Luo Jie <quic_luoj@quicinc.com>
+Subject: [PATCH v3 0/4] Add CMN PLL clock controller driver for IPQ9574
+Date: Tue, 27 Aug 2024 20:45:58 +0800
+Message-ID: <20240827-qcom_ipq_cmnpll-v3-0-8e009cece8b2@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Qiang Yu <quic_qianyu@quicinc.com>
-Cc: devicetree@vger.kernel.org, mturquette@baylibre.com, vkoul@kernel.org, 
- dmitry.baryshkov@linaro.org, sboyd@kernel.org, neil.armstrong@linaro.org, 
- linux-clk@vger.kernel.org, conor+dt@kernel.org, 
- linux-arm-msm@vger.kernel.org, andersson@kernel.org, kw@linux.com, 
- manivannan.sadhasivam@linaro.org, lpieralisi@kernel.org, 
- konradybcio@kernel.org, abel.vesa@linaro.org, quic_devipriy@quicinc.com, 
- linux-pci@vger.kernel.org, quic_msarkar@quicinc.com, 
- linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
- kishon@kernel.org, krzk+dt@kernel.org
-In-Reply-To: <20240827063631.3932971-1-quic_qianyu@quicinc.com>
-References: <20240827063631.3932971-1-quic_qianyu@quicinc.com>
-Message-Id: <172476183902.3553327.3757950028426438486.robh@kernel.org>
-Subject: Re: [PATCH 0/8] Add support for PCIe3 on x1e80100
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIbKzWYC/3XNwQ6CMAyA4VchPTvTbSLTk+9hDJFtSBMYsOmiI
+ by7g5PGePyb9usEwXqyAY7ZBN5GCtS7FHKTgW6u7mYZmdQgUOxQoWKj7ruShrHUnRvalhWac36
+ oRI6ygHQ1eFvTcxXPl9QNhXvvX+uDyJfpfytyhqzCveRGV3Wh8tP4IE1Ob9MiLFoUH4LAX0GsA
+ qIxUuZC4bcwz/Mbhz8oW/IAAAA=
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon
+	<will@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <quic_kkumarcs@quicinc.com>,
+        <quic_suruchia@quicinc.com>, <quic_pavir@quicinc.com>,
+        <quic_linchen@quicinc.com>, <quic_leiwei@quicinc.com>,
+        <bartosz.golaszewski@linaro.org>, <srinivas.kandagatla@linaro.org>,
+        Luo Jie
+	<quic_luoj@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1724762769; l=2792;
+ i=quic_luoj@quicinc.com; s=20240808; h=from:subject:message-id;
+ bh=vgn8uX1N5zG+nayIOSO9znCgxojVnlywzQCSUueGkXk=;
+ b=16/ZCyzu/Dqhk0QPU0QlE98Ep+VbepBmFhIJBlVx7Dp3+Vo/rqbiYJ1ThOU1To2PmiztMokVs
+ tZo9WGBlgRPAHvR4Hec2QjB+bPqAcuuPR2XFNDCL9j8zSVUyll+Tm6y
+X-Developer-Key: i=quic_luoj@quicinc.com; a=ed25519;
+ pk=P81jeEL23FcOkZtXZXeDDiPwIwgAHVZFASJV12w3U6w=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ezc6HeO2vG4PYzlHHRhSuAAjTSvy9kYb
+X-Proofpoint-ORIG-GUID: ezc6HeO2vG4PYzlHHRhSuAAjTSvy9kYb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-27_06,2024-08-27_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ spamscore=0 suspectscore=0 mlxscore=0 malwarescore=0 adultscore=0
+ lowpriorityscore=0 clxscore=1015 phishscore=0 mlxlogscore=999
+ impostorscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2407110000 definitions=main-2408270094
 
+The CMN PLL clock controller in Qualcomm IPQ chipsets provides
+the clocks to the networking hardware blocks that are internal or
+external to the SoC. This driver configures the CMN PLL clock
+controller to enable the output clocks to such networking hardware
+blocks. These networking blocks include the internal PPE (Packet
+Process Engine), external connected Ethernet PHY, or external switch.
+ 
+The controller expects the input reference clock from the internal
+Wi-Fi block acting as the clock source. The output clocks supplied
+by the controller are fixed rate clocks.
 
-On Mon, 26 Aug 2024 23:36:23 -0700, Qiang Yu wrote:
-> This series add support for PCIe3 on x1e80100.
-> 
-> PCIe3 needs additional set of clocks, regulators and new set of PCIe QMP
-> PHY configuration compare other PCIe instances on x1e80100. Hence add
-> required resource configuration and usage for PCIe3.
-> 
-> Qiang Yu (8):
->   phy: qcom-qmp: pcs-pcie: Add v6.30 register offsets
->   phy: qcom-qmp: pcs: Add v6.30 register offsets
->   phy: qcom: qmp: Add phy register and clk setting for x1e80100 PCIe3
->   arm64: dts: qcom: x1e80100: Add support for PCIe3 on x1e80100
->   dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the X1E80100
->     QMP PCIe PHY Gen4 x8
->   clk: qcom: gcc-x1e80100: Fix halt_check for pipediv2 clocks
->   arm64: dts: qcom: x1e80100-qcp: Add power supply and sideband signal
->     for pcie3
->   PCI: qcom: Add support to PCIe slot power supplies
-> 
->  .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |  18 +-
->  arch/arm64/boot/dts/qcom/x1e80100-qcp.dts     | 116 +++++++++
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi        | 205 +++++++++++++++-
->  drivers/clk/qcom/gcc-x1e80100.c               |  10 +-
->  drivers/pci/controller/dwc/pcie-qcom.c        |  52 +++-
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 222 +++++++++++++++++-
->  .../qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h    |  25 ++
->  drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_30.h |  19 ++
->  8 files changed, 657 insertions(+), 10 deletions(-)
->  create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h
->  create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_30.h
-> 
-> --
-> 2.34.1
-> 
-> 
-> 
+The CMN PLL hardware block does not include any other function other
+than enabling the clocks to the networking hardware blocks.
 
+The driver is being enabled to support IPQ9574 SoC initially, and
+will be extended for other SoCs.
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+---
+Changes in v3:
+- Update description of dt-binding to explain scope of 'CMN' in CMN PLL.
+- Collect Reviewed-by tags for dtbindings and defconfig patches.
+- Enable PLL_LOCKED check for the stability of output clocks.
+- Link to v2: https://lore.kernel.org/r/20240820-qcom_ipq_cmnpll-v2-0-b000dd335280@quicinc.com
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
+Changes in v2:
+- Rename the dt-binding file with the compatible.
+- Remove property 'clock-output-names' from dt-bindings and define
+  names in the driver. Add qcom,ipq-cmn-pll.h to export the output
+  clock specifier.
+- Alphanumeric ordering of 'cmn_pll_ref_clk' node in DTS.
+- Fix allmodconfig error reported by test robot.
+- Replace usage of "common" to "CMN" to match the name with the
+  hardware specification.
+- Clarify in commit message on scope of CMN PLL function.
+- Link to v1: https://lore.kernel.org/r/20240808-qcom_ipq_cmnpll-v1-0-b0631dcbf785@quicinc.com
 
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
+---
+Luo Jie (4):
+      dt-bindings: clock: qcom: Add CMN PLL clock controller for IPQ SoC
+      clk: qcom: Add CMN PLL clock controller driver for IPQ SoC
+      arm64: defconfig: Enable Qualcomm IPQ CMN PLL clock controller
+      arm64: dts: qcom: Add CMN PLL node for IPQ9574 SoC
 
-  pip3 install dtschema --upgrade
+ .../bindings/clock/qcom,ipq9574-cmn-pll.yaml       |  72 ++++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi   |   6 +-
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi              |  17 +-
+ arch/arm64/configs/defconfig                       |   1 +
+ drivers/clk/qcom/Kconfig                           |  10 +
+ drivers/clk/qcom/Makefile                          |   1 +
+ drivers/clk/qcom/clk-ipq-cmn-pll.c                 | 241 +++++++++++++++++++++
+ include/dt-bindings/clock/qcom,ipq-cmn-pll.h       |  15 ++
+ 8 files changed, 361 insertions(+), 2 deletions(-)
+---
+base-commit: 222a3380f92b8791d4eeedf7cd750513ff428adf
+change-id: 20240808-qcom_ipq_cmnpll-7c1119b25037
 
-
-New warnings running 'make CHECK_DTBS=y qcom/x1e80100-qcp.dtb' for 20240827063631.3932971-1-quic_qianyu@quicinc.com:
-
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: reg: [[0, 29163520, 0, 12288], [0, 2013265920, 0, 3869], [0, 2013269824, 0, 168], [0, 2013270016, 0, 4096], [0, 2014314496, 0, 1048576]] is too short
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: reg-names: ['parf', 'dbi', 'elbi', 'atu', 'config'] is too short
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clocks: [[53, 348], [53, 84], [53, 86], [53, 87], [53, 94], [53, 95], [53, 22], [53, 33]] is too long
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clock-names:0: 'aux' was expected
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clock-names:1: 'cfg' was expected
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clock-names:2: 'bus_master' was expected
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clock-names:3: 'bus_slave' was expected
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clock-names:4: 'slave_q2a' was expected
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clock-names:5: 'noc_aggr' was expected
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clock-names:6: 'cnoc_sf_axi' was expected
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clock-names: ['pipe_clk_src', 'aux', 'cfg', 'bus_master', 'bus_slave', 'slave_q2a', 'noc_aggr', 'cnoc_sf_axi'] is too long
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: Unevaluated properties are not allowed ('operating-points-v2', 'opp-table' were unexpected)
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: phy@1be0000: clock-names:4: 'pipe' was expected
-	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: phy@1be0000: clock-names:5: 'pipediv2' was expected
-	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: phy@1be0000: clock-names:6: 'phy_aux' was expected
-	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pmic@3: gpio@8800: 'pm_sde7_aux_3p3', 'pm_sde7_main_3p3' do not match any of the regexes: '-hog(-[0-9]+)?$', '-state$', 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: gpio@8800: 'pm_sde7_aux_3p3', 'pm_sde7_main_3p3' do not match any of the regexes: '-hog(-[0-9]+)?$', '-state$', 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,pmic-gpio.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pmic@8: gpio@8800: 'pcie_x8_12v_on' does not match any of the regexes: '-hog(-[0-9]+)?$', '-state$', 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: gpio@8800: 'pcie_x8_12v_on' does not match any of the regexes: '-hog(-[0-9]+)?$', '-state$', 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,pmic-gpio.yaml#
-
-
-
-
+Best regards,
+-- 
+Luo Jie <quic_luoj@quicinc.com>
 
 
