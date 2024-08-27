@@ -1,150 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-29620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29621-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60A4A9608CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 13:34:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A5949608D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 13:36:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1D902281CDA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 11:34:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7DAF61C22116
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 11:36:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D1ED1A08A8;
-	Tue, 27 Aug 2024 11:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CA5219FA72;
+	Tue, 27 Aug 2024 11:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IADHmL9x"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u7vwb1MM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98221A08A3;
-	Tue, 27 Aug 2024 11:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28029139580;
+	Tue, 27 Aug 2024 11:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724758441; cv=none; b=QKkpmdi4K66bfF8ug2k70u2UbLj0I70TVYhJFa/ys8JS2cf8mUGyuYTNDafDJTXoPIF964uMO979JDbi+EBgbSxxLRfL36Zc4w25PKh6bFuEfaEbo3+4ohuQmDNuLUG9m8J+Icuh7mH0HHx8kSuVa5IlqKF06NwSlgvlXvCgflc=
+	t=1724758595; cv=none; b=EVquZUUTRjaOJEVRB6IVXchYWG8On+9FnTEA/uGD3L1hkAbW7o/ZTkh5ZARZEnUIb1e4B95WcvUZ3cQ4IhStKTSZb3Xu0PegCZ8Rfhz0ztMjtCUkaqczZNmez0WQVIn7jI0gQ7ofq2Auu8FY+yfD0o9Sd9gb+b1JXc6NjEuGzak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724758441; c=relaxed/simple;
-	bh=4wJ17p45O3PoQ9utTXRbJNHKhue0RYDotv5vgI8ZK+g=;
+	s=arc-20240116; t=1724758595; c=relaxed/simple;
+	bh=UcW3FlwqzuyJC9hCJ1ksNC75o+2Abm/hr0EArMLVnD8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E0Fv1qZ8Sjl5HIClaP7RLDG7rM7+M7yhBnHQoAYu4Z5yMxgCqoHHAOczAwMzl599VqQUvbQvaJWh6OLcIxf1E4HP8RYrtSZxMF1s+eDuInbv/WazGurIasVtzT4f22PK7dA8Au4mrpTlI3O738Cy6OY38YpziQVzWhOC7wcoWnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IADHmL9x; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C38BC8B7C1;
-	Tue, 27 Aug 2024 11:33:59 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=A27E7zLlYU7sUTO6wf9TA7vM5GuxUPC2zgx+vOSMTaBvz9tbXTallfRJqYfDElz5Khtzt9CzbL+CXWY7F3oMdlbgPpKxpJ6Z4NPQ/1dE4X3LrvFQtYJXedOredaKOFSUIRdiM9l0lTMRHExEasOsqjyE03Z9qFg8RO2wiB2F8G8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u7vwb1MM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE09FC4FF6D;
+	Tue, 27 Aug 2024 11:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724758441;
-	bh=4wJ17p45O3PoQ9utTXRbJNHKhue0RYDotv5vgI8ZK+g=;
+	s=k20201202; t=1724758594;
+	bh=UcW3FlwqzuyJC9hCJ1ksNC75o+2Abm/hr0EArMLVnD8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IADHmL9x/8d0TImgNFpt/ajAhmjcIAsKnk0cIUCG9ZnFYd6xCdZMjBXR3E4wxa7wT
-	 0jA0GntZ++ymVmA/XV+xYEbNfOdQZimFdPQBhs9bkul7Ypw7Xy1vBB5rOkILqkYdtH
-	 BOG0QOvjUgK/x0AUY+hM1VHPLx4xpwoFUvwdKaL2lGzryfZx0DmuUkmzFudORfyns4
-	 MWNfu9uP6LFzaduIqBdvXvZe2211n2CvcuMVM5f5nPUDq2HFmoWm67upo+Cy4MZTlS
-	 gpN07Sq5xCd+8nd+B8adUhihRtMj/qxtXcNxJmC1pslfMk7GrNJhDrdVi+BhSkVm2Y
-	 G3ndpTj/541vw==
-Date: Tue, 27 Aug 2024 12:33:56 +0100
-From: Will Deacon <will@kernel.org>
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: Allow packing uncompressed images into distro
- packages
-Message-ID: <20240827113356.GA4318@willie-the-truck>
-References: <20240819-uncompressed-distro-packages-v1-1-c8accc8bc9ea@quicinc.com>
- <20240823105853.GC31866@willie-the-truck>
- <ZskWfKIZkThKpj9m@hu-bjorande-lv.qualcomm.com>
+	b=u7vwb1MMrQL1AC5qXHbki5GkSPFBcZxhTD/qXN7Is7Ck+79QFUzmvB8EmwEjnKB11
+	 J0bnPk5haVavHQaqxta0wkp0As1SYqmiahukScVyh75RL6P92Kk5Lt801TeYqd5t0f
+	 RSFNvqAmSXybFLkcIyUz21Ax6ZrKOnsolRf8yo6JD7AUsj29RnIcDQwrddkQf8NlxR
+	 fn5ViQ7ntWiynZbWCR7f9yPJSmETgD2NMI6mtodjWGZpqRXuxhEXRu8eAk8KuU685l
+	 k+/Xf3PGHPcQIovoE4G4324FEkigDbr6R3JNQVGQMYJugMm1Ukn3Itv0s9RGQnNnQ6
+	 NwOmBnc295sXw==
+Date: Tue, 27 Aug 2024 13:36:30 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Qiang Yu <quic_qianyu@quicinc.com>
+Cc: manivannan.sadhasivam@linaro.org, vkoul@kernel.org, kishon@kernel.org, 
+	robh@kernel.org, andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org, abel.vesa@linaro.org, 
+	quic_msarkar@quicinc.com, quic_devipriy@quicinc.com, dmitry.baryshkov@linaro.org, 
+	kw@linux.com, lpieralisi@kernel.org, neil.armstrong@linaro.org, 
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH 5/8] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy:
+ Document the X1E80100 QMP PCIe PHY Gen4 x8
+Message-ID: <jqzbpgqrbazf3rbdhag56rks74r2h3sjm6mr3tp7v2hb6pxamy@qhksqzsygttt>
+References: <20240827063631.3932971-1-quic_qianyu@quicinc.com>
+ <20240827063631.3932971-6-quic_qianyu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZskWfKIZkThKpj9m@hu-bjorande-lv.qualcomm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20240827063631.3932971-6-quic_qianyu@quicinc.com>
 
-On Fri, Aug 23, 2024 at 04:08:44PM -0700, Bjorn Andersson wrote:
-> On Fri, Aug 23, 2024 at 11:58:54AM +0100, Will Deacon wrote:
-> > On Mon, Aug 19, 2024 at 08:11:58PM -0700, Bjorn Andersson wrote:
-> > > From: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > > 
-> > > The distro packages (deb-pkg, pacman-pkg, rpm-pkg) are generated using
-> > > the compressed kernel image, which means that the kernel once installed
-> > > can not be booted with systemd-boot.
-> > > 
-> > > This differs from the packages generated by the distros themselves,
-> > > which uses the uncompressed image.
-> > > 
-> > > Expand the newly introduced CONFIG_COMPRESSED_INSTALL option to allow
-> > > selection of which version of the kernel image should be packaged into
-> > > the distro packages.
-> > > 
-> > > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > > ---
-> > >  arch/arm64/Makefile | 15 ++++++---------
-> > >  1 file changed, 6 insertions(+), 9 deletions(-)
-> > > 
-> > > diff --git a/arch/arm64/Makefile b/arch/arm64/Makefile
-> > > index f6bc3da1ef11..7bb9a0a5500a 100644
-> > > --- a/arch/arm64/Makefile
-> > > +++ b/arch/arm64/Makefile
-> > > @@ -166,9 +166,13 @@ BOOT_TARGETS	:= Image vmlinuz.efi image.fit
-> > >  PHONY += $(BOOT_TARGETS)
-> > >  
-> > >  ifeq ($(CONFIG_EFI_ZBOOT),)
-> > > -KBUILD_IMAGE	:= $(boot)/Image.gz
-> > > +  ifeq ($(CONFIG_COMPRESSED_INSTALL),y)
-> > > +    KBUILD_IMAGE := $(boot)/Image.gz
-> > > +  else
-> > > +    KBUILD_IMAGE := $(boot)/Image
-> > > +  endif
-> > >  else
-> > > -KBUILD_IMAGE	:= $(boot)/vmlinuz.efi
-> > > +  KBUILD_IMAGE := $(boot)/vmlinuz.efi
-> > >  endif
-> > >  
-> > >  all:	$(notdir $(KBUILD_IMAGE))
-> > > @@ -182,13 +186,6 @@ $(BOOT_TARGETS): vmlinux
-> > >  Image.%: Image
-> > >  	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@
-> > >  
-> > > -ifeq ($(CONFIG_COMPRESSED_INSTALL),y)
-> > > - DEFAULT_KBUILD_IMAGE = $(KBUILD_IMAGE)
-> > > -else
-> > > - DEFAULT_KBUILD_IMAGE = $(boot)/Image
-> > > -endif
-> > > -
-> > > -install: KBUILD_IMAGE := $(DEFAULT_KBUILD_IMAGE)
-> > 
-> > Hmm, doesn't this mean that we always install vmlinuz.efi if
-> > CONFIG_EFI_ZBOOT=y?
-> > 
+On Mon, Aug 26, 2024 at 11:36:28PM -0700, Qiang Yu wrote:
+> PCIe 3rd instance of X1E80100 support Gen 4x8 which needs different 8 lane
+> capable QMP PCIe PHY. Document Gen 4x8 PHY as separate module.
 > 
-> Hmm, you're right, I failed to parse that part.
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> ---
+>  .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml        | 18 +++++++++++++++++-
+>  1 file changed, 17 insertions(+), 1 deletion(-)
 > 
-> That said, prior to Linus' change we'd always install "Image" and I read
-> his commit message to allow installing "Image.gz".
-> 
-> But the change also made it possible to install "vmlinuz.efi", by
-> setting both options to =y. Was this intentional?
-> 
-> Can you confirm that this is what we want:
-> 
-> ZBOOT | COMPRESS | BUILD_IMAGE | install
-> ------+----------+-------------+--------
->   N   |    N     | Image       | Image
->   N   |    Y     | Image.gz    | Image.gz
->   Y   |    N     | vmlinuz.efi | Image (?)
->   Y   |    Y     | vmlinuz.efi | vmlinuz.efi (was Image in v6.10)
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> index 03dbd02cf9e7..e122657490b1 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> @@ -40,6 +40,7 @@ properties:
+>        - qcom,sm8650-qmp-gen4x2-pcie-phy
+>        - qcom,x1e80100-qmp-gen3x2-pcie-phy
+>        - qcom,x1e80100-qmp-gen4x2-pcie-phy
+> +      - qcom,x1e80100-qmp-gen4x8-pcie-phy
+>  
+>    reg:
+>      minItems: 1
+> @@ -47,7 +48,7 @@ properties:
+>  
+>    clocks:
+>      minItems: 5
+> -    maxItems: 7
+> +    maxItems: 8
+>  
+>    clock-names:
+>      minItems: 5
+> @@ -59,6 +60,7 @@ properties:
+>        - const: pipe
+>        - const: pipediv2
+>        - const: phy_aux
+> +      - const: clkref_en
 
-I think that's the current behaviour, and I don't see a problem with it.
+That sounds like enabling clock ref, not the reference clock.
 
-The main thing is to avoid breaking somebody's system in the default
-configuration (i.e. when CONFIG_COMPRESSED_INSTALL=n) by installing an
-image via `make install` that isn't supported universally by bootloaders.
+>  
+>    power-domains:
+>      maxItems: 1
+> @@ -190,6 +192,19 @@ allOf:
+>          clock-names:
+>            minItems: 7
 
-Will
+You need to now constrain other cases. Missing maxItems.
+
+Best regards,
+Krzysztof
+
 
