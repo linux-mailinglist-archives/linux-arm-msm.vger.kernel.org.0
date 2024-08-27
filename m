@@ -1,128 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-29540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A16B29600CE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 07:06:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5261E960184
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 08:24:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 487A11F2267F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 05:06:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 857AE1C21EDB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 06:24:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF294374CB;
-	Tue, 27 Aug 2024 05:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0584F13DB99;
+	Tue, 27 Aug 2024 06:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UO5f3t0u"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z2gL4dQO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8EF4C92;
-	Tue, 27 Aug 2024 05:06:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6267BA49;
+	Tue, 27 Aug 2024 06:24:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724735194; cv=none; b=I0Qx0Cukw9k5gjycqt0pDpkbG96mmKzefuiHIv4bRCCqFSek5lydeXVbOAjbqynfpC5wakZfLlCf/RCf/Qt0vX67D7Z29y1Z8UkTYbKODO7Cqm5Jmbt+tCVT7DKekxWlpaxw8tjJGhEQk54AsigoafiT3QqP+y0BRbkO0XS/CaQ=
+	t=1724739874; cv=none; b=mT924ntRswL7YYbKM+hxwfWYFYDiExR/HuZok+y8y/zKsRgTm7VTtS9KktcL5KuctkD+44bsD2ALtaGS9t+35C7GjfZwL94FQxJ3FdKdGEaGf+5bwkQ1Mnl+MXxCTsbXddwExGMjD9IaFtUPYJ/xEIuY/oX9E7DJKo7J6Gui2OY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724735194; c=relaxed/simple;
-	bh=XwbMjVHH0AuUfCI+3AJDGCet6dUgI5476UcxqTp0KMg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=S4ELdlImT7kMo2PfcjxvuQ83PWebf5XFyXaIJmhq+DOz31N1k2tWKHJmqH+qvYUWgJGjzxO7O+b0qCKjFkHQ45olkkJESIX0aiW7QSYobDc7p6/aGsb/sYms/IQD03Sm6olm893PYnQl5jO0lmaNU/60ukrXikcU0afu5wEUcqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UO5f3t0u; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47QJGUPl011881;
-	Tue, 27 Aug 2024 05:06:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	vYNxu/gCy9eu9jcsYYy++tNXVX/yq9NX8B9cUSJp5As=; b=UO5f3t0ujVxQTz6G
-	RAQBepUYVyp/2Ib4egMV1Eqdzso96ghHZSqtHXh5jHwpTeS/AIC9Cb9c11KsCudZ
-	Cv28iJ/VT+x7kH0TkBE2V3qHA6T/A7QBCVkh47qpv9g7uC+Uo1c5vDWnt3HmxyQ6
-	IKgIjust8042vlXwOvdGiro7Epp3RMxvzBhuM1WKxbasp3DblB7MqLgx4wINHevx
-	vKQ/sQhi7mJZVCTTSabdIn+XYO9tA6qRw0bxdl7ecg9x6AyWML0myFKWFpyo/oxv
-	ht4ooEPMzqbD8alB4x8n2bvWIocjYWdvw6hScw9f/z7wQ+ifDLjP5GJAQiB9GuRC
-	HfqV7g==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4179a1wnmt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Aug 2024 05:06:13 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47R56Cr7018336
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Aug 2024 05:06:12 GMT
-Received: from [10.216.58.121] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 26 Aug
- 2024 22:06:08 -0700
-Message-ID: <9881058a-5897-4f01-a5ed-7ae6c58b0906@quicinc.com>
-Date: Tue, 27 Aug 2024 10:36:03 +0530
+	s=arc-20240116; t=1724739874; c=relaxed/simple;
+	bh=eiyBCHlvira5vozuY4SS6oQOMVMr3NqhAQQh4AhxF8k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VWTMuFa/smDCcaXjm8OhicNXn+SYm+VIj74topn6PhUGEvCPbtNiN/0JoO41W3vVZFGv8jxtZsrErt5eJ18pl+3Cew6A+21cVmmrrNZsDkd7TpIc1SvRZuiko+89P0YzK0jlKmhtY7+Q8X8B3mbJ6PFQ2/qOz/qjLlIk+S3GYxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z2gL4dQO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 754B3C4E68E;
+	Tue, 27 Aug 2024 06:24:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724739874;
+	bh=eiyBCHlvira5vozuY4SS6oQOMVMr3NqhAQQh4AhxF8k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Z2gL4dQOC+6Pa8coExiUQ62UkHTnr0v7NVrt4TDtf8rM5IC6FB4HPW39qU5a7R9nB
+	 VZUnmGhOvtnZP+4w/XFkIIV1JxfQhAKItyOzIkfK82ftI9zjB991tZjs8dsH5zi8TE
+	 GH2jg1OFqHKIDRkAPYbzvK15NX7VxAly1Fu+uRGEtvwDr65bz65i1VdgENRDO9ymQM
+	 dDfdGN7UN3izcnzpkfAJuT/zUwbGUEGrOHh7K/qL+eIrgukPZlTLctBvH+8yOPvtB7
+	 QYcl2HqVyw02l59nr3XSlf9MY0ZA1jeH7TXFz9rZ9kvzCbtfp8mZa5Rue7Qyf5QVnW
+	 mVgygtRnyIyRQ==
+Date: Tue, 27 Aug 2024 08:24:30 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Sricharan R <quic_srichara@quicinc.com>
+Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com, 
+	manivannan.sadhasivam@linaro.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
+	p.zabel@pengutronix.de, dmitry.baryshkov@linaro.org, quic_nsekar@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, robimarko@gmail.com
+Subject: Re: [PATCH V2 0/6] Enable IPQ5018 PCI support
+Message-ID: <wq5mfkqvvclubmacu5ogptdeaahxr77hk73dpmcvcelno5ylpv@4q4hfuolzky7>
+References: <20240827045757.1101194-1-quic_srichara@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] scsi: ufs: ufs-qcom: Apply DELAY_AFTER_LPM quirk for
- Toshiba devices
-To: Bart Van Assche <bvanassche@acm.org>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        "James E.J. Bottomley"
-	<James.Bottomley@HansenPartnership.com>,
-        "Martin K. Petersen"
-	<martin.petersen@oracle.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <quic_nguyenb@quicinc.com>, <quic_nitirawa@quicinc.com>,
-        <quic_bhaskarv@quicinc.com>, <quic_narepall@quicinc.com>,
-        <quic_rampraka@quicinc.com>
-References: <20240820123756.24590-1-quic_mapa@quicinc.com>
- <20240820123756.24590-4-quic_mapa@quicinc.com>
- <7527d15c-9318-47f7-99f8-028c865a698b@acm.org>
-Content-Language: en-US
-From: MANISH PANDEY <quic_mapa@quicinc.com>
-In-Reply-To: <7527d15c-9318-47f7-99f8-028c865a698b@acm.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: efXMBKb3sXKBN7Yb7LSCd8ejDfCe7uCV
-X-Proofpoint-ORIG-GUID: efXMBKb3sXKBN7Yb7LSCd8ejDfCe7uCV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-27_03,2024-08-26_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
- phishscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0 mlxlogscore=709
- spamscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408270035
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240827045757.1101194-1-quic_srichara@quicinc.com>
 
+On Tue, Aug 27, 2024 at 10:27:51AM +0530, Sricharan R wrote:
+> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> 
+> This patch series adds the relevant phy and controller
+> DT configurations for enabling PCI gen2 support
+> on IPQ5018.
+> 
+> v2:
+>   Fixed all review comments from Krzysztof, Robert Marko,
+>   Dmitry Baryshkov, Manivannan Sadhasivam, Konrad Dybcio.
 
+That's not specific. What exactly did you do? You must list the
+changes.
 
-On 8/21/2024 3:05 AM, Bart Van Assche wrote:
-> On 8/20/24 5:37 AM, Manish Pandey wrote:
->> +    { .wmanufacturerid = UFS_VENDOR_TOSHIBA,
->> +      .model = UFS_ANY_MODEL,
->> +      .quirk = UFS_DEVICE_QUIRK_DELAY_AFTER_LPM },
-> 
-> Isn't three patches a bit much for these changes? I think all three
-> patches can be combined into a single patch without making it harder for
-> reviewers to understand what is going on.
-> 
-> Thanks,
-> 
-> Bart.
-> 
-> 
+Best regards,
+Krzysztof
 
-Thanks Bart for quick review.
-I will merge all 3 changes to a single change in next patch set [V2].
-
-Regards
-Manish
 
