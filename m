@@ -1,103 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-29627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE9679609E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 14:19:34 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CA92960A71
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 14:33:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 314DF1F21F43
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 12:19:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 35384283DF7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 12:33:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D2891A0B08;
-	Tue, 27 Aug 2024 12:19:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 201341BFDF9;
+	Tue, 27 Aug 2024 12:31:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gNMjNWho"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C41F91A08BC;
-	Tue, 27 Aug 2024 12:19:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAFE1BF812;
+	Tue, 27 Aug 2024 12:31:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724761160; cv=none; b=Jvd69gsN/OtqLAZau6Imr0weTyJT4PVoYrNg9m6uKq8Z6S+HnNMerW0WAVcNlguwc48R/w7Seqm6NzAaqXdEq5yFqk++rRVmDeUuy1ixocoIu9VHZnhCW5tyPWJM5vJ2ahYD9b5wEDywrBcs2Dsy2dKYcpYQ4HdUNvcr+pZKa8c=
+	t=1724761904; cv=none; b=MaAx87LBx4bIOO7Nf026fm85ELGnpifhmxNvTdWEh1m2i4vWPwBUCDMN3I0RbS2qIP3EfK6wfUEKHaVZAeBYC0KVB5CcynZrMMq3Wb1NDSOGOml1wTWIEicbeaDU2bgIDlCCi1zZfeUOzFz3Ip1F8Jcoo15EoK0jzGvg4k+tD5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724761160; c=relaxed/simple;
-	bh=PY/odrZ7HFMDFloiTo+2Oa6vUtHjnrzFME+/EnQwvEM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cPLJ1L3C7RjbXxvnrTUI3w+PQguu6WaWmK+n5wB5+Zg8MMN3xPdkelAx1at2sit9xTdjbBNycx9Gq9JLcB5UMNPzdJDM4i6CvIaNeENrk+m/6C+zgdOD5aMwVLNM969fjmm4uJ6VQtFcG+f62qq2eBw20mBXTBd01ehpPIKEP4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6D0DCDA7;
-	Tue, 27 Aug 2024 05:19:43 -0700 (PDT)
-Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 185FF3F762;
-	Tue, 27 Aug 2024 05:19:14 -0700 (PDT)
-Message-ID: <92ebdc16-7938-462a-bb0e-4d5d368c5eb1@arm.com>
-Date: Tue, 27 Aug 2024 13:19:13 +0100
+	s=arc-20240116; t=1724761904; c=relaxed/simple;
+	bh=qmMzGnC28ZCDh31+2GefMmB0QMXAHDZVokWKSX+jKyU=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=amyFdVdDVROEhtwJtqlTOlBEnGDFhHdmbBjlnApfyFQj701o/R8ijFGnQT3EDUR0qJ9Wy5TE0GF2bLQBEQ9h40N1pcnhne9HD/vKSvYWqeRrrFreoi2YYDyf08teUpsBb5+uawZBNyrYe23wgbGUUYoOnzt70OkA4XK4YtVo8ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gNMjNWho; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FCAAC6104D;
+	Tue, 27 Aug 2024 12:31:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724761903;
+	bh=qmMzGnC28ZCDh31+2GefMmB0QMXAHDZVokWKSX+jKyU=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=gNMjNWhoZffSOv1un8ggYbJD221iCDLPRhGXySnV4I9D0LpvMrLudiopVGiQHN41h
+	 sIBQFWvONGMXeFUFsvTLZ4Ug1Jk986Qn8V/R0P6HPX4mCfVarAnDYwW0/qkFeI52C5
+	 01CzjlyjSbdqLE57f0Z7YxxcQUqPP+SMMfHtgYmXU+gqDJ+wswLxRVol2yYOpC351t
+	 qK2N/HKBi6FJkb2HVNv6vR1SOwo3hokVVhnBRqlcjvuQSR4QX+OeVvg7kT6TdWJvpy
+	 1+b9n3YM4Im9LXRIM2j4UWAmCnOVb797kw4jDDohWQHpwNRuMGm0w7oCdc+o7+8r3l
+	 FWDFBNRa0Xctw==
+Date: Tue, 27 Aug 2024 07:31:41 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] scsi: check that busses support the DMA API before
- setting dma parameters
-To: Christoph Hellwig <hch@lst.de>, iommu@lists.linux.dev
-Cc: "Martin K. Petersen" <martin.petersen@oracle.com>,
- Marek Szyprowski <m.szyprowski@samsung.com>, linux-scsi@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, dmaengine@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linux-media@vger.kernel.org, linux-mmc@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com, linux-hyperv@vger.kernel.org,
- netdev@vger.kernel.org
-References: <20240824034925.1163244-1-hch@lst.de>
- <20240824034925.1163244-2-hch@lst.de>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20240824034925.1163244-2-hch@lst.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Qiang Yu <quic_qianyu@quicinc.com>
+Cc: devicetree@vger.kernel.org, mturquette@baylibre.com, vkoul@kernel.org, 
+ dmitry.baryshkov@linaro.org, sboyd@kernel.org, neil.armstrong@linaro.org, 
+ linux-clk@vger.kernel.org, conor+dt@kernel.org, 
+ linux-arm-msm@vger.kernel.org, andersson@kernel.org, kw@linux.com, 
+ manivannan.sadhasivam@linaro.org, lpieralisi@kernel.org, 
+ konradybcio@kernel.org, abel.vesa@linaro.org, quic_devipriy@quicinc.com, 
+ linux-pci@vger.kernel.org, quic_msarkar@quicinc.com, 
+ linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ kishon@kernel.org, krzk+dt@kernel.org
+In-Reply-To: <20240827063631.3932971-1-quic_qianyu@quicinc.com>
+References: <20240827063631.3932971-1-quic_qianyu@quicinc.com>
+Message-Id: <172476183902.3553327.3757950028426438486.robh@kernel.org>
+Subject: Re: [PATCH 0/8] Add support for PCIe3 on x1e80100
 
-On 24/08/2024 4:49 am, Christoph Hellwig wrote:
-> We'll start throwing warnings soon when dma_set_seg_boundary and
-> dma_set_max_seg_size are called on devices for buses that don't fully
-> support the DMA API.  Prepare for that by making the calls in the SCSI
-> midlayer conditional.
 
-Just thinking ahead, might it be worth a logical "are SG segment limits 
-relevant?" wrapper around the dev->dma_parms reference? Not a big deal 
-for now if we think this site is the only user, so either way,
-
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-
-> Signed-off-by: Christoph Hellwig <hch@lst.de>
-> ---
->   drivers/scsi/scsi_lib.c | 11 +++++++++--
->   1 file changed, 9 insertions(+), 2 deletions(-)
+On Mon, 26 Aug 2024 23:36:23 -0700, Qiang Yu wrote:
+> This series add support for PCIe3 on x1e80100.
 > 
-> diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-> index 3958a6d14bf457..7f0394c4492033 100644
-> --- a/drivers/scsi/scsi_lib.c
-> +++ b/drivers/scsi/scsi_lib.c
-> @@ -1988,8 +1988,15 @@ void scsi_init_limits(struct Scsi_Host *shost, struct queue_limits *lim)
->   	if (shost->no_highmem)
->   		lim->features |= BLK_FEAT_BOUNCE_HIGH;
->   
-> -	dma_set_seg_boundary(dev, shost->dma_boundary);
-> -	dma_set_max_seg_size(dev, shost->max_segment_size);
-> +	/*
-> +	 * Propagate the DMA formation properties to the dma-mapping layer as
-> +	 * a courtesy service to the LLDDs.  This needs to check that the buses
-> +	 * actually support the DMA API first, though.
-> +	 */
-> +	if (dev->dma_parms) {
-> +		dma_set_seg_boundary(dev, shost->dma_boundary);
-> +		dma_set_max_seg_size(dev, shost->max_segment_size);
-> +	}
->   }
->   EXPORT_SYMBOL_GPL(scsi_init_limits);
->   
+> PCIe3 needs additional set of clocks, regulators and new set of PCIe QMP
+> PHY configuration compare other PCIe instances on x1e80100. Hence add
+> required resource configuration and usage for PCIe3.
+> 
+> Qiang Yu (8):
+>   phy: qcom-qmp: pcs-pcie: Add v6.30 register offsets
+>   phy: qcom-qmp: pcs: Add v6.30 register offsets
+>   phy: qcom: qmp: Add phy register and clk setting for x1e80100 PCIe3
+>   arm64: dts: qcom: x1e80100: Add support for PCIe3 on x1e80100
+>   dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the X1E80100
+>     QMP PCIe PHY Gen4 x8
+>   clk: qcom: gcc-x1e80100: Fix halt_check for pipediv2 clocks
+>   arm64: dts: qcom: x1e80100-qcp: Add power supply and sideband signal
+>     for pcie3
+>   PCI: qcom: Add support to PCIe slot power supplies
+> 
+>  .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |  18 +-
+>  arch/arm64/boot/dts/qcom/x1e80100-qcp.dts     | 116 +++++++++
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi        | 205 +++++++++++++++-
+>  drivers/clk/qcom/gcc-x1e80100.c               |  10 +-
+>  drivers/pci/controller/dwc/pcie-qcom.c        |  52 +++-
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 222 +++++++++++++++++-
+>  .../qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h    |  25 ++
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_30.h |  19 ++
+>  8 files changed, 657 insertions(+), 10 deletions(-)
+>  create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h
+>  create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_30.h
+> 
+> --
+> 2.34.1
+> 
+> 
+> 
+
+
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+New warnings running 'make CHECK_DTBS=y qcom/x1e80100-qcp.dtb' for 20240827063631.3932971-1-quic_qianyu@quicinc.com:
+
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: reg: [[0, 29163520, 0, 12288], [0, 2013265920, 0, 3869], [0, 2013269824, 0, 168], [0, 2013270016, 0, 4096], [0, 2014314496, 0, 1048576]] is too short
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: reg-names: ['parf', 'dbi', 'elbi', 'atu', 'config'] is too short
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clocks: [[53, 348], [53, 84], [53, 86], [53, 87], [53, 94], [53, 95], [53, 22], [53, 33]] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clock-names:0: 'aux' was expected
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clock-names:1: 'cfg' was expected
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clock-names:2: 'bus_master' was expected
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clock-names:3: 'bus_slave' was expected
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clock-names:4: 'slave_q2a' was expected
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clock-names:5: 'noc_aggr' was expected
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clock-names:6: 'cnoc_sf_axi' was expected
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: clock-names: ['pipe_clk_src', 'aux', 'cfg', 'bus_master', 'bus_slave', 'slave_q2a', 'noc_aggr', 'cnoc_sf_axi'] is too long
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pci@1bd0000: Unevaluated properties are not allowed ('operating-points-v2', 'opp-table' were unexpected)
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-x1e80100.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: phy@1be0000: clock-names:4: 'pipe' was expected
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: phy@1be0000: clock-names:5: 'pipediv2' was expected
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: phy@1be0000: clock-names:6: 'phy_aux' was expected
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pmic@3: gpio@8800: 'pm_sde7_aux_3p3', 'pm_sde7_main_3p3' do not match any of the regexes: '-hog(-[0-9]+)?$', '-state$', 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: gpio@8800: 'pm_sde7_aux_3p3', 'pm_sde7_main_3p3' do not match any of the regexes: '-hog(-[0-9]+)?$', '-state$', 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,pmic-gpio.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: pmic@8: gpio@8800: 'pcie_x8_12v_on' does not match any of the regexes: '-hog(-[0-9]+)?$', '-state$', 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/mfd/qcom,spmi-pmic.yaml#
+arch/arm64/boot/dts/qcom/x1e80100-qcp.dtb: gpio@8800: 'pcie_x8_12v_on' does not match any of the regexes: '-hog(-[0-9]+)?$', '-state$', 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,pmic-gpio.yaml#
+
+
+
+
+
 
