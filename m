@@ -1,75 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-29609-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29610-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A47F1960771
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 12:30:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91F05960784
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 12:33:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 288881F2318A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 10:30:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4B2FD28134F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 10:33:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A40019DFB3;
-	Tue, 27 Aug 2024 10:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C395317BEA1;
+	Tue, 27 Aug 2024 10:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VpfdbBPd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aKvyi+Gh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6268D19DF61
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 10:30:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EEF2182B2;
+	Tue, 27 Aug 2024 10:33:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724754629; cv=none; b=mxODn5WDFRjoNQKILZOcgV7AigmsERAqlFXYUcb4Gl8ZFQLsULMD1KWmhg/olEAcGnb6/RM/ehj0h33Y4xomAU045es/Pddx7CbGEXKSmSoFjYPkRT5dLkOo4AO3KZ/fULUR+MIcqROZoR+bMMcCQhfbHHyy4IaWMQ/IlC6ajpk=
+	t=1724754791; cv=none; b=ACWvXlWtYnqNOhCnf4EaPpWk26TeE1q73jf9BXBk8t0r+tiQ7hSLqzUjTA94k3nNMkYyreR5UKzeGuDPo24o3Zjk9bz4dZ6YUqDna18GQVGU2ieQOgTMH5GjyncBZwOHGcbKqYsE0S4f4R10hJFkLLRSfNUwIgCC06pNPTUvKNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724754629; c=relaxed/simple;
-	bh=nT80rdayA5UHtA0WJnFTe/3oVId9QXu7cD5rdeRsvsU=;
+	s=arc-20240116; t=1724754791; c=relaxed/simple;
+	bh=cR7h+2R2D+Lq9NcV2CvzH83tJKg5LBeLkWoEq+6UNSY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X33JHmMGan81EIviWKQHz19Vf7aG8zMwIh2l/kavV8tv98L2m6nMhdxpYo5rYqDvIFOVAobqBFeP5RO6ZqADcT3dtwbuTCFPRutRb0QBq1n2Ao/8erBCfm7lZOxSN5QP/rze3J7lE1ee4LxV9YzDlfjXETa7sgQddKpkOMn9HrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VpfdbBPd; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4281ddd3ae8so3452295e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 03:30:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724754625; x=1725359425; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=W3VBFYpmaqRCs+Se9LeU7unsLD0EFFfpK+JC6xNu3vw=;
-        b=VpfdbBPd+0gwW+LO2iGGQEJjaq13m1HG4meBdWJMrXmEb2TWVV+8cH8ADm5qjewGNu
-         Lb2fRo4B3EQjj1no9D/Tl+PsGYJSYV8kAdFrBz6BpfrPZ1lpj083gF7J0mhovSMjxa3Y
-         U+2FnCwj4cyGRHxCV/d0grEI+hT1JaI4mgaXO7+GFFLHAirVp949h1kYyC569ay4rP1V
-         5b4JIiSFgx/iTRNmrrIGxknWxeEH2OGkcHPjRtb8WDvUgCU2pHZTfNk2iqPv3dLztQMX
-         3Z4j850nf2IfevimKfEIt/dtLPhTMkIBWDdlKeH7lcehZ8QbGulDK+8+n6CaGSNfmBtP
-         zPcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724754625; x=1725359425;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=W3VBFYpmaqRCs+Se9LeU7unsLD0EFFfpK+JC6xNu3vw=;
-        b=X8b990bHlWolEHxFfweObmvO3sMiEoq5UOt0p9HsDVyNQTU6VOtULT+FftXO2k2aTT
-         MRVi3LgK/Un8oq2N++F5YOQ9ljVgJDOHM3VBwXVWGr43uXpMcnfWEi4KSMcdDaEFVAhp
-         x/WJ+NwbbFprie+vb6zJmb2FPt4GAKU6P3Sg869SjLwL/g/Bq+m/QRXYjg/jU00CU9vE
-         akg4RSTY+vbovZTaK12NJHweEoWCRNe4lGzwuCWHLcYPIsXq/oLk4mIaH0ivxE+kLMvG
-         eQYcx9o3iyKf8epMPz/diW0y4xRw4xUe35i0oV1vj3OUJ8kdZNkUEYFEiMHWC89iTLdP
-         AFlA==
-X-Forwarded-Encrypted: i=1; AJvYcCWhIu2nLbFmD6EsI7gVZf+EsKKWhEbjOu4AaoWkxS7bJC1iO4O7yzIpBH+l87mlOcQstyB6MPLorrFUukiD@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzo6so0QQkLWGtDS2Ue9X5f1qiHo0sT6FGQ/N8X20jPXjSEMGzu
-	MVxt//kHLXwVJdv1/JRU8dnlddX3NXcBgrat5zEa2DuTDId1N/3H8UK4/WqLoCY=
-X-Google-Smtp-Source: AGHT+IE1vEOGOGSPbk8DqUrG92QCcaEHUw1sMQDEkeJAs2xvcYkh9LNNcDwEqw3hyc/tlUYAgEF6sg==
-X-Received: by 2002:a5d:6c6f:0:b0:368:4e31:7735 with SMTP id ffacd0b85a97d-3731191ea94mr5120606f8f.9.1724754625456;
-        Tue, 27 Aug 2024 03:30:25 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.222.82])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3730810fb76sm12879587f8f.8.2024.08.27.03.30.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Aug 2024 03:30:24 -0700 (PDT)
-Message-ID: <6f2c976c-2757-43c5-805f-e67724328b65@linaro.org>
-Date: Tue, 27 Aug 2024 12:30:22 +0200
+	 In-Reply-To:Content-Type; b=GcM+qcub1RUvBT2FP4X20AqQlYtY9yVbGuMIWAXYQCX8DHFzqczvlsai3C39lTPtc5nnQlqen6dBHIQU5D2ywqUfzSoafbSwQfFUGBHTaiQ5nirmSAZVayph0S5uabR7SSrlXvLK1W86VZ4YYoHT9rLram52HVPnpwwBybFxd9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aKvyi+Gh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D693EC8B7A4;
+	Tue, 27 Aug 2024 10:33:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724754791;
+	bh=cR7h+2R2D+Lq9NcV2CvzH83tJKg5LBeLkWoEq+6UNSY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=aKvyi+Ghqx4bemzetoDEKzGX5EfXUIegPXeuzyAzG5HZtSvGqpul8p8ML276Jw3hM
+	 FYzZjrEoHp51Qhmib+lF8rhtP6GVxreg1qCAOldPfVZiHGA4e+sYODDxkMUbr00TDd
+	 9hJ/TZ//ufr3P06s47kYc7TB6nLetewf27CLaRIfinh/iLw0YqNO2UM/jxjMj7Wn5d
+	 UKGb0RydTOFcMo6jdqmjWDTm29BdepBpKtQ4pvk9Aax5CeHvk8e2r3UEUKJLMs+VZw
+	 RBRJ+dirqwBQIu7/0XgetatDFswfjdZtSqVZUbZY4nr6i3C01RWUni7fRizE7CrHwp
+	 tg8P+t5jhNKrQ==
+Message-ID: <2d3f3da1-713e-4378-b87d-11f10f0f9590@kernel.org>
+Date: Tue, 27 Aug 2024 12:33:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,124 +50,91 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/10] pmdomain: rockchip: Simplify locking with guard()
-To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Heiko Stuebner <heiko@sntech.de>,
- Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Magnus Damm <magnus.damm@gmail.com>, linux-pm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-kernel@vger.kernel.org, imx@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org
-References: <20240823-cleanup-h-guard-pm-domain-v1-0-8320722eaf39@linaro.org>
- <20240823-cleanup-h-guard-pm-domain-v1-2-8320722eaf39@linaro.org>
- <20240827105927.00007ac7@Huawei.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 3/8] phy: qcom: qmp: Add phy register and clk setting for
+ x1e80100 PCIe3
+To: Qiang Yu <quic_qianyu@quicinc.com>, manivannan.sadhasivam@linaro.org,
+ vkoul@kernel.org, kishon@kernel.org, robh@kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, abel.vesa@linaro.org,
+ quic_msarkar@quicinc.com, quic_devipriy@quicinc.com
+Cc: dmitry.baryshkov@linaro.org, kw@linux.com, lpieralisi@kernel.org,
+ neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-clk@vger.kernel.org
+References: <20240827063631.3932971-1-quic_qianyu@quicinc.com>
+ <20240827063631.3932971-4-quic_qianyu@quicinc.com>
 Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240827105927.00007ac7@Huawei.com>
+From: Konrad Dybcio <konradybcio@kernel.org>
+In-Reply-To: <20240827063631.3932971-4-quic_qianyu@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27/08/2024 11:59, Jonathan Cameron wrote:
-> On Fri, 23 Aug 2024 14:51:06 +0200
-> Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote:
+On 27.08.2024 8:36 AM, Qiang Yu wrote:
+> Currently driver supports only x4 lane based functionality using tx/rx and
+> tx2/rx2 pair of register sets. To support 8 lane functionality with PCIe3,
+> PCIe3 related QMP PHY provides additional programming which are available
+> as txz and rxz based register set. Hence adds txz and rxz based registers
+> usage and programming sequences. Phy register setting for txz and rxz will
+> be applied to all 8 lanes. Some lanes may have different settings on
+> several registers than txz/rxz, these registers should be programmed after
+> txz/rxz programming sequences completing.
 > 
->> Simplify error handling (smaller error handling) over locks with
->> guard().
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Musing inline.
+> Besides, PCIe3 related QMP PHY also requires addtional clk, which is named
+> as clkref_en. Hence, add this clk into qmp_pciephy_clk_l so that it can be
+> easily parsed from devicetree during init.
 > 
-> LGTM
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> 
-> 
->> ---
->>  drivers/pmdomain/rockchip/pm-domains.c | 5 +----
->>  1 file changed, 1 insertion(+), 4 deletions(-)
->>
->> diff --git a/drivers/pmdomain/rockchip/pm-domains.c b/drivers/pmdomain/rockchip/pm-domains.c
->> index 5679ad336a11..538dde58d924 100644
->> --- a/drivers/pmdomain/rockchip/pm-domains.c
->> +++ b/drivers/pmdomain/rockchip/pm-domains.c
->> @@ -910,7 +910,7 @@ static int rockchip_pm_domain_probe(struct platform_device *pdev)
->>  	 * Prevent any rockchip_pmu_block() from racing with the remainder of
->>  	 * setup (clocks, register initialization).
->>  	 */
->> -	mutex_lock(&dmc_pmu_mutex);
->> +	guard(mutex)(&dmc_pmu_mutex);
->>  
->>  	for_each_available_child_of_node_scoped(np, node) {
->>  		error = rockchip_pm_add_one_domain(pmu, node);
->> @@ -943,13 +943,10 @@ static int rockchip_pm_domain_probe(struct platform_device *pdev)
->>  	if (!WARN_ON_ONCE(dmc_pmu))
->>  		dmc_pmu = pmu;
->>  
->> -	mutex_unlock(&dmc_pmu_mutex);
->> -
->>  	return 0;
->>  
->>  err_out:
->>  	rockchip_pm_domain_cleanup(pmu);
-> 
-> I wonder.  Could you use a devm_add_action_or_reset for this and allow early
-> returns throughout?
-> 
-> Would need to take the lock again perhaps and I haven't checked if there
-> is any issue in dropping and retaking the mutex however.
-> The block logic is non obvious so I couldn't quickly figure this out.
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> ---
 
-I will take a look, but as you already pointed out it is a bit further
-from trivial functionally-equivalent cleanup. I might mess with the locks.
+[...]
 
-Best regards,
-Krzysztof
+> +static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x8_pcie_rx_tbl[] = {
+> +	QMP_PHY_INIT_CFG_LANE(QSERDES_V6_20_RX_DFE_CTLE_POST_CAL_OFFSET, 0x3a, 1),
 
+1 -> BIT(0)
+
+[...]
+
+> +	/* Set to true for programming all 8 lanes using txz/rxz registers */
+> +	bool lane_broadcasting;
+
+This is unnecessary because you call qmp_configure_lane conditionally,
+but that function has a nullcheck built in
+
+> +
+>  	/* resets to be requested */
+>  	const char * const *reset_list;
+>  	int num_resets;
+> @@ -2655,6 +2815,8 @@ struct qmp_pcie {
+>  	void __iomem *rx;
+>  	void __iomem *tx2;
+>  	void __iomem *rx2;
+> +	void __iomem *txz;
+> +	void __iomem *rxz;
+>  	void __iomem *ln_shrd;
+>  
+>  	void __iomem *port_b;
+> @@ -2700,7 +2862,7 @@ static inline void qphy_clrbits(void __iomem *base, u32 offset, u32 val)
+>  
+>  /* list of clocks required by phy */
+>  static const char * const qmp_pciephy_clk_l[] = {
+> -	"aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux",
+> +	"aux", "cfg_ahb", "ref", "refgen", "rchng", "phy_aux", "clkref_en",
+
+Why not just put in TCSR_PCIE_8L_CLKREF_EN as "ref"? It's downstream
+of the XO anyway.
+
+[...]
+
+>  	const struct qmp_phy_cfg *cfg = qmp->cfg;
+> @@ -3700,6 +3907,11 @@ static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_c
+>  
+>  	qmp_configure(qmp->dev, serdes, tbls->serdes, tbls->serdes_num);
+>  
+> +	if (cfg->lane_broadcasting) {
+
+All these ifs can be unconditional
+
+Konrad
 
