@@ -1,260 +1,263 @@
-Return-Path: <linux-arm-msm+bounces-29667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C5FE961741
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 20:49:12 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 004F2961809
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 21:31:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D9C0F283E8F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 18:49:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 429A0B21F9B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 19:31:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 965971D3197;
-	Tue, 27 Aug 2024 18:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 935D51CDFC3;
+	Tue, 27 Aug 2024 19:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="iVsgildA";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="VsK++v5r"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="LCvtAl4N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537D6132132;
-	Tue, 27 Aug 2024 18:48:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724784536; cv=fail; b=CkKBSwp789KjQ6leoo92lhOtkDf7ra80EirmCpnjWkCCL75bfABP9dQZOqCX6z8RLsVCP7VfaMxKaVeGjZ2XXrorCXlNH/FU1HX+DvZcGBRQOw3/snZ+ucaXSRxCNjxydb1NBQ9w1XnL6zfRLWD4eib7iL6MfSr1KWK99QJ95mk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724784536; c=relaxed/simple;
-	bh=igjtcnHDBDTJmrkKonygL4/Il4s5NOrLzA5di2mNvjo=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=SepRjVoeSa5o1LghBfYNFSb+OkX2gITaA8khPz4GHIbrpm9qJxH5F6W+yqcFyqJa9MhdvIdA6qw5jxHUz9Iw9k0tpaMIkeo3ztROD7RNDAYQDuviUUkwNyG9jRojM2DHds7sha9Gm8pIdLef5sG9WpKF3RGZowvDYyngSVaDLe8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=iVsgildA; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=VsK++v5r; arc=fail smtp.client-ip=205.220.165.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47RHMnnn028197;
-	Tue, 27 Aug 2024 18:48:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
-	from:to:cc:subject:date:message-id:references:in-reply-to
-	:content-type:content-id:content-transfer-encoding:mime-version;
-	 s=corp-2023-11-20; bh=igjtcnHDBDTJmrkKonygL4/Il4s5NOrLzA5di2mNv
-	jo=; b=iVsgildAp98+hw9yJQSDJST+FPZX4rDUsgGdxEoFa9xiim4Kec4kkSgT2
-	BwZrzuw7OEyYCBWtKAEFDHAbYceOpAP8b7C98iOfda4JKaIMx9ry/rMfFsGQdTjF
-	nq+/kKCmE5jO66RhDsBKCzx1a/VJlt+ih4pNkTxcWRQJIwqw1WL6kP/pikKmMs/B
-	yRHG/zbMZVGuYd6LStsaA2zdkbu3RCTdPhmQVb8RW9pBOlkd0A9r2x8W1T3iIa8W
-	wjHSlcTNSS9TCsGId8JK20S/ux8hHHQqEAhJaGcgM2YxxaXV+3jKOfp9WtWjPBQU
-	0NEt4oSJSYXicEWWV6Z1UvBdXVSpw==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4177npecfk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 27 Aug 2024 18:48:37 +0000 (GMT)
-Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 47RHpjJ6036544;
-	Tue, 27 Aug 2024 18:48:36 GMT
-Received: from nam11-bn8-obe.outbound.protection.outlook.com (mail-bn8nam11lp2175.outbound.protection.outlook.com [104.47.58.175])
-	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 4189jjugsx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 27 Aug 2024 18:48:36 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QwjgaSipy/3FoCwCKzzVqhgdm1RN34LEdW9gN0vFCxn+fbgo8vTUTvBAVljaeGj9i4cLjoysOwsiQsff10+VamcpVErdu8eJffgX5xuP2kd6q0gIJJbrOydGp/WC7FqC+YRHosyDqfU7mL0s+VwQuyZsBK4t510ecM38/xeglZxYiVTvte1WmIgl19aiWQ/yaXB+KwC1h0PXQjZvBQwk7xL3UBGu3NzgpS334DES4hynCahq3Aeslgq0hDRbsnfJx2ni3Ohn69tX86omjlnRExWVBZSHBo5palmTMpSO4QFRBebLPfuRZYglYm+ERdlKwrsNXbeBtSfxU6E4cJYBfA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=igjtcnHDBDTJmrkKonygL4/Il4s5NOrLzA5di2mNvjo=;
- b=EceCMeNtRTpXjbxm3+jZIkPGXxJ2Xhdd11WV7GVsRiTTPwytWhqxwKzLgEEu9ysN6uIOWE+2hjfUY+fvFZU93wanPYGggK2WUc9DW07YC2FfxR5i/n4/zkXsY+pCv4WJR8CbXM0ycB7OfUS2M9hqs0c8m+No0kjSoycNeH4c0nHrbcW1UzpzmUUge7ITeFguqilAvD/xWFvthFjCTyGjGrvyE6bn0Zld+gA2+7wdGM9nlN0YXt5fC95jzrOucXTlPdUE227TdHCIwuxdqmzOkXbO0ageBqh3PpURH1T1xaEP7qaCccMIhxZbMpcQJwxlET8A82Tlnvl6mezWASQhlw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABD42E62B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 19:31:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1724787085; cv=none; b=tq3NwKFaB80D8RcxlgO6uF3wRAz7DUa1R3whvl+dGwH5VvzkOPlQXURQfOQ/Sct03VPr/j6oqTE7ab4obgOhS4CudNxedhHO5ptsTh8zsUG0OdWtMKoCs6SKwrYBUt7seC9XPt2pevvh8TuaeFOEk3JhT37Qgf16hHlRYlP8fq0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1724787085; c=relaxed/simple;
+	bh=T6Gc7IagPDiIeIpVlgHMgeMNX//208zTDI7EtxaFhQE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ax5g9H+RgWMCllRjASEY7q/eI7rDwWRkPh3aSuNS/0HkjV8D4THIlqqmfxS3iYI6NfR9cItdSLjUZox5yh7WwQoeXEu8McfGw6vH21mTBcSCDvo0M5b2Gm5nFIRyhUrn00sgE/5sZKMuXc6Cc2GB3x5amy4P6gj46QBB8tTEVh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=LCvtAl4N; arc=none smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6bf7b48d2feso31619696d6.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 12:31:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=igjtcnHDBDTJmrkKonygL4/Il4s5NOrLzA5di2mNvjo=;
- b=VsK++v5rijMJXxJKZwSYh6xUG3PX6O3ffu+sWHzJyuxxQ4Nw7D4PDOponNKgDlwDliqWriSSQnlnOK/O5CB9d215CGqSsvNL+oIQ8H2Y7kwwqHfzadMzxGOCFyNVGK9ca2bhpavoTZJbZJ4UFO047INWCIoUh14/WdL/BHWgEFU=
-Received: from SJ2PR10MB7082.namprd10.prod.outlook.com (2603:10b6:a03:4ca::6)
- by DM6PR10MB4187.namprd10.prod.outlook.com (2603:10b6:5:210::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7918.14; Tue, 27 Aug
- 2024 18:48:34 +0000
-Received: from SJ2PR10MB7082.namprd10.prod.outlook.com
- ([fe80::2cd7:990f:c932:1bcb]) by SJ2PR10MB7082.namprd10.prod.outlook.com
- ([fe80::2cd7:990f:c932:1bcb%5]) with mapi id 15.20.7918.012; Tue, 27 Aug 2024
- 18:48:34 +0000
-From: Sherry Yang <sherry.yang@oracle.com>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-CC: "robdclark@gmail.com" <robdclark@gmail.com>,
-        "dmitry.baryshkov@linaro.org"
-	<dmitry.baryshkov@linaro.org>,
-        "sean@poorly.run" <sean@poorly.run>,
-        "marijn.suijten@somainline.org" <marijn.suijten@somainline.org>,
-        "airlied@gmail.com" <airlied@gmail.com>,
-        "daniel@ffwll.ch" <daniel@ffwll.ch>,
-        "ruanjinjie@huawei.com" <ruanjinjie@huawei.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/1] drm/msm: fix %s null argument error
-Thread-Topic: [PATCH 1/1] drm/msm: fix %s null argument error
-Thread-Index: AQHa+KGr1HqtUl0SnkCxUhcrM2wIVLI7YgeAgAAQGIA=
-Date: Tue, 27 Aug 2024 18:48:34 +0000
-Message-ID: <5BB01958-8611-458D-B813-F28CD3BA0A15@oracle.com>
-References: <20240827165337.1075904-1-sherry.yang@oracle.com>
- <e8169167-3de3-4fc7-90c4-ac3b9fb60c38@quicinc.com>
-In-Reply-To: <e8169167-3de3-4fc7-90c4-ac3b9fb60c38@quicinc.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ2PR10MB7082:EE_|DM6PR10MB4187:EE_
-x-ms-office365-filtering-correlation-id: 4ce873c8-b74f-40f9-5567-08dcc6c8da9c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|7416014|376014|366016|1800799024|38070700018;
-x-microsoft-antispam-message-info:
- =?utf-8?B?ODd3dkkyUnMycURMVytDTEJTem83TkZ2UXVwc0lTeUtzbU9DdGtlc2RGMTRz?=
- =?utf-8?B?ODJyaWlLWTliUEdKTDFDTXVCZnBPczV4cTlGUlozeTJxSVE4dlVxQ281elpk?=
- =?utf-8?B?Qm5nVTMyUU83SFZyWCtmZXdiNE9ZZFNYalJ5WWxRU3Z5WXpVRGlxZE9WaDNm?=
- =?utf-8?B?diszOWJ6cUhUdHAvQmpyYWRnZVlCeHJVb2h5em9WNE9zQlRnRjZYOVpDREV1?=
- =?utf-8?B?eWZjd0sxakRXcDJ6SStBOVpubnROZkw1Zjl6QktZekxqUXhpNDQ2WWFxSXg5?=
- =?utf-8?B?a0dRbTl2RDdUT3FXQmNVQzdJZHI4dVdNOEVHS1drRE1VVGtkUThKaEhMWURG?=
- =?utf-8?B?bWppdnRkQ243aFZCdldsbGN2b1FxdUF3YnpaeTNxYjlRaTR4NlVEZ09vSjBT?=
- =?utf-8?B?MENIM0NCTzhoMFAzMFJ6VHJwdmJJL2R2amRENHJDQUtLVEVLSGxWK1l2WGtE?=
- =?utf-8?B?NGJ5WGhpbnlhYWtXSW1qbUVYWXUrNkNPclhuUlZ2TThwRTMyUWxTQlhPWmhn?=
- =?utf-8?B?Nktkb21TK2E0cG9ZYjBNTmpNUXNjL3lMalpVb2swV05VUklOSm9URWRPWFpT?=
- =?utf-8?B?S0dSRWFsSW5GV1R6bDFjV3RRUGhjU1B4MWhTWHBTYWw4c2Zia2Uyb1NIVCt6?=
- =?utf-8?B?eVdPamJzYzZnbXh4STVWZTErZ3FkSFN4QlRJWmh4a01sQkhXUmZ3VkZnRDlI?=
- =?utf-8?B?SzlqbUh0YlJBU2gzS1dVVUJzMlZ4c1NaSGhNclR1bnpBeWZhMEJRQTcydjA5?=
- =?utf-8?B?a1NTenFyZkE1RWR1VHFIMkVTSnU5QUd4UUluOVRBaUZJSzJTYnpwS2pyTjhR?=
- =?utf-8?B?aXc4UHBaMEdXdkpKZUlES2FGc1htck14RnVEV2hRRnhmeVZXbkZJbFV5Y0Jm?=
- =?utf-8?B?WHZKNys3OUpXYWZzZjJmMitydjlic085ajU4ZDhLNzhmVndTZUpKVFM5OVZz?=
- =?utf-8?B?V3lTdDRSKzZ4anNzZUEzVFlYQ1VKZk5ZUzRzeEVlK2lIUVZKSzlkSzE2TGc3?=
- =?utf-8?B?bEhvWDFQQlQ2RXdkb0FjRkd0OGRBL0ZMYWNUNUMvbitSNzJiam0rckVzOSsz?=
- =?utf-8?B?aktyZzlrUkhEZncwbWpNOFh2ekdvazVIZi9yaVc4VHBKcFBBK25ub0N0QVBC?=
- =?utf-8?B?TjFMMUlzcUJnbUp5ZUpoeGRMRlhUYzE3SVczdUExTWNBNXNQc2ptbVlxQVk5?=
- =?utf-8?B?RUVQbXJEcm9nR2s0RDlaQzRKQUxuUHZ1bWFYb2dLVG8xUk9jVEtrbDR2bWI4?=
- =?utf-8?B?TU1NejlVenMrMVBSUE9xbGIrVEdpSHFqa29IcEYycDNKQlFwdUNoZ29aR3N3?=
- =?utf-8?B?SUpZM3E0ZUNZZzNZUUN1clhMamt2cWc2UEliVGZHTG9ONGhpUmZjUnNVZnJP?=
- =?utf-8?B?YkRpY2FKMENmTEgrWSswTEsxU3BOTE1KWVFxc3ZjMTBhYXdGYUtQS1U4WlB3?=
- =?utf-8?B?M0plTWNyRHpmNnkrQW14b2V1Unl2ZHFkdTdzbVoyMWJtT0ZmbWloSldpNmxK?=
- =?utf-8?B?QUR5U0V3R1NNMHZHbURCUzB2UGRBZGE3a2txaWZoZnhwWG90OEtLamhFWGVW?=
- =?utf-8?B?VmdSOTAzazZNQnFpVXNFeUNnVVdtQ3V3UlJYU0d6SjFtS3FqUHdPdEhhN0xY?=
- =?utf-8?B?aS9XUVYwWXRSQmFHaWNRS0xES1V0OVdBNnpWMWtnUytMemprQkVOblRoS21Z?=
- =?utf-8?B?SEs1WXgrZElPZlNDZTRUUElwNm9CTzg4cHMxbm04Q0pEckJDemo5R21kY0xL?=
- =?utf-8?B?dklQOEZoK3cyY1NDZVRncnNERDNTTGFHbkpHYWUxMjJQcXhDaER3RkFoRFlR?=
- =?utf-8?B?MXFHeS9tQm1ERHRwb0VqRkFBeTE1dHhhd3JWZW5DTTlCSFRjcHhNaHMzdU5k?=
- =?utf-8?B?aWV6M2N4R2lVMDh3ZldXV0p4WlBPbUV1VC9TT0p3THFGdXc9PQ==?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR10MB7082.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024)(38070700018);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?b0JvMVpwSzltY21yWXcyVHhlby9jL2hac1hNaW5UaHNVaUpvT1Z6VUJtQzB3?=
- =?utf-8?B?K1ZVdG9uclllekZ2VUVmTU14RnFKbXplWlF2c1YxZllzQks5L1QwaExBZHkv?=
- =?utf-8?B?Zi9PcDZqcGdCUlhBQlQrS1pnYTl4UWJnaGJBZDNWMFErTFNCQnpsWVA0TFBZ?=
- =?utf-8?B?RzJoQmtXQTMzYlo2dWk4ZVhJaC85ZDJ0WVFnbENIZ21Xc2tQRnEvVGdqZzAx?=
- =?utf-8?B?U0pVeTdEMEJEZ3I1NlFIUzhnNExDWmpJZ0VUNUhrRmRtNlFCZFN5M1E0Q3BV?=
- =?utf-8?B?eXRoaDlTcnQveG1KQ05nb0t6ak5jRGFsMWNHZjlyd2t0QlhNRXFFUDZtaHc2?=
- =?utf-8?B?NkdjU1Z0ZXNybzZ4ai92R01pUVVHbzVVS0RiZUdQdmptRjNJWmZERkdqeFpC?=
- =?utf-8?B?MWtiY0d5VGpLU1lVb3JpVm92STNjTGM2bWRObVB6NEo3N2k3MXc1MUxGbmNQ?=
- =?utf-8?B?SzZicDMzWFUwWkpUalNId216RkhpYTV1ZE5JWklZU2hSQ1YzaFc1b1h1L1VG?=
- =?utf-8?B?REJtNlJncjN5ZjNjVUpMM1h3NW50MzlOUEFmbi9JR2VPQ1dncGZFNzg4bWtr?=
- =?utf-8?B?Wk4vSlhOYW56TXBaSkFUZEZvV3BXTk1GWUoxVTY0RS9Xd3Y4aHd1QXZIUWkv?=
- =?utf-8?B?T3FCOTRvR0ZkWnhmV0JqY3IvWVJWZ3dQbmttak5BTlQ0NCtuaERtYnk5V1gr?=
- =?utf-8?B?eVhrNEFsYVpZSU8vcW9WN296V3RSdjRmODZZMlNxTXZmODM0UWFHa3E4TzJN?=
- =?utf-8?B?Qk5TOVpqeHZGc3FIZTErNks0RFR1UkFuWUJkVjlEcjU1dFRLUWhsYUdrdVha?=
- =?utf-8?B?d3AxM2RYWm5VdmZHTEhpam1DVEFHYWJQQloyalpFT3N2dmhoZisrUU5vbkkr?=
- =?utf-8?B?N3VydGFJUWZmcjRPajJEREhWMXVvR3pUZUtZR1VubHFqK0xHVUZTRE1wWEdD?=
- =?utf-8?B?dENlK0Z0UnQ3d1Q4bHpBN0FpMXlpZjZiUmpDOEJZQnFDcmZsaityOE9zWnBo?=
- =?utf-8?B?Z2lwclpadXJUU1RYYTV6cjRscUoyVjdlcWtKNGw4ODU5MldlNG9YWWhSWm5M?=
- =?utf-8?B?QWFaREJlUTlxOGxqdEtnVG11b0c0UXJDSC9Ub05CV0R0YS9UNVdmRkQ2Q3k5?=
- =?utf-8?B?Z1FzWTI2czJ2eDVlNlJHN0JhUEF1UTk2cUlsSG0xRE5PK21rVVhrZmRPNk9p?=
- =?utf-8?B?L3pPcGhSbXlxNnBzdUZaTm00b2N0SXZJb3RWRGtRYTZ6MmwrTnFwd3NhNFRB?=
- =?utf-8?B?QlB6N1FPbG1lSVA5ZFJmOXBFejVIUFdacWc1ZXI5dG1zZVJGVEhaY0M2WHVW?=
- =?utf-8?B?WHBsTXdyYktsU0s3VUYvSjZoWW1oNnhzQU9wb3RRWTYyYTU3dnBrbFRBa2Vo?=
- =?utf-8?B?aVZlNnJwVldKZGk0QWVLdDZuVE1lSU0ycllzd1VTUXoybEg1VnNGU0tCTTFG?=
- =?utf-8?B?OGxJN0lSYlFUSXFxYm9EZktJYm5vNG1HK0FUdE44MDRRRUwyclB1TXh3RURQ?=
- =?utf-8?B?YmozZ1FsL2hmdU9WU2J6YTBDQ1N4OTZiY1Flb3J2ZEZiUWdjTVJUSnNrd2Na?=
- =?utf-8?B?OWdrbzFZZFI5NCtBRzVmTitvVTNJaU13Sm5iL1J2ZWZjQTNkYXQvNFFld1NE?=
- =?utf-8?B?TW9BdHAzVldjRys4OVFrYnFPVjh6NXpiQWU4THdFUW0zM2FqdUMzakVGT3gz?=
- =?utf-8?B?UHNGYUZaK0RqcC9jRWxvRmQ5aWdtbWNyOUUzUDNQQ1RId1BMazFTci9maTlo?=
- =?utf-8?B?QmkxV00yc0hxb3pMRnJZcGVLWFJ0dmtBb1pHNW56RTJSMldOL3Z6Z2ZRZ1Jz?=
- =?utf-8?B?NEtqaGs4K05UZzRpYnFqVGozZ0ptTEFTZnU2YUw2SUVNNEg3VUs3bFFXb1lq?=
- =?utf-8?B?cWs3bCtDSkJkdlZOQ3pGOXRYUmJSOWE4TU5jbGl6aFdYVHU2N1hxV3crWVNZ?=
- =?utf-8?B?WXhNUlp5Lyt6bHY5b3l3bHNNWjZkN2Y1U3BEcGpPZ1FqSTBLQnkxcDBkaTlo?=
- =?utf-8?B?ZVBYVnZtdFdla2xBRVJaOHlOOC9oVjJrZEx2YzR0aSt5cjFERmlxSSt0aFpL?=
- =?utf-8?B?SCt4TEZNTXFBQk9uN1RNdG1JVy8rU3FvQWU1cTdXWlNyMmV3eGRabWtpZjNW?=
- =?utf-8?B?VGwwdUlENDhhVDZJWk9Ob2tmbkJ2SHJoZFkzY3VWaThkanM0ektLRStkU1Bs?=
- =?utf-8?Q?E76GOVU8BJ5MjnGMG782Yy0=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <BABB4E540793DB4EAD97F7BD6AB94AF2@namprd10.prod.outlook.com>
-Content-Transfer-Encoding: base64
+        d=chromium.org; s=google; t=1724787081; x=1725391881; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WgLdThQMvvxQD0GtX+hFcwHT8qG9FGW2/1VwCCGBPww=;
+        b=LCvtAl4N3KKJB0cI3ecAVBXWxoiEsILCFWj+o+TeLfNcIq8UA1wY053RXBZ9sO1pX2
+         qmlp4I8z2eYXjHcm3Ibvb5A/gqVSb+xv7/8/c5HTH3Cz8QjcU2n0lfScRw9+9KS5brZB
+         lU0NPRjjAQkd4U+DxoykCLAgnHalvpZ31u5Gg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724787081; x=1725391881;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WgLdThQMvvxQD0GtX+hFcwHT8qG9FGW2/1VwCCGBPww=;
+        b=MzJbjDTB12630tmO+wMkPU1hlhaczVNrca77q/o93u0GqUvUuavBSB1eVvNjzjsRyu
+         vW7HPAJvl4a266wlxDZpVE2UpivoNLTYU5ZjZvbpqu9JGHo9+0H0gotkNzi4qHXospAv
+         odxRH/UjFF+Zno3VEbcCYqHJ4EomsiRyNfVHrLlPqRZltFJ1clBXrNUWFbsgeguREHFL
+         pCS0C+By9/k16bvRK1n2DrpRxPheHzsNn1N/pkPi/kKC5KQoBXH1W1S4JH2kddqK8kuV
+         xmm+VMgla1SWBKKR2gUYt3SoRB93a2TnU6IozD8viH5QI0S1oSmPia8rtRFQxEbbcC8D
+         C6Nw==
+X-Forwarded-Encrypted: i=1; AJvYcCUXraJObRsfFiMxPZtOMkqvgtORF4pd/zAM6rqXCya0LLwb+CeX/rg8w/Sc24ghnLHrdw0ge8d/9zWORjKN@vger.kernel.org
+X-Gm-Message-State: AOJu0YxDbKTPwunKk4+zpiqTOQs9K0x8Og5HXfAARi5SSM/u7jjy+J2h
+	eK9jML/RvXZK1WxS9imFWj72yp75iBtG6FTYBz4haWPOR9bBnzdMExG3GEPtyI7ATAOLGugI+pA
+	=
+X-Google-Smtp-Source: AGHT+IEEgLhLOEcQjoQzgcrB7FOpI5dge4KIBEjCN5SK/II0gi2hzcWR/1GkDkezHI5423ZFE74zRg==
+X-Received: by 2002:a05:6214:4381:b0:6bf:65c3:fc10 with SMTP id 6a1803df08f44-6c32b6a2ffdmr43497976d6.15.1724787080916;
+        Tue, 27 Aug 2024 12:31:20 -0700 (PDT)
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com. [209.85.219.46])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6c162db0979sm59204066d6.81.2024.08.27.12.31.19
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Aug 2024 12:31:19 -0700 (PDT)
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6bf6dedbfe1so33596826d6.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 12:31:19 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUnPFu0fw9JytkFSuhbitpo5q9JDY7JaeDq5eYhEi1lqpYzichV0/HWVtT+uoQdZDPnaEV8qP/Awq/K4NuZ@vger.kernel.org
+X-Received: by 2002:a05:6214:2d45:b0:6b5:468e:d417 with SMTP id
+ 6a1803df08f44-6c32b6ba466mr42369256d6.23.1724787079270; Tue, 27 Aug 2024
+ 12:31:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	5mqQmVvYVipavtKFkXORsfcrxT73hrICmj3LfHphS+Y2Mvv0CqfPykMDYQ6rkbAnLHqKsmcHdcrVCWNqB8kyQ5N//bSqSHcIdCUblP0+jvOXne+bMFdmT0AK4lHT/K8Y+m4x6bJMHUXR8g+9xXnzGrPi7Ku9IW7YcB1RWwApACC7gOmHvkSV9I9iZHZtVa9/TSSOQ6Eud1rjQ9kQz7A1Qw1RqFfWpW23hdrYWtGBHNw2KArQPXYp4Mk79kl1FFokPsBdAyFZhFWYwM8373endqhREGh1ksNYaVjkdMU21+3nvoQ80iIoZVr0Bp9IUVg25MX52gGjm4QGz2P3UWyi8CG5eWjfqOgiFfaDCni6ZyQuafAaRmHMZwL+11mj0h3VJu3Tlf+GJM2ON5w00V4xhfATMQot21qrBPfs60Irt+4GDVNmWXtQZa6fTezlyTAFWssBMEVCioUiOxCaNP75bVsBPpTFOFgox0Q/QuO7sWE96ZNtFeD9EbnJklYO7vXNrUdigvZFNi2V3AdBC4gEULbbjhn/jGAGMoJ30ACVFGyTMh+N5t7SKSkYmLC00aJKz1pjxB7KNaL9Aj8PFefDmkxtEo9LgIoABas++zrw9NQ=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR10MB7082.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4ce873c8-b74f-40f9-5567-08dcc6c8da9c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Aug 2024 18:48:34.2773
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 35XubtmaLj/uJTtKLM7Hao3ZyWpD8qBToMpC4U0ci3T2EkqKw0cLeKGYhTwWJLteCAZX76uGk4sOs2yyxnQcUQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR10MB4187
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-27_10,2024-08-27_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 mlxscore=0 suspectscore=0
- phishscore=0 malwarescore=0 bulkscore=0 mlxlogscore=999 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2407110000
- definitions=main-2408270141
-X-Proofpoint-GUID: HvZkwRJ6uqSCQhIlr1QH4wXF70vs-NEO
-X-Proofpoint-ORIG-GUID: HvZkwRJ6uqSCQhIlr1QH4wXF70vs-NEO
+References: <20240715-x1e80100-crd-backlight-v2-0-31b7f2f658a3@linaro.org>
+ <20240715-x1e80100-crd-backlight-v2-2-31b7f2f658a3@linaro.org>
+ <7daa3c0d-cecf-4f50-be32-ae116b920db0@linaro.org> <ZpUcI3KkIa58zC55@linaro.org>
+ <d1603248-afe8-4594-9e2e-81ba208dff00@linaro.org> <CAD=FV=WimxYmDrkfn0+E3MbXp8kS9TicN2kT3AM4eM+SAwYsOg@mail.gmail.com>
+ <CAD=FV=XfvD1OniNBrCrA8C6XjOB15fye8EdnniNmgpu4DnpH6w@mail.gmail.com>
+ <CAD=FV=Vp1Trv2JeFtqk2=Zhi0B7io5w402GkG_UhYm2q34q8dw@mail.gmail.com> <aa0f4f1c-3043-4b03-8b9f-f9a39f3682aa@linaro.org>
+In-Reply-To: <aa0f4f1c-3043-4b03-8b9f-f9a39f3682aa@linaro.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Tue, 27 Aug 2024 12:31:08 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Xw_Zpf3zpWMzK0tU-L+sUTiq05uZS5Z-Knci=9M=dGGA@mail.gmail.com>
+Message-ID: <CAD=FV=Xw_Zpf3zpWMzK0tU-L+sUTiq05uZS5Z-Knci=9M=dGGA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] Revert "drm/panel-edp: Add SDC ATNA45AF01"
+To: neil.armstrong@linaro.org
+Cc: Stephan Gerhold <stephan.gerhold@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-DQo+IE9uIEF1ZyAyNywgMjAyNCwgYXQgMTA6NTDigK9BTSwgQWJoaW5hdiBLdW1hciA8cXVpY19h
-YmhpbmF2a0BxdWljaW5jLmNvbT4gd3JvdGU6DQo+IA0KPiANCj4gDQo+IE9uIDgvMjcvMjAyNCA5
-OjUzIEFNLCBTaGVycnkgWWFuZyB3cm90ZToNCj4+IFRoZSBmb2xsb3dpbmcgYnVpbGQgZXJyb3Ig
-d2FzIHRyaWdnZXJlZCBiZWNhdXNlIG9mIE5VTEwgc3RyaW5nIGFyZ3VtZW50Og0KPj4gQlVJTERT
-VERFUlI6IGRyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9tZHA1L21kcDVfc21wLmM6IEluIGZ1bmN0
-aW9uICdtZHA1X3NtcF9kdW1wJzoNCj4+IEJVSUxEU1RERVJSOiBkcml2ZXJzL2dwdS9kcm0vbXNt
-L2Rpc3AvbWRwNS9tZHA1X3NtcC5jOjM1Mjo1MTogZXJyb3I6ICclcycgZGlyZWN0aXZlIGFyZ3Vt
-ZW50IGlzIG51bGwgWy1XZXJyb3I9Zm9ybWF0LW92ZXJmbG93PV0NCj4+IEJVSUxEU1RERVJSOiAg
-IDM1MiB8ICAgICAgICAgICAgICAgICAgICAgICAgIGRybV9wcmludGYocCwgIiVzOiVkXHQlZFx0
-JXNcbiIsDQo+PiBCVUlMRFNUREVSUjogICAgICAgfCAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIF5+DQo+PiBCVUlMRFNUREVSUjogZHJpdmVycy9ncHUv
-ZHJtL21zbS9kaXNwL21kcDUvbWRwNV9zbXAuYzozNTI6NTE6IGVycm9yOiAnJXMnIGRpcmVjdGl2
-ZSBhcmd1bWVudCBpcyBudWxsIFstV2Vycm9yPWZvcm1hdC1vdmVyZmxvdz1dDQo+PiBUaGlzIGhh
-cHBlbnMgZnJvbSB0aGUgY29tbWl0IGE2MWRkYjQzOTNhZCAoImRybTogZW5hYmxlIChtb3N0KSBX
-PTENCj4+IHdhcm5pbmdzIGJ5IGRlZmF1bHQgYWNyb3NzIHRoZSBzdWJzeXN0ZW0iKS4gVXNpbmcg
-IihudWxsKSIgaW5zdGVhZA0KPj4gdG8gZml4IGl0Lg0KPj4gRml4ZXM6IGJjNTI4OWVlZDQ4MSAo
-ImRybS9tc20vbWRwNTogYWRkIGRlYnVnZnMgdG8gc2hvdyBzbXAgYmxvY2sgc3RhdHVzIikNCj4+
-IFNpZ25lZC1vZmYtYnk6IFNoZXJyeSBZYW5nIDxzaGVycnkueWFuZ0BvcmFjbGUuY29tPg0KPj4g
-LS0tDQo+PiAgZHJpdmVycy9ncHUvZHJtL21zbS9kaXNwL21kcDUvbWRwNV9zbXAuYyB8IDIgKy0N
-Cj4+ICAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKyksIDEgZGVsZXRpb24oLSkNCj4gDQo+
-IEkgYW0gbm90IHN1cmUgaG93IHRoZSBwYXRjaCBnb3QgdGl0bGVkIDEvMSBhbmQgbm90IGp1c3Qg
-IlBBVENIIi4gSXQgc2hvdWxkIGJlIGp1c3QgIlBBVENIIg0KDQpNeSBiYWQuIEkgZ2VuZXJhdGVk
-IHRoZSBwYXRjaCB3aXRoIHBhcmFtZXRlciDigJwtLW51bWJlcmVk4oCdIGluIOKAnGdpdCBmb3Jt
-YXQtcGF0Y2jigJ0sIGl0IHdpbGwgb3V0cHV0IGluIFtQQVRDSCBuL21dIGZvcm1hdCwgZXZlbiB3
-aXRoIGEgc2luZ2xlIHBhdGNoLiBXaWxsIGRyb3AgaXQgZm9yIHNpbmdsZSBwYXRjaCBuZXh0IHRp
-bWUuDQoNClRoYW5rcywNClNoZXJyeQ0KDQo+IA0KPj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvZ3B1
-L2RybS9tc20vZGlzcC9tZHA1L21kcDVfc21wLmMgYi9kcml2ZXJzL2dwdS9kcm0vbXNtL2Rpc3Av
-bWRwNS9tZHA1X3NtcC5jDQo+PiBpbmRleCAzYTdmN2VkZGE5NmIuLjUwMGI3ZGM4OTVkMCAxMDA2
-NDQNCj4+IC0tLSBhL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9tZHA1L21kcDVfc21wLmMNCj4+
-ICsrKyBiL2RyaXZlcnMvZ3B1L2RybS9tc20vZGlzcC9tZHA1L21kcDVfc21wLmMNCj4+IEBAIC0z
-NTEsNyArMzUxLDcgQEAgdm9pZCBtZHA1X3NtcF9kdW1wKHN0cnVjdCBtZHA1X3NtcCAqc21wLCBz
-dHJ1Y3QgZHJtX3ByaW50ZXIgKnAsDQo+PiAgICAgZHJtX3ByaW50ZihwLCAiJXM6JWRcdCVkXHQl
-c1xuIiwNCj4+ICAgcGlwZTJuYW1lKHBpcGUpLCBqLCBpbnVzZSwNCj4+IC0gcGxhbmUgPyBwbGFu
-ZS0+bmFtZSA6IE5VTEwpOw0KPj4gKyBwbGFuZSA/IHBsYW5lLT5uYW1lIDogIihudWxsKSIpOw0K
-Pj4gICAgIHRvdGFsICs9IGludXNlOw0KPj4gICB9DQo+IA0KPiBDaGFuZ2UgaXRzZWxmIGxvb2tz
-IGZpbmUgdG8gbWUsDQo+IA0KPiANCj4gUmV2aWV3ZWQtYnk6IEFiaGluYXYgS3VtYXIgPHF1aWNf
-YWJoaW5hdmtAcXVpY2luYy5jb20+DQoNCg0K
+Hi,
+
+On Tue, Aug 27, 2024 at 9:26=E2=80=AFAM <neil.armstrong@linaro.org> wrote:
+>
+> On 27/08/2024 17:36, Doug Anderson wrote:
+> > Hi,
+> >
+> > On Mon, Jul 22, 2024 at 8:49=E2=80=AFAM Doug Anderson <dianders@chromiu=
+m.org> wrote:
+> >>
+> >> Hi,
+> >>
+> >> On Mon, Jul 15, 2024 at 6:51=E2=80=AFAM Doug Anderson <dianders@chromi=
+um.org> wrote:
+> >>>
+> >>> Hi,
+> >>>
+> >>> On Mon, Jul 15, 2024 at 6:02=E2=80=AFAM Neil Armstrong
+> >>> <neil.armstrong@linaro.org> wrote:
+> >>>>
+> >>>> On 15/07/2024 14:54, Stephan Gerhold wrote:
+> >>>>> On Mon, Jul 15, 2024 at 02:42:12PM +0200, Neil Armstrong wrote:
+> >>>>>> On 15/07/2024 14:15, Stephan Gerhold wrote:
+> >>>>>>> This reverts commit 8ebb1fc2e69ab8b89a425e402c7bd85e053b7b01.
+> >>>>>>>
+> >>>>>>> The panel should be handled through the samsung-atna33xc20 driver=
+ for
+> >>>>>>> correct power up timings. Otherwise the backlight does not work c=
+orrectly.
+> >>>>>>>
+> >>>>>>> We have existing users of this panel through the generic "edp-pan=
+el"
+> >>>>>>> compatible (e.g. the Qualcomm X1E80100 CRD), but the screen works=
+ only
+> >>>>>>> partially in that configuration: It works after boot but once the=
+ screen
+> >>>>>>> gets disabled it does not turn on again until after reboot. It be=
+haves the
+> >>>>>>> same way with the default "conservative" timings, so we might as =
+well drop
+> >>>>>>> the configuration from the panel-edp driver. That way, users with=
+ old DTBs
+> >>>>>>> will get a warning and can move to the new driver.
+> >>>>>>>
+> >>>>>>> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> >>>>>>> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> >>>>>>> ---
+> >>>>>>>     drivers/gpu/drm/panel/panel-edp.c | 2 --
+> >>>>>>>     1 file changed, 2 deletions(-)
+> >>>>>>>
+> >>>>>>> diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/=
+panel/panel-edp.c
+> >>>>>>> index 3a574a9b46e7..d2d682385e89 100644
+> >>>>>>> --- a/drivers/gpu/drm/panel/panel-edp.c
+> >>>>>>> +++ b/drivers/gpu/drm/panel/panel-edp.c
+> >>>>>>> @@ -1960,8 +1960,6 @@ static const struct edp_panel_entry edp_pan=
+els[] =3D {
+> >>>>>>>      EDP_PANEL_ENTRY('L', 'G', 'D', 0x05af, &delay_200_500_e200_d=
+200, "Unknown"),
+> >>>>>>>      EDP_PANEL_ENTRY('L', 'G', 'D', 0x05f1, &delay_200_500_e200_d=
+200, "Unknown"),
+> >>>>>>> -   EDP_PANEL_ENTRY('S', 'D', 'C', 0x416d, &delay_100_500_e200, "=
+ATNA45AF01"),
+> >>>>>>> -
+> >>>>>>>      EDP_PANEL_ENTRY('S', 'H', 'P', 0x1511, &delay_200_500_e50, "=
+LQ140M1JW48"),
+> >>>>>>>      EDP_PANEL_ENTRY('S', 'H', 'P', 0x1523, &delay_80_500_e50, "L=
+Q140M1JW46"),
+> >>>>>>>      EDP_PANEL_ENTRY('S', 'H', 'P', 0x153a, &delay_200_500_e50, "=
+LQ140T1JH01"),
+> >>>>>>>
+> >>>>>>
+> >>>>>> How will we handle current/old crd DT with new kernels ?
+> >>>>>>
+> >>>>>
+> >>>>> I think this is answered in the commit message:
+> >>>>>
+> >>>>>>> We have existing users of this panel through the generic "edp-pan=
+el"
+> >>>>>>> compatible (e.g. the Qualcomm X1E80100 CRD), but the screen works=
+ only
+> >>>>>>> partially in that configuration: It works after boot but once the=
+ screen
+> >>>>>>> gets disabled it does not turn on again until after reboot. It be=
+haves the
+> >>>>>>> same way with the default "conservative" timings, so we might as =
+well drop
+> >>>>>>> the configuration from the panel-edp driver. That way, users with=
+ old DTBs
+> >>>>>>> will get a warning and can move to the new driver.
+> >>>>>
+> >>>>> Basically with the entry removed, the panel-edp driver will fallbac=
+k to
+> >>>>> default "conservative" timings when using old DTBs. There will be a
+> >>>>> warning in dmesg, but otherwise the panel will somewhat work just a=
+s
+> >>>>> before. I think this is a good way to remind users to upgrade.
+> >>>>
+> >>>> I consider this as a regression
+> >>>>
+> >>>>>
+> >>>>>> Same question for patch 3, thie serie introduces a bindings that w=
+on't be valid
+> >>>>>> if we backport patch 3. I don't think patch should be backported, =
+and this patch
+> >>>>>> should be dropped.
+> >>>>>
+> >>>>> There would be a dtbs_check warning, yeah. Functionally, it would w=
+ork
+> >>>>> just fine. Is that reason enough to keep display partially broken f=
+or
+> >>>>> 6.11? We could also apply the minor binding change for 6.11 if need=
+ed.
+> >>>>
+> >>>> I don't know how to answer this, I'll let the DT maintainer comment =
+this.
+> >>>>
+> >>>> The problem is I do not think we can pass the whole patchset as fixe=
+s
+> >>>> for v6.11, patches 2 & 3 could, patches 1 & 4 definitely can't.
+> >>>>
+> >>>> Neil
+> >>>
+> >>> IMO: patch #3 (dts) and #4 (CONFIG) go through the Qualcomm tree
+> >>> whenever those folks agree to it. If we're worried about the
+> >>> dtbs_check breakage I personally wouldn't mind "Ack"ing patch #1 to g=
+o
+> >>> through the Qualcomm tree as long as it made it into 6.11-rc1. I have
+> >>> a hunch that there are going to be more Samsung OLED panels in the
+> >>> future that will need to touch the same file, but if the change is in
+> >>> -rc1 it should make it back into drm-misc quickly, right?
+> >>>
+> >>> Personally I think patch #2 could go in anytime since, as people have
+> >>> said, things are pretty broken today and the worst that happens is
+> >>> that someone gets an extra warning. That would be my preference. That
+> >>> being said, we could also snooze that patch for a month or two and
+> >>> land it later. There's no real hurry.
+> >>
+> >> For now I'm going to snooze this patch for a month just to avoid any
+> >> controversy. I'll plan to apply it (to drm-misc-next) when I see the
+> >> device tree patch land. Since the device tree patch should land as a
+> >> fix that should keep things landing in the correct order. ...and, as
+> >> per above, the worst case is that if someone has an old DTS and a new
+> >> kernel then a panel that was already not working well will print a fat
+> >> warning and startup a bit slower.
+> >>
+> >> If somehow I mess up and forget about this patch, feel free to send me
+> >> a poke when the device tree patch is landed.
+> >
+> > More than a month has passed now. One last warning before I apply this
+> > revert in a few more days.
+>
+> It's fine if you apply it now
+
+Thanks! Pushed to drm-misc-next:
+
+[2/4] Revert "drm/panel-edp: Add SDC ATNA45AF01"
+      commit: 01cc7b2e8a59fcae0c4493720561e5b33a195fe7
+
+-Doug
 
