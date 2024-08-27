@@ -1,382 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-29615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF7509607DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 12:51:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B71889607F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 12:56:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F41901C20C24
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 10:51:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 40FF91F234DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 10:56:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11EA019E7FA;
-	Tue, 27 Aug 2024 10:51:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YgvZQF4o"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C83D19E836;
+	Tue, 27 Aug 2024 10:56:01 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46BF19753F;
-	Tue, 27 Aug 2024 10:51:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A6719DF41;
+	Tue, 27 Aug 2024 10:55:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724755913; cv=none; b=UrNeq0P95DGeyRxMv/m8jktmVHws2RLrjZ36cFpJ1EIwoU15Ga9UkNwuUDeHN3o6Z2JpbPeG9QMeWFO5udeWpIXehKeXvJ1WoAAQf99h/g7voY4gyK3b8a6sG+NpLsI31sHafSWeeWnMzZWOgkUadbNZmMMjT9YEQspUTYL8pt8=
+	t=1724756161; cv=none; b=BotMzRWZQAV/Jg59Chp5aZGzW253NG3yibIRrgELeXFOlD81EaMX8gsWLvQwXofOEAbWLOH5QpQF4NWymkcrJI3mWdbSOmrEo/tePvwCTsUDLKZw2/42I4pPQuUcAba7FV1282jSg1GrEg3IHyKT+TkOnwjDi5kHPyP65u9N93Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724755913; c=relaxed/simple;
-	bh=TeJrDQy3fJuDWSxIq3vLDrsob+bLlaQ3lUK42XDZhl8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QIgy3q9T4RwOJTF+y1393PSi576c/vNLOOB1lflQ8uqmCikYtYaVP1OTkTZepvMaU2boQpNmoDSV+HJHZijp8rkYtBUHrZy7VKM+1l7szBt0J7bWN5nj+RbFnr9VWz031PgDgTlyHzZ8bPBuI76Ma9k1BXh+t5NP96ef1+/IW7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YgvZQF4o; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35F0C8B7C2;
-	Tue, 27 Aug 2024 10:51:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724755912;
-	bh=TeJrDQy3fJuDWSxIq3vLDrsob+bLlaQ3lUK42XDZhl8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=YgvZQF4o+FN5DLg12DjaIz+won+L3MaVRP5u8wKHNGzE5Chxr+5rFMP6Iiwu6X/2Z
-	 u2m9zuG9ojvkLDjt2o39VzXvB7ejNNwWVTn8osdkT4pKiXxPFeJVZPu3gRSXF+NmLc
-	 eii51h4Qb/mWAXgFePCz0vfF9f9E57C0TnBXHqVYUFOUY8R20pIO4sZXu66zP5hsFO
-	 jys/Nx+8X9xAXP8LAA7VoGrUefGy/0gh3XvROuEgV4gW1oBW/i+gkjrC0GfGeVktiN
-	 C4PwY0VU/OXllC6Uxy+JpHg4rUX8ngC4IfJf9ysOHXc/VY1jU0CINzlWQhQWsdbdrL
-	 mSi/9miav9jOg==
-Message-ID: <81fd218f-aa0f-4710-b832-cab927bfab9d@kernel.org>
-Date: Tue, 27 Aug 2024 12:51:45 +0200
+	s=arc-20240116; t=1724756161; c=relaxed/simple;
+	bh=4oBV8H5bs6V7KC17pgVHrSStgbbQbPBeJsp1/aceqNY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ruEkyWte2thgqMZwajCIjcHmtl8Y6hW1OzI607zhQCIPISSReE8/8TBiM9aPXXMsVWbalfx/gr9QvMVrjBMea3lNmbCM7AnSwFZSJ1u4gp46k0F3oOfX1lJWuTKj4T2eqIFPBKqgUlH8AHaWp+J/RKheGOUOJZC6vMNb1SUxz2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6b8d96aa4c3so45161427b3.1;
+        Tue, 27 Aug 2024 03:55:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724756155; x=1725360955;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qo2NMwoxAQ1U2hSpFIW4sKP1B7w0umymouG5LJGc8hU=;
+        b=tMX1Dw9Z+zGNWhjGgBlnTjrOPMMDgNMxkP9EzaABEGB56zn7GkHHBi608bXtY0Fgjk
+         lTy2ejwiwnxctC7LgOtg2Ez9ynnKIkagkTxqT53e7yyc3EC6EfxM4ogPrnp24ngpaIZD
+         0Kuy0CfI4eAtlfWfRcT+cff/fpEDkPMBKpbMs6Av3mClyLL/ln31IGTLYF9eDxblPAi3
+         XPk5gT8+x5p6e2S11kOi0a/Wjljw0ly2ORNSxVh2jNYFCpkrpN2XS7knuXkzFapmdt5N
+         wiSw28JjTwQ7c6PudlVqoFQi/AcjHOMeMs10jJ3J24/1IiZgjKiYXaRuNQ6fuDvrIzyE
+         hv5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVEUYa5weDMTeSTBtJOzQJhrckP/E3G+Jhy93zh5fe/2lu5xAlHgpmS/Rhdbpl8xeHCadxF/hxmhTE=@vger.kernel.org, AJvYcCW/O4EY5BhYPz7EqTc31DfojVqrcKQzkOY7QFJNWvdsuXoQV+8e5ON+Jjtg5J5QyBvJXKBCxICatr0aoub9VnXpuDA=@vger.kernel.org, AJvYcCXevh5vIM4l/N1wILi26zRB0VfCRj5rOTWJ9+i8JCCTtcTqQOQqekuVdeqAxYof3zeK+uApMlN42+ttl3WH@vger.kernel.org, AJvYcCXjyiu2msfh1AXmpdACrjZx+ehysfpAHrqTL3Gk0oouOMr1XE2prmui7X17UkhP6YHRxYLeTF+ljL2Ea/bN@vger.kernel.org
+X-Gm-Message-State: AOJu0YwCNLc2MLekUBkrs1kRjbny8AEcOO6Ria0UohKkgPnEvw8gy2TS
+	XfdJ56LwPfjZfF++mQvDay+6Ux5xItp829lIsUaNFvvSYv5zIamDBY00HOxh
+X-Google-Smtp-Source: AGHT+IETCHIGK0mw721enGSsiHio9F34nf8fMRrHd76WZv69hnIg/7XiAuB9jHfhRho4v3uBI4sk8Q==
+X-Received: by 2002:a05:690c:f82:b0:62c:e6c0:e887 with SMTP id 00721157ae682-6cfb950a938mr29761547b3.9.1724756155382;
+        Tue, 27 Aug 2024 03:55:55 -0700 (PDT)
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com. [209.85.219.169])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6c39de3e7d9sm18617947b3.128.2024.08.27.03.55.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Aug 2024 03:55:54 -0700 (PDT)
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e1633202008so5249104276.2;
+        Tue, 27 Aug 2024 03:55:54 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCU1z0Udm9zoeM3IQOFyeenSQLYJpx2yx7cgvGb8yfeCoV5llNKY7CICZ6g8BCN/rfW4IHGuw+6p7YhZs0pdpHgX77M=@vger.kernel.org, AJvYcCUEzwgKCk1MaYoaZHfqkp9EhLlUj/iK4dB5HIfFlhr9/poZyCajC6rUZq2SJWdaCTTL0RG+PTqKDdqmZJK7@vger.kernel.org, AJvYcCVFj/7SgI2UFAFEDYQm1Vnt9diD2heqtr5UMpg5SFfgis85Lj3tyL1+zqJqTookxbwh0sOoPLW54j/jobd7@vger.kernel.org, AJvYcCVHBPjzhh7j36So4wkZIBIl9XOeoQU9SlsgMYz9mCk4gU81vWRbnG3X/V6bK/qE+U+R2HIHt+nJQPg=@vger.kernel.org
+X-Received: by 2002:a05:690c:9e:b0:6b2:28c3:b706 with SMTP id
+ 00721157ae682-6cfbb6fe00dmr29288707b3.34.1724756154320; Tue, 27 Aug 2024
+ 03:55:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/29] media: iris: initialize power resources
-To: quic_dikshita@quicinc.com, Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240827-iris_v3-v3-0-c5fdbbe65e70@quicinc.com>
- <20240827-iris_v3-v3-4-c5fdbbe65e70@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240827-iris_v3-v3-4-c5fdbbe65e70@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240823-cleanup-h-guard-pm-domain-v1-0-8320722eaf39@linaro.org>
+ <20240823-cleanup-h-guard-pm-domain-v1-9-8320722eaf39@linaro.org>
+ <CAMuHMdV0R0+u1eCiUOHhL5w-wzge9KhgyumJSd28oF9kQmnx_Q@mail.gmail.com>
+ <a48f1a0b-0e20-4782-bf6b-c430da9ae391@linaro.org> <58f5d332-2f2a-4607-9662-e71fd23b1316@linaro.org>
+In-Reply-To: <58f5d332-2f2a-4607-9662-e71fd23b1316@linaro.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Tue, 27 Aug 2024 12:55:40 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdUQ5AD1QoO5F1nAy+GJoGtbi2ztKfK=2buU1MNeO8etJw@mail.gmail.com>
+Message-ID: <CAMuHMdUQ5AD1QoO5F1nAy+GJoGtbi2ztKfK=2buU1MNeO8etJw@mail.gmail.com>
+Subject: Re: [PATCH 09/10] pmdomain: renesas: rcar-gen4-sysc: Use scoped
+ device node handling to simplify error paths
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>, Heiko Stuebner <heiko@sntech.de>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-rockchip@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	imx@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 27/08/2024 12:05, Dikshita Agarwal via B4 Relay wrote:
-> From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> 
-> Add support for initializing Iris "resources", which are clocks,
-> interconnects, power domains, reset clocks, and clock frequencies
-> used for iris hardware.
-> 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> ---
+Hi Krzysztof,
 
-...
+On Tue, Aug 27, 2024 at 11:39=E2=80=AFAM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+> On 27/08/2024 11:33, Krzysztof Kozlowski wrote:
+> > On 27/08/2024 09:48, Geert Uytterhoeven wrote:
+> >> On Fri, Aug 23, 2024 at 2:51=E2=80=AFPM Krzysztof Kozlowski
+> >> <krzysztof.kozlowski@linaro.org> wrote:
+> >>> Obtain the device node reference with scoped/cleanup.h to reduce erro=
+r
+> >>> handling and make the code a bit simpler.
+> >>>
+> >>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >>
+> >> Thanks for your patch!
+> >>
+> >>> --- a/drivers/pmdomain/renesas/rcar-gen4-sysc.c
+> >>> +++ b/drivers/pmdomain/renesas/rcar-gen4-sysc.c
+> >>> @@ -303,12 +304,12 @@ static int __init rcar_gen4_sysc_pd_init(void)
+> >>>         const struct rcar_gen4_sysc_info *info;
+> >>>         const struct of_device_id *match;
+> >>>         struct rcar_gen4_pm_domains *domains;
+> >>> -       struct device_node *np;
+> >>>         void __iomem *base;
+> >>>         unsigned int i;
+> >>>         int error;
+> >>>
+> >>> -       np =3D of_find_matching_node_and_match(NULL, rcar_gen4_sysc_m=
+atches, &match);
+> >>> +       struct device_node *np __free(device_node) =3D
+> >>> +               of_find_matching_node_and_match(NULL, rcar_gen4_sysc_=
+matches, &match);
+> >>
+> >> This breaks the declarations/blank-line/code structure, so please move
+> >> this up.
+> >
+> > What do you mean "declaration structure"? That's the way how variables
 
-> +struct iris_platform_data sm8550_data = {
-> +	.icc_tbl = sm8550_icc_table,
-> +	.icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
-> +	.clk_rst_tbl = sm8550_clk_reset_table,
-> +	.clk_rst_tbl_size = ARRAY_SIZE(sm8550_clk_reset_table),
-> +	.pmdomain_tbl = sm8550_pmdomain_table,
-> +	.pmdomain_tbl_size = ARRAY_SIZE(sm8550_pmdomain_table),
-> +	.opp_pd_tbl = sm8550_opp_pd_table,
-> +	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
-> +	.clk_tbl = sm8550_clk_table,
-> +	.clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
-> +};
-> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
-> index 0a54fdaa1ab5..2616a31224f9 100644
-> --- a/drivers/media/platform/qcom/iris/iris_probe.c
-> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
-> @@ -69,6 +69,19 @@ static int iris_probe(struct platform_device *pdev)
->  	if (core->irq < 0)
->  		return core->irq;
->  
-> +	core->iris_platform_data = of_device_get_match_data(core->dev);
-> +	if (!core->iris_platform_data) {
-> +		ret = -ENODEV;
-> +		dev_err_probe(core->dev, ret, "init platform failed\n");
+First a block with declarations, then a blank line, followed by the actual =
+code
+(yeah, the pre-C99 style ;-)
 
-That's not even possible. I would suggest dropping entire if. But if yoi
-insist, then without this weird redundant code. return -EINVAL.
+> > with constructors are expected to be declared - within the code.
 
-> +		return ret;
-> +	}
-> +
-> +	ret = iris_init_resources(core);
-> +	if (ret) {
-> +		dev_err_probe(core->dev, ret, "init resource failed\n");
-> +		return ret;
+When it matters.
 
-How many same errors are you printing? Not mentioning that syntax of
-dev_errp_rpboe is different...
+> Continuing thoughts, so you prefer:
+>
+>         struct rcar_gen4_pm_domains *domains;
+>         void __iomem *base;
+>         struct device_node *np __free(device_node) =3D
+>                 of_find_matching_node_and_match(NULL, rcar_gen4_sysc_matc=
+hes, &match);
+>
+> (assuming I will put it at the end of declarations).
+>
+> Are you sure this is more readable? It's really long line so it
+> obfuscates a bit the declarations. The point of the scoped assignment is =
+that
+> you declare it at point of need/first use.
 
+You're missing reverse Christmas tree order...
 
-> +	}
-> +
->  	ret = v4l2_device_register(dev, &core->v4l2_dev);
->  	if (ret)
->  		return ret;
-> @@ -88,8 +101,14 @@ static int iris_probe(struct platform_device *pdev)
->  }
->  
->  static const struct of_device_id iris_dt_match[] = {
-> -	{ .compatible = "qcom,sm8550-iris", },
-> -	{ .compatible = "qcom,sm8250-venus", },
-> +	{
-> +		.compatible = "qcom,sm8550-iris",
-> +		.data = &sm8550_data,
-> +	},
-> +	{
-> +		.compatible = "qcom,sm8250-venus",
-> +		.data = &sm8250_data,
+> >> If you insist on keeping assignment to and validation of np together,
+> >> the line should be split in declaration and assignment.
+> >
+> > No, that would be inconsistent with cleanup/constructor coding style.
+> > Maybe this is something new, so let me bring previous discussions:
 
-You just added this. No, please do not add code which is immediatly
-incorrect.
+[...]
 
-> +	},
->  	{ },
->  };
->  MODULE_DEVICE_TABLE(of, iris_dt_match);
-> diff --git a/drivers/media/platform/qcom/iris/iris_resources.c b/drivers/media/platform/qcom/iris/iris_resources.c
-> new file mode 100644
-> index 000000000000..57c6f9f3449b
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/iris/iris_resources.c
-> @@ -0,0 +1,171 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/clk.h>
-> +#include <linux/interconnect.h>
-> +#include <linux/pm_domain.h>
-> +#include <linux/pm_opp.h>
-> +#include <linux/reset.h>
-> +
-> +#include "iris_core.h"
-> +#include "iris_resources.h"
-> +
-> +static int iris_init_icc(struct iris_core *core)
-> +{
-> +	const struct icc_info *icc_tbl;
-> +	u32 ret, i = 0;
-> +
-> +	icc_tbl = core->iris_platform_data->icc_tbl;
-> +
-> +	core->icc_count = core->iris_platform_data->icc_tbl_size;
-> +	core->icc_tbl = devm_kzalloc(core->dev,
-> +				     sizeof(struct icc_bulk_data) * core->icc_count,
-> +				     GFP_KERNEL);
-> +	if (!core->icc_tbl)
-> +		return -ENOMEM;
-> +
-> +	for (i = 0; i < core->icc_count; i++) {
-> +		core->icc_tbl[i].name = icc_tbl[i].name;
-> +		core->icc_tbl[i].avg_bw = icc_tbl[i].bw_min_kbps;
-> +		core->icc_tbl[i].peak_bw = 0;
-> +	}
-> +
-> +	ret = devm_of_icc_bulk_get(core->dev, core->icc_count, core->icc_tbl);
-> +	if (ret)
-> +		dev_err(core->dev, "failed to get interconnect paths, NoC will stay unconfigured!\n");
-> +
-> +	return ret;
-> +}
-> +
-> +static int iris_pd_get(struct iris_core *core)
-> +{
-> +	int ret;
-> +
-> +	struct dev_pm_domain_attach_data iris_pd_data = {
-> +		.pd_names = core->iris_platform_data->pmdomain_tbl,
-> +		.num_pd_names = core->iris_platform_data->pmdomain_tbl_size,
-> +		.pd_flags = PD_FLAG_NO_DEV_LINK,
-> +	};
-> +
-> +	ret = devm_pm_domain_attach_list(core->dev, &iris_pd_data, &core->pmdomain_tbl);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	return 0;
-> +}
-> +
-> +static int iris_opp_pd_get(struct iris_core *core)
-> +{
-> +	int ret;
-> +
-> +	struct dev_pm_domain_attach_data iris_opp_pd_data = {
-> +		.pd_names = core->iris_platform_data->opp_pd_tbl,
-> +		.num_pd_names = core->iris_platform_data->opp_pd_tbl_size,
-> +		.pd_flags = PD_FLAG_DEV_LINK_ON,
-> +	};
-> +
-> +	ret = devm_pm_domain_attach_list(core->dev, &iris_opp_pd_data, &core->opp_pmdomain_tbl);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	return 0;
-> +}
-> +
-> +static int iris_init_power_domains(struct iris_core *core)
-> +{
-> +	const struct platform_clk_data *clk_tbl;
-> +	u32 clk_cnt, i;
-> +	int ret;
-> +
-> +	ret = iris_pd_get(core);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = iris_opp_pd_get(core);
-> +	if (ret)
-> +		return ret;
-> +
-> +	clk_tbl = core->iris_platform_data->clk_tbl;
-> +	clk_cnt = core->iris_platform_data->clk_tbl_size;
-> +
-> +	for (i = 0; i < clk_cnt; i++) {
-> +		if (clk_tbl[i].clk_type == IRIS_HW_CLK) {
-> +			ret = devm_pm_opp_set_clkname(core->dev, clk_tbl[i].clk_name);
-> +			if (ret)
-> +				return ret;
-> +		}
-> +	}
-> +
-> +	ret = devm_pm_opp_of_add_table(core->dev);
-> +	if (ret) {
-> +		dev_err(core->dev, "failed to add opp table\n");
-> +		return ret;
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +static int iris_init_clocks(struct iris_core *core)
-> +{
-> +	int ret;
-> +
-> +	ret = devm_clk_bulk_get_all(core->dev, &core->clock_tbl);
-> +	if (ret < 0) {
-> +		dev_err(core->dev, "failed to get bulk clock\n");
+> > and finally it will reach documentation (although it focuses on
 
-Syntax is:
-return dev_err_probe(). If this is probe path. Is it?
+Oh, "finally" as in not yet upstream ;-)
 
-> +		return ret;
-> +	}
-> +
-> +	core->clk_count = ret;
-> +
-> +	return 0;
-> +}
-> +
-> +static int iris_init_resets(struct iris_core *core)
-> +{
-> +	const char * const *rst_tbl;
-> +	u32 rst_tbl_size;
-> +	u32 i = 0, ret;
-> +
-> +	rst_tbl = core->iris_platform_data->clk_rst_tbl;
-> +	rst_tbl_size = core->iris_platform_data->clk_rst_tbl_size;
-> +
-> +	core->resets = devm_kzalloc(core->dev,
-> +				    sizeof(*core->resets) * rst_tbl_size,
-> +				    GFP_KERNEL);
-> +	if (rst_tbl_size && !core->resets)
-> +		return -ENOMEM;
-> +
-> +	for (i = 0; i < rst_tbl_size; i++)
-> +		core->resets[i].id = rst_tbl[i];
-> +
-> +	ret = devm_reset_control_bulk_get_exclusive(core->dev, rst_tbl_size, core->resets);
-> +	if (ret) {
-> +		dev_err(core->dev, "failed to get resets\n");
+> > unwinding process to be specific - "When the unwind order ..."):
+> > https://lore.kernel.org/all/171175585714.2192972.12661675876300167762.s=
+tgit@dwillia2-xfh.jf.intel.com/
 
-Syntax is:
-return dev_err_probe(). If this is probe path. Is it?
+"When the unwind order matters..."
 
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +int iris_init_resources(struct iris_core *core)
-> +{
-> +	int ret;
-> +
-> +	ret = iris_init_icc(core);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = iris_init_power_domains(core);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = iris_init_clocks(core);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = iris_init_resets(core);
-> +
-> +	return ret;
-> +}
+So it's perfectly fine to have:
 
-This should be just part of of main unit file, next to probe. It is
-unusual to see probe parts not next to probe. Sorry, that's wrong.
+    static int __init rcar_gen4_sysc_pd_init(void)
+    {
+            struct device_node *np __free(device_node) =3D NULL;
+            struct rcar_gen4_pm_domains *domains;
+            const struct rcar_gen4_sysc_info *info;
+            const struct of_device_id *match;
+            void __iomem *base;
+            unsigned int i;
+            int error;
 
-Best regards,
-Krzysztof
+            np =3D of_find_matching_node_and_match(NULL,
+rcar_gen4_sysc_matches, &match);
+            if (!np)
+                    return -ENODEV;
 
+            ...
+    }
+
+But my first suggestion:
+
+    static int __init rcar_gen4_sysc_pd_init(void)
+    {
+            struct device_node *np __free(device_node) =3D
+                    of_find_matching_node_and_match(NULL,
+rcar_gen4_sysc_matches, &match);
+            struct rcar_gen4_pm_domains *domains;
+            const struct rcar_gen4_sysc_info *info;
+            const struct of_device_id *match;
+            void __iomem *base;
+            unsigned int i;
+            int error;
+
+            if (!np)
+                    return -ENODEV;
+
+            ...
+    }
+
+is safer w.r.t. to future modification.
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--=20
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
 
