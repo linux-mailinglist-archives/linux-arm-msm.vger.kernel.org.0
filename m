@@ -1,128 +1,285 @@
-Return-Path: <linux-arm-msm+bounces-29636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29637-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DF49960B96
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 15:16:36 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1577D960C52
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 15:40:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 704241C228F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 13:16:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 50353B28CBD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 13:39:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C67381BC9EA;
-	Tue, 27 Aug 2024 13:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 512C21BCA04;
+	Tue, 27 Aug 2024 13:39:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eLm/3AN6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cIiepjKZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAEF19CCE6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 13:16:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2975B1A0715
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 13:39:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724764591; cv=none; b=uFnU+o7sAaR+Hx3SY8zdRUHhLZsf6qgtbHlNFZh/Cth1ZKsN02KV/tfhv/Zgp/o1WqYVS+FHYGZeZLMcufUBzYy3+DpYKDBbc0zacVVUMFyR6IJx2ltMq6GZof68aYfTgXNqMW+gBnb7NCL6jrk2w7MTv7Q/JqmZoEItd0xnkGE=
+	t=1724765963; cv=none; b=WBB6CVthW6cxhGJeWOWKFEzVNjOpmyB5miZNGz31GRenJpwRWyo9yCVDadmf13PUwfI315LYkXP5jykEcUr9CvNZLRMLB0ibyz6Q6eK9mkpzpeBRe7Eu0A2PKv0QU0VxYNBUOfDWo8Csr8wvjnEHVcOLBmBTHXBIYItlc7G8qiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724764591; c=relaxed/simple;
-	bh=zSDs4BUV3METdXmko0hl60ogxseD+zNrseh74ORAvDo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cT07uQtOvWh2fmWmCnLvBQq2tlkf8jmqyroRZAhYEmxjastXSUD26ntkNjCLYUGz3ssQ1kA9POH+AShdGNVUChDueKclVPDt+9+aWzaw7aRtVBYGp8bx8GvcoFxiA/GxScHkgbfQbP9H9qWjHoBlyoOdoq8J93B0Nkc5QD3i7Gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eLm/3AN6; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5bec4e00978so5250449a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 06:16:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724764588; x=1725369388; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GrhMuYl4d9v0h/UP5/GJa9EJkPhfXO+uMjBnq3JFZdI=;
-        b=eLm/3AN69Jm7eIp6BT7VIJGvq9JewO7/2i5AtUByUlCzR4/dlanauEgn5vgc1xCBhS
-         GNs5E2bOWHE2Ys4XvahjpbdFEb1uQapcqiWYcnDHeFaRI/NuSB3XbBN4kj/OTBmrIYiy
-         Ffomrz5FypB2WDKR378dYXD+/r8+FQhRHVWWqa+dWm47IAqQD4JK4/Eq3VOke+2xPFyE
-         zUhyiILR+IKt51PClTjTYsktm5faNHgO/pMRpNH02b74M/OesGnI4DVmB/nLM2vVk0Bn
-         gnZRWKVwnbFChNi1CY5bMTHkYJ2WXJinpNF/MAEeiRH/WviB8Mf83xqefhJYZ8HXRkkI
-         o/3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724764588; x=1725369388;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GrhMuYl4d9v0h/UP5/GJa9EJkPhfXO+uMjBnq3JFZdI=;
-        b=mMqSUpKN49DmQ5FZENW99IgEZ8TDaQFuC9WqMtqP8aHf8bvaANuTM3pGaHeReGCXRQ
-         lYz1pQKymdkLhAvrgjnJy05mbF0545+wqGCPI8knoFFWkpot4MKu0vvAwAd+FKClrBc8
-         q5Jc9bX0MLGBSFVX/4KUH+WdgcVY89tllHrA119YPhNsVrGh6Z69g3LF3ufYVHo/8xlC
-         GX5lcTxfvpimUV26lRhS4a8uywREhEb2MF2dnfvSrUyQikGAwgsYtMWN5fk4wSyWFcBl
-         W/fktOKqcWAcGXnb+pgwpaU43U+a7FI30m0pJ23F1k+trPwuJFR3/bJdJoZjfxigviGE
-         GR1w==
-X-Gm-Message-State: AOJu0YyxSrVqdqdAs/MbltHsNFdygy7qnrx0Qchli3iFPrdxpPGRM1l6
-	HWlZwC/J+NcEEHC2uarwDxBb7Vyg1xzEzIQWL1jx3suBklqg8zX2nK6qYXeURP8=
-X-Google-Smtp-Source: AGHT+IFnrrYt1pcEShR0jArLWyB07KU328muSxhdaWUNjW24ILMrZgVMlT+ASlmP8Ql2d4/j2jfvkg==
-X-Received: by 2002:a05:6402:42c7:b0:5b8:5851:66cd with SMTP id 4fb4d7f45d1cf-5c089159d17mr8851171a12.2.1724764588304;
-        Tue, 27 Aug 2024 06:16:28 -0700 (PDT)
-Received: from [192.168.0.25] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c0bb1c2b8fsm1004146a12.1.2024.08.27.06.16.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Aug 2024 06:16:27 -0700 (PDT)
-Message-ID: <63844f8e-4564-4528-b81c-27e973fb36c8@linaro.org>
-Date: Tue, 27 Aug 2024 14:16:26 +0100
+	s=arc-20240116; t=1724765963; c=relaxed/simple;
+	bh=mgFOFeLBlxfh1P2qLfqCzzCjjawBaBWoDeRs88GUP3E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EfE3dZgomggQRweckRTr6UxUkv2fjHUQZVrGzdCS22vOzmX3CbFTWmPsxiivRNu1751nVNyOIvWzs61GGgBAs9ag1/jXBwznaZDDMmjxc5Gn65o3R0vyqsr26dE+mg3uhD3fSWRW0tHni/UOXVJvViW9VpLeWatuIZV2WACiHPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cIiepjKZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAE70C61073
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 13:39:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724765962;
+	bh=mgFOFeLBlxfh1P2qLfqCzzCjjawBaBWoDeRs88GUP3E=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=cIiepjKZP59TRjQCYRUf/RkWIINV6yDOQUisRhLkeUF3MRNQ09DI1nuvEG0fq8gnw
+	 5dp7cQ/hzVPP+OFI+6O3jMh1HJf5nKM3DuTTMmPaecfGVnFrisLnUdBOm2inJRq5i6
+	 wEwrydxZfuO7EotJ3uZAQJxJek8VZkNrcONHbKRyQmj00vuZeq7rGc3v0j4dhKnxu/
+	 iATTz8KppC/sHd53Qh6gyEaxUtWDGYJFxXwzSOQY9slMmLg20fKmhdnwkTH2A/mNGS
+	 a4UuQBsyR2QN9aCkPZDznBouITtZr6ZwxHpZXoJ1iyrN0xiYOL8/N1e+guQuDXjCIz
+	 iXZH2M7XHC0KA==
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e16518785c2so4662024276.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 06:39:22 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUkJaSwt7dfbTSmj/h7AA1PJjDL6UW5DvlKqpZsPOycHpM7V73dt8VhwxCC+Ld0ayW5nAj9uevuwWR/ZmT2@vger.kernel.org
+X-Gm-Message-State: AOJu0YxRYp9PlZgV+BaMbKOLxR3954F9nRab9ZTZuSiQAlkPpZ8AN74l
+	2MZp3Rqh2HsM3jSteeBDMyFYQQLaN+iUz6dIdqv6T/qW4xXME7rZDxb7vwlcWGVlkYkj9XTRUvl
+	DOsep1rzNhVaJxKUvUsNVTBM7cN7gYOfcyGFc6w==
+X-Google-Smtp-Source: AGHT+IGXnhHqNrJhk46Rl+P1U8Op9Mh+U4zroGn3/eljhE3p4XH2WiUerYGsPqzGwn7EwuvEBtyqueJvGIXDJt/wOYs=
+X-Received: by 2002:a05:6902:1006:b0:e13:d834:603e with SMTP id
+ 3f1490d57ef6-e17a8e42776mr14587824276.45.1724765961830; Tue, 27 Aug 2024
+ 06:39:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/13] media: qcom: camss: Add support for VFE hardware
- version Titan 780
-To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-14-quic_depengs@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240812144131.369378-14-quic_depengs@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20240812-tdp158-v5-0-78684a84ec23@freebox.fr> <20240812-tdp158-v5-2-78684a84ec23@freebox.fr>
+In-Reply-To: <20240812-tdp158-v5-2-78684a84ec23@freebox.fr>
+From: Robert Foss <rfoss@kernel.org>
+Date: Tue, 27 Aug 2024 15:39:10 +0200
+X-Gmail-Original-Message-ID: <CAN6tsi7UEZ1B3BmTxL-WEeX4Dm0cOYpJSW2QFv6t1vCxcaM8KA@mail.gmail.com>
+Message-ID: <CAN6tsi7UEZ1B3BmTxL-WEeX4Dm0cOYpJSW2QFv6t1vCxcaM8KA@mail.gmail.com>
+Subject: Re: [PATCH v5 2/2] drm/bridge: add support for TI TDP158
+To: Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Arnaud Vrac <avrac@freebox.fr>, 
+	Pierre-Hugues Husson <phhusson@freebox.fr>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 12/08/2024 15:41, Depeng Shao wrote:
-> +static void vfe_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
-> +{
-> +	int port_id = line_id;
+On Mon, Aug 12, 2024 at 4:51=E2=80=AFPM Marc Gonzalez <mgonzalez@freebox.fr=
+> wrote:
+>
+> TDP158 is an AC-coupled DVI / HDMI to TMDS level shifting Redriver.
+> It supports DVI 1.0, HDMI 1.4b and 2.0b.
+> It supports 4 TMDS channels, HPD, and a DDC interface.
+> It supports dual power supply rails (1.1V on VDD, 3.3V on VCC)
+> for power reduction. Several methods of power management are
+> implemented to reduce overall power consumption.
+> It supports fixed receiver EQ gain using I2C or pin strap to
+> compensate for different lengths input cable or board traces.
+>
+> Features
+>
+> - AC-coupled TMDS or DisplayPort dual-mode physical layer input
+> to HDMI 2.0b TMDS physical layer output supporting up to 6Gbps
+> data rate, compatible with HDMI 2.0b electrical parameters
+> - DisplayPort dual-mode standard version 1.1
+> - Programmable fixed receiver equalizer up to 15.5dB
+> - Global or independent high speed lane control, pre-emphasis
+> and transmit swing, and slew rate control
+> - I2C or pin strap programmable
+> - Configurable as a DisplayPort redriver through I2C
+> - Full lane swap on main lanes
+> - Low power consumption (200 mW at 6Gbps, 8 mW in shutdown)
+>
+> https://www.ti.com/lit/ds/symlink/tdp158.pdf
+>
+> On our board, I2C_EN is pulled high.
+> Thus, this code defines a module_i2c_driver.
+>
+> The default settings work fine for our use-case.
+> So this basic driver doesn't need to tweak any I2C registers.
+>
+> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+> ---
+>  drivers/gpu/drm/bridge/Kconfig     |   7 +++
+>  drivers/gpu/drm/bridge/Makefile    |   1 +
+>  drivers/gpu/drm/bridge/ti-tdp158.c | 108 +++++++++++++++++++++++++++++++=
+++++++
+>  3 files changed, 116 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/bridge/Kconfig b/drivers/gpu/drm/bridge/Kcon=
+fig
+> index c621be1a99a89..c0ab5b620b57d 100644
+> --- a/drivers/gpu/drm/bridge/Kconfig
+> +++ b/drivers/gpu/drm/bridge/Kconfig
+> @@ -368,6 +368,13 @@ config DRM_TI_DLPC3433
+>           It supports up to 720p resolution with 60 and 120 Hz refresh
+>           rates.
+>
+> +config DRM_TI_TDP158
+> +       tristate "TI TDP158 HDMI/TMDS bridge"
+> +       depends on OF
+> +       select DRM_PANEL_BRIDGE
+> +       help
+> +         Texas Instruments TDP158 HDMI/TMDS Bridge driver
 > +
-> +	/* RUP(register update) registers has beem moved to CSID in Titan 780.
-> +	 * Notify the event of trigger RUP.
-> +	 */
-> +	camss_reg_update(vfe->camss, vfe->id, port_id, false);
+>  config DRM_TI_TFP410
+>         tristate "TI TFP410 DVI/HDMI bridge"
+>         depends on OF
+> diff --git a/drivers/gpu/drm/bridge/Makefile b/drivers/gpu/drm/bridge/Mak=
+efile
+> index 7df87b582dca3..3daf803ce80b6 100644
+> --- a/drivers/gpu/drm/bridge/Makefile
+> +++ b/drivers/gpu/drm/bridge/Makefile
+> @@ -32,6 +32,7 @@ obj-$(CONFIG_DRM_I2C_ADV7511) +=3D adv7511/
+>  obj-$(CONFIG_DRM_TI_DLPC3433) +=3D ti-dlpc3433.o
+>  obj-$(CONFIG_DRM_TI_SN65DSI83) +=3D ti-sn65dsi83.o
+>  obj-$(CONFIG_DRM_TI_SN65DSI86) +=3D ti-sn65dsi86.o
+> +obj-$(CONFIG_DRM_TI_TDP158) +=3D ti-tdp158.o
+>  obj-$(CONFIG_DRM_TI_TFP410) +=3D ti-tfp410.o
+>  obj-$(CONFIG_DRM_TI_TPD12S015) +=3D ti-tpd12s015.o
+>  obj-$(CONFIG_DRM_NWL_MIPI_DSI) +=3D nwl-dsi.o
+> diff --git a/drivers/gpu/drm/bridge/ti-tdp158.c b/drivers/gpu/drm/bridge/=
+ti-tdp158.c
+> new file mode 100644
+> index 0000000000000..4ee0ad29874de
+> --- /dev/null
+> +++ b/drivers/gpu/drm/bridge/ti-tdp158.c
+> @@ -0,0 +1,108 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright 2024 Freebox SAS
+> + */
+> +#include <drm/drm_bridge.h>
+> +#include <drm/drm_atomic_helper.h>
+> +#include <linux/i2c.h>
+> +
+> +struct tdp158 {
+> +       struct drm_bridge bridge;
+> +       struct drm_bridge *next;
+> +       struct gpio_desc *enable; // Operation Enable - pin 36
+> +       struct regulator *vcc; // 3.3V
+> +       struct regulator *vdd; // 1.1V
+> +       struct device *dev;
+> +};
+> +
+> +static void tdp158_enable(struct drm_bridge *bridge, struct drm_bridge_s=
+tate *prev)
+> +{
+> +       int err;
+> +       struct tdp158 *tdp158 =3D bridge->driver_private;
+> +
+> +       err =3D regulator_enable(tdp158->vcc);
+> +       if (err)
+> +               dev_err(tdp158->dev, "failed to enable vcc: %d", err);
+> +
+> +       err =3D regulator_enable(tdp158->vdd);
+> +       if (err)
+> +               dev_err(tdp158->dev, "failed to enable vdd: %d", err);
+> +
+> +       gpiod_set_value_cansleep(tdp158->enable, 1);
 > +}
 > +
-> +static inline void vfe_reg_update_clear(struct vfe_device *vfe,
-> +					enum vfe_line_id line_id)
+> +static void tdp158_disable(struct drm_bridge *bridge, struct drm_bridge_=
+state *prev)
 > +{
-> +	int port_id = line_id;
+> +       struct tdp158 *tdp158 =3D bridge->driver_private;
 > +
-> +	/* RUP(register update) registers has beem moved to CSID in Titan 780.
-> +	 * Notify the event of trigger RUP clear.
-> +	 */
-> +	camss_reg_update(vfe->camss, vfe->id, port_id, true);
+> +       gpiod_set_value_cansleep(tdp158->enable, 0);
+> +       regulator_disable(tdp158->vdd);
+> +       regulator_disable(tdp158->vcc);
 > +}
+> +
+> +static int tdp158_attach(struct drm_bridge *bridge, enum drm_bridge_atta=
+ch_flags flags)
+> +{
+> +       struct tdp158 *tdp158 =3D bridge->driver_private;
+> +
+> +       return drm_bridge_attach(bridge->encoder, tdp158->next, bridge, f=
+lags);
+> +}
+> +
+> +static const struct drm_bridge_funcs tdp158_bridge_funcs =3D {
+> +       .attach =3D tdp158_attach,
+> +       .atomic_enable =3D tdp158_enable,
+> +       .atomic_disable =3D tdp158_disable,
+> +       .atomic_duplicate_state =3D drm_atomic_helper_bridge_duplicate_st=
+ate,
+> +       .atomic_destroy_state =3D drm_atomic_helper_bridge_destroy_state,
+> +       .atomic_reset =3D drm_atomic_helper_bridge_reset,
+> +};
+> +
+> +static int tdp158_probe(struct i2c_client *client)
+> +{
+> +       struct tdp158 *tdp158;
+> +       struct device *dev =3D &client->dev;
+> +
+> +       tdp158 =3D devm_kzalloc(dev, sizeof(*tdp158), GFP_KERNEL);
+> +       if (!tdp158)
+> +               return -ENOMEM;
+> +
+> +       tdp158->next =3D devm_drm_of_get_bridge(dev, dev->of_node, 1, 0);
+> +       if (IS_ERR(tdp158->next))
+> +               return dev_err_probe(dev, PTR_ERR(tdp158->next), "missing=
+ bridge");
+> +
+> +       tdp158->vcc =3D devm_regulator_get(dev, "vcc");
+> +       if (IS_ERR(tdp158->vcc))
+> +               return dev_err_probe(dev, PTR_ERR(tdp158->vcc), "vcc");
+> +
+> +       tdp158->vdd =3D devm_regulator_get(dev, "vdd");
+> +       if (IS_ERR(tdp158->vdd))
+> +               return dev_err_probe(dev, PTR_ERR(tdp158->vdd), "vdd");
+> +
+> +       tdp158->enable =3D devm_gpiod_get_optional(dev, "enable", GPIOD_O=
+UT_LOW);
+> +       if (IS_ERR(tdp158->enable))
+> +               return dev_err_probe(dev, PTR_ERR(tdp158->enable), "enabl=
+e");
+> +
+> +       tdp158->bridge.of_node =3D dev->of_node;
+> +       tdp158->bridge.funcs =3D &tdp158_bridge_funcs;
+> +       tdp158->bridge.driver_private =3D tdp158;
+> +       tdp158->dev =3D dev;
+> +
+> +       return devm_drm_bridge_add(dev, &tdp158->bridge);
+> +}
+> +
+> +static const struct of_device_id tdp158_match_table[] =3D {
+> +       { .compatible =3D "ti,tdp158" },
+> +       { }
+> +};
+> +MODULE_DEVICE_TABLE(of, tdp158_match_table);
+> +
+> +static struct i2c_driver tdp158_driver =3D {
+> +       .probe =3D tdp158_probe,
+> +       .driver =3D {
+> +               .name =3D "tdp158",
+> +               .of_match_table =3D tdp158_match_table,
+> +       },
+> +};
+> +module_i2c_driver(tdp158_driver);
+> +
+> +MODULE_DESCRIPTION("TI TDP158 driver");
+> +MODULE_LICENSE("GPL");
+>
+> --
+> 2.34.1
+>
 
-I think I tend to agree with Vlad here, that this is a needless layer of 
-wrappering.
-
-I'm not sure that's exactly what you guys where talking about but, I 
-rebased my x1e80100 stuff on top of your stuff
-
-https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-24-08-15-x1e80100-camss-debufsoff-cleanup?ref_type=heads
-
-and anyway the above wrapper didn't make alot of sense to me.
-
----
-bod
+Reviewed-by: Robert Foss <rfoss@kernel.org>
 
