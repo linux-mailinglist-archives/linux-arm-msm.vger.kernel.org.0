@@ -1,191 +1,450 @@
-Return-Path: <linux-arm-msm+bounces-29561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B51096046C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 10:30:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 35F4196047A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 10:33:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 08DF61F21A04
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 08:30:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D91EA284258
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Aug 2024 08:33:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE10C131182;
-	Tue, 27 Aug 2024 08:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11D92199FCE;
+	Tue, 27 Aug 2024 08:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LP35UPxJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cC8BWnet"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39651197A8F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 08:30:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D501714A3;
+	Tue, 27 Aug 2024 08:33:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724747439; cv=none; b=KHjDYSxRZNeia/qpo5wT99Qz5+O5tX+HcOfkoZvpbjHadM8FVv0aK9CGNDszhwu3m7D3ZR+4TxjsaWCDq1n92YIpia+ZWVZhbvIaCmpWpF8R+mFB5Qy1Q3mvOblnvhTDxiV+EgnB+AzmbEA+BjfFi2Da4ocmqBTh8ZKjdagOx9c=
+	t=1724747586; cv=none; b=b0aRe4PqS8biqHPtSw3I/9V4wf93QgjTubneC4wCVmn6PbbJumesnqCfe2SYWDJtWFPVPyaiWteFDQuE8z26S6nXck5SZx1V9cJeIvFwXwnABWknMdWLyGMiWHngynq3Sl46FRAIYqBS/ajjL8vpQxXbApNkXCQ8CwWpr9D30S0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724747439; c=relaxed/simple;
-	bh=cvZH7fUYaeL9wrWckMOUxPYywvVUJJ7wNoFeMasAFh0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DQTCtqlKT1Cw8npMs/r5ShPxwg6kKk9fu4f3N6Fo8p61gKcSqyFY4eEwC3yEbDYYHDVesAOWXfACEY8+EB7aIZurHIFRkJPmFyhGNe95bVf1zHMYRwo4zdrQbG7PwTBPTDmZ8tWof6LlZflcEC8ohBWlKaC9a6TCPh549kz0G5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LP35UPxJ; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-20223b5c1c0so46526575ad.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Aug 2024 01:30:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724747437; x=1725352237; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=4PG1MKybPmHFMME9V8dY/+bhiqIyDMUmzSsge0xRow8=;
-        b=LP35UPxJv4rW/rUKGq8i9eSrncCMGUrPMnYRXC9hxS3/RES3YtV8CLglw7Gu2L7MJR
-         A6HsySUrhV14sXRGcycYZ+CGulmKWDnfQPD3MnI4YLcjxfV9zGZ2gVKpwkg81G3wKdjo
-         QaomjzMXg0quQtSLpAIcwtoY3zKEJzMCkt1gIp/hue7IOi2E4cW+gAFo7LlrQhMFk9CN
-         Nh+QNspArm7XtKtKF7FqHmtn1GT0uXO4FFrbKIIgJdEO1jCvYd6RkezvXuIoNNJxc+3d
-         r7QB/tBmiXKKSxDX3bUI4kXp6TBJjtiAl72o12BwSIpiTnW48Oni9GMNEnnNwyO7f3PH
-         T/Rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724747437; x=1725352237;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4PG1MKybPmHFMME9V8dY/+bhiqIyDMUmzSsge0xRow8=;
-        b=FTDCBY+NhRXSdp1GeYsj517PyD95CzhhATelW3rse7IsLBaJAG+aNWHZvX9sA/gWq6
-         qyBQNEhpPzNqgzT3+GsI0ggekRpeYsRHkGJtyIzzdPXBbLgCx+oF0ZUfJEGseydzQUNC
-         QCOziactpcWRbdQ/ix3jJYvpyZ3wvN7rfSVy8TP1pfH1zvvEzD9NVk1DQTALibGOoXnB
-         ID4xQaysoABe46Zi6w0cACjHSTbqIzg/7bXJToKqo0ml/65RpkCzoqYLpFAT9Dl+K179
-         5AffsmXNYxb7F41pBKJULSY8heIOMVlV+W+ooFkcTd/oUZzahpeUu8zx5MvDEKKJiOCk
-         u3MA==
-X-Forwarded-Encrypted: i=1; AJvYcCUxUjdIwr4hZCRHOYU5mWDMNO/hBdZL1h8wIlC3eF8e4KbTF8vtaojhhAQJsFR4RAR86ppn/lREBFLvY5IO@vger.kernel.org
-X-Gm-Message-State: AOJu0YyOL6zZ9UVUrZxVpvzVTufNVSsue40GZvq+aeW6wL3Ii/dc260+
-	8xFWtBnFw5fA2b9+hx8JB52ZtoeE+0DcQbI3saK2HobfBczauKJUdj8JeE59Fw==
-X-Google-Smtp-Source: AGHT+IHduWJQyUiCIAY3p1Zf9ALxilUWiklFzc/QeC53bqPhevbARPCSsJCvuo+QiSMorgPzFKWzHg==
-X-Received: by 2002:a17:903:11c3:b0:1fd:67c2:f975 with SMTP id d9443c01a7336-204df46c2bamr23997865ad.29.1724747437246;
-        Tue, 27 Aug 2024 01:30:37 -0700 (PDT)
-Received: from thinkpad ([117.213.96.164])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-203855df8d0sm78923245ad.130.2024.08.27.01.30.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Aug 2024 01:30:36 -0700 (PDT)
-Date: Tue, 27 Aug 2024 14:00:31 +0530
-From: "manivannan.sadhasivam@linaro.org" <manivannan.sadhasivam@linaro.org>
-To: Mank Wang <mank.wang@netprisma.us>
-Cc: "duke_xinanwen@163.com" <duke_xinanwen@163.com>,
-	"loic.poulain@linaro.org" <loic.poulain@linaro.org>,
-	"quic_qianyu@quicinc.com" <quic_qianyu@quicinc.com>,
-	"mhi@lists.linux.dev" <mhi@lists.linux.dev>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH V2] bus: mhi: host: pci_generic: Add support for
- Netprisma LCUR57 and FCUN69
-Message-ID: <20240827083031.pmo4627wizsnp2pf@thinkpad>
-References: <PH7PR22MB30386647BE2D813B502226CF81942@PH7PR22MB3038.namprd22.prod.outlook.com>
+	s=arc-20240116; t=1724747586; c=relaxed/simple;
+	bh=l407OVuCih9hGBMMvs2uaR94POvyoNIh66F57mbmCQI=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=a79fUaZ/drsjjtPXVEko2BvqxbM2SYJeyKK2UJs6Vuc1xtT4vPGnUpasSMfRBED/LOdWHRir4GkBOm93naAqzv0JE13FI8KmnRev2WN7BuZnzHuBfOOirNRSEvHlInPPsOvh1FfFU7fG5QfRBmrPjWbzsmFEiEpEhOFJNM98cms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cC8BWnet; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47R7ZYgH026413;
+	Tue, 27 Aug 2024 08:32:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:date:from:message-id:subject:to; s=qcppdkim1; bh=5mk8NHe4flwR
+	ke3QAWef0GhYZ8YvmJv1G6YO6Bu6Kw8=; b=cC8BWnetEhumDUOp0wiEOqRg5R1I
+	Qm3ZGAsK4lNgimCOAXoRZ/PrCpDyU2GwSjvZ8Jk2Z4w8/tizW2aMOQd3z5bi3YBP
+	265pgZS4x0YYAqf4XiA6ibTa3eXRHyQhhXgIKHRsKZ4D6nem9T93CtpbyF2hJpsk
+	8Hf2t/YN2IBG6Vz1xzWN58gNx9mnKIsHgxjx9JYTXeLOdWGHTgdArq3MfbPvgnhz
+	NBUKpiU8EkbWwloJG+OOYAy3DhNYGqRr7071+0x8bHm+BziWj2AyWyjJGhicfvfG
+	bzA63Ut91vyciaai+NGTrKvVneM4RjNutulcRKnCJpMozrE+O+qrYWbvUg==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 417980x97t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 27 Aug 2024 08:32:59 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 47R8Wt8h012025;
+	Tue, 27 Aug 2024 08:32:55 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4178kksp5d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Tue, 27 Aug 2024 08:32:55 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 47R8WtCI012019;
+	Tue, 27 Aug 2024 08:32:55 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-vdadhani-hyd.qualcomm.com [10.213.106.28])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 47R8WthE012018;
+	Tue, 27 Aug 2024 08:32:55 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 4047106)
+	id 6680F5001C3; Tue, 27 Aug 2024 14:02:54 +0530 (+0530)
+From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+To: andersson@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org,
+        krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org, conor+dt@kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com,
+        Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Subject: [V1 RESEND] arm64: dts: qcom: sa8775p: Add UART node
+Date: Tue, 27 Aug 2024 14:02:52 +0530
+Message-Id: <20240827083252.5817-1-quic_vdadhani@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: amimmrmJ8pFwpezb45ZUnqixYc6-CmTJ
+X-Proofpoint-ORIG-GUID: amimmrmJ8pFwpezb45ZUnqixYc6-CmTJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-27_05,2024-08-26_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
+ adultscore=0 mlxlogscore=999 spamscore=0 lowpriorityscore=0 clxscore=1011
+ malwarescore=0 phishscore=0 priorityscore=1501 mlxscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408270063
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <PH7PR22MB30386647BE2D813B502226CF81942@PH7PR22MB3038.namprd22.prod.outlook.com>
 
-On Tue, Aug 27, 2024 at 01:58:33AM +0000, Mank Wang wrote:
-> Add Netprisma LCUR57 and FCUN69 hardware revision:
-> 
-> LCUR57:
-> 02:00.0 Unassigned class [ff00]: Device 203e:1000
-> 	Subsystem: Device 203e:1000
-> 
-> FCUN69:
-> 02:00.0 Unassigned class [ff00]: Device 203e:1001
-> 	Subsystem: Device 203e:1001
-> 
-> Both of these modules create IP interfaces through MBIM.
-> And these modules can be checked for successful recognition through the
-> following command:
-> $ mmcli -L
->     /org/freedesktop/ModemManager1/Modem/0 [NetPrisma] LCUR57-WWD
-> 
-> $ mmcli -L
->     /org/freedesktop/ModemManager1/Modem/0 [NetPrisma] FCUN69-WWD
-> 
-> Signed-off-by: Mank Wang <mank.wang@netprisma.us>
+Add missing UART configuration for sa8775.
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi | 231 ++++++++++++++++++++++++++
+ 1 file changed, 231 insertions(+)
 
-- Mani
-
-> 
-> ---
-> V1 -> V2:
-> 1.Add comments to provide testing methods and IP interface creation methods.
-> 2.Remove unnecessary comments.
-> 
-> Signed-off-by: Mank Wang <mank.wang@netprisma.us>
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 27 +++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 14a11880bcea..2c44aab8695a 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -26,6 +26,7 @@
->  /* PCI VID definitions */
->  #define PCI_VENDOR_ID_THALES	0x1269
->  #define PCI_VENDOR_ID_QUECTEL	0x1eac
-> +#define PCI_VENDOR_ID_NETPRISMA	0x203e
->  
->  #define MHI_EDL_DB			91
->  #define MHI_EDL_COOKIE			0xEDEDEDED
-> @@ -680,6 +681,26 @@ static const struct mhi_pci_dev_info mhi_telit_fn990_info = {
->  	.mru_default = 32768,
->  };
->  
-> +static const struct mhi_pci_dev_info mhi_netprisma_lcur57_info = {
-> +	.name = "netprisma-lcur57",
-> +	.edl = "qcom/prog_firehose_sdx24.mbn",
-> +	.config = &modem_quectel_em1xx_config,
-> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> +	.dma_data_width = 32,
-> +	.mru_default = 32768,
-> +	.sideband_wake = true,
-> +};
-> +
-> +static const struct mhi_pci_dev_info mhi_netprisma_fcun69_info = {
-> +	.name = "netprisma-fcun69",
-> +	.edl = "qcom/prog_firehose_sdx6x.elf",
-> +	.config = &modem_quectel_em1xx_config,
-> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-> +	.dma_data_width = 32,
-> +	.mru_default = 32768,
-> +	.sideband_wake = true,
-> +};
-> +
->  /* Keep the list sorted based on the PID. New VID should be added as the last entry */
->  static const struct pci_device_id mhi_pci_id_table[] = {
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
-> @@ -778,6 +799,12 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  	/* T99W175 (sdx55), HP variant */
->  	{ PCI_DEVICE(0x03f0, 0x0a6c),
->  		.driver_data = (kernel_ulong_t) &mhi_foxconn_t99w175_info },
-> +	/* NETPRISMA LCUR57 (SDX24) */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_NETPRISMA, 0x1000),
-> +		.driver_data = (kernel_ulong_t) &mhi_netprisma_lcur57_info },
-> +	/* NETPRISMA FCUN69 (SDX6X) */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_NETPRISMA, 0x1001),
-> +		.driver_data = (kernel_ulong_t) &mhi_netprisma_fcun69_info },
->  	{  }
->  };
->  MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
-> -- 
-> 2.34.1
-> 
-
-
-
+diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+index e8dbc8d820a6..0c95a23aecec 100644
+--- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
++++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause
+ /*
+  * Copyright (c) 2023, Linaro Limited
++ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ #include <dt-bindings/interconnect/qcom,icc.h>
+@@ -905,6 +906,21 @@
+ 				status = "disabled";
+ 			};
+ 
++			uart14: serial@880000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x00880000 0x0 0x4000>;
++				interrupts = <GIC_SPI 373 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP2_S0_CLK>;
++				clock-names = "se";
++				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
++				interconnect-names = "qup-core", "qup-config";
++				power-domains = <&rpmhpd SA8775P_CX>;
++				status = "disabled";
++			};
++
+ 			i2c15: i2c@884000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x0 0x884000 0x0 0x4000>;
+@@ -947,6 +963,21 @@
+ 				status = "disabled";
+ 			};
+ 
++			uart15: serial@884000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x00884000 0x0 0x4000>;
++				interrupts = <GIC_SPI 583 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP2_S1_CLK>;
++				clock-names = "se";
++				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
++				interconnect-names = "qup-core", "qup-config";
++				power-domains = <&rpmhpd SA8775P_CX>;
++				status = "disabled";
++			};
++
+ 			i2c16: i2c@888000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x0 0x888000 0x0 0x4000>;
+@@ -989,6 +1020,21 @@
+ 				status = "disabled";
+ 			};
+ 
++			uart16: serial@888000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x00888000 0x0 0x4000>;
++				interrupts = <GIC_SPI 584 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP2_S2_CLK>;
++				clock-names = "se";
++				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
++				interconnect-names = "qup-core", "qup-config";
++				power-domains = <&rpmhpd SA8775P_CX>;
++				status = "disabled";
++			};
++
+ 			i2c17: i2c@88c000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x0 0x88c000 0x0 0x4000>;
+@@ -1088,6 +1134,21 @@
+ 				status = "disabled";
+ 			};
+ 
++			uart18: serial@890000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x00890000 0x0 0x4000>;
++				interrupts = <GIC_SPI 586 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP2_S4_CLK>;
++				clock-names = "se";
++				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
++				interconnect-names = "qup-core", "qup-config";
++				power-domains = <&rpmhpd SA8775P_CX>;
++				status = "disabled";
++			};
++
+ 			i2c19: i2c@894000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x0 0x894000 0x0 0x4000>;
+@@ -1130,6 +1191,21 @@
+ 				status = "disabled";
+ 			};
+ 
++			uart19: serial@894000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x00894000 0x0 0x4000>;
++				interrupts = <GIC_SPI 587 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP2_S5_CLK>;
++				clock-names = "se";
++				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
++				interconnect-names = "qup-core", "qup-config";
++				power-domains = <&rpmhpd SA8775P_CX>;
++				status = "disabled";
++			};
++
+ 			i2c20: i2c@898000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x0 0x898000 0x0 0x4000>;
+@@ -1171,6 +1247,22 @@
+ 				power-domains = <&rpmhpd SA8775P_CX>;
+ 				status = "disabled";
+ 			};
++
++			uart20: serial@898000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x00898000 0x0 0x4000>;
++				interrupts = <GIC_SPI 834 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP2_S6_CLK>;
++				clock-names = "se";
++				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ALWAYS>;
++				interconnect-names = "qup-core", "qup-config";
++				power-domains = <&rpmhpd SA8775P_CX>;
++				status = "disabled";
++			};
++
+ 		};
+ 
+ 		qupv3_id_0: geniqup@9c0000 {
+@@ -1227,6 +1319,21 @@
+ 				status = "disabled";
+ 			};
+ 
++			uart0: serial@980000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x980000 0x0 0x4000>;
++				interrupts = <GIC_SPI 550 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
++				clock-names = "se";
++				interconnects = <&clk_virt MASTER_QUP_CORE_0 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_0 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_0 QCOM_ICC_TAG_ALWAYS>;
++				interconnect-names = "qup-core", "qup-config";
++				power-domains = <&rpmhpd SA8775P_CX>;
++				status = "disabled";
++			};
++
+ 			i2c1: i2c@984000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x0 0x984000 0x0 0x4000>;
+@@ -1269,6 +1376,21 @@
+ 				status = "disabled";
+ 			};
+ 
++			uart1: serial@984000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x984000 0x0 0x4000>;
++				interrupts = <GIC_SPI 551 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP0_S1_CLK>;
++				clock-names = "se";
++				interconnects = <&clk_virt MASTER_QUP_CORE_0 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_0 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_0 QCOM_ICC_TAG_ALWAYS>;
++				interconnect-names = "qup-core", "qup-config";
++				power-domains = <&rpmhpd SA8775P_CX>;
++				status = "disabled";
++			};
++
+ 			i2c2: i2c@988000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x0 0x988000 0x0 0x4000>;
+@@ -1311,6 +1433,21 @@
+ 				status = "disabled";
+ 			};
+ 
++			uart2: serial@988000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x988000 0x0 0x4000>;
++				interrupts = <GIC_SPI 529 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP0_S2_CLK>;
++				clock-names = "se";
++				interconnects = <&clk_virt MASTER_QUP_CORE_0 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_0 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_0 QCOM_ICC_TAG_ALWAYS>;
++				interconnect-names = "qup-core", "qup-config";
++				power-domains = <&rpmhpd SA8775P_CX>;
++				status = "disabled";
++			};
++
+ 			i2c3: i2c@98c000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x0 0x98c000 0x0 0x4000>;
+@@ -1353,6 +1490,21 @@
+ 				status = "disabled";
+ 			};
+ 
++			uart3: serial@98c000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x98c000 0x0 0x4000>;
++				interrupts = <GIC_SPI 530 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP0_S3_CLK>;
++				clock-names = "se";
++				interconnects = <&clk_virt MASTER_QUP_CORE_0 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_0 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_0 QCOM_ICC_TAG_ALWAYS>;
++				interconnect-names = "qup-core", "qup-config";
++				power-domains = <&rpmhpd SA8775P_CX>;
++				status = "disabled";
++			};
++
+ 			i2c4: i2c@990000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x0 0x990000 0x0 0x4000>;
+@@ -1395,6 +1547,21 @@
+ 				status = "disabled";
+ 			};
+ 
++			uart4: serial@990000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x990000 0x0 0x4000>;
++				interrupts = <GIC_SPI 531 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GCC_QUPV3_WRAP0_S4_CLK>;
++				clock-names = "se";
++				interconnects = <&clk_virt MASTER_QUP_CORE_0 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_0 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_0 QCOM_ICC_TAG_ALWAYS>;
++				interconnect-names = "qup-core", "qup-config";
++				power-domains = <&rpmhpd SA8775P_CX>;
++				status = "disabled";
++			};
++
+ 			i2c5: i2c@994000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x0 0x994000 0x0 0x4000>;
+@@ -1507,6 +1674,22 @@
+ 				status = "disabled";
+ 			};
+ 
++			uart7: serial@a80000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x00a80000 0x0 0x4000>;
++				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
++				clock-names = "se";
++				clocks = <&gcc GCC_QUPV3_WRAP1_S0_CLK>;
++				interconnect-names = "qup-core", "qup-config";
++				interconnects = <&clk_virt MASTER_QUP_CORE_1 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_1 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_1 QCOM_ICC_TAG_ALWAYS>;
++				power-domains = <&rpmhpd SA8775P_CX>;
++				operating-points-v2 = <&qup_opp_table_100mhz>;
++				status = "disabled";
++			};
++
+ 			i2c8: i2c@a84000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x0 0xa84000 0x0 0x4000>;
+@@ -1549,6 +1732,22 @@
+ 				status = "disabled";
+ 			};
+ 
++			uart8: serial@a84000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x00a84000 0x0 0x4000>;
++				interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
++				clock-names = "se";
++				clocks = <&gcc GCC_QUPV3_WRAP1_S1_CLK>;
++				interconnect-names = "qup-core", "qup-config";
++				interconnects = <&clk_virt MASTER_QUP_CORE_1 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_1 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_1 QCOM_ICC_TAG_ALWAYS>;
++				power-domains = <&rpmhpd SA8775P_CX>;
++				operating-points-v2 = <&qup_opp_table_100mhz>;
++				status = "disabled";
++			};
++
+ 			i2c9: i2c@a88000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x0 0xa88000 0x0 0x4000>;
+@@ -1706,6 +1905,22 @@
+ 				status = "disabled";
+ 			};
+ 
++			uart11: serial@a90000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x00a90000 0x0 0x4000>;
++				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
++				clock-names = "se";
++				clocks = <&gcc GCC_QUPV3_WRAP1_S4_CLK>;
++				interconnect-names = "qup-core", "qup-config";
++				interconnects = <&clk_virt MASTER_QUP_CORE_1 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_1 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_1 QCOM_ICC_TAG_ALWAYS>;
++				power-domains = <&rpmhpd SA8775P_CX>;
++				operating-points-v2 = <&qup_opp_table_100mhz>;
++				status = "disabled";
++			};
++
+ 			i2c12: i2c@a94000 {
+ 				compatible = "qcom,geni-i2c";
+ 				reg = <0x0 0xa94000 0x0 0x4000>;
+@@ -1838,6 +2053,22 @@
+ 				power-domains = <&rpmhpd SA8775P_CX>;
+ 				status = "disabled";
+ 			};
++
++			uart21: serial@b80000 {
++				compatible = "qcom,geni-uart";
++				reg = <0x0 0x00b80000 0x0 0x4000>;
++				interrupts = <GIC_SPI 831 IRQ_TYPE_LEVEL_HIGH>;
++				clock-names = "se";
++				clocks = <&gcc GCC_QUPV3_WRAP3_S0_CLK>;
++				interconnect-names = "qup-core", "qup-config";
++				interconnects = <&clk_virt MASTER_QUP_CORE_3 QCOM_ICC_TAG_ALWAYS
++						 &clk_virt SLAVE_QUP_CORE_3 QCOM_ICC_TAG_ALWAYS>,
++						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
++						 &config_noc SLAVE_QUP_3 QCOM_ICC_TAG_ALWAYS>;
++				power-domains = <&rpmhpd SA8775P_CX>;
++				operating-points-v2 = <&qup_opp_table_100mhz>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		rng: rng@10d2000 {
 -- 
-மணிவண்ணன் சதாசிவம்
+2.17.1
+
 
