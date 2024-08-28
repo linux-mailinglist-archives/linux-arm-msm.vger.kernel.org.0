@@ -1,88 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-29832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D58D963138
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 21:49:29 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99E8F96315C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 22:00:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B11261C23912
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 19:49:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 46EE8B233AA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 20:00:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7347E1ABEC4;
-	Wed, 28 Aug 2024 19:49:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 299FC1AC437;
+	Wed, 28 Aug 2024 19:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mCusYVUw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="azpt6wv/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A943E1A7AE2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 19:49:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F861AB53D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 19:59:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724874564; cv=none; b=jq5u7+oUiuleochm0GMF+Ic3riavyFz06vCctHauNUboF4V/sGu6A++sA+nTM9lydPXfc2gExdRDmf7TIIUh0dfOrBLCPMJz6B8zgTExyainmAnNxo3UCzdLbGeDEKF90FFS3AbqhMtOe6/g+7oD1V/bjgmPEe5Z492889q1KIs=
+	t=1724875195; cv=none; b=FWPQnKqHsqzZ65F2F5EAVojyNwJwMyRsmnMSRJcAsychuDubWJWHG6Pgo/8hZIIpp6PceXLCm03HkrP4fkDm5wlsVzsXTATmcgfw2CMy5jBH4luAuYfY661ZzCgd6JpTA/EYuIP6dhCFgdLPcYnHkIElA/GpntS4m/iEyDqH//E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724874564; c=relaxed/simple;
-	bh=iCpcqPThAPmZLodK+uZfdz3ZGn7+GEtpWdlwHYhSoSw=;
+	s=arc-20240116; t=1724875195; c=relaxed/simple;
+	bh=EF31OWz0253e9blSGsQ5Q82/ZBUquUx8AsXyW+D8yXQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TCu/PQcKKQyZvauBEA0oUejrkGvPD65LEHZHRXYoxtoFgpRjSimljJiOR1UL3mL7gsGcQ1Ed42AM022BZvrIZedP+B9XuT2SEL+52kj/oollfFkNoh/DKBsdrGcRm4O1qvqHGhap5/A332kH731JNpjUQkmBdzQNDpJCh9LD2ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mCusYVUw; arc=none smtp.client-ip=209.85.167.50
+	 Content-Type:Content-Disposition:In-Reply-To; b=PjzelL8UOz+SgcsU2Egqctpgkb/3VGiBbuwXwztd3YerPy+aeRecEedR/GYqjT5Z7AObgGimek8GbPO3VnBvczmVmXkfaZMjhbwR25ca2DFE5VjWUyMtvqlLgzSdOWv3B5ix41bxzA3dwvapiUciC76qTpWF126+9j3q4e0FEcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=azpt6wv/; arc=none smtp.client-ip=209.85.208.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5334fdabefbso880834e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 12:49:22 -0700 (PDT)
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2f3fea6a0a9so9030521fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 12:59:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724874561; x=1725479361; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1724875190; x=1725479990; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WfREJfZgElEweHVwJvSVEk/D+r54zJQcIccfYEdIZSM=;
-        b=mCusYVUwhkOoWoZ7j3rRMP0aB6XymUwG3Nm3ngxRb5Kf+WyEQ7vQT2kxWYj7ejOKGQ
-         mXisgKT1Q3Q/tVY6bq7qla00l86iqNZPDbsYpv4eGkRtxDabeALMxyuvSAt/cg9O4gXm
-         CGBG/JWAT9d1Jx27KwioaHCgqdQXBjTsTGsurBwSiqAjGHd4wVJjn/+1UTe4ObDjfnaR
-         xmWHe0l1QYpDt0uUlk5c6Ak65AN4297l4FMZxgBYkYVGKgXHcsG/aEb+7JRs5xoxI+pw
-         Zaa8/9NsRdzr+Xvym1ITN/eLqnvac3QHRysQmZQ2hDmflO9onPZ3OJyEfcV6zHF1vczm
-         Qmrw==
+        bh=d8zHkfisckPodXDwU4YrlbbeO+jKzfoe0P8xfdKKL2o=;
+        b=azpt6wv/wd3GpH5ITDNjqM9pDjkMlvsw+6Z49nxVFzV2qvxYoqNU1myDurnTs7/0Vr
+         TxwNN2YhTYRPHEij9ki2SZBcIQJHAjwxTABvxh9nYboWRmSe16BKoCdzxfOuTJgzMDYf
+         p3evfHC3KEH+KVJyQtvw5x4okgpBrQrVA0xwsWfiTzeC5Cp7qhw6B5FvvvDe7xp/D/R5
+         4rppboBvH1/1mI2DUbtnAGVTCv8eRPwOjysb9Mpzp50KGwwsHBm5kgyrvEi15xTthJQ9
+         /2bLTkYzWO3TsQbBKODaVPYPmNNs+7F2NBXWHh04R/ix/5DJnPTPCoGkpNAEigDyVsou
+         FLSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724874561; x=1725479361;
+        d=1e100.net; s=20230601; t=1724875190; x=1725479990;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WfREJfZgElEweHVwJvSVEk/D+r54zJQcIccfYEdIZSM=;
-        b=mUBxPvouS2U/pr9ilfUi/wFa7T+HZ9jE8ugsyJ9E5BgtAWoVZdpzNYQjrwDWrc9Y4y
-         l+WtNlEYm+FDfm1vgfHxwYL2rcYmeVJwPIvZL8t+F+mWzWaFmdQ86xg+DEDRMN3GBcZc
-         Sg5Zsu1y45h1NUT0xIP2ya1RtXWOq31IWrFAKkQpP/3k+5yp7A4RPJyivVwN27QN7qw0
-         L/K7Wm1gZrwXiZVpdiVPfaosWZX7qZXiZUSgtXsAjYe/lq7GH3JYUQmL4M+v+AjQg0QV
-         jU2JtmGT21O94raMEXw5ttS/oSb67Ube3Bbk5xBOWSSPwEFhKLdpBXCk8Pz4IOq+g2IK
-         vPkw==
-X-Forwarded-Encrypted: i=1; AJvYcCVBh3TMeyrgW3JNPhNnglckcTXiUQQyQRTsmmi9qSZHXfYBeKIyx551DZSCDuHuAdiALasjXO76Z+G2ceEx@vger.kernel.org
-X-Gm-Message-State: AOJu0YwDVZ63IB1fEXZfwGMN4YQfSB2/d5V5evPkrYgXYtfo5bt5HGh7
-	/BKpHg+ALR5fP+5UwPrFp0EQndIwScuRF2N+sbJ5VqqQVfSX4/xMnLmq/WJJjZc=
-X-Google-Smtp-Source: AGHT+IFR6avFKpr2wHph931hDBC2z+rTIPVUVlBNS/Uou013Y8gMhOrlNprLkZ/3P1WLSkHYPJBA7Q==
-X-Received: by 2002:a05:6512:3b97:b0:52f:228:cf91 with SMTP id 2adb3069b0e04-5353eba3ee1mr78077e87.1.1724874560042;
-        Wed, 28 Aug 2024 12:49:20 -0700 (PDT)
+        bh=d8zHkfisckPodXDwU4YrlbbeO+jKzfoe0P8xfdKKL2o=;
+        b=gLQ+qFr0q6hLo8h1lmbkZIcpVxdOJfLnmOavlsmAk/jefhnIYNorYKj4wtsR4Q+07O
+         yPDczTPB5vu9AAuJUNYJXUByncDwvaYruyZQEhiaG/86x2NDK2Kj/ClGkWco0bQfMHQu
+         6KEgkrCvFS6aIKlFe22sK7CeoJrc6j2T1Ja18eyw/AXTl5L9e8HzQxytJdoqZ14BgrdG
+         mtF87fGKqWcm5gz3FmH20wV8azbn5p5AWdi8ZZYtalp2pihBcvA+L9XARFNA3PZrce/7
+         oL5LaZaaZNzNaq19tJ9rFZwAhBaLf5xwwY1l/j6xADuk3te9yrlIw8aiIMYNoTC3Ol0+
+         PrkQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW7VFSEFzhQWFRI5Jf9rR02X57Gzg9P0pfx1yoJyITGlNebZZrvVEkm1GIgYMZfLUnVNzDvYfYz2L4Om/vd@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzk3fUXzVlwboAk1wbOAsTNP75kSevxWEuFmfQkXP6MlRL+OROP
+	lOp8GN7AbOLNSbHICM6iyeT6pnkzS5HlKnFc8wgnzb+pqrk5vIAedqnS/30FslY=
+X-Google-Smtp-Source: AGHT+IHUPZgRjwjhGXUYisGlSBvBIIptTwT7XL/6mzdnfRbs3tQwYO6A+cS/VdeREgw8PkHAmaFlbA==
+X-Received: by 2002:a2e:a989:0:b0:2ef:2768:619d with SMTP id 38308e7fff4ca-2f61299bce6mr827061fa.5.1724875189428;
+        Wed, 28 Aug 2024 12:59:49 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5334ea99933sm2248052e87.309.2024.08.28.12.49.19
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f40484c6c0sm20011361fa.75.2024.08.28.12.59.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Aug 2024 12:49:19 -0700 (PDT)
-Date: Wed, 28 Aug 2024 22:49:18 +0300
+        Wed, 28 Aug 2024 12:59:49 -0700 (PDT)
+Date: Wed, 28 Aug 2024 22:59:47 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Amol Maheshwari <amahesh@qti.qualcomm.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Jassi Brar <jassisinghbrar@gmail.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
-	Arnd Bergmann <arnd@arndb.de>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Tengfei Fan <quic_tengfan@quicinc.com>, 
-	Ling Xu <quic_lxu5@quicinc.com>
-Subject: Re: [PATCH v4 4/6] misc: fastrpc: Add support for cdsp1 remoteproc
-Message-ID: <vuviyau3vbmf4l4mfb47lyh2n2t65fy3j2lxrg5jtyuz34kil2@q5ytlfdcmf7x>
-References: <20240805-topic-sa8775p-iot-remoteproc-v4-0-86affdc72c04@linaro.org>
- <20240805-topic-sa8775p-iot-remoteproc-v4-4-86affdc72c04@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Stephen Boyd <swboyd@chromium.org>, Daniel Vetter <daniel@ffwll.ch>, 
+	David Airlie <airlied@gmail.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, freedreno@lists.freedesktop.org, 
+	dri-devel@lists.freedesktop.org, quic_jesszhan@quicinc.com, dianders@chromium.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm: fix the highest_bank_bit for sc7180
+Message-ID: <fbhb7hlpmxxfqv5iwtuhuxz4nx4qifd6kygo5fxvfiqsh2idpu@tzqwxkxaszq6>
+References: <20240808235227.2701479-1-quic_abhinavk@quicinc.com>
+ <CAE-0n53qMJVbfb9oXbDexqhOj6qTBq9k5kMj1e6CXadObhBmLg@mail.gmail.com>
+ <c2218911-650a-4f43-9119-bd2cfc46f3aa@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,28 +87,50 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240805-topic-sa8775p-iot-remoteproc-v4-4-86affdc72c04@linaro.org>
+In-Reply-To: <c2218911-650a-4f43-9119-bd2cfc46f3aa@quicinc.com>
 
-On Mon, Aug 05, 2024 at 07:08:05PM GMT, Bartosz Golaszewski wrote:
-> From: Ling Xu <quic_lxu5@quicinc.com>
+On Mon, Aug 12, 2024 at 12:41:40PM GMT, Abhinav Kumar wrote:
 > 
-> The fastrpc supports 4 remoteproc. There are some products which
-> support cdsp1 remoteproc. Add changes to support cdsp1 remoteproc.
-
-I'd very much prefer to see this abstracted somehow, but it seems
-impossible with the current driver code.
-
 > 
-> Signed-off-by: Ling Xu <quic_lxu5@quicinc.com>
-> [Bartosz: ported to mainline]
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  drivers/misc/fastrpc.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+> On 8/12/2024 11:40 AM, Stephen Boyd wrote:
+> > Quoting Abhinav Kumar (2024-08-08 16:52:27)
+> > > sc7180 programs the ubwc settings as 0x1e as that would mean a
+> > > highest bank bit of 14 which matches what the GPU sets as well.
+> > > 
+> > > However, the highest_bank_bit field of the msm_mdss_data which is
+> > > being used to program the SSPP's fetch configuration is programmed
+> > > to a highest bank bit of 16 as 0x3 translates to 16 and not 14.
+> > > 
+> > > Fix the highest bank bit field used for the SSPP to match the mdss
+> > > and gpu settings.
+> > > 
+> > > Fixes: 6f410b246209 ("drm/msm/mdss: populate missing data")
+> > > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > > ---
+> > >   drivers/gpu/drm/msm/msm_mdss.c | 2 +-
+> > >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > > 
+> > > diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+> > > index d90b9471ba6f..faa88fd6eb4d 100644
+> > > --- a/drivers/gpu/drm/msm/msm_mdss.c
+> > > +++ b/drivers/gpu/drm/msm/msm_mdss.c
+> > > @@ -577,7 +577,7 @@ static const struct msm_mdss_data sc7180_data = {
+> > >          .ubwc_enc_version = UBWC_2_0,
+> > >          .ubwc_dec_version = UBWC_2_0,
+> > >          .ubwc_static = 0x1e,
+> > > -       .highest_bank_bit = 0x3,
+> > > +       .highest_bank_bit = 0x1,
+> > 
+> > Usually when I see hex it's because there's a mask. This isn't a mask
+> > though? Can it just be '1'?
 > 
+> I just retained the same convention that was used earlier. It seems like a
+> mix and match right now. sc7180, sm6115 and qcm2290 were using 0x.
+> 
+> I can post a separate change to change all of them.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+We probably need to do a +13 to all of them to follow the approach of
+the a6xx code.
 
 -- 
 With best wishes
