@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-29760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8124D9625AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 13:13:51 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75F4B9625AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 13:14:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E6D991F23F46
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 11:13:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DECD0B237E7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 11:14:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2301D16D4CA;
-	Wed, 28 Aug 2024 11:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2FD0145323;
+	Wed, 28 Aug 2024 11:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IuVg21wX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B667KoO9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD9B16C866
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 11:13:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC1316CD07
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 11:13:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724843609; cv=none; b=ClASzqHkrPNATVA4W4XBGI+uI8jowobrhcsGKXKhHgBPMIYGlClai5IzcBuidvRz0KVu0DybUSNGCkTb/QBbRHc0588gGE9WJ2kJELihkdAkNmVDLdK59SwykZq2pGpPvMAhhfGW0mFeikIbkYx9S0vYs77pUdaQO3DzJB8zIBs=
+	t=1724843632; cv=none; b=UBo9xukY17n7/xMCXppLuXRuACgMn/9qQWTotFJwu/Zo7VGllccJqyYzanbe4SVFi1yN59eNVSHqKgbLJAjyWZt/lGrGR2btA/kGBMwplwnDBmgMFMvkiQKnz5F4qnaGSY5ACLd7j2jibljmww1ZpItTWl6ZEbAOLXAFsYlU+Nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724843609; c=relaxed/simple;
-	bh=ptebulUHSMZLOWZlqh7/gAibzwIt0+7beVs0dWeM5Bs=;
+	s=arc-20240116; t=1724843632; c=relaxed/simple;
+	bh=jUnILKAo5ATrsd6lz5mB3iOFWIQc7AkfPEQ9LPD0iHU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qbvQOZhWgJ75+I4wSntaIb8WZNn3PuZJScSehg5PLce/IiV70erM1WRTvlE4m415Rsphtv0Ql8a5mqKhJchiZciaRF7yaPZdmxDLEoxCLgwJms29m3dWCe7XhwqVhy49nrw92UKi0oo4Mv9AHZJAw4X/HRnLCGlujPeyyCiFwTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IuVg21wX; arc=none smtp.client-ip=209.85.208.46
+	 In-Reply-To:Content-Type; b=I6yKBXWWyhAZ/0Gy4riiMlNezx3u7li+FSM1eM0s//CyJr7UEtFZ3c6rVeVo++78Ucayn6p8ZpxwMy2v77w4F7SmcaDZHQkbyo1cQRRN5hMOrZGy9ydoY3ze7ZwJZs9vpaelKuWaCXbRpbRjM7awzzuUgTo0D4O4yax38lkT65Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=B667KoO9; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5bec4c3ace4so1080082a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 04:13:26 -0700 (PDT)
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5bf10810d8aso849089a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 04:13:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724843604; x=1725448404; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1724843629; x=1725448429; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=GMaB8qLEa2uCN/rXdJjEQqqqxE1oJ3oOoi7R0UTEgvE=;
-        b=IuVg21wXRXGc1UaxOyyuCu4fMEV5X1udf4ag7hrVHdiL4wi3F/ezXuQlXjh8aDZocy
-         I3u5iAoax5L0k7Ms7INpZn6D2Qt2IRTciHI9eWPXG0Y9wG0K+WtM1LYw1rU8TQsbJ7Qn
-         7l+Xkqu935A5aJe/9PMDCBd2gwnxsz5C7wYAFn6HTzJbDqBrvh6Uc3KOl7E84jBuQrjN
-         s36pU26oLFBGse7oGqfRaTVgOYRhFPXEcfJsQSIZs69YxvqxleQevhxNlaRPBFbFV12K
-         RIW4Fd6s7GWNpiYfVxqNiSqZtSFpQSB18HPPHrrzG+womlcn3yH7aRJ01DdVaA/F9vaq
-         x4PQ==
+        bh=zcghzgIG2bNBAb6yUzFmlFHQDpsaEhKndi+DVgkFQkk=;
+        b=B667KoO9Aku+3lrUmsgHInNoavkANZmKUGGDXzmdW5eCl5pFY8fu7xw1MEvDQLuJQa
+         PXdIxkU992SAtAZwOcyWG1tQ9ML6KcmYTelu2p1tIbhs3gGzhGGiLo6Da7jl4wN78Sze
+         LjkljLJUF1lnjSytwmxSJMg4pc3TLP9UE2f3IYiRQjTU789FUq8cA4KJkFE58HxaT4DK
+         Cc02FV+Mn+L2d/zrI2YY/nYYYdRGzD+Xw/L+8tP2JP9IFPq1Z94U9dkhLZXe7nPFcjfQ
+         kKdJAswV6xshC9NyW00mzY+dJCCtJ3M7+bJJrMZAgwIWewCf/JxRMb8MT7Y12lWw0Puy
+         l6/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724843604; x=1725448404;
+        d=1e100.net; s=20230601; t=1724843629; x=1725448429;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=GMaB8qLEa2uCN/rXdJjEQqqqxE1oJ3oOoi7R0UTEgvE=;
-        b=NogxLzMgcws15JOkXRI2Edfg//6qbRlidBmKfeLU7oKRQaWxVb5GhjpyW4w0huI9I8
-         UErxN1i9tJGNhsv3rx/vspumWHaqyeC7ajXewFevndWX0wQDDedoVm2d4wdMvcYpDrOA
-         pzTuJ3fwQAe7DJk51GCxe5ASEBzl82FiUrwKUSuwxjsnZKL3qiilp3Um9AF30Y/vTTIP
-         WxW06/rQX2uk0GJs05HZ5bDMK/g6BuhqlRKWpZgDH3xV96V2vq7oNmYoaBpOf+EAYVSd
-         3R0KvjBRHUlLJo4BTWOc05X/GFoPUZmfomOOpO1mCdgRIQJ1xzhaFjxGZbUDHvHThRLE
-         NECQ==
-X-Gm-Message-State: AOJu0YwHuiaHnPqdiM9YTgc+/pvsjnYKDvMbhHFh24vFCU2Vas4FQMBm
-	CG+Zz81z+p40gZjbstK1mMroAAFupyDkM5TXEZ3ezPpv5pZQOe3Id5+r0ST4nv8=
-X-Google-Smtp-Source: AGHT+IFK5mU3ayisMyzpmvftrPHN4t4HKiVqyuCiTMjGSzJxgFF0eBTD7RBXuFU1p0MpYkM6P2lLuA==
-X-Received: by 2002:a17:906:6a28:b0:a86:8000:be46 with SMTP id a640c23a62f3a-a86a52b3672mr719741766b.3.1724843604335;
-        Wed, 28 Aug 2024 04:13:24 -0700 (PDT)
+        bh=zcghzgIG2bNBAb6yUzFmlFHQDpsaEhKndi+DVgkFQkk=;
+        b=MYZ9cl3Hi/Rz47fRLluKf4TT1rKAN+SQOgOM1wUvhHyCQ5kFUtnjWdD4qHjR/u9uwF
+         4NXEBI/Az4kb712chF7seyG8WzbCOrFvmcsPG3gGyGMXgzU0esVnC7shXMZYuHEny4dI
+         YcytGJ47pgbJXvPITzYWZS74Q3YPmVol+W74PpjK7tGSKFC5bDxJfnhhB61f0D1udMzT
+         GXrS4gOMhD9ci//EjQNk+MqWSO/zqJaGtJJ07kAHPj8wcyy1spPnDAoUpgacIHxRwlZI
+         JPebkACmuOb0HBimHBpoHaYL9QQLhkFMf22JAa9TbEs0HQbnMxlDX7oI6GHOV1Hg/uZw
+         oUtw==
+X-Gm-Message-State: AOJu0Yz31unyXNlPqS3DRxuBt6nXZHksWmvTMYooRQYLSVNuFmHEQKmd
+	B/Q6+s0TkOllXTJExarf6wmNVATc4d+b55phOQu9pWD0+Csymn4HqEORkP96kuk=
+X-Google-Smtp-Source: AGHT+IH1JpO9SbHismOTO20+L7uRSRuh4mNvVVKRlxfyREMOZrSaYHDZouLRC/uPD7wWEwJu+Nv8PA==
+X-Received: by 2002:a05:6402:3489:b0:5bf:e43:895b with SMTP id 4fb4d7f45d1cf-5c08915adc2mr6787041a12.1.1724843629187;
+        Wed, 28 Aug 2024 04:13:49 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.222.82])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a86e549e010sm229978466b.61.2024.08.28.04.13.22
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c0bb4722b0sm2107487a12.69.2024.08.28.04.13.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Aug 2024 04:13:23 -0700 (PDT)
-Message-ID: <6ab35d34-0a5f-44ac-9621-18067fd23558@linaro.org>
-Date: Wed, 28 Aug 2024 13:13:20 +0200
+        Wed, 28 Aug 2024 04:13:48 -0700 (PDT)
+Message-ID: <47c4f8c8-6ca2-45a0-9e8b-813e5c5884d5@linaro.org>
+Date: Wed, 28 Aug 2024 13:13:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,18 +76,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/16] arm64: dts: qcom: sc7180: change labels to
- lower-case
-To: Konrad Dybcio <konradybcio@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH 00/16] arm64: dts: qcom: change labels to lower-case
+To: Konrad Dybcio <konradybcio@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20240828-dts-qcom-label-v1-0-b27b72130247@linaro.org>
- <20240828-dts-qcom-label-v1-3-b27b72130247@linaro.org>
- <1145f7e2-248d-4170-b7be-db694e37fec4@gmail.com>
+ <5f7735ac-e03c-4399-bdca-3e9550b23e14@kernel.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -134,48 +131,34 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <1145f7e2-248d-4170-b7be-db694e37fec4@gmail.com>
+In-Reply-To: <5f7735ac-e03c-4399-bdca-3e9550b23e14@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 28/08/2024 12:53, Konrad Dybcio wrote:
+On 28/08/2024 12:55, Konrad Dybcio wrote:
 > On 28.08.2024 9:17 AM, Krzysztof Kozlowski wrote:
 >> DTS coding style expects labels to be lowercase.  No functional impact.
 >> Verified with comparing decompiled DTB (dtx_diff and fdtdump+diff).
 >>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>  arch/arm64/boot/dts/qcom/sc7180-firmware-tfa.dtsi  |  84 ++---
->>  .../arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi |   8 +-
->>  .../boot/dts/qcom/sc7180-trogdor-homestar.dtsi     |   8 +-
->>  .../boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi  |   8 +-
->>  arch/arm64/boot/dts/qcom/sc7180.dtsi               | 344 ++++++++++-----------
->>  arch/arm64/boot/dts/qcom/sm7125.dtsi               |  16 +-
->>  6 files changed, 234 insertions(+), 234 deletions(-)
+>> I am splitting the patchset per few patches doing the same, because
+>> otherwise diffs would be too big and would bounce from Patchwork/mailing
+>> list.
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7180-firmware-tfa.dtsi b/arch/arm64/boot/dts/qcom/sc7180-firmware-tfa.dtsi
->> index ee35a454dbf6..f362b6b436ce 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7180-firmware-tfa.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7180-firmware-tfa.dtsi
->> @@ -6,82 +6,82 @@
->>   * by Qualcomm firmware.
->>   */
->>  
->> -&CPU0 {
->> +&cpu0 {
->>  	/delete-property/ power-domains;
->>  	/delete-property/ power-domain-names;
->>  
->> -	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
->> -			   &LITTLE_CPU_SLEEP_1
->> -			   &CLUSTER_SLEEP_0>;
->> +	cpu-idle-states = <&LITTLE_cpu_sleep_0
->> +			   &LITTLE_cpu_sleep_1
->> +			   &cluster_sleep_0>;
+>> Best regards,
+>> Krzysztof
+>>
+>> ---
 > 
-> I suppose this wasn't intended
+> I can confirm the changes are a NOP, however:
+> 
+> g diff $(git last).. | grep "^+.*&[A-Z]" | wc -l
+> 232
+> 
+> e.g.
+> 
+> +		domain-idle-states = <&BIG_cpu_sleep_0>;
 
-Yeah, I need to improve the pattern. Thanks for finding this.
+Same as in patch 3. I'll re-check and send a v2 tomorrow.
 
 Best regards,
 Krzysztof
