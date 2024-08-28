@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-29741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 179709622F5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 11:07:14 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D39E596231B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 11:12:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C4FB0285D5C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 09:07:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7CA4CB21FD7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 09:12:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 354C815A849;
-	Wed, 28 Aug 2024 09:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 942CA160783;
+	Wed, 28 Aug 2024 09:11:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ryph/kPm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I+fspJpN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02140158543;
-	Wed, 28 Aug 2024 09:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E7E1607AC;
+	Wed, 28 Aug 2024 09:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724836028; cv=none; b=WTgOX4qIhzKr95tXQCcA6kmlD+WzshrKNdD5566uRjoEU5I6n3npkPC4CrIabXje95JsexPxlKX+SI8t1ePWtBTEJakdcrLfaPuw/+Ge6slaiNJHHG2IwlLRY1dz8FkwOIMaIB7amhilfg4+hpvVVzA1MhJ2GiCLZfES6Kq5FxI=
+	t=1724836305; cv=none; b=KyOlZWU46rOz0YbZyowvFfHdFgzSwdlJRBOO1xfZNRqflw9KTx8IPjW947zlC1yEa24WE78lMx531wZGGsgv1kcG1GjfcRBdHS16nq9LgKhER+MDxavZpNaCgPzdH0HBH2wnD/LTYXtb62QNjYqyqh5apYdEW5/9z0zEF3O5gns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724836028; c=relaxed/simple;
-	bh=qa1D8sWQ7smF5eON7ApWsmnuqplMQ1HKdz1ku1wHFIE=;
+	s=arc-20240116; t=1724836305; c=relaxed/simple;
+	bh=0h8O7FJ3DgvgGR17BcBk6wfFWrda7TDSqBbyr2M0Ubw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t23kUJzTcHEG0lH1j+hU1BPUbNwx0ojnj6HTHNrCjxngOgfI/jGj5OTbcsAKbuzazkI23KSI6o+mjuC0AiuLTeZjSESu0XetOWqvg8J/Zh6H1sBqn44nHEHL+fEsqJK1SGXQTMWzHNT+NIB2cPdWbSOizSzI/PoHMZbHQYi2pLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ryph/kPm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CB7C4AF51;
-	Wed, 28 Aug 2024 09:07:02 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=iNLzQ7cpOwZ7shGsSiMJM/4h2Jwgm/GZScaQmiIepJ74lP0m9gT0zWa7HwayJDZ6pfG8PiWcC1uGQU3ABhggZ0PiDDjCTDdyvjOuRQBmZw+Iq6o3HcUCowac5L6qZ2lHL29dqyJHyCigSHV7v1b4KWQbCexGeT722Q5eQ3JXifs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I+fspJpN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85C5C51EE7;
+	Wed, 28 Aug 2024 09:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724836027;
-	bh=qa1D8sWQ7smF5eON7ApWsmnuqplMQ1HKdz1ku1wHFIE=;
+	s=k20201202; t=1724836304;
+	bh=0h8O7FJ3DgvgGR17BcBk6wfFWrda7TDSqBbyr2M0Ubw=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ryph/kPmI6mUyBZsV6IIW1VHyrUCZWOFAK4yYtYd087XawAaKkN4wndjstA3AxXyG
-	 h3mMMnbIho93JqD02uKUztohPXOCAYk7wB1KcQBb6HosG6yBf7xTP0jxNVZWDPr4go
-	 URklcY28JBD+ho8cF9T1XAuZyM6eVjWTw26ROWLRv04RRc6zvMOD5ub1k4vLv/R54f
-	 oDe8Jrp4XX2DFwMCNvJxsM26nM5zy1LgGmD47MueRrOaBub1m2sMx7HWtn1vKyof8l
-	 Xd2PUX4nIoXTlM7vjLPA+xoc6b8YQBKcJxpA1TGxewoj48hwIWsMM3V2IQor7tD2Gb
-	 tVnb895fiYipw==
-Message-ID: <fcf59ffe-69f7-48d3-bf20-fc223a2c2d10@kernel.org>
-Date: Wed, 28 Aug 2024 11:07:00 +0200
+	b=I+fspJpN+ifmm1D7U6v+HSzkaGPjPPilt3HUwEAU722sfeMSp67NFdNXcJ328RMu0
+	 Gnmn14XMc1kBl4uBDrp7yr2Sxo0NUyjeulXLgYK+yWRWwC3+OobBRqULU+kJo19fCR
+	 sKlmwH6S2niy9eB4qjMHhtszgWjkrir2/a5UKpnie9YHAhXs6v9RSZKvwr0iZcJrcs
+	 uyycCazxcv9GMBurmktEhyW98mbA7XBNn/dlbyUOfNqU9g/d8Z5V/wOkBTyLqfAStG
+	 pmWuY/tGOc0UavfTJVDbZjfUlhI7mbQSm95663RfHUt8ssz8hEnR5tN6gL4AdxV8Q1
+	 O5+GzqFq1AvxQ==
+Message-ID: <0ec92d59-0648-40ed-a522-307152b5c37d@kernel.org>
+Date: Wed, 28 Aug 2024 11:11:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: remoteproc: qcom,sa8775p-pas: Document
- QCS8300 remoteproc
-To: Jingyi Wang <quic_jingyw@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- andersson@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, mathieu.poirier@linaro.org,
- bartosz.golaszewski@linaro.or, quic_tingweiz@quicinc.com,
- quic_aiquny@quicinc.com, quic_tengfan@quicinc.com,
- Xin Liu <quic_liuxin@quicinc.com>
-References: <20240828030511.443605-1-quic_jingyw@quicinc.com>
- <20240828030511.443605-2-quic_jingyw@quicinc.com>
- <eetb73ycz7kzcgknuzorsnoszhpdljuxepuoflhakobli6dozl@q2sbmj77hedo>
- <51280d4a-ad55-466d-b9d8-c5bdc1a2f0ee@quicinc.com>
+Subject: Re: [PATCH 6/6] arm64: dts: qcom: add base QCS615 RIDE dts
+To: Lijuan Gao <quic_lijuang@quicinc.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, kernel@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20240828-add_initial_support_for_qcs615-v1-0-5599869ea10f@quicinc.com>
+ <20240828-add_initial_support_for_qcs615-v1-6-5599869ea10f@quicinc.com>
+ <22qkvfravm6sxiq3xfavahg2u6b2pwlyzqbqvd55zym5zef3gi@m4bsqkdvggty>
+ <17d0017e-b55d-4b32-9fd3-1a1a84e5ebf9@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,62 +107,63 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <51280d4a-ad55-466d-b9d8-c5bdc1a2f0ee@quicinc.com>
+In-Reply-To: <17d0017e-b55d-4b32-9fd3-1a1a84e5ebf9@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 28/08/2024 09:28, Jingyi Wang wrote:
+On 28/08/2024 09:54, Lijuan Gao wrote:
 > 
 > 
-> On 8/28/2024 3:22 PM, Krzysztof Kozlowski wrote:
->> On Wed, Aug 28, 2024 at 11:05:10AM +0800, Jingyi Wang wrote:
->>> Document the components used to boot the ADSP, CDSP and GPDSP on the
->>> QCS8300 SoC.
+> 在 8/28/2024 2:25 PM, Krzysztof Kozlowski 写道:
+>> On Wed, Aug 28, 2024 at 10:02:16AM +0800, Lijuan Gao wrote:
+>>> Add initial support for Qualcomm QCS615 RIDE board and enable
+>>> the QCS615 RIDE board to shell with dcc console.
 >>>
->>> Co-developed-by: Xin Liu <quic_liuxin@quicinc.com>
->>> Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
->>> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
+>>> Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
 >>> ---
->>>  .../bindings/remoteproc/qcom,sa8775p-pas.yaml | 22 +++++++++++++++++++
->>>  1 file changed, 22 insertions(+)
+>>>   arch/arm64/boot/dts/qcom/Makefile        |  1 +
+>>>   arch/arm64/boot/dts/qcom/qcs615-ride.dts | 15 +++++++++++++++
+>>>   2 files changed, 16 insertions(+)
 >>>
->>> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sa8775p-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sa8775p-pas.yaml
->>> index 7fe401a06805..44b070a17ca0 100644
->>> --- a/Documentation/devicetree/bindings/remoteproc/qcom,sa8775p-pas.yaml
->>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sa8775p-pas.yaml
->>> @@ -16,6 +16,9 @@ description:
->>>  properties:
->>>    compatible:
->>>      enum:
->>> +      - qcom,qcs8300-adsp-pas
->>> +      - qcom,qcs8300-cdsp-pas
->>> +      - qcom,qcs8300-gpdsp-pas
->>>        - qcom,sa8775p-adsp-pas
->>>        - qcom,sa8775p-cdsp0-pas
->>>        - qcom,sa8775p-cdsp1-pas
->>> @@ -64,6 +67,7 @@ allOf:
->>>        properties:
->>>          compatible:
->>>            enum:
->>> +            - qcom,qcs8300-adsp-pas
->>>              - qcom,sa8775p-adsp-pas
->>>      then:
->>>        properties:
->>> @@ -75,6 +79,23 @@ allOf:
->>>            items:
->>>              - const: lcx
->>>              - const: lmx
->>> +  - if:
->>> +      properties:
->>> +        compatible:
->>> +          enum:
->>> +            - qcom,qcs8300-cdsp-pas
+>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+>>> index 197ab325c0b9..c5503f189847 100644
+>>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>>> @@ -110,6 +110,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-idp.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-shift-otter.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+>>> +dtb-$(CONFIG_ARCH_QCOM)	+= qcs615-ride.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
+>>>   dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
+>>> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+>>> new file mode 100644
+>>> index 000000000000..31d32ad951b5
+>>> --- /dev/null
+>>> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+>>> @@ -0,0 +1,15 @@
+>>> +// SPDX-License-Identifier: BSD-3-Clause
+>>> +/*
+>>> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+>>> + */
+>>> +/dts-v1/;
+>>> +
+>>> +#include "qcs615.dtsi"
+>>> +/ {
+>>> +	model = "Qualcomm Technologies, Inc. QCS615 Ride";
+>>> +	compatible = "qcom,qcs615-ride", "qcom,qcs615";
+>>> +
+>>> +	chosen {
+>>> +		bootargs = "console=hvc0";
 >>
->> This looks the same as sa8775p cdsp. Why new entry?
+>> Noooo, last time I agreed on this, you told me later it is different.
 >>
-> There is difference in power domain, sa8775p use nsp while qcs8300 use nsp0
+> In the early stages, enabling HVC is to more easily verify clock and 
+> PMIC related functions, as it’s difficult to debug without the console 
+> log. After the clock and PMIC are ready, we will enable the UART console.
 
-Please paste code where do you see the difference.
+Working serial is supposed to be part of the early submission.
 
 Best regards,
 Krzysztof
