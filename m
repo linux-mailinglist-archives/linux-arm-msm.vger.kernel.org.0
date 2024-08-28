@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-29726-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6BCA9620BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 09:21:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C284E9620C3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 09:22:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 12AC61F226CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 07:21:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E6F31B23B20
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 07:21:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A307166F33;
-	Wed, 28 Aug 2024 07:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7369C169AC5;
+	Wed, 28 Aug 2024 07:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FtZ5bvrL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JVjNnpbE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98A4165EF8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 07:18:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4758D1CF96
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 07:18:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724829503; cv=none; b=Os7UVnAvGez1CpAAvyS+i+IKLcvN4h8DcySLNNhjnYcJca/QzXJ//+2uLNVsrcSQqhsswJ/HmxJHOK/ZBFma6qSgZ0XTATaZJx0jMIwDiaXL1E/HV6ieJ5Vh/CHtLB5E8Xw7e33U0LNYWgBs8LW/I5hD5kmsdjEwdjLczJ9LFVQ=
+	t=1724829505; cv=none; b=qP4ZjY6KzTS532IK+zzvxcmrUA8XOTd2fGh8FcDc0dn/GRoMfiCjcJ5PWBF87Pg4zgyjbEm4Mdy3vf2rsuNc8YTj70q0hEeHRNLsaxhdQjGo7oL7FJIbKRBpvk/u8MVDbFa3eBOqLRaQUVb0jGWzufSCnn463rQg3DuZDhNZQzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724829503; c=relaxed/simple;
-	bh=D1xD6nRGM2jrUkFK4+q6I9kPnCK4Y4Nu++QE4XnfJ/c=;
+	s=arc-20240116; t=1724829505; c=relaxed/simple;
+	bh=qVNVHRfmzCWvMDLnc0+n+om+D+5SYcLY4dSOzxVvd1I=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=f3oxqGgkVkDkzD/3qFBoVvgeQIaeWWRMijHwlHEqVhqUxBivQAaszxmgFLVdHsIv1qoDTVMBSeTCmSCH/9juEL/TX2+LjA9eLe+UrdFM6bmpQU6C1edIKUUF2p1wY1MUuZuwGZe4rDe+w2pCywDsJVG658656NCTqjzE46OA1+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FtZ5bvrL; arc=none smtp.client-ip=209.85.221.42
+	 In-Reply-To:To:Cc; b=ASWdVKnZRh/fmfO/n21MfxuRK/d43b9+DmUjzYUMhr+1AKvDk3H0odN/+kywtxE4jOD7iDzZtHaSMFtDgtxGeVJ+WlUJpmKdknQZkCll4MDXXtAvcfWQdhUNtikl6jPZFnw8KXVJur1lMkLD4D07m00rLIfSHYqcqBrPrWqmhzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JVjNnpbE; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3718cea0693so233226f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 00:18:19 -0700 (PDT)
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-42ba79ae3beso265775e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 00:18:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724829498; x=1725434298; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1724829500; x=1725434300; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=SgBsH5fnrT5y4ppOYhV/5M+3EUOLyl2nfn6xMKBjWkU=;
-        b=FtZ5bvrLrK7jZdgbHXIEcummTuOemtBxbwxPBe6Chx//hGuUjtJDBD8K25L966WatJ
-         G/jbubkAqP2uGaWA3VyBSNLqmY3ZVw4x9U2wA6g9eLJinEUBnR8LRWfMfu8OUZrLsVUD
-         ux4zewneFc8hgKutdtIgC+PLUJj8vXP/0wywbY5vOCiJd00gLhet9T9VZ7F94sGLhhMz
-         I3oReIqh6XQXDslppu1K+T1xq53VAKnd5tC651ZsxnLgPNXwgagXxakYTt5J8Y4os680
-         B3JChZCDl62iTN4ZsHzElpcG00+C6W8S+20QSCXSisUPeYgydFsekqdzdpupt7l38xru
-         rGsA==
+        bh=dV6M5W9aYS9sB+s9iJFQvlStZvJh8btynpfb89RdX/E=;
+        b=JVjNnpbEC0Hts8mOQlwOEHCkti06hymo6sigCB8R4jyN6uuUO9c2oDB37e9b2nzeN6
+         nSSFJM9Ngnz6kL29z0yu+ZIiofwNUtTpgVJEjcGaHzcf7mE6XZij/33BOOm2V4yskiLD
+         YUC4NP6NiTpdcp/F4+CAliWVeOIPVorEluCQFjixtwUU1PPVp64p8WYKBqGVCY6ckM/l
+         xurWOVXqVAwXYnsZQb3dAAlHQZ5atgPuoDrwrvHJ3PG0KaVETlZpreW0iFQNafgadnec
+         3GW89+3a3Vj11D/GK+t/4lsWQ7p6LdVZCDixNMtV3WcRXRFpOZXJT21d5awWSl0PqTqw
+         vXew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724829498; x=1725434298;
+        d=1e100.net; s=20230601; t=1724829500; x=1725434300;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SgBsH5fnrT5y4ppOYhV/5M+3EUOLyl2nfn6xMKBjWkU=;
-        b=qNiMVGvEl8dxbwPqNybI7e6d7Kb+G2SZ445YjH1ZyNbmtmDEa9yHd7vpJ7Ztyb+lmI
-         DFrZoLFoo1KsyxJwJmQAR1F0KcJIJRPRggfSv+RCdTGivnmWPx90cHwA3GPco3EMs8/E
-         xIXHph/12rETkopRAThgChcwfJVrdMUiUhxyGkEWJxMi3UGAbckvbMB4SE67rab7e09w
-         bK8t6TukdV/gGMWb5aoTe+TYMPDc41pQilhK/44ZCa4l3BOGZAX09b3zDXS115TOqFPA
-         872j+/17amsvHaWeyD9aJAQKKp8pDgKXd3G0LVj+wjzEBGs70fUkMBbiIGuIegqIB6aG
-         QuoA==
-X-Gm-Message-State: AOJu0YxMLK/weuXRPRVVIEy19OCoZ54jCEgbyrRMy+1eW9vS9GaA/QJi
-	CoHB+U+L3EgiXOc3w8Mj4QEPk/n66aU4X2/zyNzBd47bqJxWqjTvkilcYuKTkvo=
-X-Google-Smtp-Source: AGHT+IEtdYN7ScgUE4w0efhZqEXLNiB+ptd0pQqYSFgQ3LsoZF+lrx56lzxOHDtH84fVy6cr59UiFg==
-X-Received: by 2002:a5d:648a:0:b0:36b:b2a1:ef74 with SMTP id ffacd0b85a97d-373118fdf11mr6079022f8f.8.1724829497948;
-        Wed, 28 Aug 2024 00:18:17 -0700 (PDT)
+        bh=dV6M5W9aYS9sB+s9iJFQvlStZvJh8btynpfb89RdX/E=;
+        b=rll0HD1MHd+Y7Ax8alHjVCzcV+hyFAdeO+RUFXxnNtmmX/36IWEgOnI3V7AHe5GvdL
+         jVgF7QswDbKgc2D1POsgEyy1x5eCF0nuLgb/th+7fuZGPpLxEH9m84Mp2bKDMIjpd/F9
+         3hBDIz6TPmYn+HyBmkfcsj0ezf6WazCBDHokwp0+FYvNfILS4iecZ6YqVv3x6DG8oVFa
+         VTUBa0S379+xyHpA5xw9ECbKycjPit3weslbSaP4rJlaSY/2UXzdNWHzeffvhXk1V2xk
+         MZ3ZwYO0cKxz/Yj6+/leUdoED37TV6zLib9zySXgDljII5ZRnAJAaU1sIwvBXJSprrDo
+         YDKw==
+X-Gm-Message-State: AOJu0YyREVts5MPag2jeR5SECD2jR8bU5NSXV1oR6crRx1/dm0nDBStP
+	SyPIBxDZJ23aoHvTiVDwN3vACbzuDti2EZuPoS7xvPpsEq1xWfgRX6JpBWMa/LDBqwo6+T1eVka
+	v
+X-Google-Smtp-Source: AGHT+IH1aw/h4A2UhKaVn4EnTYilPWQgbZArf0/3lkIMSnItTJMF8fyjDmfEESJWpx5ID/M28LY3JA==
+X-Received: by 2002:a05:600c:1391:b0:424:ac9f:5c61 with SMTP id 5b1f17b1804b1-42acc9ff4c9mr71565575e9.3.1724829499482;
+        Wed, 28 Aug 2024 00:18:19 -0700 (PDT)
 Received: from [127.0.1.1] ([178.197.222.82])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37308200404sm14843476f8f.81.2024.08.28.00.18.16
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37308200404sm14843476f8f.81.2024.08.28.00.18.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Aug 2024 00:18:17 -0700 (PDT)
+        Wed, 28 Aug 2024 00:18:18 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Wed, 28 Aug 2024 09:17:44 +0200
-Subject: [PATCH 14/16] arm64: dts: qcom: sm: change labels to lower-case
+Date: Wed, 28 Aug 2024 09:17:45 +0200
+Subject: [PATCH 15/16] arm64: dts: qcom: sdm: change labels to lower-case
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240828-dts-qcom-label-v1-14-b27b72130247@linaro.org>
+Message-Id: <20240828-dts-qcom-label-v1-15-b27b72130247@linaro.org>
 References: <20240828-dts-qcom-label-v1-0-b27b72130247@linaro.org>
 In-Reply-To: <20240828-dts-qcom-label-v1-0-b27b72130247@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -88,21 +89,21 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=24613;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=38207;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=D1xD6nRGM2jrUkFK4+q6I9kPnCK4Y4Nu++QE4XnfJ/c=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmzs8dYxy2eUA7+Nns/vnAJNZtzcK7DHwxOYDlL
- 4l2MfEIEhyJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZs7PHQAKCRDBN2bmhouD
- 1+MmD/4tzyiniORV5xh1RM/ltDmx85R0YWH0UlXzNuBGNiYk+eqvqCmxSzkfkFey8KOyIJf9yQF
- hzVBRXjqrHz5ypANHbQbn1Dz1GnDB0RJuDzGJ3rKz6NzCWCIy98waCNRxX9a8MV5wHpVGDB7eOD
- rours9mQnPC2Pys+q9vZuUiMuKGNJUarW3jsQAtxpaOc9slgjyt85VwBxXf1s2wiKYIpx/hcj8m
- 6wb7bvoaGxDwA5K9INwlh0OgsMqfbxRYlM9gf3PeGWIGkasVBgcIPZE+j7ftC2bTZyJPLueWz6O
- 8YucCrKlFjvzC9S3iCrXn26+/vvI6SPwwiDBeY5Dfk7P93cjYUJbUuKOrrf3u49a4ZIt52wz/Hg
- qtw1/4FEeJTFt7qEcUZ6W3Xx/BZRwUhJiYMql+qqgbZpmxwus3jCfdgqsKY1GHCxVon5jODh1Dm
- RHHPP52cW4aWnRnjA4QXqZiihXGT3poOX8FUlZcHytI2J/G0nFfpH2kOddINBmn2eYNcgAuC+7N
- bNOdl4h1ANMWgLVFnbMsPWkxUSxWh90y+OtschW0qsIruy+WjW5wr9xYl8D1JqkJCkicjee9QmJ
- blildeMJY2jyZ6R1XhD6md0p65uacick3IpmKICXDsjRu0g052C9OBE7pJNIicax4MUf8upi8Tw
- o2rK4T+oRpHTwug==
+ bh=qVNVHRfmzCWvMDLnc0+n+om+D+5SYcLY4dSOzxVvd1I=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBmzs8e8TbJG07ggKNyrUk+MxwQuE0M6m0Y4jVn9
+ bMAlXdyWIaJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZs7PHgAKCRDBN2bmhouD
+ 1/TcD/0bxehs5e+qAtGejm6VlUSTqWGfv1bqzmQ4QLlXiI9cLH5OwlNyTEsQDrmkfGr88XhMqzr
+ EFFpIGWXLntJ6GKGcZB5xL5rGrmm4ju7p/kJQEejvA7OE4IxX+baVGarJDgUSrOafesrwEx6xhk
+ JFK2tPRInKhuTmeojnVRiZ6PbsFWpQgvgaDe6g1u74XnHDzX8ipiZnbRHaT6FskyzZerr4K4ZW0
+ g66tEErYHm+sNzlfEyLDZjcJuiIiQtN0gaUKzzM8szmXlaZeLFnPj3Lpm2To6V6CKh9TKXnwzXX
+ enH5prC600RKydx2y+YU5tlZV3I4lz/SJGJqX8OracZePwODAX063/BUl9Vj7AiirGTNsZn89wM
+ 4d7gKwvrlbEcPLQYKj42xyfwHsN7YFXF6UZjVPnfSZADXZy//um+6B5irxfC7nzUJkiI0OUuxFp
+ 2Qjts0pRZG7dRk0329+LzYVPlQeD9geQC1vnWPPfDG4pX9Nu55QvKhewuGblxUMtxu9nMpvdDJn
+ 8WXoPPUBz2Wo9vqsXh5YrPBe9rFn+nCA4FZyyg2MSa7mFIMpU4rCzPhaNIr85tUR/7TndLLJZjb
+ aF21eU8omNhE2uTGIa1+/yLpgQnfNBGhTi3rm7mrb+cdDp2nwEJdTK1g4Ek3gN2dsFH4KNntn1g
+ ieMTpFD7jOmSWOw==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
@@ -111,445 +112,39 @@ Verified with comparing decompiled DTB (dtx_diff and fdtdump+diff).
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm4450.dtsi | 142 +++++++++++++++++------------------
- arch/arm64/boot/dts/qcom/sm6125.dtsi |  52 ++++++-------
- arch/arm64/boot/dts/qcom/sm6375.dtsi | 142 +++++++++++++++++------------------
- 3 files changed, 168 insertions(+), 168 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm630.dtsi       | 152 +++++++++++++--------------
+ arch/arm64/boot/dts/qcom/sdm660.dtsi       |  16 +--
+ arch/arm64/boot/dts/qcom/sdm670.dtsi       | 140 ++++++++++++-------------
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi |  74 ++++++-------
+ arch/arm64/boot/dts/qcom/sdm845.dtsi       | 160 ++++++++++++++---------------
+ 5 files changed, 271 insertions(+), 271 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm4450.dtsi b/arch/arm64/boot/dts/qcom/sm4450.dtsi
-index 1e05cd00b635..9ac929cbf4f5 100644
---- a/arch/arm64/boot/dts/qcom/sm4450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm4450.dtsi
-@@ -46,19 +46,19 @@ cpus {
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index c8da5cb8d04e..d70ac87178c4 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -49,170 +49,170 @@ cpus {
  		#address-cells = <2>;
  		#size-cells = <0>;
  
--		CPU0: cpu@0 {
-+		cpu0: cpu@0 {
+-		CPU0: cpu@100 {
++		cpu0: cpu@100 {
  			device_type = "cpu";
- 			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x0>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
--			next-level-cache = <&L2_0>;
--			power-domains = <&CPU_PD0>;
-+			next-level-cache = <&l2_0>;
-+			power-domains = <&cpu_pd0>;
- 			power-domain-names = "psci";
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			#cooling-cells = <2>;
- 
--			L2_0: l2-cache {
-+			l2_0: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
- 				cache-unified;
-@@ -72,19 +72,19 @@ L3_0: l3-cache {
- 			};
- 		};
- 
--		CPU1: cpu@100 {
-+		cpu1: cpu@100 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x100>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
--			next-level-cache = <&L2_100>;
--			power-domains = <&CPU_PD0>;
-+			next-level-cache = <&l2_100>;
-+			power-domains = <&cpu_pd0>;
- 			power-domain-names = "psci";
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			#cooling-cells = <2>;
- 
--			L2_100: l2-cache {
-+			l2_100: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
- 				cache-unified;
-@@ -92,19 +92,19 @@ L2_100: l2-cache {
- 			};
- 		};
- 
--		CPU2: cpu@200 {
-+		cpu2: cpu@200 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x200>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
--			next-level-cache = <&L2_200>;
--			power-domains = <&CPU_PD0>;
-+			next-level-cache = <&l2_200>;
-+			power-domains = <&cpu_pd0>;
- 			power-domain-names = "psci";
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			#cooling-cells = <2>;
- 
--			L2_200: l2-cache {
-+			l2_200: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
- 				cache-unified;
-@@ -112,19 +112,19 @@ L2_200: l2-cache {
- 			};
- 		};
- 
--		CPU3: cpu@300 {
-+		cpu3: cpu@300 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x300>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
--			next-level-cache = <&L2_300>;
--			power-domains = <&CPU_PD0>;
-+			next-level-cache = <&l2_300>;
-+			power-domains = <&cpu_pd0>;
- 			power-domain-names = "psci";
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			#cooling-cells = <2>;
- 
--			L2_300: l2-cache {
-+			l2_300: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
- 				cache-unified;
-@@ -132,19 +132,19 @@ L2_300: l2-cache {
- 			};
- 		};
- 
--		CPU4: cpu@400 {
-+		cpu4: cpu@400 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x400>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
--			next-level-cache = <&L2_400>;
--			power-domains = <&CPU_PD0>;
-+			next-level-cache = <&l2_400>;
-+			power-domains = <&cpu_pd0>;
- 			power-domain-names = "psci";
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			#cooling-cells = <2>;
- 
--			L2_400: l2-cache {
-+			l2_400: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
- 				cache-unified;
-@@ -152,19 +152,19 @@ L2_400: l2-cache {
- 			};
- 		};
- 
--		CPU5: cpu@500 {
-+		cpu5: cpu@500 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a55";
- 			reg = <0x0 0x500>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
--			next-level-cache = <&L2_500>;
--			power-domains = <&CPU_PD0>;
-+			next-level-cache = <&l2_500>;
-+			power-domains = <&cpu_pd0>;
- 			power-domain-names = "psci";
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			#cooling-cells = <2>;
- 
--			L2_500: l2-cache {
-+			l2_500: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
- 				cache-unified;
-@@ -172,19 +172,19 @@ L2_500: l2-cache {
- 			};
- 		};
- 
--		CPU6: cpu@600 {
-+		cpu6: cpu@600 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a78";
- 			reg = <0x0 0x600>;
- 			clocks = <&cpufreq_hw 1>;
- 			enable-method = "psci";
--			next-level-cache = <&L2_600>;
--			power-domains = <&CPU_PD0>;
-+			next-level-cache = <&l2_600>;
-+			power-domains = <&cpu_pd0>;
- 			power-domain-names = "psci";
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			#cooling-cells = <2>;
- 
--			L2_600: l2-cache {
-+			l2_600: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
- 				cache-unified;
-@@ -192,19 +192,19 @@ L2_600: l2-cache {
- 			};
- 		};
- 
--		CPU7: cpu@700 {
-+		cpu7: cpu@700 {
- 			device_type = "cpu";
- 			compatible = "arm,cortex-a78";
- 			reg = <0x0 0x700>;
- 			clocks = <&cpufreq_hw 1>;
- 			enable-method = "psci";
--			next-level-cache = <&L2_700>;
--			power-domains = <&CPU_PD0>;
-+			next-level-cache = <&l2_700>;
-+			power-domains = <&cpu_pd0>;
- 			power-domain-names = "psci";
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			#cooling-cells = <2>;
- 
--			L2_700: l2-cache {
-+			l2_700: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
- 				cache-unified;
-@@ -215,35 +215,35 @@ L2_700: l2-cache {
- 		cpu-map {
- 			cluster0 {
- 				core0 {
--					cpu = <&CPU0>;
-+					cpu = <&cpu0>;
- 				};
- 
- 				core1 {
--					cpu = <&CPU1>;
-+					cpu = <&cpu1>;
- 				};
- 
- 				core2 {
--					cpu = <&CPU2>;
-+					cpu = <&cpu2>;
- 				};
- 
- 				core3 {
--					cpu = <&CPU3>;
-+					cpu = <&cpu3>;
- 				};
- 
- 				core4 {
--					cpu = <&CPU4>;
-+					cpu = <&cpu4>;
- 				};
- 
- 				core5 {
--					cpu = <&CPU5>;
-+					cpu = <&cpu5>;
- 				};
- 
- 				core6 {
--					cpu = <&CPU6>;
-+					cpu = <&cpu6>;
- 				};
- 
- 				core7 {
--					cpu = <&CPU7>;
-+					cpu = <&cpu7>;
- 				};
- 			};
- 		};
-@@ -251,7 +251,7 @@ core7 {
- 		idle-states {
- 			entry-method = "psci";
- 
--			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
-+			LITTLE_cpu_sleep_0: cpu-sleep-0-0 {
- 				compatible = "arm,idle-state";
- 				arm,psci-suspend-param = <0x40000004>;
- 				entry-latency-us = <800>;
-@@ -260,7 +260,7 @@ LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
- 				local-timer-stop;
- 			};
- 
--			BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
-+			BIG_cpu_sleep_0: cpu-sleep-1-0 {
- 				compatible = "arm,idle-state";
- 				arm,psci-suspend-param = <0x40000004>;
- 				entry-latency-us = <600>;
-@@ -271,7 +271,7 @@ BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
- 		};
- 
- 		domain-idle-states {
--			CLUSTER_SLEEP_0: cluster-sleep-0 {
-+			cluster_sleep_0: cluster-sleep-0 {
- 				compatible = "domain-idle-state";
- 				arm,psci-suspend-param = <0x41000044>;
- 				entry-latency-us = <1050>;
-@@ -279,7 +279,7 @@ CLUSTER_SLEEP_0: cluster-sleep-0 {
- 				min-residency-us = <5309>;
- 			};
- 
--			CLUSTER_SLEEP_1: cluster-sleep-1 {
-+			cluster_sleep_1: cluster-sleep-1 {
- 				compatible = "domain-idle-state";
- 				arm,psci-suspend-param = <0x41003344>;
- 				entry-latency-us = <1561>;
-@@ -309,57 +309,57 @@ psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
- 
--		CPU_PD0: power-domain-cpu0 {
-+		cpu_pd0: power-domain-cpu0 {
- 			#power-domain-cells = <0>;
--			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-+			power-domains = <&cluster_pd>;
-+			domain-idle-states = <&LITTLE_cpu_sleep_0>;
- 		};
- 
--		CPU_PD1: power-domain-cpu1 {
-+		cpu_pd1: power-domain-cpu1 {
- 			#power-domain-cells = <0>;
--			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-+			power-domains = <&cluster_pd>;
-+			domain-idle-states = <&LITTLE_cpu_sleep_0>;
- 		};
- 
--		CPU_PD2: power-domain-cpu2 {
-+		cpu_pd2: power-domain-cpu2 {
- 			#power-domain-cells = <0>;
--			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-+			power-domains = <&cluster_pd>;
-+			domain-idle-states = <&LITTLE_cpu_sleep_0>;
- 		};
- 
--		CPU_PD3: power-domain-cpu3 {
-+		cpu_pd3: power-domain-cpu3 {
- 			#power-domain-cells = <0>;
--			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-+			power-domains = <&cluster_pd>;
-+			domain-idle-states = <&LITTLE_cpu_sleep_0>;
- 		};
- 
--		CPU_PD4: power-domain-cpu4 {
-+		cpu_pd4: power-domain-cpu4 {
- 			#power-domain-cells = <0>;
--			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-+			power-domains = <&cluster_pd>;
-+			domain-idle-states = <&BIG_cpu_sleep_0>;
- 		};
- 
--		CPU_PD5: power-domain-cpu5 {
-+		cpu_pd5: power-domain-cpu5 {
- 			#power-domain-cells = <0>;
--			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-+			power-domains = <&cluster_pd>;
-+			domain-idle-states = <&BIG_cpu_sleep_0>;
- 		};
- 
--		CPU_PD6: power-domain-cpu6 {
-+		cpu_pd6: power-domain-cpu6 {
- 			#power-domain-cells = <0>;
--			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-+			power-domains = <&cluster_pd>;
-+			domain-idle-states = <&BIG_cpu_sleep_0>;
- 		};
- 
--		CPU_PD7: power-domain-cpu7 {
-+		cpu_pd7: power-domain-cpu7 {
- 			#power-domain-cells = <0>;
--			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&BIG_CPU_SLEEP_0>;
-+			power-domains = <&cluster_pd>;
-+			domain-idle-states = <&BIG_cpu_sleep_0>;
- 		};
- 
--		CLUSTER_PD: power-domain-cpu-cluster0 {
-+		cluster_pd: power-domain-cpu-cluster0 {
- 			#power-domain-cells = <0>;
--			domain-idle-states = <&CLUSTER_SLEEP_0>, <&CLUSTER_SLEEP_1>;
-+			domain-idle-states = <&cluster_sleep_0>, <&cluster_sleep_1>;
- 		};
- 	};
- 
-@@ -579,7 +579,7 @@ apps_rsc: rsc@17a00000 {
- 			qcom,drv-id = <2>;
- 			qcom,tcs-config = <ACTIVE_TCS    2>, <SLEEP_TCS     3>,
- 					  <WAKE_TCS      3>, <CONTROL_TCS   0>;
--			power-domains = <&CLUSTER_PD>;
-+			power-domains = <&cluster_pd>;
- 
- 			apps_bcm_voter: bcm-voter {
- 				compatible = "qcom,bcm-voter";
-diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-index 133610d14fc4..1a4e196391a6 100644
---- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-@@ -37,122 +37,122 @@ cpus {
- 		#address-cells = <2>;
- 		#size-cells = <0>;
- 
--		CPU0: cpu@0 {
-+		cpu0: cpu@0 {
- 			device_type = "cpu";
- 			compatible = "qcom,kryo260";
- 			reg = <0x0 0x0>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1024>;
--			next-level-cache = <&L2_0>;
--			L2_0: l2-cache {
-+			next-level-cache = <&l2_0>;
-+			l2_0: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
- 				cache-unified;
- 			};
- 		};
- 
--		CPU1: cpu@1 {
-+		cpu1: cpu@1 {
- 			device_type = "cpu";
- 			compatible = "qcom,kryo260";
- 			reg = <0x0 0x1>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1024>;
--			next-level-cache = <&L2_0>;
-+			next-level-cache = <&l2_0>;
- 		};
- 
--		CPU2: cpu@2 {
-+		cpu2: cpu@2 {
- 			device_type = "cpu";
- 			compatible = "qcom,kryo260";
- 			reg = <0x0 0x2>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1024>;
--			next-level-cache = <&L2_0>;
-+			next-level-cache = <&l2_0>;
- 		};
- 
--		CPU3: cpu@3 {
-+		cpu3: cpu@3 {
- 			device_type = "cpu";
- 			compatible = "qcom,kryo260";
- 			reg = <0x0 0x3>;
- 			enable-method = "psci";
- 			capacity-dmips-mhz = <1024>;
--			next-level-cache = <&L2_0>;
-+			next-level-cache = <&l2_0>;
- 		};
- 
--		CPU4: cpu@100 {
-+		cpu4: cpu@100 {
- 			device_type = "cpu";
- 			compatible = "qcom,kryo260";
+ 			compatible = "arm,cortex-a53";
  			reg = <0x0 0x100>;
  			enable-method = "psci";
- 			capacity-dmips-mhz = <1638>;
+-			cpu-idle-states = <&PERF_CPU_SLEEP_0
+-						&PERF_CPU_SLEEP_1
+-						&PERF_CLUSTER_SLEEP_0
+-						&PERF_CLUSTER_SLEEP_1
+-						&PERF_CLUSTER_SLEEP_2>;
++			cpu-idle-states = <&PERF_cpu_sleep_0
++						&PERF_cpu_sleep_1
++						&PERF_cluster_sleep_0
++						&PERF_cluster_sleep_1
++						&PERF_cluster_sleep_2>;
+ 			capacity-dmips-mhz = <1126>;
+ 			#cooling-cells = <2>;
 -			next-level-cache = <&L2_1>;
 -			L2_1: l2-cache {
 +			next-level-cache = <&l2_1>;
@@ -560,63 +155,168 @@ index 133610d14fc4..1a4e196391a6 100644
  			};
  		};
  
--		CPU5: cpu@101 {
-+		cpu5: cpu@101 {
+-		CPU1: cpu@101 {
++		cpu1: cpu@101 {
  			device_type = "cpu";
- 			compatible = "qcom,kryo260";
+ 			compatible = "arm,cortex-a53";
  			reg = <0x0 0x101>;
  			enable-method = "psci";
- 			capacity-dmips-mhz = <1638>;
+-			cpu-idle-states = <&PERF_CPU_SLEEP_0
+-						&PERF_CPU_SLEEP_1
+-						&PERF_CLUSTER_SLEEP_0
+-						&PERF_CLUSTER_SLEEP_1
+-						&PERF_CLUSTER_SLEEP_2>;
++			cpu-idle-states = <&PERF_cpu_sleep_0
++						&PERF_cpu_sleep_1
++						&PERF_cluster_sleep_0
++						&PERF_cluster_sleep_1
++						&PERF_cluster_sleep_2>;
+ 			capacity-dmips-mhz = <1126>;
+ 			#cooling-cells = <2>;
 -			next-level-cache = <&L2_1>;
 +			next-level-cache = <&l2_1>;
  		};
  
--		CPU6: cpu@102 {
-+		cpu6: cpu@102 {
+-		CPU2: cpu@102 {
++		cpu2: cpu@102 {
  			device_type = "cpu";
- 			compatible = "qcom,kryo260";
+ 			compatible = "arm,cortex-a53";
  			reg = <0x0 0x102>;
  			enable-method = "psci";
- 			capacity-dmips-mhz = <1638>;
+-			cpu-idle-states = <&PERF_CPU_SLEEP_0
+-						&PERF_CPU_SLEEP_1
+-						&PERF_CLUSTER_SLEEP_0
+-						&PERF_CLUSTER_SLEEP_1
+-						&PERF_CLUSTER_SLEEP_2>;
++			cpu-idle-states = <&PERF_cpu_sleep_0
++						&PERF_cpu_sleep_1
++						&PERF_cluster_sleep_0
++						&PERF_cluster_sleep_1
++						&PERF_cluster_sleep_2>;
+ 			capacity-dmips-mhz = <1126>;
+ 			#cooling-cells = <2>;
 -			next-level-cache = <&L2_1>;
 +			next-level-cache = <&l2_1>;
  		};
  
--		CPU7: cpu@103 {
-+		cpu7: cpu@103 {
+-		CPU3: cpu@103 {
++		cpu3: cpu@103 {
  			device_type = "cpu";
- 			compatible = "qcom,kryo260";
+ 			compatible = "arm,cortex-a53";
  			reg = <0x0 0x103>;
  			enable-method = "psci";
- 			capacity-dmips-mhz = <1638>;
+-			cpu-idle-states = <&PERF_CPU_SLEEP_0
+-						&PERF_CPU_SLEEP_1
+-						&PERF_CLUSTER_SLEEP_0
+-						&PERF_CLUSTER_SLEEP_1
+-						&PERF_CLUSTER_SLEEP_2>;
++			cpu-idle-states = <&PERF_cpu_sleep_0
++						&PERF_cpu_sleep_1
++						&PERF_cluster_sleep_0
++						&PERF_cluster_sleep_1
++						&PERF_cluster_sleep_2>;
+ 			capacity-dmips-mhz = <1126>;
+ 			#cooling-cells = <2>;
 -			next-level-cache = <&L2_1>;
 +			next-level-cache = <&l2_1>;
+ 		};
+ 
+-		CPU4: cpu@0 {
++		cpu4: cpu@0 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-a53";
+ 			reg = <0x0 0x0>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&PWR_CPU_SLEEP_0
+-						&PWR_CPU_SLEEP_1
+-						&PWR_CLUSTER_SLEEP_0
+-						&PWR_CLUSTER_SLEEP_1
+-						&PWR_CLUSTER_SLEEP_2>;
++			cpu-idle-states = <&PWR_cpu_sleep_0
++						&PWR_cpu_sleep_1
++						&PWR_cluster_sleep_0
++						&PWR_cluster_sleep_1
++						&PWR_cluster_sleep_2>;
+ 			capacity-dmips-mhz = <1024>;
+ 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_0>;
+-			L2_0: l2-cache {
++			next-level-cache = <&l2_0>;
++			l2_0: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+ 				cache-unified;
+ 			};
+ 		};
+ 
+-		CPU5: cpu@1 {
++		cpu5: cpu@1 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-a53";
+ 			reg = <0x0 0x1>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&PWR_CPU_SLEEP_0
+-						&PWR_CPU_SLEEP_1
+-						&PWR_CLUSTER_SLEEP_0
+-						&PWR_CLUSTER_SLEEP_1
+-						&PWR_CLUSTER_SLEEP_2>;
++			cpu-idle-states = <&PWR_cpu_sleep_0
++						&PWR_cpu_sleep_1
++						&PWR_cluster_sleep_0
++						&PWR_cluster_sleep_1
++						&PWR_cluster_sleep_2>;
+ 			capacity-dmips-mhz = <1024>;
+ 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_0>;
++			next-level-cache = <&l2_0>;
+ 		};
+ 
+-		CPU6: cpu@2 {
++		cpu6: cpu@2 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-a53";
+ 			reg = <0x0 0x2>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&PWR_CPU_SLEEP_0
+-						&PWR_CPU_SLEEP_1
+-						&PWR_CLUSTER_SLEEP_0
+-						&PWR_CLUSTER_SLEEP_1
+-						&PWR_CLUSTER_SLEEP_2>;
++			cpu-idle-states = <&PWR_cpu_sleep_0
++						&PWR_cpu_sleep_1
++						&PWR_cluster_sleep_0
++						&PWR_cluster_sleep_1
++						&PWR_cluster_sleep_2>;
+ 			capacity-dmips-mhz = <1024>;
+ 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_0>;
++			next-level-cache = <&l2_0>;
+ 		};
+ 
+-		CPU7: cpu@3 {
++		cpu7: cpu@3 {
+ 			device_type = "cpu";
+ 			compatible = "arm,cortex-a53";
+ 			reg = <0x0 0x3>;
+ 			enable-method = "psci";
+-			cpu-idle-states = <&PWR_CPU_SLEEP_0
+-						&PWR_CPU_SLEEP_1
+-						&PWR_CLUSTER_SLEEP_0
+-						&PWR_CLUSTER_SLEEP_1
+-						&PWR_CLUSTER_SLEEP_2>;
++			cpu-idle-states = <&PWR_cpu_sleep_0
++						&PWR_cpu_sleep_1
++						&PWR_cluster_sleep_0
++						&PWR_cluster_sleep_1
++						&PWR_cluster_sleep_2>;
+ 			capacity-dmips-mhz = <1024>;
+ 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_0>;
++			next-level-cache = <&l2_0>;
  		};
  
  		cpu-map {
  			cluster0 {
- 				core0 {
--					cpu = <&CPU0>;
-+					cpu = <&cpu0>;
- 				};
- 
- 				core1 {
--					cpu = <&CPU1>;
-+					cpu = <&cpu1>;
- 				};
- 
- 				core2 {
--					cpu = <&CPU2>;
-+					cpu = <&cpu2>;
- 				};
- 
- 				core3 {
--					cpu = <&CPU3>;
-+					cpu = <&cpu3>;
- 				};
- 			};
- 
- 			cluster1 {
  				core0 {
 -					cpu = <&CPU4>;
 +					cpu = <&cpu4>;
@@ -637,212 +337,370 @@ index 133610d14fc4..1a4e196391a6 100644
 +					cpu = <&cpu7>;
  				};
  			};
+ 
+ 			cluster1 {
+ 				core0 {
+-					cpu = <&CPU0>;
++					cpu = <&cpu0>;
+ 				};
+ 
+ 				core1 {
+-					cpu = <&CPU1>;
++					cpu = <&cpu1>;
+ 				};
+ 
+ 				core2 {
+-					cpu = <&CPU2>;
++					cpu = <&cpu2>;
+ 				};
+ 
+ 				core3 {
+-					cpu = <&CPU3>;
++					cpu = <&cpu3>;
+ 				};
+ 			};
  		};
-diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-index 4d519dd6e7ef..78db0fe2cba1 100644
---- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-@@ -38,20 +38,20 @@ cpus {
+@@ -220,7 +220,7 @@ core3 {
+ 		idle-states {
+ 			entry-method = "psci";
+ 
+-			PWR_CPU_SLEEP_0: cpu-sleep-0-0 {
++			PWR_cpu_sleep_0: cpu-sleep-0-0 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "pwr-retention";
+ 				arm,psci-suspend-param = <0x40000002>;
+@@ -229,7 +229,7 @@ PWR_CPU_SLEEP_0: cpu-sleep-0-0 {
+ 				min-residency-us = <200>;
+ 			};
+ 
+-			PWR_CPU_SLEEP_1: cpu-sleep-0-1 {
++			PWR_cpu_sleep_1: cpu-sleep-0-1 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "pwr-power-collapse";
+ 				arm,psci-suspend-param = <0x40000003>;
+@@ -239,7 +239,7 @@ PWR_CPU_SLEEP_1: cpu-sleep-0-1 {
+ 				local-timer-stop;
+ 			};
+ 
+-			PERF_CPU_SLEEP_0: cpu-sleep-1-0 {
++			PERF_cpu_sleep_0: cpu-sleep-1-0 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "perf-retention";
+ 				arm,psci-suspend-param = <0x40000002>;
+@@ -248,7 +248,7 @@ PERF_CPU_SLEEP_0: cpu-sleep-1-0 {
+ 				min-residency-us = <200>;
+ 			};
+ 
+-			PERF_CPU_SLEEP_1: cpu-sleep-1-1 {
++			PERF_cpu_sleep_1: cpu-sleep-1-1 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "perf-power-collapse";
+ 				arm,psci-suspend-param = <0x40000003>;
+@@ -258,7 +258,7 @@ PERF_CPU_SLEEP_1: cpu-sleep-1-1 {
+ 				local-timer-stop;
+ 			};
+ 
+-			PWR_CLUSTER_SLEEP_0: cluster-sleep-0-0 {
++			PWR_cluster_sleep_0: cluster-sleep-0-0 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "pwr-cluster-dynamic-retention";
+ 				arm,psci-suspend-param = <0x400000F2>;
+@@ -268,7 +268,7 @@ PWR_CLUSTER_SLEEP_0: cluster-sleep-0-0 {
+ 				local-timer-stop;
+ 			};
+ 
+-			PWR_CLUSTER_SLEEP_1: cluster-sleep-0-1 {
++			PWR_cluster_sleep_1: cluster-sleep-0-1 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "pwr-cluster-retention";
+ 				arm,psci-suspend-param = <0x400000F3>;
+@@ -278,7 +278,7 @@ PWR_CLUSTER_SLEEP_1: cluster-sleep-0-1 {
+ 				local-timer-stop;
+ 			};
+ 
+-			PWR_CLUSTER_SLEEP_2: cluster-sleep-0-2 {
++			PWR_cluster_sleep_2: cluster-sleep-0-2 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "pwr-cluster-retention";
+ 				arm,psci-suspend-param = <0x400000F4>;
+@@ -288,7 +288,7 @@ PWR_CLUSTER_SLEEP_2: cluster-sleep-0-2 {
+ 				local-timer-stop;
+ 			};
+ 
+-			PERF_CLUSTER_SLEEP_0: cluster-sleep-1-0 {
++			PERF_cluster_sleep_0: cluster-sleep-1-0 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "perf-cluster-dynamic-retention";
+ 				arm,psci-suspend-param = <0x400000F2>;
+@@ -298,7 +298,7 @@ PERF_CLUSTER_SLEEP_0: cluster-sleep-1-0 {
+ 				local-timer-stop;
+ 			};
+ 
+-			PERF_CLUSTER_SLEEP_1: cluster-sleep-1-1 {
++			PERF_cluster_sleep_1: cluster-sleep-1-1 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "perf-cluster-retention";
+ 				arm,psci-suspend-param = <0x400000F3>;
+@@ -308,7 +308,7 @@ PERF_CLUSTER_SLEEP_1: cluster-sleep-1-1 {
+ 				local-timer-stop;
+ 			};
+ 
+-			PERF_CLUSTER_SLEEP_2: cluster-sleep-1-2 {
++			PERF_cluster_sleep_2: cluster-sleep-1-2 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "perf-cluster-retention";
+ 				arm,psci-suspend-param = <0x400000F4>;
+diff --git a/arch/arm64/boot/dts/qcom/sdm660.dtsi b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+index f89b27c99f40..3164a4817e32 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+@@ -85,49 +85,49 @@ opp-160000000 {
+ 	};
+ };
+ 
+-&CPU0 {
++&cpu0 {
+ 	compatible = "qcom,kryo260";
+ 	capacity-dmips-mhz = <1024>;
+ 	/delete-property/ operating-points-v2;
+ };
+ 
+-&CPU1 {
++&cpu1 {
+ 	compatible = "qcom,kryo260";
+ 	capacity-dmips-mhz = <1024>;
+ 	/delete-property/ operating-points-v2;
+ };
+ 
+-&CPU2 {
++&cpu2 {
+ 	compatible = "qcom,kryo260";
+ 	capacity-dmips-mhz = <1024>;
+ 	/delete-property/ operating-points-v2;
+ };
+ 
+-&CPU3 {
++&cpu3 {
+ 	compatible = "qcom,kryo260";
+ 	capacity-dmips-mhz = <1024>;
+ 	/delete-property/ operating-points-v2;
+ };
+ 
+-&CPU4 {
++&cpu4 {
+ 	compatible = "qcom,kryo260";
+ 	capacity-dmips-mhz = <640>;
+ 	/delete-property/ operating-points-v2;
+ };
+ 
+-&CPU5 {
++&cpu5 {
+ 	compatible = "qcom,kryo260";
+ 	capacity-dmips-mhz = <640>;
+ 	/delete-property/ operating-points-v2;
+ };
+ 
+-&CPU6 {
++&cpu6 {
+ 	compatible = "qcom,kryo260";
+ 	capacity-dmips-mhz = <640>;
+ 	/delete-property/ operating-points-v2;
+ };
+ 
+-&CPU7 {
++&cpu7 {
+ 	compatible = "qcom,kryo260";
+ 	capacity-dmips-mhz = <640>;
+ 	/delete-property/ operating-points-v2;
+diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+index 187c6698835d..f40ff1a9a385 100644
+--- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+@@ -32,7 +32,7 @@ cpus {
  		#address-cells = <2>;
  		#size-cells = <0>;
  
 -		CPU0: cpu@0 {
 +		cpu0: cpu@0 {
  			device_type = "cpu";
- 			compatible = "qcom,kryo660";
+ 			compatible = "qcom,kryo360";
  			reg = <0x0 0x0>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
--			next-level-cache = <&L2_0>;
-+			next-level-cache = <&l2_0>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
+@@ -43,10 +43,10 @@ CPU0: cpu@0 {
  			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
+ 			interconnects = <&gladiator_noc MASTER_AMPSS_M0 3 &mem_noc SLAVE_EBI_CH0 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
 -			power-domains = <&CPU_PD0>;
 +			power-domains = <&cpu_pd0>;
  			power-domain-names = "psci";
- 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_0>;
 -			L2_0: l2-cache {
++			next-level-cache = <&l2_0>;
 +			l2_0: l2-cache {
  				compatible = "cache";
+ 				next-level-cache = <&L3_0>;
  				cache-level = <2>;
- 				cache-unified;
-@@ -64,20 +64,20 @@ L3_0: l3-cache {
+@@ -59,7 +59,7 @@ L3_0: l3-cache {
  			};
  		};
  
 -		CPU1: cpu@100 {
 +		cpu1: cpu@100 {
  			device_type = "cpu";
- 			compatible = "qcom,kryo660";
+ 			compatible = "qcom,kryo360";
  			reg = <0x0 0x100>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
--			next-level-cache = <&L2_100>;
-+			next-level-cache = <&l2_100>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
+@@ -70,10 +70,10 @@ CPU1: cpu@100 {
  			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
+ 			interconnects = <&gladiator_noc MASTER_AMPSS_M0 3 &mem_noc SLAVE_EBI_CH0 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
 -			power-domains = <&CPU_PD1>;
 +			power-domains = <&cpu_pd1>;
  			power-domain-names = "psci";
- 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_100>;
 -			L2_100: l2-cache {
++			next-level-cache = <&l2_100>;
 +			l2_100: l2-cache {
  				compatible = "cache";
  				cache-level = <2>;
  				cache-unified;
-@@ -85,20 +85,20 @@ L2_100: l2-cache {
+@@ -81,7 +81,7 @@ L2_100: l2-cache {
  			};
  		};
  
 -		CPU2: cpu@200 {
 +		cpu2: cpu@200 {
  			device_type = "cpu";
- 			compatible = "qcom,kryo660";
+ 			compatible = "qcom,kryo360";
  			reg = <0x0 0x200>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
--			next-level-cache = <&L2_200>;
-+			next-level-cache = <&l2_200>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
+@@ -92,10 +92,10 @@ CPU2: cpu@200 {
  			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
+ 			interconnects = <&gladiator_noc MASTER_AMPSS_M0 3 &mem_noc SLAVE_EBI_CH0 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
 -			power-domains = <&CPU_PD2>;
 +			power-domains = <&cpu_pd2>;
  			power-domain-names = "psci";
- 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_200>;
 -			L2_200: l2-cache {
++			next-level-cache = <&l2_200>;
 +			l2_200: l2-cache {
  				compatible = "cache";
  				cache-level = <2>;
  				cache-unified;
-@@ -106,20 +106,20 @@ L2_200: l2-cache {
+@@ -103,7 +103,7 @@ L2_200: l2-cache {
  			};
  		};
  
 -		CPU3: cpu@300 {
 +		cpu3: cpu@300 {
  			device_type = "cpu";
- 			compatible = "qcom,kryo660";
+ 			compatible = "qcom,kryo360";
  			reg = <0x0 0x300>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
--			next-level-cache = <&L2_300>;
-+			next-level-cache = <&l2_300>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
+@@ -114,10 +114,10 @@ CPU3: cpu@300 {
  			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
+ 			interconnects = <&gladiator_noc MASTER_AMPSS_M0 3 &mem_noc SLAVE_EBI_CH0 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
 -			power-domains = <&CPU_PD3>;
 +			power-domains = <&cpu_pd3>;
  			power-domain-names = "psci";
- 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_300>;
 -			L2_300: l2-cache {
++			next-level-cache = <&l2_300>;
 +			l2_300: l2-cache {
  				compatible = "cache";
  				cache-level = <2>;
  				cache-unified;
-@@ -127,20 +127,20 @@ L2_300: l2-cache {
+@@ -125,7 +125,7 @@ L2_300: l2-cache {
  			};
  		};
  
 -		CPU4: cpu@400 {
 +		cpu4: cpu@400 {
  			device_type = "cpu";
- 			compatible = "qcom,kryo660";
+ 			compatible = "qcom,kryo360";
  			reg = <0x0 0x400>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
--			next-level-cache = <&L2_400>;
-+			next-level-cache = <&l2_400>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
+@@ -136,10 +136,10 @@ CPU4: cpu@400 {
  			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
+ 			interconnects = <&gladiator_noc MASTER_AMPSS_M0 3 &mem_noc SLAVE_EBI_CH0 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
 -			power-domains = <&CPU_PD4>;
 +			power-domains = <&cpu_pd4>;
  			power-domain-names = "psci";
- 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_400>;
 -			L2_400: l2-cache {
++			next-level-cache = <&l2_400>;
 +			l2_400: l2-cache {
  				compatible = "cache";
  				cache-level = <2>;
  				cache-unified;
-@@ -148,20 +148,20 @@ L2_400: l2-cache {
+@@ -147,7 +147,7 @@ L2_400: l2-cache {
  			};
  		};
  
 -		CPU5: cpu@500 {
 +		cpu5: cpu@500 {
  			device_type = "cpu";
- 			compatible = "qcom,kryo660";
+ 			compatible = "qcom,kryo360";
  			reg = <0x0 0x500>;
- 			clocks = <&cpufreq_hw 0>;
- 			enable-method = "psci";
--			next-level-cache = <&L2_500>;
-+			next-level-cache = <&l2_500>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
+@@ -158,10 +158,10 @@ CPU5: cpu@500 {
  			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
+ 			interconnects = <&gladiator_noc MASTER_AMPSS_M0 3 &mem_noc SLAVE_EBI_CH0 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
 -			power-domains = <&CPU_PD5>;
 +			power-domains = <&cpu_pd5>;
  			power-domain-names = "psci";
- 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_500>;
 -			L2_500: l2-cache {
++			next-level-cache = <&l2_500>;
 +			l2_500: l2-cache {
  				compatible = "cache";
  				cache-level = <2>;
  				cache-unified;
-@@ -169,20 +169,20 @@ L2_500: l2-cache {
+@@ -169,7 +169,7 @@ L2_500: l2-cache {
  			};
  		};
  
 -		CPU6: cpu@600 {
 +		cpu6: cpu@600 {
  			device_type = "cpu";
- 			compatible = "qcom,kryo660";
+ 			compatible = "qcom,kryo360";
  			reg = <0x0 0x600>;
- 			clocks = <&cpufreq_hw 1>;
- 			enable-method = "psci";
--			next-level-cache = <&L2_600>;
-+			next-level-cache = <&l2_600>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
+@@ -180,10 +180,10 @@ CPU6: cpu@600 {
  			operating-points-v2 = <&cpu6_opp_table>;
- 			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
+ 			interconnects = <&gladiator_noc MASTER_AMPSS_M0 3 &mem_noc SLAVE_EBI_CH0 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
 -			power-domains = <&CPU_PD6>;
 +			power-domains = <&cpu_pd6>;
  			power-domain-names = "psci";
- 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_600>;
 -			L2_600: l2-cache {
++			next-level-cache = <&l2_600>;
 +			l2_600: l2-cache {
  				compatible = "cache";
  				cache-level = <2>;
  				cache-unified;
-@@ -190,20 +190,20 @@ L2_600: l2-cache {
+@@ -191,7 +191,7 @@ L2_600: l2-cache {
  			};
  		};
  
 -		CPU7: cpu@700 {
 +		cpu7: cpu@700 {
  			device_type = "cpu";
- 			compatible = "qcom,kryo660";
+ 			compatible = "qcom,kryo360";
  			reg = <0x0 0x700>;
- 			clocks = <&cpufreq_hw 1>;
- 			enable-method = "psci";
--			next-level-cache = <&L2_700>;
-+			next-level-cache = <&l2_700>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
+@@ -202,10 +202,10 @@ CPU7: cpu@700 {
  			operating-points-v2 = <&cpu6_opp_table>;
- 			interconnects = <&cpucp_l3 MASTER_EPSS_L3_APPS &cpucp_l3 SLAVE_EPSS_L3_SHARED>;
+ 			interconnects = <&gladiator_noc MASTER_AMPSS_M0 3 &mem_noc SLAVE_EBI_CH0 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
 -			power-domains = <&CPU_PD7>;
 +			power-domains = <&cpu_pd7>;
  			power-domain-names = "psci";
- 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_700>;
 -			L2_700: l2-cache {
++			next-level-cache = <&l2_700>;
 +			l2_700: l2-cache {
  				compatible = "cache";
  				cache-level = <2>;
  				cache-unified;
-@@ -214,35 +214,35 @@ L2_700: l2-cache {
+@@ -216,35 +216,35 @@ L2_700: l2-cache {
  		cpu-map {
  			cluster0 {
  				core0 {
@@ -886,52 +744,34 @@ index 4d519dd6e7ef..78db0fe2cba1 100644
  				};
  			};
  		};
-@@ -250,7 +250,7 @@ core7 {
+@@ -252,7 +252,7 @@ core7 {
  		idle-states {
  			entry-method = "psci";
  
 -			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
 +			LITTLE_cpu_sleep_0: cpu-sleep-0-0 {
  				compatible = "arm,idle-state";
- 				idle-state-name = "silver-power-collapse";
- 				arm,psci-suspend-param = <0x40000003>;
-@@ -260,7 +260,7 @@ LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
- 				local-timer-stop;
- 			};
- 
--			LITTLE_CPU_SLEEP_1: cpu-sleep-0-1 {
-+			LITTLE_cpu_sleep_1: cpu-sleep-0-1 {
- 				compatible = "arm,idle-state";
- 				idle-state-name = "silver-rail-power-collapse";
+ 				idle-state-name = "little-rail-power-collapse";
  				arm,psci-suspend-param = <0x40000004>;
-@@ -270,7 +270,7 @@ LITTLE_CPU_SLEEP_1: cpu-sleep-0-1 {
+@@ -262,7 +262,7 @@ LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
  				local-timer-stop;
  			};
  
 -			BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
 +			BIG_cpu_sleep_0: cpu-sleep-1-0 {
  				compatible = "arm,idle-state";
- 				idle-state-name = "gold-power-collapse";
- 				arm,psci-suspend-param = <0x40000003>;
-@@ -280,7 +280,7 @@ BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
- 				local-timer-stop;
- 			};
- 
--			BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
-+			BIG_cpu_sleep_1: cpu-sleep-1-1 {
- 				compatible = "arm,idle-state";
- 				idle-state-name = "gold-rail-power-collapse";
+ 				idle-state-name = "big-rail-power-collapse";
  				arm,psci-suspend-param = <0x40000004>;
-@@ -292,7 +292,7 @@ BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
+@@ -274,7 +274,7 @@ BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
  		};
  
  		domain-idle-states {
 -			CLUSTER_SLEEP_0: cluster-sleep-0 {
 +			cluster_sleep_0: cluster-sleep-0 {
  				compatible = "domain-idle-state";
- 				arm,psci-suspend-param = <0x41000044>;
- 				entry-latency-us = <2752>;
-@@ -455,58 +455,58 @@ psci {
+ 				arm,psci-suspend-param = <0x4100c244>;
+ 				entry-latency-us = <3263>;
+@@ -429,57 +429,57 @@ psci {
  		compatible = "arm,psci-1.0";
  		method = "smc";
  
@@ -939,83 +779,690 @@ index 4d519dd6e7ef..78db0fe2cba1 100644
 +		cpu_pd0: power-domain-cpu0 {
  			#power-domain-cells = <0>;
 -			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+-			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
 +			power-domains = <&cluster_pd>;
-+			domain-idle-states = <&LITTLE_cpu_sleep_0 &LITTLE_cpu_sleep_1>;
++			domain-idle-states = <&LITTLE_cpu_sleep_0>;
  		};
  
 -		CPU_PD1: power-domain-cpu1 {
 +		cpu_pd1: power-domain-cpu1 {
  			#power-domain-cells = <0>;
 -			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+-			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
 +			power-domains = <&cluster_pd>;
-+			domain-idle-states = <&LITTLE_cpu_sleep_0 &LITTLE_cpu_sleep_1>;
++			domain-idle-states = <&LITTLE_cpu_sleep_0>;
  		};
  
 -		CPU_PD2: power-domain-cpu2 {
 +		cpu_pd2: power-domain-cpu2 {
  			#power-domain-cells = <0>;
 -			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+-			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
 +			power-domains = <&cluster_pd>;
-+			domain-idle-states = <&LITTLE_cpu_sleep_0 &LITTLE_cpu_sleep_1>;
++			domain-idle-states = <&LITTLE_cpu_sleep_0>;
  		};
  
 -		CPU_PD3: power-domain-cpu3 {
 +		cpu_pd3: power-domain-cpu3 {
  			#power-domain-cells = <0>;
 -			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+-			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
 +			power-domains = <&cluster_pd>;
-+			domain-idle-states = <&LITTLE_cpu_sleep_0 &LITTLE_cpu_sleep_1>;
++			domain-idle-states = <&LITTLE_cpu_sleep_0>;
  		};
  
 -		CPU_PD4: power-domain-cpu4 {
 +		cpu_pd4: power-domain-cpu4 {
  			#power-domain-cells = <0>;
 -			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+-			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
 +			power-domains = <&cluster_pd>;
-+			domain-idle-states = <&LITTLE_cpu_sleep_0 &LITTLE_cpu_sleep_1>;
++			domain-idle-states = <&LITTLE_cpu_sleep_0>;
  		};
  
 -		CPU_PD5: power-domain-cpu5 {
 +		cpu_pd5: power-domain-cpu5 {
  			#power-domain-cells = <0>;
 -			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&LITTLE_CPU_SLEEP_0 &LITTLE_CPU_SLEEP_1>;
+-			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
 +			power-domains = <&cluster_pd>;
-+			domain-idle-states = <&LITTLE_cpu_sleep_0 &LITTLE_cpu_sleep_1>;
++			domain-idle-states = <&LITTLE_cpu_sleep_0>;
  		};
  
 -		CPU_PD6: power-domain-cpu6 {
 +		cpu_pd6: power-domain-cpu6 {
  			#power-domain-cells = <0>;
 -			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
+-			domain-idle-states = <&BIG_CPU_SLEEP_0>;
 +			power-domains = <&cluster_pd>;
-+			domain-idle-states = <&BIG_cpu_sleep_0 &BIG_cpu_sleep_1>;
++			domain-idle-states = <&BIG_cpu_sleep_0>;
  		};
  
 -		CPU_PD7: power-domain-cpu7 {
 +		cpu_pd7: power-domain-cpu7 {
  			#power-domain-cells = <0>;
 -			power-domains = <&CLUSTER_PD>;
--			domain-idle-states = <&BIG_CPU_SLEEP_0 &BIG_CPU_SLEEP_1>;
+-			domain-idle-states = <&BIG_CPU_SLEEP_0>;
 +			power-domains = <&cluster_pd>;
-+			domain-idle-states = <&BIG_cpu_sleep_0 &BIG_cpu_sleep_1>;
++			domain-idle-states = <&BIG_cpu_sleep_0>;
  		};
  
--		CLUSTER_PD: power-domain-cpu-cluster0 {
-+		cluster_pd: power-domain-cpu-cluster0 {
+-		CLUSTER_PD: power-domain-cluster {
++		cluster_pd: power-domain-cluster {
  			#power-domain-cells = <0>;
- 			power-domains = <&mpm>;
 -			domain-idle-states = <&CLUSTER_SLEEP_0>;
 +			domain-idle-states = <&cluster_sleep_0>;
  		};
  	};
  
+@@ -1762,7 +1762,7 @@ apps_rsc: rsc@179c0000 {
+ 					  <SLEEP_TCS   3>,
+ 					  <WAKE_TCS    3>,
+ 					  <CONTROL_TCS 1>;
+-			power-domains = <&CLUSTER_PD>;
++			power-domains = <&cluster_pd>;
+ 
+ 			apps_bcm_voter: bcm-voter {
+ 				compatible = "qcom,bcm-voter";
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+index e8276db9eabb..a31e6736cb37 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+@@ -164,7 +164,7 @@ &cpus {
+ };
+ 
+ &cpu_idle_states {
+-	LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
++	LITTLE_cpu_sleep_0: cpu-sleep-0-0 {
+ 		compatible = "arm,idle-state";
+ 		idle-state-name = "little-power-down";
+ 		arm,psci-suspend-param = <0x40000003>;
+@@ -174,7 +174,7 @@ LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
+ 		local-timer-stop;
+ 	};
+ 
+-	LITTLE_CPU_SLEEP_1: cpu-sleep-0-1 {
++	LITTLE_cpu_sleep_1: cpu-sleep-0-1 {
+ 		compatible = "arm,idle-state";
+ 		idle-state-name = "little-rail-power-down";
+ 		arm,psci-suspend-param = <0x40000004>;
+@@ -184,7 +184,7 @@ LITTLE_CPU_SLEEP_1: cpu-sleep-0-1 {
+ 		local-timer-stop;
+ 	};
+ 
+-	BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
++	BIG_cpu_sleep_0: cpu-sleep-1-0 {
+ 		compatible = "arm,idle-state";
+ 		idle-state-name = "big-power-down";
+ 		arm,psci-suspend-param = <0x40000003>;
+@@ -194,7 +194,7 @@ BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
+ 		local-timer-stop;
+ 	};
+ 
+-	BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
++	BIG_cpu_sleep_1: cpu-sleep-1-1 {
+ 		compatible = "arm,idle-state";
+ 		idle-state-name = "big-rail-power-down";
+ 		arm,psci-suspend-param = <0x40000004>;
+@@ -204,7 +204,7 @@ BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
+ 		local-timer-stop;
+ 	};
+ 
+-	CLUSTER_SLEEP_0: cluster-sleep-0 {
++	cluster_sleep_0: cluster-sleep-0 {
+ 		compatible = "arm,idle-state";
+ 		idle-state-name = "cluster-power-down";
+ 		arm,psci-suspend-param = <0x400000F4>;
+@@ -215,68 +215,68 @@ CLUSTER_SLEEP_0: cluster-sleep-0 {
+ 	};
+ };
+ 
+-&CPU0 {
++&cpu0 {
+ 	/delete-property/ power-domains;
+ 	/delete-property/ power-domain-names;
+-	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-			   &LITTLE_CPU_SLEEP_1
+-			   &CLUSTER_SLEEP_0>;
++	cpu-idle-states = <&LITTLE_cpu_sleep_0
++			   &LITTLE_cpu_sleep_1
++			   &cluster_sleep_0>;
+ };
+ 
+-&CPU1 {
++&cpu1 {
+ 	/delete-property/ power-domains;
+ 	/delete-property/ power-domain-names;
+-	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-			   &LITTLE_CPU_SLEEP_1
+-			   &CLUSTER_SLEEP_0>;
++	cpu-idle-states = <&LITTLE_cpu_sleep_0
++			   &LITTLE_cpu_sleep_1
++			   &cluster_sleep_0>;
+ };
+ 
+-&CPU2 {
++&cpu2 {
+ 	/delete-property/ power-domains;
+ 	/delete-property/ power-domain-names;
+-	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-			   &LITTLE_CPU_SLEEP_1
+-			   &CLUSTER_SLEEP_0>;
++	cpu-idle-states = <&LITTLE_cpu_sleep_0
++			   &LITTLE_cpu_sleep_1
++			   &cluster_sleep_0>;
+ };
+ 
+-&CPU3 {
++&cpu3 {
+ 	/delete-property/ power-domains;
+ 	/delete-property/ power-domain-names;
+-	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+-			   &LITTLE_CPU_SLEEP_1
+-			   &CLUSTER_SLEEP_0>;
++	cpu-idle-states = <&LITTLE_cpu_sleep_0
++			   &LITTLE_cpu_sleep_1
++			   &cluster_sleep_0>;
+ };
+ 
+-&CPU4 {
++&cpu4 {
+ 	/delete-property/ power-domains;
+ 	/delete-property/ power-domain-names;
+-	cpu-idle-states = <&BIG_CPU_SLEEP_0
+-			   &BIG_CPU_SLEEP_1
+-			   &CLUSTER_SLEEP_0>;
++	cpu-idle-states = <&BIG_cpu_sleep_0
++			   &BIG_cpu_sleep_1
++			   &cluster_sleep_0>;
+ };
+ 
+-&CPU5 {
++&cpu5 {
+ 	/delete-property/ power-domains;
+ 	/delete-property/ power-domain-names;
+-	cpu-idle-states = <&BIG_CPU_SLEEP_0
+-			   &BIG_CPU_SLEEP_1
+-			   &CLUSTER_SLEEP_0>;
++	cpu-idle-states = <&BIG_cpu_sleep_0
++			   &BIG_cpu_sleep_1
++			   &cluster_sleep_0>;
+ };
+ 
+-&CPU6 {
++&cpu6 {
+ 	/delete-property/ power-domains;
+ 	/delete-property/ power-domain-names;
+-	cpu-idle-states = <&BIG_CPU_SLEEP_0
+-			   &BIG_CPU_SLEEP_1
+-			   &CLUSTER_SLEEP_0>;
++	cpu-idle-states = <&BIG_cpu_sleep_0
++			   &BIG_cpu_sleep_1
++			   &cluster_sleep_0>;
+ };
+ 
+-&CPU7 {
++&cpu7 {
+ 	/delete-property/ power-domains;
+ 	/delete-property/ power-domain-names;
+-	cpu-idle-states = <&BIG_CPU_SLEEP_0
+-			   &BIG_CPU_SLEEP_1
+-			   &CLUSTER_SLEEP_0>;
++	cpu-idle-states = <&BIG_cpu_sleep_0
++			   &BIG_cpu_sleep_1
++			   &cluster_sleep_0>;
+ };
+ 
+ &lmh_cluster0 {
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 54077549b9da..d8507e0ef3ab 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -91,7 +91,7 @@ cpus: cpus {
+ 		#address-cells = <2>;
+ 		#size-cells = <0>;
+ 
+-		CPU0: cpu@0 {
++		cpu0: cpu@0 {
+ 			device_type = "cpu";
+ 			compatible = "qcom,kryo385";
+ 			reg = <0x0 0x0>;
+@@ -103,11 +103,11 @@ CPU0: cpu@0 {
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+-			power-domains = <&CPU_PD0>;
++			power-domains = <&cpu_pd0>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_0>;
+-			L2_0: l2-cache {
++			next-level-cache = <&l2_0>;
++			l2_0: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+ 				cache-unified;
+@@ -120,7 +120,7 @@ L3_0: l3-cache {
+ 			};
+ 		};
+ 
+-		CPU1: cpu@100 {
++		cpu1: cpu@100 {
+ 			device_type = "cpu";
+ 			compatible = "qcom,kryo385";
+ 			reg = <0x0 0x100>;
+@@ -132,11 +132,11 @@ CPU1: cpu@100 {
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+-			power-domains = <&CPU_PD1>;
++			power-domains = <&cpu_pd1>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_100>;
+-			L2_100: l2-cache {
++			next-level-cache = <&l2_100>;
++			l2_100: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+ 				cache-unified;
+@@ -144,7 +144,7 @@ L2_100: l2-cache {
+ 			};
+ 		};
+ 
+-		CPU2: cpu@200 {
++		cpu2: cpu@200 {
+ 			device_type = "cpu";
+ 			compatible = "qcom,kryo385";
+ 			reg = <0x0 0x200>;
+@@ -156,11 +156,11 @@ CPU2: cpu@200 {
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+-			power-domains = <&CPU_PD2>;
++			power-domains = <&cpu_pd2>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_200>;
+-			L2_200: l2-cache {
++			next-level-cache = <&l2_200>;
++			l2_200: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+ 				cache-unified;
+@@ -168,7 +168,7 @@ L2_200: l2-cache {
+ 			};
+ 		};
+ 
+-		CPU3: cpu@300 {
++		cpu3: cpu@300 {
+ 			device_type = "cpu";
+ 			compatible = "qcom,kryo385";
+ 			reg = <0x0 0x300>;
+@@ -181,10 +181,10 @@ CPU3: cpu@300 {
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			#cooling-cells = <2>;
+-			power-domains = <&CPU_PD3>;
++			power-domains = <&cpu_pd3>;
+ 			power-domain-names = "psci";
+-			next-level-cache = <&L2_300>;
+-			L2_300: l2-cache {
++			next-level-cache = <&l2_300>;
++			l2_300: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+ 				cache-unified;
+@@ -192,7 +192,7 @@ L2_300: l2-cache {
+ 			};
+ 		};
+ 
+-		CPU4: cpu@400 {
++		cpu4: cpu@400 {
+ 			device_type = "cpu";
+ 			compatible = "qcom,kryo385";
+ 			reg = <0x0 0x400>;
+@@ -204,11 +204,11 @@ CPU4: cpu@400 {
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+-			power-domains = <&CPU_PD4>;
++			power-domains = <&cpu_pd4>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_400>;
+-			L2_400: l2-cache {
++			next-level-cache = <&l2_400>;
++			l2_400: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+ 				cache-unified;
+@@ -216,7 +216,7 @@ L2_400: l2-cache {
+ 			};
+ 		};
+ 
+-		CPU5: cpu@500 {
++		cpu5: cpu@500 {
+ 			device_type = "cpu";
+ 			compatible = "qcom,kryo385";
+ 			reg = <0x0 0x500>;
+@@ -228,11 +228,11 @@ CPU5: cpu@500 {
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+-			power-domains = <&CPU_PD5>;
++			power-domains = <&cpu_pd5>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_500>;
+-			L2_500: l2-cache {
++			next-level-cache = <&l2_500>;
++			l2_500: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+ 				cache-unified;
+@@ -240,7 +240,7 @@ L2_500: l2-cache {
+ 			};
+ 		};
+ 
+-		CPU6: cpu@600 {
++		cpu6: cpu@600 {
+ 			device_type = "cpu";
+ 			compatible = "qcom,kryo385";
+ 			reg = <0x0 0x600>;
+@@ -252,11 +252,11 @@ CPU6: cpu@600 {
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+-			power-domains = <&CPU_PD6>;
++			power-domains = <&cpu_pd6>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_600>;
+-			L2_600: l2-cache {
++			next-level-cache = <&l2_600>;
++			l2_600: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+ 				cache-unified;
+@@ -264,7 +264,7 @@ L2_600: l2-cache {
+ 			};
+ 		};
+ 
+-		CPU7: cpu@700 {
++		cpu7: cpu@700 {
+ 			device_type = "cpu";
+ 			compatible = "qcom,kryo385";
+ 			reg = <0x0 0x700>;
+@@ -276,11 +276,11 @@ CPU7: cpu@700 {
+ 			operating-points-v2 = <&cpu4_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+-			power-domains = <&CPU_PD7>;
++			power-domains = <&cpu_pd7>;
+ 			power-domain-names = "psci";
+ 			#cooling-cells = <2>;
+-			next-level-cache = <&L2_700>;
+-			L2_700: l2-cache {
++			next-level-cache = <&l2_700>;
++			l2_700: l2-cache {
+ 				compatible = "cache";
+ 				cache-level = <2>;
+ 				cache-unified;
+@@ -291,35 +291,35 @@ L2_700: l2-cache {
+ 		cpu-map {
+ 			cluster0 {
+ 				core0 {
+-					cpu = <&CPU0>;
++					cpu = <&cpu0>;
+ 				};
+ 
+ 				core1 {
+-					cpu = <&CPU1>;
++					cpu = <&cpu1>;
+ 				};
+ 
+ 				core2 {
+-					cpu = <&CPU2>;
++					cpu = <&cpu2>;
+ 				};
+ 
+ 				core3 {
+-					cpu = <&CPU3>;
++					cpu = <&cpu3>;
+ 				};
+ 
+ 				core4 {
+-					cpu = <&CPU4>;
++					cpu = <&cpu4>;
+ 				};
+ 
+ 				core5 {
+-					cpu = <&CPU5>;
++					cpu = <&cpu5>;
+ 				};
+ 
+ 				core6 {
+-					cpu = <&CPU6>;
++					cpu = <&cpu6>;
+ 				};
+ 
+ 				core7 {
+-					cpu = <&CPU7>;
++					cpu = <&cpu7>;
+ 				};
+ 			};
+ 		};
+@@ -327,7 +327,7 @@ core7 {
+ 		cpu_idle_states: idle-states {
+ 			entry-method = "psci";
+ 
+-			LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
++			LITTLE_cpu_sleep_0: cpu-sleep-0-0 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "little-rail-power-collapse";
+ 				arm,psci-suspend-param = <0x40000004>;
+@@ -337,7 +337,7 @@ LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
+ 				local-timer-stop;
+ 			};
+ 
+-			BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
++			BIG_cpu_sleep_0: cpu-sleep-1-0 {
+ 				compatible = "arm,idle-state";
+ 				idle-state-name = "big-rail-power-collapse";
+ 				arm,psci-suspend-param = <0x40000004>;
+@@ -349,7 +349,7 @@ BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
+ 		};
+ 
+ 		domain-idle-states {
+-			CLUSTER_SLEEP_0: cluster-sleep-0 {
++			cluster_sleep_0: cluster-sleep-0 {
+ 				compatible = "domain-idle-state";
+ 				arm,psci-suspend-param = <0x4100c244>;
+ 				entry-latency-us = <3263>;
+@@ -717,57 +717,57 @@ psci: psci {
+ 		compatible = "arm,psci-1.0";
+ 		method = "smc";
+ 
+-		CPU_PD0: power-domain-cpu0 {
++		cpu_pd0: power-domain-cpu0 {
+ 			#power-domain-cells = <0>;
+-			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++			power-domains = <&cluster_pd>;
++			domain-idle-states = <&LITTLE_cpu_sleep_0>;
+ 		};
+ 
+-		CPU_PD1: power-domain-cpu1 {
++		cpu_pd1: power-domain-cpu1 {
+ 			#power-domain-cells = <0>;
+-			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++			power-domains = <&cluster_pd>;
++			domain-idle-states = <&LITTLE_cpu_sleep_0>;
+ 		};
+ 
+-		CPU_PD2: power-domain-cpu2 {
++		cpu_pd2: power-domain-cpu2 {
+ 			#power-domain-cells = <0>;
+-			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++			power-domains = <&cluster_pd>;
++			domain-idle-states = <&LITTLE_cpu_sleep_0>;
+ 		};
+ 
+-		CPU_PD3: power-domain-cpu3 {
++		cpu_pd3: power-domain-cpu3 {
+ 			#power-domain-cells = <0>;
+-			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
++			power-domains = <&cluster_pd>;
++			domain-idle-states = <&LITTLE_cpu_sleep_0>;
+ 		};
+ 
+-		CPU_PD4: power-domain-cpu4 {
++		cpu_pd4: power-domain-cpu4 {
+ 			#power-domain-cells = <0>;
+-			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++			power-domains = <&cluster_pd>;
++			domain-idle-states = <&BIG_cpu_sleep_0>;
+ 		};
+ 
+-		CPU_PD5: power-domain-cpu5 {
++		cpu_pd5: power-domain-cpu5 {
+ 			#power-domain-cells = <0>;
+-			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++			power-domains = <&cluster_pd>;
++			domain-idle-states = <&BIG_cpu_sleep_0>;
+ 		};
+ 
+-		CPU_PD6: power-domain-cpu6 {
++		cpu_pd6: power-domain-cpu6 {
+ 			#power-domain-cells = <0>;
+-			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++			power-domains = <&cluster_pd>;
++			domain-idle-states = <&BIG_cpu_sleep_0>;
+ 		};
+ 
+-		CPU_PD7: power-domain-cpu7 {
++		cpu_pd7: power-domain-cpu7 {
+ 			#power-domain-cells = <0>;
+-			power-domains = <&CLUSTER_PD>;
+-			domain-idle-states = <&BIG_CPU_SLEEP_0>;
++			power-domains = <&cluster_pd>;
++			domain-idle-states = <&BIG_cpu_sleep_0>;
+ 		};
+ 
+-		CLUSTER_PD: power-domain-cluster {
++		cluster_pd: power-domain-cluster {
+ 			#power-domain-cells = <0>;
+-			domain-idle-states = <&CLUSTER_SLEEP_0>;
++			domain-idle-states = <&cluster_sleep_0>;
+ 		};
+ 	};
+ 
+@@ -3615,7 +3615,7 @@ etm@7040000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0x07040000 0 0x1000>;
+ 
+-			cpu = <&CPU0>;
++			cpu = <&cpu0>;
+ 
+ 			clocks = <&aoss_qmp>;
+ 			clock-names = "apb_pclk";
+@@ -3635,7 +3635,7 @@ etm@7140000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0x07140000 0 0x1000>;
+ 
+-			cpu = <&CPU1>;
++			cpu = <&cpu1>;
+ 
+ 			clocks = <&aoss_qmp>;
+ 			clock-names = "apb_pclk";
+@@ -3655,7 +3655,7 @@ etm@7240000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0x07240000 0 0x1000>;
+ 
+-			cpu = <&CPU2>;
++			cpu = <&cpu2>;
+ 
+ 			clocks = <&aoss_qmp>;
+ 			clock-names = "apb_pclk";
+@@ -3675,7 +3675,7 @@ etm@7340000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0x07340000 0 0x1000>;
+ 
+-			cpu = <&CPU3>;
++			cpu = <&cpu3>;
+ 
+ 			clocks = <&aoss_qmp>;
+ 			clock-names = "apb_pclk";
+@@ -3695,7 +3695,7 @@ etm@7440000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0x07440000 0 0x1000>;
+ 
+-			cpu = <&CPU4>;
++			cpu = <&cpu4>;
+ 
+ 			clocks = <&aoss_qmp>;
+ 			clock-names = "apb_pclk";
+@@ -3715,7 +3715,7 @@ etm@7540000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0x07540000 0 0x1000>;
+ 
+-			cpu = <&CPU5>;
++			cpu = <&cpu5>;
+ 
+ 			clocks = <&aoss_qmp>;
+ 			clock-names = "apb_pclk";
+@@ -3735,7 +3735,7 @@ etm@7640000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0x07640000 0 0x1000>;
+ 
+-			cpu = <&CPU6>;
++			cpu = <&cpu6>;
+ 
+ 			clocks = <&aoss_qmp>;
+ 			clock-names = "apb_pclk";
+@@ -3755,7 +3755,7 @@ etm@7740000 {
+ 			compatible = "arm,coresight-etm4x", "arm,primecell";
+ 			reg = <0 0x07740000 0 0x1000>;
+ 
+-			cpu = <&CPU7>;
++			cpu = <&cpu7>;
+ 
+ 			clocks = <&aoss_qmp>;
+ 			clock-names = "apb_pclk";
+@@ -3959,7 +3959,7 @@ lmh_cluster1: lmh@17d70800 {
+ 			compatible = "qcom,sdm845-lmh";
+ 			reg = <0 0x17d70800 0 0x400>;
+ 			interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
+-			cpus = <&CPU4>;
++			cpus = <&cpu4>;
+ 			qcom,lmh-temp-arm-millicelsius = <65000>;
+ 			qcom,lmh-temp-low-millicelsius = <94500>;
+ 			qcom,lmh-temp-high-millicelsius = <95000>;
+@@ -3971,7 +3971,7 @@ lmh_cluster0: lmh@17d78800 {
+ 			compatible = "qcom,sdm845-lmh";
+ 			reg = <0 0x17d78800 0 0x400>;
+ 			interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
+-			cpus = <&CPU0>;
++			cpus = <&cpu0>;
+ 			qcom,lmh-temp-arm-millicelsius = <65000>;
+ 			qcom,lmh-temp-low-millicelsius = <94500>;
+ 			qcom,lmh-temp-high-millicelsius = <95000>;
+@@ -5277,7 +5277,7 @@ apps_rsc: rsc@179c0000 {
+ 					  <SLEEP_TCS   3>,
+ 					  <WAKE_TCS    3>,
+ 					  <CONTROL_TCS 1>;
+-			power-domains = <&CLUSTER_PD>;
++			power-domains = <&cluster_pd>;
+ 
+ 			apps_bcm_voter: bcm-voter {
+ 				compatible = "qcom,bcm-voter";
 
 -- 
 2.43.0
