@@ -1,165 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-29794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92E6A962C14
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 17:23:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8F27962CC4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 17:46:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27707281C67
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 15:23:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5B5971F22522
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 15:46:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B33518787E;
-	Wed, 28 Aug 2024 15:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEE051A38DB;
+	Wed, 28 Aug 2024 15:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=helen.koike@collabora.com header.b="Dzkh270i"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oU13eOsi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B6113C3D5;
-	Wed, 28 Aug 2024 15:23:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724858595; cv=pass; b=HgV/Cgq/mrUbDB8IYK4pzwYYiyk9QI67ssIcGk4UwoogtAO3z4EMc7cK0qE3KKjQjb9eDAAAgr4ftWjj2fsnPFSQCdVF1nrfOzE5b5W76u+LTCCXymZFZfNGMMbHhM/6Pxq1baq7wS3FhyMcuK49Bpc+1WNNLGL5z7A3z0VWRVc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724858595; c=relaxed/simple;
-	bh=q0Ai9vwAVR2csqHYGXc0xFXCNpIIIBEFXwMrA/u2Zoo=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=PXpGes2xczLAm4MMLhDY5Ja1tD278nf04fJJg+21K4OYczES8p/QO+dRBclnoCNa9kA9TzBulekE7ActlumoVfFceWlYbDgk7aZRthxwM1nKygWO3RQfekI5P7gDbDe9t0gjkUXbbS5OZxWnD4d1mYJGbPzlXzQSyThicbolmzI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=helen.koike@collabora.com header.b=Dzkh270i; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-Delivered-To: vignesh.raman@collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1724858582; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=n/0UeusnXOCvaEaJ1nhapBysPWJg8696ZD22LhKwNOjMIrmhYm6Hh/g1hJ2z3QffkO4VuqYZoxTZXKLyZ/VTyATeBFUvyW/ZTdjjq0xEj/BL5lEofKZ3SyCH2dTGpVenvq19l/KefQXVK3WIUe8zflbpzEzhS3fqEqfVoADkWcY=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1724858582; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=XCKdPShM2BSsjoKUXd5jLwgut9vQqNvq4fosnc20z7A=; 
-	b=OP92ZjLenjEMMDFT+eHK7WNuPjfEm8fEPF52kLJYyZgF60nuoeQ6TmTaNF/rShu+hbGPRqPXTNzN3OP53bxDne9Uq8QHMJ9MK/q3vMknoCQWTbv1dUAWmiKyoRQ0RKe4AwCrlVwpwPxUnOKdJQQDDrK4d1klaeYMRNqMVbpR76U=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=helen.koike@collabora.com;
-	dmarc=pass header.from=<helen.koike@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1724858582;
-	s=zohomail; d=collabora.com; i=helen.koike@collabora.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=XCKdPShM2BSsjoKUXd5jLwgut9vQqNvq4fosnc20z7A=;
-	b=Dzkh270iCgK9bLYwALngFlgSPGwMdPTS1B0v6XJC1P80G0jRtoqar0Eds6Zhlh12
-	A6c93FpxNKjl5bogYxOE5VQ9ept63a2EgrUR6Vojrmsbfi6AhNbfmU3XHd//hy/UhZT
-	8qK23+cNsxfQjZuN+ibJPBV//LGXRxKEljTN573A=
-Received: from mail.zoho.com by mx.zohomail.com
-	with SMTP id 17248585802298.455583977077822; Wed, 28 Aug 2024 08:23:00 -0700 (PDT)
-Date: Wed, 28 Aug 2024 12:23:00 -0300
-From: Helen Mae Koike Fornazier <helen.koike@collabora.com>
-To: "Rob Clark" <robdclark@gmail.com>
-Cc: "Vignesh Raman" <vignesh.raman@collabora.com>,
-	"dri-devel" <dri-devel@lists.freedesktop.org>,
-	"daniels" <daniels@collabora.com>, "airlied" <airlied@gmail.com>,
-	"daniel" <daniel@ffwll.ch>,
-	"guilherme.gallo" <guilherme.gallo@collabora.com>,
-	"sergi.blanch.torne" <sergi.blanch.torne@collabora.com>,
-	"deborah.brouwer" <deborah.brouwer@collabora.com>,
-	"linux-mediatek" <linux-mediatek@lists.infradead.org>,
-	"linux-amlogic" <linux-amlogic@lists.infradead.org>,
-	"linux-rockchip" <linux-rockchip@lists.infradead.org>,
-	"amd-gfx" <amd-gfx@lists.freedesktop.org>,
-	"linux-arm-msm" <linux-arm-msm@vger.kernel.org>,
-	"intel-gfx" <intel-gfx@lists.freedesktop.org>,
-	"virtualization" <virtualization@lists.linux.dev>,
-	"linux-kernel" <linux-kernel@vger.kernel.org>
-Message-ID: <19199953cbf.ded17a68157355.1209172729493560159@collabora.com>
-In-Reply-To: <CAF6AEGu-T4=3jPRcnq3BFBtfb_yhmWE2b8EgxgTm5Q0bqSv04Q@mail.gmail.com>
-References: <20240820070818.1124403-1-vignesh.raman@collabora.com> <CAF6AEGu-T4=3jPRcnq3BFBtfb_yhmWE2b8EgxgTm5Q0bqSv04Q@mail.gmail.com>
-Subject: Re: [PATCH v1] drm/ci: increase timeout for all jobs
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C6F1A2573;
+	Wed, 28 Aug 2024 15:46:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1724859984; cv=none; b=j4L+Qha6eo6mPkjXpxod9H59voy+h42YR28SqQdkP7w6cnpmkUyFhZ/LG9Q13HCobui5LiLvk9eNtw1g22r0oZx1ZycAAxknLcLIuVnplgtAbvAqzMdhNsD5x4W46hEHEGN5P2JmVsPQ83koUOdFFHM/GmJGVVdJboCzv+fxDDs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1724859984; c=relaxed/simple;
+	bh=/0egYTr5ShlYzFc5fPufNhKrQdIPFsVyuFZm+VJjZew=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=K3n+xxZcJdV201lFyXInFPe5DFnoGSMSm+9na7KcP7r/IoVtneSf5GZ9JIWheNlN/qmYs259Zg9nnm6bbFyBOEhBY3slH4Ocy06k8allvn4gEy8bMpTVQOnKWEIkQJ7oxtzdV6N1oaejN5100kNE+cyhIauDEmmETm8SLHRXr4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oU13eOsi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1104DC4CEC7;
+	Wed, 28 Aug 2024 15:46:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724859984;
+	bh=/0egYTr5ShlYzFc5fPufNhKrQdIPFsVyuFZm+VJjZew=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=oU13eOsiw7kyfs9OY8XY2o605DXdUa/+Ps/8ooLIDc9W2c1iponTiVc0//Pc0XzQm
+	 Nzbtzt81Qf2B0J1C7nj9HdzMLHQyRSE4O9k/XcQDvJYCl9OOsMbtcYN5nlG64HmMld
+	 wY4nYINUMtYseg6OBSHqITVUPdsott4tqA0a+ec1VbA08YlPHJyJJyb2tdZabYUj7a
+	 JJvJeZF61jqBIF6Pm5DOUYItmjzOEgHrvvI6FiPsrFnU325otpOvh4XO+s7phcSKMX
+	 VFySUko/hS+2PWMZBqNg5qWm+8xR5aYw+Q+kp5guHXy1t/dQt2b1AUDjSGJiUiw9VC
+	 QFGCJYYuC80Lw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04992C5B557;
+	Wed, 28 Aug 2024 15:46:24 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
+Subject: [PATCH v4 00/12] PCI: qcom: Enumerate endpoints based on Link up
+ event in 'global_irq' interrupt
+Date: Wed, 28 Aug 2024 21:16:10 +0530
+Message-Id: <20240828-pci-qcom-hotplug-v4-0-263a385fbbcb@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEJGz2YC/33NTQ6CMBCG4auQrq1h2kLRlfcwLkp/oAlSbLHRE
+ O5uYYWRuHy/ZJ6ZUNDe6oDO2YS8jjZY16dghwzJVvSNxlalRiQnLOdQ4EFa/JDujls3Dt2zwbV
+ UGiRQdQKD0tngtbGvlbzeUrc2jM6/1w8RlvUPFgHnuDCUl4WUFafi0tleeHd0vkGLFslW4DsCS
+ QIHRXNWV8BN9SPQjUBhR6BJEMBIKYzSmtZfwjzPH3xq61M1AQAA
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4619;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=/0egYTr5ShlYzFc5fPufNhKrQdIPFsVyuFZm+VJjZew=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBmz0ZKdobnw0+XoDweO1CjN0nuSx++Yf1PY2OQg
+ baAjzayEcKJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZs9GSgAKCRBVnxHm/pHO
+ 9VTKB/wNH+RvTSPDjfbPGoOWUBQ3OiHjHbKsVCVsP+PwaVRLhK//KyHolZHQYKNPzZehtYA6W46
+ yGW8+q77Z882zzVDsEGcjBrfe7fpfXEzzRjRkxU+vW9j/ysuALG81/t+UHgrMXHjHU2SvNx3oKy
+ OLCyJIJdgbuBMZxv4jULvC4jq60DXDv9S3dTUqIFvWlFMu75Ez7foF5bs87VhCAD58GNlt53peO
+ ev269wGqF/QuEvKqpm49S3c3NwM7vn34dMHfxsS9awBEHfZy54bBrKeEwuvKvfLYbOBNYCPQx0T
+ KuXpGgYpU3J84Z89FQVInpFpFWCJyzjK1JXBvVYhn2Jbsq15
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@linaro.org/default with auth_id=185
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reply-To: manivannan.sadhasivam@linaro.org
+
+Hi,
+
+This series adds support to enumerate the PCIe endpoint devices using the Qcom
+specific 'Link up' event in 'global' IRQ. Historically, Qcom PCIe RC controllers
+lacked standard hotplug support. So when an endpoint is attached to the SoC,
+users have to rescan the bus manually to enumerate the device. But this can be
+avoided by rescanning the bus upon receiving 'Link up' event.
+
+Qcom PCIe RC controllers are capable of generating the 'global' SPI interrupt
+to the host CPUs. The device driver can use this interrupt to identify events
+such as PCIe link specific events, safety events etc...
+
+One such event is the PCIe Link up event generated when an endpoint is detected
+on the bus and the Link is 'up'. This event can be used to enumerate the
+endpoint devices.
+
+So add support for capturing the PCIe Link up event using the 'global' interrupt
+in the driver. Once the Link up event is received, the bus underneath the host
+bridge is scanned to enumerate PCIe endpoint devices.
+
+This series also has some cleanups to the Qcom PCIe EP controller driver for
+interrupt handling.
+
+NOTE: During v2 review, there was a discussion about removing the devices when
+'Link Down' event is received. But this needs some more investigation, so I'm
+planning to add it later.
+
+Testing
+=======
+
+This series is tested on Qcom SM8450 based development board that has 2 SoCs
+connected over PCIe.
+
+Merging Strategy
+================
+
+I'm expecting the binding and PCI driver changes to go through PCI tree and DTS
+patches through Qcom tree.
+
+- Mani
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Changes in v4:
+- Fixed the indendation issue reported by Kbot
+- Merged the bindings patch adding global IRQ into one as suggested by Rob
+- Collected review tag
+- Link to v3: https://lore.kernel.org/r/20240731-pci-qcom-hotplug-v3-0-a1426afdee3b@linaro.org
+
+Changes in v3:
+- Removed the usage of 'simulating hotplug' and just used 'Link up' as we are
+  not fully emulating the hotplug support
+- Fixed the build issue wtih CONFIG_PCI_DOMAINS_GENERIC
+- Moved the 'global' IRQ entry to last in the binding and also mentioned the ABI
+  break and its necessity in patch description.
+- Collected tags
+- Rebased on top of v6.11-rc1
+- Link to v2: https://lore.kernel.org/r/20240717-pci-qcom-hotplug-v2-0-71d304b817f8@linaro.org
+
+Changes in v2:
+- Added CONFIG_PCI_DOMAINS_GENERIC guard for domain_nr
+- Switched to dev_WARN_ONCE() for unhandled interrupts
+- Squashed the 'linux,pci-domain' bindings patches into one
+- Link to v1: https://lore.kernel.org/r/20240715-pci-qcom-hotplug-v1-0-5f3765cc873a@linaro.org
+
+---
+Manivannan Sadhasivam (12):
+      PCI: qcom-ep: Drop the redundant masking of global IRQ events
+      PCI: qcom-ep: Reword the error message for receiving unknown global IRQ event
+      dt-bindings: PCI: pci-ep: Update Maintainers
+      dt-bindings: PCI: pci-ep: Document 'linux,pci-domain' property
+      PCI: endpoint: Assign PCI domain number for endpoint controllers
+      PCI: qcom-ep: Modify 'global_irq' and 'perst_irq' IRQ device names
+      ARM: dts: qcom: sdx55: Add 'linux,pci-domain' to PCIe EP controller node
+      ARM: dts: qcom: sdx65: Add 'linux,pci-domain' to PCIe EP controller node
+      arm64: dts: qcom: sa8775p: Add 'linux,pci-domain' to PCIe EP controller nodes
+      dt-bindings: PCI: qcom,pcie-sm8450: Add 'global' interrupt
+      PCI: qcom: Enumerate endpoints based on Link up event in 'global_irq' interrupt
+      arm64: dts: qcom: sm8450: Add 'global' interrupt to the PCIe RC node
+
+ Documentation/devicetree/bindings/pci/pci-ep.yaml  | 14 +++++-
+ .../devicetree/bindings/pci/qcom,pcie-common.yaml  |  4 +-
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml      |  1 +
+ .../devicetree/bindings/pci/qcom,pcie-sm8450.yaml  | 10 ++--
+ arch/arm/boot/dts/qcom/qcom-sdx55.dtsi             |  1 +
+ arch/arm/boot/dts/qcom/qcom-sdx65.dtsi             |  1 +
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              |  2 +
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               | 12 +++--
+ drivers/pci/controller/dwc/pcie-qcom-ep.c          | 21 +++++++--
+ drivers/pci/controller/dwc/pcie-qcom.c             | 55 +++++++++++++++++++++-
+ drivers/pci/endpoint/pci-epc-core.c                | 14 ++++++
+ include/linux/pci-epc.h                            |  2 +
+ 12 files changed, 120 insertions(+), 17 deletions(-)
+---
+base-commit: 8400291e289ee6b2bf9779ff1c83a291501f017b
+change-id: 20240715-pci-qcom-hotplug-bcde1c13d91f
+
+Best regards,
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 
-
-
-
----- On Tue, 27 Aug 2024 19:04:42 -0300 Rob Clark  wrote ---
-
- > On Tue, Aug 20, 2024 at 12:09=E2=80=AFAM Vignesh Raman=20
- > vignesh.raman@collabora.com> wrote:=20
- > >=20
- > > Set the timeout of all drm-ci jobs to 1h30m since=20
- > > some jobs takes more than 1 hour to complete.=20
- > >=20
- > > Signed-off-by: Vignesh Raman vignesh.raman@collabora.com>=20
- > =20
- > Acked-by: Rob Clark robdclark@gmail.com>=20
-
-Applied to drm-misc-next.
-
-Thanks
-Helen
-
- > =20
- > > ---=20
- > >  drivers/gpu/drm/ci/test.yml | 5 ++++-=20
- > >  1 file changed, 4 insertions(+), 1 deletion(-)=20
- > >=20
- > > diff --git a/drivers/gpu/drm/ci/test.yml b/drivers/gpu/drm/ci/test.yml=
-=20
- > > index b6f428cdaf94..09d8447840e9 100644=20
- > > --- a/drivers/gpu/drm/ci/test.yml=20
- > > +++ b/drivers/gpu/drm/ci/test.yml=20
- > > @@ -10,6 +10,7 @@=20
- > >  .lava-test:=20
- > >    extends:=20
- > >      - .test-rules=20
- > > +  timeout: "1h30m"=20
- > >    script:=20
- > >      # Note: Build dir (and thus install) may be dirty due to GIT_STRA=
-TEGY=20
- > >      - rm -rf install=20
- > > @@ -71,6 +72,7 @@=20
- > >      - .baremetal-test-arm64=20
- > >      - .use-debian/baremetal_arm64_test=20
- > >      - .test-rules=20
- > > +  timeout: "1h30m"=20
- > >    variables:=20
- > >      FDO_CI_CONCURRENT: 10=20
- > >      HWCI_TEST_SCRIPT: "/install/igt_runner.sh"=20
- > > @@ -215,7 +217,6 @@ panfrost:rk3399:=20
- > >    extends:=20
- > >      - .lava-igt:x86_64=20
- > >    stage: i915=20
- > > -  timeout: "1h30m"=20
- > >    variables:=20
- > >      DRIVER_NAME: i915=20
- > >      DTB: ""=20
- > > @@ -414,6 +415,7 @@ panfrost:g12b:=20
- > >=20
- > >  virtio_gpu:none:=20
- > >    stage: software-driver=20
- > > +  timeout: "1h30m"=20
- > >    variables:=20
- > >      CROSVM_GALLIUM_DRIVER: llvmpipe=20
- > >      DRIVER_NAME: virtio_gpu=20
- > > @@ -436,6 +438,7 @@ virtio_gpu:none:=20
- > >=20
- > >  vkms:none:=20
- > >    stage: software-driver=20
- > > +  timeout: "1h30m"=20
- > >    variables:=20
- > >      DRIVER_NAME: vkms=20
- > >      GPU_VERSION: none=20
- > > --=20
- > > 2.43.0=20
- > >=20
- >=20
 
